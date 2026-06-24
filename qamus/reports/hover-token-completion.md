@@ -5,17 +5,17 @@ Every rendered token in Qamus usage āyāt has a terminal state — **0 silent/u
 | metric | value |
 |---|---:|
 | total tokens | 49900 |
-| resolved (qamus-authored) | 35166 |
-| coverage % | 70.47 |
-| distinct pending surfaces | 6503 |
+| resolved (qamus-authored) | 35307 |
+| coverage % | 70.76 |
+| distinct pending surfaces | 6477 |
 | silent / unknown | 0 |
 
 ## States
 
 | state | n |
 |---|---:|
-| `resolved_qamus_authored` | 35166 |
-| `pending_needs_sarf` | 12606 |
+| `resolved_qamus_authored` | 35307 |
+| `pending_needs_sarf` | 12465 |
 | `pending_no_qamus_entry` | 2005 |
 | `pending_proper_noun` | 66 |
 | `pending_source_data_issue` | 57 |
@@ -79,10 +79,10 @@ Every rendered token in Qamus usage āyāt has a terminal state — **0 silent/u
 | 53 | فَإِنَّمَا | فإنما | 15 | — | P |
 | 54 | تَرَىٰٓ | تري | 15 | رأي | V |
 | 55 | ٱلْقَوْلَ | القول | 15 | قول | N |
-| 56 | الْمُؤْمِنُونَ | المؤمنون | 15 | أمن | N |
-| 57 | ٱلزَّكَوٰةَ | الزكواه | 15 | زكو | N |
-| 58 | خَبِيرٌۭ | خبير | 15 | خبر | N |
-| 59 | يُؤْمِنُ | يؤمن | 15 | أمن | V |
-| 60 | وَلَئِن | ولئن | 15 | — | P |
+| 56 | ٱلزَّكَوٰةَ | الزكواه | 15 | زكو | N |
+| 57 | خَبِيرٌۭ | خبير | 15 | خبر | N |
+| 58 | يُؤْمِنُ | يؤمن | 15 | أمن | V |
+| 59 | وَلَئِن | ولئن | 15 | — | P |
+| 60 | ٱلْمُشْرِكِينَ | المشركين | 15 | شرك | N |
 
 > Full top-500 in `hover-token-completion.json`; the per-token dump stays git-ignored under `corpora/sarfnahw/out/audit/`.

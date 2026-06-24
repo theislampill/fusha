@@ -41,6 +41,14 @@ QAC internal-reference only; Qurʾān text unaltered; OCR never authority.
 | **P15 source-address** | 2,092 nodes (v970/n1022/p100), 7 splits, 0 orphan; duplicate-avoidance report |
 | **P17 Nawawī40** | re-run under GP gates; 189 weak-root hints (low-conf), 0 live writes |
 
+## PP1 particle-first proofing + Q2 (live coverage 70.76%)
+| lane | status |
+|---|---|
+| **baseline reconciliation** | report + live AGREE at 70.47%→70.76%; GitHub not stale (69.08 was SN7 history); CURRENT-LIVE banner added |
+| **ID reconciliation** | Fusha index `qamus:nNNN` = build-ordinal ≠ entry `source_keys` (index n259=كَظِيم, entry source_key n365) |
+| **PP1 particle p001–p100** | 100 particles proofed, 219-āyah source-addressed spine (3,245 nodes); **26 content glosses APPLIED LIVE** (+141 occ → 70.76%), 4 homographs pending |
+| **Q2 كَظِيم repair** | **APPLIED LIVE** via `edit_entry_record` (gate opened): verb→adjectival صفة مشبهة; v2→v3 versioned+backup; 1 entry repaired |
+
 ## Boundaries held (this tranche)
 No live entry mutated; Fusha public-clean (0 leaks); no external gloss text; public hover = `src:"qamus"` only;
 QAC internal-reference only; Qurʾān text unaltered; OCR never authority. Rollback ready (tsv `.bak-p13` +

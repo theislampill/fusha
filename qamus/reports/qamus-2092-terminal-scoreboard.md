@@ -35,15 +35,17 @@ Full matrix: `qamus-2092-audit-completion.json`. Distinguishes *classified* from
 **0 entries are `fully_verified`** (no source-photo pass this tranche; `*_verified` flags reflect only
 measurable evidence — refs valid, QAC root agreement, hover coverage).
 
-| audit terminal state | n |
+| audit terminal state | n (live 70.76%) |
 |---|---:|
-| `needs_hover_authoring` (≥1 pending token in its āyāt) | **1,925** |
-| `needs_source_photo_review` (āyāt hover-complete; source verification outstanding) | **150** |
+| `needs_hover_authoring` (≥1 pending token in its āyāt) | **1,922** |
+| `needs_source_photo_review` (āyāt hover-complete; source verification outstanding) | **153** |
 | `needs_quran_ref_verification` (bad/range refs) | **10** |
 | `deferred_missing_source` (no addressable āyāt) | **7** |
 | **total / unknown** | **2,092 / 0** |
 
 - root-verified-vs-QAC: measurable cross-check recorded per entry.
-- **P14 entry repair:** `qamus:n259` كَظِيم ("to suppress anger" verb-gloss on a صفة مشبهة) → certified repair
-  **payload** (`repairs/repair_batch_002_p14`), `candidate_payload_ready` — **owner-gated apply** (entry mutation
-  needs app-helper dry-run + backup + DawahAgent). **0 entries mutated this tranche.**
+- **كَظِيم repair — APPLIED LIVE (gate opened):** the صفة مشبهة gloss-shape fix (verb "to suppress anger" →
+  adjectival) was applied via the qamus app `edit_entry_record` (DawahAgent = author; versioned v2→v3 +
+  auto-backup); entry count 2092 (edit, not create); propagated to its 3 hover tokens. **1 entry repaired this
+  tranche** (`repairs/repair_batch_004_kazim_applied`). ID note: the Fusha index `qamus:n259` is a build-ordinal;
+  the entry's own `source_keys=['n365']`.
