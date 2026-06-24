@@ -5,20 +5,20 @@ Every rendered token in Qamus usage āyāt has a terminal state — **0 silent/u
 | metric | value |
 |---|---:|
 | total tokens | 49900 |
-| resolved (qamus-authored) | 37567 |
-| coverage % | 75.28 |
-| distinct pending surfaces | 6266 |
+| resolved (qamus-authored) | 38580 |
+| coverage % | 77.31 |
+| distinct pending surfaces | 6082 |
 | silent / unknown | 0 |
 
 ## States
 
 | state | n |
 |---|---:|
-| `resolved_qamus_authored` | 37567 |
-| `pending_needs_sarf` | 10544 |
-| `pending_no_qamus_entry` | 1706 |
+| `resolved_qamus_authored` | 38580 |
+| `pending_needs_sarf` | 9570 |
+| `pending_no_qamus_entry` | 1674 |
 | `pending_source_data_issue` | 55 |
-| `pending_proper_noun` | 28 |
+| `pending_proper_noun` | 21 |
 
 ## Top pending surfaces (by frequency) — P13 candidate pool
 

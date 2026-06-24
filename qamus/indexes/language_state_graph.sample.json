@@ -1,18 +1,97 @@
 {
  "schema": "fusha/language-state-graph@1",
  "built_from": {
-  "coverage_pct": 75.28,
+  "coverage_pct": 77.31,
   "total_tokens": 49900,
   "distinct_keys": 12723,
   "source_sha": null
  },
  "counts": {
-  "pending": 12188,
-  "quarantine_homograph": 159,
-  "resolved_qamus_authored": 376
+  "pending": 12003,
+  "resolved_qamus_authored": 562,
+  "quarantine_homograph": 158
  },
- "_sample_note": "representative slice (resolved+all-quarantine+top-pending); rebuild full via tools/build_language_state_graph.py",
+ "_sample_note": "representative slice; rebuild full via tools/build_language_state_graph.py",
  "states": [
+  {
+   "state_id": "state:key:ءاتيناهم",
+   "observation": {
+    "norm_key": "ءاتيناهم",
+    "dominant_surface_ar": "ءَاتَيْنَٰهُمُ",
+    "surfaces": {
+     "ءَاتَيْنَٰهُمُ": 4,
+     "ءَاتَيْنَٰهُمْ": 2
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "أتي",
+     "lemma": null,
+     "pos": "V",
+     "form": null,
+     "sense": "We gave them",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "We gave them",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:2:121:2",
+    "quran:2:146:2",
+    "quran:35:40:20",
+    "quran:6:114:12",
+    "quran:6:89:3",
+    "+1 more"
+   ]
+  },
+  {
+   "state_id": "state:key:ءاخر",
+   "observation": {
+    "norm_key": "ءاخر",
+    "dominant_surface_ar": "ءَاخَرَ",
+    "surfaces": {
+     "ءَاخَرَ": 6
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "أخر",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "another; other",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "another; other",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:23:14:17",
+    "quran:23:117:6",
+    "quran:17:22:6",
+    "quran:25:68:7",
+    "quran:26:213:6",
+    "+1 more"
+   ]
+  },
   {
    "state_id": "state:key:ءادم",
    "observation": {
@@ -54,6 +133,45 @@
    ]
   },
   {
+   "state_id": "state:key:ءاذانهم",
+   "observation": {
+    "norm_key": "ءاذانهم",
+    "dominant_surface_ar": "ءَاذَانِهِمْ",
+    "surfaces": {
+     "ءَاذَانِهِمْ": 4,
+     "ءَاذَانِهِم": 1
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "أذن",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "their ears",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "their ears",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:6:25:12",
+    "quran:2:19:12",
+    "quran:18:11:3",
+    "quran:18:57:21",
+    "quran:71:7:9"
+   ]
+  },
+  {
    "state_id": "state:key:ءال",
    "observation": {
     "norm_key": "ءال",
@@ -92,6 +210,49 @@
     "quran:27:56:9",
     "quran:2:50:7",
     "+9 more"
+   ]
+  },
+  {
+   "state_id": "state:key:ءالهه",
+   "observation": {
+    "norm_key": "ءالهه",
+    "dominant_surface_ar": "ءَالِهَةٌۭ",
+    "surfaces": {
+     "ءَالِهَةً": 1,
+     "ءَالِهَةٌۭ": 2,
+     "ءَالِهَةًۢ": 1,
+     "ءَالِهَةًۭ": 2,
+     "ءَالِهَةٌ": 1
+    },
+    "occurrences": 7
+   },
+   "hidden_states": [
+    {
+     "root": "أله",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "gods (false deities)",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "gods (false deities)",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:6:74:8",
+    "quran:21:43:3",
+    "quran:46:28:9",
+    "quran:7:138:19",
+    "quran:19:81:5",
+    "+2 more"
    ]
   },
   {
@@ -185,6 +346,45 @@
     "quran:3:53:2",
     "quran:2:76:6",
     "+15 more"
+   ]
+  },
+  {
+   "state_id": "state:key:ءامنتم",
+   "observation": {
+    "norm_key": "ءامنتم",
+    "dominant_surface_ar": "ءَامَنتُم",
+    "surfaces": {
+     "ءَامَنتُمْ": 2,
+     "ءَامَنتُم": 3
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "أمن",
+     "lemma": null,
+     "pos": "V",
+     "form": null,
+     "sense": "you (all) believed",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "you (all) believed",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:26:49:2",
+    "quran:8:41:18",
+    "quran:2:137:5",
+    "quran:20:71:2",
+    "quran:7:123:3"
    ]
   },
   {
@@ -436,6 +636,83 @@
     "quran:38:86:6",
     "quran:26:109:5",
     "+5 more"
+   ]
+  },
+  {
+   "state_id": "state:key:أجلهم",
+   "observation": {
+    "norm_key": "أجلهم",
+    "dominant_surface_ar": "أَجَلُهُمْ",
+    "surfaces": {
+     "أَجَلُهُمْ": 5
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "أجل",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "their term/appointed time",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "their term/appointed time",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:35:45:20",
+    "quran:7:34:6",
+    "quran:10:11:10",
+    "quran:16:61:18",
+    "quran:7:185:18"
+   ]
+  },
+  {
+   "state_id": "state:key:أجلهن",
+   "observation": {
+    "norm_key": "أجلهن",
+    "dominant_surface_ar": "أَجَلَهُنَّ",
+    "surfaces": {
+     "أَجَلَهُنَّ": 4,
+     "أَجَلُهُنَّ": 1
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "أجل",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "their term",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "their term",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:65:2:3",
+    "quran:2:234:13",
+    "quran:2:232:5",
+    "quran:65:4:17",
+    "quran:2:231:5"
    ]
   },
   {
@@ -716,6 +993,44 @@
    ]
   },
   {
+   "state_id": "state:key:أذي",
+   "observation": {
+    "norm_key": "أذي",
+    "dominant_surface_ar": "أَذًۭى",
+    "surfaces": {
+     "أَذًۭى": 5
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "أذي",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "harm, hurt",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "harm, hurt",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:2:196:24",
+    "quran:4:102:46",
+    "quran:2:262:14",
+    "quran:2:222:6",
+    "quran:3:186:15"
+   ]
+  },
+  {
    "state_id": "state:key:أرءيتم",
    "observation": {
     "norm_key": "أرءيتم",
@@ -876,6 +1191,45 @@
    ]
   },
   {
+   "state_id": "state:key:أشده",
+   "observation": {
+    "norm_key": "أشده",
+    "dominant_surface_ar": "أَشُدَّهُۥ",
+    "surfaces": {
+     "أَشُدَّهُۥ": 4,
+     "أَشُدَّهُۥٓ": 1
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "شدد",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "his full strength / maturity",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "his full strength / maturity",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:46:15:17",
+    "quran:12:22:3",
+    "quran:6:152:11",
+    "quran:17:34:11",
+    "quran:28:14:3"
+   ]
+  },
+  {
    "state_id": "state:key:أصحاب",
    "observation": {
     "norm_key": "أصحاب",
@@ -917,6 +1271,46 @@
     "quran:10:27:23",
     "quran:15:80:3",
     "+41 more"
+   ]
+  },
+  {
+   "state_id": "state:key:أعمالكم",
+   "observation": {
+    "norm_key": "أعمالكم",
+    "dominant_surface_ar": "أَعْمَٰلَكُمْ",
+    "surfaces": {
+     "أَعْمَٰلَكُمْ": 2,
+     "أَعْمَٰلُكُمْ": 2,
+     "أَعْمَالُكُمْ": 1
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "عمل",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "your deeds",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "your deeds",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:33:71:3",
+    "quran:42:15:25",
+    "quran:47:35:12",
+    "quran:2:139:4",
+    "quran:49:2:19"
    ]
   },
   {
@@ -1238,6 +1632,46 @@
    ]
   },
   {
+   "state_id": "state:key:أليما",
+   "observation": {
+    "norm_key": "أليما",
+    "dominant_surface_ar": "أَلِيمًۭا",
+    "surfaces": {
+     "أَلِيمًۭا": 5,
+     "أَلِيمًا": 1
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "ألم",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "painful",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "painful",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:48:16:28",
+    "quran:4:173:17",
+    "quran:33:8:8",
+    "quran:48:25:40",
+    "quran:73:13:5",
+    "+1 more"
+   ]
+  },
+  {
    "state_id": "state:key:أمرا",
    "observation": {
     "norm_key": "أمرا",
@@ -1275,6 +1709,46 @@
     "quran:43:79:3",
     "quran:8:42:19",
     "+7 more"
+   ]
+  },
+  {
+   "state_id": "state:key:أمري",
+   "observation": {
+    "norm_key": "أمري",
+    "dominant_surface_ar": "أَمْرِى",
+    "surfaces": {
+     "أَمْرِى": 6,
+     "أَمْرِىٓ": 1
+    },
+    "occurrences": 7
+   },
+   "hidden_states": [
+    {
+     "root": "أمر",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "my affair / my command",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "my affair / my command",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:20:26:3",
+    "quran:18:82:28",
+    "quran:20:32:3",
+    "quran:18:73:9",
+    "quran:27:32:6",
+    "+2 more"
    ]
   },
   {
@@ -1316,6 +1790,48 @@
     "quran:6:38:11",
     "quran:7:38:4",
     "+2 more"
+   ]
+  },
+  {
+   "state_id": "state:key:أمين",
+   "observation": {
+    "norm_key": "أمين",
+    "dominant_surface_ar": "أَمِينٌۭ",
+    "surfaces": {
+     "أَمِينٌۭ": 3,
+     "أَمِينٌ": 1,
+     "أَمِينٍۢ": 1,
+     "أَمِينٍ": 1
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "أمن",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "trustworthy",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "trustworthy",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:12:54:14",
+    "quran:7:68:7",
+    "quran:27:39:16",
+    "quran:44:18:9",
+    "quran:81:21:3",
+    "+1 more"
    ]
   },
   {
@@ -1582,6 +2098,46 @@
     "quran:28:45:11",
     "quran:5:3:8",
     "+24 more"
+   ]
+  },
+  {
+   "state_id": "state:key:أهلكنا",
+   "observation": {
+    "norm_key": "أهلكنا",
+    "dominant_surface_ar": "أَهْلَكْنَا",
+    "surfaces": {
+     "أَهْلَكْنَا": 5,
+     "أَهْلَكْنَآ": 1
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "هلك",
+     "lemma": null,
+     "pos": "V",
+     "form": null,
+     "sense": "We destroyed",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "We destroyed",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:19:74:2",
+    "quran:28:58:2",
+    "quran:6:6:4",
+    "quran:17:17:2",
+    "quran:19:98:2",
+    "+1 more"
    ]
   },
   {
@@ -1947,6 +2503,84 @@
     "quran:2:125:14",
     "quran:2:130:5",
     "+7 more"
+   ]
+  },
+  {
+   "state_id": "state:key:إثم",
+   "observation": {
+    "norm_key": "إثم",
+    "dominant_surface_ar": "إِثْمَ",
+    "surfaces": {
+     "إِثْمَ": 4,
+     "إِثْمٌۭ": 2
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "أثم",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "sin",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "sin",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:2:173:20",
+    "quran:2:219:7",
+    "quran:2:182:11",
+    "quran:2:203:11",
+    "quran:2:203:16",
+    "+1 more"
+   ]
+  },
+  {
+   "state_id": "state:key:إحديهما",
+   "observation": {
+    "norm_key": "إحديهما",
+    "dominant_surface_ar": "إِحْدَىٰهُمَا",
+    "surfaces": {
+     "إِحْدَىٰهُمَا": 5
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "أحد",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "one of the two of them",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "one of the two of them",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:2:282:68",
+    "quran:2:282:70",
+    "quran:49:9:10",
+    "quran:28:25:2",
+    "quran:28:26:2"
    ]
   },
   {
@@ -2319,6 +2953,44 @@
    ]
   },
   {
+   "state_id": "state:key:اختلفوا",
+   "observation": {
+    "norm_key": "اختلفوا",
+    "dominant_surface_ar": "ٱخْتَلَفُوا۟",
+    "surfaces": {
+     "ٱخْتَلَفُوا۟": 5
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "خلف",
+     "lemma": null,
+     "pos": "V",
+     "form": null,
+     "sense": "they differed, disputed",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "they differed, disputed",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:4:157:19",
+    "quran:2:213:18",
+    "quran:2:213:38",
+    "quran:2:253:36",
+    "quran:10:93:11"
+   ]
+  },
+  {
    "state_id": "state:key:ادخلوا",
    "observation": {
     "norm_key": "ادخلوا",
@@ -2356,6 +3028,44 @@
     "quran:39:72:2",
     "quran:2:58:3",
     "+4 more"
+   ]
+  },
+  {
+   "state_id": "state:key:ادع",
+   "observation": {
+    "norm_key": "ادع",
+    "dominant_surface_ar": "ٱدْعُ",
+    "surfaces": {
+     "ٱدْعُ": 5
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "دعو",
+     "lemma": null,
+     "pos": "V",
+     "form": null,
+     "sense": "call; invoke; invite",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "call; invoke; invite",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:16:125:1",
+    "quran:2:70:2",
+    "quran:2:69:2",
+    "quran:7:134:7",
+    "quran:2:68:2"
    ]
   },
   {
@@ -2464,6 +3174,127 @@
    ]
   },
   {
+   "state_id": "state:key:استكبروا",
+   "observation": {
+    "norm_key": "استكبروا",
+    "dominant_surface_ar": "ٱسْتَكْبَرُوا۟",
+    "surfaces": {
+     "ٱسْتَكْبَرُوا۟": 4,
+     "ٱسْتَكْبَرُوٓا۟": 2
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "كبر",
+     "lemma": null,
+     "pos": "V",
+     "form": null,
+     "sense": "they were arrogant",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "they were arrogant",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:34:31:28",
+    "quran:41:38:2",
+    "quran:40:47:8",
+    "quran:25:21:14",
+    "quran:14:21:7",
+    "+1 more"
+   ]
+  },
+  {
+   "state_id": "state:key:اسم",
+   "observation": {
+    "norm_key": "اسم",
+    "dominant_surface_ar": "ٱسْمَ",
+    "surfaces": {
+     "ٱسْمُ": 2,
+     "ٱسْمَ": 3,
+     "اسْمُ": 1
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "سمو",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "name (of)",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "name (of)",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:22:40:25",
+    "quran:6:121:6",
+    "quran:87:1:6",
+    "quran:5:4:23",
+    "quran:6:118:4",
+    "+1 more"
+   ]
+  },
+  {
+   "state_id": "state:key:اسمه",
+   "observation": {
+    "norm_key": "اسمه",
+    "dominant_surface_ar": "ٱسْمُهُۥ",
+    "surfaces": {
+     "ٱسْمُهُ": 1,
+     "ٱسْمُهُۥٓ": 1,
+     "ٱسْمُهُۥ": 3
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "سمو",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "his name",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "his name",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:3:45:10",
+    "quran:61:6:23",
+    "quran:19:7:5",
+    "quran:2:114:10",
+    "quran:24:36:9"
+   ]
+  },
+  {
    "state_id": "state:key:اعبدوا",
    "observation": {
     "norm_key": "اعبدوا",
@@ -2544,6 +3375,87 @@
    ]
   },
   {
+   "state_id": "state:key:الأبصار",
+   "observation": {
+    "norm_key": "الأبصار",
+    "dominant_surface_ar": "ٱلْأَبْصَٰرُ",
+    "surfaces": {
+     "ٱلْأَبْصَٰرُ": 3,
+     "ٱلْأَبْصَٰرِ": 1,
+     "ٱلْأَبْصَٰرَ": 1,
+     "الْأَبْصَارُ": 1
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "بصر",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the eyes / sights",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the eyes / sights",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:33:10:10",
+    "quran:59:2:40",
+    "quran:6:103:3",
+    "quran:6:103:6",
+    "quran:22:46:17",
+    "+1 more"
+   ]
+  },
+  {
+   "state_id": "state:key:الأعلي",
+   "observation": {
+    "norm_key": "الأعلي",
+    "dominant_surface_ar": "ٱلْأَعْلَىٰ",
+    "surfaces": {
+     "ٱلْأَعْلَىٰ": 4,
+     "ٱلْأَعْلَى": 1
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "علو",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the Most High",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the Most High",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:37:8:5",
+    "quran:87:1:8",
+    "quran:16:60:9",
+    "quran:20:68:6",
+    "quran:30:27:12"
+   ]
+  },
+  {
    "state_id": "state:key:الأمثال",
    "observation": {
     "norm_key": "الأمثال",
@@ -2582,6 +3494,47 @@
     "quran:14:45:14",
     "quran:29:43:2",
     "+2 more"
+   ]
+  },
+  {
+   "state_id": "state:key:الأمور",
+   "observation": {
+    "norm_key": "الأمور",
+    "dominant_surface_ar": "ٱلْأُمُورُ",
+    "surfaces": {
+     "ٱلْأُمُورُ": 3,
+     "ٱلْأُمُورِ": 2,
+     "ٱلْأُمُورَ": 1
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "أمر",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the matters; affairs",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the matters; affairs",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:2:210:17",
+    "quran:22:41:17",
+    "quran:8:44:19",
+    "quran:3:186:24",
+    "quran:9:48:8",
+    "+1 more"
    ]
   },
   {
@@ -2706,6 +3659,45 @@
    ]
   },
   {
+   "state_id": "state:key:الإنس",
+   "observation": {
+    "norm_key": "الإنس",
+    "dominant_surface_ar": "ٱلْإِنسِ",
+    "surfaces": {
+     "ٱلْإِنسِ": 4,
+     "ٱلْإِنسُ": 1
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "أنس",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "mankind, humans",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "mankind, humans",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:6:112:7",
+    "quran:17:88:4",
+    "quran:72:6:5",
+    "quran:6:128:9",
+    "quran:6:128:13"
+   ]
+  },
+  {
    "state_id": "state:key:الإنسان",
    "observation": {
     "norm_key": "الإنسان",
@@ -2791,6 +3783,130 @@
    ]
   },
   {
+   "state_id": "state:key:الباطل",
+   "observation": {
+    "norm_key": "الباطل",
+    "dominant_surface_ar": "ٱلْبَٰطِلَ",
+    "surfaces": {
+     "ٱلْبَٰطِلِ": 1,
+     "ٱلْبَٰطِلَ": 2,
+     "ٱلْبَٰطِلُ": 1,
+     "الْبَاطِلُ": 1,
+     "الْبَاطِلَ": 1
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "بطل",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the falsehood; the vain",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the falsehood; the vain",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:21:18:5",
+    "quran:8:8:4",
+    "quran:17:81:5",
+    "quran:17:81:7",
+    "quran:41:42:3",
+    "+1 more"
+   ]
+  },
+  {
+   "state_id": "state:key:البصر",
+   "observation": {
+    "norm_key": "البصر",
+    "dominant_surface_ar": "ٱلْبَصَرُ",
+    "surfaces": {
+     "ٱلْبَصَرُ": 3,
+     "ٱلْبَصَرَ": 2,
+     "الْبَصَرِ": 1
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "بصر",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the sight",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the sight",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:53:17:3",
+    "quran:67:3:14",
+    "quran:16:77:2",
+    "quran:67:4:3",
+    "quran:67:4:7",
+    "+1 more"
+   ]
+  },
+  {
+   "state_id": "state:key:البيت",
+   "observation": {
+    "norm_key": "البيت",
+    "dominant_surface_ar": "ٱلْبَيْتِ",
+    "surfaces": {
+     "ٱلْبَيْتِ": 7,
+     "ٱلْبَيْتَ": 3
+    },
+    "occurrences": 10
+   },
+   "hidden_states": [
+    {
+     "root": "بيت",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the House (Kaʿbah)",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the House (Kaʿbah)",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:33:33:23",
+    "quran:2:125:3",
+    "quran:2:158:9",
+    "quran:3:97:14",
+    "quran:2:127:6",
+    "+5 more"
+   ]
+  },
+  {
    "state_id": "state:key:البينات",
    "observation": {
     "norm_key": "البينات",
@@ -2828,6 +3944,45 @@
     "quran:2:253:18",
     "quran:2:253:34",
     "+3 more"
+   ]
+  },
+  {
+   "state_id": "state:key:التقوي",
+   "observation": {
+    "norm_key": "التقوي",
+    "dominant_surface_ar": "ٱلتَّقْوَىٰ",
+    "surfaces": {
+     "ٱلتَّقْوَىٰ": 6
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "وقي",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the piety; God-consciousness",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the piety; God-consciousness",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:48:26:19",
+    "quran:22:37:9",
+    "quran:7:26:11",
+    "quran:2:197:26",
+    "quran:74:56:9",
+    "+1 more"
    ]
   },
   {
@@ -3084,6 +4239,46 @@
    ]
   },
   {
+   "state_id": "state:key:الحكم",
+   "observation": {
+    "norm_key": "الحكم",
+    "dominant_surface_ar": "ٱلْحُكْمُ",
+    "surfaces": {
+     "ٱلْحُكْمُ": 5,
+     "ٱلْحُكْمَ": 1
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "حكم",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the judgment",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the judgment",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:6:62:9",
+    "quran:12:67:20",
+    "quran:12:40:17",
+    "quran:6:57:15",
+    "quran:28:88:17",
+    "+1 more"
+   ]
+  },
+  {
    "state_id": "state:key:الحكيم",
    "observation": {
     "norm_key": "الحكيم",
@@ -3246,6 +4441,244 @@
    ]
   },
   {
+   "state_id": "state:key:الخاسرون",
+   "observation": {
+    "norm_key": "الخاسرون",
+    "dominant_surface_ar": "ٱلْخَٰسِرُونَ",
+    "surfaces": {
+     "ٱلْخَٰسِرُونَ": 4,
+     "الْخَاسِرُونَ": 1
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "خسر",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the losers",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the losers",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:9:69:32",
+    "quran:2:121:15",
+    "quran:2:27:20",
+    "quran:63:9:17",
+    "quran:7:99:10"
+   ]
+  },
+  {
+   "state_id": "state:key:الخاسرين",
+   "observation": {
+    "norm_key": "الخاسرين",
+    "dominant_surface_ar": "ٱلْخَٰسِرِينَ",
+    "surfaces": {
+     "ٱلْخَٰسِرِينَ": 6
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "خسر",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the losers",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the losers",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:7:149:18",
+    "quran:42:45:15",
+    "quran:39:15:8",
+    "quran:5:5:43",
+    "quran:5:30:9",
+    "+1 more"
+   ]
+  },
+  {
+   "state_id": "state:key:الخبيث",
+   "observation": {
+    "norm_key": "الخبيث",
+    "dominant_surface_ar": "ٱلْخَبِيثَ",
+    "surfaces": {
+     "ٱلْخَبِيثَ": 3,
+     "ٱلْخَبِيثُ": 1,
+     "ٱلْخَبِيثِ": 1
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "خبث",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the impure / the evil",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the impure / the evil",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:8:37:3",
+    "quran:2:267:16",
+    "quran:5:100:4",
+    "quran:5:100:9",
+    "quran:3:179:12"
+   ]
+  },
+  {
+   "state_id": "state:key:الخلق",
+   "observation": {
+    "norm_key": "الخلق",
+    "dominant_surface_ar": "ٱلْخَلْقَ",
+    "surfaces": {
+     "الْخَلْقِ": 1,
+     "ٱلْخَلْقُ": 2,
+     "ٱلْخَلْقَ": 3
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "خلق",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the creation",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the creation",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:36:68:5",
+    "quran:7:54:27",
+    "quran:30:11:3",
+    "quran:29:20:8",
+    "quran:13:16:36",
+    "+1 more"
+   ]
+  },
+  {
+   "state_id": "state:key:الخيرات",
+   "observation": {
+    "norm_key": "الخيرات",
+    "dominant_surface_ar": "ٱلْخَيْرَٰتِ",
+    "surfaces": {
+     "ٱلْخَيْرَٰتِ": 5
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "خير",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the good deeds",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the good deeds",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:21:90:13",
+    "quran:2:148:6",
+    "quran:21:73:8",
+    "quran:5:48:42",
+    "quran:23:61:4"
+   ]
+  },
+  {
+   "state_id": "state:key:الدار",
+   "observation": {
+    "norm_key": "الدار",
+    "dominant_surface_ar": "ٱلدَّارِ",
+    "surfaces": {
+     "ٱلدَّارِ": 3,
+     "ٱلدَّارَ": 2,
+     "ٱلدَّارُ": 1
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "دور",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the abode",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the abode",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:38:46:5",
+    "quran:28:77:5",
+    "quran:13:22:19",
+    "quran:29:64:9",
+    "quran:40:52:10",
+    "+1 more"
+   ]
+  },
+  {
    "state_id": "state:key:الربواا",
    "observation": {
     "norm_key": "الربواا",
@@ -3367,6 +4800,45 @@
     "quran:77:1:4",
     "quran:65:1:4",
     "+59 more"
+   ]
+  },
+  {
+   "state_id": "state:key:الرزق",
+   "observation": {
+    "norm_key": "الرزق",
+    "dominant_surface_ar": "ٱلرِّزْقَ",
+    "surfaces": {
+     "ٱلرِّزْقَ": 4,
+     "ٱلرِّزْقِ": 1
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "رزق",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the provision; sustenance",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the provision; sustenance",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:13:26:3",
+    "quran:34:39:5",
+    "quran:28:82:10",
+    "quran:29:17:22",
+    "quran:16:71:7"
    ]
   },
   {
@@ -3493,6 +4965,84 @@
    ]
   },
   {
+   "state_id": "state:key:السجود",
+   "observation": {
+    "norm_key": "السجود",
+    "dominant_surface_ar": "ٱلسُّجُودِ",
+    "surfaces": {
+     "ٱلسُّجُودِ": 6
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "سجد",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the prostration",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the prostration",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:48:29:24",
+    "quran:68:43:9",
+    "quran:2:125:22",
+    "quran:50:40:5",
+    "quran:22:26:16",
+    "+1 more"
+   ]
+  },
+  {
+   "state_id": "state:key:السحر",
+   "observation": {
+    "norm_key": "السحر",
+    "dominant_surface_ar": "ٱلسِّحْرَ",
+    "surfaces": {
+     "ٱلسِّحْرَ": 4,
+     "ٱلسِّحْرِ": 1
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "سحر",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the magic",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the magic",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:26:49:12",
+    "quran:2:102:16",
+    "quran:21:3:13",
+    "quran:20:71:12",
+    "quran:20:73:11"
+   ]
+  },
+  {
    "state_id": "state:key:السمع",
    "observation": {
     "norm_key": "السمع",
@@ -3569,6 +5119,124 @@
     "quran:6:115:10",
     "quran:2:127:13",
     "+6 more"
+   ]
+  },
+  {
+   "state_id": "state:key:السيات",
+   "observation": {
+    "norm_key": "السيات",
+    "dominant_surface_ar": "ٱلسَّيِّـَٔاتِ",
+    "surfaces": {
+     "ٱلسَّيِّـَٔاتِ": 5,
+     "ٱلسَّيِّـَٔاتُ": 1
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "سوأ",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the evil deeds",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the evil deeds",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:10:27:3",
+    "quran:11:114:11",
+    "quran:11:10:9",
+    "quran:35:10:17",
+    "quran:42:25:9",
+    "+1 more"
+   ]
+  },
+  {
+   "state_id": "state:key:الشاكرين",
+   "observation": {
+    "norm_key": "الشاكرين",
+    "dominant_surface_ar": "ٱلشَّٰكِرِينَ",
+    "surfaces": {
+     "ٱلشَّٰكِرِينَ": 5
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "شكر",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the grateful ones",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the grateful ones",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:7:189:29",
+    "quran:6:63:17",
+    "quran:3:144:27",
+    "quran:3:145:24",
+    "quran:10:22:41"
+   ]
+  },
+  {
+   "state_id": "state:key:الشر",
+   "observation": {
+    "norm_key": "الشر",
+    "dominant_surface_ar": "ٱلشَّرُّ",
+    "surfaces": {
+     "ٱلشَّرُّ": 3,
+     "ٱلشَّرَّ": 1,
+     "الشَّرُّ": 1
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "شرر",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the evil, the harm",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the evil, the harm",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:17:83:10",
+    "quran:41:51:10",
+    "quran:10:11:5",
+    "quran:41:49:9",
+    "quran:70:20:3"
    ]
   },
   {
@@ -3971,6 +5639,46 @@
    ]
   },
   {
+   "state_id": "state:key:الظن",
+   "observation": {
+    "norm_key": "الظن",
+    "dominant_surface_ar": "ٱلظَّنِّ",
+    "surfaces": {
+     "ٱلظَّنِّ": 3,
+     "ٱلظَّنَّ": 3
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "ظنن",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the assumption; conjecture",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the assumption; conjecture",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:4:157:31",
+    "quran:53:23:17",
+    "quran:6:116:14",
+    "quran:49:12:7",
+    "quran:49:12:10",
+    "+1 more"
+   ]
+  },
+  {
    "state_id": "state:key:العالمين",
    "observation": {
     "norm_key": "العالمين",
@@ -4252,6 +5960,47 @@
    ]
   },
   {
+   "state_id": "state:key:الفتنه",
+   "observation": {
+    "norm_key": "الفتنه",
+    "dominant_surface_ar": "ٱلْفِتْنَةَ",
+    "surfaces": {
+     "ٱلْفِتْنَةِ": 2,
+     "ٱلْفِتْنَةَ": 3,
+     "الْفِتْنَةِ": 1
+    },
+    "occurrences": 6
+   },
+   "hidden_states": [
+    {
+     "root": "فتن",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the trial/persecution",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the trial/persecution",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:3:7:24",
+    "quran:9:47:11",
+    "quran:9:49:10",
+    "quran:33:14:8",
+    "quran:4:91:4",
+    "+1 more"
+   ]
+  },
+  {
    "state_id": "state:key:الفضل",
    "observation": {
     "norm_key": "الفضل",
@@ -4411,6 +6160,45 @@
     "quran:4:77:16",
     "quran:4:77:32",
     "+2 more"
+   ]
+  },
+  {
+   "state_id": "state:key:القتل",
+   "observation": {
+    "norm_key": "القتل",
+    "dominant_surface_ar": "ٱلْقَتْلِ",
+    "surfaces": {
+     "ٱلْقَتْلِ": 4,
+     "ٱلْقَتْلُ": 1
+    },
+    "occurrences": 5
+   },
+   "hidden_states": [
+    {
+     "root": "قتل",
+     "lemma": null,
+     "pos": "N",
+     "form": null,
+     "sense": "the killing",
+     "sarf_role": null,
+     "nahw_role": null,
+     "evidence": {
+      "qamus_entry": null,
+      "qac": true,
+      "source_address": null
+     }
+    }
+   ],
+   "decision": "resolved_qamus_authored",
+   "decision_reason": "live authored gloss",
+   "public_gloss": "the killing",
+   "public_export_allowed": true,
+   "used_by": [
+    "quran:17:33:19",
+    "quran:2:191:11",
+    "quran:33:16:10",
+    "quran:3:154:60",
+    "quran:2:217:28"
    ]
   },
   {
@@ -4703,205 +6491,6 @@
     "quran:6:91:18",
     "quran:2:121:3",
     "+90 more"
-   ]
-  },
-  {
-   "state_id": "state:key:الكفار",
-   "observation": {
-    "norm_key": "الكفار",
-    "dominant_surface_ar": "ٱلْكُفَّارَ",
-    "surfaces": {
-     "ٱلْكُفَّارِ": 3,
-     "ٱلْكُفَّارَ": 4,
-     "ٱلْكُفَّارُ": 2
-    },
-    "occurrences": 9
-   },
-   "hidden_states": [
-    {
-     "root": "كفر",
-     "lemma": null,
-     "pos": "N",
-     "form": null,
-     "sense": "the disbelievers",
-     "sarf_role": null,
-     "nahw_role": null,
-     "evidence": {
-      "qamus_entry": null,
-      "qac": true,
-      "source_address": null
-     }
-    }
-   ],
-   "decision": "resolved_qamus_authored",
-   "decision_reason": "live authored gloss",
-   "public_gloss": "the disbelievers",
-   "public_export_allowed": true,
-   "used_by": [
-    "quran:48:29:8",
-    "quran:48:29:44",
-    "quran:60:10:18",
-    "quran:9:123:8",
-    "quran:60:13:16",
-    "+4 more"
-   ]
-  },
-  {
-   "state_id": "state:key:المؤمنون",
-   "observation": {
-    "norm_key": "المؤمنون",
-    "dominant_surface_ar": "ٱلْمُؤْمِنُونَ",
-    "surfaces": {
-     "الْمُؤْمِنُونَ": 1,
-     "ٱلْمُؤْمِنُونَ": 14
-    },
-    "occurrences": 15
-   },
-   "hidden_states": [
-    {
-     "root": "أمن",
-     "lemma": null,
-     "pos": "N",
-     "form": null,
-     "sense": "the believers",
-     "sarf_role": null,
-     "nahw_role": null,
-     "evidence": {
-      "qamus_entry": null,
-      "qac": true,
-      "source_address": null
-     }
-    }
-   ],
-   "decision": "resolved_qamus_authored",
-   "decision_reason": "live authored gloss",
-   "public_gloss": "the believers",
-   "public_export_allowed": true,
-   "used_by": [
-    "quran:8:4:3",
-    "quran:3:160:18",
-    "quran:8:74:13",
-    "quran:23:1:7",
-    "quran:9:122:3",
-    "+10 more"
-   ]
-  },
-  {
-   "state_id": "state:key:المؤمنين",
-   "observation": {
-    "norm_key": "المؤمنين",
-    "dominant_surface_ar": "ٱلْمُؤْمِنِينَ",
-    "surfaces": {
-     "ٱلْمُؤْمِنِينَ": 51
-    },
-    "occurrences": 51
-   },
-   "hidden_states": [
-    {
-     "root": "أمن",
-     "lemma": null,
-     "pos": "N",
-     "form": null,
-     "sense": "the believers",
-     "sarf_role": null,
-     "nahw_role": null,
-     "evidence": {
-      "qamus_entry": null,
-      "qac": true,
-      "source_address": null
-     }
-    }
-   ],
-   "decision": "resolved_qamus_authored",
-   "decision_reason": "live authored gloss",
-   "public_gloss": "the believers",
-   "public_export_allowed": true,
-   "used_by": [
-    "quran:9:111:5",
-    "quran:33:23:2",
-    "quran:33:37:36",
-    "quran:4:103:18",
-    "quran:48:26:16",
-    "+46 more"
-   ]
-  },
-  {
-   "state_id": "state:key:المتقين",
-   "observation": {
-    "norm_key": "المتقين",
-    "dominant_surface_ar": "ٱلْمُتَّقِينَ",
-    "surfaces": {
-     "ٱلْمُتَّقِينَ": 12,
-     "الْمُتَّقِينَ": 2
-    },
-    "occurrences": 14
-   },
-   "hidden_states": [
-    {
-     "root": "وقي",
-     "lemma": null,
-     "pos": "N",
-     "form": null,
-     "sense": "the God-conscious; the righteous",
-     "sarf_role": null,
-     "nahw_role": null,
-     "evidence": {
-      "qamus_entry": null,
-      "qac": true,
-      "source_address": null
-     }
-    }
-   ],
-   "decision": "resolved_qamus_authored",
-   "decision_reason": "live authored gloss",
-   "public_gloss": "the God-conscious; the righteous",
-   "public_export_allowed": true,
-   "used_by": [
-    "quran:2:241:6",
-    "quran:19:85:3",
-    "quran:16:30:20",
-    "quran:9:123:16",
-    "quran:9:4:22",
-    "+9 more"
-   ]
-  },
-  {
-   "state_id": "state:key:المجرمين",
-   "observation": {
-    "norm_key": "المجرمين",
-    "dominant_surface_ar": "ٱلْمُجْرِمِينَ",
-    "surfaces": {
-     "ٱلْمُجْرِمِينَ": 9
-    },
-    "occurrences": 9
-   },
-   "hidden_states": [
-    {
-     "root": "جرم",
-     "lemma": null,
-     "pos": "N",
-     "form": null,
-     "sense": "the criminals; the guilty",
-     "sarf_role": null,
-     "nahw_role": null,
-     "evidence": {
-      "qamus_entry": null,
-      "qac": true,
-      "source_address": null
-     }
-    }
-   ],
-   "decision": "resolved_qamus_authored",
-   "decision_reason": "live authored gloss",
-   "public_gloss": "the criminals; the guilty",
-   "public_export_allowed": true,
-   "used_by": [
-    "quran:12:110:19",
-    "quran:7:40:23",
-    "quran:6:55:6",
-    "quran:18:49:4",
-    "quran:6:147:13",
-    "+4 more"
    ]
   },
   {
@@ -10910,58 +12499,6 @@
     "quran:2:259:3",
     "quran:10:12:15",
     "quran:27:88:7"
-   ]
-  },
-  {
-   "state_id": "state:key:مس",
-   "observation": {
-    "norm_key": "مس",
-    "dominant_surface_ar": "مَسَّ",
-    "surfaces": {
-     "مَسَّ": 5
-    },
-    "occurrences": 5
-   },
-   "hidden_states": [
-    {
-     "root": "مسس",
-     "lemma": null,
-     "pos": "N",
-     "form": null,
-     "sense": null,
-     "sarf_role": null,
-     "nahw_role": null,
-     "evidence": {
-      "qamus_entry": null,
-      "qac": true,
-      "source_address": null
-     }
-    },
-    {
-     "root": "مسس",
-     "lemma": null,
-     "pos": "V",
-     "form": null,
-     "sense": null,
-     "sarf_role": null,
-     "nahw_role": null,
-     "evidence": {
-      "qamus_entry": null,
-      "qac": true,
-      "source_address": null
-     }
-    }
-   ],
-   "decision": "quarantine_homograph",
-   "decision_reason": "split: roots=['مسس'] pos=['N', 'V'] surfaces=1",
-   "public_gloss": null,
-   "public_export_allowed": false,
-   "used_by": [
-    "quran:30:33:2",
-    "quran:3:140:5",
-    "quran:54:48:8",
-    "quran:10:12:2",
-    "quran:7:95:10"
    ]
   },
   {

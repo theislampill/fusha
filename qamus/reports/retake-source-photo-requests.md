@@ -1,14 +1,14 @@
 # Source-photo retake / verification requests
 
-Entries whose example āyāt are now hover-complete but whose ENTRY FIELDS (headword, forms, senses, sense-counts, total_uses) are not yet verified against the photographed source. This is the authoring FLOOR — these need the physical source corpus (owner-gated). Public hover for these entries is already live and correct; this queue is about certifying the ENTRY DATA, not the hover aid.
+Entries whose example ayat are now hover-complete but whose ENTRY FIELDS (headword, forms, senses, sense-counts, total_uses) are not yet verified against the photographed source. This is the authoring FLOOR — these need the physical source corpus (owner-gated). Public hover for these entries is already live and correct; this queue certifies the ENTRY DATA, not the hover aid.
 
 | queue | n | what is needed |
 |---|---:|---|
-| `needs_source_photo_review` | 190 | photograph the source page; verify headword/forms/senses/counts |
-| `needs_quran_ref_verification` | 10 | fix bad/range āyah refs before re-audit |
-| `deferred_missing_source` | 7 | no addressable āyāt; locate source or mark out-of-scope |
+| `needs_source_photo_review` | 202 | photograph the source page; verify headword/forms/senses/counts |
+| `needs_quran_ref_verification` | 10 | fix bad/range ayah refs before re-audit |
+| `deferred_missing_source` | 7 | no addressable ayat; locate source or mark out-of-scope |
 
-## Top entries to verify next (by āyah-ref count)
+## Top entries to verify next (by ayah-ref count)
 
 | entry_id | source_address | root | headword | refs | hover_cov |
 |---|---|---|---|---:|---:|
@@ -27,9 +27,11 @@ Entries whose example āyāt are now hover-complete but whose ENTRY FIELDS (head
 | 880ad7cf989a | qamus:v687#root=ح ض ض | ح ض ض | يَحُضُّ | 2 | 1.00 |
 | 926559392f2f | qamus:n172#root= |  | صُحُف | 2 | 1.00 |
 | 98e0a4f33c1a | qamus:p052#root= |  | كَلَّا | 2 | 1.00 |
+| ccb0bf169f3e | qamus:n747#root= |  | فَاكِهَة | 2 | 1.00 |
 | d84692e8d2c8 | qamus:p047#root= |  | أَيْنَ | 2 | 1.00 |
 | f4dbd60e1c18 | qamus:v797#root=غ و ص | غ و ص | يَغُوصُونَ | 2 | 1.00 |
 | 00fabb02e815 | qamus:n553#root= |  | غُزًّى | 1 | 1.00 |
+| 024794041a31 | qamus:n433#root=رِفْد | رِفْد | رِفْد | 1 | 1.00 |
 | 05bda5633587 | qamus:n728#root= |  | فَرَاش | 1 | 1.00 |
 | 0813261a6f1f | qamus:n323#root= |  | سَقِيم | 1 | 1.00 |
 | 0934fd2bee46 | qamus:n989#root= |  | مَحِيص | 1 | 1.00 |
@@ -50,8 +52,6 @@ Entries whose example āyāt are now hover-complete but whose ENTRY FIELDS (head
 | 1acbee408518 | qamus:v733#root=م و ر | م و ر | تَمُورُ | 1 | 1.00 |
 | 1bb11305509a | qamus:v821#root=أ ب ق | أ ب ق | أَبَقَ | 1 | 1.00 |
 | 1c46a4c8e626 | qamus:n811#root= |  | مِلْح | 1 | 1.00 |
-| 1e35dd2122eb | qamus:v809#root=م ح ن | م ح ن | امْتَحَنَ | 1 | 1.00 |
-| 1e84704dde4f | qamus:n305#root= |  | شَفَتَيْن | 1 | 1.00 |
 
 ## Ref-verification queue
 
@@ -70,4 +70,4 @@ Entries whose example āyāt are now hover-complete but whose ENTRY FIELDS (head
 
 ## Retake instructions (per entry)
 
-For each entry: photograph the dictionary page containing its headword; crop to the entry block; record  (internal address). The crop is a DERIVED VIEW — never the public authority. Verification then sets headword_verified / forms_verified / senses_verified / sense_counts_verified / total_count_verified true in the audit, advancing the entry toward .
+Photograph the dictionary page containing the entry's headword; crop to the entry block; record `source-photo:<page>#entry=<source_key>` (internal address). The crop is a DERIVED VIEW — never the public authority. Verification then sets headword_verified / forms_verified / senses_verified / sense_counts_verified / total_count_verified true in the audit, advancing the entry toward `fully_verified`.

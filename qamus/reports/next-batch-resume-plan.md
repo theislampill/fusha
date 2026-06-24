@@ -1,11 +1,13 @@
 # Next-batch resume plan (PP1G continues — exact, no vague "standing by")
 
 ## Where we are (live, reconciled this tranche)
-- Live coverage **75.28%** · 37,567 / 49,900 resolved · **12,333 pending** · tsv **377 lines** · 2,092 entries.
-- Distinct pending surfaces: **6,266** (was 6,422). Authorable lever `pending_needs_sarf` = **10,544**.
-- Processed this tranche: **batch-2** = the top-frequency 230-candidate tier of the pending pool (POS N/V/P,
-  deduped vs the live tsv) → 159 certified + applied, 71 rejected as true homographs.
-- Cumulative live trail: 51.52 → 60.01 → 69.06 → 69.08 → 70.47 → 70.76 → 72.14 → **75.28**.
+- Live coverage **77.31%** · 38,580 / 49,900 resolved · **11,320 pending** · tsv **563 lines** · 2,092 entries.
+- Distinct pending surfaces: **6,082** (was 6,422). Authorable lever `pending_needs_sarf` = **9,570**.
+- Processed this tranche: **batch-2** (230 → 159 applied) + **batch-3** (230 new, B2-rejects excluded → 186
+  applied). Combined **+345 glosses, +2,584 occ, −0 removed**. 115 rejects = true homographs (now forbidden
+  transitions in the state graph).
+- Cumulative live trail: 51.52 → 60.01 → 69.06 → 69.08 → 70.47 → 70.76 → 72.14 → 75.28 → **77.31**.
+- State graph: 562 resolved keys, 158 quarantine_homograph, 12,003 pending (every token has a state, 0 unknown).
 
 ## Exactly what was processed vs. what remains
 The candidate pool is the live `export_audit_state.py` top-500 pending surfaces, taken by descending frequency.
