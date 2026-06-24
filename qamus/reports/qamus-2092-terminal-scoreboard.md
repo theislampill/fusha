@@ -35,17 +35,17 @@ Full matrix: `qamus-2092-audit-completion.json`. Distinguishes *classified* from
 **0 entries are `fully_verified`** (no source-photo pass this tranche; `*_verified` flags reflect only
 measurable evidence — refs valid, QAC root agreement, hover coverage).
 
-| audit terminal state | n (live 79.93%) |
+| audit terminal state | n (live 80.68%) |
 |---|---:|
-| `needs_hover_authoring` (≥1 pending token in its āyāt) | **1,851** |
-| `needs_source_photo_review` (āyāt hover-complete; source verification outstanding) | **224** |
+| `needs_hover_authoring` (≥1 pending token in its āyāt) | **1,835** |
+| `needs_source_photo_review` (āyāt hover-complete; source verification outstanding) | **240** |
 | `needs_quran_ref_verification` (bad/range refs) | **10** |
 | `deferred_missing_source` (no addressable āyāt) | **7** |
 | **total / unknown** | **2,092 / 0** |
 
-By Fusha index class (per-entry matrices `qamus/reports/{nouns,verbs}/`): **nouns 1,022 @ 81.39%**,
-**verbs 970 @ 79.78%**, **particles 100** (PP1). B2 +159; B3 +186; B4 +181; **B5 +190 (61 MCP-backed) → 79.93%**.
-As entries become hover-complete they advance `needs_hover_authoring` →
+By Fusha index class (per-entry matrices `qamus/reports/{nouns,verbs}/`): **nouns 1,022 @ 82.32%**,
+**verbs 970 @ 80.63%**, **particles 100 @ 90.51%** (āyāt). B2 +159; B3 +186; B4 +181; B5 +190 (61 MCP-backed);
+**particle-hardtail +289 → 80.68%**. As entries become hover-complete they advance `needs_hover_authoring` →
 `needs_source_photo_review` (163 → 214), so the source-photo queue grows as authoring lands.
 
 - root-verified-vs-QAC: measurable cross-check recorded per entry.

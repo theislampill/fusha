@@ -24,8 +24,8 @@ Entry repairs take the parallel, owner-gated path (`edit_entry_record` + backup 
 | **P6 source-corpus repair** | terminally classified — 0 certified error fields; 102 owner-gated QAC-root candidates |
 | **Nawawī40 catalogue** | first pass (720 candidates) + skill-refinement available via the runner |
 | **source-address graph** | 2,092 entry nodes, 0 orphan; operational backlinks (`build_decision_backlinks.py`) answer the 10 graph queries |
-| **live hover coverage** | **79.93%** (39,887 / 49,900); trail … 72.14 → 75.28 → 77.31 → 78.78 → **B5 79.93** (B2–B5 = 716 glosses, +3,891 occ, −0 removed; B5 first MCP-aware, 61 MCP-backed) |
-| **language state machine** | built — 12,723 key-states (933 resolved, 156 quarantine_homograph, 11,634 pending); schemas + builder + query + report |
+| **live hover coverage** | **80.68%** (40,260 / 49,900); trail … 78.78 → 79.93 → **particle-hardtail 80.68** (crossed 80%; B2–B5+ph = 1,005 glosses, +4,264 occ, −0 removed; 61 MCP-backed) |
+| **language state machine** | built — 12,723 key-states (1,222 resolved, 156 quarantine_homograph, 11,345 pending); schemas + builder + query + report |
 | **Tafsir MCP lane (TM1)** | AVAILABLE (direct HTTP) — internal Quran grammar/morphology evidence; build tool, NOT a skill dependency; 61 MCP-backed glosses live (tafsir_mcp_hover_batch_001) |
 | **GrammarProblems eval gate** | 80 derived cases (≥72), `run_grammar_evals.py` PASS; `grade_grammar_reasoning.py` enforces answer+reasoning (self-test PASS) |
 | **progressive-disclosure skills** | sarf 12 procedures, nahw 12 procedures + rules/evals/curriculum; SKILL.md is the gate+index |

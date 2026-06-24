@@ -6,7 +6,7 @@ Status of the operational source-address graph. Builders: `tools/build_source_ad
 |---|---|
 | stable addresses (11 families) | defined (`qamus/schemas/source-address.schema.json`) |
 | entry nodes | 2092 |
-| resolved key-states with backlinks | 160 |
+| resolved key-states with backlinks | 170 |
 | intentional homograph splits | 156 keys + 7 roots |
 | every hover decision has a source address | yes (key-state id) |
 | every repair has a field address (`repair:<batch>#field=`) | yes (كَظِيم repair recorded) |

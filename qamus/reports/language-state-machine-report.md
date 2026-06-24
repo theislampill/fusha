@@ -14,17 +14,17 @@ explicit and gates public export on single-owner keys.
 - Committed slice: [`language_state_graph.sample.json`](../indexes/language_state_graph.sample.json)
   (full graph is a generated artifact — rebuild with the builder; gitignored per the repo's generated-output rule).
 
-## Current state (built at live coverage 79.93%)
+## Current state (built at live coverage 80.68%)
 
 | decision class | n keys | meaning |
 |---|---:|---|
-| `resolved_qamus_authored` | **933** | one owner, authored gloss live, fires on its occurrences |
+| `resolved_qamus_authored` | **1,222** | one owner, authored gloss live, fires on its occurrences |
 | `quarantine_homograph` | **156** | key splits across >1 QAC root/POS — **no single gloss may fire** |
-| `pending` | **11,634** | single apparent owner, gloss not yet authored (the authoring pool) |
+| `pending` | **11,345** | single apparent owner, gloss not yet authored (the authoring pool) |
 | **total distinct keys** | **12,723** | every hover token maps to exactly one key-state; **0 unknown** |
 
-`total_tokens` = 49,900; the 933 resolved keys cover the 39,887 resolved token occurrences (79.93%). The resolved
-class grew 376 → 562 → 743 → **933** across the B2–B5 sweeps as certified glosses landed (B5 MCP-aware).
+`total_tokens` = 49,900; the 1,222 resolved keys cover the 40,260 resolved token occurrences (80.68%). The
+resolved class grew 376 → 562 → 743 → 933 → **1,222** across B2–B5 + the particle hard-tail.
 
 ## How it prevents the prior regressions
 

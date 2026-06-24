@@ -4,7 +4,7 @@ Entries whose example ayat are now hover-complete but whose ENTRY FIELDS (headwo
 
 | queue | n | what is needed |
 |---|---:|---|
-| `needs_source_photo_review` | 224 | photograph the source page; verify headword/forms/senses/counts |
+| `needs_source_photo_review` | 240 | photograph the source page; verify headword/forms/senses/counts |
 | `needs_quran_ref_verification` | 10 | fix bad/range ayah refs before re-audit |
 | `deferred_missing_source` | 7 | no addressable ayat; locate source or mark out-of-scope |
 
@@ -22,8 +22,12 @@ Entries whose example ayat are now hover-complete but whose ENTRY FIELDS (headwo
 | 22be25652dce | qamus:v651#root=ر ك ن | ر ك ن | تَرْكَنُوا۟ | 2 | 1.00 |
 | 2f8c30cd5c75 | qamus:v695#root=ذ ر و | ذ ر و | تَذْرُوهُ | 2 | 1.00 |
 | 3aecc5a5c021 | qamus:v776#root=ش غ ل | ش غ ل | شَغَلَتْنَا | 2 | 1.00 |
+| 3f0b68558cc4 | qamus:n924#root= |  | قَرْن | 2 | 1.00 |
 | 452ab0b9410e | qamus:v714#root=ع ب س | ع ب س | عَبَسَ | 2 | 1.00 |
 | 55e691eb52ab | qamus:v725#root=ك و ر | ك و ر | يُكَوِّرُ | 2 | 1.00 |
+| 616dbd6dffcc | qamus:p064#root= |  | هَذَا | 2 | 1.00 |
+| 76874561dea3 | qamus:p024#root= |  | لَكِنْ | 2 | 1.00 |
+| 79844337cc9d | qamus:p087#root= |  | نَحْنُ | 2 | 1.00 |
 | 7a89e1ffe82b | qamus:n938#root= |  | جِبِلَّة | 2 | 1.00 |
 | 7bb317131add | qamus:p061#root= |  | لَعَلَّ | 2 | 1.00 |
 | 7d41f96d61e8 | qamus:v810#root=ن ز ف | ن ز ف | يُنزَفُونَ | 2 | 1.00 |
@@ -33,6 +37,7 @@ Entries whose example ayat are now hover-complete but whose ENTRY FIELDS (headwo
 | 98e0a4f33c1a | qamus:p052#root= |  | كَلَّا | 2 | 1.00 |
 | ccb0bf169f3e | qamus:n747#root= |  | فَاكِهَة | 2 | 1.00 |
 | d84692e8d2c8 | qamus:p047#root= |  | أَيْنَ | 2 | 1.00 |
+| d93bddaa1e1e | qamus:p030#root= |  | كَيْ | 2 | 1.00 |
 | f4dbd60e1c18 | qamus:v797#root=غ و ص | غ و ص | يَغُوصُونَ | 2 | 1.00 |
 | fd4e3bf990f0 | qamus:n352#root= |  | جَمِيل | 2 | 1.00 |
 | 00fabb02e815 | qamus:n553#root= |  | غُزًّى | 1 | 1.00 |
@@ -47,11 +52,6 @@ Entries whose example ayat are now hover-complete but whose ENTRY FIELDS (headwo
 | 0af8e09e0a0b | qamus:n595#root= |  | مَنَاصٍ | 1 | 1.00 |
 | 0b760a96cdc3 | qamus:v912#root=تَلْفَحُ | تَلْفَحُ | تَلْفَحُ | 1 | 1.00 |
 | 0b925dfe0b84 | qamus:n100#root= |  | آدَم | 1 | 1.00 |
-| 0bcfa09191d0 | qamus:n606#root= |  | وَفْدًا | 1 | 1.00 |
-| 0d4a1b71419d | qamus:n220#root= |  | مُطَفِّفِين | 1 | 1.00 |
-| 0ed00ca08b87 | qamus:n391#root=ع ن د | ع ن د | عَنِيد | 1 | 1.00 |
-| 0f8e06868e38 | qamus:n541#root= |  | ضَبْحًا | 1 | 1.00 |
-| 1013f6dc80fe | qamus:v795#root=غ ل و | غ ل و | تَغْلُوا | 1 | 1.00 |
 
 ## Ref-verification queue
 

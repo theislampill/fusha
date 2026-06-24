@@ -5,7 +5,7 @@ Bidirectional links across the address families. Generator: `tools/build_decisio
 | family | nodes |
 |---|---:|
 | live-qamus entry nodes (`qamus:v/n/p###`) | 2092 |
-| resolved key-states (`state:key:*`) with backlinks | 160 |
+| resolved key-states (`state:key:*`) with backlinks | 170 |
 | split/quarantine keys | 156 |
 | roots with >1 entry (intentional homograph splits) | 7 |
 
@@ -18,7 +18,7 @@ Bidirectional links across the address families. Generator: `tools/build_decisio
 5. **What public tokens change if this entry is repaired?** the entry's resolved keys' `used_by` sets.
 6. **Which decisions are reused/transcluded?** a key-state is referenced by backlink, never copied — one node per key.
 7. **Which homographs are intentionally split?** `split_keys` (156) + `root_to_entries` (7 roots).
-8. **Which entries remain unverified by source photo?** 2092 entries (`needs_source_photo_review` = 224).
+8. **Which entries remain unverified by source photo?** 2092 entries (`needs_source_photo_review` = 240).
 9. **Which pending tokens share the same blocker?** grouped in `qamus/reports/hover-token-completion.md` by reason; split keys by `decision_reason`.
 10. **Which APKG/PDF/GrammarProblems rule supports a sarf/nahw decision?** the procedure cited by each transition links to its rules JSON + `nahw/evals/grammar-problems-*`.
 

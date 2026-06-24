@@ -3,10 +3,17 @@
 Live qamus-highlight, public beta, indexable. Public records carry only `{src:"qamus",kind:"authored"}` — 0
 external provenance. Full per-token states: `hover-token-terminal-matrix.md`.
 
-> **CURRENT LIVE (reconciled): coverage 79.93% · 39,887 / 49,900 resolved · 10,013 pending · tsv 934 lines.**
-> Trail: … N1/V1 72.14 → B2 75.28 → B3 77.31 → B4 78.78 → **B5 79.93** (B5 = first MCP-aware batch).
-> **MCP-backed decisions live: 61** (Tafsir MCP morphology-confirmed verbs, internal evidence only).
-> **wrong-gloss open: 0** · **−0 removed across B2–B5.**
+> **CURRENT LIVE (reconciled): coverage 80.68% · 40,260 / 49,900 resolved · 9,640 pending · tsv 1,223 lines.**
+> Trail: … B2 75.28 → B3 77.31 → B4 78.78 → B5 79.93 → **particle-hardtail 80.68** (crossed 80%).
+> **MCP-backed decisions live: 61** (B5 morphology-confirmed verbs, internal evidence only).
+> **wrong-gloss open: 0** · **−0 removed across B2–B5 + particle hard-tail.**
+
+## Particle hard-tail (APPLIED LIVE) — completes the p001–p100 example āyāt
+**289 glosses** (311 safe-single content tokens in particle example āyāt → 289 certified, 22 rejected). The 157
+function-word homograph keys (لَمْ/لِمَ, وَإِن/وَإِنَّ, وَمَنْ/وَمِنْ, أَمْ/أُمّ) are documented blockers,
+**MCP iʿrāb-confirmed** (`particle-hover-audit.md`). Particle-āyah coverage **81.51% → 90.51%**. Overall
+coverage **79.93% → 80.68%**, **+373 occ, −0 removed**. Mirror: `particle_hover_batch_002_tafsir_mcp.*`;
+rollback `*.bak-bpart`.
 
 ## B5 — MCP-aware noun + verb sweep (APPLIED LIVE)
 **190 glosses** (230 cand → 190 certified, 40 rejected; **61 MCP-backed**). First batch using Tafsir MCP as an
@@ -88,17 +95,17 @@ norm_strict key-collision test** (13 candidates → 11 → 8 key-safe), applied 
 نَزَّلَ (key `نزل` collides with نَزَلَ "descended"), إِنفَاق/مَخْلُوق (0 occ), تَذَكَّرَ/زَلْزَلَتِ (2-vote).
 Rollback: `*.bak-sn7` + `wbw-lookup.prev.json`. Mirror: `qamus/candidates/qamus_2092/authored_gloss_batch_002_sarfnahw.*`.
 
-## Pending by reason (live now — from `export_audit_state.py` at 79.93%)
+## Pending by reason (live now — from `export_audit_state.py` at 80.68%)
 | reason | n |
 |---|---:|
-| `pending_needs_sarf` (root exists, form/sense unresolved — the authorable lever) | 8,338 |
-| `pending_no_qamus_entry` (no entry: particles / proper nouns) | 1,607 |
-| `pending_source_data_issue` | 55 |
+| `pending_needs_sarf` (root exists, form/sense unresolved — the authorable lever) | 7,990 |
+| `pending_no_qamus_entry` (no entry: particles / proper nouns) | 1,590 |
+| `pending_source_data_issue` | 47 |
 | `pending_proper_noun` | 13 |
-| **total pending** | **10,013** |
+| **total pending** | **9,640** |
 
-The authorable `pending_needs_sarf` lever fell 11,777 → 10,544 → 9,570 → 8,891 → **8,338** across B2–B5.
-Distinct pending surfaces 6,422 → **5,719**. State graph: 933 resolved / 156 quarantine / 11,634 pending keys.
+The authorable `pending_needs_sarf` lever fell 11,777 → … → 8,338 → **7,990**. Distinct pending surfaces
+6,422 → **5,435**. State graph: 1,222 resolved / 156 quarantine / 11,345 pending keys.
 
 ## Correctness (this program, across C12–C14 + P-tranche)
 | metric | n |

@@ -1,15 +1,16 @@
 # Next-batch resume plan (PP1G continues — exact, no vague "standing by")
 
 ## Where we are (live, reconciled)
-- Live coverage **79.93%** · 39,887 / 49,900 resolved · **10,013 pending** · tsv **934 lines** · 2,092 entries.
-- Distinct pending surfaces: **5,719** (was 6,422). Authorable lever `pending_needs_sarf` = **8,338**.
-- Processed: B2 (230→159) + B3 (230→186) + B4 (230→181) + **B5 (230→190, 61 MCP-backed)**, each excluding prior
-  rejects. Combined **+716 glosses, +3,891 occ, −0 removed**. Per-batch gain +1,571 → +1,013 → +732 → +575
-  (diminishing as the homograph-dense tail deepens).
-- **Tafsir MCP lane AVAILABLE** (direct HTTP) — internal grammar/morphology evidence; build tool, not a skill
-  dependency; native MCP tools also now surfaced in-runtime (mcp__…__analyze_word/fetch_ayah).
-- Cumulative live trail: 51.52 → … → 72.14 → 75.28 → 77.31 → 78.78 → **79.93**.
-- State graph: 933 resolved keys, 156 quarantine_homograph, 11,634 pending (every token has a state, 0 unknown).
+- Live coverage **80.68%** · 40,260 / 49,900 resolved · **9,640 pending** · tsv **1,223 lines** · 2,092 entries.
+- Distinct pending surfaces: **5,435** (was 6,422). Authorable lever `pending_needs_sarf` = **7,990**.
+- Processed: B2 (230→159) + B3 (230→186) + B4 (230→181) + B5 (230→190, 61 MCP-backed) + **particle-hardtail
+  (311→289)**, each excluding prior rejects. Combined **+1,005 glosses, +4,264 occ, −0 removed**.
+- **Tafsir MCP lane AVAILABLE** (direct HTTP + now native in-runtime) — internal grammar/morphology evidence;
+  build tool, NOT a skill dependency (skills verified MCP-free).
+- Particle example āyāt: **90.51% resolved** (was 81.51%); remaining = 157 documented homograph blockers +
+  35 single-surface content tokens in the global queue.
+- Cumulative live trail: 51.52 → … → 78.78 → 79.93 → **80.68**.
+- State graph: 1,222 resolved keys, 156 quarantine_homograph, 11,345 pending (every token has a state, 0 unknown).
 
 ## Exactly what was processed vs. what remains
 The candidate pool is the live `export_audit_state.py` top-500 pending surfaces, taken by descending frequency.

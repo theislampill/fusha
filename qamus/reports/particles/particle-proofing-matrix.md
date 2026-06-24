@@ -1,6 +1,10 @@
 # Particle proofing matrix — p001–p100 (PP1)
 
-Every Qamus particle entry, its example-āyah hover coverage, and a terminal status. Generator: `qamus/scripts/build_particle_reports.py`. **0 unknown.**
+> **POST HARD-TAIL (live 80.68%):** the p001–p100 example āyāt are now **90.51% resolved** (2,937 / 3,245 tokens;
+> was 81.51%). The particle hard-tail batch added **289** safe content-token glosses; the remaining 308 pending =
+> 157 documented function-word homograph blockers (MCP iʿrāb-confirmed) + 35 single-surface content tokens in the
+> global queue. Full post-batch detail + blockers: [`particle-hover-audit.md`](particle-hover-audit.md). The PP1
+> table below is the original matrix (generator `qamus/scripts/build_particle_reports.py`); **0 unknown**.
 
 | metric | value |
 |---|---:|
