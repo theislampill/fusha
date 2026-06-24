@@ -1,0 +1,183 @@
+{
+  "_generator": "tools/build_root_cause_yield_ledger.py",
+  "coverage_ceiling_if_all_safe_realized": 92.4,
+  "coverage_now": 85.02,
+  "expected_safe_realizable": 3684.3,
+  "levers": [
+    {
+      "discount": 0.45,
+      "expected_safe": 1031.9,
+      "owner_gated": false,
+      "pending": 2293,
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "safe_tier": "C_pos_or_collision",
+      "source_gated": false
+    },
+    {
+      "discount": 0.6,
+      "expected_safe": 927.0,
+      "owner_gated": false,
+      "pending": 1545,
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "safe_tier": "B_sense_select",
+      "source_gated": false
+    },
+    {
+      "discount": 0.5,
+      "expected_safe": 605.0,
+      "owner_gated": false,
+      "pending": 1210,
+      "root_cause": "host_lexeme_possessive_candidate",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.55,
+      "expected_safe": 260.2,
+      "owner_gated": true,
+      "pending": 473,
+      "root_cause": "missing_qamus_entry_candidate",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.55,
+      "expected_safe": 229.9,
+      "owner_gated": false,
+      "pending": 418,
+      "root_cause": "particle_or_pronoun_misclassified_as_stem",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.45,
+      "expected_safe": 211.9,
+      "owner_gated": false,
+      "pending": 471,
+      "root_cause": "forms_array_missing_surface",
+      "safe_tier": "C_pos_or_collision",
+      "source_gated": false
+    },
+    {
+      "discount": 0.3,
+      "expected_safe": 119.1,
+      "owner_gated": false,
+      "pending": 397,
+      "root_cause": "quran_refs_missing_or_incomplete",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.6,
+      "expected_safe": 80.4,
+      "owner_gated": false,
+      "pending": 134,
+      "root_cause": "forms_array_missing_surface",
+      "safe_tier": "B_sense_select",
+      "source_gated": false
+    },
+    {
+      "discount": 0.5,
+      "expected_safe": 74.0,
+      "owner_gated": false,
+      "pending": 148,
+      "root_cause": "verb_form_or_voice",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.9,
+      "expected_safe": 46.8,
+      "owner_gated": false,
+      "pending": 52,
+      "root_cause": "forms_array_missing_surface",
+      "safe_tier": "A_safe",
+      "source_gated": false
+    },
+    {
+      "discount": 0.5,
+      "expected_safe": 41.0,
+      "owner_gated": false,
+      "pending": 82,
+      "root_cause": "content_homograph",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.9,
+      "expected_safe": 18.9,
+      "owner_gated": false,
+      "pending": 21,
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "safe_tier": "A_safe",
+      "source_gated": false
+    },
+    {
+      "discount": 0.1,
+      "expected_safe": 14.8,
+      "owner_gated": false,
+      "pending": 148,
+      "root_cause": "genuinely_ambiguous_pending",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.2,
+      "expected_safe": 9.8,
+      "owner_gated": false,
+      "pending": 49,
+      "root_cause": "source_photo_visual_needed",
+      "safe_tier": null,
+      "source_gated": true
+    },
+    {
+      "discount": 0.5,
+      "expected_safe": 7.0,
+      "owner_gated": false,
+      "pending": 14,
+      "root_cause": "nominal_derivative_candidate",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.3,
+      "expected_safe": 3.3,
+      "owner_gated": false,
+      "pending": 11,
+      "root_cause": "truly_low_frequency_tail",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.2,
+      "expected_safe": 1.6,
+      "owner_gated": false,
+      "pending": 8,
+      "root_cause": "source_entry_required_before_resolution",
+      "safe_tier": null,
+      "source_gated": true
+    },
+    {
+      "discount": 1.0,
+      "expected_safe": 1.0,
+      "owner_gated": false,
+      "pending": 1,
+      "root_cause": "token_addressable_proper_noun",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.7,
+      "expected_safe": 0.7,
+      "owner_gated": false,
+      "pending": 1,
+      "root_cause": "particle_function",
+      "safe_tier": null,
+      "source_gated": false
+    }
+  ],
+  "ninety_reachable_via_safe_authoring": true,
+  "resolved_now": 42424,
+  "tokens_needed_for_90pct": 2486,
+  "total_pending": 7476
+}

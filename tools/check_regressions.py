@@ -338,6 +338,18 @@ for _vname, _label in [("validate_sarf_skill.py", "Phase2 sarf engine complete (
     except Exception:
         check(_vname + " runnable", False)
 
+# closure-2092: report-ergonomics gate (Markdown counterpart to artifact ergonomics) + root-cause ledger
+for _vname, _label in [("check_report_ergonomics.py", "closure-2092 report ergonomics (no crushed one-line Markdown reports)"),
+                       ("validate_blocker_root_cause_ledger.py", "closure-2092 blocker root-cause ledger (controlled vocab, reconciled)")]:
+    if os.path.exists(os.path.join(_R, "tools", _vname)):
+        try:
+            _v = subprocess.run([sys.executable, os.path.join(_R, "tools", _vname)], capture_output=True, text=True)
+            check(_label, _v.returncode == 0)
+            if _v.returncode != 0:
+                print("  ", (_v.stdout or _v.stderr).strip().splitlines()[-1] if (_v.stdout or _v.stderr).strip() else "")
+        except Exception:
+            check(_vname + " runnable", False)
+
 # P9 wrong-reasoning traps present and grader blocks them
 _wr = 0
 try:

@@ -1,0 +1,80 @@
+{
+  "_generator": "manual baseline, verified from live + repo data (not memory)",
+  "date": "2026-06-24",
+  "git": {
+    "head": "bceb366ef4b8f76d75344a2761d6a4baf1273ac9",
+    "origin_main": "bceb366ef4b8f76d75344a2761d6a4baf1273ac9",
+    "head_eq_origin": true,
+    "dirty": ["qamus/candidates/qamus_2092/token_irab_batch_002.jsonl (untracked)",
+              "qamus/candidates/qamus_2092/token_irab_batch_002.provenance.jsonl (untracked)"],
+    "dirty_finding": "commit-hygiene gap: token_irab_batch_001 and _003 are committed but _002 (Phase-5 iʿrāb carryover +112, applied live) was never committed — provenance gap, closed in commit A"
+  },
+  "gates": {
+    "check_artifact_ergonomics": "PASS",
+    "check_regressions": "PASS",
+    "run_grammar_evals": "PASS (88 cases)",
+    "validate_qamus_completion_manifest": "PASS (49,900 terminal)",
+    "validate_entry_completion_rollup": "PASS (2,092 terminal)",
+    "validate_sarf_skill": "PASS",
+    "validate_nahw_skill": "PASS"
+  },
+  "live": {
+    "health_http": 200,
+    "coverage_pct": 85.02,
+    "resolved": 42424,
+    "total_tokens": 49900,
+    "pending": 7476,
+    "token_decisions": 2164,
+    "artifact": "qamus-app/qamus_wbw/build/wbw-lookup.json",
+    "apply_target": "qamus-service/ref/fusha-hover-token-decisions.jsonl",
+    "public_entry_count_readonly": 2092
+  },
+  "blockers_coarse": {
+    "stem_base_unknown": 5993,
+    "source_entry_unverified": 1103,
+    "same_surface_polysemy_requires_i3rab": 379,
+    "proper_noun_no_qamus_entry": 1
+  },
+  "blocker_root_cause": {
+    "stem_base_unknown": {
+      "missing_form_variant_on_existing_entry": 3859,
+      "host_lexeme_possessive_candidate": 1210,
+      "missing_qamus_entry_candidate": 473,
+      "particle_or_pronoun_misclassified_as_stem": 418,
+      "nominal_derivative_candidate": 14,
+      "truly_low_frequency_tail": 11,
+      "source_entry_required_before_resolution": 8
+    },
+    "source_entry_unverified": {
+      "forms_array_missing_surface": 657,
+      "quran_refs_missing_or_incomplete": 397,
+      "source_photo_visual_needed": 49
+    },
+    "same_surface_polysemy_requires_i3rab": {
+      "genuinely_ambiguous_pending": 148,
+      "verb_form_or_voice": 148,
+      "content_homograph": 82,
+      "particle_function": 1
+    },
+    "proper_noun_no_qamus_entry": {"token_addressable_proper_noun": 1}
+  },
+  "form_variant_safe_tier": {"A_safe": 73, "B_sense_select": 1679, "C_pos_or_collision": 2764},
+  "yield_v2": {
+    "expected_safe_realizable": 3684,
+    "coverage_ceiling_if_all_safe_realized_pct": 92.40,
+    "tokens_needed_for_90pct": 2486,
+    "ninety_reachable_via_safe_authoring": true
+  },
+  "entries": {"total": 2092, "verb": 947, "noun": 1045, "particle": 100},
+  "graph": {"address_count": 28393, "source_sha": "65797d7d5599fadd", "integrity_gate": "green"},
+  "frontier_correction": "The prior tranche's 'safe frontier ~86% / 90% not safely reachable' is SUPERSEDED: it measured only surface-wide auto-glossing. Root-cause analysis (every pending token has a QAC root) shows 90% IS reachable via root-known structured authoring (POS-correct, sense-selected, collision-guarded, 2-vote), as bounded multi-batch work. Genuine-ambiguity residue is only ~148 tokens.",
+  "next_root_cause_queues_ranked": [
+    "missing_form_variant_on_existing_entry (3,859; author POS-correct form gloss, 2-vote)",
+    "host_lexeme_possessive_candidate (1,210; host stem + possessive compose)",
+    "forms_array_missing_surface (657; entry-repair form gloss)",
+    "missing_qamus_entry_candidate (473; owner-gated new-entry proposals)",
+    "particle_or_pronoun_misclassified_as_stem (418; function/token decision)",
+    "quran_refs_missing_or_incomplete (397; entry completeness)",
+    "same_surface_polysemy remaining (378; per-loc iʿrāb)"
+  ]
+}

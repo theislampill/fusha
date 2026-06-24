@@ -1,0 +1,30 @@
+{
+  "_generator": "manual audit (closure-2092 Phase 2), verified from git + filesystem",
+  "date": "2026-06-24",
+  "reports_scanned": 55,
+  "crushed_one_line_reports": 0,
+  "crushed_tables": 0,
+  "generated_reports_missing_generator_note": 15,
+  "largest_committed_files": [
+    {"path": "qamus/reports/hover-token-audit-full.jsonl", "bytes": 10117671, "disposition": "keep (load-bearing, regenerable)"},
+    {"path": "qamus/data/current/entries.jsonl", "bytes": 4830763, "disposition": "keep (public dataset)"},
+    {"path": "qamus/indexes/current/quran-usage-spine-full.jsonl", "bytes": 4498639, "disposition": "keep (graph)"},
+    {"path": "qamus/indexes/current/source-address-full.jsonl", "bytes": 3471304, "disposition": "keep (graph)"},
+    {"path": "qamus/reports/qamus-2092-entry-matrix.jsonl", "bytes": 1458928, "disposition": "keep (audit matrix)"}
+  ],
+  "findings": [
+    {"id": 1, "finding": "token_irab_batch_002 untracked (provenance gap vs _001/_003)", "severity": "medium", "disposition": "fixed_commit_A"},
+    {"id": 2, "finding": "15 generated reports lack generator note", "severity": "low", "disposition": "soft_warn_followup"},
+    {"id": 3, "finding": "hover-token-audit-full.jsonl 10.1MB", "severity": "low", "disposition": "keep_loadbearing"},
+    {"id": 4, "finding": "large public dataset/index JSONL", "severity": "none", "disposition": "keep_deliverable"},
+    {"id": 5, "finding": "scoreboard current/historical pairs", "severity": "none", "disposition": "already_handled_HISTORICAL_markers"},
+    {"id": 6, "finding": "no Markdown report-ergonomics gate", "severity": "medium", "disposition": "fixed_added_gate"}
+  ],
+  "durable_tools_added": [
+    "tools/check_report_ergonomics.py",
+    "tools/build_blocker_root_cause_ledger.py",
+    "tools/validate_blocker_root_cause_ledger.py",
+    "tools/build_root_cause_yield_ledger.py"
+  ],
+  "all_gates_green": true
+}
