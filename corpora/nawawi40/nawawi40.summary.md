@@ -61,6 +61,13 @@ S7/P6 `impossible_root` re-diagnosis). What SN8 *does* add (regenerable to `corp
 Net effect: better triage (priority + recurrence + hadith-domain separation + honest hints) without a single
 false root claim. Root confirmation for the weak/unknown bucket remains a human/QAC task. No live writes.
 
+**P17 (GrammarProblems gates applied):** re-run through the upgraded engine (`refine_nawawi40.py`) — identical
+deterministic output (1,183 total · 189 weak-root hints · priority 205/558/420 high/med/low · 14 hadith-technical
+· 166 Ṣaḥīḥayn-recurrence-likely). The GP0 grammar-safety gate now governs every grammar-affecting Nawawī40
+candidate: generated naḥw reasoning is **not trusted** (the 189 weak-root ties stay low-confidence HINTS, never
+asserted roots), and any iʿrāb/construction candidate inherits the two-vote requirement before it could ever be
+authored. Still **0 live writes**; root confirmation remains a human/QAC task.
+
 ## Notes for the reviewer (apply the sarf + nahw skills)
 - The big `new_root_or_unknown_root` bucket (499) is dominated by hadith-frequent forms not in a Qurʾān-centric
   Qamus (e.g. رَوَاهُ "narrated it" ر و ي, إِسْنَاد, صَحِيح) — these need a human root/POS call per `sarf/SKILL.md`.
