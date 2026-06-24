@@ -1,3 +1,7 @@
+<!-- HISTORICAL: point-in-time record. Current canonical scoreboard: host-lexeme-authoring-report.md + hover-gloss-terminal-scoreboard.md (current) -->
+
+> **⚠ HISTORICAL** — point-in-time record; numbers below reflect when this landed. Current state: **host-lexeme-authoring-report.md + hover-gloss-terminal-scoreboard.md (current)**.
+
 # Suffix/pronoun hover resolution (the أَعْمَالُنَا class)
 
 Fixes the visible failure class on the live site: tokens shown as "stem recognized — suffix/pronoun pending" when

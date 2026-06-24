@@ -303,6 +303,14 @@ try:
     check("P4 suffix/pronoun invariants pass (test_suffix_pronoun.py)", _r.returncode == 0)
 except Exception:
     check("P4 suffix/pronoun test runnable", False)
+# A0 report reconciliation: no stale-as-current scoreboards
+try:
+    _rr = subprocess.run([sys.executable, os.path.join(_R, "tools", "validate_report_reconciliation.py")],
+                         capture_output=True, text=True)
+    check("A0 report reconciliation (no stale-as-current scoreboards)", _rr.returncode == 0)
+except Exception:
+    check("A0 report reconciliation runnable", False)
+
 # A1 artifact ergonomics: committed artifacts must be reviewable/diffable
 try:
     _erg = subprocess.run([sys.executable, os.path.join(_R, "tools", "check_artifact_ergonomics.py")],

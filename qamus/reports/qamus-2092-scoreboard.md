@@ -1,3 +1,7 @@
+<!-- HISTORICAL: point-in-time record. Current canonical scoreboard: qamus-2092-terminal-scoreboard.md (current public split 947/1045/100) -->
+
+> **⚠ HISTORICAL** — point-in-time record; numbers below reflect when this landed. Current state: **qamus-2092-terminal-scoreboard.md (current public split 947/1045/100)**.
+
 # Qamus 2,092 scoreboard (Fusha index export, read-only)
 
 Source: existing Qamus entries (live mirror). No live writes. Regenerate: `build_existing_qamus_index.py`.

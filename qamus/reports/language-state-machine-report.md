@@ -1,3 +1,7 @@
+<!-- HISTORICAL: point-in-time record. Current canonical scoreboard: hover-gloss-terminal-scoreboard.md + hover-token-audit-full.jsonl (current) -->
+
+> **⚠ HISTORICAL** — point-in-time record; numbers below reflect when this landed. Current state: **hover-gloss-terminal-scoreboard.md + hover-token-audit-full.jsonl (current)**.
+
 # Language state machine — report
 
 **What it is.** An OSM-style hidden-state model for Arabic surface tokens, built read-only from the live corpus.

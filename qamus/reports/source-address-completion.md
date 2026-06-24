@@ -1,3 +1,7 @@
+<!-- HISTORICAL: point-in-time record. Current canonical scoreboard: xanadu-completion-report.md (current graph, 0 orphans) -->
+
+> **⚠ HISTORICAL** — point-in-time record; numbers below reflect when this landed. Current state: **xanadu-completion-report.md (current graph, 0 orphans)**.
+
 # Source-address (Xanadu) completion (P15)
 
 The source-address graph is the central substrate: every Qamus entry, every Qurʾān token used by Qamus examples,

@@ -30,6 +30,8 @@ How the Fusha intelligence layer is driving live Qamus / qamus-highlight, and wh
 
 History (earlier tranches) follows below.
 
+<!-- HISTORICAL: sections below the current-state banner are point-in-time records -->
+
 ## The production loop (operational)
 ```
 Fusha decision engine (sarf+nahw rules + QAC + Qamus index)

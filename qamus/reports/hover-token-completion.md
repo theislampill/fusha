@@ -1,3 +1,7 @@
+<!-- HISTORICAL: point-in-time record. Current canonical scoreboard: hover-gloss-terminal-scoreboard.md (current 82.49%, 41,164/49,900) -->
+
+> **⚠ HISTORICAL** — point-in-time record; numbers below reflect when this landed. Current state: **hover-gloss-terminal-scoreboard.md (current 82.49%, 41,164/49,900)**.
+
 # Hover-token completion matrix (P12)
 
 Every rendered token in Qamus usage āyāt has a terminal state — **0 silent/unknown**. Totals reconcile to the live artifact. Generator: `qamus/scripts/build_audit_completion.py`.

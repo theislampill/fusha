@@ -1,0 +1,18 @@
+{
+  "authoritative": {
+    "coverage": "82.49",
+    "split": "947/1045/100"
+  },
+  "coverage_pct": 82.49,
+  "gates_all_pass": true,
+  "head": "f87c164",
+  "pending": 8736,
+  "resolved": 41164,
+  "split": {
+    "noun": 1045,
+    "particle": 100,
+    "verb": 947
+  },
+  "token_decisions": 904,
+  "total": 49900
+}

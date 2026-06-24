@@ -1,3 +1,7 @@
+<!-- HISTORICAL: point-in-time record. Current canonical scoreboard: token-irab-polysemy-report.md + hover-gloss-terminal-scoreboard.md (current) -->
+
+> **⚠ HISTORICAL** — point-in-time record; numbers below reflect when this landed. Current state: **token-irab-polysemy-report.md + hover-gloss-terminal-scoreboard.md (current)**.
+
 # Token-addressed hover override layer (B6)
 
 The surface-key TSV applies **one gloss per `norm_strict` key** to every matching token. That cannot represent a

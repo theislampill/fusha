@@ -1,3 +1,7 @@
+<!-- HISTORICAL: point-in-time record. Current canonical scoreboard: host-lexeme-authoring-report.md + hover-gloss-terminal-scoreboard.md (current) -->
+
+> **⚠ HISTORICAL** — point-in-time record; numbers below reflect when this landed. Current state: **host-lexeme-authoring-report.md + hover-gloss-terminal-scoreboard.md (current)**.
+
 # Suffix/pronoun class — expansion (P4)
 
 The suffix/pronoun lane is the dataset-fed engine: a possessed surface (noun stem + vocalized
