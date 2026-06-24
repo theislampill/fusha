@@ -55,6 +55,12 @@ check("ذِكْر and ذَكَر share a norm key (so a gloss must use diacritic
       N.norm("ذِكْر") == N.norm("ذَكَر"))
 check("kasra on ḏāl marks ذِكْر (maṣdar), fatḥa marks ذَكَر (noun)",
       N.haraka_on("ذِكْر", "ذ") == N.KASRA and N.haraka_on("ذَكَر", "ذ") == N.FATHA)
+# (P13) the live hover key is norm_strict — a surface-keyed gloss is UNSAFE when the key collides
+# with a different-meaning word/form; these must stay pending, never one key-gloss.
+check("أُمّ 'mother' and أَمْ 'or' collide under norm_strict (surface key unsafe → pending)",
+      N.norm_strict("أُمُّ") == N.norm_strict("أَمْ"))
+check("الملك key catches both مُلْك 'dominion' and مَلِك 'king' (vowel homograph → pending)",
+      N.norm_strict("ٱلْمُلْكُ") == N.norm_strict("ٱلْمَلِكُ"))
 # 11. (GP0) GrammarProblems eval gate — grammar-affecting triggers must escalate the gate
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 

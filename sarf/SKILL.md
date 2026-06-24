@@ -95,6 +95,22 @@ sense/multi-sense/referent) → `human_source_review_required` → `never_auto_r
 QAC-conflict). **A surface-key gloss is auto_safe only if its `norm_strict` key is collision-free** (the
 نَزَّلَ→نزل collides with نَزَلَ lesson).
 
+## 13c. Production findings (P13 — reference-assisted batch, +694 live)
+- **The live key is `norm_strict`, which KEEPS the `ال` article + the consonant skeleton but drops harakāt.** So
+  a surface-keyed gloss is **safe** when the same-key surfaces are mere case/orthographic/tanwīn variants of ONE
+  word (ٱلْكِتَٰبِ/ٱلْكِتَٰبَ/ٱلْكِتَٰبُ = "the Book" — and `الكتاب` does NOT collide with the verb `كتب`), and
+  **unsafe** when the key mixes different words/POS. Decide with an **empirical key-collision probe** against the
+  live corpus, not by reasoning about the bare root (which over-rejects).
+- **True homographs that share a `norm_strict` key stay pending:** أُمّ "mother" ↔ أَمْ "or"; ٱلْمُلْك "dominion"
+  ↔ ٱلْمَلِك "king"; هُدَى noun ↔ هَدَى verb; وَعَدَ verb ↔ وَعْد noun; كُذِبُوا۟ ↔ كَذَّبُوا "denied"; أَعْلَمُ
+  elative "knows best" ↔ أَعْلَمُ verb "I know"; أَكْثَرَ verb ↔ أَكْثَرُ elative; سَوَآء "equal" ↔ "midst".
+- **Referent landmines stay pending:** ٱلْحَقّ / ٱلْعَزِيز (divine-Name vs common), صَٰلِحًا (Prophet Ṣāliḥ vs
+  "righteous").
+- **A verbose/verb-shape spread-gloss is improved by a concise certified one** (basmala ٱلرَّحْمَٰنَ "to show mercy
+  and compassion to" → "the Most Gracious (ar-Rahman)") — the fusha override fixes shape on non-primary slots.
+- **كَظِيم (صفة مشبهة) carried a "to suppress anger" verb gloss** → entry-repair candidate (P14): reshape to
+  adjectival; the source fix propagates, so prefer it over a partial hover override.
+
 ## 14. Integration with qamus-highlight
 A sarf `decision` maps directly: `resolved`→author the gloss (src=qamus); `pending`→set the pending reason;
 `quarantine`→demote/deny the wrong sense. Record the decision at `quran:S:A:W` in the source-address graph so

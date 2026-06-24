@@ -20,3 +20,5 @@
 {"surface": "فِيهِ", "context": "لَا رَيْبَ فِيهِ", "correct": "in it / therein", "reason": "فِي + ـه pronoun; render by referent (jar-majrūr)"}
 {"surface": "عَلَيْهِمْ", "context": "أَنْعَمْتَ عَلَيْهِمْ", "correct": "upon them", "reason": "عَلَى + ـهم; wording by referent"}
 {"surface": "قَدْ", "context": "قَدْ أَفْلَحَ الْمُؤْمِنُونَ", "correct": "indeed / already", "reason": "قد + past verb → certainty/completion"}
+{"surface": "أُمُّ", "context": "أُمّ vs أَمْ", "wrong": "mother / source (on أَمْ)", "correct": "pending — homograph", "reason": "norm_strict(أُمّ)=norm_strict(أَمْ)=\"أم\"; أَمْ \"or\" (interrogative, very frequent) collides with أُمّ \"mother\" -> a surface key is unsafe"}
+{"surface": "ٱلْمُلْكُ", "context": "الملك", "wrong": "the dominion (on ٱلْمَلِك)", "correct": "pending — homograph", "reason": "key الملك catches both ٱلْمُلْك \"dominion\" and ٱلْمَلِك \"the King\" (vowel-only) -> pending, never one key-gloss"}
