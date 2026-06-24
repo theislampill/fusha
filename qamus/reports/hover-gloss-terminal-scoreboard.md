@@ -3,10 +3,19 @@
 Live qamus-highlight, public beta, indexable. Public records carry only `{src:"qamus",kind:"authored"}` — 0
 external provenance. Full per-token states: `hover-token-terminal-matrix.md`.
 
-> **CURRENT LIVE (reconciled): coverage 80.68% · 40,260 / 49,900 resolved · 9,640 pending · tsv 1,223 lines.**
-> Trail: … B2 75.28 → B3 77.31 → B4 78.78 → B5 79.93 → **particle-hardtail 80.68** (crossed 80%).
-> **MCP-backed decisions live: 61** (B5 morphology-confirmed verbs, internal evidence only).
-> **wrong-gloss open: 0** · **−0 removed across B2–B5 + particle hard-tail.**
+> **CURRENT LIVE (reconciled): coverage 81.41% · 40,623 / 49,900 resolved · 9,277 pending · tsv 1,223 + 363 token decisions.**
+> Trail: … B4 78.78 → B5 79.93 → particle-hardtail 80.68 → **B6 token-layer 81.41**.
+> **MCP-backed decisions live: 61** · **token-addressed decisions live: 363** (per-`quran:S:A:W` overrides).
+> **wrong-gloss open: 0** · **−0 removed across all batches.**
+
+## B6 — token-addressed override layer (APPLIED LIVE)
+The first layer that resolves **surface-key collisions** the TSV cannot: a per-token (`quran:S:A:W`) decision >
+surface-key TSV > pending, wired into `qamus_wbw/expand.py` (exempt from the homograph denylist). **363 decisions**
+disambiguated by vocalized harakāt: لَمْ "did not" (121) vs لِمَ "why" (3); مَنْ "who/whoever" (161) vs مِنْ "from"
+(4); أَمْ "or" (65) vs أُمّ "mother" (7). **Precedence proven live**: same key `لم`, لَمْ@46:11:13→"did not",
+لِمَ@61:5:6→"why". coverage **80.68% → 81.41%**, **+363 occ, −0 removed**. Same-surface polysemy (وَمَا, bare إِنْ,
+لَمَّا) left pending for per-token iʿrāb. Detail: `token-addressed-hover-layer.md`. Mirror:
+`token_hover_decisions_batch_001.*` / `particle_token_hover_batch_003.*`. Rollback: empty the token JSONL + rebuild.
 
 ## Particle hard-tail (APPLIED LIVE) — completes the p001–p100 example āyāt
 **289 glosses** (311 safe-single content tokens in particle example āyāt → 289 certified, 22 rejected). The 157
@@ -95,17 +104,18 @@ norm_strict key-collision test** (13 candidates → 11 → 8 key-safe), applied 
 نَزَّلَ (key `نزل` collides with نَزَلَ "descended"), إِنفَاق/مَخْلُوق (0 occ), تَذَكَّرَ/زَلْزَلَتِ (2-vote).
 Rollback: `*.bak-sn7` + `wbw-lookup.prev.json`. Mirror: `qamus/candidates/qamus_2092/authored_gloss_batch_002_sarfnahw.*`.
 
-## Pending by reason (live now — from `export_audit_state.py` at 80.68%)
+## Pending by reason (live now — from `export_audit_state.py` at 81.41%)
 | reason | n |
 |---|---:|
-| `pending_needs_sarf` (root exists, form/sense unresolved — the authorable lever) | 7,990 |
-| `pending_no_qamus_entry` (no entry: particles / proper nouns) | 1,590 |
+| `pending_needs_sarf` (root exists, form/sense unresolved — the authorable lever) | 7,981 |
+| `pending_no_qamus_entry` (no entry: particles / proper nouns) | 1,236 |
 | `pending_source_data_issue` | 47 |
 | `pending_proper_noun` | 13 |
-| **total pending** | **9,640** |
+| **total pending** | **9,277** |
 
-The authorable `pending_needs_sarf` lever fell 11,777 → … → 8,338 → **7,990**. Distinct pending surfaces
-6,422 → **5,435**. State graph: 1,222 resolved / 156 quarantine / 11,345 pending keys.
+`pending_no_qamus_entry` fell 1,590 → **1,236** (the token layer resolved the function-word homographs). Distinct
+pending surfaces 6,422 → **5,433**. State graph (key-level): 1,222 resolved / 156 quarantine / 11,345 pending; the
+token layer resolves **per-loc within collision keys** (sub-key), so it lifts coverage without changing key counts.
 
 ## Correctness (this program, across C12–C14 + P-tranche)
 | metric | n |

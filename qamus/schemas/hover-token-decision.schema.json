@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fusha/hover-token-decision.schema.json",
+  "title": "Token-addressed hover decision",
+  "description": "A per-token (quran:S:A:W) hover gloss that OVERRIDES the surface-key TSV. Resolves norm_strict collisions the surface-key layer cannot represent (لَمْ/لِمَ، مَن/مِن، إِنْ/إِنَّ، أَمْ/أُمّ): same norm_strict key, but the vocalized surface (and iʿrāb) selects a per-token reading. Precedence: token decision > surface-key TSV > pending. The runtime artifact is JSONL (one object per line) at qamus-service/ref/fusha-hover-token-decisions.jsonl (gitignored); the live renderer (qamus_wbw/expand.py) applies it as the highest-precedence pass, exempt from the homograph denylist. Public record stays {src:'qamus',kind:'authored'}; internal_provenance may cite QAC/Tanzil/Quran.com/Tafsir-MCP but NONE leak publicly.",
+  "type": "object",
+  "required": ["loc", "gloss", "src", "kind"],
+  "additionalProperties": true,
+  "properties": {
+    "loc": { "type": "string", "pattern": "^\\d{1,3}:\\d{1,3}:\\d{1,3}$", "description": "quran:S:A:W token address" },
+    "gloss": { "type": "string", "minLength": 1, "description": "original qamus-authored English gloss for THIS token" },
+    "surface": { "type": "string", "description": "the vocalized surface at this loc (the disambiguator)" },
+    "state_id": { "type": "string", "description": "language-state node id, e.g. state:tok:S:A:W" },
+    "key": { "type": "string", "description": "the norm_strict surface key this token would otherwise collide on" },
+    "src": { "const": "qamus" },
+    "kind": { "const": "authored" },
+    "lang": { "type": "string" },
+    "internal_provenance": {
+      "type": "object",
+      "description": "internal-only; never shipped to the public artifact",
+      "properties": {
+        "informed_by": { "type": "array", "items": { "type": "string" } },
+        "method": { "type": "string" }
+      }
+    }
+  }
+}

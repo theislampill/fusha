@@ -1,7 +1,8 @@
 # Next-batch resume plan (PP1G continues — exact, no vague "standing by")
 
 ## Where we are (live, reconciled)
-- Live coverage **80.68%** · 40,260 / 49,900 resolved · **9,640 pending** · tsv **1,223 lines** · 2,092 entries.
+- **NEW: token-addressed override layer is LIVE** (per-`quran:S:A:W` > surface-key TSV > pending) — resolves homograph collisions the TSV cannot; 363 decisions applied; same-surface polysemy (وَمَا, bare إِنْ, لَمَّا) is the next tier (needs per-token iʿrāb).
+- Live coverage **81.41%** · 40,623 / 49,900 resolved · **9,277 pending** · tsv 1,223 + 363 token decisions · 2,092 entries.
 - Distinct pending surfaces: **5,435** (was 6,422). Authorable lever `pending_needs_sarf` = **7,990**.
 - Processed: B2 (230→159) + B3 (230→186) + B4 (230→181) + B5 (230→190, 61 MCP-backed) + **particle-hardtail
   (311→289)**, each excluding prior rejects. Combined **+1,005 glosses, +4,264 occ, −0 removed**.
@@ -9,7 +10,7 @@
   build tool, NOT a skill dependency (skills verified MCP-free).
 - Particle example āyāt: **90.51% resolved** (was 81.51%); remaining = 157 documented homograph blockers +
   35 single-surface content tokens in the global queue.
-- Cumulative live trail: 51.52 → … → 78.78 → 79.93 → **80.68**.
+- Cumulative live trail: 51.52 → … → 79.93 → 80.68 → **81.41** (B6 token-addressed layer).
 - State graph: 1,222 resolved keys, 156 quarantine_homograph, 11,345 pending (every token has a state, 0 unknown).
 
 ## Exactly what was processed vs. what remains

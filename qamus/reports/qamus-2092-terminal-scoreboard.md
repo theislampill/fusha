@@ -35,7 +35,7 @@ Full matrix: `qamus-2092-audit-completion.json`. Distinguishes *classified* from
 **0 entries are `fully_verified`** (no source-photo pass this tranche; `*_verified` flags reflect only
 measurable evidence — refs valid, QAC root agreement, hover coverage).
 
-| audit terminal state | n (live 80.68%) |
+| audit terminal state | n (live 81.41%) |
 |---|---:|
 | `needs_hover_authoring` (≥1 pending token in its āyāt) | **1,835** |
 | `needs_source_photo_review` (āyāt hover-complete; source verification outstanding) | **240** |
@@ -45,7 +45,7 @@ measurable evidence — refs valid, QAC root agreement, hover coverage).
 
 By Fusha index class (per-entry matrices `qamus/reports/{nouns,verbs}/`): **nouns 1,022 @ 82.32%**,
 **verbs 970 @ 80.63%**, **particles 100 @ 90.51%** (āyāt). B2 +159; B3 +186; B4 +181; B5 +190 (61 MCP-backed);
-**particle-hardtail +289 → 80.68%**. As entries become hover-complete they advance `needs_hover_authoring` →
+particle-hardtail +289; **B6 token-layer +363 → 81.41%**. As entries become hover-complete they advance `needs_hover_authoring` →
 `needs_source_photo_review` (163 → 214), so the source-photo queue grows as authoring lands.
 
 - root-verified-vs-QAC: measurable cross-check recorded per entry.

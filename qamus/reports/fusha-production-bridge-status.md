@@ -24,8 +24,9 @@ Entry repairs take the parallel, owner-gated path (`edit_entry_record` + backup 
 | **P6 source-corpus repair** | terminally classified — 0 certified error fields; 102 owner-gated QAC-root candidates |
 | **Nawawī40 catalogue** | first pass (720 candidates) + skill-refinement available via the runner |
 | **source-address graph** | 2,092 entry nodes, 0 orphan; operational backlinks (`build_decision_backlinks.py`) answer the 10 graph queries |
-| **live hover coverage** | **80.68%** (40,260 / 49,900); trail … 78.78 → 79.93 → **particle-hardtail 80.68** (crossed 80%; B2–B5+ph = 1,005 glosses, +4,264 occ, −0 removed; 61 MCP-backed) |
+| **live hover coverage** | **81.41%** (40,623 / 49,900); trail … 79.93 → 80.68 → **B6 token-layer 81.41**; B2–B6 = 1,005 surface glosses + 363 token decisions, +4,627 occ, −0 removed; 61 MCP-backed |
 | **language state machine** | built — 12,723 key-states (1,222 resolved, 156 quarantine_homograph, 11,345 pending); schemas + builder + query + report |
+| **token-addressed override layer (B6)** | LIVE — per-`quran:S:A:W` decisions > surface-key TSV > pending; wired in `qamus_wbw/expand.py`; 363 decisions resolve لَمْ/لِمَ، مَن/مِن، أَمْ/أُمّ collisions the TSV cannot |
 | **Tafsir MCP lane (TM1)** | AVAILABLE (direct HTTP) — internal Quran grammar/morphology evidence; build tool, NOT a skill dependency; 61 MCP-backed glosses live (tafsir_mcp_hover_batch_001) |
 | **GrammarProblems eval gate** | 80 derived cases (≥72), `run_grammar_evals.py` PASS; `grade_grammar_reasoning.py` enforces answer+reasoning (self-test PASS) |
 | **progressive-disclosure skills** | sarf 12 procedures, nahw 12 procedures + rules/evals/curriculum; SKILL.md is the gate+index |
