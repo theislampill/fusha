@@ -1,0 +1,6862 @@
+{
+  "chosen_surfaces": 741,
+  "cumulative_safe_yield_top": 1772,
+  "distinct_pending_surfaces": 5189,
+  "safe_collisionfree_content_surfaces": 741,
+  "target_resolves": 3634,
+  "top_families": [
+    {
+      "all_surfaces": [
+        "وما",
+        "وَمَا",
+        "وَمَآ"
+      ],
+      "collision_free": false,
+      "count": 312,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": true,
+      "key": "وما",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "وما"
+    },
+    {
+      "all_surfaces": [
+        "وَإِن",
+        "وَإِنِ",
+        "وَإِنَّ",
+        "وَإِنْ"
+      ],
+      "collision_free": false,
+      "count": 153,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 5,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وإن",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "وَإِن"
+    },
+    {
+      "all_surfaces": [
+        "أَلَمْ"
+      ],
+      "collision_free": true,
+      "count": 53,
+      "dataset_hint": "particle",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ألم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَلَمْ"
+    },
+    {
+      "all_surfaces": [
+        "أَلَا",
+        "أَلَآ",
+        "أَلَّا"
+      ],
+      "collision_free": false,
+      "count": 43,
+      "dataset_hint": "particle",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": true,
+      "key": "ألا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَلَا"
+    },
+    {
+      "all_surfaces": [
+        "وَأَن",
+        "وَأَنَّ",
+        "وَأَنِ",
+        "وَأَنَّ"
+      ],
+      "collision_free": false,
+      "count": 34,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 5,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وأن",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "وَأَن"
+    },
+    {
+      "all_surfaces": [
+        "أَعْلَمُ"
+      ],
+      "collision_free": true,
+      "count": 31,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أعلم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَعْلَمُ"
+    },
+    {
+      "all_surfaces": [
+        "لَمَن",
+        "لَمَنِ",
+        "لَمِنَ",
+        "لَّمَن"
+      ],
+      "collision_free": false,
+      "count": 30,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 8,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "لمن",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "لَمَن"
+    },
+    {
+      "all_surfaces": [
+        "فَمَا",
+        "فَمَآ"
+      ],
+      "collision_free": false,
+      "count": 28,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": true,
+      "key": "فما",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "فَمَا"
+    },
+    {
+      "all_surfaces": [
+        "بِمَآ"
+      ],
+      "collision_free": true,
+      "count": 25,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بما",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "بِمَآ"
+    },
+    {
+      "all_surfaces": [
+        "حَقٌّۭ",
+        "حَقٍّ",
+        "حَقٍّۢ",
+        "حَقَّ"
+      ],
+      "collision_free": false,
+      "count": 24,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 5,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "حق",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "حَقٌّۭ"
+    },
+    {
+      "all_surfaces": [
+        "بِكُم",
+        "بِكُمُ",
+        "بِكُمْ"
+      ],
+      "collision_free": false,
+      "count": 24,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "بكم",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "بِكُم"
+    },
+    {
+      "all_surfaces": [
+        "الْمَلِكُ",
+        "الْمُلْكُ",
+        "الْمُلْكِ",
+        "ٱلْمَلِكُ"
+      ],
+      "collision_free": false,
+      "count": 23,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 8,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "الملك",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "الْمَلِكُ"
+    },
+    {
+      "all_surfaces": [
+        "هَدَى",
+        "هَدَىٰ",
+        "هُدًۭى",
+        "هُدَى"
+      ],
+      "collision_free": false,
+      "count": 22,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "هدي",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "هَدَى"
+    },
+    {
+      "all_surfaces": [
+        "كَذَبُوا۟",
+        "كَذَّبُوا۟",
+        "كُذِبُوا۟"
+      ],
+      "collision_free": false,
+      "count": 22,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "كذبوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "كَذَبُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "سَوَاءٌ",
+        "سَوَاءِ",
+        "سَوَآءً",
+        "سَوَآءًۭ"
+      ],
+      "collision_free": false,
+      "count": 20,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 11,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "سواء",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "سَوَاءٌ"
+    },
+    {
+      "all_surfaces": [
+        "صَالِحًا",
+        "صَٰلِحًا",
+        "صَٰلِحًۭا"
+      ],
+      "collision_free": false,
+      "count": 19,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "صالحا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "صَالِحًا"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْعَزِيزُ",
+        "ٱلْعَزِيزِ"
+      ],
+      "collision_free": false,
+      "count": 19,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "العزيز",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْعَزِيزُ"
+    },
+    {
+      "all_surfaces": [
+        "فَهُم",
+        "فَهُمُ",
+        "فَهُمْ"
+      ],
+      "collision_free": false,
+      "count": 19,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فهم",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "فَهُم"
+    },
+    {
+      "all_surfaces": [
+        "لَمَا",
+        "لَمَآ",
+        "لِمَا",
+        "لِّمَا"
+      ],
+      "collision_free": false,
+      "count": 19,
+      "dataset_hint": "particle",
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": true,
+      "is_function_word": true,
+      "key": "لما",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "لَمَا"
+    },
+    {
+      "all_surfaces": [
+        "وَأَنَا",
+        "وَأَنَا۠",
+        "وَأَنَّا"
+      ],
+      "collision_free": false,
+      "count": 18,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وأنا",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "وَأَنَا"
+    },
+    {
+      "all_surfaces": [
+        "عَزِيزٌ",
+        "عَزِيزٌۭ",
+        "عَزِيزٍۢ"
+      ],
+      "collision_free": false,
+      "count": 18,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "عزيز",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "عَزِيزٌ"
+    },
+    {
+      "all_surfaces": [
+        "وَعْدٌ",
+        "وَعْدَ",
+        "وَعْدُ",
+        "وُعِدَ"
+      ],
+      "collision_free": false,
+      "count": 16,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "وعد",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَعْدٌ"
+    },
+    {
+      "all_surfaces": [
+        "أَكْثَرَ",
+        "أَكْثَرُ"
+      ],
+      "collision_free": false,
+      "count": 16,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أكثر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَكْثَرَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْهَدْىَ",
+        "ٱلْهَدْىُ",
+        "ٱلْهَدْىِ",
+        "ٱلْهُدَى"
+      ],
+      "collision_free": false,
+      "count": 16,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 6,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "الهدي",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْهَدْىَ"
+    },
+    {
+      "all_surfaces": [
+        "يَدَّعُونَ",
+        "يَدْعُونَ",
+        "يُدَعُّونَ",
+        "يُدْعَوْنَ"
+      ],
+      "collision_free": false,
+      "count": 16,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "يدعون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَدَّعُونَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْءَاخَرِ",
+        "ٱلْءَاخِرَ",
+        "ٱلْءَاخِرِ"
+      ],
+      "collision_free": false,
+      "count": 16,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الءاخر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْءَاخَرِ"
+    },
+    {
+      "all_surfaces": [
+        "أَجَلٌۭ",
+        "أَجَلٍ",
+        "أَجَلٍۢ",
+        "أَجَلَ"
+      ],
+      "collision_free": false,
+      "count": 15,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 5,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أجل",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَجَلٌۭ"
+    },
+    {
+      "all_surfaces": [
+        "فَضْلٍ",
+        "فَضْلٍۢ",
+        "فَضْلٍۭ",
+        "فَضْلُ"
+      ],
+      "collision_free": false,
+      "count": 15,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 5,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "فضل",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "فَضْلٍ"
+    },
+    {
+      "all_surfaces": [
+        "يَخْرُجُ",
+        "يَخْرُجْ",
+        "يُخْرِجُ",
+        "يُخْرِجْ"
+      ],
+      "collision_free": false,
+      "count": 15,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يخرج",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَخْرُجُ"
+    },
+    {
+      "all_surfaces": [
+        "ذَاتَ",
+        "ذَاتُ",
+        "ذَاتِ"
+      ],
+      "collision_free": false,
+      "count": 15,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ذات",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ذَاتَ"
+    },
+    {
+      "all_surfaces": [
+        "فَإِنَّمَا",
+        "فَإِنَّمَآ"
+      ],
+      "collision_free": false,
+      "count": 15,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فإنما",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "فَإِنَّمَا"
+    },
+    {
+      "all_surfaces": [
+        "أُمَّةًۭ",
+        "أُمَّةٌۭ",
+        "أُمَّةٍ",
+        "أُمَّةٍۢ"
+      ],
+      "collision_free": false,
+      "count": 14,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أمه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أُمَّةًۭ"
+    },
+    {
+      "all_surfaces": [
+        "وَلِىَ",
+        "وَلِىٌّۭ",
+        "وَلِىٍّۢ",
+        "وَلِىُّ"
+      ],
+      "collision_free": false,
+      "count": 14,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 7,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ولي",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَلِىَ"
+    },
+    {
+      "all_surfaces": [
+        "حَرَّمَ",
+        "حُرُمٌ",
+        "حُرُمٌۭ",
+        "حُرِّمَ"
+      ],
+      "collision_free": false,
+      "count": 14,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "حرم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "حَرَّمَ"
+    },
+    {
+      "all_surfaces": [
+        "وَلَهُ",
+        "وَلَهُۥ",
+        "وَلَهُۥٓ"
+      ],
+      "collision_free": false,
+      "count": 14,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وله",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "وَلَهُ"
+    },
+    {
+      "all_surfaces": [
+        "فَهَل",
+        "فَهَلْ"
+      ],
+      "collision_free": false,
+      "count": 14,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فهل",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "فَهَل"
+    },
+    {
+      "all_surfaces": [
+        "ٱلدِّينَ",
+        "ٱلدِّينُ",
+        "ٱلدِّينِ"
+      ],
+      "collision_free": false,
+      "count": 14,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "الدين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلدِّينَ"
+    },
+    {
+      "all_surfaces": [
+        "تَوَلَّوا۟",
+        "تَوَلَّوْا۟",
+        "تُوَلُّوا۟"
+      ],
+      "collision_free": false,
+      "count": 14,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "تولوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَوَلَّوا۟"
+    },
+    {
+      "all_surfaces": [
+        "الْعَظِيمِ",
+        "ٱلْعَظِيمُ",
+        "ٱلْعَظِيمِ"
+      ],
+      "collision_free": false,
+      "count": 13,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "العظيم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "الْعَظِيمِ"
+    },
+    {
+      "all_surfaces": [
+        "أَمَرَ",
+        "أَمْرٍ",
+        "أَمْرٍۢ",
+        "أَمْرَ"
+      ],
+      "collision_free": false,
+      "count": 13,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 6,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أمر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَمَرَ"
+    },
+    {
+      "all_surfaces": [
+        "يُرَدُّ",
+        "يُرِدِ",
+        "يُرِدْ"
+      ],
+      "collision_free": false,
+      "count": 12,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يرد",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يُرَدُّ"
+    },
+    {
+      "all_surfaces": [
+        "يَنظُرُونَ",
+        "يُنظَرُونَ"
+      ],
+      "collision_free": false,
+      "count": 12,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ينظرون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَنظُرُونَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلسَّوْءِ",
+        "ٱلسُّوٓءَ",
+        "ٱلسُّوٓءُ",
+        "ٱلسُّوٓءِ"
+      ],
+      "collision_free": false,
+      "count": 12,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "السوء",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلسَّوْءِ"
+    },
+    {
+      "all_surfaces": [
+        "وَلَدٌۭ",
+        "وَلَدٍۢ"
+      ],
+      "collision_free": false,
+      "count": 11,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ولد",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَلَدٌۭ"
+    },
+    {
+      "all_surfaces": [
+        "بَشَرٌ",
+        "بَشَرٌۭ",
+        "بَشَرٍۢ",
+        "بُشِّرَ"
+      ],
+      "collision_free": false,
+      "count": 11,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 5,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "بشر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بَشَرٌ"
+    },
+    {
+      "all_surfaces": [
+        "يَكْفُرُ",
+        "يَكْفُرْ",
+        "يُكَفِّرَ",
+        "يُكَفِّرْ"
+      ],
+      "collision_free": false,
+      "count": 11,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 5,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "يكفر",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَكْفُرُ"
+    },
+    {
+      "all_surfaces": [
+        "عَلِيمًا",
+        "عَلِيمًۭا"
+      ],
+      "collision_free": false,
+      "count": 11,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "عليما",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "عَلِيمًا"
+    },
+    {
+      "all_surfaces": [
+        "أَمَرَهُمْ",
+        "أَمْرَهُم",
+        "أَمْرَهُمْ",
+        "أَمْرُهُمْ"
+      ],
+      "collision_free": false,
+      "count": 10,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 5,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أمرهم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَمَرَهُمْ"
+    },
+    {
+      "all_surfaces": [
+        "بِى",
+        "بِىَ",
+        "بِىٓ"
+      ],
+      "collision_free": false,
+      "count": 10,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بي",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "بِى"
+    },
+    {
+      "all_surfaces": [
+        "نَزَلَ",
+        "نَزَّلَ",
+        "نُزِّلَ"
+      ],
+      "collision_free": false,
+      "count": 10,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "نزل",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "نَزَلَ"
+    },
+    {
+      "all_surfaces": [
+        "شَرٌّۭ",
+        "شَرَّ",
+        "شَرِّ"
+      ],
+      "collision_free": false,
+      "count": 10,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "شر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "شَرٌّۭ"
+    },
+    {
+      "all_surfaces": [
+        "بَيِّنَةٌۭ",
+        "بَيِّنَةٍۢ",
+        "بَيْنَهُۥ"
+      ],
+      "collision_free": false,
+      "count": 10,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "بينه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بَيِّنَةٌۭ"
+    },
+    {
+      "all_surfaces": [
+        "سَيِّئَةًۭ",
+        "سَيِّئَةٌۢ",
+        "سَيِّئَةٌۭ",
+        "سَيِّئَةٍۢ"
+      ],
+      "collision_free": false,
+      "count": 10,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 6,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "سيئه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "سَيِّئَةًۭ"
+    },
+    {
+      "all_surfaces": [
+        "بُيُوتٍ",
+        "بُيُوتَ",
+        "بُيُوتِ"
+      ],
+      "collision_free": false,
+      "count": 10,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بيوت",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بُيُوتٍ"
+    },
+    {
+      "all_surfaces": [
+        "أَمَرَنَا",
+        "أَمْرَنَا",
+        "أَمْرُنَا",
+        "أَمْرِنَا"
+      ],
+      "collision_free": false,
+      "count": 10,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أمرنا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَمَرَنَا"
+    },
+    {
+      "all_surfaces": [
+        "تَدَّعُونَ",
+        "تَدْعُونَ",
+        "تُدْعَوْنَ"
+      ],
+      "collision_free": false,
+      "count": 9,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "تدعون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَدَّعُونَ"
+    },
+    {
+      "all_surfaces": [
+        "أَخَذَ",
+        "أَخْذَ",
+        "أَخْذُ"
+      ],
+      "collision_free": false,
+      "count": 9,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أخذ",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَخَذَ"
+    },
+    {
+      "all_surfaces": [
+        "ءَاتَىٰهُم",
+        "ءَاتَىٰهُمُ",
+        "ءَاتَىٰهُمْ",
+        "ءَاتِيهِمْ"
+      ],
+      "collision_free": false,
+      "count": 9,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ءاتيهم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ءَاتَىٰهُم"
+    },
+    {
+      "all_surfaces": [
+        "بِأَن",
+        "بِأَنَّ"
+      ],
+      "collision_free": false,
+      "count": 8,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بأن",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "بِأَن"
+    },
+    {
+      "all_surfaces": [
+        "وَهِىَ",
+        "وَهِيَ"
+      ],
+      "collision_free": false,
+      "count": 8,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وهي",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "وَهِىَ"
+    },
+    {
+      "all_surfaces": [
+        "أَدْنَى",
+        "أَدْنَىٰ",
+        "أَدْنَىٰٓ"
+      ],
+      "collision_free": false,
+      "count": 8,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أدني",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَدْنَى"
+    },
+    {
+      "all_surfaces": [
+        "مَلِكِ",
+        "مُلْكُ",
+        "مَّلِكٌۭ"
+      ],
+      "collision_free": false,
+      "count": 8,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ملك",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مَلِكِ"
+    },
+    {
+      "all_surfaces": [
+        "قَتَلَ",
+        "قَتْلَ",
+        "قُتِلَ"
+      ],
+      "collision_free": false,
+      "count": 8,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "قتل",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "قَتَلَ"
+    },
+    {
+      "all_surfaces": [
+        "كِتَٰبًۭا"
+      ],
+      "collision_free": true,
+      "count": 8,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "كتابا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "كِتَٰبًۭا"
+    },
+    {
+      "all_surfaces": [
+        "أَمَرَهُۥ",
+        "أَمْرُهُۥ",
+        "أَمْرِهِۦ",
+        "أَمْرِهِۦٓ"
+      ],
+      "collision_free": false,
+      "count": 8,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أمره",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَمَرَهُۥ"
+    },
+    {
+      "all_surfaces": [
+        "وَبَيْنَ"
+      ],
+      "collision_free": true,
+      "count": 8,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وبين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَبَيْنَ"
+    },
+    {
+      "all_surfaces": [
+        "وَهُدًۭى"
+      ],
+      "collision_free": true,
+      "count": 8,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وهدي",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَهُدًۭى"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْكَذِبَ",
+        "ٱلْكَذِبِ"
+      ],
+      "collision_free": false,
+      "count": 8,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الكذب",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْكَذِبَ"
+    },
+    {
+      "all_surfaces": [
+        "تُوعَدُونَ",
+        "تُوعِدُونَ"
+      ],
+      "collision_free": false,
+      "count": 8,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "توعدون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تُوعَدُونَ"
+    },
+    {
+      "all_surfaces": [
+        "عَدُوًّا",
+        "عَدُوًّۭا",
+        "عَدْوًۢا"
+      ],
+      "collision_free": false,
+      "count": 8,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "عدوا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "عَدُوًّا"
+    },
+    {
+      "all_surfaces": [
+        "تُنفِقُوا۟"
+      ],
+      "collision_free": true,
+      "count": 8,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "تنفقوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تُنفِقُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "أَنفَقُوا۟",
+        "أَنفِقُوا۟"
+      ],
+      "collision_free": false,
+      "count": 8,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أنفقوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَنفَقُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "وَكُلٌّۭ",
+        "وَكُلَّ",
+        "وَكُلُّ"
+      ],
+      "collision_free": false,
+      "count": 8,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "وكل",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَكُلٌّۭ"
+    },
+    {
+      "all_surfaces": [
+        "وَإِمَّا",
+        "وَإِمَّآ"
+      ],
+      "collision_free": false,
+      "count": 8,
+      "dataset_hint": "particle",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "وإما",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "وَإِمَّا"
+    },
+    {
+      "all_surfaces": [
+        "يَذَّكَّرُونَ",
+        "يَذْكُرُونَ"
+      ],
+      "collision_free": false,
+      "count": 8,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يذكرون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَذَّكَّرُونَ"
+    },
+    {
+      "all_surfaces": [
+        "نِعَمَهُۥ",
+        "نِعْمَةًۭ",
+        "نِعْمَةٌۭ",
+        "نِعْمَةَ"
+      ],
+      "collision_free": false,
+      "count": 7,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 5,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "نعمه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "نِعَمَهُۥ"
+    },
+    {
+      "all_surfaces": [
+        "يذكر",
+        "يَذَّكَّرَ",
+        "يَذَّكَّرُ",
+        "يُذْكَرَ"
+      ],
+      "collision_free": false,
+      "count": 7,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 6,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "يذكر",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يذكر"
+    },
+    {
+      "all_surfaces": [
+        "صَدَقَ",
+        "صَدَّقَ",
+        "صِدْقٍ",
+        "صِدْقٍۢ"
+      ],
+      "collision_free": false,
+      "count": 7,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "صدق",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "صَدَقَ"
+    },
+    {
+      "all_surfaces": [
+        "هَدَىٰنَا",
+        "هَدَيْنَا"
+      ],
+      "collision_free": false,
+      "count": 7,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "هدينا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "هَدَىٰنَا"
+    },
+    {
+      "all_surfaces": [
+        "ءَاتَىٰكُمُ",
+        "ءَاتَىٰكُمْ",
+        "ءَاتِيكُم"
+      ],
+      "collision_free": false,
+      "count": 7,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ءاتيكم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ءَاتَىٰكُمُ"
+    },
+    {
+      "all_surfaces": [
+        "أَزْوَاجٌ",
+        "أَزْوَٰجٌۭ",
+        "أَزْوَٰجٍۢ",
+        "أَزْوَٰجِ"
+      ],
+      "collision_free": false,
+      "count": 7,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أزواج",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَزْوَاجٌ"
+    },
+    {
+      "all_surfaces": [
+        "ضَرَبَ",
+        "ضُرِبَ"
+      ],
+      "collision_free": false,
+      "count": 7,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ضرب",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ضَرَبَ"
+    },
+    {
+      "all_surfaces": [
+        "كَذِبٍۢ",
+        "كَذَّبَ"
+      ],
+      "collision_free": false,
+      "count": 7,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "كذب",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "كَذِبٍۢ"
+    },
+    {
+      "all_surfaces": [
+        "يَنزِلُ",
+        "يُنَزَّلَ",
+        "يُنَزِّلَ",
+        "يُنَزِّلُ"
+      ],
+      "collision_free": false,
+      "count": 7,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 5,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ينزل",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَنزِلُ"
+    },
+    {
+      "all_surfaces": [
+        "يُوحَىٰ",
+        "يُوحَىٰٓ"
+      ],
+      "collision_free": false,
+      "count": 7,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "يوحي",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يُوحَىٰ"
+    },
+    {
+      "all_surfaces": [
+        "يَتَّبِعُونَ",
+        "يُتْبِعُونَ"
+      ],
+      "collision_free": false,
+      "count": 7,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يتبعون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَتَّبِعُونَ"
+    },
+    {
+      "all_surfaces": [
+        "مِثْلِهِ",
+        "مَّثَلُهُۥ",
+        "مِّثْلُهُۥ",
+        "مِّثْلِهِۦ"
+      ],
+      "collision_free": false,
+      "count": 7,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "مثله",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مِثْلِهِ"
+    },
+    {
+      "all_surfaces": [
+        "بَلَغَ"
+      ],
+      "collision_free": true,
+      "count": 7,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "بلغ",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "بَلَغَ"
+    },
+    {
+      "all_surfaces": [
+        "حَكَمًۭا",
+        "حُكْمًا",
+        "حُكْمًۭا"
+      ],
+      "collision_free": false,
+      "count": 7,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "حكما",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "حَكَمًۭا"
+    },
+    {
+      "all_surfaces": [
+        "ذَكَرُوا۟",
+        "ذُكِّرُوا",
+        "ذُكِّرُوا۟"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ذكروا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ذَكَرُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "بَشَرًا",
+        "بَشَرًۭا",
+        "بُشْرًۢا"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بشرا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بَشَرًا"
+    },
+    {
+      "all_surfaces": [
+        "دَعَوُا۟",
+        "دَعَوْا۟",
+        "دُعُوا۟",
+        "دَّعَوَا"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "دعوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "دَعَوُا۟"
+    },
+    {
+      "all_surfaces": [
+        "يَنصُرُونَ",
+        "يُنصَرُونَ"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ينصرون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَنصُرُونَ"
+    },
+    {
+      "all_surfaces": [
+        "فَلَهُ",
+        "فَلَهُۥ",
+        "فَلَهُۥٓ"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فله",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "فَلَهُ"
+    },
+    {
+      "all_surfaces": [
+        "كَبُرَ",
+        "كِبْرٌۭ"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "كبر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "كَبُرَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱتَّبَعُوا۟",
+        "ٱتَّبِعُوا۟",
+        "ٱتُّبِعُوا۟"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "اتبعوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ٱتَّبَعُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "بَأْسٍۢ",
+        "بَأْسَ",
+        "بَأْسِ"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "بأس",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بَأْسٍۢ"
+    },
+    {
+      "all_surfaces": [
+        "كَمَن",
+        "كَمَنْ",
+        "كَمَنۢ"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "كمن",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "كَمَن"
+    },
+    {
+      "all_surfaces": [
+        "وَإِذَآ"
+      ],
+      "collision_free": true,
+      "count": 6,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وإذا",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "وَإِذَآ"
+    },
+    {
+      "all_surfaces": [
+        "أَنزَلْتَ",
+        "أُنزِلَتْ"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أنزلت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَنزَلْتَ"
+    },
+    {
+      "all_surfaces": [
+        "وَأَنفَقُوا۟",
+        "وَأَنفِقُوا۟"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وأنفقوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَأَنفَقُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "تُطِعِ",
+        "تُطِعْ"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "تطع",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تُطِعِ"
+    },
+    {
+      "all_surfaces": [
+        "قَضَىٰٓ",
+        "قُضِىَ"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "قضي",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "قَضَىٰٓ"
+    },
+    {
+      "all_surfaces": [
+        "تَقُومَ",
+        "تَقُومُ"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "تقوم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَقُومَ"
+    },
+    {
+      "all_surfaces": [
+        "وَٱتَّبَعُوا۟",
+        "وَٱتَّبَعُوٓا۟"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "واتبعوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَٱتَّبَعُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "أُمِرْتَ",
+        "أُمِرْتُ"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أمرت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أُمِرْتَ"
+    },
+    {
+      "all_surfaces": [
+        "مَّهِينٍ",
+        "مُّهِينٌۭ"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "مهين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مَّهِينٍ"
+    },
+    {
+      "all_surfaces": [
+        "أَظْلَمُ"
+      ],
+      "collision_free": true,
+      "count": 6,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أظلم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَظْلَمُ"
+    },
+    {
+      "all_surfaces": [
+        "مَلَكًۭا",
+        "مَلِكًۭا",
+        "مُلْكًۭا",
+        "مُّلْكًا"
+      ],
+      "collision_free": false,
+      "count": 6,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ملكا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مَلَكًۭا"
+    },
+    {
+      "all_surfaces": [
+        "أَغْنَىٰ",
+        "أُغْنِى"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أغني",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَغْنَىٰ"
+    },
+    {
+      "all_surfaces": [
+        "بَصِيرًا",
+        "بَصِيرًۢا",
+        "بَصِيرًۭا"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بصيرا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بَصِيرًا"
+    },
+    {
+      "all_surfaces": [
+        "عَمَلٌۭ",
+        "عَمَلٍۢ",
+        "عَمَلَ",
+        "عَمَلِ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "عمل",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "عَمَلٌۭ"
+    },
+    {
+      "all_surfaces": [
+        "عَلِمْنَا",
+        "عُلِّمْنَا"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "علمنا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "عَلِمْنَا"
+    },
+    {
+      "all_surfaces": [
+        "وَيَقْتُلُونَ",
+        "وَيُقْتَلُونَ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ويقتلون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَيَقْتُلُونَ"
+    },
+    {
+      "all_surfaces": [
+        "أَرَى",
+        "أَرَىٰ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أري",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَرَى"
+    },
+    {
+      "all_surfaces": [
+        "بَلَغَتِ",
+        "بَلَغْتَ",
+        "بَلَغْتُ",
+        "بَلَّغْتَ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بلغت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "بَلَغَتِ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْكُبَرِ",
+        "ٱلْكِبَرَ",
+        "ٱلْكِبَرُ",
+        "ٱلْكِبَرِ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الكبر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْكُبَرِ"
+    },
+    {
+      "all_surfaces": [
+        "تَقُولَ",
+        "تَقُولُ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "تقول",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَقُولَ"
+    },
+    {
+      "all_surfaces": [
+        "تَعْلَمُوا۟",
+        "تَعْلَمُوٓا۟"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "تعلموا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَعْلَمُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "الْأَمِينِ",
+        "ٱلْأَمِينُ",
+        "ٱلْأُمِّيِّۦنَ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "الأمين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "الْأَمِينِ"
+    },
+    {
+      "all_surfaces": [
+        "بَغِيًّۭا",
+        "بَغْيًا",
+        "بَغْيًۢا",
+        "بَغْيًۭا"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بغيا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بَغِيًّۭا"
+    },
+    {
+      "all_surfaces": [
+        "تَخْرُجُ",
+        "تَخْرُجْ",
+        "تُخْرِجُ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "تخرج",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَخْرُجُ"
+    },
+    {
+      "all_surfaces": [
+        "عَدْلٌۭ",
+        "عَدْلٍۢ",
+        "عَدْلُ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "عدل",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "عَدْلٌۭ"
+    },
+    {
+      "all_surfaces": [
+        "حَبَّةٍ",
+        "حَبَّةٍۢ",
+        "حُبِّهِۦ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "حبه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "حَبَّةٍ"
+    },
+    {
+      "all_surfaces": [
+        "تَقْرَبُوا۟"
+      ],
+      "collision_free": true,
+      "count": 5,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "تقربوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَقْرَبُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "لَيَقُولَنَّ",
+        "لَيَقُولُنَّ",
+        "لَّيَقُولُنَّ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ليقولن",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "لَيَقُولَنَّ"
+    },
+    {
+      "all_surfaces": [
+        "بِمَن",
+        "بِمَنِ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بمن",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "بِمَن"
+    },
+    {
+      "all_surfaces": [
+        "فَأَخْرَجْنَا"
+      ],
+      "collision_free": true,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فأخرجنا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "فَأَخْرَجْنَا"
+    },
+    {
+      "all_surfaces": [
+        "دَيْنٍ",
+        "دَيْنٍۢ",
+        "دِينِ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "دين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "دَيْنٍ"
+    },
+    {
+      "all_surfaces": [
+        "خَلَقْتَ",
+        "خَلَقْتُ",
+        "خُلِقَتْ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "خلقت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "خَلَقْتَ"
+    },
+    {
+      "all_surfaces": [
+        "قُلْتَ",
+        "قُلْتُ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "قلت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "قُلْتَ"
+    },
+    {
+      "all_surfaces": [
+        "فَأَنَّىٰ"
+      ],
+      "collision_free": true,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فأني",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "فَأَنَّىٰ"
+    },
+    {
+      "all_surfaces": [
+        "أَلْقَى",
+        "أَلْقَىٰ",
+        "أُلْقِىَ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ألقي",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَلْقَى"
+    },
+    {
+      "all_surfaces": [
+        "حَبًّۭا",
+        "حُبًّا",
+        "حُبًّۭا"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "حبا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "حَبًّۭا"
+    },
+    {
+      "all_surfaces": [
+        "مُحِيطٌۢ",
+        "مُحِيطٌۭ",
+        "مُّحِيطٌۢ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "محيط",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مُحِيطٌۢ"
+    },
+    {
+      "all_surfaces": [
+        "يَغْشَى",
+        "يَغْشَىٰ",
+        "يُغْشَىٰ",
+        "يُغْشِى"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "يغشي",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَغْشَى"
+    },
+    {
+      "all_surfaces": [
+        "ظَنَّ"
+      ],
+      "collision_free": true,
+      "count": 5,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ظن",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ظَنَّ"
+    },
+    {
+      "all_surfaces": [
+        "وَبِمَا",
+        "وَبِمَآ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وبما",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "وَبِمَا"
+    },
+    {
+      "all_surfaces": [
+        "ٱسْتَوَىٰ",
+        "ٱسْتَوَىٰٓ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "استوي",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ٱسْتَوَىٰ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْبَرُّ",
+        "ٱلْبَرِّ"
+      ],
+      "collision_free": false,
+      "count": 5,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "البر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْبَرُّ"
+    },
+    {
+      "all_surfaces": [
+        "مَثَلُهُمْ",
+        "مِثْلَهُم",
+        "مِّثْلُهُمْ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "مثلهم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مَثَلُهُمْ"
+    },
+    {
+      "all_surfaces": [
+        "ضَعْفًۭا",
+        "ضِعْفًۭا"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ضعفا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ضَعْفًۭا"
+    },
+    {
+      "all_surfaces": [
+        "قَدَرُهُۥ",
+        "قَدْرِهِۦ",
+        "قَدْرِهِۦٓ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "قدره",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "قَدَرُهُۥ"
+    },
+    {
+      "all_surfaces": [
+        "أَرَىٰكُم",
+        "أَرَىٰكُمْ",
+        "أُرِيكُمْ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أريكم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَرَىٰكُم"
+    },
+    {
+      "all_surfaces": [
+        "لَلَّذِى",
+        "لِلَّذِى",
+        "لِلَّذِىٓ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "للذي",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "لَلَّذِى"
+    },
+    {
+      "all_surfaces": [
+        "أَمَرَكُمُ",
+        "أَمْرَكُمْ",
+        "أَمْرُكُمْ",
+        "أَمْرِكُمْ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أمركم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَمَرَكُمُ"
+    },
+    {
+      "all_surfaces": [
+        "تَنظُرُونَ",
+        "تُنظِرُونِ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "تنظرون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَنظُرُونَ"
+    },
+    {
+      "all_surfaces": [
+        "ضَعْفٍۢ",
+        "ضِعْفٌۭ",
+        "ضِعْفَ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ضعف",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ضَعْفٍۢ"
+    },
+    {
+      "all_surfaces": [
+        "لَهُوَ",
+        "لَهْوٌۭ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "لهو",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "لَهُوَ"
+    },
+    {
+      "all_surfaces": [
+        "قَٰتَلُوٓا۟",
+        "قَٰتِلُوا۟"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "قاتلوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "قَٰتَلُوٓا۟"
+    },
+    {
+      "all_surfaces": [
+        "فَإِمَّا"
+      ],
+      "collision_free": true,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فإما",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "فَإِمَّا"
+    },
+    {
+      "all_surfaces": [
+        "وَٱلطَّيْرَ",
+        "وَٱلطَّيْرُ",
+        "وَٱلطَّيْرِ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "والطير",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَٱلطَّيْرَ"
+    },
+    {
+      "all_surfaces": [
+        "أَنْعَمْتَ",
+        "أَنْعَمْتُ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أنعمت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَنْعَمْتَ"
+    },
+    {
+      "all_surfaces": [
+        "أَلْقَوْا۟",
+        "أَلْقُوا۟"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ألقوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَلْقَوْا۟"
+    },
+    {
+      "all_surfaces": [
+        "لَيُوسُفُ",
+        "لِيُوسُفَ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ليوسف",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "لَيُوسُفُ"
+    },
+    {
+      "all_surfaces": [
+        "أَمَّن",
+        "أَمَّنْ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أمن",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "أَمَّن"
+    },
+    {
+      "all_surfaces": [
+        "جِئْتَ",
+        "جِئْتِ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "جئت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "جِئْتَ"
+    },
+    {
+      "all_surfaces": [
+        "تَهْتَدُونَ"
+      ],
+      "collision_free": true,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "تهتدون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَهْتَدُونَ"
+    },
+    {
+      "all_surfaces": [
+        "وَعْدَهُۥ",
+        "وَعْدَهُۥٓ",
+        "وَعْدُهُۥ",
+        "وَعْدِهِۦ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وعده",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَعْدَهُۥ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلسَّلَمَ",
+        "ٱلسَّلْمِ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "السلم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلسَّلَمَ"
+    },
+    {
+      "all_surfaces": [
+        "يَدْعُوا۟",
+        "يَدْعُوٓا۟"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يدعوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَدْعُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "أَتَى",
+        "أَتَىٰ",
+        "أَتَىٰٓ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أتي",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَتَى"
+    },
+    {
+      "all_surfaces": [
+        "وَأَصْلَحُوا۟",
+        "وَأَصْلِحُوا۟"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وأصلحوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَأَصْلَحُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "يُؤْتَ",
+        "يُؤْتِ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يؤت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يُؤْتَ"
+    },
+    {
+      "all_surfaces": [
+        "أَخْرَجْنَا",
+        "أَخْرِجْنَا",
+        "أُخْرِجْنَا"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أخرجنا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَخْرَجْنَا"
+    },
+    {
+      "all_surfaces": [
+        "شَرِبَ",
+        "شِرْبٌۭ",
+        "شِرْبٍۢ",
+        "شِرْبُ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 4,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "شرب",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "شَرِبَ"
+    },
+    {
+      "all_surfaces": [
+        "بِيَدِهِ",
+        "بِيَدِهِۦ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بيده",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بِيَدِهِ"
+    },
+    {
+      "all_surfaces": [
+        "يَصُدُّونَ"
+      ],
+      "collision_free": true,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "يصدون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَصُدُّونَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْأَرْحَامُ",
+        "ٱلْأَرْحَامِ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "الأرحام",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْأَرْحَامُ"
+    },
+    {
+      "all_surfaces": [
+        "وَقَٰتَلُوا۟",
+        "وَقَٰتِلُوا۟"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وقاتلوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَقَٰتَلُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "وَكُلًّۭا"
+      ],
+      "collision_free": true,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وكلا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَكُلًّۭا"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْعَلِىُّ",
+        "ٱلْعَلِىِّ",
+        "ٱلْعُلَىٰ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "العلي",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْعَلِىُّ"
+    },
+    {
+      "all_surfaces": [
+        "وَٱتَّخَذُوا۟",
+        "وَٱتَّخَذُوٓا۟",
+        "وَٱتَّخِذُوا۟"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "واتخذوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَٱتَّخَذُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "يُؤْخَذُ",
+        "يُؤْخَذْ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يؤخذ",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يُؤْخَذُ"
+    },
+    {
+      "all_surfaces": [
+        "أَوْلَىٰ",
+        "أُو۟لِى"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أولي",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَوْلَىٰ"
+    },
+    {
+      "all_surfaces": [
+        "خِلَٰفٍ",
+        "خِلَٰفٍۢ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "خلاف",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "خِلَٰفٍ"
+    },
+    {
+      "all_surfaces": [
+        "صَٰلِحَيْنِ",
+        "صَٰلِحِينَ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "صالحين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "صَٰلِحَيْنِ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْكَلِمَ",
+        "ٱلْكَلِمُ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الكلم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْكَلِمَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْأَعْمَىٰ"
+      ],
+      "collision_free": true,
+      "count": 4,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "الأعمي",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْأَعْمَىٰ"
+    },
+    {
+      "all_surfaces": [
+        "عَبْدَنَا",
+        "عَبْدَنَآ",
+        "عَبْدِنَا"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "عبدنا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "عَبْدَنَا"
+    },
+    {
+      "all_surfaces": [
+        "غَضَبٌۭ",
+        "غَضَبَ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "غضب",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "غَضَبٌۭ"
+    },
+    {
+      "all_surfaces": [
+        "آيَةً",
+        "آيَةٌ",
+        "آيَةٍ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ايه",
+      "qac_pos": null,
+      "qac_root": null,
+      "sample_surface": "آيَةً"
+    },
+    {
+      "all_surfaces": [
+        "نَرَىٰكَ"
+      ],
+      "collision_free": true,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "نريك",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "نَرَىٰكَ"
+    },
+    {
+      "all_surfaces": [
+        "قَتَلُوٓا۟",
+        "قُتِلُوا۟"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "قتلوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "قَتَلُوٓا۟"
+    },
+    {
+      "all_surfaces": [
+        "أُوحِىَ"
+      ],
+      "collision_free": true,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أوحي",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أُوحِىَ"
+    },
+    {
+      "all_surfaces": [
+        "وَءَامِنُوا۟",
+        "وَّءَامَنُوا۟"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وءامنوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَءَامِنُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "ءَامَنتُ",
+        "ءَامَنَتْ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ءامنت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ءَامَنتُ"
+    },
+    {
+      "all_surfaces": [
+        "يَأْتُوا",
+        "يَأْتُوا۟"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يأتوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَأْتُوا"
+    },
+    {
+      "all_surfaces": [
+        "مَالَ",
+        "مَالِ",
+        "مَّالِ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "مال",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مَالَ"
+    },
+    {
+      "all_surfaces": [
+        "عَرَضٌۭ",
+        "عَرَضَ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "عرض",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "عَرَضٌۭ"
+    },
+    {
+      "all_surfaces": [
+        "خَلَقُوا۟",
+        "خُلِقُوا۟"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "خلقوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "خَلَقُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْءَاخَرِينَ",
+        "ٱلْءَاخِرِينَ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الءاخرين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْءَاخَرِينَ"
+    },
+    {
+      "all_surfaces": [
+        "وَقَوْمَ",
+        "وَقَوْمُ",
+        "وَقَوْمِ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وقوم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَقَوْمَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلرُّوحَ",
+        "ٱلرُّوحُ",
+        "ٱلرُّوحِ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "الروح",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلرُّوحَ"
+    },
+    {
+      "all_surfaces": [
+        "فَلَهُمْ"
+      ],
+      "collision_free": true,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فلهم",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "فَلَهُمْ"
+    },
+    {
+      "all_surfaces": [
+        "شَهَٰدَةً",
+        "شَهَٰدَةَ",
+        "شَهَٰدَةُ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "شهاده",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "شَهَٰدَةً"
+    },
+    {
+      "all_surfaces": [
+        "سَخِرَ",
+        "سَخَّرَ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "سخر",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "سَخِرَ"
+    },
+    {
+      "all_surfaces": [
+        "يَسْبَحُونَ",
+        "يُسَبِّحُونَ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "يسبحون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَسْبَحُونَ"
+    },
+    {
+      "all_surfaces": [
+        "يَخْلُقُونَ",
+        "يُخْلَقُونَ"
+      ],
+      "collision_free": false,
+      "count": 4,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يخلقون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَخْلُقُونَ"
+    },
+    {
+      "all_surfaces": [
+        "أَخْرَجَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أخرج",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَخْرَجَ"
+    },
+    {
+      "all_surfaces": [
+        "وَأَخَّرَ",
+        "وَأُخَرَ",
+        "وَأُخَرُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وأخر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَأَخَّرَ"
+    },
+    {
+      "all_surfaces": [
+        "حَمَلَتْهُ",
+        "حَمَلْتَهُۥ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "حملته",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "حَمَلَتْهُ"
+    },
+    {
+      "all_surfaces": [
+        "أَحَبَّ",
+        "أَحَبُّ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أحب",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَحَبَّ"
+    },
+    {
+      "all_surfaces": [
+        "ٱتَّخَذَتْ",
+        "ٱتَّخَذْتَ",
+        "ٱتَّخَذْتُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "اتخذت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ٱتَّخَذَتْ"
+    },
+    {
+      "all_surfaces": [
+        "يَظْهَرُوا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يظهروا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَظْهَرُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "رَأَيْتَهُمْ",
+        "رَأَيْتُهُمْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "رأيتهم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "رَأَيْتَهُمْ"
+    },
+    {
+      "all_surfaces": [
+        "أَوَلَوْ",
+        "أُولُو"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أولو",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَوَلَوْ"
+    },
+    {
+      "all_surfaces": [
+        "بِيَمِينِهِۦ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بيمينه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بِيَمِينِهِۦ"
+    },
+    {
+      "all_surfaces": [
+        "ٱسْتَطَعْتَ",
+        "ٱسْتَطَعْتُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "استطعت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ٱسْتَطَعْتَ"
+    },
+    {
+      "all_surfaces": [
+        "أَخْرِجُوٓا۟",
+        "أُخْرِجُوا۟"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أخرجوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَخْرِجُوٓا۟"
+    },
+    {
+      "all_surfaces": [
+        "صَدَقُوا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "صدقوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "صَدَقُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "قَضَيْتَ",
+        "قَضَيْتُ",
+        "قُضِيَتِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "قضيت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "قَضَيْتَ"
+    },
+    {
+      "all_surfaces": [
+        "وَأَقْوَمَ",
+        "وَأَقْوَمُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وأقوم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَأَقْوَمَ"
+    },
+    {
+      "all_surfaces": [
+        "بَيْتٌ",
+        "بَيْتٍۢ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "بيت",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بَيْتٌ"
+    },
+    {
+      "all_surfaces": [
+        "لِّلْعَٰلَمِينَ",
+        "لِّلْعَٰلِمِينَ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "للعالمين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "لِّلْعَٰلَمِينَ"
+    },
+    {
+      "all_surfaces": [
+        "فَبِمَا"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فبما",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "فَبِمَا"
+    },
+    {
+      "all_surfaces": [
+        "كُلًّا",
+        "كُلًّۭا"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": true,
+      "key": "كلا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "كُلًّا"
+    },
+    {
+      "all_surfaces": [
+        "بِسَحَرٍۢ",
+        "بِسِحْرٍ",
+        "بِسِحْرٍۢ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بسحر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بِسَحَرٍۢ"
+    },
+    {
+      "all_surfaces": [
+        "وَأَمَرُّ",
+        "وَأْمُرْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وأمر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَأَمَرُّ"
+    },
+    {
+      "all_surfaces": [
+        "وَأَعْرَضَ",
+        "وَأَعْرِضْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وأعرض",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَأَعْرَضَ"
+    },
+    {
+      "all_surfaces": [
+        "ظَنًّا",
+        "ظَنًّۭا",
+        "ظَنَّآ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ظنا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ظَنًّا"
+    },
+    {
+      "all_surfaces": [
+        "فَأَخْرَجَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فأخرج",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "فَأَخْرَجَ"
+    },
+    {
+      "all_surfaces": [
+        "حِلٌّۭ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "حل",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "حِلٌّۭ"
+    },
+    {
+      "all_surfaces": [
+        "مُبْصِرَةًۭ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "مبصره",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مُبْصِرَةًۭ"
+    },
+    {
+      "all_surfaces": [
+        "رَشَدًۭا",
+        "رُشْدًۭا"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "رشدا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "رَشَدًۭا"
+    },
+    {
+      "all_surfaces": [
+        "رُدُّوا",
+        "رُدُّوا۟",
+        "رُدُّوٓا۟"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ردوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "رُدُّوا"
+    },
+    {
+      "all_surfaces": [
+        "مُخْلَصًۭا",
+        "مُخْلِصًۭا"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "مخلصا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مُخْلَصًۭا"
+    },
+    {
+      "all_surfaces": [
+        "كَفَّارٌۭ",
+        "كَفَّارٍ",
+        "كُفَّارٌۭ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "كفار",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "كَفَّارٌۭ"
+    },
+    {
+      "all_surfaces": [
+        "وَأَلْقَيْنَا"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وألقينا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَأَلْقَيْنَا"
+    },
+    {
+      "all_surfaces": [
+        "فَأَلْقَوُا۟",
+        "فَأَلْقَوْا۟"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فألقوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "فَأَلْقَوُا۟"
+    },
+    {
+      "all_surfaces": [
+        "تَتْلُوا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "تتلوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَتْلُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "وَيُخْرِجُ",
+        "وَيُخْرِجْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ويخرج",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَيُخْرِجُ"
+    },
+    {
+      "all_surfaces": [
+        "أَنجَىٰنَا",
+        "أَنجَيْنَا"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أنجينا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَنجَىٰنَا"
+    },
+    {
+      "all_surfaces": [
+        "وَٱلشُّهَدَآءُ",
+        "وَٱلشُّهَدَآءِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "والشهداء",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَٱلشُّهَدَآءُ"
+    },
+    {
+      "all_surfaces": [
+        "ءَاتَىٰكَ",
+        "ءَاتِيكَ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ءاتيك",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ءَاتَىٰكَ"
+    },
+    {
+      "all_surfaces": [
+        "فَلَهَا"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فلها",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "فَلَهَا"
+    },
+    {
+      "all_surfaces": [
+        "بِهِنَّ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بهن",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "بِهِنَّ"
+    },
+    {
+      "all_surfaces": [
+        "بِنَا",
+        "بِنَآ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بنا",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "بِنَا"
+    },
+    {
+      "all_surfaces": [
+        "غَلَّ",
+        "غِلٍّ",
+        "غِلٍّۢ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "غل",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "غَلَّ"
+    },
+    {
+      "all_surfaces": [
+        "فَإِنَّهَا"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فإنها",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "فَإِنَّهَا"
+    },
+    {
+      "all_surfaces": [
+        "نِعْمَ",
+        "نِّعْمَ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "particle",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "نعم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "نِعْمَ"
+    },
+    {
+      "all_surfaces": [
+        "أَضَلُّ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أضل",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَضَلُّ"
+    },
+    {
+      "all_surfaces": [
+        "وَحَرَّمَ",
+        "وَحُرِّمَ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وحرم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَحَرَّمَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْقَيِّمُ",
+        "ٱلْقَيِّمِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "القيم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْقَيِّمُ"
+    },
+    {
+      "all_surfaces": [
+        "تَتَوَلَّوْا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "تتولوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَتَوَلَّوْا۟"
+    },
+    {
+      "all_surfaces": [
+        "قِبْلَةًۭ",
+        "قِبْلَةَ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "قبله",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "قِبْلَةًۭ"
+    },
+    {
+      "all_surfaces": [
+        "وَٱلْمَغْرِبُ",
+        "وَٱلْمَغْرِبِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "والمغرب",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَٱلْمَغْرِبُ"
+    },
+    {
+      "all_surfaces": [
+        "بِقَوْمٍ",
+        "بِقَوْمٍۢ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بقوم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بِقَوْمٍ"
+    },
+    {
+      "all_surfaces": [
+        "يُعَذِّبَهُمُ",
+        "يُعَذِّبُهُمْ",
+        "يُعَذِّبْهُمُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يعذبهم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يُعَذِّبَهُمُ"
+    },
+    {
+      "all_surfaces": [
+        "فَٱعْلَمُوٓا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فاعلموا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "فَٱعْلَمُوٓا۟"
+    },
+    {
+      "all_surfaces": [
+        "ثَوَابًۭا"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ثوابا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ثَوَابًۭا"
+    },
+    {
+      "all_surfaces": [
+        "وَخَيْرٌ",
+        "وَخَيْرٌۭ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وخير",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَخَيْرٌ"
+    },
+    {
+      "all_surfaces": [
+        "ءَاذَنَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ءاذن",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ءَاذَنَ"
+    },
+    {
+      "all_surfaces": [
+        "وَبَثَّ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وبث",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَبَثَّ"
+    },
+    {
+      "all_surfaces": [
+        "يَقْدِرُونَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يقدرون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَقْدِرُونَ"
+    },
+    {
+      "all_surfaces": [
+        "مُجْرِمِينَ",
+        "مُّجْرِمِينَ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "مجرمين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مُجْرِمِينَ"
+    },
+    {
+      "all_surfaces": [
+        "وَجَآءَتْ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وجاءت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَجَآءَتْ"
+    },
+    {
+      "all_surfaces": [
+        "تَرَوْنَهَا"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ترونها",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَرَوْنَهَا"
+    },
+    {
+      "all_surfaces": [
+        "يَضَعْنَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يضعن",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَضَعْنَ"
+    },
+    {
+      "all_surfaces": [
+        "يَخْرُجُونَ",
+        "يُخْرِجُونَ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يخرجون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَخْرُجُونَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْبُيُوتَ",
+        "ٱلْبُيُوتِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "البيوت",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْبُيُوتَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْكَٰذِبِينَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الكاذبين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْكَٰذِبِينَ"
+    },
+    {
+      "all_surfaces": [
+        "وَٱلشَّهَٰدَةِ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "والشهاده",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَٱلشَّهَٰدَةِ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْكَبِيرُ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الكبير",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْكَبِيرُ"
+    },
+    {
+      "all_surfaces": [
+        "يَبْعَثُهُمُ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يبعثهم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَبْعَثُهُمُ"
+    },
+    {
+      "all_surfaces": [
+        "فَيُنَبِّئُهُم"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فينبئهم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "فَيُنَبِّئُهُم"
+    },
+    {
+      "all_surfaces": [
+        "يَقُومُ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "يقوم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَقُومُ"
+    },
+    {
+      "all_surfaces": [
+        "وَبَنِينَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وبنين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَبَنِينَ"
+    },
+    {
+      "all_surfaces": [
+        "وَلِيَعْلَمَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وليعلم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَلِيَعْلَمَ"
+    },
+    {
+      "all_surfaces": [
+        "بَيْتِىَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بيتي",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بَيْتِىَ"
+    },
+    {
+      "all_surfaces": [
+        "مُخْتَلِفًا",
+        "مُّخْتَلِفًا"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "مختلفا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مُخْتَلِفًا"
+    },
+    {
+      "all_surfaces": [
+        "مُخْتَلِفٌ",
+        "مُّخْتَلِفٌ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "مختلف",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مُخْتَلِفٌ"
+    },
+    {
+      "all_surfaces": [
+        "ٱغْفِرْ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "اغفر",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ٱغْفِرْ"
+    },
+    {
+      "all_surfaces": [
+        "يَعِدُكُمُ",
+        "يَعِدُكُمْ",
+        "يَعِدْكُمْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يعدكم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَعِدُكُمُ"
+    },
+    {
+      "all_surfaces": [
+        "حُطَٰمًا",
+        "حُطَٰمًۭا"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "حطاما",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "حُطَٰمًا"
+    },
+    {
+      "all_surfaces": [
+        "لِأُو۟لِى",
+        "لِّأُو۟لِى"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "لأولي",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "لِأُو۟لِى"
+    },
+    {
+      "all_surfaces": [
+        "أَرْبَعِينَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أربعين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَرْبَعِينَ"
+    },
+    {
+      "all_surfaces": [
+        "وَأَصْلَحَ",
+        "وَأَصْلِحْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وأصلح",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَأَصْلَحَ"
+    },
+    {
+      "all_surfaces": [
+        "دَعْوَةٌۭ",
+        "دَعْوَةَ",
+        "دَعْوَةُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "دعوه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "دَعْوَةٌۭ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْبَلَٰغُ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "البلاغ",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْبَلَٰغُ"
+    },
+    {
+      "all_surfaces": [
+        "عُدَّةًۭ",
+        "عِدَّةَ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "عده",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "عُدَّةًۭ"
+    },
+    {
+      "all_surfaces": [
+        "الغالبون",
+        "الْغَالِبُونَ",
+        "ٱلْغَٰلِبُونَ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "الغالبون",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "الغالبون"
+    },
+    {
+      "all_surfaces": [
+        "وَٱلْمُحْصَنَٰتُ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "والمحصنات",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَٱلْمُحْصَنَٰتُ"
+    },
+    {
+      "all_surfaces": [
+        "آمَنُوا",
+        "آمِنُوا"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "امنوا",
+      "qac_pos": null,
+      "qac_root": null,
+      "sample_surface": "آمَنُوا"
+    },
+    {
+      "all_surfaces": [
+        "نَبَاتَ",
+        "نَبَاتُ",
+        "نَّبَاتٍۢ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "نبات",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "نَبَاتَ"
+    },
+    {
+      "all_surfaces": [
+        "وَظَنَّ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وظن",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَظَنَّ"
+    },
+    {
+      "all_surfaces": [
+        "فَصَلَتِ",
+        "فُصِّلَتْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فصلت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "فَصَلَتِ"
+    },
+    {
+      "all_surfaces": [
+        "فَلَكُمُ",
+        "فَلَكُمْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فلكم",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "فَلَكُمُ"
+    },
+    {
+      "all_surfaces": [
+        "ٱمْرَأَةًۭ",
+        "ٱمْرَأَةٌ",
+        "ٱمْرَأَةٌۭ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "امرأه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱمْرَأَةًۭ"
+    },
+    {
+      "all_surfaces": [
+        "يَٰعِيسَى",
+        "يَٰعِيسَىٰٓ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ياعيسي",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "يَٰعِيسَى"
+    },
+    {
+      "all_surfaces": [
+        "فَلِنَفْسِهِۦ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فلنفسه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "فَلِنَفْسِهِۦ"
+    },
+    {
+      "all_surfaces": [
+        "أُكُلَهَا",
+        "أُكُلُهَا"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أكلها",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أُكُلَهَا"
+    },
+    {
+      "all_surfaces": [
+        "حَرَّمْنَا"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "حرمنا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "حَرَّمْنَا"
+    },
+    {
+      "all_surfaces": [
+        "يَمَسُّهُم",
+        "يَمَسُّهُمُ",
+        "يَمَسُّهُمْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يمسهم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَمَسُّهُم"
+    },
+    {
+      "all_surfaces": [
+        "يُصِيبَهُم",
+        "يُصِيبَهُمْ",
+        "يُصِيبُهُمْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يصيبهم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يُصِيبَهُم"
+    },
+    {
+      "all_surfaces": [
+        "دَخَلَتْ",
+        "دَخَلْتَ",
+        "دُخِلَتْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "دخلت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "دَخَلَتْ"
+    },
+    {
+      "all_surfaces": [
+        "وَٱسْتَغْفِرُوا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "واستغفروا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَٱسْتَغْفِرُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "وَذَا"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وذا",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "وَذَا"
+    },
+    {
+      "all_surfaces": [
+        "ءَاتَىٰهُ",
+        "ءَاتِيَةٌۭ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ءاتيه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ءَاتَىٰهُ"
+    },
+    {
+      "all_surfaces": [
+        "يُسْرًۭا"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "يسرا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "يُسْرًۭا"
+    },
+    {
+      "all_surfaces": [
+        "فَرَضَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "فرض",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "فَرَضَ"
+    },
+    {
+      "all_surfaces": [
+        "يَقْدِرَ",
+        "يَقْدِرُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "يقدر",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَقْدِرَ"
+    },
+    {
+      "all_surfaces": [
+        "شَهْرٌۭ",
+        "شَهْرٍۢ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "شهر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "شَهْرٌۭ"
+    },
+    {
+      "all_surfaces": [
+        "أَتَوا۟",
+        "أَتَوْا۟"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أتوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَتَوا۟"
+    },
+    {
+      "all_surfaces": [
+        "كَفَرْتُمْ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "كفرتم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "كَفَرْتُمْ"
+    },
+    {
+      "all_surfaces": [
+        "فَٱسْتَكْبَرُوا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فاستكبروا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "فَٱسْتَكْبَرُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "عَيْنًا",
+        "عَيْنًۭا"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "عينا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "عَيْنًا"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْغَىِّ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الغي",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْغَىِّ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْبَعْثِ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "البعث",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْبَعْثِ"
+    },
+    {
+      "all_surfaces": [
+        "مَكَانَهُۥ",
+        "مَكَانَهُۥٓ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "مكانه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مَكَانَهُۥ"
+    },
+    {
+      "all_surfaces": [
+        "خُضْرٌۭ",
+        "خُضْرٍۢ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "خضر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "خُضْرٌۭ"
+    },
+    {
+      "all_surfaces": [
+        "قَامُوا۟",
+        "قَامُوٓا۟"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "قاموا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "قَامُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "خَسِرَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "خسر",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "خَسِرَ"
+    },
+    {
+      "all_surfaces": [
+        "مُهْتَدِينَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "مهتدين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مُهْتَدِينَ"
+    },
+    {
+      "all_surfaces": [
+        "أَجِدُ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أجد",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَجِدُ"
+    },
+    {
+      "all_surfaces": [
+        "بَعْدِى",
+        "بَعْدِىٓ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بعدي",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بَعْدِى"
+    },
+    {
+      "all_surfaces": [
+        "مَّعْلُومٍۢ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "معلوم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مَّعْلُومٍۢ"
+    },
+    {
+      "all_surfaces": [
+        "تَسْتَكْبِرُونَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "تستكبرون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَسْتَكْبِرُونَ"
+    },
+    {
+      "all_surfaces": [
+        "جَامِعٍۢ",
+        "جَامِعُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "جامع",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "جَامِعٍۢ"
+    },
+    {
+      "all_surfaces": [
+        "شِئْتَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "شئت",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "شِئْتَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْبَيْعَ",
+        "ٱلْبَيْعُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "البيع",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْبَيْعَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلرَّحْمَةَ",
+        "ٱلرَّحْمَةُ",
+        "ٱلرَّحْمَةِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الرحمه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلرَّحْمَةَ"
+    },
+    {
+      "all_surfaces": [
+        "يَٰٓأَهْلَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ياأهل",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "يَٰٓأَهْلَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْمَلَؤُا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الملؤا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْمَلَؤُا۟"
+    },
+    {
+      "all_surfaces": [
+        "بِٱلصَّبْرِ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بالصبر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بِٱلصَّبْرِ"
+    },
+    {
+      "all_surfaces": [
+        "وَٱلصَّلَوٰةِ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "والصلواه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَٱلصَّلَوٰةِ"
+    },
+    {
+      "all_surfaces": [
+        "أَوَّابٌ",
+        "أَوَّابٌۭ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "أواب",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَوَّابٌ"
+    },
+    {
+      "all_surfaces": [
+        "صَبَّارٍۢ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "صبار",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "صَبَّارٍۢ"
+    },
+    {
+      "all_surfaces": [
+        "نَدْعُوا۟",
+        "نَّدْعُوَا۟"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ندعوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "نَدْعُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "يَحْسَبُونَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يحسبون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَحْسَبُونَ"
+    },
+    {
+      "all_surfaces": [
+        "قَوْمِى"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "قومي",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "قَوْمِى"
+    },
+    {
+      "all_surfaces": [
+        "رَضُوا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "رضوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "رَضُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "مُّقِيمٌ",
+        "مُّقِيمٌۭ",
+        "مُّقِيمٍۢ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "مقيم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مُّقِيمٌ"
+    },
+    {
+      "all_surfaces": [
+        "يَرْتَدَّ",
+        "يَرْتَدُّ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يرتد",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَرْتَدَّ"
+    },
+    {
+      "all_surfaces": [
+        "وَٰسِعٌ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "واسع",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَٰسِعٌ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْعِزَّةَ",
+        "ٱلْعِزَّةُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "العزه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْعِزَّةَ"
+    },
+    {
+      "all_surfaces": [
+        "وَلِلْمُؤْمِنِينَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وللمؤمنين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَلِلْمُؤْمِنِينَ"
+    },
+    {
+      "all_surfaces": [
+        "وَءَاتَى"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وءاتي",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَءَاتَى"
+    },
+    {
+      "all_surfaces": [
+        "أَتَىٰنَا",
+        "أَتَيْنَا"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أتينا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَتَىٰنَا"
+    },
+    {
+      "all_surfaces": [
+        "وَٱسْتَكْبَرُوا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "واستكبروا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "وَٱسْتَكْبَرُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "يَدْخُلُونَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يدخلون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَدْخُلُونَ"
+    },
+    {
+      "all_surfaces": [
+        "أَثِيمٍ",
+        "أَثِيمٍۢ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أثيم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَثِيمٍ"
+    },
+    {
+      "all_surfaces": [
+        "يَأْتِهِمْ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يأتهم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَأْتِهِمْ"
+    },
+    {
+      "all_surfaces": [
+        "نُذِقْهُ",
+        "نُّذِقْهُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "نذقه",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "نُذِقْهُ"
+    },
+    {
+      "all_surfaces": [
+        "بِٱلصَّلَوٰةِ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بالصلواه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بِٱلصَّلَوٰةِ"
+    },
+    {
+      "all_surfaces": [
+        "بِٱلْعِبَادِ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بالعباد",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بِٱلْعِبَادِ"
+    },
+    {
+      "all_surfaces": [
+        "لَقُضِىَ",
+        "لَّقُضِىَ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "لقضي",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "لَقُضِىَ"
+    },
+    {
+      "all_surfaces": [
+        "كَلِمَٰتٍۢ",
+        "كَلِمَٰتُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "كلمات",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "كَلِمَٰتٍۢ"
+    },
+    {
+      "all_surfaces": [
+        "يَكْفُرُوا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يكفروا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَكْفُرُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "زَوْجَيْنِ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "زوجين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "زَوْجَيْنِ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلصُّمَّ",
+        "ٱلصُّمُّ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "الصم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلصُّمَّ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلدُّعَآءَ",
+        "ٱلدُّعَآءِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الدعاء",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلدُّعَآءَ"
+    },
+    {
+      "all_surfaces": [
+        "لِبَشَرٍ",
+        "لِبَشَرٍۢ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "لبشر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "لِبَشَرٍ"
+    },
+    {
+      "all_surfaces": [
+        "يَتْلُونَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يتلون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَتْلُونَ"
+    },
+    {
+      "all_surfaces": [
+        "ءَاتَيْنَٰكُم"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ءاتيناكم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ءَاتَيْنَٰكُم"
+    },
+    {
+      "all_surfaces": [
+        "يَأْمُرُكُم",
+        "يَأْمُرُكُمْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يأمركم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَأْمُرُكُم"
+    },
+    {
+      "all_surfaces": [
+        "وَأَشَدَّ",
+        "وَأَشَدُّ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وأشد",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَأَشَدَّ"
+    },
+    {
+      "all_surfaces": [
+        "وَالْكِتَابِ",
+        "وَٱلْكِتَٰبَ",
+        "وَٱلْكِتَٰبِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "والكتاب",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَالْكِتَابِ"
+    },
+    {
+      "all_surfaces": [
+        "كُلَّهُۥ",
+        "كُلِّهِۦ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "كله",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "كُلَّهُۥ"
+    },
+    {
+      "all_surfaces": [
+        "وَإِلَيْكَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وإليك",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "وَإِلَيْكَ"
+    },
+    {
+      "all_surfaces": [
+        "أَمْلِكُ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أملك",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَمْلِكُ"
+    },
+    {
+      "all_surfaces": [
+        "وَلِلرَّسُولِ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وللرسول",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَلِلرَّسُولِ"
+    },
+    {
+      "all_surfaces": [
+        "ءَأَنتُمْ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ءأنتم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ءَأَنتُمْ"
+    },
+    {
+      "all_surfaces": [
+        "يَلْبَثُوٓا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يلبثوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَلْبَثُوٓا۟"
+    },
+    {
+      "all_surfaces": [
+        "وَعَنِ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وعن",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "وَعَنِ"
+    },
+    {
+      "all_surfaces": [
+        "نَصَرَكُمُ",
+        "نَصْرَكُمْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "نصركم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "نَصَرَكُمُ"
+    },
+    {
+      "all_surfaces": [
+        "مَرُّوا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "مروا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "مَرُّوا۟"
+    },
+    {
+      "all_surfaces": [
+        "أَظُنُّ",
+        "أَظُنُّ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أظن",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَظُنُّ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلضُّرَّ",
+        "ٱلضُّرُّ",
+        "ٱلضُّرِّ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الضر",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلضُّرَّ"
+    },
+    {
+      "all_surfaces": [
+        "ضَرُّهُۥٓ",
+        "ضُرَّهُۥ",
+        "ضُرِّهِۦٓ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ضره",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ضَرُّهُۥٓ"
+    },
+    {
+      "all_surfaces": [
+        "يُؤْذَنَ",
+        "يُؤْذَنُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يؤذن",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يُؤْذَنَ"
+    },
+    {
+      "all_surfaces": [
+        "عَيْنٍ",
+        "عِينٌۭ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "عين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "عَيْنٍ"
+    },
+    {
+      "all_surfaces": [
+        "وَأَنْهَٰرٌۭ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "وأنهار",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَأَنْهَٰرٌۭ"
+    },
+    {
+      "all_surfaces": [
+        "وَمَغْفِرَةًۭ",
+        "وَمَغْفِرَةٌۭ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ومغفره",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "وَمَغْفِرَةًۭ"
+    },
+    {
+      "all_surfaces": [
+        "الْجَوَارِ",
+        "ٱلْجَوَارِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الجوار",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "الْجَوَارِ"
+    },
+    {
+      "all_surfaces": [
+        "ءَاتَيْنَٰهُ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ءاتيناه",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ءَاتَيْنَٰهُ"
+    },
+    {
+      "all_surfaces": [
+        "لَٰكِنِ",
+        "لَّٰكِنِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "لاكن",
+      "qac_pos": "P",
+      "qac_root": null,
+      "sample_surface": "لَٰكِنِ"
+    },
+    {
+      "all_surfaces": [
+        "مَسْـُٔولًۭا"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "مسولا",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مَسْـُٔولًۭا"
+    },
+    {
+      "all_surfaces": [
+        "لِأَجَلٍۢ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "لأجل",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "لِأَجَلٍۢ"
+    },
+    {
+      "all_surfaces": [
+        "ظَٰلِمُونَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "ظالمون",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ظَٰلِمُونَ"
+    },
+    {
+      "all_surfaces": [
+        "مُلْكَهُۥ",
+        "مُلْكِهِۦٓ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ملكه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "مُلْكَهُۥ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْمُمْتَرِينَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الممترين",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْمُمْتَرِينَ"
+    },
+    {
+      "all_surfaces": [
+        "يُسِرُّونَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يسرون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يُسِرُّونَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْخَوْفُ",
+        "ٱلْخَوْفِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الخوف",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْخَوْفُ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلسَّيِّئَةَ",
+        "ٱلسَّيِّئَةِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "السيئه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلسَّيِّئَةَ"
+    },
+    {
+      "all_surfaces": [
+        "بَابٌۢ",
+        "بَابٍۢ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": "noun",
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "باب",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بَابٌۢ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلنَّعِيمِ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "النعيم",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلنَّعِيمِ"
+    },
+    {
+      "all_surfaces": [
+        "يَنقَلِبُ",
+        "يَنقَلِبْ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "ينقلب",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَنقَلِبُ"
+    },
+    {
+      "all_surfaces": [
+        "ٱهْتَدَوا۟",
+        "ٱهْتَدَوْا۟"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "اهتدوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "ٱهْتَدَوا۟"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْخُرُوجَ",
+        "ٱلْخُرُوجُ",
+        "ٱلْخُرُوجِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 3,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الخروج",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْخُرُوجَ"
+    },
+    {
+      "all_surfaces": [
+        "تَتَذَكَّرُونَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "تتذكرون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "تَتَذَكَّرُونَ"
+    },
+    {
+      "all_surfaces": [
+        "أَهَٰٓؤُلَآءِ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أهاؤلاء",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَهَٰٓؤُلَآءِ"
+    },
+    {
+      "all_surfaces": [
+        "أَئِمَّةًۭ",
+        "أَئِمَّةَ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أئمه",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "أَئِمَّةًۭ"
+    },
+    {
+      "all_surfaces": [
+        "يَهْدُونَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يهدون",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَهْدُونَ"
+    },
+    {
+      "all_surfaces": [
+        "ٱلطَّيِّبُ",
+        "ٱلطَّيِّبِ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "الطيب",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلطَّيِّبُ"
+    },
+    {
+      "all_surfaces": [
+        "يَأْتِيكُم",
+        "يَأْتِيَكُمُ"
+      ],
+      "collision_free": false,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 2,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "يأتيكم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "يَأْتِيكُم"
+    },
+    {
+      "all_surfaces": [
+        "ٱلْكَيْلَ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": "verb",
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": true,
+      "is_function_word": false,
+      "key": "الكيل",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "ٱلْكَيْلَ"
+    },
+    {
+      "all_surfaces": [
+        "أَوْفُوا۟"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "أوفوا",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "أَوْفُوا۟"
+    },
+    {
+      "all_surfaces": [
+        "بِحَمْدِ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "بحمد",
+      "qac_pos": "N",
+      "qac_root": null,
+      "sample_surface": "بِحَمْدِ"
+    },
+    {
+      "all_surfaces": [
+        "فَٱعْلَمْ"
+      ],
+      "collision_free": true,
+      "count": 3,
+      "dataset_hint": null,
+      "distinct_roots": 0,
+      "distinct_surfaces": 1,
+      "has_dataset_entry": false,
+      "is_function_word": false,
+      "key": "فاعلم",
+      "qac_pos": "V",
+      "qac_root": null,
+      "sample_surface": "فَٱعْلَمْ"
+    }
+  ],
+  "total_pending": 8624
+}
