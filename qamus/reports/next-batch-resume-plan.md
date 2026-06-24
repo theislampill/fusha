@@ -1,8 +1,14 @@
 # Next-batch resume plan — exact, no vague "standing by"
 
-## Where we are (live, reconciled 2026-06-24c, coverage-economics tranche)
+## Where we are (live, reconciled 2026-06-24d, closure-2092 tranche)
 
-- Live coverage **85.02%** · **42,424 / 49,900** resolved · **7,476 pending** · 2,164 token decisions · health 200. This tranche +1,260 (safe-surface +1,024, iʿrāb +236), −0 removed, 0 wrong. Safe frontier ~86% PROVEN (see coverage-90-tranche-report); 90% needs ~20 more per-loc iʿrāb tiers + ambiguous residue.
+- Live coverage **85.87%** · **42,849 / 49,900** resolved · **7,051 pending** · 2,589 token decisions · health 200. This tranche +425 (form-variant lever, 2-vote, 44.6% family approval), −0 removed, 0 wrong.
+- **FRONTIER CORRECTED (supersedes the prior "~86% / 90%-not-reachable" claim):** the root-cause ledger (`closure-2092/`) shows the prior claim measured only surface-wide auto-gloss. Every pending token has a QAC root → the dominant lever is **root-known structured authoring** (POS-correct, sense-selected, collision-guarded, 2-vote). Yield-v2: **~3,473 safe-realizable → 92.83% ceiling; 90% needs only +2,061** — bounded multi-batch work, NOT a wall (genuine-ambiguity residue ~148). Exact lanes + commands: `closure-2092/final-closure-report-20260624.md`.
+
+### next (closure-2092 resume, highest-yield first)
+1. **form-variant lever again** (top queue): `build_form_variant_candidates.py --max-b 200 --max-c 200` → `form-variant-2vote` workflow → `build_form_variant_apply.py` → append(backup) → `rebuild.sh` → re-stage → regenerate audit/graph/matrix/ledgers → gates → commit. ~125–200 resolves/batch.
+2. **host_lexeme_possessive** (1,210), **missing_qamus_entry** new-entry proposals (473, owner-gated), **particle/pronoun-miscoded** (418), **remaining iʿrāb** (379).
+3. Deferred audits: live public-page crawl (Phase 8), source-photo scale-up (10), claude.ai pack + tutor curriculum (11/12), corpus/hadith readiness (13), bidirectional-link validator (14).
 
 ### (prior) Where we are (corrective tranche)
 

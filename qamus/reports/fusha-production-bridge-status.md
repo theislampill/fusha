@@ -2,13 +2,19 @@
 
 How the Fusha intelligence layer is driving live Qamus / qamus-highlight, and where each lane stands.
 
-## ⭐ CURRENT STATE — coverage-economics tranche 2026-06-24c (live 85.02%)
+## ⭐ CURRENT STATE — closure-2092 tranche 2026-06-24d (live 85.87%)
 
 | lane | status |
 |---|---|
-| **live coverage** | **85.02%** (42,424/49,900); +1,260 this tranche (safe-surface +1,024, iʿrāb +236), −0 removed, 0 wrong; 2,164 token decisions |
-| **coverage-yield ledger** | safe-surface ceiling 1,772 (~86%); 90% needs the per-loc iʿrāb pool (proven frontier, `coverage-90-tranche-report`) |
-| **safe-surface lane** | 430 collision-free families authored surface-wide (2-vote); 311 homograph families rejected |
+| **live coverage** | **85.87%** (42,849/49,900); +425 this tranche (form-variant lever, 2-vote 44.6% approval), −0 removed, 0 wrong; 2,589 token decisions |
+| **FRONTIER CORRECTED** | the prior "~86% / 90%-not-reachable" claim measured only surface-wide auto-gloss. Root-cause ledger (`closure-2092/`): every pending token has a QAC root → dominant lever is root-known authoring. Yield-v2 **~3,473 safe-realizable → 92.83% ceiling; 90% needs +2,061** — bounded multi-batch work, residue ~148 |
+| **form-variant lane** | 121 collision-free families authored (entry-seeded, 2-vote); 122 homograph/voice-collision rejected, 28 disagreement-dropped |
+
+### prior coverage-economics tranche 2026-06-24c (live 85.02%) — frontier claim SUPERSEDED above
+| lane | status |
+|---|---|
+| live coverage | 85.02% (42,424/49,900); +1,260 (safe-surface +1,024, iʿrāb +236) |
+| safe-surface lane | 430 collision-free families surface-wide (2-vote); 311 homograph rejected |
 
 ### prior corrective tranche 2026-06-24b (live 82.49%)
 

@@ -1,0 +1,37 @@
+{
+  "_generator": "closure-2092 Phase 18 final report",
+  "date": "2026-06-24",
+  "head_at_close": "see commit C (= origin/main)",
+  "commits": ["b9a6ca0 (A: ledgers+gates+frontier correction)", "2c50af8 (B: form-variant +425 live)", "C (final report+ledger+memory)"],
+  "live_mutation": "qamus hover layer only, via scoped deploy loop (rebuild.sh + scoped restart); NOT webroot/phpBB/wiki/DB; rollback artifact wbw-lookup.prev.json retained",
+  "coverage": {"before_pct": 85.02, "after_pct": 85.87, "resolved_before": 42424, "resolved_after": 42849, "pending_before": 7476, "pending_after": 7051, "total": 49900},
+  "decisions": {"before": 2164, "after": 2589, "newly_resolved": 425, "removed": 0, "changed": 0, "wrong_open": 0},
+  "blockers_after": {"stem_base_unknown": 5595, "source_entry_unverified": 1076, "same_surface_polysemy_requires_i3rab": 379, "proper_noun_no_qamus_entry": 1},
+  "frontier_correction": {
+    "prior_claim": "safe frontier ~86%, 90% not safely reachable (measured only surface-wide auto-gloss)",
+    "corrected": "90% reachable via root-known structured authoring (POS-correct, sense-selected, collision-guarded, 2-vote)",
+    "expected_safe_realizable": 3473,
+    "coverage_ceiling_pct": 92.83,
+    "tokens_needed_for_90pct": 2061,
+    "genuine_ambiguity_residue": 148
+  },
+  "execution_lane": {
+    "lever": "missing_form_variant_on_existing_entry",
+    "candidate_families": 271, "certified": 121, "rejected": 122, "disagree_dropped": 28,
+    "measured_2vote_family_approval_pct": 44.6,
+    "applied_token_decisions": 425
+  },
+  "entries": {"total": 2092, "verb": 947, "noun": 1045, "particle": 100, "mechanically_audited": true, "live_page_crawl": "deferred"},
+  "quality_audit": {"resolved": 42849, "clean_pct": 91.20, "public_source_leaks": 0},
+  "graph": {"orphan_links": 0, "address_count": 28393},
+  "gates_all_pass": ["check_artifact_ergonomics", "check_report_ergonomics", "check_regressions", "run_grammar_evals", "validate_qamus_completion_manifest", "validate_entry_completion_rollup", "validate_blocker_root_cause_ledger", "validate_sarf_skill", "validate_nahw_skill"],
+  "phases_state": {
+    "0_bootstrap": "done", "1_baseline": "done", "2_repo_org": "done", "3_root_cause_ledger": "done",
+    "4_yield_ledger_v2": "done", "5_source_entry": "in_progress", "6_stem_base": "in_progress",
+    "7_irab_proper": "deferred", "8_live_crawl": "deferred", "9_grammar_quality_audit": "done",
+    "10_source_photo": "deferred", "11_skill_packaging": "deferred", "12_curriculum": "deferred",
+    "13_corpus_readiness": "deferred", "14_bidir_graph": "in_progress", "15_apply_boundary": "done",
+    "16_loop": "in_progress (1 cycle)", "17_commits": "done", "18_final": "done"
+  },
+  "next_command": "python tools/build_form_variant_candidates.py --max-b 200 --max-c 200 -> form-variant-2vote workflow -> tools/build_form_variant_apply.py -> append(backup) -> rebuild.sh -> regenerate -> gates -> commit; then host_lexeme/new-entry/particle/iʿrāb lanes"
+}
