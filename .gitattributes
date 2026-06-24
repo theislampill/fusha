@@ -1,0 +1,7 @@
+# Keep all generated/data artifacts LF so sha256 checksums stay byte-stable across
+# platforms (the validators verify checksums.json against on-disk bytes).
+*.json   text eol=lf
+*.jsonl  text eol=lf
+*.tsv    text eol=lf
+*.py     text eol=lf
+*.md     text eol=lf
