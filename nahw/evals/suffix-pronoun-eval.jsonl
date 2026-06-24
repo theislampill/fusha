@@ -5,3 +5,14 @@
 {"id": "SP-005", "surface": "عَلِمْنَا", "stem": "علم", "suffix": "نا", "host_pos": "V", "expect_gloss": null, "expect_state": "pending", "reason": "verb host: نا is subject we-knew, NOT possessive our-knowledge"}
 {"id": "SP-006", "surface": "خَلَقْنَا", "stem": "خلق", "suffix": "نا", "host_pos": "V", "expect_gloss": null, "expect_state": "pending", "reason": "verb host: We created, not our-creation"}
 {"id": "SP-007", "surface": "قُرْءَانًا", "stem": "قرءان", "suffix": null, "host_pos": "N", "expect_gloss": null, "expect_state": "not_a_suffix", "reason": "tanwin-alef is NOT the نا pronoun"}
+{"id": "SP-008", "surface": "أَعْمَالَهُمْ", "stem": "أعمال", "suffix": "هم", "host_pos": "N", "expect_gloss": "their deeds", "expect_state": "suffix_pronoun_decision"}
+{"id": "SP-009", "surface": "رَبِّكُمْ", "stem": "رب", "suffix": "كم", "host_pos": "N", "expect_gloss": "your Lord", "expect_state": "suffix_pronoun_decision"}
+{"id": "SP-010", "surface": "كِتَابَهُمْ", "stem": "كتاب", "suffix": "هم", "host_pos": "N", "expect_gloss": "their book", "expect_state": "suffix_pronoun_decision"}
+{"id": "SP-011", "surface": "أَمْوَالَهُمْ", "stem": "أموال", "suffix": "هم", "host_pos": "N", "expect_gloss": "their wealth", "expect_state": "suffix_pronoun_decision"}
+{"id": "SP-012", "surface": "أَيْدِيهِمْ", "stem": "أيدي", "suffix": "هم", "host_pos": "N", "expect_gloss": "their hands", "expect_state": "suffix_pronoun_decision"}
+{"id": "SP-013", "surface": "وَجُنُودَهُمَا", "stem": "جنود", "suffix": "هما", "host_pos": "N", "expect_gloss": "and their troops", "expect_state": "suffix_pronoun_decision", "reason": "dataset-sourced base (جند troops) + dual enclitic; 2-vote certified"}
+{"id": "SP-014", "surface": "أَبِينَا", "stem": "أبي", "suffix": "نا", "host_pos": "N", "expect_gloss": "our father", "expect_state": "suffix_pronoun_decision"}
+{"id": "SP-015", "surface": "يَمِينُكَ", "stem": "يمين", "suffix": "ك", "host_pos": "N", "expect_gloss": "your right hand", "expect_state": "suffix_pronoun_decision", "reason": "sense selection: right hand, not oath"}
+{"id": "SP-016", "surface": "ذِكْرِنَا", "stem": "ذكر", "suffix": "نا", "host_pos": "N", "expect_gloss": null, "expect_state": "rejected_homograph", "reason": "ذِكْر remembrance must NOT match ذَكَر male (norm_strict collision); 2-vote rejected homograph_wrong_lemma"}
+{"id": "SP-017", "surface": "بُنْيَٰنًۭا", "stem": "بنيان", "suffix": null, "host_pos": "N", "expect_gloss": null, "expect_state": "not_a_suffix", "reason": "tanwin-alef بنيانًا 'a structure' is NOT stem+نا; also != ابن son"}
+{"id": "SP-018", "surface": "فَمِنكُم", "stem": "من", "suffix": "كم", "host_pos": "P", "expect_gloss": "and from you", "expect_state": "preposition_pronoun", "reason": "min preposition + kum, not a possessed noun; phrase gloss only"}

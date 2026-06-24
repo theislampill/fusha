@@ -271,6 +271,47 @@ for path in ("sarf/examples/qamus-regressions.jsonl", "sarf/examples/root-form-d
         print("  parse error in %s: %s" % (path, e))
     check("fixture %s parses (%d rows)" % (path, n), ok and n > 0)
 
+# 13. completion-tranche artifacts (P0 dataset, P1 graph, P3 audit, P4 suffix lane, P9 wrong-reasoning)
+import subprocess
+_R = os.path.join(os.path.dirname(__file__), "..")
+def _exists(rel):
+    return os.path.exists(os.path.join(_R, rel))
+def _lines(rel):
+    p = os.path.join(_R, rel)
+    return sum(1 for l in io.open(p, encoding="utf-8") if l.strip()) if os.path.exists(p) else 0
+check("P0 dataset committed: entries.jsonl has 2092 entries",
+      _lines("qamus/data/current/entries.jsonl") == 2092)
+check("P0 dataset: schema + 7 indexes present", _exists("qamus/schemas/qamus-entry-public.schema.json")
+      and all(_exists("qamus/indexes/current/%s.json" % n) for n in
+      ("by-entry-id","by-source-key","by-root","by-lemma","by-normalized-surface","by-quran-ref","by-category")))
+check("P1 source-address graph present (full)", all(_exists("qamus/indexes/current/%s.json" % n) for n in
+      ("source-address-full","decision-backlinks-full","quran-usage-spine-full","qamus-entry-field-addresses")))
+check("P2 entry matrix has 2092 rows", _lines("qamus/reports/qamus-2092-entry-matrix.jsonl") == 2092)
+check("P3 hover-token audit covers all 49,900 tokens", _lines("qamus/reports/hover-token-audit-full.jsonl") == 49900)
+try:
+    _au = [json.loads(l) for l in io.open(os.path.join(_R, "qamus/reports/hover-token-audit-full.jsonl"), encoding="utf-8")]
+    _pend_no_blocker = [r for r in _au if r.get("decision_state") == "pending" and not r.get("blocker")]
+    check("P3 audit: no generic pending (every pending token has an exact blocker)", not _pend_no_blocker)
+except Exception as e:
+    check("P3 audit readable", False)
+# P4 suffix/pronoun offline test
+try:
+    _r = subprocess.run([sys.executable, os.path.join(_R, "tools", "test_suffix_pronoun.py")],
+                        capture_output=True, text=True)
+    check("P4 suffix/pronoun invariants pass (test_suffix_pronoun.py)", _r.returncode == 0)
+except Exception:
+    check("P4 suffix/pronoun test runnable", False)
+# P9 wrong-reasoning traps present and grader blocks them
+_wr = 0
+try:
+    for l in io.open(os.path.join(_R, "nahw/evals/grammar-problems-derived-eval.jsonl"), encoding="utf-8"):
+        l = l.strip()
+        if l and json.loads(l).get("wrong_reasoning_trap"):
+            _wr += 1
+except Exception:
+    pass
+check("P9 grammar gate has >=8 wrong-reasoning trap cases (%d)" % _wr, _wr >= 8)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

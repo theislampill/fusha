@@ -81,6 +81,24 @@ def main():
         dup = [i for i, n in collections.Counter(ids).items() if n > 1]
         errors.append("duplicate ids: %s" % dup)
 
+    # GrammarProblems load-bearing property, exercised on REAL content: every case carrying a
+    # wrong_reasoning_trap (a plausible path that lands on the right final answer for the wrong reason)
+    # MUST be blocked by the grader when reasoning_ok is False — a right answer with wrong reasoning is unsafe.
+    from grade_grammar_reasoning import grade
+    wr_cases = [c for c in cases if c.get("wrong_reasoning_trap")]
+    for c in wr_cases:
+        # simulate the failure mode: final answer correct, reasoning is the trap (wrong), evidence + 2-vote present
+        r = grade(c, {"final_ok": True, "reasoning_ok": False, "evidence_cited": True,
+                      "source_address": "quran:demo", "two_vote_done": True})
+        if r["pass"]:
+            errors.append("%s: wrong_reasoning_trap NOT blocked (right answer + wrong reasoning passed!)" % c["id"])
+        # and the honest version (correct reasoning) must pass the gate
+        r2 = grade(c, {"final_ok": True, "reasoning_ok": True, "evidence_cited": True,
+                       "source_address": "quran:demo", "two_vote_done": True})
+        if not r2["pass"]:
+            errors.append("%s: correct-reasoning version unexpectedly blocked (%s)" % (c["id"], r2["block_reason"]))
+    print("wrong_reasoning_trap cases exercised: %d (each must FAIL on wrong reasoning, PASS on right)" % len(wr_cases))
+
     # scoreboard
     by_level = collections.Counter(c.get("level") for c in cases)
     by_bloom = collections.Counter(c.get("bloom") for c in cases)
