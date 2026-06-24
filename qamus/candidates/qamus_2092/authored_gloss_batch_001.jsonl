@@ -60,7 +60,6 @@
 {"norm_strict": "أهل", "surface": "أَهْلِ", "decision": "authored_gloss", "gloss_en": "people of / family of", "pending_reason": "", "confidence": "high", "confirmed": true}
 {"norm_strict": "نفس", "surface": "نَفْسٍۢ", "decision": "authored_gloss", "gloss_en": "a soul / self", "pending_reason": "", "confidence": "high", "confirmed": true}
 {"norm_strict": "الأنهار", "surface": "ٱلْأَنْهَٰرُ", "decision": "authored_gloss", "gloss_en": "the rivers", "pending_reason": "", "confidence": "high", "confirmed": true}
-{"norm_strict": "لما", "surface": "لِّمَا", "decision": "authored_gloss", "gloss_en": "for what / for that which", "pending_reason": "", "confidence": "medium", "confirmed": true}
 {"norm_strict": "رسول", "surface": "رَّسُولُ", "decision": "authored_gloss", "gloss_en": "a messenger", "pending_reason": "", "confidence": "high", "confirmed": true}
 {"norm_strict": "ماء", "surface": "مَآءَ", "decision": "authored_gloss", "gloss_en": "water", "pending_reason": "", "confidence": "high", "confirmed": true}
 {"norm_strict": "باياتنا", "surface": "بِـَٔايَٰتِنَا", "decision": "authored_gloss", "gloss_en": "in Our signs / verses", "pending_reason": "", "confidence": "high", "confirmed": true}
@@ -90,7 +89,6 @@
 {"norm_strict": "بني", "surface": "بَنِىٓ", "decision": "authored_gloss", "gloss_en": "children of / sons of", "pending_reason": "", "confidence": "high", "confirmed": true}
 {"norm_strict": "لئن", "surface": "لَئِنْ", "decision": "authored_gloss", "gloss_en": "if indeed / surely if", "pending_reason": "", "confidence": "high", "confirmed": true}
 {"norm_strict": "فهو", "surface": "فَهُوَ", "decision": "authored_gloss", "gloss_en": "so he / so it", "pending_reason": "", "confidence": "high", "confirmed": true}
-{"norm_strict": "وأنا", "surface": "وَأَنَّا", "decision": "authored_gloss", "gloss_en": "and that we", "pending_reason": "", "confidence": "medium", "confirmed": true}
 {"norm_strict": "خالدين", "surface": "خَٰلِدِينَ", "decision": "authored_gloss", "gloss_en": "abiding forever", "pending_reason": "", "confidence": "high", "confirmed": true}
 {"norm_strict": "اتقوا", "surface": "ٱتَّقُوا۟", "decision": "authored_gloss", "gloss_en": "be mindful! / fear (Allah)", "pending_reason": "", "confidence": "high", "confirmed": true}
 {"norm_strict": "ممن", "surface": "مِمَّن", "decision": "authored_gloss", "gloss_en": "than whom / from those who", "pending_reason": "", "confidence": "high", "confirmed": true}
@@ -99,7 +97,6 @@
 {"norm_strict": "وأما", "surface": "وَأَمَّا", "decision": "authored_gloss", "gloss_en": "and as for", "pending_reason": "", "confidence": "high", "confirmed": true}
 {"norm_strict": "وإلي", "surface": "وَإِلَى", "decision": "authored_gloss", "gloss_en": "and to / towards", "pending_reason": "", "confidence": "high", "confirmed": true}
 {"norm_strict": "ومنهم", "surface": "وَمِنْهُم", "decision": "authored_gloss", "gloss_en": "and among them", "pending_reason": "", "confidence": "high", "confirmed": true}
-{"norm_strict": "ذكر", "surface": "ذِكْرِ", "decision": "authored_gloss", "gloss_en": "remembrance / mention", "pending_reason": "", "confidence": "high", "confirmed": true}
 {"norm_strict": "النهار", "surface": "ٱلنَّهَارَ", "decision": "authored_gloss", "gloss_en": "the day / daytime", "pending_reason": "", "confidence": "high", "confirmed": true}
 {"norm_strict": "أعمالهم", "surface": "أَعْمَٰلُهُمْ", "decision": "authored_gloss", "gloss_en": "their deeds", "pending_reason": "", "confidence": "high", "confirmed": true}
 {"norm_strict": "العلm", "surface": "ٱلْعِلْمِ", "decision": "authored_gloss", "gloss_en": "the knowledge", "pending_reason": "", "confidence": "high", "confirmed": true}

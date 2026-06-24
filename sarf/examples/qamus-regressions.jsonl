@@ -18,3 +18,6 @@
 {"surface":"عَلِيمٌ","wrong":"to be in pain","fix":"All-Knowing (ع ل م); quarantine must cover the NOMINATIVE عليم too, not only the accusative عليما","risk":"data-error homograph; surface-keyed authoring overrides it"}
 {"surface":"عِندِ","wrong":"stubborn","fix":"with / near (عِنْد); a surface-keyed authored gloss overrides the عَنِيد data-error spread gloss","risk":"data-error; override fixes it"}
 {"surface":"قَالَ","wrong":"to say (verbose) / pending","fix":"he said — concise + FORM-AWARE; perfect verb -> past tense","risk":"multi-sense root pended by single-sense filter; safe dominant sense"}
+{"surface":"ذَكَرٍ","wrong":"remembrance / mention","fix":"a male (ذَكَر) when paired with أُنثَىٰ; NOT ذِكْر; vowel-only homograph — surface-key UNSAFE, must stay pending","risk":"vowel-only same-root homograph"}
+{"surface":"وَأَنَا۠","wrong":"and that we","fix":"and I (وَ+أَنَا, no shadda); NOT وَأَنَّا (shadda on nūn = 'and that we'); surface-key UNSAFE","risk":"shadda-distinguished homograph"}
+{"surface":"لَمَّا","wrong":"for what / for that which","fix":"not yet / when (لَمَّا, shadda on mīm); NOT لِمَا 'for what'; surface-key UNSAFE","risk":"shadda-distinguished homograph"}
