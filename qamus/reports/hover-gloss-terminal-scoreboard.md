@@ -3,13 +3,18 @@
 Live qamus-highlight, public beta, indexable. Public records carry only `{src:"qamus",kind:"authored"}` — 0
 external provenance. Full per-token states: `hover-token-terminal-matrix.md`.
 
-| metric | baseline | before P5 | LIVE after P5 | **LIVE after SN7** |
-|---|---:|---:|---:|---:|
-| total hover tokens | 49,900 | 49,900 | 49,900 | 49,900 |
-| resolved (qamus-authored) | 25,708 | 29,943 | 34,459 | **34,472** |
-| coverage % | 51.52 | 60.01 | 69.06 | **69.08** |
-| pending total | 24,192 | 19,957 | 15,441 | **15,428** |
-| build diff (occurrences) | — | — | +4,675 / −222 | **+13 / ~3 / −0** |
+> **CURRENT LIVE (reconciled): coverage 70.47% · 35,166 / 49,900 resolved · 14,734 pending · artifact
+> source_sha `d3150275d15b5245` (2026-06-24T08:06Z) · Fusha HEAD `e9d1a75`.** The history table below ends at
+> the SN7 column (69.08%); the **P13 row (70.47%)** is the current figure — see "P13 — reference-assisted
+> authored batch" below. (The 69.08% some readers see is the SN7 *history* column, not current.)
+
+| metric | baseline | before P5 | LIVE after P5 | LIVE after SN7 | **CURRENT (P13)** |
+|---|---:|---:|---:|---:|---:|
+| total hover tokens | 49,900 | 49,900 | 49,900 | 49,900 | 49,900 |
+| resolved (qamus-authored) | 25,708 | 29,943 | 34,459 | 34,472 | **35,166** |
+| coverage % | 51.52 | 60.01 | 69.06 | 69.08 | **70.47** |
+| pending total | 24,192 | 19,957 | 15,441 | 15,428 | **14,734** |
+| build diff (occurrences) | — | — | +4,675 / −222 | +13 / ~3 / −0 | **+694 / ~51 / −0** |
 
 ## P13 — reference-assisted authored batch (APPLIED LIVE)
 | metric | LIVE after SN7 | **LIVE after P13** |
