@@ -3,10 +3,18 @@
 Live qamus-highlight, public beta, indexable. Public records carry only `{src:"qamus",kind:"authored"}` — 0
 external provenance. Full per-token states: `hover-token-terminal-matrix.md`.
 
-> **CURRENT LIVE (reconciled): coverage 70.76% · 35,307 / 49,900 resolved · 14,593 pending · artifact
-> source_sha `65797d7d5599fadd` · Fusha HEAD see git log.** History table below ends at the SN7 column
-> (69.08%); current = the PP1 row (70.76%). Trail: SN7 69.08 → P13 70.47 → **PP1 70.76**. (The 69.08% some
-> readers see is the SN7 *history* column, not current.)
+> **CURRENT LIVE (reconciled): coverage 72.14% · 35,996 / 49,900 resolved · 13,904 pending · tsv 218 lines.**
+> Trail: SN7 69.08 → P13 70.47 → PP1 70.76 → **N1/V1 72.14**. (The 69.08% some readers see is the SN7
+> *history* column below, not current.)
+
+## N1/V1 — noun + verb sweep (APPLIED LIVE)
+**55 content-token glosses** (28 nouns + 27 verbs) from the global pending pool, certified via the four-gate
+pipeline (empirical key-probe → author + key-aware 2-vote): **55/80 certified, 25 rejected** (true homographs:
+أُمَّة↔أُمّهُ, مُلْك↔مَلَك↔مَلِك, فَضْل↔فَضَّلَ, يَخْرُجُ I↔IV, قُتِلَ voice, أَمَرَهُمْ verb↔noun, نَزَّلَ form…).
+Nouns incl. divine *attributes* as adjectival glosses (سَمِيع "All-Hearing", خَبِير "All-Aware", غَفُور "Most
+Forgiving"); verbs with finite person/number (خَلَقْنَا "We created", يَقُولُوا "they say", ٱدْخُلُوا "enter!").
+coverage **70.76% → 72.14%**, +689 occ, **~0 changed, −0 removed**. Mirrors: `noun_hover_batch_001.*`,
+`verb_hover_batch_001.*`. Rollback: `*.bak-nv` + `wbw-lookup.prev.json`.
 
 ## PP1 — particle-lane authored batch (APPLIED LIVE)
 26 content-token glosses from the p001–p100 example āyāt (ٱلصِّيَامِ, ٱلْمُؤْمِنُونَ, ٱلرُّسُلِ, مَثَلًا, خَٰلِدُونَ,
