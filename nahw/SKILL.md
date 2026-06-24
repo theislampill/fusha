@@ -108,3 +108,23 @@ note, or the review queue.
 A surface-keyed gloss is safe **only with the harakāt guard in place**: وَمِنَ "and from" (kasra on the mīm,
 even under the و proclitic) is the preposition and may be glossed, while وَمَن "and whoever" (fatḥa) must not
 inherit it — the content-letter harakah, read by the guard, keeps the two apart across all occurrences.
+
+## References (SN ingest)
+The corpus distillation added four operational references and a negation rule file:
+- [`references/particles.md`](references/particles.md) — the closed particle/preposition/pronoun inventory + the
+  content‑letter‑harakah rule.
+- [`references/jar-majrur.md`](references/jar-majrur.md) — preposition+pronoun rendering by referent; the
+  إِلَيْنَا ≠ ل‑ي‑ن hard guard.
+- [`references/idafa.md`](references/idafa.md) — genitive constructs; gloss the relationship + definiteness.
+- [`references/irab-case-mood.md`](references/irab-case-mood.md) — case/mood endings; **لَمْ + jussive → past
+  meaning**; quarantine inflection families together.
+- [`rules/negation-rules.json`](rules/negation-rules.json) — لَمْ/لَنْ/لَا/مَا/لَيْسَ scope and gloss effect.
+
+## Production finding (SN ingest — negation scope & function-word inventory)
+Two additions from the verb‑charts + AMAU corpus:
+1. **The governing negative sets the tense, not the verb's surface form.** لَمْ over a present‑tense form yields a
+   **past** meaning ("did not"); لَنْ negates the future ("will never"). Resolve the لَمْ/لِمَ homograph (harakāt)
+   first, then apply the negation effect — never gloss the bare surface tense under a negative.
+2. **The corpus confirms a stable function‑word inventory with English glosses** (prepositions قَبْلَ/بَعْدَ/
+   أَمَامَ/فَوْقَ/تَحْتَ/وَرَاءَ, pronouns هُمَا/أَنْتُمْ/أَنْتُمَا, particles). These are safe hover candidates **only**
+   through the content‑letter‑harakah guard — a surface key alone still cannot separate مَن/مِن، لَمَّا/لِمَا.

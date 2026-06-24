@@ -21,3 +21,8 @@
 {"surface":"ذَكَرٍ","wrong":"remembrance / mention","fix":"a male (ذَكَر) when paired with أُنثَىٰ; NOT ذِكْر; vowel-only homograph — surface-key UNSAFE, must stay pending","risk":"vowel-only same-root homograph"}
 {"surface":"وَأَنَا۠","wrong":"and that we","fix":"and I (وَ+أَنَا, no shadda); NOT وَأَنَّا (shadda on nūn = 'and that we'); surface-key UNSAFE","risk":"shadda-distinguished homograph"}
 {"surface":"لَمَّا","wrong":"for what / for that which","fix":"not yet / when (لَمَّا, shadda on mīm); NOT لِمَا 'for what'; surface-key UNSAFE","risk":"shadda-distinguished homograph"}
+{"surface": "أَنزَلَ", "wrong": "descended", "fix": "Form IV (hamza) \"sent down\"; ≠ Form I نَزَلَ \"descended\", ≠ Form II نَزَّلَ", "risk": "derived-form sense collapse (I/II/IV one root)"}
+{"surface": "عَلَّمَ", "wrong": "knew", "fix": "Form II causative \"taught\"; Form I عَلِمَ is \"knew\"", "risk": "derived-form sense (II vs I)"}
+{"surface": "ذِكْر", "wrong": "a male / he mentioned", "fix": "maṣdar \"remembrance\" (nominal); ذَكَر \"male\" & ذَكَرَ \"mentioned\" are harakāt homographs", "risk": "masdar vowel-homograph (P5 pull)"}
+{"surface": "مُؤْمِنُونَ", "wrong": "they believe", "fix": "ism fāʿil \"believers\" (nominal); never a finite verb", "risk": "participle glossed as verb"}
+{"surface": "كُتُب", "wrong": "(missed, no surface link to كِتَاب)", "fix": "broken plural of كِتَاب \"books\"; match by lemma/plural field not surface", "risk": "broken-plural no surface link"}

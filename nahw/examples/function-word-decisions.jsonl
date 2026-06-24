@@ -13,3 +13,10 @@
 {"surface":"حَلِيمٌ","context":"إِنَّ إِبْرَاهِيمَ لَحَلِيمٌ","wrong":"one of Allah's Names","correct":"forbearing","reason":"referent is Ibrāhīm, not Allah"}
 {"surface":"وَمِنَ","context":"وَمِنَ ٱلنَّاسِ","wrong":"and whoever","correct":"and among / and from","reason":"preposition (kasra on mīm under the و proclitic); a surface-keyed gloss is safe ONLY with the harakāt guard"}
 {"surface":"قُلْ","context":"قُلْ هُوَ ٱللَّهُ","correct":"say! (command)","reason":"imperative form -> command gloss, distinct from the perfect قَالَ 'he said'"}
+{"surface": "لَنْ", "context": "لَنْ تَنَالُوا الْبِرَّ", "correct": "will never", "reason": "لن + subjunctive → categorical future negation"}
+{"surface": "لَيْسَ", "context": "لَيْسَ كَمِثْلِهِ شَيْءٌ", "correct": "there is not / nothing", "reason": "defective verb of negation over a nominal sentence"}
+{"surface": "قَبْلَ", "context": "مِن قَبْلُ", "correct": "before", "reason": "ẓarf of time; iḍāfa head (corpus-attested)"}
+{"surface": "بَعْدَ", "context": "مِن بَعْدِ ذَٰلِكَ", "correct": "after", "reason": "ẓarf of time (corpus-attested)"}
+{"surface": "فِيهِ", "context": "لَا رَيْبَ فِيهِ", "correct": "in it / therein", "reason": "فِي + ـه pronoun; render by referent (jar-majrūr)"}
+{"surface": "عَلَيْهِمْ", "context": "أَنْعَمْتَ عَلَيْهِمْ", "correct": "upon them", "reason": "عَلَى + ـهم; wording by referent"}
+{"surface": "قَدْ", "context": "قَدْ أَفْلَحَ الْمُؤْمِنُونَ", "correct": "indeed / already", "reason": "قد + past verb → certainty/completion"}

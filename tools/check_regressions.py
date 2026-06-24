@@ -44,8 +44,20 @@ check("كُلّ ḍamma vs كَلَّا fatḥa on kāf",
       N.haraka_on("كُلًّا", "ك") == N.DAMMA and N.haraka_on("كَلَّا", "ك") == N.FATHA)
 # 7. tanwīn-alef is not a نا suffix
 check("قُرْءَانًا ends in tanwīn-alef (not the pronoun نا)", N.ends_tanwin_alef("قُرْءَانًا"))
-# 8. fixtures well-formed
+# 8. (SN ingest) Form IV hamza keeps أَنزَلَ distinct from Form I/II نزل
+check("أَنزَلَ (IV) ≠ نَزَلَ (I) — hamza kept by norm_strict",
+      N.norm_strict("أَنزَلَ") != N.norm_strict("نَزَلَ"))
+# 9. (SN ingest) Form II vs Form I separated by the shadda (norm_strict drops it, so use shadda_on)
+check("نَزَّلَ (II) has shadda on zāy, نَزَلَ (I) does not",
+      N.shadda_on("نَزَّلَ", "ز") and not N.shadda_on("نَزَلَ", "ز"))
+# 10. (SN ingest) maṣdar ذِكْر vs noun ذَكَر share a norm key; harakah on ḏāl decides (P5 homograph)
+check("ذِكْر and ذَكَر share a norm key (so a gloss must use diacritics)",
+      N.norm("ذِكْر") == N.norm("ذَكَر"))
+check("kasra on ḏāl marks ذِكْر (maṣdar), fatḥa marks ذَكَر (noun)",
+      N.haraka_on("ذِكْر", "ذ") == N.KASRA and N.haraka_on("ذَكَر", "ذ") == N.FATHA)
+# 11. fixtures well-formed
 for path in ("sarf/examples/qamus-regressions.jsonl", "sarf/examples/root-form-decisions.jsonl",
+             "sarf/examples/verb-measure-examples.jsonl",
              "nahw/examples/function-word-decisions.jsonl", "nahw/examples/ayah-context-decisions.jsonl",
              "qamus/examples/linguistic-decisions.sample.jsonl"):
     fp = os.path.join(os.path.dirname(__file__), "..", path)

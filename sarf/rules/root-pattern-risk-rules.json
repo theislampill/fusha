@@ -1,0 +1,57 @@
+{
+  "schema": "sarf/root-pattern-risk-rules@1",
+  "purpose": "Pattern- and plural-shape risks that break naive surface/norm() matching. Complements morphology-risk-rules.json (decision flags): these are the WAZN-level traps surfaced by the AMAU vocab corpus (451 singular↔plural pairs, gender-tagged) and the verb-measure charts. Each rule says what looks safe, why it is not, and how to resolve or when to mark pending.",
+  "rules": [
+    {
+      "id": "broken_plural_no_surface_link",
+      "trigger": "a broken plural (جمع تكسير) shares the ROOT but not the surface of its singular: كِتَاب→كُتُب, رَجُل→رِجَال, قَلَم→أَقْلَام, طَرِيق→طُرُق, نَجْم→نُجُوم.",
+      "why_it_bites": "norm()/surface keys link a token to its lemma by shape; a broken plural shares NO contiguous shape with the singular, so a singular-keyed gloss silently misses the plural occurrence.",
+      "resolve_with": "match via the Qamus entry plural field or the QAC lemma/root for THIS token, not the singular surface; if neither links it, pending(root_exists_form_unresolved).",
+      "decision": "review_then_author"
+    },
+    {
+      "id": "sound_plural_suffix_not_root",
+      "trigger": "sound plurals carry an inflectional tail: masc ـُونَ/ـِينَ (مُسْلِمُونَ, مُدَرِّسِينَ), fem ـَاتٌ (طَالِبَات, سَيَّارَات).",
+      "why_it_bites": "the ـون/ـين tail looks like a verb ending or a dual; the ـات tail looks like part of the root. Stripping it wrong invents a false stem.",
+      "resolve_with": "treat ـونَ/ـينَ/ـاتٌ as number+case morphology; recover the singular lemma, but the suffix is NOT the root and NOT a verb conjugation. Gender comes from the entry, not the tail alone.",
+      "decision": "review_then_author"
+    },
+    {
+      "id": "mu_prefix_participle_voice",
+      "trigger": "a مُـ-initial derived participle: مُعَلِّم/مُعَلَّم, مُنزِل/مُنزَل, مُؤْمِن, مُسْلِم, مُفْعِل/مُفْعَل.",
+      "why_it_bites": "active (ism fāʿil, kasra on the penult) and passive (ism mafʿūl, fatḥa) participles share the consonant skeleton and the مـ prefix; only the last-radical vowel separates 'one who Xs' from 'one who is Xed'.",
+      "resolve_with": "read the penult harakah; gloss the active as agent ('the one who …'), the passive as patient ('the one/thing …ed'). Never a finite-verb gloss on either. If the vowel is absent → pending(derived_form_needs_review).",
+      "decision": "review_then_author"
+    },
+    {
+      "id": "afʿaal_plural_vs_form_iv_verb",
+      "trigger": "a leading أ is ambiguous: أَفْعَال is a broken-plural noun (أَقْلَام, أَوْرَاق, أَشْجَار) while أَفْعَلَ is a Form IV VERB (أَنزَلَ, أَخْرَجَ).",
+      "why_it_bites": "a hamza-initial surface is not automatically Form IV; glossing a plural noun with a 'to …' verb gloss is the §3 POS-mismatch defect.",
+      "resolve_with": "use QAC POS: N/plural → nominal gloss; V → the Form IV causative sense. Do not infer the verb from the أ alone.",
+      "decision": "review_then_author"
+    },
+    {
+      "id": "masdar_vowel_homograph",
+      "trigger": "a maṣdar collides with a noun/verb of the same root under norm(): ذِكْر (remembrance) / ذَكَر (a male) / ذَكَرَ (he mentioned); عِلْم (knowledge) / عَلِمَ (he knew).",
+      "why_it_bites": "the consonant skeleton is identical; only the harakāt separate a NOMINAL gloss from a finite-verb gloss. This is the exact P5 homograph (ذَكَر) that had to be pulled from the live batch.",
+      "resolve_with": "decide on the harakāt (kasra+sukūn → maṣdar ذِكْر; fatḥa+fatḥa → noun ذَكَر); gloss a maṣdar nominally. If undiacritized → pending(homograph_haraka).",
+      "decision": "quarantine_then_author"
+    },
+    {
+      "id": "form_ii_vs_form_iv_same_root",
+      "trigger": "Form II فَعَّلَ (shadda) and Form IV أَفْعَلَ (hamza) of one root are different verbs: نَزَّلَ vs أَنزَلَ (root ن-ز-ل); both ≠ Form I نَزَلَ.",
+      "why_it_bites": "a root-keyed gloss can collapse two distinct senses; نَزَّلَ 'sent down gradually' vs أَنزَلَ 'sent down' vs نَزَلَ 'descended'.",
+      "resolve_with": "the shadda (II) vs hamza (IV) vs bare (I) selects the form; pick the matching Qamus sense. norm_strict keeps the hamza of أَنزَلَ distinct; the shadda of نَزَّلَ is a diacritic, so confirm the form before authoring.",
+      "decision": "review_then_author"
+    },
+    {
+      "id": "geminate_shadda_hides_radical",
+      "trigger": "a doubled root wears a shadda that hides C3: رَدَّ (ر-د-د), مَدَّ (م-د-د), ضَلَّ (ض-ل-ل).",
+      "why_it_bites": "the surface looks bi-consonantal; a radical count or root match under norm() can mis-classify it.",
+      "resolve_with": "expand the shadda to C2=C3 before counting radicals; certify the triliteral root via QAC.",
+      "decision": "review_then_author"
+    }
+  ],
+  "standing_order": "These are recall/precision traps, not new authorities. When the resolving evidence (entry plural field, QAC POS/lemma, the decisive harakah) is absent, mark pending with the precise reason. PENDING beats wrong.",
+  "provenance": "Plural/gender traps surfaced by the AMAU vocab corpus (corpora/sarfnahw, licensing under review); wazn traps from sarf/rules/verb-measures.json. Examples are standard morphology authored for this repo."
+}

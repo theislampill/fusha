@@ -1,0 +1,58 @@
+{
+  "$schema_note": "Negation particles and the effect each has on the GLOSS — tense, mood, and meaning. A hover gloss must follow the governing negative, not the bare surface tense of the verb. لَمْ over a present-tense FORM yields a PAST meaning; لَنْ negates the future; لَا/مَا depend on context. Consume alongside particle-context-rules.json (homograph harakāt) — لَمْ vs لِمَ is decided there first, then the negation effect here.",
+  "generator": "authored from the verb-chart negation columns (لن/لم) + standard nahw; field names aligned to nahw/examples/function-word-decisions.jsonl",
+  "reason_code": "negation_scope",
+  "rules": [
+    {
+      "id": "lam_jussive",
+      "surface": "لَمْ",
+      "governs": "muḍāriʿ majzūm (jussive)",
+      "effect": "negates the PAST. The verb is present-tense in FORM but past in MEANING.",
+      "gloss": "did not / has not",
+      "example": "لَمْ يَلِدْ وَلَمْ يُولَدْ → 'He did not beget, nor was He begotten'",
+      "decision": "resolved",
+      "guard": "distinct from the interrogative لِمَ 'why' (kasra on lām) — resolve the homograph via particle-context-rules.json#lam_vs_lima FIRST."
+    },
+    {
+      "id": "lan_subjunctive",
+      "surface": "لَنْ",
+      "governs": "muḍāriʿ manṣūb (subjunctive)",
+      "effect": "categorical negation of the FUTURE.",
+      "gloss": "will never / will not",
+      "example": "لَنْ تَنَالُوا الْبِرَّ → 'You will never attain righteousness'",
+      "decision": "resolved"
+    },
+    {
+      "id": "laa_context",
+      "surface": "لَا",
+      "governs": "varies",
+      "effect": "multi-function: (a) لا النافية — simple negation 'does not'; (b) لا الناهية — prohibition + jussive 'do not!'; (c) لا النافية للجنس — absolute negation 'there is no …'; (d) bare 'no'.",
+      "gloss": "no / not / do not (by role)",
+      "example": "لَا إِلَٰهَ إِلَّا اللَّهُ → 'there is no god but Allah' (لا of absolute negation)",
+      "decision": "resolved_with_context_else_pending",
+      "pending_reason_when_unknown": "negation_scope",
+      "guard": "the prohibitive لا (+ jussive verb) vs the negating لا (+ indicative) need the following verb's mood; if the next token's POS/mood is unknown → pending (see nahw SKILL §'Do not resolve')."
+    },
+    {
+      "id": "maa_negation",
+      "surface": "مَا",
+      "governs": "verbal or nominal sentence",
+      "effect": "as a negative: negates a past verb ('did not') or a nominal predicate ('is not'). But مَا is ALSO relative / interrogative / maṣdariyyah — negation is only one reading.",
+      "gloss": "did not / is not (when negating)",
+      "example": "مَا قَتَلُوهُ → 'they did not kill him'",
+      "decision": "resolved_with_context_else_pending",
+      "pending_reason_when_unknown": "maa_category_unresolved",
+      "guard": "do NOT default مَا to negation; without a clear negation/relative/interrogative signal → pending. See particle decision ladder."
+    },
+    {
+      "id": "laysa",
+      "surface": "لَيْسَ",
+      "governs": "nominal sentence (raises the noun, accusatives the predicate)",
+      "effect": "defective verb of negation — 'is not / are not' (present-state negation of a nominal sentence).",
+      "gloss": "is not / are not",
+      "example": "لَيْسَ كَمِثْلِهِ شَيْءٌ → 'there is nothing like Him'",
+      "decision": "resolved"
+    }
+  ],
+  "standing_order": "Resolve the homograph (harakāt) first, then apply the negation effect. If the governed verb's mood/POS is needed but unknown, prefer pending(negation_scope) over a wrong tense gloss. The negative's scope, not the verb's surface tense, sets the English."
+}

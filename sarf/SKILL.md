@@ -51,7 +51,12 @@ QAC POS → Qamus category → morphological shape (wazn) → context. **A POS m
 ## 7. Derived form / wazn hints
 Form II/IV often change sense + transitivity (يُحَذِّرُ "warns" ≠ "be cautious"; أَلْقَوْا form IV ≠ "meet";
 فَأَخْرَجَ form IV "brought forth" ≠ "come out"). Maṣdar/participle usually need a **nominal** gloss
-(تَحْرِير "freeing", not "to free… heat"). Passive vs active changes wording.
+(تَحْرِير "freeing", not "to free… heat"). Passive vs active changes wording. The full forms I–X paradigm
+(wazn, active/passive, imperative, maṣdar, ism fāʿil/mafʿūl, sense, Qurʾānic examples) is machine‑readable in
+[`rules/verb-measures.json`](rules/verb-measures.json) with the readable table in
+[`references/verb-measures-table.md`](references/verb-measures-table.md) and the gloss‑shape contract in
+[`references/masdar-participle-notes.md`](references/masdar-participle-notes.md). Irregular roots
+(hollow/defective/assimilated/hamzated/doubled/quadriliteral): [`references/weak-verbs.md`](references/weak-verbs.md).
 
 ## 8. Common clitics & suffixes
 Proclitics وَ/فَ/بِ/لِ/كَ/ال and pronoun enclitics ـه/ـها/ـهم/ـكم/ـنا. **Clitic stripping must not invent a
@@ -116,3 +121,21 @@ new_lemma_existing_root / new_root_or_unknown_root / particle_or_construction / 
   Never override a curator-placed primary.
 - **Quarantine the whole inflection family.** A data-error quarantine on عَلِيمًا (accusative) must also cover
   عَلِيمٌ (nominative) — match on the stem, not one case ending.
+
+## Production findings (SN ingest — verb charts + AMAU vocab corpus)
+The 1995 verb‑charts and the 11 AMAU decks (1,132 notes) were distilled into the verb‑measure paradigm + 451
+singular↔plural pairs (gender‑tagged); see [`rules/verb-measures.json`](rules/verb-measures.json),
+[`rules/root-pattern-risk-rules.json`](rules/root-pattern-risk-rules.json),
+[`drills/verb-measures.md`](drills/verb-measures.md), and the knowledge base `corpora/sarfnahw/knowledge_base.json`.
+Operational additions:
+- **A broken plural shares the root, not the surface.** كِتَاب→كُتُب, رَجُل→رِجَال, قَلَم→أَقْلَام link by lemma/root,
+  never by `norm()` shape — match a plural occurrence via the entry's plural field or QAC lemma, or pending.
+- **Sound‑plural tails are morphology, not roots.** ـُونَ/ـِينَ (masc) and ـَاتٌ (fem) are number+case; ـون is not a
+  verb ending, ـات is not part of the root.
+- **مُـ participles split active/passive on the penult vowel** (مُعَلِّم "teacher" vs مُعَلَّم "taught one"); read the
+  vowel before the gloss, and never put a finite verb on either.
+- **A leading أ is ambiguous:** أَفْعَال (plural noun, أَقْلَام) vs أَفْعَلَ (Form IV verb, أَنزَلَ). Use QAC POS, not the أ.
+- **Form II vs IV vs I are different verbs of one root** (نَزَّلَ / أَنزَلَ / نَزَلَ): the shadda, the hamza, the bare
+  stem each select a distinct Qamus sense.
+- **Gender is data, not a guess.** The corpus carries explicit m/f on nouns; use the entry's gender for agreement
+  and participle‑form choice rather than inferring from the tail.

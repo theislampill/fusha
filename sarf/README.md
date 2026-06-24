@@ -110,10 +110,26 @@ sarf/
   drills/
     root-detection.md                    ← find the root via the evidence ladder; worked examples
     homograph-regressions.md             ← the exact homographs we fought + the distinguishing feature
+    verb-measures.md                     ← drills: read the form/voice/gloss-shape before glossing
   references/
     quranic-morphology-notes.md          ← forms I–X, weak letters, hamza seats, tāʾ marbūṭa, …
-  examples/                              ← (seed slot for worked end-to-end cases)
+    verb-measures-table.md               ← forms I–X paradigm table + qamus-relevance payoff
+    weak-verbs.md                        ← hollow/defective/assimilated/hamzated/doubled/quadriliteral hazards
+    masdar-participle-notes.md           ← the gloss-shape rule: maṣdar/participle ≠ finite verb
+  rules/
+    morphology-risk-rules.json           ← the risk_flags vocabulary for a sarf decision
+    root-pattern-risk-rules.json         ← wazn/plural-shape traps (broken plural, مـ participle, …)
+    pos-mismatch-rules.json  root-decision-rules.json  homograph-quarantines.json
+    verb-measures.json                   ← machine-readable forms I–X paradigm
+  examples/
+    qamus-regressions.jsonl  root-form-decisions.jsonl
+    verb-measure-examples.jsonl          ← per-form decisions (form/voice/gloss-shape)
 ```
+
+> The verb-measure + weak-verb + plural-pattern material was distilled from the SN corpus ingest
+> (AMAU decks + 1995 verb-charts; catalogued under `corpora/sarfnahw/`, licensing under review). The
+> chart Arabic (a non-Unicode legacy font) was **not** extracted/copied — all Arabic patterns are
+> standard morphology authored for this repo.
 
 ## Hard rules (non‑negotiable)
 

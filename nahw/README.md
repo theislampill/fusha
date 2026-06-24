@@ -105,6 +105,13 @@ of the qamus-highlight work — see the regression list in `references/quranic-n
   negation/mood, and contronyms / multi-sense roots resolved by context.
 - `references/quranic-nahw-notes.md` — concise iʿrāb (jarr / naṣb / rafʿ), conditionals,
   relative pronouns, and the referent guard, with the regression checklist.
+- `references/particles.md` — the closed particle/preposition/pronoun inventory (corpus-attested)
+  + the content-letter-harakah rule.
+- `references/jar-majrur.md` — preposition + pronoun rendering by referent; the `إِلَيْنَا` ≠ ل-ي-ن guard.
+- `references/idafa.md` — genitive constructs; gloss the relationship + definiteness.
+- `references/irab-case-mood.md` — case/mood endings; **لَمْ + jussive → past meaning**.
+- `rules/*.json` — particle-context, preposition-pronoun, negation, context-sense, referent-guard
+  decision tables (machine-readable; consumed with `tools/normalize_ar`).
 
 ## Hard rules honored here
 
