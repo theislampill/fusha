@@ -9,6 +9,15 @@ You author or repair a scripture-facing gloss only **after** you can answer: wha
 part of speech, is this a homograph risk, and is this safely matchable to a Qamus entry — **or should it stay
 pending?** This skill is the discipline that prevents wrong hover glosses. It is **not** a generic Arabic lesson.
 
+## Procedures (progressive disclosure — load the one you need)
+This SKILL is the fast gate + contract; each step is a short procedure (input · checks · evidence ladder ·
+output · forbidden · test):
+- [`procedures/root-decision.md`](procedures/root-decision.md) — find the root via the evidence ladder.
+- [`procedures/verb-form.md`](procedures/verb-form.md) — measure I–X, voice, person/number, negation tense-flip.
+- [`procedures/noun-plural-gender.md`](procedures/noun-plural-gender.md) — role/shape, plural, gender, proper vs common.
+- [`procedures/homograph-risk.md`](procedures/homograph-risk.md) — the `norm_strict` surface-key safety probe.
+- [`procedures/hover-application.md`](procedures/hover-application.md) — the certified live-apply path + rollback.
+
 ## 1. Purpose
 Turn a raw surface into a *defensible* morphological decision (or an honest pending) for Qamus authoring,
 qamus-highlight resolution, and Nawawī40/Ṣaḥīḥayn candidate classification.

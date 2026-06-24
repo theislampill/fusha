@@ -18,6 +18,15 @@ when it forces **pending**.
 > [`qamus/reports/grammar-risk-policy.md`](../qamus/reports/grammar-risk-policy.md); drill:
 > [`drills/grammar-reasoning-safety.md`](drills/grammar-reasoning-safety.md).
 
+## Procedures (progressive disclosure — load the one you need)
+This SKILL is the fast context gate + contract; each step is a short procedure:
+- [`procedures/particle-decision.md`](procedures/particle-decision.md) — content-letter harakah; مَن/مِن، لَمْ/لِمَ.
+- [`procedures/preposition-pronoun.md`](procedures/preposition-pronoun.md) — jar-majrūr wording by referent; إِلَيْنَا guard.
+- [`procedures/negation.md`](procedures/negation.md) — لَمْ/لَنْ/لَا/مَا/لَيْسَ scope → tense/polarity.
+- [`procedures/idafa-jar-majrur.md`](procedures/idafa-jar-majrur.md) — construct relationship + definiteness.
+- [`procedures/referent-context.md`](procedures/referent-context.md) — referent guard, divine-Name vs attribute, contronyms.
+- [`procedures/grammar-risk-gate.md`](procedures/grammar-risk-gate.md) — the GrammarProblems gate (answer AND reason).
+
 ## 1. Purpose
 Choose the context-correct gloss (or an honest pending) for tokens whose meaning depends on the sentence:
 particles, prepositions+pronouns, negation/mood, contronyms, multi-sense roots, referents, iḍāfa.

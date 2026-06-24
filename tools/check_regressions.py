@@ -97,6 +97,15 @@ except Exception as e:
     check("grammar-decision-gates.json loads", False)
     print("  ", e)
 
+# 11b. (PP1G) progressive-disclosure procedure files exist (skills are operational, not just docs)
+for proc in ("sarf/procedures/root-decision.md", "sarf/procedures/verb-form.md",
+             "sarf/procedures/noun-plural-gender.md", "sarf/procedures/homograph-risk.md",
+             "sarf/procedures/hover-application.md", "nahw/procedures/particle-decision.md",
+             "nahw/procedures/preposition-pronoun.md", "nahw/procedures/negation.md",
+             "nahw/procedures/idafa-jar-majrur.md", "nahw/procedures/referent-context.md",
+             "nahw/procedures/grammar-risk-gate.md"):
+    check("procedure exists: %s" % proc, os.path.exists(os.path.join(ROOT, proc)))
+
 # 12. fixtures well-formed
 for path in ("sarf/examples/qamus-regressions.jsonl", "sarf/examples/root-form-decisions.jsonl",
              "sarf/examples/verb-measure-examples.jsonl",
