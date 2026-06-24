@@ -1,122 +1,17 @@
-# Qamus 2,092 — audit-completion matrix (P11)
+# Qamus 2,092 audit completion
 
-Per-entry, field-level audit. **Honest:** `*_verified` flags reflect only what is independently measurable here (usage refs valid, QAC root agreement, hover coverage of the entry's āyāt). Source-photo / sense-count verification was **not** performed this tranche, so **0 entries are `fully_verified`** — the matrix distinguishes *classified* from *actually verified*.
-Generator: `qamus/scripts/build_audit_completion.py`; data: `qamus/scripts/export_audit_state.py` (read-only on server).
+Matrix: `qamus/reports/qamus-2092-entry-matrix.jsonl` (2,092 rows, one per entry).
 
-| terminal state | n |
-|---|---:|
-| `needs_hover_authoring` | 1835 |
-| `needs_source_photo_review` | 240 |
-| `needs_quran_ref_verification` | 10 |
-| `deferred_missing_source` | 7 |
-| **total** | **2092** |
-| **unknown / unclassified** | **0** |
+Row keys: entry_id, source_keys, category, root, lemma, section, source_photo_status, field_status{headword,root,forms,senses,counts,total_uses,quran_refs}, hover_status{complete,resolved_tokens,pending_tokens,blockers}, repair_status, next_action.
 
-- `root_verified_vs_qac` (entry root attested in QAC for its āyāt): **0 / 2092**.
-- `needs_hover_authoring` = entry has ≥1 pending token in its āyāt (the P13 target).
-- `needs_source_photo_review` = its āyāt are fully hover-glossed; remaining gap is independent source/field verification (owner-gated).
+Terminal-state rules enforced:
 
-## Top 100 to finish next (closest to hover-complete)
+- no 'unknown' bucket — every status is from a controlled vocabulary;
 
-| # | entry | root | pending | resolved | coverage |
-|---:|---|---|---:|---:|---:|
-| 1 | كَيْفَ |  | 1 | 40 | 98% |
-| 2 | إِذَا |  | 1 | 39 | 98% |
-| 3 | يُسْحَبُون | س ح ب | 1 | 36 | 97% |
-| 4 | أَنَّى |  | 1 | 32 | 97% |
-| 5 | وَدْق |  | 1 | 27 | 96% |
-| 6 | أَنْتُمْ |  | 1 | 24 | 96% |
-| 7 | عُزَيْر |  | 1 | 22 | 96% |
-| 8 | يُضَاهِئُونَ | ض ه أ | 1 | 22 | 96% |
-| 9 | حَرِير |  | 1 | 21 | 96% |
-| 10 | لُؤْلُؤ |  | 1 | 21 | 96% |
-| 11 | مَجُوس |  | 1 | 21 | 96% |
-| 12 | الَّذِينَ |  | 1 | 21 | 96% |
-| 13 | طَبَق | ط ب ق | 1 | 21 | 96% |
-| 14 | حَام |  | 1 | 20 | 95% |
-| 15 | بَحِيرَة |  | 1 | 20 | 95% |
-| 16 | وَصِيلَة |  | 1 | 20 | 95% |
-| 17 | سَائِبَة |  | 1 | 20 | 95% |
-| 18 | دَمْع |  | 1 | 20 | 95% |
-| 19 | جِبْت |  | 1 | 19 | 95% |
-| 20 | ثُمَّ |  | 1 | 19 | 95% |
-| 21 | طَاغُوت |  | 1 | 19 | 95% |
-| 22 | أُولَئِكَ |  | 1 | 18 | 95% |
-| 23 | تُكْوَىٰ | تُكْوَىٰ | 1 | 18 | 95% |
-| 24 | جِبَاهُهُمْ |  | 1 | 18 | 95% |
-| 25 | تَمْرَحُونَ | م ر ح | 1 | 18 | 95% |
-| 26 | نَّ / نْ |  | 1 | 18 | 95% |
-| 27 | السَّلْوَى |  | 1 | 17 | 94% |
-| 28 | إِيَّانَا |  | 1 | 17 | 94% |
-| 29 | هَاتُوا۟ | ه ت ي | 1 | 17 | 94% |
-| 30 | الْمَنّ |  | 1 | 17 | 94% |
-| 31 | كَوْكَب |  | 1 | 17 | 94% |
-| 32 | غَمَام |  | 1 | 17 | 94% |
-| 33 | فَاقِع |  | 1 | 17 | 94% |
-| 34 | يَكْبِتَهُمْ | ك ب ت | 1 | 17 | 94% |
-| 35 | ٱخْسَـُٔوا۟ | خ س أ | 1 | 16 | 94% |
-| 36 | حَفَظَة |  | 1 | 16 | 94% |
-| 37 | رُعْب | ر ع ب | 1 | 15 | 94% |
-| 38 | صَيَاصِيهِمْ |  | 1 | 15 | 94% |
-| 39 | تَنْفُذُوا | ن ف ذ | 1 | 15 | 94% |
-| 40 | أَقْطَار |  | 1 | 15 | 94% |
-| 41 | خُطُوَات |  | 1 | 15 | 94% |
-| 42 | سُعِدُوا | س ع د | 1 | 14 | 93% |
-| 43 | يَصْرِمُنَّهَا | ص ر م | 1 | 14 | 93% |
-| 44 | حُسُومًا |  | 1 | 14 | 93% |
-| 45 | صَرْعَى |  | 1 | 14 | 93% |
-| 46 | أَفَلَ | أ ف ل | 1 | 14 | 93% |
-| 47 | عِيشَة |  | 1 | 14 | 93% |
-| 48 | هُنَالِكَ |  | 1 | 14 | 93% |
-| 49 | مَرِيئًا |  | 1 | 13 | 93% |
-| 50 | مُعَوِّقِينَ |  | 1 | 13 | 93% |
-| 51 | نِحْلَةً |  | 1 | 13 | 93% |
-| 52 | بَطَشْتُمْ | ب ط ش | 1 | 13 | 93% |
-| 53 | وَرِيد |  | 1 | 13 | 93% |
-| 54 | مَنَاكِبِهَا |  | 1 | 13 | 93% |
-| 55 | كَأَيِّن |  | 1 | 13 | 93% |
-| 56 | يَدْمَغُهُ | د م غ | 1 | 12 | 92% |
-| 57 | سُوَاعًا |  | 1 | 12 | 92% |
-| 58 | هَذَانِ |  | 1 | 12 | 92% |
-| 59 | وَدًّا |  | 1 | 12 | 92% |
-| 60 | ثَمَن |  | 1 | 12 | 92% |
-| 61 | بَنُو إِسْرَائِيل |  | 1 | 12 | 92% |
-| 62 | عَصِيب |  | 1 | 12 | 92% |
-| 63 | يَغُوثَ |  | 1 | 12 | 92% |
-| 64 | مُكَاء |  | 1 | 12 | 92% |
-| 65 | لِينَة |  | 1 | 12 | 92% |
-| 66 | إِمْلَاق | إِمْلَاق | 1 | 12 | 92% |
-| 67 | نَسْرًا |  | 1 | 12 | 92% |
-| 68 | تَصْدِيَة |  | 1 | 12 | 92% |
-| 69 | يَعُوقَ |  | 1 | 12 | 92% |
-| 70 | نَحْل |  | 1 | 12 | 92% |
-| 71 | إِيَّاكُمْ |  | 1 | 12 | 92% |
-| 72 | أَنْدَادًا |  | 1 | 11 | 92% |
-| 73 | مَتِين | م ت ن | 1 | 11 | 92% |
-| 74 | اِنْتَثَرَتْ | ن ث ر | 1 | 11 | 92% |
-| 75 | سَرْد |  | 1 | 11 | 92% |
-| 76 | رَدْمًا |  | 1 | 11 | 92% |
-| 77 | غِطَاء |  | 1 | 11 | 92% |
-| 78 | تَهَجَّدْ | تَهَجَّدْ | 1 | 11 | 92% |
-| 79 | أَخْبَتُوا۟ | خ ب ت | 1 | 11 | 92% |
-| 80 | الْحَاقَّة |  | 1 | 10 | 91% |
-| 81 | يُصْهَرُ / صِهْرًا | ص هـ ر | 1 | 10 | 91% |
-| 82 | صَوْت |  | 1 | 10 | 91% |
-| 83 | عِوَج |  | 1 | 9 | 90% |
-| 84 | شِمَال |  | 1 | 9 | 90% |
-| 85 | يَنسِفُهَا | ن س ف | 1 | 9 | 90% |
-| 86 | أَوْتَاد |  | 1 | 9 | 90% |
-| 87 | مُقْمَحُونَ |  | 1 | 9 | 90% |
-| 88 | اقْتَدِهْ | ق د و | 1 | 9 | 90% |
-| 89 | ح م م |  | 1 | 9 | 90% |
-| 90 | أَرْكَسَهُمْ | ر ك س | 1 | 9 | 90% |
-| 91 | زَمْهَرِير |  | 1 | 9 | 90% |
-| 92 | هُوَ |  | 1 | 9 | 90% |
-| 93 | الْفِرْدَوْس |  | 1 | 9 | 90% |
-| 94 | تَـ |  | 1 | 8 | 89% |
-| 95 | هَبَاءً |  | 1 | 8 | 89% |
-| 96 | أَجْدَاث |  | 1 | 8 | 89% |
-| 97 | الْمَلَإ الْأَعْلَى |  | 1 | 8 | 89% |
-| 98 | يُوفِضُونَ | يُوفِضُونَ | 1 | 8 | 89% |
-| 99 | صَرْح |  | 1 | 8 | 89% |
-| 100 | يَنْعِقُ | يَنْعِقُ | 1 | 8 | 89% |
+- source_photo_status is never 'needs_retake' by default (corpus is complete: 0 missing pages per the rescue audit) — un-verified entries are `photo_present_needs_visual`;
+
+- 'missing' field statuses carry a reason (e.g. proper-noun entry has no triliteral root);
+
+- next_action is exact and per-entry.
+
+Top remaining work: 1,843 entries have ≥1 pending hover token; 1,965 entries await source-photo visual verification.
