@@ -406,6 +406,38 @@ def decide(token, rules, index, by_ns, idx):
                decision, sarf_reason, nahw_reason, token, public_export=public_export)
 
 
+_NEVER_T = {"norm_only_match", "ocr_only_evidence", "external_gloss_copied", "reasoning_path_wrong", "qac_pos_conflict"}
+_HUMAN_T = {"ambiguous_grammar", "source_corpus_conflict", "suspected_qamus_entry_error", "proper_vs_common_noun", "quran_ref_uncertain"}
+_TWOVOTE_T = {"irab", "case_or_mood", "istithna", "nafy_lil_jins", "idafa_ambiguous", "jar_majrur_ambiguous",
+              "multi_sense_root", "referent_sensitive_gloss", "advanced_nahw", "depth_deep", "format_essay",
+              "bloom_analysis_or_higher"}
+
+
+def _required_gate(triggers):
+    """GP0 gate (mirrors validate_linguistic_decisions / grammar-decision-gates.json)."""
+    t = set(triggers or [])
+    if t & _NEVER_T:
+        return "never_auto_resolve"
+    if t & _HUMAN_T:
+        return "human_source_review_required"
+    if t & _TWOVOTE_T:
+        return "two_vote_required"
+    return "auto_safe"
+
+
+def _triggers_from(sarf, nahw, decision):
+    """Derive GP0 grammar_triggers from the sarf/nahw evidence on this decision."""
+    t = []
+    rf = set(sarf.get("risk_flags") or [])
+    if "multi_sense_root" in rf or "sense_selection_required" in rf:
+        t.append("multi_sense_root")
+    if (nahw.get("context_rule") or "").startswith("referent_guard"):
+        t.append("referent_sensitive_gloss")
+    if decision.get("type") == "quarantine" and decision.get("pending_reason") == "pos_mismatch":
+        t.append("reasoning_path_wrong")
+    return sorted(set(t))
+
+
 def _lemma(token):
     return token.get("lemma") or token.get("lemma_ar") or None
 
@@ -464,6 +496,11 @@ def _mk(idx, address, surface, root_ar, lemma_ar, pos, sarf, nahw, decision,
         rec["sarf"]["reason"] = sarf_reason
     if nahw_reason:
         rec["nahw"]["reason"] = nahw_reason
+    # GP0 gate stamping: triggers -> required gate; reasoning carries the iʿrāb/morphology reason
+    triggers = _triggers_from(rec["sarf"], rec["nahw"], rec["decision"])
+    rec["grammar_triggers"] = triggers
+    rec["gate"] = _required_gate(triggers)
+    rec["reasoning"] = sarf_reason or nahw_reason or None
     return rec
 
 

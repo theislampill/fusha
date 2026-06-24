@@ -81,6 +81,20 @@ mismatch). Emit a repair candidate with a source address + field path — **neve
 See `examples/qamus-regressions.jsonl` and `examples/root-form-decisions.jsonl`. They encode the exact bug
 classes already fixed; a change that would re-introduce any of them is wrong.
 
+## 13b. Executable gates (P10 — enforced, not advisory)
+A decision is now machine-checked. Every `linguistic-decision` carries a `gate`, `grammar_triggers`, and
+`reasoning`; [`tools/validate_linguistic_decisions.py`](../tools/validate_linguistic_decisions.py) **rejects** any
+decision whose gate is weaker than its triggers require, any two-vote/iʿrāb decision missing its reasoning, and
+any `never_auto`/`human-review` decision marked exportable. Gate rules:
+[`rules/verb-measure-gates.json`](rules/verb-measure-gates.json), [`rules/weak-root-gates.json`](rules/weak-root-gates.json),
+[`rules/masdar-participle-gates.json`](rules/masdar-participle-gates.json),
+[`nahw/rules/irab-safety-gates.json`](../nahw/rules/irab-safety-gates.json),
+[`nahw/rules/two-vote-required-rules.json`](../nahw/rules/two-vote-required-rules.json). Tiers:
+`auto_safe` (QAC agrees · one sense · no homograph · no grammar dependency) → `two_vote_required` (iʿrāb/derived-
+sense/multi-sense/referent) → `human_source_review_required` → `never_auto_resolve` (norm-only/OCR-only/copied/
+QAC-conflict). **A surface-key gloss is auto_safe only if its `norm_strict` key is collision-free** (the
+نَزَّلَ→نزل collides with نَزَلَ lesson).
+
 ## 14. Integration with qamus-highlight
 A sarf `decision` maps directly: `resolved`→author the gloss (src=qamus); `pending`→set the pending reason;
 `quarantine`→demote/deny the wrong sense. Record the decision at `quran:S:A:W` in the source-address graph so

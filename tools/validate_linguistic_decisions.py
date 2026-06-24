@@ -42,6 +42,25 @@ LEAK_RE = re.compile(r"informed_by|external_informed_by|quran\.com|corpus\.quran
 WHO_GLOSS = re.compile(r"\bwho\b|\bwhoever\b|\bwhomever\b|he who", re.I)
 FROM_GLOSS = re.compile(r"\bfrom\b|\bamong\b", re.I)
 
+# GP0 gate tiers (must mirror nahw/evals/grammar-decision-gates.json), ranked
+_GATE_RANK = {"auto_safe": 0, "two_vote_required": 1, "human_source_review_required": 2, "never_auto_resolve": 3}
+_NEVER = {"norm_only_match", "ocr_only_evidence", "external_gloss_copied", "reasoning_path_wrong", "qac_pos_conflict"}
+_HUMAN = {"ambiguous_grammar", "source_corpus_conflict", "suspected_qamus_entry_error", "proper_vs_common_noun", "quran_ref_uncertain"}
+_TWOVOTE = {"irab", "case_or_mood", "istithna", "nafy_lil_jins", "idafa_ambiguous", "jar_majrur_ambiguous",
+            "multi_sense_root", "referent_sensitive_gloss", "advanced_nahw", "depth_deep", "format_essay",
+            "bloom_analysis_or_higher"}
+
+
+def required_gate(triggers):
+    triggers = set(triggers or [])
+    if triggers & _NEVER:
+        return "never_auto_resolve"
+    if triggers & _HUMAN:
+        return "human_source_review_required"
+    if triggers & _TWOVOTE:
+        return "two_vote_required"
+    return "auto_safe"
+
 
 # ---------------------------------------------------------------------------
 # minimal schema validator (only the constructs this schema uses)
@@ -136,6 +155,26 @@ def invariant_violations(record):
         root = record.get("root_ar")
         if root and N.norm(root.replace(" ", "")) == N.norm("لين"):
             v.append("إِلَيْنَا must not be assigned the root ل ي ن at %s" % record.get("source_address"))
+
+    # --- GP0 gate enforcement: a decision may not ship below the gate its triggers require ---
+    triggers = record.get("grammar_triggers") or []
+    need = required_gate(triggers)
+    declared = record.get("gate")
+    if triggers and declared is None:
+        v.append("grammar_triggers present but no gate declared (need >= %s) at %s"
+                 % (need, record.get("source_address")))
+    elif declared is not None and _GATE_RANK.get(declared, -1) < _GATE_RANK[need]:
+        v.append("gate %r is weaker than triggers require (need %s) at %s"
+                 % (declared, need, record.get("source_address")))
+    # a two_vote / iʿrāb decision must carry its reasoning (answer alone is insufficient)
+    if (need == "two_vote_required" or "irab" in triggers) and dec.get("type") == "authored_gloss":
+        if not (record.get("reasoning") or "").strip():
+            v.append("a two-vote/iʿrāb authored decision must carry reasoning (answer+reason) at %s"
+                     % record.get("source_address"))
+    # never auto-resolve / human-review tiers may never be publicly exported
+    if record.get("public_export_allowed") and need in ("never_auto_resolve", "human_source_review_required"):
+        v.append("public_export_allowed=true but triggers force %s (not exportable) at %s"
+                 % (need, record.get("source_address")))
 
     # --- public_export_allowed implies authored_gloss + no provenance leak
     if record.get("public_export_allowed"):
@@ -236,9 +275,35 @@ def _self_test():
     assert any("enum" in e for e in se6) and any("does not match" in e for e in se6) \
         and any("additional property" in e for e in se6), se6
 
+    # bad 7 (GP0): iʿrāb decision with too-weak gate
+    bad7 = json.loads(json.dumps(good))
+    bad7.update({"source_address": "quran:2:255:1", "surface_ar": "ٱللَّهُ", "pos": "noun",
+                 "grammar_triggers": ["irab"], "gate": "auto_safe", "reasoning": "mubtadaʾ, rafʿ",
+                 "public_export_allowed": False})
+    bad7["decision"]["gloss_en_authored"] = "Allah"
+    _, _, ie7 = validate_stream([json.dumps(bad7, ensure_ascii=False)], schema)
+    assert any("weaker than triggers require" in e for e in ie7), ie7
+
+    # bad 8 (GP0): two-vote authored decision missing reasoning
+    bad8 = json.loads(json.dumps(good))
+    bad8.update({"source_address": "quran:2:255:5", "surface_ar": "كُرْسِيُّهُ", "pos": "noun",
+                 "grammar_triggers": ["multi_sense_root"], "gate": "two_vote_required",
+                 "reasoning": None, "public_export_allowed": False})
+    bad8["decision"]["gloss_en_authored"] = "his throne"
+    _, _, ie8 = validate_stream([json.dumps(bad8, ensure_ascii=False)], schema)
+    assert any("must carry reasoning" in e for e in ie8), ie8
+
+    # bad 9 (GP0): never_auto trigger but public_export_allowed=true
+    bad9 = json.loads(json.dumps(good))
+    bad9.update({"grammar_triggers": ["norm_only_match"], "gate": "never_auto_resolve",
+                 "public_export_allowed": True})
+    _, _, ie9 = validate_stream([json.dumps(bad9, ensure_ascii=False)], schema)
+    assert any("not exportable" in e for e in ie9), ie9
+
     print("validate_linguistic_decisions self-test OK — good passes; "
-          "6 bad records each caught (مِن≠who, no 'to …' on noun, إِلَيْنَا≠ل ي ن, "
-          "no provenance leak on export, export⇒authored, schema enums/patterns)")
+          "9 bad records each caught (مِن≠who, no 'to …' on noun, إِلَيْنَا≠ل ي ن, "
+          "no provenance leak on export, export⇒authored, schema enums/patterns, "
+          "GP0: gate>=triggers, two-vote needs reasoning, never_auto not exportable)")
 
 
 def main():

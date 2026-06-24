@@ -1,0 +1,12 @@
+{
+  "schema": "fusha/verb-measure-gates@1",
+  "purpose": "Gate tier for a verb-form (measure) hover/authoring decision. A form-aware dominant-sense gloss is auto-safe ONLY when the surface key is collision-free and the sense is single; derived-form sense shifts and surface-key collisions escalate.",
+  "tiers": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"],
+  "rules": [
+    {"id": "form_dominant_sense_keyclean", "when": "QAC root+POS agree; surface norm_strict key maps to ONE form/meaning in the corpus; single applicable Qamus sense", "gate": "auto_safe", "triggers": [], "hover": "safe_if_cited"},
+    {"id": "form_collision", "when": "norm_strict key collides with a different-meaning form of the root (نَزَّلَ→نزل vs نَزَلَ; اِسْتَغْفِرُوا imperative vs perfect)", "gate": "never_auto_resolve", "triggers": ["norm_only_match"], "hover": "never_auto", "note": "the form-distinguishing shadda/voice is dropped by the key — pending"},
+    {"id": "derived_sense_shift", "when": "Form II/IV/V/VIII/X sense differs from Form I (نَزَّلَ≠نَزَلَ; عَلَّمَ≠عَلِمَ)", "gate": "two_vote_required", "triggers": ["multi_sense_root"], "hover": "pending_if_reason_uncertain"},
+    {"id": "passive_voice", "when": "the form is passive (ḍamma-kasra) — wording flips (خُلِقَ 'was created')", "gate": "two_vote_required", "triggers": ["case_or_mood"], "hover": "pending_if_reason_uncertain"},
+    {"id": "negation_governed", "when": "a لَمْ/لَنْ governs the verb (tense flips)", "gate": "two_vote_required", "triggers": ["case_or_mood"], "hover": "pending_if_reason_uncertain"}
+  ]
+}

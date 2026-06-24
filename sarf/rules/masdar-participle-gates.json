@@ -1,0 +1,11 @@
+{
+  "schema": "fusha/masdar-participle-gates@1",
+  "purpose": "Gate tier for maṣdar / ism fāʿil / ism mafʿūl decisions. The gloss SHAPE must be nominal; a finite-verb gloss on these is a POS-mismatch blocker.",
+  "rules": [
+    {"id": "masdar_nominal", "when": "surface is a maṣdar (ذِكْر, إِنفَاق, اِسْتِغْفَار)", "gate": "auto_safe", "triggers": [], "hover": "safe_if_cited", "require": "nominal gloss ('the act of …'); never a finite verb"},
+    {"id": "masdar_vowel_homograph", "when": "the maṣdar collides with a noun/verb of the root under norm() (ذِكْر / ذَكَر / ذَكَرَ)", "gate": "never_auto_resolve", "triggers": ["norm_only_match"], "hover": "never_auto"},
+    {"id": "participle_agent_patient", "when": "ism fāʿil / ism mafʿūl (كَافِر, مُؤْمِن, مَخْلُوق)", "gate": "auto_safe", "triggers": [], "hover": "safe_if_cited", "require": "agent/patient noun gloss; never a finite verb"},
+    {"id": "mu_prefix_voice", "when": "مُـ participle split by the penult vowel (مُعَلِّم vs مُعَلَّم) and the vowel is absent/ambiguous", "gate": "two_vote_required", "triggers": ["case_or_mood"], "hover": "pending_if_reason_uncertain"},
+    {"id": "verb_on_nominal", "when": "a 'to …' verb gloss is proposed on a maṣdar/participle/noun", "gate": "never_auto_resolve", "triggers": ["reasoning_path_wrong"], "hover": "never_auto", "note": "the §3 POS-mismatch blocker"}
+  ]
+}

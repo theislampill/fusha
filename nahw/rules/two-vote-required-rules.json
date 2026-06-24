@@ -1,0 +1,38 @@
+{
+  "schema": "fusha/two-vote-required-rules@1",
+  "purpose": "The canonical trigger list that forces TWO independent checks (agreeing on conclusion AND reason) before a decision may author/apply. Consumed by validate_linguistic_decisions.required_gate(). A decision carrying any of these in grammar_triggers must declare gate>=two_vote_required (or stricter if a never_auto/human trigger is also present).",
+  "two_vote_triggers": [
+    "advanced_nahw",
+    "irab",
+    "case_or_mood",
+    "istithna",
+    "nafy_lil_jins",
+    "idafa_ambiguous",
+    "jar_majrur_ambiguous",
+    "multi_sense_root",
+    "referent_sensitive_gloss",
+    "depth_deep",
+    "format_essay",
+    "bloom_analysis_or_higher"
+  ],
+  "human_review_triggers": [
+    "ambiguous_grammar",
+    "source_corpus_conflict",
+    "suspected_qamus_entry_error",
+    "proper_vs_common_noun",
+    "quran_ref_uncertain"
+  ],
+  "never_auto_triggers": [
+    "norm_only_match",
+    "ocr_only_evidence",
+    "external_gloss_copied",
+    "reasoning_path_wrong",
+    "qac_pos_conflict"
+  ],
+  "two_vote_protocol": {
+    "checks": 2,
+    "independence": "the two checks must be independent (different lens/agent), not one check repeated",
+    "must_agree_on": ["conclusion", "reasoning"],
+    "fail_open": "if the two disagree on EITHER conclusion or reasoning -> pending (never ship the majority guess)"
+  }
+}

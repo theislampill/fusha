@@ -1,0 +1,12 @@
+{
+  "schema": "fusha/irab-safety-gates@1",
+  "purpose": "Gate tier for iʿrāb-affecting decisions — the GrammarProblems study's worst area. A right answer with wrong iʿrāb reasoning is unsafe; these decisions need two independent checks agreeing on conclusion AND reason.",
+  "rules": [
+    {"id": "irab_assignment", "when": "the decision assigns/depends on case (rafʿ/naṣb/jarr) or mood (rafʿ/naṣb/jazm)", "gate": "two_vote_required", "triggers": ["irab", "case_or_mood"], "hover": "never_auto", "require": "reasoning present"},
+    {"id": "mood_tense_flip", "when": "a particle changes the verb's mood and hence tense/meaning (لَمْ+jussive→past; لَنْ+subjunctive→future)", "gate": "two_vote_required", "triggers": ["case_or_mood"], "hover": "pending_if_reason_uncertain"},
+    {"id": "nafy_lil_jins", "when": "لا النافية للجنس vs negating لا (depends on the governed noun's state)", "gate": "two_vote_required", "triggers": ["nafy_lil_jins"], "hover": "never_auto"},
+    {"id": "istithna", "when": "exception (إلّا/غير/سوى) — excepted noun's case depends on positive/negative + connected/disconnected", "gate": "two_vote_required", "triggers": ["istithna"], "hover": "never_auto"},
+    {"id": "idafa_jar_majrur_ambiguous", "when": "ambiguous iḍāfa or jar-majrūr boundary/role", "gate": "two_vote_required", "triggers": ["idafa_ambiguous", "jar_majrur_ambiguous"], "hover": "pending_if_reason_uncertain"},
+    {"id": "referent_sensitive", "when": "the gloss depends on a referent (divine Name vs human attribute; proper vs common)", "gate": "two_vote_required", "triggers": ["referent_sensitive_gloss"], "hover": "never_auto"}
+  ]
+}

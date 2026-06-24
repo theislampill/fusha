@@ -1,0 +1,23 @@
+{
+  "schema": "fusha/grammar-problems-gates@1",
+  "purpose": "Topic → gate map derived from the GrammarProblems study dimensions. Machine-readable mirror of nahw/evals/grammar-problems-matrix.json#topics, for use by run/validate_linguistic_decisions.",
+  "by_topic": {
+    "irab": {"gate": "two_vote_required", "hover": "never_auto"},
+    "case_mood": {"gate": "two_vote_required", "hover": "never_auto"},
+    "nafy_lil_jins": {"gate": "two_vote_required", "hover": "never_auto"},
+    "istithna": {"gate": "two_vote_required", "hover": "never_auto"},
+    "proper_vs_common": {"gate": "two_vote_required", "hover": "never_auto"},
+    "conditional": {"gate": "two_vote_required", "hover": "pending_if_reason_uncertain"},
+    "idafa": {"gate": "two_vote_required", "hover": "pending_if_reason_uncertain"},
+    "negation": {"gate": "two_vote_required", "hover": "pending_if_reason_uncertain"},
+    "jar_majrur": {"gate": "auto_safe", "hover": "safe_if_cited"},
+    "particles": {"gate": "auto_safe", "hover": "safe_if_cited"},
+    "mubtada_khabar": {"gate": "auto_safe", "hover": "safe_if_cited"},
+    "verb_measure": {"gate": "auto_safe", "hover": "safe_if_cited"}
+  },
+  "by_difficulty": [
+    {"when": "level=awdah_al_masalik OR depth=deep OR format=essay OR bloom in [analysis,evaluation,generation]", "gate": "two_vote_required"},
+    {"when": "level=ajurrumiyyah AND depth=direct AND format=objective AND bloom in [recall,understanding]", "gate": "auto_safe_if_other_conditions_met"}
+  ],
+  "note": "auto_safe still requires QAC agreement + single sense + no homograph + no grammar-context dependency (see grammar-decision-gates.json)."
+}

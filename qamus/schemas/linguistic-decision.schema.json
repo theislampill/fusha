@@ -51,7 +51,10 @@
       }
     },
     "public_export_allowed": { "type": "boolean", "description": "true only when decision.type=authored_gloss and no provenance would leak" },
-    "review_status": { "type": "string", "enum": ["needs_human_review", "approved", "applied"] }
+    "review_status": { "type": "string", "enum": ["needs_human_review", "approved", "applied"] },
+    "gate": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"], "description": "GP0 gate tier; must be >= the strictest tier any grammar_trigger requires" },
+    "grammar_triggers": { "type": "array", "items": { "type": "string" }, "description": "GrammarProblems triggers present (irab, case_or_mood, istithna, nafy_lil_jins, norm_only_match, ...)" },
+    "reasoning": { "type": ["string", "null"], "description": "the iʿrāb/morphology reason; REQUIRED on a two_vote/irab decision (answer alone is insufficient)" }
   },
   "additionalProperties": false
 }
