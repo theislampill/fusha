@@ -1,32 +1,42 @@
-# Source-photo verification — progress
+# Source-photo verification — progress (RESCUE pass)
 
-Honest status of the **entry-data** verification lane (distinct from the hover aid, which is live and correct).
-Entry fields — headword spelling, forms, sense list, sense-counts, total_uses — are verified against the
-**photographed source** (the owner's printed dictionary). That corpus is **owner-gated and not available this
-session**, so this lane cannot certify field repairs yet.
+Status of the **entry-data** verification lane. **Owner correction applied:** `needs_source_photo_review` is no
+longer treated as "ask owner for new photos." The existing photographed corpus was indexed and used FIRST.
 
-## Why the Tafsir MCP does NOT close this lane
-The Tafsir MCP supplies **Qur'anic grammar/morphology** evidence (root, wazn, form, iʿrāb) — it does **not** hold
-the printed Qamus dictionary's entry data, so it cannot confirm a headword's sense list or `total_uses`. MCP
-strengthens the **hover/gloss** lane (form/voice/POS witness), not source-photo entry verification.
+## Corpus inventory (existing photos — `tools/source_photo_indexer.py`)
+| metric | value |
+|---|---|
+| total images | **1,205** |
+| page-numbered files | **468** (pages **2–471**) |
+| missing pages (per manifests) | **0** |
+| folders | 21 (intake_2…intake_13, alternates, legacy, …) |
+| verdict | **dictionary fully photographed** → retakes are not the default |
 
-## Progress
+Index: `qamus/indexes/source_photo_index.json`. Calibration page `intake_13/IMG_7784.jpeg` confirmed entry blocks
+are legible (headword/root/definition/senses/total-uses/Qurʾānic-usage).
 
-| state | n | change |
-|---|---:|---|
-| entries `source_photo_verified` | **0** | no photo pass this session (honest) |
-| `needs_source_photo_review` (āyāt hover-complete, fields unverified) | **214** | grew 163 → 190 → 202 → 214 as authoring landed (entries advance into this queue) |
-| `needs_quran_ref_verification` (bad/range refs) | **10** | unchanged |
-| `deferred_missing_source` (no addressable āyāt) | **7** | unchanged |
-| certified source-verified repairs this tranche | **0** | `repairs/repair_batch_005_source_verified.jsonl` (empty by design) |
+## Reclassified queue (240 → 6 buckets, `tools/source_photo_rescue.py`)
+| bucket | n |
+|---|---:|
+| `needs_manual_visual_review` (photo PRESENT) | **240** |
+| `needs_new_photo` (retake justified) | **0** |
+| `verified_from_existing_photo` | 1 sample (ب ي ن) |
+| `certified_repair_ready` | 0 |
+| `missing_locator` | 0 |
+| `deferred_ambiguous` | 0 |
 
-The 214 count rising is expected and healthy: every batch that makes an entry's example āyāt fully glossed
-advances it from `needs_hover_authoring` into `needs_source_photo_review`. The hover aid for these entries is
-already live and correct; only the entry DATA awaits the photo.
+**All 240 reclassified off "needs new photo."** Only entries the corpus genuinely cannot cover would become
+`needs_new_photo`; there are none (0 missing pages).
 
-## What unblocks it
-The retake worklist [`retake-source-photo-requests.md`](retake-source-photo-requests.md) lists each entry with
-the exact field needing verification. When the owner provides a page photo:
-`dry-run → backup_store → DawahAgent edit_entry_record → verify (versioned) → rebuild` (the proven كَظِيم path).
+## Field-verification sample (proof the method works)
+ب ي ن (df6af97d5e93, source_key v008): live `total_uses` = 523; the photo `intake_13/IMG_7784.jpeg` reads
+**"Total uses in the Quran: 523"** → **verified_correct**, no repair, no mutation
+(`tools/source_photo_verify_entry.py`).
 
-## Lane status: **BLOCKED — owner-gated (source corpus)**; all other lanes continue.
+## What remains (next tier — bounded reading, not retakes)
+Per-entry visual verification of the 240 against existing page tiles: crop (`source_photo_cropper.py`) → read →
+compare headword/forms/senses/sense-counts/total_uses/refs (`source_photo_verify_entry.py`) → repair payload only
+on a real discrepancy → owner-gated `edit_entry_record`. The pipeline is built, calibrated, and the corpus is
+complete; this is a reading task over an already-complete photo set.
+
+## Lane status: **RESCUED** — 0 retakes required; 240 awaiting visual review of existing photos.

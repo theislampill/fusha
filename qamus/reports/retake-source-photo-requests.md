@@ -1,73 +1,30 @@
-# Source-photo retake / verification requests
+# Source-photo retake requests — RESCUED (retake is no longer the default)
 
-Entries whose example ayat are now hover-complete but whose ENTRY FIELDS (headword, forms, senses, sense-counts, total_uses) are not yet verified against the photographed source. This is the authoring FLOOR — these need the physical source corpus (owner-gated). Public hover for these entries is already live and correct; this queue certifies the ENTRY DATA, not the hover aid.
+> **Reclassified by the source-photo rescue pass** (`qamus/reports/source-photo-rescue-report.md`). The existing
+> corpus was indexed first: **1,205 images, pages 2–471, 0 missing**. The dictionary is fully photographed, so the
+> 240 `needs_source_photo_review` entries do **NOT** need new photos — they need a *visual read of existing pages*.
 
-| queue | n | what is needed |
+## Reclassified queue (240 entries)
+| bucket | n | action |
 |---|---:|---|
-| `needs_source_photo_review` | 240 | photograph the source page; verify headword/forms/senses/counts |
-| `needs_quran_ref_verification` | 10 | fix bad/range ayah refs before re-audit |
-| `deferred_missing_source` | 7 | no addressable ayat; locate source or mark out-of-scope |
+| `needs_manual_visual_review` | **240** | read the existing page tile (`source_photo_cropper.py`) + verify fields — **no retake** |
+| `verified_from_existing_photo` | (sample) | ب ي ن total_uses 523 = live 523 (no action) |
+| `certified_repair_ready` | 0 | none certified yet |
+| **`needs_new_photo`** | **0** | corpus covers every page — **no retakes requested** |
+| `missing_locator` | 0 | every queued entry has a source_key |
+| `deferred_ambiguous` | 0 | — |
 
-## Top entries to verify next (by ayah-ref count)
+## Retake instructions (only if a genuine gap appears later)
+A retake is requested ONLY for an entry that lands in `needs_new_photo` after a visual-review attempt fails (e.g.
+the page tile is illegible at that block). For such a case record: entry_id · source_key · expected page (the
+corpus is page-indexed 2–471) · exact crop · field needing verification · why the existing photo is insufficient.
+**As of this pass, that list is empty.**
 
-| entry_id | source_address | root | headword | refs | hover_cov |
-|---|---|---|---|---:|---:|
-| 03609d2ef226 | qamus:v703#root=س ج ر | س ج ر | سُجِّرَتْ | 3 | 1.00 |
-| 972a53c81a73 | qamus:n414#root=ه م ز | ه م ز | ه م ز | 3 | 1.00 |
-| b0743d9417df | qamus:v673#root=ن س ل | ن س ل | يَنسِلُونَ | 3 | 1.00 |
-| c63837955935 | qamus:v723#root=ك ب (ك) ب | ك ب (ك) ب | كُبَّتْ | 3 | 1.00 |
-| 0451bd0c1350 | qamus:v691#root=خ ر ص | خ ر ص | يَخْرُصُونَ | 2 | 1.00 |
-| 0d82cf557616 | qamus:v753#root=ب ع ث ر | ب ع ث ر | بُعْثِرَ | 2 | 1.00 |
-| 12791e704272 | qamus:n395#root=م ج د | م ج د | مَجِيد | 2 | 1.00 |
-| 22be25652dce | qamus:v651#root=ر ك ن | ر ك ن | تَرْكَنُوا۟ | 2 | 1.00 |
-| 2f8c30cd5c75 | qamus:v695#root=ذ ر و | ذ ر و | تَذْرُوهُ | 2 | 1.00 |
-| 3aecc5a5c021 | qamus:v776#root=ش غ ل | ش غ ل | شَغَلَتْنَا | 2 | 1.00 |
-| 3f0b68558cc4 | qamus:n924#root= |  | قَرْن | 2 | 1.00 |
-| 452ab0b9410e | qamus:v714#root=ع ب س | ع ب س | عَبَسَ | 2 | 1.00 |
-| 55e691eb52ab | qamus:v725#root=ك و ر | ك و ر | يُكَوِّرُ | 2 | 1.00 |
-| 616dbd6dffcc | qamus:p064#root= |  | هَذَا | 2 | 1.00 |
-| 76874561dea3 | qamus:p024#root= |  | لَكِنْ | 2 | 1.00 |
-| 79844337cc9d | qamus:p087#root= |  | نَحْنُ | 2 | 1.00 |
-| 7a89e1ffe82b | qamus:n938#root= |  | جِبِلَّة | 2 | 1.00 |
-| 7bb317131add | qamus:p061#root= |  | لَعَلَّ | 2 | 1.00 |
-| 7d41f96d61e8 | qamus:v810#root=ن ز ف | ن ز ف | يُنزَفُونَ | 2 | 1.00 |
-| 7f1793bce21a | qamus:n969#root= |  | حُقُبًا | 2 | 1.00 |
-| 880ad7cf989a | qamus:v687#root=ح ض ض | ح ض ض | يَحُضُّ | 2 | 1.00 |
-| 926559392f2f | qamus:n172#root= |  | صُحُف | 2 | 1.00 |
-| 98e0a4f33c1a | qamus:p052#root= |  | كَلَّا | 2 | 1.00 |
-| ccb0bf169f3e | qamus:n747#root= |  | فَاكِهَة | 2 | 1.00 |
-| d84692e8d2c8 | qamus:p047#root= |  | أَيْنَ | 2 | 1.00 |
-| d93bddaa1e1e | qamus:p030#root= |  | كَيْ | 2 | 1.00 |
-| f4dbd60e1c18 | qamus:v797#root=غ و ص | غ و ص | يَغُوصُونَ | 2 | 1.00 |
-| fd4e3bf990f0 | qamus:n352#root= |  | جَمِيل | 2 | 1.00 |
-| 00fabb02e815 | qamus:n553#root= |  | غُزًّى | 1 | 1.00 |
-| 024794041a31 | qamus:n433#root=رِفْد | رِفْد | رِفْد | 1 | 1.00 |
-| 05bda5633587 | qamus:n728#root= |  | فَرَاش | 1 | 1.00 |
-| 0813261a6f1f | qamus:n323#root= |  | سَقِيم | 1 | 1.00 |
-| 0934fd2bee46 | qamus:n989#root= |  | مَحِيص | 1 | 1.00 |
-| 098d3f546348 | qamus:n609#root= |  | وَهَّاجًا | 1 | 1.00 |
-| 0a4065024804 | qamus:v910#root=يَكْلَؤُكُمْ | يَكْلَؤُكُمْ | يَكْلَؤُكُمْ | 1 | 1.00 |
-| 0a48df03174d | qamus:n024#root= |  | الطَّامَّة | 1 | 1.00 |
-| 0af1843f20af | qamus:n864#root= |  | عِهْن | 1 | 1.00 |
-| 0af8e09e0a0b | qamus:n595#root= |  | مَنَاصٍ | 1 | 1.00 |
-| 0b760a96cdc3 | qamus:v912#root=تَلْفَحُ | تَلْفَحُ | تَلْفَحُ | 1 | 1.00 |
-| 0b925dfe0b84 | qamus:n100#root= |  | آدَم | 1 | 1.00 |
+## Next tier (the actual remaining work)
+Per-entry visual verification of the 240: for each, map source_key → page → tile (`source_photo_cropper.py`),
+read the entry block, compare headword/forms/senses/sense-counts/total_uses/refs against live
+(`source_photo_verify_entry.py`), and emit a repair payload only on a real discrepancy. The pipeline is built and
+calibrated; this is a bounded reading task over an already-complete photo set, not a retake campaign.
 
-## Ref-verification queue
-
-| entry_id | root | headword | refs |
-|---|---|---|---:|
-| 049756ecbbf9 | ح ق ق | حَقَّ | 30 |
-| 3b300a693995 | و ج ل | وَجِلَتْ | 2 |
-| 4af79d2fb7e5 | ك ي د | كِدْنَا | 5 |
-| 6269f8851346 | و ر ث | وَرِثَ | 7 |
-| 63addc5a2b8e | و س و س | وَسْوَسَ | 2 |
-| 7f673c8b767f | أ ل ف | أَلَّفَ | 4 |
-| 9cabebe3f9b8 | و ق ع | وَقَعَ | 9 |
-| ae39253c0a8c | ر ك ض | يَرْكُضُونَ | 1 |
-| b75d80a03a31 | ه ز أ | يَسْتَهْزِئُ | 3 |
-| e9dd6c4a6a4f | ف ق د | تَفْقِدُونَ | 1 |
-
-## Retake instructions (per entry)
-
-Photograph the dictionary page containing the entry's headword; crop to the entry block; record `source-photo:<page>#entry=<source_key>` (internal address). The crop is a DERIVED VIEW — never the public authority. Verification then sets headword_verified / forms_verified / senses_verified / sense_counts_verified / total_count_verified true in the audit, advancing the entry toward `fully_verified`.
+## Ref-verification queue (separate, 10 entries)
+Bad/range āyah refs (unchanged): see the audit; these are ref fixes, not photo retakes.
