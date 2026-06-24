@@ -469,6 +469,11 @@ def _mk(idx, address, surface, root_ar, lemma_ar, pos, sarf, nahw, decision,
         "quran_text_verified": bool(token.get("ayah")),
         "external_informed_by": _internal_informed_by(token),
     }
+    # Optional INTERNAL Tafsir MCP evidence (a build-tool witness; never public, never a skill dependency).
+    mcp_ev = token.get("mcp") or token.get("mcp_evidence")
+    if mcp_ev:
+        prov["mcp"] = mcp_ev
+        prov["external_informed_by"] = sorted(set((prov.get("external_informed_by") or []) + ["tafsir-mcp"]))
     rec = {
         "decision_id": "lingdec-%06d" % idx,
         "source_address": address,
@@ -485,6 +490,7 @@ def _mk(idx, address, surface, root_ar, lemma_ar, pos, sarf, nahw, decision,
             "confidence": decision.get("confidence", "low"),
         },
         "internal_provenance": prov,
+        "mcp_used": bool(mcp_ev),
         # public export is allowed ONLY for a clean authored_gloss with a gloss present
         "public_export_allowed": bool(public_export and decision["type"] == "authored_gloss"
                                       and decision.get("gloss_en_authored")),

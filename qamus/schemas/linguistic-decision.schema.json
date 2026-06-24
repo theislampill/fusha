@@ -47,9 +47,11 @@
         "qamus_entries": { "type": "array", "items": { "type": "string" } },
         "qac": { "type": "boolean" },
         "quran_text_verified": { "type": "boolean" },
-        "external_informed_by": { "type": "array", "items": { "type": "string" } }
+        "external_informed_by": { "type": "array", "items": { "type": "string" } },
+        "mcp": { "type": ["object", "null"], "description": "INTERNAL Tafsir MCP morphology/iʿrāb evidence (pos/form/voice/number/case) when consulted; never public" }
       }
     },
+    "mcp_used": { "type": "boolean", "description": "whether a Tafsir MCP grammar/morphology witness informed this decision (internal; default false)" },
     "public_export_allowed": { "type": "boolean", "description": "true only when decision.type=authored_gloss and no provenance would leak" },
     "review_status": { "type": "string", "enum": ["needs_human_review", "approved", "applied"] },
     "gate": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"], "description": "GP0 gate tier; must be >= the strictest tier any grammar_trigger requires" },
