@@ -1,24 +1,24 @@
 {
- "schema": "fusha/suffix-pronoun-rules@1",
- "purpose": "Resolve a NOUN stem + possessive enclitic into possessor+base. POS-gated: never on a verb.",
- "enclitics": {
-  "نا": "our/us",
-  "كم": "your(pl)",
-  "كن": "your(pl-f)",
-  "هم": "their",
-  "هن": "their(f)",
-  "ه": "his/its",
-  "ها": "her/its",
-  "ك": "your",
-  "ي": "my",
-  "كما": "your(dual)",
-  "هما": "their(dual)"
- },
- "gate": "token QAC POS must be nominal (N/ADJ/PN); on POS=V the enclitic is subject/object (we knew, created you) NOT possessive -> skip",
- "compose": "[proclitic and/so] + possessor + stem_base_gloss",
- "forbidden": [
-  "possessive gloss on a verb (عَلِمْنَا != our knowledge)",
-  "overwrite proper nouns/idioms",
-  "guess base gloss when stem unknown"
- ]
+  "compose": "[proclitic and/so] + possessor + stem_base_gloss",
+  "enclitics": {
+    "ك": "your",
+    "كم": "your(pl)",
+    "كما": "your(dual)",
+    "كن": "your(pl-f)",
+    "نا": "our/us",
+    "ه": "his/its",
+    "ها": "her/its",
+    "هم": "their",
+    "هما": "their(dual)",
+    "هن": "their(f)",
+    "ي": "my"
+  },
+  "forbidden": [
+    "possessive gloss on a verb (عَلِمْنَا != our knowledge)",
+    "overwrite proper nouns/idioms",
+    "guess base gloss when stem unknown"
+  ],
+  "gate": "token QAC POS must be nominal (N/ADJ/PN); on POS=V the enclitic is subject/object (we knew, created you) NOT possessive -> skip",
+  "purpose": "Resolve a NOUN stem + possessive enclitic into possessor+base. POS-gated: never on a verb.",
+  "schema": "fusha/suffix-pronoun-rules@1"
 }

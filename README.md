@@ -60,6 +60,19 @@ tools/      normalize_ar.py · qac_adapter.py · ocr_locator_notes
 Large outputs (full indexes, OCR dumps) are **not** committed raw — commit a **sample + the generator script**,
 and keep full output under a gitignored `out/`. Every committed index/report is reproducible from its script.
 
+## Artifact ergonomics — how to review the data (humans & agents)
+Every committed artifact is **reviewable and diffable** (enforced by `tools/check_artifact_ergonomics.py`,
+gated in `check_regressions.py`; classified in `qamus/reports/artifact-taxonomy.md`):
+- **reviewer-facing JSON** is pretty (`indent=2`, `sort_keys`, `ensure_ascii=False`, trailing newline) — open it
+  and read it; diffs are line-by-line. The navigational lookup indexes (`qamus/indexes/current/by-*.json`) are here.
+- **large row-records are JSONL** (one record per line) with a pretty `*.meta.json` sidecar — e.g.
+  `qamus/data/current/entries.jsonl`, `qamus/indexes/current/{source-address-full,quran-usage-spine-full,
+  qamus-entry-field-addresses}.jsonl`, `qamus/reports/hover-token-audit-full.jsonl`. Grep a line; each is valid JSON.
+- **compact is allowed only** for `*.min.json` (machine-only, regenerable from the reviewable dataset) and
+  `checksums.json`. Nothing else may be a one-line mega-file.
+- query any of it offline, no server: `tools/query_current_qamus.py`, `tools/query_source_address_graph.py`,
+  `tools/query_hover_token.py`.
+
 ## Review workflow
 Candidate entries / authored glosses / repairs are produced **review-only** (`review_status: needs_human_review`)
 and flow through `qamus/reports/fusha-to-qamus-highlight-bridge.md` → human review → owner-gated apply. Nothing

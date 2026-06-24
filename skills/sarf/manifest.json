@@ -1,33 +1,33 @@
 {
- "schema": "fusha/skill-manifest@1",
- "name": "fusha-sarf",
- "version": "1.0.0",
- "skill_root": "sarf",
- "entry": "sarf/SKILL.md",
- "description": "Arabic morphology (sarf) engine: root/form/POS/clitic decisions, hover-gloss authoring, Qamus entry generation, learner drills. MCP-free; cooperates with nahw + Qamus + the internal evidence ladder.",
- "includes": [
-  "sarf/SKILL.md",
-  "sarf/README.md",
-  "sarf/procedures/",
-  "sarf/rules/",
-  "sarf/evals/",
-  "sarf/curriculum/",
-  "sarf/references/",
-  "sarf/examples/",
-  "sarf/drills/"
- ],
- "install_targets": {
-  "claude": "~/.claude/skills/fusha-sarf",
-  "codex": "~/.codex/skills/fusha-sarf"
- },
- "invariants": [
-  "MCP-free (no external service named/required in SKILL.md)",
-  "no raw source/media committed",
-  "public gloss record stays {src:qamus,kind:authored}"
- ],
- "cooperates_with": [
-  "fusha-nahw",
-  "qamus source-address graph",
-  "language state machine"
- ]
+  "cooperates_with": [
+    "fusha-nahw",
+    "qamus source-address graph",
+    "language state machine"
+  ],
+  "description": "Arabic morphology (sarf) engine: root/form/POS/clitic decisions, hover-gloss authoring, Qamus entry generation, learner drills. MCP-free; cooperates with nahw + Qamus + the internal evidence ladder.",
+  "entry": "sarf/SKILL.md",
+  "includes": [
+    "sarf/SKILL.md",
+    "sarf/README.md",
+    "sarf/procedures/",
+    "sarf/rules/",
+    "sarf/evals/",
+    "sarf/curriculum/",
+    "sarf/references/",
+    "sarf/examples/",
+    "sarf/drills/"
+  ],
+  "install_targets": {
+    "claude": "~/.claude/skills/fusha-sarf",
+    "codex": "~/.codex/skills/fusha-sarf"
+  },
+  "invariants": [
+    "MCP-free (no external service named/required in SKILL.md)",
+    "no raw source/media committed",
+    "public gloss record stays {src:qamus,kind:authored}"
+  ],
+  "name": "fusha-sarf",
+  "schema": "fusha/skill-manifest@1",
+  "skill_root": "sarf",
+  "version": "1.0.0"
 }

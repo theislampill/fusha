@@ -37,6 +37,14 @@ classifying any Arabic gloss.
   decisions need **two independent checks agreeing on conclusion AND reason**; uncertain naḥw → pending. See
   `nahw/evals/grammar-decision-gates.json` + `qamus/reports/grammar-risk-policy.md`.
 
+## Artifact ergonomics (dogfoodable repo — enforced)
+- Reviewer-facing JSON is **pretty**: `indent=2`, `sort_keys=True`, `ensure_ascii=False`, trailing newline.
+  Use `tools/format_review_json.py` or the builders' `dump_review`. Never commit a one-line mega-JSON.
+- Large row-record artifacts are **JSONL** (one object/line) + a pretty `*.meta.json` sidecar.
+- Compact single-line is allowed **only** for `*.min.json` (machine-only, regenerable) and `checksums.json`.
+- Run `python3 tools/check_artifact_ergonomics.py` (and `classify_artifacts.py`) before committing data; it is
+  gated by `check_regressions.py`. Classes live in `qamus/reports/artifact-taxonomy.md`.
+
 ## Commit rules
 - Commit only to this repo's paths. Stage explicit paths; verify staged set before committing.
 - Commit a **sample + generator** for large outputs; keep full output gitignored under `out/`.

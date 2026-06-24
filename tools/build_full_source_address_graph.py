@@ -61,8 +61,16 @@ def jload(p, default=None):
     return json.load(open(p,encoding="utf-8"))
 
 def jdump(o,p,**kw):
-    with open(p,"w",encoding="utf-8") as f:
-        json.dump(o,f,ensure_ascii=False,sort_keys=True,separators=(",",":"),**kw)
+    # reviewer-facing pretty JSON (A1 ergonomics)
+    with open(p,"w",encoding="utf-8",newline="\n") as f:
+        json.dump(o,f,ensure_ascii=False,sort_keys=True,indent=2,**kw)
+        f.write("\n")
+
+def jdump_rows(rows,p):
+    # large row-record artifact -> JSONL (one record per line, diffable)
+    with open(p,"w",encoding="utf-8",newline="\n") as f:
+        for r in rows:
+            f.write(json.dumps(r,ensure_ascii=False,sort_keys=True)+"\n")
 
 def main():
     entries = {}
@@ -148,11 +156,19 @@ def main():
                     seen.add(sa)
         field_addr[eid]=fa
 
+    # source-address-full -> JSONL (one address record per line) + meta sidecar
+    jdump_rows([{"address":a, **addresses[a]} for a in sorted(addresses)],
+               os.path.join(IDX,"source-address-full.jsonl"))
     jdump({"schema":"fusha/source-address-full@1","source_sha":SOURCE_SHA,
-           "address_count":len(addresses),"addresses":addresses},
-          os.path.join(IDX,"source-address-full.json"))
+           "address_count":len(addresses),
+           "row_schema":["address","type","entry","field","source_key","ayah","page","status",
+                         "headword","root","section","source_keys","n_examples","source_photo_verified"]},
+          os.path.join(IDX,"source-address-full.meta.json"))
+    jdump_rows([{"entry_id":eid, "fields":field_addr[eid]} for eid in sorted(field_addr)],
+               os.path.join(IDX,"qamus-entry-field-addresses.jsonl"))
     jdump({"schema":"fusha/qamus-entry-field-addresses@1","entry_count":len(field_addr),
-           "entries":field_addr}, os.path.join(IDX,"qamus-entry-field-addresses.json"))
+           "row_schema":["entry_id","fields"]},
+          os.path.join(IDX,"qamus-entry-field-addresses.meta.json"))
 
     # ---- 2. quran-usage-spine-full ----
     spine = {}
@@ -169,8 +185,13 @@ def main():
                          "gloss":ar.get("public_gloss")})
         spine[sa]={"entries":by_ref.get(sa,[]),"n_tokens":len(wlist),
                    "resolved":res,"pending":pend,"tokens":toks}
-    jdump({"schema":"fusha/quran-usage-spine-full@1","source_sha":SOURCE_SHA,
-           "ayat":len(spine),"spine":spine}, os.path.join(IDX,"quran-usage-spine-full.json"))
+    # quran-usage-spine-full -> JSONL (one āyah record per line) + meta sidecar
+    jdump_rows([{"ayah":sa, **spine[sa]} for sa in sorted(spine,
+                key=lambda x:(int(x.split(":")[0]),int(x.split(":")[1])))],
+               os.path.join(IDX,"quran-usage-spine-full.jsonl"))
+    jdump({"schema":"fusha/quran-usage-spine-full@1","source_sha":SOURCE_SHA,"ayat":len(spine),
+           "row_schema":["ayah","entries","n_tokens","resolved","pending","tokens"]},
+          os.path.join(IDX,"quran-usage-spine-full.meta.json"))
 
     # ---- 3. decision-backlinks-full ----
     # decision -> entry_contexts ; homograph key -> resolved/pending locs ; blocker -> locs ;

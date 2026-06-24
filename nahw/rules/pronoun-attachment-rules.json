@@ -1,17 +1,17 @@
 {
- "schema": "fusha/pronoun-attachment-rules@1",
- "purpose": "Decide what an attached pronoun (enclitic) IS by the host POS + syntax.",
- "attachment": {
-  "noun_host": "possessive (مضاف إليه) -> our/your/their X",
-  "verb_host": "subject (nا الفاعلين = we) or object (هم/كم = them/you) -> NOT possessive",
-  "preposition_host": "object of preposition (بِكَ = with you, لَهُم = for them)"
- },
- "two_vote_required": [
-  "ambiguous host POS",
-  "referent-sensitive pronoun (his/its, her/its)"
- ],
- "forbidden": [
-  "treat verb-subject نا as possessive our",
-  "treat tanwin-alef as نا (قُرْءَانًا != qurʾan+na)"
- ]
+  "attachment": {
+    "noun_host": "possessive (مضاف إليه) -> our/your/their X",
+    "preposition_host": "object of preposition (بِكَ = with you, لَهُم = for them)",
+    "verb_host": "subject (nا الفاعلين = we) or object (هم/كم = them/you) -> NOT possessive"
+  },
+  "forbidden": [
+    "treat verb-subject نا as possessive our",
+    "treat tanwin-alef as نا (قُرْءَانًا != qurʾan+na)"
+  ],
+  "purpose": "Decide what an attached pronoun (enclitic) IS by the host POS + syntax.",
+  "schema": "fusha/pronoun-attachment-rules@1",
+  "two_vote_required": [
+    "ambiguous host POS",
+    "referent-sensitive pronoun (his/its, her/its)"
+  ]
 }

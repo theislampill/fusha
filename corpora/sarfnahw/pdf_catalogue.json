@@ -1,47 +1,23 @@
 {
-  "schema": "fusha/pdf_catalogue@1",
+  "docx": [
+    {
+      "arabic_unicode_chars": 113,
+      "drawings": 9,
+      "file": "verb-tables-supplement--r21.docx",
+      "full_output": "corpora/sarfnahw/out/docx/verb-tables-supplement-r21.txt",
+      "image_files": 9,
+      "note": "verb tables embedded as images (0 Word tables); image content NOT OCR'd",
+      "paragraphs": 11,
+      "raw_committed": false,
+      "source_review_status": "needs_review",
+      "tables": 0,
+      "topic": "verb_charts"
+    }
+  ],
   "pdfs": [
     {
-      "file": "set-of-9-important-arabic-verb-charts_1.pdf",
-      "topic": "verb_charts",
-      "source_review_status": "needs_review",
-      "raw_committed": false,
-      "pages": 2,
-      "images": 2,
-      "arabic_unicode_chars": 0,
       "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
-      "paradigm_slots": [
-        "past_active",
-        "past_passive",
-        "present_active",
-        "present_passive",
-        "imperative",
-        "masdar",
-        "ism_fa3il",
-        "ism_maf3ul"
-      ],
-      "form_markers": [
-        "I",
-        "II",
-        "III",
-        "IV",
-        "V",
-        "VI",
-        "VII",
-        "VIII",
-        "IX",
-        "X",
-        "XI",
-        "XII",
-        "XIV"
-      ],
-      "provenance_lines": [
-        "First prepared in February 1995",
-        "Hans",
-        "Wehr",
-        "www.efatwa.com",
-        "www.fatwa-online.com"
-      ],
+      "arabic_unicode_chars": 0,
       "english_label_count": 45,
       "english_labels": [
         "(Known)",
@@ -90,33 +66,49 @@
         "www.efatwa.com",
         "www.fatwa-online.com"
       ],
-      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-1.txt"
-    },
-    {
-      "file": "set-of-9-important-arabic-verb-charts_2.pdf",
-      "topic": "verb_charts",
-      "source_review_status": "needs_review",
-      "raw_committed": false,
-      "pages": 1,
-      "images": 1,
-      "arabic_unicode_chars": 0,
-      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "file": "set-of-9-important-arabic-verb-charts_1.pdf",
+      "form_markers": [
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI",
+        "VII",
+        "VIII",
+        "IX",
+        "X",
+        "XI",
+        "XII",
+        "XIV"
+      ],
+      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-1.txt",
+      "images": 2,
+      "pages": 2,
       "paradigm_slots": [
         "past_active",
+        "past_passive",
         "present_active",
         "present_passive",
         "imperative",
+        "masdar",
         "ism_fa3il",
         "ism_maf3ul"
       ],
-      "form_markers": [
-        "I"
-      ],
       "provenance_lines": [
-        "First prepared in November 1995",
+        "First prepared in February 1995",
+        "Hans",
+        "Wehr",
         "www.efatwa.com",
         "www.fatwa-online.com"
       ],
+      "raw_committed": false,
+      "source_review_status": "needs_review",
+      "topic": "verb_charts"
+    },
+    {
+      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "arabic_unicode_chars": 0,
       "english_label_count": 31,
       "english_labels": [
         "(Future)",
@@ -151,47 +143,33 @@
         "www.efatwa.com",
         "www.fatwa-online.com"
       ],
-      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-2.txt"
-    },
-    {
-      "file": "set-of-9-important-arabic-verb-charts_3.pdf",
-      "topic": "verb_charts",
-      "source_review_status": "needs_review",
-      "raw_committed": false,
-      "pages": 3,
-      "images": 0,
-      "arabic_unicode_chars": 0,
-      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "file": "set-of-9-important-arabic-verb-charts_2.pdf",
+      "form_markers": [
+        "I"
+      ],
+      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-2.txt",
+      "images": 1,
+      "pages": 1,
       "paradigm_slots": [
         "past_active",
         "present_active",
         "present_passive",
         "imperative",
-        "masdar",
-        "ism_fa3il"
-      ],
-      "form_markers": [
-        "I",
-        "II",
-        "III",
-        "IV",
-        "V",
-        "VI",
-        "VII",
-        "VIII",
-        "IX",
-        "X",
-        "XI",
-        "XII",
-        "XIII"
+        "ism_fa3il",
+        "ism_maf3ul"
       ],
       "provenance_lines": [
-        "February 1995",
-        "First prepared in",
-        "Hans",
-        "Wehr",
-        "www.efatwa.com"
+        "First prepared in November 1995",
+        "www.efatwa.com",
+        "www.fatwa-online.com"
       ],
+      "raw_committed": false,
+      "source_review_status": "needs_review",
+      "topic": "verb_charts"
+    },
+    {
+      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "arabic_unicode_chars": 0,
       "english_label_count": 40,
       "english_labels": [
         "(Unknown)",
@@ -235,37 +213,47 @@
         "www.efatwa.com",
         "www.fatwa-"
       ],
-      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-3.txt"
-    },
-    {
-      "file": "set-of-9-important-arabic-verb-charts_4.pdf",
-      "topic": "verb_charts",
-      "source_review_status": "needs_review",
-      "raw_committed": false,
-      "pages": 1,
-      "images": 1,
-      "arabic_unicode_chars": 0,
-      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "file": "set-of-9-important-arabic-verb-charts_3.pdf",
+      "form_markers": [
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI",
+        "VII",
+        "VIII",
+        "IX",
+        "X",
+        "XI",
+        "XII",
+        "XIII"
+      ],
+      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-3.txt",
+      "images": 0,
+      "pages": 3,
       "paradigm_slots": [
         "past_active",
-        "past_passive",
         "present_active",
         "present_passive",
         "imperative",
         "masdar",
-        "ism_fa3il",
-        "ism_maf3ul"
-      ],
-      "form_markers": [
-        "I"
+        "ism_fa3il"
       ],
       "provenance_lines": [
-        "First prepared in February 1995",
+        "February 1995",
+        "First prepared in",
         "Hans",
         "Wehr",
-        "www.efatwa.com",
-        "www.fatwa-online.com"
+        "www.efatwa.com"
       ],
+      "raw_committed": false,
+      "source_review_status": "needs_review",
+      "topic": "verb_charts"
+    },
+    {
+      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "arabic_unicode_chars": 0,
       "english_label_count": 30,
       "english_labels": [
         "(Known)",
@@ -299,45 +287,37 @@
         "www.efatwa.com",
         "www.fatwa-online.com"
       ],
-      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-4.txt"
-    },
-    {
-      "file": "set-of-9-important-arabic-verb-charts_5.pdf",
-      "topic": "verb_charts",
-      "source_review_status": "needs_review",
-      "raw_committed": false,
-      "pages": 3,
-      "images": 0,
-      "arabic_unicode_chars": 0,
-      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "file": "set-of-9-important-arabic-verb-charts_4.pdf",
+      "form_markers": [
+        "I"
+      ],
+      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-4.txt",
+      "images": 1,
+      "pages": 1,
       "paradigm_slots": [
         "past_active",
+        "past_passive",
         "present_active",
         "present_passive",
-        "imperative"
-      ],
-      "form_markers": [
-        "I",
-        "II",
-        "III",
-        "IV",
-        "V",
-        "VI",
-        "VII",
-        "VIII",
-        "IX",
-        "X",
-        "XI",
-        "XII",
-        "XIII"
+        "imperative",
+        "masdar",
+        "ism_fa3il",
+        "ism_maf3ul"
       ],
       "provenance_lines": [
-        "February 1995",
-        "First prepared in",
+        "First prepared in February 1995",
         "Hans",
         "Wehr",
-        "www.efatwa.com"
+        "www.efatwa.com",
+        "www.fatwa-online.com"
       ],
+      "raw_committed": false,
+      "source_review_status": "needs_review",
+      "topic": "verb_charts"
+    },
+    {
+      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "arabic_unicode_chars": 0,
       "english_label_count": 21,
       "english_labels": [
         "February 1995",
@@ -362,35 +342,45 @@
         "www.efatwa.com",
         "www.fatwa-"
       ],
-      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-5.txt"
-    },
-    {
-      "file": "set-of-9-important-arabic-verb-charts_6.pdf",
-      "topic": "verb_charts",
-      "source_review_status": "needs_review",
-      "raw_committed": false,
-      "pages": 1,
-      "images": 0,
-      "arabic_unicode_chars": 0,
-      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
-      "paradigm_slots": [
-        "past_active",
-        "past_passive",
-        "present_active",
-        "present_passive",
-        "imperative",
-        "masdar",
-        "ism_fa3il",
-        "ism_maf3ul"
-      ],
+      "file": "set-of-9-important-arabic-verb-charts_5.pdf",
       "form_markers": [
         "I",
-        "XIV"
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI",
+        "VII",
+        "VIII",
+        "IX",
+        "X",
+        "XI",
+        "XII",
+        "XIII"
+      ],
+      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-5.txt",
+      "images": 0,
+      "pages": 3,
+      "paradigm_slots": [
+        "past_active",
+        "present_active",
+        "present_passive",
+        "imperative"
       ],
       "provenance_lines": [
+        "February 1995",
+        "First prepared in",
         "Hans",
-        "Wehr"
+        "Wehr",
+        "www.efatwa.com"
       ],
+      "raw_committed": false,
+      "source_review_status": "needs_review",
+      "topic": "verb_charts"
+    },
+    {
+      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "arabic_unicode_chars": 0,
       "english_label_count": 26,
       "english_labels": [
         "(Known)",
@@ -420,17 +410,14 @@
         "shaking",
         "towards which"
       ],
-      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-6.txt"
-    },
-    {
-      "file": "set-of-9-important-arabic-verb-charts_7.pdf",
-      "topic": "verb_charts",
-      "source_review_status": "needs_review",
-      "raw_committed": false,
-      "pages": 1,
+      "file": "set-of-9-important-arabic-verb-charts_6.pdf",
+      "form_markers": [
+        "I",
+        "XIV"
+      ],
+      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-6.txt",
       "images": 0,
-      "arabic_unicode_chars": 0,
-      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "pages": 1,
       "paradigm_slots": [
         "past_active",
         "past_passive",
@@ -441,13 +428,17 @@
         "ism_fa3il",
         "ism_maf3ul"
       ],
-      "form_markers": [
-        "I"
-      ],
       "provenance_lines": [
         "Hans",
         "Wehr"
       ],
+      "raw_committed": false,
+      "source_review_status": "needs_review",
+      "topic": "verb_charts"
+    },
+    {
+      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "arabic_unicode_chars": 0,
       "english_label_count": 25,
       "english_labels": [
         "(Known)",
@@ -476,17 +467,13 @@
         "writing",
         "written"
       ],
-      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-7.txt"
-    },
-    {
-      "file": "set-of-9-important-arabic-verb-charts_8.pdf",
-      "topic": "verb_charts",
-      "source_review_status": "needs_review",
-      "raw_committed": false,
-      "pages": 1,
+      "file": "set-of-9-important-arabic-verb-charts_7.pdf",
+      "form_markers": [
+        "I"
+      ],
+      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-7.txt",
       "images": 0,
-      "arabic_unicode_chars": 0,
-      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "pages": 1,
       "paradigm_slots": [
         "past_active",
         "past_passive",
@@ -497,14 +484,17 @@
         "ism_fa3il",
         "ism_maf3ul"
       ],
-      "form_markers": [
-        "I",
-        "XIV"
-      ],
       "provenance_lines": [
         "Hans",
         "Wehr"
       ],
+      "raw_committed": false,
+      "source_review_status": "needs_review",
+      "topic": "verb_charts"
+    },
+    {
+      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "arabic_unicode_chars": 0,
       "english_label_count": 26,
       "english_labels": [
         "(Known)",
@@ -534,17 +524,14 @@
         "rolling",
         "towards which"
       ],
-      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-8.txt"
-    },
-    {
-      "file": "set-of-9-important-arabic-verb-charts_9.pdf",
-      "topic": "verb_charts",
-      "source_review_status": "needs_review",
-      "raw_committed": false,
-      "pages": 1,
+      "file": "set-of-9-important-arabic-verb-charts_8.pdf",
+      "form_markers": [
+        "I",
+        "XIV"
+      ],
+      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-8.txt",
       "images": 0,
-      "arabic_unicode_chars": 0,
-      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "pages": 1,
       "paradigm_slots": [
         "past_active",
         "past_passive",
@@ -555,26 +542,17 @@
         "ism_fa3il",
         "ism_maf3ul"
       ],
-      "form_markers": [
-        "I",
-        "II",
-        "III",
-        "IV",
-        "V",
-        "VI",
-        "VII",
-        "VIII",
-        "IX",
-        "X",
-        "XI",
-        "XII",
-        "XIII",
-        "XIV"
-      ],
       "provenance_lines": [
         "Hans",
         "Wehr"
       ],
+      "raw_committed": false,
+      "source_review_status": "needs_review",
+      "topic": "verb_charts"
+    },
+    {
+      "arabic_glyph_status": "legacy_font_not_unicode (not OCR'd; structure only)",
+      "arabic_unicode_chars": 0,
       "english_label_count": 31,
       "english_labels": [
         "(Known)",
@@ -609,28 +587,50 @@
         "writing",
         "written"
       ],
-      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-9.txt"
-    }
-  ],
-  "docx": [
-    {
-      "file": "verb-tables-supplement--r21.docx",
-      "topic": "verb_charts",
-      "source_review_status": "needs_review",
+      "file": "set-of-9-important-arabic-verb-charts_9.pdf",
+      "form_markers": [
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI",
+        "VII",
+        "VIII",
+        "IX",
+        "X",
+        "XI",
+        "XII",
+        "XIII",
+        "XIV"
+      ],
+      "full_output": "corpora/sarfnahw/out/pdf/set-of-9-important-arabic-verb-charts-9.txt",
+      "images": 0,
+      "pages": 1,
+      "paradigm_slots": [
+        "past_active",
+        "past_passive",
+        "present_active",
+        "present_passive",
+        "imperative",
+        "masdar",
+        "ism_fa3il",
+        "ism_maf3ul"
+      ],
+      "provenance_lines": [
+        "Hans",
+        "Wehr"
+      ],
       "raw_committed": false,
-      "note": "verb tables embedded as images (0 Word tables); image content NOT OCR'd",
-      "paragraphs": 11,
-      "tables": 0,
-      "image_files": 9,
-      "drawings": 9,
-      "arabic_unicode_chars": 113,
-      "full_output": "corpora/sarfnahw/out/docx/verb-tables-supplement-r21.txt"
+      "source_review_status": "needs_review",
+      "topic": "verb_charts"
     }
   ],
+  "schema": "fusha/pdf_catalogue@1",
   "totals": {
+    "docx_files": 1,
     "pdf_files": 9,
-    "pdf_pages": 14,
     "pdf_images": 4,
-    "docx_files": 1
+    "pdf_pages": 14
   }
 }

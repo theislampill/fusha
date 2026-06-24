@@ -1,1702 +1,1702 @@
 {
- "corpus_complete": true,
- "total_images": 1205,
- "queue_size": 240,
- "buckets": {
-  "verified_from_existing_photo": 0,
-  "certified_repair_ready": 0,
-  "needs_manual_visual_review": 240,
-  "needs_new_photo": 0,
-  "missing_locator": 0,
-  "deferred_ambiguous": 0
- },
- "entries": {
-  "verified_from_existing_photo": [],
-  "certified_repair_ready": [],
-  "needs_manual_visual_review": [
-   {
-    "entry_id": "00fabb02e815",
-    "source_keys": [
-     "n553"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "024794041a31",
-    "source_keys": [
-     "n433"
-    ],
-    "root": "رِفْد"
-   },
-   {
-    "entry_id": "03609d2ef226",
-    "source_keys": [
-     "v703"
-    ],
-    "root": "س ج ر"
-   },
-   {
-    "entry_id": "0451bd0c1350",
-    "source_keys": [
-     "v691"
-    ],
-    "root": "خ ر ص"
-   },
-   {
-    "entry_id": "05bda5633587",
-    "source_keys": [
-     "n728"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "0813261a6f1f",
-    "source_keys": [
-     "n323"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "0934fd2bee46",
-    "source_keys": [
-     "n989"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "098d3f546348",
-    "source_keys": [
-     "n609"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "0a4065024804",
-    "source_keys": [
-     "v910"
-    ],
-    "root": "يَكْلَؤُكُمْ"
-   },
-   {
-    "entry_id": "0a48df03174d",
-    "source_keys": [
-     "n024"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "0af1843f20af",
-    "source_keys": [
-     "n864"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "0af8e09e0a0b",
-    "source_keys": [
-     "n595"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "0b760a96cdc3",
-    "source_keys": [
-     "v912"
-    ],
-    "root": "تَلْفَحُ"
-   },
-   {
-    "entry_id": "0b925dfe0b84",
-    "source_keys": [
-     "n100"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "0bcfa09191d0",
-    "source_keys": [
-     "n606"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "0d4a1b71419d",
-    "source_keys": [
-     "n220"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "0d82cf557616",
-    "source_keys": [
-     "v753"
-    ],
-    "root": "ب ع ث ر"
-   },
-   {
-    "entry_id": "0ed00ca08b87",
-    "source_keys": [
-     "n391"
-    ],
-    "root": "ع ن د"
-   },
-   {
-    "entry_id": "0f8e06868e38",
-    "source_keys": [
-     "n541"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "1013f6dc80fe",
-    "source_keys": [
-     "v795"
-    ],
-    "root": "غ ل و"
-   },
-   {
-    "entry_id": "10f738f9b7e5",
-    "source_keys": [
-     "n603"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "115761e37f78",
-    "source_keys": [
-     "v863"
-    ],
-    "root": "ر ي ن"
-   },
-   {
-    "entry_id": "126cf2a95db5",
-    "source_keys": [
-     "n647"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "12791e704272",
-    "source_keys": [
-     "n395"
-    ],
-    "root": "م ج د"
-   },
-   {
-    "entry_id": "130e9e3bfd5c",
-    "source_keys": [
-     "v867"
-    ],
-    "root": "س ط ح"
-   },
-   {
-    "entry_id": "1671a0dd8551",
-    "source_keys": [
-     "v930"
-    ],
-    "root": "يَهْجَعُونَ"
-   },
-   {
-    "entry_id": "16a0ee5ff804",
-    "source_keys": [
-     "n062"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "1acbee408518",
-    "source_keys": [
-     "v733"
-    ],
-    "root": "م و ر"
-   },
-   {
-    "entry_id": "1bb11305509a",
-    "source_keys": [
-     "v821"
-    ],
-    "root": "أ ب ق"
-   },
-   {
-    "entry_id": "1c46a4c8e626",
-    "source_keys": [
-     "n811"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "1de20b3fcc60",
-    "source_keys": [
-     "p075"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "1e35dd2122eb",
-    "source_keys": [
-     "v809"
-    ],
-    "root": "م ح ن"
-   },
-   {
-    "entry_id": "1e84704dde4f",
-    "source_keys": [
-     "n305"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "22be25652dce",
-    "source_keys": [
-     "v651"
-    ],
-    "root": "ر ك ن"
-   },
-   {
-    "entry_id": "22c896ce6ded",
-    "source_keys": [
-     "n591"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "23bfa24fc95f",
-    "source_keys": [
-     "v853"
-    ],
-    "root": "د ح و"
-   },
-   {
-    "entry_id": "2461aa4915d8",
-    "source_keys": [
-     "v914"
-    ],
-    "root": "ٱلْتَقَمَهُ"
-   },
-   {
-    "entry_id": "25460db4e3ce",
-    "source_keys": [
-     "n405"
-    ],
-    "root": "ذ م م"
-   },
-   {
-    "entry_id": "25991423398f",
-    "source_keys": [
-     "n410"
-    ],
-    "root": "ف ر ت"
-   },
-   {
-    "entry_id": "26d524e70205",
-    "source_keys": [
-     "n573"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "271d51bf44c4",
-    "source_keys": [
-     "n507"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "27ad08903c01",
-    "source_keys": [
-     "n072"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "27edccf579d9",
-    "source_keys": [
-     "n078"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "27f7ce9bda19",
-    "source_keys": [
-     "n406"
-    ],
-    "root": "ر غ د"
-   },
-   {
-    "entry_id": "29ae231aff74",
-    "source_keys": [
-     "v926"
-    ],
-    "root": "يُنْغِضُونَ"
-   },
-   {
-    "entry_id": "2bde50b249e8",
-    "source_keys": [
-     "v881"
-    ],
-    "root": "ص ع ر"
-   },
-   {
-    "entry_id": "2cf0c19466cb",
-    "source_keys": [
-     "n429"
-    ],
-    "root": "خَامِدُون"
-   },
-   {
-    "entry_id": "2f8c30cd5c75",
-    "source_keys": [
-     "v695"
-    ],
-    "root": "ذ ر و"
-   },
-   {
-    "entry_id": "31355fee39a3",
-    "source_keys": [
-     "n061"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "368d256bcc04",
-    "source_keys": [
-     "n254"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "379e54e9b447",
-    "source_keys": [
-     "n459"
-    ],
-    "root": "لَمْح"
-   },
-   {
-    "entry_id": "391c5e9eb5b1",
-    "source_keys": [
-     "n470"
-    ],
-    "root": "هَشِيم"
-   },
-   {
-    "entry_id": "39484de544a8",
-    "source_keys": [
-     "n562"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "39583ebfa0e2",
-    "source_keys": [
-     "n973"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "39672b1d67d1",
-    "source_keys": [
-     "v918"
-    ],
-    "root": "يَتَمَطَّىٰ"
-   },
-   {
-    "entry_id": "3aecc5a5c021",
-    "source_keys": [
-     "v776"
-    ],
-    "root": "ش غ ل"
-   },
-   {
-    "entry_id": "3b761caada53",
-    "source_keys": [
-     "v842"
-    ],
-    "root": "ح ر ك"
-   },
-   {
-    "entry_id": "3c0c971698e7",
-    "source_keys": [
-     "n488"
-    ],
-    "root": "تَثْرِيب"
-   },
-   {
-    "entry_id": "3cd980bdcbb4",
-    "source_keys": [
-     "v866"
-    ],
-    "root": "س ج و"
-   },
-   {
-    "entry_id": "3ed21daa1310",
-    "source_keys": [
-     "n481"
-    ],
-    "root": "أَبْتَر"
-   },
-   {
-    "entry_id": "3f0b68558cc4",
-    "source_keys": [
-     "n924"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "3f58762b5232",
-    "source_keys": [
-     "p032"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "3f611b55bfd8",
-    "source_keys": [
-     "n721"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "40623aaa1a7d",
-    "source_keys": [
-     "v887"
-    ],
-    "root": "ع س ع س"
-   },
-   {
-    "entry_id": "41033db55677",
-    "source_keys": [
-     "n217"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "410f02923819",
-    "source_keys": [
-     "n089"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "452ab0b9410e",
-    "source_keys": [
-     "v714"
-    ],
-    "root": "ع ب س"
-   },
-   {
-    "entry_id": "47c66256923a",
-    "source_keys": [
-     "n302"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "47e07345d5e3",
-    "source_keys": [
-     "n053"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "488a9b1d64d5",
-    "source_keys": [
-     "v777"
-    ],
-    "root": "ش ك و"
-   },
-   {
-    "entry_id": "48b447da8815",
-    "source_keys": [
-     "n213"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "49f83a5e3b9a",
-    "source_keys": [
-     "n051"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "4accb6d07c54",
-    "source_keys": [
-     "n474"
-    ],
-    "root": "وَاصِب"
-   },
-   {
-    "entry_id": "4aeb20b7beca",
-    "source_keys": [
-     "p019"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "4b7a0ef01b56",
-    "source_keys": [
-     "n593"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "4b7fe1c31bf7",
-    "source_keys": [
-     "n136"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "51181d1328b2",
-    "source_keys": [
-     "n894"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "52dc6b3e545f",
-    "source_keys": [
-     "n478"
-    ],
-    "root": "أَمْتًا"
-   },
-   {
-    "entry_id": "55de6345c432",
-    "source_keys": [
-     "n501"
-    ],
-    "root": "حُوبًا"
-   },
-   {
-    "entry_id": "55e691eb52ab",
-    "source_keys": [
-     "v725"
-    ],
-    "root": "ك و ر"
-   },
-   {
-    "entry_id": "56df186084e2",
-    "source_keys": [
-     "p069"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "573d1e1709a2",
-    "source_keys": [
-     "n653"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "57b096dfab30",
-    "source_keys": [
-     "n772"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "587a88633a87",
-    "source_keys": [
-     "n033"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "588c5ac4d429",
-    "source_keys": [
-     "n149"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "5891b51869cc",
-    "source_keys": [
-     "p049"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "595a4db14665",
-    "source_keys": [
-     "n049"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "5ae407f4780a",
-    "source_keys": [
-     "p088"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "5cd2adb6481b",
-    "source_keys": [
-     "n572"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "5cf3ac945137",
-    "source_keys": [
-     "n087"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "5f3f9006c88e",
-    "source_keys": [
-     "v699"
-    ],
-    "root": "ر و غ"
-   },
-   {
-    "entry_id": "602b10b52f7e",
-    "source_keys": [
-     "n910"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "60b1dc36ddca",
-    "source_keys": [
-     "n449"
-    ],
-    "root": "غُلْف"
-   },
-   {
-    "entry_id": "616dbd6dffcc",
-    "source_keys": [
-     "p064"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "62c550168299",
-    "source_keys": [
-     "v720"
-    ],
-    "root": "ف س ح"
-   },
-   {
-    "entry_id": "62fdcc6429f1",
-    "source_keys": [
-     "v811"
-    ],
-    "root": "ن ص ت"
-   },
-   {
-    "entry_id": "6402a4739ba0",
-    "source_keys": [
-     "n420"
-    ],
-    "root": "ث ق ب"
-   },
-   {
-    "entry_id": "677167be479e",
-    "source_keys": [
-     "n564"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "6adae1ce2f2b",
-    "source_keys": [
-     "n740"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "6bc3ee5c53ce",
-    "source_keys": [
-     "n439"
-    ],
-    "root": "سَاهُون"
-   },
-   {
-    "entry_id": "6c64248be5f6",
-    "source_keys": [
-     "n297"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "6d98a20d2b3a",
-    "source_keys": [
-     "n508"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "6e35cbb25054",
-    "source_keys": [
-     "n016"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "6fa01d052a46",
-    "source_keys": [
-     "n569"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "7450300c1ba8",
-    "source_keys": [
-     "n448"
-    ],
-    "root": "غُثَاء"
-   },
-   {
-    "entry_id": "761cf07d3f03",
-    "source_keys": [
-     "n036"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "76874561dea3",
-    "source_keys": [
-     "p024"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "78710c6925c5",
-    "source_keys": [
-     "n779"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "79844337cc9d",
-    "source_keys": [
-     "p087"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "79aa9d523d63",
-    "source_keys": [
-     "n774"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "7a89e1ffe82b",
-    "source_keys": [
-     "n938"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "7bb317131add",
-    "source_keys": [
-     "p061"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "7cd9341e9c7c",
-    "source_keys": [
-     "n854"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "7d41f96d61e8",
-    "source_keys": [
-     "v810"
-    ],
-    "root": "ن ز ف"
-   },
-   {
-    "entry_id": "7e2283ef4b60",
-    "source_keys": [
-     "n240"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "7f1793bce21a",
-    "source_keys": [
-     "n969"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "81cf69e52dd9",
-    "source_keys": [
-     "p059"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "8259cc884640",
-    "source_keys": [
-     "n097"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "833ac5812d30",
-    "source_keys": [
-     "n978"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "83992d1ebff2",
-    "source_keys": [
-     "n585"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "84e786f63759",
-    "source_keys": [
-     "n972"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "85edb3a467a4",
-    "source_keys": [
-     "v750"
-    ],
-    "root": "ب س س"
-   },
-   {
-    "entry_id": "862d0a14e013",
-    "source_keys": [
-     "n253"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "8637e9ebf5ee",
-    "source_keys": [
-     "n869"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "880ad7cf989a",
-    "source_keys": [
-     "v687"
-    ],
-    "root": "ح ض ض"
-   },
-   {
-    "entry_id": "887302078759",
-    "source_keys": [
-     "v909"
-    ],
-    "root": "كُشِطَتْ"
-   },
-   {
-    "entry_id": "890aeddb5fb9",
-    "source_keys": [
-     "p028"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "8a6b80409e2f",
-    "source_keys": [
-     "n535"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "8c85014795fc",
-    "source_keys": [
-     "n943"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "8cc07187007a",
-    "source_keys": [
-     "n219"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "8e0f13de3bc7",
-    "source_keys": [
-     "p092"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "8f937853bb97",
-    "source_keys": [
-     "n882"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "920fc8e9bca2",
-    "source_keys": [
-     "n023"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "926559392f2f",
-    "source_keys": [
-     "n172"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "927a8f3d42f7",
-    "source_keys": [
-     "n247"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "9368f1cc21ec",
-    "source_keys": [
-     "n670"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "93d9fe312f48",
-    "source_keys": [
-     "n485"
-    ],
-    "root": "تَعْسًا"
-   },
-   {
-    "entry_id": "948bcecf730a",
-    "source_keys": [
-     "n730"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "952145e30648",
-    "source_keys": [
-     "v747"
-    ],
-    "root": "ب ت ل"
-   },
-   {
-    "entry_id": "95c9280c7665",
-    "source_keys": [
-     "n702"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "96199e5a20f6",
-    "source_keys": [
-     "n676"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "972a53c81a73",
-    "source_keys": [
-     "n414"
-    ],
-    "root": "ه م ز"
-   },
-   {
-    "entry_id": "98a2464a27dc",
-    "source_keys": [
-     "n301"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "98e0a4f33c1a",
-    "source_keys": [
-     "p052"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "9b189f5c228f",
-    "source_keys": [
-     "n555"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "9c630bfd660c",
-    "source_keys": [
-     "n423"
-    ],
-    "root": "ج ر ز"
-   },
-   {
-    "entry_id": "9c7201d5e4fb",
-    "source_keys": [
-     "n528"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "9d550cb9c295",
-    "source_keys": [
-     "v640"
-    ],
-    "root": "ج ه ز"
-   },
-   {
-    "entry_id": "9e871030a16f",
-    "source_keys": [
-     "n096"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "9f059620ccd0",
-    "source_keys": [
-     "n725"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "9f6586685884",
-    "source_keys": [
-     "n783"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "9fbd583d12a2",
-    "source_keys": [
-     "n408"
-    ],
-    "root": "ش ح ن"
-   },
-   {
-    "entry_id": "9ff6173183c2",
-    "source_keys": [
-     "n056"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "a0efd154b578",
-    "source_keys": [
-     "n487"
-    ],
-    "root": "ثَجَّاجًا"
-   },
-   {
-    "entry_id": "a15edbe7e166",
-    "source_keys": [
-     "n980"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "a3df2ff0b02a",
-    "source_keys": [
-     "v933"
-    ],
-    "root": "وَجَبَتْ"
-   },
-   {
-    "entry_id": "a3fb60d3223d",
-    "source_keys": [
-     "n090"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "a61ac6fb2c32",
-    "source_keys": [
-     "n672"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "a668534b93d0",
-    "source_keys": [
-     "n940"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "a67e87f356bc",
-    "source_keys": [
-     "n066"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "a8acc236738a",
-    "source_keys": [
-     "n540"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "a8d45ad15532",
-    "source_keys": [
-     "n556"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "a9a7e0ff350f",
-    "source_keys": [
-     "n545"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "abf89744f0fc",
-    "source_keys": [
-     "n525"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "ac594aad2a3e",
-    "source_keys": [
-     "n111"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "ae033affe174",
-    "source_keys": [
-     "p058"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "ae2da03d838e",
-    "source_keys": [
-     "n557"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "aea8bf6012fe",
-    "source_keys": [
-     "n542"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "affa6a9b1f6c",
-    "source_keys": [
-     "p090"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "b0743d9417df",
-    "source_keys": [
-     "v673"
-    ],
-    "root": "ن س ل"
-   },
-   {
-    "entry_id": "b0d5a6a57295",
-    "source_keys": [
-     "n438"
-    ],
-    "root": "سَدِيدًا"
-   },
-   {
-    "entry_id": "b1bc336babae",
-    "source_keys": [
-     "n936"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "b43b625f30d7",
-    "source_keys": [
-     "v781"
-    ],
-    "root": "ض م م"
-   },
-   {
-    "entry_id": "b4629374212c",
-    "source_keys": [
-     "n543"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "b4b04a01a079",
-    "source_keys": [
-     "n513"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "b6a982440b95",
-    "source_keys": [
-     "n1009"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "b8f4d87cff23",
-    "source_keys": [
-     "p083"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "ba7a39b12bcf",
-    "source_keys": [
-     "n791"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "bac4f985c17c",
-    "source_keys": [
-     "n911"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "bb18399b52c3",
-    "source_keys": [
-     "v940"
-    ],
-    "root": "أُفٍّ"
-   },
-   {
-    "entry_id": "bb4fcf47baa2",
-    "source_keys": [
-     "n216"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "bc1343dffe26",
-    "source_keys": [
-     "n946"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "bd0e8cd7fbfb",
-    "source_keys": [
-     "v774"
-    ],
-    "root": "س ف ك"
-   },
-   {
-    "entry_id": "be1270d76fd3",
-    "source_keys": [
-     "n110"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "be403aef6c48",
-    "source_keys": [
-     "n192"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "c028225e4d9d",
-    "source_keys": [
-     "n793"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "c2eb8c4d9f23",
-    "source_keys": [
-     "n610"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "c3a584031df8",
-    "source_keys": [
-     "v873"
-    ],
-    "root": "س ه م"
-   },
-   {
-    "entry_id": "c3e4e325d3b8",
-    "source_keys": [
-     "n1012"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "c63837955935",
-    "source_keys": [
-     "v723"
-    ],
-    "root": "ك ب (ك) ب"
-   },
-   {
-    "entry_id": "c6cbb8e67671",
-    "source_keys": [
-     "n832"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "ca1297d74176",
-    "source_keys": [
-     "n063"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "caf2deb2c39d",
-    "source_keys": [
-     "v900"
-    ],
-    "root": "فَهَّمْنَاهَا"
-   },
-   {
-    "entry_id": "ccb0bf169f3e",
-    "source_keys": [
-     "n747"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "cfab6122c62f",
-    "source_keys": [
-     "v901"
-    ],
-    "root": "أُفَوِّضُ"
-   },
-   {
-    "entry_id": "d216fd1245a3",
-    "source_keys": [
-     "n1045"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "d4165f3ec9e6",
-    "source_keys": [
-     "n370"
-    ],
-    "root": "ج ث م"
-   },
-   {
-    "entry_id": "d4cf600d544e",
-    "source_keys": [
-     "n729"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "d54a026b21eb",
-    "source_keys": [
-     "v937"
-    ],
-    "root": "تَنِيَا"
-   },
-   {
-    "entry_id": "d6fd70f7a42a",
-    "source_keys": [
-     "v768"
-    ],
-    "root": "ر ج ج"
-   },
-   {
-    "entry_id": "d785ccae1291",
-    "source_keys": [
-     "n523"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "d84692e8d2c8",
-    "source_keys": [
-     "p047"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "d93bddaa1e1e",
-    "source_keys": [
-     "p030"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "d9b2fc79fc53",
-    "source_keys": [
-     "v680"
-    ],
-    "root": "أ ز ف"
-   },
-   {
-    "entry_id": "da99a81dcd12",
-    "source_keys": [
-     "n563"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "dac1929f0391",
-    "source_keys": [
-     "n726"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "dafede9a7483",
-    "source_keys": [
-     "n348"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "dec752c33d29",
-    "source_keys": [
-     "n568"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "dfae8c3a25de",
-    "source_keys": [
-     "n589"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "e083c9a11482",
-    "source_keys": [
-     "n805"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "e0881fe22418",
-    "source_keys": [
-     "n396"
-    ],
-    "root": "ه ن أ"
-   },
-   {
-    "entry_id": "e107ff0b6e7b",
-    "source_keys": [
-     "n714"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "e26e5ed3291b",
-    "source_keys": [
-     "n599"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "e3b874d260ed",
-    "source_keys": [
-     "n048"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "e40a2db97ffc",
-    "source_keys": [
-     "n398"
-    ],
-    "root": "أ ج ج"
-   },
-   {
-    "entry_id": "e412b23ffc52",
-    "source_keys": [
-     "n1011"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "e496f7b1403f",
-    "source_keys": [
-     "n256"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "e4f46d11cbd5",
-    "source_keys": [
-     "n652"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "e5ac86702c67",
-    "source_keys": [
-     "n530"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "e5ecfefbc304",
-    "source_keys": [
-     "p004"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "e8da25fd56d5",
-    "source_keys": [
-     "p077"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "e8deb0deacd9",
-    "source_keys": [
-     "n468"
-    ],
-    "root": "نَاشِطَات"
-   },
-   {
-    "entry_id": "ea4c86243293",
-    "source_keys": [
-     "n193"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "ecc843ac7693",
-    "source_keys": [
-     "p063"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "ed096258aa69",
-    "source_keys": [
-     "n777"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "eeea963c4955",
-    "source_keys": [
-     "n537"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "f1ff5376e45a",
-    "source_keys": [
-     "n208"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "f2d4aa89ba69",
-    "source_keys": [
-     "v907"
-    ],
-    "root": "ٱنكَدَرَتْ"
-   },
-   {
-    "entry_id": "f30c6b0ee1e2",
-    "source_keys": [
-     "v788"
-    ],
-    "root": "ع ز ب"
-   },
-   {
-    "entry_id": "f4dbd60e1c18",
-    "source_keys": [
-     "v797"
-    ],
-    "root": "غ و ص"
-   },
-   {
-    "entry_id": "f7559baa981e",
-    "source_keys": [
-     "n979"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "f92b7e0e1f10",
-    "source_keys": [
-     "n839"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "f985f33625fa",
-    "source_keys": [
-     "n074"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "f9d7017c7409",
-    "source_keys": [
-     "n112"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "f9e442ac2aba",
-    "source_keys": [
-     "n284"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "fc7dc351fb50",
-    "source_keys": [
-     "v845"
-    ],
-    "root": "ح ص ل"
-   },
-   {
-    "entry_id": "fcef4b40f122",
-    "source_keys": [
-     "n082"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "fd2899ac9978",
-    "source_keys": [
-     "n601"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "fd4e3bf990f0",
-    "source_keys": [
-     "n352"
-    ],
-    "root": ""
-   },
-   {
-    "entry_id": "fe429340f7a0",
-    "source_keys": [
-     "n710"
-    ],
-    "root": ""
-   }
-  ],
-  "needs_new_photo": [],
-  "missing_locator": [],
-  "deferred_ambiguous": []
- }
+  "buckets": {
+    "certified_repair_ready": 0,
+    "deferred_ambiguous": 0,
+    "missing_locator": 0,
+    "needs_manual_visual_review": 240,
+    "needs_new_photo": 0,
+    "verified_from_existing_photo": 0
+  },
+  "corpus_complete": true,
+  "entries": {
+    "certified_repair_ready": [],
+    "deferred_ambiguous": [],
+    "missing_locator": [],
+    "needs_manual_visual_review": [
+      {
+        "entry_id": "00fabb02e815",
+        "root": "",
+        "source_keys": [
+          "n553"
+        ]
+      },
+      {
+        "entry_id": "024794041a31",
+        "root": "رِفْد",
+        "source_keys": [
+          "n433"
+        ]
+      },
+      {
+        "entry_id": "03609d2ef226",
+        "root": "س ج ر",
+        "source_keys": [
+          "v703"
+        ]
+      },
+      {
+        "entry_id": "0451bd0c1350",
+        "root": "خ ر ص",
+        "source_keys": [
+          "v691"
+        ]
+      },
+      {
+        "entry_id": "05bda5633587",
+        "root": "",
+        "source_keys": [
+          "n728"
+        ]
+      },
+      {
+        "entry_id": "0813261a6f1f",
+        "root": "",
+        "source_keys": [
+          "n323"
+        ]
+      },
+      {
+        "entry_id": "0934fd2bee46",
+        "root": "",
+        "source_keys": [
+          "n989"
+        ]
+      },
+      {
+        "entry_id": "098d3f546348",
+        "root": "",
+        "source_keys": [
+          "n609"
+        ]
+      },
+      {
+        "entry_id": "0a4065024804",
+        "root": "يَكْلَؤُكُمْ",
+        "source_keys": [
+          "v910"
+        ]
+      },
+      {
+        "entry_id": "0a48df03174d",
+        "root": "",
+        "source_keys": [
+          "n024"
+        ]
+      },
+      {
+        "entry_id": "0af1843f20af",
+        "root": "",
+        "source_keys": [
+          "n864"
+        ]
+      },
+      {
+        "entry_id": "0af8e09e0a0b",
+        "root": "",
+        "source_keys": [
+          "n595"
+        ]
+      },
+      {
+        "entry_id": "0b760a96cdc3",
+        "root": "تَلْفَحُ",
+        "source_keys": [
+          "v912"
+        ]
+      },
+      {
+        "entry_id": "0b925dfe0b84",
+        "root": "",
+        "source_keys": [
+          "n100"
+        ]
+      },
+      {
+        "entry_id": "0bcfa09191d0",
+        "root": "",
+        "source_keys": [
+          "n606"
+        ]
+      },
+      {
+        "entry_id": "0d4a1b71419d",
+        "root": "",
+        "source_keys": [
+          "n220"
+        ]
+      },
+      {
+        "entry_id": "0d82cf557616",
+        "root": "ب ع ث ر",
+        "source_keys": [
+          "v753"
+        ]
+      },
+      {
+        "entry_id": "0ed00ca08b87",
+        "root": "ع ن د",
+        "source_keys": [
+          "n391"
+        ]
+      },
+      {
+        "entry_id": "0f8e06868e38",
+        "root": "",
+        "source_keys": [
+          "n541"
+        ]
+      },
+      {
+        "entry_id": "1013f6dc80fe",
+        "root": "غ ل و",
+        "source_keys": [
+          "v795"
+        ]
+      },
+      {
+        "entry_id": "10f738f9b7e5",
+        "root": "",
+        "source_keys": [
+          "n603"
+        ]
+      },
+      {
+        "entry_id": "115761e37f78",
+        "root": "ر ي ن",
+        "source_keys": [
+          "v863"
+        ]
+      },
+      {
+        "entry_id": "126cf2a95db5",
+        "root": "",
+        "source_keys": [
+          "n647"
+        ]
+      },
+      {
+        "entry_id": "12791e704272",
+        "root": "م ج د",
+        "source_keys": [
+          "n395"
+        ]
+      },
+      {
+        "entry_id": "130e9e3bfd5c",
+        "root": "س ط ح",
+        "source_keys": [
+          "v867"
+        ]
+      },
+      {
+        "entry_id": "1671a0dd8551",
+        "root": "يَهْجَعُونَ",
+        "source_keys": [
+          "v930"
+        ]
+      },
+      {
+        "entry_id": "16a0ee5ff804",
+        "root": "",
+        "source_keys": [
+          "n062"
+        ]
+      },
+      {
+        "entry_id": "1acbee408518",
+        "root": "م و ر",
+        "source_keys": [
+          "v733"
+        ]
+      },
+      {
+        "entry_id": "1bb11305509a",
+        "root": "أ ب ق",
+        "source_keys": [
+          "v821"
+        ]
+      },
+      {
+        "entry_id": "1c46a4c8e626",
+        "root": "",
+        "source_keys": [
+          "n811"
+        ]
+      },
+      {
+        "entry_id": "1de20b3fcc60",
+        "root": "",
+        "source_keys": [
+          "p075"
+        ]
+      },
+      {
+        "entry_id": "1e35dd2122eb",
+        "root": "م ح ن",
+        "source_keys": [
+          "v809"
+        ]
+      },
+      {
+        "entry_id": "1e84704dde4f",
+        "root": "",
+        "source_keys": [
+          "n305"
+        ]
+      },
+      {
+        "entry_id": "22be25652dce",
+        "root": "ر ك ن",
+        "source_keys": [
+          "v651"
+        ]
+      },
+      {
+        "entry_id": "22c896ce6ded",
+        "root": "",
+        "source_keys": [
+          "n591"
+        ]
+      },
+      {
+        "entry_id": "23bfa24fc95f",
+        "root": "د ح و",
+        "source_keys": [
+          "v853"
+        ]
+      },
+      {
+        "entry_id": "2461aa4915d8",
+        "root": "ٱلْتَقَمَهُ",
+        "source_keys": [
+          "v914"
+        ]
+      },
+      {
+        "entry_id": "25460db4e3ce",
+        "root": "ذ م م",
+        "source_keys": [
+          "n405"
+        ]
+      },
+      {
+        "entry_id": "25991423398f",
+        "root": "ف ر ت",
+        "source_keys": [
+          "n410"
+        ]
+      },
+      {
+        "entry_id": "26d524e70205",
+        "root": "",
+        "source_keys": [
+          "n573"
+        ]
+      },
+      {
+        "entry_id": "271d51bf44c4",
+        "root": "",
+        "source_keys": [
+          "n507"
+        ]
+      },
+      {
+        "entry_id": "27ad08903c01",
+        "root": "",
+        "source_keys": [
+          "n072"
+        ]
+      },
+      {
+        "entry_id": "27edccf579d9",
+        "root": "",
+        "source_keys": [
+          "n078"
+        ]
+      },
+      {
+        "entry_id": "27f7ce9bda19",
+        "root": "ر غ د",
+        "source_keys": [
+          "n406"
+        ]
+      },
+      {
+        "entry_id": "29ae231aff74",
+        "root": "يُنْغِضُونَ",
+        "source_keys": [
+          "v926"
+        ]
+      },
+      {
+        "entry_id": "2bde50b249e8",
+        "root": "ص ع ر",
+        "source_keys": [
+          "v881"
+        ]
+      },
+      {
+        "entry_id": "2cf0c19466cb",
+        "root": "خَامِدُون",
+        "source_keys": [
+          "n429"
+        ]
+      },
+      {
+        "entry_id": "2f8c30cd5c75",
+        "root": "ذ ر و",
+        "source_keys": [
+          "v695"
+        ]
+      },
+      {
+        "entry_id": "31355fee39a3",
+        "root": "",
+        "source_keys": [
+          "n061"
+        ]
+      },
+      {
+        "entry_id": "368d256bcc04",
+        "root": "",
+        "source_keys": [
+          "n254"
+        ]
+      },
+      {
+        "entry_id": "379e54e9b447",
+        "root": "لَمْح",
+        "source_keys": [
+          "n459"
+        ]
+      },
+      {
+        "entry_id": "391c5e9eb5b1",
+        "root": "هَشِيم",
+        "source_keys": [
+          "n470"
+        ]
+      },
+      {
+        "entry_id": "39484de544a8",
+        "root": "",
+        "source_keys": [
+          "n562"
+        ]
+      },
+      {
+        "entry_id": "39583ebfa0e2",
+        "root": "",
+        "source_keys": [
+          "n973"
+        ]
+      },
+      {
+        "entry_id": "39672b1d67d1",
+        "root": "يَتَمَطَّىٰ",
+        "source_keys": [
+          "v918"
+        ]
+      },
+      {
+        "entry_id": "3aecc5a5c021",
+        "root": "ش غ ل",
+        "source_keys": [
+          "v776"
+        ]
+      },
+      {
+        "entry_id": "3b761caada53",
+        "root": "ح ر ك",
+        "source_keys": [
+          "v842"
+        ]
+      },
+      {
+        "entry_id": "3c0c971698e7",
+        "root": "تَثْرِيب",
+        "source_keys": [
+          "n488"
+        ]
+      },
+      {
+        "entry_id": "3cd980bdcbb4",
+        "root": "س ج و",
+        "source_keys": [
+          "v866"
+        ]
+      },
+      {
+        "entry_id": "3ed21daa1310",
+        "root": "أَبْتَر",
+        "source_keys": [
+          "n481"
+        ]
+      },
+      {
+        "entry_id": "3f0b68558cc4",
+        "root": "",
+        "source_keys": [
+          "n924"
+        ]
+      },
+      {
+        "entry_id": "3f58762b5232",
+        "root": "",
+        "source_keys": [
+          "p032"
+        ]
+      },
+      {
+        "entry_id": "3f611b55bfd8",
+        "root": "",
+        "source_keys": [
+          "n721"
+        ]
+      },
+      {
+        "entry_id": "40623aaa1a7d",
+        "root": "ع س ع س",
+        "source_keys": [
+          "v887"
+        ]
+      },
+      {
+        "entry_id": "41033db55677",
+        "root": "",
+        "source_keys": [
+          "n217"
+        ]
+      },
+      {
+        "entry_id": "410f02923819",
+        "root": "",
+        "source_keys": [
+          "n089"
+        ]
+      },
+      {
+        "entry_id": "452ab0b9410e",
+        "root": "ع ب س",
+        "source_keys": [
+          "v714"
+        ]
+      },
+      {
+        "entry_id": "47c66256923a",
+        "root": "",
+        "source_keys": [
+          "n302"
+        ]
+      },
+      {
+        "entry_id": "47e07345d5e3",
+        "root": "",
+        "source_keys": [
+          "n053"
+        ]
+      },
+      {
+        "entry_id": "488a9b1d64d5",
+        "root": "ش ك و",
+        "source_keys": [
+          "v777"
+        ]
+      },
+      {
+        "entry_id": "48b447da8815",
+        "root": "",
+        "source_keys": [
+          "n213"
+        ]
+      },
+      {
+        "entry_id": "49f83a5e3b9a",
+        "root": "",
+        "source_keys": [
+          "n051"
+        ]
+      },
+      {
+        "entry_id": "4accb6d07c54",
+        "root": "وَاصِب",
+        "source_keys": [
+          "n474"
+        ]
+      },
+      {
+        "entry_id": "4aeb20b7beca",
+        "root": "",
+        "source_keys": [
+          "p019"
+        ]
+      },
+      {
+        "entry_id": "4b7a0ef01b56",
+        "root": "",
+        "source_keys": [
+          "n593"
+        ]
+      },
+      {
+        "entry_id": "4b7fe1c31bf7",
+        "root": "",
+        "source_keys": [
+          "n136"
+        ]
+      },
+      {
+        "entry_id": "51181d1328b2",
+        "root": "",
+        "source_keys": [
+          "n894"
+        ]
+      },
+      {
+        "entry_id": "52dc6b3e545f",
+        "root": "أَمْتًا",
+        "source_keys": [
+          "n478"
+        ]
+      },
+      {
+        "entry_id": "55de6345c432",
+        "root": "حُوبًا",
+        "source_keys": [
+          "n501"
+        ]
+      },
+      {
+        "entry_id": "55e691eb52ab",
+        "root": "ك و ر",
+        "source_keys": [
+          "v725"
+        ]
+      },
+      {
+        "entry_id": "56df186084e2",
+        "root": "",
+        "source_keys": [
+          "p069"
+        ]
+      },
+      {
+        "entry_id": "573d1e1709a2",
+        "root": "",
+        "source_keys": [
+          "n653"
+        ]
+      },
+      {
+        "entry_id": "57b096dfab30",
+        "root": "",
+        "source_keys": [
+          "n772"
+        ]
+      },
+      {
+        "entry_id": "587a88633a87",
+        "root": "",
+        "source_keys": [
+          "n033"
+        ]
+      },
+      {
+        "entry_id": "588c5ac4d429",
+        "root": "",
+        "source_keys": [
+          "n149"
+        ]
+      },
+      {
+        "entry_id": "5891b51869cc",
+        "root": "",
+        "source_keys": [
+          "p049"
+        ]
+      },
+      {
+        "entry_id": "595a4db14665",
+        "root": "",
+        "source_keys": [
+          "n049"
+        ]
+      },
+      {
+        "entry_id": "5ae407f4780a",
+        "root": "",
+        "source_keys": [
+          "p088"
+        ]
+      },
+      {
+        "entry_id": "5cd2adb6481b",
+        "root": "",
+        "source_keys": [
+          "n572"
+        ]
+      },
+      {
+        "entry_id": "5cf3ac945137",
+        "root": "",
+        "source_keys": [
+          "n087"
+        ]
+      },
+      {
+        "entry_id": "5f3f9006c88e",
+        "root": "ر و غ",
+        "source_keys": [
+          "v699"
+        ]
+      },
+      {
+        "entry_id": "602b10b52f7e",
+        "root": "",
+        "source_keys": [
+          "n910"
+        ]
+      },
+      {
+        "entry_id": "60b1dc36ddca",
+        "root": "غُلْف",
+        "source_keys": [
+          "n449"
+        ]
+      },
+      {
+        "entry_id": "616dbd6dffcc",
+        "root": "",
+        "source_keys": [
+          "p064"
+        ]
+      },
+      {
+        "entry_id": "62c550168299",
+        "root": "ف س ح",
+        "source_keys": [
+          "v720"
+        ]
+      },
+      {
+        "entry_id": "62fdcc6429f1",
+        "root": "ن ص ت",
+        "source_keys": [
+          "v811"
+        ]
+      },
+      {
+        "entry_id": "6402a4739ba0",
+        "root": "ث ق ب",
+        "source_keys": [
+          "n420"
+        ]
+      },
+      {
+        "entry_id": "677167be479e",
+        "root": "",
+        "source_keys": [
+          "n564"
+        ]
+      },
+      {
+        "entry_id": "6adae1ce2f2b",
+        "root": "",
+        "source_keys": [
+          "n740"
+        ]
+      },
+      {
+        "entry_id": "6bc3ee5c53ce",
+        "root": "سَاهُون",
+        "source_keys": [
+          "n439"
+        ]
+      },
+      {
+        "entry_id": "6c64248be5f6",
+        "root": "",
+        "source_keys": [
+          "n297"
+        ]
+      },
+      {
+        "entry_id": "6d98a20d2b3a",
+        "root": "",
+        "source_keys": [
+          "n508"
+        ]
+      },
+      {
+        "entry_id": "6e35cbb25054",
+        "root": "",
+        "source_keys": [
+          "n016"
+        ]
+      },
+      {
+        "entry_id": "6fa01d052a46",
+        "root": "",
+        "source_keys": [
+          "n569"
+        ]
+      },
+      {
+        "entry_id": "7450300c1ba8",
+        "root": "غُثَاء",
+        "source_keys": [
+          "n448"
+        ]
+      },
+      {
+        "entry_id": "761cf07d3f03",
+        "root": "",
+        "source_keys": [
+          "n036"
+        ]
+      },
+      {
+        "entry_id": "76874561dea3",
+        "root": "",
+        "source_keys": [
+          "p024"
+        ]
+      },
+      {
+        "entry_id": "78710c6925c5",
+        "root": "",
+        "source_keys": [
+          "n779"
+        ]
+      },
+      {
+        "entry_id": "79844337cc9d",
+        "root": "",
+        "source_keys": [
+          "p087"
+        ]
+      },
+      {
+        "entry_id": "79aa9d523d63",
+        "root": "",
+        "source_keys": [
+          "n774"
+        ]
+      },
+      {
+        "entry_id": "7a89e1ffe82b",
+        "root": "",
+        "source_keys": [
+          "n938"
+        ]
+      },
+      {
+        "entry_id": "7bb317131add",
+        "root": "",
+        "source_keys": [
+          "p061"
+        ]
+      },
+      {
+        "entry_id": "7cd9341e9c7c",
+        "root": "",
+        "source_keys": [
+          "n854"
+        ]
+      },
+      {
+        "entry_id": "7d41f96d61e8",
+        "root": "ن ز ف",
+        "source_keys": [
+          "v810"
+        ]
+      },
+      {
+        "entry_id": "7e2283ef4b60",
+        "root": "",
+        "source_keys": [
+          "n240"
+        ]
+      },
+      {
+        "entry_id": "7f1793bce21a",
+        "root": "",
+        "source_keys": [
+          "n969"
+        ]
+      },
+      {
+        "entry_id": "81cf69e52dd9",
+        "root": "",
+        "source_keys": [
+          "p059"
+        ]
+      },
+      {
+        "entry_id": "8259cc884640",
+        "root": "",
+        "source_keys": [
+          "n097"
+        ]
+      },
+      {
+        "entry_id": "833ac5812d30",
+        "root": "",
+        "source_keys": [
+          "n978"
+        ]
+      },
+      {
+        "entry_id": "83992d1ebff2",
+        "root": "",
+        "source_keys": [
+          "n585"
+        ]
+      },
+      {
+        "entry_id": "84e786f63759",
+        "root": "",
+        "source_keys": [
+          "n972"
+        ]
+      },
+      {
+        "entry_id": "85edb3a467a4",
+        "root": "ب س س",
+        "source_keys": [
+          "v750"
+        ]
+      },
+      {
+        "entry_id": "862d0a14e013",
+        "root": "",
+        "source_keys": [
+          "n253"
+        ]
+      },
+      {
+        "entry_id": "8637e9ebf5ee",
+        "root": "",
+        "source_keys": [
+          "n869"
+        ]
+      },
+      {
+        "entry_id": "880ad7cf989a",
+        "root": "ح ض ض",
+        "source_keys": [
+          "v687"
+        ]
+      },
+      {
+        "entry_id": "887302078759",
+        "root": "كُشِطَتْ",
+        "source_keys": [
+          "v909"
+        ]
+      },
+      {
+        "entry_id": "890aeddb5fb9",
+        "root": "",
+        "source_keys": [
+          "p028"
+        ]
+      },
+      {
+        "entry_id": "8a6b80409e2f",
+        "root": "",
+        "source_keys": [
+          "n535"
+        ]
+      },
+      {
+        "entry_id": "8c85014795fc",
+        "root": "",
+        "source_keys": [
+          "n943"
+        ]
+      },
+      {
+        "entry_id": "8cc07187007a",
+        "root": "",
+        "source_keys": [
+          "n219"
+        ]
+      },
+      {
+        "entry_id": "8e0f13de3bc7",
+        "root": "",
+        "source_keys": [
+          "p092"
+        ]
+      },
+      {
+        "entry_id": "8f937853bb97",
+        "root": "",
+        "source_keys": [
+          "n882"
+        ]
+      },
+      {
+        "entry_id": "920fc8e9bca2",
+        "root": "",
+        "source_keys": [
+          "n023"
+        ]
+      },
+      {
+        "entry_id": "926559392f2f",
+        "root": "",
+        "source_keys": [
+          "n172"
+        ]
+      },
+      {
+        "entry_id": "927a8f3d42f7",
+        "root": "",
+        "source_keys": [
+          "n247"
+        ]
+      },
+      {
+        "entry_id": "9368f1cc21ec",
+        "root": "",
+        "source_keys": [
+          "n670"
+        ]
+      },
+      {
+        "entry_id": "93d9fe312f48",
+        "root": "تَعْسًا",
+        "source_keys": [
+          "n485"
+        ]
+      },
+      {
+        "entry_id": "948bcecf730a",
+        "root": "",
+        "source_keys": [
+          "n730"
+        ]
+      },
+      {
+        "entry_id": "952145e30648",
+        "root": "ب ت ل",
+        "source_keys": [
+          "v747"
+        ]
+      },
+      {
+        "entry_id": "95c9280c7665",
+        "root": "",
+        "source_keys": [
+          "n702"
+        ]
+      },
+      {
+        "entry_id": "96199e5a20f6",
+        "root": "",
+        "source_keys": [
+          "n676"
+        ]
+      },
+      {
+        "entry_id": "972a53c81a73",
+        "root": "ه م ز",
+        "source_keys": [
+          "n414"
+        ]
+      },
+      {
+        "entry_id": "98a2464a27dc",
+        "root": "",
+        "source_keys": [
+          "n301"
+        ]
+      },
+      {
+        "entry_id": "98e0a4f33c1a",
+        "root": "",
+        "source_keys": [
+          "p052"
+        ]
+      },
+      {
+        "entry_id": "9b189f5c228f",
+        "root": "",
+        "source_keys": [
+          "n555"
+        ]
+      },
+      {
+        "entry_id": "9c630bfd660c",
+        "root": "ج ر ز",
+        "source_keys": [
+          "n423"
+        ]
+      },
+      {
+        "entry_id": "9c7201d5e4fb",
+        "root": "",
+        "source_keys": [
+          "n528"
+        ]
+      },
+      {
+        "entry_id": "9d550cb9c295",
+        "root": "ج ه ز",
+        "source_keys": [
+          "v640"
+        ]
+      },
+      {
+        "entry_id": "9e871030a16f",
+        "root": "",
+        "source_keys": [
+          "n096"
+        ]
+      },
+      {
+        "entry_id": "9f059620ccd0",
+        "root": "",
+        "source_keys": [
+          "n725"
+        ]
+      },
+      {
+        "entry_id": "9f6586685884",
+        "root": "",
+        "source_keys": [
+          "n783"
+        ]
+      },
+      {
+        "entry_id": "9fbd583d12a2",
+        "root": "ش ح ن",
+        "source_keys": [
+          "n408"
+        ]
+      },
+      {
+        "entry_id": "9ff6173183c2",
+        "root": "",
+        "source_keys": [
+          "n056"
+        ]
+      },
+      {
+        "entry_id": "a0efd154b578",
+        "root": "ثَجَّاجًا",
+        "source_keys": [
+          "n487"
+        ]
+      },
+      {
+        "entry_id": "a15edbe7e166",
+        "root": "",
+        "source_keys": [
+          "n980"
+        ]
+      },
+      {
+        "entry_id": "a3df2ff0b02a",
+        "root": "وَجَبَتْ",
+        "source_keys": [
+          "v933"
+        ]
+      },
+      {
+        "entry_id": "a3fb60d3223d",
+        "root": "",
+        "source_keys": [
+          "n090"
+        ]
+      },
+      {
+        "entry_id": "a61ac6fb2c32",
+        "root": "",
+        "source_keys": [
+          "n672"
+        ]
+      },
+      {
+        "entry_id": "a668534b93d0",
+        "root": "",
+        "source_keys": [
+          "n940"
+        ]
+      },
+      {
+        "entry_id": "a67e87f356bc",
+        "root": "",
+        "source_keys": [
+          "n066"
+        ]
+      },
+      {
+        "entry_id": "a8acc236738a",
+        "root": "",
+        "source_keys": [
+          "n540"
+        ]
+      },
+      {
+        "entry_id": "a8d45ad15532",
+        "root": "",
+        "source_keys": [
+          "n556"
+        ]
+      },
+      {
+        "entry_id": "a9a7e0ff350f",
+        "root": "",
+        "source_keys": [
+          "n545"
+        ]
+      },
+      {
+        "entry_id": "abf89744f0fc",
+        "root": "",
+        "source_keys": [
+          "n525"
+        ]
+      },
+      {
+        "entry_id": "ac594aad2a3e",
+        "root": "",
+        "source_keys": [
+          "n111"
+        ]
+      },
+      {
+        "entry_id": "ae033affe174",
+        "root": "",
+        "source_keys": [
+          "p058"
+        ]
+      },
+      {
+        "entry_id": "ae2da03d838e",
+        "root": "",
+        "source_keys": [
+          "n557"
+        ]
+      },
+      {
+        "entry_id": "aea8bf6012fe",
+        "root": "",
+        "source_keys": [
+          "n542"
+        ]
+      },
+      {
+        "entry_id": "affa6a9b1f6c",
+        "root": "",
+        "source_keys": [
+          "p090"
+        ]
+      },
+      {
+        "entry_id": "b0743d9417df",
+        "root": "ن س ل",
+        "source_keys": [
+          "v673"
+        ]
+      },
+      {
+        "entry_id": "b0d5a6a57295",
+        "root": "سَدِيدًا",
+        "source_keys": [
+          "n438"
+        ]
+      },
+      {
+        "entry_id": "b1bc336babae",
+        "root": "",
+        "source_keys": [
+          "n936"
+        ]
+      },
+      {
+        "entry_id": "b43b625f30d7",
+        "root": "ض م م",
+        "source_keys": [
+          "v781"
+        ]
+      },
+      {
+        "entry_id": "b4629374212c",
+        "root": "",
+        "source_keys": [
+          "n543"
+        ]
+      },
+      {
+        "entry_id": "b4b04a01a079",
+        "root": "",
+        "source_keys": [
+          "n513"
+        ]
+      },
+      {
+        "entry_id": "b6a982440b95",
+        "root": "",
+        "source_keys": [
+          "n1009"
+        ]
+      },
+      {
+        "entry_id": "b8f4d87cff23",
+        "root": "",
+        "source_keys": [
+          "p083"
+        ]
+      },
+      {
+        "entry_id": "ba7a39b12bcf",
+        "root": "",
+        "source_keys": [
+          "n791"
+        ]
+      },
+      {
+        "entry_id": "bac4f985c17c",
+        "root": "",
+        "source_keys": [
+          "n911"
+        ]
+      },
+      {
+        "entry_id": "bb18399b52c3",
+        "root": "أُفٍّ",
+        "source_keys": [
+          "v940"
+        ]
+      },
+      {
+        "entry_id": "bb4fcf47baa2",
+        "root": "",
+        "source_keys": [
+          "n216"
+        ]
+      },
+      {
+        "entry_id": "bc1343dffe26",
+        "root": "",
+        "source_keys": [
+          "n946"
+        ]
+      },
+      {
+        "entry_id": "bd0e8cd7fbfb",
+        "root": "س ف ك",
+        "source_keys": [
+          "v774"
+        ]
+      },
+      {
+        "entry_id": "be1270d76fd3",
+        "root": "",
+        "source_keys": [
+          "n110"
+        ]
+      },
+      {
+        "entry_id": "be403aef6c48",
+        "root": "",
+        "source_keys": [
+          "n192"
+        ]
+      },
+      {
+        "entry_id": "c028225e4d9d",
+        "root": "",
+        "source_keys": [
+          "n793"
+        ]
+      },
+      {
+        "entry_id": "c2eb8c4d9f23",
+        "root": "",
+        "source_keys": [
+          "n610"
+        ]
+      },
+      {
+        "entry_id": "c3a584031df8",
+        "root": "س ه م",
+        "source_keys": [
+          "v873"
+        ]
+      },
+      {
+        "entry_id": "c3e4e325d3b8",
+        "root": "",
+        "source_keys": [
+          "n1012"
+        ]
+      },
+      {
+        "entry_id": "c63837955935",
+        "root": "ك ب (ك) ب",
+        "source_keys": [
+          "v723"
+        ]
+      },
+      {
+        "entry_id": "c6cbb8e67671",
+        "root": "",
+        "source_keys": [
+          "n832"
+        ]
+      },
+      {
+        "entry_id": "ca1297d74176",
+        "root": "",
+        "source_keys": [
+          "n063"
+        ]
+      },
+      {
+        "entry_id": "caf2deb2c39d",
+        "root": "فَهَّمْنَاهَا",
+        "source_keys": [
+          "v900"
+        ]
+      },
+      {
+        "entry_id": "ccb0bf169f3e",
+        "root": "",
+        "source_keys": [
+          "n747"
+        ]
+      },
+      {
+        "entry_id": "cfab6122c62f",
+        "root": "أُفَوِّضُ",
+        "source_keys": [
+          "v901"
+        ]
+      },
+      {
+        "entry_id": "d216fd1245a3",
+        "root": "",
+        "source_keys": [
+          "n1045"
+        ]
+      },
+      {
+        "entry_id": "d4165f3ec9e6",
+        "root": "ج ث م",
+        "source_keys": [
+          "n370"
+        ]
+      },
+      {
+        "entry_id": "d4cf600d544e",
+        "root": "",
+        "source_keys": [
+          "n729"
+        ]
+      },
+      {
+        "entry_id": "d54a026b21eb",
+        "root": "تَنِيَا",
+        "source_keys": [
+          "v937"
+        ]
+      },
+      {
+        "entry_id": "d6fd70f7a42a",
+        "root": "ر ج ج",
+        "source_keys": [
+          "v768"
+        ]
+      },
+      {
+        "entry_id": "d785ccae1291",
+        "root": "",
+        "source_keys": [
+          "n523"
+        ]
+      },
+      {
+        "entry_id": "d84692e8d2c8",
+        "root": "",
+        "source_keys": [
+          "p047"
+        ]
+      },
+      {
+        "entry_id": "d93bddaa1e1e",
+        "root": "",
+        "source_keys": [
+          "p030"
+        ]
+      },
+      {
+        "entry_id": "d9b2fc79fc53",
+        "root": "أ ز ف",
+        "source_keys": [
+          "v680"
+        ]
+      },
+      {
+        "entry_id": "da99a81dcd12",
+        "root": "",
+        "source_keys": [
+          "n563"
+        ]
+      },
+      {
+        "entry_id": "dac1929f0391",
+        "root": "",
+        "source_keys": [
+          "n726"
+        ]
+      },
+      {
+        "entry_id": "dafede9a7483",
+        "root": "",
+        "source_keys": [
+          "n348"
+        ]
+      },
+      {
+        "entry_id": "dec752c33d29",
+        "root": "",
+        "source_keys": [
+          "n568"
+        ]
+      },
+      {
+        "entry_id": "dfae8c3a25de",
+        "root": "",
+        "source_keys": [
+          "n589"
+        ]
+      },
+      {
+        "entry_id": "e083c9a11482",
+        "root": "",
+        "source_keys": [
+          "n805"
+        ]
+      },
+      {
+        "entry_id": "e0881fe22418",
+        "root": "ه ن أ",
+        "source_keys": [
+          "n396"
+        ]
+      },
+      {
+        "entry_id": "e107ff0b6e7b",
+        "root": "",
+        "source_keys": [
+          "n714"
+        ]
+      },
+      {
+        "entry_id": "e26e5ed3291b",
+        "root": "",
+        "source_keys": [
+          "n599"
+        ]
+      },
+      {
+        "entry_id": "e3b874d260ed",
+        "root": "",
+        "source_keys": [
+          "n048"
+        ]
+      },
+      {
+        "entry_id": "e40a2db97ffc",
+        "root": "أ ج ج",
+        "source_keys": [
+          "n398"
+        ]
+      },
+      {
+        "entry_id": "e412b23ffc52",
+        "root": "",
+        "source_keys": [
+          "n1011"
+        ]
+      },
+      {
+        "entry_id": "e496f7b1403f",
+        "root": "",
+        "source_keys": [
+          "n256"
+        ]
+      },
+      {
+        "entry_id": "e4f46d11cbd5",
+        "root": "",
+        "source_keys": [
+          "n652"
+        ]
+      },
+      {
+        "entry_id": "e5ac86702c67",
+        "root": "",
+        "source_keys": [
+          "n530"
+        ]
+      },
+      {
+        "entry_id": "e5ecfefbc304",
+        "root": "",
+        "source_keys": [
+          "p004"
+        ]
+      },
+      {
+        "entry_id": "e8da25fd56d5",
+        "root": "",
+        "source_keys": [
+          "p077"
+        ]
+      },
+      {
+        "entry_id": "e8deb0deacd9",
+        "root": "نَاشِطَات",
+        "source_keys": [
+          "n468"
+        ]
+      },
+      {
+        "entry_id": "ea4c86243293",
+        "root": "",
+        "source_keys": [
+          "n193"
+        ]
+      },
+      {
+        "entry_id": "ecc843ac7693",
+        "root": "",
+        "source_keys": [
+          "p063"
+        ]
+      },
+      {
+        "entry_id": "ed096258aa69",
+        "root": "",
+        "source_keys": [
+          "n777"
+        ]
+      },
+      {
+        "entry_id": "eeea963c4955",
+        "root": "",
+        "source_keys": [
+          "n537"
+        ]
+      },
+      {
+        "entry_id": "f1ff5376e45a",
+        "root": "",
+        "source_keys": [
+          "n208"
+        ]
+      },
+      {
+        "entry_id": "f2d4aa89ba69",
+        "root": "ٱنكَدَرَتْ",
+        "source_keys": [
+          "v907"
+        ]
+      },
+      {
+        "entry_id": "f30c6b0ee1e2",
+        "root": "ع ز ب",
+        "source_keys": [
+          "v788"
+        ]
+      },
+      {
+        "entry_id": "f4dbd60e1c18",
+        "root": "غ و ص",
+        "source_keys": [
+          "v797"
+        ]
+      },
+      {
+        "entry_id": "f7559baa981e",
+        "root": "",
+        "source_keys": [
+          "n979"
+        ]
+      },
+      {
+        "entry_id": "f92b7e0e1f10",
+        "root": "",
+        "source_keys": [
+          "n839"
+        ]
+      },
+      {
+        "entry_id": "f985f33625fa",
+        "root": "",
+        "source_keys": [
+          "n074"
+        ]
+      },
+      {
+        "entry_id": "f9d7017c7409",
+        "root": "",
+        "source_keys": [
+          "n112"
+        ]
+      },
+      {
+        "entry_id": "f9e442ac2aba",
+        "root": "",
+        "source_keys": [
+          "n284"
+        ]
+      },
+      {
+        "entry_id": "fc7dc351fb50",
+        "root": "ح ص ل",
+        "source_keys": [
+          "v845"
+        ]
+      },
+      {
+        "entry_id": "fcef4b40f122",
+        "root": "",
+        "source_keys": [
+          "n082"
+        ]
+      },
+      {
+        "entry_id": "fd2899ac9978",
+        "root": "",
+        "source_keys": [
+          "n601"
+        ]
+      },
+      {
+        "entry_id": "fd4e3bf990f0",
+        "root": "",
+        "source_keys": [
+          "n352"
+        ]
+      },
+      {
+        "entry_id": "fe429340f7a0",
+        "root": "",
+        "source_keys": [
+          "n710"
+        ]
+      }
+    ],
+    "needs_new_photo": [],
+    "verified_from_existing_photo": []
+  },
+  "queue_size": 240,
+  "total_images": 1205
 }

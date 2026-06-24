@@ -27,7 +27,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 import normalize_ar as NA  # noqa: E402
 
-IDX = os.path.join(ROOT, "qamus", "indexes", "existing_qamus_index.json")
+IDX = os.path.join(ROOT, "qamus", "indexes", "existing_qamus_index.min.json")
 # short high-frequency function words -> particle_or_construction (no root-verb gloss)
 PARTICLES = set("في من عن الى على مع او ثم بل لا ما ان اذا قد هل لم لن كي اذ".split())
 

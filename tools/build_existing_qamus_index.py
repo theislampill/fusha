@@ -9,7 +9,8 @@ Public-safe: no status/visibility/author fields. Keyed by qamus:<section><n> add
 import json, os, re, unicodedata
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "qamus", "data", "current", "entries.jsonl")
-OUT = os.path.join(ROOT, "qamus", "indexes", "existing_qamus_index.json")
+# compact-machine index (named .min.json per A1 ergonomics — internal corpus dedup lookup)
+OUT = os.path.join(ROOT, "qamus", "indexes", "existing_qamus_index.min.json")
 
 def _norm(s, strict):
     if not s: return ""
@@ -54,8 +55,9 @@ def main():
             "total_uses": e.get("total_uses"), "tags": e.get("tags", []),
             "usage_refs": sorted({str(ex.get("ref")) for u in e.get("usage", []) for ex in u.get("examples", []) if ex.get("ref")}),
         }
-    with open(OUT, "w", encoding="utf-8") as f:
+    with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         json.dump(idx, f, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        f.write("\n")
     print("wrote %s with %d entries from committed dataset" % (os.path.relpath(OUT, ROOT), len(idx)))
 
 if __name__ == "__main__":

@@ -1,17 +1,17 @@
 {
- "name": "tanzil",
- "title": "Tanzil Uthmani text",
- "evidence_role": [
-  "quran_text"
- ],
- "access": {
-  "kind": "http",
-  "endpoint_env": "TANZIL_BASE",
-  "tool": "(text verification)"
- },
- "availability": "available",
- "public_exposable": false,
- "required_by_skills": false,
- "ladder_rank": 2,
- "notes": "Verbatim Uthmani text (CC BY 3.0; attribution required) — used to verify ayah text/refs. The live arabic_source already credits Tanzil in the artifact meta."
+  "access": {
+    "endpoint_env": "TANZIL_BASE",
+    "kind": "http",
+    "tool": "(text verification)"
+  },
+  "availability": "available",
+  "evidence_role": [
+    "quran_text"
+  ],
+  "ladder_rank": 2,
+  "name": "tanzil",
+  "notes": "Verbatim Uthmani text (CC BY 3.0; attribution required) — used to verify ayah text/refs. The live arabic_source already credits Tanzil in the artifact meta.",
+  "public_exposable": false,
+  "required_by_skills": false,
+  "title": "Tanzil Uthmani text"
 }

@@ -284,8 +284,10 @@ check("P0 dataset committed: entries.jsonl has 2092 entries",
 check("P0 dataset: schema + 7 indexes present", _exists("qamus/schemas/qamus-entry-public.schema.json")
       and all(_exists("qamus/indexes/current/%s.json" % n) for n in
       ("by-entry-id","by-source-key","by-root","by-lemma","by-normalized-surface","by-quran-ref","by-category")))
-check("P1 source-address graph present (full)", all(_exists("qamus/indexes/current/%s.json" % n) for n in
-      ("source-address-full","decision-backlinks-full","quran-usage-spine-full","qamus-entry-field-addresses")))
+check("P1 source-address graph present (full)",
+      _exists("qamus/indexes/current/decision-backlinks-full.json")
+      and all(_exists("qamus/indexes/current/%s.jsonl" % n) for n in
+      ("source-address-full","quran-usage-spine-full","qamus-entry-field-addresses")))
 check("P2 entry matrix has 2092 rows", _lines("qamus/reports/qamus-2092-entry-matrix.jsonl") == 2092)
 check("P3 hover-token audit covers all 49,900 tokens", _lines("qamus/reports/hover-token-audit-full.jsonl") == 49900)
 try:
@@ -301,6 +303,15 @@ try:
     check("P4 suffix/pronoun invariants pass (test_suffix_pronoun.py)", _r.returncode == 0)
 except Exception:
     check("P4 suffix/pronoun test runnable", False)
+# A1 artifact ergonomics: committed artifacts must be reviewable/diffable
+try:
+    _erg = subprocess.run([sys.executable, os.path.join(_R, "tools", "check_artifact_ergonomics.py")],
+                          capture_output=True, text=True)
+    check("A1 artifact ergonomics (no one-line mega-indexes; pretty/JSONL; trailing newlines)",
+          _erg.returncode == 0)
+except Exception:
+    check("A1 artifact ergonomics runnable", False)
+
 # P9 wrong-reasoning traps present and grader blocks them
 _wr = 0
 try:

@@ -1,287 +1,287 @@
 {
- "_doc": "sample entry nodes; full graph regenerable from the index",
- "counts": {
-  "doc": "Each qamus:v###/n###/p### is one node. Reuse before minting. >1 entry per root = intentional split.",
-  "entry_nodes": 2092,
-  "classes": {
-   "v": 970,
-   "n": 1022,
-   "p": 100
+  "_doc": "sample entry nodes; full graph regenerable from the index",
+  "counts": {
+    "classes": {
+      "n": 1022,
+      "p": 100,
+      "v": 970
+    },
+    "distinct_roots": 1091,
+    "doc": "Each qamus:v###/n###/p### is one node. Reuse before minting. >1 entry per root = intentional split.",
+    "entry_nodes": 2092,
+    "orphan_or_duplicate": 0,
+    "roots_with_multiple_entries": 7,
+    "split_examples": {
+      "ذ م م": [
+        "qamus:n443",
+        "qamus:n582"
+      ],
+      "ر و د": [
+        "qamus:v507",
+        "qamus:v072"
+      ],
+      "ز ر ع": [
+        "qamus:v583",
+        "qamus:v412"
+      ],
+      "ص ر ر": [
+        "qamus:v512",
+        "qamus:n356"
+      ],
+      "ص ل ي": [
+        "qamus:v105",
+        "qamus:v309"
+      ],
+      "ط ر ف": [
+        "qamus:n169",
+        "qamus:v543"
+      ],
+      "ف ر ج": [
+        "qamus:v520",
+        "qamus:n234"
+      ]
+    }
   },
-  "distinct_roots": 1091,
-  "roots_with_multiple_entries": 7,
-  "split_examples": {
-   "ر و د": [
-    "qamus:v507",
-    "qamus:v072"
-   ],
-   "ذ م م": [
-    "qamus:n443",
-    "qamus:n582"
-   ],
-   "ص ر ر": [
-    "qamus:v512",
-    "qamus:n356"
-   ],
-   "ف ر ج": [
-    "qamus:v520",
-    "qamus:n234"
-   ],
-   "ط ر ف": [
-    "qamus:n169",
-    "qamus:v543"
-   ],
-   "ص ل ي": [
-    "qamus:v105",
-    "qamus:v309"
-   ],
-   "ز ر ع": [
-    "qamus:v583",
-    "qamus:v412"
-   ]
-  },
-  "orphan_or_duplicate": 0
- },
- "entry_nodes": {
-  "qamus:v443": {
-   "id": "qamus:v443",
-   "address": "qamus:v443#root=خ و ض",
-   "type": "live-qamus-entry",
-   "locator": {
-    "entry_id": "00107b99a50e",
-    "root": "خ و ض",
-    "headword": "خَاضُوا",
-    "category": "Verbs",
-    "source_keys": [
-     "v426"
-    ]
-   },
-   "provenance": [
-    "live-qamus"
-   ],
-   "status": "clean",
-   "used_by": [],
-   "blockers": []
-  },
-  "qamus:n621": {
-   "id": "qamus:n621",
-   "address": "qamus:n621#root=",
-   "type": "live-qamus-entry",
-   "locator": {
-    "entry_id": "001242c409ae",
-    "root": "",
-    "headword": "شَطْأَهُ",
-    "category": "Plants & Fruits",
-    "source_keys": [
-     "n773"
-    ]
-   },
-   "provenance": [
-    "live-qamus"
-   ],
-   "status": "clean",
-   "used_by": [],
-   "blockers": []
-  },
-  "qamus:v188": {
-   "id": "qamus:v188",
-   "address": "qamus:v188#root=ص د ر",
-   "type": "live-qamus-entry",
-   "locator": {
-    "entry_id": "00da6306f662",
-    "root": "ص د ر",
-    "headword": "يَصْدُر / صَدْر",
-    "category": "Verbs with Derivatives",
-    "source_keys": [
-     "v180"
-    ]
-   },
-   "provenance": [
-    "live-qamus"
-   ],
-   "status": "clean",
-   "used_by": [],
-   "blockers": []
-  },
-  "qamus:n622": {
-   "id": "qamus:n622",
-   "address": "qamus:n622#root=",
-   "type": "live-qamus-entry",
-   "locator": {
-    "entry_id": "00fabb02e815",
-    "root": "",
-    "headword": "غُزًّى",
-    "category": "Nouns",
-    "source_keys": [
-     "n553"
-    ]
-   },
-   "provenance": [
-    "live-qamus"
-   ],
-   "status": "clean",
-   "used_by": [],
-   "blockers": []
-  },
-  "qamus:n300": {
-   "id": "qamus:n300",
-   "address": "qamus:n300#root=ب غ ض",
-   "type": "live-qamus-entry",
-   "locator": {
-    "entry_id": "0112c06037b7",
-    "root": "ب غ ض",
-    "headword": "بَغْضَاء",
-    "category": "Nouns",
-    "source_keys": [
-     "n368"
-    ]
-   },
-   "provenance": [
-    "live-qamus"
-   ],
-   "status": "clean",
-   "used_by": [],
-   "blockers": []
-  },
-  "qamus:v509": {
-   "id": "qamus:v509",
-   "address": "qamus:v509#root=ز ي غ",
-   "type": "live-qamus-entry",
-   "locator": {
-    "entry_id": "01133eb5431b",
-    "root": "ز ي غ",
-    "headword": "زَاغَ",
-    "category": "Verbs",
-    "source_keys": [
-     "v489"
-    ]
-   },
-   "provenance": [
-    "live-qamus"
-   ],
-   "status": "clean",
-   "used_by": [],
-   "blockers": []
-  },
-  "qamus:v147": {
-   "id": "qamus:v147",
-   "address": "qamus:v147#root=ك س ب",
-   "type": "live-qamus-entry",
-   "locator": {
-    "entry_id": "0131159a9456",
-    "root": "ك س ب",
-    "headword": "كَسَبَ",
-    "category": "Verbs with Derivatives",
-    "source_keys": [
-     "v140"
-    ]
-   },
-   "provenance": [
-    "live-qamus"
-   ],
-   "status": "clean",
-   "used_by": [],
-   "blockers": []
-  },
-  "qamus:n575": {
-   "id": "qamus:n575",
-   "address": "qamus:n575#root=ح ش ي",
-   "type": "live-qamus-entry",
-   "locator": {
-    "entry_id": "0135b6be178e",
-    "root": "ح ش ي",
-    "headword": "حَاشَ لِلَّه",
-    "category": "Nouns",
-    "source_keys": [
-     "n421"
-    ]
-   },
-   "provenance": [
-    "live-qamus"
-   ],
-   "status": "clean",
-   "used_by": [],
-   "blockers": []
-  },
-  "qamus:n453": {
-   "id": "qamus:n453",
-   "address": "qamus:n453#root=",
-   "type": "live-qamus-entry",
-   "locator": {
-    "entry_id": "013966ac19a7",
-    "root": "",
-    "headword": "وَدْق",
-    "category": "Sky",
-    "source_keys": [
-     "n681"
-    ]
-   },
-   "provenance": [
-    "live-qamus"
-   ],
-   "status": "clean",
-   "used_by": [],
-   "blockers": []
-  },
-  "qamus:n580": {
-   "id": "qamus:n580",
-   "address": "qamus:n580#root=خَبَالًا",
-   "type": "live-qamus-entry",
-   "locator": {
-    "entry_id": "014677d54d50",
-    "root": "خَبَالًا",
-    "headword": "خَبَالًا",
-    "category": "Nouns",
-    "source_keys": [
-     "n428"
-    ]
-   },
-   "provenance": [
-    "live-qamus"
-   ],
-   "status": "clean",
-   "used_by": [],
-   "blockers": []
-  },
-  "qamus:v379": {
-   "id": "qamus:v379",
-   "address": "qamus:v379#root=خ ف ف",
-   "type": "live-qamus-entry",
-   "locator": {
-    "entry_id": "014e23727379",
-    "root": "خ ف ف",
-    "headword": "خَفَّت",
-    "category": "Verbs",
-    "source_keys": [
-     "v363"
-    ]
-   },
-   "provenance": [
-    "live-qamus"
-   ],
-   "status": "clean",
-   "used_by": [],
-   "blockers": []
-  },
-  "qamus:v948": {
-   "id": "qamus:v948",
-   "address": "qamus:v948#root=مَكَانَكُمْ",
-   "type": "live-qamus-entry",
-   "locator": {
-    "entry_id": "0191d7ee3dae",
-    "root": "مَكَانَكُمْ",
-    "headword": "مَكَانَكُمْ",
-    "category": "Verbs",
-    "source_keys": [
-     "v946"
-    ]
-   },
-   "provenance": [
-    "live-qamus"
-   ],
-   "status": "clean",
-   "used_by": [],
-   "blockers": []
+  "entry_nodes": {
+    "qamus:n300": {
+      "address": "qamus:n300#root=ب غ ض",
+      "blockers": [],
+      "id": "qamus:n300",
+      "locator": {
+        "category": "Nouns",
+        "entry_id": "0112c06037b7",
+        "headword": "بَغْضَاء",
+        "root": "ب غ ض",
+        "source_keys": [
+          "n368"
+        ]
+      },
+      "provenance": [
+        "live-qamus"
+      ],
+      "status": "clean",
+      "type": "live-qamus-entry",
+      "used_by": []
+    },
+    "qamus:n453": {
+      "address": "qamus:n453#root=",
+      "blockers": [],
+      "id": "qamus:n453",
+      "locator": {
+        "category": "Sky",
+        "entry_id": "013966ac19a7",
+        "headword": "وَدْق",
+        "root": "",
+        "source_keys": [
+          "n681"
+        ]
+      },
+      "provenance": [
+        "live-qamus"
+      ],
+      "status": "clean",
+      "type": "live-qamus-entry",
+      "used_by": []
+    },
+    "qamus:n575": {
+      "address": "qamus:n575#root=ح ش ي",
+      "blockers": [],
+      "id": "qamus:n575",
+      "locator": {
+        "category": "Nouns",
+        "entry_id": "0135b6be178e",
+        "headword": "حَاشَ لِلَّه",
+        "root": "ح ش ي",
+        "source_keys": [
+          "n421"
+        ]
+      },
+      "provenance": [
+        "live-qamus"
+      ],
+      "status": "clean",
+      "type": "live-qamus-entry",
+      "used_by": []
+    },
+    "qamus:n580": {
+      "address": "qamus:n580#root=خَبَالًا",
+      "blockers": [],
+      "id": "qamus:n580",
+      "locator": {
+        "category": "Nouns",
+        "entry_id": "014677d54d50",
+        "headword": "خَبَالًا",
+        "root": "خَبَالًا",
+        "source_keys": [
+          "n428"
+        ]
+      },
+      "provenance": [
+        "live-qamus"
+      ],
+      "status": "clean",
+      "type": "live-qamus-entry",
+      "used_by": []
+    },
+    "qamus:n621": {
+      "address": "qamus:n621#root=",
+      "blockers": [],
+      "id": "qamus:n621",
+      "locator": {
+        "category": "Plants & Fruits",
+        "entry_id": "001242c409ae",
+        "headword": "شَطْأَهُ",
+        "root": "",
+        "source_keys": [
+          "n773"
+        ]
+      },
+      "provenance": [
+        "live-qamus"
+      ],
+      "status": "clean",
+      "type": "live-qamus-entry",
+      "used_by": []
+    },
+    "qamus:n622": {
+      "address": "qamus:n622#root=",
+      "blockers": [],
+      "id": "qamus:n622",
+      "locator": {
+        "category": "Nouns",
+        "entry_id": "00fabb02e815",
+        "headword": "غُزًّى",
+        "root": "",
+        "source_keys": [
+          "n553"
+        ]
+      },
+      "provenance": [
+        "live-qamus"
+      ],
+      "status": "clean",
+      "type": "live-qamus-entry",
+      "used_by": []
+    },
+    "qamus:v147": {
+      "address": "qamus:v147#root=ك س ب",
+      "blockers": [],
+      "id": "qamus:v147",
+      "locator": {
+        "category": "Verbs with Derivatives",
+        "entry_id": "0131159a9456",
+        "headword": "كَسَبَ",
+        "root": "ك س ب",
+        "source_keys": [
+          "v140"
+        ]
+      },
+      "provenance": [
+        "live-qamus"
+      ],
+      "status": "clean",
+      "type": "live-qamus-entry",
+      "used_by": []
+    },
+    "qamus:v188": {
+      "address": "qamus:v188#root=ص د ر",
+      "blockers": [],
+      "id": "qamus:v188",
+      "locator": {
+        "category": "Verbs with Derivatives",
+        "entry_id": "00da6306f662",
+        "headword": "يَصْدُر / صَدْر",
+        "root": "ص د ر",
+        "source_keys": [
+          "v180"
+        ]
+      },
+      "provenance": [
+        "live-qamus"
+      ],
+      "status": "clean",
+      "type": "live-qamus-entry",
+      "used_by": []
+    },
+    "qamus:v379": {
+      "address": "qamus:v379#root=خ ف ف",
+      "blockers": [],
+      "id": "qamus:v379",
+      "locator": {
+        "category": "Verbs",
+        "entry_id": "014e23727379",
+        "headword": "خَفَّت",
+        "root": "خ ف ف",
+        "source_keys": [
+          "v363"
+        ]
+      },
+      "provenance": [
+        "live-qamus"
+      ],
+      "status": "clean",
+      "type": "live-qamus-entry",
+      "used_by": []
+    },
+    "qamus:v443": {
+      "address": "qamus:v443#root=خ و ض",
+      "blockers": [],
+      "id": "qamus:v443",
+      "locator": {
+        "category": "Verbs",
+        "entry_id": "00107b99a50e",
+        "headword": "خَاضُوا",
+        "root": "خ و ض",
+        "source_keys": [
+          "v426"
+        ]
+      },
+      "provenance": [
+        "live-qamus"
+      ],
+      "status": "clean",
+      "type": "live-qamus-entry",
+      "used_by": []
+    },
+    "qamus:v509": {
+      "address": "qamus:v509#root=ز ي غ",
+      "blockers": [],
+      "id": "qamus:v509",
+      "locator": {
+        "category": "Verbs",
+        "entry_id": "01133eb5431b",
+        "headword": "زَاغَ",
+        "root": "ز ي غ",
+        "source_keys": [
+          "v489"
+        ]
+      },
+      "provenance": [
+        "live-qamus"
+      ],
+      "status": "clean",
+      "type": "live-qamus-entry",
+      "used_by": []
+    },
+    "qamus:v948": {
+      "address": "qamus:v948#root=مَكَانَكُمْ",
+      "blockers": [],
+      "id": "qamus:v948",
+      "locator": {
+        "category": "Verbs",
+        "entry_id": "0191d7ee3dae",
+        "headword": "مَكَانَكُمْ",
+        "root": "مَكَانَكُمْ",
+        "source_keys": [
+          "v946"
+        ]
+      },
+      "provenance": [
+        "live-qamus"
+      ],
+      "status": "clean",
+      "type": "live-qamus-entry",
+      "used_by": []
+    }
   }
- }
 }

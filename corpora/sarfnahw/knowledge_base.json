@@ -1,52 +1,22 @@
 {
-  "schema": "fusha/sarfnahw_knowledge_base@1",
-  "totals": {
-    "concepts": 28,
-    "by_domain": {
-      "sarf": 25,
-      "nahw": 3
-    },
-    "by_topic": {
-      "verb_measure": 10,
-      "verb_class": 7,
-      "plural_pattern": 7,
-      "gender": 1,
-      "particle": 1,
-      "preposition": 1,
-      "pronoun": 1
-    },
-    "apkg_notes_scanned": 1132,
-    "distinct_plural_pairs": 486,
-    "plural_orientation": {
-      "paren": 298,
-      "sound": 177,
-      "multi": 11
-    },
-    "gender_tagged": {
-      "m": 338,
-      "f": 246
-    }
-  },
   "concepts": [
     {
+      "arabic_label": "فَعَلَ",
       "concept_id": "sarf:verb-measure:I",
       "domain": "sarf",
-      "topic": "verb_measure",
-      "arabic_label": "فَعَلَ",
       "english_label": "Form I",
-      "rule_summary": "the base lexical action; transitivity and vowel of the muḍāriʿ are lexical (learned).",
       "examples": [
         {
-          "surface_ar": "خَلَقَ (created)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "خَلَقَ (created)"
         },
         {
-          "surface_ar": "كَتَبَ (decreed/wrote)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "كَتَبَ (decreed/wrote)"
         },
         {
-          "surface_ar": "قَالَ (said, hollow)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "قَالَ (said, hollow)"
         }
       ],
       "qamus_relevance": [
@@ -55,31 +25,31 @@
         "maṣdar/participle gloss shape",
         "hover-gloss disambiguation"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "the base lexical action; transitivity and vowel of the muḍāriʿ are lexical (learned).",
+      "topic": "verb_measure"
     },
     {
+      "arabic_label": "فَعَّلَ",
       "concept_id": "sarf:verb-measure:II",
       "domain": "sarf",
-      "topic": "verb_measure",
-      "arabic_label": "فَعَّلَ",
       "english_label": "Form II",
-      "rule_summary": "intensive / causative / declarative / denominative. Chart: 'strengthening/intensifying of meaning; applying the act to a more general object'.",
       "examples": [
         {
-          "surface_ar": "عَلَّمَ (taught)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "عَلَّمَ (taught)"
         },
         {
-          "surface_ar": "نَزَّلَ (sent down gradually)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "نَزَّلَ (sent down gradually)"
         },
         {
-          "surface_ar": "كَذَّبَ (denied/cried lies)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "كَذَّبَ (denied/cried lies)"
         },
         {
-          "surface_ar": "بَشَّرَ (gave glad tidings)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "بَشَّرَ (gave glad tidings)"
         }
       ],
       "qamus_relevance": [
@@ -88,27 +58,27 @@
         "maṣdar/participle gloss shape",
         "hover-gloss disambiguation"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "intensive / causative / declarative / denominative. Chart: 'strengthening/intensifying of meaning; applying the act to a more general object'.",
+      "topic": "verb_measure"
     },
     {
+      "arabic_label": "فَاعَلَ",
       "concept_id": "sarf:verb-measure:III",
       "domain": "sarf",
-      "topic": "verb_measure",
-      "arabic_label": "فَاعَلَ",
       "english_label": "Form III",
-      "rule_summary": "associative / conative — doing the act toward another, or attempting it. Chart: 'relation of the action to another person; attempting the act'.",
       "examples": [
         {
-          "surface_ar": "جَاهَدَ (strove)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "جَاهَدَ (strove)"
         },
         {
-          "surface_ar": "قَاتَلَ (fought)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "قَاتَلَ (fought)"
         },
         {
-          "surface_ar": "نَادَى (called out)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "نَادَى (called out)"
         }
       ],
       "qamus_relevance": [
@@ -117,31 +87,31 @@
         "maṣdar/participle gloss shape",
         "hover-gloss disambiguation"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "associative / conative — doing the act toward another, or attempting it. Chart: 'relation of the action to another person; attempting the act'.",
+      "topic": "verb_measure"
     },
     {
+      "arabic_label": "أَفْعَلَ",
       "concept_id": "sarf:verb-measure:IV",
       "domain": "sarf",
-      "topic": "verb_measure",
-      "arabic_label": "أَفْعَلَ",
       "english_label": "Form IV",
-      "rule_summary": "causative — to make someone/something do/become. The hamza changes sense vs Form I; do NOT gloss as Form I.",
       "examples": [
         {
-          "surface_ar": "أَنزَلَ (sent down)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "أَنزَلَ (sent down)"
         },
         {
-          "surface_ar": "أَخْرَجَ (brought forth)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "أَخْرَجَ (brought forth)"
         },
         {
-          "surface_ar": "أَسْلَمَ (submitted)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "أَسْلَمَ (submitted)"
         },
         {
-          "surface_ar": "أَقَامَ (established)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "أَقَامَ (established)"
         }
       ],
       "qamus_relevance": [
@@ -150,27 +120,27 @@
         "maṣdar/participle gloss shape",
         "hover-gloss disambiguation"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "causative — to make someone/something do/become. The hamza changes sense vs Form I; do NOT gloss as Form I.",
+      "topic": "verb_measure"
     },
     {
+      "arabic_label": "تَفَعَّلَ",
       "concept_id": "sarf:verb-measure:V",
       "domain": "sarf",
-      "topic": "verb_measure",
-      "arabic_label": "تَفَعَّلَ",
       "english_label": "Form V",
-      "rule_summary": "reflexive/effective of II; to take on / consider oneself to have the quality. Chart: 'to consider/represent oneself as having a quality expressed in the root'.",
       "examples": [
         {
-          "surface_ar": "تَنَزَّلَ (came down)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "تَنَزَّلَ (came down)"
         },
         {
-          "surface_ar": "تَوَفَّى (took in full / caused to die)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "تَوَفَّى (took in full / caused to die)"
         },
         {
-          "surface_ar": "تَذَكَّرَ (took heed)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "تَذَكَّرَ (took heed)"
         }
       ],
       "qamus_relevance": [
@@ -179,27 +149,27 @@
         "maṣdar/participle gloss shape",
         "hover-gloss disambiguation"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "reflexive/effective of II; to take on / consider oneself to have the quality. Chart: 'to consider/represent oneself as having a quality expressed in the root'.",
+      "topic": "verb_measure"
     },
     {
+      "arabic_label": "تَفَاعَلَ",
       "concept_id": "sarf:verb-measure:VI",
       "domain": "sarf",
-      "topic": "verb_measure",
-      "arabic_label": "تَفَاعَلَ",
       "english_label": "Form VI",
-      "rule_summary": "reciprocal / mutual; pretending. Chart: 'implying the mutual application of the action'.",
       "examples": [
         {
-          "surface_ar": "تَعَاوَنَ (cooperated)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "تَعَاوَنَ (cooperated)"
         },
         {
-          "surface_ar": "تَسَاءَلَ (asked one another)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "تَسَاءَلَ (asked one another)"
         },
         {
-          "surface_ar": "تَوَفَّاهُ — see V",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "تَوَفَّاهُ — see V"
         }
       ],
       "qamus_relevance": [
@@ -208,27 +178,27 @@
         "maṣdar/participle gloss shape",
         "hover-gloss disambiguation"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "reciprocal / mutual; pretending. Chart: 'implying the mutual application of the action'.",
+      "topic": "verb_measure"
     },
     {
+      "arabic_label": "اِنْفَعَلَ",
       "concept_id": "sarf:verb-measure:VII",
       "domain": "sarf",
-      "topic": "verb_measure",
-      "arabic_label": "اِنْفَعَلَ",
       "english_label": "Form VII",
-      "rule_summary": "mediopassive / anticausative — to become X-ed (intransitive result). No passive (already passive in sense).",
       "examples": [
         {
-          "surface_ar": "اِنْفَطَرَ (split apart)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِنْفَطَرَ (split apart)"
         },
         {
-          "surface_ar": "اِنقَلَبَ (turned back)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِنقَلَبَ (turned back)"
         },
         {
-          "surface_ar": "اِنشَقَّ (was cleft, geminate)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِنشَقَّ (was cleft, geminate)"
         }
       ],
       "qamus_relevance": [
@@ -237,31 +207,31 @@
         "maṣdar/participle gloss shape",
         "hover-gloss disambiguation"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "mediopassive / anticausative — to become X-ed (intransitive result). No passive (already passive in sense).",
+      "topic": "verb_measure"
     },
     {
+      "arabic_label": "اِفْتَعَلَ",
       "concept_id": "sarf:verb-measure:VIII",
       "domain": "sarf",
-      "topic": "verb_measure",
-      "arabic_label": "اِفْتَعَلَ",
       "english_label": "Form VIII",
-      "rule_summary": "reflexive / middle voice; doing for oneself. The infixed ت assimilates after certain first radicals (e.g. اِصْطَبَرَ, اِزْدَادَ).",
       "examples": [
         {
-          "surface_ar": "اِتَّقَى (was mindful, و→ت)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِتَّقَى (was mindful, و→ت)"
         },
         {
-          "surface_ar": "اِخْتَلَفَ (differed)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِخْتَلَفَ (differed)"
         },
         {
-          "surface_ar": "اِزْدَادَ (increased, د-assim)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِزْدَادَ (increased, د-assim)"
         },
         {
-          "surface_ar": "اِصْطَفَى (chose)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِصْطَفَى (chose)"
         }
       ],
       "qamus_relevance": [
@@ -270,27 +240,27 @@
         "maṣdar/participle gloss shape",
         "hover-gloss disambiguation"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "reflexive / middle voice; doing for oneself. The infixed ت assimilates after certain first radicals (e.g. اِصْطَبَرَ, اِزْدَادَ).",
+      "topic": "verb_measure"
     },
     {
+      "arabic_label": "اِفْعَلَّ",
       "concept_id": "sarf:verb-measure:IX",
       "domain": "sarf",
-      "topic": "verb_measure",
-      "arabic_label": "اِفْعَلَّ",
       "english_label": "Form IX",
-      "rule_summary": "acquisition of a colour or a bodily defect. Chart: 'possession/acquisition of colours/defects'.",
       "examples": [
         {
-          "surface_ar": "اِسْوَدَّ (turned black)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِسْوَدَّ (turned black)"
         },
         {
-          "surface_ar": "اِبْيَضَّ (turned white)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِبْيَضَّ (turned white)"
         },
         {
-          "surface_ar": "اِحْمَرَّ (turned red)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِحْمَرَّ (turned red)"
         }
       ],
       "qamus_relevance": [
@@ -299,31 +269,31 @@
         "maṣdar/participle gloss shape",
         "hover-gloss disambiguation"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "acquisition of a colour or a bodily defect. Chart: 'possession/acquisition of colours/defects'.",
+      "topic": "verb_measure"
     },
     {
+      "arabic_label": "اِسْتَفْعَلَ",
       "concept_id": "sarf:verb-measure:X",
       "domain": "sarf",
-      "topic": "verb_measure",
-      "arabic_label": "اِسْتَفْعَلَ",
       "english_label": "Form X",
-      "rule_summary": "requestative (to seek/ask for the act) or estimative (to deem X to be ...). Chart: 'asking for the act/quality of the root; esteeming/thinking someone/thing to be ...'.",
       "examples": [
         {
-          "surface_ar": "اِسْتَغْفَرَ (sought forgiveness)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِسْتَغْفَرَ (sought forgiveness)"
         },
         {
-          "surface_ar": "اِسْتَكْبَرَ (was arrogant)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِسْتَكْبَرَ (was arrogant)"
         },
         {
-          "surface_ar": "اِسْتَعَانَ (sought help, hollow)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِسْتَعَانَ (sought help, hollow)"
         },
         {
-          "surface_ar": "اِسْتَطَاعَ (was able)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "اِسْتَطَاعَ (was able)"
         }
       ],
       "qamus_relevance": [
@@ -332,231 +302,231 @@
         "maṣdar/participle gloss shape",
         "hover-gloss disambiguation"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "requestative (to seek/ask for the act) or estimative (to deem X to be ...). Chart: 'asking for the act/quality of the root; esteeming/thinking someone/thing to be ...'.",
+      "topic": "verb_measure"
     },
     {
+      "arabic_label": "فَعْلَلَ",
       "concept_id": "sarf:verb-class:quadriliteral",
       "domain": "sarf",
-      "topic": "verb_class",
-      "arabic_label": "فَعْلَلَ",
       "english_label": "Quadriliteral فَعْلَلَ",
-      "rule_summary": "Chart 8 (model 'to roll' = دَحْرَجَ) — four-radical verbs.",
       "examples": [
         {
-          "surface_ar": "زَلْزَلَ (shook violently)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "زَلْزَلَ (shook violently)"
         },
         {
-          "surface_ar": "وَسْوَسَ (whispered)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "وَسْوَسَ (whispered)"
         },
         {
-          "surface_ar": "تَزَلْزَلَ",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "تَزَلْزَلَ"
         }
       ],
       "qamus_relevance": [
         "root recovery",
         "norm() hazard"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "Chart 8 (model 'to roll' = دَحْرَجَ) — four-radical verbs.",
+      "topic": "verb_class"
     },
     {
+      "arabic_label": "Geminate مضاعف",
       "concept_id": "sarf:verb-class:geminate",
       "domain": "sarf",
-      "topic": "verb_class",
-      "arabic_label": "Geminate مضاعف",
       "english_label": "Geminate مضاعف",
-      "rule_summary": "Chart 6 (model 'to shake' = هَزَّ) — doubled verbs مضاعف where C2=C3; written with shadda when the two identicals meet.",
       "examples": [
         {
-          "surface_ar": "مَدَّ (extended)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "مَدَّ (extended)"
         },
         {
-          "surface_ar": "رَدَّ (returned/repelled)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "رَدَّ (returned/repelled)"
         },
         {
-          "surface_ar": "ضَلَّ (went astray)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "ضَلَّ (went astray)"
         },
         {
-          "surface_ar": "أَحَبَّ (loved, form IV)",
-          "source_ref": "sarf/rules/verb-measures.json"
+          "source_ref": "sarf/rules/verb-measures.json",
+          "surface_ar": "أَحَبَّ (loved, form IV)"
         }
       ],
       "qamus_relevance": [
         "root recovery",
         "norm() hazard"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "Chart 6 (model 'to shake' = هَزَّ) — doubled verbs مضاعف where C2=C3; written with shadda when the two identicals meet.",
+      "topic": "verb_class"
     },
     {
+      "arabic_label": "المهموز",
       "concept_id": "sarf:weak-verb:hamzated",
       "domain": "sarf",
-      "topic": "verb_class",
-      "arabic_label": "المهموز",
       "english_label": "Hamzated verb",
-      "rule_summary": "a radical is hamza; norm() drops the seat — use norm_strict",
       "examples": [
         {
-          "surface_ar": "أَخَذَ",
-          "source_ref": "sarf/references/weak-verbs.md"
+          "source_ref": "sarf/references/weak-verbs.md",
+          "surface_ar": "أَخَذَ"
         }
       ],
       "qamus_relevance": [
         "root recovery",
         "pending reason when root uncertain"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "a radical is hamza; norm() drops the seat — use norm_strict",
+      "topic": "verb_class"
     },
     {
+      "arabic_label": "المضاعف",
       "concept_id": "sarf:weak-verb:doubled",
       "domain": "sarf",
-      "topic": "verb_class",
-      "arabic_label": "المضاعف",
       "english_label": "Doubled verb",
-      "rule_summary": "C2=C3 merged under shadda; expand before counting radicals",
       "examples": [
         {
-          "surface_ar": "رَدَّ",
-          "source_ref": "sarf/references/weak-verbs.md"
+          "source_ref": "sarf/references/weak-verbs.md",
+          "surface_ar": "رَدَّ"
         }
       ],
       "qamus_relevance": [
         "root recovery",
         "pending reason when root uncertain"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "C2=C3 merged under shadda; expand before counting radicals",
+      "topic": "verb_class"
     },
     {
+      "arabic_label": "المثال",
       "concept_id": "sarf:weak-verb:assimilated",
       "domain": "sarf",
-      "topic": "verb_class",
-      "arabic_label": "المثال",
       "english_label": "Assimilated verb",
-      "rule_summary": "C1 و drops in the muḍāriʿ (يَجِدُ); و→ت in Form VIII",
       "examples": [
         {
-          "surface_ar": "وَجَدَ",
-          "source_ref": "sarf/references/weak-verbs.md"
+          "source_ref": "sarf/references/weak-verbs.md",
+          "surface_ar": "وَجَدَ"
         }
       ],
       "qamus_relevance": [
         "root recovery",
         "pending reason when root uncertain"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "C1 و drops in the muḍāriʿ (يَجِدُ); و→ت in Form VIII",
+      "topic": "verb_class"
     },
     {
+      "arabic_label": "الأجوف",
       "concept_id": "sarf:weak-verb:hollow",
       "domain": "sarf",
-      "topic": "verb_class",
-      "arabic_label": "الأجوف",
       "english_label": "Hollow verb",
-      "rule_summary": "C2 (و/ي) → long alif in the past; medial dropped in IV/VIII/X",
       "examples": [
         {
-          "surface_ar": "قَالَ",
-          "source_ref": "sarf/references/weak-verbs.md"
+          "source_ref": "sarf/references/weak-verbs.md",
+          "surface_ar": "قَالَ"
         }
       ],
       "qamus_relevance": [
         "root recovery",
         "pending reason when root uncertain"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "C2 (و/ي) → long alif in the past; medial dropped in IV/VIII/X",
+      "topic": "verb_class"
     },
     {
+      "arabic_label": "الناقص",
       "concept_id": "sarf:weak-verb:defective",
       "domain": "sarf",
-      "topic": "verb_class",
-      "arabic_label": "الناقص",
       "english_label": "Defective verb",
-      "rule_summary": "C3 (و/ي) alternates ا/ى/و/ي; last radical hidden",
       "examples": [
         {
-          "surface_ar": "دَعَا",
-          "source_ref": "sarf/references/weak-verbs.md"
+          "source_ref": "sarf/references/weak-verbs.md",
+          "surface_ar": "دَعَا"
         }
       ],
       "qamus_relevance": [
         "root recovery",
         "pending reason when root uncertain"
       ],
-      "review_status": "curated"
+      "review_status": "curated",
+      "rule_summary": "C3 (و/ي) alternates ا/ى/و/ي; last radical hidden",
+      "topic": "verb_class"
     },
     {
+      "arabic_label": "وزن أَفْعَال",
       "concept_id": "sarf:plural:broken_plural_afʿaal",
       "domain": "sarf",
-      "topic": "plural_pattern",
-      "arabic_label": "وزن أَفْعَال",
       "english_label": "broken plural afʿaal",
-      "rule_summary": "Form-pair pattern attested in the vocab corpus (3 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 31 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
         {
-          "singular_ar": "وَرَقَةٌ",
-          "plural_ar": "أَوْرَاقٌ",
           "gender": "f",
           "gloss_en": "A piece of paper",
           "orientation": "paren",
+          "plural_ar": "أَوْرَاقٌ",
+          "singular_ar": "وَرَقَةٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "قَلَمٌ",
-          "plural_ar": "أَقْلَامٌ",
           "gender": "m",
           "gloss_en": "Pen",
           "orientation": "paren",
+          "plural_ar": "أَقْلَامٌ",
+          "singular_ar": "قَلَمٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "أَرْضٌ",
-          "plural_ar": "أَرَاضٍ",
           "gender": "f",
           "gloss_en": "Earth / land",
           "orientation": "paren",
+          "plural_ar": "أَرَاضٍ",
+          "singular_ar": "أَرْضٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "قَمَرٌ",
-          "plural_ar": "أَقْمَارٌ",
           "gender": "m",
           "gloss_en": "Moon",
           "orientation": "paren",
+          "plural_ar": "أَقْمَارٌ",
+          "singular_ar": "قَمَرٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "نَهَرٌ",
-          "plural_ar": "أَنْهَارٌ",
           "gender": "m",
           "gloss_en": "River",
           "orientation": "paren",
+          "plural_ar": "أَنْهَارٌ",
+          "singular_ar": "نَهَرٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "طَبِيبٌ",
-          "plural_ar": "أَطِبَّاءُ",
           "gender": "m",
           "gloss_en": "Male doctor",
           "orientation": "paren",
+          "plural_ar": "أَطِبَّاءُ",
+          "singular_ar": "طَبِيبٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "فِيلٌ",
-          "plural_ar": "أَفْيَالٌ",
           "gender": "m",
           "gloss_en": "Elephant",
           "orientation": "paren",
+          "plural_ar": "أَفْيَالٌ",
+          "singular_ar": "فِيلٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "فَرَسٌ",
-          "plural_ar": "أفرَاسٌ",
           "gender": "f",
           "gloss_en": "Mare",
           "orientation": "paren",
+          "plural_ar": "أفرَاسٌ",
+          "singular_ar": "فَرَسٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         }
       ],
@@ -565,78 +535,78 @@
         "entry plural field",
         "surface-form resolution"
       ],
-      "review_status": "needs_review"
+      "review_status": "needs_review",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (3 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 31 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
+      "topic": "plural_pattern"
     },
     {
+      "arabic_label": "وزن فِعَال",
       "concept_id": "sarf:plural:broken_plural_fiʿaal",
       "domain": "sarf",
-      "topic": "plural_pattern",
-      "arabic_label": "وزن فِعَال",
       "english_label": "broken plural fiʿaal",
-      "rule_summary": "Form-pair pattern attested in the vocab corpus (5 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 49 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
         {
-          "singular_ar": "رَجُلٌ",
-          "plural_ar": "رِجَالٌ",
           "gender": "m",
           "gloss_en": "Man",
           "orientation": "paren",
+          "plural_ar": "رِجَالٌ",
+          "singular_ar": "رَجُلٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "طَالِبٌ",
-          "plural_ar": "طُلَّابٌ",
           "gender": "m",
           "gloss_en": "Male student",
           "orientation": "paren",
+          "plural_ar": "طُلَّابٌ",
+          "singular_ar": "طَالِبٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "جَبَلٌ",
-          "plural_ar": "جِبَالٌ",
           "gender": "m",
           "gloss_en": "Mountain",
           "orientation": "paren",
+          "plural_ar": "جِبَالٌ",
+          "singular_ar": "جَبَلٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "بَحْرٌ",
-          "plural_ar": "بِحَارٌ",
           "gender": "m",
           "gloss_en": "Sea",
           "orientation": "paren",
+          "plural_ar": "بِحَارٌ",
+          "singular_ar": "بَحْرٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "قَاضٍ",
-          "plural_ar": "قُضَاةٌ",
           "gender": "m",
           "gloss_en": "Judge",
           "orientation": "paren",
+          "plural_ar": "قُضَاةٌ",
+          "singular_ar": "قَاضٍ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "تَاجِرٌ",
-          "plural_ar": "تُجَّارٌ",
           "gender": "m",
           "gloss_en": "Male merchant",
           "orientation": "paren",
+          "plural_ar": "تُجَّارٌ",
+          "singular_ar": "تَاجِرٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "رَاكِبٌ",
-          "plural_ar": "رُكَّابٌ",
           "gender": "f",
           "gloss_en": "Male passenger",
           "orientation": "paren",
+          "plural_ar": "رُكَّابٌ",
+          "singular_ar": "رَاكِبٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "مَاشٍ",
-          "plural_ar": "مُشَاةٌ",
           "gender": "m",
           "gloss_en": "Male pedestrian",
           "orientation": "paren",
+          "plural_ar": "مُشَاةٌ",
+          "singular_ar": "مَاشٍ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         }
       ],
@@ -645,78 +615,78 @@
         "entry plural field",
         "surface-form resolution"
       ],
-      "review_status": "needs_review"
+      "review_status": "needs_review",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (5 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 49 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
+      "topic": "plural_pattern"
     },
     {
+      "arabic_label": "وزن فُعُل",
       "concept_id": "sarf:plural:broken_plural_fuʿul",
       "domain": "sarf",
-      "topic": "plural_pattern",
-      "arabic_label": "وزن فُعُل",
       "english_label": "broken plural fuʿul",
-      "rule_summary": "Form-pair pattern attested in the vocab corpus (6 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 62 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
         {
-          "singular_ar": "كِتَابٌ",
-          "plural_ar": "كُتُبٌ",
           "gender": "m",
           "gloss_en": "Book",
           "orientation": "paren",
+          "plural_ar": "كُتُبٌ",
+          "singular_ar": "كِتَابٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "طَرِيقٌ",
-          "plural_ar": "طُرُقٌ",
           "gender": "m",
           "gloss_en": "Road",
           "orientation": "paren",
+          "plural_ar": "طُرُقٌ",
+          "singular_ar": "طَرِيقٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "قِطَّةٌ",
-          "plural_ar": "قِطَطٌَ",
           "gender": "f",
           "gloss_en": "Cat",
           "orientation": "paren",
+          "plural_ar": "قِطَطٌَ",
+          "singular_ar": "قِطَّةٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "حِمَارٌ",
-          "plural_ar": "حُمُرٌ",
           "gender": "m",
           "gloss_en": "Donkey",
           "orientation": "paren",
+          "plural_ar": "حُمُرٌ",
+          "singular_ar": "حِمَارٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "سَمَكَةٌ",
-          "plural_ar": "سَمَكٌ",
           "gender": "f",
           "gloss_en": "Fish",
           "orientation": "paren",
+          "plural_ar": "سَمَكٌ",
+          "singular_ar": "سَمَكَةٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "مَاعِزٌ",
-          "plural_ar": "مَعْزٌ",
           "gender": "m",
           "gloss_en": "Goat",
           "orientation": "paren",
+          "plural_ar": "مَعْزٌ",
+          "singular_ar": "مَاعِزٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "حِصَانٌ",
-          "plural_ar": "حُصُنٌ",
           "gender": "m",
           "gloss_en": "Stallion",
           "orientation": "paren",
+          "plural_ar": "حُصُنٌ",
+          "singular_ar": "حِصَانٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "ضَائِنٌ",
-          "plural_ar": "ضَأْنٌ",
           "gender": "m",
           "gloss_en": "Sheep",
           "orientation": "paren",
+          "plural_ar": "ضَأْنٌ",
+          "singular_ar": "ضَائِنٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         }
       ],
@@ -725,78 +695,78 @@
         "entry plural field",
         "surface-form resolution"
       ],
-      "review_status": "needs_review"
+      "review_status": "needs_review",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (6 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 62 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
+      "topic": "plural_pattern"
     },
     {
+      "arabic_label": "وزن فُعُول",
       "concept_id": "sarf:plural:broken_plural_fuʿuul",
       "domain": "sarf",
-      "topic": "plural_pattern",
-      "arabic_label": "وزن فُعُول",
       "english_label": "broken plural fuʿuul",
-      "rule_summary": "Form-pair pattern attested in the vocab corpus (6 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 18 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
         {
-          "singular_ar": "جِسْرٌ",
-          "plural_ar": "جُسُورٌ",
           "gender": "m",
           "gloss_en": "Bridge",
           "orientation": "paren",
+          "plural_ar": "جُسُورٌ",
+          "singular_ar": "جِسْرٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "نَجْمٌ",
-          "plural_ar": "نُجُومٌ",
           "gender": "m",
           "gloss_en": "Star",
           "orientation": "paren",
+          "plural_ar": "نُجُومٌ",
+          "singular_ar": "نَجْمٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "شَمْسٌ",
-          "plural_ar": "شُمُوسٌ",
           "gender": "f",
           "gloss_en": "Sun",
           "orientation": "paren",
+          "plural_ar": "شُمُوسٌ",
+          "singular_ar": "شَمْسٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "خَيْلٌ",
-          "plural_ar": "خُيُولٌ",
           "gender": "m",
           "gloss_en": "Horse",
           "orientation": "paren",
+          "plural_ar": "خُيُولٌ",
+          "singular_ar": "خَيْلٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "بَيْتٌ",
-          "plural_ar": "بُيُوتٌ",
           "gender": "m",
           "gloss_en": "House",
           "orientation": "paren",
+          "plural_ar": "بُيُوتٌ",
+          "singular_ar": "بَيْتٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-5-vocab.jsonl"
         },
         {
-          "singular_ar": "عِلْمٌ",
-          "plural_ar": "عُلُومٌ",
           "gender": "",
           "gloss_en": "Knowledge",
           "orientation": "paren",
+          "plural_ar": "عُلُومٌ",
+          "singular_ar": "عِلْمٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-5-vocab.jsonl"
         },
         {
-          "singular_ar": "إِفْطَارٌ",
-          "plural_ar": "فُطُورٌ",
           "gender": "",
           "gloss_en": "Breakfast / the time of breaking fast",
           "orientation": "paren",
+          "plural_ar": "فُطُورٌ",
+          "singular_ar": "إِفْطَارٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-6-vocab-vocabulary-of-comprehension-lessons.jsonl"
         },
         {
-          "singular_ar": "جَيْبٌ",
-          "plural_ar": "جُيُوبٌ",
           "gender": "m",
           "gloss_en": "Pocket",
           "orientation": "paren",
+          "plural_ar": "جُيُوبٌ",
+          "singular_ar": "جَيْبٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-6-vocab.jsonl"
         }
       ],
@@ -805,78 +775,78 @@
         "entry plural field",
         "surface-form resolution"
       ],
-      "review_status": "needs_review"
+      "review_status": "needs_review",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (6 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 18 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
+      "topic": "plural_pattern"
     },
     {
+      "arabic_label": "جمع تكسير (نمط آخر)",
       "concept_id": "sarf:plural:broken_plural_other",
       "domain": "sarf",
-      "topic": "plural_pattern",
-      "arabic_label": "جمع تكسير (نمط آخر)",
       "english_label": "broken plural other",
-      "rule_summary": "Form-pair pattern attested in the vocab corpus (7 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 135 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
         {
-          "singular_ar": "أَهْلاً",
-          "plural_ar": "وَسَهْلاً",
           "gender": "",
           "gloss_en": "Welcome",
           "orientation": "paren",
+          "plural_ar": "وَسَهْلاً",
+          "singular_ar": "أَهْلاً",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-getting-used-to-arabic.jsonl"
         },
         {
-          "singular_ar": "حَجَرٌ",
-          "plural_ar": "حِجَارَةٌ",
           "gender": "f",
           "gloss_en": "Stone",
           "orientation": "paren",
+          "plural_ar": "حِجَارَةٌ",
+          "singular_ar": "حَجَرٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "شَارِعٌ",
-          "plural_ar": "شَوَارِعُ",
           "gender": "m",
           "gloss_en": "Street",
           "orientation": "paren",
+          "plural_ar": "شَوَارِعُ",
+          "singular_ar": "شَارِعٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "قِطٌّ",
-          "plural_ar": "قِطَطَةٌ",
           "gender": "m",
           "gloss_en": "Cat",
           "orientation": "paren",
+          "plural_ar": "قِطَطَةٌ",
+          "singular_ar": "قِطٌّ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "جَوَابٌ",
-          "plural_ar": "أَجْوِبَةٌ",
           "gender": "m",
           "gloss_en": "Answer",
           "orientation": "paren",
+          "plural_ar": "أَجْوِبَةٌ",
+          "singular_ar": "جَوَابٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "كُرْسِيٌّ",
-          "plural_ar": "كَرَاسِيُّ",
           "gender": "m",
           "gloss_en": "Chair",
           "orientation": "paren",
+          "plural_ar": "كَرَاسِيُّ",
+          "singular_ar": "كُرْسِيٌّ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "مَكْتَبٌ",
-          "plural_ar": "مَكَاتِبُ",
           "gender": "m",
           "gloss_en": "Desk",
           "orientation": "paren",
+          "plural_ar": "مَكَاتِبُ",
+          "singular_ar": "مَكْتَبٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "دَفْتَرٌ",
-          "plural_ar": "دَفَاتِرُ",
           "gender": "m",
           "gloss_en": "Notebook",
           "orientation": "paren",
+          "plural_ar": "دَفَاتِرُ",
+          "singular_ar": "دَفْتَرٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         }
       ],
@@ -885,78 +855,78 @@
         "entry plural field",
         "surface-form resolution"
       ],
-      "review_status": "needs_review"
+      "review_status": "needs_review",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (7 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 135 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
+      "topic": "plural_pattern"
     },
     {
+      "arabic_label": "جمع مؤنث سالم",
       "concept_id": "sarf:plural:sound_feminine_plural",
       "domain": "sarf",
-      "topic": "plural_pattern",
-      "arabic_label": "جمع مؤنث سالم",
       "english_label": "sound feminine plural",
-      "rule_summary": "Form-pair pattern attested in the vocab corpus (6 source decks). Orientation: 123 sound-plural (singular↔plural CERTAIN), 0 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
         {
-          "singular_ar": "سَيَّارَةٌ",
-          "plural_ar": "سَيَّارَاتٌ",
           "gender": "f",
           "gloss_en": "Car",
           "orientation": "sound",
+          "plural_ar": "سَيَّارَاتٌ",
+          "singular_ar": "سَيَّارَةٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "طَالِبَةٌ",
-          "plural_ar": "طَالِبَاتٌ",
           "gender": "f",
           "gloss_en": "Female student",
           "orientation": "sound",
+          "plural_ar": "طَالِبَاتٌ",
+          "singular_ar": "طَالِبَةٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "مُدَرِّسَةٌ",
-          "plural_ar": "مُدَرِّسَاتٌ",
           "gender": "m",
           "gloss_en": "Female teacher",
           "orientation": "sound",
+          "plural_ar": "مُدَرِّسَاتٌ",
+          "singular_ar": "مُدَرِّسَةٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "مُسْلِمَةٌ",
-          "plural_ar": "مُسْلِمَاتٌ",
           "gender": "f",
           "gloss_en": "Muslim woman",
           "orientation": "sound",
+          "plural_ar": "مُسْلِمَاتٌ",
+          "singular_ar": "مُسْلِمَةٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "سَمَاءٌ",
-          "plural_ar": "سَمَاوَاتٌ",
           "gender": "f",
           "gloss_en": "Sky",
           "orientation": "sound",
+          "plural_ar": "سَمَاوَاتٌ",
+          "singular_ar": "سَمَاءٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "طَبِيبَةٌ",
-          "plural_ar": "طَبِيبَاتٌ",
           "gender": "",
           "gloss_en": "Female doctor",
           "orientation": "sound",
+          "plural_ar": "طَبِيبَاتٌ",
+          "singular_ar": "طَبِيبَةٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "فَلَّاحَةٌ",
-          "plural_ar": "فَلَّاحَاتٌ",
           "gender": "f",
           "gloss_en": "Female farmer",
           "orientation": "sound",
+          "plural_ar": "فَلَّاحَاتٌ",
+          "singular_ar": "فَلَّاحَةٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "مُدِيرَةٌ",
-          "plural_ar": "مُدِيرَاتٌ",
           "gender": "f",
           "gloss_en": "Female manager",
           "orientation": "sound",
+          "plural_ar": "مُدِيرَاتٌ",
+          "singular_ar": "مُدِيرَةٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         }
       ],
@@ -965,78 +935,78 @@
         "entry plural field",
         "surface-form resolution"
       ],
-      "review_status": "needs_review"
+      "review_status": "needs_review",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (6 source decks). Orientation: 123 sound-plural (singular↔plural CERTAIN), 0 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
+      "topic": "plural_pattern"
     },
     {
+      "arabic_label": "جمع مذكر سالم",
       "concept_id": "sarf:plural:sound_masculine_plural",
       "domain": "sarf",
-      "topic": "plural_pattern",
-      "arabic_label": "جمع مذكر سالم",
       "english_label": "sound masculine plural",
-      "rule_summary": "Form-pair pattern attested in the vocab corpus (6 source decks). Orientation: 54 sound-plural (singular↔plural CERTAIN), 3 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
         {
-          "singular_ar": "مُسْلِمٌ",
-          "plural_ar": "مُسْلِمُونَ",
           "gender": "m",
           "gloss_en": "Muslim Man",
           "orientation": "sound",
+          "plural_ar": "مُسْلِمُونَ",
+          "singular_ar": "مُسْلِمٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "مُدَرِّسٌ",
-          "plural_ar": "مُدَرِّسُونَ",
           "gender": "m",
           "gloss_en": "Male teacher",
           "orientation": "sound",
+          "plural_ar": "مُدَرِّسُونَ",
+          "singular_ar": "مُدَرِّسٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "فَلَّاحٌ",
-          "plural_ar": "فَلَّاحُونَ",
           "gender": "f",
           "gloss_en": "Male farmer",
           "orientation": "sound",
+          "plural_ar": "فَلَّاحُونَ",
+          "singular_ar": "فَلَّاحٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "مُدِيرٌ",
-          "plural_ar": "مُدِيرُونَ",
           "gender": "m",
           "gloss_en": "Male manager",
           "orientation": "sound",
+          "plural_ar": "مُدِيرُونَ",
+          "singular_ar": "مُدِيرٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "مُؤَذِّنٌ",
-          "plural_ar": "مُؤَذِّنُونَ",
           "gender": "m",
           "gloss_en": "Mu’adhdhin",
           "orientation": "sound",
+          "plural_ar": "مُؤَذِّنُونَ",
+          "singular_ar": "مُؤَذِّنٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "خَيَّاطٌ",
-          "plural_ar": "خَيَّاطُونَ",
           "gender": "f",
           "gloss_en": "Male tailor",
           "orientation": "sound",
+          "plural_ar": "خَيَّاطُونَ",
+          "singular_ar": "خَيَّاطٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "هَاتِي",
-          "plural_ar": "هَاتِينَ",
           "gender": "f",
           "gloss_en": "Give me (f)",
           "orientation": "sound",
+          "plural_ar": "هَاتِينَ",
+          "singular_ar": "هَاتِي",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
-          "singular_ar": "سِكِّينٌ",
-          "plural_ar": "سَكَاكِينُ",
           "gender": "m",
           "gloss_en": "Knife",
           "orientation": "paren",
+          "plural_ar": "سَكَاكِينُ",
+          "singular_ar": "سِكِّينٌ",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-5-vocab.jsonl"
         }
       ],
@@ -1045,39 +1015,39 @@
         "entry plural field",
         "surface-form resolution"
       ],
-      "review_status": "needs_review"
+      "review_status": "needs_review",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (6 source decks). Orientation: 54 sound-plural (singular↔plural CERTAIN), 3 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
+      "topic": "plural_pattern"
     },
     {
+      "arabic_label": "المذكر / المؤنث",
       "concept_id": "sarf:noun-gender",
       "domain": "sarf",
-      "topic": "gender",
-      "arabic_label": "المذكر / المؤنث",
       "english_label": "noun gender",
-      "rule_summary": "Corpus vocab carries explicit gender: 338 masculine, 246 feminine nouns tagged.",
       "examples": [],
       "qamus_relevance": [
         "agreement",
         "ism fāʿil/mafʿūl form choice"
       ],
-      "review_status": "needs_review"
+      "review_status": "needs_review",
+      "rule_summary": "Corpus vocab carries explicit gender: 338 masculine, 246 feminine nouns tagged.",
+      "topic": "gender"
     },
     {
+      "arabic_label": "الحروف / الأدوات",
       "concept_id": "nahw:function-word:particle",
       "domain": "nahw",
-      "topic": "particle",
-      "arabic_label": "الحروف / الأدوات",
       "english_label": "particle inventory (corpus-attested)",
-      "rule_summary": "2 distinct particles attested with English glosses; feed nahw hover/function-word decisions (harakāt-guarded).",
       "examples": [
         {
-          "surface_ar": "مَا",
           "gloss_en": "What?",
-          "source_ref": "apkg-vocab"
+          "source_ref": "apkg-vocab",
+          "surface_ar": "مَا"
         },
         {
-          "surface_ar": "أنْ",
           "gloss_en": "To",
-          "source_ref": "apkg-vocab"
+          "source_ref": "apkg-vocab",
+          "surface_ar": "أنْ"
         }
       ],
       "qamus_relevance": [
@@ -1085,55 +1055,55 @@
         "particle disambiguation",
         "preposition+pronoun rendering"
       ],
-      "review_status": "needs_review"
+      "review_status": "needs_review",
+      "rule_summary": "2 distinct particles attested with English glosses; feed nahw hover/function-word decisions (harakāt-guarded).",
+      "topic": "particle"
     },
     {
+      "arabic_label": "حروف الجر",
       "concept_id": "nahw:function-word:preposition",
       "domain": "nahw",
-      "topic": "preposition",
-      "arabic_label": "حروف الجر",
       "english_label": "preposition inventory (corpus-attested)",
-      "rule_summary": "14 distinct prepositions attested with English glosses; feed nahw hover/function-word decisions (harakāt-guarded).",
       "examples": [
         {
-          "surface_ar": "مَنْ",
           "gloss_en": "Who?",
-          "source_ref": "apkg-vocab"
+          "source_ref": "apkg-vocab",
+          "surface_ar": "مَنْ"
         },
         {
-          "surface_ar": "عَنْ",
           "gloss_en": "about",
-          "source_ref": "apkg-vocab"
+          "source_ref": "apkg-vocab",
+          "surface_ar": "عَنْ"
         },
         {
-          "surface_ar": "لِ",
           "gloss_en": "belongs to/for",
-          "source_ref": "apkg-vocab"
+          "source_ref": "apkg-vocab",
+          "surface_ar": "لِ"
         },
         {
-          "surface_ar": "مِنْ",
           "gloss_en": "from",
-          "source_ref": "apkg-vocab"
+          "source_ref": "apkg-vocab",
+          "surface_ar": "مِنْ"
         },
         {
-          "surface_ar": "فِي",
           "gloss_en": "in",
-          "source_ref": "apkg-vocab"
+          "source_ref": "apkg-vocab",
+          "surface_ar": "فِي"
         },
         {
-          "surface_ar": "عَلَى",
           "gloss_en": "on",
-          "source_ref": "apkg-vocab"
+          "source_ref": "apkg-vocab",
+          "surface_ar": "عَلَى"
         },
         {
-          "surface_ar": "إِلَى",
           "gloss_en": "to",
-          "source_ref": "apkg-vocab"
+          "source_ref": "apkg-vocab",
+          "surface_ar": "إِلَى"
         },
         {
-          "surface_ar": "بِ",
           "gloss_en": "with",
-          "source_ref": "apkg-vocab"
+          "source_ref": "apkg-vocab",
+          "surface_ar": "بِ"
         }
       ],
       "qamus_relevance": [
@@ -1141,30 +1111,30 @@
         "particle disambiguation",
         "preposition+pronoun rendering"
       ],
-      "review_status": "needs_review"
+      "review_status": "needs_review",
+      "rule_summary": "14 distinct prepositions attested with English glosses; feed nahw hover/function-word decisions (harakāt-guarded).",
+      "topic": "preposition"
     },
     {
+      "arabic_label": "الضمائر",
       "concept_id": "nahw:function-word:pronoun",
       "domain": "nahw",
-      "topic": "pronoun",
-      "arabic_label": "الضمائر",
       "english_label": "pronoun inventory (corpus-attested)",
-      "rule_summary": "3 distinct pronouns attested with English glosses; feed nahw hover/function-word decisions (harakāt-guarded).",
       "examples": [
         {
-          "surface_ar": "هُمَا",
           "gloss_en": "The two of them",
-          "source_ref": "apkg-vocab"
+          "source_ref": "apkg-vocab",
+          "surface_ar": "هُمَا"
         },
         {
-          "surface_ar": "أَنْتُمْ",
           "gloss_en": "You (m)",
-          "source_ref": "apkg-vocab"
+          "source_ref": "apkg-vocab",
+          "surface_ar": "أَنْتُمْ"
         },
         {
-          "surface_ar": "أَنْتُمَا",
           "gloss_en": "You two",
-          "source_ref": "apkg-vocab"
+          "source_ref": "apkg-vocab",
+          "surface_ar": "أَنْتُمَا"
         }
       ],
       "qamus_relevance": [
@@ -1172,7 +1142,37 @@
         "particle disambiguation",
         "preposition+pronoun rendering"
       ],
-      "review_status": "needs_review"
+      "review_status": "needs_review",
+      "rule_summary": "3 distinct pronouns attested with English glosses; feed nahw hover/function-word decisions (harakāt-guarded).",
+      "topic": "pronoun"
     }
-  ]
+  ],
+  "schema": "fusha/sarfnahw_knowledge_base@1",
+  "totals": {
+    "apkg_notes_scanned": 1132,
+    "by_domain": {
+      "nahw": 3,
+      "sarf": 25
+    },
+    "by_topic": {
+      "gender": 1,
+      "particle": 1,
+      "plural_pattern": 7,
+      "preposition": 1,
+      "pronoun": 1,
+      "verb_class": 7,
+      "verb_measure": 10
+    },
+    "concepts": 28,
+    "distinct_plural_pairs": 486,
+    "gender_tagged": {
+      "f": 246,
+      "m": 338
+    },
+    "plural_orientation": {
+      "multi": 11,
+      "paren": 298,
+      "sound": 177
+    }
+  }
 }

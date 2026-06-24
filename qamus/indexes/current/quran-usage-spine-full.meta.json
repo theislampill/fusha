@@ -1,0 +1,13 @@
+{
+  "ayat": 3854,
+  "row_schema": [
+    "ayah",
+    "entries",
+    "n_tokens",
+    "resolved",
+    "pending",
+    "tokens"
+  ],
+  "schema": "fusha/quran-usage-spine-full@1",
+  "source_sha": "65797d7d5599fadd"
+}

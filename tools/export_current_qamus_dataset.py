@@ -118,9 +118,11 @@ def sha256_file(p):
     return h.hexdigest()
 
 def jdump(obj, path, **kw):
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(obj, f, ensure_ascii=False, sort_keys=True,
-                  separators=(",", ":"), **kw)
+    # reviewer-facing: pretty (indent=2, sort_keys, ensure_ascii=False, trailing newline) — A1 ergonomics
+    kw.pop("indent", None)
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(obj, f, ensure_ascii=False, sort_keys=True, indent=2, **kw)
+        f.write("\n")
 
 def main():
     ap = argparse.ArgumentParser()

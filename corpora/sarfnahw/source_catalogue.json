@@ -1,54 +1,28 @@
 {
-  "schema": "fusha/source_catalogue@1",
-  "summary": {
-    "total_files": 22,
-    "by_ext": {
-      "pdf": 10,
-      "apkg": 11,
-      "docx": 1
-    },
-    "apkg_notes_total": 1132,
-    "apkg_cards_total": 1132,
-    "apkg_media_total": 694,
-    "pdf_pages_total": 87
-  },
   "files": [
     {
-      "filename": "GrammarProblems.pdf",
       "ext": "pdf",
-      "size_bytes": 1168075,
-      "sha256": "c122585273656546945a61bfc9017ddd7d7e46ab2baebe66e39d946247bb4c1c",
-      "kind": "grammar_eval_paper",
-      "raw_committed": false,
       "extraction_status": "pending",
-      "source_review_status": "needs_review",
+      "filename": "GrammarProblems.pdf",
+      "gitignored_full_output": "corpora/sarfnahw/out/grammar-eval/",
+      "kind": "grammar_eval_paper",
+      "note": "structure/findings summarized (authored); questions/body NOT copied",
       "pages": 73,
       "pdf_text_kind": "text",
-      "topic": "grammar_eval",
+      "raw_committed": false,
       "safe_outputs": [
         "nahw/evals/grammar-problems-matrix.json",
         "nahw/evals/grammar-problems-matrix.md",
         "qamus/reports/grammar-risk-policy.md"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/grammar-eval/",
-      "note": "structure/findings summarized (authored); questions/body NOT copied"
+      "sha256": "c122585273656546945a61bfc9017ddd7d7e46ab2baebe66e39d946247bb4c1c",
+      "size_bytes": 1168075,
+      "source_review_status": "needs_review",
+      "topic": "grammar_eval"
     },
     {
-      "filename": "learn-arabic-with-amau--section-7-getting-used-to-arabic.apkg",
-      "ext": "apkg",
-      "size_bytes": 7654446,
-      "sha256": "da555fd02df03043e07abdfcc8861632148ed836b92ece80fe313af74cb50ce7",
-      "kind": "anki_package",
-      "raw_committed": false,
-      "extraction_status": "pending",
-      "source_review_status": "needs_review",
-      "notes": 34,
       "cards": 34,
-      "models": 1,
-      "decks": 10,
-      "media": 34,
       "db_file": "collection.anki21",
-      "topic": "getting_used_to_arabic",
       "deck_names": [
         "Learn Arabic With AMAU",
         "Learn Arabic With AMAU::AMAU Arabic Section 7: Small Changes…Great Benefits [Getting Used to Arabic]",
@@ -60,31 +34,31 @@
         "Learn Arabic With AMAU::AMAU Arabic Section 7: Small Changes…Great Benefits [Getting Used to Arabic]::Getting Used to Arabic 23",
         "Learn Arabic With AMAU::AMAU Arabic Section 7: Small Changes…Great Benefits [Getting Used to Arabic]::Getting Used to Arabic 24"
       ],
+      "decks": 10,
+      "ext": "apkg",
+      "extraction_status": "pending",
+      "filename": "learn-arabic-with-amau--section-7-getting-used-to-arabic.apkg",
+      "gitignored_full_output": "corpora/sarfnahw/out/apkg/",
+      "kind": "anki_package",
+      "media": 34,
       "model_names": [
         "[Audio] - Arabic GUTA Template"
       ],
+      "models": 1,
+      "notes": 34,
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/apkg_catalogue.json",
         "corpora/sarfnahw/apkg_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/apkg/"
+      "sha256": "da555fd02df03043e07abdfcc8861632148ed836b92ece80fe313af74cb50ce7",
+      "size_bytes": 7654446,
+      "source_review_status": "needs_review",
+      "topic": "getting_used_to_arabic"
     },
     {
-      "filename": "learn-arabic-with-amau__amau-arabic-section-4_-getting-used-to-arabic.apkg",
-      "ext": "apkg",
-      "size_bytes": 1351701,
-      "sha256": "865f817e0dab8ecd9127b2c1089e9365a6f5e883ebfa048a6f1a7cc90cb3cdcb",
-      "kind": "anki_package",
-      "raw_committed": false,
-      "extraction_status": "pending",
-      "source_review_status": "needs_review",
-      "notes": 25,
       "cards": 25,
-      "models": 1,
-      "decks": 8,
-      "media": 25,
       "db_file": "collection.anki21",
-      "topic": "mixed:nahw+getting_used_to_arabic",
       "deck_names": [
         "Learn Arabic With AMAU",
         "Learn Arabic With AMAU::AMAU Arabic Section 4: Getting Used to Arabic",
@@ -94,31 +68,31 @@
         "Learn Arabic With AMAU::AMAU Arabic Section 4: Getting Used to Arabic::Sentences Lesson 4",
         "Learn Arabic With AMAU::AMAU Arabic Section 4: Getting Used to Arabic::Sentences Lesson 5"
       ],
+      "decks": 8,
+      "ext": "apkg",
+      "extraction_status": "pending",
+      "filename": "learn-arabic-with-amau__amau-arabic-section-4_-getting-used-to-arabic.apkg",
+      "gitignored_full_output": "corpora/sarfnahw/out/apkg/",
+      "kind": "anki_package",
+      "media": 25,
       "model_names": [
         "[Audio] - Arabic GUTA Template"
       ],
+      "models": 1,
+      "notes": 25,
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/apkg_catalogue.json",
         "corpora/sarfnahw/apkg_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/apkg/"
+      "sha256": "865f817e0dab8ecd9127b2c1089e9365a6f5e883ebfa048a6f1a7cc90cb3cdcb",
+      "size_bytes": 1351701,
+      "source_review_status": "needs_review",
+      "topic": "mixed:nahw+getting_used_to_arabic"
     },
     {
-      "filename": "learn-arabic-with-amau__amau-arabic-section-4_-vocab.apkg",
-      "ext": "apkg",
-      "size_bytes": 11333274,
-      "sha256": "bf8cc94dea5b73556574b64643f0d5b241fc2694a98950681c77321269d3aa27",
-      "kind": "anki_package",
-      "raw_committed": false,
-      "extraction_status": "pending",
-      "source_review_status": "needs_review",
-      "notes": 113,
       "cards": 113,
-      "models": 6,
-      "decks": 12,
-      "media": 75,
       "db_file": "collection.anki21",
-      "topic": "vocabulary",
       "deck_names": [
         "Learn Arabic With AMAU",
         "Learn Arabic With AMAU::AMAU Arabic Section 4: Vocab",
@@ -132,6 +106,13 @@
         "Learn Arabic With AMAU::AMAU Arabic Section 4: Vocab::Vocab Lesson 8: Animals",
         "Learn Arabic With AMAU::AMAU Arabic Section 4: Vocab::Vocab Lesson 9: In the Classroom"
       ],
+      "decks": 12,
+      "ext": "apkg",
+      "extraction_status": "pending",
+      "filename": "learn-arabic-with-amau__amau-arabic-section-4_-vocab.apkg",
+      "gitignored_full_output": "corpora/sarfnahw/out/apkg/",
+      "kind": "anki_package",
+      "media": 75,
       "model_names": [
         "[Image:Female] - Arabic Vocab Template",
         "[Image:Male] - Arabic Vocab Template",
@@ -140,28 +121,21 @@
         "[No Image:Male] - Arabic Vocab Template+",
         "[No Image] - Arabic Vocab Template+++++"
       ],
+      "models": 6,
+      "notes": 113,
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/apkg_catalogue.json",
         "corpora/sarfnahw/apkg_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/apkg/"
+      "sha256": "bf8cc94dea5b73556574b64643f0d5b241fc2694a98950681c77321269d3aa27",
+      "size_bytes": 11333274,
+      "source_review_status": "needs_review",
+      "topic": "vocabulary"
     },
     {
-      "filename": "learn-arabic-with-amau__amau-arabic-section-5_-getting-used-to-arabic.apkg",
-      "ext": "apkg",
-      "size_bytes": 29275499,
-      "sha256": "d3c2ad4ef0bb7a7bfae1fe98cb3a08398c7b49456acb5960e9e28511a30c450b",
-      "kind": "anki_package",
-      "raw_committed": false,
-      "extraction_status": "pending",
-      "source_review_status": "needs_review",
-      "notes": 25,
       "cards": 25,
-      "models": 1,
-      "decks": 8,
-      "media": 25,
       "db_file": "collection.anki21",
-      "topic": "mixed:nahw+getting_used_to_arabic",
       "deck_names": [
         "Learn Arabic With AMAU",
         "Learn Arabic With AMAU::AMAU Arabic Section 5: Getting Used to Arabic",
@@ -171,31 +145,31 @@
         "Learn Arabic With AMAU::AMAU Arabic Section 5: Getting Used to Arabic::​Sentences Lesson 9",
         "Learn Arabic With AMAU::AMAU Arabic Section 5: Getting Used to Arabic::​​Sentences Lesson 10"
       ],
+      "decks": 8,
+      "ext": "apkg",
+      "extraction_status": "pending",
+      "filename": "learn-arabic-with-amau__amau-arabic-section-5_-getting-used-to-arabic.apkg",
+      "gitignored_full_output": "corpora/sarfnahw/out/apkg/",
+      "kind": "anki_package",
+      "media": 25,
       "model_names": [
         "[Audio] - Arabic GUTA Template"
       ],
+      "models": 1,
+      "notes": 25,
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/apkg_catalogue.json",
         "corpora/sarfnahw/apkg_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/apkg/"
+      "sha256": "d3c2ad4ef0bb7a7bfae1fe98cb3a08398c7b49456acb5960e9e28511a30c450b",
+      "size_bytes": 29275499,
+      "source_review_status": "needs_review",
+      "topic": "mixed:nahw+getting_used_to_arabic"
     },
     {
-      "filename": "learn-arabic-with-amau__amau-arabic-section-5_-vocab.apkg",
-      "ext": "apkg",
-      "size_bytes": 8775130,
-      "sha256": "00885f171b37a938c26e6bbcf8b416b0ba35934c1bf0bd5b40cef7c1f18d2caf",
-      "kind": "anki_package",
-      "raw_committed": false,
-      "extraction_status": "pending",
-      "source_review_status": "needs_review",
-      "notes": 171,
       "cards": 171,
-      "models": 4,
-      "decks": 12,
-      "media": 72,
       "db_file": "collection.anki21",
-      "topic": "vocabulary",
       "deck_names": [
         "Learn Arabic With AMAU",
         "Learn Arabic With AMAU::AMAU Arabic Section 5: Vocab",
@@ -209,34 +183,34 @@
         "Learn Arabic With AMAU::AMAU Arabic Section 5: Vocab::Vocab Lesson 17a: Verbal Nouns",
         "Learn Arabic With AMAU::AMAU Arabic Section 5: Vocab::Vocab Lesson 17b: Those Who Do the Action"
       ],
+      "decks": 12,
+      "ext": "apkg",
+      "extraction_status": "pending",
+      "filename": "learn-arabic-with-amau__amau-arabic-section-5_-vocab.apkg",
+      "gitignored_full_output": "corpora/sarfnahw/out/apkg/",
+      "kind": "anki_package",
+      "media": 72,
       "model_names": [
         "[Image:Female] - Arabic Vocab Template",
         "[Image:Male] - Arabic Vocab Template",
         "[Image] - Arabic Vocab Template+",
         "[No Image] - Arabic Vocab Template+++++"
       ],
+      "models": 4,
+      "notes": 171,
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/apkg_catalogue.json",
         "corpora/sarfnahw/apkg_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/apkg/"
+      "sha256": "00885f171b37a938c26e6bbcf8b416b0ba35934c1bf0bd5b40cef7c1f18d2caf",
+      "size_bytes": 8775130,
+      "source_review_status": "needs_review",
+      "topic": "vocabulary"
     },
     {
-      "filename": "learn-arabic-with-amau__amau-arabic-section-6_-getting-used-to-arabic.apkg",
-      "ext": "apkg",
-      "size_bytes": 16543569,
-      "sha256": "36c06f103dfaddc0b10b9eaad5e5554ce22ad245f226dd6c4eb90c74f9a57222",
-      "kind": "anki_package",
-      "raw_committed": false,
-      "extraction_status": "pending",
-      "source_review_status": "needs_review",
-      "notes": 35,
       "cards": 35,
-      "models": 1,
-      "decks": 10,
-      "media": 35,
       "db_file": "collection.anki21",
-      "topic": "getting_used_to_arabic",
       "deck_names": [
         "Learn Arabic With AMAU",
         "Learn Arabic With AMAU::AMAU Arabic Section 6: Getting Used to Arabic",
@@ -248,31 +222,31 @@
         "Learn Arabic With AMAU::AMAU Arabic Section 6: Getting Used to Arabic::Getting Used to Arabic 16",
         "Learn Arabic With AMAU::AMAU Arabic Section 6: Getting Used to Arabic::Getting Used to Arabic 17"
       ],
+      "decks": 10,
+      "ext": "apkg",
+      "extraction_status": "pending",
+      "filename": "learn-arabic-with-amau__amau-arabic-section-6_-getting-used-to-arabic.apkg",
+      "gitignored_full_output": "corpora/sarfnahw/out/apkg/",
+      "kind": "anki_package",
+      "media": 35,
       "model_names": [
         "[Audio] - Arabic GUTA Template"
       ],
+      "models": 1,
+      "notes": 35,
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/apkg_catalogue.json",
         "corpora/sarfnahw/apkg_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/apkg/"
+      "sha256": "36c06f103dfaddc0b10b9eaad5e5554ce22ad245f226dd6c4eb90c74f9a57222",
+      "size_bytes": 16543569,
+      "source_review_status": "needs_review",
+      "topic": "getting_used_to_arabic"
     },
     {
-      "filename": "learn-arabic-with-amau__amau-arabic-section-6_-vocab.apkg",
-      "ext": "apkg",
-      "size_bytes": 24954398,
-      "sha256": "a6f56c709ae67d7288476735fdacbc0926721bfd4145532a24309ebeeea942f5",
-      "kind": "anki_package",
-      "raw_committed": false,
-      "extraction_status": "pending",
-      "source_review_status": "needs_review",
-      "notes": 248,
       "cards": 248,
-      "models": 5,
-      "decks": 14,
-      "media": 168,
       "db_file": "collection.anki21",
-      "topic": "vocabulary",
       "deck_names": [
         "Learn Arabic With AMAU",
         "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab",
@@ -287,6 +261,13 @@
         "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Lesson 26 You've Got Mail",
         "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Lesson 27 Common Opposites part ii"
       ],
+      "decks": 14,
+      "ext": "apkg",
+      "extraction_status": "pending",
+      "filename": "learn-arabic-with-amau__amau-arabic-section-6_-vocab.apkg",
+      "gitignored_full_output": "corpora/sarfnahw/out/apkg/",
+      "kind": "anki_package",
+      "media": 168,
       "model_names": [
         "[Image:Female] - Arabic Vocab Template",
         "[Image:Male] - Arabic Vocab Template",
@@ -294,61 +275,54 @@
         "[Image] - Arabic Vocab Template+",
         "[No Image] - Arabic Vocab Template+++++"
       ],
+      "models": 5,
+      "notes": 248,
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/apkg_catalogue.json",
         "corpora/sarfnahw/apkg_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/apkg/"
+      "sha256": "a6f56c709ae67d7288476735fdacbc0926721bfd4145532a24309ebeeea942f5",
+      "size_bytes": 24954398,
+      "source_review_status": "needs_review",
+      "topic": "vocabulary"
     },
     {
-      "filename": "learn-arabic-with-amau__amau-arabic-section-6_-vocab__vocabulary-of-comprehension-lessons.apkg",
-      "ext": "apkg",
-      "size_bytes": 12260462,
-      "sha256": "055331a4ca5432829b817a6943af899f092024db29a85aa8f4b127ace3a199ff",
-      "kind": "anki_package",
-      "raw_committed": false,
-      "extraction_status": "pending",
-      "source_review_status": "needs_review",
-      "notes": 108,
       "cards": 108,
-      "models": 4,
-      "decks": 4,
-      "media": 83,
       "db_file": "collection.anki21",
-      "topic": "vocabulary",
       "deck_names": [
         "Learn Arabic With AMAU",
         "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab",
         "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Of Comprehension Lessons"
       ],
+      "decks": 4,
+      "ext": "apkg",
+      "extraction_status": "pending",
+      "filename": "learn-arabic-with-amau__amau-arabic-section-6_-vocab__vocabulary-of-comprehension-lessons.apkg",
+      "gitignored_full_output": "corpora/sarfnahw/out/apkg/",
+      "kind": "anki_package",
+      "media": 83,
       "model_names": [
         "[Image:Female] - Arabic Vocab Template",
         "[Image:Male] - Arabic Vocab Template",
         "[Image] - Arabic Vocab Template+",
         "[No Image] - Arabic Vocab Template+++++"
       ],
+      "models": 4,
+      "notes": 108,
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/apkg_catalogue.json",
         "corpora/sarfnahw/apkg_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/apkg/"
+      "sha256": "055331a4ca5432829b817a6943af899f092024db29a85aa8f4b127ace3a199ff",
+      "size_bytes": 12260462,
+      "source_review_status": "needs_review",
+      "topic": "vocabulary"
     },
     {
-      "filename": "learn-arabic-with-amau__amau-arabic-section-7_-vocab.apkg",
-      "ext": "apkg",
-      "size_bytes": 15289283,
-      "sha256": "bffbf80d37d98ddb0a2e9d6fe753496c23cf708619706ad0407844e61cf2d335",
-      "kind": "anki_package",
-      "raw_committed": false,
-      "extraction_status": "pending",
-      "source_review_status": "needs_review",
-      "notes": 152,
       "cards": 152,
-      "models": 6,
-      "decks": 11,
-      "media": 71,
       "db_file": "collection.anki21",
-      "topic": "vocabulary",
       "deck_names": [
         "Learn Arabic With AMAU",
         "Learn Arabic With AMAU::AMAU Arabic Section 7: Vocab",
@@ -361,6 +335,13 @@
         "Learn Arabic With AMAU::AMAU Arabic Section 7: Vocab::Vocabulary Lesson 35: Car Parts",
         "Learn Arabic With AMAU::AMAU Arabic Section 7: Vocab::Vocabulary Lesson 36: Insects"
       ],
+      "decks": 11,
+      "ext": "apkg",
+      "extraction_status": "pending",
+      "filename": "learn-arabic-with-amau__amau-arabic-section-7_-vocab.apkg",
+      "gitignored_full_output": "corpora/sarfnahw/out/apkg/",
+      "kind": "anki_package",
+      "media": 71,
       "model_names": [
         "[Image:Female] - Arabic Vocab Template",
         "[Image:Male] - Arabic Vocab Template",
@@ -369,28 +350,21 @@
         "[No Image:Male] - Arabic Vocab Template+",
         "[No Image] - Arabic Vocab Template++++++"
       ],
+      "models": 6,
+      "notes": 152,
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/apkg_catalogue.json",
         "corpora/sarfnahw/apkg_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/apkg/"
+      "sha256": "bffbf80d37d98ddb0a2e9d6fe753496c23cf708619706ad0407844e61cf2d335",
+      "size_bytes": 15289283,
+      "source_review_status": "needs_review",
+      "topic": "vocabulary"
     },
     {
-      "filename": "learn-arabic-with-amau__amau-arabic-section-8_-getting-used-to-arabic.apkg",
-      "ext": "apkg",
-      "size_bytes": 7899851,
-      "sha256": "4000ea798eaacd1e2db990b7aa98c1eb6aedf2925abc9fe9fe8db0c895c92990",
-      "kind": "anki_package",
-      "raw_committed": false,
-      "extraction_status": "pending",
-      "source_review_status": "needs_review",
-      "notes": 49,
       "cards": 49,
-      "models": 1,
-      "decks": 10,
-      "media": 49,
       "db_file": "collection.anki21",
-      "topic": "getting_used_to_arabic",
       "deck_names": [
         "Learn Arabic With AMAU",
         "Learn Arabic With AMAU::AMAU Arabic Section 8: Getting Used to Arabic",
@@ -402,31 +376,31 @@
         "Learn Arabic With AMAU::AMAU Arabic Section 8: Getting Used to Arabic::Getting Used to Arabic 30",
         "Learn Arabic With AMAU::AMAU Arabic Section 8: Getting Used to Arabic::Getting Used to Arabic 31"
       ],
+      "decks": 10,
+      "ext": "apkg",
+      "extraction_status": "pending",
+      "filename": "learn-arabic-with-amau__amau-arabic-section-8_-getting-used-to-arabic.apkg",
+      "gitignored_full_output": "corpora/sarfnahw/out/apkg/",
+      "kind": "anki_package",
+      "media": 49,
       "model_names": [
         "[Audio] - Arabic GUTA Template"
       ],
+      "models": 1,
+      "notes": 49,
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/apkg_catalogue.json",
         "corpora/sarfnahw/apkg_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/apkg/"
+      "sha256": "4000ea798eaacd1e2db990b7aa98c1eb6aedf2925abc9fe9fe8db0c895c92990",
+      "size_bytes": 7899851,
+      "source_review_status": "needs_review",
+      "topic": "getting_used_to_arabic"
     },
     {
-      "filename": "learn-arabic-with-amau__amau-arabic-section-8_-vocab.apkg",
-      "ext": "apkg",
-      "size_bytes": 5160828,
-      "sha256": "ab5e622852e462e11fd429fc23fd105f7d7979d39d0efcf177716136f6e59383",
-      "kind": "anki_package",
-      "raw_committed": false,
-      "extraction_status": "pending",
-      "source_review_status": "needs_review",
-      "notes": 172,
       "cards": 172,
-      "models": 8,
-      "decks": 9,
-      "media": 57,
       "db_file": "collection.anki21",
-      "topic": "vocabulary",
       "deck_names": [
         "Learn Arabic With AMAU",
         "Learn Arabic With AMAU::AMAU Arabic Section 8: Vocab",
@@ -437,6 +411,13 @@
         "Learn Arabic With AMAU::AMAU Arabic Section 8: Vocab::Vocabulary Lesson 41: In the Kitchen I",
         "Learn Arabic With AMAU::AMAU Arabic Section 8: Vocab::Vocabulary Lesson 42: In the Kitchen II"
       ],
+      "decks": 9,
+      "ext": "apkg",
+      "extraction_status": "pending",
+      "filename": "learn-arabic-with-amau__amau-arabic-section-8_-vocab.apkg",
+      "gitignored_full_output": "corpora/sarfnahw/out/apkg/",
+      "kind": "anki_package",
+      "media": 57,
       "model_names": [
         "[Image:Female] - Arabic Vocab Template",
         "[Image:Male] - Arabic Vocab Template",
@@ -447,191 +428,210 @@
         "[No Image:Male] - Arabic Vocab Template+",
         "[No Image] - Arabic Vocab Template+++++"
       ],
+      "models": 8,
+      "notes": 172,
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/apkg_catalogue.json",
         "corpora/sarfnahw/apkg_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/apkg/"
+      "sha256": "ab5e622852e462e11fd429fc23fd105f7d7979d39d0efcf177716136f6e59383",
+      "size_bytes": 5160828,
+      "source_review_status": "needs_review",
+      "topic": "vocabulary"
     },
     {
-      "filename": "set-of-9-important-arabic-verb-charts_1.pdf",
       "ext": "pdf",
-      "size_bytes": 67492,
-      "sha256": "7f0a88f372406889a0d19be5ef016775e2bce59f8bc8fb22b53e3379f5d9766e",
-      "kind": "pdf",
-      "raw_committed": false,
       "extraction_status": "pending",
-      "source_review_status": "needs_review",
+      "filename": "set-of-9-important-arabic-verb-charts_1.pdf",
+      "gitignored_full_output": "corpora/sarfnahw/out/pdf/",
+      "kind": "pdf",
       "pages": 2,
       "pdf_text_kind": "text",
-      "topic": "verb_charts",
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/pdf_catalogue.json",
         "corpora/sarfnahw/pdf_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/pdf/"
+      "sha256": "7f0a88f372406889a0d19be5ef016775e2bce59f8bc8fb22b53e3379f5d9766e",
+      "size_bytes": 67492,
+      "source_review_status": "needs_review",
+      "topic": "verb_charts"
     },
     {
+      "ext": "pdf",
+      "extraction_status": "pending",
       "filename": "set-of-9-important-arabic-verb-charts_2.pdf",
-      "ext": "pdf",
-      "size_bytes": 69553,
+      "gitignored_full_output": "corpora/sarfnahw/out/pdf/",
+      "kind": "pdf",
+      "pages": 1,
+      "pdf_text_kind": "text",
+      "raw_committed": false,
+      "safe_outputs": [
+        "corpora/sarfnahw/pdf_catalogue.json",
+        "corpora/sarfnahw/pdf_samples.jsonl"
+      ],
       "sha256": "516a655c08410a98cb418b3c4832e8a7911ef9a8b5f658f37a53fb101323d709",
-      "kind": "pdf",
-      "raw_committed": false,
-      "extraction_status": "pending",
+      "size_bytes": 69553,
       "source_review_status": "needs_review",
-      "pages": 1,
-      "pdf_text_kind": "text",
-      "topic": "verb_charts",
-      "safe_outputs": [
-        "corpora/sarfnahw/pdf_catalogue.json",
-        "corpora/sarfnahw/pdf_samples.jsonl"
-      ],
-      "gitignored_full_output": "corpora/sarfnahw/out/pdf/"
+      "topic": "verb_charts"
     },
     {
+      "ext": "pdf",
+      "extraction_status": "pending",
       "filename": "set-of-9-important-arabic-verb-charts_3.pdf",
-      "ext": "pdf",
-      "size_bytes": 90542,
+      "gitignored_full_output": "corpora/sarfnahw/out/pdf/",
+      "kind": "pdf",
+      "pages": 3,
+      "pdf_text_kind": "text",
+      "raw_committed": false,
+      "safe_outputs": [
+        "corpora/sarfnahw/pdf_catalogue.json",
+        "corpora/sarfnahw/pdf_samples.jsonl"
+      ],
       "sha256": "cf681f9f9bfd7410b1c702e8c1b06c21be1ed5a6011e28f01450d57626b62881",
-      "kind": "pdf",
-      "raw_committed": false,
-      "extraction_status": "pending",
+      "size_bytes": 90542,
       "source_review_status": "needs_review",
-      "pages": 3,
-      "pdf_text_kind": "text",
-      "topic": "verb_charts",
-      "safe_outputs": [
-        "corpora/sarfnahw/pdf_catalogue.json",
-        "corpora/sarfnahw/pdf_samples.jsonl"
-      ],
-      "gitignored_full_output": "corpora/sarfnahw/out/pdf/"
+      "topic": "verb_charts"
     },
     {
+      "ext": "pdf",
+      "extraction_status": "pending",
       "filename": "set-of-9-important-arabic-verb-charts_4.pdf",
-      "ext": "pdf",
-      "size_bytes": 58332,
-      "sha256": "4f99ab0f1bc28624644991a47315c0388a790c59643831bab2a2e0adc96b20ce",
+      "gitignored_full_output": "corpora/sarfnahw/out/pdf/",
       "kind": "pdf",
-      "raw_committed": false,
-      "extraction_status": "pending",
-      "source_review_status": "needs_review",
       "pages": 1,
       "pdf_text_kind": "text",
-      "topic": "verb_charts",
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/pdf_catalogue.json",
         "corpora/sarfnahw/pdf_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/pdf/"
+      "sha256": "4f99ab0f1bc28624644991a47315c0388a790c59643831bab2a2e0adc96b20ce",
+      "size_bytes": 58332,
+      "source_review_status": "needs_review",
+      "topic": "verb_charts"
     },
     {
-      "filename": "set-of-9-important-arabic-verb-charts_5.pdf",
       "ext": "pdf",
-      "size_bytes": 79237,
-      "sha256": "d12495a172d7d1545be4131d60d352b9ea8389a000cf0d1f287ecbb08b7df0e0",
-      "kind": "pdf",
-      "raw_committed": false,
       "extraction_status": "pending",
-      "source_review_status": "needs_review",
+      "filename": "set-of-9-important-arabic-verb-charts_5.pdf",
+      "gitignored_full_output": "corpora/sarfnahw/out/pdf/",
+      "kind": "pdf",
       "pages": 3,
       "pdf_text_kind": "text",
-      "topic": "verb_charts",
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/pdf_catalogue.json",
         "corpora/sarfnahw/pdf_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/pdf/"
+      "sha256": "d12495a172d7d1545be4131d60d352b9ea8389a000cf0d1f287ecbb08b7df0e0",
+      "size_bytes": 79237,
+      "source_review_status": "needs_review",
+      "topic": "verb_charts"
     },
     {
+      "ext": "pdf",
+      "extraction_status": "pending",
       "filename": "set-of-9-important-arabic-verb-charts_6.pdf",
-      "ext": "pdf",
-      "size_bytes": 48684,
+      "gitignored_full_output": "corpora/sarfnahw/out/pdf/",
+      "kind": "pdf",
+      "pages": 1,
+      "pdf_text_kind": "text",
+      "raw_committed": false,
+      "safe_outputs": [
+        "corpora/sarfnahw/pdf_catalogue.json",
+        "corpora/sarfnahw/pdf_samples.jsonl"
+      ],
       "sha256": "fcf0332a71df7f3dc0c5d13d1b1614dc5ecb711530045270aea87af30af60351",
-      "kind": "pdf",
-      "raw_committed": false,
-      "extraction_status": "pending",
+      "size_bytes": 48684,
       "source_review_status": "needs_review",
-      "pages": 1,
-      "pdf_text_kind": "text",
-      "topic": "verb_charts",
-      "safe_outputs": [
-        "corpora/sarfnahw/pdf_catalogue.json",
-        "corpora/sarfnahw/pdf_samples.jsonl"
-      ],
-      "gitignored_full_output": "corpora/sarfnahw/out/pdf/"
+      "topic": "verb_charts"
     },
     {
+      "ext": "pdf",
+      "extraction_status": "pending",
       "filename": "set-of-9-important-arabic-verb-charts_7.pdf",
-      "ext": "pdf",
-      "size_bytes": 40150,
+      "gitignored_full_output": "corpora/sarfnahw/out/pdf/",
+      "kind": "pdf",
+      "pages": 1,
+      "pdf_text_kind": "text",
+      "raw_committed": false,
+      "safe_outputs": [
+        "corpora/sarfnahw/pdf_catalogue.json",
+        "corpora/sarfnahw/pdf_samples.jsonl"
+      ],
       "sha256": "31b812eab5b93f66f9f5fd32cf5bc28c7d6b23527397acacbc08d963adcdb8f3",
-      "kind": "pdf",
-      "raw_committed": false,
-      "extraction_status": "pending",
+      "size_bytes": 40150,
       "source_review_status": "needs_review",
-      "pages": 1,
-      "pdf_text_kind": "text",
-      "topic": "verb_charts",
-      "safe_outputs": [
-        "corpora/sarfnahw/pdf_catalogue.json",
-        "corpora/sarfnahw/pdf_samples.jsonl"
-      ],
-      "gitignored_full_output": "corpora/sarfnahw/out/pdf/"
+      "topic": "verb_charts"
     },
     {
+      "ext": "pdf",
+      "extraction_status": "pending",
       "filename": "set-of-9-important-arabic-verb-charts_8.pdf",
-      "ext": "pdf",
-      "size_bytes": 47577,
+      "gitignored_full_output": "corpora/sarfnahw/out/pdf/",
+      "kind": "pdf",
+      "pages": 1,
+      "pdf_text_kind": "text",
+      "raw_committed": false,
+      "safe_outputs": [
+        "corpora/sarfnahw/pdf_catalogue.json",
+        "corpora/sarfnahw/pdf_samples.jsonl"
+      ],
       "sha256": "8d89df5a1e76e437e90fc23bf89798057ece27cf6fe114d30381964f9ba4b270",
-      "kind": "pdf",
-      "raw_committed": false,
-      "extraction_status": "pending",
+      "size_bytes": 47577,
       "source_review_status": "needs_review",
-      "pages": 1,
-      "pdf_text_kind": "text",
-      "topic": "verb_charts",
-      "safe_outputs": [
-        "corpora/sarfnahw/pdf_catalogue.json",
-        "corpora/sarfnahw/pdf_samples.jsonl"
-      ],
-      "gitignored_full_output": "corpora/sarfnahw/out/pdf/"
+      "topic": "verb_charts"
     },
     {
-      "filename": "set-of-9-important-arabic-verb-charts_9.pdf",
       "ext": "pdf",
-      "size_bytes": 50247,
-      "sha256": "3a10e2603936dac1eb3ffd91b0311d0a86cd55ddddf4d0a2ef437d4cb8a0d7b1",
-      "kind": "pdf",
-      "raw_committed": false,
       "extraction_status": "pending",
-      "source_review_status": "needs_review",
+      "filename": "set-of-9-important-arabic-verb-charts_9.pdf",
+      "gitignored_full_output": "corpora/sarfnahw/out/pdf/",
+      "kind": "pdf",
       "pages": 1,
       "pdf_text_kind": "text",
-      "topic": "verb_charts",
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/pdf_catalogue.json",
         "corpora/sarfnahw/pdf_samples.jsonl"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/pdf/"
+      "sha256": "3a10e2603936dac1eb3ffd91b0311d0a86cd55ddddf4d0a2ef437d4cb8a0d7b1",
+      "size_bytes": 50247,
+      "source_review_status": "needs_review",
+      "topic": "verb_charts"
     },
     {
-      "filename": "verb-tables-supplement--r21.docx",
-      "ext": "docx",
-      "size_bytes": 2139752,
-      "sha256": "af016379dd8863a7a30b3a1c4da9eaee00e8ef324bcb53e6b9ec0c0df3477731",
-      "kind": "docx",
-      "raw_committed": false,
-      "extraction_status": "pending",
-      "source_review_status": "needs_review",
-      "paragraphs": 40,
-      "tables": 0,
       "blocked": null,
-      "topic": "verb_charts",
+      "ext": "docx",
+      "extraction_status": "pending",
+      "filename": "verb-tables-supplement--r21.docx",
+      "gitignored_full_output": "corpora/sarfnahw/out/docx/",
+      "kind": "docx",
+      "paragraphs": 40,
+      "raw_committed": false,
       "safe_outputs": [
         "corpora/sarfnahw/pdf_catalogue.json (docx folded in)"
       ],
-      "gitignored_full_output": "corpora/sarfnahw/out/docx/"
+      "sha256": "af016379dd8863a7a30b3a1c4da9eaee00e8ef324bcb53e6b9ec0c0df3477731",
+      "size_bytes": 2139752,
+      "source_review_status": "needs_review",
+      "tables": 0,
+      "topic": "verb_charts"
     }
-  ]
+  ],
+  "schema": "fusha/source_catalogue@1",
+  "summary": {
+    "apkg_cards_total": 1132,
+    "apkg_media_total": 694,
+    "apkg_notes_total": 1132,
+    "by_ext": {
+      "apkg": 11,
+      "docx": 1,
+      "pdf": 10
+    },
+    "pdf_pages_total": 87,
+    "total_files": 22
+  }
 }

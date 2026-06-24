@@ -1,23 +1,23 @@
 {
- "name": "tafsir_mcp",
- "title": "Tafsir MCP",
- "evidence_role": [
-  "irab",
-  "morphology",
-  "root",
-  "pos",
-  "qiraat",
-  "tafsir",
-  "quran_text"
- ],
- "access": {
-  "kind": "mcp",
-  "endpoint_env": "TAFSIR_MCP_URL",
-  "tool": "tools/tafsir_mcp_client.py"
- },
- "availability": "available",
- "public_exposable": false,
- "required_by_skills": false,
- "ladder_rank": 3,
- "notes": "Quran grammar/morphology + iʿrāb. Build tool; reached via direct HTTP. NEVER named in SKILL.md."
+  "access": {
+    "endpoint_env": "TAFSIR_MCP_URL",
+    "kind": "mcp",
+    "tool": "tools/tafsir_mcp_client.py"
+  },
+  "availability": "available",
+  "evidence_role": [
+    "irab",
+    "morphology",
+    "root",
+    "pos",
+    "qiraat",
+    "tafsir",
+    "quran_text"
+  ],
+  "ladder_rank": 3,
+  "name": "tafsir_mcp",
+  "notes": "Quran grammar/morphology + iʿrāb. Build tool; reached via direct HTTP. NEVER named in SKILL.md.",
+  "public_exposable": false,
+  "required_by_skills": false,
+  "title": "Tafsir MCP"
 }

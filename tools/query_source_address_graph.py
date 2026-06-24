@@ -35,6 +35,13 @@ def norm_strict(s):
     return "".join(out).replace("آ","ا").replace("ٱ","ا").replace("ى","ي").replace("ة","ه").replace(" ","")
 
 def L(name): return json.load(open(os.path.join(IDX,name),encoding="utf-8"))
+def Lj(name, key):
+    d={}
+    for line in open(os.path.join(IDX,name),encoding="utf-8"):
+        line=line.strip()
+        if line:
+            r=json.loads(line); d[r[key]]=r
+    return d
 
 def main():
     ap=argparse.ArgumentParser()
@@ -46,13 +53,13 @@ def main():
     ap.add_argument("--limit",type=int,default=20)
     a=ap.parse_args(); out=None
     if a.token:  # Q1
-        spine=L("quran-usage-spine-full.json")["spine"]
+        spine=Lj("quran-usage-spine-full.jsonl","ayah")
         sa=":".join(a.token.split(":")[:2]); w=int(a.token.split(":")[2])
         v=spine.get(sa,{}); tok=next((t for t in v.get("tokens",[]) if t["w"]==w),None)
         out={"token":a.token,"supporting_entries":v.get("entries",[]),"token_state":tok}
     elif a.entry and a.dependents:  # Q2
-        sa_full=L("source-address-full.json")["addresses"]
-        spine=L("quran-usage-spine-full.json")["spine"]
+        sa_full=Lj("source-address-full.jsonl","address")
+        spine=Lj("quran-usage-spine-full.jsonl","ayah")
         ayat=[k.split("#usage=")[1] for k in sa_full if k.startswith(f"qamus:{a.entry}#usage=")]
         deps=[]
         for sa in ayat:
@@ -60,15 +67,15 @@ def main():
                 if t["state"]=="resolved": deps.append({"loc":f"{sa}:{t['w']}","gloss":t["gloss"]})
         out={"entry":a.entry,"n_ayat":len(ayat),"dependent_resolved_tokens":len(deps),"sample":deps[:a.limit]}
     elif a.entry and a.ayat:  # Q3
-        sa_full=L("source-address-full.json")["addresses"]
+        sa_full=Lj("source-address-full.jsonl","address")
         ayat=[k.split("#usage=")[1] for k in sa_full if k.startswith(f"qamus:{a.entry}#usage=")]
         out={"entry":a.entry,"ayat":sorted(ayat)}
     elif a.entry and a.photo:  # Q4
-        sa_full=L("source-address-full.json")["addresses"]
+        sa_full=Lj("source-address-full.jsonl","address")
         sp=[{"address":k,**v} for k,v in sa_full.items() if k.startswith("source-photo:") and v.get("entry")==a.entry]
         out={"entry":a.entry,"source_photo":sp}
     elif a.entry:
-        sa_full=L("source-address-full.json")["addresses"]
+        sa_full=Lj("source-address-full.jsonl","address")
         out={"entry":a.entry,"node":sa_full.get(f"qamus:{a.entry}")}
     elif a.root:  # Q5
         out={"root":a.root,"entries":L("by-root.json").get(a.root,[])}
@@ -85,15 +92,13 @@ def main():
     elif a.procedures:  # Q9
         out={"procedures":L("decision-backlinks-full.json")["by_procedure"]}
     elif a.unverified_fields:  # Q10
-        fa=L("qamus-entry-field-addresses.json")["entries"]
-        un=[]
-        for eid,fields in fa.items():
-            for f,meta in fields.items():
+        fa=Lj("qamus-entry-field-addresses.jsonl","entry_id")
+        un=[]; total=0
+        for eid in fa:
+            for f,meta in fa[eid].get("fields",{}).items():
                 if not meta["source_verified"]:
-                    un.append(meta["address"])
-                    if len(un)>=a.limit: break
-            if len(un)>=a.limit: break
-        total=sum(1 for eid in fa for f in fa[eid] if not fa[eid][f]["source_verified"])
+                    total+=1
+                    if len(un)<a.limit: un.append(meta["address"])
         out={"unverified_field_count":total,"sample":un}
     else:
         ap.print_help(); sys.exit(1)
