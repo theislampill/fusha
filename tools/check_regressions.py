@@ -128,18 +128,25 @@ for art in ("qamus/schemas/language-state.schema.json", "qamus/schemas/token-sta
             "sarf/curriculum/zero-to-fluency-sarf.md", "nahw/curriculum/zero-to-fluency-nahw.md"):
     check("architecture artifact exists: %s" % art, os.path.exists(os.path.join(ROOT, art)))
 
-# 11c-mcp. (TM1) Tafsir MCP integration lane — connector, scaffold, procedures, eval fixtures exist
+# 11c-mcp. (TM1) Tafsir MCP — a BUILD/COMPLETION tool under sources/tafsir_mcp/ + tools/, NOT a skill dependency.
+# The sarf/nahw skills stay self-contained (cooperate with each other + Qamus + internal evidence ladder); they do
+# NOT reference or rely on the MCP. So these artifacts live OUTSIDE sarf/ and nahw/.
 for art in ("tools/tafsir_mcp_client.py", "tools/tafsir_mcp_probe.py", "tools/fetch_tafsir_mcp_ayah.py",
             "tools/analyze_tafsir_mcp_word.py", "tools/build_tafsir_mcp_cache.py",
             "tools/validate_tafsir_mcp_cache.py", "tools/mcp_to_language_state.py",
             "sources/tafsir_mcp/README.md", "sources/tafsir_mcp/schema.json",
             "sources/tafsir_mcp/examples/001_001_001.analyze_word.sample.json",
             "sources/tafsir_mcp/examples/001_001.fetch_ayah.sample.json",
-            "sarf/procedures/tafsir-mcp-morphology.md", "nahw/procedures/tafsir-mcp-irab.md",
-            "sarf/evals/tafsir_mcp_sarf_cases.jsonl", "nahw/evals/tafsir_mcp_irab_cases.jsonl",
-            "sarf/evals/tafsir-mcp-morphology-eval.jsonl", "nahw/evals/tafsir-mcp-irab-eval.jsonl",
+            "sources/tafsir_mcp/procedures/sarf-morphology-via-mcp.md",
+            "sources/tafsir_mcp/procedures/nahw-irab-via-mcp.md",
+            "sources/tafsir_mcp/evals/sarf_cases.jsonl", "sources/tafsir_mcp/evals/irab_cases.jsonl",
+            "sources/tafsir_mcp/evals/morphology-eval.jsonl", "sources/tafsir_mcp/evals/irab-eval.jsonl",
             "qamus/reports/tafsir-mcp-integration-report.md"):
     check("tafsir-mcp artifact exists: %s" % art, os.path.exists(os.path.join(ROOT, art)))
+# guard: the skills must NOT instruct about / depend on the external MCP
+for skill in ("sarf/SKILL.md", "nahw/SKILL.md"):
+    _txt = io.open(os.path.join(ROOT, skill), encoding="utf-8").read().lower()
+    check("%s is MCP-free (self-contained skill)" % skill, "tafsir" not in _txt and "mcp" not in _txt)
 # the MCP morphology extractor classifies the load-bearing cases (noun-not-verb on wazn name; Form IV active verb)
 try:
     import importlib.util as _ilu

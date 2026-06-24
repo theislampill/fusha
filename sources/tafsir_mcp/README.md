@@ -4,6 +4,12 @@
 evidence source** for sarf/nahw decisions over Qur'anic examples. It is **never** a public data source — nothing
 it returns ships to the live hover artifact, which stays `{src:"qamus", kind:"authored"}`.
 
+> **Decoupled from the skills.** This is a **maintainer/build tool**. The `sarf/SKILL.md` and `nahw/SKILL.md`
+> skills are self-contained — they cooperate with each other + the Qamus + the internal evidence ladder, and do
+> **not** reference or depend on this MCP (a regression check enforces both SKILL.md files are MCP-free). The MCP
+> is used *here* to help author/verify glosses + entries for qamus.dawah.wiki and `/fusha/qamus/` and to construct
+> the skills' content — not as a runtime requirement of the skills.
+
 ## How we reach it
 The Claude tool registry may or may not surface the connector's tools in a given runtime. Independent of that,
 the connector tools here speak MCP streamable-HTTP (JSON-RPC 2.0) **directly** over `tools/call`, via
@@ -33,6 +39,8 @@ sources/tafsir_mcp/
   schema.json          (cache record schema)
   examples/            (tiny redacted samples — committed)
   cache/               (.gitkeep; raw records gitignored)
+  procedures/          (build-tooling docs: how the maintainer uses MCP — NOT skill procedures)
+  evals/               (MCP extractor fixtures — outside sarf/ and nahw/ so the skills stay MCP-free)
 tools/
   tafsir_mcp_client.py        (shared JSON-RPC client)
   tafsir_mcp_probe.py         (availability / exact blocker)

@@ -33,9 +33,9 @@ chose the direct-HTTP path.
   - problematic **particle** 2:6:1 إنّ ("حرف توكيد ونصب");
   - **verb-form** 2:3:2 يؤمنون ("فعل مضارع … من باب أَفْعَلَ" = Form IV active 3pl);
   - **noun/gender/plural** 2:5:8 المفلحون (plural noun).
-- ✅ converted to sarf/nahw decision fixtures —
-  [`sarf/evals/tafsir_mcp_sarf_cases.jsonl`](../../sarf/evals/tafsir_mcp_sarf_cases.jsonl) (4/4 pass),
-  [`nahw/evals/tafsir_mcp_irab_cases.jsonl`](../../nahw/evals/tafsir_mcp_irab_cases.jsonl) (3/3 pass) via
+- ✅ converted to decision fixtures —
+  [`sources/tafsir_mcp/evals/sarf_cases.jsonl`](../../sources/tafsir_mcp/evals/sarf_cases.jsonl) (4/4 pass),
+  [`sources/tafsir_mcp/evals/irab_cases.jsonl`](../../sources/tafsir_mcp/evals/irab_cases.jsonl) (3/3 pass) via
   [`tools/mcp_to_language_state.py`](../../tools/mcp_to_language_state.py).
 - ✅ cache validator passes (`tools/validate_tafsir_mcp_cache.py` — schema + source-hash + no-public-leak).
 - ✅ leakage scan clean — no Tafsir MCP / external provenance in any public artifact; public hover stays
@@ -46,8 +46,15 @@ chose the direct-HTTP path.
 its `sarf`. Fixed: POS is now read from the **leading classification token** (after the first `:`), not anywhere in
 the prose. All fixtures pass.
 
-## How it plugs into the program
-- `sarf/procedures/tafsir-mcp-morphology.md` + `nahw/procedures/tafsir-mcp-irab.md` make MCP a standard evidence
-  rung (POS/voice/form guard; case/mood/role guard) — beside QAC, never above the Qamus entry, never public.
-- Used live in the **B5 MCP-aware batch** to back grammar-risk verb/noun glosses (see
-  `qamus/candidates/qamus_2092/tafsir_mcp_hover_batch_001.report.md`).
+## How it plugs into the program (a BUILD tool, not a skill dependency)
+**Decoupled from the skills by design.** The `sarf/SKILL.md` and `nahw/SKILL.md` skills stay self-contained —
+they cooperate with each other + the Qamus + the internal evidence ladder (Qamus entry → QAC → source-photo →
+heuristic) and the GrammarProblems gate, and do **not** reference or depend on any external MCP
+(`check_regressions.py` asserts both SKILL.md files are MCP-free). The Tafsir MCP is a **maintainer/completion
+tool**: it helps author and verify glosses + entries for qamus.dawah.wiki and `/fusha/qamus/`, and helped
+construct the skills' content — but it is never a runtime requirement of the skills.
+- Build-tooling docs: [`sources/tafsir_mcp/procedures/sarf-morphology-via-mcp.md`](../../sources/tafsir_mcp/procedures/sarf-morphology-via-mcp.md)
+  + [`nahw-irab-via-mcp.md`](../../sources/tafsir_mcp/procedures/nahw-irab-via-mcp.md).
+- Used as internal evidence in the **B5 MCP-aware batch** to back grammar-risk verb/noun glosses (see
+  `qamus/candidates/qamus_2092/tafsir_mcp_hover_batch_001.report.md`); MCP-assisted decisions carry
+  `internal_provenance.informed_by += ["tafsir-mcp"]` only.

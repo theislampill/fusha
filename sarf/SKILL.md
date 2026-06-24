@@ -24,9 +24,6 @@ output · forbidden · test). **Open only the one the task needs.**
 - [`procedures/hover-application.md`](procedures/hover-application.md) — the certified live-apply path + rollback.
 - [`procedures/qamus-entry-authoring.md`](procedures/qamus-entry-authoring.md) — sarf evidence → reviewable entry candidate.
 - [`procedures/corpus-to-qamus.md`](procedures/corpus-to-qamus.md) — the sarf half of the corpus→Qamus pipeline.
-- [`procedures/tafsir-mcp-morphology.md`](procedures/tafsir-mcp-morphology.md) — **Tafsir MCP** `analyze_word` as an
-  internal morphology witness (POS/wazn/form I–X/voice/number); evidence, never public; guards verb-on-noun,
-  active/passive, and form collisions. For Qur'anic tokens, call it when QAC + entry leave the form/voice unsettled.
 
 **Rules** (`rules/`): root-decision, verb-measure-gates, weak-root-gates, hamza-gates, plural-gender-rules,
 masdar-participle-gates, homograph-quarantines, **surface-state-transition-rules** (the morphology side of the
