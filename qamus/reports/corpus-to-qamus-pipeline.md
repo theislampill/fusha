@@ -46,3 +46,23 @@ Candidates are deduped by `norm_strict` key against the index (reuse before mint
 splits are preserved (see [`duplicate-avoidance-report.md`](duplicate-avoidance-report.md)). A token already in
 Qamus produces no new entry — at most an occurrence augment attaching the new `corpus:<ref>:<idx>` address to the
 entry's usage. Homograph keys are routed to the 2-vote, never auto-glossed.
+
+## P10 — bound to the COMMITTED dataset (no hidden live dependency)
+
+`tools/build_existing_qamus_index.py` rebuilds `qamus/indexes/existing_qamus_index.json` **from the committed
+`qamus/data/current/entries.jsonl` (all 2,092 entries)** — so the corpus pipeline now dedupes against the
+committed public dataset, not a live pull. Re-run against Nawawī40-style + synthetic fixtures (2026-06-24):
+
+| metric | value |
+|---|---|
+| passages | 3 |
+| already_in_qamus (deduped vs committed dataset) | 10 |
+| new_surface_existing_lemma | 7 |
+| new_root | 6 |
+| particle_or_construction | 2 |
+| distinct candidates | 13 |
+| **live writes** | **0** |
+
+Dedupe confirmed: الأَعْمَالُ → existing entry `4ca491391b4f` (root ع م ل) as an occurrence-augment, not a
+duplicate; بِالنِّيَّاتِ → `new_root` draft candidate. Acceptance: tools use the committed 2,092-entry dataset ✓,
+dedupe works ✓, no live writes ✓, review candidates generated ✓.

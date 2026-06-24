@@ -1,5 +1,7 @@
 # Particle proofing matrix — p001–p100 (PP1)
 
+> **2026-06-24 (live 81.91%):** particle section example coverage **92.2%** (26/100 entries fully hover-complete; 74 with >=1 pending). Remaining = documented function-word homograph blockers (`same_surface_polysemy_requires_i3rab`) needing per-loc iʿrāb. Every token terminal in P3 audit.
+
 > **POST HARD-TAIL (live 80.68%):** the p001–p100 example āyāt are now **90.51% resolved** (2,937 / 3,245 tokens;
 > was 81.51%). The particle hard-tail batch added **289** safe content-token glosses; the remaining 308 pending =
 > 157 documented function-word homograph blockers (MCP iʿrāb-confirmed) + 35 single-surface content tokens in the

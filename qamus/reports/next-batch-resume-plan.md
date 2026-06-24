@@ -1,56 +1,58 @@
-# Next-batch resume plan (PP1G continues — exact, no vague "standing by")
+# Next-batch resume plan — exact, no vague "standing by"
 
-## Where we are (live, reconciled)
-- **NEW: suffix/pronoun lane is LIVE** — noun-stem + possessive-enclitic resolver (POS-gated, verb hosts excluded), fixed the visible أَعْمَالُنَا→"our deeds" class; 182 applied; 888 stem_base_unknown (next: author noun stems), 1,050 verb-suffix (verb lane).
-- **NEW: token-addressed override layer is LIVE** (per-`quran:S:A:W` > surface-key TSV > pending) — resolves homograph collisions the TSV cannot; 363 decisions applied; same-surface polysemy (وَمَا, bare إِنْ, لَمَّا) is the next tier (needs per-token iʿrāb).
-- Live coverage **81.77%** · 40,805 / 49,900 resolved · **9,095 pending** · tsv 1,223 + 545 token decisions · 2,092 entries.
-- Distinct pending surfaces: **5,435** (was 6,422). Authorable lever `pending_needs_sarf` = **7,990**.
-- Processed: B2 (230→159) + B3 (230→186) + B4 (230→181) + B5 (230→190, 61 MCP-backed) + **particle-hardtail
-  (311→289)**, each excluding prior rejects. Combined **+1,005 glosses, +4,264 occ, −0 removed**.
-- **Tafsir MCP lane AVAILABLE** (direct HTTP + now native in-runtime) — internal grammar/morphology evidence;
-  build tool, NOT a skill dependency (skills verified MCP-free).
-- Particle example āyāt: **90.51% resolved** (was 81.51%); remaining = 157 documented homograph blockers +
-  35 single-surface content tokens in the global queue.
-- Cumulative live trail: 51.52 → … → 79.93 → 80.68 → **81.41** (B6 token-addressed layer).
-- State graph: 1,222 resolved keys, 156 quarantine_homograph, 11,345 pending (every token has a state, 0 unknown).
+## Where we are (live, reconciled 2026-06-24, completion-tranche P0–P12)
 
-## Exactly what was processed vs. what remains
-The candidate pool is the live `export_audit_state.py` top-500 pending surfaces, taken by descending frequency.
-- **Done:** the top SAFE-classified slice (≈ first 230 by frequency) — certified survivors applied.
-- **Remaining same-tier rejects (do NOT re-author as single glosses):** the 71 homographs are now forbidden
-  transitions; they need either (a) per-surface (vocalized) keys, which the current `norm_strict` pass cannot
-  carry, or (b) entry-level disambiguation. Track in the state graph `--split`.
-- **Remaining pool:** ~6,036 distinct pending surfaces below the processed tier — a long, lower-frequency tail
-  that is increasingly proper nouns, multi-sense, and source-photo-gated entries (each further batch yields a
-  smaller, harder-won increment, by design of the gate).
+- Live coverage **81.91%** · **40,875 / 49,900** resolved · **9,025 pending** · health 200 ·
+  `source_sha=65797d7d5599fadd` · 2,092 entries (947 v / 1,045 n / 100 p) · **615 token decisions**.
+- This tranche: **+70 tokens** applied, **−0 removed, −0 changed**, **0 wrong glosses shipped**
+  (81.77 → 81.85 suffix/pronoun batch_002 +40 → 81.91 content batch_001 +30), all 2-vote certified.
+- **Every one of the 49,900 hover tokens is terminal** (P3): resolved, or pending with an EXACT
+  blocker — `stem_base_unknown` 6,969 · `source_entry_unverified` 1,505 ·
+  `same_surface_polysemy_requires_i3rab` 550 · `proper_noun_no_qamus_entry` 1. **No generic pending.**
+- **Complete public dataset committed** (P0): `qamus/data/current/` (2,092 entries, 7 indexes,
+  schema, validator, query tool). **Source-address graph** (P1, 28,393 addresses, 0 orphans, 10
+  queries). **Entry audit matrix** (P2, 2,092 rows, 0 unknown). All offline-queryable.
 
-## Exact next command chain (batch-6 — B2..B5 already applied)
-Run from this repo + the server wrappers (`/tmp/sshx`, `/tmp/sshxr` recreated per session):
+## What is DONE (this tranche)
 
-```bash
-# 1. refresh the pending pool (read-only on server)
-cat tools/build_language_state_graph.py | /tmp/sshx 'cat > /tmp/build_lsg.py'   # if not present
-cat qamus/scripts/export_audit_state.py | /tmp/sshx 'cat > /tmp/export_audit_state.py'
-/tmp/sshx 'cd .../services && QAMUS_WBW_SERVICES=.../services QAMUS_ENTRIES=.../entries \
-  QAMUS_WBW_ARTIFACT=.../qamus-app/qamus_wbw/build/wbw-lookup.json \
-  python3 /tmp/export_audit_state.py --out /tmp/audit_export3'
-# 2. select + key-probe the NEXT tier (skip the 377 live keys; POS N/V/P; auto-class SAFE)
-#    reuse: artifacts/batch2_select_probe.py (edit the slice to safe[230:460])
-# 3. author + key-aware 2-vote: assemble artifacts/batch2_wf_template.js with the new candidates
-#    (file->file via the Python injector) then Workflow({scriptPath: ".../batch3_wf.js"})
-# 4. apply certified -> tsv (artifacts/b2_apply_local.py pattern, backup .bak-b3) -> rebuild.sh
-# 5. re-export -> build_audit_completion.py + build_nv_matrices.py -> update scoreboards -> commit/push
-```
+P0 dataset · P1 graph · P2 matrix · P3 49,900-token audit · P4 suffix/pronoun expansion (+40) ·
+P5/P6 content batch (+30) · P7 source-photo (2 visually verified, 0 retakes) · P8 skill install
+verified · P9 GrammarProblems gate (88 cases + 8 wrong-reasoning traps) · P10 corpus→Qamus bound to
+committed dataset · P11 live screenshots (b10 particle, عمل verb) · P12 scoreboards.
 
-The harness is fully reusable: `artifacts/batch2_select_probe.py` (selection+probe), `artifacts/batch2_wf.js`
-(author+2-vote workflow — edit the injected `CANDS`), `artifacts/b2_apply_local.py` (apply), `qamus_wbw/rebuild.sh`
-(rebuild), `qamus/scripts/build_nv_matrices.py` + `build_audit_completion.py` (matrices).
+## Exact next (in priority order)
+
+1. **Author the 785 host lexemes** with no Qamus noun entry (suffix/pronoun `stem_base_unknown`:
+   خَلَاق, رِضْوَان, سِيمَا, مَثَل, …) → re-run `build_suffix_pronoun_candidates.py` → 2-vote → apply.
+   Command chain:
+   ```bash
+   cat tools/build_suffix_pronoun_candidates.py | /tmp/sshx 'cat > /tmp/bspc.py'
+   /tmp/sshx 'cd .../services && QAMUS_WBW_SERVICES=.../services \
+     QAMUS_WBW_ARTIFACT=.../qamus_wbw/build/wbw-lookup.json QAMUS_DATASET=/tmp/entries.jsonl \
+     python3 /tmp/bspc.py --out /tmp/sp_cands.jsonl'
+   # pull -> Workflow(suffix-pronoun-verify) -> build_sp_batch -> append (backup) -> rebuild.sh
+   ```
+2. **Per-loc iʿrāb token decisions** for the 550 `same_surface_polysemy_requires_i3rab` (verb/noun
+   homographs the content probe correctly rejected: يَدْعُونَ call/shove, يَحِلُّونَ lawful/adorn,
+   وَمَا not/what, bare إِنْ if/emphatic). Generate per-loc candidates with āyah context → 2-vote
+   (`/fusha-nahw` relative/negation + `/fusha-sarf` form-split) → apply. These need context, not a
+   surface key — the token layer is the mechanism.
+3. **Next content tier:** re-run `build_content_hover_candidates.py --max-per-section 60` for the
+   next frequency tier (collision-free + single-sense) → 2-vote → apply. Each tier is smaller/harder.
+4. **Build the `source_key → page` index** (the P7 bottleneck) from `pages.md` + the draft JSONs to
+   scale source-photo visual verification beyond the 2 done this pass (corpus is complete; 0 retakes).
+
+## Reusable harness (proven this tranche)
+
+- candidate gen: `tools/build_suffix_pronoun_candidates.py`, `tools/build_content_hover_candidates.py`
+- verify: Workflow `suffix-pronoun-verify` / `content-hover-verify` (2-vote, sarf+nahw lenses)
+- apply: `out/hover_stage/build_*_batch.py` + byte-safe append (backup) to
+  `qamus-service/ref/fusha-hover-token-decisions.jsonl` → `qamus_wbw/rebuild.sh`
+- reconcile: `audit_all_hover_tokens.py` → `build_full_source_address_graph.py` →
+  `audit_qamus_2092_entries.py` → scoreboards. Gate: `check_regressions.py` + `run_grammar_evals.py`.
 
 ## Continuation rule
-Do not stop after batch-5 if green. Continue the tiers (particles where safe → nouns → verbs) until every key is
-`resolved`/`quarantine_homograph`/`pending-with-exact-blocker` in the language state graph, or a real
-evidence/safety gate blocks (the source-photo floor below). Each applied batch must re-reconcile the scoreboards.
 
-## The floor (where authoring stops and source verification begins)
-190 entries are `needs_source_photo_review` (āyāt hover-complete, entry fields unverified) and require the
-photographed source corpus — owner-gated. See [`retake-source-photo-requests.md`](retake-source-photo-requests.md).
+Do not stop after one green batch. Continue tiers (per-loc iʿrāb → content tiers → new lexemes)
+until every token is resolved or pending-with-exact-blocker (already true) AND every *safe* decision
+is applied, or a real evidence/safety gate blocks. Each applied batch re-reconciles all scoreboards.

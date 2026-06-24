@@ -14,4 +14,4 @@ Terminal-state rules enforced:
 
 - next_action is exact and per-entry.
 
-Top remaining work: 1,843 entries have ≥1 pending hover token; 1,965 entries await source-photo visual verification.
+Top remaining work: 1,837 entries have ≥1 pending hover token; 1,964 entries await source-photo visual verification.

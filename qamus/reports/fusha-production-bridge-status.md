@@ -2,6 +2,23 @@
 
 How the Fusha intelligence layer is driving live Qamus / qamus-highlight, and where each lane stands.
 
+## ⭐ CURRENT STATE — completion tranche 2026-06-24 (live 81.91%)
+
+| lane | status |
+|---|---|
+| **complete public dataset (P0)** | `qamus/data/current/` — all **2,092** entries exported public-safe (0 leaks), 7 indexes, schema, validator, offline query tool; checksum-gated, LF-pinned |
+| **source-address graph (P1)** | `*-full.json` — **28,393** addresses, **0 orphans**, all 10 Xanadu queries answerable offline (`query_source_address_graph.py`) |
+| **2,092-entry matrix (P2)** | terminal status per entry, **0 unknown**; honest root-on-noun = curator style; 255 hover-complete |
+| **49,900-token audit (P3)** | every token terminal — **40,875 resolved / 9,025 pending**, each pending an EXACT blocker, **no generic pending** |
+| **suffix/pronoun (P4)** | +40 applied (2-vote certified); dataset-sourced bases; tanwīn-alef/homograph/verb-host correctly rejected; named classes + tests gated |
+| **content batch (P5/P6)** | +30 applied (7 verb + 23 noun; 2-vote); 122/152 rejected as homograph/context/clitic — **0 wrong shipped** |
+| **GrammarProblems gate (P9)** | 88 cases incl. **8 wrong-reasoning traps**, grader proves right-answer/wrong-reasoning FAILS |
+| **corpus→Qamus (P10)** | bound to the **committed** dataset (`build_existing_qamus_index.py`); Nawawī40 fixtures deduped, 0 live writes |
+| **source-photo (P7)** | corpus complete (0 missing, **0 retakes**); 2 entries visually verified by me (v008 بين 523, v027 عبد 275) |
+| **live coverage** | **81.91%** (40,875 / 49,900); this tranche +70, −0 removed, −0 changed, **0 wrong glosses** |
+
+History (earlier tranches) follows below.
+
 ## The production loop (operational)
 ```
 Fusha decision engine (sarf+nahw rules + QAC + Qamus index)

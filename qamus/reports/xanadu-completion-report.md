@@ -1,6 +1,6 @@
 # Project-Xanadu source-address completion report
 
-source_sha `65797d7d5599fadd` · entries 2,092 · addresses **28,393** · āyāt 3,854 · decisions 545 · repairs 132
+source_sha `65797d7d5599fadd` · entries 2,092 · addresses **28,393** · āyāt 3,854 · decisions 615 · repairs 132
 
 **Orphan links: 0** (address→entry 0, spine→entry 0).
 
@@ -17,4 +17,4 @@ source_sha `65797d7d5599fadd` · entries 2,092 · addresses **28,393** · āyāt
 - 9. Which sarf/nahw rule was used for this decision? → by_decision[*].procedure
 - 10. Which entry fields remain source-unverified? → qamus-entry-field-addresses (source_verified=false)
 
-Entries with a source-photo-verified field: 1 / 2,092 (the rest carry `source-photo:unlocated#entry=<sk>` locators for P7).
+Entries with a source-photo-verified field: 2 / 2,092 (the rest carry `source-photo:unlocated#entry=<sk>` locators for P7).
