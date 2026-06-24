@@ -4,7 +4,7 @@ Entries whose example ayat are now hover-complete but whose ENTRY FIELDS (headwo
 
 | queue | n | what is needed |
 |---|---:|---|
-| `needs_source_photo_review` | 202 | photograph the source page; verify headword/forms/senses/counts |
+| `needs_source_photo_review` | 214 | photograph the source page; verify headword/forms/senses/counts |
 | `needs_quran_ref_verification` | 10 | fix bad/range ayah refs before re-audit |
 | `deferred_missing_source` | 7 | no addressable ayat; locate source or mark out-of-scope |
 
@@ -15,7 +15,9 @@ Entries whose example ayat are now hover-complete but whose ENTRY FIELDS (headwo
 | 03609d2ef226 | qamus:v703#root=س ج ر | س ج ر | سُجِّرَتْ | 3 | 1.00 |
 | b0743d9417df | qamus:v673#root=ن س ل | ن س ل | يَنسِلُونَ | 3 | 1.00 |
 | 0451bd0c1350 | qamus:v691#root=خ ر ص | خ ر ص | يَخْرُصُونَ | 2 | 1.00 |
+| 0d82cf557616 | qamus:v753#root=ب ع ث ر | ب ع ث ر | بُعْثِرَ | 2 | 1.00 |
 | 12791e704272 | qamus:n395#root=م ج د | م ج د | مَجِيد | 2 | 1.00 |
+| 22be25652dce | qamus:v651#root=ر ك ن | ر ك ن | تَرْكَنُوا۟ | 2 | 1.00 |
 | 2f8c30cd5c75 | qamus:v695#root=ذ ر و | ذ ر و | تَذْرُوهُ | 2 | 1.00 |
 | 3aecc5a5c021 | qamus:v776#root=ش غ ل | ش غ ل | شَغَلَتْنَا | 2 | 1.00 |
 | 452ab0b9410e | qamus:v714#root=ع ب س | ع ب س | عَبَسَ | 2 | 1.00 |
@@ -30,12 +32,15 @@ Entries whose example ayat are now hover-complete but whose ENTRY FIELDS (headwo
 | ccb0bf169f3e | qamus:n747#root= |  | فَاكِهَة | 2 | 1.00 |
 | d84692e8d2c8 | qamus:p047#root= |  | أَيْنَ | 2 | 1.00 |
 | f4dbd60e1c18 | qamus:v797#root=غ و ص | غ و ص | يَغُوصُونَ | 2 | 1.00 |
+| fd4e3bf990f0 | qamus:n352#root= |  | جَمِيل | 2 | 1.00 |
 | 00fabb02e815 | qamus:n553#root= |  | غُزًّى | 1 | 1.00 |
 | 024794041a31 | qamus:n433#root=رِفْد | رِفْد | رِفْد | 1 | 1.00 |
 | 05bda5633587 | qamus:n728#root= |  | فَرَاش | 1 | 1.00 |
 | 0813261a6f1f | qamus:n323#root= |  | سَقِيم | 1 | 1.00 |
 | 0934fd2bee46 | qamus:n989#root= |  | مَحِيص | 1 | 1.00 |
 | 098d3f546348 | qamus:n609#root= |  | وَهَّاجًا | 1 | 1.00 |
+| 0a4065024804 | qamus:v910#root=يَكْلَؤُكُمْ | يَكْلَؤُكُمْ | يَكْلَؤُكُمْ | 1 | 1.00 |
+| 0a48df03174d | qamus:n024#root= |  | الطَّامَّة | 1 | 1.00 |
 | 0af1843f20af | qamus:n864#root= |  | عِهْن | 1 | 1.00 |
 | 0af8e09e0a0b | qamus:n595#root= |  | مَنَاصٍ | 1 | 1.00 |
 | 0b760a96cdc3 | qamus:v912#root=تَلْفَحُ | تَلْفَحُ | تَلْفَحُ | 1 | 1.00 |
@@ -47,11 +52,6 @@ Entries whose example ayat are now hover-complete but whose ENTRY FIELDS (headwo
 | 115761e37f78 | qamus:v863#root=ر ي ن | ر ي ن | رَانَ | 1 | 1.00 |
 | 126cf2a95db5 | qamus:n647#root= |  | سَاهِرَة | 1 | 1.00 |
 | 130e9e3bfd5c | qamus:v867#root=س ط ح | س ط ح | سُطِحَتْ | 1 | 1.00 |
-| 1671a0dd8551 | qamus:v930#root=يَهْجَعُونَ | يَهْجَعُونَ | يَهْجَعُونَ | 1 | 1.00 |
-| 16a0ee5ff804 | qamus:n062#root= |  | نَضَّاخَتَان | 1 | 1.00 |
-| 1acbee408518 | qamus:v733#root=م و ر | م و ر | تَمُورُ | 1 | 1.00 |
-| 1bb11305509a | qamus:v821#root=أ ب ق | أ ب ق | أَبَقَ | 1 | 1.00 |
-| 1c46a4c8e626 | qamus:n811#root= |  | مِلْح | 1 | 1.00 |
 
 ## Ref-verification queue
 

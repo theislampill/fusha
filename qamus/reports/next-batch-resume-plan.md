@@ -1,13 +1,13 @@
 # Next-batch resume plan (PP1G continues — exact, no vague "standing by")
 
 ## Where we are (live, reconciled this tranche)
-- Live coverage **77.31%** · 38,580 / 49,900 resolved · **11,320 pending** · tsv **563 lines** · 2,092 entries.
-- Distinct pending surfaces: **6,082** (was 6,422). Authorable lever `pending_needs_sarf` = **9,570**.
-- Processed this tranche: **batch-2** (230 → 159 applied) + **batch-3** (230 new, B2-rejects excluded → 186
-  applied). Combined **+345 glosses, +2,584 occ, −0 removed**. 115 rejects = true homographs (now forbidden
-  transitions in the state graph).
-- Cumulative live trail: 51.52 → 60.01 → 69.06 → 69.08 → 70.47 → 70.76 → 72.14 → 75.28 → **77.31**.
-- State graph: 562 resolved keys, 158 quarantine_homograph, 12,003 pending (every token has a state, 0 unknown).
+- Live coverage **78.78%** · 39,312 / 49,900 resolved · **10,588 pending** · tsv **744 lines** · 2,092 entries.
+- Distinct pending surfaces: **5,904** (was 6,422). Authorable lever `pending_needs_sarf` = **8,891**.
+- Processed this tranche: **batch-2** (230 → 159) + **batch-3** (230 → 186) + **batch-4** (230 → 181), each with
+  prior rejects excluded. Combined **+526 glosses, +3,316 occ, −0 removed**. 164 rejects = true homographs (now
+  forbidden transitions). Per-batch gain shrinking (+1,571 → +1,013 → +732) as the tail goes homograph-dense.
+- Cumulative live trail: 51.52 → … → 72.14 → 75.28 → 77.31 → **78.78**.
+- State graph: 743 resolved keys, 158 quarantine_homograph, 11,822 pending (every token has a state, 0 unknown).
 
 ## Exactly what was processed vs. what remains
 The candidate pool is the live `export_audit_state.py` top-500 pending surfaces, taken by descending frequency.
@@ -19,7 +19,7 @@ The candidate pool is the live `export_audit_state.py` top-500 pending surfaces,
   that is increasingly proper nouns, multi-sense, and source-photo-gated entries (each further batch yields a
   smaller, harder-won increment, by design of the gate).
 
-## Exact next command chain (batch-3)
+## Exact next command chain (batch-5 — B2/B3/B4 already applied)
 Run from this repo + the server wrappers (`/tmp/sshx`, `/tmp/sshxr` recreated per session):
 
 ```bash
@@ -42,7 +42,7 @@ The harness is fully reusable: `artifacts/batch2_select_probe.py` (selection+pro
 (rebuild), `qamus/scripts/build_nv_matrices.py` + `build_audit_completion.py` (matrices).
 
 ## Continuation rule
-Do not stop after batch-3 if green. Continue the tiers (particles where safe → nouns → verbs) until every key is
+Do not stop after batch-5 if green. Continue the tiers (particles where safe → nouns → verbs) until every key is
 `resolved`/`quarantine_homograph`/`pending-with-exact-blocker` in the language state graph, or a real
 evidence/safety gate blocks (the source-photo floor below). Each applied batch must re-reconcile the scoreboards.
 

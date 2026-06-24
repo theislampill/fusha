@@ -3,9 +3,15 @@
 Live qamus-highlight, public beta, indexable. Public records carry only `{src:"qamus",kind:"authored"}` — 0
 external provenance. Full per-token states: `hover-token-terminal-matrix.md`.
 
-> **CURRENT LIVE (reconciled): coverage 77.31% · 38,580 / 49,900 resolved · 11,320 pending · tsv 563 lines.**
-> Trail: SN7 69.08 → P13 70.47 → PP1 70.76 → N1/V1 72.14 → B2 75.28 → **B3 77.31**. (The 69.08% some readers see
-> is the SN7 *history* column below, not current.)
+> **CURRENT LIVE (reconciled): coverage 78.78% · 39,312 / 49,900 resolved · 10,588 pending · tsv 744 lines.**
+> Trail: SN7 69.08 → P13 70.47 → PP1 70.76 → N1/V1 72.14 → B2 75.28 → B3 77.31 → **B4 78.78**. (The 69.08% some
+> readers see is the SN7 *history* column below, not current.)
+
+## B4 — deep-tail noun + verb sweep (APPLIED LIVE)
+**181 glosses** (230 cand → 181 certified, 49 rejected; top occ now 5). نَزَّلَ/كَذَّبَ landmine keys (نزلنا,
+كذبت, كذبا) empirically cleared (Form-II/noun-only in the corpus). coverage **77.31% → 78.78%**, **+732 occ, −0
+removed**. Cumulative this tranche: **+526 glosses, +3,316 occ** (per-batch +1,571 → +1,013 → +732, diminishing as
+the homograph-dense tail begins). Mirror: `hover_batch_006_b4.*`; rollback `*.bak-b4`.
 
 ## B3 — continued noun + verb sweep (APPLIED LIVE)
 **186 glosses** (230 cand → 186 certified, 44 rejected; B2 rejects pre-excluded). Plurals/content nouns (faces,
@@ -72,17 +78,17 @@ norm_strict key-collision test** (13 candidates → 11 → 8 key-safe), applied 
 نَزَّلَ (key `نزل` collides with نَزَلَ "descended"), إِنفَاق/مَخْلُوق (0 occ), تَذَكَّرَ/زَلْزَلَتِ (2-vote).
 Rollback: `*.bak-sn7` + `wbw-lookup.prev.json`. Mirror: `qamus/candidates/qamus_2092/authored_gloss_batch_002_sarfnahw.*`.
 
-## Pending by reason (live now — from `export_audit_state.py` at 77.31%)
+## Pending by reason (live now — from `export_audit_state.py` at 78.78%)
 | reason | n |
 |---|---:|
-| `pending_needs_sarf` (root exists, form/sense unresolved — the authorable lever) | 9,570 |
-| `pending_no_qamus_entry` (no entry: particles / proper nouns) | 1,674 |
+| `pending_needs_sarf` (root exists, form/sense unresolved — the authorable lever) | 8,891 |
+| `pending_no_qamus_entry` (no entry: particles / proper nouns) | 1,629 |
 | `pending_source_data_issue` | 55 |
-| `pending_proper_noun` | 21 |
-| **total pending** | **11,320** |
+| `pending_proper_noun` | 13 |
+| **total pending** | **10,588** |
 
-The authorable `pending_needs_sarf` lever fell 11,777 → 10,544 (B2) → **9,570** (B3); `pending_proper_noun`
-66 → 28 → **21**. Distinct pending surfaces 6,422 → 6,266 → **6,082**.
+The authorable `pending_needs_sarf` lever fell 11,777 → 10,544 → 9,570 → **8,891** across B2–B4;
+`pending_proper_noun` 66 → **13**. Distinct pending surfaces 6,422 → **5,904**.
 
 ## Correctness (this program, across C12–C14 + P-tranche)
 | metric | n |

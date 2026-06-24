@@ -24,8 +24,8 @@ Entry repairs take the parallel, owner-gated path (`edit_entry_record` + backup 
 | **P6 source-corpus repair** | terminally classified — 0 certified error fields; 102 owner-gated QAC-root candidates |
 | **Nawawī40 catalogue** | first pass (720 candidates) + skill-refinement available via the runner |
 | **source-address graph** | 2,092 entry nodes, 0 orphan; operational backlinks (`build_decision_backlinks.py`) answer the 10 graph queries |
-| **live hover coverage** | **77.31%** (38,580 / 49,900); trail 51.52 → … → 72.14 → 75.28 → **B3 77.31** (B2+B3 = 345 glosses, +2,584 occ, −0 removed) |
-| **language state machine** | built — 12,723 key-states (562 resolved, 158 quarantine_homograph, 12,003 pending); schemas + builder + query + report |
+| **live hover coverage** | **78.78%** (39,312 / 49,900); trail 51.52 → … → 72.14 → 75.28 → 77.31 → **B4 78.78** (B2+B3+B4 = 526 glosses, +3,316 occ, −0 removed) |
+| **language state machine** | built — 12,723 key-states (743 resolved, 158 quarantine_homograph, 11,822 pending); schemas + builder + query + report |
 | **GrammarProblems eval gate** | 80 derived cases (≥72), `run_grammar_evals.py` PASS; `grade_grammar_reasoning.py` enforces answer+reasoning (self-test PASS) |
 | **progressive-disclosure skills** | sarf 12 procedures, nahw 12 procedures + rules/evals/curriculum; SKILL.md is the gate+index |
 | **ajami curriculum** | 12-level roadmap + qamus/quran/hadith paths + 8 drill sets + placement test + checkpoints |
