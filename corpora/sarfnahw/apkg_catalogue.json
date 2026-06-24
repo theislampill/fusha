@@ -1,0 +1,482 @@
+{
+  "schema": "fusha/apkg_catalogue@1",
+  "decks": [
+    {
+      "file": "learn-arabic-with-amau--section-7-getting-used-to-arabic.apkg",
+      "deck_kind": "guta",
+      "db_file": "collection.anki21",
+      "blocked": null,
+      "notes": 34,
+      "model_names": [
+        "[Audio] - Arabic GUTA Template"
+      ],
+      "deck_names": [
+        "Learn Arabic With AMAU",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Small Changes…Great Benefits [Getting Used to Arabic]",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Small Changes…Great Benefits [Getting Used to Arabic]::Getting Used to Arabic 18",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Small Changes…Great Benefits [Getting Used to Arabic]::Getting Used to Arabic 19",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Small Changes…Great Benefits [Getting Used to Arabic]::Getting Used to Arabic 20",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Small Changes…Great Benefits [Getting Used to Arabic]::Getting Used to Arabic 21",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Small Changes…Great Benefits [Getting Used to Arabic]::Getting Used to Arabic 22",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Small Changes…Great Benefits [Getting Used to Arabic]::Getting Used to Arabic 23",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Small Changes…Great Benefits [Getting Used to Arabic]::Getting Used to Arabic 24"
+      ],
+      "field_names": [
+        "Arabic",
+        "Audio",
+        "Card_name",
+        "English"
+      ],
+      "media_refs": 34,
+      "single_token": 0,
+      "multi_token": 34,
+      "no_arabic": 0,
+      "with_plural": 0,
+      "with_gender": 0,
+      "with_gloss": 34,
+      "by_class": {
+        "nahw_drill": 34
+      },
+      "full_output": "corpora/sarfnahw/out/apkg/learn-arabic-with-amau-section-7-getting-used-to-arabic.jsonl"
+    },
+    {
+      "file": "learn-arabic-with-amau__amau-arabic-section-4_-getting-used-to-arabic.apkg",
+      "deck_kind": "guta",
+      "db_file": "collection.anki21",
+      "blocked": null,
+      "notes": 25,
+      "model_names": [
+        "[Audio] - Arabic GUTA Template"
+      ],
+      "deck_names": [
+        "Learn Arabic With AMAU",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Getting Used to Arabic",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Getting Used to Arabic::Sentences Lesson 1",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Getting Used to Arabic::Sentences Lesson 2",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Getting Used to Arabic::Sentences Lesson 3",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Getting Used to Arabic::Sentences Lesson 4",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Getting Used to Arabic::Sentences Lesson 5"
+      ],
+      "field_names": [
+        "Arabic",
+        "Audio",
+        "Card_name",
+        "English"
+      ],
+      "media_refs": 25,
+      "single_token": 4,
+      "multi_token": 21,
+      "no_arabic": 0,
+      "with_plural": 0,
+      "with_gender": 0,
+      "with_gloss": 25,
+      "by_class": {
+        "vocabulary_candidate": 4,
+        "nahw_drill": 21
+      },
+      "full_output": "corpora/sarfnahw/out/apkg/learn-arabic-with-amau-amau-arabic-section-4-getting-used-to-arabic.jsonl"
+    },
+    {
+      "file": "learn-arabic-with-amau__amau-arabic-section-4_-vocab.apkg",
+      "deck_kind": "vocab",
+      "db_file": "collection.anki21",
+      "blocked": null,
+      "notes": 113,
+      "model_names": [
+        "[Image:Female] - Arabic Vocab Template",
+        "[Image:Male] - Arabic Vocab Template",
+        "[Image] - Arabic Vocab Template+",
+        "[No Image:Female] - Arabic Vocab Template+",
+        "[No Image:Male] - Arabic Vocab Template+",
+        "[No Image] - Arabic Vocab Template+++++"
+      ],
+      "deck_names": [
+        "Learn Arabic With AMAU",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Vocab",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Vocab::Vocab Lesson 1: First Words",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Vocab::Vocab Lesson 2: You, I, and Them",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Vocab::Vocab Lesson 3: Outside",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Vocab::Vocab Lesson 4: Question Words",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Vocab::Vocab Lesson 5: Jobs and Work",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Vocab::Vocab Lesson 6: This, That, These and Those",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Vocab::Vocab Lesson 7: Transport",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Vocab::Vocab Lesson 8: Animals",
+        "Learn Arabic With AMAU::AMAU Arabic Section 4: Vocab::Vocab Lesson 9: In the Classroom"
+      ],
+      "field_names": [
+        "Arabic",
+        "Card_Name",
+        "Card_name",
+        "English",
+        "Gender",
+        "Image"
+      ],
+      "media_refs": 104,
+      "single_token": 11,
+      "multi_token": 102,
+      "no_arabic": 0,
+      "with_plural": 91,
+      "with_gender": 88,
+      "with_gloss": 113,
+      "by_class": {
+        "vocabulary_candidate": 99,
+        "phrase_vocabulary": 14
+      },
+      "full_output": "corpora/sarfnahw/out/apkg/learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
+    },
+    {
+      "file": "learn-arabic-with-amau__amau-arabic-section-5_-getting-used-to-arabic.apkg",
+      "deck_kind": "guta",
+      "db_file": "collection.anki21",
+      "blocked": null,
+      "notes": 25,
+      "model_names": [
+        "[Audio] - Arabic GUTA Template"
+      ],
+      "deck_names": [
+        "Learn Arabic With AMAU",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Getting Used to Arabic",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Getting Used to Arabic::Sentences Lesson 6",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Getting Used to Arabic::Sentences Lesson 7",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Getting Used to Arabic::Sentences Lesson 8",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Getting Used to Arabic::​Sentences Lesson 9",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Getting Used to Arabic::​​Sentences Lesson 10"
+      ],
+      "field_names": [
+        "Arabic",
+        "Audio",
+        "Card_name",
+        "English"
+      ],
+      "media_refs": 25,
+      "single_token": 0,
+      "multi_token": 25,
+      "no_arabic": 0,
+      "with_plural": 0,
+      "with_gender": 0,
+      "with_gloss": 25,
+      "by_class": {
+        "nahw_drill": 25
+      },
+      "full_output": "corpora/sarfnahw/out/apkg/learn-arabic-with-amau-amau-arabic-section-5-getting-used-to-arabic.jsonl"
+    },
+    {
+      "file": "learn-arabic-with-amau__amau-arabic-section-5_-vocab.apkg",
+      "deck_kind": "vocab",
+      "db_file": "collection.anki21",
+      "blocked": null,
+      "notes": 171,
+      "model_names": [
+        "[Image:Female] - Arabic Vocab Template",
+        "[Image:Male] - Arabic Vocab Template",
+        "[Image] - Arabic Vocab Template+",
+        "[No Image] - Arabic Vocab Template+++++"
+      ],
+      "deck_names": [
+        "Learn Arabic With AMAU",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Vocab",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Vocab::Vocab Lesson 10: Starting with Verbs",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Vocab::Vocab Lesson 11: Prepositions",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Vocab::Vocab Lesson 12: Common Verbs - Part (i)",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Vocab::Vocab Lesson 13: Common Verbs - Part (ii)",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Vocab::Vocab Lesson 14: Around the House",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Vocab::Vocab Lesson 15: At the Table",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Vocab::Vocab Lesson 16: At School",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Vocab::Vocab Lesson 17a: Verbal Nouns",
+        "Learn Arabic With AMAU::AMAU Arabic Section 5: Vocab::Vocab Lesson 17b: Those Who Do the Action"
+      ],
+      "field_names": [
+        "Arabic",
+        "Card_Name",
+        "Card_name",
+        "English",
+        "Gender",
+        "Image"
+      ],
+      "media_refs": 164,
+      "single_token": 31,
+      "multi_token": 140,
+      "no_arabic": 0,
+      "with_plural": 101,
+      "with_gender": 124,
+      "with_gloss": 171,
+      "by_class": {
+        "phrase_vocabulary": 38,
+        "vocabulary_candidate": 133
+      },
+      "full_output": "corpora/sarfnahw/out/apkg/learn-arabic-with-amau-amau-arabic-section-5-vocab.jsonl"
+    },
+    {
+      "file": "learn-arabic-with-amau__amau-arabic-section-6_-getting-used-to-arabic.apkg",
+      "deck_kind": "guta",
+      "db_file": "collection.anki21",
+      "blocked": null,
+      "notes": 35,
+      "model_names": [
+        "[Audio] - Arabic GUTA Template"
+      ],
+      "deck_names": [
+        "Learn Arabic With AMAU",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Getting Used to Arabic",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Getting Used to Arabic::Getting Used to Arabic 11",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Getting Used to Arabic::Getting Used to Arabic 12",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Getting Used to Arabic::Getting Used to Arabic 13",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Getting Used to Arabic::Getting Used to Arabic 14",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Getting Used to Arabic::Getting Used to Arabic 15",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Getting Used to Arabic::Getting Used to Arabic 16",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Getting Used to Arabic::Getting Used to Arabic 17"
+      ],
+      "field_names": [
+        "Arabic",
+        "Audio",
+        "Card_name",
+        "English"
+      ],
+      "media_refs": 35,
+      "single_token": 2,
+      "multi_token": 33,
+      "no_arabic": 0,
+      "with_plural": 0,
+      "with_gender": 0,
+      "with_gloss": 35,
+      "by_class": {
+        "nahw_drill": 32,
+        "vocabulary_candidate": 2,
+        "function_construction": 1
+      },
+      "full_output": "corpora/sarfnahw/out/apkg/learn-arabic-with-amau-amau-arabic-section-6-getting-used-to-arabic.jsonl"
+    },
+    {
+      "file": "learn-arabic-with-amau__amau-arabic-section-6_-vocab.apkg",
+      "deck_kind": "vocab",
+      "db_file": "collection.anki21",
+      "blocked": null,
+      "notes": 248,
+      "model_names": [
+        "[Image:Female] - Arabic Vocab Template",
+        "[Image:Male] - Arabic Vocab Template",
+        "[Image] - Arabic Vocab Template",
+        "[Image] - Arabic Vocab Template+",
+        "[No Image] - Arabic Vocab Template+++++"
+      ],
+      "deck_names": [
+        "Learn Arabic With AMAU",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Lesson 18: First Adjectives",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Lesson 19: Common Opposites - Part i",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Lesson 20: First Second Third",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Lesson 21: Accessories",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Lesson 22: Colours",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Lesson 23: Clothes",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Lesson 24: Body Parts",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Lesson 25: Furniture",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Lesson 26 You've Got Mail",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Lesson 27 Common Opposites part ii",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Lesson 28 The Family Tree"
+      ],
+      "field_names": [
+        "Arabic",
+        "Card_Name",
+        "Card_name",
+        "English",
+        "Gender",
+        "Image"
+      ],
+      "media_refs": 245,
+      "single_token": 42,
+      "multi_token": 206,
+      "no_arabic": 0,
+      "with_plural": 185,
+      "with_gender": 216,
+      "with_gloss": 248,
+      "by_class": {
+        "vocabulary_candidate": 239,
+        "phrase_vocabulary": 9
+      },
+      "full_output": "corpora/sarfnahw/out/apkg/learn-arabic-with-amau-amau-arabic-section-6-vocab.jsonl"
+    },
+    {
+      "file": "learn-arabic-with-amau__amau-arabic-section-6_-vocab__vocabulary-of-comprehension-lessons.apkg",
+      "deck_kind": "vocab",
+      "db_file": "collection.anki21",
+      "blocked": null,
+      "notes": 108,
+      "model_names": [
+        "[Image:Female] - Arabic Vocab Template",
+        "[Image:Male] - Arabic Vocab Template",
+        "[Image] - Arabic Vocab Template+",
+        "[No Image] - Arabic Vocab Template+++++"
+      ],
+      "deck_names": [
+        "Learn Arabic With AMAU",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab",
+        "Learn Arabic With AMAU::AMAU Arabic Section 6: Vocab::Vocabulary Of Comprehension Lessons"
+      ],
+      "field_names": [
+        "Arabic",
+        "Card_Name",
+        "Card_name",
+        "English",
+        "Gender",
+        "Image"
+      ],
+      "media_refs": 106,
+      "single_token": 54,
+      "multi_token": 54,
+      "no_arabic": 0,
+      "with_plural": 18,
+      "with_gender": 0,
+      "with_gloss": 108,
+      "by_class": {
+        "phrase_vocabulary": 33,
+        "vocabulary_candidate": 75
+      },
+      "full_output": "corpora/sarfnahw/out/apkg/learn-arabic-with-amau-amau-arabic-section-6-vocab-vocabulary-of-comprehension-lessons.jsonl"
+    },
+    {
+      "file": "learn-arabic-with-amau__amau-arabic-section-7_-vocab.apkg",
+      "deck_kind": "vocab",
+      "db_file": "collection.anki21",
+      "blocked": null,
+      "notes": 152,
+      "model_names": [
+        "[Image:Female] - Arabic Vocab Template",
+        "[Image:Male] - Arabic Vocab Template",
+        "[Image] - Arabic Vocab Template+",
+        "[No Image:Female] - Arabic Vocab Template+",
+        "[No Image:Male] - Arabic Vocab Template+",
+        "[No Image] - Arabic Vocab Template++++++"
+      ],
+      "deck_names": [
+        "Learn Arabic With AMAU",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Vocab",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Vocab::Vocabulary Lesson 29: Food",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Vocab::Vocabulary Lesson 30: Fruit",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Vocab::Vocabulary Lesson 31: In the Desert",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Vocab::Vocabulary Lesson 32: Break Time",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Vocab::Vocabulary Lesson 33: Weather",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Vocab::Vocabulary Lesson 34: Number Words",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Vocab::Vocabulary Lesson 35: Car Parts",
+        "Learn Arabic With AMAU::AMAU Arabic Section 7: Vocab::Vocabulary Lesson 36: Insects"
+      ],
+      "field_names": [
+        "Arabic",
+        "Audio",
+        "Card_Name",
+        "English",
+        "Gender",
+        "Image"
+      ],
+      "media_refs": 80,
+      "single_token": 22,
+      "multi_token": 130,
+      "no_arabic": 0,
+      "with_plural": 99,
+      "with_gender": 133,
+      "with_gloss": 152,
+      "by_class": {
+        "vocabulary_candidate": 114,
+        "phrase_vocabulary": 38
+      },
+      "full_output": "corpora/sarfnahw/out/apkg/learn-arabic-with-amau-amau-arabic-section-7-vocab.jsonl"
+    },
+    {
+      "file": "learn-arabic-with-amau__amau-arabic-section-8_-getting-used-to-arabic.apkg",
+      "deck_kind": "guta",
+      "db_file": "collection.anki21",
+      "blocked": null,
+      "notes": 49,
+      "model_names": [
+        "[Audio] - Arabic GUTA Template"
+      ],
+      "deck_names": [
+        "Learn Arabic With AMAU",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Getting Used to Arabic",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Getting Used to Arabic::Getting Used to Arabic 25",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Getting Used to Arabic::Getting Used to Arabic 26",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Getting Used to Arabic::Getting Used to Arabic 27",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Getting Used to Arabic::Getting Used to Arabic 28",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Getting Used to Arabic::Getting Used to Arabic 29",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Getting Used to Arabic::Getting Used to Arabic 30",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Getting Used to Arabic::Getting Used to Arabic 31"
+      ],
+      "field_names": [
+        "Arabic",
+        "Audio",
+        "Card_name",
+        "English"
+      ],
+      "media_refs": 49,
+      "single_token": 0,
+      "multi_token": 49,
+      "no_arabic": 0,
+      "with_plural": 0,
+      "with_gender": 0,
+      "with_gloss": 49,
+      "by_class": {
+        "nahw_drill": 49
+      },
+      "full_output": "corpora/sarfnahw/out/apkg/learn-arabic-with-amau-amau-arabic-section-8-getting-used-to-arabic.jsonl"
+    },
+    {
+      "file": "learn-arabic-with-amau__amau-arabic-section-8_-vocab.apkg",
+      "deck_kind": "vocab",
+      "db_file": "collection.anki21",
+      "blocked": null,
+      "notes": 172,
+      "model_names": [
+        "[Image:Female] - Arabic Vocab Template",
+        "[Image:Male] - Arabic Vocab Template",
+        "[Image] - Arabic Vocab Template",
+        "[Image] - Arabic Vocab Template+",
+        "[No Image:Female] - Arabic Vocab Template+",
+        "[No Image:Male] - Arabic Vocab Template",
+        "[No Image:Male] - Arabic Vocab Template+",
+        "[No Image] - Arabic Vocab Template+++++"
+      ],
+      "deck_names": [
+        "Learn Arabic With AMAU",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Vocab",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Vocab::Vocabulary Lesson 37: Immigration & Customs I",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Vocab::Vocabulary Lesson 38: Immigration & Customs II",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Vocab::Vocabulary Lesson 39: At the Office I",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Vocab::Vocabulary Lesson 40: At the Office II",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Vocab::Vocabulary Lesson 41: In the Kitchen I",
+        "Learn Arabic With AMAU::AMAU Arabic Section 8: Vocab::Vocabulary Lesson 42: In the Kitchen II"
+      ],
+      "field_names": [
+        "Arabic",
+        "Card_Name",
+        "Card_name",
+        "English",
+        "Gender",
+        "Image"
+      ],
+      "media_refs": 85,
+      "single_token": 7,
+      "multi_token": 157,
+      "no_arabic": 8,
+      "with_plural": 73,
+      "with_gender": 23,
+      "with_gloss": 172,
+      "by_class": {
+        "phrase_vocabulary": 65,
+        "vocabulary_candidate": 99,
+        "uncertain": 8
+      },
+      "full_output": "corpora/sarfnahw/out/apkg/learn-arabic-with-amau-amau-arabic-section-8-vocab.jsonl"
+    }
+  ],
+  "totals": {
+    "files": 11,
+    "notes": 1132,
+    "media_refs": 952,
+    "by_class": {
+      "nahw_drill": 161,
+      "vocabulary_candidate": 765,
+      "phrase_vocabulary": 197,
+      "function_construction": 1,
+      "uncertain": 8
+    }
+  }
+}

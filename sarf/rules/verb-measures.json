@@ -1,0 +1,120 @@
+{
+  "schema": "fusha/verb-measures@1",
+  "purpose": "Machine-readable triliteral verb measures (forms I-X) + rare/quadriliteral/geminate notes. Drives sarf decisions: pick the form, choose active vs passive wording, gloss a maṣdar nominally, gloss a participle as agent/patient, never read a derived form as Form I.",
+  "model_root": "ك ت ب (k-t-b, 'to write')",
+  "paradigm_slots": [
+    "past_active", "past_passive", "present_active", "present_passive",
+    "imperative", "masdar", "ism_fa3il", "ism_maf3ul"
+  ],
+  "slot_english": {
+    "past_active": "he did (Past, Known) — al-māḍī al-maʿlūm",
+    "past_passive": "it was done (Past, Unknown) — al-māḍī al-majhūl",
+    "present_active": "he is doing (Present/Future, Known) — al-muḍāriʿ al-maʿlūm",
+    "present_passive": "it is (being) done (Present/Future, Unknown) — al-muḍāriʿ al-majhūl",
+    "imperative": "do! (Command/Order) — al-amr",
+    "masdar": "the act of doing (verbal noun) — al-maṣdar",
+    "ism_fa3il": "the one who does / the doer (active participle) — ism al-fāʿil",
+    "ism_maf3ul": "the one/thing done (passive participle) — ism al-mafʿūl"
+  },
+  "negation": {
+    "negation_future": "لَنْ + subjunctive — 'he will not do' (categorical future negation)",
+    "negation_past": "لَمْ + jussive — 'he has not / did not do' (negates the past, governs the muḍāriʿ majzūm)",
+    "note": "لَمْ flips a present-tense FORM to a PAST MEANING; a hover gloss must follow the governing negative, not the surface tense."
+  },
+  "forms": [
+    {"form": "I", "wazn": "فَعَلَ", "past_active": "فَعَلَ", "past_passive": "فُعِلَ",
+     "present_active": "يَفْعُلُ / يَفْعِلُ / يَفْعَلُ", "present_passive": "يُفْعَلُ",
+     "imperative": "اُفْعُلْ", "masdar": "samāʿī — irregular, learned per verb",
+     "ism_fa3il": "فَاعِل", "ism_maf3ul": "مَفْعُول",
+     "sense": "the base lexical action; transitivity and vowel of the muḍāriʿ are lexical (learned).",
+     "kataba": {"past_active": "كَتَبَ", "past_passive": "كُتِبَ", "present_active": "يَكْتُبُ",
+                "present_passive": "يُكْتَبُ", "imperative": "اُكْتُبْ",
+                "masdar": "كِتَابَة / كَتْب", "ism_fa3il": "كَاتِب", "ism_maf3ul": "مَكْتُوب"},
+     "quran_examples": ["خَلَقَ (created)", "كَتَبَ (decreed/wrote)", "قَالَ (said, hollow)"]},
+
+    {"form": "II", "wazn": "فَعَّلَ", "past_active": "فَعَّلَ", "past_passive": "فُعِّلَ",
+     "present_active": "يُفَعِّلُ", "present_passive": "يُفَعَّلُ", "imperative": "فَعِّلْ",
+     "masdar": "تَفْعِيل (qiyāsī)", "ism_fa3il": "مُفَعِّل", "ism_maf3ul": "مُفَعَّل",
+     "sense": "intensive / causative / declarative / denominative. Chart: 'strengthening/intensifying of meaning; applying the act to a more general object'.",
+     "kataba": {"past_active": "كَتَّبَ", "present_active": "يُكَتِّبُ", "masdar": "تَكْتِيب"},
+     "quran_examples": ["عَلَّمَ (taught)", "نَزَّلَ (sent down gradually)", "كَذَّبَ (denied/cried lies)", "بَشَّرَ (gave glad tidings)"]},
+
+    {"form": "III", "wazn": "فَاعَلَ", "past_active": "فَاعَلَ", "past_passive": "فُوعِلَ",
+     "present_active": "يُفَاعِلُ", "present_passive": "يُفَاعَلُ", "imperative": "فَاعِلْ",
+     "masdar": "مُفَاعَلَة / فِعَال (qiyāsī)", "ism_fa3il": "مُفَاعِل", "ism_maf3ul": "مُفَاعَل",
+     "sense": "associative / conative — doing the act toward another, or attempting it. Chart: 'relation of the action to another person; attempting the act'.",
+     "kataba": {"past_active": "كَاتَبَ", "present_active": "يُكَاتِبُ", "masdar": "مُكَاتَبَة / كِتَاب"},
+     "quran_examples": ["جَاهَدَ (strove)", "قَاتَلَ (fought)", "نَادَى (called out)"]},
+
+    {"form": "IV", "wazn": "أَفْعَلَ", "past_active": "أَفْعَلَ", "past_passive": "أُفْعِلَ",
+     "present_active": "يُفْعِلُ", "present_passive": "يُفْعَلُ", "imperative": "أَفْعِلْ",
+     "masdar": "إِفْعَال (qiyāsī)", "ism_fa3il": "مُفْعِل", "ism_maf3ul": "مُفْعَل",
+     "sense": "causative — to make someone/something do/become. The hamza changes sense vs Form I; do NOT gloss as Form I.",
+     "kataba": {"past_active": "أَكْتَبَ", "present_active": "يُكْتِبُ", "masdar": "إِكْتَاب"},
+     "quran_examples": ["أَنزَلَ (sent down)", "أَخْرَجَ (brought forth)", "أَسْلَمَ (submitted)", "أَقَامَ (established)"]},
+
+    {"form": "V", "wazn": "تَفَعَّلَ", "past_active": "تَفَعَّلَ", "past_passive": "تُفُعِّلَ",
+     "present_active": "يَتَفَعَّلُ", "present_passive": "يُتَفَعَّلُ", "imperative": "تَفَعَّلْ",
+     "masdar": "تَفَعُّل (qiyāsī)", "ism_fa3il": "مُتَفَعِّل", "ism_maf3ul": "مُتَفَعَّل",
+     "sense": "reflexive/effective of II; to take on / consider oneself to have the quality. Chart: 'to consider/represent oneself as having a quality expressed in the root'.",
+     "kataba": {"past_active": "تَكَتَّبَ", "present_active": "يَتَكَتَّبُ", "masdar": "تَكَتُّب"},
+     "quran_examples": ["تَنَزَّلَ (came down)", "تَوَفَّى (took in full / caused to die)", "تَذَكَّرَ (took heed)"]},
+
+    {"form": "VI", "wazn": "تَفَاعَلَ", "past_active": "تَفَاعَلَ", "past_passive": "تُفُوعِلَ",
+     "present_active": "يَتَفَاعَلُ", "present_passive": "يُتَفَاعَلُ", "imperative": "تَفَاعَلْ",
+     "masdar": "تَفَاعُل (qiyāsī)", "ism_fa3il": "مُتَفَاعِل", "ism_maf3ul": "مُتَفَاعَل",
+     "sense": "reciprocal / mutual; pretending. Chart: 'implying the mutual application of the action'.",
+     "kataba": {"past_active": "تَكَاتَبَ", "present_active": "يَتَكَاتَبُ", "masdar": "تَكَاتُب"},
+     "quran_examples": ["تَعَاوَنَ (cooperated)", "تَسَاءَلَ (asked one another)", "تَوَفَّاهُ — see V"]},
+
+    {"form": "VII", "wazn": "اِنْفَعَلَ", "past_active": "اِنْفَعَلَ", "past_passive": "—",
+     "present_active": "يَنْفَعِلُ", "present_passive": "—", "imperative": "اِنْفَعِلْ",
+     "masdar": "اِنْفِعَال (qiyāsī)", "ism_fa3il": "مُنْفَعِل", "ism_maf3ul": "مُنْفَعَل",
+     "sense": "mediopassive / anticausative — to become X-ed (intransitive result). No passive (already passive in sense).",
+     "kataba": {"past_active": "اِنْكَتَبَ", "present_active": "يَنْكَتِبُ", "masdar": "اِنْكِتَاب"},
+     "quran_examples": ["اِنْفَطَرَ (split apart)", "اِنقَلَبَ (turned back)", "اِنشَقَّ (was cleft, geminate)"]},
+
+    {"form": "VIII", "wazn": "اِفْتَعَلَ", "past_active": "اِفْتَعَلَ", "past_passive": "اُفْتُعِلَ",
+     "present_active": "يَفْتَعِلُ", "present_passive": "يُفْتَعَلُ", "imperative": "اِفْتَعِلْ",
+     "masdar": "اِفْتِعَال (qiyāsī)", "ism_fa3il": "مُفْتَعِل", "ism_maf3ul": "مُفْتَعَل",
+     "sense": "reflexive / middle voice; doing for oneself. The infixed ت assimilates after certain first radicals (e.g. اِصْطَبَرَ, اِزْدَادَ).",
+     "kataba": {"past_active": "اِكْتَتَبَ", "present_active": "يَكْتَتِبُ", "masdar": "اِكْتِتَاب"},
+     "quran_examples": ["اِتَّقَى (was mindful, و→ت)", "اِخْتَلَفَ (differed)", "اِزْدَادَ (increased, د-assim)", "اِصْطَفَى (chose)"]},
+
+    {"form": "IX", "wazn": "اِفْعَلَّ", "past_active": "اِفْعَلَّ", "past_passive": "—",
+     "present_active": "يَفْعَلُّ", "present_passive": "—", "imperative": "اِفْعَلِلْ / اِفْعَلَّ",
+     "masdar": "اِفْعِلَال (qiyāsī)", "ism_fa3il": "مُفْعَلّ", "ism_maf3ul": "—",
+     "sense": "acquisition of a colour or a bodily defect. Chart: 'possession/acquisition of colours/defects'.",
+     "kataba": {"note": "k-t-b does not form IX (semantic restriction to colours/defects)"},
+     "quran_examples": ["اِسْوَدَّ (turned black)", "اِبْيَضَّ (turned white)", "اِحْمَرَّ (turned red)"]},
+
+    {"form": "X", "wazn": "اِسْتَفْعَلَ", "past_active": "اِسْتَفْعَلَ", "past_passive": "اُسْتُفْعِلَ",
+     "present_active": "يَسْتَفْعِلُ", "present_passive": "يُسْتَفْعَلُ", "imperative": "اِسْتَفْعِلْ",
+     "masdar": "اِسْتِفْعَال (qiyāsī)", "ism_fa3il": "مُسْتَفْعِل", "ism_maf3ul": "مُسْتَفْعَل",
+     "sense": "requestative (to seek/ask for the act) or estimative (to deem X to be ...). Chart: 'asking for the act/quality of the root; esteeming/thinking someone/thing to be ...'.",
+     "kataba": {"past_active": "اِسْتَكْتَبَ", "present_active": "يَسْتَكْتِبُ", "masdar": "اِسْتِكْتَاب"},
+     "quran_examples": ["اِسْتَغْفَرَ (sought forgiveness)", "اِسْتَكْبَرَ (was arrogant)", "اِسْتَعَانَ (sought help, hollow)", "اِسْتَطَاعَ (was able)"]}
+  ],
+  "rare_forms": {
+    "note": "Charts show XI-XV markers labelled 'specialised meaning, very rare in use'.",
+    "XI": {"wazn": "اِفْعَالَّ", "sense": "colours/defects, more intensive than IX (chart wording)"},
+    "XII_XV": {"sense": "very rare; specialised; not productive in Qurʾānic vocabulary"}
+  },
+  "quadriliteral": {
+    "note": "Chart 8 (model 'to roll' = دَحْرَجَ) — four-radical verbs.",
+    "base": {"wazn": "فَعْلَلَ", "present_active": "يُفَعْلِلُ", "masdar": "فَعْلَلَة / فِعْلَال",
+             "ism_fa3il": "مُفَعْلِل", "ism_maf3ul": "مُفَعْلَل"},
+    "derived": ["تَفَعْلَلَ (Q-II)", "اِفْعَنْلَلَ (Q-III)", "اِفْعَلَلَّ (Q-IV)"],
+    "quran_examples": ["زَلْزَلَ (shook violently)", "وَسْوَسَ (whispered)", "تَزَلْزَلَ"]
+  },
+  "geminate": {
+    "note": "Chart 6 (model 'to shake' = هَزَّ) — doubled verbs مضاعف where C2=C3; written with shadda when the two identicals meet.",
+    "behaviour": "idghām (merging) of the doubled radical; the shadda hides the third radical from norm()-style matching.",
+    "quran_examples": ["مَدَّ (extended)", "رَدَّ (returned/repelled)", "ضَلَّ (went astray)", "أَحَبَّ (loved, form IV)"]
+  },
+  "provenance": {
+    "informed_by": "Paradigm STRUCTURE + English slot labels + form organisation observed in third-party teaching verb-charts (see corpora/sarfnahw catalogue; licensing under review) and the open-source qutrub conjugator roster.",
+    "authored": "All Arabic wazn patterns and example realisations here are standard classical Arabic morphology, authored for this repo — NOT OCR-copied from any chart (the chart Arabic is a non-Unicode legacy font and was not extracted).",
+    "public_safety": "These are language-intelligence reference facts. They never ship as Qamus hover gloss text; live hover records remain {src:'qamus',kind:'authored'}."
+  }
+}
