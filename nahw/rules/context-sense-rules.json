@@ -1,0 +1,72 @@
+{
+  "$schema_note": "Contronym / multi-sense resolution by sentence context. One root, several senses; the governing partner, object, or construct picks ONE. Where the context is decisive emit resolved-with-context; where it is not, emit pending (reason multi_sense or contronym or context_sensitive_needs_nahw). Same-root polyseme quarantines block a lexically-near but contextually-wrong sense from leaking onto a token. PENDING beats a wrong gloss.",
+  "generator": "authored by hand; aligned to nahw/examples/ayah-context-decisions.jsonl",
+  "rules": [
+    {
+      "id": "qadara_contronym",
+      "surface": "يَقْدِرُ",
+      "root": "ق-د-ر",
+      "candidate_glosses": ["is able / ordains", "restricts / straitens"],
+      "context_signal": "paired antonym partner يَبْسُط (extends/expands) in a rizq (provision) context",
+      "decision_table": [
+        {
+          "when": "contrasted with يَبْسُطُ ٱلرِّزْقَ (extend vs withhold)",
+          "contextual_choice": "restricts / straitens",
+          "decision": "resolved",
+          "reason": "antonymic pairing with يَبْسُط forces the 'restrict' polarity, not 'is able' / 'ordains'",
+          "confidence": "medium",
+          "reason_code": "contronym"
+        },
+        {
+          "when": "no antonym partner / general ability context",
+          "contextual_choice": "is able / has power",
+          "decision": "resolved",
+          "reason": "default ability sense when no contrastive partner is present",
+          "confidence": "medium"
+        },
+        {
+          "when": "partner / context unclear",
+          "decision": "pending",
+          "pending_reason": "multi_sense",
+          "reason": "ق-د-ر spans able / ordain / restrict; needs the governing context to choose"
+        }
+      ]
+    },
+    {
+      "id": "ataa_object_selected",
+      "surface": "أَتَى",
+      "root": "ʾ-t-y",
+      "candidate_glosses": ["come", "bring", "give", "commit / do"],
+      "context_signal": "the object/construction fixes the verb sense",
+      "decision_table": [
+        {"when": "intransitive / with a place", "contextual_choice": "come / arrive", "decision": "resolved", "reason": "no patient object → motion sense", "confidence": "medium"},
+        {"when": "with a thing-object (أتى + بـ)", "contextual_choice": "bring / give", "decision": "resolved", "reason": "transitive with bi- → bring/give", "confidence": "medium"},
+        {"when": "with a blameworthy act as object", "contextual_choice": "commit / do", "decision": "resolved", "reason": "object is a deed → commit", "confidence": "medium"},
+        {"when": "object unclear", "decision": "pending", "pending_reason": "multi_sense", "reason": "object/construction not yet identified"}
+      ]
+    }
+  ],
+  "polyseme_quarantines": {
+    "$note": "Each pair: a token whose context-correct sense must be chosen, and a lexically-near same-root sibling whose sense must NOT leak onto it. These are resolved (context decisive) unless flagged pending.",
+    "entries": [
+      {"surface": "ٱلْمُلْك", "correct": "sovereignty / dominion / kingship", "blocked_sense": "angels (مَلَك)", "context": "Allah grants al-mulk + wisdom → kingship", "decision": "resolved", "reason_code": "multi_sense"},
+      {"surface": "أَنْهَٰر", "correct": "rivers (pl. of نَهْر)", "blocked_sense": "daytime (نَهَار)", "context": "firm mountains AND rivers → watercourses", "decision": "resolved", "reason_code": "multi_sense"},
+      {"surface": "ٱلْإِسْلَٰم", "correct": "Islam / submission (to Allah)", "blocked_sense": "peace (سَلَام) as the headword sense", "context": "the religious sense is the lexical entry; 'peace' is a sibling, not this gloss", "decision": "resolved", "reason_code": "multi_sense"},
+      {"surface": "عِنْد", "correct": "near / with / in the sight of", "blocked_sense": "stubborn (عَنِيد / عِنَاد)", "context": "ẓarf of place, not the obstinacy root-sense", "decision": "resolved", "reason_code": "multi_sense"},
+      {"surface": "تَحْرِير", "correct": "freeing / manumission (maṣdar of ḥarrara)", "blocked_sense": "heat (حَرّ)", "context": "تَحْرِيرُ رَقَبَةٍ → freeing a slave", "decision": "resolved", "reason_code": "multi_sense"},
+      {"surface": "ثالث", "correct": "third (ordinal)", "blocked_sense": "three (cardinal ثَلَاثَة)", "context": "ordinal adjective, not the count", "decision": "resolved", "reason_code": "multi_sense"}
+    ]
+  },
+  "negation_sense_rule": {
+    "id": "la_nafiya_lil_jins",
+    "surface": "لَا",
+    "candidate_glosses": ["did not (verbal past)", "there is no (لا النافية للجنس)"],
+    "context_signal": "لا followed by an indefinite NOUN in naṣb negates the genus, not a verb",
+    "example_context": "أَن لَّا مَلْجَأَ — لا negating the noun مَلْجَأ",
+    "decision": "pending",
+    "pending_reason": "context_sensitive_needs_nahw",
+    "reason": "لا النافية للجنس ('there is no X at all') vs verbal negation depends on whether a noun or verb follows; resolve by the following token's POS/case before glossing",
+    "confidence": "medium"
+  },
+  "general_rule": "Where a contronym's partner or a polyseme's construct is present and decisive, resolve with context; otherwise emit pending(multi_sense | contronym | context_sensitive_needs_nahw). Never let a same-root sibling sense leak onto a token whose context names a different sense."
+}

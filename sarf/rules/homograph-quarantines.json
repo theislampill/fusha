@@ -1,0 +1,256 @@
+{
+  "schema": "sarf/homograph-quarantines@1",
+  "purpose": "Surfaces whose bare consonants collapse under norm() but whose meaning differs. The distinguishing signal is a harakah on the CONTENT letter, a hamza seat, a shadda, or a same-root polyseme that must be denied outright. norm() must never decide any of these. If the distinguishing diacritic is absent in the source text, the decision is pending — never the commoner reading.",
+  "fields": {
+    "surface_or_norm": "the colliding surface (with diacritics) or the norm() key that two readings share",
+    "distinguish_by": "content-letter-harakah | hamza-seat | shadda | surface-deny",
+    "rule": "the operational test (which helper, which letter, what to read)",
+    "wrong_gloss": "the gloss that shipped or would ship if norm() decided",
+    "correct": "the defensible reading, or 'pending' when the diacritic is absent",
+    "example_loc": "a quran:S:A:W where the correct reading holds"
+  },
+  "decide_on_content_letter": "The harakah may sit AFTER a و/ف proclitic. Read the FIRST radical of the content word, not the first character. haraka_on/is_man_who/shadda_on already scan past the proclitic.",
+  "fallback": "If distinguish_by cannot be evaluated because the source is undiacritized, emit decision=pending (reason hamza_sensitive_homograph or multi_sense_root). Prefer pending over wrong.",
+  "quarantines": [
+    {
+      "surface_or_norm": "مَن",
+      "distinguish_by": "content-letter-harakah",
+      "rule": "is_man_who(tok): مَن 'who' has no kasra on the mīm and no shadda on the nūn; مِن 'from' has kasra on the mīm.",
+      "wrong_gloss": "from",
+      "correct": "who / whoever (relative or interrogative)",
+      "example_loc": "2:8:2"
+    },
+    {
+      "surface_or_norm": "مِن",
+      "distinguish_by": "content-letter-harakah",
+      "rule": "haraka_on(tok,'م')==KASRA → preposition مِن 'from/among'; NOT مَن 'who'.",
+      "wrong_gloss": "who / whoever",
+      "correct": "from / among",
+      "example_loc": "2:4:5"
+    },
+    {
+      "surface_or_norm": "وَمِنَ",
+      "distinguish_by": "content-letter-harakah",
+      "rule": "Proclitic وَ hides the signal; read haraka_on(tok,'م')==KASRA → وَمِنَ 'and from'. is_man_who('وَمِنَ') is False. This is the exact bug that glossed it 'and whoever'.",
+      "wrong_gloss": "and whoever",
+      "correct": "and from / and among",
+      "example_loc": "2:8:1"
+    },
+    {
+      "surface_or_norm": "فَمَن",
+      "distinguish_by": "content-letter-harakah",
+      "rule": "Proclitic فَ; haraka_on(tok,'م') has no kasra → فَمَن 'so whoever' (is_man_who True). Distinguish from فَمِن 'so from'.",
+      "wrong_gloss": "so from",
+      "correct": "so whoever",
+      "example_loc": "2:38:6"
+    },
+    {
+      "surface_or_norm": "لِمَا",
+      "distinguish_by": "shadda",
+      "rule": "shadda_on(tok,'م') is False → لِمَا 'for what / to that which' (lām + mā). لَمَّا has the shadda.",
+      "wrong_gloss": "when / not yet",
+      "correct": "for what / to that which",
+      "example_loc": "2:41:4"
+    },
+    {
+      "surface_or_norm": "لَمَّا",
+      "distinguish_by": "shadda",
+      "rule": "shadda_on(tok,'م') is True → لَمَّا 'when' or 'not yet'. Never collapse with لِمَا 'for what'.",
+      "wrong_gloss": "for what",
+      "correct": "when / not yet (per context)",
+      "example_loc": "2:89:3"
+    },
+    {
+      "surface_or_norm": "كُلّ",
+      "distinguish_by": "content-letter-harakah",
+      "rule": "haraka_on(tok,'ك')==DAMMA → كُلّ 'all / every'. كَلَّا (fatḥa on kāf) is 'nay!'.",
+      "wrong_gloss": "nay!",
+      "correct": "all / every",
+      "example_loc": "2:20:11"
+    },
+    {
+      "surface_or_norm": "كَلَّا",
+      "distinguish_by": "content-letter-harakah",
+      "rule": "haraka_on(tok,'ك')==FATHA → كَلَّا 'nay! / by no means'. Not كُلّ/كُلًّا 'all'.",
+      "wrong_gloss": "all / every",
+      "correct": "nay! / by no means",
+      "example_loc": "19:79:1"
+    },
+    {
+      "surface_or_norm": "نِعْمَ",
+      "distinguish_by": "content-letter-harakah",
+      "rule": "haraka_on(tok,'ن')==KASRA → نِعْمَ 'how excellent!' (verb of praise). نَعَمْ (fatḥa) is 'yes'.",
+      "wrong_gloss": "yes",
+      "correct": "how excellent! (praise)",
+      "example_loc": "2:271:6"
+    },
+    {
+      "surface_or_norm": "نَعَمْ",
+      "distinguish_by": "content-letter-harakah",
+      "rule": "haraka_on(tok,'ن')==FATHA with sukūn final → نَعَمْ 'yes'. Not the praise verb نِعْمَ.",
+      "wrong_gloss": "how excellent!",
+      "correct": "yes",
+      "example_loc": "7:44:13"
+    },
+    {
+      "surface_or_norm": "أَنِّي",
+      "distinguish_by": "shadda",
+      "rule": "shadda on the nūn AND final ي (not ى) → أَنِّي 'that I'. bare() preserves ي≠ى; do not fold.",
+      "wrong_gloss": "how / whence",
+      "correct": "that I",
+      "example_loc": "3:49:9"
+    },
+    {
+      "surface_or_norm": "أَنَّى",
+      "distinguish_by": "shadda",
+      "rule": "shadda on the nūn AND final ى (alif maqṣūra) → أَنَّى 'how / whence / from where'. Keep ى≠ي.",
+      "wrong_gloss": "that I",
+      "correct": "how / whence",
+      "example_loc": "2:223:7"
+    },
+    {
+      "surface_or_norm": "لَمْ",
+      "distinguish_by": "content-letter-harakah",
+      "rule": "haraka_on(tok,'ل')==FATHA + sukūn on mīm → لَمْ negative jussive '(did) not'. لِمَ (kasra) is 'why?'.",
+      "wrong_gloss": "why?",
+      "correct": "(did) not",
+      "example_loc": "112:3:1"
+    },
+    {
+      "surface_or_norm": "لِمَ",
+      "distinguish_by": "content-letter-harakah",
+      "rule": "haraka_on(tok,'ل')==KASRA → لِمَ 'why?' (interrogative lām + mā). Not the negation لَمْ.",
+      "wrong_gloss": "(did) not",
+      "correct": "why?",
+      "example_loc": "3:65:3"
+    },
+    {
+      "surface_or_norm": "إِيمَان",
+      "distinguish_by": "hamza-seat",
+      "rule": "norm() drops the hamza seat, collapsing onto أَيْمَان. Certify with norm_strict()/QAC: root أ م ن, initial hamza-kasra, ي is a glide → 'faith'.",
+      "wrong_gloss": "oaths",
+      "correct": "faith / belief",
+      "example_loc": "49:7:13"
+    },
+    {
+      "surface_or_norm": "أَيْمَان",
+      "distinguish_by": "hamza-seat",
+      "rule": "root ي م ن, the ي is a radical → 'oaths' (plural of يَمِين). norm_strict() keeps it apart from إِيمَان 'faith'.",
+      "wrong_gloss": "faith",
+      "correct": "oaths",
+      "example_loc": "16:91:4"
+    },
+    {
+      "surface_or_norm": "يَأْمُرُونَ",
+      "distinguish_by": "hamza-seat",
+      "rule": "hamza on the first stem letter → root أ م ر 'they command'. Not يَمُرُّونَ (shadda on ر, root م ر ر) 'they pass by'. norm() erases both signals.",
+      "wrong_gloss": "they pass by",
+      "correct": "they command / enjoin",
+      "example_loc": "3:104:9"
+    },
+    {
+      "surface_or_norm": "يَمُرُّونَ",
+      "distinguish_by": "shadda",
+      "rule": "shadda on the rāʾ, no hamza → root م ر ر 'they pass by'. Distinct root from يَأْمُرُونَ.",
+      "wrong_gloss": "they command",
+      "correct": "they pass by",
+      "example_loc": "12:105:6"
+    },
+    {
+      "surface_or_norm": "إِلَيْنَا",
+      "distinguish_by": "hamza-seat",
+      "rule": "norm() yields a لين-shaped key, but this is إِلَى + ـنا (preposition + 1pl enclitic), not a triliteral stem. Parse the enclitic; never certify root ل ي ن.",
+      "wrong_gloss": "to be soft / lenient",
+      "correct": "to us",
+      "example_loc": "2:136:11"
+    },
+    {
+      "surface_or_norm": "مَالِكِ",
+      "distinguish_by": "surface-deny",
+      "rule": "Phrase-form collision with مَا لَكَ 'what is for you'. Deny that reading; allow only the م ل ك 'Owner/Master' sense when QAC certifies, else pending.",
+      "wrong_gloss": "what / whatever",
+      "correct": "Owner / Master (root م ل ك), else pending",
+      "example_loc": "1:4:1"
+    },
+    {
+      "surface_or_norm": "ٱلْمُلْك",
+      "distinguish_by": "surface-deny",
+      "rule": "Same-root (م ل ك) polyseme quarantine: ٱلْمُلْك is 'the dominion / sovereignty'. Deny the مَلَك 'angel' / مَلَائِكَة sense; distinguish مَلِك 'king', مُلْك 'dominion', مَلَك 'angel' by vowels and context.",
+      "wrong_gloss": "angels",
+      "correct": "the dominion / sovereignty",
+      "example_loc": "3:26:3"
+    },
+    {
+      "surface_or_norm": "أَنْهَٰر",
+      "distinguish_by": "surface-deny",
+      "rule": "Root ن ه ر polyseme quarantine: plural نَهْر → 'rivers'. Deny the نَهَار 'daytime' sense.",
+      "wrong_gloss": "daytime",
+      "correct": "rivers",
+      "example_loc": "2:25:18"
+    },
+    {
+      "surface_or_norm": "ٱلْإِسْلَٰم",
+      "distinguish_by": "surface-deny",
+      "rule": "Root س ل م polyseme quarantine: the maṣdar of Form IV → 'submission (to God) / Islam'. Deny the bare سَلَام 'peace' gloss; it is a distinct derivation.",
+      "wrong_gloss": "peace",
+      "correct": "Islam / submission (to God)",
+      "example_loc": "3:19:4"
+    },
+    {
+      "surface_or_norm": "عِنْد",
+      "distinguish_by": "surface-deny",
+      "rule": "Adverb/preposition عِنْدَ 'with / in the presence of / according to'. Deny the root ع ن د 'stubborn / obstinate' (عَنِيد/عِنَاد) sense — different lexeme.",
+      "wrong_gloss": "stubborn",
+      "correct": "with / in the presence of",
+      "example_loc": "2:54:18"
+    },
+    {
+      "surface_or_norm": "تَحْرِير",
+      "distinguish_by": "surface-deny",
+      "rule": "Root ح ر ر maṣdar of Form II → 'freeing / manumission (of a slave)'. Deny the حَرّ 'heat' sense; this is a nominal gloss, not a verb.",
+      "wrong_gloss": "heat",
+      "correct": "freeing / manumission",
+      "example_loc": "4:92:8"
+    },
+    {
+      "surface_or_norm": "ثَالِث",
+      "distinguish_by": "surface-deny",
+      "rule": "Ordinal from ث ل ث → 'third'. Deny the cardinal 'three' (ثَلَاثَة) gloss — ordinal, not cardinal.",
+      "wrong_gloss": "three",
+      "correct": "third",
+      "example_loc": "5:73:4"
+    },
+    {
+      "surface_or_norm": "حَلِيمٌ",
+      "distinguish_by": "surface-deny",
+      "rule": "Referent guard: root ح ل م 'forbearing'. When the referent is Ibrāhīm (e.g. 11:75), gloss as the human attribute 'forbearing', NOT as a divine Name. Sense holds; referent fixes register.",
+      "wrong_gloss": "(a divine Name)",
+      "correct": "forbearing (human attribute of Ibrāhīm)",
+      "example_loc": "11:75:3"
+    },
+    {
+      "surface_or_norm": "صَٰلِحًا",
+      "distinguish_by": "surface-deny",
+      "rule": "Referent guard: active participle of ص ل ح → 'righteous / good (deed)'. Deny the proper-noun reading 'the Prophet Ṣāliḥ' unless context certifies it; default is the descriptive adjective.",
+      "wrong_gloss": "the Prophet Ṣāliḥ",
+      "correct": "righteous / good (deed)",
+      "example_loc": "2:62:13"
+    },
+    {
+      "surface_or_norm": "مَنَّ",
+      "distinguish_by": "shadda",
+      "rule": "shadda on the nūn → verb مَنَّ 'to bestow / confer a favour'. is_man_who returns False here; do not gloss as مَن 'who'.",
+      "wrong_gloss": "who / whoever",
+      "correct": "to bestow / confer favour",
+      "example_loc": "3:164:1"
+    },
+    {
+      "surface_or_norm": "مَلِك_vs_مُلْك_vs_مَلَك",
+      "distinguish_by": "content-letter-harakah",
+      "rule": "Root م ل ك triple homograph: مَلِك (fatḥa-kasra) 'king'; مُلْك (ḍamma-sukūn) 'dominion'; مَلَك (fatḥa-fatḥa) 'angel'. Decide on the vowels + context, never on norm().",
+      "wrong_gloss": "(any single one applied blindly)",
+      "correct": "king / dominion / angel per vowels+context, else pending",
+      "example_loc": "114:2:1"
+    }
+  ]
+}

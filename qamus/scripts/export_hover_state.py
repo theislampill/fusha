@@ -1,0 +1,81 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Export the live qamus-highlight per-token hover state for the P3 terminal matrix + P4 batch selection.
+
+Read-only over the deployed artifact + the QAC reference. Run ON THE SERVER (it needs the live artifact +
+qac-tokroots.tsv); the JSON it writes is pulled into Fusha (no private paths inside the JSON).
+
+Outputs (to --out):
+  hover_state.jsonl       — one row per token: {loc, surface, norm_strict, qac_root, qac_pos, state, conf, gloss}
+  hover_pending_top.json  — top pending surfaces ranked by frequency, with QAC root/POS (P4 candidates)
+  hover_state_summary.json
+"""
+import argparse
+import collections
+import io
+import json
+import os
+import sys
+
+sys.path.insert(0, "/srv/dawah-ops/hermes-workspace/repos/ops-dashboard/services")
+from qamus_wbw import expand as X, normalize as N
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--artifact", default="/srv/dawah-ops/hermes-workspace/repos/ops-dashboard/services/qamus_wbw/build/wbw-lookup.json")
+    ap.add_argument("--out", required=True)
+    a = ap.parse_args()
+    os.makedirs(a.out, exist_ok=True)
+    d = json.load(open(a.artifact, encoding="utf-8"))
+    verses, words = d.get("verses", {}), d["words"]
+    qac = X._load_qac_roots()
+    qpos = X._QAC_CACHE.get("pos", {})
+
+    rows = []
+    state_c = collections.Counter()
+    pend_surf = collections.Counter()
+    pend_meta = {}
+    for ref, toks in verses.items():
+        for i, tok in enumerate(toks):
+            loc = "%s:%d" % (ref, i + 1)
+            nst = N.norm_strict(tok)
+            qr = qac.get((ref, nst))
+            pos = qpos.get((ref, nst)) or ""
+            rec = words.get(loc)
+            if rec:
+                state = "resolved:%s" % rec.get("conf", "?")
+                gloss = rec["glosses"][0]["text"]
+            else:
+                # classify the pending reason from available evidence
+                if qr is None and not pos:
+                    state = "pending:source_data_issue"
+                elif not qr and pos:
+                    state = "pending:proper_noun" if pos == "PN" else "pending:no_qamus_entry"
+                else:
+                    state = "pending:root_exists_form_unresolved"
+                gloss = None
+                pend_surf[nst] += 1
+                if nst not in pend_meta:
+                    pend_meta[nst] = {"surface": tok, "qac_root": qr or None, "qac_pos": pos or None, "example_loc": loc}
+            state_c[state.split(":")[0]] += 1
+            rows.append({"loc": loc, "surface": tok, "norm_strict": nst, "qac_root": qr or None,
+                         "qac_pos": pos or None, "state": state, "gloss": (gloss or "")[:60]})
+
+    with io.open(os.path.join(a.out, "hover_state.jsonl"), "w", encoding="utf-8") as f:
+        for r in rows:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    top = []
+    for nst, c in pend_surf.most_common(400):
+        m = pend_meta[nst]
+        top.append({"norm_strict": nst, "count": c, **m})
+    json.dump(top, io.open(os.path.join(a.out, "hover_pending_top.json"), "w", encoding="utf-8"), ensure_ascii=False)
+    json.dump({"tokens": len(rows), "states": dict(state_c), "distinct_pending_surfaces": len(pend_surf),
+               "pending_by_reason": d.get("_meta", {}).get("coverage", {}).get("pending_by_reason", {}),
+               "coverage_pct": d.get("_meta", {}).get("coverage", {}).get("pct")},
+              io.open(os.path.join(a.out, "hover_state_summary.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    print("tokens=%d states=%s distinct_pending=%d" % (len(rows), dict(state_c), len(pend_surf)))
+
+
+if __name__ == "__main__":
+    main()

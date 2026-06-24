@@ -1,0 +1,98 @@
+{
+  "schema": "sarf/pos-mismatch-rules@1",
+  "purpose": "A POS mismatch is a blocker. The dominant failure is putting a verb infinitive ('to ...') on a token whose QAC POS is a noun, proper noun, or adjective. Drop the verb gloss; author a nominal gloss only if a Qamus sense supports it, else pending. norm() never certifies POS — QAC POS leads.",
+  "fields": {
+    "id": "rule id",
+    "when": "trigger condition over QAC POS / gloss shape",
+    "then": "the decision and what to do",
+    "reason": "pending/quarantine reason code used downstream",
+    "examples": "surface -> wrong vs correct"
+  },
+  "pos_ladder": ["qac_pos", "qamus_category", "wazn_shape", "context"],
+  "rules": [
+    {
+      "id": "drop-verb-gloss-on-nominal",
+      "when": "candidate gloss is a verb infinitive (English 'to ...' or an Arabic maṣdar-as-verb) AND qac_pos in ['N', 'PN', 'ADJ']",
+      "then": "DROP the verb gloss. Author a nominal gloss only if a Qamus sense supports the nominal use; otherwise leave the token plain and emit pending.",
+      "reason": "pos_mismatch",
+      "note": "This is sarf principle 3 — 'no verb gloss on a noun unless the Qamus sense supports the nominal use.'"
+    },
+    {
+      "id": "proper-noun-never-verb",
+      "when": "qac_pos == 'PN'",
+      "then": "Never apply a verb gloss derived from the proper noun's root. A name is not its etymon. Prefer pending or a name-as-name record.",
+      "reason": "proper_noun"
+    },
+    {
+      "id": "participle-takes-nominal",
+      "when": "wazn is an active/passive participle (ism fāʿil / ism mafʿūl) or a maṣdar AND qac_pos is nominal",
+      "then": "Use a nominal gloss (e.g. 'one who ...', '...ing', 'a ...'), never the bare verb infinitive whose sense differs.",
+      "reason": "derived_form_needs_review"
+    },
+    {
+      "id": "masdar-nominal-not-verb",
+      "when": "token is a maṣdar (verbal noun) AND a verb infinitive gloss is proposed",
+      "then": "Gloss as a noun ('freeing', not 'to free'). A maṣdar names the action; it is not the conjugated verb.",
+      "reason": "derived_form_needs_review",
+      "example": "تَحْرِير -> wrong 'to free/heat'; correct 'freeing/manumission'"
+    }
+  ],
+  "examples": [
+    {
+      "surface": "رَسُولًا",
+      "qac_pos": "N",
+      "wrong_gloss": "to send",
+      "correct": "a messenger (noun)",
+      "why": "root ر س ل; the token is a noun, not the verb أَرْسَلَ.",
+      "example_loc": "73:15:3"
+    },
+    {
+      "surface": "ٱبْن",
+      "qac_pos": "N",
+      "wrong_gloss": "to build",
+      "correct": "son (noun) if authored, else pending",
+      "why": "root ب ن و (noun 'son'), not ب ن ي (verb 'to build').",
+      "example_loc": "2:87:5"
+    },
+    {
+      "surface": "بَنَات",
+      "qac_pos": "N",
+      "wrong_gloss": "to build",
+      "correct": "daughters (kinship plural)",
+      "why": "verb-on-noun; kinship plural of بِنْت.",
+      "example_loc": "16:57:4"
+    },
+    {
+      "surface": "بَنِي",
+      "qac_pos": "N",
+      "wrong_gloss": "to build",
+      "correct": "Children of / sons of (construct plural)",
+      "why": "بَنِي إِسْرَائِيل = 'Children of Israel'; noun in iḍāfa, not the verb 'to build'.",
+      "example_loc": "2:40:3"
+    },
+    {
+      "surface": "مُحَمَّد",
+      "qac_pos": "PN",
+      "wrong_gloss": "to praise",
+      "correct": "Muḥammad (proper noun)",
+      "why": "proper noun; a name is not glossed by its root verb ح م د.",
+      "example_loc": "3:144:4"
+    },
+    {
+      "surface": "أَحْمَد",
+      "qac_pos": "PN",
+      "wrong_gloss": "to praise / more praiseworthy",
+      "correct": "Aḥmad (proper noun)",
+      "why": "proper noun naming the Prophet; not the elative or the verb.",
+      "example_loc": "61:6:12"
+    },
+    {
+      "surface": "صَٰلِحًا",
+      "qac_pos": "ADJ",
+      "wrong_gloss": "the Prophet Ṣāliḥ / to be righteous",
+      "correct": "righteous / good (deed) (adjective)",
+      "why": "active participle used adjectivally; not the proper noun and not a verb, unless context certifies the name.",
+      "example_loc": "2:62:13"
+    }
+  ]
+}

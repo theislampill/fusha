@@ -1,0 +1,81 @@
+{
+  "$schema_note": "Referent guard: a divine-Name / Prophet / proper-noun sense must NEVER be carried onto a common word that merely shares its letters or root. An attribute glosses by who it points to. When the referent forces a non-divine / non-proper reading, emit the referent-correct common gloss; when the referent is unidentified, emit pending (reason referent_unresolved or proper_name). PENDING beats a wrong gloss. Read names with norm_strict/bare/QAC POS, never the recall-only norm().",
+  "generator": "authored by hand; aligned to nahw/examples/ayah-context-decisions.jsonl and function-word-decisions.jsonl",
+  "principle": "An attribute or homograph is glossed by its REFERENT. A human/created referent forbids a divine-Name reading; a common-noun referent forbids a Prophet/proper-noun reading.",
+  "rules": [
+    {
+      "id": "halim_referent",
+      "surface": "حَلِيمٌ",
+      "candidate_glosses": ["forbearing", "one of Allah's Names"],
+      "referent_test": "who is the described entity in this āyah?",
+      "decision_table": [
+        {
+          "when_referent": "a human (e.g. Ibrāhīm in إِنَّ إِبْرَاهِيمَ لَأَوَّاهٌ حَلِيمٌ)",
+          "contextual_choice": "forbearing",
+          "decision": "resolved",
+          "reason": "referent is a human; حَلِيمٌ is a human attribute here, NOT a divine Name",
+          "confidence": "high"
+        },
+        {
+          "when_referent": "Allah",
+          "contextual_choice": "the Forbearing (divine attribute)",
+          "decision": "resolved",
+          "reason": "referent is Allah; render as the divine attribute",
+          "confidence": "high"
+        },
+        {
+          "when_referent": "unidentified",
+          "decision": "pending",
+          "pending_reason": "referent_unresolved",
+          "reason": "do not assume a divine Name until the referent is fixed"
+        }
+      ],
+      "hard_guard": "never default an adjective like حَلِيم/كَرِيم/عَزِيز of a human to 'one of Allah's Names'"
+    },
+    {
+      "id": "salihan_proper_vs_common",
+      "surface": "صَٰلِحًا",
+      "candidate_glosses": ["righteous / good (deed)", "the Prophet Ṣāliḥ"],
+      "referent_test": "is this a name of the Prophet, or the common adjective/maṣdar?",
+      "decision_table": [
+        {
+          "when_referent": "an action / deed (e.g. عَمِلَ صَٰلِحًا)",
+          "contextual_choice": "righteous (deed) / good",
+          "decision": "resolved",
+          "reason": "naṣb common adjective qualifying a deed; NOT the proper name of the Prophet Ṣāliḥ",
+          "confidence": "high"
+        },
+        {
+          "when_referent": "the messenger sent to Thamūd",
+          "contextual_choice": "Ṣāliḥ (proper name)",
+          "decision": "resolved",
+          "reason": "definite proper-noun referent; render the name",
+          "confidence": "high"
+        },
+        {
+          "when_referent": "unidentified",
+          "decision": "pending",
+          "pending_reason": "proper_name",
+          "reason": "do not carry the Prophet sense onto the common adjective without a proper-noun referent"
+        }
+      ],
+      "hard_guard": "صَٰلِحًا as object of عَمِلَ is the common adjective; the Prophet reading requires a proper-noun referent"
+    },
+    {
+      "id": "proper_noun_not_verb",
+      "surface_class": "proper / descriptive names sharing a verbal root",
+      "examples": [
+        {"surface": "مُحَمَّد", "wrong": "to praise", "correct": "Muḥammad (proper name)", "reason_code": "proper_name"},
+        {"surface": "أَحْمَد", "wrong": "more praiseworthy (as a verb)", "correct": "Aḥmad (proper name)", "reason_code": "proper_name"}
+      ],
+      "decision": "resolved_as_name_else_pending",
+      "reason": "a proper noun is never glossed as its homographic verb; render the name or pending(proper_name)",
+      "guard": "POS mismatch: no 'to …' verb gloss on a proper noun"
+    }
+  ],
+  "general_guards": [
+    "Divine Names are render-by-referent: an attribute of a created being is the common adjective, not a Name.",
+    "Prophet/proper names are never their homographic common verb/noun (مُحَمَّد ≠ 'to praise'; صَٰلِحًا as a deed ≠ the Prophet).",
+    "Prefer pending(referent_unresolved | proper_name) over a referent-wrong gloss."
+  ]
+}

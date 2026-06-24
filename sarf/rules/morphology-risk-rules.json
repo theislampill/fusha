@@ -1,0 +1,63 @@
+{
+  "schema": "sarf/morphology-risk-rules@1",
+  "purpose": "The risk_flags vocabulary for a sarf decision object. Each flag has a trigger condition and the decision it forces. A flag does not always block — but it forbids authoring unless the named evidence resolves it. When in doubt the flag forces pending. Prefer pending over wrong.",
+  "fields": {
+    "flag": "the risk_flag emitted in the decision object's risk_flags[]",
+    "trigger": "the condition under which the flag fires",
+    "decision": "the forced decision: pending | quarantine | review_then_author",
+    "pending_reason": "the precise reason code recorded when the flag forces pending",
+    "resolve_with": "the evidence that clears the flag and permits authoring"
+  },
+  "risk_flags": [
+    {
+      "flag": "multi_sense_root",
+      "trigger": "the certified root has multiple distinct Qamus senses and more than one could apply at this loc (e.g. م ل ك → king/dominion/angel; ن ه ر → rivers/daytime; س ل م → Islam/peace).",
+      "decision": "review_then_author",
+      "pending_reason": "multi_sense_root",
+      "resolve_with": "context fixes a single applicable sense (via the nahw skill / āyah context). If still ambiguous → pending. Deny the polyseme sense that does not apply (see homograph-quarantines surface-deny entries)."
+    },
+    {
+      "flag": "hamza_sensitive",
+      "trigger": "the token bears a hamza (أ إ ؤ ئ ء) or collides under norm() with a differently-seated form (إِيمَان/أَيْمَان; يَأْمُرُونَ/يَمُرُّونَ; إِلَيْنَا as a false ل ي ن stem).",
+      "decision": "review_then_author",
+      "pending_reason": "hamza_sensitive_homograph",
+      "resolve_with": "norm_strict() keeps the seat AND the QAC root agrees. If the seat is absent/ambiguous in the source → pending."
+    },
+    {
+      "flag": "verb_on_noun_risk",
+      "trigger": "a verb-infinitive ('to ...') gloss is proposed while qac_pos in ['N','PN','ADJ'] (رَسُولًا, ٱبْن, بَنَات, بَنِي, مُحَمَّد).",
+      "decision": "quarantine",
+      "pending_reason": "pos_mismatch",
+      "resolve_with": "drop the verb gloss; author a nominal gloss only if a Qamus sense supports the nominal use, else pending."
+    },
+    {
+      "flag": "derived_form",
+      "trigger": "the token is a derived form (II-X) whose sense/transitivity shifts from Form I, a passive vs active, or a maṣdar/participle (يُحَذِّر≠'be cautious'; أَلْقَوْا IV; فَأَخْرَجَ IV; تَحْرِير maṣdar).",
+      "decision": "review_then_author",
+      "pending_reason": "derived_form_needs_review",
+      "resolve_with": "confirm the wazn and use the matching Qamus sense; maṣdar/participle take a NOMINAL gloss; passive ≠ active wording. If the form is unresolved → pending."
+    },
+    {
+      "flag": "weak_letter",
+      "trigger": "the root contains a weak radical (و/ي/ء) — hollow, defective, or assimilated — so a subsequence/heuristic root check would falsely reject or mis-extract (قَالُوا root ق و ل; يَأْتِي root أ ت ي).",
+      "decision": "review_then_author",
+      "pending_reason": "root_exists_form_unresolved",
+      "resolve_with": "use the QAC root rather than a surface-radical heuristic; never let norm() decide the root for a weak stem."
+    },
+    {
+      "flag": "tanwin_alef",
+      "trigger": "the token ends in ـًا (ʾalif al-tanwīn) and so LOOKS like a stem + ـنا 1pl pronoun but is not (قُرْءَانًا, مَتَٰعًا).",
+      "decision": "review_then_author",
+      "pending_reason": "root_exists_form_unresolved",
+      "resolve_with": "ends_tanwin_alef(tok) is True → do NOT split off a نا pronoun; the alif is accusative tanwīn. Re-derive the stem without the false enclitic."
+    },
+    {
+      "flag": "proper_noun",
+      "trigger": "qac_pos == 'PN' (مُحَمَّد, أَحْمَد), or a descriptive form is being read as a name (صَٰلِحًا as the Prophet Ṣāliḥ), or a referent guard applies (حَلِيمٌ of Ibrāhīm is a human attribute, not a divine Name).",
+      "decision": "quarantine",
+      "pending_reason": "proper_noun",
+      "resolve_with": "never gloss a name by its root verb; record name-as-name or pending. For referent guards, gloss to the referent's register (human attribute, not divine Name) only when context certifies."
+    }
+  ],
+  "standing_order": "If the distinguishing diacritic, hamza seat, shadda, or POS evidence is ABSENT or ambiguous in the source, the decision is pending with the precise reason above. Never pick the commoner reading. PENDING beats wrong."
+}

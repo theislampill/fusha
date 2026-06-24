@@ -1,0 +1,205 @@
+{
+  "$schema_note": "Diacritic + context disambiguation rules for high-frequency Arabic function-word homographs that norm() collapses. Each rule keys on the harakah of the CONTENT letter (read AFTER any و/ف proclitic), never the first letter. Consume with tools.normalize_ar: haraka_on(tok, letter), shadda_on(tok, letter), is_man_who(tok). FATHA=064E, KASRA=0650, DAMMA=064F, SHADDA=0651. A rule emits decision_if_A / decision_if_B; if the diacritic is absent (undiacritized input) emit the pending fallback. PENDING beats a wrong gloss.",
+  "generator": "authored by hand; validate field names against nahw/examples/function-word-decisions.jsonl",
+  "reason_code": "homograph_haraka",
+  "rules": [
+    {
+      "id": "man_vs_min",
+      "surface_norm": "من",
+      "members": ["مَن", "مِن", "وَمِنَ", "مِنَ"],
+      "distinguish_by": {
+        "signal": "haraka_on(tok, 'م')",
+        "also": "shadda_on(tok, 'ن') guards the verb مَنَّ 'to bestow'",
+        "helper": "is_man_who(tok)"
+      },
+      "decision_if_A": {
+        "when": "no kasra on mīm (fatḥa or bare) AND no shadda on nūn",
+        "reading": "مَن — relative / interrogative pronoun",
+        "gloss": "who / whoever / he who",
+        "decision": "resolved",
+        "reason": "fatḥa (or bare) on the mīm content letter → pronoun, not the preposition مِنْ"
+      },
+      "decision_if_B": {
+        "when": "kasra on mīm (incl. وَمِنَ where the و proclitic shifts the harakah right)",
+        "reading": "مِنْ — preposition",
+        "gloss": "from / among / of",
+        "decision": "resolved",
+        "reason": "kasra on the mīm content letter → preposition; the leading و/ف does not move the decision letter"
+      },
+      "pending_fallback": {
+        "decision": "pending",
+        "pending_reason": "homograph_haraka",
+        "note": "undiacritized input: مَن/مِن indistinguishable without the content-letter harakah"
+      },
+      "guard": "وَمِنَ is NOT وَمَن; وَمَنَّ (shadda on nūn) is the verb 'to bestow', neither pronoun nor preposition"
+    },
+    {
+      "id": "lam_vs_lima",
+      "surface_norm": "لم",
+      "members": ["لَمْ", "لِمَ"],
+      "distinguish_by": {
+        "signal": "haraka_on(tok, 'ل')",
+        "also": "sukūn on mīm marks لَمْ; fatḥa on mīm marks لِمَ"
+      },
+      "decision_if_A": {
+        "when": "fatḥa on lām (and the following verb is jussive)",
+        "reading": "لَمْ — negative particle + jazm",
+        "gloss": "did not / has not",
+        "decision": "resolved",
+        "reason": "negation of the past via jussive; e.g. لَمْ يَلِدْ"
+      },
+      "decision_if_B": {
+        "when": "kasra on lām",
+        "reading": "لِ (interrogative lām) + مَ",
+        "gloss": "why / for what",
+        "decision": "resolved",
+        "reason": "interrogative لِمَ; e.g. لِمَ تَقُولُونَ"
+      },
+      "pending_fallback": {
+        "decision": "pending",
+        "pending_reason": "homograph_haraka",
+        "note": "without the lām harakah, لَمْ 'did not' and لِمَ 'why' are not separable"
+      }
+    },
+    {
+      "id": "an_vs_inna",
+      "surface_norm": "ان",
+      "members": ["أَنْ", "أَنَّ", "إِنَّ", "إِنْ"],
+      "distinguish_by": {
+        "signal": "hamza seat (أ vs إ) — preserved by norm_strict(), dropped by norm()",
+        "also": "shadda_on(tok, 'ن') separates the emphatic أَنَّ/إِنَّ from light أَنْ/إِنْ"
+      },
+      "decision_if_A": {
+        "when": "alif-hamza-above (أ) seat",
+        "reading": "أَنْ (maṣdariyyah / subjunctive) or أَنَّ (emphatic 'that')",
+        "gloss": "to / that",
+        "decision": "resolved",
+        "reason": "fatḥa-seat hamza → أَنْ/أَنَّ; light أَنْ takes subjunctive, أَنَّ (shadda) takes a noun-clause"
+      },
+      "decision_if_B": {
+        "when": "alif-hamza-below (إ) seat",
+        "reading": "إِنَّ (emphatic) or إِنْ (conditional/negative)",
+        "gloss": "indeed / verily (إِنَّ) — or — if (إِنْ)",
+        "decision": "resolved",
+        "reason": "kasra-seat hamza → إِنَّ/إِنْ; shadda marks the emphatic, light إِنْ is conditional or negating"
+      },
+      "pending_fallback": {
+        "decision": "pending",
+        "pending_reason": "seat_collapsed",
+        "note": "if norm() dropped the hamza seat, re-read with norm_strict before deciding أَنْ vs إِنَّ"
+      }
+    },
+    {
+      "id": "anni_vs_anna",
+      "surface_norm": "اني",
+      "members": ["أَنِّي", "أَنَّى"],
+      "distinguish_by": {
+        "signal": "kasra cluster on nūn → أَنِّي; fatḥa on nūn → أَنَّى",
+        "also": "final yāʾ ـِي (1sg pronoun) vs final alif-maqṣūra ـَى"
+      },
+      "decision_if_A": {
+        "when": "kasra on nūn + attached ـِي",
+        "reading": "أَنَّ + ـِي (1sg)",
+        "gloss": "that I",
+        "decision": "resolved",
+        "reason": "kasra cluster on the nūn; e.g. أَنِّي أَنَا الْغَفُورُ"
+      },
+      "decision_if_B": {
+        "when": "fatḥa on nūn + final alif-maqṣūra",
+        "reading": "أَنَّى — interrogative/adverbial",
+        "gloss": "how? / whence? / wherever",
+        "decision": "resolved",
+        "reason": "fatḥa on nūn → adverbial أَنَّى, not the pronoun-bearing أَنِّي"
+      },
+      "pending_fallback": {
+        "decision": "pending",
+        "pending_reason": "homograph_haraka",
+        "note": "without the nūn harakah, أَنِّي 'that I' vs أَنَّى 'how' is undecidable"
+      }
+    },
+    {
+      "id": "lima_vs_lamma",
+      "surface_norm": "لما",
+      "members": ["لِمَا", "لَمَا", "لَمَّا"],
+      "distinguish_by": {
+        "signal": "shadda_on(tok, 'م') → لَمَّا; absent → لِمَا / لَمَا",
+        "also": "kasra on lām marks the لِ + relative مَا reading"
+      },
+      "decision_if_A": {
+        "when": "shadda on mīm",
+        "reading": "لَمَّا — temporal / 'not yet'",
+        "gloss": "when / after / not yet",
+        "decision": "resolved",
+        "reason": "shadda on the mīm marks لَمَّا; e.g. فَلَمَّا جَاءَهُمْ"
+      },
+      "decision_if_B": {
+        "when": "no shadda on mīm (kasra on lām)",
+        "reading": "لِ (preposition/lām) + relative مَا",
+        "gloss": "for / to that which",
+        "decision": "resolved",
+        "reason": "لِ + relative مَا, no shadda; e.g. مُصَدِّقًا لِّمَا بَيْنَ يَدَيْهِ"
+      },
+      "pending_fallback": {
+        "decision": "pending",
+        "pending_reason": "homograph_haraka",
+        "note": "the shadda on the mīm is the decisive mark; if absent in input, do not guess 'when'"
+      }
+    },
+    {
+      "id": "kull_vs_kalla",
+      "surface_norm": "كلا",
+      "members": ["كُلّ", "كُلًّا", "كَلَّا"],
+      "distinguish_by": {
+        "signal": "haraka_on(tok, 'ك')",
+        "also": "ḍamma on kāf → كُلّ 'all'; fatḥa on kāf → كَلَّا 'nay'"
+      },
+      "decision_if_A": {
+        "when": "ḍamma on kāf",
+        "reading": "كُلّ / كُلًّا — quantifier",
+        "gloss": "all / each / every",
+        "decision": "resolved",
+        "reason": "ḍamma on the kāf content letter → quantifier; e.g. وَيَعْقُوبَ كُلًّا هَدَيْنَا"
+      },
+      "decision_if_B": {
+        "when": "fatḥa on kāf",
+        "reading": "كَلَّا — deterrent particle",
+        "gloss": "nay / by no means / not so",
+        "decision": "resolved",
+        "reason": "fatḥa on the kāf → the rebuke particle كَلَّا, not the quantifier كُلّ"
+      },
+      "pending_fallback": {
+        "decision": "pending",
+        "pending_reason": "homograph_haraka",
+        "note": "kāf harakah (ḍamma vs fatḥa) is the only separator; do not default to 'all'"
+      }
+    },
+    {
+      "id": "nima_vs_naam",
+      "surface_norm": "نعم",
+      "members": ["نِعْمَ", "نَعَمْ"],
+      "distinguish_by": {
+        "signal": "haraka_on(tok, 'ن')",
+        "also": "kasra on nūn + sukūn on ʿayn → نِعْمَ; fatḥa on nūn → نَعَمْ"
+      },
+      "decision_if_A": {
+        "when": "kasra on nūn",
+        "reading": "نِعْمَ — verb of praise (jāmid)",
+        "gloss": "how excellent / what a good",
+        "decision": "resolved",
+        "reason": "kasra on nūn marks the praise verb; e.g. نِعْمَ الثَّوَابُ"
+      },
+      "decision_if_B": {
+        "when": "fatḥa on nūn",
+        "reading": "نَعَمْ — affirmation particle",
+        "gloss": "yes / indeed",
+        "decision": "resolved",
+        "reason": "fatḥa on nūn → affirmation, not the praise verb نِعْمَ"
+      },
+      "pending_fallback": {
+        "decision": "pending",
+        "pending_reason": "homograph_haraka",
+        "note": "nūn harakah decides praise-verb vs 'yes'; undiacritized input stays pending"
+      }
+    }
+  ]
+}

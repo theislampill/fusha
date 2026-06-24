@@ -22,3 +22,8 @@ qac-*.tsv
 *.weights
 .scan*.json
 *.local.json
+
+# local scratch (agent slices, enriched inputs)
+.p4*
+.hover_*
+.scan*

@@ -1,0 +1,83 @@
+{
+  "schema": "sarf/root-decision-rules@1",
+  "purpose": "The ordered root-decision ladder for certifying a triliteral (or quadriliteral) root before authoring a scripture-facing gloss. Stop at the first rung that certifies. A heuristic root alone is never enough. norm() never certifies a root — it only assists lookup.",
+  "fields": {
+    "rank": "evaluation order; lower binds first",
+    "rung": "the evidence source",
+    "certifies": "true if this rung alone is sufficient to certify a root",
+    "use": "what this rung is for",
+    "guard": "constraints that must hold when relying on this rung"
+  },
+  "norm_never_certifies": {
+    "rule": "norm() (lenient recall key) drops the hamza seat and all harakāt. It may locate a candidate but MUST NEVER be the sole basis for certifying a root, lemma, or sense. Any authored root must additionally pass norm_strict() and agree with the QAC root.",
+    "violations_it_prevents": [
+      "إِلَيْنَا certified as root ل ي ن (it is إِلَى + ـنا)",
+      "إِيمَان (أ م ن) collapsed onto أَيْمَان (ي م ن)",
+      "قُرْءَانًا split as stem + نا (it is tanwīn-alef ـًا)",
+      "مَالِكِ read as the phrase مَا لَكَ"
+    ]
+  },
+  "ladder": [
+    {
+      "rank": 1,
+      "rung": "qamus_entry",
+      "certifies": true,
+      "use": "An existing Qamus source entry whose root + headword match the token (verified via norm_strict, not norm) certifies the root directly.",
+      "guard": "Match must hold under norm_strict() AND not be a homograph collision; if the entry's count/form is itself wrong, emit a repair candidate instead of trusting it."
+    },
+    {
+      "rank": 2,
+      "rung": "qac_root",
+      "certifies": true,
+      "use": "The QAC per-word root/POS is authoritative INTERNAL morphology evidence and certifies the root when no Qamus entry exists yet.",
+      "guard": "Use QAC internally only; never expose QAC/informed_by in a public artifact. The public record stays {src:'qamus', kind:'authored'}."
+    },
+    {
+      "rank": 3,
+      "rung": "photographed_source_page",
+      "certifies": true,
+      "use": "The owner's photographed dictionary page certifies the root when transcribing a new entry.",
+      "guard": "Transcribe the root exactly as printed; it is scripture-adjacent content the owner verifies."
+    },
+    {
+      "rank": 4,
+      "rung": "external_reference_triangulation",
+      "certifies": true,
+      "use": "Triangulation across independent references certifies a root only when rungs 1-3 are unavailable.",
+      "guard": "Never copy an external gloss text into the public artifact; use the reference only to confirm the root, then author original wording."
+    },
+    {
+      "rank": 5,
+      "rung": "heuristic_wazn_shape",
+      "certifies": false,
+      "use": "A morphological-shape heuristic (radical extraction by wazn) may PROPOSE a root for review.",
+      "guard": "A heuristic root alone is NEVER enough for a scripture-facing gloss. Emit pending (reason source_evidence_needed). Hollow/weak/hamza-bearing stems are exactly where the heuristic lies — defer to QAC."
+    }
+  ],
+  "decision_rules": [
+    {
+      "id": "stop-at-first-certifying-rung",
+      "when": "a rung with certifies==true matches under norm_strict()/QAC agreement",
+      "then": "certify the root; proceed to the POS ladder.",
+      "reason": null
+    },
+    {
+      "id": "heuristic-only-is-pending",
+      "when": "only the heuristic rung (rank 5) produced a root",
+      "then": "do NOT author; emit pending.",
+      "reason": "source_evidence_needed"
+    },
+    {
+      "id": "norm-only-match-is-pending",
+      "when": "the only evidence is a norm() (lenient) match that does not survive norm_strict() or disagrees with QAC",
+      "then": "do NOT certify; emit pending.",
+      "reason": "hamza_sensitive_homograph"
+    },
+    {
+      "id": "qamus-entry-conflicts-with-qac",
+      "when": "a Qamus entry's root disagrees with the QAC root for the same token",
+      "then": "do NOT author from the entry; emit a Qamus repair candidate with source address + field path.",
+      "reason": "qamus_entry_needs_repair"
+    }
+  ]
+}

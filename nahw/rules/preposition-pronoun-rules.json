@@ -1,0 +1,74 @@
+{
+  "$schema_note": "How a preposition + attached pronoun reshapes the gloss WORDING by referent. The lexeme stays fixed; only the rendered English changes with who/what the suffix points to. Attached pronouns ـه/ـها/ـهم/ـكم/ـنا change wording, not the head sense, and never invent a new stem. Never confuse ʾalif al-tanwīn (ـًا) with the pronoun نا — use tools.normalize_ar.ends_tanwin_alef(raw). The decisive guard: إِلَيْنَا is the jar-majrūr إِلَى + نا (root ʾ-l-y), it is NOT the root ل-ي-ن 'soft' — read with norm_strict/bare, never the recall-only norm().",
+  "generator": "authored by hand; field names aligned to nahw/examples/function-word-decisions.jsonl",
+  "reason_code": "referent_unresolved",
+  "rules": [
+    {
+      "id": "bihi",
+      "surface": "بِهِ",
+      "lexeme": "بِ (preposition) + ـهِ (3sg pronoun)",
+      "base_sense": "بِ = with / by / in / through (instrumental, locative, or oath, by context)",
+      "renderings_by_referent": [
+        {"referent": "a person (masc.)", "gloss": "in him / with him / by him"},
+        {"referent": "a thing / abstraction", "gloss": "in it / with it / by it"},
+        {"referent": "belief object (آمَنَ بِهِ)", "gloss": "in it / in him — believed IN"}
+      ],
+      "decision": "resolved_with_referent_else_pending",
+      "default_when_referent_known": "in it / with it (by referent)",
+      "pending_reason_when_unknown": "referent_unresolved",
+      "reason": "preposition + pronoun; the English 'in/with/by it/him' is fixed only once the referent is identified"
+    },
+    {
+      "id": "lahu",
+      "surface": "لَهُ",
+      "lexeme": "لِ (preposition) + ـهُ (3sg pronoun)",
+      "base_sense": "لِ = for / to / belonging to (possession, benefit, or dative)",
+      "renderings_by_referent": [
+        {"referent": "a person (masc.)", "gloss": "for him / to him / belongs to him"},
+        {"referent": "a thing / abstraction", "gloss": "for it / to it / belongs to it"},
+        {"referent": "Allah (لَهُ ٱلْمُلْك)", "gloss": "to Him belongs"}
+      ],
+      "decision": "resolved_with_referent_else_pending",
+      "default_when_referent_known": "for him / to him (by referent)",
+      "pending_reason_when_unknown": "referent_unresolved",
+      "reason": "the possession vs dative shade and him/it choice depend on the referent of ـهُ"
+    },
+    {
+      "id": "ilayna",
+      "surface": "إِلَيْنَا",
+      "lexeme": "إِلَى (preposition) + ـنا (1pl pronoun)",
+      "base_sense": "إِلَى = to / toward / unto",
+      "renderings_by_referent": [
+        {"referent": "1pl (us)", "gloss": "to us / unto us"}
+      ],
+      "decision": "resolved",
+      "default": "to us",
+      "reason": "jar-majrūr إِلَى + نا; e.g. ثُمَّ إِلَيْنَا مَرْجِعُكُمْ",
+      "hard_guard": {
+        "do_not": "do NOT analyze as root ل-ي-ن ('soft / pliant')",
+        "why": "the ـنا is the 1pl pronoun, NOT a stem of layyin; norm() over-recalls to ل-ي-ن — re-read with norm_strict/bare before glossing",
+        "also": "ends_tanwin_alef() distinguishes a genuine ـنا pronoun from ʾalif al-tanwīn ـًا on other tokens",
+        "reason_code_if_mis_matched": "seat_collapsed"
+      }
+    },
+    {
+      "id": "inda",
+      "surface": "عِنْدَ",
+      "lexeme": "عِنْدَ — adverb of place / iḍāfa head (ẓarf makān)",
+      "base_sense": "near / with / at; figuratively 'in the sight/estimation of'",
+      "renderings_by_referent": [
+        {"referent": "physical proximity", "gloss": "near / at / by"},
+        {"referent": "possession (عِنْدَهُ)", "gloss": "with him / he has"},
+        {"referent": "Allah (عِندَ ٱللَّهِ)", "gloss": "in the sight of / with Allah"}
+      ],
+      "decision": "resolved_with_context_else_pending",
+      "default_when_head_known": "with / near / in the sight of (by construct head)",
+      "pending_reason_when_unknown": "referent_unresolved",
+      "reason": "gloss the PHRASE role of the iḍāfa, not just the lexeme; the head noun of the construct selects 'near' vs 'in the sight of'",
+      "polyseme_guard": {
+        "do_not": "do NOT carry a same-root sense 'stubborn' (عَنِيد / عِنَاد) onto the ẓarf عِنْدَ",
+        "reason_code": "multi_sense"
+      }
+    }
+  ]
+}
