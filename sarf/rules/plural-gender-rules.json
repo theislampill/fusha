@@ -1,0 +1,169 @@
+{
+  "schema": "fusha/plural-gender-rules@1",
+  "purpose": "Patterns and grammatical-gender cues for certifying a noun's plural form and its gender BEFORE authoring a scripture-facing gloss or an agreement note. Consumed by the noun-plural-gender procedure. A plural pattern observed on the surface PROPOSES a class; it never certifies the singular root by itself — defer root certification to ../rules/root-decision-rules.json. Gender is a property of the lemma, not of the surface tā' marbūṭa: many feminine words carry no ـة and several ـة-bearing words are masculine. Public artifacts stay {src:'qamus', kind:'authored'}; QAC POS/gender is INTERNAL evidence only and is never exposed.",
+  "fields": {
+    "id": "stable rule key",
+    "kind": "msl (jamʿ mudhakkar sālim) | mfl (jamʿ muʾannath sālim) | taksir (jamʿ taksīr) | cue",
+    "wazn": "the template, written with ف ع ل radical placeholders and full diacritics",
+    "test": "the operational signal on the diacritized surface (which letters / harakāt / suffix)",
+    "singular_hint": "how the singular relates to the plural; never a certification on its own",
+    "gender": "grammatical gender the pattern implies, or 'lemma-bound' when the pattern is gender-neutral",
+    "example": "a vowelized Arabic word",
+    "example_loc": "a quran:S:A:W where the form occurs",
+    "guard": "what must hold; what NOT to infer from this pattern"
+  },
+  "decide_on_diacritics": "Every test reads the FULL diacritized surface. A bare skeleton (مسلمون vs no harakāt) cannot distinguish masculine-sound nominative مُسْلِمُونَ from a hollow stem; if the harakāt or the case-suffix vowel is absent, emit pending rather than guessing the commoner reading. The case ending (ـُونَ/ـِينَ for msl, ـَاتٌ/ـَاتٍ for mfl) is part of the signal.",
+  "patterns": [
+    {
+      "id": "msl-nominative",
+      "kind": "msl",
+      "wazn": "فَاعِلُونَ / فَعِلُونَ",
+      "test": "stem + ـُونَ (wāw-ḍamma + nūn-fatḥa) in the nominative; suffix ـِينَ (yā'-kasra + nūn) in the accusative/genitive.",
+      "singular_hint": "drop the case suffix → the masculine singular (مُسْلِمٌ ← مُسْلِمُونَ). The suffix is inflection, never a radical.",
+      "gender": "masculine",
+      "example": "ٱلْمُسْلِمُونَ",
+      "example_loc": "33:35:1",
+      "guard": "Sound-masculine plural is reserved for rational/animate masculine referents and a small fixed set (سِنُونَ, أَرَضُونَ). Do not treat the ـُونَ/ـِينَ as part of the root; do not certify a root from the suffix. Distinguish from the dual ـَانِ/ـَيْنِ."
+    },
+    {
+      "id": "msl-genitive-accusative",
+      "kind": "msl",
+      "wazn": "فَاعِلِينَ",
+      "test": "stem + ـِينَ (yā'-kasra + nūn-fatḥa). Same lemma as msl-nominative, oblique case.",
+      "singular_hint": "identical singular to msl-nominative; only the case vowel differs.",
+      "gender": "masculine",
+      "example": "ٱلصَّٰبِرِينَ",
+      "example_loc": "2:153:6",
+      "guard": "Do NOT confuse the oblique sound-masculine ـِينَ with the broken-plural feminine ـِينَ-shaped endings or with the dual oblique ـَيْنِ. The yā' here carries kasra and the nūn fatḥa."
+    },
+    {
+      "id": "mfl-sound",
+      "kind": "mfl",
+      "wazn": "فَاعِلَاتٌ / فَعْلَاتٌ",
+      "test": "stem + ـَاتٌ (alif + tā' maftūḥa, NOT tā' marbūṭa) with ḍamma in the nominative, kasra (ـَاتٍ) in the oblique.",
+      "singular_hint": "the singular usually ends in tā' marbūṭa (مُسْلِمَةٌ ← مُسْلِمَاتٌ); the marbūṭa opens to a maftūḥa tā' in the plural.",
+      "gender": "feminine",
+      "example": "ٱلْمُسْلِمَاتِ",
+      "example_loc": "33:35:3",
+      "guard": "The oblique sound-feminine takes KASRA not fatḥa (مُسْلِمَاتٍ, not *مُسْلِمَاتَ) — it is a diptote-exception that takes kasra. Do not read the final ـَات as a feminine of the broken pattern فَعَلَات without checking soundness."
+    },
+    {
+      "id": "taksir-afal",
+      "kind": "taksir",
+      "wazn": "أَفْعَال",
+      "test": "prefixed hamza-fatḥa + skeletal فعل; common plural of triliteral nouns.",
+      "singular_hint": "singular is often فَعْل/فِعْل (قَوْل ← أَقْوَال, نَهْر ← أَنْهَار). The internal vowel change IS the plural — no sound suffix.",
+      "gender": "lemma-bound",
+      "example": "أَنْهَٰر",
+      "example_loc": "2:25:18",
+      "guard": "Broken plurals are gender-neutral on the surface: gender is decided by the lemma + agreement, not by the أفعال shape. أَنْهَار is the plural of نَهْر 'river', NOT نَهَار 'daytime' — see the ن ه ر quarantine in ../rules/homograph-quarantines.json."
+    },
+    {
+      "id": "taksir-fual",
+      "kind": "taksir",
+      "wazn": "فُعُل / فُعَل",
+      "test": "ḍamma-ḍamma or ḍamma-fatḥa internal vocalisation, no external suffix.",
+      "singular_hint": "فُعُل pluralises فَعُول/فِعَال singulars (رَسُول ← رُسُل); فُعَل pluralises فُعْلَة (غُرْفَة ← غُرَف).",
+      "gender": "lemma-bound",
+      "example": "ٱلرُّسُل",
+      "example_loc": "2:285:9",
+      "guard": "رُسُل is a broken plural of رَسُول and refers to rational beings, yet — being a broken (not sound-masculine) plural — it may take feminine-singular agreement on its verb/adjective. Decide agreement from the agreement cue, not from the referent's natural sex."
+    },
+    {
+      "id": "taksir-fuala",
+      "kind": "taksir",
+      "wazn": "فُعَلَاء / أَفْعِلَاء",
+      "test": "ـَاء (alif + hamza) terminal; pluralises adjectival فَعِيل singulars denoting rational masculine referents.",
+      "singular_hint": "فَعِيل ← فُعَلَاء (شَهِيد ← شُهَدَاء, نَبِيّ ← أَنْبِيَاء via أَفْعِلَاء).",
+      "gender": "masculine (rational referents)",
+      "example": "ٱلشُّهَدَاء",
+      "example_loc": "2:282:23",
+      "guard": "The terminal ـَاء is a feminine/plural marker here, NOT a radical hamza. Do not certify a hamza-final root from this surface; check the seat per ../rules/hamza-gates.json before reading a third radical hamza."
+    },
+    {
+      "id": "taksir-mafail",
+      "kind": "taksir",
+      "wazn": "مَفَاعِل / فَوَاعِل / فَعَائِل",
+      "test": "the 'broken plural of plenty' (ṣīghat muntahā al-jumūʿ): a long ā after the second radical and a kasra before the last. Diptote — no tanwīn, oblique takes fatḥa.",
+      "singular_hint": "quadriliteral / augmented singulars (مَسْجِد ← مَسَاجِد, رِسَالَة ← رَسَائِل).",
+      "gender": "lemma-bound",
+      "example": "مَسَٰجِد",
+      "example_loc": "2:114:6",
+      "guard": "This class is MAMNŪʿ MIN AL-ṢARF (diptote): it refuses tanwīn and takes FATḤA in the oblique (فِي مَسَاجِدَ, not *مَسَاجِدٍ). Authoring an oblique kasra-tanwīn here is a known error — verify the case vowel before glossing case."
+    }
+  ],
+  "gender_cues": [
+    {
+      "id": "cue-ta-marbuta",
+      "kind": "cue",
+      "test": "lemma ends in tā' marbūṭa ـة → feminine by morphology (مَدِينَة, شَجَرَة).",
+      "gender": "feminine",
+      "example": "شَجَرَة",
+      "example_loc": "2:35:11",
+      "guard": "Strong cue but NOT absolute: a few ـة words are masculine (خَلِيفَة 'successor', عَلَّامَة 'great scholar') and take masculine agreement. The marbūṭa is necessary-not-sufficient; confirm against the agreement cue when stakes are high."
+    },
+    {
+      "id": "cue-feminine-no-marker",
+      "kind": "cue",
+      "test": "semantically/conventionally feminine lemma carrying NO ـة: body parts that come in pairs (يَد, عَيْن, أُذُن), and the fixed muʾannath samāʿī set (شَمْس, نَفْس, أَرْض, نَار, رِيح).",
+      "gender": "feminine",
+      "example": "ٱلشَّمْس",
+      "example_loc": "91:1:2",
+      "guard": "Never infer masculine merely because ـة is absent. شَمْس, أَرْض, نَفْس, نَار are feminine and govern feminine verbs/adjectives despite the bare skeleton. This is the single most common over-application of the marbūṭa shortcut."
+    },
+    {
+      "id": "cue-nonrational-plural-agreement",
+      "kind": "cue",
+      "test": "ANY plural of a non-rational noun (broken or sound) takes FEMININE-SINGULAR agreement on its verb, adjective, and demonstrative.",
+      "gender": "feminine-singular (agreement, not lemma gender)",
+      "example": "ءَايَٰتٌ بَيِّنَٰتٌ",
+      "example_loc": "3:97:1",
+      "guard": "This is grammatical agreement (mā lā yaʿqil), independent of the singular's gender. أَيَّام (m. sg. يَوْم) still takes feminine-singular agreement in the plural. Do not 'correct' a feminine-singular adjective on a non-rational plural to masculine plural."
+    },
+    {
+      "id": "cue-broken-plural-agreement",
+      "kind": "cue",
+      "test": "a BROKEN plural — even of rational beings — may take feminine-singular agreement, unlike the sound-masculine plural which takes masculine-plural agreement.",
+      "gender": "feminine-singular permitted",
+      "example": "وَقَالَ ٱلرُّسُلُ",
+      "example_loc": "14:11:1",
+      "guard": "Contrast مُسْلِمُونَ (sound, masc-pl agreement) with رُسُل (broken, may take fem-sg). The plural KIND, not the referent, sets the licensed agreement. Read the verb's gender/number from the text; do not normalise it."
+    },
+    {
+      "id": "cue-diptote-no-tanwin",
+      "kind": "cue",
+      "test": "ṣīghat muntahā al-jumūʿ and فُعَلَاء/أَفْعِلَاء classes are diptote: no tanwīn, oblique = fatḥa.",
+      "gender": "n/a (case behaviour, recorded as a cue)",
+      "example": "أَنبِيَآء",
+      "example_loc": "2:91:14",
+      "guard": "A missing tanwīn here is GRAMMATICAL, not a transcription gap; do not add one. If a gloss asserts the genitive with kasra-tanwīn on a diptote plural, flag it for repair per ../rules/root-decision-rules.json (qamus_entry_needs_repair)."
+    }
+  ],
+  "forbidden_shortcuts": [
+    {
+      "id": "ta-marbuta-equals-feminine",
+      "pattern": "treating presence/absence of ـة as a total decision for gender",
+      "why": "خَلِيفَة (masc, +ة) and شَمْس/أَرْض/نَفْس (fem, −ة) both falsify it. Use the gender_cues together with agreement; the marbūṭa is one signal, not the verdict."
+    },
+    {
+      "id": "broken-plural-from-skeleton",
+      "pattern": "classifying a broken plural (and inferring its singular/root) from the undiacritized consonant skeleton",
+      "why": "أَنْهَار vs نَهَار, أَيْمَان vs إِيمَان collapse without harakāt/seat. The plural pattern proposes a class only after the diacritics are read; root certification still goes through ../rules/root-decision-rules.json and the hamza seats through ../rules/hamza-gates.json."
+    },
+    {
+      "id": "suffix-as-radical",
+      "pattern": "counting the sound-plural suffix ـُونَ/ـِينَ/ـَات as part of the triliteral root",
+      "why": "مُسْلِمُون: the ـُون is inflection; the root is س ل م. Mistaking the suffix for a radical fabricates a quadriliteral root and a wrong gloss. norm() also erases the case vowel, so it cannot decide this — see norm_never_certifies in ../rules/root-decision-rules.json."
+    },
+    {
+      "id": "rational-implies-masc-plural-agreement",
+      "pattern": "forcing masculine-plural agreement on every plural of rational beings",
+      "why": "Only the SOUND masculine plural mandates masc-pl agreement; broken plurals of rational beings (رُسُل, أَنْبِيَاء) license feminine-singular agreement. Decide from the plural kind, read agreement off the verse, never normalise it."
+    },
+    {
+      "id": "afal-default-gloss",
+      "pattern": "auto-glossing any أَفْعَال surface by its commonest member",
+      "why": "أَيْمَان could be 'oaths' (ي م ن) and أَنْهَار 'rivers' (ن ه ر) — both are أفعال but their singulars/roots differ. Defer to the homograph quarantines and certify the singular root before glossing the plural."
+    }
+  ]
+}

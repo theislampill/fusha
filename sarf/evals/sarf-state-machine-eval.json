@@ -1,0 +1,301 @@
+{
+  "schema": "fusha/sarf-state-machine-eval@1",
+  "purpose": "Treat morphological resolution as a hidden-state machine: the OBSERVED surface (with whatever diacritics the source carries) is the emission; the CORRECT root/lemma/pos/form is the hidden state. norm() over-collapses emissions, so several distinct states map to one observation. Each case fixes the right hidden state, lists the plausible distractors a surface-keyed resolver would fall into, names the evidence that disambiguates, and the gate that decision must clear. Mirrors the regression style of ../examples/qamus-regressions.jsonl but adds the explicit distractor set + evidence the resolver must demand.",
+  "case_schema": {
+    "id": "stable kebab id",
+    "observation": {"surface_ar": "display surface with diacritics", "norm_key": "the over-collapsed key the resolver actually sees (no harakāt/hamza-seat/shadda)"},
+    "correct_hidden_state": {"root": "space-separated radicals or null for rootless particles", "lemma": "vowelled citation form", "pos": "verb | noun | masdar | participle | adjective | particle | proper_noun | pronoun", "form": "I-X | null"},
+    "distractor_states": "the hidden states a surface/norm-keyed resolver would wrongly emit, each with why it loses",
+    "evidence_required": "signals that must be present to certify the correct state; subset of qac | norm_strict | content_letter_harakah | hamza_seat | shadda | voice_pattern | wazn | context_nahw | referent",
+    "expected_gate": "auto_safe | two_vote_required | human_source_review_required | never_auto_resolve"
+  },
+  "gate_legend": {
+    "auto_safe": "key collision-free AND single applicable sense — a form-aware gloss may ship cited",
+    "two_vote_required": "derived-form sense shift / passive / negation-governed — two independent agreements needed",
+    "human_source_review_required": "needs a photographed-source or context check beyond automatic signals",
+    "never_auto_resolve": "the distinguishing signal is dropped by the key (or absent in source) — pending, never the commoner reading"
+  },
+  "evidence_sources_internal": "qac/norm_strict/diacritic helpers are INTERNAL evidence only; the public record is always {src:'qamus',kind:'authored'} per ../../qamus/schemas/authored-gloss.schema.json",
+  "see_also": ["../examples/qamus-regressions.jsonl", "../rules/verb-measure-gates.json", "../rules/weak-root-gates.json", "../rules/homograph-quarantines.json", "./qamus-regression-eval.json"],
+  "cases": [
+    {
+      "id": "weak-hollow-qaala",
+      "observation": {"surface_ar": "قَالَ", "norm_key": "قال"},
+      "correct_hidden_state": {"root": "ق و ل", "lemma": "قَالَ", "pos": "verb", "form": "I"},
+      "distractor_states": [
+        {"state": {"root": "ق ا ل", "pos": "verb"}, "why_loses": "treats the alif as a radical; the middle radical is و (hollow verb), surfacing as alif only in the perfect"},
+        {"state": {"decision": "pending", "reason": "multi_sense_root"}, "why_loses": "a single-sense filter over-pends a high-frequency unambiguous verb"}
+      ],
+      "evidence_required": ["qac", "wazn"],
+      "expected_gate": "auto_safe"
+    },
+    {
+      "id": "weak-final-yaqdi",
+      "observation": {"surface_ar": "يَقْضِي", "norm_key": "يقضي"},
+      "correct_hidden_state": {"root": "ق ض ي", "lemma": "قَضَى", "pos": "verb", "form": "I"},
+      "distractor_states": [
+        {"state": {"root": "ق ض و", "pos": "verb"}, "why_loses": "final-weak root is ي not و; the imperfect ـضِي preserves the ي radical"},
+        {"state": {"pos": "noun", "lemma": "قَاضِي"}, "why_loses": "قَاضِي 'judge' shares the radicals but is a participle, not this finite imperfect"}
+      ],
+      "evidence_required": ["qac", "norm_strict"],
+      "expected_gate": "auto_safe"
+    },
+    {
+      "id": "weak-assimilated-yajidu",
+      "observation": {"surface_ar": "يَجِدُ", "norm_key": "يجد"},
+      "correct_hidden_state": {"root": "و ج د", "lemma": "وَجَدَ", "pos": "verb", "form": "I"},
+      "distractor_states": [
+        {"state": {"root": "ج د د", "pos": "verb"}, "why_loses": "the imperfect drops the initial و (assimilated/miṯāl verb); norm sees only ج-د and reaches for a doubled root"},
+        {"state": {"root": "ج و د", "pos": "verb"}, "why_loses": "wrong hollow root; the citation form وَجَدَ recovers the dropped و radical"}
+      ],
+      "evidence_required": ["qac", "wazn"],
+      "expected_gate": "auto_safe"
+    },
+    {
+      "id": "hamza-initial-aamana",
+      "observation": {"surface_ar": "آمَنَ", "norm_key": "امن"},
+      "correct_hidden_state": {"root": "أ م ن", "lemma": "آمَنَ", "pos": "verb", "form": "IV"},
+      "distractor_states": [
+        {"state": {"form": "I", "lemma": "أَمِنَ", "gloss": "felt safe"}, "why_loses": "the madda آ is hamza+alif of Form IV; Form I أَمِنَ is a different sense ('was secure')"},
+        {"state": {"root": "ي م ن", "lemma": "أَيْمَان"}, "why_loses": "norm collapses the hamza seat onto أيمان 'oaths'; norm_strict keeps the seat"}
+      ],
+      "evidence_required": ["hamza_seat", "wazn", "norm_strict"],
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "hamza-medial-saala",
+      "observation": {"surface_ar": "سَأَلَ", "norm_key": "سال"},
+      "correct_hidden_state": {"root": "س أ ل", "lemma": "سَأَلَ", "pos": "verb", "form": "I"},
+      "distractor_states": [
+        {"state": {"root": "س ي ل", "lemma": "سَالَ", "gloss": "flowed"}, "why_loses": "norm drops the medial hamza, collapsing onto hollow سَالَ 'flowed'; the hamza seat is the only signal"},
+        {"state": {"root": "س و ل", "gloss": "enticed"}, "why_loses": "different hollow root entirely; سَوَّلَ is Form II of س و ل"}
+      ],
+      "evidence_required": ["hamza_seat", "qac"],
+      "expected_gate": "never_auto_resolve"
+    },
+    {
+      "id": "doubled-radda",
+      "observation": {"surface_ar": "رَدَّ", "norm_key": "رد"},
+      "correct_hidden_state": {"root": "ر د د", "lemma": "رَدَّ", "pos": "verb", "form": "I"},
+      "distractor_states": [
+        {"state": {"root": "ر د", "pos": "particle"}, "why_loses": "a two-letter key tempts a rootless reading; the shadda encodes the doubled (geminate) third radial"},
+        {"state": {"root": "و ر د", "lemma": "وَرَدَ", "gloss": "arrived at"}, "why_loses": "unrelated assimilated root; norm without the shadda has nothing to separate them"}
+      ],
+      "evidence_required": ["shadda", "qac"],
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "form-I-vs-II-nazala",
+      "observation": {"surface_ar": "نَزَلَ", "norm_key": "نزل"},
+      "correct_hidden_state": {"root": "ن ز ل", "lemma": "نَزَلَ", "pos": "verb", "form": "I"},
+      "distractor_states": [
+        {"state": {"form": "II", "lemma": "نَزَّلَ", "gloss": "sent down (gradually)"}, "why_loses": "the شَدّة on the zāy marks Form II; its absence means Form I 'descended'"},
+        {"state": {"form": "IV", "lemma": "أَنْزَلَ", "gloss": "sent down"}, "why_loses": "Form IV carries an initial hamza this surface does not"}
+      ],
+      "evidence_required": ["shadda", "wazn", "qac"],
+      "expected_gate": "never_auto_resolve"
+    },
+    {
+      "id": "form-II-nazzala",
+      "observation": {"surface_ar": "نَزَّلَ", "norm_key": "نزل"},
+      "correct_hidden_state": {"root": "ن ز ل", "lemma": "نَزَّلَ", "pos": "verb", "form": "II"},
+      "distractor_states": [
+        {"state": {"form": "I", "lemma": "نَزَلَ", "gloss": "descended"}, "why_loses": "shares the norm key; only the shadda on the middle radical certifies Form II's causative/intensive sense"}
+      ],
+      "evidence_required": ["shadda", "wazn"],
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "form-IV-anzala",
+      "observation": {"surface_ar": "أَنْزَلَ", "norm_key": "انزل"},
+      "correct_hidden_state": {"root": "ن ز ل", "lemma": "أَنْزَلَ", "pos": "verb", "form": "IV"},
+      "distractor_states": [
+        {"state": {"form": "I", "lemma": "نَزَلَ", "gloss": "descended"}, "why_loses": "Form I is intransitive 'descended'; Form IV is transitive 'sent down'. The hamza+sukūn wazn (أَفْعَلَ) distinguishes"},
+        {"state": {"pos": "noun", "lemma": "أَنْزَال"}, "why_loses": "no such nominal here; the fatḥa pattern is verbal"}
+      ],
+      "evidence_required": ["hamza_seat", "wazn"],
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "form-VIII-istamaa",
+      "observation": {"surface_ar": "ٱسْتَمَعَ", "norm_key": "استمع"},
+      "correct_hidden_state": {"root": "س م ع", "lemma": "ٱسْتَمَعَ", "pos": "verb", "form": "VIII"},
+      "distractor_states": [
+        {"state": {"form": "X", "lemma": "ٱسْتَسْمَعَ"}, "why_loses": "the prefix here is ٱفْتَعَلَ (tāʾ infix), not ٱسْتَفْعَلَ; only one س, the tāʾ sits between"},
+        {"state": {"form": "I", "lemma": "سَمِعَ", "gloss": "heard"}, "why_loses": "Form VIII adds 'listened attentively'; the wazn's tāʾ infix changes the sense register"}
+      ],
+      "evidence_required": ["wazn", "qac"],
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "form-X-istaghfara",
+      "observation": {"surface_ar": "ٱسْتَغْفَرَ", "norm_key": "استغفر"},
+      "correct_hidden_state": {"root": "غ ف ر", "lemma": "ٱسْتَغْفَرَ", "pos": "verb", "form": "X"},
+      "distractor_states": [
+        {"state": {"form": "I", "lemma": "غَفَرَ", "gloss": "forgave"}, "why_loses": "Form X ٱسْتَفْعَلَ is 'sought forgiveness', a requestive sense Form I lacks"},
+        {"state": {"pos": "imperative", "lemma": "ٱسْتَغْفِرْ"}, "why_loses": "the fatḥa on the fāʾ marks a perfect, not the kasra imperative"}
+      ],
+      "evidence_required": ["wazn", "content_letter_harakah"],
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "active-vs-passive-khalaqa",
+      "observation": {"surface_ar": "خُلِقَ", "norm_key": "خلق"},
+      "correct_hidden_state": {"root": "خ ل ق", "lemma": "خُلِقَ", "pos": "verb", "form": "I"},
+      "distractor_states": [
+        {"state": {"voice": "active", "lemma": "خَلَقَ", "gloss": "created"}, "why_loses": "the ḍamma-kasra vowel pattern marks the passive 'was created'; norm drops voice entirely"}
+      ],
+      "evidence_required": ["voice_pattern", "content_letter_harakah"],
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "passive-kudhiba-vs-kadhdhaba",
+      "observation": {"surface_ar": "كُذِبُوا۟", "norm_key": "كذبوا"},
+      "correct_hidden_state": {"root": "ك ذ ب", "lemma": "كُذِبُوا۟", "pos": "verb", "form": "I"},
+      "distractor_states": [
+        {"state": {"form": "II", "lemma": "كَذَّبُوا۟", "gloss": "they denied"}, "why_loses": "the dominant key reading (18x) is Form II active; the rare passive (1x) drops both shadda and voice, so the key cannot reach it"},
+        {"state": {"form": "I", "voice": "active", "lemma": "كَذَبُوا۟", "gloss": "they lied"}, "why_loses": "Form I active is a third reading the bare key cannot separate"}
+      ],
+      "evidence_required": ["shadda", "voice_pattern", "context_nahw"],
+      "expected_gate": "never_auto_resolve"
+    },
+    {
+      "id": "imperfect-active-vs-causative-yakhruju",
+      "observation": {"surface_ar": "يَخْرُجُ", "norm_key": "يخرج"},
+      "correct_hidden_state": {"root": "خ ر ج", "lemma": "خَرَجَ", "pos": "verb", "form": "I"},
+      "distractor_states": [
+        {"state": {"form": "IV", "lemma": "أَخْرَجَ", "imperfect": "يُخْرِجُ", "gloss": "brings out"}, "why_loses": "Form IV imperfect يُخْرِجُ has ḍamma-then-kasra; Form I يَخْرُجُ has fatḥa-then-ḍamma. norm erases the vowel contrast that separates 'goes out' from 'brings out'"}
+      ],
+      "evidence_required": ["content_letter_harakah", "wazn"],
+      "expected_gate": "never_auto_resolve"
+    },
+    {
+      "id": "masdar-vs-finite-dhikr",
+      "observation": {"surface_ar": "ذِكْر", "norm_key": "ذكر"},
+      "correct_hidden_state": {"root": "ذ ك ر", "lemma": "ذِكْر", "pos": "masdar", "form": "I"},
+      "distractor_states": [
+        {"state": {"pos": "verb", "lemma": "ذَكَرَ", "gloss": "he mentioned"}, "why_loses": "fatḥa pattern is the finite verb; the kasra-sukūn maṣdar takes a nominal gloss 'remembrance'"},
+        {"state": {"pos": "noun", "lemma": "ذَكَر", "gloss": "male"}, "why_loses": "fatḥa-fatḥa is the concrete noun 'male'; three readings share the key, separable only by harakāt"}
+      ],
+      "evidence_required": ["content_letter_harakah", "wazn"],
+      "expected_gate": "never_auto_resolve"
+    },
+    {
+      "id": "masdar-imaan",
+      "observation": {"surface_ar": "إِيمَان", "norm_key": "ايمان"},
+      "correct_hidden_state": {"root": "أ م ن", "lemma": "إِيمَان", "pos": "masdar", "form": "IV"},
+      "distractor_states": [
+        {"state": {"root": "ي م ن", "lemma": "أَيْمَان", "gloss": "oaths"}, "why_loses": "norm collapses the initial hamza-kasra seat onto أيمان; the ي here is a glide, not a radical"},
+        {"state": {"pos": "verb"}, "why_loses": "this is the maṣdar of آمَنَ, a nominal, not a finite verb"}
+      ],
+      "evidence_required": ["hamza_seat", "norm_strict", "wazn"],
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "participle-muminun-not-verb",
+      "observation": {"surface_ar": "مُؤْمِنُونَ", "norm_key": "مومنون"},
+      "correct_hidden_state": {"root": "أ م ن", "lemma": "مُؤْمِن", "pos": "participle", "form": "IV"},
+      "distractor_states": [
+        {"state": {"pos": "verb", "gloss": "they believe"}, "why_loses": "the وَاو-نُون is the masculine sound plural of an ism fāʿil, not a verbal subject ending; ism fāʿil is nominal"},
+        {"state": {"root": "م و ن"}, "why_loses": "the hamza-on-wāw seat (ؤ) is a Form IV participle marker, not a radical و"}
+      ],
+      "evidence_required": ["wazn", "hamza_seat"],
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "noun-not-verb-rasulan",
+      "observation": {"surface_ar": "رَسُولًا", "norm_key": "رسولا"},
+      "correct_hidden_state": {"root": "ر س ل", "lemma": "رَسُول", "pos": "noun", "form": null},
+      "distractor_states": [
+        {"state": {"pos": "verb", "lemma": "أَرْسَلَ", "gloss": "to send"}, "why_loses": "a verb-on-noun error; رَسُول is the فَعُول-pattern agent noun 'messenger'"},
+        {"state": {"decompose": "رسول + نا"}, "why_loses": "the final ـًا is accusative tanwīn-alif, not the pronoun نا"}
+      ],
+      "evidence_required": ["wazn", "qac"],
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "broken-plural-kutub",
+      "observation": {"surface_ar": "كُتُب", "norm_key": "كتب"},
+      "correct_hidden_state": {"root": "ك ت ب", "lemma": "كِتَاب", "pos": "noun", "form": null},
+      "distractor_states": [
+        {"state": {"pos": "verb", "lemma": "كَتَبَ", "gloss": "he wrote"}, "why_loses": "fatḥa pattern would be the verb; the ḍamma-ḍamma فُعُل pattern is a broken plural"},
+        {"state": {"surface_link": "none"}, "why_loses": "the broken plural has no surface affinity to its singular كِتَاب — must match by lemma/plural field, not surface"}
+      ],
+      "evidence_required": ["wazn", "qac"],
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "polyseme-mulk-not-malak",
+      "observation": {"surface_ar": "ٱلْمُلْك", "norm_key": "الملك"},
+      "correct_hidden_state": {"root": "م ل ك", "lemma": "مُلْك", "pos": "noun", "form": null},
+      "distractor_states": [
+        {"state": {"lemma": "مَلَك", "gloss": "angel"}, "why_loses": "fatḥa-fatḥa is 'angel'; the ḍamma-sukūn مُلْك is 'dominion/sovereignty' — same root, vowel-split"},
+        {"state": {"lemma": "مَلِك", "gloss": "king"}, "why_loses": "fatḥa-kasra is 'king'; a triple homograph on one key, decided by vowels + context only"}
+      ],
+      "evidence_required": ["content_letter_harakah", "context_nahw"],
+      "expected_gate": "never_auto_resolve"
+    },
+    {
+      "id": "adjective-aleem-not-painful",
+      "observation": {"surface_ar": "عَلِيم", "norm_key": "عليم"},
+      "correct_hidden_state": {"root": "ع ل م", "lemma": "عَلِيم", "pos": "adjective", "form": null},
+      "distractor_states": [
+        {"state": {"root": "أ ل م", "lemma": "أَلِيم", "gloss": "painful"}, "why_loses": "a data-error homograph filed عَلِيم under أ ل م; the ع-initial فَعِيل from ع ل م is 'All-Knowing', not the hamza-initial 'painful'"}
+      ],
+      "evidence_required": ["qac", "norm_strict", "wazn"],
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "proper-noun-ahmad",
+      "observation": {"surface_ar": "أَحْمَد", "norm_key": "احمد"},
+      "correct_hidden_state": {"root": null, "lemma": "أَحْمَد", "pos": "proper_noun", "form": null},
+      "distractor_states": [
+        {"state": {"root": "ح م د", "pos": "verb", "gloss": "to praise"}, "why_loses": "shares radicals with حَمِدَ but is a personal name (61:6); a name is not its root verb"},
+        {"state": {"pos": "adjective", "gloss": "more praiseworthy"}, "why_loses": "the elative pattern exists but the referent here is a proper noun"}
+      ],
+      "evidence_required": ["referent", "context_nahw", "qac"],
+      "expected_gate": "human_source_review_required"
+    },
+    {
+      "id": "referent-guard-salih",
+      "observation": {"surface_ar": "صَٰلِحًا", "norm_key": "صالحا"},
+      "correct_hidden_state": {"root": "ص ل ح", "lemma": "صَالِح", "pos": "adjective", "form": null},
+      "distractor_states": [
+        {"state": {"pos": "proper_noun", "gloss": "the Prophet Ṣāliḥ"}, "why_loses": "the active participle 'righteous (deed)' is the default; the proper-noun reading needs context certification"}
+      ],
+      "evidence_required": ["referent", "context_nahw"],
+      "expected_gate": "human_source_review_required"
+    },
+    {
+      "id": "particle-man-rootless",
+      "observation": {"surface_ar": "مَن", "norm_key": "من"},
+      "correct_hidden_state": {"root": null, "lemma": "مَن", "pos": "particle", "form": null},
+      "distractor_states": [
+        {"state": {"lemma": "مِن", "gloss": "from"}, "why_loses": "kasra on the mīm would make it the preposition; مَن (no kasra, no shadda) is the relative/interrogative pronoun"},
+        {"state": {"root": "م ن ن", "lemma": "مَنَّ"}, "why_loses": "a shadda on the nūn would make it the verb 'to bestow'; rootless particle has no content root"}
+      ],
+      "evidence_required": ["content_letter_harakah", "shadda"],
+      "expected_gate": "never_auto_resolve"
+    },
+    {
+      "id": "prep-pronoun-ilayna-not-root",
+      "observation": {"surface_ar": "إِلَيْنَا", "norm_key": "الينا"},
+      "correct_hidden_state": {"root": null, "lemma": "إِلَى + ـنا", "pos": "pronoun", "form": null},
+      "distractor_states": [
+        {"state": {"root": "ل ي ن", "gloss": "to be soft"}, "why_loses": "norm yields a لين-shaped key from a preposition + 1pl enclitic; there is no triliteral stem to certify"}
+      ],
+      "evidence_required": ["norm_strict", "context_nahw"],
+      "expected_gate": "never_auto_resolve"
+    },
+    {
+      "id": "tanwin-alef-false-suffix-quraan",
+      "observation": {"surface_ar": "قُرْءَانًا", "norm_key": "قرءانا"},
+      "correct_hidden_state": {"root": "ق ر أ", "lemma": "قُرْآن", "pos": "noun", "form": null},
+      "distractor_states": [
+        {"state": {"decompose": "قرءان + نا", "gloss": "stem + 1pl suffix"}, "why_loses": "the final ـًا is accusative tanwīn-alef, not the pronoun نا; do not decompose"}
+      ],
+      "evidence_required": ["hamza_seat", "qac"],
+      "expected_gate": "two_vote_required"
+    }
+  ]
+}

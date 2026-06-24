@@ -99,12 +99,49 @@ except Exception as e:
 
 # 11b. (PP1G) progressive-disclosure procedure files exist (skills are operational, not just docs)
 for proc in ("sarf/procedures/root-decision.md", "sarf/procedures/verb-form.md",
+             "sarf/procedures/weak-root.md", "sarf/procedures/hamza-root.md",
+             "sarf/procedures/doubled-root.md", "sarf/procedures/masdar-participle.md",
+             "sarf/procedures/proper-noun.md", "sarf/procedures/qamus-entry-authoring.md",
+             "sarf/procedures/corpus-to-qamus.md",
              "sarf/procedures/noun-plural-gender.md", "sarf/procedures/homograph-risk.md",
              "sarf/procedures/hover-application.md", "nahw/procedures/particle-decision.md",
              "nahw/procedures/preposition-pronoun.md", "nahw/procedures/negation.md",
+             "nahw/procedures/relative-interrogative.md", "nahw/procedures/conditionals.md",
+             "nahw/procedures/irab-case-mood.md", "nahw/procedures/hover-application.md",
+             "nahw/procedures/qamus-entry-authoring.md", "nahw/procedures/corpus-to-qamus.md",
              "nahw/procedures/idafa-jar-majrur.md", "nahw/procedures/referent-context.md",
              "nahw/procedures/grammar-risk-gate.md"):
     check("procedure exists: %s" % proc, os.path.exists(os.path.join(ROOT, proc)))
+
+# 11c. (architecture tranche) state-machine + source-graph + curriculum + corpus-pipeline infrastructure exists
+for art in ("qamus/schemas/language-state.schema.json", "qamus/schemas/token-state.schema.json",
+            "qamus/schemas/state-transition.schema.json", "tools/build_language_state_graph.py",
+            "tools/query_language_state.py", "qamus/indexes/language_state_graph.sample.json",
+            "qamus/reports/language-state-machine-report.md", "tools/build_decision_backlinks.py",
+            "qamus/indexes/decision_backlinks.json", "qamus/reports/source-address-usage-report.md",
+            "qamus/reports/xanadu-source-graph-completion.md", "tools/corpus_to_qamus_candidates.py",
+            "tools/corpus_to_hover_decisions.py", "qamus/reports/corpus-to-qamus-pipeline.md",
+            "qamus/examples/corpus_to_qamus.sample.jsonl", "tools/run_grammar_evals.py",
+            "tools/grade_grammar_reasoning.py", "nahw/evals/grammar-problems-derived-eval.jsonl",
+            "sarf/rules/surface-state-transition-rules.json", "nahw/rules/state-transition-rules.json",
+            "curriculum/README.md", "curriculum/zero-to-fluency-roadmap.md",
+            "sarf/curriculum/zero-to-fluency-sarf.md", "nahw/curriculum/zero-to-fluency-nahw.md"):
+    check("architecture artifact exists: %s" % art, os.path.exists(os.path.join(ROOT, art)))
+
+# 11d. the derived grammar eval bank meets the >=72 floor and the state graph sample is non-trivial
+try:
+    _ge = sum(1 for l in io.open(os.path.join(ROOT, "nahw/evals/grammar-problems-derived-eval.jsonl"),
+                                 encoding="utf-8") if l.strip())
+except Exception:
+    _ge = 0
+check("grammar-problems-derived-eval has >=72 cases (%d)" % _ge, _ge >= 72)
+try:
+    _lsg = json.load(io.open(os.path.join(ROOT, "qamus/indexes/language_state_graph.sample.json"),
+                             encoding="utf-8"))
+    _hasquar = any(s.get("decision") == "quarantine_homograph" for s in _lsg.get("states", []))
+except Exception:
+    _hasquar = False
+check("language state graph sample encodes homograph splits", _hasquar)
 
 # 12. fixtures well-formed
 for path in ("sarf/examples/qamus-regressions.jsonl", "sarf/examples/root-form-decisions.jsonl",

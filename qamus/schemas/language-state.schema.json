@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fusha/language-state.schema.json",
+  "title": "Language state graph",
+  "description": "OSM-style hidden-state model for Arabic surface tokens. The live qamus-highlight keys ONLY by a vowel-stripped norm_strict key; a single observation (key) may emit from MORE THAN ONE hidden state (lemma / POS / form / sense). This graph makes those splits explicit so a gloss is exported only when ONE hidden state owns the key (or all states agree). Built read-only by tools/build_language_state_graph.py; queried by tools/query_language_state.py.",
+  "type": "object",
+  "required": ["schema", "built_from", "counts", "states"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "fusha/language-state-graph@1" },
+    "built_from": {
+      "type": "object",
+      "description": "Provenance of the build (no private paths).",
+      "required": ["coverage_pct", "total_tokens", "distinct_keys"],
+      "properties": {
+        "coverage_pct": { "type": "number" },
+        "total_tokens": { "type": "integer" },
+        "distinct_keys": { "type": "integer" },
+        "source_sha": { "type": ["string", "null"] }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "description": "Reconciliation tallies; every key has exactly one decision class.",
+      "additionalProperties": { "type": "integer" }
+    },
+    "states": {
+      "type": "array",
+      "description": "One node per distinct norm_strict key.",
+      "items": { "$ref": "token-state.schema.json" }
+    }
+  }
+}

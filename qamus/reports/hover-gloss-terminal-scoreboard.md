@@ -3,9 +3,19 @@
 Live qamus-highlight, public beta, indexable. Public records carry only `{src:"qamus",kind:"authored"}` — 0
 external provenance. Full per-token states: `hover-token-terminal-matrix.md`.
 
-> **CURRENT LIVE (reconciled): coverage 72.14% · 35,996 / 49,900 resolved · 13,904 pending · tsv 218 lines.**
-> Trail: SN7 69.08 → P13 70.47 → PP1 70.76 → **N1/V1 72.14**. (The 69.08% some readers see is the SN7
+> **CURRENT LIVE (reconciled): coverage 75.28% · 37,567 / 49,900 resolved · 12,333 pending · tsv 377 lines.**
+> Trail: SN7 69.08 → P13 70.47 → PP1 70.76 → N1/V1 72.14 → **B2 75.28**. (The 69.08% some readers see is the SN7
 > *history* column below, not current.)
+
+## B2 — noun + verb + particle-cluster sweep (APPLIED LIVE)
+**159 content-token glosses** (230 candidates → 159 certified, 71 rejected) via the four-gate pipeline (empirical
+key-probe → author + key-aware 2-vote). Proper nouns (Adam, Abraham, Noah, David, Moses, the Torah), divine
+attributes (the Merciful, All-Hearing, All-Seeing, All-Forgiving, the Living), case-variant content words, and
+finite verbs (We seized, We sent down, you worship, they possess). The 71 rejections are the gate catching real
+homographs: lemma collisions (الملك مُلْك/مَلِك, أمه community/mother), form/voice (كذبوا, يخرج), particle-sense
+(وإن if/indeed, لم why/not), referent/polysemy (الدين religion/judgment, العزيز divine-Name/minister).
+coverage **72.14% → 75.28%**, **+1,571 occ, ~50 improved, −0 removed**. Mirror: `hover_batch_004_b2.*`.
+Rollback: `*.bak-b2` + `wbw-lookup.prev.json`.
 
 ## N1/V1 — noun + verb sweep (APPLIED LIVE)
 **55 content-token glosses** (28 nouns + 27 verbs) from the global pending pool, certified via the four-gate
@@ -55,12 +65,17 @@ norm_strict key-collision test** (13 candidates → 11 → 8 key-safe), applied 
 نَزَّلَ (key `نزل` collides with نَزَلَ "descended"), إِنفَاق/مَخْلُوق (0 occ), تَذَكَّرَ/زَلْزَلَتِ (2-vote).
 Rollback: `*.bak-sn7` + `wbw-lookup.prev.json`. Mirror: `qamus/candidates/qamus_2092/authored_gloss_batch_002_sarfnahw.*`.
 
-## Pending by reason (live now)
+## Pending by reason (live now — from `export_audit_state.py` at 75.28%)
 | reason | n |
 |---|---:|
-| root_exists_form_unresolved | 17,398 |
-| no_qamus_entry (proper nouns / particles) | 2,451 |
-| source_data_issue | 108 |
+| `pending_needs_sarf` (root exists, form/sense unresolved — the authorable lever) | 10,544 |
+| `pending_no_qamus_entry` (no entry: particles / proper nouns) | 1,706 |
+| `pending_source_data_issue` | 55 |
+| `pending_proper_noun` | 28 |
+| **total pending** | **12,333** |
+
+The authorable `pending_needs_sarf` lever shrank 11,777 → 10,544 this batch; `pending_proper_noun` 66 → 28
+(the Noah/Abraham/Moses glosses). Distinct pending surfaces 6,422 → **6,266**.
 
 ## Correctness (this program, across C12–C14 + P-tranche)
 | metric | n |

@@ -35,16 +35,18 @@ Full matrix: `qamus-2092-audit-completion.json`. Distinguishes *classified* from
 **0 entries are `fully_verified`** (no source-photo pass this tranche; `*_verified` flags reflect only
 measurable evidence — refs valid, QAC root agreement, hover coverage).
 
-| audit terminal state | n (live 72.14%) |
+| audit terminal state | n (live 75.28%) |
 |---|---:|
-| `needs_hover_authoring` (≥1 pending token in its āyāt) | **1,912** |
-| `needs_source_photo_review` (āyāt hover-complete; source verification outstanding) | **163** |
+| `needs_hover_authoring` (≥1 pending token in its āyāt) | **1,885** |
+| `needs_source_photo_review` (āyāt hover-complete; source verification outstanding) | **190** |
 | `needs_quran_ref_verification` (bad/range refs) | **10** |
 | `deferred_missing_source` (no addressable āyāt) | **7** |
 | **total / unknown** | **2,092 / 0** |
 
-By Fusha index class (per-entry matrices `qamus/reports/{nouns,verbs}/`): **nouns 1,022 @ 73.99%**,
-**verbs 970 @ 71.89%**, **particles 100** (PP1). N1/V1 sweep applied 55 content glosses live (+689 occ).
+By Fusha index class (per-entry matrices `qamus/reports/{nouns,verbs}/`): **nouns 1,022 @ 77.06%**,
+**verbs 970 @ 74.98%**, **particles 100** (PP1). N1/V1 applied 55 glosses (+689 occ); **B2 applied 159 glosses
+(+1,571 occ) → 75.28%**. As entries become hover-complete they advance `needs_hover_authoring` →
+`needs_source_photo_review` (163 → 190), so the source-photo queue grows as authoring lands.
 
 - root-verified-vs-QAC: measurable cross-check recorded per entry.
 - **كَظِيم repair — APPLIED LIVE (gate opened):** the صفة مشبهة gloss-shape fix (verb "to suppress anger" →

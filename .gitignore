@@ -39,3 +39,6 @@ qac-*.tsv
 .p4*
 .hover_*
 .scan*
+
+# full language state graph (commit the .sample + builder instead)
+qamus/indexes/language_state_graph.json

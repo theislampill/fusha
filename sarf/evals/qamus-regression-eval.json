@@ -1,0 +1,122 @@
+{
+  "schema": "fusha/qamus-regression-eval@1",
+  "purpose": "Lock the known sarf hover regressions as executable assertions. Each row pins a norm-collapsed key, the wrong gloss that shipped (or would ship if norm() decided), and the correct gloss OR an explicit 'pending' when the distinguishing diacritic is dropped by the key. A resolver passes the suite only if it produces correct_gloss_or_pending for every key. Companion to ../examples/qamus-regressions.jsonl (narrative form) — this file is the pass/fail contract.",
+  "assertion_schema": {
+    "id": "stable kebab id",
+    "key": "the norm/norm_strict key the resolver receives (over-collapsed)",
+    "surfaces": "the distinct vowelled surfaces that share the key",
+    "wrong_gloss": "what a surface/norm-keyed resolver emits incorrectly",
+    "correct_gloss_or_pending": "the defensible gloss, or 'pending' when the key cannot decide",
+    "rule": "the operational test the resolver must apply (which signal, which letter)",
+    "expected_gate": "auto_safe | two_vote_required | human_source_review_required | never_auto_resolve"
+  },
+  "pending_contract": "'pending' is a PASS state, not a failure: when the key drops shadda/voice/hamza-seat/content-harakah, the only correct output is pending with the matching reason from ../../qamus/schemas/authored-gloss.schema.json (multi_sense_root | derived_form_needs_review | hamza_sensitive_homograph). Emitting the commoner reading instead is the failure.",
+  "see_also": ["../examples/qamus-regressions.jsonl", "./sarf-state-machine-eval.json", "../rules/homograph-quarantines.json", "../rules/verb-measure-gates.json", "../rules/pos-mismatch-rules.json"],
+  "assertions": [
+    {
+      "id": "nazzala-vs-nazala",
+      "key": "نزل",
+      "surfaces": ["نَزَّلَ", "نَزَلَ", "أَنْزَلَ"],
+      "wrong_gloss": "descended (collapsing all three onto Form I)",
+      "correct_gloss_or_pending": "pending",
+      "rule": "Form II نَزَّلَ 'sent down gradually' carries a shadda on the zāy; Form I نَزَلَ 'descended' does not; Form IV أَنْزَلَ adds an initial hamza. The key drops shadda and hamza-seat, so it cannot separate the three forms of one root — pending (derived_form_needs_review).",
+      "expected_gate": "never_auto_resolve"
+    },
+    {
+      "id": "nazzala-form-II-cited",
+      "key": "نَزَّلَ@form-aware",
+      "surfaces": ["نَزَّلَ"],
+      "wrong_gloss": "descended (Form I sense applied to Form II)",
+      "correct_gloss_or_pending": "sent down (gradually / in stages)",
+      "rule": "When the shadda is preserved and certified, Form II نَزَّلَ takes its intensive/distributive 'sent down' gloss — distinct from Form I 'descended'. Two-vote because it is a derived-form sense shift.",
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "mulk-vs-malik",
+      "key": "ملك",
+      "surfaces": ["مُلْك", "مَلِك", "مَلَك"],
+      "wrong_gloss": "angels (مَلَك applied to مُلْك)",
+      "correct_gloss_or_pending": "pending",
+      "rule": "Triple homograph on root م ل ك: مُلْك (ḍamma-sukūn) 'dominion/sovereignty', مَلِك (fatḥa-kasra) 'king', مَلَك (fatḥa-fatḥa) 'angel'. The key drops every harakah that separates them — decide on vowels + context, never on the key; absent the harakāt it is pending (multi_sense_root).",
+      "expected_gate": "never_auto_resolve"
+    },
+    {
+      "id": "malik-king-cited",
+      "key": "مَلِك@vowelled",
+      "surfaces": ["مَلِك"],
+      "wrong_gloss": "dominion / angel",
+      "correct_gloss_or_pending": "king",
+      "rule": "With the fatḥa-kasra vowels present and certified, مَلِك is unambiguously 'king'. Still two-vote because the sibling readings مُلْك/مَلَك make the surface high-risk.",
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "ummah-vs-umm",
+      "key": "ام",
+      "surfaces": ["أُمَّة", "أُمّ"],
+      "wrong_gloss": "mother (أُمّ applied to أُمَّة)",
+      "correct_gloss_or_pending": "pending",
+      "rule": "Root أ م م: أُمّ 'mother' vs أُمَّة 'community/nation' — the tāʾ marbūṭa and the wider derivation distinguish them, but the bare key (which also brushes against أَمَّ 'led' and the preposition أَمَام) cannot decide. Pending until the surface + POS are pinned (multi_sense_root).",
+      "expected_gate": "never_auto_resolve"
+    },
+    {
+      "id": "ummah-community-cited",
+      "key": "أُمَّة@vowelled",
+      "surfaces": ["أُمَّة"],
+      "wrong_gloss": "mother",
+      "correct_gloss_or_pending": "community / nation",
+      "rule": "When the surface أُمَّة (shadda on mīm + tāʾ marbūṭa) is preserved and certified, gloss as 'community / nation', never 'mother'. The tāʾ marbūṭa is part of the lemma, not a suffix.",
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "kadhdhaba-vs-kadhaba-vs-kudhiba",
+      "key": "كذب",
+      "surfaces": ["كَذَّبَ", "كَذَبَ", "كُذِبَ"],
+      "wrong_gloss": "they were disbelieved (rare passive applied), or 'lied' (Form I applied to Form II)",
+      "correct_gloss_or_pending": "pending",
+      "rule": "Three readings on root ك ذ ب: Form II كَذَّبَ 'denied/cried lies against' (shadda, dominant), Form I كَذَبَ 'lied', passive كُذِبَ 'was disbelieved' (rare, ḍamma-kasra). The key drops shadda AND voice — never auto-resolve; default-to-dominant must NOT fire on the rare reading (derived_form_needs_review).",
+      "expected_gate": "never_auto_resolve"
+    },
+    {
+      "id": "kadhdhaba-form-II-cited",
+      "key": "كَذَّبَ@form-aware",
+      "surfaces": ["كَذَّبَ"],
+      "wrong_gloss": "lied (Form I sense)",
+      "correct_gloss_or_pending": "denied / rejected as false",
+      "rule": "With the shadda preserved and the active voice certified, Form II كَذَّبَ is the transitive 'denied / cried lies against (a sign, a messenger)' — not the intransitive Form I 'lied'. Two-vote for the derived-form sense shift.",
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "yakhruju-vs-yukhriju",
+      "key": "يخرج",
+      "surfaces": ["يَخْرُجُ", "يُخْرِجُ"],
+      "wrong_gloss": "brings out (Form IV applied to Form I), or 'goes out' (Form I applied to Form IV)",
+      "correct_gloss_or_pending": "pending",
+      "rule": "Form I يَخْرُجُ (fatḥa-…-ḍamma) 'goes out' vs Form IV يُخْرِجُ (ḍamma-…-kasra) 'brings out'. The key erases the prefix and stem vowels that flip intransitive↔transitive — pending unless the harakāt are present (derived_form_needs_review).",
+      "expected_gate": "never_auto_resolve"
+    },
+    {
+      "id": "yukhriju-form-IV-cited",
+      "key": "يُخْرِجُ@vowelled",
+      "surfaces": ["يُخْرِجُ"],
+      "wrong_gloss": "goes out (Form I sense)",
+      "correct_gloss_or_pending": "brings out / produces",
+      "rule": "With the ḍamma-prefix and kasra stem vowel certified, Form IV يُخْرِجُ is causative-transitive 'brings out / produces'. Two-vote for the derived-form sense shift from Form I.",
+      "expected_gate": "two_vote_required"
+    },
+    {
+      "id": "aleem-all-knowing-not-painful",
+      "key": "عليم",
+      "surfaces": ["عَلِيم", "عَلِيمًا", "عَلِيمٌ"],
+      "wrong_gloss": "to be in pain / painful",
+      "correct_gloss_or_pending": "All-Knowing",
+      "rule": "عَلِيم is فَعِيل from root ع ل م 'All-Knowing'. The wrong gloss came from a data error filing it under أ ل م (أَلِيم 'painful'). Quarantine must cover the nominative عَلِيمٌ and accusative عَلِيمًا too, not only the bare عَلِيم. A surface-keyed authored gloss overrides the data-error spread. Two-vote because of the homograph proximity.",
+      "expected_gate": "two_vote_required"
+    }
+  ],
+  "suite_invariants": [
+    "Every assertion whose correct_gloss_or_pending == 'pending' MUST resolve to pending under the default (key-only) path — emitting any vowelled sibling's gloss is a regression.",
+    "Every '@vowelled' / '@form-aware' assertion is reachable ONLY when the named diacritic (shadda/voice/harakah/hamza-seat) is present in the source; if absent, the sibling 'pending' assertion governs.",
+    "No assertion may ship a public gloss except as {src:'qamus',kind:'authored'}; the internal data error (أ ل م misfile, dominant-sense pull) is evidence, never surfaced.",
+    "عَلِيمٌ (nominative) and عَلِيمًا (accusative) are the SAME assertion as عَلِيم — case-marking tanwīn must not split or re-expose the quarantine."
+  ]
+}

@@ -19,13 +19,27 @@ when it forces **pending**.
 > [`drills/grammar-reasoning-safety.md`](drills/grammar-reasoning-safety.md).
 
 ## Procedures (progressive disclosure — load the one you need)
-This SKILL is the fast context gate + contract; each step is a short procedure:
+This SKILL is the fast context gate + contract; each step is a short procedure. **Open only what the task needs.**
 - [`procedures/particle-decision.md`](procedures/particle-decision.md) — content-letter harakah; مَن/مِن، لَمْ/لِمَ.
 - [`procedures/preposition-pronoun.md`](procedures/preposition-pronoun.md) — jar-majrūr wording by referent; إِلَيْنَا guard.
 - [`procedures/negation.md`](procedures/negation.md) — لَمْ/لَنْ/لَا/مَا/لَيْسَ scope → tense/polarity.
+- [`procedures/relative-interrogative.md`](procedures/relative-interrogative.md) — مَا/مَن/أَيّ relative vs interrogative vs negation.
+- [`procedures/conditionals.md`](procedures/conditionals.md) — إِنْ/إِذَا/لَوْ + the إِنْ "if" vs إِنَّ "indeed" collision.
 - [`procedures/idafa-jar-majrur.md`](procedures/idafa-jar-majrur.md) — construct relationship + definiteness.
+- [`procedures/irab-case-mood.md`](procedures/irab-case-mood.md) — case/mood reading → why it forces the two-vote gate.
 - [`procedures/referent-context.md`](procedures/referent-context.md) — referent guard, divine-Name vs attribute, contronyms.
 - [`procedures/grammar-risk-gate.md`](procedures/grammar-risk-gate.md) — the GrammarProblems gate (answer AND reason).
+- [`procedures/hover-application.md`](procedures/hover-application.md) — syntax-sensitive tokens → precise pending, not a one-word gloss.
+- [`procedures/qamus-entry-authoring.md`](procedures/qamus-entry-authoring.md) — nahw evidence → function-word/construction entry candidate.
+- [`procedures/corpus-to-qamus.md`](procedures/corpus-to-qamus.md) — the nahw half of the corpus→Qamus pipeline.
+
+**Rules** (`rules/`): particle-context, preposition-pronoun, negation, irab-safety-gates, grammar-problems-gates,
+two-vote-required-rules, context-sense, **state-transition-rules** (the syntax side of the
+[language state machine](../qamus/reports/language-state-machine-report.md): مَن/مِن، لَمْ/لِمَ، أَن/إِن/أَنَّ/إِنَّ
+forbidden collisions). **Evals** (`evals/`): grammar-problems-matrix, **grammar-problems-derived-eval.jsonl**
+(≥72 cases, run via [`tools/run_grammar_evals.py`](../tools/run_grammar_evals.py) +
+[`tools/grade_grammar_reasoning.py`](../tools/grade_grammar_reasoning.py)), nahw-state-machine-eval, hover-context-eval.
+**Curriculum** (`curriculum/`): `zero-to-fluency-nahw.md` + beginner/intermediate/advanced drills.
 
 ## 1. Purpose
 Choose the context-correct gloss (or an honest pending) for tokens whose meaning depends on the sentence:

@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fusha/token-state.schema.json",
+  "title": "Token state node",
+  "description": "One node of the language state graph, keyed by a norm_strict observation. Carries every hidden state the observation could emit from. If more than one hidden state denotes a different lemma/POS/form/voice, the node is a SPLIT and no single public gloss may fire on the key (decision=quarantine_homograph). public_export_allowed is true only when exactly one hidden state owns the key, or all states share the same authorable gloss.",
+  "type": "object",
+  "required": ["state_id", "observation", "hidden_states", "decision", "public_export_allowed", "used_by"],
+  "additionalProperties": false,
+  "properties": {
+    "state_id": {
+      "type": "string",
+      "description": "Stable address: state:key:<norm_strict>",
+      "pattern": "^state:key:"
+    },
+    "observation": {
+      "type": "object",
+      "required": ["norm_key", "surfaces", "occurrences"],
+      "additionalProperties": false,
+      "properties": {
+        "norm_key": { "type": "string", "description": "vowel-stripped key the live aid matches on" },
+        "dominant_surface_ar": { "type": "string", "description": "most frequent vocalized surface" },
+        "surfaces": {
+          "type": "object",
+          "description": "every vocalized surface sharing this key -> count",
+          "additionalProperties": { "type": "integer" }
+        },
+        "occurrences": { "type": "integer" }
+      }
+    },
+    "hidden_states": {
+      "type": "array",
+      "description": "candidate hidden states this observation may emit from",
+      "items": {
+        "type": "object",
+        "required": ["root", "pos"],
+        "additionalProperties": false,
+        "properties": {
+          "root": { "type": ["string", "null"] },
+          "lemma": { "type": ["string", "null"] },
+          "pos": { "type": ["string", "null"] },
+          "form": { "type": ["string", "null"], "description": "verb measure I-X / nominal pattern when known" },
+          "sense": { "type": ["string", "null"] },
+          "sarf_role": { "type": ["string", "null"] },
+          "nahw_role": { "type": ["string", "null"] },
+          "evidence": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "qamus_entry": { "type": ["string", "null"] },
+              "qac": { "type": "boolean" },
+              "source_address": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["resolved_qamus_authored", "pending", "quarantine_homograph", "repair_candidate"],
+      "description": "resolved=one owner + gloss live; pending=no safe single gloss yet; quarantine_homograph=split states (>1 lemma/POS/form); repair_candidate=entry field needs fixing"
+    },
+    "decision_reason": { "type": ["string", "null"] },
+    "public_gloss": { "type": ["string", "null"], "description": "the authored English gloss IF resolved; never external text" },
+    "public_export_allowed": { "type": "boolean" },
+    "used_by": {
+      "type": "array",
+      "description": "back-references into the corpus this key fires on (quran:S:A:W or count)",
+      "items": { "type": "string" }
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "schema": "fusha/hamza-gates@1",
+  "purpose": "Gates that fire whenever a token's reading turns on a hamza — as a RADICAL (أ/ء in the root) or as a SEAT (إ/أ/ؤ/ئ/آ orthographic carrier). norm() drops every hamza seat and all harakāt, so it routinely merges words that differ only by seat (إيمان/أيمان, آمن/أمن). These gates name the collapses norm() causes and require independent certification before any such token may be authored. A gate firing means: do NOT trust norm(); certify with norm_strict() AND the QAC root AND (when present) the Qamus entry. If the distinguishing seat/harakah is absent in the source, emit pending — never the commoner reading. Public artifacts stay {src:'qamus', kind:'authored'}; QAC is INTERNAL evidence and is never exposed.",
+  "fields": {
+    "id": "stable gate key",
+    "trigger": "what makes this gate fire on a token",
+    "role": "radical (hamza belongs to the root) | seat (orthographic carrier, not a radical) | both",
+    "rule": "the operational test on the diacritized surface, naming the helper/letter/harakah",
+    "norm_merges": "the distinct words norm() wrongly fuses",
+    "wrong_gloss": "what ships if norm() decides",
+    "correct": "the defensible reading, or 'pending' when the seat/harakah is absent",
+    "example_loc": "a quran:S:A:W where the correct reading holds",
+    "certify_with": "the rungs that must agree before authoring"
+  },
+  "seat_inventory": {
+    "note": "Hamza is written on one of several seats whose choice depends on the surrounding vowels. norm_strict() PRESERVES the seat; norm() ERASES it. The seats and their bearer letters: ",
+    "seats": {
+      "hamzat_qatʿ_alif": "أ (fatḥa/ḍamma) / إ (kasra) — initial connecting/cutting hamza on alif",
+      "hamzat_wasl": "ٱ — elidable alif, NOT a hamza-qaṭʿ; carries no glottal stop in continuous reading",
+      "madda": "آ — alif + hamza + long-ā fused; expands to أَا/أْا underlyingly",
+      "yaʾ_seat": "ئ — hamza on a dotless/notched yā' (kasra context)",
+      "waw_seat": "ؤ — hamza on a wāw (ḍamma context)",
+      "standalone": "ء — hamza on the line (after a long vowel / certain medials)"
+    }
+  },
+  "decide_on_seat": "Read the orthographic seat AND the harakah on the first content letter (the seat may follow a وَ/فَ/لِ proclitic). A bare alif with no visible hamza-seat or harakah is ambiguous between hamzat-qaṭʿ and hamzat-waṣl; if the source does not disambiguate, the gate yields pending. Never let norm() — which has already discarded the seat — be the tiebreaker.",
+  "norm_collapses": [
+    {
+      "id": "iman-vs-ayman",
+      "trigger": "skeleton ا+ي+م+ا+ن after norm()",
+      "role": "both",
+      "rule": "إِيمَان: initial hamza-kasra (إ) on root أ م ن, the ي is a glide (madd) → 'faith / belief'. أَيْمَان: initial hamza-fatḥa (أ) on root ي م ن, the ي is a RADICAL → 'oaths' (plural of يَمِين). norm() drops both the seat and the harakah and fuses them.",
+      "norm_merges": "إِيمَان (faith) ⇄ أَيْمَان (oaths)",
+      "wrong_gloss": "oaths (when the token is إِيمَان)",
+      "correct": "faith / belief — or 'oaths' per the seat; pending if the seat is absent",
+      "example_loc": "49:7:13",
+      "certify_with": ["norm_strict", "qac", "entry"]
+    },
+    {
+      "id": "amana-vs-amina-seats",
+      "trigger": "skeleton ا+م+ن verb after norm(), seat undetermined",
+      "role": "both",
+      "rule": "آمَنَ (madda seat آ = Form IV أَأْمَنَ contracted) → 'to believe / have faith' (root أ م ن). أَمِنَ (plain hamza-fatḥa أ) → 'to be safe / secure' (Form I, same root, different sense). أَمَّنَ (shadda on mīm) → 'to grant safety'. The madda seat is the Form-IV signal; norm() erases it and the shadda.",
+      "norm_merges": "آمَنَ (believed, IV) ⇄ أَمِنَ (was safe, I) ⇄ أَمَّنَ (gave safety, II)",
+      "wrong_gloss": "to be safe (when the token is آمَنَ 'believed')",
+      "correct": "to believe (madda) / to be safe (plain) / to grant safety (shadda) per the seat+shadda; pending if undiacritized",
+      "example_loc": "2:285:1",
+      "certify_with": ["norm_strict", "qac", "entry"]
+    },
+    {
+      "id": "madda-form-IV-collapse",
+      "trigger": "any token beginning with آ (madda) whose Form-IV reading is in question",
+      "role": "seat",
+      "rule": "Initial آ frequently encodes a contracted Form-IV أَأ (آتَى ← أَأْتَى 'to give', آمَنَ ← أَأْمَنَ). norm() flattens آ to a single alif, hiding the Form-IV augment and inviting a Form-I gloss. Restore the underlying أَأ via norm_strict() before deciding the wazn.",
+      "norm_merges": "آتَى (IV, 'gave') ⇄ أَتَى (I, 'came')",
+      "wrong_gloss": "came (when the token is آتَى 'gave')",
+      "correct": "gave / brought (Form IV) — or 'came' (Form I) per the madda; pending if the seat is lost",
+      "example_loc": "2:177:13",
+      "certify_with": ["norm_strict", "qac", "entry"]
+    },
+    {
+      "id": "wasl-not-qat",
+      "trigger": "initial ٱ (alif-waṣl) mistaken for a hamza-qaṭʿ radical",
+      "role": "seat",
+      "rule": "Hamzat al-waṣl (ٱ) is an elidable connector, NOT a radical and NOT a hamza-qaṭʿ. In ٱسْتَغْفَرَ (Form X) and ٱلْكِتَاب (article) the initial alif carries no glottal stop in continuous reading. Do not count it as a first radical hamza; the root of ٱسْتَغْفَرَ is غ ف ر.",
+      "norm_merges": "ٱسْم (waṣl, 'name', root س م و/و س م) treated as a hamza-initial root أ س م",
+      "wrong_gloss": "a fabricated أ-initial root",
+      "correct": "strip the waṣl; certify the true root (غ ف ر, س م و, …) via the root ladder",
+      "example_loc": "96:1:1",
+      "certify_with": ["norm_strict", "qac", "entry"]
+    },
+    {
+      "id": "medial-hamza-seat-shift",
+      "trigger": "a medial hamza whose seat (ئ/ؤ/ء) shifts with case/mood inflection",
+      "role": "radical",
+      "rule": "A radical hamza changes seat by harakah: سَأَلَ (أ) ⇄ يَسْـئَلُ/يَسْأَلُ ⇄ سُئِلَ (ئ). The seat shift is orthographic; the radical is constant (root س أ ل). norm() drops every seat, so it cannot track that these are one root inflecting — author the root once, not three.",
+      "norm_merges": "سَأَلَ ⇄ سُئِلَ ⇄ يَسْأَلُونَ as if different stems",
+      "wrong_gloss": "split senses for one inflecting root",
+      "correct": "single root س أ ل ('to ask'); the seat is a spelling rule of the vowel context",
+      "example_loc": "2:186:4",
+      "certify_with": ["norm_strict", "qac", "entry"]
+    },
+    {
+      "id": "final-hamza-vs-glide",
+      "trigger": "a terminal ـَاء that may be a radical hamza OR a feminine/plural marker",
+      "role": "seat",
+      "rule": "Terminal ـَاء is a RADICAL hamza in some roots (مَاء root م و ه/م ي ه via assimilation; سَمَاء root س م و) but a FEMININE/PLURAL marker in others (شُهَدَاء plural of شَهِيد, root ش ه د — the hamza is NOT a radical). norm() cannot tell them apart. Check whether the third radical is genuinely hamza before certifying it.",
+      "norm_merges": "شُهَدَاء (plural marker) ⇄ a fabricated hamza-final root",
+      "wrong_gloss": "a hamza third-radical root for a sound plural",
+      "correct": "decide via the singular + QAC root: plural-marker hamza ≠ radical hamza",
+      "example_loc": "2:282:23",
+      "certify_with": ["norm_strict", "qac", "entry"]
+    },
+    {
+      "id": "kasra-yaseat-vs-glide",
+      "trigger": "ئ (yā'-seat hamza) vs a true long-ī glide after norm()",
+      "role": "both",
+      "rule": "أَئِمَّة (yā'-seat hamza, root أ م م) 'leaders/imams' vs a glide-ī reading. The ئ encodes a hamza in a kasra context, NOT a long vowel. norm() turns ئ into a plain yā', erasing the hamza and the shadda on the mīm.",
+      "norm_merges": "أَئِمَّة (leaders) ⇄ a glide-ī mis-segmentation",
+      "wrong_gloss": "a vowel-glide reading with no hamza",
+      "correct": "leaders / imams (root أ م م), hamza on the yā'-seat; pending if seat+shadda absent",
+      "example_loc": "9:12:9",
+      "certify_with": ["norm_strict", "qac", "entry"]
+    }
+  ],
+  "gates": [
+    {
+      "id": "gate-seat-required",
+      "when": "a token's gloss depends on which hamza seat is present (any norm_collapses entry could match)",
+      "then": "do NOT author from norm(); require norm_strict() to preserve the seat AND QAC root agreement AND (if it exists) a Qamus entry under norm_strict.",
+      "reason": "hamza_sensitive_homograph"
+    },
+    {
+      "id": "gate-seat-absent-pending",
+      "when": "the source surface lacks the disambiguating seat or harakah (bare alif, no madda, no shadda)",
+      "then": "emit decision=pending; prefer pending over the commoner reading.",
+      "reason": "hamza_seat_undetermined"
+    },
+    {
+      "id": "gate-wasl-strip",
+      "when": "the initial letter is hamzat al-waṣl (ٱ) or a Form VII/VIII/X connecting alif",
+      "then": "strip it before root certification; never count it as a first radical; route the residual stem through ../rules/root-decision-rules.json.",
+      "reason": "wasl_not_radical"
+    },
+    {
+      "id": "gate-norm-only-denied",
+      "when": "the only evidence is a norm() (lenient) match across a hamza collapse",
+      "then": "deny certification; this is exactly the case norm_never_certifies in ../rules/root-decision-rules.json was written for.",
+      "reason": "norm_collapsed_hamza_seat"
+    }
+  ],
+  "cross_links": {
+    "root_ladder": "../rules/root-decision-rules.json",
+    "homograph_quarantines": "../rules/homograph-quarantines.json (إِيمَان/أَيْمَان, يَأْمُرُونَ/يَمُرُّونَ entries mirror these gates)"
+  }
+}

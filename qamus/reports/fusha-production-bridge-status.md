@@ -23,7 +23,13 @@ Entry repairs take the parallel, owner-gated path (`edit_entry_record` + backup 
 | **P5 live apply** | `fusha` pass wired into expand.py (no-op until the tsv lands), proven byte-stable |
 | **P6 source-corpus repair** | terminally classified — 0 certified error fields; 102 owner-gated QAC-root candidates |
 | **Nawawī40 catalogue** | first pass (720 candidates) + skill-refinement available via the runner |
-| **source-address graph** | 2,092 entry nodes, 9,937 evidence links, 0 orphan (live, regenerable) |
+| **source-address graph** | 2,092 entry nodes, 0 orphan; operational backlinks (`build_decision_backlinks.py`) answer the 10 graph queries |
+| **live hover coverage** | **75.28%** (37,567 / 49,900); trail 51.52 → … → 72.14 → **B2 75.28** (159 glosses, +1,571 occ, −0 removed) |
+| **language state machine** | built — 12,723 key-states (376 resolved, 159 quarantine_homograph, 12,188 pending); schemas + builder + query + report |
+| **GrammarProblems eval gate** | 80 derived cases (≥72), `run_grammar_evals.py` PASS; `grade_grammar_reasoning.py` enforces answer+reasoning (self-test PASS) |
+| **progressive-disclosure skills** | sarf 12 procedures, nahw 12 procedures + rules/evals/curriculum; SKILL.md is the gate+index |
+| **ajami curriculum** | 12-level roadmap + qamus/quran/hadith paths + 8 drill sets + placement test + checkpoints |
+| **corpus → Qamus pipeline** | `corpus_to_qamus_candidates.py` + `corpus_to_hover_decisions.py` (Nawawī40-proven, 0 live writes) |
 
 ## Boundaries held
 No live entry mutated; Fusha public-clean (0 leaks); no external gloss text; public hover = `src:"qamus"` only;

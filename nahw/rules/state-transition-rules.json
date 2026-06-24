@@ -1,0 +1,185 @@
+{
+  "schema": "fusha/nahw-state-transition-rules@1",
+  "$schema_note": "The SYNTAX side of the per-token state machine. The morphology side fixes WHAT the token is (a surface + POS + reading); this file fixes the syntactic ROLE that reading takes in the sentence, given a context trigger. A transition fires ONLY when the context_trigger is observed; otherwise the token stays in its unresolved state (pending beats a wrong role). Each transition carries requires_two_vote: when true, the role may not be authored/applied until two independent checks agree on BOTH conclusion and reasoning (see ../rules/two-vote-required-rules.json two_vote_protocol). forbidden_transitions capture homograph collisions that share letters under norm() but are different lexemes — read names with norm_strict/bare/QAC POS, never the recall-only norm(). A single forbidden gloss is given per collision so the wrong role can never be authored even when the diacritic is present.",
+  "generator": "authored by hand; aligned to ../examples/function-word-decisions.jsonl and ../examples/ayah-context-decisions.jsonl; cross-checks ../rules/particle-context-rules.json (haraka split), ../rules/context-sense-rules.json (sense), ../rules/referent-guard-rules.json (referent), ../rules/two-vote-required-rules.json (gate)",
+  "principle": "A reading does not name its own syntactic role; the governing context does. Fire a transition only on its trigger, attach the gate the role demands, and quarantine homograph siblings via forbidden_transitions. PENDING beats a wrong role.",
+  "state_legend": {
+    "from_observation": "the morphologically-fixed reading the token enters with (surface + POS + diacritic-resolved identity), the OUTPUT of particle-context-rules.json — not a raw norm() surface",
+    "context_trigger": "the syntactic signal in the surrounding tokens that licenses the transition (following POS/case, governing partner, construct head, preceding particle)",
+    "to_nahw_role": "the iʿrāb role the token takes once the trigger is observed",
+    "requires_two_vote": "true → role carries a two_vote_required gate (it appears in ../rules/two-vote-required-rules.json two_vote_triggers); author/apply only on two-agreeing-checks",
+    "else": "if the trigger is absent the token holds at pending with the stated pending_reason"
+  },
+  "transitions": [
+    {
+      "id": "an_light_to_masdariyyah",
+      "from_observation": "أَنْ (light, no shadda; hamza-above seat confirmed by norm_strict)",
+      "context_trigger": "an imperfect verb follows in naṣb (subjunctive), e.g. أَنْ تَصُومُوا",
+      "to_nahw_role": "ḥarf maṣdariyyah wa-naṣb — subjunctival 'that/to' forming a maṣdar muʾawwal; nuṣiba al-fiʿl baʿdahā",
+      "requires_two_vote": true,
+      "two_vote_trigger": "case_or_mood",
+      "reason": "light أَنْ governs the following fiʿl muḍāriʿ into naṣb; the role is the subjunctive operator, not the emphatic أَنَّ",
+      "else": {"decision": "pending", "pending_reason": "case_or_mood", "note": "if the following verb's mood is unmarked, do not assert naṣb"},
+      "confidence": "high"
+    },
+    {
+      "id": "anna_heavy_to_emphatic_nasb_subject",
+      "from_observation": "أَنَّ (heavy, shadda on nūn; hamza-above seat)",
+      "context_trigger": "a noun/pronoun follows that it puts in naṣb as its ism, then a khabar, e.g. عَلِمَ أَنَّ ٱللَّهَ غَفُورٌ",
+      "to_nahw_role": "min akhawāt inna — ḥarf tawkīd wa-naṣb; tansibu al-ism wa-tarfaʿu al-khabar, the clause is a maṣdar muʾawwal object",
+      "requires_two_vote": true,
+      "two_vote_trigger": "irab",
+      "reason": "heavy أَنَّ heads a noun-clause and assigns naṣb to its ism; distinct from light أَنْ which takes a verb",
+      "else": {"decision": "pending", "pending_reason": "case_or_mood", "note": "needs the ism in naṣb to confirm the akhawāt-inna role"},
+      "confidence": "high"
+    },
+    {
+      "id": "inna_heavy_to_tawkid",
+      "from_observation": "إِنَّ (heavy, shadda on nūn; hamza-BELOW seat)",
+      "context_trigger": "sentence-initial / clause-initial before its ism in naṣb, e.g. إِنَّ ٱللَّهَ مَعَ ٱلصَّابِرِينَ",
+      "to_nahw_role": "ḥarf tawkīd wa-naṣb (umm al-bāb) — 'indeed/verily'; tansibu al-ism wa-tarfaʿu al-khabar",
+      "requires_two_vote": true,
+      "two_vote_trigger": "irab",
+      "reason": "kasra-seat emphatic إِنَّ asserts the clause; the ism takes naṣb, the khabar rafʿ",
+      "else": {"decision": "pending", "pending_reason": "seat_collapsed", "note": "if norm() dropped the hamza seat, re-read with norm_strict before fixing إِنَّ vs أَنَّ"},
+      "confidence": "high"
+    },
+    {
+      "id": "in_light_to_conditional",
+      "from_observation": "إِنْ (light, no shadda; hamza-below seat)",
+      "context_trigger": "a jussive verb (or two jazm-verb clauses: sharṭ + jawāb) follows, e.g. إِنْ تَنْصُرُوا ٱللَّهَ يَنْصُرْكُمْ",
+      "to_nahw_role": "adāt sharṭ jāzima — conditional 'if'; tajzimu fiʿlayn (fiʿl al-sharṭ wa-jawābih)",
+      "requires_two_vote": true,
+      "two_vote_trigger": "case_or_mood",
+      "reason": "light conditional إِنْ governs both verbs into jazm; it is neither the emphatic إِنَّ nor the negating إِنْ",
+      "else": {"decision": "pending", "pending_reason": "case_or_mood", "note": "without a jussive jawāb the conditional vs negating reading of light إِنْ is open"},
+      "confidence": "medium"
+    },
+    {
+      "id": "man_relative_to_mubtada_or_object",
+      "from_observation": "مَن (pronoun; fatḥa/bare on mīm, no shadda on nūn — per particle-context-rules man_vs_min)",
+      "context_trigger": "heads a relative/conditional clause with a following ṣilah verb, e.g. مَن يَعْمَلْ سُوءًا يُجْزَ بِهِ",
+      "to_nahw_role": "ism mawṣūl / sharṭ — relative-or-conditional pronoun 'whoever'; mabnī, holds a rafʿ/naṣb maḥall by its clause function",
+      "requires_two_vote": false,
+      "reason": "the pronoun مَن takes its role from the clause it heads; the haraka split (not min) is already settled upstream",
+      "else": {"decision": "pending", "pending_reason": "homograph_haraka", "note": "if the mīm harakah is absent, مَن (pronoun) vs مِن (preposition) is unsettled — do not assign a role"},
+      "confidence": "medium"
+    },
+    {
+      "id": "min_preposition_to_jar_majrur",
+      "from_observation": "مِنْ (preposition; kasra on mīm — incl. وَمِنَ)",
+      "context_trigger": "a noun in jarr follows, e.g. مِنَ ٱلنَّاسِ",
+      "to_nahw_role": "ḥarf jarr — forms a jar-majrūr; the following ism is majrūr",
+      "requires_two_vote": false,
+      "reason": "kasra-mīm preposition governs the following noun into jarr; role is the prepositional phrase",
+      "else": {"decision": "pending", "pending_reason": "jar_majrur_ambiguous", "note": "if the governed noun's case is unmarked, hold before asserting jarr"},
+      "confidence": "high"
+    },
+    {
+      "id": "la_indef_nasb_to_nafy_lil_jins",
+      "from_observation": "لَا followed by an indefinite noun in naṣb without tanwīn",
+      "context_trigger": "an indefinite mabnī noun in naṣb immediately follows, e.g. لَا رَيْبَ فِيهِ / لَا إِلَٰهَ إِلَّا ٱللَّهُ",
+      "to_nahw_role": "lā al-nāfiyah lil-jins — absolute genus-negation 'there is no … at all'; tabnī al-ism al-mufrad ʿalā al-fatḥ",
+      "requires_two_vote": true,
+      "two_vote_trigger": "nafy_lil_jins",
+      "reason": "لا + indefinite naṣb-noun negates the whole genus; this is a distinct operator from verbal negation, see ../rules/context-sense-rules.json la_nafiya_lil_jins and ../rules/negation-rules.json",
+      "else": {"decision": "pending", "pending_reason": "context_sensitive_needs_nahw", "note": "if a verb (not an indefinite noun) follows لا, this is verbal negation, not lil-jins"},
+      "confidence": "high"
+    },
+    {
+      "id": "illa_to_istithna",
+      "from_observation": "إِلَّا (exceptive particle)",
+      "context_trigger": "a mustathnā follows after a mustathnā-minhu, e.g. فَشَرِبُوا مِنْهُ إِلَّا قَلِيلًا مِّنْهُمْ",
+      "to_nahw_role": "adāt istithnāʾ — the mustathnā is manṣūb in a complete affirmative sentence (kalām tāmm mūjab); after negation/incomplete it may follow the badal/maḥall rule",
+      "requires_two_vote": true,
+      "two_vote_trigger": "istithna",
+      "reason": "istithnāʾ case assignment depends on tāmm/nāqiṣ and mūjab/manfī; never default the mustathnā to naṣb without checking the sentence type",
+      "else": {"decision": "pending", "pending_reason": "case_or_mood", "note": "negative/incomplete exception flips the case rule — resolve sentence completeness first"},
+      "confidence": "medium"
+    },
+    {
+      "id": "noun_noun_to_idafa",
+      "from_observation": "a definite/indefinite noun immediately followed by a second noun",
+      "context_trigger": "the second noun is in jarr with no intervening particle and the first carries no tanwīn/nūn, e.g. كِتَابُ ٱللَّهِ",
+      "to_nahw_role": "muḍāf + muḍāf ilayh — possessive construct; the muḍāf drops tanwīn/nūn, the muḍāf ilayh is majrūr",
+      "requires_two_vote": true,
+      "two_vote_trigger": "idafa_ambiguous",
+      "reason": "noun-noun adjacency is iḍāfa only when the second is majrūr and the first is stripped; otherwise it may be naʿt or two separate roles",
+      "else": {"decision": "pending", "pending_reason": "idafa_ambiguous", "note": "if the first noun keeps tanwīn or the second is not majrūr, it is not iḍāfa — could be mawṣūf+ṣifah"},
+      "confidence": "medium"
+    },
+    {
+      "id": "lamma_temporal_to_zarf_clause",
+      "from_observation": "لَمَّا (shadda on mīm — per particle-context-rules lima_vs_lamma)",
+      "context_trigger": "a past verb follows it and a second past clause answers it, e.g. فَلَمَّا جَاءَهُمُ ٱلْحَقُّ",
+      "to_nahw_role": "ẓarf / ḥarf wujūb li-wujūb — temporal 'when' binding two past clauses (sharṭ ghayr jāzim)",
+      "requires_two_vote": false,
+      "reason": "shadda-mīm لَمَّا heads a temporal subordination over two māḍī clauses; distinct from لِمَا (lām + relative mā)",
+      "else": {"decision": "pending", "pending_reason": "homograph_haraka", "note": "no shadda on the mīm → لِمَا (for/to that which), not the temporal لَمَّا"},
+      "confidence": "medium"
+    }
+  ],
+  "forbidden_transitions": [
+    {
+      "id": "min_not_man",
+      "collision": "مِن vs مَن (norm surface من)",
+      "forbidden_from": "مِنْ (preposition, kasra on mīm)",
+      "forbidden_to": "ism mawṣūl / sharṭ (the relative-pronoun role of مَن)",
+      "forbidden_gloss": "whoever / he who",
+      "why_forbidden": "the kasra-mīm preposition can never take a relative-pronoun role; its only role is ḥarf jarr. Reading it as مَن swaps a particle for a pronoun on a bare haraka difference.",
+      "correct_instead": "ḥarf jarr → jar-majrūr (gloss: from / among / of)",
+      "guard": "read the mīm harakah via norm_strict; وَمِنَ is NOT وَمَن",
+      "reason_code": "homograph_haraka"
+    },
+    {
+      "id": "lam_not_lima",
+      "collision": "لَمْ vs لِمَ (norm surface لم)",
+      "forbidden_from": "لَمْ (negative particle + jazm, sukūn on mīm)",
+      "forbidden_to": "interrogative لِ + مَ ('why')",
+      "forbidden_gloss": "why / for what",
+      "why_forbidden": "لَمْ negates a past verb via jussive and is never an interrogative; assigning it the question role drops the jazm and invents a question that is not there.",
+      "correct_instead": "ḥarf nafy wa-jazm → jussive negation (gloss: did not / has not)",
+      "guard": "fatḥa-on-lām + jussive verb marks لَمْ; kasra-on-lām marks لِمَ",
+      "reason_code": "homograph_haraka"
+    },
+    {
+      "id": "lamma_not_lima",
+      "collision": "لَمَّا vs لِمَا (norm surface لما)",
+      "forbidden_from": "لَمَّا (temporal, shadda on mīm)",
+      "forbidden_to": "لِ (preposition/lām) + relative مَا",
+      "forbidden_gloss": "for / to that which",
+      "why_forbidden": "shadda-mīm لَمَّا is a temporal subordinator over two clauses; reading it as لِ + مَا turns a 'when'-clause into a prepositional phrase and loses the two-clause binding.",
+      "correct_instead": "ẓarf/ḥarf wujūb li-wujūb → temporal 'when / after / not yet'",
+      "guard": "the shadda on the mīm is decisive; absent shadda → لِمَا, present → لَمَّا",
+      "reason_code": "homograph_haraka"
+    },
+    {
+      "id": "anna_not_inna",
+      "collision": "أَنَّ vs إِنَّ (norm surface ان — hamza seat collapsed)",
+      "forbidden_from": "أَنَّ (hamza-above, opens a maṣdar-muʾawwal object-clause mid-sentence)",
+      "forbidden_to": "إِنَّ (sentence-initial emphatic 'verily')",
+      "forbidden_gloss": "indeed / verily",
+      "why_forbidden": "أَنَّ heads a subordinate noun-clause governed by a preceding verb (عَلِمَ أَنَّ…); إِنَّ stands at the head of an independent assertion. Swapping the seat re-roots the clause from a complement to a standalone assertion.",
+      "correct_instead": "min akhawāt inna heading a maṣdar muʾawwal (gloss: that)",
+      "guard": "hamza-above (أ) = أَنَّ subordinate; hamza-below (إ) = إِنَّ initial — preserved by norm_strict, dropped by norm()",
+      "reason_code": "seat_collapsed"
+    },
+    {
+      "id": "inna_not_an",
+      "collision": "إِنْ (light conditional) vs أَنْ (light subjunctive) (norm surface ان)",
+      "forbidden_from": "إِنْ (light, hamza-below, conditional/jazm)",
+      "forbidden_to": "أَنْ maṣdariyyah (subjunctive 'to/that' + naṣb)",
+      "forbidden_gloss": "to / that",
+      "why_forbidden": "light إِنْ governs TWO verbs into jazm as a conditional; light أَنْ governs ONE verb into naṣb as a maṣdar operator. They differ by hamza seat, mood assigned, and verb count — collapsing them mis-assigns both case and clause structure.",
+      "correct_instead": "adāt sharṭ jāzima → conditional 'if' tajzimu fiʿlayn",
+      "guard": "hamza-below light = conditional إِنْ; hamza-above light = subjunctive أَنْ — re-read with norm_strict if the seat is gone",
+      "reason_code": "seat_collapsed"
+    }
+  ],
+  "general_rules": [
+    "Fire a transition ONLY when its context_trigger is observed; an unfired token holds at pending with the stated pending_reason. PENDING beats a wrong role.",
+    "Any transition whose two_vote_trigger appears in ../rules/two-vote-required-rules.json two_vote_triggers (irab, case_or_mood, istithna, nafy_lil_jins, idafa_ambiguous) must carry requires_two_vote:true and may not be authored/applied on a single check.",
+    "Homograph collisions are resolved upstream by ../rules/particle-context-rules.json (haraka) before a transition fires; forbidden_transitions are the backstop so a swapped sibling role can never be authored even with the diacritic present.",
+    "Read names and seats with norm_strict/bare/QAC POS, never the recall-only norm(); a collapsed hamza seat or missing shadda is itself a pending(seat_collapsed | homograph_haraka), not a guess."
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fusha/state-transition.schema.json",
+  "title": "State transition",
+  "description": "A transition resolves an ambiguous observation toward one hidden state on cited evidence, or records a FORBIDDEN transition learned from a regression. Every successful authoring/repair becomes a reusable transition pattern; every wrong-gloss regression becomes a forbidden transition. Transitions are the audit trail of the language state machine.",
+  "type": "object",
+  "required": ["transition_id", "kind", "from_observation", "to", "evidence", "gate"],
+  "additionalProperties": false,
+  "properties": {
+    "transition_id": { "type": "string", "pattern": "^transition:" },
+    "kind": {
+      "type": "string",
+      "enum": ["resolve", "split", "repair", "forbidden"],
+      "description": "resolve=observation->single hidden state; split=observation->multiple states (quarantine); repair=entry field corrected; forbidden=a collapse that must never be made"
+    },
+    "from_observation": {
+      "type": "object",
+      "required": ["norm_key"],
+      "additionalProperties": false,
+      "properties": {
+        "norm_key": { "type": "string" },
+        "surface_ar": { "type": ["string", "null"] }
+      }
+    },
+    "to": {
+      "type": "object",
+      "description": "the hidden state(s) reached (one for resolve/repair; many for split); for forbidden, the WRONG target that must be rejected",
+      "additionalProperties": false,
+      "properties": {
+        "root": { "type": ["string", "null"] },
+        "lemma": { "type": ["string", "null"] },
+        "pos": { "type": ["string", "null"] },
+        "form": { "type": ["string", "null"] },
+        "sense": { "type": ["string", "null"] },
+        "split_into": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "description": "evidence rungs that licensed the transition (internal-only references are NOT public)",
+      "items": { "type": "string" }
+    },
+    "procedure": { "type": ["string", "null"], "description": "sarf/nahw procedure that owns this transition" },
+    "source_address": { "type": ["string", "null"] },
+    "gate": {
+      "type": "string",
+      "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"]
+    },
+    "why": { "type": ["string", "null"], "description": "for forbidden transitions: the collision class and the regression it prevents" }
+  }
+}

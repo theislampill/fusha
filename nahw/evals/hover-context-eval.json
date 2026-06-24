@@ -1,0 +1,232 @@
+{
+  "schema": "fusha/hover-context-eval@1",
+  "purpose": "Decides, per token, whether a hover gloss may auto-render (safe=true) or MUST stay pending (safe=false) because the surface key collides with another reading under the same normalization, OR because the correct sense is context-/referent-dependent. A hover is the lowest-friction surface in the public reader; a wrong auto-gloss there is the highest-leverage error. safe=true is permitted ONLY when the cited harakāt/POS/referent evidence uniquely fixes the sense AND no same-norm-key sibling can leak. PENDING beats a wrong hover.",
+  "principle": "The hover layer keys on norm(surface). norm() is recall-only: it collapses harakāt and (in plain norm) the hamza seat, so one norm_key can front several incompatible readings. A hover is safe ONLY if the rendered token still carries the discriminating mark AND the context does not flip the sense; otherwise it stays pending. same_key_surfaces[] lists the colliding readings the gloss must NOT silently pick among.",
+  "consumes": {
+    "gates": "./grammar-decision-gates.json",
+    "state_machine": "./nahw-state-machine-eval.json",
+    "particle_haraka": "../rules/particle-context-rules.json",
+    "referent_guard": "../rules/referent-guard-rules.json",
+    "context_sense": "../rules/context-sense-rules.json",
+    "two_vote": "../rules/two-vote-required-rules.json",
+    "decision_examples": "../examples/function-word-decisions.jsonl"
+  },
+  "field_contract": {
+    "id": "stable case id",
+    "surface": "the diacritized token AS RENDERED on the page (the harakāt are part of what the hover sees)",
+    "norm_key": "norm(surface) — the recall key the hover index is built on; collapses harakāt, and in plain norm() the hamza seat",
+    "same_key_surfaces": "other diacritized readings that map to the same norm_key and would be confused if only the key were used",
+    "safe": "true → auto-render the gloss; false → hover MUST stay pending",
+    "reason": "why it is safe (the discriminating mark survives in `surface` and context does not flip it) or unsafe (collision / referent-dependent / context-sensitive)",
+    "gloss_if_safe": "the gloss to render when safe=true (omitted when safe=false)",
+    "pending_reason": "the pending code when safe=false (omitted when safe=true)",
+    "gate": "the decision gate this hover is routed through"
+  },
+  "cases": [
+    {
+      "id": "min_preposition_safe",
+      "surface": "مِنَ",
+      "norm_key": "من",
+      "same_key_surfaces": ["مَن", "مَنَّ"],
+      "safe": true,
+      "gloss_if_safe": "from / among",
+      "reason": "the rendered surface carries the kasra on the mīm, which uniquely fixes the preposition; مَن (fatḥa) and مَنَّ (shadda) are excluded by the visible harakāt",
+      "gate": "auto_safe"
+    },
+    {
+      "id": "man_relative_safe_with_sila",
+      "surface": "مَن",
+      "norm_key": "من",
+      "same_key_surfaces": ["مِنْ", "مَنَّ"],
+      "safe": true,
+      "gloss_if_safe": "who / whoever",
+      "reason": "fatḥa on the mīm rules out the preposition and the verb مَنَّ; the gloss 'who/whoever' covers both relative and interrogative مَن without committing to a wrong referent",
+      "gate": "auto_safe"
+    },
+    {
+      "id": "man_bare_unsafe",
+      "surface": "من",
+      "norm_key": "من",
+      "same_key_surfaces": ["مَن", "مِنْ", "مَنَّ"],
+      "safe": false,
+      "pending_reason": "homograph_haraka",
+      "reason": "the rendered token has NO harakāt — relative/interrogative مَن, preposition مِنْ, and the verb مَنَّ all collapse to this key; nothing on the surface separates them",
+      "gate": "never_auto_resolve"
+    },
+    {
+      "id": "lam_negation_safe",
+      "surface": "لَمْ",
+      "norm_key": "لم",
+      "same_key_surfaces": ["لِمَ"],
+      "safe": true,
+      "gloss_if_safe": "did not",
+      "reason": "sukūn on the mīm (and the licensing jussive verb downstream) uniquely marks the negation particle; لِمَ 'why' carries kasra on the lām and fatḥa on the mīm",
+      "gate": "auto_safe"
+    },
+    {
+      "id": "lam_bare_unsafe",
+      "surface": "لم",
+      "norm_key": "لم",
+      "same_key_surfaces": ["لَمْ", "لِمَ"],
+      "safe": false,
+      "pending_reason": "homograph_haraka",
+      "reason": "without the lām harakah the rendered key cannot separate negation لَمْ 'did not' from interrogative لِمَ 'why'; opposite functions, same key",
+      "gate": "never_auto_resolve"
+    },
+    {
+      "id": "lamma_temporal_safe",
+      "surface": "لَمَّا",
+      "norm_key": "لما",
+      "same_key_surfaces": ["لِمَا", "لَمَا"],
+      "safe": true,
+      "gloss_if_safe": "when / after",
+      "reason": "the shadda on the mīm is visible in the rendered surface and is the decisive mark for لَمَّا; لِمَا 'for that which' has no shadda",
+      "gate": "two_vote_required"
+    },
+    {
+      "id": "lima_relative_unsafe_when_bare_shadda",
+      "surface": "لما",
+      "norm_key": "لما",
+      "same_key_surfaces": ["لَمَّا", "لِمَا", "لَمَا"],
+      "safe": false,
+      "pending_reason": "homograph_haraka",
+      "reason": "the deciding shadda on the mīm is absent in this rendered token; do not guess temporal 'when' — لِمَا 'for that which' and لَمَّا 'when/not yet' share the bare key",
+      "gate": "never_auto_resolve"
+    },
+    {
+      "id": "an_vs_inna_norm_collapses_seat_unsafe",
+      "surface": "ان",
+      "norm_key": "ان",
+      "same_key_surfaces": ["أَنْ", "أَنَّ", "إِنَّ", "إِنْ"],
+      "safe": false,
+      "pending_reason": "seat_collapsed",
+      "reason": "plain norm() drops the hamza seat, so أَنْ (subjunctive), أَنَّ ('that'+noun), إِنَّ ('indeed'), and إِنْ ('if'/'not') all collide; re-key with norm_strict before any hover renders",
+      "gate": "never_auto_resolve"
+    },
+    {
+      "id": "inna_strict_seat_safe",
+      "surface": "إِنَّ",
+      "norm_key": "إن",
+      "same_key_surfaces": ["إِنْ"],
+      "safe": true,
+      "gloss_if_safe": "indeed / verily",
+      "reason": "under norm_strict the kasra-seat (إ) survives AND the shadda is visible, separating emphatic إِنَّ from light إِنْ; the following naṣb ism confirms it",
+      "gate": "two_vote_required"
+    },
+    {
+      "id": "in_conditional_referent_free_safe",
+      "surface": "إِنْ",
+      "norm_key": "إن",
+      "same_key_surfaces": ["إِنَّ"],
+      "safe": true,
+      "gloss_if_safe": "if",
+      "reason": "light إِنْ (no shadda, kasra-seat under norm_strict) before a sharṭ verb; the 'if' gloss does not depend on a referent, so it auto-renders once the double-jazm frame is confirmed",
+      "gate": "two_vote_required"
+    },
+    {
+      "id": "bihi_pronoun_referent_unsafe",
+      "surface": "بِهِ",
+      "norm_key": "به",
+      "same_key_surfaces": ["بِهَا"],
+      "safe": false,
+      "pending_reason": "referent_unresolved",
+      "reason": "preposition بِ + the pronoun ـه: the gloss is 'in/with it' vs 'in/with him' depending on the antecedent's gender/animacy; the hover cannot fix the referent from the token alone",
+      "gate": "two_vote_required"
+    },
+    {
+      "id": "fihi_pronoun_safe_neutral",
+      "surface": "فِيهِ",
+      "norm_key": "فيه",
+      "same_key_surfaces": [],
+      "safe": true,
+      "gloss_if_safe": "in it / therein",
+      "reason": "فِي + ـه is unambiguous as a jar-majrūr; the referent-neutral 'in it / therein' is correct regardless of antecedent, so no referent resolution is needed to render safely",
+      "gate": "auto_safe"
+    },
+    {
+      "id": "halim_attribute_referent_unsafe",
+      "surface": "حَلِيمٌ",
+      "norm_key": "حليم",
+      "same_key_surfaces": [],
+      "safe": false,
+      "pending_reason": "referent_unresolved",
+      "reason": "role-dependent: 'forbearing' (of a human) vs 'the Forbearing' (divine attribute) is decided by the referent; never default a human attribute to a divine Name (referent-guard-rules halim_referent)",
+      "gate": "two_vote_required"
+    },
+    {
+      "id": "salihan_proper_vs_common_unsafe",
+      "surface": "صَٰلِحًا",
+      "norm_key": "صالحا",
+      "same_key_surfaces": ["صَالِح"],
+      "safe": false,
+      "pending_reason": "proper_name",
+      "reason": "could be the common adjective 'righteous (deed)' or the Prophet Ṣāliḥ; the proper-noun reading needs a proper-noun referent, which the hover cannot establish alone",
+      "gate": "human_source_review_required"
+    },
+    {
+      "id": "muhammad_proper_no_verb_safe",
+      "surface": "مُحَمَّد",
+      "norm_key": "محمد",
+      "same_key_surfaces": ["مُحَمِّد"],
+      "safe": true,
+      "gloss_if_safe": "Muḥammad (proper name)",
+      "reason": "a proper noun is rendered as the name and never as its homographic verb 'to praise'; the proper-name gloss is referent-stable, so it is safe (POS guard forbids a 'to …' gloss) — see referent-guard-rules proper_noun_not_verb",
+      "gate": "auto_safe"
+    },
+    {
+      "id": "almulk_vowel_only_unsafe",
+      "surface": "الملك",
+      "norm_key": "الملك",
+      "same_key_surfaces": ["ٱلْمُلْكُ", "ٱلْمَلِكُ", "ٱلْمَلَكُ"],
+      "safe": false,
+      "pending_reason": "homograph_haraka",
+      "reason": "the bare key catches ٱلْمُلْك 'dominion', ٱلْمَلِك 'the King', and ٱلْمَلَك 'the angel' — vowel-only distinctions; one key-gloss is unsafe (function-word-decisions line 24)",
+      "gate": "never_auto_resolve"
+    },
+    {
+      "id": "yaqdiru_contronym_unsafe",
+      "surface": "يَقْدِرُ",
+      "norm_key": "يقدر",
+      "same_key_surfaces": [],
+      "safe": false,
+      "pending_reason": "multi_sense",
+      "reason": "ق-د-ر spans 'is able / ordains' and 'restricts / straitens'; the polarity is fixed only by the antonym partner يَبْسُط in context, not by the token — the hover must wait for the contrast (context-sense-rules qadara_contronym)",
+      "gate": "two_vote_required"
+    },
+    {
+      "id": "qul_imperative_safe",
+      "surface": "قُلْ",
+      "norm_key": "قل",
+      "same_key_surfaces": ["قَالَ"],
+      "safe": true,
+      "gloss_if_safe": "say! (command)",
+      "reason": "the imperative form (ḍamma-sukūn, no medial alif) is visible and distinct from the perfect قَالَ 'he said'; the command gloss is context-independent",
+      "gate": "auto_safe"
+    },
+    {
+      "id": "umm_vs_am_unsafe",
+      "surface": "ام",
+      "norm_key": "ام",
+      "same_key_surfaces": ["أُمّ", "أَمْ", "إِمَّا"],
+      "safe": false,
+      "pending_reason": "seat_collapsed",
+      "reason": "norm_strict(أُمّ)=norm_strict(أَمْ)='أم'; the very frequent interrogative أَمْ 'or' collides with أُمّ 'mother' — a surface key is unsafe, render pending (function-word-decisions line 23)",
+      "gate": "never_auto_resolve"
+    },
+    {
+      "id": "ilayna_not_root_layn_safe",
+      "surface": "إِلَيْنَا",
+      "norm_key": "إلينا",
+      "same_key_surfaces": [],
+      "safe": true,
+      "gloss_if_safe": "to us",
+      "reason": "jar-majrūr إِلَى + نا; the gloss is referent-fixed (1pl) and must NOT be confused with the root ل-ي-ن 'soft' — the analyzed structure makes it safe and referent-stable",
+      "gate": "auto_safe"
+    }
+  ],
+  "scoring": {
+    "pass": "engine returns the listed `safe` AND, when safe=false, holds the hover pending with the listed pending_reason",
+    "fail_high_severity": "rendering a gloss on any safe=false case (auto-glossing a collision/referent/context-sensitive token) — the worst hover error",
+    "fail_open_default": "when in doubt between safe true/false, treat as safe=false; a missing hover is recoverable, a wrong one is not"
+  }
+}

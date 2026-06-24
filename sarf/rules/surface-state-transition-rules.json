@@ -1,0 +1,112 @@
+{
+  "schema": "fusha/surface-state-transition-rules@1",
+  "purpose": "The morphology side of the token state machine. An observed SURFACE (what is written, diacritics and all) is not the same as the HIDDEN morphological state (root + wazn + Form + voice + the certified sense). This file encodes the licensed transitions from an observation to a hidden state, the evidence each transition requires, and the forbidden transitions that past regressions taught us to refuse. A transition with requires_two_vote=true may not be taken on a single rung — it needs two independent agreeing certifiers (e.g. QAC root + Qamus entry, or norm_strict + QAC). norm() is never a vote. Public artifacts stay {src:'qamus', kind:'authored'}; QAC is INTERNAL evidence only.",
+  "fields": {
+    "from_observation": "the surface signal observed on the diacritized token",
+    "trigger_evidence": "the certifier(s) that license moving to the hidden state",
+    "to_hidden_state": "the morphological state the transition asserts (root/wazn/Form/voice/sense)",
+    "requires_two_vote": "true if a single rung is insufficient; two independent certifiers must agree",
+    "why": "for forbidden transitions: the regression this refusal prevents"
+  },
+  "state_vocabulary": {
+    "observation": "diacritized surface string as written in the muṣḥaf (incl. seat, shadda, harakāt, proclitics)",
+    "hidden_state": "{root, wazn, form (I–X), voice (active/passive), sense_id}",
+    "certifiers": "qamus_entry | qac_root | photographed_source_page | norm_strict | (norm — assists lookup, NEVER votes)",
+    "pending": "the explicit non-state emitted when evidence is insufficient; safe default"
+  },
+  "voting_rule": "A 'vote' is one INDEPENDENT certifier agreeing on the hidden state. norm() is not a vote (it only assists recall — see norm_never_certifies in ../rules/root-decision-rules.json). Two votes from the SAME source (e.g. two QAC fields) count as one. requires_two_vote transitions are the hamza-sensitive, Form-ambiguous, and voice-ambiguous ones where a single rung has historically shipped a wrong gloss.",
+  "transitions": [
+    {
+      "from_observation": "stem + sound-plural suffix ـُونَ/ـِينَ or ـَاتٌ/ـَاتٍ",
+      "trigger_evidence": "norm_strict strips the case suffix to a lemma; QAC POS confirms a sound plural",
+      "to_hidden_state": "{root: lemma-root, wazn: sound-plural, sense: singular's sense, number: plural}",
+      "requires_two_vote": false,
+      "why": null
+    },
+    {
+      "from_observation": "أَفْعَال / مَفَاعِل / فُعَلَاء broken-plural shape with full diacritics",
+      "trigger_evidence": "QAC root + the certified singular's Qamus entry agree on the same root",
+      "to_hidden_state": "{root: certified, wazn: broken-plural, sense: singular's sense, number: plural}",
+      "requires_two_vote": true,
+      "why": null
+    },
+    {
+      "from_observation": "initial آ (madda) on a verb",
+      "trigger_evidence": "norm_strict restores the underlying أَأ Form-IV augment AND QAC marks Form IV",
+      "to_hidden_state": "{wazn: أَفْعَلَ, form: IV, voice: active}",
+      "requires_two_vote": true,
+      "why": null
+    },
+    {
+      "from_observation": "shadda on the SECOND radical (فَعَّلَ)",
+      "trigger_evidence": "QAC marks Form II AND the entry's sense is the intensive/causative reading",
+      "to_hidden_state": "{wazn: فَعَّلَ, form: II, sense: intensive/causative}",
+      "requires_two_vote": true,
+      "why": null
+    },
+    {
+      "from_observation": "ḍamma on the first radical + kasra before the last (فُعِلَ / yufʿalu)",
+      "trigger_evidence": "QAC voice=passive AND the context/agreement supports an undergoer subject",
+      "to_hidden_state": "{voice: passive, sense: '(was) X-ed'}",
+      "requires_two_vote": true,
+      "why": null
+    },
+    {
+      "from_observation": "medial hamza whose seat shifts (سَأَلَ/سُئِلَ/يَسْأَلُ)",
+      "trigger_evidence": "norm_strict preserves the seat; QAC certifies one constant root across the inflections",
+      "to_hidden_state": "{root: single, sense: single; seat treated as a vowel-context spelling rule}",
+      "requires_two_vote": false,
+      "why": null
+    },
+    {
+      "from_observation": "initial ٱ (hamzat al-waṣl) before a stem",
+      "trigger_evidence": "../rules/hamza-gates.json gate-wasl-strip removes the waṣl; QAC root certifies the residual stem",
+      "to_hidden_state": "{root: residual-stem-root; the waṣl is NOT a radical}",
+      "requires_two_vote": false,
+      "why": null
+    },
+    {
+      "from_observation": "any surface where the disambiguating seat/harakah/shadda is ABSENT",
+      "trigger_evidence": "none sufficient",
+      "to_hidden_state": "pending",
+      "requires_two_vote": false,
+      "why": null
+    }
+  ],
+  "forbidden_transitions": [
+    {
+      "pattern": "norm_strict key نزل → a single gloss for both نَزَّلَ and نَزَلَ",
+      "why": "نَزَّلَ (shadda on zāy, Form II) 'sent down (gradually/upon)' and نَزَلَ (Form I) 'descended / came down' share the bare key نزل. Authoring one gloss for both erases the Form II↔I distinction and the agent/patient roles. The shadda is the signal; Form must be certified by QAC + entry before glossing, never by the shared key."
+    },
+    {
+      "pattern": "observation آمَنَ → {sense: 'to be safe'} on a single rung",
+      "why": "آمَنَ (madda, Form IV) is 'to believe', أَمِنَ (plain hamza, Form I) is 'to be safe' — same root أ م ن, different Form and sense. A single-rung transition that picked the Form-I sense for a Form-IV surface shipped the wrong gloss. Requires_two_vote; see amana-vs-amina-seats in ../rules/hamza-gates.json."
+    },
+    {
+      "pattern": "observation إِيمَان → {root: ي م ن, sense: 'oaths'}",
+      "why": "إِيمَان is root أ م ن 'faith'; أَيْمَان is root ي م ن 'oaths'. norm() fuses them by dropping the seat. Transitioning the faith-surface to the oaths-state is the canonical hamza-collapse regression — forbidden without the seat-preserving two-vote."
+    },
+    {
+      "pattern": "observation فُعِلَ-shaped surface → {voice: active} by default",
+      "why": "Defaulting passive-pattern surfaces (قُتِلَ, أُنزِلَ) to active flips agent and patient and reverses the verse's meaning. Voice is a requires_two_vote hidden state: QAC voice + agreement must agree before authoring active OR passive."
+    },
+    {
+      "pattern": "observation with sound-plural suffix → {root includes the suffix}",
+      "why": "Counting ـُونَ/ـِينَ/ـَات as radicals fabricates a quadriliteral root (مُسْلِمُونَ → false root س ل م ن). The suffix is inflection; strip it via norm_strict first. Mirrors suffix-as-radical in ../rules/plural-gender-rules.json."
+    },
+    {
+      "pattern": "observation ٱ-initial → {first radical: hamza}",
+      "why": "Treating hamzat al-waṣl as a radical hamza invents an أ-initial root for Form VII/VIII/X stems and the article (ٱسْتَغْفَرَ → false root أ س ت). The waṣl carries no glottal stop in continuous reading; strip it first (gate-wasl-strip)."
+    },
+    {
+      "pattern": "any forbidden/ambiguous observation → a non-pending state via norm() alone",
+      "why": "norm() assists lookup but is not a vote; letting it complete a transition is the root cause of every collapse above. When in doubt the only licensed target is pending — prefer pending over wrong, per ../rules/root-decision-rules.json decision rules."
+    }
+  ],
+  "cross_links": {
+    "root_ladder": "../rules/root-decision-rules.json",
+    "hamza_gates": "../rules/hamza-gates.json",
+    "plural_gender": "../rules/plural-gender-rules.json",
+    "homograph_quarantines": "../rules/homograph-quarantines.json"
+  }
+}

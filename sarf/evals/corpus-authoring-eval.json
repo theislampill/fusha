@@ -1,0 +1,173 @@
+{
+  "schema": "fusha/corpus-authoring-eval@1",
+  "purpose": "Given a corpus token (from the Nawawī40 ḥadīth set or a Qurʾān sample), assert the correct authoring CLASSIFICATION against the existing Qamus and the shape of the candidate it should produce. This is the gate for the diff step that feeds new content into Qamus: a token is routed to exactly one bucket, and the expected candidate shape (entry vs occurrence-augment vs particle) is pinned. Mirrors the conservative diff used in ../../corpora/nawawi40/out/nawawi40.refine_summary.json — automated weak-root tying is ~50% precision, so any 'new_root' assertion still demands QAC/human confirmation.",
+  "classes": {
+    "already_in_qamus": "lemma + root already have a published entry — author NOTHING new; at most attach this occurrence",
+    "occurrence_augment": "entry exists; add this surface/āyah occurrence to an existing sense (no new entry, no new sense)",
+    "new_surface": "lemma exists but THIS inflected surface is not yet mapped to it — map surface→lemma, no new entry",
+    "new_lemma": "root exists in Qamus but this lemma (e.g. a different derivation/form) is new — new entry under the existing root",
+    "new_root": "neither root nor lemma present — new root + entry; weak/hamza roots require QAC or human confirmation before asserting radicals",
+    "particle": "closed-set particle or construction — rootless; goes to the particle spine, never gets a content root"
+  },
+  "candidate_shape_ref": "expected_candidate fields follow ../../qamus/schemas/qamus-entry.schema.json (status=candidate) and ../../qamus/schemas/authored-gloss.schema.json for occurrence-level rows. Public record is always {src:'qamus',kind:'authored'}; source_scope names the corpus (quran|nawawi40) as INTERNAL provenance only.",
+  "case_schema": {
+    "id": "stable kebab id",
+    "token": {"surface_ar": "vowelled surface as it appears in the corpus", "corpus": "nawawi40 | quran", "locus": "hadith:N (Nawawī number) or quran:S:A"},
+    "norm_key": "the over-collapsed key the differ sees",
+    "expected_class": "one of classes",
+    "expected_candidate": "the shape the differ should emit for this class",
+    "evidence_required": "qac | norm_strict | content_letter_harakah | hamza_seat | shadda | wazn | context_nahw | referent | existing_entry",
+    "expected_gate": "auto_safe | two_vote_required | human_source_review_required | never_auto_resolve",
+    "note": "why this bucket and not its neighbours"
+  },
+  "see_also": ["../../corpora/nawawi40/out/nawawi40.refine_summary.json", "./sarf-state-machine-eval.json", "../rules/root-decision-rules.json", "../rules/pos-mismatch-rules.json", "../../corpora/sarfnahw/out/particles/particle_spine.json"],
+  "cases": [
+    {
+      "id": "nawawi-innama-bil-niyyat",
+      "token": {"surface_ar": "بِٱلنِّيَّاتِ", "corpus": "nawawi40", "locus": "hadith:1"},
+      "norm_key": "بالنيات",
+      "expected_class": "new_lemma",
+      "expected_candidate": {"headword": "نِيَّة", "root": "ن و ي", "pos": "noun", "category": "Nouns", "senses": [{"gloss": "intention / resolve of the heart"}], "source_scope": ["nawawi40"], "status": "candidate", "note": "strip the بِ + ٱل + plural ـات; map the broken/sound plural surface to the singular lemma نِيَّة"},
+      "evidence_required": ["norm_strict", "qac", "wazn"],
+      "expected_gate": "two_vote_required",
+      "note": "root ن و ي may already exist via the verb نَوَى; the NOMINAL lemma نِيَّة is the new entry. Do not let بِٱلـ proclitics or the plural ـات leak into the headword."
+    },
+    {
+      "id": "nawawi-al-aamal-occurrence",
+      "token": {"surface_ar": "ٱلْأَعْمَالُ", "corpus": "nawawi40", "locus": "hadith:1"},
+      "norm_key": "الاعمال",
+      "expected_class": "occurrence_augment",
+      "expected_candidate": {"target_lemma": "عَمَل", "root": "ع م ل", "add": {"surface_ar": "ٱلْأَعْمَال", "locus": "hadith:1", "form": "broken plural أَفْعَال"}, "no_new_entry": true, "note": "عَمَل already published; attach this plural occurrence to its existing sense"},
+      "evidence_required": ["existing_entry", "wazn"],
+      "expected_gate": "auto_safe",
+      "note": "broken plural أَعْمَال has no surface affinity to عَمَل — match by lemma, then augment; creating a second entry would duplicate."
+    },
+    {
+      "id": "nawawi-hijra-new-lemma",
+      "token": {"surface_ar": "هِجْرَتُهُ", "corpus": "nawawi40", "locus": "hadith:1"},
+      "norm_key": "هجرته",
+      "expected_class": "new_lemma",
+      "expected_candidate": {"headword": "هِجْرَة", "root": "ه ج ر", "pos": "masdar", "category": "Nouns", "senses": [{"gloss": "migration / emigration (for God's sake)"}], "source_scope": ["nawawi40"], "status": "candidate", "note": "strip the ـهُ possessive enclitic; the maṣdar هِجْرَة is the lemma even if the verb هَجَرَ root exists"},
+      "evidence_required": ["norm_strict", "wazn"],
+      "expected_gate": "two_vote_required",
+      "note": "the enclitic ـهُ is not part of the lemma; maṣdar vs finite verb is a sense distinction that needs the second vote."
+    },
+    {
+      "id": "nawawi-man-particle",
+      "token": {"surface_ar": "مَنْ", "corpus": "nawawi40", "locus": "hadith:1"},
+      "norm_key": "من",
+      "expected_class": "particle",
+      "expected_candidate": {"spine_entry": "مَن", "pos": "particle", "root": null, "function": "conditional/relative pronoun 'whoever'", "no_content_root": true, "note": "route to the particle spine; the sukūn on the nūn + no kasra on the mīm distinguishes it from مِن 'from'"},
+      "evidence_required": ["content_letter_harakah", "shadda"],
+      "expected_gate": "never_auto_resolve",
+      "note": "rootless closed-set particle; absent the harakāt the مَن/مِن split cannot be auto-decided, so the spine assignment itself is pending until vowels confirm."
+    },
+    {
+      "id": "nawawi-al-islam-already",
+      "token": {"surface_ar": "ٱلْإِسْلَامُ", "corpus": "nawawi40", "locus": "hadith:3"},
+      "norm_key": "الاسلام",
+      "expected_class": "already_in_qamus",
+      "expected_candidate": {"target_lemma": "إِسْلَام", "root": "س ل م", "action": "none", "note": "published Form-IV maṣdar entry already exists; do not re-author. At most record the nawawi40 occurrence as internal provenance."},
+      "evidence_required": ["existing_entry", "hamza_seat"],
+      "expected_gate": "auto_safe",
+      "note": "the س ل م polyseme quarantine already governs إِسْلَام 'submission' vs سَلَام 'peace'; the existing entry must not be split by a second authoring pass."
+    },
+    {
+      "id": "nawawi-shahada-new-lemma",
+      "token": {"surface_ar": "شَهَادَةِ", "corpus": "nawawi40", "locus": "hadith:3"},
+      "norm_key": "شهاده",
+      "expected_class": "new_lemma",
+      "expected_candidate": {"headword": "شَهَادَة", "root": "ش ه د", "pos": "masdar", "category": "Nouns", "senses": [{"gloss": "testimony / bearing witness"}], "source_scope": ["nawawi40"], "status": "candidate", "note": "tāʾ marbūṭa is part of the lemma, not a suffix; the genitive kasra is case-marking, strip it"},
+      "evidence_required": ["norm_strict", "wazn"],
+      "expected_gate": "two_vote_required",
+      "note": "root ش ه د likely present via شَهِدَ; the maṣdar شَهَادَة is the new nominal lemma."
+    },
+    {
+      "id": "nawawi-jibril-proper-noun",
+      "token": {"surface_ar": "جِبْرِيلُ", "corpus": "nawawi40", "locus": "hadith:2"},
+      "norm_key": "جبريل",
+      "expected_class": "new_lemma",
+      "expected_candidate": {"headword": "جِبْرِيل", "root": null, "pos": "proper_noun", "category": "Nouns", "senses": [{"gloss": "Jibrīl (the angel Gabriel)"}], "source_scope": ["nawawi40"], "status": "candidate", "note": "non-Arabic proper noun — assign NO content root; never derive radicals from the surface"},
+      "evidence_required": ["referent", "context_nahw"],
+      "expected_gate": "human_source_review_required",
+      "note": "a name is not its root; proper nouns need a referent/context check, and foreign names get no triliteral root at all."
+    },
+    {
+      "id": "nawawi-yatahaajazu-new-root",
+      "token": {"surface_ar": "يَتَجَافَىٰ", "corpus": "nawawi40", "locus": "hadith:hadith-qudsi-set"},
+      "norm_key": "يتجافى",
+      "expected_class": "new_root",
+      "expected_candidate": {"headword": "تَجَافَىٰ", "root": "ج ف و", "pos": "verb", "form": "VI", "category": "Verbs", "senses": [{"gloss": "to keep (one's side) away from / forsake (the bed)"}], "source_scope": ["nawawi40"], "status": "candidate", "confirm_root": "QAC_or_human", "note": "Form VI تَفَاعَلَ of a final-weak root; the ى is the weak radical — root candidate ج ف و must be QAC-confirmed, not asserted from the surface"},
+      "evidence_required": ["qac", "wazn", "norm_strict"],
+      "expected_gate": "human_source_review_required",
+      "note": "weak-final + derived form: the conservative differ flags this as new_root but the ~50%-precision weak-root tie means radicals are NOT asserted without confirmation."
+    },
+    {
+      "id": "quran-al-hamd-already",
+      "token": {"surface_ar": "ٱلْحَمْدُ", "corpus": "quran", "locus": "quran:1:2"},
+      "norm_key": "الحمد",
+      "expected_class": "already_in_qamus",
+      "expected_candidate": {"target_lemma": "حَمْد", "root": "ح م د", "action": "none", "note": "published maṣdar 'praise' entry exists; the ٱل is the definite article, not part of the lemma"},
+      "evidence_required": ["existing_entry"],
+      "expected_gate": "auto_safe",
+      "note": "high-frequency, single-sense, key-clean once the article is stripped — no authoring."
+    },
+    {
+      "id": "quran-rabb-new-surface",
+      "token": {"surface_ar": "رَبِّ", "corpus": "quran", "locus": "quran:1:2"},
+      "norm_key": "رب",
+      "expected_class": "new_surface",
+      "expected_candidate": {"target_lemma": "رَبّ", "root": "ر ب ب", "map_surface": "رَبِّ", "case": "genitive (iḍāfa)", "no_new_entry": true, "note": "the kasra is iḍāfa case-marking on the existing lemma رَبّ; map the inflected surface, do not create an entry"},
+      "evidence_required": ["existing_entry", "context_nahw"],
+      "expected_gate": "auto_safe",
+      "note": "lemma exists; only the case-inflected surface رَبِّ needs to be tied to it. Distinguish from the doubled-root trap (ر ب vs ر ب ب) via the shadda."
+    },
+    {
+      "id": "quran-iyyaka-particle-construction",
+      "token": {"surface_ar": "إِيَّاكَ", "corpus": "quran", "locus": "quran:1:5"},
+      "norm_key": "اياك",
+      "expected_class": "particle",
+      "expected_candidate": {"spine_entry": "إِيَّا + ـكَ", "pos": "pronoun", "root": null, "function": "isolated accusative object pronoun 'You (alone)'", "no_content_root": true, "note": "construction = the إِيَّا support + 2ms enclitic; rootless. norm سees an اياك-shaped key but there is no triliteral stem"},
+      "evidence_required": ["norm_strict", "context_nahw"],
+      "expected_gate": "never_auto_resolve",
+      "note": "do not certify a root from a pronoun-support construction; route to the particle/pronoun spine."
+    },
+    {
+      "id": "quran-nastainu-new-root",
+      "token": {"surface_ar": "نَسْتَعِينُ", "corpus": "quran", "locus": "quran:1:5"},
+      "norm_key": "نستعين",
+      "expected_class": "new_root",
+      "expected_candidate": {"headword": "ٱسْتَعَانَ", "root": "ع و ن", "pos": "verb", "form": "X", "category": "Verbs", "senses": [{"gloss": "to seek help / seek aid"}], "source_scope": ["quran"], "status": "candidate", "confirm_root": "QAC_or_human", "note": "Form X ٱسْتَفْعَلَ of a hollow root; the ـعِينُ surfaces the weak middle radical و — root ع و ن is QAC-confirmed, not read off the surface ي"},
+      "evidence_required": ["qac", "wazn", "hamza_seat"],
+      "expected_gate": "human_source_review_required",
+      "note": "hollow + Form X: the imperfect prefix نَـ and the istifʿāl frame must be peeled before the root is even guessed; weak-root precision demands confirmation."
+    },
+    {
+      "id": "quran-as-sirat-new-lemma",
+      "token": {"surface_ar": "ٱلصِّرَٰطَ", "corpus": "quran", "locus": "quran:1:6"},
+      "norm_key": "الصراط",
+      "expected_class": "new_lemma",
+      "expected_candidate": {"headword": "صِرَاط", "root": "ص ر ط", "pos": "noun", "category": "Nouns", "senses": [{"gloss": "path / way"}], "source_scope": ["quran"], "status": "candidate", "note": "strip ٱل + accusative fatḥa; concrete noun, single sense"},
+      "evidence_required": ["norm_strict"],
+      "expected_gate": "two_vote_required",
+      "note": "a clean new nominal lemma; two-vote is the standard floor for any new entry even when the surface is unambiguous."
+    },
+    {
+      "id": "quran-aleem-quarantine-occurrence",
+      "token": {"surface_ar": "عَلِيمٌ", "corpus": "quran", "locus": "quran:2:32"},
+      "norm_key": "عليم",
+      "expected_class": "occurrence_augment",
+      "expected_candidate": {"target_lemma": "عَلِيم", "root": "ع م م? -> ع ل م", "add": {"surface_ar": "عَلِيمٌ", "locus": "quran:2:32"}, "no_new_entry": true, "guard": "must attach to the ع ل م 'All-Knowing' entry, NOT the أ ل م 'painful' data-error key", "note": "augment the existing عَلِيم entry; the nominative tanwīn must not spawn a separate entry or re-trip the quarantine"},
+      "evidence_required": ["existing_entry", "qac", "norm_strict"],
+      "expected_gate": "two_vote_required",
+      "note": "ties the regression (see ./qamus-regression-eval.json#aleem-all-knowing-not-painful) into the authoring path: an occurrence of a quarantined homograph augments the CORRECT entry and never re-files under the wrong root."
+    }
+  ],
+  "suite_invariants": [
+    "Every token is routed to exactly one expected_class — overlap (e.g. new_lemma AND new_root) is a differ bug.",
+    "No 'new_root' assertion ships radicals without QAC or human confirmation (confirm_root must be set); weak/hamza roots are never read off the surface.",
+    "Proclitics (بِ/وَ/فَ/ٱل), enclitics (ـهُ/ـكَ/ـنا), case-marking (tanwīn, iḍāfa kasra), and the tāʾ marbūṭa-as-suffix illusion are stripped/handled before classification — they must never leak into a headword.",
+    "Particles and pronoun-support constructions get root:null and go to the particle spine — never a content root.",
+    "occurrence_augment and new_surface MUST set no_new_entry/no-create — duplicating an existing lemma is a regression."
+  ]
+}

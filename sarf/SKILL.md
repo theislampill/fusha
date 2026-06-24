@@ -11,12 +11,25 @@ pending?** This skill is the discipline that prevents wrong hover glosses. It is
 
 ## Procedures (progressive disclosure — load the one you need)
 This SKILL is the fast gate + contract; each step is a short procedure (input · checks · evidence ladder ·
-output · forbidden · test):
+output · forbidden · test). **Open only the one the task needs.**
 - [`procedures/root-decision.md`](procedures/root-decision.md) — find the root via the evidence ladder.
 - [`procedures/verb-form.md`](procedures/verb-form.md) — measure I–X, voice, person/number, negation tense-flip.
+- [`procedures/weak-root.md`](procedures/weak-root.md) — recover hidden و/ي/ا radicals (مثال/أجوف/ناقص/لفيف).
+- [`procedures/hamza-root.md`](procedures/hamza-root.md) — hamza as radical + seat orthography (norm collapses it).
+- [`procedures/doubled-root.md`](procedures/doubled-root.md) — geminate roots hidden by shadda (رَدَّ→ر د د).
 - [`procedures/noun-plural-gender.md`](procedures/noun-plural-gender.md) — role/shape, plural, gender, proper vs common.
+- [`procedures/masdar-participle.md`](procedures/masdar-participle.md) — maṣdar vs ism fāʿil/mafʿūl vs ṣifa mushabbaha gloss shape.
+- [`procedures/proper-noun.md`](procedures/proper-noun.md) — detect أعلام; no root-verb gloss; route to pending_proper_noun.
 - [`procedures/homograph-risk.md`](procedures/homograph-risk.md) — the `norm_strict` surface-key safety probe.
 - [`procedures/hover-application.md`](procedures/hover-application.md) — the certified live-apply path + rollback.
+- [`procedures/qamus-entry-authoring.md`](procedures/qamus-entry-authoring.md) — sarf evidence → reviewable entry candidate.
+- [`procedures/corpus-to-qamus.md`](procedures/corpus-to-qamus.md) — the sarf half of the corpus→Qamus pipeline.
+
+**Rules** (`rules/`): root-decision, verb-measure-gates, weak-root-gates, hamza-gates, plural-gender-rules,
+masdar-participle-gates, homograph-quarantines, **surface-state-transition-rules** (the morphology side of the
+[language state machine](../qamus/reports/language-state-machine-report.md) — forbidden single-gloss collisions).
+**Evals** (`evals/`): `sarf-state-machine-eval.json`, `qamus-regression-eval.json`, `corpus-authoring-eval.json`.
+**Curriculum** (`curriculum/`): `zero-to-fluency-sarf.md` + beginner/intermediate/advanced drills (ajami path).
 
 ## 1. Purpose
 Turn a raw surface into a *defensible* morphological decision (or an honest pending) for Qamus authoring,
