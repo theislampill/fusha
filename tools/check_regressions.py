@@ -320,6 +320,15 @@ try:
 except Exception:
     check("A1 artifact ergonomics runnable", False)
 
+# Phase 4 completion-manifest gates (per-token manifest + per-entry rollup)
+for _vname, _label in [("validate_qamus_completion_manifest.py", "Phase4 per-token completion manifest (49,900 terminal, risk-tagged)"),
+                       ("validate_entry_completion_rollup.py", "Phase4 per-entry completion rollup (2,092, 0 unknown)")]:
+    try:
+        _v = subprocess.run([sys.executable, os.path.join(_R, "tools", _vname)], capture_output=True, text=True)
+        check(_label, _v.returncode == 0)
+    except Exception:
+        check(_vname + " runnable", False)
+
 # Phase 2/3 skill completeness gates (sarf + nahw engines)
 for _vname, _label in [("validate_sarf_skill.py", "Phase2 sarf engine complete (derivatives + Madinah modes + false-clitic)"),
                        ("validate_nahw_skill.py", "Phase3 nahw engine complete (particle functions + iʿrāb polysemy)")]:

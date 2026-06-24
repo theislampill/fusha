@@ -138,6 +138,8 @@ def main():
                 row["sarf_procedure"] = sp if d else ("form-resolution" if tok.get("conf")!="low" else "clitic/suffix-resolution")
                 row["nahw_procedure"] = npn if d else None
                 row["token_decision"] = bool(d)
+                # risk: how the gloss was certified (LOW deterministic high-conf → MEDIUM med/low/2-vote)
+                row["risk"] = "LOW" if tok.get("conf")=="high" and not d else "MEDIUM"
                 state_c["resolved"]+=1; conf_c[tok.get("conf","?")]+=1
             else:
                 # unresolved -> exact blocker
@@ -173,6 +175,9 @@ def main():
                 row["sarf_procedure"] = None
                 row["nahw_procedure"] = None
                 row["token_decision"] = False
+                # risk: HIGH for iʿrāb-dependent homographs, SCHOLAR for proper nouns, MEDIUM otherwise
+                row["risk"] = ("HIGH" if blocker=="same_surface_polysemy_requires_i3rab"
+                               else "SCHOLAR" if blocker=="proper_noun_no_qamus_entry" else "MEDIUM")
                 state_c["pending"]+=1; blocker_c[blocker]+=1
             rows.append(row)
 
