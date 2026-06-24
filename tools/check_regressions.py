@@ -128,6 +128,31 @@ for art in ("qamus/schemas/language-state.schema.json", "qamus/schemas/token-sta
             "sarf/curriculum/zero-to-fluency-sarf.md", "nahw/curriculum/zero-to-fluency-nahw.md"):
     check("architecture artifact exists: %s" % art, os.path.exists(os.path.join(ROOT, art)))
 
+# 11c-mcp. (TM1) Tafsir MCP integration lane — connector, scaffold, procedures, eval fixtures exist
+for art in ("tools/tafsir_mcp_client.py", "tools/tafsir_mcp_probe.py", "tools/fetch_tafsir_mcp_ayah.py",
+            "tools/analyze_tafsir_mcp_word.py", "tools/build_tafsir_mcp_cache.py",
+            "tools/validate_tafsir_mcp_cache.py", "tools/mcp_to_language_state.py",
+            "sources/tafsir_mcp/README.md", "sources/tafsir_mcp/schema.json",
+            "sources/tafsir_mcp/examples/001_001_001.analyze_word.sample.json",
+            "sources/tafsir_mcp/examples/001_001.fetch_ayah.sample.json",
+            "sarf/procedures/tafsir-mcp-morphology.md", "nahw/procedures/tafsir-mcp-irab.md",
+            "sarf/evals/tafsir_mcp_sarf_cases.jsonl", "nahw/evals/tafsir_mcp_irab_cases.jsonl",
+            "sarf/evals/tafsir-mcp-morphology-eval.jsonl", "nahw/evals/tafsir-mcp-irab-eval.jsonl",
+            "qamus/reports/tafsir-mcp-integration-report.md"):
+    check("tafsir-mcp artifact exists: %s" % art, os.path.exists(os.path.join(ROOT, art)))
+# the MCP morphology extractor classifies the load-bearing cases (noun-not-verb on wazn name; Form IV active verb)
+try:
+    import importlib.util as _ilu
+    _spec = _ilu.spec_from_file_location("_m2ls", os.path.join(ROOT, "tools", "mcp_to_language_state.py"))
+    _m = _ilu.module_from_spec(_spec); _spec.loader.exec_module(_m)
+    _noun = _m.extract({"sarf": "{اسْمِ}: اسْمٌ، مُذَكَّرٌ، مُفْرَدٌ، جَامِدٌ، عَلَى وَزْنِ: (فِعْلٌ)", "irab": "اسْمٌ مَجْرُورٌ"})
+    _verb = _m.extract({"sarf": "{يُؤْمِنُونَ}: فِعْلٌ مُضَارِعٌ لِلْغَائِبِينِ، مَبْنِيٌّ لِلْمَعْلُومِ، مِنْ بَابِ: (أَفْعَلَ)", "irab": "فِعْلٌ مُضَارِعٌ مَرْفُوعٌ"})
+    _ok = (_noun.get("pos") == "noun" and _noun.get("case_mood") == "jarr"
+           and _verb.get("pos") == "verb" and _verb.get("verb_form") == "IV" and _verb.get("voice") == "active")
+except Exception as _e:
+    _ok = False
+check("mcp_to_language_state extracts POS/form/voice/case correctly (wazn-name not mistaken for verb)", _ok)
+
 # 11d. the derived grammar eval bank meets the >=72 floor and the state graph sample is non-trivial
 try:
     _ge = sum(1 for l in io.open(os.path.join(ROOT, "nahw/evals/grammar-problems-derived-eval.jsonl"),

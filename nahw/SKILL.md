@@ -32,6 +32,9 @@ This SKILL is the fast context gate + contract; each step is a short procedure. 
 - [`procedures/hover-application.md`](procedures/hover-application.md) — syntax-sensitive tokens → precise pending, not a one-word gloss.
 - [`procedures/qamus-entry-authoring.md`](procedures/qamus-entry-authoring.md) — nahw evidence → function-word/construction entry candidate.
 - [`procedures/corpus-to-qamus.md`](procedures/corpus-to-qamus.md) — the nahw half of the corpus→Qamus pipeline.
+- [`procedures/tafsir-mcp-irab.md`](procedures/tafsir-mcp-irab.md) — **Tafsir MCP** `fetch_ayah(include=["irab"])`
+  + `analyze_word(aspects=["irab"])` as an internal iʿrāb witness (case/mood, role, governing particle, iḍāfa,
+  hidden-verb). Evidence, never public; the GrammarProblems gate + reasoning check still apply (MCP ≠ exemption).
 
 **Rules** (`rules/`): particle-context, preposition-pronoun, negation, irab-safety-gates, grammar-problems-gates,
 two-vote-required-rules, context-sense, **state-transition-rules** (the syntax side of the

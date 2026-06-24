@@ -1,0 +1,3 @@
+{"id": "TM-IRAB-002_003_002", "word": "يؤمنون", "expected": {"case_mood": "rafʿ"}, "extracted": {"case_mood": "rafʿ"}, "pass": true, "internal_provenance": {"informed_by": ["tafsir-mcp"], "note": "extracted from irab prose; not copied"}}
+{"id": "TM-IRAB-001_001_001", "word": "بسم", "expected": {"case_mood": "jarr"}, "extracted": {"case_mood": "jarr"}, "pass": true, "internal_provenance": {"informed_by": ["tafsir-mcp"], "note": "extracted from irab prose; not copied"}}
+{"id": "TM-IRAB-002_006_001", "word": "إن", "expected": {"pos": "particle"}, "extracted": {"pos": "particle"}, "pass": true, "internal_provenance": {"informed_by": ["tafsir-mcp"], "note": "extracted from irab prose; not copied"}}

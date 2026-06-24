@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fusha/tafsir-mcp-cache.schema.json",
+  "title": "Tafsir MCP cache record",
+  "description": "One source-hashed Tafsir MCP response, held as INTERNAL Qur'an grammar/morphology evidence. Raw cache is gitignored; only tiny redacted examples are committed. Nothing here ships to the public hover artifact — public hover stays {src:'qamus',kind:'authored'}.",
+  "type": "object",
+  "required": ["schema", "kind", "key", "request", "source", "source_hash", "response", "public_export_allowed"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "fusha/tafsir-mcp-cache@1" },
+    "kind": { "type": "string", "enum": ["analyze_word", "fetch_ayah", "list_sources_for_ayah", "find_root_occurrences", "get_qeraat_variants", "other"] },
+    "key": { "type": "string", "description": "compact id, e.g. 2_3_2 (analyze_word) or 1_1 (fetch_ayah)" },
+    "request": { "type": "object", "description": "the exact MCP tool arguments" },
+    "source": {
+      "type": "object",
+      "required": ["name", "endpoint"],
+      "properties": {
+        "name": { "const": "Tafsir MCP" },
+        "endpoint": { "type": "string" },
+        "version": { "type": ["string", "null"] }
+      }
+    },
+    "source_hash": { "type": "string", "description": "sha256(response)[:16] — integrity check" },
+    "response": {
+      "type": "object",
+      "description": "verbatim MCP response. analyze_word -> {word, meaning, irab, sarf, root, frequency, rasm_note?}; fetch_ayah -> {text_uthmani, irab, tajweed?, gharib?, word_count}"
+    },
+    "public_export_allowed": { "const": false },
+    "note": { "type": "string" }
+  }
+}
