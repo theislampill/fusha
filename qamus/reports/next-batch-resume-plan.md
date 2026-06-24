@@ -1,13 +1,15 @@
 # Next-batch resume plan (PP1G continues — exact, no vague "standing by")
 
-## Where we are (live, reconciled this tranche)
-- Live coverage **78.78%** · 39,312 / 49,900 resolved · **10,588 pending** · tsv **744 lines** · 2,092 entries.
-- Distinct pending surfaces: **5,904** (was 6,422). Authorable lever `pending_needs_sarf` = **8,891**.
-- Processed this tranche: **batch-2** (230 → 159) + **batch-3** (230 → 186) + **batch-4** (230 → 181), each with
-  prior rejects excluded. Combined **+526 glosses, +3,316 occ, −0 removed**. 164 rejects = true homographs (now
-  forbidden transitions). Per-batch gain shrinking (+1,571 → +1,013 → +732) as the tail goes homograph-dense.
-- Cumulative live trail: 51.52 → … → 72.14 → 75.28 → 77.31 → **78.78**.
-- State graph: 743 resolved keys, 158 quarantine_homograph, 11,822 pending (every token has a state, 0 unknown).
+## Where we are (live, reconciled)
+- Live coverage **79.93%** · 39,887 / 49,900 resolved · **10,013 pending** · tsv **934 lines** · 2,092 entries.
+- Distinct pending surfaces: **5,719** (was 6,422). Authorable lever `pending_needs_sarf` = **8,338**.
+- Processed: B2 (230→159) + B3 (230→186) + B4 (230→181) + **B5 (230→190, 61 MCP-backed)**, each excluding prior
+  rejects. Combined **+716 glosses, +3,891 occ, −0 removed**. Per-batch gain +1,571 → +1,013 → +732 → +575
+  (diminishing as the homograph-dense tail deepens).
+- **Tafsir MCP lane AVAILABLE** (direct HTTP) — internal grammar/morphology evidence; build tool, not a skill
+  dependency; native MCP tools also now surfaced in-runtime (mcp__…__analyze_word/fetch_ayah).
+- Cumulative live trail: 51.52 → … → 72.14 → 75.28 → 77.31 → 78.78 → **79.93**.
+- State graph: 933 resolved keys, 156 quarantine_homograph, 11,634 pending (every token has a state, 0 unknown).
 
 ## Exactly what was processed vs. what remains
 The candidate pool is the live `export_audit_state.py` top-500 pending surfaces, taken by descending frequency.
@@ -19,7 +21,7 @@ The candidate pool is the live `export_audit_state.py` top-500 pending surfaces,
   that is increasingly proper nouns, multi-sense, and source-photo-gated entries (each further batch yields a
   smaller, harder-won increment, by design of the gate).
 
-## Exact next command chain (batch-5 — B2/B3/B4 already applied)
+## Exact next command chain (batch-6 — B2..B5 already applied)
 Run from this repo + the server wrappers (`/tmp/sshx`, `/tmp/sshxr` recreated per session):
 
 ```bash

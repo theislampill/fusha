@@ -4,7 +4,7 @@ Entries whose example ayat are now hover-complete but whose ENTRY FIELDS (headwo
 
 | queue | n | what is needed |
 |---|---:|---|
-| `needs_source_photo_review` | 214 | photograph the source page; verify headword/forms/senses/counts |
+| `needs_source_photo_review` | 224 | photograph the source page; verify headword/forms/senses/counts |
 | `needs_quran_ref_verification` | 10 | fix bad/range ayah refs before re-audit |
 | `deferred_missing_source` | 7 | no addressable ayat; locate source or mark out-of-scope |
 
@@ -13,7 +13,9 @@ Entries whose example ayat are now hover-complete but whose ENTRY FIELDS (headwo
 | entry_id | source_address | root | headword | refs | hover_cov |
 |---|---|---|---|---:|---:|
 | 03609d2ef226 | qamus:v703#root=س ج ر | س ج ر | سُجِّرَتْ | 3 | 1.00 |
+| 972a53c81a73 | qamus:n414#root=ه م ز | ه م ز | ه م ز | 3 | 1.00 |
 | b0743d9417df | qamus:v673#root=ن س ل | ن س ل | يَنسِلُونَ | 3 | 1.00 |
+| c63837955935 | qamus:v723#root=ك ب (ك) ب | ك ب (ك) ب | كُبَّتْ | 3 | 1.00 |
 | 0451bd0c1350 | qamus:v691#root=خ ر ص | خ ر ص | يَخْرُصُونَ | 2 | 1.00 |
 | 0d82cf557616 | qamus:v753#root=ب ع ث ر | ب ع ث ر | بُعْثِرَ | 2 | 1.00 |
 | 12791e704272 | qamus:n395#root=م ج د | م ج د | مَجِيد | 2 | 1.00 |
@@ -44,14 +46,12 @@ Entries whose example ayat are now hover-complete but whose ENTRY FIELDS (headwo
 | 0af1843f20af | qamus:n864#root= |  | عِهْن | 1 | 1.00 |
 | 0af8e09e0a0b | qamus:n595#root= |  | مَنَاصٍ | 1 | 1.00 |
 | 0b760a96cdc3 | qamus:v912#root=تَلْفَحُ | تَلْفَحُ | تَلْفَحُ | 1 | 1.00 |
+| 0b925dfe0b84 | qamus:n100#root= |  | آدَم | 1 | 1.00 |
 | 0bcfa09191d0 | qamus:n606#root= |  | وَفْدًا | 1 | 1.00 |
+| 0d4a1b71419d | qamus:n220#root= |  | مُطَفِّفِين | 1 | 1.00 |
 | 0ed00ca08b87 | qamus:n391#root=ع ن د | ع ن د | عَنِيد | 1 | 1.00 |
 | 0f8e06868e38 | qamus:n541#root= |  | ضَبْحًا | 1 | 1.00 |
 | 1013f6dc80fe | qamus:v795#root=غ ل و | غ ل و | تَغْلُوا | 1 | 1.00 |
-| 10f738f9b7e5 | qamus:n603#root= |  | مَوْئِلًا | 1 | 1.00 |
-| 115761e37f78 | qamus:v863#root=ر ي ن | ر ي ن | رَانَ | 1 | 1.00 |
-| 126cf2a95db5 | qamus:n647#root= |  | سَاهِرَة | 1 | 1.00 |
-| 130e9e3bfd5c | qamus:v867#root=س ط ح | س ط ح | سُطِحَتْ | 1 | 1.00 |
 
 ## Ref-verification queue
 

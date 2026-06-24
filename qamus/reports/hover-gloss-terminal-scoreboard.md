@@ -3,9 +3,19 @@
 Live qamus-highlight, public beta, indexable. Public records carry only `{src:"qamus",kind:"authored"}` — 0
 external provenance. Full per-token states: `hover-token-terminal-matrix.md`.
 
-> **CURRENT LIVE (reconciled): coverage 78.78% · 39,312 / 49,900 resolved · 10,588 pending · tsv 744 lines.**
-> Trail: SN7 69.08 → P13 70.47 → PP1 70.76 → N1/V1 72.14 → B2 75.28 → B3 77.31 → **B4 78.78**. (The 69.08% some
-> readers see is the SN7 *history* column below, not current.)
+> **CURRENT LIVE (reconciled): coverage 79.93% · 39,887 / 49,900 resolved · 10,013 pending · tsv 934 lines.**
+> Trail: … N1/V1 72.14 → B2 75.28 → B3 77.31 → B4 78.78 → **B5 79.93** (B5 = first MCP-aware batch).
+> **MCP-backed decisions live: 61** (Tafsir MCP morphology-confirmed verbs, internal evidence only).
+> **wrong-gloss open: 0** · **−0 removed across B2–B5.**
+
+## B5 — MCP-aware noun + verb sweep (APPLIED LIVE)
+**190 glosses** (230 cand → 190 certified, 40 rejected; **61 MCP-backed**). First batch using Tafsir MCP as an
+internal morphology witness (form/voice/person pre-confirmed for 80 verbs; author + key-aware 2-vote then
+authored precise finite glosses). Verbs (they fight you, he worships, he breaks a promise, they seek), nouns
+(wrongdoing, angels, women, the Holy Spirit), participles. 40 rejects = form/voice (سخر, يسبحون, يخلقون) +
+referent (حملته, اتخذت) + lemma collisions. coverage **78.78% → 79.93%**, **+575 occ, −0 removed**. MCP morphology
+is internal only (informed_by += tafsir-mcp); public stays `{src:"qamus"}`. Mirrors: `hover_batch_007_b5.*` +
+`tafsir_mcp_hover_batch_001.*`; rollback `*.bak-b5`.
 
 ## B4 — deep-tail noun + verb sweep (APPLIED LIVE)
 **181 glosses** (230 cand → 181 certified, 49 rejected; top occ now 5). نَزَّلَ/كَذَّبَ landmine keys (نزلنا,
@@ -78,17 +88,17 @@ norm_strict key-collision test** (13 candidates → 11 → 8 key-safe), applied 
 نَزَّلَ (key `نزل` collides with نَزَلَ "descended"), إِنفَاق/مَخْلُوق (0 occ), تَذَكَّرَ/زَلْزَلَتِ (2-vote).
 Rollback: `*.bak-sn7` + `wbw-lookup.prev.json`. Mirror: `qamus/candidates/qamus_2092/authored_gloss_batch_002_sarfnahw.*`.
 
-## Pending by reason (live now — from `export_audit_state.py` at 78.78%)
+## Pending by reason (live now — from `export_audit_state.py` at 79.93%)
 | reason | n |
 |---|---:|
-| `pending_needs_sarf` (root exists, form/sense unresolved — the authorable lever) | 8,891 |
-| `pending_no_qamus_entry` (no entry: particles / proper nouns) | 1,629 |
+| `pending_needs_sarf` (root exists, form/sense unresolved — the authorable lever) | 8,338 |
+| `pending_no_qamus_entry` (no entry: particles / proper nouns) | 1,607 |
 | `pending_source_data_issue` | 55 |
 | `pending_proper_noun` | 13 |
-| **total pending** | **10,588** |
+| **total pending** | **10,013** |
 
-The authorable `pending_needs_sarf` lever fell 11,777 → 10,544 → 9,570 → **8,891** across B2–B4;
-`pending_proper_noun` 66 → **13**. Distinct pending surfaces 6,422 → **5,904**.
+The authorable `pending_needs_sarf` lever fell 11,777 → 10,544 → 9,570 → 8,891 → **8,338** across B2–B5.
+Distinct pending surfaces 6,422 → **5,719**. State graph: 933 resolved / 156 quarantine / 11,634 pending keys.
 
 ## Correctness (this program, across C12–C14 + P-tranche)
 | metric | n |

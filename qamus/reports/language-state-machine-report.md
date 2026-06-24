@@ -14,17 +14,17 @@ explicit and gates public export on single-owner keys.
 - Committed slice: [`language_state_graph.sample.json`](../indexes/language_state_graph.sample.json)
   (full graph is a generated artifact — rebuild with the builder; gitignored per the repo's generated-output rule).
 
-## Current state (built at live coverage 78.78%)
+## Current state (built at live coverage 79.93%)
 
 | decision class | n keys | meaning |
 |---|---:|---|
-| `resolved_qamus_authored` | **743** | one owner, authored gloss live, fires on its occurrences |
-| `quarantine_homograph` | **158** | key splits across >1 QAC root/POS — **no single gloss may fire** |
-| `pending` | **11,822** | single apparent owner, gloss not yet authored (the authoring pool) |
+| `resolved_qamus_authored` | **933** | one owner, authored gloss live, fires on its occurrences |
+| `quarantine_homograph` | **156** | key splits across >1 QAC root/POS — **no single gloss may fire** |
+| `pending` | **11,634** | single apparent owner, gloss not yet authored (the authoring pool) |
 | **total distinct keys** | **12,723** | every hover token maps to exactly one key-state; **0 unknown** |
 
-`total_tokens` = 49,900; the 743 resolved keys cover the 39,312 resolved token occurrences (78.78%). The resolved
-class grew 376 → 562 → **743** across the B2+B3+B4 sweeps as certified glosses landed.
+`total_tokens` = 49,900; the 933 resolved keys cover the 39,887 resolved token occurrences (79.93%). The resolved
+class grew 376 → 562 → 743 → **933** across the B2–B5 sweeps as certified glosses landed (B5 MCP-aware).
 
 ## How it prevents the prior regressions
 

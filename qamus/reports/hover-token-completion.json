@@ -3,16 +3,16 @@
  "generator": "qamus/scripts/build_audit_completion.py",
  "summary": {
   "total_tokens": 49900,
-  "resolved": 39312,
-  "coverage_pct": 78.78,
+  "resolved": 39887,
+  "coverage_pct": 79.93,
   "states": {
-   "resolved_qamus_authored": 39312,
-   "pending_needs_sarf": 8891,
-   "pending_no_qamus_entry": 1629,
+   "resolved_qamus_authored": 39887,
+   "pending_needs_sarf": 8338,
+   "pending_no_qamus_entry": 1607,
    "pending_source_data_issue": 55,
    "pending_proper_noun": 13
   },
-  "distinct_pending_surfaces": 5904,
+  "distinct_pending_surfaces": 5719,
   "unknown_silent": 0
  },
  "top_500_pending_surfaces": [
@@ -1777,60 +1777,12 @@
    "example_loc": "2:140:22"
   },
   {
-   "norm_strict": "يقاتلونكم",
-   "count": 4,
-   "surface": "يُقَٰتِلُونَكُمْ",
-   "qac_root": "قتل",
-   "qac_pos": "V",
-   "example_loc": "59:14:2"
-  },
-  {
-   "norm_strict": "ظلما",
-   "count": 4,
-   "surface": "ظُلْمًۭا",
-   "qac_root": "ظلم",
-   "qac_pos": "N",
-   "example_loc": "20:111:9"
-  },
-  {
-   "norm_strict": "راجعون",
-   "count": 4,
-   "surface": "رَٰجِعُونَ",
-   "qac_root": "رجع",
-   "qac_pos": "N",
-   "example_loc": "23:60:10"
-  },
-  {
-   "norm_strict": "واليل",
-   "count": 4,
-   "surface": "وَٱلَّيْلِ",
-   "qac_root": "ليل",
-   "qac_pos": "N",
-   "example_loc": "93:2:1"
-  },
-  {
    "norm_strict": "سخر",
    "count": 4,
    "surface": "سَخَّرَ",
    "qac_root": "سخر",
    "qac_pos": "V",
    "example_loc": "16:14:3"
-  },
-  {
-   "norm_strict": "ونساء",
-   "count": 4,
-   "surface": "وَنِسَآءِ",
-   "qac_root": "نسو",
-   "qac_pos": "N",
-   "example_loc": "33:59:6"
-  },
-  {
-   "norm_strict": "وأنهم",
-   "count": 4,
-   "surface": "وَأَنَّهُمْ",
-   "qac_root": null,
-   "qac_pos": "P",
-   "example_loc": "2:46:6"
   },
   {
    "norm_strict": "يسبحون",
@@ -1841,108 +1793,12 @@
    "example_loc": "41:38:6"
   },
   {
-   "norm_strict": "يعبد",
-   "count": 4,
-   "surface": "يَعْبُدُ",
-   "qac_root": "عبد",
-   "qac_pos": "V",
-   "example_loc": "22:11:4"
-  },
-  {
-   "norm_strict": "يخلف",
-   "count": 4,
-   "surface": "يُخْلِفَ",
-   "qac_root": "خلف",
-   "qac_pos": "V",
-   "example_loc": "22:47:4"
-  },
-  {
-   "norm_strict": "فاليوم",
-   "count": 4,
-   "surface": "فَالْيَوْمَ",
-   "qac_root": "يوم",
-   "qac_pos": "N",
-   "example_loc": "10:92:1"
-  },
-  {
    "norm_strict": "أسر",
    "count": 4,
    "surface": "أَسَرَّ",
    "qac_root": "سرر",
    "qac_pos": "V",
    "example_loc": "66:3:2"
-  },
-  {
-   "norm_strict": "برب",
-   "count": 4,
-   "surface": "بِرَبِّ",
-   "qac_root": "ربب",
-   "qac_pos": "N",
-   "example_loc": "70:40:3"
-  },
-  {
-   "norm_strict": "يبغون",
-   "count": 4,
-   "surface": "يَبْغُونَ",
-   "qac_root": "بغي",
-   "qac_pos": "V",
-   "example_loc": "3:83:4"
-  },
-  {
-   "norm_strict": "مكرهم",
-   "count": 4,
-   "surface": "مَكْرُهُمْ",
-   "qac_root": "مكر",
-   "qac_pos": "N",
-   "example_loc": "13:33:29"
-  },
-  {
-   "norm_strict": "ملائكه",
-   "count": 4,
-   "surface": "مَلَٰٓئِكَةٌ",
-   "qac_root": "ملك",
-   "qac_pos": "N",
-   "example_loc": "66:6:12"
-  },
-  {
-   "norm_strict": "مصبحين",
-   "count": 4,
-   "surface": "مُّصْبِحِينَ",
-   "qac_root": "صبح",
-   "qac_pos": "N",
-   "example_loc": "15:66:9"
-  },
-  {
-   "norm_strict": "لرءوف",
-   "count": 4,
-   "surface": "لَرَءُوفٌۭ",
-   "qac_root": "رأف",
-   "qac_pos": "N",
-   "example_loc": "16:7:13"
-  },
-  {
-   "norm_strict": "بالقول",
-   "count": 4,
-   "surface": "بِٱلْقَوْلِ",
-   "qac_root": "قول",
-   "qac_pos": "N",
-   "example_loc": "33:32:11"
-  },
-  {
-   "norm_strict": "أهدي",
-   "count": 4,
-   "surface": "أَهْدَىٰ",
-   "qac_root": "هدي",
-   "qac_pos": "N",
-   "example_loc": "4:51:16"
-  },
-  {
-   "norm_strict": "ضرا",
-   "count": 4,
-   "surface": "ضَرًّا",
-   "qac_root": "ضرر",
-   "qac_pos": "N",
-   "example_loc": "7:188:7"
   },
   {
    "norm_strict": "يخلقون",
@@ -1961,22 +1817,6 @@
    "example_loc": "48:29:33"
   },
   {
-   "norm_strict": "وجد",
-   "count": 3,
-   "surface": "وَجَدَ",
-   "qac_root": "وجد",
-   "qac_pos": "V",
-   "example_loc": "28:23:5"
-  },
-  {
-   "norm_strict": "جاءوكم",
-   "count": 3,
-   "surface": "جَآءُوكُم",
-   "qac_root": "جيأ",
-   "qac_pos": "V",
-   "example_loc": "33:10:2"
-  },
-  {
    "norm_strict": "وأخر",
    "count": 3,
    "surface": "وَأُخَرُ",
@@ -1993,62 +1833,6 @@
    "example_loc": "2:286:26"
   },
   {
-   "norm_strict": "أصاب",
-   "count": 3,
-   "surface": "أَصَابَ",
-   "qac_root": "صوب",
-   "qac_pos": "V",
-   "example_loc": "30:48:20"
-  },
-  {
-   "norm_strict": "زوجها",
-   "count": 3,
-   "surface": "زَوْجَهَا",
-   "qac_root": "زوج",
-   "qac_pos": "N",
-   "example_loc": "7:189:9"
-  },
-  {
-   "norm_strict": "انفروا",
-   "count": 3,
-   "surface": "ٱنفِرُوا۟",
-   "qac_root": "نفر",
-   "qac_pos": "V",
-   "example_loc": "9:41:1"
-  },
-  {
-   "norm_strict": "وأنفسكم",
-   "count": 3,
-   "surface": "وَأَنفُسِكُمْ",
-   "qac_root": "نفس",
-   "qac_pos": "N",
-   "example_loc": "9:41:6"
-  },
-  {
-   "norm_strict": "والأنثي",
-   "count": 3,
-   "surface": "وَٱلْأُنثَىٰ",
-   "qac_root": "أنث",
-   "qac_pos": "N",
-   "example_loc": "2:178:13"
-  },
-  {
-   "norm_strict": "بأهلك",
-   "count": 3,
-   "surface": "بِأَهْلِكَ",
-   "qac_root": "أهل",
-   "qac_pos": "N",
-   "example_loc": "12:25:16"
-  },
-  {
-   "norm_strict": "سوءا",
-   "count": 3,
-   "surface": "سُوٓءًا",
-   "qac_root": "سوأ",
-   "qac_pos": "N",
-   "example_loc": "12:25:17"
-  },
-  {
    "norm_strict": "أحب",
    "count": 3,
    "surface": "أَحَبُّ",
@@ -2057,60 +1841,12 @@
    "example_loc": "12:33:4"
   },
   {
-   "norm_strict": "الجاهلين",
-   "count": 3,
-   "surface": "ٱلْجَٰهِلِينَ",
-   "qac_root": "جهل",
-   "qac_pos": "N",
-   "example_loc": "12:33:17"
-  },
-  {
    "norm_strict": "اتخذت",
    "count": 3,
    "surface": "ٱتَّخَذْتَ",
    "qac_root": "أخذ",
    "qac_pos": "V",
    "example_loc": "26:29:3"
-  },
-  {
-   "norm_strict": "يانوح",
-   "count": 3,
-   "surface": "يَٰنُوحُ",
-   "qac_root": null,
-   "qac_pos": "P",
-   "example_loc": "11:32:2"
-  },
-  {
-   "norm_strict": "تعدنا",
-   "count": 3,
-   "surface": "تَعِدُنَآ",
-   "qac_root": "وعد",
-   "qac_pos": "V",
-   "example_loc": "11:32:9"
-  },
-  {
-   "norm_strict": "مستقيما",
-   "count": 3,
-   "surface": "مُّسْتَقِيمًۭا",
-   "qac_root": "قوم",
-   "qac_pos": "N",
-   "example_loc": "48:2:15"
-  },
-  {
-   "norm_strict": "إفك",
-   "count": 3,
-   "surface": "إِفْكٌۭ",
-   "qac_root": "أفك",
-   "qac_pos": "N",
-   "example_loc": "46:11:18"
-  },
-  {
-   "norm_strict": "وءاباؤكم",
-   "count": 3,
-   "surface": "وَءَابَآؤُكُمُ",
-   "qac_root": "أبو",
-   "qac_pos": "N",
-   "example_loc": "26:76:2"
   },
   {
    "norm_strict": "يظهروا",
@@ -2129,22 +1865,6 @@
    "example_loc": "12:4:13"
   },
   {
-   "norm_strict": "وكفرا",
-   "count": 3,
-   "surface": "وَكُفْرًۭا",
-   "qac_root": "كفر",
-   "qac_pos": "N",
-   "example_loc": "18:80:10"
-  },
-  {
-   "norm_strict": "نتبع",
-   "count": 3,
-   "surface": "نَتَّبِعُ",
-   "qac_root": "تبع",
-   "qac_pos": "V",
-   "example_loc": "31:21:10"
-  },
-  {
    "norm_strict": "أولو",
    "count": 3,
    "surface": "أَوَلَوْ",
@@ -2161,54 +1881,6 @@
    "example_loc": "39:67:13"
   },
   {
-   "norm_strict": "أوفي",
-   "count": 3,
-   "surface": "أَوْفَىٰ",
-   "qac_root": "وفي",
-   "qac_pos": "N",
-   "example_loc": "9:111:25"
-  },
-  {
-   "norm_strict": "القدس",
-   "count": 3,
-   "surface": "ٱلْقُدُسِ",
-   "qac_root": "قدس",
-   "qac_pos": "N",
-   "example_loc": "2:87:16"
-  },
-  {
-   "norm_strict": "خلقا",
-   "count": 3,
-   "surface": "خَلْقًا",
-   "qac_root": "خلق",
-   "qac_pos": "N",
-   "example_loc": "23:14:16"
-  },
-  {
-   "norm_strict": "مر",
-   "count": 3,
-   "surface": "مَرَّ",
-   "qac_root": "مرر",
-   "qac_pos": "V",
-   "example_loc": "2:259:3"
-  },
-  {
-   "norm_strict": "وانظر",
-   "count": 3,
-   "surface": "وَٱنظُرْ",
-   "qac_root": "نظر",
-   "qac_pos": "V",
-   "example_loc": "2:259:43"
-  },
-  {
-   "norm_strict": "يعتدون",
-   "count": 3,
-   "surface": "يَعْتَدُونَ",
-   "qac_root": "عدو",
-   "qac_pos": "V",
-   "example_loc": "2:61:59"
-  },
-  {
    "norm_strict": "استطعت",
    "count": 3,
    "surface": "ٱسْتَطَعْتَ",
@@ -2217,108 +1889,12 @@
    "example_loc": "6:35:7"
   },
   {
-   "norm_strict": "ينصركم",
-   "count": 3,
-   "surface": "يَنصُرْكُمْ",
-   "qac_root": "نصر",
-   "qac_pos": "V",
-   "example_loc": "47:7:7"
-  },
-  {
    "norm_strict": "أخرجوا",
    "count": 3,
    "surface": "أُخْرِجُوا۟",
    "qac_root": "خرج",
    "qac_pos": "V",
    "example_loc": "22:40:2"
-  },
-  {
-   "norm_strict": "نصرا",
-   "count": 3,
-   "surface": "نَصْرًۭا",
-   "qac_root": "نصر",
-   "qac_pos": "N",
-   "example_loc": "7:192:4"
-  },
-  {
-   "norm_strict": "جاءنا",
-   "count": 3,
-   "surface": "جَآءَنَا",
-   "qac_root": "جيأ",
-   "qac_pos": "V",
-   "example_loc": "40:29:14"
-  },
-  {
-   "norm_strict": "وهاجروا",
-   "count": 3,
-   "surface": "وَهَاجَرُوا۟",
-   "qac_root": "هجر",
-   "qac_pos": "V",
-   "example_loc": "8:72:4"
-  },
-  {
-   "norm_strict": "أهلكناهم",
-   "count": 3,
-   "surface": "أَهْلَكْنَٰهُمْ",
-   "qac_root": "هلك",
-   "qac_pos": "V",
-   "example_loc": "47:13:11"
-  },
-  {
-   "norm_strict": "ناصرين",
-   "count": 3,
-   "surface": "نَّٰصِرِينَ",
-   "qac_root": "نصر",
-   "qac_pos": "N",
-   "example_loc": "3:22:11"
-  },
-  {
-   "norm_strict": "نصير",
-   "count": 3,
-   "surface": "نَصِيرٍ",
-   "qac_root": "نصر",
-   "qac_pos": "N",
-   "example_loc": "2:107:17"
-  },
-  {
-   "norm_strict": "جبل",
-   "count": 3,
-   "surface": "جَبَلٍۢ",
-   "qac_root": "جبل",
-   "qac_pos": "N",
-   "example_loc": "2:260:28"
-  },
-  {
-   "norm_strict": "سماوات",
-   "count": 3,
-   "surface": "سَمَٰوَاتٍۢ",
-   "qac_root": "سمو",
-   "qac_pos": "N",
-   "example_loc": "41:12:3"
-  },
-  {
-   "norm_strict": "بشيء",
-   "count": 3,
-   "surface": "بِشَىْءٍ",
-   "qac_root": "شيأ",
-   "qac_pos": "N",
-   "example_loc": "40:20:10"
-  },
-  {
-   "norm_strict": "لأهله",
-   "count": 3,
-   "surface": "لِأَهْلِهِ",
-   "qac_root": "أهل",
-   "qac_pos": "N",
-   "example_loc": "28:29:13"
-  },
-  {
-   "norm_strict": "ءانست",
-   "count": 3,
-   "surface": "ءَانَسْتُ",
-   "qac_root": "أنس",
-   "qac_pos": "V",
-   "example_loc": "28:29:16"
   },
   {
    "norm_strict": "صدقوا",
@@ -2337,164 +1913,12 @@
    "example_loc": "62:10:2"
   },
   {
-   "norm_strict": "غفله",
-   "count": 3,
-   "surface": "غَفْلَةٍۢ",
-   "qac_root": "غفل",
-   "qac_pos": "N",
-   "example_loc": "28:15:5"
-  },
-  {
    "norm_strict": "رجلين",
    "count": 3,
    "surface": "رَجُلَيْنِ",
    "qac_root": "رجل",
    "qac_pos": "N",
    "example_loc": "28:15:10"
-  },
-  {
-   "norm_strict": "نبي",
-   "count": 3,
-   "surface": "نَّبِىٍّۢ",
-   "qac_root": "نبأ",
-   "qac_pos": "N",
-   "example_loc": "3:146:3"
-  },
-  {
-   "norm_strict": "أصابهم",
-   "count": 3,
-   "surface": "أَصَابَهُمْ",
-   "qac_root": "صوب",
-   "qac_pos": "V",
-   "example_loc": "3:146:11"
-  },
-  {
-   "norm_strict": "عددا",
-   "count": 3,
-   "surface": "عَدَدًۭا",
-   "qac_root": "عدد",
-   "qac_pos": "N",
-   "example_loc": "72:24:11"
-  },
-  {
-   "norm_strict": "أرض",
-   "count": 3,
-   "surface": "أَرْضُ",
-   "qac_root": "أرض",
-   "qac_pos": "N",
-   "example_loc": "4:97:18"
-  },
-  {
-   "norm_strict": "مصيرا",
-   "count": 3,
-   "surface": "مَصِيرًا",
-   "qac_root": "صير",
-   "qac_pos": "N",
-   "example_loc": "4:97:27"
-  },
-  {
-   "norm_strict": "منكن",
-   "count": 3,
-   "surface": "مِنكُنَّ",
-   "qac_root": null,
-   "qac_pos": "P",
-   "example_loc": "33:30:5"
-  },
-  {
-   "norm_strict": "مبينه",
-   "count": 3,
-   "surface": "مُّبَيِّنَةٍۢ",
-   "qac_root": "بين",
-   "qac_pos": "N",
-   "example_loc": "33:30:7"
-  },
-  {
-   "norm_strict": "ضعفين",
-   "count": 3,
-   "surface": "ضِعْفَيْنِ",
-   "qac_root": "ضعف",
-   "qac_pos": "N",
-   "example_loc": "33:30:11"
-  },
-  {
-   "norm_strict": "ءاتيتم",
-   "count": 3,
-   "surface": "ءَاتَيْتُم",
-   "qac_root": "أتي",
-   "qac_pos": "V",
-   "example_loc": "30:39:2"
-  },
-  {
-   "norm_strict": "تريدون",
-   "count": 3,
-   "surface": "تُرِيدُونَ",
-   "qac_root": "رود",
-   "qac_pos": "V",
-   "example_loc": "30:39:17"
-  },
-  {
-   "norm_strict": "عقاب",
-   "count": 3,
-   "surface": "عِقَابِ",
-   "qac_root": "عقب",
-   "qac_pos": "N",
-   "example_loc": "38:14:7"
-  },
-  {
-   "norm_strict": "خزنتها",
-   "count": 3,
-   "surface": "خَزَنَتُهَا",
-   "qac_root": "خزن",
-   "qac_pos": "N",
-   "example_loc": "39:71:3"
-  },
-  {
-   "norm_strict": "ونذيرا",
-   "count": 3,
-   "surface": "وَنَذِيرًۭا",
-   "qac_root": "نذر",
-   "qac_pos": "N",
-   "example_loc": "17:105:9"
-  },
-  {
-   "norm_strict": "مله",
-   "count": 3,
-   "surface": "مِّلَّةَ",
-   "qac_root": "ملل",
-   "qac_pos": "N",
-   "example_loc": "22:78:15"
-  },
-  {
-   "norm_strict": "فنعم",
-   "count": 3,
-   "surface": "فَنِعْمَ",
-   "qac_root": "نعم",
-   "qac_pos": "V",
-   "example_loc": "22:78:41"
-  },
-  {
-   "norm_strict": "المولي",
-   "count": 3,
-   "surface": "ٱلْمَوْلَىٰ",
-   "qac_root": "ولي",
-   "qac_pos": "N",
-   "example_loc": "22:78:42"
-  },
-  {
-   "norm_strict": "ونعم",
-   "count": 3,
-   "surface": "وَنِعْمَ",
-   "qac_root": "نعم",
-   "qac_pos": "V",
-   "example_loc": "22:78:43"
-  },
-  {
-   "norm_strict": "كاتب",
-   "count": 3,
-   "surface": "كَاتِبٌۢ",
-   "qac_root": "كتب",
-   "qac_pos": "N",
-   "example_loc": "2:282:13"
   },
   {
    "norm_strict": "وأقوم",
@@ -2505,68 +1929,12 @@
    "example_loc": "2:282:91"
   },
   {
-   "norm_strict": "الجاهليه",
-   "count": 3,
-   "surface": "ٱلْجَٰهِلِيَّةِ",
-   "qac_root": "جهل",
-   "qac_pos": "N",
-   "example_loc": "48:26:9"
-  },
-  {
-   "norm_strict": "فأنزل",
-   "count": 3,
-   "surface": "فَأَنزَلَ",
-   "qac_root": "نزل",
-   "qac_pos": "V",
-   "example_loc": "48:26:10"
-  },
-  {
    "norm_strict": "وأهلها",
    "count": 3,
    "surface": "وَأَهْلَهَا",
    "qac_root": "أهل",
    "qac_pos": "N",
    "example_loc": "48:26:23"
-  },
-  {
-   "norm_strict": "يأمرون",
-   "count": 3,
-   "surface": "يَأْمُرُونَ",
-   "qac_root": "أمر",
-   "qac_pos": "V",
-   "example_loc": "3:21:12"
-  },
-  {
-   "norm_strict": "قائما",
-   "count": 3,
-   "surface": "قَآئِمًۭا",
-   "qac_root": "قوم",
-   "qac_pos": "N",
-   "example_loc": "3:75:22"
-  },
-  {
-   "norm_strict": "يد",
-   "count": 3,
-   "surface": "يَدٍۢ",
-   "qac_root": "يدي",
-   "qac_pos": "N",
-   "example_loc": "9:29:27"
-  },
-  {
-   "norm_strict": "الأكبر",
-   "count": 3,
-   "surface": "ٱلْأَكْبَرُ",
-   "qac_root": "كبر",
-   "qac_pos": "N",
-   "example_loc": "21:103:4"
-  },
-  {
-   "norm_strict": "لغفور",
-   "count": 3,
-   "surface": "لَغَفُورٌۭ",
-   "qac_root": "غفر",
-   "qac_pos": "N",
-   "example_loc": "35:34:10"
   },
   {
    "norm_strict": "بيت",
@@ -2585,30 +1953,6 @@
    "example_loc": "3:96:10"
   },
   {
-   "norm_strict": "صدقه",
-   "count": 3,
-   "surface": "صَدَقَةٍ",
-   "qac_root": "صدق",
-   "qac_pos": "N",
-   "example_loc": "2:196:31"
-  },
-  {
-   "norm_strict": "فصيام",
-   "count": 3,
-   "surface": "فَصِيَامُ",
-   "qac_root": "صوم",
-   "qac_pos": "N",
-   "example_loc": "2:196:48"
-  },
-  {
-   "norm_strict": "الرءيا",
-   "count": 3,
-   "surface": "ٱلرُّءْيَا",
-   "qac_root": "رأي",
-   "qac_pos": "N",
-   "example_loc": "48:27:5"
-  },
-  {
    "norm_strict": "فبما",
    "count": 3,
    "surface": "فَبِمَا",
@@ -2617,100 +1961,12 @@
    "example_loc": "3:159:1"
   },
   {
-   "norm_strict": "واستغفر",
-   "count": 3,
-   "surface": "وَٱسْتَغْفِرْ",
-   "qac_root": "غفر",
-   "qac_pos": "V",
-   "example_loc": "3:159:17"
-  },
-  {
-   "norm_strict": "متشابها",
-   "count": 3,
-   "surface": "مُّتَشَٰبِهًۭا",
-   "qac_root": "شبه",
-   "qac_pos": "N",
-   "example_loc": "39:23:6"
-  },
-  {
-   "norm_strict": "عبادي",
-   "count": 3,
-   "surface": "عِبَادِىَ",
-   "qac_root": "عبد",
-   "qac_pos": "N",
-   "example_loc": "34:13:18"
-  },
-  {
-   "norm_strict": "وجاءو",
-   "count": 3,
-   "surface": "وَجَآءُو",
-   "qac_root": "جيأ",
-   "qac_pos": "V",
-   "example_loc": "7:116:9"
-  },
-  {
    "norm_strict": "بسحر",
    "count": 3,
    "surface": "بِسِحْرٍ",
    "qac_root": "سحر",
    "qac_pos": "N",
    "example_loc": "7:116:10"
-  },
-  {
-   "norm_strict": "خاشعين",
-   "count": 3,
-   "surface": "خَٰشِعِينَ",
-   "qac_root": "خشع",
-   "qac_pos": "N",
-   "example_loc": "21:90:19"
-  },
-  {
-   "norm_strict": "ويصدون",
-   "count": 3,
-   "surface": "وَيَصُدُّونَ",
-   "qac_root": "صدد",
-   "qac_pos": "V",
-   "example_loc": "9:34:13"
-  },
-  {
-   "norm_strict": "يعرفون",
-   "count": 3,
-   "surface": "يَعْرِفُونَ",
-   "qac_root": "عرف",
-   "qac_pos": "V",
-   "example_loc": "2:146:6"
-  },
-  {
-   "norm_strict": "جهد",
-   "count": 3,
-   "surface": "جَهْدَ",
-   "qac_root": "جهد",
-   "qac_pos": "N",
-   "example_loc": "24:53:3"
-  },
-  {
-   "norm_strict": "طاعه",
-   "count": 3,
-   "surface": "طَاعَةٌۭ",
-   "qac_root": "طوع",
-   "qac_pos": "N",
-   "example_loc": "24:53:11"
-  },
-  {
-   "norm_strict": "فعسي",
-   "count": 3,
-   "surface": "فَعَسَىٰٓ",
-   "qac_root": "عسي",
-   "qac_pos": "V",
-   "example_loc": "4:19:26"
-  },
-  {
-   "norm_strict": "خذ",
-   "count": 3,
-   "surface": "خُذِ",
-   "qac_root": "أخذ",
-   "qac_pos": "V",
-   "example_loc": "7:199:1"
   },
   {
    "norm_strict": "وأمر",
@@ -2729,36 +1985,12 @@
    "example_loc": "7:199:5"
   },
   {
-   "norm_strict": "يتق",
-   "count": 3,
-   "surface": "يَتَّقِ",
-   "qac_root": "وقي",
-   "qac_pos": "V",
-   "example_loc": "65:2:26"
-  },
-  {
-   "norm_strict": "إماما",
-   "count": 3,
-   "surface": "إِمَامًۭا",
-   "qac_root": "أمم",
-   "qac_pos": "N",
-   "example_loc": "2:124:11"
-  },
-  {
    "norm_strict": "ظنا",
    "count": 3,
    "surface": "ظَنَّآ",
    "qac_root": "ظنن",
    "qac_pos": "V",
    "example_loc": "2:230:20"
-  },
-  {
-   "norm_strict": "يقيما",
-   "count": 3,
-   "surface": "يُقِيمَا",
-   "qac_root": "قوم",
-   "qac_pos": "V",
-   "example_loc": "2:230:22"
   },
   {
    "norm_strict": "فأخرج",
@@ -2769,30 +2001,6 @@
    "example_loc": "2:22:12"
   },
   {
-   "norm_strict": "منيب",
-   "count": 3,
-   "surface": "مُّنِيبٍ",
-   "qac_root": "نوب",
-   "qac_pos": "N",
-   "example_loc": "50:33:7"
-  },
-  {
-   "norm_strict": "ضر",
-   "count": 3,
-   "surface": "ضُرٌّۭ",
-   "qac_root": "ضرر",
-   "qac_pos": "N",
-   "example_loc": "30:33:4"
-  },
-  {
-   "norm_strict": "مؤمنات",
-   "count": 3,
-   "surface": "مُؤْمِنَٰتٍۢ",
-   "qac_root": "أمن",
-   "qac_pos": "N",
-   "example_loc": "60:10:14"
-  },
-  {
    "norm_strict": "حل",
    "count": 3,
    "surface": "حِلٌّۭ",
@@ -2801,36 +2009,12 @@
    "example_loc": "60:10:21"
   },
   {
-   "norm_strict": "تحسبن",
-   "count": 3,
-   "surface": "تَحْسَبَنَّ",
-   "qac_root": "حسب",
-   "qac_pos": "V",
-   "example_loc": "14:47:2"
-  },
-  {
-   "norm_strict": "انتقام",
-   "count": 3,
-   "surface": "ٱنتِقَامٍۢ",
-   "qac_root": "نقم",
-   "qac_pos": "N",
-   "example_loc": "14:47:11"
-  },
-  {
    "norm_strict": "مبصره",
    "count": 3,
    "surface": "مُبْصِرَةًۭ",
    "qac_root": "بصر",
    "qac_pos": "N",
    "example_loc": "17:12:11"
-  },
-  {
-   "norm_strict": "لتبتغوا",
-   "count": 3,
-   "surface": "لِّتَبْتَغُوا۟",
-   "qac_root": "بغي",
-   "qac_pos": "V",
-   "example_loc": "17:12:12"
   },
   {
    "norm_strict": "رشدا",
@@ -2849,140 +2033,12 @@
    "example_loc": "6:62:2"
   },
   {
-   "norm_strict": "النجوي",
-   "count": 3,
-   "surface": "ٱلنَّجْوَىٰ",
-   "qac_root": "نجو",
-   "qac_pos": "N",
-   "example_loc": "58:8:7"
-  },
-  {
-   "norm_strict": "جاءوك",
-   "count": 3,
-   "surface": "جَآءُوكَ",
-   "qac_root": "جيأ",
-   "qac_pos": "V",
-   "example_loc": "58:8:19"
-  },
-  {
-   "norm_strict": "أردتم",
-   "count": 3,
-   "surface": "أَرَدتُّمْ",
-   "qac_root": "رود",
-   "qac_pos": "V",
-   "example_loc": "2:233:45"
-  },
-  {
-   "norm_strict": "فتحرير",
-   "count": 3,
-   "surface": "فَتَحْرِيرُ",
-   "qac_root": "حرر",
-   "qac_pos": "N",
-   "example_loc": "4:92:13"
-  },
-  {
-   "norm_strict": "للإيمان",
-   "count": 3,
-   "surface": "لِلْإِيمَٰنِ",
-   "qac_root": "أمن",
-   "qac_pos": "N",
-   "example_loc": "49:17:16"
-  },
-  {
-   "norm_strict": "أعد",
-   "count": 3,
-   "surface": "أَعَدَّ",
-   "qac_root": "عدد",
-   "qac_pos": "V",
-   "example_loc": "33:35:25"
-  },
-  {
-   "norm_strict": "وملائكته",
-   "count": 3,
-   "surface": "وَمَلَٰٓئِكَتَهُۥ",
-   "qac_root": "ملك",
-   "qac_pos": "N",
-   "example_loc": "33:56:3"
-  },
-  {
-   "norm_strict": "سلاما",
-   "count": 3,
-   "surface": "سَلَٰمًۭا",
-   "qac_root": "سلم",
-   "qac_pos": "N",
-   "example_loc": "11:69:7"
-  },
-  {
-   "norm_strict": "خاشعه",
-   "count": 3,
-   "surface": "خَٰشِعَةً",
-   "qac_root": "خشع",
-   "qac_pos": "N",
-   "example_loc": "68:43:1"
-  },
-  {
-   "norm_strict": "ذله",
-   "count": 3,
-   "surface": "ذِلَّةٌۭ",
-   "qac_root": "ذلل",
-   "qac_pos": "N",
-   "example_loc": "68:43:4"
-  },
-  {
-   "norm_strict": "الميته",
-   "count": 3,
-   "surface": "ٱلْمَيْتَةَ",
-   "qac_root": "موت",
-   "qac_pos": "N",
-   "example_loc": "2:173:4"
-  },
-  {
-   "norm_strict": "لغير",
-   "count": 3,
-   "surface": "لِغَيْرِ",
-   "qac_root": "غير",
-   "qac_pos": "N",
-   "example_loc": "2:173:11"
-  },
-  {
-   "norm_strict": "اضطر",
-   "count": 3,
-   "surface": "ٱضْطُرَّ",
-   "qac_root": "ضرر",
-   "qac_pos": "V",
-   "example_loc": "2:173:14"
-  },
-  {
-   "norm_strict": "ليبلوكم",
-   "count": 3,
-   "surface": "لِّيَبْلُوَكُمْ",
-   "qac_root": "بلو",
-   "qac_pos": "V",
-   "example_loc": "6:165:11"
-  },
-  {
-   "norm_strict": "صاعقه",
-   "count": 3,
-   "surface": "صَٰعِقَةُ",
-   "qac_root": "صعق",
-   "qac_pos": "N",
-   "example_loc": "41:17:9"
-  },
-  {
    "norm_strict": "أبي",
    "count": 3,
    "surface": "أَبِىٓ",
    "qac_root": "أبو",
    "qac_pos": "N",
    "example_loc": "12:80:30"
-  },
-  {
-   "norm_strict": "الحاكمين",
-   "count": 3,
-   "surface": "ٱلْحَٰكِمِينَ",
-   "qac_root": "حكم",
-   "qac_pos": "N",
-   "example_loc": "12:80:37"
   },
   {
    "norm_strict": "مخلصا",
@@ -2993,28 +2049,12 @@
    "example_loc": "39:2:8"
   },
   {
-   "norm_strict": "لنفسي",
-   "count": 3,
-   "surface": "لِنَفْسِى",
-   "qac_root": "نفس",
-   "qac_pos": "N",
-   "example_loc": "12:54:6"
-  },
-  {
    "norm_strict": "يمينك",
    "count": 3,
    "surface": "يَمِينُكَ",
    "qac_root": "يمن",
    "qac_pos": "N",
    "example_loc": "33:50:12"
-  },
-  {
-   "norm_strict": "أزواجهم",
-   "count": 3,
-   "surface": "أَزْوَٰجِهِمْ",
-   "qac_root": "زوج",
-   "qac_pos": "N",
-   "example_loc": "33:50:50"
   },
   {
    "norm_strict": "كفار",
@@ -3025,124 +2065,12 @@
    "example_loc": "39:3:33"
   },
   {
-   "norm_strict": "نبيا",
-   "count": 3,
-   "surface": "نَّبِيًّۭا",
-   "qac_root": "نبأ",
-   "qac_pos": "N",
-   "example_loc": "19:51:10"
-  },
-  {
-   "norm_strict": "اتبعت",
-   "count": 3,
-   "surface": "ٱتَّبَعْتَ",
-   "qac_root": "تبع",
-   "qac_pos": "V",
-   "example_loc": "2:120:17"
-  },
-  {
-   "norm_strict": "يسجد",
-   "count": 3,
-   "surface": "يَسْجُدُ",
-   "qac_root": "سجد",
-   "qac_pos": "V",
-   "example_loc": "22:18:5"
-  },
-  {
-   "norm_strict": "كذاب",
-   "count": 3,
-   "surface": "كَذَّابٌ",
-   "qac_root": "كذب",
-   "qac_pos": "N",
-   "example_loc": "38:4:10"
-  },
-  {
-   "norm_strict": "ترابا",
-   "count": 3,
-   "surface": "تُرَٰبًا",
-   "qac_root": "ترب",
-   "qac_pos": "N",
-   "example_loc": "13:5:7"
-  },
-  {
-   "norm_strict": "أءنا",
-   "count": 3,
-   "surface": "أَءِنَّا",
-   "qac_root": null,
-   "qac_pos": "N",
-   "example_loc": "13:5:8"
-  },
-  {
-   "norm_strict": "أولادهم",
-   "count": 3,
-   "surface": "أَوْلَٰدُهُمْ",
-   "qac_root": "ولد",
-   "qac_pos": "N",
-   "example_loc": "9:55:5"
-  },
-  {
-   "norm_strict": "ياأبانا",
-   "count": 3,
-   "surface": "يَٰٓأَبَانَا",
-   "qac_root": "أبو",
-   "qac_pos": "N",
-   "example_loc": "12:65:9"
-  },
-  {
-   "norm_strict": "وءال",
-   "count": 3,
-   "surface": "وَءَالَ",
-   "qac_root": "أول",
-   "qac_pos": "N",
-   "example_loc": "3:33:6"
-  },
-  {
-   "norm_strict": "تالله",
-   "count": 3,
-   "surface": "تَٱللَّهِ",
-   "qac_root": "أله",
-   "qac_pos": "N",
-   "example_loc": "12:91:2"
-  },
-  {
-   "norm_strict": "بريء",
-   "count": 3,
-   "surface": "بَرِىٓءٌۭ",
-   "qac_root": "برأ",
-   "qac_pos": "N",
-   "example_loc": "11:35:10"
-  },
-  {
-   "norm_strict": "يموت",
-   "count": 3,
-   "surface": "يَمُوتُ",
-   "qac_root": "موت",
-   "qac_pos": "V",
-   "example_loc": "20:74:10"
-  },
-  {
-   "norm_strict": "للتقوي",
-   "count": 3,
-   "surface": "لِلتَّقْوَىٰ",
-   "qac_root": "وقي",
-   "qac_pos": "N",
-   "example_loc": "5:8:19"
-  },
-  {
    "norm_strict": "وألقينا",
    "count": 3,
    "surface": "وَأَلْقَيْنَا",
    "qac_root": "لقي",
    "qac_pos": "V",
    "example_loc": "5:64:27"
-  },
-  {
-   "norm_strict": "ملاقوا",
-   "count": 3,
-   "surface": "مُّلَٰقُوا۟",
-   "qac_root": "لقي",
-   "qac_pos": "N",
-   "example_loc": "2:249:47"
   },
   {
    "norm_strict": "فألقوا",
@@ -3153,116 +2081,12 @@
    "example_loc": "26:44:1"
   },
   {
-   "norm_strict": "تتخذون",
-   "count": 3,
-   "surface": "تَتَّخِذُونَ",
-   "qac_root": "أخذ",
-   "qac_pos": "V",
-   "example_loc": "16:92:10"
-  },
-  {
-   "norm_strict": "الأنبياء",
-   "count": 3,
-   "surface": "ٱلْأَنۢبِيَآءَ",
-   "qac_root": "نبأ",
-   "qac_pos": "N",
-   "example_loc": "4:155:8"
-  },
-  {
-   "norm_strict": "وقولهم",
-   "count": 3,
-   "surface": "وَقَوْلِهِمْ",
-   "qac_root": "قول",
-   "qac_pos": "N",
-   "example_loc": "4:155:11"
-  },
-  {
-   "norm_strict": "موعدا",
-   "count": 3,
-   "surface": "مَّوْعِدًۭا",
-   "qac_root": "وعد",
-   "qac_pos": "N",
-   "example_loc": "18:48:16"
-  },
-  {
-   "norm_strict": "حليم",
-   "count": 3,
-   "surface": "حَلِيمٌۭ",
-   "qac_root": "حلم",
-   "qac_pos": "N",
-   "example_loc": "2:235:47"
-  },
-  {
-   "norm_strict": "ريح",
-   "count": 3,
-   "surface": "رِيحٌۭ",
-   "qac_root": "روح",
-   "qac_pos": "N",
-   "example_loc": "46:24:15"
-  },
-  {
-   "norm_strict": "فتبينوا",
-   "count": 3,
-   "surface": "فَتَبَيَّنُوا۟",
-   "qac_root": "بين",
-   "qac_pos": "V",
-   "example_loc": "4:94:9"
-  },
-  {
-   "norm_strict": "ستجدني",
-   "count": 3,
-   "surface": "سَتَجِدُنِىٓ",
-   "qac_root": "وجد",
-   "qac_pos": "V",
-   "example_loc": "28:27:24"
-  },
-  {
-   "norm_strict": "ولاكنا",
-   "count": 3,
-   "surface": "وَلَٰكِنَّآ",
-   "qac_root": null,
-   "qac_pos": "P",
-   "example_loc": "28:45:1"
-  },
-  {
-   "norm_strict": "العمر",
-   "count": 3,
-   "surface": "ٱلْعُمُرُ",
-   "qac_root": "عمر",
-   "qac_pos": "N",
-   "example_loc": "28:45:6"
-  },
-  {
    "norm_strict": "تتلوا",
    "count": 3,
    "surface": "تَتْلُوا۟",
    "qac_root": "تلو",
    "qac_pos": "V",
    "example_loc": "28:45:13"
-  },
-  {
-   "norm_strict": "القاعدين",
-   "count": 3,
-   "surface": "ٱلْقَٰعِدِينَ",
-   "qac_root": "قعد",
-   "qac_pos": "N",
-   "example_loc": "9:86:18"
-  },
-  {
-   "norm_strict": "ويل",
-   "count": 3,
-   "surface": "وَيْلٌۭ",
-   "qac_root": null,
-   "qac_pos": "N",
-   "example_loc": "83:1:5"
-  },
-  {
-   "norm_strict": "رسالات",
-   "count": 3,
-   "surface": "رِسَٰلَٰتِ",
-   "qac_root": "رسل",
-   "qac_pos": "N",
-   "example_loc": "72:28:5"
   },
   {
    "norm_strict": "ويخرج",
@@ -3273,44 +2097,12 @@
    "example_loc": "10:31:16"
   },
   {
-   "norm_strict": "فأخذناهم",
-   "count": 3,
-   "surface": "فَأَخَذْنَٰهُم",
-   "qac_root": "أخذ",
-   "qac_pos": "V",
-   "example_loc": "6:42:7"
-  },
-  {
-   "norm_strict": "والضراء",
-   "count": 3,
-   "surface": "وَٱلضَّرَّآءِ",
-   "qac_root": "ضرر",
-   "qac_pos": "N",
-   "example_loc": "6:42:9"
-  },
-  {
    "norm_strict": "أنجينا",
    "count": 3,
    "surface": "أَنجَىٰنَا",
    "qac_root": "نجو",
    "qac_pos": "V",
    "example_loc": "6:63:12"
-  },
-  {
-   "norm_strict": "معدوده",
-   "count": 3,
-   "surface": "مَّعْدُودَةٍۢ",
-   "qac_root": "عدد",
-   "qac_pos": "N",
-   "example_loc": "11:8:7"
-  },
-  {
-   "norm_strict": "يطع",
-   "count": 3,
-   "surface": "يُطِعِ",
-   "qac_root": "طوع",
-   "qac_pos": "V",
-   "example_loc": "4:69:2"
   },
   {
    "norm_strict": "والشهداء",
@@ -3361,76 +2153,12 @@
    "example_loc": "9:52:4"
   },
   {
-   "norm_strict": "ءاتنا",
-   "count": 3,
-   "surface": "ءَاتِنَا",
-   "qac_root": "أتي",
-   "qac_pos": "V",
-   "example_loc": "2:201:5"
-  },
-  {
-   "norm_strict": "يتبع",
-   "count": 3,
-   "surface": "يَتَّبِعْ",
-   "qac_root": "تبع",
-   "qac_pos": "V",
-   "example_loc": "24:21:9"
-  },
-  {
-   "norm_strict": "والمنكر",
-   "count": 3,
-   "surface": "وَٱلْمُنكَرِ",
-   "qac_root": "نكر",
-   "qac_pos": "N",
-   "example_loc": "24:21:15"
-  },
-  {
-   "norm_strict": "ورحمته",
-   "count": 3,
-   "surface": "وَرَحْمَتُهُۥ",
-   "qac_root": "رحم",
-   "qac_pos": "N",
-   "example_loc": "24:21:20"
-  },
-  {
-   "norm_strict": "تدع",
-   "count": 3,
-   "surface": "تَدْعُ",
-   "qac_root": "دعو",
-   "qac_pos": "V",
-   "example_loc": "35:18:7"
-  },
-  {
-   "norm_strict": "قربي",
-   "count": 3,
-   "surface": "قُرْبَىٰٓ",
-   "qac_root": "قرب",
-   "qac_pos": "N",
-   "example_loc": "35:18:18"
-  },
-  {
    "norm_strict": "من",
    "count": 3,
    "surface": "مَنَّ",
    "qac_root": null,
    "qac_pos": "P",
    "example_loc": "3:164:2"
-  },
-  {
-   "norm_strict": "فريضه",
-   "count": 3,
-   "surface": "فَرِيضَةًۭ",
-   "qac_root": "فرض",
-   "qac_pos": "N",
-   "example_loc": "9:60:17"
-  },
-  {
-   "norm_strict": "لنبي",
-   "count": 3,
-   "surface": "لِنَبِىٍّ",
-   "qac_root": "نبأ",
-   "qac_pos": "N",
-   "example_loc": "3:161:3"
   },
   {
    "norm_strict": "غل",
@@ -3441,52 +2169,12 @@
    "example_loc": "3:161:10"
   },
   {
-   "norm_strict": "مثقال",
-   "count": 3,
-   "surface": "مِثْقَالَ",
-   "qac_root": "ثقل",
-   "qac_pos": "N",
-   "example_loc": "4:40:5"
-  },
-  {
-   "norm_strict": "درجه",
-   "count": 3,
-   "surface": "دَرَجَةًۭ",
-   "qac_root": "درج",
-   "qac_pos": "N",
-   "example_loc": "57:10:23"
-  },
-  {
-   "norm_strict": "شعائر",
-   "count": 3,
-   "surface": "شَعَٰٓئِرَ",
-   "qac_root": "شعر",
-   "qac_pos": "N",
-   "example_loc": "22:32:4"
-  },
-  {
    "norm_strict": "فإنها",
    "count": 3,
    "surface": "فَإِنَّهَا",
    "qac_root": null,
    "qac_pos": "P",
    "example_loc": "22:32:6"
-  },
-  {
-   "norm_strict": "يشفع",
-   "count": 3,
-   "surface": "يَشْفَعُ",
-   "qac_root": "شفع",
-   "qac_pos": "V",
-   "example_loc": "2:255:23"
-  },
-  {
-   "norm_strict": "عمله",
-   "count": 3,
-   "surface": "عَمَلِهِۦ",
-   "qac_root": "عمل",
-   "qac_pos": "N",
-   "example_loc": "40:37:14"
   },
   {
    "norm_strict": "نعم",
@@ -3497,52 +2185,12 @@
    "example_loc": "18:31:25"
   },
   {
-   "norm_strict": "حيواه",
-   "count": 3,
-   "surface": "حَيَوٰةٍۢ",
-   "qac_root": "حيي",
-   "qac_pos": "N",
-   "example_loc": "2:96:5"
-  },
-  {
-   "norm_strict": "مرضي",
-   "count": 3,
-   "surface": "مَّرْضَىٰٓ",
-   "qac_root": "مرض",
-   "qac_pos": "N",
-   "example_loc": "4:102:51"
-  },
-  {
-   "norm_strict": "مهينا",
-   "count": 3,
-   "surface": "مُّهِينًۭا",
-   "qac_root": "هون",
-   "qac_pos": "N",
-   "example_loc": "4:102:62"
-  },
-  {
-   "norm_strict": "هويه",
-   "count": 3,
-   "surface": "هَوَىٰهُ",
-   "qac_root": "هوي",
-   "qac_pos": "N",
-   "example_loc": "18:28:27"
-  },
-  {
    "norm_strict": "أضل",
    "count": 3,
    "surface": "أَضَلُّ",
    "qac_root": "ضلل",
    "qac_pos": "N",
    "example_loc": "7:179:27"
-  },
-  {
-   "norm_strict": "فأغرقناهم",
-   "count": 3,
-   "surface": "فَأَغْرَقْنَٰهُمْ",
-   "qac_root": "غرق",
-   "qac_pos": "V",
-   "example_loc": "7:136:3"
   },
   {
    "norm_strict": "وحرم",
@@ -3553,44 +2201,12 @@
    "example_loc": "24:3:15"
   },
   {
-   "norm_strict": "نؤته",
-   "count": 3,
-   "surface": "نُؤْتِهِۦ",
-   "qac_root": "أتي",
-   "qac_pos": "V",
-   "example_loc": "42:20:15"
-  },
-  {
-   "norm_strict": "أزكي",
-   "count": 3,
-   "surface": "أَزْكَىٰ",
-   "qac_root": "زكو",
-   "qac_pos": "N",
-   "example_loc": "18:19:29"
-  },
-  {
-   "norm_strict": "لقاءنا",
-   "count": 3,
-   "surface": "لِقَآءَنَا",
-   "qac_root": "لقي",
-   "qac_pos": "N",
-   "example_loc": "10:15:10"
-  },
-  {
    "norm_strict": "القيم",
    "count": 3,
    "surface": "ٱلْقَيِّمُ",
    "qac_root": "قوم",
    "qac_pos": "N",
    "example_loc": "30:30:17"
-  },
-  {
-   "norm_strict": "إبليس",
-   "count": 3,
-   "surface": "إِبْلِيسَ",
-   "qac_root": null,
-   "qac_pos": "N",
-   "example_loc": "18:50:8"
   },
   {
    "norm_strict": "تتولوا",
@@ -3601,116 +2217,12 @@
    "example_loc": "47:38:22"
   },
   {
-   "norm_strict": "وإثما",
-   "count": 3,
-   "surface": "وَإِثْمًۭا",
-   "qac_root": "أثم",
-   "qac_pos": "N",
-   "example_loc": "4:20:16"
-  },
-  {
-   "norm_strict": "بحمده",
-   "count": 3,
-   "surface": "بِحَمْدِهِ",
-   "qac_root": "حمد",
-   "qac_pos": "N",
-   "example_loc": "13:13:3"
-  },
-  {
-   "norm_strict": "للشاربين",
-   "count": 3,
-   "surface": "لِّلشَّارِبِينَ",
-   "qac_root": "شرب",
-   "qac_pos": "N",
-   "example_loc": "37:46:2"
-  },
-  {
-   "norm_strict": "والمهاجرين",
-   "count": 3,
-   "surface": "وَٱلْمُهَٰجِرِينَ",
-   "qac_root": "هجر",
-   "qac_pos": "N",
-   "example_loc": "33:6:18"
-  },
-  {
-   "norm_strict": "الوالدان",
-   "count": 3,
-   "surface": "ٱلْوَٰلِدَانِ",
-   "qac_root": "ولد",
-   "qac_pos": "N",
-   "example_loc": "4:33:6"
-  },
-  {
-   "norm_strict": "والأقربون",
-   "count": 3,
-   "surface": "وَٱلْأَقْرَبُونَ",
-   "qac_root": "قرب",
-   "qac_pos": "N",
-   "example_loc": "4:33:7"
-  },
-  {
-   "norm_strict": "شهدنا",
-   "count": 3,
-   "surface": "شَهِدْنَا",
-   "qac_root": "شهد",
-   "qac_pos": "V",
-   "example_loc": "27:49:10"
-  },
-  {
    "norm_strict": "قبله",
    "count": 3,
    "surface": "قِبْلَةًۭ",
    "qac_root": "قبل",
    "qac_pos": "N",
    "example_loc": "2:144:8"
-  },
-  {
-   "norm_strict": "بغافل",
-   "count": 3,
-   "surface": "بِغَٰفِلٍ",
-   "qac_root": "غفل",
-   "qac_pos": "N",
-   "example_loc": "2:144:32"
-  },
-  {
-   "norm_strict": "المرسلون",
-   "count": 3,
-   "surface": "ٱلْمُرْسَلُونَ",
-   "qac_root": "رسل",
-   "qac_pos": "N",
-   "example_loc": "27:10:19"
-  },
-  {
-   "norm_strict": "تطيعوا",
-   "count": 3,
-   "surface": "تُطِيعُوا۟",
-   "qac_root": "طوع",
-   "qac_pos": "V",
-   "example_loc": "48:16:15"
-  },
-  {
-   "norm_strict": "لقيتم",
-   "count": 3,
-   "surface": "لَقِيتُمُ",
-   "qac_root": "لقي",
-   "qac_pos": "V",
-   "example_loc": "8:15:5"
-  },
-  {
-   "norm_strict": "فتول",
-   "count": 3,
-   "surface": "فَتَوَلَّ",
-   "qac_root": "ولي",
-   "qac_pos": "V",
-   "example_loc": "37:174:1"
-  },
-  {
-   "norm_strict": "المشرق",
-   "count": 3,
-   "surface": "ٱلْمَشْرِقُ",
-   "qac_root": "شرق",
-   "qac_pos": "N",
-   "example_loc": "2:142:14"
   },
   {
    "norm_strict": "والمغرب",
@@ -4015,6 +2527,1494 @@
    "qac_root": "بلغ",
    "qac_pos": "N",
    "example_loc": "24:54:22"
+  },
+  {
+   "norm_strict": "عده",
+   "count": 3,
+   "surface": "عِدَّةَ",
+   "qac_root": "عدد",
+   "qac_pos": "N",
+   "example_loc": "9:37:15"
+  },
+  {
+   "norm_strict": "الغالبون",
+   "count": 3,
+   "surface": "ٱلْغَٰلِبُونَ",
+   "qac_root": "غلب",
+   "qac_pos": "N",
+   "example_loc": "21:44:18"
+  },
+  {
+   "norm_strict": "والمحصنات",
+   "count": 3,
+   "surface": "وَٱلْمُحْصَنَٰتُ",
+   "qac_root": "حصن",
+   "qac_pos": "N",
+   "example_loc": "4:24:1"
+  },
+  {
+   "norm_strict": "امنوا",
+   "count": 3,
+   "surface": "آمَنُوا",
+   "qac_root": null,
+   "qac_pos": null,
+   "example_loc": "3:141:4"
+  },
+  {
+   "norm_strict": "نبات",
+   "count": 3,
+   "surface": "نَبَاتُ",
+   "qac_root": "نبت",
+   "qac_pos": "N",
+   "example_loc": "10:24:11"
+  },
+  {
+   "norm_strict": "وظن",
+   "count": 3,
+   "surface": "وَظَنَّ",
+   "qac_root": "ظنن",
+   "qac_pos": "V",
+   "example_loc": "10:24:23"
+  },
+  {
+   "norm_strict": "فصلت",
+   "count": 3,
+   "surface": "فَصَلَتِ",
+   "qac_root": "فصل",
+   "qac_pos": "V",
+   "example_loc": "12:94:2"
+  },
+  {
+   "norm_strict": "أزواجكم",
+   "count": 3,
+   "surface": "أَزْوَٰجُكُمْ",
+   "qac_root": "زوج",
+   "qac_pos": "N",
+   "example_loc": "4:12:5"
+  },
+  {
+   "norm_strict": "فلكم",
+   "count": 3,
+   "surface": "فَلَكُمُ",
+   "qac_root": null,
+   "qac_pos": "P",
+   "example_loc": "4:12:15"
+  },
+  {
+   "norm_strict": "امرأه",
+   "count": 3,
+   "surface": "ٱمْرَأَةٌۭ",
+   "qac_root": "مرأ",
+   "qac_pos": "N",
+   "example_loc": "4:12:56"
+  },
+  {
+   "norm_strict": "ياعيسي",
+   "count": 3,
+   "surface": "يَٰعِيسَى",
+   "qac_root": null,
+   "qac_pos": "P",
+   "example_loc": "5:116:4"
+  },
+  {
+   "norm_strict": "فلنفسه",
+   "count": 3,
+   "surface": "فَلِنَفْسِهِۦ",
+   "qac_root": "نفس",
+   "qac_pos": "N",
+   "example_loc": "41:46:4"
+  },
+  {
+   "norm_strict": "وأبصارهم",
+   "count": 3,
+   "surface": "وَأَبْصَٰرِهِمْ",
+   "qac_root": "بصر",
+   "qac_pos": "N",
+   "example_loc": "2:20:19"
+  },
+  {
+   "norm_strict": "أكلها",
+   "count": 3,
+   "surface": "أُكُلَهَا",
+   "qac_root": "أكل",
+   "qac_pos": "N",
+   "example_loc": "2:265:17"
+  },
+  {
+   "norm_strict": "حرمنا",
+   "count": 3,
+   "surface": "حَرَّمْنَا",
+   "qac_root": "حرم",
+   "qac_pos": "V",
+   "example_loc": "6:146:4"
+  },
+  {
+   "norm_strict": "يمسهم",
+   "count": 3,
+   "surface": "يَمَسُّهُمْ",
+   "qac_root": "مسس",
+   "qac_pos": "V",
+   "example_loc": "15:48:2"
+  },
+  {
+   "norm_strict": "يصيبهم",
+   "count": 3,
+   "surface": "يُصِيبَهُمْ",
+   "qac_root": "صوب",
+   "qac_pos": "V",
+   "example_loc": "24:63:25"
+  },
+  {
+   "norm_strict": "دخلت",
+   "count": 3,
+   "surface": "دُخِلَتْ",
+   "qac_root": "دخل",
+   "qac_pos": "V",
+   "example_loc": "33:14:2"
+  },
+  {
+   "norm_strict": "واستغفروا",
+   "count": 3,
+   "surface": "وَٱسْتَغْفِرُوا۟",
+   "qac_root": "غفر",
+   "qac_pos": "V",
+   "example_loc": "73:20:73"
+  },
+  {
+   "norm_strict": "وذا",
+   "count": 3,
+   "surface": "وَذَا",
+   "qac_root": null,
+   "qac_pos": "P",
+   "example_loc": "21:87:1"
+  },
+  {
+   "norm_strict": "ءاتيه",
+   "count": 3,
+   "surface": "ءَاتَىٰهُ",
+   "qac_root": "أتي",
+   "qac_pos": "V",
+   "example_loc": "65:7:12"
+  },
+  {
+   "norm_strict": "يسرا",
+   "count": 3,
+   "surface": "يُسْرًۭا",
+   "qac_root": "يسر",
+   "qac_pos": "N",
+   "example_loc": "65:7:25"
+  },
+  {
+   "norm_strict": "أمك",
+   "count": 3,
+   "surface": "أُمِّكَ",
+   "qac_root": "أمم",
+   "qac_pos": "N",
+   "example_loc": "20:40:12"
+  },
+  {
+   "norm_strict": "فرض",
+   "count": 3,
+   "surface": "فَرَضَ",
+   "qac_root": "فرض",
+   "qac_pos": "V",
+   "example_loc": "33:38:8"
+  },
+  {
+   "norm_strict": "يقدر",
+   "count": 3,
+   "surface": "يَقْدِرَ",
+   "qac_root": "قدر",
+   "qac_pos": "V",
+   "example_loc": "90:5:4"
+  },
+  {
+   "norm_strict": "شهر",
+   "count": 3,
+   "surface": "شَهْرٍۢ",
+   "qac_root": "شهر",
+   "qac_pos": "N",
+   "example_loc": "97:3:6"
+  },
+  {
+   "norm_strict": "أعقابكم",
+   "count": 3,
+   "surface": "أَعْقَابِكُمْ",
+   "qac_root": "عقب",
+   "qac_pos": "N",
+   "example_loc": "23:66:3"
+  },
+  {
+   "norm_strict": "أتوا",
+   "count": 3,
+   "surface": "أَتَوا۟",
+   "qac_root": "أتي",
+   "qac_pos": "V",
+   "example_loc": "3:188:6"
+  },
+  {
+   "norm_strict": "كفرتم",
+   "count": 3,
+   "surface": "كَفَرْتُمْ",
+   "qac_root": "كفر",
+   "qac_pos": "V",
+   "example_loc": "17:69:15"
+  },
+  {
+   "norm_strict": "فاستكبروا",
+   "count": 3,
+   "surface": "فَٱسْتَكْبَرُوا۟",
+   "qac_root": "كبر",
+   "qac_pos": "V",
+   "example_loc": "29:39:8"
+  },
+  {
+   "norm_strict": "عينا",
+   "count": 3,
+   "surface": "عَيْنًۭا",
+   "qac_root": "عين",
+   "qac_pos": "N",
+   "example_loc": "2:60:13"
+  },
+  {
+   "norm_strict": "الغي",
+   "count": 3,
+   "surface": "ٱلْغَىِّ",
+   "qac_root": "غوي",
+   "qac_pos": "N",
+   "example_loc": "7:146:27"
+  },
+  {
+   "norm_strict": "البعث",
+   "count": 3,
+   "surface": "ٱلْبَعْثِ",
+   "qac_root": "بعث",
+   "qac_pos": "N",
+   "example_loc": "22:5:8"
+  },
+  {
+   "norm_strict": "مكانه",
+   "count": 3,
+   "surface": "مَكَانَهُۥ",
+   "qac_root": "كون",
+   "qac_pos": "N",
+   "example_loc": "7:143:21"
+  },
+  {
+   "norm_strict": "خضر",
+   "count": 3,
+   "surface": "خُضْرٍۢ",
+   "qac_root": "خضر",
+   "qac_pos": "N",
+   "example_loc": "12:43:13"
+  },
+  {
+   "norm_strict": "قاموا",
+   "count": 3,
+   "surface": "قَامُوٓا۟",
+   "qac_root": "قوم",
+   "qac_pos": "V",
+   "example_loc": "4:142:8"
+  },
+  {
+   "norm_strict": "خسر",
+   "count": 3,
+   "surface": "خَسِرَ",
+   "qac_root": "خسر",
+   "qac_pos": "V",
+   "example_loc": "6:140:2"
+  },
+  {
+   "norm_strict": "مهتدين",
+   "count": 3,
+   "surface": "مُهْتَدِينَ",
+   "qac_root": "هدي",
+   "qac_pos": "N",
+   "example_loc": "6:140:20"
+  },
+  {
+   "norm_strict": "أجد",
+   "count": 3,
+   "surface": "أَجِدُ",
+   "qac_root": "وجد",
+   "qac_pos": "V",
+   "example_loc": "6:145:3"
+  },
+  {
+   "norm_strict": "بعدي",
+   "count": 3,
+   "surface": "بَعْدِى",
+   "qac_root": "بعد",
+   "qac_pos": "N",
+   "example_loc": "61:6:22"
+  },
+  {
+   "norm_strict": "رسلهم",
+   "count": 3,
+   "surface": "رُسُلُهُم",
+   "qac_root": "رسل",
+   "qac_pos": "N",
+   "example_loc": "64:6:5"
+  },
+  {
+   "norm_strict": "معلوم",
+   "count": 3,
+   "surface": "مَّعْلُومٍۢ",
+   "qac_root": "علم",
+   "qac_pos": "N",
+   "example_loc": "26:38:5"
+  },
+  {
+   "norm_strict": "تستكبرون",
+   "count": 3,
+   "surface": "تَسْتَكْبِرُونَ",
+   "qac_root": "كبر",
+   "qac_pos": "V",
+   "example_loc": "7:48:14"
+  },
+  {
+   "norm_strict": "جامع",
+   "count": 3,
+   "surface": "جَامِعُ",
+   "qac_root": "جمع",
+   "qac_pos": "N",
+   "example_loc": "3:9:3"
+  },
+  {
+   "norm_strict": "شئت",
+   "count": 3,
+   "surface": "شِئْتَ",
+   "qac_root": "شيأ",
+   "qac_pos": "V",
+   "example_loc": "24:62:31"
+  },
+  {
+   "norm_strict": "البيع",
+   "count": 3,
+   "surface": "ٱلْبَيْعَ",
+   "qac_root": "بيع",
+   "qac_pos": "N",
+   "example_loc": "62:9:15"
+  },
+  {
+   "norm_strict": "الرحمه",
+   "count": 3,
+   "surface": "ٱلرَّحْمَةَ",
+   "qac_root": "رحم",
+   "qac_pos": "N",
+   "example_loc": "6:12:12"
+  },
+  {
+   "norm_strict": "ياأهل",
+   "count": 3,
+   "surface": "يَٰٓأَهْلَ",
+   "qac_root": "أهل",
+   "qac_pos": "N",
+   "example_loc": "3:64:2"
+  },
+  {
+   "norm_strict": "الملؤا",
+   "count": 3,
+   "surface": "ٱلْمَلَؤُا۟",
+   "qac_root": "ملأ",
+   "qac_pos": "N",
+   "example_loc": "27:29:3"
+  },
+  {
+   "norm_strict": "بالصبر",
+   "count": 3,
+   "surface": "بِٱلصَّبْرِ",
+   "qac_root": "صبر",
+   "qac_pos": "N",
+   "example_loc": "2:153:5"
+  },
+  {
+   "norm_strict": "والصلواه",
+   "count": 3,
+   "surface": "وَٱلصَّلَوٰةِ",
+   "qac_root": "صلو",
+   "qac_pos": "N",
+   "example_loc": "2:153:6"
+  },
+  {
+   "norm_strict": "أواب",
+   "count": 3,
+   "surface": "أَوَّابٌۭ",
+   "qac_root": "أوب",
+   "qac_pos": "N",
+   "example_loc": "38:44:14"
+  },
+  {
+   "norm_strict": "صبار",
+   "count": 3,
+   "surface": "صَبَّارٍۢ",
+   "qac_root": "صبر",
+   "qac_pos": "N",
+   "example_loc": "31:31:18"
+  },
+  {
+   "norm_strict": "ندعوا",
+   "count": 3,
+   "surface": "نَدْعُوا۟",
+   "qac_root": "دعو",
+   "qac_pos": "V",
+   "example_loc": "16:86:12"
+  },
+  {
+   "norm_strict": "ءالهتنا",
+   "count": 3,
+   "surface": "ءَالِهَتِنَا",
+   "qac_root": "أله",
+   "qac_pos": "N",
+   "example_loc": "37:36:4"
+  },
+  {
+   "norm_strict": "يحسبون",
+   "count": 3,
+   "surface": "يَحْسَبُونَ",
+   "qac_root": "حسب",
+   "qac_pos": "V",
+   "example_loc": "63:4:12"
+  },
+  {
+   "norm_strict": "فضه",
+   "count": 3,
+   "surface": "فِضَّةٍۢ",
+   "qac_root": "فضض",
+   "qac_pos": "N",
+   "example_loc": "43:33:14"
+  },
+  {
+   "norm_strict": "بئسما",
+   "count": 3,
+   "surface": "بِئْسَمَا",
+   "qac_root": "بأس",
+   "qac_pos": "V",
+   "example_loc": "7:150:9"
+  },
+  {
+   "norm_strict": "قومي",
+   "count": 3,
+   "surface": "قَوْمِى",
+   "qac_root": "قوم",
+   "qac_pos": "N",
+   "example_loc": "7:142:18"
+  },
+  {
+   "norm_strict": "رضوا",
+   "count": 3,
+   "surface": "رَضُوا۟",
+   "qac_root": "رضو",
+   "qac_pos": "V",
+   "example_loc": "9:87:1"
+  },
+  {
+   "norm_strict": "مقيم",
+   "count": 3,
+   "surface": "مُّقِيمٍۢ",
+   "qac_root": "قوم",
+   "qac_pos": "N",
+   "example_loc": "42:45:27"
+  },
+  {
+   "norm_strict": "يرتد",
+   "count": 3,
+   "surface": "يَرْتَدَّ",
+   "qac_root": "ردد",
+   "qac_pos": "V",
+   "example_loc": "5:54:5"
+  },
+  {
+   "norm_strict": "واسع",
+   "count": 3,
+   "surface": "وَٰسِعٌ",
+   "qac_root": "وسع",
+   "qac_pos": "N",
+   "example_loc": "5:54:36"
+  },
+  {
+   "norm_strict": "العزه",
+   "count": 3,
+   "surface": "ٱلْعِزَّةُ",
+   "qac_root": "عزز",
+   "qac_pos": "N",
+   "example_loc": "63:8:11"
+  },
+  {
+   "norm_strict": "وللمؤمنين",
+   "count": 3,
+   "surface": "وَلِلْمُؤْمِنِينَ",
+   "qac_root": "أمن",
+   "qac_pos": "N",
+   "example_loc": "63:8:13"
+  },
+  {
+   "norm_strict": "وءاتي",
+   "count": 3,
+   "surface": "وَءَاتَى",
+   "qac_root": "أتي",
+   "qac_pos": "V",
+   "example_loc": "9:18:12"
+  },
+  {
+   "norm_strict": "أتينا",
+   "count": 3,
+   "surface": "أَتَيْنَا",
+   "qac_root": "أتي",
+   "qac_pos": "V",
+   "example_loc": "21:47:16"
+  },
+  {
+   "norm_strict": "واستكبروا",
+   "count": 3,
+   "surface": "وَٱسْتَكْبَرُوا۟",
+   "qac_root": "كبر",
+   "qac_pos": "V",
+   "example_loc": "7:40:5"
+  },
+  {
+   "norm_strict": "يدخلون",
+   "count": 3,
+   "surface": "يَدْخُلُونَ",
+   "qac_root": "دخل",
+   "qac_pos": "V",
+   "example_loc": "7:40:13"
+  },
+  {
+   "norm_strict": "أثيم",
+   "count": 3,
+   "surface": "أَثِيمٍۢ",
+   "qac_root": "أثم",
+   "qac_pos": "N",
+   "example_loc": "45:7:4"
+  },
+  {
+   "norm_strict": "يأتهم",
+   "count": 3,
+   "surface": "يَأْتِهِمْ",
+   "qac_root": "أتي",
+   "qac_pos": "V",
+   "example_loc": "9:70:2"
+  },
+  {
+   "norm_strict": "نذقه",
+   "count": 3,
+   "surface": "نُذِقْهُ",
+   "qac_root": "ذوق",
+   "qac_pos": "V",
+   "example_loc": "34:12:24"
+  },
+  {
+   "norm_strict": "بالصلواه",
+   "count": 3,
+   "surface": "بِٱلصَّلَوٰةِ",
+   "qac_root": "صلو",
+   "qac_pos": "N",
+   "example_loc": "19:55:4"
+  },
+  {
+   "norm_strict": "بالعباد",
+   "count": 3,
+   "surface": "بِٱلْعِبَادِ",
+   "qac_root": "عبد",
+   "qac_pos": "N",
+   "example_loc": "2:207:11"
+  },
+  {
+   "norm_strict": "لقضي",
+   "count": 3,
+   "surface": "لَقُضِىَ",
+   "qac_root": "قضي",
+   "qac_pos": "V",
+   "example_loc": "10:19:13"
+  },
+  {
+   "norm_strict": "كلمات",
+   "count": 3,
+   "surface": "كَلِمَٰتُ",
+   "qac_root": "كلم",
+   "qac_pos": "N",
+   "example_loc": "31:27:16"
+  },
+  {
+   "norm_strict": "يكفروا",
+   "count": 3,
+   "surface": "يَكْفُرُوا۟",
+   "qac_root": "كفر",
+   "qac_pos": "V",
+   "example_loc": "2:90:6"
+  },
+  {
+   "norm_strict": "وللكافرين",
+   "count": 3,
+   "surface": "وَلِلْكَٰفِرِينَ",
+   "qac_root": "كفر",
+   "qac_pos": "N",
+   "example_loc": "2:90:25"
+  },
+  {
+   "norm_strict": "زوجين",
+   "count": 3,
+   "surface": "زَوْجَيْنِ",
+   "qac_root": "زوج",
+   "qac_pos": "N",
+   "example_loc": "23:27:17"
+  },
+  {
+   "norm_strict": "وأهلك",
+   "count": 3,
+   "surface": "وَأَهْلَكَ",
+   "qac_root": "أهل",
+   "qac_pos": "N",
+   "example_loc": "23:27:19"
+  },
+  {
+   "norm_strict": "الصم",
+   "count": 3,
+   "surface": "ٱلصُّمُّ",
+   "qac_root": "صمم",
+   "qac_pos": "N",
+   "example_loc": "21:45:7"
+  },
+  {
+   "norm_strict": "الدعاء",
+   "count": 3,
+   "surface": "ٱلدُّعَآءَ",
+   "qac_root": "دعو",
+   "qac_pos": "N",
+   "example_loc": "21:45:8"
+  },
+  {
+   "norm_strict": "لبشر",
+   "count": 3,
+   "surface": "لِبَشَرٍ",
+   "qac_root": "بشر",
+   "qac_pos": "N",
+   "example_loc": "42:51:3"
+  },
+  {
+   "norm_strict": "يتلون",
+   "count": 3,
+   "surface": "يَتْلُونَ",
+   "qac_root": "تلو",
+   "qac_pos": "V",
+   "example_loc": "22:72:15"
+  },
+  {
+   "norm_strict": "ءاتيناكم",
+   "count": 3,
+   "surface": "ءَاتَيْنَٰكُم",
+   "qac_root": "أتي",
+   "qac_pos": "V",
+   "example_loc": "2:93:9"
+  },
+  {
+   "norm_strict": "يأمركم",
+   "count": 3,
+   "surface": "يَأْمُرُكُم",
+   "qac_root": "أمر",
+   "qac_pos": "V",
+   "example_loc": "2:93:22"
+  },
+  {
+   "norm_strict": "وأشد",
+   "count": 3,
+   "surface": "وَأَشَدُّ",
+   "qac_root": "شدد",
+   "qac_pos": "N",
+   "example_loc": "4:84:21"
+  },
+  {
+   "norm_strict": "والكتاب",
+   "count": 3,
+   "surface": "وَٱلْكِتَٰبِ",
+   "qac_root": "كتب",
+   "qac_pos": "N",
+   "example_loc": "2:177:17"
+  },
+  {
+   "norm_strict": "كله",
+   "count": 3,
+   "surface": "كُلَّهُۥ",
+   "qac_root": "كلل",
+   "qac_pos": "N",
+   "example_loc": "3:154:32"
+  },
+  {
+   "norm_strict": "وإليك",
+   "count": 3,
+   "surface": "وَإِلَيْكَ",
+   "qac_root": null,
+   "qac_pos": "P",
+   "example_loc": "2:285:26"
+  },
+  {
+   "norm_strict": "أملك",
+   "count": 3,
+   "surface": "أَمْلِكُ",
+   "qac_root": "ملك",
+   "qac_pos": "V",
+   "example_loc": "5:25:5"
+  },
+  {
+   "norm_strict": "وللرسول",
+   "count": 3,
+   "surface": "وَلِلرَّسُولِ",
+   "qac_root": "رسل",
+   "qac_pos": "N",
+   "example_loc": "8:41:9"
+  },
+  {
+   "norm_strict": "سياتكم",
+   "count": 3,
+   "surface": "سَيِّـَٔاتِكُمْ",
+   "qac_root": "سوأ",
+   "qac_pos": "N",
+   "example_loc": "8:29:12"
+  },
+  {
+   "norm_strict": "هودا",
+   "count": 3,
+   "surface": "هُودًا",
+   "qac_root": "هود",
+   "qac_pos": "N",
+   "example_loc": "2:140:10"
+  },
+  {
+   "norm_strict": "ءأنتم",
+   "count": 3,
+   "surface": "ءَأَنتُمْ",
+   "qac_root": null,
+   "qac_pos": "N",
+   "example_loc": "2:140:14"
+  },
+  {
+   "norm_strict": "يلبثوا",
+   "count": 3,
+   "surface": "يَلْبَثُوٓا۟",
+   "qac_root": "لبث",
+   "qac_pos": "V",
+   "example_loc": "10:45:5"
+  },
+  {
+   "norm_strict": "وعن",
+   "count": 3,
+   "surface": "وَعَنِ",
+   "qac_root": null,
+   "qac_pos": "P",
+   "example_loc": "50:17:6"
+  },
+  {
+   "norm_strict": "ءاخرين",
+   "count": 3,
+   "surface": "ءَاخَرِينَ",
+   "qac_root": "أخر",
+   "qac_pos": "N",
+   "example_loc": "6:6:31"
+  },
+  {
+   "norm_strict": "نصركم",
+   "count": 3,
+   "surface": "نَصَرَكُمُ",
+   "qac_root": "نصر",
+   "qac_pos": "V",
+   "example_loc": "3:123:2"
+  },
+  {
+   "norm_strict": "مروا",
+   "count": 3,
+   "surface": "مَرُّوا۟",
+   "qac_root": "مرر",
+   "qac_pos": "V",
+   "example_loc": "83:30:2"
+  },
+  {
+   "norm_strict": "أظن",
+   "count": 3,
+   "surface": "أَظُنُّ",
+   "qac_root": "ظنن",
+   "qac_pos": "V",
+   "example_loc": "41:50:2"
+  },
+  {
+   "norm_strict": "والأقربين",
+   "count": 3,
+   "surface": "وَٱلْأَقْرَبِينَ",
+   "qac_root": "قرب",
+   "qac_pos": "N",
+   "example_loc": "4:135:14"
+  },
+  {
+   "norm_strict": "الضر",
+   "count": 3,
+   "surface": "ٱلضُّرُّ",
+   "qac_root": "ضرر",
+   "qac_pos": "N",
+   "example_loc": "10:12:4"
+  },
+  {
+   "norm_strict": "ضره",
+   "count": 3,
+   "surface": "ضُرَّهُۥ",
+   "qac_root": "ضرر",
+   "qac_pos": "N",
+   "example_loc": "10:12:14"
+  },
+  {
+   "norm_strict": "يؤذن",
+   "count": 3,
+   "surface": "يُؤْذَنَ",
+   "qac_root": "أذن",
+   "qac_pos": "V",
+   "example_loc": "33:53:10"
+  },
+  {
+   "norm_strict": "عين",
+   "count": 3,
+   "surface": "عَيْنٍ",
+   "qac_root": "عين",
+   "qac_pos": "N",
+   "example_loc": "88:5:3"
+  },
+  {
+   "norm_strict": "وأنهار",
+   "count": 3,
+   "surface": "وَأَنْهَٰرٌۭ",
+   "qac_root": "نهر",
+   "qac_pos": "N",
+   "example_loc": "47:15:12"
+  },
+  {
+   "norm_strict": "ومغفره",
+   "count": 3,
+   "surface": "وَمَغْفِرَةٌۭ",
+   "qac_root": "غفر",
+   "qac_pos": "N",
+   "example_loc": "47:15:32"
+  },
+  {
+   "norm_strict": "الجوار",
+   "count": 3,
+   "surface": "ٱلْجَوَارِ",
+   "qac_root": "جري",
+   "qac_pos": "N",
+   "example_loc": "81:16:1"
+  },
+  {
+   "norm_strict": "أتيك",
+   "count": 3,
+   "surface": "أَتَىٰكَ",
+   "qac_root": "أتي",
+   "qac_pos": "V",
+   "example_loc": "79:15:2"
+  },
+  {
+   "norm_strict": "ءاتيناه",
+   "count": 3,
+   "surface": "ءَاتَيْنَٰهُ",
+   "qac_root": "أتي",
+   "qac_pos": "V",
+   "example_loc": "12:22:4"
+  },
+  {
+   "norm_strict": "لاكن",
+   "count": 3,
+   "surface": "لَّٰكِنِ",
+   "qac_root": null,
+   "qac_pos": "P",
+   "example_loc": "4:162:1"
+  },
+  {
+   "norm_strict": "مسولا",
+   "count": 3,
+   "surface": "مَسْـُٔولًۭا",
+   "qac_root": "سأل",
+   "qac_pos": "N",
+   "example_loc": "33:15:13"
+  },
+  {
+   "norm_strict": "لأجل",
+   "count": 3,
+   "surface": "لِأَجَلٍۢ",
+   "qac_root": "أجل",
+   "qac_pos": "N",
+   "example_loc": "13:2:17"
+  },
+  {
+   "norm_strict": "ظالمون",
+   "count": 3,
+   "surface": "ظَٰلِمُونَ",
+   "qac_root": "ظلم",
+   "qac_pos": "N",
+   "example_loc": "29:14:16"
+  },
+  {
+   "norm_strict": "ملكه",
+   "count": 3,
+   "surface": "مُلْكَهُۥ",
+   "qac_root": "ملك",
+   "qac_pos": "N",
+   "example_loc": "38:20:2"
+  },
+  {
+   "norm_strict": "الممترين",
+   "count": 3,
+   "surface": "ٱلْمُمْتَرِينَ",
+   "qac_root": "مري",
+   "qac_pos": "N",
+   "example_loc": "6:114:23"
+  },
+  {
+   "norm_strict": "يسرون",
+   "count": 3,
+   "surface": "يُسِرُّونَ",
+   "qac_root": "سرر",
+   "qac_pos": "V",
+   "example_loc": "11:5:13"
+  },
+  {
+   "norm_strict": "الخوف",
+   "count": 3,
+   "surface": "ٱلْخَوْفُ",
+   "qac_root": "خوف",
+   "qac_pos": "N",
+   "example_loc": "33:19:5"
+  },
+  {
+   "norm_strict": "السيئه",
+   "count": 3,
+   "surface": "ٱلسَّيِّئَةَ",
+   "qac_root": "سوأ",
+   "qac_pos": "N",
+   "example_loc": "13:22:15"
+  },
+  {
+   "norm_strict": "باب",
+   "count": 3,
+   "surface": "بَابٍۢ",
+   "qac_root": "بوب",
+   "qac_pos": "N",
+   "example_loc": "15:44:5"
+  },
+  {
+   "norm_strict": "النعيم",
+   "count": 3,
+   "surface": "ٱلنَّعِيمِ",
+   "qac_root": "نعم",
+   "qac_pos": "N",
+   "example_loc": "83:24:5"
+  },
+  {
+   "norm_strict": "محمد",
+   "count": 3,
+   "surface": "مُحَمَّدٌ",
+   "qac_root": "حمد",
+   "qac_pos": "N",
+   "example_loc": "33:40:3"
+  },
+  {
+   "norm_strict": "ينقلب",
+   "count": 3,
+   "surface": "يَنقَلِبْ",
+   "qac_root": "قلب",
+   "qac_pos": "V",
+   "example_loc": "3:144:18"
+  },
+  {
+   "norm_strict": "كفرا",
+   "count": 3,
+   "surface": "كُفْرًۭا",
+   "qac_root": "كفر",
+   "qac_pos": "N",
+   "example_loc": "4:137:12"
+  },
+  {
+   "norm_strict": "اهتدوا",
+   "count": 3,
+   "surface": "ٱهْتَدَوْا۟",
+   "qac_root": "هدي",
+   "qac_pos": "V",
+   "example_loc": "19:76:4"
+  },
+  {
+   "norm_strict": "الخروج",
+   "count": 3,
+   "surface": "ٱلْخُرُوجَ",
+   "qac_root": "خرج",
+   "qac_pos": "N",
+   "example_loc": "9:46:3"
+  },
+  {
+   "norm_strict": "تتذكرون",
+   "count": 3,
+   "surface": "تَتَذَكَّرُونَ",
+   "qac_root": "ذكر",
+   "qac_pos": "V",
+   "example_loc": "32:4:24"
+  },
+  {
+   "norm_strict": "أهاؤلاء",
+   "count": 3,
+   "surface": "أَهَٰٓؤُلَآءِ",
+   "qac_root": null,
+   "qac_pos": "N",
+   "example_loc": "6:53:6"
+  },
+  {
+   "norm_strict": "أئمه",
+   "count": 3,
+   "surface": "أَئِمَّةًۭ",
+   "qac_root": "أمم",
+   "qac_pos": "N",
+   "example_loc": "32:24:3"
+  },
+  {
+   "norm_strict": "يهدون",
+   "count": 3,
+   "surface": "يَهْدُونَ",
+   "qac_root": "هدي",
+   "qac_pos": "V",
+   "example_loc": "32:24:4"
+  },
+  {
+   "norm_strict": "الطيب",
+   "count": 3,
+   "surface": "ٱلطَّيِّبُ",
+   "qac_root": "طيب",
+   "qac_pos": "N",
+   "example_loc": "7:58:2"
+  },
+  {
+   "norm_strict": "يأتيكم",
+   "count": 3,
+   "surface": "يَأْتِيَكُمُ",
+   "qac_root": "أتي",
+   "qac_pos": "V",
+   "example_loc": "2:248:8"
+  },
+  {
+   "norm_strict": "الكيل",
+   "count": 3,
+   "surface": "ٱلْكَيْلَ",
+   "qac_root": "كيل",
+   "qac_pos": "N",
+   "example_loc": "6:152:13"
+  },
+  {
+   "norm_strict": "أوفوا",
+   "count": 3,
+   "surface": "أَوْفُوا۟",
+   "qac_root": "وفي",
+   "qac_pos": "V",
+   "example_loc": "6:152:30"
+  },
+  {
+   "norm_strict": "بحمد",
+   "count": 3,
+   "surface": "بِحَمْدِ",
+   "qac_root": "حمد",
+   "qac_pos": "N",
+   "example_loc": "50:39:6"
+  },
+  {
+   "norm_strict": "فاعلم",
+   "count": 3,
+   "surface": "فَٱعْلَمْ",
+   "qac_root": "علم",
+   "qac_pos": "V",
+   "example_loc": "5:49:21"
+  },
+  {
+   "norm_strict": "وممن",
+   "count": 3,
+   "surface": "وَمِمَّنْ",
+   "qac_root": null,
+   "qac_pos": "P",
+   "example_loc": "19:58:11"
+  },
+  {
+   "norm_strict": "مدبرين",
+   "count": 3,
+   "surface": "مُدْبِرِينَ",
+   "qac_root": "دبر",
+   "qac_pos": "N",
+   "example_loc": "40:33:3"
+  },
+  {
+   "norm_strict": "حرما",
+   "count": 3,
+   "surface": "حَرَمًا",
+   "qac_root": "حرم",
+   "qac_pos": "N",
+   "example_loc": "28:57:12"
+  },
+  {
+   "norm_strict": "مريه",
+   "count": 3,
+   "surface": "مِرْيَةٍۢ",
+   "qac_root": "مري",
+   "qac_pos": "N",
+   "example_loc": "41:54:4"
+  },
+  {
+   "norm_strict": "لقاء",
+   "count": 3,
+   "surface": "لِّقَآءِ",
+   "qac_root": "لقي",
+   "qac_pos": "N",
+   "example_loc": "41:54:6"
+  },
+  {
+   "norm_strict": "القرنين",
+   "count": 3,
+   "surface": "ٱلْقَرْنَيْنِ",
+   "qac_root": "قرن",
+   "qac_pos": "N",
+   "example_loc": "18:94:3"
+  },
+  {
+   "norm_strict": "سدا",
+   "count": 3,
+   "surface": "سَدًّۭا",
+   "qac_root": "سدد",
+   "qac_pos": "N",
+   "example_loc": "18:94:19"
+  },
+  {
+   "norm_strict": "المنذرين",
+   "count": 3,
+   "surface": "ٱلْمُنذَرِينَ",
+   "qac_root": "نذر",
+   "qac_pos": "N",
+   "example_loc": "26:173:6"
+  },
+  {
+   "norm_strict": "الأبرار",
+   "count": 3,
+   "surface": "ٱلْأَبْرَارَ",
+   "qac_root": "برر",
+   "qac_pos": "N",
+   "example_loc": "76:5:2"
+  },
+  {
+   "norm_strict": "نكرا",
+   "count": 3,
+   "surface": "نُّكْرًۭا",
+   "qac_root": "نكر",
+   "qac_pos": "N",
+   "example_loc": "18:74:16"
+  },
+  {
+   "norm_strict": "وأني",
+   "count": 3,
+   "surface": "وَأَنَّىٰ",
+   "qac_root": null,
+   "qac_pos": "P",
+   "example_loc": "89:23:7"
+  },
+  {
+   "norm_strict": "وإنك",
+   "count": 3,
+   "surface": "وَإِنَّكَ",
+   "qac_root": null,
+   "qac_pos": "P",
+   "example_loc": "42:52:23"
+  },
+  {
+   "norm_strict": "ميت",
+   "count": 3,
+   "surface": "مَّيِّتٍۢ",
+   "qac_root": "موت",
+   "qac_pos": "N",
+   "example_loc": "35:9:10"
+  },
+  {
+   "norm_strict": "يأتوك",
+   "count": 3,
+   "surface": "يَأْتُوكَ",
+   "qac_root": "أتي",
+   "qac_pos": "V",
+   "example_loc": "5:41:26"
+  },
+  {
+   "norm_strict": "والمنافقين",
+   "count": 3,
+   "surface": "وَٱلْمُنَٰفِقِينَ",
+   "qac_root": "نفق",
+   "qac_pos": "N",
+   "example_loc": "33:48:4"
+  },
+  {
+   "norm_strict": "فقاتلوا",
+   "count": 3,
+   "surface": "فَقَٰتِلُوٓا۟",
+   "qac_root": "قتل",
+   "qac_pos": "V",
+   "example_loc": "9:12:10"
+  },
+  {
+   "norm_strict": "مكانتكم",
+   "count": 3,
+   "surface": "مَكَانَتِكُمْ",
+   "qac_root": "كون",
+   "qac_pos": "N",
+   "example_loc": "6:135:3"
+  },
+  {
+   "norm_strict": "عالم",
+   "count": 3,
+   "surface": "عَٰلِمُ",
+   "qac_root": "علم",
+   "qac_pos": "N",
+   "example_loc": "72:26:1"
+  },
+  {
+   "norm_strict": "الخلد",
+   "count": 3,
+   "surface": "ٱلْخُلْدِ",
+   "qac_root": "خلد",
+   "qac_pos": "N",
+   "example_loc": "20:120:10"
+  },
+  {
+   "norm_strict": "فأصلحوا",
+   "count": 3,
+   "surface": "فَأَصْلِحُوا۟",
+   "qac_root": "صلح",
+   "qac_pos": "V",
+   "example_loc": "49:9:6"
+  },
+  {
+   "norm_strict": "يحكمون",
+   "count": 3,
+   "surface": "يَحْكُمُونَ",
+   "qac_root": "حكم",
+   "qac_pos": "V",
+   "example_loc": "16:59:19"
+  },
+  {
+   "norm_strict": "نزلا",
+   "count": 3,
+   "surface": "نُزُلًا",
+   "qac_root": "نزل",
+   "qac_pos": "N",
+   "example_loc": "18:107:10"
+  },
+  {
+   "norm_strict": "أعبد",
+   "count": 3,
+   "surface": "أَعْبُدَ",
+   "qac_root": "عبد",
+   "qac_pos": "V",
+   "example_loc": "27:91:4"
+  },
+  {
+   "norm_strict": "مؤمنون",
+   "count": 3,
+   "surface": "مُؤْمِنُونَ",
+   "qac_root": "أمن",
+   "qac_pos": "N",
+   "example_loc": "44:12:6"
+  },
+  {
+   "norm_strict": "يمسسك",
+   "count": 3,
+   "surface": "يَمْسَسْكَ",
+   "qac_root": "مسس",
+   "qac_pos": "V",
+   "example_loc": "6:17:2"
+  },
+  {
+   "norm_strict": "بضر",
+   "count": 3,
+   "surface": "بِضُرٍّۢ",
+   "qac_root": "ضرر",
+   "qac_pos": "N",
+   "example_loc": "6:17:4"
+  },
+  {
+   "norm_strict": "برحمه",
+   "count": 3,
+   "surface": "بِرَحْمَةٍ",
+   "qac_root": "رحم",
+   "qac_pos": "N",
+   "example_loc": "39:38:26"
+  },
+  {
+   "norm_strict": "بالإيمان",
+   "count": 3,
+   "surface": "بِٱلْإِيمَٰنِ",
+   "qac_root": "أمن",
+   "qac_pos": "N",
+   "example_loc": "5:5:35"
+  },
+  {
+   "norm_strict": "أقل",
+   "count": 3,
+   "surface": "أَقُل",
+   "qac_root": "قول",
+   "qac_pos": "V",
+   "example_loc": "12:96:12"
+  },
+  {
+   "norm_strict": "فينبئكم",
+   "count": 3,
+   "surface": "فَيُنَبِّئُكُم",
+   "qac_root": "نبأ",
+   "qac_pos": "V",
+   "example_loc": "9:94:27"
+  },
+  {
+   "norm_strict": "جرم",
+   "count": 3,
+   "surface": "جَرَمَ",
+   "qac_root": "جرم",
+   "qac_pos": "N",
+   "example_loc": "40:43:2"
+  },
+  {
+   "norm_strict": "نجينا",
+   "count": 3,
+   "surface": "نَجَّىٰنَا",
+   "qac_root": "نجو",
+   "qac_pos": "V",
+   "example_loc": "7:89:12"
+  },
+  {
+   "norm_strict": "علما",
+   "count": 3,
+   "surface": "عِلْمًا",
+   "qac_root": "علم",
+   "qac_pos": "N",
+   "example_loc": "7:89:30"
+  },
+  {
+   "norm_strict": "ورب",
+   "count": 3,
+   "surface": "وَرَبُّ",
+   "qac_root": "ربب",
+   "qac_pos": "N",
+   "example_loc": "55:17:3"
+  },
+  {
+   "norm_strict": "أغير",
+   "count": 3,
+   "surface": "أَغَيْرَ",
+   "qac_root": "غير",
+   "qac_pos": "N",
+   "example_loc": "6:164:2"
+  },
+  {
+   "norm_strict": "دعويهم",
+   "count": 3,
+   "surface": "دَعْوَىٰهُمْ",
+   "qac_root": "دعو",
+   "qac_pos": "N",
+   "example_loc": "10:10:1"
+  },
+  {
+   "norm_strict": "وءايه",
+   "count": 3,
+   "surface": "وَءَايَةًۭ",
+   "qac_root": "أيي",
+   "qac_pos": "N",
+   "example_loc": "5:114:17"
+  },
+  {
+   "norm_strict": "مسكينا",
+   "count": 3,
+   "surface": "مِسْكِينًا",
+   "qac_root": "سكن",
+   "qac_pos": "N",
+   "example_loc": "58:4:2"
+  },
+  {
+   "norm_strict": "حلالا",
+   "count": 3,
+   "surface": "حَلَٰلًۭا",
+   "qac_root": "حلل",
+   "qac_pos": "N",
+   "example_loc": "5:88:5"
+  },
+  {
+   "norm_strict": "طوعا",
+   "count": 3,
+   "surface": "طَوْعًۭا",
+   "qac_root": "طوع",
+   "qac_pos": "N",
+   "example_loc": "3:83:11"
+  },
+  {
+   "norm_strict": "خوفا",
+   "count": 3,
+   "surface": "خَوْفًۭا",
+   "qac_root": "خوف",
+   "qac_pos": "N",
+   "example_loc": "13:12:5"
+  },
+  {
+   "norm_strict": "وطمعا",
+   "count": 3,
+   "surface": "وَطَمَعًۭا",
+   "qac_root": "طمع",
+   "qac_pos": "N",
+   "example_loc": "13:12:6"
+  },
+  {
+   "norm_strict": "والهدي",
+   "count": 3,
+   "surface": "وَٱلْهَدْىَ",
+   "qac_root": "هدي",
+   "qac_pos": "N",
+   "example_loc": "48:25:8"
+  },
+  {
+   "norm_strict": "بعبادي",
+   "count": 3,
+   "surface": "بِعِبَادِىٓ",
+   "qac_root": "عبد",
+   "qac_pos": "N",
+   "example_loc": "26:52:6"
+  },
+  {
+   "norm_strict": "سرر",
+   "count": 3,
+   "surface": "سُرُرٌۭ",
+   "qac_root": "سرر",
+   "qac_pos": "N",
+   "example_loc": "88:13:2"
+  },
+  {
+   "norm_strict": "فاطر",
+   "count": 3,
+   "surface": "فَاطِرِ",
+   "qac_root": "فطر",
+   "qac_pos": "N",
+   "example_loc": "6:14:6"
+  },
+  {
+   "norm_strict": "بالكتاب",
+   "count": 3,
+   "surface": "بِٱلْكِتَٰبِ",
+   "qac_root": "كتب",
+   "qac_pos": "N",
+   "example_loc": "7:170:3"
+  },
+  {
+   "norm_strict": "وكذب",
+   "count": 3,
+   "surface": "وَكَذَّبَ",
+   "qac_root": "كذب",
+   "qac_pos": "V",
+   "example_loc": "39:32:7"
+  },
+  {
+   "norm_strict": "ضلالا",
+   "count": 3,
+   "surface": "ضَلَٰلًۢا",
+   "qac_root": "ضلل",
+   "qac_pos": "N",
+   "example_loc": "4:116:19"
   }
  ]
 }

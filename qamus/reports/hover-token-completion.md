@@ -5,18 +5,18 @@ Every rendered token in Qamus usage āyāt has a terminal state — **0 silent/u
 | metric | value |
 |---|---:|
 | total tokens | 49900 |
-| resolved (qamus-authored) | 39312 |
-| coverage % | 78.78 |
-| distinct pending surfaces | 5904 |
+| resolved (qamus-authored) | 39887 |
+| coverage % | 79.93 |
+| distinct pending surfaces | 5719 |
 | silent / unknown | 0 |
 
 ## States
 
 | state | n |
 |---|---:|
-| `resolved_qamus_authored` | 39312 |
-| `pending_needs_sarf` | 8891 |
-| `pending_no_qamus_entry` | 1629 |
+| `resolved_qamus_authored` | 39887 |
+| `pending_needs_sarf` | 8338 |
+| `pending_no_qamus_entry` | 1607 |
 | `pending_source_data_issue` | 55 |
 | `pending_proper_noun` | 13 |
 
