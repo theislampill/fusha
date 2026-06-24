@@ -15,3 +15,6 @@
 {"surface":"أَنْهَٰر","wrong":"daytime","fix":"\"rivers\" (نَهْر); NOT نَهَار \"daytime\"","risk":"same-root polyseme"}
 {"surface":"عَلِيمًا","wrong":"to be in pain","fix":"\"All-Knowing\" (ع ل م); a data error filed it under أ ل م","risk":"data error + homograph"}
 {"surface":"قُرْءَانًا","wrong":"stem + نا suffix","fix":"do not decompose; final alef is tanwīn (ـًا), not the pronoun نا","risk":"tanwīn-alef false suffix"}
+{"surface":"عَلِيمٌ","wrong":"to be in pain","fix":"All-Knowing (ع ل م); quarantine must cover the NOMINATIVE عليم too, not only the accusative عليما","risk":"data-error homograph; surface-keyed authoring overrides it"}
+{"surface":"عِندِ","wrong":"stubborn","fix":"with / near (عِنْد); a surface-keyed authored gloss overrides the عَنِيد data-error spread gloss","risk":"data-error; override fixes it"}
+{"surface":"قَالَ","wrong":"to say (verbose) / pending","fix":"he said — concise + FORM-AWARE; perfect verb -> past tense","risk":"multi-sense root pended by single-sense filter; safe dominant sense"}

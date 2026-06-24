@@ -11,3 +11,5 @@
 {"surface":"إِلَيْنَا","context":"ثُمَّ إِلَيْنَا مَرْجِعُكُمْ","wrong":"soft","correct":"to us","reason":"jar-majrūr إِلَى + نا; NOT root ل ي ن"}
 {"surface":"وَيَقْدِرُ","context":"يَبْسُطُ الرِّزْقَ لِمَن يَشَاءُ وَيَقْدِرُ","correct":"restricts / straitens","reason":"paired antonym with يَبْسُط → restricts, not merely \"ordains\""}
 {"surface":"حَلِيمٌ","context":"إِنَّ إِبْرَاهِيمَ لَحَلِيمٌ","wrong":"one of Allah's Names","correct":"forbearing","reason":"referent is Ibrāhīm, not Allah"}
+{"surface":"وَمِنَ","context":"وَمِنَ ٱلنَّاسِ","wrong":"and whoever","correct":"and among / and from","reason":"preposition (kasra on mīm under the و proclitic); a surface-keyed gloss is safe ONLY with the harakāt guard"}
+{"surface":"قُلْ","context":"قُلْ هُوَ ٱللَّهُ","correct":"say! (command)","reason":"imperative form -> command gloss, distinct from the perfect قَالَ 'he said'"}

@@ -103,3 +103,8 @@ note, or the review queue.
 - A bare لا before a noun vs a verb (لا النافية للجنس vs verbal negation) when the next token's POS is unknown.
 - مَا with no clear negation/relative/interrogative signal.
 - A multi-sense root with no disambiguating object/referent in range.
+
+## Production finding (P4/P5)
+A surface-keyed gloss is safe **only with the harakāt guard in place**: وَمِنَ "and from" (kasra on the mīm,
+even under the و proclitic) is the preposition and may be glossed, while وَمَن "and whoever" (fatḥa) must not
+inherit it — the content-letter harakah, read by the guard, keeps the two apart across all occurrences.

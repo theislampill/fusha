@@ -105,3 +105,14 @@ new_lemma_existing_root / new_root_or_unknown_root / particle_or_construction / 
 - Never put a verb infinitive on a noun, proper noun, or participle whose sense differs.
 - Never copy an external gloss. Never expose `informed_by`/QAC/Quran.com/Tanzil in a public artifact.
 - Never resolve when uncertain — **prefer pending with a precise reason.**
+
+## Production findings (P4/P5 authored-gloss batch)
+- **Surface-stable dominant-sense authoring works at scale.** For a high-frequency multi-sense root whose
+  *surface form* has a single stable meaning (قَالَ "he said", ٱلنَّاسُ "the people"), author the concise
+  **form-aware** dominant sense — it is safe surface-wide and resolves thousands of tokens the single-sense
+  filter left pending. Context-sensitive surfaces stay pending (the nahw skill decides).
+- **A verified authored gloss may OVERRIDE a non-primary (spread) gloss** — this is how the batch fixed
+  pre-existing data-error wrongs (عَلِيمٌ "to be in pain" → "All-Knowing"; عِند "stubborn" → "with/near").
+  Never override a curator-placed primary.
+- **Quarantine the whole inflection family.** A data-error quarantine on عَلِيمًا (accusative) must also cover
+  عَلِيمٌ (nominative) — match on the stem, not one case ending.
