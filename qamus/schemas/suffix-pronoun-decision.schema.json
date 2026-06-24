@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fusha/suffix-pronoun-decision.schema.json",
+  "title": "Suffix/pronoun hover decision",
+  "description": "A token-addressed decision for the 'stem recognized + enclitic pronoun' class — a NOUN stem + a possessive enclitic (أَعْمَالُنَا = أعمال 'deeds' + نا 'our' -> 'our deeds'). It is a specialization of hover-token-decision: same per-quran:S:A:W override, plus the parsed stem/suffix/possessor and a POS gate. The possessive composition is valid ONLY on a noun; on a verb the enclitic is a subject/object pronoun ('we knew', not 'our knowledge'), so verb tokens are excluded. Public record stays {src:'qamus',kind:'authored'}.",
+  "type": "object",
+  "required": ["loc", "gloss", "stem", "suffix", "possessor", "decision_state", "src", "kind"],
+  "additionalProperties": true,
+  "properties": {
+    "loc": { "type": "string", "pattern": "^\\d{1,3}:\\d{1,3}:\\d{1,3}$" },
+    "gloss": { "type": "string", "description": "possessor + base, e.g. 'our deeds', 'their hearts', 'your Lord'" },
+    "surface": { "type": "string", "description": "vocalized token (the disambiguator for the enclitic)" },
+    "stem": { "type": "string", "description": "the noun stem after stripping the enclitic" },
+    "suffix": { "type": "string", "description": "the enclitic pronoun (نا/كم/هم/ه/ها/ي/...)" },
+    "possessor": { "type": "string", "enum": ["our", "your", "their", "his", "her", "my", "its", "your (you two)", "their (those two)"] },
+    "person": { "type": "string" },
+    "number": { "type": "string" },
+    "decision_state": { "const": "suffix_pronoun_decision" },
+    "src": { "const": "qamus" },
+    "kind": { "const": "authored" },
+    "internal_provenance": { "type": "object" }
+  }
+}

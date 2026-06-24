@@ -1,8 +1,9 @@
 # Next-batch resume plan (PP1G continues — exact, no vague "standing by")
 
 ## Where we are (live, reconciled)
+- **NEW: suffix/pronoun lane is LIVE** — noun-stem + possessive-enclitic resolver (POS-gated, verb hosts excluded), fixed the visible أَعْمَالُنَا→"our deeds" class; 182 applied; 888 stem_base_unknown (next: author noun stems), 1,050 verb-suffix (verb lane).
 - **NEW: token-addressed override layer is LIVE** (per-`quran:S:A:W` > surface-key TSV > pending) — resolves homograph collisions the TSV cannot; 363 decisions applied; same-surface polysemy (وَمَا, bare إِنْ, لَمَّا) is the next tier (needs per-token iʿrāb).
-- Live coverage **81.41%** · 40,623 / 49,900 resolved · **9,277 pending** · tsv 1,223 + 363 token decisions · 2,092 entries.
+- Live coverage **81.77%** · 40,805 / 49,900 resolved · **9,095 pending** · tsv 1,223 + 545 token decisions · 2,092 entries.
 - Distinct pending surfaces: **5,435** (was 6,422). Authorable lever `pending_needs_sarf` = **7,990**.
 - Processed: B2 (230→159) + B3 (230→186) + B4 (230→181) + B5 (230→190, 61 MCP-backed) + **particle-hardtail
   (311→289)**, each excluding prior rejects. Combined **+1,005 glosses, +4,264 occ, −0 removed**.

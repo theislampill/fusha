@@ -3,10 +3,17 @@
 Live qamus-highlight, public beta, indexable. Public records carry only `{src:"qamus",kind:"authored"}` — 0
 external provenance. Full per-token states: `hover-token-terminal-matrix.md`.
 
-> **CURRENT LIVE (reconciled): coverage 81.41% · 40,623 / 49,900 resolved · 9,277 pending · tsv 1,223 + 363 token decisions.**
-> Trail: … B4 78.78 → B5 79.93 → particle-hardtail 80.68 → **B6 token-layer 81.41**.
-> **MCP-backed decisions live: 61** · **token-addressed decisions live: 363** (per-`quran:S:A:W` overrides).
+> **CURRENT LIVE (reconciled): coverage 81.77% · 40,805 / 49,900 resolved · 9,095 pending · tsv 1,223 + 545 token decisions.**
+> Trail: … B5 79.93 → particle-hardtail 80.68 → B6 token-layer 81.41 → **suffix/pronoun 81.77**.
+> **MCP-backed decisions live: 61** · **token-addressed decisions live: 545** (363 homograph + 182 suffix/pronoun, per-`quran:S:A:W`).
 > **wrong-gloss open: 0** · **−0 removed across all batches.**
+
+## Suffix/pronoun lane (APPLIED LIVE) — fixes the visible أَعْمَالُنَا failure
+**182 noun+possessive decisions** (general state-machine feature, not per-token patches): split the vocalized
+enclitic → POS-gate (noun host only) → possessor + stem base. أَعْمَالُنَا → "our deeds" (was the reported
+pending), قُلُوبِهِمْ → "their hearts", رَبِّنَا → "our Lord". **Verb hosts excluded** (عَلِمْنَا "we knew" is NOT
+"our knowledge" — 1,050 verb-suffixes correctly skipped). coverage **81.41% → 81.77%**, +182 occ, −0 removed.
+Mirror `suffix_pronoun_hover_batch_001.*`; report `suffix-pronoun-hover-report.md`; rollback `*.bak-suffix2`.
 
 ## B6 — token-addressed override layer (APPLIED LIVE)
 The first layer that resolves **surface-key collisions** the TSV cannot: a per-token (`quran:S:A:W`) decision >
@@ -104,7 +111,7 @@ norm_strict key-collision test** (13 candidates → 11 → 8 key-safe), applied 
 نَزَّلَ (key `نزل` collides with نَزَلَ "descended"), إِنفَاق/مَخْلُوق (0 occ), تَذَكَّرَ/زَلْزَلَتِ (2-vote).
 Rollback: `*.bak-sn7` + `wbw-lookup.prev.json`. Mirror: `qamus/candidates/qamus_2092/authored_gloss_batch_002_sarfnahw.*`.
 
-## Pending by reason (live now — from `export_audit_state.py` at 81.41%)
+## Pending by reason (live now — from `export_audit_state.py` at 81.77%)
 | reason | n |
 |---|---:|
 | `pending_needs_sarf` (root exists, form/sense unresolved — the authorable lever) | 7,981 |

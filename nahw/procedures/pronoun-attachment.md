@@ -1,0 +1,31 @@
+# Procedure — pronoun attachment (what an enclitic IS, by host)
+
+**Invoke when:** a token carries an attached pronoun (enclitic) and you must decide its **syntactic role** before
+glossing — because the same enclitic means different things on different hosts.
+
+**The rule (host decides):**
+- **Noun host** → the enclitic is **possessive** (مضاف إليه): أَعْمَالُنَا = "our deeds", قُلُوبِهِمْ = "their
+  hearts". Resolve via [`sarf/procedures/suffix-pronoun-state.md`](../../sarf/procedures/suffix-pronoun-state.md).
+- **Verb host** → the enclitic is a **subject** (نا الفاعلين = "we": عَلِمْنَا "we knew", خَلَقْنَا "We created") or
+  an **object** (هم/كم = "them/you": خَلَقَكُمْ "He created you"). **Never** a possessive — do not gloss عَلِمْنَا as
+  "our knowledge".
+- **Preposition host** → the enclitic is the **object of the preposition**: بِكَ "with you", لَهُم "for them",
+  عَلَيْهِ "upon him".
+
+**Checks:**
+1. Determine host POS (QAC/Tafsir-adapter/sarf). If verb → subject/object, not possessive.
+2. Identify the enclitic from the **vocalized** surface (نا/كم/هم/ه/ها/ي/كما/هما); guard the tanwīn-alef
+   false-positive (قُرْءَانًا ≠ ...+نا).
+3. Referent sensitivity: ه/ها render his/its or her/its by antecedent — keep the pronoun-faithful default
+   (his/her/their); if the referent flips the sense materially, two-vote or pending.
+
+**Output:** the attachment classification (possessive | subject | object) feeding the gloss; for the possessive
+case emit a `suffix_pronoun_decision`. Grammar-affecting → the GrammarProblems reasoning gate still applies.
+
+**Forbidden:** treating a verb-subject نا as possessive "our"; treating tanwīn-alef as the نا pronoun; exporting a
+possessive gloss without confirming a noun host.
+
+**Test:** [`nahw/evals/suffix-pronoun-eval.jsonl`](../evals/suffix-pronoun-eval.jsonl);
+rules [`nahw/rules/pronoun-attachment-rules.json`](../rules/pronoun-attachment-rules.json).
+
+**Feeds:** hover-gloss resolution (subject vs object vs possessive) · /qamus/ entry authoring · ajami learners.

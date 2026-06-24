@@ -148,6 +148,32 @@ for skill in ("sarf/SKILL.md", "nahw/SKILL.md"):
     _txt = io.open(os.path.join(ROOT, skill), encoding="utf-8").read().lower()
     check("%s is MCP-free (self-contained skill)" % skill, "tafsir" not in _txt and "mcp" not in _txt)
 
+# 11g. (suffix/pronoun lane) artifacts exist + the noun-vs-verb gate holds (عَلِمْنَا verb stays pending)
+for art in ("qamus/schemas/suffix-pronoun-decision.schema.json", "tools/build_suffix_pronoun_decisions.py",
+            "tools/validate_suffix_pronoun_decisions.py", "sarf/procedures/suffix-pronoun-state.md",
+            "nahw/procedures/pronoun-attachment.md", "sarf/rules/suffix-pronoun-rules.json",
+            "nahw/rules/pronoun-attachment-rules.json", "qamus/reports/suffix-pronoun-hover-report.md",
+            "qamus/candidates/qamus_2092/suffix_pronoun_hover_batch_001.jsonl",
+            "nahw/evals/suffix-pronoun-eval.jsonl"):
+    check("suffix/pronoun artifact exists: %s" % art, os.path.exists(os.path.join(ROOT, art)))
+try:
+    _sp = [json.loads(l) for l in io.open(os.path.join(ROOT, "qamus/candidates/qamus_2092/suffix_pronoun_hover_batch_001.jsonl"), encoding="utf-8") if l.strip()]
+    _noun_ok = any("our deeds" == r.get("gloss") for r in _sp)          # أعمالنا resolved
+    _no_verb = all(r.get("gloss") != "our knowledge" for r in _sp)      # عَلِمْنَا verb NOT mis-glossed
+    _poss_ok = all(r.get("decision_state") == "suffix_pronoun_decision" for r in _sp)
+except Exception:
+    _noun_ok = _no_verb = _poss_ok = False
+check("suffix lane resolves أعمالنا='our deeds'", _noun_ok)
+check("suffix lane excludes verb hosts (no 'our knowledge' for عَلِمْنَا)", _no_verb and _poss_ok)
+# the eval fixture encodes the noun-resolve + verb-pending contract
+try:
+    _ev = [json.loads(l) for l in io.open(os.path.join(ROOT, "nahw/evals/suffix-pronoun-eval.jsonl"), encoding="utf-8") if l.strip()]
+    _ev_ok = any(c.get("host_pos") == "N" and c.get("expect_gloss") for c in _ev) and \
+             any(c.get("host_pos") == "V" and c.get("expect_state") == "pending" for c in _ev)
+except Exception:
+    _ev_ok = False
+check("suffix/pronoun eval encodes noun-resolve + verb-pending contract", _ev_ok)
+
 # 11f. source-adapter abstraction exists (skills are MCP-free but adapter-aware) + S8 source-photo rescue pipeline
 for art in ("sources/source-adapter.schema.json", "sources/README.md", "sources/tafsir_mcp/adapter.json",
             "sources/qac/adapter.json", "sources/quran_com/adapter.json", "sources/tanzil/adapter.json",

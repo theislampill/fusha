@@ -1,0 +1,7 @@
+{"id": "SP-001", "surface": "أَعْمَالُنَا", "stem": "أعمال", "suffix": "نا", "host_pos": "N", "expect_gloss": "our deeds", "expect_state": "suffix_pronoun_decision"}
+{"id": "SP-002", "surface": "أَعْمَالُكُمْ", "stem": "أعمال", "suffix": "كم", "host_pos": "N", "expect_gloss": "your deeds", "expect_state": "suffix_pronoun_decision"}
+{"id": "SP-003", "surface": "قُلُوبِهِمْ", "stem": "قلوب", "suffix": "هم", "host_pos": "N", "expect_gloss": "their hearts", "expect_state": "suffix_pronoun_decision"}
+{"id": "SP-004", "surface": "رَبِّنَا", "stem": "رب", "suffix": "نا", "host_pos": "N", "expect_gloss": "our Lord", "expect_state": "suffix_pronoun_decision"}
+{"id": "SP-005", "surface": "عَلِمْنَا", "stem": "علم", "suffix": "نا", "host_pos": "V", "expect_gloss": null, "expect_state": "pending", "reason": "verb host: نا is subject we-knew, NOT possessive our-knowledge"}
+{"id": "SP-006", "surface": "خَلَقْنَا", "stem": "خلق", "suffix": "نا", "host_pos": "V", "expect_gloss": null, "expect_state": "pending", "reason": "verb host: We created, not our-creation"}
+{"id": "SP-007", "surface": "قُرْءَانًا", "stem": "قرءان", "suffix": null, "host_pos": "N", "expect_gloss": null, "expect_state": "not_a_suffix", "reason": "tanwin-alef is NOT the نا pronoun"}
