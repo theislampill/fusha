@@ -40,6 +40,27 @@ python qamus/scripts/diff_against_qamus.py  --lex corpora/nawawi40/out/nawawi40.
 python qamus/scripts/make_candidate_payloads.py --diff corpora/nawawi40/out/nawawi40.diff_against_quran_qamus.jsonl --out corpora/nawawi40/out --draft-glosses
 ```
 
+## SN8 refinement (upgraded skills) — reviewer signals, classification unchanged
+
+`qamus/scripts/refine_nawawi40.py` re-runs the diff through the upgraded sarf/nahw layer to add **reviewer
+signals**, not to re-bucket. An automated weak-aware root tie was prototyped to shrink the big
+`new_root_or_unknown_root` bucket, but a spot-check measured it at **~50% precision** (وَمَنْ→أمن, هُرَيْرَةَ→هور,
+الْأَمْرِ→ألم were spurious ties). Asserting those roots would mislead the reviewer — worse than leaving them
+unknown — so **the classification is left exactly as the conservative diff had it** (the same discipline as the
+S7/P6 `impossible_root` re-diagnosis). What SN8 *does* add (regenerable to `corpora/nawawi40/out/`):
+
+| signal | value |
+|---|---|
+| classification | unchanged (already_in_qamus 394 · new_lemma_existing_root 272 · unknown 499 · …) |
+| weak-root **hints** (low-conf, QAC/human confirms) | 189 flagged, never asserted |
+| POS guess (wazn) | 112 morphologically classified (38 ism fāʿil · 58 derived verb · 11 maṣdar · 4 Form X · 1 ism mafʿūl) |
+| Fusha-learning priority | 205 high · 558 medium · 420 low |
+| hadith-technical (low Qamus priority) | 14 (روى/إسناد/صحيح…) |
+| likely to recur in Ṣaḥīḥayn | 166 |
+
+Net effect: better triage (priority + recurrence + hadith-domain separation + honest hints) without a single
+false root claim. Root confirmation for the weak/unknown bucket remains a human/QAC task. No live writes.
+
 ## Notes for the reviewer (apply the sarf + nahw skills)
 - The big `new_root_or_unknown_root` bucket (499) is dominated by hadith-frequent forms not in a Qurʾān-centric
   Qamus (e.g. رَوَاهُ "narrated it" ر و ي, إِسْنَاد, صَحِيح) — these need a human root/POS call per `sarf/SKILL.md`.

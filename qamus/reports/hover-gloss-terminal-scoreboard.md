@@ -3,13 +3,22 @@
 Live qamus-highlight, public beta, indexable. Public records carry only `{src:"qamus",kind:"authored"}` — 0
 external provenance. Full per-token states: `hover-token-terminal-matrix.md`.
 
-| metric | baseline | before P5 | **LIVE after P5** |
-|---|---:|---:|---:|
-| total hover tokens | 49,900 | 49,900 | 49,900 |
-| resolved (qamus-authored) | 25,708 | 29,943 | **34,459** |
-| coverage % | 51.52 | 60.01 | **69.06** |
-| pending total | 24,192 | 19,957 | **15,441** |
-| build diff (occurrences) | — | — | **+4,675 / −222** |
+| metric | baseline | before P5 | LIVE after P5 | **LIVE after SN7** |
+|---|---:|---:|---:|---:|
+| total hover tokens | 49,900 | 49,900 | 49,900 | 49,900 |
+| resolved (qamus-authored) | 25,708 | 29,943 | 34,459 | **34,472** |
+| coverage % | 51.52 | 60.01 | 69.06 | **69.08** |
+| pending total | 24,192 | 19,957 | 15,441 | **15,428** |
+| build diff (occurrences) | — | — | +4,675 / −222 | **+13 / ~3 / −0** |
+
+## SN7 — sarf/nahw verb-form batch (APPLIED LIVE)
+8 form-aware verb glosses from the sarf/nahw corpus ingest (أَخْرَجَ "brought forth", اِتَّقَىٰ "was mindful",
+كَافِرُونَ "disbelievers", أَقَامُوا "established", اِسْتَغْفِرُوا "seek forgiveness", يَسْتَكْبِرُونَ "act
+arrogantly", اِزْدَادُوا "increased", مَدَّ "extended") — certified by **2-vote adversarial + an empirical
+norm_strict key-collision test** (13 candidates → 11 → 8 key-safe), applied via `fusha-hover-decisions.tsv` →
+`rebuild.sh`. +13 occurrences resolved, 3 verbose spread-glosses improved, **0 removed**. Dropped by the gates:
+نَزَّلَ (key `نزل` collides with نَزَلَ "descended"), إِنفَاق/مَخْلُوق (0 occ), تَذَكَّرَ/زَلْزَلَتِ (2-vote).
+Rollback: `*.bak-sn7` + `wbw-lookup.prev.json`. Mirror: `qamus/candidates/qamus_2092/authored_gloss_batch_002_sarfnahw.*`.
 
 ## Pending by reason (live now)
 | reason | n |
