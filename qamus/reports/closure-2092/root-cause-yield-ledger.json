@@ -1,23 +1,23 @@
 {
   "_generator": "tools/build_root_cause_yield_ledger.py",
-  "coverage_ceiling_if_all_safe_realized": 92.4,
-  "coverage_now": 85.02,
-  "expected_safe_realizable": 3684.3,
+  "coverage_ceiling_if_all_safe_realized": 92.83,
+  "coverage_now": 85.87,
+  "expected_safe_realizable": 3472.7,
   "levers": [
     {
       "discount": 0.45,
-      "expected_safe": 1031.9,
+      "expected_safe": 906.8,
       "owner_gated": false,
-      "pending": 2293,
+      "pending": 2015,
       "root_cause": "missing_form_variant_on_existing_entry",
       "safe_tier": "C_pos_or_collision",
       "source_gated": false
     },
     {
       "discount": 0.6,
-      "expected_safe": 927.0,
+      "expected_safe": 859.8,
       "owner_gated": false,
-      "pending": 1545,
+      "pending": 1433,
       "root_cause": "missing_form_variant_on_existing_entry",
       "safe_tier": "B_sense_select",
       "source_gated": false
@@ -51,27 +51,27 @@
     },
     {
       "discount": 0.45,
-      "expected_safe": 211.9,
+      "expected_safe": 202.5,
       "owner_gated": false,
-      "pending": 471,
+      "pending": 450,
       "root_cause": "forms_array_missing_surface",
       "safe_tier": "C_pos_or_collision",
       "source_gated": false
     },
     {
       "discount": 0.3,
-      "expected_safe": 119.1,
+      "expected_safe": 118.2,
       "owner_gated": false,
-      "pending": 397,
+      "pending": 394,
       "root_cause": "quran_refs_missing_or_incomplete",
       "safe_tier": null,
       "source_gated": false
     },
     {
       "discount": 0.6,
-      "expected_safe": 80.4,
+      "expected_safe": 78.6,
       "owner_gated": false,
-      "pending": 134,
+      "pending": 131,
       "root_cause": "forms_array_missing_surface",
       "safe_tier": "B_sense_select",
       "source_gated": false
@@ -104,21 +104,21 @@
       "source_gated": false
     },
     {
-      "discount": 0.9,
-      "expected_safe": 18.9,
-      "owner_gated": false,
-      "pending": 21,
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "safe_tier": "A_safe",
-      "source_gated": false
-    },
-    {
       "discount": 0.1,
       "expected_safe": 14.8,
       "owner_gated": false,
       "pending": 148,
       "root_cause": "genuinely_ambiguous_pending",
       "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.9,
+      "expected_safe": 11.7,
+      "owner_gated": false,
+      "pending": 13,
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "safe_tier": "A_safe",
       "source_gated": false
     },
     {
@@ -177,7 +177,7 @@
     }
   ],
   "ninety_reachable_via_safe_authoring": true,
-  "resolved_now": 42424,
-  "tokens_needed_for_90pct": 2486,
-  "total_pending": 7476
+  "resolved_now": 42849,
+  "tokens_needed_for_90pct": 2061,
+  "total_pending": 7051
 }

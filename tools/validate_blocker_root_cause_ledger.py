@@ -70,8 +70,11 @@ def main():
     s = json.load(open(SUMM, encoding="utf-8"))
     if s.get("total_pending") != len(rows): fail("summary total_pending mismatch")
 
+    counts = "/".join(str(blk_c.get(k, 0)) for k in
+                      ("stem_base_unknown", "source_entry_unverified",
+                       "same_surface_polysemy_requires_i3rab", "proper_noun_no_qamus_entry"))
     print(f"LEDGER VALIDATE OK — {len(rows):,} pending tokens, controlled vocab, "
-          "reconciled to coarse blockers (5993/1103/379/1)")
+          f"reconciled to coarse blockers ({counts})")
 
 if __name__ == "__main__":
     main()

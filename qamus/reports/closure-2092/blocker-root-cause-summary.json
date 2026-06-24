@@ -11,13 +11,13 @@
       "verb_form_or_voice": 148
     },
     "source_entry_unverified": {
-      "forms_array_missing_surface": 657,
-      "quran_refs_missing_or_incomplete": 397,
+      "forms_array_missing_surface": 633,
+      "quran_refs_missing_or_incomplete": 394,
       "source_photo_visual_needed": 49
     },
     "stem_base_unknown": {
       "host_lexeme_possessive_candidate": 1210,
-      "missing_form_variant_on_existing_entry": 3859,
+      "missing_form_variant_on_existing_entry": 3461,
       "missing_qamus_entry_candidate": 473,
       "nominal_derivative_candidate": 14,
       "particle_or_pronoun_misclassified_as_stem": 418,
@@ -25,7 +25,7 @@
       "truly_low_frequency_tail": 11
     }
   },
-  "family_unlock_count": 1157,
+  "family_unlock_count": 1151,
   "family_unlock_top50": [
     {
       "family": "b8e480aebafe",
@@ -40,32 +40,12 @@
     {
       "family": "3f3f15cb27c2",
       "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 65
-    },
-    {
-      "family": "ecfc082ac2c5",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 62
-    },
-    {
-      "family": "5c7461bd7014",
-      "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 60
-    },
-    {
-      "family": "8f8d49c8fd17",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 59
     },
     {
       "family": "65c6db0170cd",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 59
-    },
-    {
-      "family": "83e64ea698d5",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 58
     },
     {
       "family": "ca43414f9b01",
@@ -78,24 +58,29 @@
       "tokens": 53
     },
     {
-      "family": "c59a0161fac8",
+      "family": "ecfc082ac2c5",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 52
     },
     {
-      "family": "60fa5302aa68",
+      "family": "83e64ea698d5",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 50
     },
     {
-      "family": "7e246b9a02ea",
+      "family": "c59a0161fac8",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 49
     },
     {
-      "family": "d5ac66156b8e",
+      "family": "5c7461bd7014",
       "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 44
+      "tokens": 49
+    },
+    {
+      "family": "8f8d49c8fd17",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 43
     },
     {
       "family": "سوأ",
@@ -108,9 +93,9 @@
       "tokens": 43
     },
     {
-      "family": "3041d6f44a27",
+      "family": "d5ac66156b8e",
       "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 43
+      "tokens": 42
     },
     {
       "family": "3f40e0c0eb7a",
@@ -118,9 +103,9 @@
       "tokens": 41
     },
     {
-      "family": "5d89e690256d",
+      "family": "3041d6f44a27",
       "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 40
+      "tokens": 41
     },
     {
       "family": "رأي",
@@ -138,17 +123,12 @@
       "tokens": 35
     },
     {
-      "family": "7172a5394a7b",
+      "family": "60fa5302aa68",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 35
     },
     {
-      "family": "16dc0a87056e",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 35
-    },
-    {
-      "family": "259fe620e117",
+      "family": "5d89e690256d",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 34
     },
@@ -158,7 +138,7 @@
       "tokens": 34
     },
     {
-      "family": "fbd04177b8dd",
+      "family": "7172a5394a7b",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 33
     },
@@ -166,21 +146,6 @@
       "family": "4f666d15bb7e",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 33
-    },
-    {
-      "family": "b4144b892cc7",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 33
-    },
-    {
-      "family": "1015809f59b7",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 32
-    },
-    {
-      "family": "4d22dd9db001",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 31
     },
     {
       "family": "ecfc082ac2c5",
@@ -203,7 +168,7 @@
       "tokens": 30
     },
     {
-      "family": "51e9879b93ab",
+      "family": "7e246b9a02ea",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 30
     },
@@ -213,17 +178,12 @@
       "tokens": 30
     },
     {
-      "family": "9e4222baccd2",
+      "family": "16dc0a87056e",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 29
     },
     {
-      "family": "a6de8fd64244",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 29
-    },
-    {
-      "family": "d6a4f976cb61",
+      "family": "1015809f59b7",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 29
     },
@@ -233,12 +193,7 @@
       "tokens": 29
     },
     {
-      "family": "c1e7d213be6b",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 28
-    },
-    {
-      "family": "89f4baadb89a",
+      "family": "fbd04177b8dd",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 27
     },
@@ -248,13 +203,28 @@
       "tokens": 27
     },
     {
-      "family": "141cbc3bd2bd",
+      "family": "51e9879b93ab",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 27
+    },
+    {
+      "family": "9e4222baccd2",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 27
+    },
+    {
+      "family": "a6de8fd64244",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 27
     },
     {
       "family": "رضو",
       "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 27
+    },
+    {
+      "family": "b4144b892cc7",
+      "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 27
     },
     {
@@ -273,16 +243,46 @@
       "tokens": 26
     },
     {
-      "family": "f926e5fd94bb",
+      "family": "543da5bcc248",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 25
+    },
+    {
+      "family": "89f4baadb89a",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 25
+    },
+    {
+      "family": "4d22dd9db001",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 24
+    },
+    {
+      "family": "f3726bc9f962",
+      "root_cause": "host_lexeme_possessive_candidate",
+      "tokens": 24
+    },
+    {
+      "family": "1ab446228cab",
+      "root_cause": "forms_array_missing_surface",
+      "tokens": 24
+    },
+    {
+      "family": "259fe620e117",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 24
+    },
+    {
+      "family": "5b382a023db8",
+      "root_cause": "host_lexeme_possessive_candidate",
+      "tokens": 23
     }
   ],
-  "family_unlock_total_tokens": 6659,
+  "family_unlock_total_tokens": 6234,
   "form_variant_safe_tier": {
-    "A_safe": 73,
-    "B_sense_select": 1679,
-    "C_pos_or_collision": 2764
+    "A_safe": 65,
+    "B_sense_select": 1564,
+    "C_pos_or_collision": 2465
   },
-  "total_pending": 7476
+  "total_pending": 7051
 }

@@ -17,7 +17,7 @@ Per-entry audit of the **947** verb entries (public `section` split — authorit
 
 | blocker | count |
 |---|---:|
-| `stem_base_unknown` | 12,413 |
-| `source_entry_unverified` | 2,102 |
+| `stem_base_unknown` | 11,576 |
+| `source_entry_unverified` | 2,055 |
 | `same_surface_polysemy_requires_i3rab` | 756 |
 | `proper_noun_no_qamus_entry` | 3 |

@@ -17,6 +17,6 @@ Per-entry audit of the **1045** noun entries (public `section` split — authori
 
 | blocker | count |
 |---|---:|
-| `stem_base_unknown` | 3,412 |
-| `source_entry_unverified` | 571 |
+| `stem_base_unknown` | 3,101 |
+| `source_entry_unverified` | 554 |
 | `same_surface_polysemy_requires_i3rab` | 256 |

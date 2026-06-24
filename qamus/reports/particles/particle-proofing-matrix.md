@@ -17,7 +17,7 @@ Per-entry audit of the **100** particle entries (public `section` split — auth
 
 | blocker | count |
 |---|---:|
-| `stem_base_unknown` | 146 |
-| `source_entry_unverified` | 68 |
+| `stem_base_unknown` | 124 |
+| `source_entry_unverified` | 67 |
 | `same_surface_polysemy_requires_i3rab` | 16 |
 | `proper_noun_no_qamus_entry` | 1 |

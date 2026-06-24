@@ -1,6 +1,6 @@
 # Project-Xanadu source-address completion report
 
-source_sha `65797d7d5599fadd` · entries 2,092 · addresses **28,393** · āyāt 3,854 · decisions 2164 · repairs 132
+source_sha `65797d7d5599fadd` · entries 2,092 · addresses **28,393** · āyāt 3,854 · decisions 2589 · repairs 132
 
 **Orphan links: 0** (address→entry 0, spine→entry 0).
 
