@@ -9,6 +9,15 @@ Sarf finds the form; **nahw decides what it means here**. A gloss can be perfect
 its āyah. This skill is operational, not a grammar primer: it tells you when context **resolves** a sense and
 when it forces **pending**.
 
+> ⚠️ **Grammar-safety (GrammarProblems eval gate).** General LLM confidence is **not evidence**; grammar decisions
+> require the sarf/nahw evidence ladders. A **correct answer with wrong iʿrāb reasoning is unsafe** — do not ship
+> it. An independent study put a general LLM at ~33% on Arabic naḥw (worst on iʿrāb/deep/essay), so iʿrāb,
+> case/mood, istithnāʾ, لا النافية للجنس, ambiguous iḍāfa/jar-majrūr, multi-sense, and referent-sensitive
+> decisions require **two independent checks agreeing on conclusion AND reason**. Uncertain naḥw → pending, never
+> a public gloss. Gates: [`evals/grammar-decision-gates.json`](evals/grammar-decision-gates.json); policy:
+> [`qamus/reports/grammar-risk-policy.md`](../qamus/reports/grammar-risk-policy.md); drill:
+> [`drills/grammar-reasoning-safety.md`](drills/grammar-reasoning-safety.md).
+
 ## 1. Purpose
 Choose the context-correct gloss (or an honest pending) for tokens whose meaning depends on the sentence:
 particles, prepositions+pronouns, negation/mood, contronyms, multi-sense roots, referents, iḍāfa.

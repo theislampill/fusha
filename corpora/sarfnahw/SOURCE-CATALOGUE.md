@@ -4,19 +4,20 @@ Local, uncommitted ingest corpus. **No raw APKG/PDF/DOCX, no media, no audio, no
 
 | metric | value |
 |---|---:|
-| total files | 21 |
+| total files | 22 |
 | `.apkg` files | 11 |
 | `.docx` files | 1 |
-| `.pdf` files | 9 |
+| `.pdf` files | 10 |
 | APKG notes (total) | 1132 |
 | APKG cards (total) | 1132 |
 | APKG media files (total, NOT committed) | 694 |
-| PDF pages (total) | 14 |
+| PDF pages (total) | 87 |
 
 ## Files
 
 | file | type | size | detail | topic | extraction | source review | raw committed |
 |---|---|---:|---|---|---|---|---|
+| `GrammarProblems.pdf` | grammar_eval_paper | 1.11 MB | 73 pp · text | grammar_eval | pending | needs_review | false |
 | `learn-arabic-with-amau--section-7-getting-used-to-arabic.apkg` | anki_package | 7.30 MB | 34 notes · 34 cards · 34 media | getting_used_to_arabic | pending | needs_review | false |
 | `learn-arabic-with-amau__amau-arabic-section-4_-getting-used-to-arabic.apkg` | anki_package | 1.29 MB | 25 notes · 25 cards · 25 media | mixed:nahw+getting_used_to_arabic | pending | needs_review | false |
 | `learn-arabic-with-amau__amau-arabic-section-4_-vocab.apkg` | anki_package | 10.81 MB | 113 notes · 113 cards · 75 media | vocabulary | pending | needs_review | false |
@@ -40,7 +41,7 @@ Local, uncommitted ingest corpus. **No raw APKG/PDF/DOCX, no media, no audio, no
 | `verb-tables-supplement--r21.docx` | docx | 2.04 MB | 40 paras · 0 tables | verb_charts | pending | needs_review | false |
 
 ## Acceptance (SN0)
-- All files in the ingest dir accounted for: **21**.
+- All files in the ingest dir accounted for: **22**.
 - No raw large source file committed (gitignore blocks `*.apkg *.pdf *.docx *.zip` + media).
 - Catalogue committed; full extraction stays under git-ignored `corpora/sarfnahw/out/`.
 

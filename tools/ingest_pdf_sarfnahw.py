@@ -133,6 +133,9 @@ def main():
     samples = []
 
     for fn in sorted(f for f in os.listdir(cdir) if f.lower().endswith(".pdf")):
+        low = fn.lower()
+        if "grammar" in low or "problem" in low:
+            continue  # eval paper, not a verb chart — handled by the nahw eval-gate (GP0)
         path = os.path.join(cdir, fn)
         info = extract_pdf(path)
         stem = re.sub(r"[^a-z0-9]+", "-", fn.lower().rsplit(".", 1)[0]).strip("-")

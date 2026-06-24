@@ -1,0 +1,67 @@
+{
+  "schema": "fusha/grammar-decision-gates@1",
+  "purpose": "The four gate tiers every grammar-affecting decision is routed through, derived from the GrammarProblems finding that a general LLM is unreliable on naḥw. A decision object MUST declare a gate at least as strict as its triggers require; validate_linguistic_decisions.py enforces this.",
+  "principle": "General LLM confidence is not evidence. A correct conclusion with wrong iʿrāb reasoning is unsafe. Prefer pending over wrong.",
+  "gates": {
+    "auto_safe": {
+      "rank": 0,
+      "allow_when_ALL": [
+        "qac_root_pos_agrees",
+        "qamus_single_applicable_sense",
+        "no_homograph_flag",
+        "no_grammar_context_dependency"
+      ],
+      "hover": "safe_if_cited",
+      "note": "the only tier that may auto-author a hover gloss without a second check"
+    },
+    "two_vote_required": {
+      "rank": 1,
+      "trigger_when_ANY": [
+        "advanced_nahw",
+        "irab",
+        "case_or_mood",
+        "istithna",
+        "nafy_lil_jins",
+        "idafa_ambiguous",
+        "jar_majrur_ambiguous",
+        "multi_sense_root",
+        "referent_sensitive_gloss",
+        "depth_deep",
+        "format_essay",
+        "bloom_analysis_or_higher"
+      ],
+      "requires": "two independent checks that AGREE on BOTH the conclusion AND the reasoning",
+      "hover": "pending_if_reason_uncertain",
+      "note": "the conclusion alone is insufficient; the iʿrāb reason must also match"
+    },
+    "human_source_review_required": {
+      "rank": 2,
+      "trigger_when_ANY": [
+        "ambiguous_grammar",
+        "source_corpus_conflict",
+        "suspected_qamus_entry_error",
+        "proper_vs_common_noun",
+        "quran_ref_uncertain"
+      ],
+      "requires": "owner/human + source-address evidence before any apply",
+      "hover": "pending_or_quarantine"
+    },
+    "never_auto_resolve": {
+      "rank": 3,
+      "trigger_when_ANY": [
+        "norm_only_match",
+        "ocr_only_evidence",
+        "external_gloss_copied",
+        "reasoning_path_wrong",
+        "qac_pos_conflict"
+      ],
+      "action": "reject — never ship; quarantine or pending with the precise blocker",
+      "hover": "never_auto"
+    }
+  },
+  "decision_object_contract": {
+    "must_carry": ["source_address", "sarf_decision", "nahw_decision_if_grammar_affecting", "gate", "reasoning"],
+    "gate_must_be": ">= the strictest tier any trigger requires",
+    "reject_if": "gate weaker than triggers, OR reasoning absent on a two_vote/irab decision, OR any never_auto trigger present"
+  }
+}

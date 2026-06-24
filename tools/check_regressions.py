@@ -55,7 +55,43 @@ check("ذِكْر and ذَكَر share a norm key (so a gloss must use diacritic
       N.norm("ذِكْر") == N.norm("ذَكَر"))
 check("kasra on ḏāl marks ذِكْر (maṣdar), fatḥa marks ذَكَر (noun)",
       N.haraka_on("ذِكْر", "ذ") == N.KASRA and N.haraka_on("ذَكَر", "ذ") == N.FATHA)
-# 11. fixtures well-formed
+# 11. (GP0) GrammarProblems eval gate — grammar-affecting triggers must escalate the gate
+ROOT = os.path.join(os.path.dirname(__file__), "..")
+
+
+def grammar_gate(triggers):
+    """Return the strictest required gate for a set of triggers (mirrors grammar-decision-gates.json)."""
+    triggers = set(triggers)
+    never = {"norm_only_match", "ocr_only_evidence", "external_gloss_copied", "reasoning_path_wrong", "qac_pos_conflict"}
+    human = {"ambiguous_grammar", "source_corpus_conflict", "suspected_qamus_entry_error", "proper_vs_common_noun", "quran_ref_uncertain"}
+    twovote = {"irab", "case_or_mood", "istithna", "nafy_lil_jins", "idafa_ambiguous", "jar_majrur_ambiguous",
+               "multi_sense_root", "referent_sensitive_gloss", "advanced_nahw", "depth_deep", "format_essay", "bloom_analysis_or_higher"}
+    if triggers & never:
+        return "never_auto_resolve"
+    if triggers & human:
+        return "human_source_review_required"
+    if triggers & twovote:
+        return "two_vote_required"
+    return "auto_safe"
+
+
+check("iʿrāb decision requires two-vote (not auto)", grammar_gate(["irab"]) == "two_vote_required")
+check("norm-only / OCR-only / copied-gloss can NEVER auto-resolve",
+      grammar_gate(["norm_only_match"]) == "never_auto_resolve"
+      and grammar_gate(["ocr_only_evidence"]) == "never_auto_resolve"
+      and grammar_gate(["external_gloss_copied"]) == "never_auto_resolve")
+check("لا النافية للجنس + istithnāʾ require two-vote",
+      grammar_gate(["nafy_lil_jins"]) == "two_vote_required" and grammar_gate(["istithna"]) == "two_vote_required")
+check("a clean lexical decision with no grammar triggers is auto_safe", grammar_gate([]) == "auto_safe")
+try:
+    gd = json.load(io.open(os.path.join(ROOT, "nahw/evals/grammar-decision-gates.json"), encoding="utf-8"))
+    check("grammar-decision-gates.json has the 4 tiers",
+          set(gd.get("gates", {})) == {"auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"})
+except Exception as e:
+    check("grammar-decision-gates.json loads", False)
+    print("  ", e)
+
+# 12. fixtures well-formed
 for path in ("sarf/examples/qamus-regressions.jsonl", "sarf/examples/root-form-decisions.jsonl",
              "sarf/examples/verb-measure-examples.jsonl",
              "nahw/examples/function-word-decisions.jsonl", "nahw/examples/ayah-context-decisions.jsonl",

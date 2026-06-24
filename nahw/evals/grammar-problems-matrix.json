@@ -1,0 +1,57 @@
+{
+  "schema": "fusha/grammar-problems-matrix@1",
+  "purpose": "Encode the STRUCTURE of an Arabic-naḥw LLM-accuracy study as an evaluation gate for grammar-affecting agent decisions. The dataset/questions/body text are NOT reproduced — only the tested dimensions, the headline findings, and the engineering gate they imply.",
+  "source": {
+    "type": "peer-reviewed Arabic conference paper (2026)",
+    "subject": "accuracy of a free general LLM (GPT-5 free) answering Arabic naḥw (syntax) questions",
+    "internal_only": true,
+    "note": "cited as internal evidence; never surfaced in any public hover artifact"
+  },
+  "dimensions": {
+    "level": ["ajurrumiyyah", "qatr_al_nada", "awdah_al_masalik"],
+    "level_gloss": {
+      "ajurrumiyyah": "beginner (al-Ājurrūmiyyah)",
+      "qatr_al_nada": "intermediate (Qaṭr al-Nadā)",
+      "awdah_al_masalik": "advanced (Awḍaḥ al-Masālik)"
+    },
+    "bloom": ["recall", "understanding", "application", "analysis", "evaluation", "generation"],
+    "format": ["objective", "essay"],
+    "depth": ["direct", "deep"]
+  },
+  "findings": {
+    "n_questions": 72,
+    "overall_accuracy_pct": 33.33,
+    "weakest": ["intermediate", "advanced", "deep", "essay", "analysis", "evaluation"],
+    "strongest": ["beginner", "direct", "objective", "recall"],
+    "headline": "A free general LLM scored ~1/3 on Arabic naḥw, collapsing on higher Bloom levels, deeper questions, and essay/iʿrāb reasoning.",
+    "engineering_reading": "General LLM confidence is NOT evidence for an iʿrāb-affecting decision. A correct-looking final answer with wrong iʿrāb reasoning is unsafe and must not ship."
+  },
+  "cell_schema": {
+    "level": "ajurrumiyyah | qatr_al_nada | awdah_al_masalik",
+    "bloom": "recall | understanding | application | analysis | evaluation | generation",
+    "format": "objective | essay",
+    "depth": "direct | deep",
+    "topic": "nafy_lil_jins | istithna | idafa | jar_majrur | irab | ...",
+    "required_gate": "sarf_only | nahw_only | sarf_plus_nahw | two_vote_advanced",
+    "hover_safety": "safe_if_cited | pending_if_reason_uncertain | never_auto"
+  },
+  "default_gate_rules": [
+    {"when": "depth=deep OR format=essay OR bloom in [analysis,evaluation,generation] OR level=awdah_al_masalik", "required_gate": "two_vote_advanced", "hover_safety": "pending_if_reason_uncertain"},
+    {"when": "topic in [irab,case_mood,nafy_lil_jins,istithna,idafa_ambiguous,jar_majrur_ambiguous]", "required_gate": "two_vote_advanced", "hover_safety": "never_auto"},
+    {"when": "level=ajurrumiyyah AND depth=direct AND format=objective AND bloom in [recall,understanding]", "required_gate": "nahw_only", "hover_safety": "safe_if_cited"}
+  ],
+  "topics": [
+    {"topic": "irab", "label": "iʿrāb (case/mood assignment)", "required_gate": "two_vote_advanced", "hover_safety": "never_auto", "why": "reasoning-dependent; the study's worst area; a right answer with wrong reasoning is common"},
+    {"topic": "case_mood", "label": "naṣb/jarr/rafʿ + jussive/subjunctive", "required_gate": "two_vote_advanced", "hover_safety": "never_auto", "why": "mood flips tense/meaning (لَمْ+jussive→past); never infer from surface"},
+    {"topic": "nafy_lil_jins", "label": "لا النافية للجنس (absolute negation)", "required_gate": "two_vote_advanced", "hover_safety": "never_auto", "why": "construction-sensitive; لا vs لا-of-genus needs the governed noun's state"},
+    {"topic": "istithna", "label": "exception (إلّا / غير / سوى)", "required_gate": "two_vote_advanced", "hover_safety": "never_auto", "why": "the excepted noun's case depends on positive/negative + connected/disconnected"},
+    {"topic": "idafa", "label": "genitive construct", "required_gate": "sarf_plus_nahw", "hover_safety": "pending_if_reason_uncertain", "why": "definiteness + relationship come from the second term; gloss the phrase"},
+    {"topic": "jar_majrur", "label": "preposition + governed noun/pronoun", "required_gate": "nahw_only", "hover_safety": "safe_if_cited", "why": "render by referent; إِلَيْنَا≠root ل ي ن"},
+    {"topic": "particles", "label": "closed-set particles", "required_gate": "nahw_only", "hover_safety": "safe_if_cited", "why": "harakah on the content letter decides (مَن/مِن); homographs → pending"},
+    {"topic": "negation", "label": "لم/لن/لا/ما/ليس scope", "required_gate": "sarf_plus_nahw", "hover_safety": "pending_if_reason_uncertain", "why": "the governing negative sets tense; ما is multi-function"},
+    {"topic": "conditional", "label": "conditional/relative مَن/ما/إن/إذا", "required_gate": "two_vote_advanced", "hover_safety": "pending_if_reason_uncertain", "why": "apodosis decides conditional vs relative"},
+    {"topic": "mubtada_khabar", "label": "nominal sentence", "required_gate": "nahw_only", "hover_safety": "safe_if_cited", "why": "implied 'to be'; no lexical verb"},
+    {"topic": "verb_measure", "label": "form I-X derivation", "required_gate": "sarf_only", "hover_safety": "safe_if_cited", "why": "wazn fixes sense; maṣdar/participle take nominal glosses"},
+    {"topic": "proper_vs_common", "label": "proper noun vs common noun", "required_gate": "sarf_plus_nahw", "hover_safety": "never_auto", "why": "referent guard; a name is not its root verb"}
+  ]
+}

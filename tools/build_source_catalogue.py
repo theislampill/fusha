@@ -182,10 +182,21 @@ def build():
             n, kind = pdf_pages(path)
             rec["pages"] = n
             rec["pdf_text_kind"] = kind
-            rec["topic"] = detect_topic(name)
-            rec["safe_outputs"] = ["corpora/sarfnahw/pdf_catalogue.json",
-                                   "corpora/sarfnahw/pdf_samples.jsonl"]
-            rec["gitignored_full_output"] = "corpora/sarfnahw/out/pdf/"
+            low = name.lower()
+            if "grammar" in low or "problem" in low or "nahw-eval" in low:
+                # an evaluation paper, NOT a verb chart — feeds the nahw eval-gate, not the chart pipeline
+                rec["kind"] = "grammar_eval_paper"
+                rec["topic"] = "grammar_eval"
+                rec["safe_outputs"] = ["nahw/evals/grammar-problems-matrix.json",
+                                       "nahw/evals/grammar-problems-matrix.md",
+                                       "qamus/reports/grammar-risk-policy.md"]
+                rec["gitignored_full_output"] = "corpora/sarfnahw/out/grammar-eval/"
+                rec["note"] = "structure/findings summarized (authored); questions/body NOT copied"
+            else:
+                rec["topic"] = detect_topic(name)
+                rec["safe_outputs"] = ["corpora/sarfnahw/pdf_catalogue.json",
+                                       "corpora/sarfnahw/pdf_samples.jsonl"]
+                rec["gitignored_full_output"] = "corpora/sarfnahw/out/pdf/"
         elif ext == "apkg":
             st = apkg_stats(path)
             rec.update({k: st[k] for k in ("notes", "cards", "models", "decks", "media", "db_file")})

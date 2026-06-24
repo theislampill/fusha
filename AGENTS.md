@@ -31,6 +31,11 @@ classifying any Arabic gloss.
 - **Context decides multi-sense roots** (يَقْدِرُ in rizq-context = "restricts"; حَلِيمٌ for Ibrahim = "forbearing",
   not a divine Name). Use the source-address graph to avoid duplicate decisions.
 - **Prefer pending over wrong**, always, with a precise reason. Wrong public glosses are worse than honest gaps.
+- **Grammar-safety gate (GrammarProblems eval).** General LLM confidence is **not evidence**; grammar decisions
+  require the sarf/nahw evidence ladders. A **correct answer with wrong iʿrāb reasoning is unsafe.** iʿrāb,
+  case/mood, istithnāʾ, لا النافية للجنس, ambiguous iḍāfa/jar-majrūr, multi-sense, and referent-sensitive
+  decisions need **two independent checks agreeing on conclusion AND reason**; uncertain naḥw → pending. See
+  `nahw/evals/grammar-decision-gates.json` + `qamus/reports/grammar-risk-policy.md`.
 
 ## Commit rules
 - Commit only to this repo's paths. Stage explicit paths; verify staged set before committing.

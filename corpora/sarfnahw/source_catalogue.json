@@ -1,18 +1,38 @@
 {
   "schema": "fusha/source_catalogue@1",
   "summary": {
-    "total_files": 21,
+    "total_files": 22,
     "by_ext": {
+      "pdf": 10,
       "apkg": 11,
-      "pdf": 9,
       "docx": 1
     },
     "apkg_notes_total": 1132,
     "apkg_cards_total": 1132,
     "apkg_media_total": 694,
-    "pdf_pages_total": 14
+    "pdf_pages_total": 87
   },
   "files": [
+    {
+      "filename": "GrammarProblems.pdf",
+      "ext": "pdf",
+      "size_bytes": 1168075,
+      "sha256": "c122585273656546945a61bfc9017ddd7d7e46ab2baebe66e39d946247bb4c1c",
+      "kind": "grammar_eval_paper",
+      "raw_committed": false,
+      "extraction_status": "pending",
+      "source_review_status": "needs_review",
+      "pages": 73,
+      "pdf_text_kind": "text",
+      "topic": "grammar_eval",
+      "safe_outputs": [
+        "nahw/evals/grammar-problems-matrix.json",
+        "nahw/evals/grammar-problems-matrix.md",
+        "qamus/reports/grammar-risk-policy.md"
+      ],
+      "gitignored_full_output": "corpora/sarfnahw/out/grammar-eval/",
+      "note": "structure/findings summarized (authored); questions/body NOT copied"
+    },
     {
       "filename": "learn-arabic-with-amau--section-7-getting-used-to-arabic.apkg",
       "ext": "apkg",
