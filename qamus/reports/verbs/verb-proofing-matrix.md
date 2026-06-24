@@ -5,11 +5,11 @@ Per-entry audit of the **947** verb entries (public `section` split — authorit
 | metric | value |
 |---|---:|
 | verb entries | **947** |
-| entries fully hover-complete | 56 |
-| entries with ≥1 pending hover token | 886 |
-| resolved example tokens (per-entry, overlapping) | 84,850 |
-| pending example tokens (per-entry, overlapping) | 18,016 |
-| per-section example coverage | **82.5%** |
+| entries fully hover-complete | 63 |
+| entries with ≥1 pending hover token | 879 |
+| resolved example tokens (per-entry, overlapping) | 87,486 |
+| pending example tokens (per-entry, overlapping) | 15,380 |
+| per-section example coverage | **85.0%** |
 
 > Per-entry token counts overlap (a token in a shared āyah counts for each citing entry); the canonical de-duplicated total is the P3 audit (41,164 resolved / 8,736 pending / 49,900).
 
@@ -17,7 +17,7 @@ Per-entry audit of the **947** verb entries (public `section` split — authorit
 
 | blocker | count |
 |---|---:|
-| `stem_base_unknown` | 14,216 |
-| `source_entry_unverified` | 2,656 |
-| `same_surface_polysemy_requires_i3rab` | 1,030 |
+| `stem_base_unknown` | 12,413 |
+| `source_entry_unverified` | 2,102 |
+| `same_surface_polysemy_requires_i3rab` | 756 |
 | `proper_noun_no_qamus_entry` | 3 |

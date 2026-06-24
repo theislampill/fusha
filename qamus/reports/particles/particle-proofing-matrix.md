@@ -5,11 +5,11 @@ Per-entry audit of the **100** particle entries (public `section` split — auth
 | metric | value |
 |---|---:|
 | particle entries | **100** |
-| entries fully hover-complete | 26 |
-| entries with ≥1 pending hover token | 74 |
-| resolved example tokens (per-entry, overlapping) | 3,479 |
-| pending example tokens (per-entry, overlapping) | 278 |
-| per-section example coverage | **92.6%** |
+| entries fully hover-complete | 29 |
+| entries with ≥1 pending hover token | 71 |
+| resolved example tokens (per-entry, overlapping) | 3,526 |
+| pending example tokens (per-entry, overlapping) | 231 |
+| per-section example coverage | **93.9%** |
 
 > Per-entry token counts overlap (a token in a shared āyah counts for each citing entry); the canonical de-duplicated total is the P3 audit (41,164 resolved / 8,736 pending / 49,900).
 
@@ -17,7 +17,7 @@ Per-entry audit of the **100** particle entries (public `section` split — auth
 
 | blocker | count |
 |---|---:|
-| `stem_base_unknown` | 155 |
-| `source_entry_unverified` | 94 |
-| `same_surface_polysemy_requires_i3rab` | 28 |
+| `stem_base_unknown` | 146 |
+| `source_entry_unverified` | 68 |
+| `same_surface_polysemy_requires_i3rab` | 16 |
 | `proper_noun_no_qamus_entry` | 1 |

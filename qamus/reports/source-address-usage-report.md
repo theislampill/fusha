@@ -7,6 +7,6 @@ How each address family is used to keep decisions de-duplicated and traceable.
 - usage(āyah) addresses: 7,682
 - source_key addresses: 2,092
 - source-photo locators: 2,092
-- token decisions addressed: 904
-- homograph keys tracked: 237
+- token decisions addressed: 2164
+- homograph keys tracked: 690
 - repair addresses: 131

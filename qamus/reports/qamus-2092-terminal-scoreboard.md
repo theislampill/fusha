@@ -13,8 +13,8 @@ All **2,092** entries audited; **0 unknown buckets**. Sections: {'verb': 947, 'n
 
 ## Hover status
 
-- entries fully hover-complete (all example tokens resolved): **264**
-- entries with ≥1 pending hover token: **1,828**
+- entries fully hover-complete (all example tokens resolved): **311**
+- entries with ≥1 pending hover token: **1,781**
 
 ## Repair status
 | status | count |

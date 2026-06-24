@@ -2,7 +2,15 @@
 
 How the Fusha intelligence layer is driving live Qamus / qamus-highlight, and where each lane stands.
 
-## ⭐ CURRENT STATE — corrective tranche 2026-06-24b (live 82.49%)
+## ⭐ CURRENT STATE — coverage-economics tranche 2026-06-24c (live 85.02%)
+
+| lane | status |
+|---|---|
+| **live coverage** | **85.02%** (42,424/49,900); +1,260 this tranche (safe-surface +1,024, iʿrāb +236), −0 removed, 0 wrong; 2,164 token decisions |
+| **coverage-yield ledger** | safe-surface ceiling 1,772 (~86%); 90% needs the per-loc iʿrāb pool (proven frontier, `coverage-90-tranche-report`) |
+| **safe-surface lane** | 430 collision-free families authored surface-wide (2-vote); 311 homograph families rejected |
+
+### prior corrective tranche 2026-06-24b (live 82.49%)
 
 | lane | status |
 |---|---|

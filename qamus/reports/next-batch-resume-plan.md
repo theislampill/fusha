@@ -1,6 +1,10 @@
 # Next-batch resume plan — exact, no vague "standing by"
 
-## Where we are (live, reconciled 2026-06-24b, corrective tranche)
+## Where we are (live, reconciled 2026-06-24c, coverage-economics tranche)
+
+- Live coverage **85.02%** · **42,424 / 49,900** resolved · **7,476 pending** · 2,164 token decisions · health 200. This tranche +1,260 (safe-surface +1,024, iʿrāb +236), −0 removed, 0 wrong. Safe frontier ~86% PROVEN (see coverage-90-tranche-report); 90% needs ~20 more per-loc iʿrāb tiers + ambiguous residue.
+
+### (prior) Where we are (corrective tranche)
 
 - Live coverage **82.49%** · **41,164 / 49,900** resolved · **8,736 pending** · health 200 ·
   `source_sha=65797d7d5599fadd` · 2,092 entries (947 v / 1,045 n / 100 p) · **904 token decisions**.
