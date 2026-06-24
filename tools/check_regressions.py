@@ -148,6 +148,18 @@ for skill in ("sarf/SKILL.md", "nahw/SKILL.md"):
     _txt = io.open(os.path.join(ROOT, skill), encoding="utf-8").read().lower()
     check("%s is MCP-free (self-contained skill)" % skill, "tafsir" not in _txt and "mcp" not in _txt)
 
+# 11h. (installable package) skills wrappers/manifests/scripts + architecture doc exist
+for art in ("INSTALL.md", "skills/sarf/SKILL.md", "skills/sarf/manifest.json", "skills/nahw/SKILL.md",
+            "skills/nahw/manifest.json", "scripts/install_claude_skills.py",
+            "scripts/install_codex_instructions.py", "scripts/verify_skill_install.py",
+            "dist/codex/AGENTS.fusha.md", "qamus/reports/skill-installation-report.md",
+            "curriculum/qamus-driven-fluency-engine.md"):
+    check("install-package artifact exists: %s" % art, os.path.exists(os.path.join(ROOT, art)))
+# the installable wrappers must themselves be MCP-free
+for w in ("skills/sarf/SKILL.md", "skills/nahw/SKILL.md"):
+    _t = io.open(os.path.join(ROOT, w), encoding="utf-8").read().lower()
+    check("%s wrapper is MCP-free" % w, "tafsir" not in _t and "mcp-free" in _t)
+
 # 11g. (suffix/pronoun lane) artifacts exist + the noun-vs-verb gate holds (عَلِمْنَا verb stays pending)
 for art in ("qamus/schemas/suffix-pronoun-decision.schema.json", "tools/build_suffix_pronoun_decisions.py",
             "tools/validate_suffix_pronoun_decisions.py", "sarf/procedures/suffix-pronoun-state.md",

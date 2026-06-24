@@ -7,6 +7,22 @@ qamus-highlight hover-gloss correctness, and future Qurʾān / Nawawī40 / Ṣa�
 
 > **Dawah.Wiki is the live product.** This repo is **not** the app. It never writes to the live site.
 
+## Architecture: the Qamus is the cart, sarf/nahw is the engine
+
+The **Qamus is the cart** (the lexicon/output). The **sarf + nahw skills are the engine** that pulls it; external
+sources are **fuel/evidence**, never public output; the **source-address + state graphs are the transmission**.
+The engine can pull the existing Qamus, **generate new Qamus** from a corpus, author hover glosses, audit grammar
+(the GrammarProblems gate: right answer *and* right reasoning), teach ajami learners, and know when a token must
+stay **pending**. It is **MCP-free** — it consults *available source adapters* (`sources/README.md`) only as
+optional internal evidence. Full architecture + worked examples: `curriculum/qamus-driven-fluency-engine.md`.
+
+**The engine in five examples** (each a regression fixture): أَعْمَالُنَا → "our deeds" (noun stem + possessive,
+POS-gated); لَمْ vs لِمَ → "did not" vs "why" (particle state split); مِن vs مَن → "from" vs "who/whoever" (harakat
+split); كَظِيم → adjectival ṣifa, **not** the infinitive verb; نَزَّلَ vs نَزَلَ → form II vs I split.
+
+**Install it** as a Claude/Codex skill — see `INSTALL.md` (`scripts/install_claude_skills.py --dry-run`).
+**Agent-facing** entry: `sarf/SKILL.md` + `nahw/SKILL.md`. **Learner-facing** entry: `curriculum/`.
+
 ## What belongs here vs the live app
 
 | Stays in the Dawah.Wiki live app repo | Lives (or is mirrored) here in Fusha |

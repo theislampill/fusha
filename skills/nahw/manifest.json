@@ -1,0 +1,33 @@
+{
+ "schema": "fusha/skill-manifest@1",
+ "name": "fusha-nahw",
+ "version": "1.0.0",
+ "skill_root": "nahw",
+ "entry": "nahw/SKILL.md",
+ "description": "Arabic syntax (nahw) engine: particle/pronoun/case-mood/context decisions + the GrammarProblems reasoning gate. MCP-free; cooperates with sarf + Qamus.",
+ "includes": [
+  "nahw/SKILL.md",
+  "nahw/README.md",
+  "nahw/procedures/",
+  "nahw/rules/",
+  "nahw/evals/",
+  "nahw/curriculum/",
+  "nahw/references/",
+  "nahw/examples/",
+  "nahw/drills/"
+ ],
+ "install_targets": {
+  "claude": "~/.claude/skills/fusha-nahw",
+  "codex": "~/.codex/skills/fusha-nahw"
+ },
+ "invariants": [
+  "MCP-free (no external service named/required in SKILL.md)",
+  "no raw source/media committed",
+  "public gloss record stays {src:qamus,kind:authored}"
+ ],
+ "cooperates_with": [
+  "fusha-sarf",
+  "qamus source-address graph",
+  "language state machine"
+ ]
+}
