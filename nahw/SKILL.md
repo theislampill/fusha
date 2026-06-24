@@ -137,3 +137,13 @@ Two additions from the verb‑charts + AMAU corpus:
 2. **The corpus confirms a stable function‑word inventory with English glosses** (prepositions قَبْلَ/بَعْدَ/
    أَمَامَ/فَوْقَ/تَحْتَ/وَرَاءَ, pronouns هُمَا/أَنْتُمْ/أَنْتُمَا, particles). These are safe hover candidates **only**
    through the content‑letter‑harakah guard — a surface key alone still cannot separate مَن/مِن، لَمَّا/لِمَا.
+
+## Production finding (PP1 — particle p001–p100 proofing pilot)
+Proofing all 100 particle entries' example āyāt (219 āyāt, 3,757 tokens) confirmed the proving‑ground value:
+the function‑word tops in particle āyāt (وَمَآ, لَمْ, أَمْ, وَإِن, وَمَن) are **correctly pending** (homograph /
+multi‑function — مَا alone has negation/relative/interrogative/maṣdariyyah readings), while the content tokens are
+authorable. 26 content glosses were certified+applied (+141 occ → 70.76%). New **person/POS homograph** classes
+the key‑aware 2‑vote caught and kept pending: هَدَيْنَا "We guided" ↔ هَدَىٰنَا "He guided us" (subject person);
+حَرَّمَ "forbade" (verb) ↔ حُرُم "sacred" (noun); وَلَدٌ "child" (noun) ↔ وَلَدَ "begot" (verb). Lesson: the live
+`norm_strict` key drops the person/voice/POS‑distinguishing harakāt, so a same‑key set must be one *word AND one
+person/POS* before a surface gloss is safe.

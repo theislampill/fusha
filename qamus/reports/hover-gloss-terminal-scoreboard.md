@@ -3,10 +3,16 @@
 Live qamus-highlight, public beta, indexable. Public records carry only `{src:"qamus",kind:"authored"}` — 0
 external provenance. Full per-token states: `hover-token-terminal-matrix.md`.
 
-> **CURRENT LIVE (reconciled): coverage 70.47% · 35,166 / 49,900 resolved · 14,734 pending · artifact
-> source_sha `d3150275d15b5245` (2026-06-24T08:06Z) · Fusha HEAD `e9d1a75`.** The history table below ends at
-> the SN7 column (69.08%); the **P13 row (70.47%)** is the current figure — see "P13 — reference-assisted
-> authored batch" below. (The 69.08% some readers see is the SN7 *history* column, not current.)
+> **CURRENT LIVE (reconciled): coverage 70.76% · 35,307 / 49,900 resolved · 14,593 pending · artifact
+> source_sha `65797d7d5599fadd` · Fusha HEAD see git log.** History table below ends at the SN7 column
+> (69.08%); current = the PP1 row (70.76%). Trail: SN7 69.08 → P13 70.47 → **PP1 70.76**. (The 69.08% some
+> readers see is the SN7 *history* column, not current.)
+
+## PP1 — particle-lane authored batch (APPLIED LIVE)
+26 content-token glosses from the p001–p100 example āyāt (ٱلصِّيَامِ, ٱلْمُؤْمِنُونَ, ٱلرُّسُلِ, مَثَلًا, خَٰلِدُونَ,
+يُنفِقُونَ, يَتَّقُونَ…) + the **كَظِيم entry repair** (Q2). coverage **70.47% → 70.76%**, +141 occ, ~3 changed
+(كَظِيم verb→adjectival), −0 removed. 4 homographs (هَدَيْنَا/حَرَّمَ/وَلَدَ…) correctly pending. Mirror:
+`particle_hover_batch_001.*`. Rollback: `*.bak-pp1` + `wbw-lookup.prev.json`.
 
 | metric | baseline | before P5 | LIVE after P5 | LIVE after SN7 | **CURRENT (P13)** |
 |---|---:|---:|---:|---:|---:|
