@@ -1,0 +1,17 @@
+{"surface":"إِلَيْنَا","wrong":"to be soft","fix":"\"to us\" (إِلَى + نا) or pending; NOT root ل ي ن","risk":"hamza/weak-letter false root from norm()"}
+{"surface":"رَسُولًا","wrong":"to send","fix":"noun \"a messenger\"; do not verb-gloss","risk":"verb-on-noun"}
+{"surface":"ٱبْن","wrong":"to build","fix":"\"son\" noun if authored; else pending","risk":"root/POS mismatch (ب ن و noun, not ب ن ي verb)"}
+{"surface":"بَنَات","wrong":"to build","fix":"\"daughters\"","risk":"verb-on-noun, kinship plural"}
+{"surface":"مَالِكِ","wrong":"what/whatever","fix":"pending unless م ل ك \"owner/master\" sense certified","risk":"phrase-form collision (مَا لَكَ)"}
+{"surface":"مَن","wrong":"from","fix":"\"who/whoever\" when the mīm has no kasra; NOT مِنْ \"from\"","risk":"diacritic-sensitive particle (content-letter harakah)"}
+{"surface":"وَمِنَ","wrong":"and whoever","fix":"\"and from/among\" (kasra on mīm); NOT وَمَن","risk":"proclitic hides the distinguishing harakah"}
+{"surface":"لَمْ","wrong":"why?","fix":"\"(did) not\"","risk":"diacritic-sensitive particle (لِمَ \"why\")"}
+{"surface":"مُحَمَّد","wrong":"to praise","fix":"proper noun; pending unless authored as a name","risk":"proper name vs verb ح م د"}
+{"surface":"أَحْمَد","wrong":"to praise","fix":"proper noun (61:6)","risk":"proper name, bare-key collision with حمد"}
+{"surface":"صَٰلِحًا","wrong":"Prophet Salih","fix":"\"righteous (deed)\" adjective; NOT the proper name unless context supports it","risk":"proper-name vs descriptive"}
+{"surface":"يُحَذِّرُكُمُ","wrong":"be cautious","fix":"\"warns you\" (form II causative) if sense certified","risk":"derived form / causative sense"}
+{"surface":"وَيَقْدِرُ","wrong":"ordain only","fix":"\"restricts/straitens\" in rizq context if certified","risk":"within-root sense, needs nahw context"}
+{"surface":"ٱلْمُلْك","wrong":"angels","fix":"\"sovereignty/dominion\" (مُلْك); NOT مَلَك \"angel\"","risk":"same-root polyseme"}
+{"surface":"أَنْهَٰر","wrong":"daytime","fix":"\"rivers\" (نَهْر); NOT نَهَار \"daytime\"","risk":"same-root polyseme"}
+{"surface":"عَلِيمًا","wrong":"to be in pain","fix":"\"All-Knowing\" (ع ل م); a data error filed it under أ ل م","risk":"data error + homograph"}
+{"surface":"قُرْءَانًا","wrong":"stem + نا suffix","fix":"do not decompose; final alef is tanwīn (ـًا), not the pronoun نا","risk":"tanwīn-alef false suffix"}

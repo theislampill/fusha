@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/linguistic-decision.schema.json",
+  "title": "Linguistic decision (sarf + nahw, machine-readable)",
+  "description": "A reusable, auditable record of a sarf (morphology) + nahw (syntax) decision about one token. Produced before authoring/repairing/resolving. internal_provenance never reaches the public artifact.",
+  "type": "object",
+  "required": ["decision_id", "source_address", "surface_ar", "decision"],
+  "properties": {
+    "decision_id": { "type": "string", "pattern": "^lingdec-[0-9]{6,}$" },
+    "source_address": { "type": "string", "examples": ["quran:28:82:7"] },
+    "surface_ar": { "type": "string" },
+    "root_ar": { "type": ["string", "null"] },
+    "lemma_ar": { "type": ["string", "null"] },
+    "pos": { "type": "string", "enum": ["verb", "noun", "particle", "proper_noun", "adjective", "masdar", "participle", "unknown"] },
+    "sarf": {
+      "type": "object",
+      "properties": {
+        "form": { "type": "string", "description": "I–X / unknown" },
+        "voice": { "type": "string", "enum": ["active", "passive", "unknown"] },
+        "attached_clitics": { "type": "array", "items": { "type": "string" } },
+        "suffix_pronoun": { "type": ["string", "null"] },
+        "risk_flags": { "type": "array", "items": { "type": "string", "enum": ["multi_sense_root", "hamza_sensitive", "sense_selection_required", "verb_on_noun_risk", "proper_noun", "derived_form", "weak_letter", "tanwin_alef"] } }
+      }
+    },
+    "nahw": {
+      "type": "object",
+      "properties": {
+        "context_rule": { "type": "string", "examples": ["paired_antonym_with_yabsut"] },
+        "syntactic_role": { "type": "string" },
+        "governing_particle": { "type": ["string", "null"] },
+        "nearby_tokens": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string", "enum": ["authored_gloss", "pending", "quarantine", "repair_candidate"] },
+        "gloss_en_authored": { "type": ["string", "null"], "description": "original; never copied" },
+        "pending_reason": { "type": ["string", "null"] },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+      }
+    },
+    "internal_provenance": {
+      "type": "object",
+      "properties": {
+        "qamus_entries": { "type": "array", "items": { "type": "string" } },
+        "qac": { "type": "boolean" },
+        "quran_text_verified": { "type": "boolean" },
+        "external_informed_by": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "public_export_allowed": { "type": "boolean", "description": "true only when decision.type=authored_gloss and no provenance would leak" },
+    "review_status": { "type": "string", "enum": ["needs_human_review", "approved", "applied"] }
+  },
+  "additionalProperties": false
+}

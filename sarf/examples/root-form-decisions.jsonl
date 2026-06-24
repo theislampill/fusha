@@ -1,0 +1,10 @@
+{"surface":"قَالُوا","root":"ق و ل","lemma":"قَالَ","pos":"verb","form":"I","note":"hollow verb (و middle radical); norm subsequence check would falsely reject — use QAC root"}
+{"surface":"يَأْتِي","root":"أ ت ي","lemma":"أَتَى","pos":"verb","form":"I","note":"hamza-initial + weak final; preserve أ seat"}
+{"surface":"بَيِّنَة","root":"ب ي ن","lemma":"بَيِّنَة","pos":"noun","note":"ism, not the verb بَانَ/تَبَيَّنَ; tāʾ marbūṭa is not a suffix"}
+{"surface":"إِيمَان","root":"أ م ن","lemma":"إِيمَان","pos":"masdar","note":"\"faith\"; norm collapses onto أَيْمَان \"oaths\" (root ي م ن) — keep hamza/use norm_strict"}
+{"surface":"مَلِك","root":"م ل ك","lemma":"مَلِك","pos":"noun","note":"\"king\"; distinguish مُلْك (dominion) and مَلَك (angel) by vowels/context"}
+{"surface":"أَنْهَٰر","root":"ن ه ر","lemma":"نَهْر","pos":"noun","note":"plural \"rivers\"; not نَهَار \"daytime\""}
+{"surface":"رِجَال","root":"ر ج ل","lemma":"رَجُل","pos":"noun","note":"plural \"men\"; not أَرْجُل \"legs\" nor the verb"}
+{"surface":"مَتَٰعًا","root":"م ت ع","lemma":"مَتَٰع","pos":"noun","note":"\"(worldly) enjoyment/provision\"; not the narrow fiqh متعة sense by default"}
+{"surface":"مَن","root":null,"lemma":"مَن","pos":"particle","note":"relative/interrogative pronoun (fatḥa); rootless — never assign a content root"}
+{"surface":"لَمْ","root":null,"lemma":"لَمْ","pos":"particle","note":"negative jussive; rootless; ≠ لِمَ \"why\""}

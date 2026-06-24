@@ -1,0 +1,105 @@
+---
+name: nahw
+description: Decide how SENTENCE CONTEXT changes the correct gloss of an Arabic token — particles, prepositions, pronouns, negation, conditionals, relatives, iḍāfa, jar-majrūr, case/mood, referent. Use when sarf alone cannot pick the sense, when a particle is multi-function, or when a gloss is lexically valid but contextually wrong. Encodes the exact context mistakes fought in qamus-highlight.
+---
+
+# Nahw (syntax) skill
+
+Sarf finds the form; **nahw decides what it means here**. A gloss can be perfectly lexical and still wrong for
+its āyah. This skill is operational, not a grammar primer: it tells you when context **resolves** a sense and
+when it forces **pending**.
+
+## 1. Purpose
+Choose the context-correct gloss (or an honest pending) for tokens whose meaning depends on the sentence:
+particles, prepositions+pronouns, negation/mood, contronyms, multi-sense roots, referents, iḍāfa.
+
+## 2. Input contract
+A token + `quran_ref`/`token_loc` + the surrounding tokens (and, if known, the sarf output object).
+
+## 3. Output contract
+```json
+{
+  "quran_ref": "28:82", "token_loc": "28:82:7", "surface_ar": "وَيَقْدِرُ",
+  "phrase_context": "verbal phrase", "syntactic_role": "verb",
+  "nearby_tokens": ["اللَّهَ","يَبْسُطُ","الرِّزْقَ","لِمَن","يَشَاءُ","وَيَقْدِرُ"],
+  "particle_context": ["و"], "governing_particle": null, "case_or_mood_signal": "indicative_or_unknown",
+  "candidate_glosses": ["ordains","restricts"], "contextual_choice": "restricts",
+  "decision": "resolved | pending", "reason": "paired with يبسط الرزق; contrast indicates restricts",
+  "confidence": "medium", "allowed_for_hover": true
+}
+```
+
+## 4. Particle decision ladder
+Read the **content-letter harakah** (not the first letter): مَن(fatḥa "who") vs مِن(kasra "from", incl. وَمِنَ);
+لَمْ vs لِمَ; أَنْ vs إِنَّ; أَنَّى("how") vs أَنِّي("that I"); إِلَّا vs لَا; مَا = negation/relative/interrogative by
+context. **Particles are diacritic- AND context-sensitive.**
+
+## 5. Preposition decision ladder
+The same preposition renders differently by referent: بِهِ "with/by/in it"; لَهُ "for/to him, belongs to him";
+عِنْدَ "with/near/in the sight of"; إِلَيْنَا "to us" (jar-majrūr — **not** root ل ي ن "soft").
+
+## 6. Pronoun / suffix handling
+Attached pronouns ـه/ـها/ـهم/ـكم/ـنا change the wording but not the head sense; do not let a suffix invent a
+new stem (and never confuse a tanwīn-alef with the pronoun نا).
+
+## 7. Negation handling
+لَمْ → past negation + jussive; لَنْ → future negation; لَا → negation / prohibition / "no"; مَا → negation or
+other roles. **A hover gloss must respect the governing negative if it changes the meaning.**
+
+## 8. Conditionals & relative pronouns
+مَن / مَا / إِنْ / إِذَا can be conditional or relative; the apodosis (jawāb) signals which. Distinguish from the
+homographic prepositions مِن / and the temporal لَمَّا.
+
+## 9. Iḍāfa & jar-majrūr
+A genitive construction or preposition+noun changes gloss wording; gloss the **phrase role**, not just the
+lexeme.
+
+## 10. Verb–subject–object context
+The object/construction can fix a polysemous verb: أَتَى = come/bring/give/commit by object; يَقْدِرُ in a rizq
+context contrasting يَبْسُط = "restricts".
+
+## 11. Nominal-sentence context
+Mubtadaʾ/khabar with no verb; a "to be" verb is implied, not lexical.
+
+## 12. Referent / context guard
+Do **not** propagate: a divine-Name sense onto a human attribute (حَلِيمٌ for Ibrāhīm = "forbearing", not a
+Name); a Prophet's proper name onto a common adjective (صَٰلِحًا); a proper-noun sense onto an ordinary noun; an
+ordinary verb gloss onto a proper noun.
+
+## 13. When to resolve vs pending
+Resolve when the construction uniquely fixes the sense. Otherwise emit
+`pending: context-sensitive; needs nahw review` with the precise blocker.
+
+## 14. How to author a qamus grammatical gloss
+Write a concise, original English rendering of the **function in context** (e.g. مَن→"whoever", وَمِنَ→"and from",
+بِهِ→"in it"); keep src=qamus/authored; record `informed_by` internally only.
+
+## 15. How to update qamus-highlight pending reasons
+Map this decision to: `pending_reason`, an authored-gloss candidate, a `sense_quarantine`, a source-address
+note, or the review queue.
+
+## 16. Regression examples
+`examples/function-word-decisions.jsonl` + `examples/ayah-context-decisions.jsonl` — real qamus-highlight cases.
+
+---
+
+## The six nahw principles (encode these)
+1. **Particles are context-sensitive** — handle مَن/مِن، لَمْ/لِمَ، أَنْ/إِنَّ، أَنَّى/أَنِّي، إِلَّا/لَا، مَا by diacritic **and**
+   context.
+2. **Jar-majrūr & iḍāfa change wording** — بِهِ، لَهُ، عِنْدَ، إِلَيْنَا render by referent/role.
+3. **Negation & mood matter** — respect لم/لن/لا/ما's effect on the governed verb.
+4. **Context resolves contronyms & multi-sense roots** — يَقْدِرُ→"restricts" in rizq context; حذّر→"warn";
+   أتى by object; ملك/مُلك/مَلَك by vowels/context.
+5. **Referent matters** — never carry a Name/Prophet/proper-noun sense to a common word, or vice-versa.
+6. **Prefer phrase-aware pending over a wrong one-word gloss.**
+
+## How nahw feeds the rest
+- **Qamus entry authoring/repair:** better sense selection, usage notes, teacher notes.
+- **Hover-gloss:** context-aware sense; distinguishes مَن/مِن، لَم/لِمَ، أن/إن; avoids referent errors; honest pending.
+- **Pending-reason refinement:** turns vague pendings into precise, reviewable reasons.
+- **Catalogues:** classifies particle/construction candidates from Nawawī40/Ṣaḥīḥayn.
+
+## Do not resolve; mark pending (examples)
+- A bare لا before a noun vs a verb (لا النافية للجنس vs verbal negation) when the next token's POS is unknown.
+- مَا with no clear negation/relative/interrogative signal.
+- A multi-sense root with no disambiguating object/referent in range.

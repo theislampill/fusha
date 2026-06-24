@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# Generated full outputs — commit a SAMPLE + the generator instead (see README "generated-artifact rules")
+out/
+**/out/*
+!**/out/.gitkeep
+
+# Never commit: raw source images, OCR dumps, model weights, local QAC dumps, scratch
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+*.pdf
+*.gz
+*.zip
+qac-*.tsv
+*.weights
+.scan*.json
+*.local.json

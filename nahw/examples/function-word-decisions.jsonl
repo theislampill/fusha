@@ -1,0 +1,13 @@
+{"surface":"مَن","context":"مَن يَقُولُ","wrong":"from","correct":"whoever / he who","reason":"fatḥa on mīm → relative/interrogative, not the preposition مِنْ"}
+{"surface":"مِنْ","context":"مِنَ النَّاس","wrong":"who","correct":"from / among","reason":"kasra on mīm → preposition"}
+{"surface":"وَمِنَ","context":"وَمِنَ النَّاسِ","wrong":"and whoever","correct":"and from / and among","reason":"kasra on mīm under the و proclitic → preposition, not وَمَن"}
+{"surface":"لَمْ","context":"لَمْ يَلِدْ","wrong":"why","correct":"did not","reason":"negation + jussive"}
+{"surface":"لِمَ","context":"لِمَ تَقُولُونَ","wrong":"did not","correct":"why","reason":"interrogative lām + mā (kasra on lām)"}
+{"surface":"لِمَا","context":"مُصَدِّقًا لِّمَا بَيْنَ يَدَيْهِ","wrong":"when","correct":"for / that which","reason":"لِ + relative مَا; لَمَّا \"when\" carries shadda on the mīm"}
+{"surface":"كُلًّا","context":"وَيَعْقُوبَ كُلًّا هَدَيْنَا","wrong":"but no","correct":"all / each","reason":"ḍamma on kāf → كُلّ; كَلَّا \"but no\" has fatḥa on kāf"}
+{"surface":"نِعْمَ","context":"نِعْمَ الثَّوَابُ","wrong":"yes","correct":"how excellent / what a good","reason":"kasra on nūn → verb of praise; نَعَمْ \"yes\" has fatḥa"}
+{"surface":"أَنِّى","context":"أَنِّى أَنَا الْغَفُورُ","wrong":"how?","correct":"that I","reason":"kasra cluster on nūn → أَنَّ + ـِي; أَنَّى \"how/whence\" has fatḥa"}
+{"surface":"بِهِ","context":"آمَنَ بِهِ","correct":"in it / in him / with it (by referent)","reason":"preposition + pronoun; needs referent context"}
+{"surface":"إِلَيْنَا","context":"ثُمَّ إِلَيْنَا مَرْجِعُكُمْ","wrong":"soft","correct":"to us","reason":"jar-majrūr إِلَى + نا; NOT root ل ي ن"}
+{"surface":"وَيَقْدِرُ","context":"يَبْسُطُ الرِّزْقَ لِمَن يَشَاءُ وَيَقْدِرُ","correct":"restricts / straitens","reason":"paired antonym with يَبْسُط → restricts, not merely \"ordains\""}
+{"surface":"حَلِيمٌ","context":"إِنَّ إِبْرَاهِيمَ لَحَلِيمٌ","wrong":"one of Allah's Names","correct":"forbearing","reason":"referent is Ibrāhīm, not Allah"}

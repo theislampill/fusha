@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/qamus-entry.schema.json",
+  "title": "Qamus entry / candidate entry",
+  "description": "A Qamus dictionary entry. The same shape serves a LIVE entry and a review-only CANDIDATE (status=candidate). External sources may inform authoring but are never copied; gloss text is original qamus-authored.",
+  "type": "object",
+  "required": ["headword", "category"],
+  "properties": {
+    "id": { "type": "string", "description": "stable entry id (live entries only)" },
+    "source_address": { "type": "string", "description": "qamus:v###/n###/p####root=… (see source-address.schema.json)" },
+    "headword": { "type": "string", "description": "Arabic headword (display form, never normalized)" },
+    "translit": { "type": "string" },
+    "root": { "type": ["string", "null"], "description": "space-separated radicals e.g. 'ق و ل'; nouns may key by headword" },
+    "root_translit": { "type": "string" },
+    "lemma_candidate": { "type": "string" },
+    "category": { "type": "string", "description": "Verbs / Nouns / Particles - … (drives the v/n/p class)" },
+    "section": { "type": "string" },
+    "pos": { "type": "string", "enum": ["verb", "noun", "particle", "proper_noun", "adjective", "masdar", "participle", "unknown"] },
+    "definition": { "type": "string" },
+    "meaning": { "type": "string" },
+    "total_uses": { "type": ["integer", "null"], "minimum": 0 },
+    "senses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gloss": { "type": "string", "description": "ORIGINAL qamus-authored English; never copied from an external source" },
+          "count": { "type": ["integer", "null"] },
+          "note": { "type": "string" }
+        },
+        "required": ["gloss"]
+      }
+    },
+    "usage": {
+      "type": "array",
+      "description": "usage blocks with forms + example āyāt",
+      "items": {
+        "type": "object",
+        "properties": {
+          "forms": { "type": "array", "items": { "type": "string" } },
+          "gloss": { "type": "string" },
+          "examples": { "type": "array", "items": {
+            "type": "object",
+            "properties": { "ar": { "type": "string" }, "ref": { "type": "string", "pattern": "^[0-9]{1,3}:[0-9]{1,3}$" }, "en": { "type": "string" } }
+          } }
+        }
+      }
+    },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "source_keys": { "type": "array", "items": { "type": "string" }, "description": "printed-source locator keys" },
+    "source_scope": { "type": "array", "items": { "type": "string", "enum": ["quran", "nawawi40", "sahihayn"] } },
+    "status": { "type": "string", "enum": ["draft", "candidate", "published"] },
+    "review_status": { "type": "string", "enum": ["needs_human_review", "approved", "applied"] },
+    "visibility": { "type": "string", "enum": ["public", "private"] }
+  },
+  "additionalProperties": true
+}

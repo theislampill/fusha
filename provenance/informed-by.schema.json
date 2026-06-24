@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/provenance/informed-by.schema.json",
+  "title": "informed_by — INTERNAL provenance label set",
+  "description": "Records which external references INFORMED an original authored decision. This is internal evidence/attribution ONLY. It must NEVER be exported to a public hover artifact, and it must NEVER carry copied external gloss text — only source LABELS and (optionally) a verification flag.",
+  "type": "object",
+  "required": ["sources"],
+  "properties": {
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "enum": ["qac", "quran.com", "tanzil", "qamus", "photographed-source", "sunnah.com"] },
+      "description": "labels only — no gloss text, no URLs to specific external glosses"
+    },
+    "used_for": { "type": "array", "items": { "type": "string", "enum": ["root", "pos", "lemma", "token-validation", "context-triangulation", "ref-verification"] } },
+    "quran_text_verified": { "type": "boolean", "description": "the Qurʾān reference/text was checked (e.g. against Tanzil)" },
+    "copied_text": { "const": false, "description": "MUST be false — copying external gloss text is forbidden" },
+    "public_exposure": { "const": "forbidden", "description": "this object never appears in a public artifact" }
+  },
+  "additionalProperties": false,
+  "$comment": "Boundary: external sources are uncopyrightable FACTS (root/POS/lemma) used as reference. Authored gloss text is original. The shipped public record is exactly {src:'qamus',kind:'authored',lang:'en'}."
+}

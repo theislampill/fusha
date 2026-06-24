@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/source-address.schema.json",
+  "title": "Source-address node (Xanadu-style)",
+  "description": "A stable, addressable evidence node. Crops/OCR/images are DERIVED VIEWS of an address, never the citation. The graph answers 'where is this source used?' (used_by) and 'what evidence supports this gloss?' (token → entry).",
+  "type": "object",
+  "required": ["id", "type"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "stable address",
+      "examples": ["qamus:v044#root=س م ع", "qamus:n002#page=<located>#field=headword", "quran:2:21:2#surface=ٱلنَّاس", "wbw:2:21:2#artifact=<source_sha>", "live-entry:<id>#field=senses[0].gloss", "repair:<batch>#entry=<id>#field=senses[0].count"]
+    },
+    "type": {
+      "type": "string",
+      "enum": ["photographed-qamus-entry", "live-qamus-entry", "quran-token", "wbw-record", "ocr-candidate", "crop-view", "repair-payload-field", "external-reference-note"]
+    },
+    "locator": {
+      "type": "object",
+      "description": "canonical locator — NOT a crop filename",
+      "properties": {
+        "entry_id": { "type": "string" },
+        "source_key": { "type": "string" },
+        "root": { "type": "string" },
+        "headword": { "type": "string" },
+        "category": { "type": "string" },
+        "toc_page": { "type": ["string", "integer", "null"] },
+        "page_window": { "type": "string" },
+        "field_path": { "type": "string", "description": "e.g. senses[0].count" },
+        "quran_ref": { "type": "string", "pattern": "^[0-9]{1,3}:[0-9]{1,3}$" },
+        "word_loc": { "type": "string", "pattern": "^[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}$" }
+      }
+    },
+    "derived_views": { "type": "array", "items": { "type": "string" }, "description": "crop/enhanced/OCR/review-sheet refs (paths kept out of public commits)" },
+    "provenance": { "type": "array", "items": { "type": "string", "enum": ["live-qamus", "ToC-locator", "OCR", "visual-verification", "qac-internal", "tanzil-internal", "quran.com-internal", "authored-decision"] } },
+    "status": { "type": "string", "enum": ["located", "visually-certified", "ocr-only-candidate", "applied-repair", "deferred", "ambiguous", "missing-evidence", "clean"] },
+    "used_by": { "type": "array", "items": { "type": "string" }, "description": "backlinks: entry id / wbw:S:A:W / hover token / repair id / report path" },
+    "used_by_count": { "type": "integer" },
+    "blockers": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": true,
+  "$comment": "Duplicate avoidance: one node per quran:S:A:W; reuse an existing qamus:v###/n###/p### before minting a new one; split only for genuine homograph/sense divergence and record why."
+}

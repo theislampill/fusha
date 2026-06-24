@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/authored-gloss.schema.json",
+  "title": "Authored-gloss proposal",
+  "description": "A proposal to attach an ORIGINAL qamus-authored English gloss to a Qurʾān token (or to add a sense to an entry). External references may inform the wording but their text is never copied. The PUBLIC export carries only {src:'qamus',kind:'authored'}; informed_by is INTERNAL.",
+  "type": "object",
+  "required": ["source_address", "surface_ar", "public_record", "decision"],
+  "properties": {
+    "source_address": { "type": "string", "description": "quran:S:A:W or wbw:S:A:W or live-entry:<id>#field=…" },
+    "surface_ar": { "type": "string", "description": "the Arabic surface (display, never normalized)" },
+    "quran_loc": { "type": "string", "pattern": "^[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}$" },
+    "root_ar": { "type": ["string", "null"] },
+    "pos": { "type": "string" },
+    "public_record": {
+      "type": "object",
+      "description": "EXACTLY what ships in the hover artifact — no other keys allowed",
+      "required": ["src", "kind", "lang", "text"],
+      "properties": {
+        "text": { "type": "string", "description": "original concise English gloss" },
+        "src": { "const": "qamus" },
+        "kind": { "const": "authored" },
+        "lang": { "const": "en" }
+      },
+      "additionalProperties": false
+    },
+    "internal_provenance": {
+      "type": "object",
+      "description": "INTERNAL only — never exported to the public artifact",
+      "properties": {
+        "qamus_entries": { "type": "array", "items": { "type": "string" } },
+        "informed_by": { "type": "array", "items": { "type": "string", "enum": ["qac", "quran.com", "tanzil", "qamus", "photographed-source"] } },
+        "quran_text_verified": { "type": "boolean" },
+        "note": { "type": "string" }
+      }
+    },
+    "decision": { "type": "string", "enum": ["authored_gloss", "pending", "quarantine"] },
+    "pending_reason": { "type": ["string", "null"], "enum": ["root_exists_form_unresolved", "pos_mismatch", "hamza_sensitive_homograph", "multi_sense_root", "derived_form_needs_review", "proper_noun", "source_evidence_needed", "qamus_entry_needs_repair", "context_sensitive_needs_nahw", null] },
+    "confidence": { "type": "string", "enum": ["high", "medium", "low"] },
+    "review_status": { "type": "string", "enum": ["needs_human_review", "approved", "applied"] }
+  },
+  "additionalProperties": false
+}
