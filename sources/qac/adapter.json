@@ -1,0 +1,19 @@
+{
+ "name": "qac",
+ "title": "Quranic Arabic Corpus (root/POS)",
+ "evidence_role": [
+  "root",
+  "pos",
+  "morphology"
+ ],
+ "access": {
+  "kind": "package",
+  "endpoint_env": "QAMUS_WBW_SERVICES",
+  "tool": "qamus_wbw.expand._load_qac_roots (server)"
+ },
+ "availability": "available",
+ "public_exposable": false,
+ "required_by_skills": false,
+ "ladder_rank": 2,
+ "notes": "Internal per-word root+POS. Already used by the renderer for the QAC-drop guard. Internal only."
+}

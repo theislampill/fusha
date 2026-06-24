@@ -46,7 +46,10 @@ Choose the context-correct gloss (or an honest pending) for tokens whose meaning
 particles, prepositions+pronouns, negation/mood, contronyms, multi-sense roots, referents, iḍāfa.
 
 ## 2. Input contract
-A token + `quran_ref`/`token_loc` + the surrounding tokens (and, if known, the sarf output object).
+A token + `quran_ref`/`token_loc` + the surrounding tokens (and, if known, the sarf output object). For a
+Qurʾānic token, you MAY consult any **available source adapter** for iʿrāb/role evidence (see `sources/README.md`)
+— optional, internal-only, never named here, never public, and never outranking the Qamus entry or the reasoning
+gate.
 
 ## 3. Output contract
 ```json

@@ -147,6 +147,24 @@ for art in ("tools/tafsir_mcp_client.py", "tools/tafsir_mcp_probe.py", "tools/fe
 for skill in ("sarf/SKILL.md", "nahw/SKILL.md"):
     _txt = io.open(os.path.join(ROOT, skill), encoding="utf-8").read().lower()
     check("%s is MCP-free (self-contained skill)" % skill, "tafsir" not in _txt and "mcp" not in _txt)
+
+# 11f. source-adapter abstraction exists (skills are MCP-free but adapter-aware) + S8 source-photo rescue pipeline
+for art in ("sources/source-adapter.schema.json", "sources/README.md", "sources/tafsir_mcp/adapter.json",
+            "sources/qac/adapter.json", "sources/quran_com/adapter.json", "sources/tanzil/adapter.json",
+            "tools/source_photo_indexer.py", "tools/source_photo_cropper.py", "tools/source_photo_rescue.py",
+            "tools/source_photo_verify_entry.py", "qamus/reports/source-photo-rescue-report.md",
+            "qamus/indexes/source_photo_index.json"):
+    check("source-adapter/rescue artifact exists: %s" % art, os.path.exists(os.path.join(ROOT, art)))
+# every adapter manifest is internal-only + not skill-required
+try:
+    _ad_ok = True
+    for _a in ("tafsir_mcp", "qac", "quran_com", "tanzil"):
+        _m = json.load(io.open(os.path.join(ROOT, "sources", _a, "adapter.json"), encoding="utf-8"))
+        if _m.get("public_exposable") is not False or _m.get("required_by_skills") is not False:
+            _ad_ok = False
+except Exception:
+    _ad_ok = False
+check("source adapters are internal-only (public_exposable=false, required_by_skills=false)", _ad_ok)
 # the MCP morphology extractor classifies the load-bearing cases (noun-not-verb on wazn name; Form IV active verb)
 try:
     import importlib.util as _ilu

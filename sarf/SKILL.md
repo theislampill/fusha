@@ -64,8 +64,10 @@ entry candidates + optional QAC root/POS.
 6. **source-address loc** — `quran:S:A:W` to record + dedup the decision.
 
 ## 5. Root decision ladder (stop at the first that certifies)
-Qamus source entry → **QAC root** → photographed source page → external reference (triangulation) → **only
-then** a heuristic. A heuristic root alone is never enough for a scripture-facing gloss.
+Qamus source entry → **QAC root** → photographed source page → any **available source adapter** (triangulation,
+internal-only) → **only then** a heuristic. A heuristic root alone is never enough for a scripture-facing gloss.
+Adapters are optional and never named here (see `sources/README.md`); the Qamus entry always outranks them, and
+nothing an adapter returns is ever public.
 
 ## 6. POS decision ladder
 QAC POS → Qamus category → morphological shape (wazn) → context. **A POS mismatch is a blocker** (§ principle 3).

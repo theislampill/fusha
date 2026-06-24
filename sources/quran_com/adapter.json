@@ -1,0 +1,18 @@
+{
+ "name": "quran_com",
+ "title": "Quran.com word-by-word (build-time comparison)",
+ "evidence_role": [
+  "wbw_gloss",
+  "quran_text"
+ ],
+ "access": {
+  "kind": "http",
+  "endpoint_env": "QURAN_COM_BASE",
+  "tool": "(transient build-time only)"
+ },
+ "availability": "optional",
+ "public_exposable": false,
+ "required_by_skills": false,
+ "ladder_rank": 4,
+ "notes": "Transient <=1-week build-time comparison template only (per their caching terms); NEVER shipped verbatim."
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fusha/source-adapter.schema.json",
+  "title": "Evidence source adapter",
+  "description": "A declarative manifest for an INTERNAL evidence source the maintainer/agent may consult through the evidence ladder. The sarf/nahw skills reference adapters GENERICALLY ('use available source adapters'); they never name a specific external service and never depend on any one being present. No adapter's content is ever public — public hover/entry records stay {src:'qamus',kind:'authored'}.",
+  "type": "object",
+  "required": ["name", "evidence_role", "access", "public_exposable", "required_by_skills"],
+  "additionalProperties": true,
+  "properties": {
+    "name": { "type": "string", "description": "adapter id (e.g. tafsir_mcp, qac, quran_com, tanzil)" },
+    "title": { "type": "string" },
+    "evidence_role": {
+      "type": "array",
+      "items": { "enum": ["irab", "morphology", "root", "pos", "wbw_gloss", "quran_text", "qiraat", "tafsir"] },
+      "description": "what kind of internal evidence it provides"
+    },
+    "access": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["mcp", "http", "local_file", "package"] },
+        "endpoint_env": { "type": "string", "description": "ENV var holding the endpoint/path (no secret committed)" },
+        "tool": { "type": "string", "description": "the Fusha tool/client that wraps this access" }
+      }
+    },
+    "availability": { "enum": ["available", "blocked", "optional"], "description": "current runtime status" },
+    "public_exposable": { "const": false, "description": "adapter content is INTERNAL evidence only — never shipped" },
+    "required_by_skills": { "const": false, "description": "skills must NOT depend on this adapter; it is optional evidence" },
+    "ladder_rank": { "type": "integer", "description": "position in the evidence ladder (lower = higher authority); Qamus entry stays rank 1, no adapter outranks it" },
+    "notes": { "type": "string" }
+  }
+}

@@ -31,6 +31,9 @@ Entry repairs take the parallel, owner-gated path (`edit_entry_record` + backup 
 | **GrammarProblems eval gate** | 80 derived cases (≥72), `run_grammar_evals.py` PASS; `grade_grammar_reasoning.py` enforces answer+reasoning (self-test PASS) |
 | **progressive-disclosure skills** | sarf 12 procedures, nahw 12 procedures + rules/evals/curriculum; SKILL.md is the gate+index |
 | **ajami curriculum** | 12-level roadmap + qamus/quran/hadith paths + 8 drill sets + placement test + checkpoints |
+| **source-adapter abstraction** | sources/source-adapter.schema.json + 4 manifests (tafsir_mcp/qac/quran_com/tanzil); skills are MCP-free but adapter-aware (generic "available source adapter"); all internal-only, none skill-required |
+| **source-photo rescue (S8)** | corpus indexed (1,205 imgs, pages 2-471, 0 missing); 240 reclassified -> needs_manual_visual_review (0 needs_new_photo); ب ي ن verified-from-photo (523=523) |
+| **token-addressed hover layer (B6)** | LIVE — 363 per-quran:S:A:W decisions resolve لَمْ/لِمَ، مَن/مِن، أَمْ/أُمّ collisions; 80.68->81.41% |
 | **corpus → Qamus pipeline** | `corpus_to_qamus_candidates.py` + `corpus_to_hover_decisions.py` (Nawawī40-proven, 0 live writes) |
 
 ## Boundaries held
