@@ -16,7 +16,12 @@
       "pronoun": 1
     },
     "apkg_notes_scanned": 1132,
-    "distinct_plural_pairs": 451,
+    "distinct_plural_pairs": 486,
+    "plural_orientation": {
+      "paren": 298,
+      "sound": 177,
+      "multi": 11
+    },
     "gender_tagged": {
       "m": 338,
       "f": 246
@@ -488,13 +493,14 @@
       "topic": "plural_pattern",
       "arabic_label": "وزن أَفْعَال",
       "english_label": "broken plural afʿaal",
-      "rule_summary": "Singular→plural pattern attested in the vocab corpus (4 source decks).",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (3 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 31 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
         {
           "singular_ar": "وَرَقَةٌ",
           "plural_ar": "أَوْرَاقٌ",
           "gender": "f",
           "gloss_en": "A piece of paper",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -502,6 +508,7 @@
           "plural_ar": "أَقْلَامٌ",
           "gender": "m",
           "gloss_en": "Pen",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -509,6 +516,7 @@
           "plural_ar": "أَرَاضٍ",
           "gender": "f",
           "gloss_en": "Earth / land",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -516,6 +524,7 @@
           "plural_ar": "أَقْمَارٌ",
           "gender": "m",
           "gloss_en": "Moon",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -523,6 +532,7 @@
           "plural_ar": "أَنْهَارٌ",
           "gender": "m",
           "gloss_en": "River",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -530,6 +540,7 @@
           "plural_ar": "أَطِبَّاءُ",
           "gender": "m",
           "gloss_en": "Male doctor",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -537,6 +548,7 @@
           "plural_ar": "أَفْيَالٌ",
           "gender": "m",
           "gloss_en": "Elephant",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -544,6 +556,7 @@
           "plural_ar": "أفرَاسٌ",
           "gender": "f",
           "gloss_en": "Mare",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         }
       ],
@@ -560,13 +573,14 @@
       "topic": "plural_pattern",
       "arabic_label": "وزن فِعَال",
       "english_label": "broken plural fiʿaal",
-      "rule_summary": "Singular→plural pattern attested in the vocab corpus (5 source decks).",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (5 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 49 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
         {
           "singular_ar": "رَجُلٌ",
           "plural_ar": "رِجَالٌ",
           "gender": "m",
           "gloss_en": "Man",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -574,6 +588,7 @@
           "plural_ar": "طُلَّابٌ",
           "gender": "m",
           "gloss_en": "Male student",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -581,6 +596,7 @@
           "plural_ar": "جِبَالٌ",
           "gender": "m",
           "gloss_en": "Mountain",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -588,6 +604,7 @@
           "plural_ar": "بِحَارٌ",
           "gender": "m",
           "gloss_en": "Sea",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -595,6 +612,7 @@
           "plural_ar": "قُضَاةٌ",
           "gender": "m",
           "gloss_en": "Judge",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -602,6 +620,7 @@
           "plural_ar": "تُجَّارٌ",
           "gender": "m",
           "gloss_en": "Male merchant",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -609,6 +628,7 @@
           "plural_ar": "رُكَّابٌ",
           "gender": "f",
           "gloss_en": "Male passenger",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -616,6 +636,7 @@
           "plural_ar": "مُشَاةٌ",
           "gender": "m",
           "gloss_en": "Male pedestrian",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         }
       ],
@@ -632,13 +653,14 @@
       "topic": "plural_pattern",
       "arabic_label": "وزن فُعُل",
       "english_label": "broken plural fuʿul",
-      "rule_summary": "Singular→plural pattern attested in the vocab corpus (6 source decks).",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (6 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 62 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
         {
           "singular_ar": "كِتَابٌ",
           "plural_ar": "كُتُبٌ",
           "gender": "m",
           "gloss_en": "Book",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -646,6 +668,7 @@
           "plural_ar": "طُرُقٌ",
           "gender": "m",
           "gloss_en": "Road",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -653,6 +676,7 @@
           "plural_ar": "قِطَطٌَ",
           "gender": "f",
           "gloss_en": "Cat",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -660,6 +684,7 @@
           "plural_ar": "حُمُرٌ",
           "gender": "m",
           "gloss_en": "Donkey",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -667,6 +692,7 @@
           "plural_ar": "سَمَكٌ",
           "gender": "f",
           "gloss_en": "Fish",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -674,6 +700,7 @@
           "plural_ar": "مَعْزٌ",
           "gender": "m",
           "gloss_en": "Goat",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -681,6 +708,7 @@
           "plural_ar": "حُصُنٌ",
           "gender": "m",
           "gloss_en": "Stallion",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -688,6 +716,7 @@
           "plural_ar": "ضَأْنٌ",
           "gender": "m",
           "gloss_en": "Sheep",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         }
       ],
@@ -704,13 +733,14 @@
       "topic": "plural_pattern",
       "arabic_label": "وزن فُعُول",
       "english_label": "broken plural fuʿuul",
-      "rule_summary": "Singular→plural pattern attested in the vocab corpus (5 source decks).",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (6 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 18 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
         {
           "singular_ar": "جِسْرٌ",
           "plural_ar": "جُسُورٌ",
           "gender": "m",
           "gloss_en": "Bridge",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -718,6 +748,7 @@
           "plural_ar": "نُجُومٌ",
           "gender": "m",
           "gloss_en": "Star",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -725,6 +756,7 @@
           "plural_ar": "شُمُوسٌ",
           "gender": "f",
           "gloss_en": "Sun",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -732,6 +764,7 @@
           "plural_ar": "خُيُولٌ",
           "gender": "m",
           "gloss_en": "Horse",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -739,6 +772,7 @@
           "plural_ar": "بُيُوتٌ",
           "gender": "m",
           "gloss_en": "House",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-5-vocab.jsonl"
         },
         {
@@ -746,20 +780,23 @@
           "plural_ar": "عُلُومٌ",
           "gender": "",
           "gloss_en": "Knowledge",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-5-vocab.jsonl"
+        },
+        {
+          "singular_ar": "إِفْطَارٌ",
+          "plural_ar": "فُطُورٌ",
+          "gender": "",
+          "gloss_en": "Breakfast / the time of breaking fast",
+          "orientation": "paren",
+          "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-6-vocab-vocabulary-of-comprehension-lessons.jsonl"
         },
         {
           "singular_ar": "جَيْبٌ",
           "plural_ar": "جُيُوبٌ",
           "gender": "m",
           "gloss_en": "Pocket",
-          "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-6-vocab.jsonl"
-        },
-        {
-          "singular_ar": "رَأْسٌ",
-          "plural_ar": "رُؤُوسٌ",
-          "gender": "m",
-          "gloss_en": "Head",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-6-vocab.jsonl"
         }
       ],
@@ -776,13 +813,22 @@
       "topic": "plural_pattern",
       "arabic_label": "جمع تكسير (نمط آخر)",
       "english_label": "broken plural other",
-      "rule_summary": "Singular→plural pattern attested in the vocab corpus (6 source decks).",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (7 source decks). Orientation: 0 sound-plural (singular↔plural CERTAIN), 135 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
+        {
+          "singular_ar": "أَهْلاً",
+          "plural_ar": "وَسَهْلاً",
+          "gender": "",
+          "gloss_en": "Welcome",
+          "orientation": "paren",
+          "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-getting-used-to-arabic.jsonl"
+        },
         {
           "singular_ar": "حَجَرٌ",
           "plural_ar": "حِجَارَةٌ",
           "gender": "f",
           "gloss_en": "Stone",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -790,6 +836,7 @@
           "plural_ar": "شَوَارِعُ",
           "gender": "m",
           "gloss_en": "Street",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -797,6 +844,7 @@
           "plural_ar": "قِطَطَةٌ",
           "gender": "m",
           "gloss_en": "Cat",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -804,6 +852,7 @@
           "plural_ar": "أَجْوِبَةٌ",
           "gender": "m",
           "gloss_en": "Answer",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -811,6 +860,7 @@
           "plural_ar": "كَرَاسِيُّ",
           "gender": "m",
           "gloss_en": "Chair",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -818,13 +868,7 @@
           "plural_ar": "مَكَاتِبُ",
           "gender": "m",
           "gloss_en": "Desk",
-          "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
-        },
-        {
-          "singular_ar": "هَاتِ",
-          "plural_ar": "هَاتُوا",
-          "gender": "m",
-          "gloss_en": "Give me (m)",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -832,6 +876,7 @@
           "plural_ar": "دَفَاتِرُ",
           "gender": "m",
           "gloss_en": "Notebook",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         }
       ],
@@ -848,13 +893,14 @@
       "topic": "plural_pattern",
       "arabic_label": "جمع مؤنث سالم",
       "english_label": "sound feminine plural",
-      "rule_summary": "Singular→plural pattern attested in the vocab corpus (4 source decks).",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (6 source decks). Orientation: 123 sound-plural (singular↔plural CERTAIN), 0 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
         {
           "singular_ar": "سَيَّارَةٌ",
           "plural_ar": "سَيَّارَاتٌ",
           "gender": "f",
           "gloss_en": "Car",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -862,6 +908,7 @@
           "plural_ar": "طَالِبَاتٌ",
           "gender": "f",
           "gloss_en": "Female student",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -869,6 +916,7 @@
           "plural_ar": "مُدَرِّسَاتٌ",
           "gender": "m",
           "gloss_en": "Female teacher",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -876,6 +924,7 @@
           "plural_ar": "مُسْلِمَاتٌ",
           "gender": "f",
           "gloss_en": "Muslim woman",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -883,6 +932,7 @@
           "plural_ar": "سَمَاوَاتٌ",
           "gender": "f",
           "gloss_en": "Sky",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -890,6 +940,7 @@
           "plural_ar": "طَبِيبَاتٌ",
           "gender": "",
           "gloss_en": "Female doctor",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -897,6 +948,7 @@
           "plural_ar": "فَلَّاحَاتٌ",
           "gender": "f",
           "gloss_en": "Female farmer",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -904,6 +956,7 @@
           "plural_ar": "مُدِيرَاتٌ",
           "gender": "f",
           "gloss_en": "Female manager",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         }
       ],
@@ -920,13 +973,14 @@
       "topic": "plural_pattern",
       "arabic_label": "جمع مذكر سالم",
       "english_label": "sound masculine plural",
-      "rule_summary": "Singular→plural pattern attested in the vocab corpus (6 source decks).",
+      "rule_summary": "Form-pair pattern attested in the vocab corpus (6 source decks). Orientation: 54 sound-plural (singular↔plural CERTAIN), 3 paren-heuristic (broken↔broken — sg/pl LABEL not certified; SN9 found some inverted).",
       "examples": [
         {
           "singular_ar": "مُسْلِمٌ",
           "plural_ar": "مُسْلِمُونَ",
           "gender": "m",
           "gloss_en": "Muslim Man",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -934,6 +988,7 @@
           "plural_ar": "مُدَرِّسُونَ",
           "gender": "m",
           "gloss_en": "Male teacher",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -941,6 +996,7 @@
           "plural_ar": "فَلَّاحُونَ",
           "gender": "f",
           "gloss_en": "Male farmer",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -948,6 +1004,7 @@
           "plural_ar": "مُدِيرُونَ",
           "gender": "m",
           "gloss_en": "Male manager",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -955,6 +1012,7 @@
           "plural_ar": "مُؤَذِّنُونَ",
           "gender": "m",
           "gloss_en": "Mu’adhdhin",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -962,6 +1020,7 @@
           "plural_ar": "خَيَّاطُونَ",
           "gender": "f",
           "gloss_en": "Male tailor",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -969,6 +1028,7 @@
           "plural_ar": "هَاتِينَ",
           "gender": "f",
           "gloss_en": "Give me (f)",
+          "orientation": "sound",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-4-vocab.jsonl"
         },
         {
@@ -976,6 +1036,7 @@
           "plural_ar": "سَكَاكِينُ",
           "gender": "m",
           "gloss_en": "Knife",
+          "orientation": "paren",
           "source_ref": "apkg:learn-arabic-with-amau-amau-arabic-section-5-vocab.jsonl"
         }
       ],

@@ -7,7 +7,7 @@ Concepts carry source refs + review status; the full vocabulary stays git-ignore
 |---|---:|
 | concepts | 28 |
 | APKG notes scanned | 1132 |
-| distinct singular→plural pairs | 451 |
+| distinct singular→plural pairs | 486 |
 | gender-tagged nouns (m/f) | 338 / 246 |
 
 ## Concepts by topic

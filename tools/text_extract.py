@@ -105,24 +105,51 @@ def arabic_script_only(s):
     return " ".join(out).strip()
 
 
-def split_vocab_forms(raw_field, ar_only):
-    """For AMAU vocab cards, return (headword_singular, plural, extra_tokens).
+_MARKS = re.compile(r"[ً-ٰٕـ]")
 
-    Shape: ``( <plural>) <singular>`` — plural inside parens precedes the singular
-    headword. Heuristic: if the raw field has a '(' and exactly two Arabic tokens,
-    the FIRST clean token is the plural, the LAST is the singular headword.
+
+def _letters(t):
+    return _MARKS.sub("", t or "")
+
+
+def is_sound_plural(t):
+    """Reliable: a sound plural ends in ـُونَ/ـِينَ (masc) or ـَاتٌ (fem)."""
+    s = _letters(t)
+    return s.endswith("ون") or s.endswith("ين") or s.endswith("ات")
+
+
+def split_vocab_forms(raw_field, ar_only):
+    """For AMAU vocab cards, return (headword_singular, plural, extra_tokens, orientation).
+
+    Orientation of the two forms:
+      * "sound"  — one token is a sound plural (ون/ين/ات): morphologically CERTAIN.
+      * "paren"  — neither is a sound plural; fall back to the deck's ``(plural) singular``
+                   parenthesis convention. This is a HEURISTIC: broken↔broken pairs share
+                   skeleton shapes (كِتَاب فِعَال-singular vs كُتُب فُعُل-plural — shape cannot
+                   decide), and the deck is not perfectly consistent, so the singular/plural
+                   LABEL here is not certified (the SN9 review flagged inverted cases).
+      * "single"/"multi" for 1 or >2 tokens.
     """
     toks = [strip_punct(t) for t in ar_only.split()]
     toks = [t for t in toks if t]
     if not toks:
-        return "", "", []
-    has_paren = "(" in (raw_field or "")
-    if len(toks) == 2 and has_paren:
-        return toks[1], toks[0], []
+        return "", "", [], "none"
     if len(toks) == 1:
-        return toks[0], "", []
-    # >2 tokens: last is usually the headword; treat the rest as extra forms
-    return toks[-1], (toks[0] if has_paren else ""), toks[:-1]
+        return toks[0], "", [], "single"
+    if len(toks) == 2:
+        a, b = toks[0], toks[1]
+        # sound-plural override (reliable, independent of paren order)
+        if is_sound_plural(a) and not is_sound_plural(b):
+            return b, a, [], "sound"
+        if is_sound_plural(b) and not is_sound_plural(a):
+            return a, b, [], "sound"
+        # else: paren convention (plural first in parens) — heuristic, label uncertain
+        has_paren = "(" in (raw_field or "")
+        if has_paren:
+            return b, a, [], "paren"
+        return a, b, [], "paren"
+    # >2 tokens
+    return toks[-1], (toks[0] if "(" in (raw_field or "") else ""), toks[:-1], "multi"
 
 
 def nfc(s):

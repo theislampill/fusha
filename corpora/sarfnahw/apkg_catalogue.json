@@ -31,7 +31,7 @@
       "single_token": 0,
       "multi_token": 34,
       "no_arabic": 0,
-      "with_plural": 0,
+      "with_plural": 2,
       "with_gender": 0,
       "with_gloss": 34,
       "by_class": {
@@ -67,7 +67,7 @@
       "single_token": 4,
       "multi_token": 21,
       "no_arabic": 0,
-      "with_plural": 0,
+      "with_plural": 15,
       "with_gender": 0,
       "with_gloss": 25,
       "by_class": {
@@ -152,7 +152,7 @@
       "single_token": 0,
       "multi_token": 25,
       "no_arabic": 0,
-      "with_plural": 0,
+      "with_plural": 2,
       "with_gender": 0,
       "with_gloss": 25,
       "by_class": {
@@ -197,7 +197,7 @@
       "single_token": 31,
       "multi_token": 140,
       "no_arabic": 0,
-      "with_plural": 101,
+      "with_plural": 102,
       "with_gender": 124,
       "with_gloss": 171,
       "by_class": {
@@ -236,7 +236,7 @@
       "single_token": 2,
       "multi_token": 33,
       "no_arabic": 0,
-      "with_plural": 0,
+      "with_plural": 3,
       "with_gender": 0,
       "with_gloss": 35,
       "by_class": {
@@ -286,7 +286,7 @@
       "single_token": 42,
       "multi_token": 206,
       "no_arabic": 0,
-      "with_plural": 185,
+      "with_plural": 198,
       "with_gender": 216,
       "with_gloss": 248,
       "by_class": {
@@ -324,7 +324,7 @@
       "single_token": 54,
       "multi_token": 54,
       "no_arabic": 0,
-      "with_plural": 18,
+      "with_plural": 21,
       "with_gender": 0,
       "with_gloss": 108,
       "by_class": {
@@ -371,7 +371,7 @@
       "single_token": 22,
       "multi_token": 130,
       "no_arabic": 0,
-      "with_plural": 99,
+      "with_plural": 112,
       "with_gender": 133,
       "with_gloss": 152,
       "by_class": {
@@ -410,7 +410,7 @@
       "single_token": 0,
       "multi_token": 49,
       "no_arabic": 0,
-      "with_plural": 0,
+      "with_plural": 2,
       "with_gender": 0,
       "with_gloss": 49,
       "by_class": {
@@ -456,7 +456,7 @@
       "single_token": 7,
       "multi_token": 157,
       "no_arabic": 8,
-      "with_plural": 73,
+      "with_plural": 109,
       "with_gender": 23,
       "with_gloss": 172,
       "by_class": {

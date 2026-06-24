@@ -123,15 +123,17 @@ def normalize_note(raw, model, deck, guid, tags, deck_kind="mixed"):
             if ll > best:
                 gloss, best = v, ll
     gender = (fields.get("Gender") or fields.get("gender") or "").strip().lower()
-    gender = {"m": "m", "f": "f", "male": "m", "female": "f"}.get(gender, gender)
+    # clamp to {m, f, ""} — never pass through raw Anki values (some decks put Arabic here)
+    gender = {"m": "m", "f": "f", "male": "m", "female": "f"}.get(gender, "")
 
     ar_only = T.arabic_script_only(ar_raw)
-    headword, plural, extra = T.split_vocab_forms(ar_raw, ar_only)
+    headword, plural, extra, orientation = T.split_vocab_forms(ar_raw, ar_only)
     toks = [t for t in (T.strip_punct(x) for x in ar_only.split()) if t]
     note = {
         "deck": deck, "model": model, "guid": guid, "deck_kind": deck_kind,
         "arabic_raw": ar_raw, "arabic": ar_only, "arabic_field": ar_field,
         "headword": headword, "plural": plural, "gender": gender,
+        "plural_orientation": orientation,
         "headword_norm_strict": N.norm_strict(headword) if headword else "",
         "headword_bare": N.bare(headword) if headword else "",
         "plural_bare": N.bare(plural) if plural else "",

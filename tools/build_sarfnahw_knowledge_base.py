@@ -157,8 +157,9 @@ def build():
     concepts += weak_verb_concepts()
 
     # --- plural-pattern concepts from vocab pairs ---
-    plural_buckets = collections.defaultdict(lambda: {"ar": "", "examples": [], "srcs": set()})
+    plural_buckets = collections.defaultdict(lambda: {"ar": "", "examples": [], "srcs": set(), "orient": collections.Counter()})
     gender_count = collections.Counter()
+    orient_count = collections.Counter()
     seen_pairs = set()
     for n in notes:
         if n.get("gender") in ("m", "f"):
@@ -177,20 +178,28 @@ def build():
         if not cls:
             continue
         cid, arlabel = cls
+        orientation = n.get("plural_orientation", "paren")
+        orient_count[orientation] += 1
         b = plural_buckets[cid]
         b["ar"] = arlabel
         b["srcs"].add(n["_src"])
+        b["orient"][orientation] += 1
         if len(b["examples"]) < MAX_EX:
             b["examples"].append({"singular_ar": hw, "plural_ar": pl,
                                   "gender": n.get("gender", ""),
                                   "gloss_en": (n.get("gloss_en") or "")[:40],
+                                  "orientation": orientation,
                                   "source_ref": "apkg:%s" % n["_src"]})
     plural_total = len(seen_pairs)
     for cid, b in sorted(plural_buckets.items()):
+        sound = b["orient"].get("sound", 0)
         concepts.append({
             "concept_id": "sarf:plural:%s" % cid, "domain": "sarf", "topic": "plural_pattern",
             "arabic_label": b["ar"], "english_label": cid.replace("_", " "),
-            "rule_summary": "Singular→plural pattern attested in the vocab corpus (%d source decks)." % len(b["srcs"]),
+            "rule_summary": ("Form-pair pattern attested in the vocab corpus (%d source decks). "
+                             "Orientation: %d sound-plural (singular↔plural CERTAIN), %d paren-heuristic "
+                             "(broken↔broken — sg/pl LABEL not certified; SN9 found some inverted)."
+                             % (len(b["srcs"]), sound, b["orient"].get("paren", 0))),
             "examples": b["examples"],
             "qamus_relevance": ["plural form matching", "entry plural field", "surface-form resolution"],
             "review_status": "needs_review",
@@ -246,6 +255,7 @@ def build():
             "by_topic": dict(collections.Counter(c["topic"] for c in concepts)),
             "apkg_notes_scanned": len(notes),
             "distinct_plural_pairs": plural_total,
+            "plural_orientation": dict(orient_count),
             "gender_tagged": dict(gender_count),
         },
         "concepts": concepts,

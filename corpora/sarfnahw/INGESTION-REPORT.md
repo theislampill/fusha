@@ -26,7 +26,7 @@ needs_review` pending owner licensing confirmation.
   were **not** OCR-copied; canonical wazn patterns are authored from standard morphology with the chart as an
   internal `informed_by` reference only.
 - **Knowledge base (SN3):** **28 deduped concepts** (10 verb measures, 7 verb classes, 7 plural patterns, gender,
-  3 function-word inventories) from **451 singular→plural pairs** + 338m/246f gender tags.
+  3 function-word inventories) from **486 singular→plural pairs** (202 sound-plural = orientation-certain, 284 broken = orientation-heuristic) + 338m/246f gender tags.
 
 ## Skills strengthened (SN4–SN5)
 
@@ -55,6 +55,20 @@ needs_review` pending owner licensing confirmation.
 Refinement adds reviewer signals (189 weak-root **hints** flagged low-confidence, 112 POS guesses, priority
 ranking 205/558/420, 14 hadith-technical, 166 Ṣaḥīḥayn-recurrence-likely). Automated weak-root tying measured
 ~50% precision, so it is **not** used to re-bucket or assert roots — classification is unchanged. No live writes.
+
+## SN9 review (8 read-only reviewers) + remediation
+
+An 8-dimension adversarial panel audited the work: **6 PASS** (PDF/chart extraction, sarf morphology,
+nahw grammar, Qamus/hover integration incl. the 2-gate certification logic, candidate dedup, test quality),
+**2 concerns** — all findings closed:
+
+| finding | severity | fix |
+|---|---|---|
+| `export_hover_state.py` hardcoded two `/srv/...` paths (pre-existing) | blocker (leakage) | now env-var driven (`QAMUS_WBW_SERVICES`/`QAMUS_WBW_ARTIFACT`); no server path in the repo |
+| gender field passed through raw Anki values (e.g. بِطَاءٌ) | major | clamped to `{m,f,""}` — 0 non-mf values remain |
+| singular/plural label inverted for some broken↔broken pairs | blocker | sound plurals (ون/ين/ات) now oriented with certainty; broken pairs fall back to the paren convention but are **flagged `orientation:"paren"` (heuristic, not certified)** rather than asserted — the honest fix for an inherently ambiguous skeleton |
+
+Post-fix: regression checker 19/19 PASS; leakage scan clean (no raw sources/media tracked, no secrets/keys/IPs).
 
 ## Boundaries held
 

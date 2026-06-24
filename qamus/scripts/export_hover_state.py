@@ -5,6 +5,10 @@
 Read-only over the deployed artifact + the QAC reference. Run ON THE SERVER (it needs the live artifact +
 qac-tokroots.tsv); the JSON it writes is pulled into Fusha (no private paths inside the JSON).
 
+Configuration is via ENV VARS so no private/server path lives in this public repo:
+  QAMUS_WBW_SERVICES  — dir containing the `qamus_wbw` package (added to sys.path). Default: "services".
+  QAMUS_WBW_ARTIFACT  — path to the built wbw-lookup.json (or pass --artifact). Required if neither is set.
+
 Outputs (to --out):
   hover_state.jsonl       — one row per token: {loc, surface, norm_strict, qac_root, qac_pos, state, conf, gloss}
   hover_pending_top.json  — top pending surfaces ranked by frequency, with QAC root/POS (P4 candidates)
@@ -17,15 +21,18 @@ import json
 import os
 import sys
 
-sys.path.insert(0, "/srv/dawah-ops/hermes-workspace/repos/ops-dashboard/services")
+sys.path.insert(0, os.environ.get("QAMUS_WBW_SERVICES", "services"))
 from qamus_wbw import expand as X, normalize as N
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--artifact", default="/srv/dawah-ops/hermes-workspace/repos/ops-dashboard/services/qamus_wbw/build/wbw-lookup.json")
+    ap.add_argument("--artifact", default=os.environ.get("QAMUS_WBW_ARTIFACT"),
+                    help="built wbw-lookup.json (or set QAMUS_WBW_ARTIFACT)")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
+    if not a.artifact:
+        ap.error("--artifact or QAMUS_WBW_ARTIFACT is required (no path is hardcoded in this public repo)")
     os.makedirs(a.out, exist_ok=True)
     d = json.load(open(a.artifact, encoding="utf-8"))
     verses, words = d.get("verses", {}), d["words"]
