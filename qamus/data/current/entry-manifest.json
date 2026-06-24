@@ -1,0 +1,35 @@
+{
+ "category_count":55,
+ "distinct_lemmas":2088,
+ "distinct_norm_surfaces":2050,
+ "distinct_quran_refs":3863,
+ "distinct_roots":1091,
+ "dropped_unknown_fields":{},
+ "entry_count":2092,
+ "files":[
+  "data/entries.jsonl",
+  "data/entries.min.jsonl",
+  "data/source-keys.json",
+  "indexes/by-entry-id.json",
+  "indexes/by-source-key.json",
+  "indexes/by-root.json",
+  "indexes/by-lemma.json",
+  "indexes/by-normalized-surface.json",
+  "indexes/by-quran-ref.json",
+  "indexes/by-category.json"
+ ],
+ "generator":"tools/export_current_qamus_dataset.py",
+ "schema":"qamus-entry-public/1.0",
+ "scope":{
+  "status":"reviewed (all)",
+  "visibility":"public (all)"
+ },
+ "section_counts":{
+  "noun":1045,
+  "particle":100,
+  "verb":947
+ },
+ "total_examples":7700,
+ "total_senses":3037,
+ "total_usage_blocks":3038
+}

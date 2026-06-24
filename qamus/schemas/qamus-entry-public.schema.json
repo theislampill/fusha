@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/qamus-entry-public.schema.json",
+  "title": "Qamus public entry (redistribution-safe)",
+  "description": "One public-safe Qamus entry as emitted by tools/export_current_qamus_dataset.py. Contains ONLY redistributable lexical content; all author/moderation/provenance/version/path fields are stripped at export. This schema is the public contract: a conforming object carries no private data.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "headword", "section", "senses", "usage"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[0-9a-f]{6,32}$", "description": "Stable entry id (hex)."},
+    "source_keys": {"type": "array", "items": {"type": "string"}, "description": "Source-scope keys (e.g. v003, n012, p045) tying the entry to its dictionary source; not a filesystem path."},
+    "root": {"type": "string", "description": "Triliteral/quadriliteral root, space-separated (e.g. 'أ م ن'). May be empty for proper-noun/phrase entries."},
+    "root_translit": {"type": "string"},
+    "headword": {"type": "string", "description": "Lemma / dictionary headword (vocalized Arabic)."},
+    "translit": {"type": "string"},
+    "section": {"type": "string", "enum": ["verb", "noun", "particle"], "description": "Coarse POS."},
+    "category": {"type": "string", "description": "Human-readable category (e.g. 'Verbs with Derivatives', 'Animals & Birds')."},
+    "definition": {"type": "string"},
+    "meaning": {"type": "string"},
+    "total_uses": {"type": ["integer", "null"], "description": "Qamus-recorded total Qur'anic occurrences of the lexeme."},
+    "tags": {"type": "array", "items": {"type": "string"}},
+    "notes": {"type": "array", "items": {"type": "string"}, "description": "Public info-notes (e.g. homograph disambiguation)."},
+    "senses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "n": {"type": ["integer", "null"]},
+          "ar": {"type": "string"},
+          "translit": {"type": "string"},
+          "gloss": {"type": "string"},
+          "count": {"type": ["integer", "null"]}
+        }
+      }
+    },
+    "usage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sense": {"type": ["integer", "null"], "description": "1-based index into senses[] this usage block elaborates."},
+          "forms": {"type": "array", "items": {"type": "string"}, "description": "Public Arabic word-forms for the sense."},
+          "examples": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ar": {"type": "string", "description": "Qur'anic example text — never altered."},
+                "en": {"type": "string", "description": "English rendering of the example."},
+                "ref": {"type": "string", "description": "Qur'an reference, e.g. '2:13' or a range."}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-stripped-private-fields": [
+    "author_uid", "author_name", "last_edited_by", "actor_type",
+    "created_at", "updated_at", "edit_count", "version", "versions",
+    "status", "visibility", "image", "source"
+  ]
+}
