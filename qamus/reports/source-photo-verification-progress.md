@@ -1,6 +1,7 @@
 # Source-photo verification — progress (RESCUE pass)
 
-> **2026-06-24 update:** corpus complete (1,205 imgs, pages 2-471, **0 missing, 0 retakes**). Visually verified by me this pass: **v008 بَيَّنَ (523) + v027 عَبَدَ (275)** from existing photos (intake_13). Real-bucket queue + the entry->page-index bottleneck in `source-photo-verification-batch-001.md`.
+> **2026-06-24b update:** entry→page locator built for all 2,092 (`source_photo_entry_locator.json`); 3 head-on verified (v008 بين 523, v027 عبد 275, v028 أخذ 273); circled entry number = v-number confirmed; 0 retakes (corpus complete). Read-quality (angle/glare) limits bulk digit reads — see `source-photo-verification-batch-002.md`.
+
 
 Status of the **entry-data** verification lane. **Owner correction applied:** `needs_source_photo_review` is no
 longer treated as "ask owner for new photos." The existing photographed corpus was indexed and used FIRST.

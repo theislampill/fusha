@@ -6,15 +6,15 @@ All **2,092** entries audited; **0 unknown buckets**. Sections: {'verb': 947, 'n
 
 | status | count |
 |---|---|
-| photo_present_needs_visual | 1,964 |
+| photo_present_needs_visual | 1,963 |
 | deferred | 102 |
 | repair_ready | 24 |
-| verified | 2 |
+| verified | 3 |
 
 ## Hover status
 
-- entries fully hover-complete (all example tokens resolved): **255**
-- entries with ≥1 pending hover token: **1,837**
+- entries fully hover-complete (all example tokens resolved): **264**
+- entries with ≥1 pending hover token: **1,828**
 
 ## Repair status
 | status | count |

@@ -1,11 +1,24 @@
 # Next-batch resume plan — exact, no vague "standing by"
 
-## Where we are (live, reconciled 2026-06-24, completion-tranche P0–P12)
+## Where we are (live, reconciled 2026-06-24b, corrective tranche)
 
-- Live coverage **81.91%** · **40,875 / 49,900** resolved · **9,025 pending** · health 200 ·
-  `source_sha=65797d7d5599fadd` · 2,092 entries (947 v / 1,045 n / 100 p) · **615 token decisions**.
-- This tranche: **+70 tokens** applied, **−0 removed, −0 changed**, **0 wrong glosses shipped**
-  (81.77 → 81.85 suffix/pronoun batch_002 +40 → 81.91 content batch_001 +30), all 2-vote certified.
+- Live coverage **82.49%** · **41,164 / 49,900** resolved · **8,736 pending** · health 200 ·
+  `source_sha=65797d7d5599fadd` · 2,092 entries (947 v / 1,045 n / 100 p) · **904 token decisions**.
+- This tranche (corrective): **A1 artifact ergonomics** (repo dogfoodable — pretty/JSONL/.min, gated)
+  + **+289 tokens** applied (B3 token-iʿrāb +188, B2 host-lexeme +101), **−0 removed, −0 changed**,
+  **0 wrong glosses**. Blockers now: `stem_base_unknown` 6,866 · `source_entry_unverified` 1,349 ·
+  `same_surface_polysemy_requires_i3rab` 520 · `proper_noun` 1.
+- Coverage trail: 81.91 → 82.29 (B3) → **82.49% (B2)**.
+
+### exact next (this tranche's resume)
+1. Re-run `build_token_irab_decisions.py` for the next polysemy tier (remaining وما/لمّا + lower-freq
+   content homographs) → `token-irab-verify` workflow → apply.
+2. Re-run `build_host_lexeme_candidates.py` next tier → `host-lexeme-verify` → apply; mint owner-gated
+   new-entry candidates for genuinely recurring missing nouns.
+3. Source-photo: head-on crop pass over `source_photo_entry_locator.json` candidate pages (method
+   proven; bulk digit-reads need head-on crops, not retakes — corpus complete).
+
+### prior state (completion-tranche P0–P12, 81.91%)
 - **Every one of the 49,900 hover tokens is terminal** (P3): resolved, or pending with an EXACT
   blocker — `stem_base_unknown` 6,969 · `source_entry_unverified` 1,505 ·
   `same_surface_polysemy_requires_i3rab` 550 · `proper_noun_no_qamus_entry` 1. **No generic pending.**

@@ -1,6 +1,7 @@
 # Verbs proofing matrix (V1 sweep)
 
-> **2026-06-24 (live 81.91%):** verb section example coverage **81.9%** (54/947 entries fully hover-complete; 888 with >=1 pending). Content batch_001 applied 7 verb glosses (وَعَدَ "promised" etc.); all homograph candidates (يَدْعُونَ call/shove, يَحِلُّونَ lawful/adorn) correctly 2-vote-rejected -> pending with exact blocker. Canonical totals in `hover-token-audit-full.jsonl`.
+> **2026-06-24b (live 82.49%):** verb section example coverage **82.5%** (56/947 entries fully hover-complete). B3 token-iʿrāb resolved verb homographs per loc (عاد returned, ذهب gold, أذن permitted, يحيى=John). Canonical totals in `hover-token-audit-full.jsonl`.
+
 
 Per-entry audit for the 970 verbs entries (Fusha index class `v`). Hover coverage of each entry's example āyāt + a terminal status. **0 unknown.** Generator: `qamus/scripts/build_nv_matrices.py`.
 

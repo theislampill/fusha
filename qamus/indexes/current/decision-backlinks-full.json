@@ -7,7 +7,7 @@
       ]
     },
     "same_surface_polysemy_requires_i3rab": {
-      "count": 550,
+      "count": 520,
       "sample": [
         "2:19:18",
         "2:22:12",
@@ -32,12 +32,12 @@
         "2:144:3",
         "2:158:19",
         "2:173:18",
-        "2:177:2",
-        "2:177:4"
+        "2:177:4",
+        "2:177:15"
       ]
     },
     "source_entry_unverified": {
-      "count": 1505,
+      "count": 1349,
       "sample": [
         "1:4:1",
         "2:2:6",
@@ -67,7 +67,7 @@
       ]
     },
     "stem_base_unknown": {
-      "count": 6969,
+      "count": 6866,
       "sample": [
         "1:6:1",
         "1:7:3",
@@ -113,6 +113,51 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "فَأُمُّهُۥ"
     },
+    "state:tok:10:10:1": {
+      "entry_contexts": [
+        "543da5bcc248",
+        "68e87fcb398a",
+        "83e64ea698d5"
+      ],
+      "gloss": "their call",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "10:10:1",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "دَعْوَىٰهُمْ"
+    },
+    "state:tok:10:10:9": {
+      "entry_contexts": [
+        "543da5bcc248",
+        "68e87fcb398a",
+        "83e64ea698d5"
+      ],
+      "gloss": "their call",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "10:10:9",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "دَعْوَىٰهُمْ"
+    },
+    "state:tok:10:11:17": {
+      "entry_contexts": [
+        "2e2fa868686a",
+        "4610ca5d83fa",
+        "4ad302f84579"
+      ],
+      "gloss": "their transgression",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "10:11:17",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "طُغْيَٰنِهِمْ"
+    },
     "state:tok:10:12:17": {
       "entry_contexts": [
         "30fad52d1929",
@@ -129,6 +174,20 @@
       "loc": "10:12:17",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
+    },
+    "state:tok:10:19:5": {
+      "entry_contexts": [
+        "2954a233a939",
+        "6e94367c0d77"
+      ],
+      "gloss": "community",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "10:19:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُمَّةًۭ"
     },
     "state:tok:10:24:36": {
       "entry_contexts": [
@@ -148,6 +207,34 @@
       "loc": "10:24:36",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
+    },
+    "state:tok:10:28:10": {
+      "entry_contexts": [
+        "0191d7ee3dae",
+        "5d308b003904"
+      ],
+      "gloss": "and your partners",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "10:28:10",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَشُرَكَآؤُكُمْ"
+    },
+    "state:tok:10:28:14": {
+      "entry_contexts": [
+        "0191d7ee3dae",
+        "5d308b003904"
+      ],
+      "gloss": "their partners",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "10:28:14",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "شُرَكَآؤُهُم"
     },
     "state:tok:10:30:10": {
       "entry_contexts": [
@@ -248,6 +335,20 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "عَذَابُهُۥ"
     },
+    "state:tok:10:59:15": {
+      "entry_contexts": [
+        "4f666d15bb7e",
+        "8a5693e22167"
+      ],
+      "gloss": "permitted",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "10:59:15",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَذِنَ"
+    },
     "state:tok:10:59:17": {
       "entry_contexts": [
         "4f666d15bb7e",
@@ -263,6 +364,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:10:71:22": {
+      "entry_contexts": [
+        "044c699bb45b",
+        "444a6379d037",
+        "fbd04177b8dd"
+      ],
+      "gloss": "and your partners",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "10:71:22",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَشُرَكَآءَكُمْ"
+    },
     "state:tok:10:73:2": {
       "entry_contexts": [
         "e2d50a1aacf6"
@@ -276,6 +392,20 @@
       "loc": "10:73:2",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:10:9:8": {
+      "entry_contexts": [
+        "76ae70642fdb",
+        "f926e5fd94bb"
+      ],
+      "gloss": "their faith",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "10:9:8",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِإِيمَٰنِهِمْ"
     },
     "state:tok:112:3:1": {
       "entry_contexts": [
@@ -306,6 +436,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "شَقُوا۟"
     },
+    "state:tok:11:107:14": {
+      "entry_contexts": [
+        "2ab27e895dbb"
+      ],
+      "gloss": "of whatever",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "11:107:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "لِّمَا"
+    },
     "state:tok:11:109:13": {
       "entry_contexts": [
         "78e9fc4a99b5",
@@ -320,6 +463,34 @@
       "loc": "11:109:13",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "ءَابَآؤُهُم"
+    },
+    "state:tok:11:118:6": {
+      "entry_contexts": [
+        "259fe620e117",
+        "5d308b003904"
+      ],
+      "gloss": "community",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "11:118:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُمَّةًۭ"
+    },
+    "state:tok:11:12:19": {
+      "entry_contexts": [
+        "23b124a7024e",
+        "7e204ec6d6de"
+      ],
+      "gloss": "an angel",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "11:12:19",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مَلَكٌ"
     },
     "state:tok:11:13:1": {
       "entry_contexts": [
@@ -364,6 +535,20 @@
       "loc": "11:35:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
+    },
+    "state:tok:11:37:4": {
+      "entry_contexts": [
+        "21588055751c",
+        "f6860c032374"
+      ],
+      "gloss": "and Our revelation",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "11:37:4",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَوَحْيِنَا"
     },
     "state:tok:11:40:14": {
       "entry_contexts": [
@@ -425,6 +610,21 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "ءَابَآؤُنَا"
     },
+    "state:tok:11:69:10": {
+      "entry_contexts": [
+        "088ebd5e2393",
+        "58d16ee708f4",
+        "c50d034ef7fc"
+      ],
+      "gloss": "so not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "11:69:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَمَا"
+    },
     "state:tok:11:93:13": {
       "entry_contexts": [
         "b373e6dfeef9"
@@ -453,6 +653,23 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
     },
+    "state:tok:12:100:41": {
+      "entry_contexts": [
+        "049756ecbbf9",
+        "390931ad3aec",
+        "5de0208f57c4",
+        "b3a878fad2b5",
+        "e2824ef7725d"
+      ],
+      "gloss": "toward what",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "12:100:41",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "لِّمَا"
+    },
     "state:tok:12:108:10": {
       "entry_contexts": [
         "1c64d16249f0"
@@ -466,6 +683,22 @@
       "loc": "12:108:10",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنِ"
+    },
+    "state:tok:12:17:9": {
+      "entry_contexts": [
+        "1a9f6df3889e",
+        "23b124a7024e",
+        "70d189b69c9c",
+        "c59a0161fac8"
+      ],
+      "gloss": "our belongings",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "12:17:9",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "مَتَٰعِنَا"
     },
     "state:tok:12:23:5": {
       "entry_contexts": [
@@ -500,6 +733,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
     },
+    "state:tok:12:39:6": {
+      "entry_contexts": [
+        "2cb4015f1b2f"
+      ],
+      "gloss": "or",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "12:39:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمِ"
+    },
     "state:tok:12:51:10": {
       "entry_contexts": [
         "08c89bbcbaad",
@@ -514,6 +760,20 @@
       "loc": "12:51:10",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "حَٰشَ"
+    },
+    "state:tok:12:51:3": {
+      "entry_contexts": [
+        "08c89bbcbaad",
+        "7e246b9a02ea"
+      ],
+      "gloss": "your affair",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "12:51:3",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "خَطْبُكُنَّ"
     },
     "state:tok:12:65:17": {
       "entry_contexts": [
@@ -594,6 +854,22 @@
       "loc": "13:10:9",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
+    },
+    "state:tok:13:11:10": {
+      "entry_contexts": [
+        "141cbc3bd2bd",
+        "2313b955bef3",
+        "321b0c4aed31",
+        "79f031f1c0cb"
+      ],
+      "gloss": "command of Allah",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "13:11:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرِ"
     },
     "state:tok:13:11:7": {
       "entry_contexts": [
@@ -687,6 +963,21 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَأَزْوَٰجِهِمْ"
     },
+    "state:tok:13:30:4": {
+      "entry_contexts": [
+        "0f50cc927d62",
+        "3d82e28ccae0",
+        "a36aed085027"
+      ],
+      "gloss": "community",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "13:30:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُمَّةٍۢ"
+    },
     "state:tok:13:33:14": {
       "entry_contexts": [
         "65daebe73c35"
@@ -700,6 +991,19 @@
       "loc": "13:33:14",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
+    },
+    "state:tok:13:33:21": {
+      "entry_contexts": [
+        "65daebe73c35"
+      ],
+      "gloss": "or",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "13:33:21",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَم"
     },
     "state:tok:13:33:33": {
       "entry_contexts": [
@@ -775,6 +1079,19 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَبْصَٰرُنَا"
     },
+    "state:tok:15:49:3": {
+      "entry_contexts": [
+        "997ebd6fbaf7"
+      ],
+      "gloss": "that I",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "15:49:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَنِّىٓ"
+    },
     "state:tok:15:5:5": {
       "entry_contexts": [
         "6e94367c0d77"
@@ -834,6 +1151,47 @@
       "loc": "16:108:8",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَأَبْصَٰرِهِمْ"
+    },
+    "state:tok:16:120:4": {
+      "entry_contexts": [
+        "0f50cc927d62"
+      ],
+      "gloss": "a model of excellence",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "16:120:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُمَّةً"
+    },
+    "state:tok:16:1:6": {
+      "entry_contexts": [
+        "22faf72d13ce",
+        "33787ee8c0c1",
+        "d5ac66156b8e"
+      ],
+      "gloss": "command of Allah",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "16:1:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرُ"
+    },
+    "state:tok:16:44:5": {
+      "entry_contexts": [
+        "201e59136f5c"
+      ],
+      "gloss": "the reminder",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "16:44:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلذِّكْرَ"
     },
     "state:tok:16:59:12": {
       "entry_contexts": [
@@ -943,6 +1301,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:16:79:4": {
+      "entry_contexts": [
+        "f014850953af"
+      ],
+      "gloss": "the birds",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "16:79:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "الطَّيْرِ"
+    },
     "state:tok:16:7:5": {
       "entry_contexts": [
         "77f39a7f56f8"
@@ -956,6 +1327,25 @@
       "loc": "16:7:5",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
+    },
+    "state:tok:16:80:17": {
+      "entry_contexts": [
+        "014e23727379",
+        "1a9f6df3889e",
+        "61c3bedee211",
+        "92ee2586fdff",
+        "9eb86f860545",
+        "e27e46338419",
+        "e6195d5f06a7"
+      ],
+      "gloss": "your staying",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "16:80:17",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "إِقَامَتِكُمْ"
     },
     "state:tok:16:81:19": {
       "entry_contexts": [
@@ -972,6 +1362,32 @@
       "loc": "16:81:19",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "بَأْسَكُمْ"
+    },
+    "state:tok:16:86:5": {
+      "entry_contexts": [
+        "22faf72d13ce"
+      ],
+      "gloss": "their partners",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "16:86:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "شُرَكَآءَهُمْ"
+    },
+    "state:tok:16:86:9": {
+      "entry_contexts": [
+        "22faf72d13ce"
+      ],
+      "gloss": "our partners",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "16:86:9",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "شُرَكَآؤُنَا"
     },
     "state:tok:16:92:11": {
       "entry_contexts": [
@@ -990,6 +1406,38 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَيْمَٰنَكُمْ"
     },
+    "state:tok:16:92:16": {
+      "entry_contexts": [
+        "0c5f30e50041",
+        "4732fa608347",
+        "4c4cfa311243",
+        "92c1c2e044f6"
+      ],
+      "gloss": "a community",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "16:92:16",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُمَّةٌ"
+    },
+    "state:tok:16:92:20": {
+      "entry_contexts": [
+        "0c5f30e50041",
+        "4732fa608347",
+        "4c4cfa311243",
+        "92c1c2e044f6"
+      ],
+      "gloss": "community",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "16:92:20",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُمَّةٍ"
+    },
     "state:tok:16:94:3": {
       "entry_contexts": [
         "10323da55570",
@@ -1006,6 +1454,21 @@
       "loc": "16:94:3",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَيْمَٰنَكُمْ"
+    },
+    "state:tok:17:105:5": {
+      "entry_contexts": [
+        "049756ecbbf9",
+        "4e7ead35510e",
+        "a6de8fd64244"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "17:105:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَآ"
     },
     "state:tok:17:111:5": {
       "entry_contexts": [
@@ -1034,6 +1497,20 @@
       "loc": "17:19:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
+    },
+    "state:tok:17:25:5": {
+      "entry_contexts": [
+        "1c5f7c9c8e05",
+        "aa1e635cbb3d"
+      ],
+      "gloss": "your souls",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "17:25:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "نُفُوسِكُمْ"
     },
     "state:tok:17:33:9": {
       "entry_contexts": [
@@ -1068,6 +1545,34 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:17:5:9": {
+      "entry_contexts": [
+        "4cc74b0f231e",
+        "ef4d590e9dac"
+      ],
+      "gloss": "possessors of",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "17:5:9",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُو۟لِى"
+    },
+    "state:tok:17:63:8": {
+      "entry_contexts": [
+        "14016d7c8d23",
+        "14281cf45ced"
+      ],
+      "gloss": "your recompense",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "17:63:8",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "جَزَآؤُكُمْ"
+    },
     "state:tok:17:69:1": {
       "entry_contexts": [
         "1e35a96fbd9d",
@@ -1099,6 +1604,36 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:17:7:19": {
+      "entry_contexts": [
+        "0f79975eb71d",
+        "8fed4103a14a",
+        "d257e3f29283",
+        "f80e6f80783a"
+      ],
+      "gloss": "time",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "17:7:19",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مَرَّةٍۢ"
+    },
+    "state:tok:17:91:4": {
+      "entry_contexts": [
+        "0df50aa355f4",
+        "7f42e9796371"
+      ],
+      "gloss": "a garden",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "17:91:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "جَنَّةٌۭ"
+    },
     "state:tok:17:97:1": {
       "entry_contexts": [
         "8ea56e8ba9b4"
@@ -1126,6 +1661,19 @@
       "loc": "17:97:6",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:18:106:2": {
+      "entry_contexts": [
+        "14016d7c8d23"
+      ],
+      "gloss": "their recompense",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "18:106:2",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "جَزَآؤُهُمْ"
     },
     "state:tok:18:17:28": {
       "entry_contexts": [
@@ -1218,6 +1766,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:18:43:9": {
+      "entry_contexts": [
+        "03b5507d70a2"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "18:43:9",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَا"
+    },
     "state:tok:18:47:8": {
       "entry_contexts": [
         "4f09e3f35dd1",
@@ -1233,6 +1794,21 @@
       "loc": "18:47:8",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَلَمْ"
+    },
+    "state:tok:18:48:10": {
+      "entry_contexts": [
+        "0cc78289b69d",
+        "98859ead2d8c",
+        "c3cc01c15eec"
+      ],
+      "gloss": "time",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "18:48:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مَرَّةٍۭ"
     },
     "state:tok:18:52:8": {
       "entry_contexts": [
@@ -1262,6 +1838,32 @@
       "loc": "18:57:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
+    },
+    "state:tok:18:57:4": {
+      "entry_contexts": [
+        "470fa719de93"
+      ],
+      "gloss": "is reminded",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "18:57:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ذُكِّرَ"
+    },
+    "state:tok:18:5:7": {
+      "entry_contexts": [
+        "fbd04177b8dd"
+      ],
+      "gloss": "their fathers",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "18:5:7",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لِءَابَآئِهِمْ"
     },
     "state:tok:18:68:5": {
       "entry_contexts": [
@@ -1590,6 +2192,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنِ"
     },
+    "state:tok:20:21:7": {
+      "entry_contexts": [
+        "744b6cea0cc9"
+      ],
+      "gloss": "the former",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "20:21:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْأُولَىٰ"
+    },
     "state:tok:20:38:4": {
       "entry_contexts": [
         "2b9b68ab6329"
@@ -1625,6 +2240,19 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أُمِّكَ"
     },
+    "state:tok:20:51:5": {
+      "entry_contexts": [
+        "e0eccd6b35ed"
+      ],
+      "gloss": "the former",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "20:51:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "الْأُولَىٰ"
+    },
     "state:tok:20:63:9": {
       "entry_contexts": [
         "07e9e2cce5df",
@@ -1657,6 +2285,47 @@
       "loc": "20:69:4",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "يَمِينِكَ"
+    },
+    "state:tok:20:71:9": {
+      "entry_contexts": [
+        "8a5693e22167",
+        "b39567132b2c",
+        "fbd04177b8dd"
+      ],
+      "gloss": "your chief",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "20:71:9",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لَكَبِيرُكُمُ"
+    },
+    "state:tok:20:73:6": {
+      "entry_contexts": [
+        "d61581e0ee6b"
+      ],
+      "gloss": "our sins",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "20:73:6",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "خَطَٰيَٰنَا"
+    },
+    "state:tok:20:74:13": {
+      "entry_contexts": [
+        "0bf59423714b"
+      ],
+      "gloss": "lives",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "20:74:13",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يَحْيَىٰ"
     },
     "state:tok:20:75:1": {
       "entry_contexts": [
@@ -1733,6 +2402,35 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:21:109:10": {
+      "entry_contexts": [
+        "8a5693e22167",
+        "a6200e6a0d07",
+        "f958e6e21ac1"
+      ],
+      "gloss": "or",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "21:109:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَم"
+    },
+    "state:tok:21:15:4": {
+      "entry_contexts": [
+        "5d308b003904",
+        "83e64ea698d5"
+      ],
+      "gloss": "their cry",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "21:15:4",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "دَعْوَىٰهُمْ"
+    },
     "state:tok:21:19:6": {
       "entry_contexts": [
         "ecf5fd6d9c13"
@@ -1746,6 +2444,19 @@
       "loc": "21:19:6",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
+    },
+    "state:tok:21:2:4": {
+      "entry_contexts": [
+        "722b4065dc2a"
+      ],
+      "gloss": "a reminder",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "21:2:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ذِكْرٍۢ"
     },
     "state:tok:21:43:1": {
       "entry_contexts": [
@@ -1824,6 +2535,47 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "بَأْسِكُمْ"
     },
+    "state:tok:21:90:5": {
+      "entry_contexts": [
+        "05ffcc9a615d",
+        "4d22dd9db001",
+        "b309f86b564e"
+      ],
+      "gloss": "Yaḥyā (John)",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "21:90:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يَحْيَىٰ"
+    },
+    "state:tok:21:92:3": {
+      "entry_contexts": [
+        "0f50cc927d62"
+      ],
+      "gloss": "your community",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "21:92:3",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أُمَّتُكُمْ"
+    },
+    "state:tok:21:92:4": {
+      "entry_contexts": [
+        "0f50cc927d62"
+      ],
+      "gloss": "community",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "21:92:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُمَّةً"
+    },
     "state:tok:22:18:10": {
       "entry_contexts": [
         "09ea21f326d0",
@@ -1862,6 +2614,40 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:22:18:29": {
+      "entry_contexts": [
+        "09ea21f326d0",
+        "5935ecfb1ec5",
+        "9834999a6b31",
+        "a23a0c853dd8",
+        "a79275c6cdfe",
+        "df392acc2f17"
+      ],
+      "gloss": "so not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "22:18:29",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَمَا"
+    },
+    "state:tok:22:23:18": {
+      "entry_contexts": [
+        "164c9dc1a38b",
+        "2c7649496fb4",
+        "6471f74ceb4e",
+        "652920a74333"
+      ],
+      "gloss": "gold",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "22:23:18",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ذَهَبٍۢ"
+    },
     "state:tok:22:25:17": {
       "entry_contexts": [
         "c1aeb5420969",
@@ -1876,6 +2662,24 @@
       "loc": "22:25:17",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:22:29:5": {
+      "entry_contexts": [
+        "02aec6b4799a",
+        "044c699bb45b",
+        "3a4822f4385a",
+        "6197ee2c0b2a",
+        "d2eddd3dbdad",
+        "f12ae52e78f7"
+      ],
+      "gloss": "their vows",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "22:29:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "نُذُورَهُمْ"
     },
     "state:tok:22:30:2": {
       "entry_contexts": [
@@ -1893,6 +2697,22 @@
       "loc": "22:30:2",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:22:31:14": {
+      "entry_contexts": [
+        "441336466eb4",
+        "790e8c848efc",
+        "99464091d59a",
+        "a189e0ee8815"
+      ],
+      "gloss": "the birds",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "22:31:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلطَّيْرُ"
     },
     "state:tok:22:31:6": {
       "entry_contexts": [
@@ -1924,6 +2744,20 @@
       "loc": "22:32:2",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:22:47:12": {
+      "entry_contexts": [
+        "4610ca5d83fa",
+        "55c548d602e9"
+      ],
+      "gloss": "year",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "22:47:12",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "سَنَةٍۢ"
     },
     "state:tok:22:5:40": {
       "entry_contexts": [
@@ -2016,6 +2850,19 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَأَهْلَكَ"
     },
+    "state:tok:23:27:7": {
+      "entry_contexts": [
+        "2b9b68ab6329"
+      ],
+      "gloss": "and Our revelation",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "23:27:7",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَوَحْيِنَا"
+    },
     "state:tok:23:44:9": {
       "entry_contexts": [
         "5d89e690256d",
@@ -2045,6 +2892,19 @@
       "loc": "23:47:5",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَقَوْمُهُمَا"
+    },
+    "state:tok:23:66:3": {
+      "entry_contexts": [
+        "1d150a3bac99"
+      ],
+      "gloss": "your heels",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "23:66:3",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَعْقَابِكُمْ"
     },
     "state:tok:23:6:7": {
       "entry_contexts": [
@@ -2215,6 +3075,24 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:24:33:46": {
+      "entry_contexts": [
+        "21d0c74b634d",
+        "33787ee8c0c1",
+        "34b231b32718",
+        "5970b19734fd",
+        "622180fd3846",
+        "622a3d627d4d"
+      ],
+      "gloss": "their coercion",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "24:33:46",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "إِكْرَٰهِهِنَّ"
+    },
     "state:tok:24:35:30": {
       "entry_contexts": [
         "0c0e1edc8c65",
@@ -2244,6 +3122,19 @@
       "loc": "24:35:30",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
+    },
+    "state:tok:24:36:3": {
+      "entry_contexts": [
+        "d2eddd3dbdad"
+      ],
+      "gloss": "permitted",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "24:36:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَذِنَ"
     },
     "state:tok:24:39:12": {
       "entry_contexts": [
@@ -2387,6 +3278,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:24:50:4": {
+      "entry_contexts": [
+        "6fa19a75798d"
+      ],
+      "gloss": "or",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "24:50:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمِ"
+    },
     "state:tok:24:50:6": {
       "entry_contexts": [
         "6fa19a75798d"
@@ -2505,6 +3409,19 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "ءَابَآئِكُمْ"
     },
+    "state:tok:24:62:11": {
+      "entry_contexts": [
+        "2189b86e056e"
+      ],
+      "gloss": "a matter",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "24:62:11",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرٍۢ"
+    },
     "state:tok:24:62:13": {
       "entry_contexts": [
         "2189b86e056e"
@@ -2547,6 +3464,19 @@
       "loc": "25:18:15",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَءَابَآءَهُمْ"
+    },
+    "state:tok:25:18:18": {
+      "entry_contexts": [
+        "869fa8cf6d07"
+      ],
+      "gloss": "the remembrance",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "25:18:18",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلذِّكْرَ"
     },
     "state:tok:25:19:10": {
       "entry_contexts": [
@@ -2664,6 +3594,34 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَزْوَٰجِنَا"
     },
+    "state:tok:25:74:8": {
+      "entry_contexts": [
+        "80d2a171a103",
+        "887fec713dc3"
+      ],
+      "gloss": "and our offspring",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "25:74:8",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَذُرِّيَّٰتِنَا"
+    },
+    "state:tok:25:8:8": {
+      "entry_contexts": [
+        "2e2fa868686a",
+        "b2a21f632e32"
+      ],
+      "gloss": "a garden",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "25:8:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "جَنَّةٌۭ"
+    },
     "state:tok:26:116:3": {
       "entry_contexts": [
         "32aa5c099adc"
@@ -2749,6 +3707,19 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "نَفْسَكَ"
     },
+    "state:tok:26:49:9": {
+      "entry_contexts": [
+        "1472e09bf997"
+      ],
+      "gloss": "your chief",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "26:49:9",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لَكَبِيرُكُمُ"
+    },
     "state:tok:26:65:3": {
       "entry_contexts": [
         "5b382a023db8"
@@ -2779,6 +3750,34 @@
       "loc": "27:12:11",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "تِسْعِ"
+    },
+    "state:tok:27:16:9": {
+      "entry_contexts": [
+        "2dc72fd49600"
+      ],
+      "gloss": "the birds",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "27:16:9",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلطَّيْرِ"
+    },
+    "state:tok:27:18:12": {
+      "entry_contexts": [
+        "519a6a9b0c09",
+        "d07bf534afd2",
+        "efbecdbb9803"
+      ],
+      "gloss": "your dwellings",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "27:18:12",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "مَسَٰكِنَكُمْ"
     },
     "state:tok:27:19:10": {
       "entry_contexts": [
@@ -2827,6 +3826,21 @@
       "loc": "27:19:4",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "قَوْلِهَا"
+    },
+    "state:tok:27:20:2": {
+      "entry_contexts": [
+        "3c80def5fc48",
+        "b8e480aebafe",
+        "e9dd6c4a6a4f"
+      ],
+      "gloss": "the birds",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "27:20:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلطَّيْرَ"
     },
     "state:tok:27:20:9": {
       "entry_contexts": [
@@ -2965,6 +3979,20 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "بُيُوتُهُمْ"
     },
+    "state:tok:27:60:1": {
+      "entry_contexts": [
+        "d8b8169ae3d3",
+        "fda92aa2e301"
+      ],
+      "gloss": "or who",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "27:60:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمَّنْ"
+    },
     "state:tok:27:66:3": {
       "entry_contexts": [
         "eef1d18c436f"
@@ -3021,6 +4049,41 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أُمِّهِۦ"
     },
+    "state:tok:28:23:25": {
+      "entry_contexts": [
+        "00da6306f662",
+        "0f50cc927d62",
+        "9243dc76f6a2",
+        "db1a68c31812",
+        "f0452c9b2cfb",
+        "f6860c032374",
+        "f7b5171016df",
+        "fbd04177b8dd"
+      ],
+      "gloss": "and our father",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "28:23:25",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَأَبُونَا"
+    },
+    "state:tok:28:24:10": {
+      "entry_contexts": [
+        "141cbc3bd2bd",
+        "8157fb296ba9",
+        "e5040e06a079"
+      ],
+      "gloss": "for whatever",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "28:24:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "لِمَآ"
+    },
     "state:tok:28:27:17": {
       "entry_contexts": [
         "0cf17016b97c",
@@ -3070,6 +4133,21 @@
       "loc": "28:36:16",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "ءَابَآئِنَا"
+    },
+    "state:tok:28:4:15": {
+      "entry_contexts": [
+        "1be757bbd2cc",
+        "89f4baadb89a",
+        "d257e3f29283"
+      ],
+      "gloss": "their women",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "28:4:15",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "نِسَآءَهُمْ"
     },
     "state:tok:28:50:2": {
       "entry_contexts": [
@@ -3127,6 +4205,21 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَجُنُودَهُمَا"
     },
+    "state:tok:28:76:17": {
+      "entry_contexts": [
+        "52ba25e0e494",
+        "622a3d627d4d",
+        "e10eba589c16"
+      ],
+      "gloss": "possessors of",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "28:76:17",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُو۟لِى"
+    },
     "state:tok:28:7:3": {
       "entry_contexts": [
         "04e045953ea0",
@@ -3175,6 +4268,86 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَجُنُودَهُمَا"
     },
+    "state:tok:29:12:14": {
+      "entry_contexts": [
+        "97657fc0cb1c"
+      ],
+      "gloss": "their sins",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "29:12:14",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "خَطَٰيَٰهُم"
+    },
+    "state:tok:29:12:9": {
+      "entry_contexts": [
+        "97657fc0cb1c"
+      ],
+      "gloss": "your sins",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "29:12:9",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "خَطَٰيَٰكُمْ"
+    },
+    "state:tok:29:13:2": {
+      "entry_contexts": [
+        "baa65d37a55a"
+      ],
+      "gloss": "their burdens",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "29:13:2",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَثْقَالَهُمْ"
+    },
+    "state:tok:29:13:5": {
+      "entry_contexts": [
+        "baa65d37a55a"
+      ],
+      "gloss": "their burdens",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "29:13:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَثْقَالِهِمْ"
+    },
+    "state:tok:29:14:8": {
+      "entry_contexts": [
+        "3538a4af6393",
+        "f12ae52e78f7"
+      ],
+      "gloss": "a thousand",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "29:14:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلْفَ"
+    },
+    "state:tok:29:14:9": {
+      "entry_contexts": [
+        "3538a4af6393",
+        "f12ae52e78f7"
+      ],
+      "gloss": "year",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "29:14:9",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "سَنَةٍ"
+    },
     "state:tok:29:25:22": {
       "entry_contexts": [
         "24c53b976cf4",
@@ -3203,6 +4376,19 @@
       "loc": "29:33:18",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَأَهْلَكَ"
+    },
+    "state:tok:29:38:7": {
+      "entry_contexts": [
+        "1c64d16249f0"
+      ],
+      "gloss": "their dwellings",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "29:38:7",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "مَّسَٰكِنِهِمْ"
     },
     "state:tok:29:6:1": {
       "entry_contexts": [
@@ -3237,6 +4423,20 @@
       "loc": "2:102:42",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَزَوْجِهِۦ"
+    },
+    "state:tok:2:107:9": {
+      "entry_contexts": [
+        "03b5507d70a2",
+        "141cbc3bd2bd"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:107:9",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَا"
     },
     "state:tok:2:108:1": {
       "entry_contexts": [
@@ -3329,6 +4529,22 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:2:128:7": {
+      "entry_contexts": [
+        "088ebd5e2393",
+        "57f5749e976b",
+        "a36aed085027",
+        "db97926e4b50"
+      ],
+      "gloss": "a community",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:128:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُمَّةًۭ"
+    },
     "state:tok:2:130:1": {
       "entry_contexts": [
         "1ffcc554ec44",
@@ -3386,6 +4602,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:2:140:16": {
+      "entry_contexts": [
+        "2d25d2995270"
+      ],
+      "gloss": "or",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:140:16",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمِ"
+    },
     "state:tok:2:140:18": {
       "entry_contexts": [
         "2d25d2995270"
@@ -3399,6 +4628,20 @@
       "loc": "2:140:18",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
+    },
+    "state:tok:2:142:8": {
+      "entry_contexts": [
+        "141cbc3bd2bd",
+        "1ffcc554ec44"
+      ],
+      "gloss": "their prayer direction",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:142:8",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "قِبْلَتِهِمُ"
     },
     "state:tok:2:158:18": {
       "entry_contexts": [
@@ -3420,6 +4663,50 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:2:177:10": {
+      "entry_contexts": [
+        "2c61963db8b2",
+        "47d747ff370a",
+        "55dd18892bf9",
+        "7947580aed3e",
+        "9e51dc1d48ba",
+        "a3829d9357ae",
+        "b57eeb09ca28",
+        "cfa11b67fad0",
+        "d3e8b9b7c4fc",
+        "e9a3604fdfb1"
+      ],
+      "gloss": "righteousness",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:177:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْبِرَّ"
+    },
+    "state:tok:2:177:2": {
+      "entry_contexts": [
+        "2c61963db8b2",
+        "47d747ff370a",
+        "55dd18892bf9",
+        "7947580aed3e",
+        "9e51dc1d48ba",
+        "a3829d9357ae",
+        "b57eeb09ca28",
+        "cfa11b67fad0",
+        "d3e8b9b7c4fc",
+        "e9a3604fdfb1"
+      ],
+      "gloss": "righteousness",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:177:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْبِرَّ"
+    },
     "state:tok:2:185:18": {
       "entry_contexts": [
         "1cf05c1e5d9c",
@@ -3440,6 +4727,23 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:2:189:10": {
+      "entry_contexts": [
+        "16788c4f1590",
+        "2506d1430f16",
+        "292fb71a98c2",
+        "68e87fcb398a",
+        "98259aa98c96"
+      ],
+      "gloss": "righteousness",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:189:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْبِرُّ"
+    },
     "state:tok:2:189:15": {
       "entry_contexts": [
         "16788c4f1590",
@@ -3457,6 +4761,23 @@
       "loc": "2:189:15",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "ظُهُورِهَا"
+    },
+    "state:tok:2:189:17": {
+      "entry_contexts": [
+        "16788c4f1590",
+        "2506d1430f16",
+        "292fb71a98c2",
+        "68e87fcb398a",
+        "98259aa98c96"
+      ],
+      "gloss": "righteousness",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:189:17",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْبِرَّ"
     },
     "state:tok:2:196:13": {
       "entry_contexts": [
@@ -3588,6 +4909,50 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَأَبْصَٰرِهِمْ"
     },
+    "state:tok:2:213:3": {
+      "entry_contexts": [
+        "1c4c58d664ab",
+        "997ebd6fbaf7",
+        "f9e31261222b"
+      ],
+      "gloss": "community",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:213:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُمَّةًۭ"
+    },
+    "state:tok:2:213:37": {
+      "entry_contexts": [
+        "1c4c58d664ab",
+        "997ebd6fbaf7",
+        "f9e31261222b"
+      ],
+      "gloss": "to that which",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:213:37",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "لِمَا"
+    },
+    "state:tok:2:214:1": {
+      "entry_contexts": [
+        "19de33871698",
+        "7e06490afa9c"
+      ],
+      "gloss": "indeed",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:214:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ألا"
+    },
     "state:tok:2:217:38": {
       "entry_contexts": [
         "3ad045e70ff7",
@@ -3624,6 +4989,58 @@
       "loc": "2:220:13",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "فَإِخْوَٰنُكُمْ"
+    },
+    "state:tok:2:224:5": {
+      "entry_contexts": [
+        "0cc78289b69d",
+        "d547df241bb6"
+      ],
+      "gloss": "your oaths",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:224:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لِّأَيْمَٰنِكُمْ"
+    },
+    "state:tok:2:229:19": {
+      "entry_contexts": [
+        "077b3e5e01fd",
+        "45382abab504",
+        "56d447209801",
+        "603eecbe7dd7",
+        "6520ab46a9dc",
+        "9e4222baccd2",
+        "c77a66a7c89b"
+      ],
+      "gloss": "that ... not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:229:19",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلَّا"
+    },
+    "state:tok:2:229:25": {
+      "entry_contexts": [
+        "077b3e5e01fd",
+        "45382abab504",
+        "56d447209801",
+        "603eecbe7dd7",
+        "6520ab46a9dc",
+        "9e4222baccd2",
+        "c77a66a7c89b"
+      ],
+      "gloss": "that ... not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:229:25",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلَّا"
     },
     "state:tok:2:229:40": {
       "entry_contexts": [
@@ -3696,6 +5113,28 @@
       "loc": "2:233:14",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "رِزْقُهُنَّ"
+    },
+    "state:tok:2:233:25": {
+      "entry_contexts": [
+        "088ebd5e2393",
+        "20ad1797ac4b",
+        "361a2ebe2ad4",
+        "554c1c782996",
+        "6269f8851346",
+        "63da116be953",
+        "748db31e0c38",
+        "cdc25c98f360",
+        "d6a4f976cb61",
+        "efa9daeebae2"
+      ],
+      "gloss": "her child",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:233:25",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِوَلَدِهَا"
     },
     "state:tok:2:233:3": {
       "entry_contexts": [
@@ -3800,6 +5239,20 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَنفُسِهِنَّ"
     },
+    "state:tok:2:240:7": {
+      "entry_contexts": [
+        "1a9f6df3889e",
+        "554c1c782996"
+      ],
+      "gloss": "their wives",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:240:7",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لِّأَزْوَٰجِهِم"
+    },
     "state:tok:2:246:42": {
       "entry_contexts": [
         "a04259b0887d"
@@ -3885,6 +5338,24 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
     },
+    "state:tok:2:257:12": {
+      "entry_contexts": [
+        "141cbc3bd2bd",
+        "1f50dcf7931c",
+        "56d447209801",
+        "5c405be976bd",
+        "714b269ac820",
+        "a5cc58fc5d1a"
+      ],
+      "gloss": "their protectors",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:257:12",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَوْلِيَآؤُهُمُ"
+    },
     "state:tok:2:259:41": {
       "entry_contexts": [
         "0363f1b02d58",
@@ -3931,6 +5402,39 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلْعِظَامِ"
     },
+    "state:tok:2:260:21": {
+      "entry_contexts": [
+        "03ca74904e38",
+        "056715c742d4",
+        "50e6965331d9",
+        "afe866d4f423"
+      ],
+      "gloss": "the birds",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:260:21",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلطَّيْرِ"
+    },
+    "state:tok:2:265:12": {
+      "entry_contexts": [
+        "1c64d16249f0",
+        "1f1b330dbcd0",
+        "3cd6c95e5901",
+        "4732fa608347",
+        "d1b19bc5e60d"
+      ],
+      "gloss": "a garden",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:265:12",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "جَنَّةٍۭ"
+    },
     "state:tok:2:265:20": {
       "entry_contexts": [
         "1c64d16249f0",
@@ -3948,6 +5452,22 @@
       "loc": "2:265:20",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
+    },
+    "state:tok:2:266:6": {
+      "entry_contexts": [
+        "047ddb2e206e",
+        "7d6e5b852be1",
+        "a22e313b17b6",
+        "ea0df9d53638"
+      ],
+      "gloss": "a garden",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:266:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "جَنَّةٌۭ"
     },
     "state:tok:2:269:5": {
       "entry_contexts": [
@@ -4046,6 +5566,24 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَجَلِهِۦ"
     },
+    "state:tok:2:283:11": {
+      "entry_contexts": [
+        "2639545324b4",
+        "5f0547e0c0c9",
+        "674fd8bf02d2",
+        "a06d517f5b38",
+        "bb789f4cfd10",
+        "c59a0161fac8"
+      ],
+      "gloss": "trusts",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:283:11",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمِنَ"
+    },
     "state:tok:2:283:24": {
       "entry_contexts": [
         "2639545324b4",
@@ -4084,6 +5622,22 @@
       "loc": "2:286:45",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "مَوْلَىٰنَا"
+    },
+    "state:tok:2:49:12": {
+      "entry_contexts": [
+        "51042708f3b6",
+        "6d7fb324a641",
+        "89f4baadb89a",
+        "d2f38ce36ca1"
+      ],
+      "gloss": "your women",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:49:12",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "نِسَآءَكُمْ"
     },
     "state:tok:2:6:7": {
       "entry_contexts": [
@@ -4129,6 +5683,37 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:2:96:13": {
+      "entry_contexts": [
+        "1196fc7289e8",
+        "24c53b976cf4",
+        "26fc04f9d447",
+        "588b093309e9",
+        "af75174c26a6"
+      ],
+      "gloss": "a thousand",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:96:13",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلْفَ"
+    },
+    "state:tok:2:97:13": {
+      "entry_contexts": [
+        "1015809f59b7",
+        "dc571b74a440"
+      ],
+      "gloss": "that which",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "2:97:13",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "لِّمَا"
+    },
     "state:tok:30:28:11": {
       "entry_contexts": [
         "f3726bc9f962"
@@ -4157,6 +5742,34 @@
       "loc": "30:30:16",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلدِّينُ"
+    },
+    "state:tok:30:39:1": {
+      "entry_contexts": [
+        "047ddb2e206e",
+        "4732fa608347"
+      ],
+      "gloss": "and whatever",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "30:39:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَآ"
+    },
+    "state:tok:30:39:13": {
+      "entry_contexts": [
+        "047ddb2e206e",
+        "4732fa608347"
+      ],
+      "gloss": "and whatever",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "30:39:13",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَآ"
     },
     "state:tok:30:44:5": {
       "entry_contexts": [
@@ -4315,6 +5928,32 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "فَمَأْوَىٰهُمُ"
     },
+    "state:tok:32:5:14": {
+      "entry_contexts": [
+        "1d1155c1ea36"
+      ],
+      "gloss": "a thousand",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "32:5:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلْفَ"
+    },
+    "state:tok:32:5:15": {
+      "entry_contexts": [
+        "1d1155c1ea36"
+      ],
+      "gloss": "year",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "32:5:15",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "سَنَةٍۢ"
+    },
     "state:tok:33:13:3": {
       "entry_contexts": [
         "2ca978c2b2b9",
@@ -4364,6 +6003,35 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:33:23:16": {
+      "entry_contexts": [
+        "044c699bb45b",
+        "fc61b71b6f83"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "33:23:16",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَا"
+    },
+    "state:tok:33:25:5": {
+      "entry_contexts": [
+        "1da89a32d7fc",
+        "51e9879b93ab",
+        "c9f6f53604e8"
+      ],
+      "gloss": "their rage",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "33:25:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِغَيْظِهِمْ"
+    },
     "state:tok:33:25:6": {
       "entry_contexts": [
         "1da89a32d7fc",
@@ -4409,6 +6077,21 @@
       "loc": "33:33:3",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "بُيُوتِكُنَّ"
+    },
+    "state:tok:33:33:8": {
+      "entry_contexts": [
+        "15ff7cb94ab4",
+        "887fec713dc3",
+        "ad9af170d670"
+      ],
+      "gloss": "the former",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "33:33:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْأُولَىٰ"
     },
     "state:tok:33:34:5": {
       "entry_contexts": [
@@ -4465,6 +6148,60 @@
       "loc": "33:37:16",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "نَفْسِكَ"
+    },
+    "state:tok:33:37:40": {
+      "entry_contexts": [
+        "044c699bb45b",
+        "39659e4cdea3",
+        "5b626770ac68",
+        "6520ab46a9dc",
+        "7ef217b3cd82",
+        "a511c5cabcea",
+        "e2824ef7725d",
+        "f926e5fd94bb"
+      ],
+      "gloss": "their adopted sons",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "33:37:40",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَدْعِيَآئِهِمْ"
+    },
+    "state:tok:33:37:46": {
+      "entry_contexts": [
+        "044c699bb45b",
+        "39659e4cdea3",
+        "5b626770ac68",
+        "6520ab46a9dc",
+        "7ef217b3cd82",
+        "a511c5cabcea",
+        "e2824ef7725d",
+        "f926e5fd94bb"
+      ],
+      "gloss": "command of Allah",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "33:37:46",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرُ"
+    },
+    "state:tok:33:38:19": {
+      "entry_contexts": [
+        "1d1155c1ea36",
+        "2b4fb40bed6b"
+      ],
+      "gloss": "command of Allah",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "33:38:19",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرُ"
     },
     "state:tok:33:4:11": {
       "entry_contexts": [
@@ -4679,6 +6416,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلدِّينِ"
     },
+    "state:tok:33:5:2": {
+      "entry_contexts": [
+        "141cbc3bd2bd",
+        "83e64ea698d5",
+        "aa6f12a8f41e"
+      ],
+      "gloss": "their fathers",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "33:5:2",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لِءَابَآئِهِمْ"
+    },
     "state:tok:33:5:8": {
       "entry_contexts": [
         "141cbc3bd2bd",
@@ -4710,6 +6462,33 @@
       "loc": "33:60:2",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
+    },
+    "state:tok:33:67:6": {
+      "entry_contexts": [
+        "177fb17bf61b",
+        "fbd04177b8dd"
+      ],
+      "gloss": "and our chiefs",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "33:67:6",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَكُبَرَآءَنَا"
+    },
+    "state:tok:33:6:23": {
+      "entry_contexts": [
+        "141cbc3bd2bd"
+      ],
+      "gloss": "your allies",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "33:6:23",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَوْلِيَآئِكُم"
     },
     "state:tok:33:71:7": {
       "entry_contexts": [
@@ -4744,6 +6523,74 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:34:15:5": {
+      "entry_contexts": [
+        "99f8d3c2cad5",
+        "a2b7f1c18ce6"
+      ],
+      "gloss": "their dwelling place",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "34:15:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "مَسْكَنِهِمْ"
+    },
+    "state:tok:34:23:7": {
+      "entry_contexts": [
+        "5193302d50eb"
+      ],
+      "gloss": "permitted",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "34:23:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَذِنَ"
+    },
+    "state:tok:34:46:13": {
+      "entry_contexts": [
+        "f71f12890815"
+      ],
+      "gloss": "your companion",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "34:46:13",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِصَاحِبِكُم"
+    },
+    "state:tok:34:46:15": {
+      "entry_contexts": [
+        "f71f12890815"
+      ],
+      "gloss": "madness",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "34:46:15",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "جِنَّةٍ"
+    },
+    "state:tok:34:54:8": {
+      "entry_contexts": [
+        "1d59eaad6369",
+        "748db31e0c38",
+        "e319c7d90f6d"
+      ],
+      "gloss": "their kind",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "34:54:8",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِأَشْيَاعِهِم"
+    },
     "state:tok:35:18:27": {
       "entry_contexts": [
         "101401b11de8",
@@ -4759,6 +6606,32 @@
       "loc": "35:18:27",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:35:1:4": {
+      "entry_contexts": [
+        "3d8a8bfb97e9"
+      ],
+      "gloss": "possessors of",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "35:1:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُولِي"
+    },
+    "state:tok:35:24:8": {
+      "entry_contexts": [
+        "2b4fb40bed6b"
+      ],
+      "gloss": "community",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "35:24:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُمَّةٍ"
     },
     "state:tok:35:40:14": {
       "entry_contexts": [
@@ -4788,6 +6661,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:35:40:3": {
+      "entry_contexts": [
+        "22faf72d13ce"
+      ],
+      "gloss": "your partners",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "35:40:3",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "شُرَكَآءَكُمُ"
+    },
     "state:tok:35:42:4": {
       "entry_contexts": [
         "9f7e03bf6ac7"
@@ -4815,6 +6701,20 @@
       "loc": "35:8:18",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "نَفْسُكَ"
+    },
+    "state:tok:36:39:5": {
+      "entry_contexts": [
+        "3c366a3056e5",
+        "4e7ead35510e"
+      ],
+      "gloss": "returned",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "36:39:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "عَادَ"
     },
     "state:tok:36:50:6": {
       "entry_contexts": [
@@ -4873,6 +6773,63 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:36:69:10": {
+      "entry_contexts": [
+        "61c3bedee211",
+        "8f8d49c8fd17"
+      ],
+      "gloss": "a reminder",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "36:69:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ذِكْرٌۭ"
+    },
+    "state:tok:36:78:3": {
+      "entry_contexts": [
+        "61198bcd902f",
+        "cb74da5b5dce"
+      ],
+      "gloss": "gives life to",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "36:78:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يُحْيِي"
+    },
+    "state:tok:37:102:11": {
+      "entry_contexts": [
+        "51e7b558eefa",
+        "f6c115011ede"
+      ],
+      "gloss": "that I",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "37:102:11",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَنِّىٓ"
+    },
+    "state:tok:37:147:4": {
+      "entry_contexts": [
+        "1196fc7289e8",
+        "39659e4cdea3",
+        "57ff5ef29e13"
+      ],
+      "gloss": "thousand",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "37:147:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلْفٍ"
+    },
     "state:tok:37:158:2": {
       "entry_contexts": [
         "4150deac9808"
@@ -4886,6 +6843,19 @@
       "loc": "37:158:2",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "بَيْنَهُ"
+    },
+    "state:tok:37:36:4": {
+      "entry_contexts": [
+        "23b124a7024e"
+      ],
+      "gloss": "our gods",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "37:36:4",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "ءَالِهَتِنَا"
     },
     "state:tok:37:48:1": {
       "entry_contexts": [
@@ -4945,6 +6915,32 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:38:41:7": {
+      "entry_contexts": [
+        "1cabc12cf11c"
+      ],
+      "gloss": "that I",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "38:41:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَنِّى"
+    },
+    "state:tok:38:45:6": {
+      "entry_contexts": [
+        "f0573ac07683"
+      ],
+      "gloss": "possessors of",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "38:45:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُو۟لِى"
+    },
     "state:tok:38:75:11": {
       "entry_contexts": [
         "27b75a559611"
@@ -4958,6 +6954,33 @@
       "loc": "38:75:11",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
+    },
+    "state:tok:38:75:7": {
+      "entry_contexts": [
+        "27b75a559611"
+      ],
+      "gloss": "to that which",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "38:75:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "لِمَا"
+    },
+    "state:tok:39:15:12": {
+      "entry_contexts": [
+        "43f7c3170070",
+        "d510eda5a427"
+      ],
+      "gloss": "and their families",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "39:15:12",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَأَهْلِيهِمْ"
     },
     "state:tok:39:23:28": {
       "entry_contexts": [
@@ -4976,6 +6999,23 @@
       "loc": "39:23:28",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:39:23:31": {
+      "entry_contexts": [
+        "057ab0427de6",
+        "21bcc0905331",
+        "722b4065dc2a",
+        "89f59fbb1fff",
+        "f85900d57958"
+      ],
+      "gloss": "so not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "39:23:31",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَمَا"
     },
     "state:tok:39:2:10": {
       "entry_contexts": [
@@ -5006,6 +7046,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:39:3:1": {
+      "entry_contexts": [
+        "09d4d0b6836d",
+        "259fe620e117"
+      ],
+      "gloss": "indeed",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "39:3:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلَا"
+    },
     "state:tok:39:3:3": {
       "entry_contexts": [
         "09d4d0b6836d",
@@ -5034,6 +7088,46 @@
       "loc": "39:41:10",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:39:45:12": {
+      "entry_contexts": [
+        "96d970977904"
+      ],
+      "gloss": "are mentioned",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "39:45:12",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ذُكِرَ"
+    },
+    "state:tok:39:45:2": {
+      "entry_contexts": [
+        "96d970977904"
+      ],
+      "gloss": "is mentioned",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "39:45:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ذُكِرَ"
+    },
+    "state:tok:39:67:1": {
+      "entry_contexts": [
+        "02b4ab2a615f",
+        "674fd8bf02d2"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "39:67:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَا"
     },
     "state:tok:39:68:8": {
       "entry_contexts": [
@@ -5078,6 +7172,32 @@
       "loc": "3:121:4",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَهْلِكَ"
+    },
+    "state:tok:3:126:1": {
+      "entry_contexts": [
+        "03b5507d70a2"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:126:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَا"
+    },
+    "state:tok:3:126:10": {
+      "entry_contexts": [
+        "03b5507d70a2"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:126:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَا"
     },
     "state:tok:3:135:12": {
       "entry_contexts": [
@@ -5127,6 +7247,22 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "قَرْحٌۭ"
     },
+    "state:tok:3:144:16": {
+      "entry_contexts": [
+        "3907e535f2fb",
+        "5bddb8a95c8f",
+        "79f031f1c0cb",
+        "a6123cbca2ff"
+      ],
+      "gloss": "your heels",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:144:16",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَعْقَٰبِكُمْ"
+    },
     "state:tok:3:144:17": {
       "entry_contexts": [
         "3907e535f2fb",
@@ -5171,6 +7307,97 @@
       "loc": "3:145:17",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:3:146:10": {
+      "entry_contexts": [
+        "047ddb2e206e",
+        "9264e145b045",
+        "d3559a102a61"
+      ],
+      "gloss": "because of what",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:146:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "لِمَآ"
+    },
+    "state:tok:3:146:15": {
+      "entry_contexts": [
+        "047ddb2e206e",
+        "9264e145b045",
+        "d3559a102a61"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:146:15",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَا"
+    },
+    "state:tok:3:146:17": {
+      "entry_contexts": [
+        "047ddb2e206e",
+        "9264e145b045",
+        "d3559a102a61"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:146:17",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَا"
+    },
+    "state:tok:3:146:8": {
+      "entry_contexts": [
+        "047ddb2e206e",
+        "9264e145b045",
+        "d3559a102a61"
+      ],
+      "gloss": "so not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:146:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَمَا"
+    },
+    "state:tok:3:149:10": {
+      "entry_contexts": [
+        "a6123cbca2ff"
+      ],
+      "gloss": "your heels",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:149:10",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَعْقَٰبِكُمْ"
+    },
+    "state:tok:3:153:10": {
+      "entry_contexts": [
+        "16e05c2ec837",
+        "1e6386a6bff5",
+        "444a6379d037",
+        "543da5bcc248",
+        "6dd29a115a6e",
+        "cb4234c4878b"
+      ],
+      "gloss": "your rear",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:153:10",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أُخْرَىٰكُمْ"
     },
     "state:tok:3:159:14": {
       "entry_contexts": [
@@ -5269,6 +7496,54 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:3:195:11": {
+      "entry_contexts": [
+        "16e05c2ec837",
+        "20f0c48ad4ab",
+        "4bba2359dc9c",
+        "6d7fb324a641"
+      ],
+      "gloss": "male",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:195:11",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ذَكَرٍ"
+    },
+    "state:tok:3:195:29": {
+      "entry_contexts": [
+        "16e05c2ec837",
+        "20f0c48ad4ab",
+        "4bba2359dc9c",
+        "6d7fb324a641"
+      ],
+      "gloss": "their evil deeds",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:195:29",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "سَيِّـَٔاتِهِمْ"
+    },
+    "state:tok:3:195:4": {
+      "entry_contexts": [
+        "16e05c2ec837",
+        "20f0c48ad4ab",
+        "4bba2359dc9c",
+        "6d7fb324a641"
+      ],
+      "gloss": "that I",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:195:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَنِّى"
+    },
     "state:tok:3:19:19": {
       "entry_contexts": [
         "04b31adc3b8c",
@@ -5286,6 +7561,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:3:22:8": {
+      "entry_contexts": [
+        "03b5507d70a2"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:22:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَا"
+    },
     "state:tok:3:28:9": {
       "entry_contexts": [
         "247452622312",
@@ -5300,6 +7588,34 @@
       "loc": "3:28:9",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:3:36:13": {
+      "entry_contexts": [
+        "7a9f73115d7f",
+        "b8e9a3a37453"
+      ],
+      "gloss": "the male",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:36:13",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلذَّكَرُ"
+    },
+    "state:tok:3:36:21": {
+      "entry_contexts": [
+        "7a9f73115d7f",
+        "b8e9a3a37453"
+      ],
+      "gloss": "and her offspring",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:36:21",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَذُرِّيَّتَهَا"
     },
     "state:tok:3:41:7": {
       "entry_contexts": [
@@ -5319,6 +7635,34 @@
       "loc": "3:41:7",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "ءَايَتُكَ"
+    },
+    "state:tok:3:49:11": {
+      "entry_contexts": [
+        "5f9452ef1f6f",
+        "d8fd4b950c4a"
+      ],
+      "gloss": "that I",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:49:11",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَنِّىٓ"
+    },
+    "state:tok:3:49:5": {
+      "entry_contexts": [
+        "5f9452ef1f6f",
+        "d8fd4b950c4a"
+      ],
+      "gloss": "that I",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:49:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَنِّى"
     },
     "state:tok:3:61:13": {
       "entry_contexts": [
@@ -5412,6 +7756,54 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أُمُّ"
     },
+    "state:tok:3:7:27": {
+      "entry_contexts": [
+        "01133eb5431b",
+        "21bcc0905331",
+        "8a3648f16039",
+        "b669e4468463",
+        "da61fd38733f"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text",
+        "tafsir-mcp"
+      ],
+      "loc": "3:7:27",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَا"
+    },
+    "state:tok:3:7:42": {
+      "entry_contexts": [
+        "01133eb5431b",
+        "21bcc0905331",
+        "8a3648f16039",
+        "b669e4468463",
+        "da61fd38733f"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:7:42",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَا"
+    },
+    "state:tok:3:92:3": {
+      "entry_contexts": [
+        "d547df241bb6"
+      ],
+      "gloss": "righteousness",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "3:92:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْبِرَّ"
+    },
     "state:tok:3:97:19": {
       "entry_contexts": [
         "3041d6f44a27",
@@ -5441,6 +7833,20 @@
       "loc": "3:97:6",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:40:29:22": {
+      "entry_contexts": [
+        "03b5507d70a2",
+        "1fd424ee1e74"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "40:29:22",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَآ"
     },
     "state:tok:40:33:10": {
       "entry_contexts": [
@@ -5485,6 +7891,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
     },
+    "state:tok:41:21:16": {
+      "entry_contexts": [
+        "2dc72fd49600"
+      ],
+      "gloss": "time",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "41:21:16",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مَرَّةٍۢ"
+    },
     "state:tok:41:21:3": {
       "entry_contexts": [
         "2dc72fd49600"
@@ -5512,6 +7931,19 @@
       "loc": "41:33:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
+    },
+    "state:tok:41:40:14": {
+      "entry_contexts": [
+        "dcfb17c4fe01"
+      ],
+      "gloss": "or",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "41:40:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَم"
     },
     "state:tok:41:46:5": {
       "entry_contexts": [
@@ -5575,6 +8007,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:42:45:19": {
+      "entry_contexts": [
+        "269ebe526439",
+        "53bbf2c4975a",
+        "dcfb17c4fe01"
+      ],
+      "gloss": "and their families",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "42:45:19",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَأَهْلِيهِمْ"
+    },
     "state:tok:42:7:7": {
       "entry_contexts": [
         "091ddcebac61",
@@ -5617,6 +8064,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
     },
+    "state:tok:42:9:1": {
+      "entry_contexts": [
+        "141cbc3bd2bd"
+      ],
+      "gloss": "or",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "42:9:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمِ"
+    },
     "state:tok:43:21:1": {
       "entry_contexts": [
         "6520ab46a9dc"
@@ -5630,6 +8090,21 @@
       "loc": "43:21:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
+    },
+    "state:tok:43:33:5": {
+      "entry_contexts": [
+        "24bf5e29906c",
+        "473d89cfc13e",
+        "4cb26045b5b7"
+      ],
+      "gloss": "community",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "43:33:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُمَّةًۭ"
     },
     "state:tok:43:36:1": {
       "entry_contexts": [
@@ -5661,6 +8136,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:43:53:6": {
+      "entry_contexts": [
+        "afe8c5105077",
+        "fe688e34da2d"
+      ],
+      "gloss": "gold",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "43:53:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ذَهَبٍ"
+    },
     "state:tok:43:58:4": {
       "entry_contexts": [
         "e91deae107d0"
@@ -5675,6 +8164,38 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:43:5:3": {
+      "entry_contexts": [
+        "2cbf84907e01",
+        "3f72628fa1ec"
+      ],
+      "gloss": "the reminder",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "43:5:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلذِّكْرَ"
+    },
+    "state:tok:43:71:5": {
+      "entry_contexts": [
+        "13dd060fd3f1",
+        "1c5f7c9c8e05",
+        "2d8c0e70f965",
+        "b8b0d09bccfa",
+        "f12ae52e78f7"
+      ],
+      "gloss": "gold",
+      "informed_by": [
+        "qac",
+        "quran-text",
+        "tafsir-mcp"
+      ],
+      "loc": "43:71:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ذَهَبٍۢ"
+    },
     "state:tok:43:79:1": {
       "entry_contexts": [
         "17aae9076f00"
@@ -5688,6 +8209,19 @@
       "loc": "43:79:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
+    },
+    "state:tok:44:35:5": {
+      "entry_contexts": [
+        "92c7557c5bf5"
+      ],
+      "gloss": "the first",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "44:35:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْأُولَىٰ"
     },
     "state:tok:44:37:3": {
       "entry_contexts": [
@@ -5705,6 +8239,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:44:56:7": {
+      "entry_contexts": [
+        "dcf75e7f4b79"
+      ],
+      "gloss": "the first",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "44:56:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْأُولَىٰ"
+    },
     "state:tok:45:21:1": {
       "entry_contexts": [
         "89f4baadb89a",
@@ -5721,6 +8268,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:45:24:5": {
+      "entry_contexts": [
+        "89f4baadb89a"
+      ],
+      "gloss": "our life",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "45:24:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "حَيَاتُنَا"
+    },
     "state:tok:46:11:13": {
       "entry_contexts": [
         "01de86d90f60",
@@ -5736,6 +8296,23 @@
       "loc": "46:11:13",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
+    },
+    "state:tok:46:15:20": {
+      "entry_contexts": [
+        "191e9b80dfcd",
+        "5970b19734fd",
+        "85d4f8dee30f",
+        "97657fc0cb1c",
+        "a36aed085027"
+      ],
+      "gloss": "year",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "46:15:20",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "سَنَةًۭ"
     },
     "state:tok:46:15:26": {
       "entry_contexts": [
@@ -5772,6 +8349,32 @@
       "loc": "46:15:6",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أُمُّهُۥ"
+    },
+    "state:tok:46:20:10": {
+      "entry_contexts": [
+        "c58bce4626f3"
+      ],
+      "gloss": "your life",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "46:20:10",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "حَيَاتِكُمُ"
+    },
+    "state:tok:46:22:5": {
+      "entry_contexts": [
+        "28a37c16df79"
+      ],
+      "gloss": "our gods",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "46:22:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "ءَالِهَتِنَا"
     },
     "state:tok:46:32:1": {
       "entry_contexts": [
@@ -5961,6 +8564,33 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:48:29:19": {
+      "entry_contexts": [
+        "001242c409ae",
+        "2132ee9b51c1",
+        "269dcbe9167d",
+        "291e842312f6",
+        "3c48ced2c521",
+        "3d6569d207b8",
+        "4c40b7dda389",
+        "622a3d627d4d",
+        "69ffdedf9db4",
+        "a0057de7bf15",
+        "af1459df9c4c",
+        "c26ca4dc9302",
+        "d0eac6ef4f78",
+        "d4e0e61c15c9",
+        "edb80955e059"
+      ],
+      "gloss": "their mark",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "48:29:19",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "سِيمَاهُمْ"
+    },
     "state:tok:48:29:45": {
       "entry_contexts": [
         "001242c409ae",
@@ -6051,6 +8681,20 @@
       "loc": "49:14:5",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
+    },
+    "state:tok:49:17:9": {
+      "entry_contexts": [
+        "088ebd5e2393",
+        "3f40e0c0eb7a"
+      ],
+      "gloss": "your acceptance of Islam",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "49:17:9",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "إِسْلَٰمَكُم"
     },
     "state:tok:4:100:1": {
       "entry_contexts": [
@@ -6202,6 +8846,27 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
     },
+    "state:tok:4:11:57": {
+      "entry_contexts": [
+        "1975a28c061a",
+        "445f9e047a5b",
+        "4973b17c5fa4",
+        "4babe1cdd189",
+        "5575581aa220",
+        "7aa81aa90341",
+        "85d4f8dee30f",
+        "9dbe7f045ea8",
+        "d6a4f976cb61"
+      ],
+      "gloss": "and your sons",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:11:57",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَأَبْنَآؤُكُمْ"
+    },
     "state:tok:4:122:1": {
       "entry_contexts": [
         "430015446b77"
@@ -6231,6 +8896,21 @@
       "loc": "4:124:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:4:124:6": {
+      "entry_contexts": [
+        "52e4cd25fa3a",
+        "b5adfa98d258",
+        "f80e6f80783a"
+      ],
+      "gloss": "male",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:124:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ذَكَرٍ"
     },
     "state:tok:4:125:1": {
       "entry_contexts": [
@@ -6356,6 +9036,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:4:155:4": {
+      "entry_contexts": [
+        "0c5f30e50041",
+        "997ebd6fbaf7"
+      ],
+      "gloss": "and their disbelief",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:155:4",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَكُفْرِهِم"
+    },
     "state:tok:4:164:8": {
       "entry_contexts": [
         "2954a233a939"
@@ -6388,6 +9082,26 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
     },
+    "state:tok:4:23:15": {
+      "entry_contexts": [
+        "1f2cc527b097",
+        "3bb29ae37e32",
+        "63da116be953",
+        "c507cd07fc82",
+        "d3559a102a61",
+        "d3e8b9b7c4fc",
+        "f80e6f80783a",
+        "f92aeb1d59ae"
+      ],
+      "gloss": "and your sisters",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:23:15",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَأَخَوَٰتُكُم"
+    },
     "state:tok:4:23:30": {
       "entry_contexts": [
         "1f2cc527b097",
@@ -6408,6 +9122,41 @@
       "loc": "4:23:30",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
+    },
+    "state:tok:4:23:5": {
+      "entry_contexts": [
+        "1f2cc527b097",
+        "3bb29ae37e32",
+        "63da116be953",
+        "c507cd07fc82",
+        "d3559a102a61",
+        "d3e8b9b7c4fc",
+        "f80e6f80783a",
+        "f92aeb1d59ae"
+      ],
+      "gloss": "and your sisters",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:23:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَأَخَوَٰتُكُمْ"
+    },
+    "state:tok:4:24:22": {
+      "entry_contexts": [
+        "1a9f6df3889e",
+        "202eddfdb3c5",
+        "622180fd3846"
+      ],
+      "gloss": "so whatever",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:24:22",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَمَا"
     },
     "state:tok:4:24:7": {
       "entry_contexts": [
@@ -6485,6 +9234,25 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَيْمَٰنُكُم"
     },
+    "state:tok:4:25:19": {
+      "entry_contexts": [
+        "0d050fe8e03c",
+        "16273913c1dd",
+        "202eddfdb3c5",
+        "33787ee8c0c1",
+        "50c673a03370",
+        "622180fd3846",
+        "ecfc082ac2c5"
+      ],
+      "gloss": "your faith",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:25:19",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِإِيمَٰنِكُم"
+    },
     "state:tok:4:25:2": {
       "entry_contexts": [
         "0d050fe8e03c",
@@ -6559,6 +9327,27 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:4:3:18": {
+      "entry_contexts": [
+        "0870dd09d1c6",
+        "58c2de3f48ba",
+        "69156893d156",
+        "85d4f8dee30f",
+        "8e2506f45485",
+        "b56da5c447c1",
+        "c70d7fcaedf7",
+        "e0e500c4b7a5",
+        "eccba8b4d3f3"
+      ],
+      "gloss": "that ... not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:3:18",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلَّا"
+    },
     "state:tok:4:3:24": {
       "entry_contexts": [
         "0870dd09d1c6",
@@ -6580,6 +9369,48 @@
       "loc": "4:3:24",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَيْمَٰنُكُمْ"
+    },
+    "state:tok:4:3:27": {
+      "entry_contexts": [
+        "0870dd09d1c6",
+        "58c2de3f48ba",
+        "69156893d156",
+        "85d4f8dee30f",
+        "8e2506f45485",
+        "b56da5c447c1",
+        "c70d7fcaedf7",
+        "e0e500c4b7a5",
+        "eccba8b4d3f3"
+      ],
+      "gloss": "that ... not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:3:27",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلَّا"
+    },
+    "state:tok:4:3:3": {
+      "entry_contexts": [
+        "0870dd09d1c6",
+        "58c2de3f48ba",
+        "69156893d156",
+        "85d4f8dee30f",
+        "8e2506f45485",
+        "b56da5c447c1",
+        "c70d7fcaedf7",
+        "e0e500c4b7a5",
+        "eccba8b4d3f3"
+      ],
+      "gloss": "that ... not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:3:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلَّا"
     },
     "state:tok:4:43:35": {
       "entry_contexts": [
@@ -6605,6 +9436,21 @@
       "loc": "4:43:35",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَلَمْ"
+    },
+    "state:tok:4:45:3": {
+      "entry_contexts": [
+        "03b5507d70a2",
+        "141cbc3bd2bd",
+        "c9f6f53604e8"
+      ],
+      "gloss": "your enemies",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:45:3",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِأَعْدَآئِكُمْ"
     },
     "state:tok:4:46:19": {
       "entry_contexts": [
@@ -6833,6 +9679,34 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:4:83:15": {
+      "entry_contexts": [
+        "5cc6e7e832fd",
+        "8476404e1fbc"
+      ],
+      "gloss": "those in authority",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:83:15",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُو۟لِى"
+    },
+    "state:tok:4:83:3": {
+      "entry_contexts": [
+        "5cc6e7e832fd",
+        "8476404e1fbc"
+      ],
+      "gloss": "a matter",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:83:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرٌۭ"
+    },
     "state:tok:4:84:8": {
       "entry_contexts": [
         "2c5ce390d7cf",
@@ -6897,6 +9771,72 @@
       "loc": "4:90:26",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَلَمْ"
+    },
+    "state:tok:4:92:14": {
+      "entry_contexts": [
+        "088ebd5e2393",
+        "1015809f59b7",
+        "53f173a5fbce",
+        "5c47679176b2",
+        "5d89e690256d",
+        "8a39b7785e24",
+        "b373e6dfeef9",
+        "c59a0161fac8",
+        "e9a3604fdfb1",
+        "f71a4907aad8"
+      ],
+      "gloss": "a slave",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:92:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "رَقَبَةٍۢ"
+    },
+    "state:tok:4:92:32": {
+      "entry_contexts": [
+        "088ebd5e2393",
+        "1015809f59b7",
+        "53f173a5fbce",
+        "5c47679176b2",
+        "5d89e690256d",
+        "8a39b7785e24",
+        "b373e6dfeef9",
+        "c59a0161fac8",
+        "e9a3604fdfb1",
+        "f71a4907aad8"
+      ],
+      "gloss": "a slave",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:92:32",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "رَقَبَةٍۢ"
+    },
+    "state:tok:4:92:46": {
+      "entry_contexts": [
+        "088ebd5e2393",
+        "1015809f59b7",
+        "53f173a5fbce",
+        "5c47679176b2",
+        "5d89e690256d",
+        "8a39b7785e24",
+        "b373e6dfeef9",
+        "c59a0161fac8",
+        "e9a3604fdfb1",
+        "f71a4907aad8"
+      ],
+      "gloss": "a slave",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:92:46",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "رَقَبَةٍۢ"
     },
     "state:tok:4:92:49": {
       "entry_contexts": [
@@ -6973,6 +9913,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَمَنَّ"
     },
+    "state:tok:4:95:7": {
+      "entry_contexts": [
+        "4f99a11c3127",
+        "963f6cd9e1f0",
+        "c1e7d213be6b"
+      ],
+      "gloss": "possessors of",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "4:95:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُو۟لِى"
+    },
     "state:tok:50:27:2": {
       "entry_contexts": [
         "714b269ac820"
@@ -6986,6 +9941,46 @@
       "loc": "50:27:2",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "قَرِينُهُۥ"
+    },
+    "state:tok:51:27:4": {
+      "entry_contexts": [
+        "19de33871698",
+        "728e4a8ba16e"
+      ],
+      "gloss": "will you not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "51:27:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلَا"
+    },
+    "state:tok:51:45:1": {
+      "entry_contexts": [
+        "03b5507d70a2"
+      ],
+      "gloss": "so not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "51:45:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَمَا"
+    },
+    "state:tok:51:45:5": {
+      "entry_contexts": [
+        "03b5507d70a2"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "51:45:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَا"
     },
     "state:tok:52:21:12": {
       "entry_contexts": [
@@ -7177,6 +10172,85 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:53:30:2": {
+      "entry_contexts": [
+        "191e9b80dfcd"
+      ],
+      "gloss": "their extent",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "53:30:2",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "مَبْلَغُهُم"
+    },
+    "state:tok:53:45:4": {
+      "entry_contexts": [
+        "eb41bfb6d725"
+      ],
+      "gloss": "the male",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "53:45:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلذَّكَرَ"
+    },
+    "state:tok:53:50:4": {
+      "entry_contexts": [
+        "af6979048806"
+      ],
+      "gloss": "the former",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "53:50:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْأُولَىٰ"
+    },
+    "state:tok:53:56:5": {
+      "entry_contexts": [
+        "6197ee2c0b2a"
+      ],
+      "gloss": "the former",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "53:56:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْأُولَىٰٓ"
+    },
+    "state:tok:54:10:3": {
+      "entry_contexts": [
+        "0c1097a796fe"
+      ],
+      "gloss": "that I",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "54:10:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَنِّى"
+    },
+    "state:tok:54:12:7": {
+      "entry_contexts": [
+        "1d1155c1ea36",
+        "7f42e9796371"
+      ],
+      "gloss": "a matter",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "54:12:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرٍۢ"
+    },
     "state:tok:54:26:5": {
       "entry_contexts": [
         "163c48922755"
@@ -7190,6 +10264,19 @@
       "loc": "54:26:5",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلْأَشِرُ"
+    },
+    "state:tok:54:29:2": {
+      "entry_contexts": [
+        "ce93950db658"
+      ],
+      "gloss": "their companion",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "54:29:2",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "صَاحِبَهُمْ"
     },
     "state:tok:54:43:5": {
       "entry_contexts": [
@@ -7277,6 +10364,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:57:10:3": {
+      "entry_contexts": [
+        "10e7e3a74184"
+      ],
+      "gloss": "that ... not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "57:10:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلَّا"
+    },
     "state:tok:57:10:31": {
       "entry_contexts": [
         "10e7e3a74184"
@@ -7290,6 +10390,19 @@
       "loc": "57:10:31",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَعَدَ"
+    },
+    "state:tok:57:12:9": {
+      "entry_contexts": [
+        "a6de8fd64244"
+      ],
+      "gloss": "and their right hands",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "57:12:9",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَبِأَيْمَٰنِهِم"
     },
     "state:tok:57:15:10": {
       "entry_contexts": [
@@ -7305,6 +10418,19 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "مَأْوَىٰكُمُ"
     },
+    "state:tok:57:17:4": {
+      "entry_contexts": [
+        "4318e2561011"
+      ],
+      "gloss": "gives life to",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "57:17:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يُحْيِي"
+    },
     "state:tok:57:19:13": {
       "entry_contexts": [
         "1015809f59b7",
@@ -7319,6 +10445,59 @@
       "loc": "57:19:13",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَنُورُهُمْ"
+    },
+    "state:tok:57:27:28": {
+      "entry_contexts": [
+        "05ffcc9a615d",
+        "291e842312f6",
+        "982280188cfe",
+        "ba4f896d349f",
+        "c14b24d45397",
+        "d4e0e61c15c9",
+        "db1a68c31812",
+        "dcd164232e6d"
+      ],
+      "gloss": "so not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "57:27:28",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَمَا"
+    },
+    "state:tok:57:27:5": {
+      "entry_contexts": [
+        "05ffcc9a615d",
+        "291e842312f6",
+        "982280188cfe",
+        "ba4f896d349f",
+        "c14b24d45397",
+        "d4e0e61c15c9",
+        "db1a68c31812",
+        "dcd164232e6d"
+      ],
+      "gloss": "our messengers",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "57:27:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِرُسُلِنَا"
+    },
+    "state:tok:57:29:5": {
+      "entry_contexts": [
+        "1d1155c1ea36"
+      ],
+      "gloss": "that ... not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "57:29:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلَّا"
     },
     "state:tok:58:12:17": {
       "entry_contexts": [
@@ -7348,6 +10527,19 @@
       "loc": "58:16:2",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَيْمَٰنَهُمْ"
+    },
+    "state:tok:58:3:10": {
+      "entry_contexts": [
+        "e11ae777e759"
+      ],
+      "gloss": "a slave",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "58:3:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "رَقَبَةٍۢ"
     },
     "state:tok:58:8:22": {
       "entry_contexts": [
@@ -7448,6 +10640,23 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "ءَابَآؤُهُمْ"
     },
+    "state:tok:5:107:21": {
+      "entry_contexts": [
+        "049756ecbbf9",
+        "0ba6e776b72c",
+        "141cbc3bd2bd",
+        "543da5bcc248",
+        "780df10f872a"
+      ],
+      "gloss": "and not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "5:107:21",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَا"
+    },
     "state:tok:5:108:14": {
       "entry_contexts": [
         "b3504e19ef50"
@@ -7526,6 +10735,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:5:21:12": {
+      "entry_contexts": [
+        "162bddf6461c"
+      ],
+      "gloss": "your backs",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "5:21:12",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَدْبَارِكُمْ"
+    },
     "state:tok:5:29:6": {
       "entry_contexts": [
         "6708891659a2"
@@ -7539,6 +10761,26 @@
       "loc": "5:29:6",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَإِثْمِكَ"
+    },
+    "state:tok:5:2:40": {
+      "entry_contexts": [
+        "3d82e28ccae0",
+        "4beb33ad7ecf",
+        "4f666d15bb7e",
+        "79f031f1c0cb",
+        "85f48915cba6",
+        "d2eddd3dbdad",
+        "d547df241bb6",
+        "f92aeb1d59ae"
+      ],
+      "gloss": "righteousness",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "5:2:40",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْبِرِّ"
     },
     "state:tok:5:32:22": {
       "entry_contexts": [
@@ -7843,6 +11085,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:5:66:18": {
+      "entry_contexts": [
+        "3041d6f44a27",
+        "52cf80f165e1"
+      ],
+      "gloss": "a community",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "5:66:18",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُمَّةٌۭ"
+    },
     "state:tok:5:67:10": {
       "entry_contexts": [
         "07c919b3a9f2",
@@ -7857,6 +11113,39 @@
       "loc": "5:67:10",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
+    },
+    "state:tok:5:67:12": {
+      "entry_contexts": [
+        "07c919b3a9f2",
+        "191e9b80dfcd"
+      ],
+      "gloss": "then not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "5:67:12",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَمَا"
+    },
+    "state:tok:5:6:14": {
+      "entry_contexts": [
+        "1650fb53a8c2",
+        "263779da1141",
+        "30fad52d1929",
+        "367b8d3d8988",
+        "48086cbc303a",
+        "855156f634ea",
+        "efef3e152fa8"
+      ],
+      "gloss": "your heads",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "5:6:14",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِرُءُوسِكُمْ"
     },
     "state:tok:5:6:37": {
       "entry_contexts": [
@@ -7892,6 +11181,46 @@
       "loc": "5:73:16",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
+    },
+    "state:tok:5:89:22": {
+      "entry_contexts": [
+        "1b3f0d3be691",
+        "7172a5394a7b",
+        "beae77dd607f",
+        "cb83b6decfbd",
+        "dde8f621a435",
+        "df2cd8f0dcdb",
+        "e3565220ef7b",
+        "ecfc082ac2c5"
+      ],
+      "gloss": "their clothing",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "5:89:22",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "كِسْوَتُهُمْ"
+    },
+    "state:tok:5:89:25": {
+      "entry_contexts": [
+        "1b3f0d3be691",
+        "7172a5394a7b",
+        "beae77dd607f",
+        "cb83b6decfbd",
+        "dde8f621a435",
+        "df2cd8f0dcdb",
+        "e3565220ef7b",
+        "ecfc082ac2c5"
+      ],
+      "gloss": "a slave",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "5:89:25",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "رَقَبَةٍۢ"
     },
     "state:tok:5:89:27": {
       "entry_contexts": [
@@ -7977,6 +11306,20 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَيْمَٰنِكُمْ"
     },
+    "state:tok:5:91:14": {
+      "entry_contexts": [
+        "9cabebe3f9b8",
+        "f07be7c7113d"
+      ],
+      "gloss": "remembrance of",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "5:91:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ذِكْرِ"
+    },
     "state:tok:5:95:42": {
       "entry_contexts": [
         "191e9b80dfcd",
@@ -8037,6 +11380,34 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَطَعَامُهُۥ"
     },
+    "state:tok:60:10:11": {
+      "entry_contexts": [
+        "07c919b3a9f2",
+        "2cec1fa6610d",
+        "f92aeb1d59ae"
+      ],
+      "gloss": "their faith",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "60:10:11",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِإِيمَٰنِهِنَّ"
+    },
+    "state:tok:60:1:11": {
+      "entry_contexts": [
+        "9e4222baccd2"
+      ],
+      "gloss": "and your enemy",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "60:1:11",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَعَدُوَّكُمْ"
+    },
     "state:tok:60:1:46": {
       "entry_contexts": [
         "9e4222baccd2"
@@ -8079,6 +11450,22 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:61:5:10": {
+      "entry_contexts": [
+        "01133eb5431b",
+        "3041d6f44a27",
+        "65d3d5c51f24",
+        "7f1f8b8e29e6"
+      ],
+      "gloss": "that I",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "61:5:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَنِّى"
+    },
     "state:tok:61:5:6": {
       "entry_contexts": [
         "01133eb5431b",
@@ -8096,6 +11483,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لِمَ"
     },
+    "state:tok:61:8:10": {
+      "entry_contexts": [
+        "285d790cd18a",
+        "29587bc586c7",
+        "90d6ab43d466"
+      ],
+      "gloss": "disliked",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "61:8:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "كَرِهَ"
+    },
     "state:tok:62:5:6": {
       "entry_contexts": [
         "2639545324b4",
@@ -8111,6 +11513,19 @@
       "loc": "62:5:6",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
+    },
+    "state:tok:63:9:10": {
+      "entry_contexts": [
+        "95f67980615c"
+      ],
+      "gloss": "remembrance of",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "63:9:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ذِكْرِ"
     },
     "state:tok:63:9:12": {
       "entry_contexts": [
@@ -8183,6 +11598,22 @@
       "loc": "65:11:16",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:65:1:11": {
+      "entry_contexts": [
+        "077b3e5e01fd",
+        "0db8d0c5a0f3",
+        "55c548d602e9",
+        "722b4065dc2a"
+      ],
+      "gloss": "their waiting period",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "65:1:11",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لِعِدَّتِهِنَّ"
     },
     "state:tok:65:1:20": {
       "entry_contexts": [
@@ -8291,6 +11722,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:65:5:2": {
+      "entry_contexts": [
+        "10e7e3a74184",
+        "7172a5394a7b"
+      ],
+      "gloss": "command of Allah",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "65:5:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرُ"
+    },
     "state:tok:65:5:6": {
       "entry_contexts": [
         "10e7e3a74184",
@@ -8382,6 +11827,48 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "قُلُوبُكُمَا"
     },
+    "state:tok:66:6:6": {
+      "entry_contexts": [
+        "69ffdedf9db4",
+        "edb80955e059"
+      ],
+      "gloss": "and your families",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "66:6:6",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَأَهْلِيكُمْ"
+    },
+    "state:tok:66:8:14": {
+      "entry_contexts": [
+        "65442fe1216b",
+        "a36aed085027"
+      ],
+      "gloss": "your evil deeds",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "66:8:14",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "سَيِّـَٔاتِكُمْ"
+    },
+    "state:tok:66:8:33": {
+      "entry_contexts": [
+        "65442fe1216b",
+        "a36aed085027"
+      ],
+      "gloss": "and their right hands",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "66:8:33",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَبِأَيْمَٰنِهِمْ"
+    },
     "state:tok:66:8:38": {
       "entry_contexts": [
         "65442fe1216b",
@@ -8411,6 +11898,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:67:19:4": {
+      "entry_contexts": [
+        "674fd8bf02d2"
+      ],
+      "gloss": "the birds",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "67:19:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلطَّيْرِ"
+    },
     "state:tok:68:37:1": {
       "entry_contexts": [
         "300a648674d2"
@@ -8424,6 +11924,61 @@
       "loc": "68:37:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
+    },
+    "state:tok:68:51:9": {
+      "entry_contexts": [
+        "c64baccb7f7a",
+        "db4395f10479"
+      ],
+      "gloss": "the reminder",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "68:51:9",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلذِّكْرَ"
+    },
+    "state:tok:69:12:5": {
+      "entry_contexts": [
+        "6d0a4d73fa88",
+        "cbcde72fba35"
+      ],
+      "gloss": "an ear",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "69:12:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُذُنٌۭ"
+    },
+    "state:tok:69:20:3": {
+      "entry_contexts": [
+        "2e2fa868686a",
+        "70ac567b851c"
+      ],
+      "gloss": "that I",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "69:20:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَنِّى"
+    },
+    "state:tok:69:22:2": {
+      "entry_contexts": [
+        "d257e3f29283"
+      ],
+      "gloss": "a garden",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "69:22:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "جَنَّةٍ"
     },
     "state:tok:69:9:3": {
       "entry_contexts": [
@@ -8483,6 +12038,19 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "مَّرْجِعُهُمْ"
     },
+    "state:tok:6:110:12": {
+      "entry_contexts": [
+        "b3d910cb22e7"
+      ],
+      "gloss": "their transgression",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "6:110:12",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "طُغْيَٰنِهِمْ"
+    },
     "state:tok:6:110:3": {
       "entry_contexts": [
         "b3d910cb22e7"
@@ -8510,6 +12078,33 @@
       "loc": "6:110:5",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
+    },
+    "state:tok:6:110:9": {
+      "entry_contexts": [
+        "b3d910cb22e7"
+      ],
+      "gloss": "time",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "6:110:9",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مَرَّةٍۢ"
+    },
+    "state:tok:6:121:15": {
+      "entry_contexts": [
+        "2b9b68ab6329",
+        "b3504e19ef50"
+      ],
+      "gloss": "their allies",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "6:121:15",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَوْلِيَآئِهِمْ"
     },
     "state:tok:6:121:4": {
       "entry_contexts": [
@@ -8543,6 +12138,20 @@
       "loc": "6:125:9",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:6:128:11": {
+      "entry_contexts": [
+        "5af78b50e696",
+        "a5925b694669"
+      ],
+      "gloss": "their allies",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "6:128:11",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَوْلِيَآؤُهُم"
     },
     "state:tok:6:128:19": {
       "entry_contexts": [
@@ -8615,6 +12224,22 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَزْوَٰجِنَا"
     },
+    "state:tok:6:143:12": {
+      "entry_contexts": [
+        "3b32957f8044",
+        "816f5800da92",
+        "a2b7f1c18ce6",
+        "f02804674d7e"
+      ],
+      "gloss": "or",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "6:143:12",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمِ"
+    },
     "state:tok:6:147:10": {
       "entry_contexts": [
         "7ae3f9560bca"
@@ -8628,6 +12253,20 @@
       "loc": "6:147:10",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "بَأْسُهُۥ"
+    },
+    "state:tok:6:150:3": {
+      "entry_contexts": [
+        "16dc0a87056e",
+        "17515e1dc9d3"
+      ],
+      "gloss": "your witnesses",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "6:150:3",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "شُهَدَآءَكُمُ"
     },
     "state:tok:6:158:23": {
       "entry_contexts": [
@@ -8717,6 +12356,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:6:23:4": {
+      "entry_contexts": [
+        "3ad045e70ff7"
+      ],
+      "gloss": "their trial",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "6:23:4",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "فِتْنَتُهُمْ"
+    },
     "state:tok:6:31:22": {
       "entry_contexts": [
         "af95ef53a640",
@@ -8750,6 +12402,24 @@
       "loc": "6:35:14",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "سُلَّمًۭا"
+    },
+    "state:tok:6:35:5": {
+      "entry_contexts": [
+        "03b1ffb93673",
+        "088ebd5e2393",
+        "0cc78289b69d",
+        "9f7581b5c1ac",
+        "a6651d505467",
+        "fc62d7c0ebbf"
+      ],
+      "gloss": "their turning away",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "6:35:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "إِعْرَاضُهُمْ"
     },
     "state:tok:6:46:6": {
       "entry_contexts": [
@@ -8812,6 +12482,24 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَعِندَهُۥ"
     },
+    "state:tok:6:59:11": {
+      "entry_contexts": [
+        "0919c7ce9ce8",
+        "21d0c74b634d",
+        "722c6c18d2fe",
+        "acd67e5639ee",
+        "ca394e51cb82",
+        "e06851c9530d"
+      ],
+      "gloss": "the land",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "6:59:11",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْبَرِّ"
+    },
     "state:tok:6:62:5": {
       "entry_contexts": [
         "0805d48b2472",
@@ -8827,6 +12515,34 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "مَوْلَىٰهُمُ"
     },
+    "state:tok:6:62:7": {
+      "entry_contexts": [
+        "0805d48b2472",
+        "94f0bd3faba8"
+      ],
+      "gloss": "indeed",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "6:62:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلَا"
+    },
+    "state:tok:6:63:6": {
+      "entry_contexts": [
+        "0e45298adbd9",
+        "dcfb17c4fe01"
+      ],
+      "gloss": "the land",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "6:63:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْبَرِّ"
+    },
     "state:tok:6:6:13": {
       "entry_contexts": [
         "2fcbd8198aa6",
@@ -8841,6 +12557,21 @@
       "loc": "6:6:13",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
+    },
+    "state:tok:6:71:13": {
+      "entry_contexts": [
+        "01eec1f1c329",
+        "441336466eb4",
+        "a15e00770b49"
+      ],
+      "gloss": "our heels",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "6:71:13",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَعْقَابِنَا"
     },
     "state:tok:6:73:11": {
       "entry_contexts": [
@@ -8905,6 +12636,21 @@
       "loc": "6:91:33",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
+    },
+    "state:tok:6:91:43": {
+      "entry_contexts": [
+        "049756ecbbf9",
+        "1d1155c1ea36",
+        "a502a936a731"
+      ],
+      "gloss": "their vain talk",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "6:91:43",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "خَوْضِهِمْ"
     },
     "state:tok:6:92:10": {
       "entry_contexts": [
@@ -8986,6 +12732,53 @@
       "loc": "6:9:3",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "مَلَكًۭا"
+    },
+    "state:tok:70:4:10": {
+      "entry_contexts": [
+        "1196fc7289e8",
+        "473d89cfc13e",
+        "7ea2cfcc722e"
+      ],
+      "gloss": "thousand",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "70:4:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلْفَ"
+    },
+    "state:tok:70:4:11": {
+      "entry_contexts": [
+        "1196fc7289e8",
+        "473d89cfc13e",
+        "7ea2cfcc722e"
+      ],
+      "gloss": "year",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "70:4:11",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "سَنَةٍۢ"
+    },
+    "state:tok:71:23:4": {
+      "entry_contexts": [
+        "0562476eaa41",
+        "278e09f1ac47",
+        "715634d7a69c",
+        "d224911ed8ee",
+        "dc84599be98d"
+      ],
+      "gloss": "your gods",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "71:23:4",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "ءَالِهَتَكُمْ"
     },
     "state:tok:71:25:6": {
       "entry_contexts": [
@@ -9075,6 +12868,21 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "شَرُّهُۥ"
     },
+    "state:tok:78:38:10": {
+      "entry_contexts": [
+        "2954a233a939",
+        "746abe23a760"
+      ],
+      "gloss": "permitted",
+      "informed_by": [
+        "qac",
+        "quran-text",
+        "tafsir-mcp"
+      ],
+      "loc": "78:38:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَذِنَ"
+    },
     "state:tok:78:9:2": {
       "entry_contexts": [
         "438b497a38c6",
@@ -9089,6 +12897,19 @@
       "loc": "78:9:2",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "نَوْمَكُمْ"
+    },
+    "state:tok:79:12:4": {
+      "entry_contexts": [
+        "43f7c3170070"
+      ],
+      "gloss": "a return",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "79:12:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "كَرَّةٌ"
     },
     "state:tok:79:29:2": {
       "entry_contexts": [
@@ -9176,6 +12997,41 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:7:127:18": {
+      "entry_contexts": [
+        "4709f6b49cb5",
+        "75451a5d26b7"
+      ],
+      "gloss": "their women",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "7:127:18",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "نِسَآءَهُمْ"
+    },
+    "state:tok:7:143:4": {
+      "entry_contexts": [
+        "1fd424ee1e74",
+        "2506d1430f16",
+        "555d341ae708",
+        "5e7efc72a7aa",
+        "6ca6194a8023",
+        "887fec713dc3",
+        "d4b969a9d577",
+        "e2ae6f6094c7",
+        "fe1b51d100ae"
+      ],
+      "gloss": "for our appointed time",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "7:143:4",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لِمِيقَٰتِنَا"
+    },
     "state:tok:7:149:11": {
       "entry_contexts": [
         "0919c7ce9ce8",
@@ -9223,6 +13079,19 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "رَحْمَتِكَ"
     },
+    "state:tok:7:155:6": {
+      "entry_contexts": [
+        "68fbbd2981cf"
+      ],
+      "gloss": "for our appointed time",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "7:155:6",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لِّمِيقَٰتِنَا"
+    },
     "state:tok:7:172:8": {
       "entry_contexts": [
         "16dc0a87056e"
@@ -9236,6 +13105,34 @@
       "loc": "7:172:8",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "ظُهُورِهِمْ"
+    },
+    "state:tok:7:184:4": {
+      "entry_contexts": [
+        "6197ee2c0b2a",
+        "f71f12890815"
+      ],
+      "gloss": "their companion",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "7:184:4",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِصَاحِبِهِم"
+    },
+    "state:tok:7:184:6": {
+      "entry_contexts": [
+        "6197ee2c0b2a",
+        "f71f12890815"
+      ],
+      "gloss": "madness",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "7:184:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "جِنَّةٍ"
     },
     "state:tok:7:193:4": {
       "entry_contexts": [
@@ -9280,6 +13177,20 @@
       "loc": "7:195:15",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
+    },
+    "state:tok:7:195:22": {
+      "entry_contexts": [
+        "a17c90658e33",
+        "bc1a285908b2"
+      ],
+      "gloss": "your partners",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "7:195:22",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "شُرَكَآءَكُمْ"
     },
     "state:tok:7:195:5": {
       "entry_contexts": [
@@ -9355,6 +13266,20 @@
       "loc": "7:31:4",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "زِينَتَكُمْ"
+    },
+    "state:tok:7:39:4": {
+      "entry_contexts": [
+        "0131159a9456"
+      ],
+      "gloss": "so not",
+      "informed_by": [
+        "qac",
+        "quran-text",
+        "tafsir-mcp"
+      ],
+      "loc": "7:39:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَمَا"
     },
     "state:tok:7:44:16": {
       "entry_contexts": [
@@ -9444,6 +13369,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
     },
+    "state:tok:81:22:2": {
+      "entry_contexts": [
+        "54f8ff4c5829"
+      ],
+      "gloss": "your companion",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "81:22:2",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "صَاحِبُكُم"
+    },
     "state:tok:83:31:4": {
       "entry_contexts": [
         "967ace8e960d",
@@ -9473,6 +13411,32 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:87:13:6": {
+      "entry_contexts": [
+        "dcf75e7f4b79"
+      ],
+      "gloss": "lives",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "87:13:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يَحْيَىٰ"
+    },
+    "state:tok:87:18:5": {
+      "entry_contexts": [
+        "372ada9ad6f0"
+      ],
+      "gloss": "the former",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "87:18:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "الْأُولَىٰ"
+    },
     "state:tok:87:5:2": {
       "entry_contexts": [
         "0b39034134f1"
@@ -9486,6 +13450,20 @@
       "loc": "87:5:2",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "غُثَآءً"
+    },
+    "state:tok:8:12:6": {
+      "entry_contexts": [
+        "2b9b68ab6329",
+        "fd14701af7de"
+      ],
+      "gloss": "that I",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "8:12:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَنِّى"
     },
     "state:tok:8:13:6": {
       "entry_contexts": [
@@ -9565,6 +13543,47 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَقَلْبِهِۦ"
     },
+    "state:tok:8:29:12": {
+      "entry_contexts": [
+        "2cb4015f1b2f"
+      ],
+      "gloss": "your evil deeds",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "8:29:12",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "سَيِّـَٔاتِكُمْ"
+    },
+    "state:tok:8:2:5": {
+      "entry_contexts": [
+        "3b300a693995",
+        "521f616e7c55"
+      ],
+      "gloss": "is mentioned",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "8:2:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ذُكِرَ"
+    },
+    "state:tok:8:34:3": {
+      "entry_contexts": [
+        "141cbc3bd2bd",
+        "8f8d49c8fd17"
+      ],
+      "gloss": "that ... not",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "8:34:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلَّا"
+    },
     "state:tok:8:53:4": {
       "entry_contexts": [
         "321b0c4aed31",
@@ -9580,6 +13599,34 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:8:60:14": {
+      "entry_contexts": [
+        "05ffcc9a615d",
+        "39d36d1933a0",
+        "8f8d49c8fd17"
+      ],
+      "gloss": "and your enemy",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "8:60:14",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَعَدُوَّكُمْ"
+    },
+    "state:tok:8:63:16": {
+      "entry_contexts": [
+        "7f673c8b767f"
+      ],
+      "gloss": "brought together",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "8:63:16",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلَّفَ"
+    },
     "state:tok:8:64:5": {
       "entry_contexts": [
         "997ebd6fbaf7"
@@ -9593,6 +13640,21 @@
       "loc": "8:64:5",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنِ"
+    },
+    "state:tok:8:66:19": {
+      "entry_contexts": [
+        "0c1097a796fe",
+        "1196fc7289e8",
+        "57ff5ef29e13"
+      ],
+      "gloss": "a thousand",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "8:66:19",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلْفٌۭ"
     },
     "state:tok:8:72:33": {
       "entry_contexts": [
@@ -9612,6 +13674,46 @@
       "loc": "8:72:33",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلدِّينِ"
+    },
+    "state:tok:8:9:6": {
+      "entry_contexts": [
+        "7486acc96141",
+        "8b39cd1363d8"
+      ],
+      "gloss": "that I",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "8:9:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَنِّى"
+    },
+    "state:tok:90:13:2": {
+      "entry_contexts": [
+        "eef665ccd2dc"
+      ],
+      "gloss": "a slave",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "90:13:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "رَقَبَةٍ"
+    },
+    "state:tok:92:3:3": {
+      "entry_contexts": [
+        "b8e480aebafe"
+      ],
+      "gloss": "the male",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "92:3:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "الذكر"
     },
     "state:tok:96:15:3": {
       "entry_contexts": [
@@ -9642,6 +13744,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:97:3:5": {
+      "entry_contexts": [
+        "1d1155c1ea36",
+        "388bbd38acf6",
+        "7f673c8b767f"
+      ],
+      "gloss": "a thousand",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "97:3:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَلْفِ"
+    },
     "state:tok:98:1:1": {
       "entry_contexts": [
         "df6af97d5e93",
@@ -9656,6 +13773,34 @@
       "loc": "98:1:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
+    },
+    "state:tok:98:8:1": {
+      "entry_contexts": [
+        "7ef217b3cd82"
+      ],
+      "gloss": "their recompense",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "98:8:1",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "جَزَآؤُهُمْ"
+    },
+    "state:tok:9:109:10": {
+      "entry_contexts": [
+        "d6c4b6e4e61c",
+        "e12c0bd330b2",
+        "f0b32acc7882"
+      ],
+      "gloss": "or",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "9:109:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَم"
     },
     "state:tok:9:111:24": {
       "entry_contexts": [
@@ -9698,6 +13843,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
     },
+    "state:tok:9:13:12": {
+      "entry_contexts": [
+        "98038af2d9aa"
+      ],
+      "gloss": "time",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "9:13:12",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مَرَّةٍ"
+    },
     "state:tok:9:13:5": {
       "entry_contexts": [
         "98038af2d9aa"
@@ -9725,6 +13883,20 @@
       "loc": "9:16:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
+    },
+    "state:tok:9:24:5": {
+      "entry_contexts": [
+        "0bbbbe4ab344",
+        "b5c6fe226901"
+      ],
+      "gloss": "and your sons",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "9:24:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَأَبْنَآؤُكُمْ"
     },
     "state:tok:9:24:6": {
       "entry_contexts": [
@@ -9788,6 +13960,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَلَمْ"
     },
+    "state:tok:9:33:13": {
+      "entry_contexts": [
+        "4cb26045b5b7",
+        "5bddb8a95c8f"
+      ],
+      "gloss": "disliked",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "9:33:13",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "كَرِهَ"
+    },
     "state:tok:9:35:11": {
       "entry_contexts": [
         "34bd58ce0861",
@@ -9830,6 +14016,22 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
     },
+    "state:tok:9:46:8": {
+      "entry_contexts": [
+        "3aadc0459dc6",
+        "55c548d602e9",
+        "ef4d590e9dac",
+        "f4c54dd88d56"
+      ],
+      "gloss": "disliked",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "9:46:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "كَرِهَ"
+    },
     "state:tok:9:4:7": {
       "entry_contexts": [
         "4cb26045b5b7",
@@ -9860,6 +14062,34 @@
       "loc": "9:58:11",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
+    },
+    "state:tok:9:61:7": {
+      "entry_contexts": [
+        "4bba2359dc9c",
+        "cbcde72fba35"
+      ],
+      "gloss": "an ear",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "9:61:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُذُنٌۭ"
+    },
+    "state:tok:9:61:9": {
+      "entry_contexts": [
+        "4bba2359dc9c",
+        "cbcde72fba35"
+      ],
+      "gloss": "an ear",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "9:61:9",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أُذُنُ"
     },
     "state:tok:9:70:17": {
       "entry_contexts": [
@@ -9903,6 +14133,64 @@
       "loc": "9:73:8",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَمَأْوَىٰهُمْ"
+    },
+    "state:tok:9:7:1": {
+      "entry_contexts": [
+        "3041d6f44a27"
+      ],
+      "gloss": "so as long as",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "9:7:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَمَا"
+    },
+    "state:tok:9:80:11": {
+      "entry_contexts": [
+        "36ffe82c1c8a",
+        "68fbbd2981cf"
+      ],
+      "gloss": "times",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "9:80:11",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مَرَّةًۭ"
+    },
+    "state:tok:9:81:4": {
+      "entry_contexts": [
+        "259fe620e117",
+        "3aadc0459dc6",
+        "52ba25e0e494",
+        "9f7e03bf6ac7",
+        "fce18cbb4e50"
+      ],
+      "gloss": "behind",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "9:81:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "خِلَٰفَ"
+    },
+    "state:tok:9:83:22": {
+      "entry_contexts": [
+        "259fe620e117",
+        "3aadc0459dc6"
+      ],
+      "gloss": "time",
+      "informed_by": [
+        "qac",
+        "quran-text"
+      ],
+      "loc": "9:83:22",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مَرَّةٍۢ"
     },
     "state:tok:9:94:19": {
       "entry_contexts": [
@@ -9948,6 +14236,18 @@
         "9:40:7"
       ],
       "resolved": []
+    },
+    "أذن": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "78:38:10",
+        "9:61:7",
+        "9:61:9",
+        "10:59:15",
+        "34:23:7",
+        "69:12:5",
+        "24:36:3"
+      ]
     },
     "أربعين": {
       "pending_ambiguous": [
@@ -10001,6 +14301,36 @@
         "3:106:10"
       ],
       "resolved": []
+    },
+    "ألا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:229:19",
+        "2:229:25",
+        "6:62:7",
+        "4:3:3",
+        "4:3:18",
+        "4:3:27",
+        "39:3:1",
+        "57:10:3",
+        "8:34:3",
+        "51:27:4",
+        "2:214:1",
+        "57:29:5"
+      ]
+    },
+    "ألف": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "8:66:19",
+        "2:96:13",
+        "70:4:10",
+        "37:147:4",
+        "97:3:5",
+        "32:5:14",
+        "29:14:8",
+        "8:63:16"
+      ]
     },
     "ألقوا": {
       "pending_ambiguous": [
@@ -10153,20 +14483,60 @@
         "46:4:13",
         "43:52:1",
         "43:58:4",
-        "28:10:3"
+        "28:10:3",
+        "42:9:1",
+        "12:39:6",
+        "2:140:16",
+        "6:143:12",
+        "13:33:21",
+        "24:50:4",
+        "21:109:10",
+        "9:109:10",
+        "41:40:14"
+      ]
+    },
+    "أمر": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "33:37:46",
+        "65:5:2",
+        "13:11:10",
+        "54:12:7",
+        "33:38:19",
+        "24:62:11",
+        "16:1:6",
+        "4:83:3"
       ]
     },
     "أمن": {
       "pending_ambiguous": [
-        "2:283:11",
         "10:31:7",
-        "27:60:1",
         "27:61:1",
         "27:62:1",
         "39:9:1",
         "67:21:1"
       ],
-      "resolved": []
+      "resolved": [
+        "2:283:11",
+        "27:60:1"
+      ]
+    },
+    "أمه": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:128:7",
+        "16:92:16",
+        "16:92:20",
+        "13:30:4",
+        "21:92:4",
+        "16:120:4",
+        "2:213:3",
+        "43:33:5",
+        "11:118:6",
+        "10:19:5",
+        "35:24:8",
+        "5:66:18"
+      ]
     },
     "أنهارا": {
       "pending_ambiguous": [
@@ -10174,11 +14544,38 @@
       ],
       "resolved": []
     },
+    "أني": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "61:5:10",
+        "54:10:3",
+        "3:195:4",
+        "38:41:7",
+        "8:12:6",
+        "69:20:3",
+        "37:102:11",
+        "3:49:5",
+        "3:49:11",
+        "8:9:6",
+        "15:49:3"
+      ]
+    },
     "أوديه": {
       "pending_ambiguous": [
         "13:17:6"
       ],
       "resolved": []
+    },
+    "أولي": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "35:1:4",
+        "17:5:9",
+        "4:95:7",
+        "28:76:17",
+        "4:83:15",
+        "38:45:6"
+      ]
     },
     "أومن": {
       "pending_ambiguous": [
@@ -10276,17 +14673,17 @@
       "resolved": []
     },
     "الأولي": {
-      "pending_ambiguous": [
-        "20:21:7",
-        "20:51:5",
+      "pending_ambiguous": [],
+      "resolved": [
         "33:33:8",
-        "44:35:5",
-        "44:56:7",
-        "53:50:4",
+        "87:18:5",
         "53:56:5",
-        "87:18:5"
-      ],
-      "resolved": []
+        "20:21:7",
+        "44:35:5",
+        "53:50:4",
+        "44:56:7",
+        "20:51:5"
+      ]
     },
     "الأيمان": {
       "pending_ambiguous": [
@@ -10303,21 +14700,22 @@
     },
     "البر": {
       "pending_ambiguous": [
-        "2:177:2",
-        "2:177:10",
-        "2:189:10",
-        "2:189:17",
-        "3:92:3",
-        "5:2:40",
         "5:96:12",
-        "6:59:11",
-        "6:63:6",
         "6:97:10",
         "17:70:7",
         "31:32:13",
         "52:28:8"
       ],
-      "resolved": []
+      "resolved": [
+        "6:59:11",
+        "6:63:6",
+        "2:189:10",
+        "2:189:17",
+        "2:177:2",
+        "2:177:10",
+        "5:2:40",
+        "3:92:3"
+      ]
     },
     "التنور": {
       "pending_ambiguous": [
@@ -10362,6 +14760,18 @@
         "4:46:19"
       ]
     },
+    "الذكر": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "16:44:5",
+        "43:5:3",
+        "3:36:13",
+        "25:18:18",
+        "92:3:3",
+        "68:51:9",
+        "53:45:4"
+      ]
+    },
     "الربع": {
       "pending_ambiguous": [
         "4:12:16",
@@ -10389,16 +14799,17 @@
     },
     "الطير": {
       "pending_ambiguous": [
-        "2:260:21",
         "3:49:17",
-        "5:110:32",
-        "16:79:4",
-        "22:31:14",
+        "5:110:32"
+      ],
+      "resolved": [
+        "2:260:21",
         "27:16:9",
         "27:20:2",
-        "67:19:4"
-      ],
-      "resolved": []
+        "22:31:14",
+        "67:19:4",
+        "16:79:4"
+      ]
     },
     "العظام": {
       "pending_ambiguous": [
@@ -10674,6 +15085,18 @@
       ],
       "resolved": []
     },
+    "جنه": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:266:6",
+        "17:91:4",
+        "2:265:12",
+        "25:8:8",
+        "7:184:6",
+        "69:22:2",
+        "34:46:15"
+      ]
+    },
     "جواب": {
       "pending_ambiguous": [
         "7:82:3",
@@ -10692,6 +15115,12 @@
         "22:21:4"
       ],
       "resolved": []
+    },
+    "خلاف": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "9:81:4"
+      ]
     },
     "خلاق": {
       "pending_ambiguous": [
@@ -10730,6 +15159,29 @@
       ],
       "resolved": []
     },
+    "ذكر": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "3:195:11",
+        "8:2:5",
+        "18:57:4",
+        "4:124:6",
+        "36:69:10",
+        "21:2:4",
+        "63:9:10",
+        "39:45:2",
+        "39:45:12",
+        "5:91:14"
+      ]
+    },
+    "ذهب": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "43:71:5",
+        "22:23:18",
+        "43:53:6"
+      ]
+    },
     "رجالا": {
       "pending_ambiguous": [
         "22:27:6"
@@ -10743,6 +15195,17 @@
         "28:15:10"
       ],
       "resolved": []
+    },
+    "رقبه": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "4:92:14",
+        "4:92:32",
+        "4:92:46",
+        "5:89:25",
+        "58:3:10",
+        "90:13:2"
+      ]
     },
     "سبعين": {
       "pending_ambiguous": [
@@ -10762,6 +15225,16 @@
       ],
       "resolved": [
         "6:35:14"
+      ]
+    },
+    "سنه": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "70:4:11",
+        "46:15:20",
+        "32:5:15",
+        "29:14:9",
+        "22:47:12"
       ]
     },
     "شاعر": {
@@ -10842,11 +15315,12 @@
         "11:50:2",
         "11:59:2",
         "26:123:2",
-        "36:39:5",
         "41:13:8",
         "69:6:2"
       ],
-      "resolved": []
+      "resolved": [
+        "36:39:5"
+      ]
     },
     "عتيد": {
       "pending_ambiguous": [
@@ -11039,6 +15513,21 @@
         "71:25:6"
       ]
     },
+    "فما": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "7:39:4",
+        "51:45:1",
+        "3:146:8",
+        "39:23:31",
+        "57:27:28",
+        "5:67:12",
+        "11:69:10",
+        "22:18:29",
+        "4:24:22",
+        "9:7:1"
+      ]
+    },
     "فمن": {
       "pending_ambiguous": [],
       "resolved": [
@@ -11113,6 +15602,15 @@
         "55:24:6"
       ],
       "resolved": []
+    },
+    "كره": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "61:8:10",
+        "9:46:8",
+        "79:12:4",
+        "9:33:13"
+      ]
     },
     "كفاره": {
       "pending_ambiguous": [
@@ -11281,6 +15779,18 @@
         "17:111:5"
       ]
     },
+    "لما": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "3:146:10",
+        "12:100:41",
+        "2:97:13",
+        "28:24:10",
+        "2:213:37",
+        "38:75:7",
+        "11:107:14"
+      ]
+    },
     "متكبر": {
       "pending_ambiguous": [
         "40:35:22"
@@ -11310,6 +15820,18 @@
         "50:7:2"
       ],
       "resolved": []
+    },
+    "مره": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "18:48:10",
+        "17:7:19",
+        "9:83:22",
+        "41:21:16",
+        "9:80:11",
+        "9:13:12",
+        "6:110:9"
+      ]
     },
     "مزيد": {
       "pending_ambiguous": [
@@ -11343,6 +15865,12 @@
         "42:45:27"
       ],
       "resolved": []
+    },
+    "ملك": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "11:12:19"
+      ]
     },
     "ملكا": {
       "pending_ambiguous": [
@@ -11557,6 +16085,28 @@
         "2:142:6"
       ],
       "resolved": []
+    },
+    "وما": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "3:7:27",
+        "3:7:42",
+        "39:67:1",
+        "40:29:22",
+        "3:126:1",
+        "3:126:10",
+        "3:22:8",
+        "2:107:9",
+        "18:43:9",
+        "51:45:5",
+        "33:23:16",
+        "3:146:15",
+        "3:146:17",
+        "30:39:1",
+        "30:39:13",
+        "5:107:21",
+        "17:105:5"
+      ]
     },
     "ومن": {
       "pending_ambiguous": [
@@ -11801,14 +16351,14 @@
       "resolved": []
     },
     "يحيي": {
-      "pending_ambiguous": [
-        "20:74:13",
+      "pending_ambiguous": [],
+      "resolved": [
         "21:90:5",
-        "36:78:3",
+        "20:74:13",
         "57:17:4",
+        "36:78:3",
         "87:13:6"
-      ],
-      "resolved": []
+      ]
     },
     "يدبر": {
       "pending_ambiguous": [
@@ -11958,7 +16508,7 @@
   },
   "by_procedure": {
     "suffix-pronoun-state/pronoun-attachment": {
-      "count": 222,
+      "count": 323,
       "sample": [
         "2:286:45",
         "48:2:7",
@@ -11988,7 +16538,7 @@
       ]
     },
     "surface-state-transition/particle-state-split": {
-      "count": 393,
+      "count": 581,
       "sample": [
         "61:5:6",
         "3:7:10",
@@ -12096,8 +16646,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:03a647901e42#field=root": {
       "affects_ayat": [
-        "quran:7:4",
-        "quran:25:24"
+        "quran:25:24",
+        "quran:7:4"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -12152,14 +16702,14 @@
     },
     "repair:repair_batch_001.evidence#live-entry:101401b11de8#field=root": {
       "affects_ayat": [
+        "quran:24:30",
         "quran:4:49",
+        "quran:19:19",
         "quran:19:13",
         "quran:2:43",
-        "quran:19:19",
-        "quran:3:164",
-        "quran:35:18",
-        "quran:24:30",
         "quran:24:21",
+        "quran:35:18",
+        "quran:3:164",
         "quran:18:81"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
@@ -12260,8 +16810,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:2745be9c0cca#field=root": {
       "affects_ayat": [
-        "quran:6:78",
-        "quran:6:77"
+        "quran:6:77",
+        "quran:6:78"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -12350,14 +16900,14 @@
     },
     "repair:repair_batch_001.evidence#live-entry:385725d86a5b#field=root": {
       "affects_ayat": [
-        "quran:51:56",
-        "quran:19:26",
         "quran:2:21",
         "quran:114:2",
-        "quran:20:10",
+        "quran:28:29",
         "quran:24:27",
-        "quran:10:44",
-        "quran:28:29"
+        "quran:20:10",
+        "quran:51:56",
+        "quran:19:26",
+        "quran:10:44"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -12489,24 +17039,24 @@
     },
     "repair:repair_batch_001.evidence#live-entry:488d1175c005#field=root": {
       "affects_ayat": [
-        "quran:32:9",
-        "quran:55:12",
-        "quran:38:36",
         "quran:56:89",
-        "quran:12:87",
         "quran:16:6",
-        "quran:15:29",
-        "quran:19:17",
-        "quran:21:91",
+        "quran:26:193",
+        "quran:12:94",
         "quran:17:85",
         "quran:58:22",
-        "quran:26:193",
-        "quran:35:9",
         "quran:8:46",
+        "quran:35:9",
+        "quran:15:29",
+        "quran:19:17",
+        "quran:34:12",
         "quran:42:52",
+        "quran:38:36",
         "quran:2:87",
-        "quran:12:94",
-        "quran:34:12"
+        "quran:21:91",
+        "quran:55:12",
+        "quran:12:87",
+        "quran:32:9"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -12539,8 +17089,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:50c673a03370#field=root": {
       "affects_ayat": [
-        "quran:5:5",
-        "quran:4:25"
+        "quran:4:25",
+        "quran:5:5"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -12617,8 +17167,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:66aa57881e6a#field=root": {
       "affects_ayat": [
-        "quran:81:15",
-        "quran:114:4"
+        "quran:114:4",
+        "quran:81:15"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -12629,8 +17179,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:6885a7c60ca3#field=root": {
       "affects_ayat": [
-        "quran:15:3",
-        "quran:18:46"
+        "quran:18:46",
+        "quran:15:3"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -12696,13 +17246,13 @@
     },
     "repair:repair_batch_001.evidence#live-entry:746abe23a760#field=root": {
       "affects_ayat": [
-        "quran:38:36",
-        "quran:24:63",
         "quran:12:56",
-        "quran:11:81",
         "quran:78:38",
+        "quran:38:36",
         "quran:2:19",
+        "quran:11:81",
         "quran:3:165",
+        "quran:24:63",
         "quran:4:79"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
@@ -13013,8 +17563,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:ab009aea619c#field=root": {
       "affects_ayat": [
-        "quran:20:112",
-        "quran:26:148"
+        "quran:26:148",
+        "quran:20:112"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -13047,12 +17597,12 @@
     },
     "repair:repair_batch_001.evidence#live-entry:af75174c26a6#field=root": {
       "affects_ayat": [
-        "quran:5:45",
-        "quran:30:4",
-        "quran:2:96",
         "quran:15:26",
-        "quran:33:62",
-        "quran:2:259"
+        "quran:2:96",
+        "quran:5:45",
+        "quran:2:259",
+        "quran:30:4",
+        "quran:33:62"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -13129,8 +17679,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:bc8ab33a5bdf#field=root": {
       "affects_ayat": [
-        "quran:58:8",
-        "quran:3:173"
+        "quran:3:173",
+        "quran:58:8"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -13152,13 +17702,13 @@
     },
     "repair:repair_batch_001.evidence#live-entry:c49dfdec1d36#field=root": {
       "affects_ayat": [
-        "quran:80:6",
-        "quran:43:57",
-        "quran:4:167",
-        "quran:14:16",
-        "quran:8:35",
         "quran:4:160",
-        "quran:4:61"
+        "quran:80:6",
+        "quran:4:167",
+        "quran:4:61",
+        "quran:43:57",
+        "quran:8:35",
+        "quran:14:16"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -13202,9 +17752,9 @@
     },
     "repair:repair_batch_001.evidence#live-entry:c63837955935#field=root": {
       "affects_ayat": [
-        "quran:26:94",
+        "quran:67:22",
         "quran:27:90",
-        "quran:67:22"
+        "quran:26:94"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -13215,8 +17765,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:c9b15a7407f9#field=root": {
       "affects_ayat": [
-        "quran:19:97",
-        "quran:2:204"
+        "quran:2:204",
+        "quran:19:97"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -13316,8 +17866,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:d249ba3477f2#field=root": {
       "affects_ayat": [
-        "quran:22:45",
-        "quran:4:78"
+        "quran:4:78",
+        "quran:22:45"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -13339,8 +17889,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:d779132e894c#field=root": {
       "affects_ayat": [
-        "quran:72:19",
-        "quran:90:6"
+        "quran:90:6",
+        "quran:72:19"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -13407,15 +17957,15 @@
     },
     "repair:repair_batch_001.evidence#live-entry:e919504a83fa#field=root": {
       "affects_ayat": [
-        "quran:23:30",
-        "quran:4:6",
-        "quran:20:120",
-        "quran:89:16",
-        "quran:8:17",
-        "quran:86:9",
         "quran:67:2",
+        "quran:20:120",
+        "quran:8:17",
+        "quran:4:6",
         "quran:68:17",
-        "quran:2:249"
+        "quran:86:9",
+        "quran:2:249",
+        "quran:89:16",
+        "quran:23:30"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,

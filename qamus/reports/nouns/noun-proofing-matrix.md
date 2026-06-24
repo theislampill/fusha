@@ -1,6 +1,7 @@
 # Nouns proofing matrix (N1 sweep)
 
-> **2026-06-24 (live 81.91%):** noun section example coverage **83.7%** (175/1045 entries fully hover-complete; 868 with >=1 pending). Content batch_001 applied 23 noun glosses (نِصْف "half", ٱلْعِظَام "the bones", طِين "clay", دِين "the religion", ٱلْإِسْلَٰم "Islam" etc.), 2-vote certified. Suffix/pronoun batch_002 added possessives (their troops/our father/your right hand).
+> **2026-06-24b (live 82.49%):** noun section example coverage **84.3%** (182/1045 fully hover-complete). B2 host-lexeme added ~101 possessives (their evil deeds/your gods/their dwellings…); B3 added noun homographs (جنّة garden/madness, أمة community/model, ذكر, البر land/righteousness).
+
 
 Per-entry audit for the 1022 nouns entries (Fusha index class `n`). Hover coverage of each entry's example āyāt + a terminal status. **0 unknown.** Generator: `qamus/scripts/build_nv_matrices.py`.
 

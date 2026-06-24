@@ -24294,7 +24294,7 @@
 {"address": "qamus:ecf5fd6d9c13#usage=36:30", "ayah": "36:30", "entry": "ecf5fd6d9c13", "type": "usage"}
 {"address": "qamus:ecf5fd6d9c13#usage=67:4", "ayah": "67:4", "entry": "ecf5fd6d9c13", "type": "usage"}
 {"address": "qamus:ecf5fd6d9c13#usage=6:31", "ayah": "6:31", "entry": "ecf5fd6d9c13", "type": "usage"}
-{"address": "qamus:ecfc082ac2c5", "headword": "أَخَذَ / اِتَّخَذَ / يُؤَاخِذُ", "n_examples": 25, "root": "أ خ ذ", "section": "verb", "source_keys": ["v028"], "source_photo_verified": false, "type": "entry"}
+{"address": "qamus:ecfc082ac2c5", "headword": "أَخَذَ / اِتَّخَذَ / يُؤَاخِذُ", "n_examples": 25, "root": "أ خ ذ", "section": "verb", "source_keys": ["v028"], "source_photo_verified": true, "type": "entry"}
 {"address": "qamus:ecfc082ac2c5#field=definition", "entry": "ecfc082ac2c5", "field": "definition", "type": "field"}
 {"address": "qamus:ecfc082ac2c5#field=headword", "entry": "ecfc082ac2c5", "field": "headword", "type": "field"}
 {"address": "qamus:ecfc082ac2c5#field=root", "entry": "ecfc082ac2c5", "field": "root", "type": "field"}
@@ -27471,7 +27471,7 @@
 {"address": "source-photo:unlocated#entry=v025", "entry": "65c6db0170cd", "page": null, "source_key": "v025", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=v026", "entry": "484b4fb9beba", "page": null, "source_key": "v026", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=v027", "entry": "b4144b892cc7", "page": null, "source_key": "v027", "status": "verified", "type": "source_photo"}
-{"address": "source-photo:unlocated#entry=v028", "entry": "ecfc082ac2c5", "page": null, "source_key": "v028", "status": "locator_only", "type": "source_photo"}
+{"address": "source-photo:unlocated#entry=v028", "entry": "ecfc082ac2c5", "page": null, "source_key": "v028", "status": "verified", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=v029", "entry": "c8190204f5ad", "page": null, "source_key": "v029", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=v030", "entry": "55dd18892bf9", "page": null, "source_key": "v030", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=v031", "entry": "543da5bcc248", "page": null, "source_key": "v031", "status": "locator_only", "type": "source_photo"}

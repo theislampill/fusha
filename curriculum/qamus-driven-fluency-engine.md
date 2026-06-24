@@ -37,3 +37,13 @@ resolves each token) → drills (generated from the entry + hover state) → err
 procedure. `curriculum/zero-to-fluency-roadmap.md` sequences this from script to independent Fusha reading.
 
 The engine is MCP-free and portable: install it (`INSTALL.md`) and point it at any Qamus or corpus.
+
+## Live polysemy worked examples (2026-06-24b, each a per-loc iʿrāb decision)
+These joined the engine's regression set from the B3 token-iʿrāb + B2 host-lexeme batches:
+- **وَمَا** — negation "and not" (3:7) vs relative "and whatever" (30:39): the clause decides (nahw).
+- **أَلَّا** = أَنْ+لَا "that … not" (4:3) vs **ألَا** istiftāḥ "indeed" (39:3) — same norm key, distinct particles.
+- **عَادٍ** = ism fāʿil "transgressor" from عدا (2:173), **not** the tribe ʿĀd; **عَادَ** "returned" (36:39).
+- **جِنَّة** = "a garden" (2:266) vs "madness" (7:184).
+- **ذَهَب** "gold" (noun) vs went (verb); **أَذِنَ** "permitted" vs **أُذُن** "an ear"; **يَحْيَىٰ** "Yaḥyā (John)" (proper noun) vs "gives life".
+- **host-lexeme possessives** authored from the root when the noun has no entry: سَيِّئَاتِهِمْ "their evil deeds",
+  ءَالِهَتَكُمْ "your gods", قِبْلَتِهِمْ "their prayer direction" — broken plural shares the root, POS-gated.

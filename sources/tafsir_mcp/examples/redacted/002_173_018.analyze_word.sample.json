@@ -1,0 +1,11 @@
+{
+  "_note": "REDACTED internal-evidence example; never shipped publicly. Demonstrates the homograph the surface key misses.",
+  "loc": "2:173:18",
+  "surface": "عَادٍ",
+  "mcp_irab": "اسم فاعل من (عدا يعدو) — متجاوز/transgressor",
+  "NOT": "the tribe ʿĀd",
+  "public_record": {
+    "src": "qamus",
+    "kind": "authored"
+  }
+}

@@ -2,7 +2,18 @@
 
 How the Fusha intelligence layer is driving live Qamus / qamus-highlight, and where each lane stands.
 
-## ⭐ CURRENT STATE — completion tranche 2026-06-24 (live 81.91%)
+## ⭐ CURRENT STATE — corrective tranche 2026-06-24b (live 82.49%)
+
+| lane | status |
+|---|---|
+| **artifact ergonomics (A1)** | repo dogfoodable — all committed JSON pretty / JSONL / `.min`; gate `check_artifact_ergonomics.py` (0 violations) wired into regressions; 14 one-line mega-indexes fixed |
+| **token-iʿrāb polysemy (B3)** | **+188 applied** (2-vote, 50 verifiers) — وما/ألا/فما per-loc + content homographs (عاد transgressor/returned, جنّة garden/madness, ذكر, ذهب, أذن, يحيى=John); Tafsir-MCP iʿrāb on a sample (internal) |
+| **host-lexeme (B2)** | **+101 applied** (2-vote, 26 authors) — possessed nouns w/ no dataset host (their evil deeds/your gods/their dwellings…); false-split/preposition/verb-host rejected |
+| **source-photo (C0)** | entry→page locator for all 2,092 (candidate bands + verified); 3 head-on verified (بين 523, عبد 275, أخذ 273); 0 retakes; honest read-quality constraint documented |
+| **live coverage** | **82.49%** (41,164 / 49,900); this tranche **+289**, −0 removed, −0 changed, **0 wrong glosses**; 904 token decisions |
+| **GrammarProblems gate** | 88 cases + 8 wrong-reasoning traps; `grade_grammar_reasoning` AND-gate enforced |
+
+### prior completion tranche 2026-06-24 (live 81.91%)
 
 | lane | status |
 |---|---|
