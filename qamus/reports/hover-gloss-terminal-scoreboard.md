@@ -11,6 +11,22 @@ external provenance. Full per-token states: `hover-token-terminal-matrix.md`.
 | pending total | 24,192 | 19,957 | 15,441 | **15,428** |
 | build diff (occurrences) | — | — | +4,675 / −222 | **+13 / ~3 / −0** |
 
+## P13 — reference-assisted authored batch (APPLIED LIVE)
+| metric | LIVE after SN7 | **LIVE after P13** |
+|---|---:|---:|
+| resolved (qamus-authored) | 34,472 | **35,166** |
+| coverage % | 69.08 | **70.47** |
+| pending total | 15,428 | **14,734** |
+| build diff (occurrences) | +13 / ~3 | **+694 / ~51 / −0** |
+
+23 high-frequency Qurʾānic content-word glosses (ٱلْكِتَٰبَ "the Book", ٱلْءَاخِرَةِ "the Hereafter", يُؤْمِنُونَ
+"they believe", ٱلصَّٰلِحَٰتِ "the righteous deeds", ٱلْقُرْءَانِ "the Qurʾan", بَيْنَ "between", ٱلرَّحْمَٰنَ "the
+Most Gracious", …) authored from understanding (root + dominant sense), certified by **four gates**: author+2vote
+→ empirical norm_strict key-collision probe → key-aware 2-vote re-verify (23/29) → apply. The ~51 "changed" are
+verbose spread-glosses improved (basmala ٱلرَّحْمَٰنَ "to show mercy…" → "the Most Gracious"). 0 removed.
+~21 true homographs / referent landmines / polysemy terminally classified as pending (the gate working).
+Rollback: `fusha-hover-decisions.tsv.bak-p13` + `wbw-lookup.prev.json`. Mirror: `authored_gloss_batch_003_p13.*`.
+
 ## SN7 — sarf/nahw verb-form batch (APPLIED LIVE)
 8 form-aware verb glosses from the sarf/nahw corpus ingest (أَخْرَجَ "brought forth", اِتَّقَىٰ "was mindful",
 كَافِرُونَ "disbelievers", أَقَامُوا "established", اِسْتَغْفِرُوا "seek forgiveness", يَسْتَكْبِرُونَ "act

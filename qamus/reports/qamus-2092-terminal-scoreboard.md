@@ -27,5 +27,23 @@ to **2,092**, zero unclassified. No live Qamus entry was mutated this tranche.
 
 ## Top next actions
 The 50 highest-value non-clean entries (by usage refs) are in `qamus-2092-terminal-matrix.md`. The biggest
-*lever* for the live product is not entry mutation — it is the **hover authored-gloss batch** (P4/P5), which
+*lever* for the live product is not entry mutation — it is the **hover authored-gloss batch** (P4/P5/P13), which
 turns pending tokens into resolved qamus-authored glosses without touching entry data.
+
+## P11 audit-completion (GP/P-tranche) — field-level, HONEST
+Full matrix: `qamus-2092-audit-completion.json`. Distinguishes *classified* from *actually verified*:
+**0 entries are `fully_verified`** (no source-photo pass this tranche; `*_verified` flags reflect only
+measurable evidence — refs valid, QAC root agreement, hover coverage).
+
+| audit terminal state | n |
+|---|---:|
+| `needs_hover_authoring` (≥1 pending token in its āyāt) | **1,925** |
+| `needs_source_photo_review` (āyāt hover-complete; source verification outstanding) | **150** |
+| `needs_quran_ref_verification` (bad/range refs) | **10** |
+| `deferred_missing_source` (no addressable āyāt) | **7** |
+| **total / unknown** | **2,092 / 0** |
+
+- root-verified-vs-QAC: measurable cross-check recorded per entry.
+- **P14 entry repair:** `qamus:n259` كَظِيم ("to suppress anger" verb-gloss on a صفة مشبهة) → certified repair
+  **payload** (`repairs/repair_batch_002_p14`), `candidate_payload_ready` — **owner-gated apply** (entry mutation
+  needs app-helper dry-run + backup + DawahAgent). **0 entries mutated this tranche.**

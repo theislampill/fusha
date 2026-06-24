@@ -29,7 +29,24 @@ Entry repairs take the parallel, owner-gated path (`edit_entry_record` + backup 
 No live entry mutated; Fusha public-clean (0 leaks); no external gloss text; public hover = `src:"qamus"` only;
 QAC internal-reference only; Qurʾān text unaltered; OCR never authority.
 
+## GrammarProblems / P-tranche update (live coverage 70.47%)
+| lane | status |
+|---|---|
+| **GrammarProblems eval gate (GP0)** | matrix + 4-tier gates + policy + drill; warning in SKILL/AGENTS; enforced |
+| **executable gates (P10)** | `validate_linguistic_decisions.py` rejects below-gate / no-reasoning / non-exportable; 6 new rule files; schema +gate/+triggers/+reasoning; 25 regression checks |
+| **audit-completion (P11)** | 2,092 field-level, **0 unknown, 0 fully_verified** (honest); top-100 finish-next |
+| **hover-token completion (P12)** | 49,900 classified, 0 silent; top-500 pending pool |
+| **P13 reference-assisted batch** | **23 APPLIED LIVE** (+694 occ, coverage 69.08→70.47%, 0 removed); ~21 homograph/referent/polysemy terminally pending |
+| **P14 entry repair** | كَظِيم certified **payload** (`repair_batch_002_p14`), owner-gated apply — 0 entries mutated |
+| **P15 source-address** | 2,092 nodes (v970/n1022/p100), 7 splits, 0 orphan; duplicate-avoidance report |
+| **P17 Nawawī40** | re-run under GP gates; 189 weak-root hints (low-conf), 0 live writes |
+
+## Boundaries held (this tranche)
+No live entry mutated; Fusha public-clean (0 leaks); no external gloss text; public hover = `src:"qamus"` only;
+QAC internal-reference only; Qurʾān text unaltered; OCR never authority. Rollback ready (tsv `.bak-p13` +
+`wbw-lookup.prev.json`).
+
 ## Next GO (owner-gated)
-Apply the confirmed P4 batch live (done in this tranche if verify completes), then: ramp the next pending tier
-(multi-sense roots resolved by `nahw` context), and — on owner approval — the 102 impossible_root QAC-root
-candidates and the Nawawī40 reviewed additions.
+Apply the P14 كَظِيم entry-repair payload via the DawahAgent path; ramp the next pending tier (the ~21 P13
+homographs need phrase-aware/two-vote resolution); the 102 impossible_root QAC-root candidates and Nawawī40
+reviewed additions remain owner-gated.

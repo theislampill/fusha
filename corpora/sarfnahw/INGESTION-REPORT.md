@@ -70,9 +70,28 @@ nahw grammar, Qamus/hover integration incl. the 2-gate certification logic, cand
 
 Post-fix: regression checker 19/19 PASS; leakage scan clean (no raw sources/media tracked, no secrets/keys/IPs).
 
+## GrammarProblems eval-gate tranche (GP0 + P10–P18)
+
+`GrammarProblems.pdf` (73-pp study: a free LLM ~33% on Arabic naḥw) was ingested as a **safety/eval gate**, not a
+reference: `nahw/evals/grammar-problems-matrix.*` + `grammar-decision-gates.json` (4 tiers) + policy + drill, with
+the warning in `nahw/SKILL.md`/`AGENTS.md`.
+- **P10 executable gates:** `validate_linguistic_decisions.py` now REJECTS a decision below its required gate, a
+  two-vote/iʿrāb decision missing reasoning, or a never-auto decision marked exportable; schema gained
+  `gate`/`grammar_triggers`/`reasoning`; 6 new rule files; **25 regression checks PASS**.
+- **P11/P12 completion matrices:** 2,092 entries (0 unknown, **0 fully_verified** — honest) + 49,900 tokens
+  (0 silent).
+- **P13 reference-assisted batch — 23 APPLIED LIVE:** coverage **69.08% → 70.47%** (+694 occ, ~51 improved,
+  −0 removed). Certified by four gates (author+2vote → empirical key-collision probe → key-aware 2-vote → apply);
+  ~21 homograph/referent/polysemy candidates terminally classified as pending.
+- **P14:** كَظِيم entry-repair **certified payload** (owner-gated; 0 entries mutated).
+- **P15:** source-address completion (2,092 nodes, 0 orphan) + duplicate-avoidance report.
+- **P17:** Nawawī40 re-run under GP gates (189 weak-root hints kept low-confidence; 0 live writes).
+- **P18:** rebuild verified — validate PASS, health 200, light+dark screenshots viewed; rollback `*.bak-p13` +
+  `wbw-lookup.prev.json`.
+
 ## Boundaries held
 
-- No raw decks/PDFs/DOCX, no media/audio, no copyrighted body text committed.
+- No raw decks/PDFs/DOCX (incl. GrammarProblems.pdf), no media/audio, no copyrighted body text committed.
 - No external gloss text copied; external source names internal-only; public hover = `{src:"qamus",kind:"authored"}`.
 - Qurʾān text unaltered; **0 Qamus entries mutated**; the one live change is hover-only via the established path.
 - No Ṣaḥīḥayn live import. No OCR used as authority.
