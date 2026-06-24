@@ -320,6 +320,15 @@ try:
 except Exception:
     check("A1 artifact ergonomics runnable", False)
 
+# Phase 2/3 skill completeness gates (sarf + nahw engines)
+for _vname, _label in [("validate_sarf_skill.py", "Phase2 sarf engine complete (derivatives + Madinah modes + false-clitic)"),
+                       ("validate_nahw_skill.py", "Phase3 nahw engine complete (particle functions + iʿrāb polysemy)")]:
+    try:
+        _v = subprocess.run([sys.executable, os.path.join(_R, "tools", _vname)], capture_output=True, text=True)
+        check(_label, _v.returncode == 0)
+    except Exception:
+        check(_vname + " runnable", False)
+
 # P9 wrong-reasoning traps present and grader blocks them
 _wr = 0
 try:

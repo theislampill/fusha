@@ -1,0 +1,25 @@
+{"id":"IP-001","surface":"وَمَا","loc":"3:7:27","reading":"resumption_waw + negative ma","gloss":"and not","why":"وما يعلم تأويله إلا الله — ما نافية; not relative/interrogative here"}
+{"id":"IP-002","surface":"عَادٍ","loc":"2:173:18","reading":"ism_fail from عدا","gloss":"a transgressor","why":"اسم فاعل 'exceeding'; غير باغ ولا عاد — NOT the tribe ʿĀd"}
+{"id":"IP-003","surface":"أَلَّا","loc":"11:2:3","reading":"an + la","gloss":"that … not","why":"أَنْ مصدرية + لا نافية; subjunctive"}
+{"id":"IP-004","surface":"أَلَا","loc":"2:13:13","reading":"istiftah","gloss":"indeed / behold","why":"opening attention particle; distinct from أَلَّا"}
+{"id":"IP-005","surface":"فَمَا","loc":"7:39:4","reading":"fa + negative ma","gloss":"so not","why":"فما كان لكم علينا من فضل — negation, not 'whatever'"}
+{"id":"IP-006","surface":"لَمَّا","loc":"2:89:5","reading":"temporal","gloss":"when","why":"حينية; distinguish from لَمَّا jussive 'not yet' and لِما 'for what'"}
+{"id":"IP-007","surface":"لَا","loc":"2:2:2","reading":"la_of_genus","gloss":"there is no","why":"لا ريب فيه — النافية للجنس + mabnī ism"}
+{"id":"IP-008","surface":"لَا","loc":"2:286:8","reading":"prohibition_dua","gloss":"do not","why":"لا تؤاخذنا — لا الناهية"}
+{"id":"IP-009","surface":"إِنْ","loc":"67:20:8","reading":"negation","gloss":"not (… except)","why":"إن الكافرون إلا في غرور — نافية not conditional"}
+{"id":"IP-010","surface":"مَنْ","loc":"2:8:3","reading":"relative","gloss":"who / those who","why":"ومن الناس من يقول — relative; fatḥa مَن ≠ مِن"}
+{"id":"IP-011","surface":"وَمِنَ","loc":"2:8:1","reading":"preposition","gloss":"and among / and of","why":"kasra on mīm under و = preposition"}
+{"id":"IP-012","surface":"لِمَ","loc":"61:2:3","reading":"interrogative_why","gloss":"why","why":"لـ + ما; ≠ لَمْ 'did not'"}
+{"id":"IP-013","surface":"لَمْ","loc":"112:3:1","reading":"negation_past_jussive","gloss":"did not","why":"لم يلد — jussive, past meaning"}
+{"id":"IP-014","surface":"كَلَّا","loc":"78:4:1","reading":"rad'","gloss":"nay!","why":"deterrence; ≠ كُلّ 'all/every'"}
+{"id":"IP-015","surface":"أَنِّى","loc":"3:40:5","reading":"interrogative_how","gloss":"how","why":"أَنَّىٰ يكون لي غلام — 'how'; ≠ أَنِّي 'that I'"}
+{"id":"IP-016","surface":"أَنِّي","loc":"3:49:5","reading":"anna + ya","gloss":"that I","why":"أنّ + ياء المتكلم; emphatic-clause 'that I'"}
+{"id":"IP-017","surface":"يَقْدِرُ","loc":"28:82:14","reading":"context_contrast_with_yabsut","gloss":"restricts","why":"يبسط الرزق لمن يشاء ويقدر — paired contrast → 'restricts', not merely 'is able'"}
+{"id":"IP-018","surface":"حَلِيمٌ","loc":"11:75:5","reading":"human_referent","gloss":"forbearing","why":"إن إبراهيم لحليم — human attribute, not the divine Name by default"}
+{"id":"IP-019","surface":"ٱنْحَرْ","loc":"108:2:3","reading":"imperative","gloss":"and sacrifice","why":"فصل لربك وانحر — imperative construction"}
+{"id":"IP-020","surface":"مُحَرَّرًا","loc":"3:35:9","reading":"hal_or_maful","gloss":"dedicated (freed for service)","why":"نذرت لك ما في بطني محررا — ism mafʿūl, accusative ḥāl/state"}
+{"id":"IP-021","surface":"أَلَمْ","loc":"94:1:1","reading":"hamza_istifham + lam","gloss":"have we not","why":"ألم نشرح — interrogative hamza + لم negation (rhetorical)"}
+{"id":"IP-022","surface":"جِنَّةٍ","loc":"7:184:6","reading":"noun_madness","gloss":"madness","why":"ما بصاحبهم من جنّة — جِنّة 'madness', not جَنّة 'garden'"}
+{"id":"IP-023","surface":"أُمَّةً","loc":"16:120:4","reading":"noun_model","gloss":"a model of excellence","why":"إن إبراهيم كان أمة — 'leader/model', not just 'community'"}
+{"id":"IP-024","surface":"وَيَقْدِرُ","loc":"13:26:6","reading":"context_restricts","gloss":"and restricts","why":"يبسط الرزق لمن يشاء ويقدر — contrast restricts"}
+{"id":"IP-025","surface":"كُلَّ","loc":"2:20:24","reading":"noun_all_emphasis","gloss":"all / every","why":"على كل شيء قدير — كُلّ 'every'; ≠ كَلَّا deterrence"}

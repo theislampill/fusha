@@ -21,6 +21,8 @@ when it forces **pending**.
 ## Procedures (progressive disclosure — load the one you need)
 This SKILL is the fast context gate + contract; each step is a short procedure. **Open only what the task needs.**
 - [`procedures/particle-decision.md`](procedures/particle-decision.md) — content-letter harakah; مَن/مِن، لَمْ/لِمَ.
+- [`procedures/particle-function-decision.md`](procedures/particle-function-decision.md) — pick a particle's FUNCTION in context (مَا/إِنْ/لَا/فاء/واو/لام/أَلَا-أَلَّا); see `references/particle-functions.md`.
+- [`procedures/irab-teaching-diagnosis.md`](procedures/irab-teaching-diagnosis.md) — produce the iʿrāb (role·case/mood·governor) or diagnose the learner/draft error; answer AND reasoning.
 - [`procedures/preposition-pronoun.md`](procedures/preposition-pronoun.md) — jar-majrūr wording by referent; إِلَيْنَا guard.
 - [`procedures/negation.md`](procedures/negation.md) — لَمْ/لَنْ/لَا/مَا/لَيْسَ scope → tense/polarity.
 - [`procedures/relative-interrogative.md`](procedures/relative-interrogative.md) — مَا/مَن/أَيّ relative vs interrogative vs negation.
@@ -38,8 +40,14 @@ two-vote-required-rules, context-sense, **state-transition-rules** (the syntax s
 [language state machine](../qamus/reports/language-state-machine-report.md): مَن/مِن، لَمْ/لِمَ، أَن/إِن/أَنَّ/إِنَّ
 forbidden collisions). **Evals** (`evals/`): grammar-problems-matrix, **grammar-problems-derived-eval.jsonl**
 (≥72 cases, run via [`tools/run_grammar_evals.py`](../tools/run_grammar_evals.py) +
-[`tools/grade_grammar_reasoning.py`](../tools/grade_grammar_reasoning.py)), nahw-state-machine-eval, hover-context-eval.
-**Curriculum** (`curriculum/`): `zero-to-fluency-nahw.md` + beginner/intermediate/advanced drills.
+[`tools/grade_grammar_reasoning.py`](../tools/grade_grammar_reasoning.py)), nahw-state-machine-eval, hover-context-eval,
+**`particle-function-eval.jsonl`** (each particle × its functions, machine-testable),
+**`irab-polysemy-eval.jsonl`** (per-loc iʿrāb regressions: وما/أَلَّا/فما/عاد/جنّة/أمّة/يقدر/حليم).
+**References** (`references/`): particles, idafa, jar-majrur, irab-case-mood, quranic-nahw-notes,
+**particle-functions** (closed-class function map), **irab-teaching-map** (zero→fluency iʿrāb spine),
+**learner-error-remediation** (syntax failure modes → fix).
+**Curriculum** (`curriculum/`): `zero-to-fluency-nahw.md` + beginner/intermediate/advanced drills;
+**`drills/particle-disambiguation.md`** + **`drills/irab-case-mood.md`**.
 
 ## 1. Purpose
 Choose the context-correct gloss (or an honest pending) for tokens whose meaning depends on the sentence:

@@ -19,6 +19,8 @@ output · forbidden · test). **Open only the one the task needs.**
 - [`procedures/doubled-root.md`](procedures/doubled-root.md) — geminate roots hidden by shadda (رَدَّ→ر د د).
 - [`procedures/noun-plural-gender.md`](procedures/noun-plural-gender.md) — role/shape, plural, gender, proper vs common.
 - [`procedures/masdar-participle.md`](procedures/masdar-participle.md) — maṣdar vs ism fāʿil/mafʿūl vs ṣifa mushabbaha gloss shape.
+- [`procedures/nominal-derivative-decision.md`](procedures/nominal-derivative-decision.md) — classify the 7 derivative types (fāʿil/mafʿūl/mubālagha/ṣifa-mushabbaha/tafḍīl/zamān-makān/āla); penult+prefix vowel reads; **never a verb gloss** on a derivative.
+- [`procedures/learner-error-diagnosis.md`](procedures/learner-error-diagnosis.md) — name the Madinah-study error class, route to fix + drill (ajamī teaching + engine guard share one loop).
 - [`procedures/proper-noun.md`](procedures/proper-noun.md) — detect أعلام; no root-verb gloss; route to pending_proper_noun.
 - [`procedures/homograph-risk.md`](procedures/homograph-risk.md) — the `norm_strict` surface-key safety probe.
 - [`procedures/hover-application.md`](procedures/hover-application.md) — the certified live-apply path + rollback.
@@ -28,8 +30,14 @@ output · forbidden · test). **Open only the one the task needs.**
 **Rules** (`rules/`): root-decision, verb-measure-gates, weak-root-gates, hamza-gates, plural-gender-rules,
 masdar-participle-gates, homograph-quarantines, **surface-state-transition-rules** (the morphology side of the
 [language state machine](../qamus/reports/language-state-machine-report.md) — forbidden single-gloss collisions).
-**Evals** (`evals/`): `sarf-state-machine-eval.json`, `qamus-regression-eval.json`, `corpus-authoring-eval.json`.
-**Curriculum** (`curriculum/`): `zero-to-fluency-sarf.md` + beginner/intermediate/advanced drills (ajami path).
+**References** (`references/`): verb-measures-table, masdar-participle-notes, weak-verbs, quranic-morphology-notes,
+**nominal-derivatives** (pattern→gloss-shape contract for the 7 derived nouns), **learner-error-remediation**
+(Madinah-study failure modes → diagnosis → fix).
+**Evals** (`evals/`): `sarf-state-machine-eval.json`, `qamus-regression-eval.json`, `corpus-authoring-eval.json`,
+**`nominal-derivative-error-eval.jsonl`** (7 types + the Madinah confusions, machine-testable),
+**`false-clitic-split-eval.jsonl`** (ٱلْمُلْك/لَهُ/قُرْءَانًا/رَحْمَة false-split guards + positive controls).
+**Curriculum** (`curriculum/`): `zero-to-fluency-sarf.md` + beginner/intermediate/advanced drills (ajami path);
+**`drills/nominal-derivatives.md`** (recognition+production for each derivative type).
 
 ## 1. Purpose
 Turn a raw surface into a *defensible* morphological decision (or an honest pending) for Qamus authoring,
