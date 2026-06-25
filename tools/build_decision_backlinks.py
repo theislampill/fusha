@@ -112,8 +112,8 @@ def main():
             "entries_source_photo_unverified": sum(1 for e in entry.values() if not e["source_photo_verified"]),
         },
     }
-    json.dump(backlinks, open(os.path.join(IDXDIR, "decision_backlinks.json"), "w", encoding="utf-8"),
-              ensure_ascii=False, indent=1)
+    with open(os.path.join(IDXDIR, "decision_backlinks.json"), "w", encoding="utf-8", newline="\n") as _bf:
+        json.dump(backlinks, _bf, ensure_ascii=False, indent=2, sort_keys=True); _bf.write("\n")
 
     # ---- reports answering the 10 required graph queries ----
     c = backlinks["counts"]
