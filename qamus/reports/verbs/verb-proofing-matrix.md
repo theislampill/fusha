@@ -1,6 +1,6 @@
 # Verbs proofing matrix (canonical, from qamus-2092-entry-matrix)
 
-Per-entry audit of the **947** verb entries (public `section` split — authoritative 947 verb / 1045 noun / 100 particle). **0 unknown buckets.** Regenerate: `tools/build_proofing_matrices.py` (from `qamus-2092-entry-matrix.jsonl`). Reconciles to `hover-gloss-terminal-scoreboard.md` (86.18% overall) and `qamus-2092-terminal-scoreboard.md`.
+Per-entry audit of the **947** verb entries (public `section` split — authoritative 947 verb / 1045 noun / 100 particle). **0 unknown buckets.** Regenerate: `tools/build_proofing_matrices.py` (from `qamus-2092-entry-matrix.jsonl`). Reconciles to `hover-gloss-terminal-scoreboard.md` (87.2% overall) and `qamus-2092-terminal-scoreboard.md`.
 
 | metric | value |
 |---|---:|
@@ -11,12 +11,12 @@ Per-entry audit of the **947** verb entries (public `section` split — authorit
 | pending example tokens (per-entry, overlapping) | 15,380 |
 | per-section example coverage | **85.0%** |
 
-> Per-entry token counts overlap (a token in a shared āyah counts for each citing entry); the canonical de-duplicated total is the P3 audit (43,005 resolved / 6,895 pending / 49,900).
+> Per-entry token counts overlap (a token in a shared āyah counts for each citing entry); the canonical de-duplicated total is the P3 audit (43,515 resolved / 6,385 pending / 49,900).
 
 ## Pending by blocker (this section)
 
 | blocker | count |
 |---|---:|
-| `stem_base_unknown` | 9,722 |
-| `source_entry_unverified` | 3,497 |
+| `stem_base_unknown` | 8,527 |
+| `source_entry_unverified` | 3,469 |
 | `same_surface_polysemy_requires_i3rab` | 759 |
