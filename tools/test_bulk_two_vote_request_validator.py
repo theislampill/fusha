@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """Self-test for bulk two-vote request packet validation."""
 import json
+import os
 import tempfile
 from pathlib import Path
 
@@ -78,6 +79,46 @@ def main():
         write_jsonl(table, [table_row()])
         write_jsonl(requests, [request_row()])
         assert V.validate_files(str(requests), table_path=str(table)) == []
+
+        chunks_dir = root / "requests_chunks"
+        chunks_dir.mkdir()
+        chunk = chunks_dir / "chunk_001.jsonl"
+        write_jsonl(chunk, [request_row()])
+        manifest = root / "manifest.json"
+        manifest.write_text(json.dumps({
+            "rows": 1,
+            "source_table": os.path.relpath(str(table), V.ROOT),
+            "source_table_sha256": V.sha256_file(str(table)),
+            "request_file": os.path.relpath(str(requests), V.ROOT),
+            "request_file_sha256": V.sha256_file(str(requests)),
+            "chunks": [os.path.relpath(str(chunk), V.ROOT)],
+            "chunk_sha256": {os.path.relpath(str(chunk), V.ROOT): V.sha256_file(str(chunk))},
+        }, ensure_ascii=False, indent=2), encoding="utf-8")
+        assert V.validate_files(
+            str(requests), table_path=str(table), manifest_path=str(manifest),
+            require_checksums=True
+        ) == []
+
+        stale_manifest = json.loads(manifest.read_text(encoding="utf-8"))
+        stale_manifest["request_file_sha256"] = "0" * 64
+        manifest.write_text(json.dumps(stale_manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        assert any("request_file_sha256" in e for e in V.validate_files(
+            str(requests), table_path=str(table), manifest_path=str(manifest),
+            require_checksums=True
+        ))
+
+        legacy_manifest = {
+            "rows": 1,
+            "source_table": os.path.relpath(str(table), V.ROOT),
+            "request_file": os.path.relpath(str(requests), V.ROOT),
+            "chunks": [],
+        }
+        manifest.write_text(json.dumps(legacy_manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        assert V.validate_files(str(requests), table_path=str(table), manifest_path=str(manifest)) == []
+        assert any("missing source_table_sha256" in e for e in V.validate_files(
+            str(requests), table_path=str(table), manifest_path=str(manifest),
+            require_checksums=True
+        ))
 
         bad_gate = request_row()
         bad_gate["gate"] = "auto_rule"

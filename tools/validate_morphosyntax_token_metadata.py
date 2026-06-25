@@ -46,7 +46,11 @@ FUNCTION_BEARING_SEGMENTS = {
     "prefix_particle",
     "prefix_purpose_lam",
     "prefix_imperative_lam",
+    "vocative_particle",
+    "vocative_support",
+    "attention_particle",
     "preventive_ma",
+    "definite_article",
     "subject_pronoun",
     "object_pronoun",
     "possessive_pronoun",
@@ -112,6 +116,13 @@ def _validate_invariants(record, seen):
         errors.append("%s: segments must be an array" % loc)
         return errors
 
+    has_visible_article = any(
+        isinstance(segment, dict)
+        and segment.get("role") == "definite_article"
+        and (segment.get("gloss_contribution") or "").strip().lower() == "the"
+        for segment in segments
+    )
+
     for index, segment in enumerate(segments):
         role = segment.get("role") if isinstance(segment, dict) else None
         contribution = (segment.get("gloss_contribution") or "").strip() if isinstance(segment, dict) else ""
@@ -120,6 +131,8 @@ def _validate_invariants(record, seen):
                 errors.append("%s: segment[%d] %s needs gloss_contribution" % (loc, index, role))
             if not must_surface:
                 errors.append("%s: function-bearing segment needs hover_contract.must_surface" % loc)
+        if has_visible_article and role == "stem" and contribution.lower().startswith("the "):
+            errors.append("%s: stem gloss duplicates definite_article contribution" % loc)
         if role in PRONOUN_SEGMENTS:
             if segment.get("person") in (None, "null"):
                 errors.append("%s: segment[%d] %s needs person" % (loc, index, role))
@@ -263,6 +276,237 @@ def _sample_records():
                 "external_source_names_public": False,
             },
         },
+        {
+            "loc": "22:18:12",
+            "surface": "ٱلْأَرْضِ",
+            "lemma": "أَرْض",
+            "root": "أ ر ض",
+            "pos": "noun",
+            "morphology": {"case": "genitive", "state": "definite", "number": "singular", "gender": "feminine"},
+            "segments": [
+                {"role": "definite_article", "surface": "ٱل", "gloss_contribution": "the"},
+                {"role": "stem", "surface": "أَرْضِ", "gloss_contribution": "earth, land"},
+            ],
+            "syntax": {"role": "majrur_host", "dependency": "jar_majrur", "linked_locs": []},
+            "hover_contract": {
+                "must_surface": ["the", "earth"],
+                "must_not_surface": ["earth only"],
+                "reason": "The definite article is part of the visible token and must not disappear.",
+            },
+            "evidence": {
+                "labels": ["tafsir-center:analyze_word:22:18:12:irab_sarf"],
+                "gate": "two_vote_required",
+                "reasoning": "Definite genitive noun inside a prepositional phrase.",
+            },
+            "public_boundary": {
+                "public_gloss_src": "qamus",
+                "public_gloss_kind": "authored",
+                "public_gloss_lang": "en",
+                "external_source_names_public": False,
+            },
+        },
+        {
+            "loc": "22:18:13",
+            "surface": "وَٱلشَّمْسُ",
+            "lemma": "شَمْس",
+            "root": "ش م س",
+            "pos": "noun",
+            "morphology": {"case": "nominative", "state": "definite", "number": "singular", "gender": "feminine"},
+            "segments": [
+                {"role": "prefix_conjunction", "surface": "وَ", "gloss_contribution": "and"},
+                {"role": "definite_article", "surface": "ٱل", "gloss_contribution": "the"},
+                {"role": "stem", "surface": "شَّمْسُ", "gloss_contribution": "sun"},
+            ],
+            "syntax": {"role": "coordinated", "dependency": "coordination", "linked_locs": ["22:18:12"]},
+            "hover_contract": {
+                "must_surface": ["and", "the", "sun"],
+                "must_not_surface": ["sun only", "and + sun"],
+                "reason": "The prefixed wāw and definite article must both remain visible.",
+            },
+            "evidence": {
+                "labels": ["tafsir-center:analyze_word:22:18:13:irab_sarf"],
+                "gate": "two_vote_required",
+                "reasoning": "Coordinating wāw plus definite nominative noun.",
+            },
+            "public_boundary": {
+                "public_gloss_src": "qamus",
+                "public_gloss_kind": "authored",
+                "public_gloss_lang": "en",
+                "external_source_names_public": False,
+            },
+        },
+        {
+            "loc": "22:18:14",
+            "surface": "وَٱلْقَمَرُ",
+            "lemma": "قَمَر",
+            "root": "ق م ر",
+            "pos": "noun",
+            "morphology": {"case": "nominative", "state": "definite", "number": "singular", "gender": "masculine"},
+            "segments": [
+                {"role": "prefix_conjunction", "surface": "وَ", "gloss_contribution": "and"},
+                {"role": "definite_article", "surface": "ٱل", "gloss_contribution": "the"},
+                {"role": "stem", "surface": "قَمَرُ", "gloss_contribution": "moon"},
+            ],
+            "syntax": {"role": "coordinated", "dependency": "coordination", "linked_locs": ["22:18:13"]},
+            "hover_contract": {
+                "must_surface": ["and", "the", "moon"],
+                "must_not_surface": ["moon only"],
+                "reason": "The prefixed wāw and definite article must both remain visible.",
+            },
+            "evidence": {
+                "labels": ["tafsir-center:analyze_word:22:18:14:irab_sarf"],
+                "gate": "two_vote_required",
+                "reasoning": "Coordinating wāw plus definite nominative noun.",
+            },
+            "public_boundary": {
+                "public_gloss_src": "qamus",
+                "public_gloss_kind": "authored",
+                "public_gloss_lang": "en",
+                "external_source_names_public": False,
+            },
+        },
+        {
+            "loc": "2:13:12",
+            "surface": "ٱلسُّفَهَاءُ",
+            "lemma": "سَفِيه",
+            "root": "س ف ه",
+            "pos": "noun",
+            "morphology": {
+                "case": "nominative",
+                "state": "definite",
+                "number": "plural",
+                "gender": "masculine",
+                "rationality": "rational",
+            },
+            "segments": [
+                {"role": "definite_article", "surface": "ٱل", "gloss_contribution": "the"},
+                {"role": "stem", "surface": "سُّفَهَاءُ", "gloss_contribution": "foolish ones"},
+            ],
+            "syntax": {"role": "subject", "dependency": "subject", "linked_locs": []},
+            "hover_contract": {
+                "must_surface": ["the", "foolish ones"],
+                "must_not_surface": ["the + the foolish ones"],
+                "reason": "The article is a separate segment; the stem gloss must not repeat it.",
+            },
+            "evidence": {
+                "labels": ["tafsir-center:analyze_word:2:13:12:irab_sarf"],
+                "gate": "two_vote_required",
+                "reasoning": "Definite broken plural functioning as a subject.",
+            },
+            "public_boundary": {
+                "public_gloss_src": "qamus",
+                "public_gloss_kind": "authored",
+                "public_gloss_lang": "en",
+                "external_source_names_public": False,
+            },
+        },
+        {
+            "loc": "2:21:1",
+            "surface": "يَا",
+            "lemma": "يَا",
+            "root": None,
+            "pos": "vocative_particle",
+            "segments": [{"role": "vocative_particle", "surface": "يَا", "gloss_contribution": "O"}],
+            "syntax": {"role": "vocative", "dependency": "vocative", "linked_locs": ["2:21:2"]},
+            "hover_contract": {
+                "must_surface": ["O"],
+                "must_not_surface": ["O you (who)"],
+                "reason": "The standalone vocative particle contributes O; it should not swallow ayyuha.",
+            },
+            "evidence": {
+                "labels": ["tafsir-center:analyze_word:2:21:1:irab_sarf"],
+                "gate": "two_vote_required",
+                "reasoning": "Vocative particle separated from the following addressee bridge in Qamus tokenization.",
+            },
+            "public_boundary": {
+                "public_gloss_src": "qamus",
+                "public_gloss_kind": "authored",
+                "public_gloss_lang": "en",
+                "external_source_names_public": False,
+            },
+        },
+        {
+            "loc": "2:21:2",
+            "surface": "أَيُّهَا",
+            "lemma": "أَيّ",
+            "root": None,
+            "pos": "particle",
+            "segments": [
+                {"role": "vocative_support", "surface": "أَيُّ", "gloss_contribution": "you who"},
+                {"role": "attention_particle", "surface": "هَا", "gloss_contribution": "attention marker"},
+            ],
+            "syntax": {"role": "vocative_addressee", "dependency": "vocative_addressee", "linked_locs": ["2:21:1"]},
+            "hover_contract": {
+                "must_surface": ["you"],
+                "must_not_surface": ["O you (who)"],
+                "reason": "Ayyuha carries the addressee bridge and attention particle; ya carries O.",
+            },
+            "evidence": {
+                "labels": ["tafsir-center:analyze_word:2:21:1:irab_sarf"],
+                "gate": "two_vote_required",
+                "reasoning": "MCP analyzes ya/ayyuha together; Qamus split tokens must preserve each piece separately.",
+            },
+            "public_boundary": {
+                "public_gloss_src": "qamus",
+                "public_gloss_kind": "authored",
+                "public_gloss_lang": "en",
+                "external_source_names_public": False,
+            },
+        },
+        {
+            "loc": "26:139:2",
+            "surface": "فَأَهْلَكْنَاهُمْ",
+            "lemma": "أَهْلَكَ",
+            "root": "ه ل ك",
+            "pos": "verb",
+            "morphology": {
+                "verb_form": "IV",
+                "voice": "active",
+                "aspect": "perfect",
+                "person": "1",
+                "number": "plural",
+                "gender": "common",
+            },
+            "segments": [
+                {"role": "prefix_coordination_fa", "surface": "فَ", "gloss_contribution": "so/then"},
+                {"role": "stem", "surface": "أَهْلَكْ", "gloss_contribution": "destroyed"},
+                {
+                    "role": "subject_pronoun",
+                    "surface": "نَا",
+                    "gloss_contribution": "We",
+                    "person": "1",
+                    "number": "plural",
+                    "gender": "common",
+                    "case": "nominative",
+                },
+                {
+                    "role": "object_pronoun",
+                    "surface": "هُمْ",
+                    "gloss_contribution": "them",
+                    "person": "3",
+                    "number": "plural",
+                    "gender": "masculine",
+                    "case": "accusative",
+                },
+            ],
+            "syntax": {"role": "verb", "dependency": "object", "linked_locs": []},
+            "hover_contract": {
+                "must_surface": ["We", "them"],
+                "must_not_surface": ["stem recognized", "suffix/pronoun pending", "destroyed only"],
+                "reason": "The subject and object pronouns must be visible before this can leave pending.",
+            },
+            "evidence": {
+                "labels": ["tafsir-center:analyze_word:26:139:2:irab_sarf"],
+                "gate": "two_vote_required",
+                "reasoning": "Form IV perfect verb with first-person plural subject and third-person plural object suffix.",
+            },
+            "public_boundary": {
+                "public_gloss_src": "qamus",
+                "public_gloss_kind": "authored",
+                "public_gloss_lang": "en",
+                "external_source_names_public": False,
+            },
+        },
     ]
 
 
@@ -277,7 +521,7 @@ def _self_test():
         good = os.path.join(td, "good.jsonl")
         _write_jsonl(good, _sample_records())
         n, errors = validate_file(good)
-        assert n == 3 and not errors, errors
+        assert n == 10 and not errors, errors
 
         missing_lang = _sample_records()
         del missing_lang[0]["public_boundary"]["public_gloss_lang"]
@@ -306,6 +550,13 @@ def _self_test():
         _write_jsonl(bad_leak, leak)
         _, errors = validate_file(bad_leak)
         assert any("leaks an internal source label" in e for e in errors), errors
+
+        duplicate_article = _sample_records()
+        duplicate_article[6]["segments"][1]["gloss_contribution"] = "the foolish ones"
+        bad_article = os.path.join(td, "duplicate-article.jsonl")
+        _write_jsonl(bad_article, duplicate_article)
+        _, errors = validate_file(bad_article)
+        assert any("stem gloss duplicates definite_article contribution" in e for e in errors), errors
 
     print("validate_morphosyntax_token_metadata self-test OK")
 

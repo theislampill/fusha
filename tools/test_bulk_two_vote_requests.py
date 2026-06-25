@@ -65,11 +65,16 @@ def main():
         assert req["public_boundary"]["kind"] == "authored"
         assert req["public_boundary"]["lang"] == "en"
         assert "owner" not in req["gate"]
+        assert len(summary["source_table_sha256"]) == 64
+        assert len(summary["request_file_sha256"]) == 64
+        assert len(next(iter(summary["chunk_sha256"].values()))) == 64
         assert summary["excluded_locs"] == 1
         assert summary["only_lanes"] == ["token_irab"]
         assert (root / "requests_chunks" / "chunk_001.jsonl").exists()
         report_text = report.read_text(encoding="utf-8")
         assert summary["request_file"] in report_text
+        assert summary["source_table_sha256"] in report_text
+        assert summary["request_file_sha256"] in report_text
         assert "bulk_twovote_requests_batch_001.jsonl" not in report_text
     print("bulk two-vote request builder self-test OK")
 

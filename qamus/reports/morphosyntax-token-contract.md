@@ -43,6 +43,8 @@ Do not collapse same-letter particles into one hover rule:
 - vocative particles govern an addressee and can affect case; record the vocative dependency and addressee loc.
 - exceptive particles need the exception structure: mustathnā minhu, mustathnā, and whether the expression is muttaṣil, munqaṭiʿ, or mufarragh.
 - prefixed `بـ`, `لـ`, and similar prepositions create jar-majrūr even when fused to a noun or pronoun.
+- definite articles are visible grammar pieces. A token such as `وَٱلْقَمَرُ` must preserve `and + the + moon`,
+  while `ٱلسُّفَهَاءُ` must not become `the + the foolish ones`.
 - hamza/alif may be interrogative or equalization; the equalization use should surface a "whether" contribution and is not an ordinary question.
 - purpose lām, imperative lām, and genitive lām are distinct segment roles.
 
@@ -119,6 +121,24 @@ The parse payload should drive validators:
 - `إِنَّا`: hover must surface emphasis plus `We`, not particle-only `surely/indeed`.
 - `يَحْفَظُونَهُ`: hover must surface plural subject and object `him`, not bare root-family `to guard`.
 - `أَنزَلْنَاهُ`: hover must keep `We sent it down`.
+- `وَٱلشَّمْسُ` and `وَٱلْقَمَرُ`: hover must keep `and + the + host`, not host-only or missing-article wording.
+- `ٱلسُّفَهَاءُ`: hover must keep one visible article contribution, not `the + the foolish ones`.
+- `يَا` versus `أَيُّهَا`: the vocative particle contributes `O`; `أَيُّهَا` carries the addressee bridge and attention particle, so the two split tokens must not share one flattened hover.
+- `فَأَهْلَكْنَاهُمْ`: hover must account for fāʾ, Form IV/perfect stem, `We` subject, and `them` object before leaving pending.
+
+## Segment Rendering Target
+
+The live renderer should be able to color both the Arabic token and the hover breakdown from this payload. Keep the
+public best gloss concise, but expose a scrubbed learner view with stable segment classes:
+
+- conjunction/resumption/result/cause particles
+- prepositions, oath wāw, and jar-majrūr hosts
+- definite article
+- verb stem and verb form
+- subject, object, and possessive pronouns
+- vocative support and attention particles
+
+The color layer must be generated from scrubbed segment roles, not from external source names or copied source text.
 
 ## Public Boundary
 

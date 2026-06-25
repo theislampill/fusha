@@ -7,6 +7,7 @@ nahw-primary review inputs for rows that already passed the table validator and
 still require independent agreement.
 """
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -48,6 +49,14 @@ def write_jsonl(path, rows):
     with open(path, "w", encoding="utf-8", newline="\n") as handle:
         for row in rows:
             handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def sha256_file(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 
 def request_from_row(row):
@@ -151,7 +160,9 @@ def build_requests(table_path=DEFAULT_TABLE, out_path=DEFAULT_OUT, manifest_path
     summary = {
         "_generator": "tools/build_bulk_two_vote_requests.py",
         "source_table": os.path.relpath(table_path, ROOT),
+        "source_table_sha256": sha256_file(table_path),
         "request_file": os.path.relpath(out_path, ROOT),
+        "request_file_sha256": sha256_file(out_path),
         "rows": len(requests),
         "eligible_rows": len(rows),
         "limit": limit,
@@ -161,6 +172,10 @@ def build_requests(table_path=DEFAULT_TABLE, out_path=DEFAULT_OUT, manifest_path
         "only_lanes": sorted(only_lanes),
         "exclude_lanes": sorted(exclude_lanes),
         "chunks": chunks,
+        "chunk_sha256": {
+            chunk: sha256_file(os.path.join(ROOT, chunk))
+            for chunk in chunks
+        },
         "by_lane": lane_counts,
         "validator": "tools/validate_bulk_two_vote_requests.py",
         "reconciliation_tool": "tools/reconcile_bulk_two_vote_results.py",
@@ -189,6 +204,8 @@ def build_requests(table_path=DEFAULT_TABLE, out_path=DEFAULT_OUT, manifest_path
             "| eligible low/medium two-vote rows | %d |" % len(rows),
             "| chunk size | %d |" % chunk_size,
             "| chunks | %d |" % len(chunks),
+            "| source table sha256 | `%s` |" % summary["source_table_sha256"],
+            "| request file sha256 | `%s` |" % summary["request_file_sha256"],
             "",
             "## Review Contract",
             "",
