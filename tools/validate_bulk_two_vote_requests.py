@@ -73,7 +73,7 @@ def _public_strings(row):
                 yield "requested_output.%s" % key, value
 
 
-def validate_row(line_no, row, source_row=None):
+def validate_row(line_no, row, source_row=None, require_lang_en=False):
     errors = []
     if "__json_error__" in row:
         return ["line %d: bad JSON (%s)" % (line_no, row["__json_error__"])]
@@ -97,6 +97,8 @@ def validate_row(line_no, row, source_row=None):
     else:
         _expect(errors, loc, boundary.get("src") == "qamus", "public_boundary.src must be qamus")
         _expect(errors, loc, boundary.get("kind") == "authored", "public_boundary.kind must be authored")
+        if require_lang_en or "lang" in boundary:
+            _expect(errors, loc, boundary.get("lang") == "en", "public_boundary.lang must be en")
         _expect(errors, loc, boundary.get("external_text_allowed") is False,
                 "external text must not be allowed")
         _expect(errors, loc, boundary.get("external_source_names_public_allowed") is False,
@@ -184,7 +186,7 @@ def _manifest_errors(request_path, request_rows, manifest_path):
     return errors
 
 
-def validate_files(request_path=DEFAULT_REQUESTS, table_path=DEFAULT_TABLE, manifest_path=None):
+def validate_files(request_path=DEFAULT_REQUESTS, table_path=DEFAULT_TABLE, manifest_path=None, require_lang_en=False):
     errors = []
     table = table_by_loc(table_path) if table_path else {}
     request_pairs = read_jsonl(request_path)
@@ -201,7 +203,7 @@ def validate_files(request_path=DEFAULT_REQUESTS, table_path=DEFAULT_TABLE, mani
         source_row = table.get(loc) if table else None
         if table and source_row is None:
             errors.append("%s: loc not present in source table" % (loc or "line %d" % line_no))
-        errors.extend(validate_row(line_no, row, source_row))
+        errors.extend(validate_row(line_no, row, source_row, require_lang_en=require_lang_en))
     errors.extend(_manifest_errors(request_path, request_rows, manifest_path))
     return errors
 
@@ -212,9 +214,15 @@ def main():
     parser.add_argument("--table", default=DEFAULT_TABLE)
     parser.add_argument("--manifest", default=DEFAULT_MANIFEST)
     parser.add_argument("--no-manifest", action="store_true")
+    parser.add_argument(
+        "--require-lang-en",
+        action="store_true",
+        help="require public_boundary.lang='en' for newly generated review packets; legacy packets may omit it",
+    )
     args = parser.parse_args()
     manifest = None if args.no_manifest else args.manifest
-    errors = validate_files(args.requests, table_path=args.table, manifest_path=manifest)
+    errors = validate_files(args.requests, table_path=args.table, manifest_path=manifest,
+                            require_lang_en=args.require_lang_en)
     checked = len(read_jsonl(args.requests))
     print("checked %d two-vote request row(s)" % checked)
     if errors:

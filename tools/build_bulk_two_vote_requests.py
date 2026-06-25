@@ -81,6 +81,7 @@ def request_from_row(row):
         "public_boundary": {
             "src": "qamus",
             "kind": "authored",
+            "lang": "en",
             "external_text_allowed": False,
             "external_source_names_public_allowed": False,
         },

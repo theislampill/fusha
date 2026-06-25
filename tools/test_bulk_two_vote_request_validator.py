@@ -63,6 +63,7 @@ def request_row(loc="7:157:2"):
         "public_boundary": {
             "src": "qamus",
             "kind": "authored",
+            "lang": "en",
             "external_text_allowed": False,
             "external_source_names_public_allowed": False,
         },
@@ -87,6 +88,19 @@ def main():
         bad_boundary["public_boundary"]["external_source_names_public_allowed"] = True
         write_jsonl(requests, [bad_boundary])
         assert any("external source names" in e for e in V.validate_files(str(requests), table_path=str(table)))
+
+        legacy_boundary = request_row()
+        del legacy_boundary["public_boundary"]["lang"]
+        write_jsonl(requests, [legacy_boundary])
+        assert V.validate_files(str(requests), table_path=str(table)) == []
+        assert any("public_boundary.lang must be en" in e
+                   for e in V.validate_files(str(requests), table_path=str(table), require_lang_en=True))
+
+        bad_lang = request_row()
+        bad_lang["public_boundary"]["lang"] = "ar"
+        write_jsonl(requests, [bad_lang])
+        assert any("public_boundary.lang must be en" in e
+                   for e in V.validate_files(str(requests), table_path=str(table)))
 
         bad_parity = request_row()
         bad_parity["qac"]["pos"] = "N"

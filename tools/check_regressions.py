@@ -452,6 +452,18 @@ for _args, _label in ((["--self-test"], "morphosyntax validator self-test"),
     except Exception:
         check(_label + " runnable", False)
 
+for _script, _label in (("test_bulk_two_vote_requests.py", "bulk two-vote builder self-test"),
+                        ("test_bulk_two_vote_request_validator.py", "bulk two-vote validator self-test")):
+    try:
+        _v = subprocess.run([sys.executable, os.path.join(_R, "tools", _script)], capture_output=True, text=True)
+        check(_label, _v.returncode == 0)
+        if _v.returncode != 0:
+            _out = (_v.stdout or _v.stderr).strip().splitlines()
+            if _out:
+                print("  ", _out[-1])
+    except Exception:
+        check(_label + " runnable", False)
+
 # closure-2092: report-ergonomics gate (Markdown counterpart to artifact ergonomics) + root-cause ledger
 # + open-stem hygiene gates (surface-index covers usage.forms; lane sanity — no verb-clitic/false-blocker pollution)
 for _vname, _label in [("check_report_ergonomics.py", "closure-2092 report ergonomics (no crushed one-line Markdown reports)"),

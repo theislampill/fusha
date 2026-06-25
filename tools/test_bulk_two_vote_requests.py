@@ -62,6 +62,8 @@ def main():
         assert req["loc"] == "7:158:3"
         assert req["vote_lenses"] == ["sarf-primary", "nahw-primary"]
         assert req["public_boundary"]["src"] == "qamus"
+        assert req["public_boundary"]["kind"] == "authored"
+        assert req["public_boundary"]["lang"] == "en"
         assert "owner" not in req["gate"]
         assert summary["excluded_locs"] == 1
         assert summary["only_lanes"] == ["token_irab"]
