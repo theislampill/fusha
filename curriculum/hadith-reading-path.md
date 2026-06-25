@@ -11,7 +11,7 @@ after the Book.
 > commentary. **No Ṣaḥīḥayn content is reproduced anywhere here** — Ṣaḥīḥayn remains a future,
 > owner-gated expansion (see [`../corpora/sahihayn/PLAN.md`](../corpora/sahihayn/PLAN.md)). The
 > matn is treated read-only and is never altered; any gloss that could reach a public artifact
-> is `{src:'qamus', kind:'authored'}`, and **PENDING beats a wrong gloss**. See
+> is `{src:'qamus', kind:'authored', lang:'en'}`, and **PENDING beats a wrong gloss**. See
 > [`README.md`](README.md) and [`../provenance/source-boundaries.md`](../provenance/source-boundaries.md).
 > This is a **language** study layer; the learner verifies meaning with a qualified teacher.
 
@@ -47,7 +47,10 @@ For each ḥadīth in the order below:
    [`../corpora/nawawi40/nawawi40.summary.md`](../corpora/nawawi40/nawawi40.summary.md) tells
    you which bucket a word fell into (`already_in_qamus` vs a review-only candidate).
 3. **Grammar via nahw procedures** — parse the sentence with the first-governor habit; resolve
-   every particle by the harakah on its content letter, never by `norm()`.
+   every particle by the harakah on its content letter, never by `norm()`. For attached
+   particles/pronouns, run the same token-composition habit from
+   [`drills/hover-composition-and-routing.md`](drills/hover-composition-and-routing.md) before
+   trusting a hover-like gloss.
 4. **PENDING discipline** — for any word whose root, form, or sense you cannot certify, name the
    `pending:` reason and route to the procedure. Do not assert a root the catalogue itself left
    in the `new_root_or_unknown_root` bucket; that bucket is a **human/QAC** task, not a guess.

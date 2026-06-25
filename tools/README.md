@@ -85,7 +85,7 @@ pos  = qac.get_pos("2:255", "ٱللَّهُ")    # -> "PN"      (keeps a verb gl
   "keep your authored value and consider `PENDING`", never as a license to invent.
 - **`informed_by` is internal only.** Record `informed_by:'qac'` in internal schemas
   when a QAC fact agreed with yours; strip it before publication. The public hover
-  artifact is always `{src:'qamus', kind:'authored'}` — never a QAC name.
+  artifact is always `{src:'qamus', kind:'authored', lang:'en'}` — never a QAC name.
 
 The module's `__main__` parses a tiny inline 3-row **demo** TSV (hand-written, not
 QAC data) to show the parsing contract without needing the real corpus.

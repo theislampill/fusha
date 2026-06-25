@@ -21,7 +21,8 @@ if not skill: errs.append("sarf/SKILL.md missing")
 
 # 1. required procedures / references / evals exist
 for p in ["root-decision","verb-form","weak-root","hamza-root","doubled-root","noun-plural-gender",
-          "masdar-participle","nominal-derivative-decision","learner-error-diagnosis","proper-noun",
+          "masdar-participle","clitic-and-host-morphology","verb-form-and-mood-review",
+          "nominal-derivative-decision","learner-error-diagnosis","proper-noun",
           "homograph-risk","suffix-pronoun-state","hover-application","qamus-entry-authoring","corpus-to-qamus"]:
     need(f"procedures/{p}.md", "required procedure")
 for r in ["nominal-derivatives","learner-error-remediation"]:
@@ -32,7 +33,8 @@ need("drills/nominal-derivatives.md", "required drill")
 
 # 2. SKILL.md references the new procedures/evals (named, not orphan)
 for token in ["nominal-derivative-decision","learner-error-diagnosis","nominal-derivative-error-eval",
-              "false-clitic-split-eval","nominal-derivatives","learner-error-remediation"]:
+              "false-clitic-split-eval","nominal-derivatives","learner-error-remediation",
+              "clitic-and-host-morphology","verb-form-and-mood-review","visible_morphology"]:
     if token not in skill: errs.append(f"SKILL.md does not reference {token}")
 
 # 3. the 7 derivative types present in the reference
@@ -66,10 +68,23 @@ fcs = os.path.join(S, "evals", "false-clitic-split-eval.jsonl")
 if os.path.exists(fcs):
     rows = [json.loads(l) for l in open(fcs, encoding="utf-8") if l.strip()]
     blob = json.dumps(rows, ensure_ascii=False)
-    for surf in ["ٱلْمُلْكُ","لَهُ","بِيَدِهِ","قُرْءَانًا","رَحْمَة","أَعْمَالُنَا","عَلِمْنَا"]:
+    for surf in ["ٱلْمُلْكُ","لَهُ","بِيَدِهِ","قُرْءَانًا","رَحْمَة","أَعْمَالُنَا","عَلِمْنَا",
+                 "بِسَلَامٍ","بِبَدْرٍ","جَادَلُوكَ","وَلْيَعْفُوا","مُعَلَّمٌ"]:
         if surf not in blob: errs.append(f"false-clitic-split-eval missing case {surf}")
     for r in rows:
         if "decision" not in r: errs.append(f"FCS row {r.get('id')} missing decision")
+    rich_ids = {"FCS-021", "FCS-022", "FCS-023", "FCS-024", "FCS-025"}
+    rich_rows = {r.get("id"): r for r in rows if r.get("id") in rich_ids}
+    for rid in sorted(rich_ids):
+        r = rich_rows.get(rid)
+        if not r:
+            errs.append(f"false-clitic-split-eval missing structured row {rid}")
+            continue
+        for k in ("visible_morphology", "host_pos", "expected_visible_gloss", "reject_host_only_gloss"):
+            if k not in r:
+                errs.append(f"FCS row {rid} missing {k}")
+        if r.get("reject_host_only_gloss") is not True:
+            errs.append(f"FCS row {rid} must reject host-only glosses")
 
 # 7. corpus-to-Qamus production recipe + learner path + provenance invariant
 if "corpus" not in read("procedures/corpus-to-qamus.md").lower(): errs.append("corpus-to-qamus recipe weak")

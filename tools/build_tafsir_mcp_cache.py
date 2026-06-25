@@ -4,7 +4,7 @@
 
 Each cache record is one MCP response, source-hashed for integrity. Raw cache is gitignored (see .gitignore);
 only tiny redacted examples live under sources/tafsir_mcp/examples/. Nothing here ships to the public hover
-artifact — public records stay {src:"qamus",kind:"authored"}.
+artifact — public records stay {src:"qamus",kind:"authored",lang:"en"}.
 
 Usage:
   # batch a list of ayah/word targets from a JSONL/loc file:

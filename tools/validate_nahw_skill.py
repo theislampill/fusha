@@ -24,7 +24,9 @@ if not skill: errs.append("nahw/SKILL.md missing")
 for p in ["particle-decision","particle-function-decision","preposition-pronoun","negation",
           "relative-interrogative","conditionals","idafa-jar-majrur","irab-case-mood",
           "irab-teaching-diagnosis","referent-context","grammar-risk-gate","hover-application",
-          "qamus-entry-authoring","corpus-to-qamus","pronoun-attachment"]:
+          "qamus-entry-authoring","corpus-to-qamus","pronoun-attachment","function-token-hover-review",
+          "ma-function-decision","pp-attachment-review","governing-particle-mood-review",
+          "exception-and-vocative-review"]:
     need(f"procedures/{p}.md", "required procedure")
 for r in ["particle-functions","irab-teaching-map","learner-error-remediation","particles","idafa","jar-majrur"]:
     need(f"references/{r}.md", "required reference")
@@ -34,7 +36,10 @@ need("drills/particle-disambiguation.md", "required drill")
 need("drills/irab-case-mood.md", "required drill")
 
 for token in ["particle-function-decision","irab-teaching-diagnosis","particle-function-eval",
-              "irab-polysemy-eval","particle-functions","irab-teaching-map","learner-error-remediation"]:
+              "irab-polysemy-eval","particle-functions","irab-teaching-map","learner-error-remediation",
+              "function-token-hover-review","ma-function-decision","pp-attachment-review",
+              "governing-particle-mood-review","exception-and-vocative-review","function_class",
+              "attachment","composition"]:
     if token not in skill: errs.append(f"SKILL.md does not reference {token}")
 
 # particle functions machine-testable: every row has functions[] + context_function + a loc
@@ -47,18 +52,47 @@ if os.path.exists(pf):
         for k in ("functions", "context_function", "particle"):
             if k not in r: errs.append(f"PF row {r.get('id')} missing {k}")
         particles.add(r.get("particle"))
-    for need_p in ["مَا","مَن","مِن","إِنْ","لَا","أَلَا","أَلَّا","فَمَا","أَمْ","كَلَّا","لِمَ"]:
+    for need_p in ["مَا","مَن","مِن","إِنْ","لَا","أَلَا","أَلَّا","فَمَا","أَمْ","كَلَّا","لِمَ",
+                   "واو","فاء","أ","إِنَّمَا","إِلَّا"]:
         if need_p not in particles: errs.append(f"particle-function-eval missing particle {need_p}")
+    blob = json.dumps(rows, ensure_ascii=False)
+    if "negative_ma_like_laysa" not in blob:
+        errs.append("particle-function-eval missing negative_ma_like_laysa case")
+    rich_pf = {"PF-033", "PF-034", "PF-035", "PF-036", "PF-037", "PF-038"}
+    rich_rows = {r.get("id"): r for r in rows if r.get("id") in rich_pf}
+    for rid in sorted(rich_pf):
+        r = rich_rows.get(rid)
+        if not r:
+            errs.append(f"particle-function-eval missing structured row {rid}")
+            continue
+        if "parse_requirement" not in r:
+            errs.append(f"PF row {rid} missing parse_requirement")
+    if rich_rows.get("PF-037", {}).get("expected_mood") != "subjunctive":
+        errs.append("PF-037 must require subjunctive mood")
 
 # iʿrāb-polysemy: required same-surface regressions present + each has a reading
 ip = os.path.join(N, "evals", "irab-polysemy-eval.jsonl")
 if os.path.exists(ip):
     rows = [json.loads(l) for l in open(ip, encoding="utf-8") if l.strip()]
     blob = json.dumps(rows, ensure_ascii=False)
-    for surf in ["وَمَا","عَادٍ","أَلَّا","أَلَا","فَمَا","جِنَّةٍ","أُمَّةً","يَقْدِرُ","حَلِيمٌ"]:
+    for surf in ["وَمَا","عَادٍ","أَلَّا","أَلَا","فَمَا","جِنَّةٍ","أُمَّةً","يَقْدِرُ","حَلِيمٌ",
+                 "بِسَلَامٍ","بِبَدْرٍ","وَٱلتِّينِ","وَٱلزَّيْتُونِ","وَبِٱلنَّجْمِ",
+                 "جَادَلُوكَ","مُعَلَّمٌ","ذَٰلِكُمْ"]:
         if surf not in blob: errs.append(f"irab-polysemy-eval missing regression {surf}")
     for r in rows:
         if "reading" not in r: errs.append(f"IP row {r.get('id')} missing reading")
+    rich_ip = {"IP-026", "IP-027", "IP-028", "IP-029", "IP-030", "IP-031", "IP-032", "IP-033", "IP-034"}
+    rich_rows = {r.get("id"): r for r in rows if r.get("id") in rich_ip}
+    for rid in sorted(rich_ip):
+        r = rich_rows.get(rid)
+        if not r:
+            errs.append(f"irab-polysemy-eval missing structured row {rid}")
+            continue
+        for k in ("composition", "attachment", "reject_host_only_gloss"):
+            if k not in r:
+                errs.append(f"IP row {rid} missing {k}")
+        if r.get("reject_host_only_gloss") is not True:
+            errs.append(f"IP row {rid} must reject host-only glosses")
 
 # conclusion-only reasoning forbidden: grammar-risk-gate procedure + grade tool must exist
 if "answer AND" not in read("procedures/grammar-risk-gate.md") and "reasoning" not in read("procedures/grammar-risk-gate.md"):

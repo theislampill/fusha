@@ -11,7 +11,7 @@ syntactic frame, then check the answer. When undiacritized input would collapse 
 the correct beginner answer is `pending: homograph_haraka` — guessing is the failure.
 
 > Cited so you can verify each form against its position: e.g. `quran:112:1:1` = Sūrah 112,
-> āyah 1, word 1. Glosses are authored; the public render is `{src:'qamus', kind:'authored'}`.
+> āyah 1, word 1. Glosses are authored; the public render is `{src:'qamus', kind:'authored', lang:'en'}`.
 
 ---
 

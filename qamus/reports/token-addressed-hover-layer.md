@@ -26,7 +26,7 @@ exact token.
   `norm_strict` collapsed them. The exporter assigns a gloss only when the surface unambiguously selects a reading;
   **same-surface polysemy** (وَمَا "and not"/"and what", bare إِنْ "if"/lightened-emphatic, لَمَّا "when"/"not yet")
   is left pending for per-token iʿrāb.
-- Public record stays `{src:"qamus",kind:"authored"}`. `internal_provenance` may cite QAC/Tanzil/Tafsir-MCP; the
+- Public record stays `{src:"qamus",kind:"authored",lang:"en"}`. `internal_provenance` may cite QAC/Tanzil/Tafsir-MCP; the
   validator rejects any external name in the public gloss text.
 
 ## Live result (B6 + B6A applied)

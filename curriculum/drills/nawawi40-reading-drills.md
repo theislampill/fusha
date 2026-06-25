@@ -20,6 +20,8 @@ teacher.
 > roots in the catalogue's large "unknown" bucket await a human/QAC call and are **PENDING** —
 > the catalogue flags them as low-confidence hints, never asserted roots. Ṣaḥīḥayn is a future,
 > owner-gated expansion ([`../../corpora/sahihayn/PLAN.md`](../../corpora/sahihayn/PLAN.md)).
+> Grammar-resource labels, screenshot notes, and concept metadata stay internal; they route a
+> review or lesson but never provide public provenance or copied wording.
 
 **The new register:** Nawawī40 prose adds *narration vocabulary* (the isnād words: "narrated,"
 "reported," "on the authority of") that you will not have met in Qurʾānic verses. The catalogue
@@ -109,6 +111,7 @@ The learner reads the catalogue as a **study map**, not as authority.
       eyeballing the consonants?
 - [ ] Do I remember the catalogue is **review-only** — no published gloss, no live Qamus, no full
       matn reproduced — and that I read the actual matn from a verified copy with a teacher?
+- [ ] Do I run token composition on attached particles/pronouns before trusting a prose gloss?
 
 This is the bridge to the open corpus: the same discipline carries into Level 11 (Ṣaḥīḥayn
 preparation, owner-gated — [`../../corpora/sahihayn/PLAN.md`](../../corpora/sahihayn/PLAN.md)) and

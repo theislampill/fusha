@@ -32,5 +32,5 @@ and only authored via the certified author + key-aware 2-vote pipeline. Deduplic
 ## Boundaries
 
 - No external gloss text is copied; authored glosses are original qamus-style English.
-- Public output carries `{src:"qamus",kind:"authored"}` only — no `informed_by`, no source names.
+- Public output carries `{src:"qamus",kind:"authored",lang:"en"}` only — no `informed_by`, no source names.
 - Ṣaḥīḥayn remains **plan-only** (`corpora/sahihayn/`); no hadith text is committed here.

@@ -20,6 +20,7 @@ reports. Nothing here writes to a live site, talks to a server, or ships a runti
 | `reports/source-address-model.md` | report | The Xanadu-style source-address graph: address grammar, repair fields, derived views, `used_by` backlinks, duplicate avoidance. |
 | `reports/source-corpus-locator-summary.md` | report | The ToC-rank → page locator method for the physical source corpus (counts only; **no image paths**). |
 | `reports/hover-gloss-terminal-scoreboard.md` | report | Portable scoreboard template (tokens / resolved / pending-by-reason / wrong-fixed / coverage) + latest figures. |
+| `procedures/` | procedure docs | Review routing for closure batches, source triangulation/public-boundary checks, and grammar-resource use. Start with [`procedures/grammar-resource-usage.md`](procedures/grammar-resource-usage.md), [`procedures/closure-lane-routing.md`](procedures/closure-lane-routing.md), and [`procedures/source-triangulation-and-public-boundary.md`](procedures/source-triangulation-and-public-boundary.md). |
 | `candidates/` | data (authored, gitignored draft area) | Proposed new/repaired entries awaiting human review. Each is a self-contained payload (see the bridge report). Not present until candidate runs land. |
 
 Sibling research areas referenced by these docs:
@@ -38,7 +39,7 @@ Sibling research areas referenced by these docs:
 2. **Informed-by stays internal.** External references (Quran.com, the Quranic Arabic Corpus,
    Tanzil, sunnah.com) are *evidence used during review*. They may be **named** as
    `informed_by` labels in schemas and reports, but their gloss **text is never copied**. The
-   public hover artifact a reader sees must carry only `{src:'qamus', kind:'authored'}`.
+   public hover artifact a reader sees must carry only `{src:'qamus', kind:'authored', lang:'en'}`.
 3. **Qurʾān text is never altered.** Āyah text is reproduced verbatim or not at all.
 4. **All content is original.** Glosses, definitions, and notes are authored, not lifted.
 5. **Prefer PENDING over a wrong gloss.** A blank is recoverable; a confident error in

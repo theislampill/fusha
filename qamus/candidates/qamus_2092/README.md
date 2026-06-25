@@ -115,7 +115,7 @@ never performs that apply.**
 1. **No live-site code, secrets, server paths, IPs, or image/OCR bytes** here. Stdlib-only tools over local
    JSON you point them at.
 2. **Informed-by stays internal.** External references may be *named* as evidence labels; their gloss text
-   is **never** copied. The public hover artifact a reader sees carries only `{src:'qamus', kind:'authored'}`.
+   is **never** copied. The public hover artifact a reader sees carries only `{src:'qamus', kind:'authored', lang:'en'}`.
 3. **Qurʾān text is reproduced verbatim or not at all.** Āyah text is never altered.
 4. **All content is original** — glosses, definitions, notes are authored, not lifted.
 5. **Prefer `pending` over a wrong gloss.** A blank is recoverable; a confident error in scripture-facing

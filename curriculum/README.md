@@ -53,6 +53,22 @@ draws on, its drill, and its checkpoint, is in
 The first eight rungs build the machinery to read one āyah. Rungs 9–12 widen the reading from
 a single āyah to a root family, then to classical prose, and finally to the open corpus.
 
+## Current repo state this curriculum teaches from
+
+The current public `main` state audited on 2026-06-25 is recorded in
+[`repo-state-and-mission-audit-20260625.md`](repo-state-and-mission-audit-20260625.md). The
+short version: Fusha is no longer only a set of root and particle lessons. It now contains
+Qamus closure procedures for grammar-resource usage, source-triangulation boundaries,
+closure-lane routing, clitic/host morphology, governing-particle mood, `مَا` function
+decisions, PP attachment, exception/vocative review, and an internal-only QAC concept-map
+adapter.
+
+The learner-facing consequence is simple: hovers are not dictionary substitutions. They are
+small contextual claims that survived sarf, nahw, source-boundary, and public-provenance
+gates. When a hover is blank, the curriculum teaches the learner to name the blocker:
+unknown entry, clitic role, function particle, PP attachment, iʿrāb, proper-name collision, or
+source repair. A precise blank is part of the method.
+
 ## How the ladder links the rest of the repo
 
 The curriculum does **not** restate ṣarf or nahw — it *routes* to them. Each level names the
@@ -80,7 +96,7 @@ lands on the same single source of truth the gloss-authoring side uses.
   [`qamus-learning-path.md`](qamus-learning-path.md).
 - **Hover-gloss state** — from Level 8 on, the learner reads on `qamus.dawah.wiki`, where
   hovering or tapping a Qurʾānic word shows an **authored** English gloss
-  (`{src:'qamus', kind:'authored'}`) when the word is covered, and shows **nothing** when it
+  (`{src:'qamus', kind:'authored', lang:'en'}`) when the word is covered, and shows **nothing** when it
   is not. A blank hover is a feature: it means "this word has not yet earned a certified
   gloss," and the learner falls back to procedure rather than to a guess. The coverage the
   learner sees is the same scoreboard the authoring side tracks at
@@ -91,6 +107,11 @@ lands on the same single source of truth the gloss-authoring side uses.
   curriculum uses these as *study coordinates*: a root study at Level 9 is "open address
   `qamus:v443`, read every `usage_refs[]` it points at." Addresses give the learner a durable
   way to bookmark, revisit, and cross-link what they have studied.
+- **Grammar-resource routing** — screenshots, QAC grammar labels, Tafsir/iʿrāb evidence, and
+  concept-map metadata are internal study aids. They may route a learner or reviewer to
+  "proper name," "place," "oath wāw," "hidden PP attachment," or "scholar review," but they do
+  not supply public hover wording. See
+  [`../qamus/procedures/grammar-resource-usage.md`](../qamus/procedures/grammar-resource-usage.md).
 
 ## Files in this pack
 
@@ -99,20 +120,27 @@ curriculum/
   README.md                      ← you are here
   zero-to-fluency-roadmap.md     ← the 12 levels in full: goal · skills · entries · drill · checkpoint
   qamus-learning-path.md         ← how to study with qamus.dawah.wiki + the hover layer
+  quran-reading-path.md          ← graded short-suwar reading path
+  hadith-reading-path.md         ← Nawawī40 prose path, with Ṣaḥīḥayn kept owner-gated
   placement-test.md              ← self-scoring test → your starting level
   mastery-checkpoints.md         ← per-level checkpoints + error → remediation procedure map
+  repo-state-and-mission-audit-20260625.md ← current GitHub/repo-state audit for curriculum updates
+  drills/
+    hover-composition-and-routing.md ← written token → pieces → sarf/nahw route → safe hover
 ```
 
 A learner's path through these files: take [`placement-test.md`](placement-test.md) to find a
 starting rung, climb [`zero-to-fluency-roadmap.md`](zero-to-fluency-roadmap.md) one level at a
-time, use [`qamus-learning-path.md`](qamus-learning-path.md) for the daily reading habit, and
-clear each rung against [`mastery-checkpoints.md`](mastery-checkpoints.md) before moving up.
+time, use [`qamus-learning-path.md`](qamus-learning-path.md) for the daily reading habit, run
+[`drills/hover-composition-and-routing.md`](drills/hover-composition-and-routing.md) whenever a
+written token hides multiple pieces, and clear each rung against
+[`mastery-checkpoints.md`](mastery-checkpoints.md) before moving up.
 
 ## Hard rules honored here
 
 - **Qurʾān text is never altered.** It appears as something to read, never edited for a drill.
 - **The learner only ever sees authored content.** Hover glosses are `{src:'qamus',
-  kind:'authored'}`; no external dictionary, textbook, or exam text is reproduced anywhere in
+  kind:'authored', lang:'en'}`; no external dictionary, textbook, or exam text is reproduced anywhere in
   this curriculum. Every drill item and example is original.
 - **A blank beats a wrong answer.** The curriculum teaches the same discipline the gloss
   pipeline enforces: when root, pattern, or sense is uncertain, the honest move is PENDING —

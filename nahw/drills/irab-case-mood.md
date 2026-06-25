@@ -15,11 +15,16 @@ Recognition + production. Built from [`../evals/irab-polysemy-eval.jsonl`](../ev
 - إِنَّ زَيْدًا قَائِمٌ → inna: ism **naṣb**, khabar **rafʿ**.
 - ظَنَنْتُ زَيْدًا قَائِمًا → ẓanna: **two** manṣūb objects.
 - لَا رَجُلَ فِي ٱلدَّارِ → lā of genus: ism **mabnī** on fatḥ.
+- تَكَادُ تَمَيَّزُ → kāda: ism kāda is hidden; khabar kāda is an imperfect verb in **rafʿ** unless
+  another governor changes it.
 
 ## 4. The accusatives learners confuse
 - طَابَ زَيْدٌ نَفْسًا → نفسًا = **tamyīz** (jāmid, fāʿil-convertible), not ḥāl.
 - جَآءَ زَيْدٌ رَاكِبًا → راكبًا = **ḥāl** (mushtaqq, state).
 - مَا جَآءَ إِلَّا زَيْدٌ → mufarragh istithnāʾ: زيد = **fāʿil marfūʿ** (إلا cancelled).
+- تِسْعَةَ عَشَرَ → murakkab number: both numeric pieces are manṣūb; do not gloss either as a
+  standalone dictionary noun.
+- سَبْعُونَ ذِرَاعًا → ذراعًا = **tamyīz manṣūb**, specifying the measure.
 
 ## 5. Context-decided sense (iʿrāb over lexicon)
 - يَبْسُطُ ٱلرِّزْقَ … وَيَقْدِرُ → يقدر = "**restricts**" (contrast), not just "is able".

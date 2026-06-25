@@ -373,6 +373,31 @@ for _vname, _label in [("validate_sarf_skill.py", "Phase2 sarf engine complete (
     except Exception:
         check(_vname + " runnable", False)
 
+# June 25 curriculum hard-tail: validators and eval fixtures must lock the known hover-gloss failures.
+try:
+    _sarf_validator = io.open(os.path.join(_R, "tools", "validate_sarf_skill.py"), encoding="utf-8").read()
+    _nahw_validator = io.open(os.path.join(_R, "tools", "validate_nahw_skill.py"), encoding="utf-8").read()
+    _validator_blob = _sarf_validator + "\n" + _nahw_validator
+except Exception:
+    _validator_blob = ""
+for _tok in ("بِسَلَامٍ", "بِبَدْرٍ", "وَٱلتِّينِ", "وَٱلزَّيْتُونِ", "وَبِٱلنَّجْمِ",
+             "جَادَلُوكَ", "مُعَلَّمٌ", "ذَٰلِكُمْ"):
+    check("June25 validator covers token: %s" % _tok, _tok in _validator_blob)
+try:
+    _fcs_blob = io.open(os.path.join(_R, "sarf", "evals", "false-clitic-split-eval.jsonl"),
+                        encoding="utf-8").read()
+    _pf_blob = io.open(os.path.join(_R, "nahw", "evals", "particle-function-eval.jsonl"),
+                       encoding="utf-8").read()
+    _ip_blob = io.open(os.path.join(_R, "nahw", "evals", "irab-polysemy-eval.jsonl"),
+                       encoding="utf-8").read()
+except Exception:
+    _fcs_blob = _pf_blob = _ip_blob = ""
+for _eid, _blob in ([(x, _fcs_blob) for x in ("FCS-021", "FCS-022", "FCS-023", "FCS-024", "FCS-025")] +
+                    [(x, _pf_blob) for x in ("PF-033", "PF-034", "PF-035", "PF-036", "PF-037", "PF-038")] +
+                    [(x, _ip_blob) for x in ("IP-026", "IP-027", "IP-028", "IP-029", "IP-030",
+                                             "IP-031", "IP-032", "IP-033", "IP-034")]):
+    check("June25 eval fixture exists: %s" % _eid, _eid in _blob)
+
 # closure-2092: report-ergonomics gate (Markdown counterpart to artifact ergonomics) + root-cause ledger
 # + open-stem hygiene gates (surface-index covers usage.forms; lane sanity — no verb-clitic/false-blocker pollution)
 for _vname, _label in [("check_report_ergonomics.py", "closure-2092 report ergonomics (no crushed one-line Markdown reports)"),

@@ -1,6 +1,6 @@
 {
   "schema": "fusha/plural-gender-rules@1",
-  "purpose": "Patterns and grammatical-gender cues for certifying a noun's plural form and its gender BEFORE authoring a scripture-facing gloss or an agreement note. Consumed by the noun-plural-gender procedure. A plural pattern observed on the surface PROPOSES a class; it never certifies the singular root by itself — defer root certification to ../rules/root-decision-rules.json. Gender is a property of the lemma, not of the surface tā' marbūṭa: many feminine words carry no ـة and several ـة-bearing words are masculine. Public artifacts stay {src:'qamus', kind:'authored'}; QAC POS/gender is INTERNAL evidence only and is never exposed.",
+  "purpose": "Patterns and grammatical-gender cues for certifying a noun's plural form and its gender BEFORE authoring a scripture-facing gloss or an agreement note. Consumed by the noun-plural-gender procedure. A plural pattern observed on the surface PROPOSES a class; it never certifies the singular root by itself — defer root certification to ../rules/root-decision-rules.json. Gender is a property of the lemma, not of the surface tā' marbūṭa: many feminine words carry no ـة and several ـة-bearing words are masculine. Public artifacts stay {src:'qamus', kind:'authored', lang:'en'}; QAC POS/gender is INTERNAL evidence only and is never exposed.",
   "fields": {
     "id": "stable rule key",
     "kind": "msl (jamʿ mudhakkar sālim) | mfl (jamʿ muʾannath sālim) | taksir (jamʿ taksīr) | cue",

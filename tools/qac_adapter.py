@@ -11,7 +11,7 @@ PROVENANCE (read provenance/source-boundaries.md §0–§3 before using this):
     the .tsv itself. This adapter ships; the DATA it reads does NOT. The user
     fetches the QAC corpus offline and points this adapter at their local copy.
   * This adapter returns FACTS (root / POS), never glosses. Glosses are authored
-    by us and published as {src:'qamus', kind:'authored'} — see the source rules.
+    by us and published as {src:'qamus', kind:'authored', lang:'en'} — see the source rules.
 
 WHAT THIS IS:
   A stdlib-only ADAPTER INTERFACE over a local, tab-separated QAC export. The exact

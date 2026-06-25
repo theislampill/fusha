@@ -22,14 +22,19 @@ when it forces **pending**.
 This SKILL is the fast context gate + contract; each step is a short procedure. **Open only what the task needs.**
 - [`procedures/particle-decision.md`](procedures/particle-decision.md) — content-letter harakah; مَن/مِن، لَمْ/لِمَ.
 - [`procedures/particle-function-decision.md`](procedures/particle-function-decision.md) — pick a particle's FUNCTION in context (مَا/إِنْ/لَا/فاء/واو/لام/أَلَا-أَلَّا); see `references/particle-functions.md`.
+- [`procedures/function-token-hover-review.md`](procedures/function-token-hover-review.md) — require the visible hover to preserve a token's function contribution.
+- [`procedures/ma-function-decision.md`](procedures/ma-function-decision.md) — classify `ما`/`وما` as negative, relative, interrogative, masdariyya, conditional, laysa-like, or preventive.
+- [`procedures/governing-particle-mood-review.md`](procedures/governing-particle-mood-review.md) — connect particles to verb case/mood and tense effect.
 - [`procedures/irab-teaching-diagnosis.md`](procedures/irab-teaching-diagnosis.md) — produce the iʿrāb (role·case/mood·governor) or diagnose the learner/draft error; answer AND reasoning.
 - [`procedures/preposition-pronoun.md`](procedures/preposition-pronoun.md) — jar-majrūr wording by referent; إِلَيْنَا guard.
 - [`procedures/negation.md`](procedures/negation.md) — لَمْ/لَنْ/لَا/مَا/لَيْسَ scope → tense/polarity.
 - [`procedures/relative-interrogative.md`](procedures/relative-interrogative.md) — مَا/مَن/أَيّ relative vs interrogative vs negation.
 - [`procedures/conditionals.md`](procedures/conditionals.md) — إِنْ/إِذَا/لَوْ + the إِنْ "if" vs إِنَّ "indeed" collision.
 - [`procedures/idafa-jar-majrur.md`](procedures/idafa-jar-majrur.md) — construct relationship + definiteness.
+- [`procedures/pp-attachment-review.md`](procedures/pp-attachment-review.md) — decide the PP head: verb, nominal, hidden hāl, hidden ṣifa, or clause.
 - [`procedures/irab-case-mood.md`](procedures/irab-case-mood.md) — case/mood reading → why it forces the two-vote gate.
 - [`procedures/referent-context.md`](procedures/referent-context.md) — referent guard, divine-Name vs attribute, contronyms.
+- [`procedures/exception-and-vocative-review.md`](procedures/exception-and-vocative-review.md) — route vocative and exceptive structures with governed case roles.
 - [`procedures/grammar-risk-gate.md`](procedures/grammar-risk-gate.md) — the GrammarProblems gate (answer AND reason).
 - [`procedures/hover-application.md`](procedures/hover-application.md) — syntax-sensitive tokens → precise pending, not a one-word gloss.
 - [`procedures/bulk-source-triangulation.md`](procedures/bulk-source-triangulation.md) — route bulk pending-table rows by context risk before any hover decision.
@@ -67,6 +72,9 @@ gate.
   "phrase_context": "verbal phrase", "syntactic_role": "verb",
   "nearby_tokens": ["اللَّهَ","يَبْسُطُ","الرِّزْقَ","لِمَن","يَشَاءُ","وَيَقْدِرُ"],
   "particle_context": ["و"], "governing_particle": null, "case_or_mood_signal": "indicative_or_unknown",
+  "function_class": "none | oath_waw | comitative_waw | cause_fa | preventive_ma | negative_ma_like_laysa | pp_attachment | exception | vocative | clause_link",
+  "attachment": {"head": null, "relation": null},
+  "composition": {"proclitic_functions": [], "host_role": null, "suffix_roles": []},
   "candidate_glosses": ["ordains","restricts"], "contextual_choice": "restricts",
   "decision": "resolved | pending", "reason": "paired with يبسط الرزق; contrast indicates restricts",
   "confidence": "medium", "allowed_for_hover": true
@@ -138,6 +146,8 @@ note, or the review queue.
 `وَمَا` is one Qur'anic word token but two syntactic pieces: wāw + mā. Do not count it as two corpus word tokens,
 but do decompose it for the hover gloss. The mā may be relative/maṣdariyyah, interrogative, or negative; use
 iʿrāb/context evidence before authoring ("and by the One Who", "and not", "and no" are different decisions).
+When `ما` acts like laysa or as preventive/kāffa after an accusative particle, the parse record must say so; the
+hover cannot be selected from a default `ma = what/that/not` table.
 For attached بِـ, the hover must include the preposition's role, not only the governed noun.
 For oath waw (واو القسم), the hover must include the oath relation; a governed noun like وَالتِّينِ is not merely
 "fig". For attached وَبِـ before a governed noun, preserve both the coordination/resumption and the bāʾ relation

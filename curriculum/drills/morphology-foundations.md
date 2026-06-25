@@ -19,6 +19,13 @@ patterns is two different words, and the pattern is in the harakāt and the adde
 > [`../../sarf/procedures/masdar-participle.md`](../../sarf/procedures/masdar-participle.md).
 > When root or pattern is uncertain, the answer is **PENDING** — name the doubt, do not guess.
 
+Before root extraction, account for visible token pieces. A written token may be host + bā',
+lām, kāf, wāw, fā', article, or suffix pronoun; those pieces are not radicals and must not
+vanish from a hover. The learner drill for that composition step is
+[`hover-composition-and-routing.md`](hover-composition-and-routing.md), and the reviewer-side
+procedure is
+[`../../sarf/procedures/clitic-and-host-morphology.md`](../../sarf/procedures/clitic-and-host-morphology.md).
+
 ## The measuring stick: ف ع ل
 
 Arabic states every pattern against the dummy root **`ف ع ل`** (f‑ʿ‑l): `ف` = first radical,
@@ -118,6 +125,8 @@ it apart by checking whether the doubled letter is the *middle* radical (Form II
 
 - [ ] For a given word, can I say its **root** *and* its **pattern** (mapped onto `فَعَلَ`)?
 - [ ] Do I strip affixes (`مـ`, `ال`, `ة`, `ـُونَ`) **before** reading the root?
+- [ ] Do I separate attached particles and pronouns before accepting a host gloss?
+- [ ] Do I avoid false clitic splits, such as reading tanwīn fatḥ alif `ـًا` as pronoun `نا`?
 - [ ] Do I read **tense/voice/role** off the pattern, not the consonants?
 - [ ] Can I tell a **shadda = Form II** (middle radical) from a **shadda = geminate** (last
       radical)?

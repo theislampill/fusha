@@ -13,7 +13,7 @@ specific **`pending:`**, never a coin-flip.
 > Each item cites an āyah **source-address** (`quran:S:A:W`, per
 > [`../../qamus/reports/source-address-model.md`](../../qamus/reports/source-address-model.md))
 > as the *position* where the learner meets the word, and gives the **safe authored gloss**
-> (`{src:'qamus', kind:'authored'}`). The full disambiguator logic lives in
+> (`{src:'qamus', kind:'authored', lang:'en'}`). The full disambiguator logic lives in
 > [`../../nahw/drills/particles.md`](../../nahw/drills/particles.md) and
 > [`../../nahw/procedures/particle-decision.md`](../../nahw/procedures/particle-decision.md);
 > this drill is the learner-facing recognition pass over them. Qurʾān text is never altered —
@@ -105,6 +105,23 @@ out. Root is `ʿ‑l‑w/y`, **not** anything else `norm()` might suggest.
 and its clitic `إِلَيْهِ` ("to him") are root `ʾ‑l‑y` (the hamza seat is load-bearing); they are
 **not** root `ل‑ي‑ن` — `norm()` drops the seat and creates that false match. Certify the seat.
 
+## Hard-tail routing addendum
+
+After the basic particle pool, graduate to the cases that closure work proved are unsafe as
+single-gloss shortcuts:
+
+- `وَمَا` is one written Qurʾānic token but multiple grammatical pieces: wāw plus the actual
+  function of `مَا`.
+- `وَ` may be conjunction, oath, or comitative; `فَـ` may be resumption, result, coordination,
+  supplement, or cause.
+- `لِـ`, `لَنْ`, `لَمْ`, causal `فَـ`, and prohibition `لَا` can govern the mood of a following
+  imperfect verb.
+- A preposition phrase still needs attachment: visible head, hidden hāl, hidden ṣifa, clause
+  frame, or unknown.
+
+Use [`../../nahw/drills/grammar-routing-hard-cases.md`](../../nahw/drills/grammar-routing-hard-cases.md)
+when any of those appears. Do not let a familiar particle become a generic hover.
+
 ---
 
 ## Checklist before you leave the function-word pool
@@ -119,6 +136,6 @@ and its clitic `إِلَيْهِ` ("to him") are root `ʾ‑l‑y` (the hamza se
 - [ ] When the marks are missing or the frame is unclear, do I emit a **specific `pending:`**
       (e.g. `pending: homograph_haraka`) instead of guessing?
 
-Every gloss here is `{src:'qamus', kind:'authored'}`. Carry these into real verses in
+Every gloss here is `{src:'qamus', kind:'authored', lang:'en'}`. Carry these into real verses in
 [`ayah-reading-drills.md`](ayah-reading-drills.md). **A wrong particle gloss poisons the whole
 āyah — pending beats a guess.**

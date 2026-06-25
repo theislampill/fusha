@@ -26,7 +26,7 @@ Top pending vocabulary by frequency: قَالَ "he said" (236×), ءَامَن�
 - **Form-aware** (قَالَ "he said" vs قُلْ "say!"), surface-stable only; context-sensitive surfaces → pending.
 - Diacritic homographs respected (وَمِنَ kasra "from" ≠ وَمَن fatha "who" — guarded at assembly).
 - **No external gloss text copied; `informed_by` is internal only** (see `authored_gloss_batch_001.provenance.jsonl`,
-  labels qac/qamus/quran-context). The public hover record is exactly `{src:"qamus",kind:"authored"}`.
+  labels qac/qamus/quran-context). The public hover record is exactly `{src:"qamus",kind:"authored",lang:"en"}`.
 
 ## Provenance & public boundary
 `authored_gloss_batch_001.jsonl` = the confirmed decisions. `*.provenance.jsonl` = internal provenance (source

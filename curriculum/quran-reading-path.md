@@ -4,20 +4,22 @@ A **graded** reading ladder for the ʿajamī learner who can read the script and
 core particles. Each step names: the **āyāt** to read (token-addressed `quran:S:A:W`), the
 **function words** that step teaches, and the **drill** that trains them. You read on
 `qamus.dawah.wiki` with the hover layer on: hover or tap a Qurʾānic word and, when it is
-covered, an **authored** English gloss appears (`{src:'qamus', kind:'authored'}`); when it is
+covered, an **authored** English gloss appears (`{src:'qamus', kind:'authored', lang:'en'}`); when it is
 not covered, the hover is **blank** — that blank is honest, and your move is to run the
 procedure, not to guess.
 
 > Qurʾān text is never altered here; words appear only as text to be read, addressed by
 > position (`quran:S:A:W`), never edited for a drill. External corpora are internal evidence
-> only; the public render carries only `{src:'qamus', kind:'authored'}`. See
+> only; the public render carries only `{src:'qamus', kind:'authored', lang:'en'}`. See
 > [`README.md`](README.md) and [`../provenance/source-boundaries.md`](../provenance/source-boundaries.md).
 > This is a **language** study layer: verify meaning against the muṣḥaf and a qualified teacher.
 
 ## How to climb
 
 For every step: **(1)** read the procedure for that step's function words, **(2)** do the
-named drill, **(3)** read the āyāt with the hover layer, **(4)** for any word whose hover is
+named drill, **(3)** compose any written token with visible attached pieces using
+[`drills/hover-composition-and-routing.md`](drills/hover-composition-and-routing.md), **(4)**
+read the āyāt with the hover layer, **(5)** for any word whose hover is
 blank or whose harakah you cannot resolve, say the precise `pending:` reason aloud rather than
 inventing a gloss. The whole skill is **stop guessing**: when the evidence does not decide,
 `pending` *is* the right answer.
@@ -221,6 +223,19 @@ the first governor, and for every pronoun the antecedent it points back to. Wher
 English (it/him/them) depends on an unresolved antecedent → `pending: referent_unresolved`.
 
 ---
+
+## Hard-tail review before longer passages
+
+Before leaving the short-sūrah ladder, do a twenty-token review with
+[`../sarf/drills/clitic-and-host-morphology.md`](../sarf/drills/clitic-and-host-morphology.md)
+and [`../nahw/drills/grammar-routing-hard-cases.md`](../nahw/drills/grammar-routing-hard-cases.md):
+
+- one written Qurʾānic token may contain multiple grammatical pieces (`وَمَا`, `فَذَٰلِكَ`,
+  `بِسَلَامٍ`, `جَادَلُوكَ`);
+- a host-only hover fails when a bāʾ, lām, oath/comitative wāw, fāʾ, or suffix pronoun has
+  disappeared;
+- the hover is a contextual learning aid, not a dictionary substitution;
+- a precise `pending:` reason is mastery when the role is not certified.
 
 ## Where this path connects
 

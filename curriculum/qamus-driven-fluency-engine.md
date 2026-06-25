@@ -38,6 +38,20 @@ procedure. `curriculum/zero-to-fluency-roadmap.md` sequences this from script to
 
 The engine is MCP-free and portable: install it (`INSTALL.md`) and point it at any Qamus or corpus.
 
+## Current operating state (2026-06-25)
+
+Current GitHub `main` is audited in
+[`repo-state-and-mission-audit-20260625.md`](repo-state-and-mission-audit-20260625.md). The latest repo state has
+already moved beyond broad source matching: it includes grammar-resource procedures, source-triangulation public
+boundary rules, closure-lane routing, clitic/host morphology, governing-particle mood, `مَا` function decisions,
+PP attachment review, exception/vocative review, and the internal-only QAC concept-map adapter.
+
+The reported closure state in `qamus/reports/closure-2092/current-live-closure-state-20260625.md` says the staged
+hover artifact is at 49,255 resolved of 49,900 tokens, with the remainder split across owner, scholar/iʿrāb,
+source-repair, and two-vote gates. Treat that as a repo report, not a fresh live crawl. The curriculum lesson is
+stable either way: the final gaps are not solved by more confident guessing. They are solved by exact lane routing,
+clitic preservation, iʿrāb evidence, owner decisions, or source-entry repair.
+
 ## Live polysemy worked examples (2026-06-24b, each a per-loc iʿrāb decision)
 These joined the engine's regression set from the B3 token-iʿrāb + B2 host-lexeme batches:
 - **وَمَا** — negation "and not" (3:7) vs relative "and whatever" (30:39): the clause decides (nahw).
@@ -47,3 +61,13 @@ These joined the engine's regression set from the B3 token-iʿrāb + B2 host-lex
 - **ذَهَب** "gold" (noun) vs went (verb); **أَذِنَ** "permitted" vs **أُذُن** "an ear"; **يَحْيَىٰ** "Yaḥyā (John)" (proper noun) vs "gives life".
 - **host-lexeme possessives** authored from the root when the noun has no entry: سَيِّئَاتِهِمْ "their evil deeds",
   ءَالِهَتَكُمْ "your gods", قِبْلَتِهِمْ "their prayer direction" — broken plural shares the root, POS-gated.
+
+## Current hard-tail lessons for curriculum
+
+- A written Qurʾānic token can contain multiple grammar pieces. Teach `وَمَا`, `وَمِمَّا`, bā'/lām/kāf proclitics,
+  and suffix pronouns as composition, not as loose dictionary lookup.
+- Source agreement is not enough when both sources omit a visible preposition, particle, or suffix contribution.
+- Function particles route before they gloss: `و`, `ف`, `ل`, `أ`, `لا`, `إن`, and especially `ما` must be classified
+  by their actual clause role.
+- QAC concept metadata is useful for semantic review and curriculum grouping, but never as public hover provenance
+  or as a translation source.

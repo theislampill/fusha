@@ -106,7 +106,7 @@ For **every** short function word and every hamza/shadda‑bearing content word:
 2. If the harakah is **absent** in the source text (undiacritized), you **cannot**
    disambiguate → **PENDING**. Do not pick the more common reading and hope.
 3. Certify hamza‑bearing tokens with `norm_strict()` / QAC, never `norm()`.
-4. Emit `{src:'qamus', kind:'authored'}` only when the reading is certain; otherwise leave
+4. Emit `{src:'qamus', kind:'authored', lang:'en'}` only when the reading is certain; otherwise leave
    the token plain.
 
 **PENDING beats wrong** — and on these pairs, the wrong gloss is the one that flips the

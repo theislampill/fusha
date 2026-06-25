@@ -4,7 +4,7 @@ A single, portable scorecard for the word-by-word hover layer: how many Qurʾān
 **certified, authored** gloss, how many are still pending and *why*, and how many previously
 wrong glosses have been fixed. It is a **derived view** over `wbw:S:A:W` slots and the
 `qamus:` addresses that resolve them (see `source-address-model.md`) — it stores no external
-text and renders nothing public beyond `{src:'qamus', kind:'authored'}`.
+text and renders nothing public beyond `{src:'qamus', kind:'authored', lang:'en'}`.
 
 ## The template (regenerable, stdlib only)
 
@@ -48,7 +48,7 @@ export; the three figures above are the load-bearing headline numbers for this s
 3. **Pending always has a reason.** No slot is "pending, unknown" — the reason bucket drives
    what skill (sarf / nahw / source-address / locator) needs to act next.
 4. **No external text counted as resolved.** A slot is `resolved` only when a Qamus-authored
-   gloss is certified for it (`{src:'qamus', kind:'authored'}`). An `informed_by` consult never
+   gloss is certified for it (`{src:'qamus', kind:'authored', lang:'en'}`). An `informed_by` consult never
    resolves a slot by itself.
 
 ## Regenerating the scoreboard (sketch)

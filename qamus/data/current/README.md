@@ -70,7 +70,7 @@ python3 tools/validate_current_qamus_dataset.py            # acceptance gate (fa
 
 - **Entry authoring / repair:** check an existing entry, its senses, forms, example āyāt.
 - **Hover-gloss authoring:** join a token's lemma via `by-normalized-surface`; cite the
-  supporting entry; keep the public hover `{src:"qamus",kind:"authored"}`.
+  supporting entry; keep the public hover `{src:"qamus",kind:"authored",lang:"en"}`.
 - **corpus→Qamus generation:** dedupe a candidate against this dataset before proposing it
   (the corpus→Qamus pipeline reads these committed files, not the live store).
 

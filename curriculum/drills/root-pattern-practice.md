@@ -18,8 +18,13 @@ person/thing, not an action. The root is the theme; the pattern decides whether 
 > and [`../../sarf/procedures/masdar-participle.md`](../../sarf/procedures/masdar-participle.md);
 > root extraction from
 > [`../../sarf/procedures/root-decision.md`](../../sarf/procedures/root-decision.md). All glosses
-> are `{src:'qamus', kind:'authored'}`. When a member's pattern or sense is uncertain, write
+> are `{src:'qamus', kind:'authored', lang:'en'}`. When a member's pattern or sense is uncertain, write
 > **PENDING**.
+
+Composition still comes before root family study: strip visible proclitics and suffix pronouns
+without mistaking them for radicals, and do not let a host-only family gloss swallow `بِـ`,
+`لِـ`, `كَـ`, `وَ`, `فَـ`, or an object suffix. If a surface may be both a proper name and a
+common lexical item, concept metadata is only a review flag; the verse decides.
 
 The address ids below (e.g. `qamus:v012`) are study handles for the root family, in the
 class-and-frequency order of [`../README.md`](../README.md); open the matching entry on
@@ -122,6 +127,9 @@ sense from doing to *causing*; the root's theme is constant.
       harakāt?
 - [ ] For a **hamzated/weak/doubled** root, do I keep the seat / spot the weak radical / not
       confuse a geminate with Form II?
+- [ ] Did I handle visible attached pieces before mapping the host to a root family?
+- [ ] Did I treat proper-name/common-word collisions as context questions, not concept-map
+      answers?
 - [ ] When a family member's class or sense is uncertain, do I write **PENDING**?
 
 Next, study a single root *as the Qamus stores it* in

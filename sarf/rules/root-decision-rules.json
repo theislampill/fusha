@@ -30,7 +30,7 @@
       "rung": "qac_root",
       "certifies": true,
       "use": "The QAC per-word root/POS is authoritative INTERNAL morphology evidence and certifies the root when no Qamus entry exists yet.",
-      "guard": "Use QAC internally only; never expose QAC/informed_by in a public artifact. The public record stays {src:'qamus', kind:'authored'}."
+      "guard": "Use QAC internally only; never expose QAC/informed_by in a public artifact. The public record stays {src:'qamus', kind:'authored', lang:'en'}."
     },
     {
       "rank": 3,

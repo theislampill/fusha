@@ -29,6 +29,11 @@ Three letters double as **long vowels** when they carry no vowel of their own: `
 `و` (long ū, after ḍamma), `ي` (long ī, after kasra). Distinguish the *long vowel* from the
 *consonant* `و` ("w") / `ي` ("y") — the harakah before it decides which.
 
+This sound-level habit later protects Qamus hovers: final `ـًا` is tanwīn on an alif carrier,
+not pronoun `نا`; `و` can be a consonant, long vowel, conjunction, oath, or comitative marker;
+hamza seat and shadda can decide root, particle, and mood. Level 1 does not teach those
+meanings yet, but it trains the eye that keeps them separate.
+
 ---
 
 ## Items (read aloud, then check)
@@ -120,6 +125,7 @@ spelling variant of final long ā; do not voice it as a consonant.
 - [ ] Do I assimilate `الْ` on a **sun** letter (shadda, no *l*) and keep it on a **moon**
       letter (sukūn on `ل`)?
 - [ ] Do I read `ة` as *t* in continuation, soft *h* in pause?
+- [ ] Do I avoid turning sound signs into grammar pieces too early (`ـًا` is not `نا`)?
 
 When you can read all 14 items aloud without hesitating, move to
 [`quranic-function-words.md`](quranic-function-words.md) and

@@ -2,7 +2,7 @@
 
 Concise ṣarf reference, scoped to **one job**: stopping a wrong hover gloss. Every section
 ends with the *gloss‑safety consequence* — the mistake it prevents. This is not a grammar
-course; it is the minimum morphology that keeps `{src:'qamus', kind:'authored'}` honest.
+course; it is the minimum morphology that keeps `{src:'qamus', kind:'authored', lang:'en'}` honest.
 
 Throughout, "certify" means: confirm against the **Qamus entry / QAC**, never against
 `norm()` alone (`norm()` drops hamza + harakāt and cannot decide form, root, or class).
@@ -192,7 +192,7 @@ surface form
    ├─ classify: verb (which form?) / maṣdar / ism fāʿil / ism mafʿūl / plain noun / particle
    │
    └─ bind to the Qamus entry whose root AND sense AND class match
-         ├─ match → emit {src:'qamus', kind:'authored'}
+         ├─ match → emit {src:'qamus', kind:'authored', lang:'en'}
          └─ any uncertainty (form, root, sense, missing harakah) → PENDING (leave plain)
 ```
 
@@ -206,6 +206,6 @@ surface form
 - **Class gates vocabulary.** Verb gloss → finite verbs only; nouns/maṣādir/participles get
   noun glosses; proper names get neither.
 - **External references are `informed_by`, never copied.** Public hover = only
-  `{src:'qamus', kind:'authored'}`.
+  `{src:'qamus', kind:'authored', lang:'en'}`.
 - **PENDING beats wrong.** A blank hover is correct; a flipped meaning is a defect.
 - All helpers live in `tools/normalize_ar.py`. Reference them; do not redefine them.

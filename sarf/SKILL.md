@@ -14,11 +14,13 @@ This SKILL is the fast gate + contract; each step is a short procedure (input ·
 output · forbidden · test). **Open only the one the task needs.**
 - [`procedures/root-decision.md`](procedures/root-decision.md) — find the root via the evidence ladder.
 - [`procedures/verb-form.md`](procedures/verb-form.md) — measure I–X, voice, person/number, negation tense-flip.
+- [`procedures/verb-form-and-mood-review.md`](procedures/verb-form-and-mood-review.md) — keep form, voice, person/number, and governing mood visible before a verb hover.
 - [`procedures/weak-root.md`](procedures/weak-root.md) — recover hidden و/ي/ا radicals (مثال/أجوف/ناقص/لفيف).
 - [`procedures/hamza-root.md`](procedures/hamza-root.md) — hamza as radical + seat orthography (norm collapses it).
 - [`procedures/doubled-root.md`](procedures/doubled-root.md) — geminate roots hidden by shadda (رَدَّ→ر د د).
 - [`procedures/noun-plural-gender.md`](procedures/noun-plural-gender.md) — role/shape, plural, gender, proper vs common.
 - [`procedures/masdar-participle.md`](procedures/masdar-participle.md) — maṣdar vs ism fāʿil/mafʿūl vs ṣifa mushabbaha gloss shape.
+- [`procedures/clitic-and-host-morphology.md`](procedures/clitic-and-host-morphology.md) — segment proclitic + host + suffix; reject host-only hovers for composed tokens.
 - [`procedures/nominal-derivative-decision.md`](procedures/nominal-derivative-decision.md) — classify the 7 derivative types (fāʿil/mafʿūl/mubālagha/ṣifa-mushabbaha/tafḍīl/zamān-makān/āla); penult+prefix vowel reads; **never a verb gloss** on a derivative.
 - [`procedures/learner-error-diagnosis.md`](procedures/learner-error-diagnosis.md) — name the Madinah-study error class, route to fix + drill (ajamī teaching + engine guard share one loop).
 - [`procedures/proper-noun.md`](procedures/proper-noun.md) — detect أعلام; no root-verb gloss; route to pending_proper_noun.
@@ -54,6 +56,9 @@ entry candidates + optional QAC root/POS.
   "surface_ar": "يَأْتِي", "normalized": "ياتي", "strict_normalized": "يأتي", "bare": "يأتي",
   "quran_loc": "2:38:10", "candidate_root": "أ ت ي", "candidate_lemma": "أتى",
   "pos": "verb", "form": "I", "voice": "active_or_passive_or_unknown",
+  "person": "3rd_or_unknown", "gender": "masculine_or_unknown", "number": "singular_or_unknown",
+  "case_or_mood": "raf_or_nasb_or_jazm_or_jarr_or_unknown",
+  "visible_morphology": {"proclitics": [], "host": "يأتي", "suffixes": [], "inflection": null},
   "attached_clitics": [], "suffix_pronoun": null,
   "qac_root": "أ ت ي", "qac_pos": "V", "qamus_entry_candidates": ["entry_id"],
   "risk_flags": ["multi_sense_root", "hamza_sensitive", "sense_selection_required"],
@@ -112,7 +117,8 @@ certified, or keep the row pending with the exact suffix blocker.
 Verb form is a semantic gate, not decoration. Record triliteral form I-X or quadriliteral form I-IV before
 authoring: II can be causative/intensive, III can be mutual, VI reciprocal, VII/VIII reflexive or agentless,
 IX stative/color, X seeking/reflexive-causative. A hover that ignores the form, voice, person, number, or suffix
-is a dictionary gloss, not a token gloss.
+is a dictionary gloss, not a token gloss. A passive participle such as `مُعَلَّمٌ` needs a token-form gloss
+like "taught", not a lemma gloss such as "to teach".
 Prefix shape is not enough to classify a segment. A raw `و`, `ف`, `أ`, `ل`, or `ما` must be handed to nahw for
 function before hover authoring: ordinary conjunction, oath, comitative, resumption, cause, equalization,
 interrogation, purpose, imperative, genitive, preventive, vocative, exceptive, and negation can share deceptively

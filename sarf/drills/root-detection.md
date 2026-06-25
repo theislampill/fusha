@@ -178,6 +178,6 @@ norm_strict("إِيمَان") != norm_strict("أَيْمَان")  # True  → se
       sense — or is it PENDING?
 - [ ] Is this a **proper name** that only *looks* like a verb/derivative? (If so, not a verb
       gloss.)
-- [ ] Public emit is `{src:'qamus', kind:'authored'}` or **nothing**. No external prose.
+- [ ] Public emit is `{src:'qamus', kind:'authored', lang:'en'}` or **nothing**. No external prose.
 
 When in doubt at any box: **PENDING beats wrong.**

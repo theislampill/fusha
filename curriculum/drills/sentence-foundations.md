@@ -16,7 +16,10 @@ pieces fall into place; translate first and you will mis-assign the parts.
 > referent/context in
 > [`../../nahw/procedures/referent-context.md`](../../nahw/procedures/referent-context.md),
 > and iʿrāb (case/mood) in
-> [`../../nahw/procedures/irab-case-mood.md`](../../nahw/procedures/irab-case-mood.md). When
+> [`../../nahw/procedures/irab-case-mood.md`](../../nahw/procedures/irab-case-mood.md). For the
+> closure-hard cases, also route to
+> [`../../nahw/procedures/function-token-hover-review.md`](../../nahw/procedures/function-token-hover-review.md)
+> and [`../../nahw/procedures/pp-attachment-review.md`](../../nahw/procedures/pp-attachment-review.md). When
 > the parse is genuinely ambiguous, the answer is **PENDING** — name the doubt.
 
 ## The two sentence types
@@ -113,6 +116,13 @@ object `خَيْرًا` ("good"), then the **answer** verb `يَجِدْهُ` (j
 → "whoever does good will find it." Both verbs are jussive — the mark of a conditional pair.
 (Procedure: [`../../nahw/procedures/conditionals.md`](../../nahw/procedures/conditionals.md).)
 
+### 13. Prepositional phrase attachment
+**Read:** `جَاءَ بِكِتَابٍ`
+**Answer:** verbal. `جَاءَ` = fiʿl, and `بِكِتَابٍ` is a jār-majrūr attached to the verb frame.
+The bā' is not decoration and the host is not enough by itself. If a PP could attach as a
+predicate, hāl, ṣifa, or hidden complement and the frame does not decide, write
+`pending: pp_attachment`.
+
 ---
 
 ## Checklist before you leave sentence foundations
@@ -124,6 +134,8 @@ object `خَيْرًا` ("good"), then the **answer** verb `يَجِدْهُ` (j
       fatḥa=object** from the case endings?
 - [ ] Do I treat an **iḍāfa** and a **jār-majrūr** as single units (and remember a muḍāf takes
       no `الْ`)?
+- [ ] When a prepositional phrase appears, can I state what it attaches to — verb, predicate,
+      hāl, ṣifa, or `pending: pp_attachment`?
 - [ ] Do I let the **following verb's mood** decide `لَا` (negation vs. prohibition) and spot a
       **conditional** by its two jussive verbs?
 - [ ] When the frame is genuinely ambiguous, do I write **PENDING** and route to the matching

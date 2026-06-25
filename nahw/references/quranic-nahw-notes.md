@@ -3,7 +3,7 @@
 Concise, gloss-facing syntax reference for the disambiguator. Not a full grammar — only the
 nahw facts that change a hover gloss or a PENDING reason. Cross-referenced from the drills.
 All examples are evidence only; no external gloss text is reproduced (external corpora named
-as `informed_by` only). The public hover artifact emits only `{src:'qamus', kind:'authored'}`.
+as `informed_by` only). The public hover artifact emits only `{src:'qamus', kind:'authored', lang:'en'}`.
 
 ---
 

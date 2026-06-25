@@ -150,7 +150,7 @@ in this repo — the repo's contribution ended at the certified payload.
 ## What the bridge guarantees
 
 - **No external text on the page.** `informed_by` is a research label; the reader sees only
-  authored Qamus content tagged `{src:'qamus', kind:'authored'}`.
+  authored Qamus content tagged `{src:'qamus', kind:'authored', lang:'en'}`.
 - **No wrong glosses by construction.** Certification can't ride on `norm()`; verb glosses are
   blocked from nouns; proper names are blocked from verb senses (`مُحَمَّد` ≠ "to praise";
   `صَٰلِحًا` ≠ Prophet Ṣāliḥ); short particles are decided by the harakah on the content letter.

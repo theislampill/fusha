@@ -52,12 +52,16 @@ by eyeballing — affixed letters masquerade as radicals and weak letters drop.
 
 - **Procedure:** [`../procedures/root-decision.md`](../procedures/root-decision.md).
 - **Drill:** [`drills-beginner.md`](drills-beginner.md) (parts A–B: identify the 3 radicals;
-  strip a proclitic).
+  strip a proclitic) and
+  [`../drills/clitic-and-host-morphology.md`](../drills/clitic-and-host-morphology.md) (name
+  every visible attached piece before accepting a host gloss).
 - **Read live:** `qamus:v147` `كَسَبَ` (root `ك س ب`, all three radicals visible — the easy
   sound case); `qamus:v188` `يَصْدُر / صَدْر` (root `ص د ر`).
 - **Mastery checkpoint:** given 15 **sound-root** Qurʾānic surfaces (no weak letter, no hamza,
   no doubling), name the three radicals for each and find the matching Qamus root, recording
-  which rung of the ladder certified it. Zero "I read it off the surface" answers.
+  which rung of the ladder certified it. If the token has a bā', lām, kāf, wāw, fā', article,
+  or suffix pronoun attached, segment it before naming the root. Zero "I read it off the
+  surface" answers.
 
 ---
 
@@ -97,13 +101,15 @@ vowel signature: ḍamma–kasra `خُلِقَ` "was created" vs active `خَل�
   person/number).
 - **Drill:** [`drills-intermediate.md`](drills-intermediate.md) (parts A–B: name the form;
   active vs passive reconstruction), building on
-  [`../drills/verb-measures.md`](../drills/verb-measures.md) parts A–B.
+  [`../drills/verb-measures.md`](../drills/verb-measures.md) parts A–B and the verb-suffix rows
+  in [`../drills/clitic-and-host-morphology.md`](../drills/clitic-and-host-morphology.md).
 - **Read live:** `qamus:v147` `كَسَبَ` "earned" (Form I, sound, active); contrast the passive
   signature drilled at [`../drills/verb-measures.md`](../drills/verb-measures.md) part B
   (`خَلَقَ` ↔ `خُلِقَ`).
 - **Mastery checkpoint:** for 12 Form-I surfaces, give the finite English (with the right
   person/number/gender) and flag active vs passive from the harakāt. Never emit
-  "to …" on a conjugated verb; never read `خُلِقَ` as active.
+  "to …" on a conjugated verb; never drop an attached object pronoun; never read `خُلِقَ` as
+  active.
 
 ---
 
@@ -202,13 +208,18 @@ traps are where two readings collapse:
 
 This is the point of the whole path: a token earns a gloss **iff** root + pattern + class +
 sense all agree on a Qamus entry; otherwise it stays plain. **PENDING beats wrong.**
+QAC concept metadata may flag that a surface is semantically a person, place, people, plant,
+book, or body part, but it is not morphology and not a translation source. Use it as a review
+flag for proper-name/common-word collisions; let sarf and nahw certify the token.
 
 - **Procedure:** [`../procedures/homograph-risk.md`](../procedures/homograph-risk.md) (the
   `norm_strict` surface-key safety probe) and the apply path
   [`../procedures/hover-application.md`](../procedures/hover-application.md).
 - **Drill:** [`drills-advanced.md`](drills-advanced.md) (homograph disambiguation by pattern;
   passive reconstruction; doubled/hamzated edge cases) and
-  [`../drills/homograph-regressions.md`](../drills/homograph-regressions.md).
+  [`../drills/homograph-regressions.md`](../drills/homograph-regressions.md), plus
+  [`../drills/clitic-and-host-morphology.md`](../drills/clitic-and-host-morphology.md) for the
+  host-only hover failure class.
 - **Read live:** the same-root polysemy walk-throughs in
   [`../drills/root-detection.md`](../drills/root-detection.md) examples 6–7 (`ن ه ر`,
   `ر ج ل`).
@@ -236,5 +247,5 @@ sense all agree on a Qamus entry; otherwise it stays plain. **PENDING beats wron
 > **Standing constraints (carried from [`../README.md`](../README.md) and
 > [`../SKILL.md`](../SKILL.md)):** Qurʾān text is never altered; `norm()` cannot certify;
 > class gates the gloss vocabulary; external references are `informed_by`, never copied; the
-> public emit is exactly `{src:'qamus', kind:'authored'}` — or nothing. When in doubt at any
+> public emit is exactly `{src:'qamus', kind:'authored', lang:'en'}` — or nothing. When in doubt at any
 > stage: **PENDING beats wrong.**

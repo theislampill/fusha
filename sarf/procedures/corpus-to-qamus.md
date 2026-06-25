@@ -30,7 +30,7 @@ merge into one entry; a tuple resting on `norm()` alone is routed to review, nev
 `source_address` · `lemma_candidate` · `root` · `pos` · `disposition` (the class above) · the entry fields
 authored per [`qamus-entry-authoring.md`](qamus-entry-authoring.md) (`headword`/`translit`/`senses[]`/`usage[]`) ·
 `status:"candidate"` · `review_status:"needs_human_review"`. Public provenance stays exactly
-`{src:"qamus",kind:"authored"}`; internal evidence (QAC/Tanzil/quran.com/OCR/crop) goes only to the sibling
+`{src:"qamus",kind:"authored",lang:"en"}`; internal evidence (QAC/Tanzil/quran.com/OCR/crop) goes only to the sibling
 `*.provenance.jsonl`, never the candidate row.
 
 **Forbidden shortcuts:** writing live (emit candidates, owner-gated apply only); classifying on `norm()` instead of

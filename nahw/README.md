@@ -16,7 +16,7 @@ of decision rules that let an automated hover-gloss / lemmatizer say, for each t
 > evidence and drill material. Everything here is **original authored content**; external
 > corpora (Quran.com, QAC, Tanzil, sunnah.com) are internal evidence only — named as
 > `informed_by` labels, never copied as gloss text. The public hover artifact emits only
-> `{src:'qamus', kind:'authored'}`.
+> `{src:'qamus', kind:'authored', lang:'en'}`.
 
 ---
 
@@ -103,6 +103,8 @@ of the qamus-highlight work — see the regression list in `references/quranic-n
   gloss wording; the `إِلَيْنَا` ≠ 'soft' guard.
 - `drills/sentence-context.md` — nominal vs. verbal sentences, the governing particle,
   negation/mood, and contronyms / multi-sense roots resolved by context.
+- `drills/grammar-routing-hard-cases.md` — the June 25 hard-tail routing cases: `ما`, `و`,
+  `ف`, governing particles, PP attachment, conditionals, hāl, vocatives, and exceptions.
 - `references/quranic-nahw-notes.md` — concise iʿrāb (jarr / naṣb / rafʿ), conditionals,
   relative pronouns, and the referent guard, with the regression checklist.
 - `references/particles.md` — the closed particle/preposition/pronoun inventory (corpus-attested)
@@ -117,6 +119,6 @@ of the qamus-highlight work — see the regression list in `references/quranic-n
 
 - Qurʾān text is never altered; it appears as evidence only.
 - No external gloss text is copied; external corpora are named as `informed_by` only.
-- The public hover artifact shows only `{src:'qamus', kind:'authored'}`.
+- The public hover artifact shows only `{src:'qamus', kind:'authored', lang:'en'}`.
 - Python is stdlib-only and imports from `tools.normalize_ar` (never re-implements norm).
 - **PENDING beats a wrong gloss, always.**

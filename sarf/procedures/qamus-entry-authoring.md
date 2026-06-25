@@ -31,7 +31,7 @@ to review, never live.
 `source_address` · `headword` · `translit` · `root` · `root_translit` · `category` · `pos` ·
 `senses[]{gloss,count,note}` · `usage[]{forms[],gloss,examples[]{ar,ref,en}}` · `total_uses` ·
 `status:"candidate"` · `review_status:"needs_human_review"`. Public provenance is exactly
-`{src:"qamus",kind:"authored"}` — no QAC/Tanzil/quran.com/OCR/crop/book-scan names leak into the row (they live only
+`{src:"qamus",kind:"authored",lang:"en"}` — no QAC/Tanzil/quran.com/OCR/crop/book-scan names leak into the row (they live only
 in the sibling `*.provenance.jsonl`).
 
 **Forbidden shortcuts:** writing live (entries are JSON content, applied only through the owner-gated path — emit a

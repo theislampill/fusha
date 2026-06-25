@@ -24,7 +24,7 @@ Repo-local queue-hygiene tranche. NO live server / NO rebuild.sh / NO authoring.
 ## Hard constraints honored
 
 - No live server access; no `rebuild.sh`; no append to `qamus-service/ref/*`; no new authored glosses; no new
-  entries; no corpus mass-import; public invariant `{src:"qamus",kind:"authored"}` unchanged.
+  entries; no corpus mass-import; public invariant `{src:"qamus",kind:"authored",lang:"en"}` unchanged.
 - The exporter (`export_current_qamus_dataset.py`) reads per-entry JSON from the **server** entries dir, so it
   cannot run repo-locally; the index regeneration uses a repo-local rebuilder over the committed
   `entries.jsonl` that shares the exporter's surface-index logic (no faked exporter run).

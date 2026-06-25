@@ -14,4 +14,7 @@ It can: decide context-dependent senses, classify pronoun attachment (possessive
 grammar-affecting decisions on correct reasoning (not fluent-sounding answers), and keep a token pending with a
 precise blocker when evidence is insufficient. It is **MCP-free** — it consults *available source adapters*
 (`sources/README.md`) only as optional internal evidence, never as a dependency; **nothing external is ever
-public**. See `INSTALL.md` for install + usage; `sarf/SKILL.md` is its morphology partner.
+public**. Public hover records stay `{src:"qamus",kind:"authored",lang:"en"}`. QAC grammar screenshots and
+concept-map metadata are internal routing/curriculum aids only; see `qamus/procedures/grammar-resource-usage.md`.
+Never use them as hover text or public provenance. See `INSTALL.md` for install + usage; `sarf/SKILL.md` is
+its morphology partner.

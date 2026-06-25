@@ -7,7 +7,7 @@ content *transcludes* / references it rather than copying it. Here it does two c
 1. **De-duplication** — an address is the canonical identity of a Qamus entry, so two authors
    cannot independently re-create the same work.
 2. **Provenance without leakage** — derived views link to addresses (internal evidence) while
-   the public render carries only `{src:'qamus', kind:'authored'}`.
+   the public render carries only `{src:'qamus', kind:'authored', lang:'en'}`.
 
 ## Address grammar
 

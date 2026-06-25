@@ -127,7 +127,7 @@ advanced skill is not "resolve more"; it is **knowing exactly when not to**.
 - [ ] For a homograph/proper-name/context case, did I apply the **right gate** (two_vote /
       human_review) or go **pending** with a precise reason?
 - [ ] Is the proper name kept off its underlying-verb/participle gloss?
-- [ ] Public emit is `{src:'qamus', kind:'authored'}` or nothing — `informed_by`/QAC names stay
+- [ ] Public emit is `{src:'qamus', kind:'authored', lang:'en'}` or nothing — `informed_by`/QAC names stay
       internal.
 
 The graduation bar: across a mixed set, every `resolved` is right and **nothing wrong is

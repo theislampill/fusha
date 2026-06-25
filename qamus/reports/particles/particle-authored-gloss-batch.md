@@ -32,5 +32,5 @@ knowledge" · طَيِّبَةً "good/wholesome" · وَكَثِيرٌ "a great
 - **Rollback:** `fusha-hover-decisions.tsv.bak-pp1` + `wbw-lookup.prev.json` (hover); كَظِيم entry `versions[]` v2 +
   `backups/qamus-20260624-084704.tar.gz` (entry).
 
-Public records ship exactly `{src:"qamus",kind:"authored"}`; internal provenance `informed_by:[qac,quran-text]`.
+Public records ship exactly `{src:"qamus",kind:"authored",lang:"en"}`; internal provenance `informed_by:[qac,quran-text]`.
 Mirror: `qamus/candidates/qamus_2092/particle_hover_batch_001.{jsonl,provenance.jsonl}`.

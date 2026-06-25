@@ -39,7 +39,7 @@ chose the direct-HTTP path.
   [`tools/mcp_to_language_state.py`](../../tools/mcp_to_language_state.py).
 - ✅ cache validator passes (`tools/validate_tafsir_mcp_cache.py` — schema + source-hash + no-public-leak).
 - ✅ leakage scan clean — no Tafsir MCP / external provenance in any public artifact; public hover stays
-  `{src:"qamus",kind:"authored"}`; raw cache gitignored (examples redacted).
+  `{src:"qamus",kind:"authored",lang:"en"}`; raw cache gitignored (examples redacted).
 
 ## Extractor note (fixed during integration)
 `mcp_to_language_state.py` first mislabelled the noun بسم as a verb because the **wazn name `(فِعْلٌ)`** appears in

@@ -25,6 +25,6 @@ forbidden transitions in the state graph (`query_language_state.py --split`) and
 pending are single-surface content tokens (occ 1) in the global authoring queue (B6+).
 
 ## Provenance
-Public records carry ONLY `{src:"qamus",kind:"authored"}`. MCP iʿrāb stayed internal (used for blocker analysis,
+Public records carry ONLY `{src:"qamus",kind:"authored",lang:"en"}`. MCP iʿrāb stayed internal (used for blocker analysis,
 never copied, never shipped). Mirror: `particle_hover_batch_002_tafsir_mcp.{jsonl,provenance.jsonl}`. Rollback:
 `*.bak-bpart` + `wbw-lookup.prev.json`.

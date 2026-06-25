@@ -131,7 +131,7 @@ gloss. (Class → gloss-vocabulary; see
 - [ ] For a noun shape, did I withhold any **"to …"** gloss? (class gates vocabulary)
 - [ ] Where the surface couldn't certify the root (A5 hollow), did I **defer to the entry/QAC**
       rather than read it off?
-- [ ] Public emit would be `{src:'qamus', kind:'authored'}` or nothing — no external prose.
+- [ ] Public emit would be `{src:'qamus', kind:'authored', lang:'en'}` or nothing — no external prose.
 
 When the harakāt are the only distinguisher and you cannot read them: **PENDING beats wrong.**
 Advance to [`drills-intermediate.md`](drills-intermediate.md) only after Part A and Part B are

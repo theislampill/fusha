@@ -6,19 +6,19 @@ rung; this file tells you *how* to turn `qamus.dawah.wiki` and its hover layer i
 that actually moves you up the ladder.
 
 > Everything below uses the **public app only**. The learner sees authored content
-> (`{src:'qamus', kind:'authored'}`) and Qurʾān text; nothing internal, no external dictionary
+> (`{src:'qamus', kind:'authored', lang:'en'}`) and Qurʾān text; nothing internal, no external dictionary
 > text, no source names. The repo's boundary rules are in
 > [`../provenance/source-boundaries.md`](../provenance/source-boundaries.md).
 
-## The loop, in five moves
+## The loop, in six moves
 
-The habit is a five-step loop you can run on one root in fifteen minutes. It is the same shape
+The habit is a six-step loop you can run on one root in fifteen minutes. It is the same shape
 whether you are at Level 8 (one āyah) or Level 12 (a full passage).
 
 ```
-pick a root → read the entry → study the forms → read the āyāt with hover → drill
-     ▲                                                                        │
-     └────────────────────────── pick the next root ──────────────────────────┘
+pick a root → read the entry → study the forms → compose the token → read with hover → drill
+     ▲                                                                                 │
+     └────────────────────────────── pick the next root ───────────────────────────────┘
 ```
 
 ### 1. Pick a root
@@ -54,7 +54,21 @@ form aloud and name what it is: *"`عَالِم` — ism fāʿil, the one who kn
 mafʿūl, the thing known; `عِلْم` — maṣdar, knowledge."* Watch the meaning rotate with the
 shape, not the root.
 
-### 4. Read the example āyāt with hover
+### 4. Compose the written token
+
+Before trusting a plaque, split the written token into visible pieces: proclitic (`وَ`, `فَـ`,
+`بِـ`, `لِـ`, `كَـ`), host word, article, suffix pronoun, and function particle. A hover is safe
+only if those pieces have not disappeared. Use
+[`drills/hover-composition-and-routing.md`](drills/hover-composition-and-routing.md) for the
+learner loop, and route hard cases to sarf/nahw:
+[`../sarf/procedures/clitic-and-host-morphology.md`](../sarf/procedures/clitic-and-host-morphology.md),
+[`../nahw/procedures/function-token-hover-review.md`](../nahw/procedures/function-token-hover-review.md),
+and [`../nahw/procedures/ma-function-decision.md`](../nahw/procedures/ma-function-decision.md).
+
+Concept metadata may warn you that a surface could be a person, place, people, plant, body
+part, or book. Treat that as a flag to review the context, not as a translation.
+
+### 5. Read the example āyāt with hover
 
 Each entry points at its **usage refs** — `surah:ayah` addresses (`quran:S:A:W`) where the root
 appears. Open each āyah on `qamus.dawah.wiki` and read the form *in its sentence*:
@@ -68,6 +82,10 @@ appears. Open each āyah on `qamus.dawah.wiki` and read the form *in its sentenc
 - **Read the gloss against the āyah, not instead of it.** The plaque is a single high-confidence
   word-sense for *that position*; it is a backstop after you have tried, not a substitute for
   trying.
+- **Check that visible pieces did not vanish.** If the token carries attached bāʾ, lām, kāf,
+  wāw, fāʾ, article, tanwīn, or a suffix pronoun, the hover must preserve that contribution
+  when it is certified. `بِسَلَامٍ` is not safely taught by host-only "peace," and
+  `جَادَلُوكَ` is not safely taught by bare "to argue."
 
 The coverage you see grows as the Qamus entries grow — the same scoreboard the project tracks
 at [`../qamus/reports/hover-gloss-terminal-scoreboard.md`](../qamus/reports/hover-gloss-terminal-scoreboard.md).
@@ -78,7 +96,7 @@ So a word blank today may be glossed next month; revisit your hard roots.
 > ever feel you are "reading a dictionary," step back — the point is to read *Arabic* with the
 > gloss as a net, not to read English about Arabic.
 
-### 5. Drill
+### 6. Drill
 
 Close the gloss and prove the gain:
 
@@ -112,17 +130,21 @@ The addresses are not just identifiers — they are how you **navigate and bookm
 1. **Pick.** Next unstudied frequent verb root, address `qamus:v###`.
 2. **Read.** Its senses — say there are three; read all three and the total-uses count.
 3. **Forms.** Produce past `فَعَلَ`, present `يَفْعَلُ`, maṣdar, ism fāʿil; say each aloud.
-4. **Āyāt.** Open its three `usage_refs[]`; read each form in context; hover to check; for any
+4. **Compose.** For each written token containing a visible attached piece, list host + pieces
+   before accepting the plaque.
+5. **Āyāt.** Open its three `usage_refs[]`; read each form in context; hover to check; for any
    blank word in the āyah, write a *named* PENDING (homograph? noun-vs-verb? unclear root?).
-5. **Drill.** Cover the glosses; re-read all three āyāt; recall the root's sense in each.
+6. **Drill.** Cover the glosses; re-read all three āyāt; recall the root's sense in each.
 
 Log the address and the date. Tomorrow, start by re-reading yesterday's PENDINGs before picking
 a new root. That re-reading is where the ladder is actually climbed.
 
 ## Hard rules honored here
 
-- **Public app only; authored content only.** Hover shows `{src:'qamus', kind:'authored'}` or
+- **Public app only; authored content only.** Hover shows `{src:'qamus', kind:'authored', lang:'en'}` or
   nothing. No external dictionary, textbook, or source name is ever the authority.
+- **QAC concept metadata is internal only.** It can route review and curriculum grouping; it
+  cannot author hover text, supply public provenance, or override sarf/nahw/iʿrāb/context.
 - **Qurʾān text is read, never altered.** Verify meaning against the muṣḥaf and a teacher.
 - **A blank hover is correct.** Coverage grows by authoring more entries, never by guessing.
   When the plaque is blank, parse by procedure — do not invent.

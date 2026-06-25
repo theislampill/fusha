@@ -15,4 +15,6 @@ It can: pull/extend the existing Qamus, generate new Qamus entry candidates from
 resolve the suffix/pronoun and homograph classes, decide when a token must stay **pending**, and teach ajami
 learners. It is **MCP-free** — it consults *available source adapters* (`sources/README.md`) only as optional
 internal evidence, never as a dependency, and **nothing external is ever public** (public gloss record stays
-`{src:"qamus",kind:"authored"}`). See `INSTALL.md` for install + usage; `nahw/SKILL.md` is its syntax partner.
+`{src:"qamus",kind:"authored",lang:"en"}`). QAC grammar screenshots and concept-map metadata are internal
+routing/curriculum aids only; see `qamus/procedures/grammar-resource-usage.md`. Never use them as hover text
+or public provenance. See `INSTALL.md` for install + usage; `nahw/SKILL.md` is its syntax partner.

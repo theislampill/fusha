@@ -9,7 +9,7 @@ it, the *drill* that trains it, the *Qamus examples* that ground it in real āy�
 
 > All content here is original authored teaching. Qurʾān words appear only as evidence, by
 > address (`quran:S:A:W`, e.g. `quran:112:3:2`), never altered. External corpora are internal
-> evidence only; the public render carries `{src:'qamus', kind:'authored'}`. See
+> evidence only; the public render carries `{src:'qamus', kind:'authored', lang:'en'}`. See
 > [`../README.md`](../README.md) for the layer and [`../../qamus/reports/source-address-model.md`](../../qamus/reports/source-address-model.md)
 > for how a citation points back without copying.
 
@@ -22,7 +22,8 @@ Stage 5. The whole point of naḥw is to **stop guessing**: when the evidence do
 the disciplined answer is **pending**, never a confident wrong reading.
 
 Drill files: [`drills-beginner.md`](drills-beginner.md) · [`drills-intermediate.md`](drills-intermediate.md) ·
-[`drills-advanced.md`](drills-advanced.md).
+[`drills-advanced.md`](drills-advanced.md). The current closure hard-tail drill is
+[`../drills/grammar-routing-hard-cases.md`](../drills/grammar-routing-hard-cases.md).
 
 ---
 
@@ -34,14 +35,18 @@ Drill files: [`drills-beginner.md`](drills-beginner.md) · [`drills-intermediate
 separate them.
 
 - **Procedure:** [`../procedures/particle-decision.md`](../procedures/particle-decision.md)
-- **Reference:** [`../drills/particles.md`](../drills/particles.md), [`../references/particles.md`](../references/particles.md)
+- **Reference:** [`../drills/particles.md`](../drills/particles.md),
+  [`../drills/grammar-routing-hard-cases.md`](../drills/grammar-routing-hard-cases.md),
+  [`../references/particles.md`](../references/particles.md)
 - **Drill:** [`drills-beginner.md`](drills-beginner.md) §1 (identify the particle)
 - **Qamus examples:** `وَالْعَصْرِ` `quran:103:1:1` (`وَ` = oath 'by', not 'and'); `لَمْ يَلِدْ`
   `quran:112:3:1` (`لَمْ` = 'did not', forces the next verb to past).
 
 **Checkpoint 1.** Given ten diacritized function words from real āyāt, name each one's function
-and gloss, **and** for any word stripped of diacritics say `pending: homograph_haraka` rather
-than guess. A wrong particle gloss poisons the whole āyah's parse.
+and gloss, including whether `و` is conjunction/oath/comitative and whether `ف` is
+resumption/result/cause. For any word stripped of diacritics or missing clause frame, say the
+exact `pending:` reason rather than guess. A wrong particle gloss poisons the whole āyah's
+parse.
 
 ---
 
@@ -54,13 +59,15 @@ of the phrase, not the head's sense: `بِهِ` 'with it / in it', `لَهُ` 'f
 hamza seat `norm()` drops is load-bearing.
 
 - **Procedure:** [`../procedures/preposition-pronoun.md`](../procedures/preposition-pronoun.md)
-- **Reference:** [`../references/jar-majrur.md`](../references/jar-majrur.md)
+- **Reference:** [`../references/jar-majrur.md`](../references/jar-majrur.md),
+  [`../procedures/pp-attachment-review.md`](../procedures/pp-attachment-review.md)
 - **Drill:** [`drills-beginner.md`](drills-beginner.md) §2 (preposition + its object)
 - **Qamus examples:** `فِي الْأَرْضِ` `quran:2:30:9` (object jarr, a noun); `عَلَيْهِمْ`
   `quran:1:7:2` ('upon them / against them'); `إِلَيْنَا` `quran:2:136:13` ('to us', not ل-ي-ن).
 
 **Checkpoint 2.** For each of `بِهِ`, `لَهُ`, `فِيهِ`, `عَلَيْهِمْ`, `إِلَيْنَا` give the
-referent-correct gloss, and state why no `إِلَى…` form is ever glossed from root ل-ي-ن.
+referent-correct gloss, state why no `إِلَى…` form is ever glossed from root ل-ي-ن, and name the
+PP's attachment if it changes the meaning. Unknown attachment is a precise pending reason.
 
 ---
 
@@ -68,11 +75,14 @@ referent-correct gloss, and state why no `إِلَى…` form is ever glossed fr
 
 **Skill.** The **governing negative**, not the verb's surface tense, decides the English.
 `لَمْ` + jussive negates the **past** ('did not'), even though the verb is present-form; `لَنْ` +
-subjunctive is categorical **future** negation ('will never'); `لَا` is multi-function (simple
-negation / prohibition + jussive / *lā al-nāfiyah lil-jins* 'there is no'); `لَيْسَ` negates a
-nominal sentence ('is not'); `مَا` negation is **only one** of its readings.
+subjunctive is categorical **future** negation ('will never'); purpose lām and causal fā' can
+govern the following imperfect; `لَا` is multi-function (simple negation / prohibition +
+jussive / *lā al-nāfiyah lil-jins* 'there is no'); `لَيْسَ` negates a nominal sentence ('is not');
+`مَا` negation is **only one** of its readings, and negative `مَا` can act like `لَيْسَ`.
 
-- **Procedure:** [`../procedures/negation.md`](../procedures/negation.md)
+- **Procedure:** [`../procedures/negation.md`](../procedures/negation.md),
+  [`../procedures/governing-particle-mood-review.md`](../procedures/governing-particle-mood-review.md),
+  [`../procedures/ma-function-decision.md`](../procedures/ma-function-decision.md)
 - **Reference:** [`../references/irab-case-mood.md`](../references/irab-case-mood.md) (verb-mood section)
 - **Drill:** [`drills-intermediate.md`](drills-intermediate.md) §3 (negation type)
 - **Qamus examples:** `لَمْ يَلِدْ وَلَمْ يُولَدْ` `quran:112:3:1` (past negation, jussive); `لَا
@@ -80,8 +90,8 @@ nominal sentence ('is not'); `مَا` negation is **only one** of its readings.
   'there is no').
 
 **Checkpoint 3.** For a verb under each of `لَمْ` / `لَنْ` / `لَا` / `مَا`, state the resulting
-tense/polarity **and** the mood it forces; default `مَا` to nothing — emit `pending: multi_sense`
-when the frame is unclear.
+tense/polarity **and** the mood or case effect it forces; default `مَا` to nothing — emit
+`pending: multi_sense` or `pending: ma_function_uncertified` when the frame is unclear.
 
 ---
 
@@ -162,9 +172,12 @@ discipline is: answer **and** reasoning must both be right, or emit a precise `p
   'restricts'); `إِنَّهُ كَانَ حَلِيمًا` of Ibrāhīm `quran:11:75:4` ('forbearing', human virtue).
 
 **Checkpoint 7 (fluency gate).** Take an unseen āyah and produce, for each token: root/POS,
-case/mood, role assigned by its governor, and a cited gloss — **or** the most specific
-`pending:` reason. Pass only when no token carries a confident wrong reading. This is the bar
-the [GrammarProblems gate](../evals/grammar-problems-matrix.md) enforces in the pipeline.
+case/mood, role assigned by its governor, PP/clause attachment where relevant, and a cited gloss
+— **or** the most specific `pending:` reason. For `ما`, `و`, `ف`, vocatives, exceptions, hāl,
+mafʿūl li-ajlih, and mafʿūl maʿahu, route through
+[`../drills/grammar-routing-hard-cases.md`](../drills/grammar-routing-hard-cases.md). Pass only
+when no token carries a confident wrong reading. This is the bar the
+[GrammarProblems gate](../evals/grammar-problems-matrix.md) enforces in the pipeline.
 
 ---
 

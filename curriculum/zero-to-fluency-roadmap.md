@@ -171,12 +171,16 @@ and [`../nahw/references/quranic-nahw-notes.md`](../nahw/references/quranic-nahw
 entry's distinguishing note.
 
 **Drill.** The exact pairs the gloss pipeline fights: `مَنْ` (who) vs `مِنْ`/`وَمِنَ` (from);
-`مَا` (what / not) by context; `إِنَّ` (indeed) vs `أَنَّ` (that) by the hamza seat; `الَّذِي`
-(the one who, m.) / `الَّتِي` (f.); the conditional `إِنْ` (if). Read each in a phrase and say
-which reading holds and why.
+`مَا` by function (negative, relative, interrogative, maṣdariyya, negative like laysa, or
+preventive); `و` as conjunction/oath/comitative; `ف` as resumption/result/cause; `إِنَّ`
+(indeed) vs `أَنَّ` (that) by the hamza seat; `الَّذِي` (the one who, m.) / `الَّتِي` (f.);
+the conditional `إِنْ` (if). Read each in a phrase and say which reading holds and why. For
+the hard-tail routing cases, use
+[`../nahw/drills/grammar-routing-hard-cases.md`](../nahw/drills/grammar-routing-hard-cases.md).
 
 **Checkpoint.** Disambiguate `مَنْ`/`مِنْ`, `إِنَّ`/`أَنَّ`, and `مَا` (relative vs negative)
-in eight unmarked-by-meaning phrases, each time naming the deciding feature.
+in eight unmarked-by-meaning phrases, each time naming the deciding feature. For any `و`/`ف`
+or `ما` whose clause function is not decisive, write the exact `pending:` reason.
 
 ---
 
@@ -189,17 +193,25 @@ using the **hover layer** as a backstop, not a crutch.
 in [`../sarf/procedures/hover-application.md`](../sarf/procedures/hover-application.md).
 
 **Qamus entries used.** Whatever the āyah's words resolve to. On `qamus.dawah.wiki`, hover or
-tap each word: a covered word shows an **authored** gloss (`{src:'qamus', kind:'authored'}`);
+tap each word: a covered word shows an **authored** gloss (`{src:'qamus', kind:'authored',
+lang:'en'}`);
 an uncovered word shows nothing — that blank means "not yet certified," your cue to parse it
 by procedure. Full method in [`qamus-learning-path.md`](qamus-learning-path.md).
 
 **Drill.** Take a short, well-known āyah. Without hovering, gloss each word yourself; *then*
 hover to check. Where the hover is blank, do not invent a gloss — write your PENDING reason
 (homograph? root unclear? noun-vs-verb?) and route it to the matching procedure. Verify the
-whole meaning against the muṣḥaf.
+whole meaning against the muṣḥaf. If a token contains an attached bā', lām, kāf, wāw, fā', or
+suffix pronoun, prove that the attached piece did not disappear from the learner-facing
+answer; the learner drill for this is
+[`drills/hover-composition-and-routing.md`](drills/hover-composition-and-routing.md), backed by
+the reviewer-side sarf drill
+[`../sarf/drills/clitic-and-host-morphology.md`](../sarf/drills/clitic-and-host-morphology.md).
 
 **Checkpoint.** Read a short āyah you have not seen, glossing each covered word and producing a
-*named* PENDING for each uncovered one — zero confident wrong glosses.
+*named* PENDING for each uncovered one. A host-only hover on a token with a visible attached
+preposition, function particle, or suffix pronoun fails the checkpoint — zero confident wrong
+glosses.
 
 ---
 
@@ -219,7 +231,9 @@ the word in its āyah. The address is your bookmark; `used_by` shows where it ap
 **Drill.** Pick a frequent root. Read its entry top to bottom. For each `usage_refs[]`, open
 that āyah on `qamus.dawah.wiki` and read the form *in context* — watch one root carry related
 but distinct senses across different āyāt. Method detailed in
-[`qamus-learning-path.md`](qamus-learning-path.md).
+[`qamus-learning-path.md`](qamus-learning-path.md). When a surface may be a proper name,
+historic people, place, plant, body part, or book, use concept metadata only as a review flag;
+the verse's sarf/nahw/iʿrāb still certifies the reading.
 
 **Checkpoint.** For a given root entry, list its senses and derived forms from memory and read
 two of its usage āyāt aloud with correct meaning.

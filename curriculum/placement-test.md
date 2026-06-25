@@ -72,8 +72,9 @@ Give the one-word English gloss.
 - E2. Translate `كِتَابُ اللهِ`.
 - E3. Translate `لَهُ` and `بِهِ`.
 - E4. What does `إِلَيْنَا` mean, and what is its root?
+- E5. Why is a host-only hover for `بِسَلَامٍ` unsafe?
 
-**Bar to pass E:** all four, and E4 root given as `أ ل ي` ("to us") — **not** `ل ي ن` ("soft").
+**Bar to pass E:** all five, and E4 root given as `أ ل ي` ("to us") — **not** `ل ي ن` ("soft").
 Else **start at Level 5.**
 
 ---
@@ -92,10 +93,12 @@ Else **start at Level 5.**
 
 - G1. `مَنْ` vs `مِنْ`: which is "who" and which "from," and what tells them apart?
 - G2. `إِنَّ` vs `أَنَّ`: gloss each and name the deciding feature.
-- G3. `مَا` has two common readings — what are they?
+- G3. Name at least three functions `مَا` can carry.
+- G4. `وَمَا` is how many written Qurʾānic word tokens, and why can it still need multiple
+  grammatical pieces?
 
-**Bar to pass G:** all three, each with the *deciding feature* named (harakah / hamza seat /
-context). Else **start at Level 7.**
+**Bar to pass G:** all four, each with the *deciding feature* named (harakah / hamza seat /
+context / written-token composition). Else **start at Level 7.**
 
 ---
 
@@ -106,11 +109,15 @@ context). Else **start at Level 7.**
 - H2. A root entry shows three senses. How do you decide which one a given āyah uses?
 - H3. You meet an unknown word in a passage. Name a *precise* reason you might mark it PENDING
   (not just "I don't know").
+- H4. A hover for `جَادَلُوكَ` says only "to argue." What visible information is missing?
+- H5. A QAC concept map says a surface can name a prophet or place. May that decide the hover?
 
 **Bar to pass H:** H1 = "the word is not yet certified; parse it by procedure, do not guess";
 H2 = "context decides — the governing particle / referent / sentence type"; H3 = any specific
 reason such as homograph (harakah), noun-vs-verb (pos), one-root-many-senses (multi-sense),
-unresolved referent, proper name, or collapsed hamza seat.
+unresolved referent, proper name, or collapsed hamza seat; H4 = the plural subject marker and
+the second-person masculine singular object suffix; H5 = no, concept metadata is internal
+routing evidence, not a translation source.
 
 **If you pass A–G and clear H:** you are ready for **independent reading (Level 12)** — use the
 ladder's upper rungs (9–11) to widen coverage, and lean on
@@ -154,7 +161,9 @@ second letter's harakah).
 "he knew." D4 **false** — `رَسُول` is a noun, "messenger"; a noun never takes a verb gloss.
 
 **E.** E1 "the door of the house." E2 "the Book of Allāh." E3 `لَهُ` = "for him / to him,"
-`بِهِ` = "with it / in it." E4 "to us," root `أ ل ي` — **not** `ل ي ن`.
+`بِهِ` = "with it / in it." E4 "to us," root `أ ل ي` — **not** `ل ي ن`. E5 the prefixed bāʾ
+contributes the prepositional relation ("with/in/by" by context), so host-only "peace" drops
+visible grammar.
 
 **F.** F1 nominal; subject (mubtadaʾ) = `الْبَيْتُ`. F2 verbal; doer (fāʿil) = `الطَّالِبُ`
 (rafʿ), object (mafʿūl) = `الدَّرْسَ` (naṣb). F3 there is no overt verb "to be" — the nominal
@@ -162,15 +171,23 @@ sentence carries "is" implicitly.
 
 **G.** G1 `مَنْ` = "who," `مِنْ` = "from"; the harakah on the content letter separates them
 (fatḥa vs kasra). G2 `إِنَّ` = "indeed/verily," `أَنَّ` = "that"; the **hamza seat**
-distinguishes them. G3 `مَا` = "what" (interrogative/relative) **or** "not" (negative) — context
-decides.
+distinguishes them. G3 acceptable functions include relative/interrogative "what," negative
+"not," maṣdariyyah/source, oath/source, preventive/kāffah, or negative behaving like `لَيْسَ` —
+context decides. G4 one written Qurʾānic word token; internally it may decompose into wāw plus the
+correct function of `ما`, so neither counting it as two tokens nor giving one undivided default
+gloss is safe.
 
 **H.** H1 a blank hover means the word has **not yet earned a certified, authored gloss** —
 parse it by procedure (ṣarf/nahw), do **not** guess. H2 **context** decides which sense: the
 governing particle, the referent, and the sentence type — this is the nahw layer's job. H3 any
 *specific* PENDING reason, e.g. homograph needing the harakah, POS mismatch (verb gloss on a
 noun), one root with several senses, an unresolved referent, a proper name, or a collapsed hamza
-seat — see the reason vocabulary in [`../nahw/README.md`](../nahw/README.md).
+seat — see the reason vocabulary in [`../nahw/README.md`](../nahw/README.md). H4 it drops the
+plural subject and attached `كَ` object: the token means they argue/dispute with you (masc. sg.)
+in context, not just an infinitive.
+
+H5 no: concept metadata routes review and curriculum grouping, but it cannot authorize a token
+hover or override sarf/nahw/iʿrāb/context.
 
 When you have your starting rung, open
 [`zero-to-fluency-roadmap.md`](zero-to-fluency-roadmap.md) at that level and begin.

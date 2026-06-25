@@ -9,7 +9,7 @@ Level 8 of [`../README.md`](../README.md): the first eight rungs built the machi
 Each word is addressed `quran:S:A:W` (surah:ayah:word, per
 [`../../qamus/reports/source-address-model.md`](../../qamus/reports/source-address-model.md)) — a
 pointer at the verbatim word, never an edit of it. Glosses are the authored hover values
-(`{src:'qamus', kind:'authored'}`); a word with no certified gloss reads **blank** on the live app,
+(`{src:'qamus', kind:'authored', lang:'en'}`); a word with no certified gloss reads **blank** on the live app,
 and a blank is honest — it means *route to procedure*, not *invent a meaning*.
 
 > Qurʾān text is never altered. The diacritics here serve reading; the muṣḥaf is the authority.
@@ -18,8 +18,11 @@ and a blank is honest — it means *route to procedure*, not *invent a meaning*.
 > [`../../sarf/procedures/root-decision.md`](../../sarf/procedures/root-decision.md). Verify
 > meaning against the muṣḥaf and a qualified teacher — this is a *language* drill.
 
-**How to do each item:** cover the gloss column, read the Arabic token aloud (Level 1), name its
-class (Levels 2–7), then uncover and check. Read the assembled sentence last.
+**How to do each item:** cover the gloss column, read the Arabic token aloud (Level 1), split
+any visible attached pieces, name its class (Levels 2–7), then uncover and check. Read the
+assembled sentence last. If a token has a bā', lām, kāf, wāw, fā', article, or suffix pronoun,
+run [`hover-composition-and-routing.md`](hover-composition-and-routing.md) before accepting the
+gloss.
 
 ---
 
@@ -133,6 +136,8 @@ implied, no written particle — see
 - [ ] Do I give every token an **address** and a **class** *before* a gloss?
 - [ ] Can I split fused tokens (`إِنَّا` = `إِنَّ` + `نا`; `بِسْمِ` = `بِـ` + `ٱسْمِ`) into their
       pieces?
+- [ ] Did every visible attached preposition, function particle, article, and suffix pronoun
+      make it into the hover or learner explanation?
 - [ ] Do I recognize **fronting** (`إِيَّاكَ`) and **oath wāw** (`وَٱلْعَصْرِ`) from the frame,
       not the default?
 - [ ] Do I read **derived-form verbs** (Form IV `أَعْطَيْنَا`, Form X `نَسْتَعِينُ`) as such?

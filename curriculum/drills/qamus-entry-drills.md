@@ -15,7 +15,7 @@ not list, and do not gloss a form against a sense it is not attached to.
 > a sense is `…#sense=N`, a form `…#form=…`, a ref `…#ref=S:A`. To author or repair an entry the
 > agent follows
 > [`../../sarf/procedures/qamus-entry-authoring.md`](../../sarf/procedures/qamus-entry-authoring.md)
-> — the learner only *reads* it. All entry content is `{src:'qamus', kind:'authored'}`; nothing
+> — the learner only *reads* it. All entry content is `{src:'qamus', kind:'authored', lang:'en'}`; nothing
 > external is reproduced.
 
 **The shape you are reading** (one entry):
@@ -104,6 +104,21 @@ A blank is a feature, not a failure.
 + harakāt** (`norm_strict`/QAC), not the bare consonants — exactly the regression class in
 [`../../sarf/drills/homograph-regressions.md`](../../sarf/drills/homograph-regressions.md).
 
+### 9. Separate entry gloss, token hover, phrase hover, and learner explanation
+**Q:** An entry gloss says "name," but the āyah token is `بِسْمِ`. May the public token hover be
+only "name"?
+**A:** No. The entry gloss describes the host word; the token hover must account for the
+visible bā' and the iḍāfa frame. The learner explanation may say "`بِـ` + `اسم` = in the name
+of," but public provenance still stays Qamus-authored only. Drill this in
+[`hover-composition-and-routing.md`](hover-composition-and-routing.md).
+
+### 10. Use concept metadata as a warning light, not an answer
+**Q:** A concept map says a surface can be a prophet, people, city, plant, body part, or book.
+Does that prove the entry sense for this token?
+**A:** No. It flags a semantic collision to review; verse-specific sarf, nahw, i'rab, and
+context decide the token. Concept labels never become public hover source labels and never
+flatten homographs.
+
 ---
 
 ## Checklist before you leave Qamus-entry reading
@@ -117,6 +132,9 @@ A blank is a feature, not a failure.
 - [ ] When I meet a **form not in `forms[]`**, do I treat it as an honest blank and route to
       procedure?
 - [ ] Do I read the entry's **`notes`** as certification guards against homograph traps?
+- [ ] Do I separate **entry gloss**, **token hover**, **phrase explanation**, and **learner
+      note**?
+- [ ] Do I keep concept-map/source labels out of public provenance?
 
 Next, take the same read-the-record discipline to classical prose vocabulary in
 [`nawawi40-reading-drills.md`](nawawi40-reading-drills.md). **Read the whole entry, bind form to

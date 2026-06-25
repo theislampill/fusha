@@ -57,4 +57,4 @@ Structure (slot set, form ladder, English labels, the colours/defects + seeking/
 *observed* in third‑party teaching verb‑charts (catalogued in `corpora/sarfnahw/`, licensing under review) and the
 open‑source **qutrub** conjugator roster. **All Arabic above is standard classical morphology authored for this
 repo** — the chart Arabic is a non‑Unicode legacy font and was never extracted or copied. None of this ships as
-hover text; live hover records stay `{src:"qamus",kind:"authored"}`.
+hover text; live hover records stay `{src:"qamus",kind:"authored",lang:"en"}`.

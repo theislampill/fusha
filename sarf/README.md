@@ -42,7 +42,7 @@ Use it in this order. Do not skip to the bottom.
 3. **Pattern check** — `references/quranic-morphology-notes.md`. Confirm the surface's form
    so a verb gloss does not land on a noun and a participle is not read as a finite verb.
 4. **Certify against an entry** — only now bind the surface to a Qamus entry, and only if
-   the entry's root *and* sense match. Emit `{src:'qamus', kind:'authored'}` or emit
+   the entry's root *and* sense match. Emit `{src:'qamus', kind:'authored', lang:'en'}` or emit
    nothing.
 
 ### The evidence ladder (root + sense)
@@ -66,7 +66,7 @@ used. Never certify from a lower rung when a higher one disagrees.
 ## How it feeds qamus‑highlight
 
 `qamus-highlight` is the public hover layer: hover/tap a Qur'anic word → an English gloss
-plaque. The **only** thing it may ever render is `{src:'qamus', kind:'authored'}` — our own
+plaque. The **only** thing it may ever render is `{src:'qamus', kind:'authored', lang:'en'}` — our own
 content. The ṣarf pack is the gate that decides whether a token *earns* a gloss:
 
 - A token gets a gloss **iff** root detection + homograph check + pattern check all agree
@@ -74,7 +74,7 @@ content. The ṣarf pack is the gate that decides whether a token *earns* a glos
 - Otherwise the token stays **plain** (no plaque). Coverage grows as entries grow; it never
   grows by lowering the bar.
 - The public artifact carries no external gloss text and no provenance beyond
-  `{src:'qamus', kind:'authored'}`. External references named in build scripts are
+  `{src:'qamus', kind:'authored', lang:'en'}`. External references named in build scripts are
   `informed_by` labels for *our* internal audit only.
 
 Hard precedence, learned in production: **prefer PENDING over a wrong gloss.** A verb gloss
@@ -111,6 +111,7 @@ sarf/
     root-detection.md                    ← find the root via the evidence ladder; worked examples
     homograph-regressions.md             ← the exact homographs we fought + the distinguishing feature
     verb-measures.md                     ← drills: read the form/voice/gloss-shape before glossing
+    clitic-and-host-morphology.md         ← visible proclitics/suffixes must not vanish into host-only hovers
   references/
     quranic-morphology-notes.md          ← forms I–X, weak letters, hamza seats, tāʾ marbūṭa, …
     verb-measures-table.md               ← forms I–X paradigm table + qamus-relevance payoff
@@ -140,7 +141,7 @@ sarf/
 - **`norm()` cannot certify.** It drops hamza + harakāt; it widens recall only. Certify
   with `norm_strict()`, the harakāt helpers, QAC, or the Qamus entry.
 - **External references are `informed_by`, never copied.** The public hover shows only
-  `{src:'qamus', kind:'authored'}`.
+  `{src:'qamus', kind:'authored', lang:'en'}`.
 - **Use the shared module.** Normalization and harakāt logic live in
   `tools/normalize_ar.py` (`norm`, `norm_strict`, `bare`, `haraka_on`, `shadda_on`,
   `is_man_who`, `ends_tanwin_alef`). Reference it; do not re‑implement it.
