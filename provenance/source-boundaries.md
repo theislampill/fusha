@@ -23,6 +23,11 @@ only as `informed_by` labels in internal schemas/scripts.
 If a source is not in this table, treat it as "may not consult for publication"
 until it is added here with an explicit role.
 
+Internal evidence labels should be short, source-addressed breadcrumbs rather
+than copied text. Use labels such as `tafsir-center:analyze_word:6:6:26:irab_sarf`
+or `quran-com:visual-ref:6:6` to record that a fact was checked; never store the
+returned wording as the public hover.
+
 ## §1. Evidence vs. publication (the hard wall)
 
 1. A fact **learned** from an external source is not publishable merely because it

@@ -10,6 +10,9 @@ import json
 import os
 import sys
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from tools import normalize_ar as N
 
@@ -373,6 +376,11 @@ for _vname, _label in [("check_report_ergonomics.py", "closure-2092 report ergon
 # closure-2092: committed batch families validated as HARD gates (not mere existence checks)
 _C = os.path.join(_R, "qamus", "candidates", "qamus_2092")
 _BATCH_GATES = [
+    ("validate_token_hover_decisions.py", ["andon_hover_regression_repairs_20260625.jsonl"], None),
+    ("validate_token_hover_decisions.py", ["andon_hover_regression_repairs_20260625_002.jsonl"], None),
+    ("validate_token_hover_decisions.py", ["andon_hover_regression_repairs_20260625_003.jsonl"], None),
+    ("validate_token_hover_decisions.py", ["andon_hover_regression_repairs_20260625_004.jsonl"], None),
+    ("validate_token_hover_decisions.py", ["andon_hover_regression_repairs_20260625_005.jsonl"], None),
     ("validate_token_hover_decisions.py", ["form_variant_batch_001.jsonl"], None),
     ("validate_form_variant_family_batches.py", ["form_variant_batch_001.jsonl"], "form_variant_batch_001.provenance.jsonl"),
     ("validate_token_hover_decisions.py", ["token_irab_batch_001.jsonl"], None),

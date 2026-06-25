@@ -98,10 +98,21 @@ If an exact/form match resolves the host before the clitic pass runs, still insp
 proclitic. A hover for بِسَلَـٰمٍ or بِبَدْرٍ must not silently display only the host noun ("peace", "Badr") when
 the entry/sense being taught is the bāʾ. Add a separate `pre` channel or a source-addressed phrase gloss, and keep
 the false-split guards in force.
+If the public tooltip renders only the best gloss text, the best gloss itself must carry the attached clitic's
+contribution; metadata like `pre: "with / by"` is evidence, not a user-visible repair. For example, `بِسَلَـٰمٍ`
+must surface as "with peace" or "in peace" where certified, not best=`peace` plus hidden preposition metadata.
 
 A broad root-family gloss is dictionary metadata, not a hover. Do not put an omnibus entry gloss such as
 "to know — also to teach and learn" on a concrete token. Pick the token's form-aware contribution ("knows",
 "taught", "learned", "known", "the All-Knowing") or leave the token pending with the exact blocker.
+Verb suffix pronouns are also visible morphology, not metadata. A token like `جَادَلُوكَ` contains the verb stem,
+plural subject marker, and a second-person masculine singular object suffix; the hover must not collapse it to
+"to argue; dispute". Use a subject/object-aware gloss such as "they argue/dispute with you (masc. sg.)" when
+certified, or keep the row pending with the exact suffix blocker.
+Verb form is a semantic gate, not decoration. Record triliteral form I-X or quadriliteral form I-IV before
+authoring: II can be causative/intensive, III can be mutual, VI reciprocal, VII/VIII reflexive or agentless,
+IX stative/color, X seeking/reflexive-causative. A hover that ignores the form, voice, person, number, or suffix
+is a dictionary gloss, not a token gloss.
 
 ## 9. Homograph quarantine rules
 If two readings collapse under `norm()`, decide on the **content letter's harakah / hamza seat / shadda**, not

@@ -14,6 +14,9 @@ import json
 import sys
 from pathlib import Path
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 
 CASES = [
     {
@@ -87,6 +90,34 @@ CASES = [
         "why": "Form II verb with object suffix needs a form-aware suffix-preserving hover",
     },
     {
+        "loc": "22:68:2",
+        "surface": "جَٰدَلُوكَ",
+        "must": ["they", "argue", "with you", "masc"],
+        "must_not": ["to argue; dispute"],
+        "why": "past plural verb plus second-person masculine singular object suffix must not render as a bare lemma",
+    },
+    {
+        "loc": "97:1:1",
+        "surface": "إِنَّا",
+        "must": ["indeed", "We"],
+        "must_not": ["surely, indeed, certainly"],
+        "why": "inna plus attached first-person plural pronoun must not render as particle-only emphasis",
+    },
+    {
+        "loc": "97:1:2",
+        "surface": "أَنزَلْنَٰهُ",
+        "must": ["We", "sent", "it", "down"],
+        "must_not": ["he sent down", "to send down"],
+        "why": "Form IV verb with na subject and hu object suffix must preserve both pronouns",
+    },
+    {
+        "loc": "13:11:8",
+        "surface": "يَحْفَظُونَهُۥ",
+        "must": ["they", "guard", "him"],
+        "must_not": ["to guard; preserve; watch over"],
+        "why": "imperfect plural verb plus hu object suffix must not render as a bare root-family gloss",
+    },
+    {
         "loc": "2:3:3",
         "surface": "بِٱلْغَيْبِ",
         "must": ["in", "unseen"],
@@ -99,6 +130,71 @@ CASES = [
         "must": ["in", "Babylon"],
         "must_not": ["pending"],
         "why": "locative ba plus proper place must not collapse to host-only proper noun",
+    },
+    {
+        "loc": "6:6:26",
+        "surface": "بِذُنُوبِهِمْ",
+        "must": ["because", "their sins"],
+        "must_not": ["Sin."],
+        "why": "causal ba plus plural noun and possessive suffix must not collapse to a host-only entry gloss",
+    },
+    {
+        "loc": "3:11:11",
+        "surface": "بِذُنُوبِهِمْ",
+        "must": ["because", "their sins"],
+        "must_not": ["Sin."],
+        "why": "causal ba plus plural noun and possessive suffix must not collapse to a host-only entry gloss",
+    },
+    {
+        "loc": "9:102:3",
+        "surface": "بِذُنُوبِهِمْ",
+        "must": ["acknowledged", "their sins"],
+        "must_not": ["Sin."],
+        "why": "ba plus plural noun and possessive suffix must preserve the verb complement in context",
+    },
+    {
+        "loc": "5:18:11",
+        "surface": "بِذُنُوبِكُم",
+        "must": ["because", "your sins"],
+        "must_not": ["pending", "Sin."],
+        "why": "causal ba plus second-person possessive suffix must not stay pending or host-only",
+    },
+    {
+        "loc": "40:11:8",
+        "surface": "بِذُنُوبِنَا",
+        "must": ["because", "our sins"],
+        "must_not": ["pending", "Sin."],
+        "why": "causal ba plus first-person possessive suffix must not stay pending or host-only",
+    },
+    {
+        "loc": "2:87:15",
+        "surface": "بِرُوحِ",
+        "must": ["with", "Holy Spirit"],
+        "must_not": ["angel, revelation", "life-giving spirit"],
+        "why": "attached ba plus idafa host must preserve the support relation in context",
+    },
+    {
+        "loc": "58:22:28",
+        "surface": "بِرُوحٍۢ",
+        "must": ["with", "spirit"],
+        "must_not": ["angel, revelation", "life-giving spirit"],
+        "why": "attached ba plus majrur host must preserve the strengthening relation in context",
+    },
+    {
+        "loc": "11:48:4",
+        "surface": "بِسَلَٰمٍۢ",
+        "must": ["with", "peace"],
+        "best_must": ["with"],
+        "must_not": [],
+        "why": "attached ba must appear in the public hover text, not only in metadata",
+    },
+    {
+        "loc": "50:34:2",
+        "surface": "بِسَلَٰمٍۢ",
+        "must": ["in", "peace"],
+        "best_must": ["in"],
+        "must_not": [],
+        "why": "attached ba must appear in the public hover text, not only in metadata",
     },
     {
         "loc": "1:2:1",
@@ -164,6 +260,28 @@ def best_text(rec: dict | None) -> str:
     return ""
 
 
+def best_gloss(rec: dict | None) -> dict:
+    if not rec:
+        return {}
+    glosses = rec.get("glosses") or []
+    best = rec.get("best", 0)
+    if isinstance(best, int) and 0 <= best < len(glosses):
+        return glosses[best]
+    if glosses:
+        return glosses[0]
+    return {}
+
+
+def case_missing(needles: list[str], haystack: str) -> list[str]:
+    low = haystack.lower()
+    return [needle for needle in needles if needle.lower() not in low]
+
+
+def case_forbidden(needles: list[str], haystack: str) -> list[str]:
+    low = haystack.lower()
+    return [needle for needle in needles if needle.lower() in low]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("artifact", help="Path to built wbw-lookup.json")
@@ -180,13 +298,17 @@ def main() -> int:
         loc = case["loc"]
         rec = words.get(loc)
         text = best_text(rec)
+        gloss = best_gloss(rec)
         pending_reason = pending.get(loc)
         haystack = " ".join(
             part for part in [text, str(rec.get("pre") if rec else ""), str(pending_reason or "")] if part
         )
-        low = haystack.lower()
-        missing = [needle for needle in case["must"] if needle.lower() not in low]
-        forbidden = [needle for needle in case["must_not"] if needle.lower() in low]
+        missing = case_missing(case["must"], haystack) + [
+            f"best:{needle}" for needle in case_missing(case.get("best_must", []), text)
+        ]
+        forbidden = case_forbidden(case["must_not"], haystack) + [
+            f"best:{needle}" for needle in case_forbidden(case.get("best_must_not", []), text)
+        ]
         if not rec or pending_reason or missing or forbidden:
             failures.append(
                 {
@@ -197,6 +319,19 @@ def main() -> int:
                     "forbidden": forbidden,
                     "pending": pending_reason,
                     "why": case["why"],
+                }
+            )
+        elif gloss.get("src") != "qamus" or gloss.get("kind") != "authored":
+            failures.append(
+                {
+                    "loc": loc,
+                    "surface": case["surface"],
+                    "actual": haystack,
+                    "missing": [],
+                    "forbidden": [],
+                    "pending": pending_reason,
+                    "why": "public hover invariant violated for regression row",
+                    "public_gloss": gloss,
                 }
             )
 

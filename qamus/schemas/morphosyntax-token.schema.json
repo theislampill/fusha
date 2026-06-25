@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/morphosyntax-token.schema.json",
+  "title": "Qamus per-token morphosyntax metadata",
+  "description": "Internal, source-addressed grammar metadata for a Quran token. This is separate from the concise public hover gloss. It records POS, morphology, clitics, case/mood/state, agreement, and dependency links so hovers can be checked and future teaching UI can show a breakdown without stuffing source labels or long grammar notes into data-tr.",
+  "type": "object",
+  "required": ["loc", "surface", "pos", "evidence", "public_boundary"],
+  "additionalProperties": false,
+  "properties": {
+    "loc": {
+      "type": "string",
+      "pattern": "^\\d{1,3}:\\d{1,3}:\\d{1,3}$",
+      "description": "Quran token address S:A:W."
+    },
+    "surface": { "type": "string" },
+    "lemma": { "type": ["string", "null"] },
+    "root": { "type": ["string", "null"] },
+    "pos": {
+      "type": "string",
+      "enum": ["noun", "proper_noun", "pronoun", "adjective", "participle", "masdar", "verb", "particle", "preposition", "conjunction", "relative", "number", "unknown"]
+    },
+    "morphology": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "verb_form": { "type": ["string", "null"], "description": "I-X, quadriliteral, or null." },
+        "voice": { "type": ["string", "null"], "enum": ["active", "passive", "null"] },
+        "aspect": { "type": ["string", "null"], "enum": ["perfect", "imperfect", "imperative", "participle", "masdar", "null"] },
+        "mood": { "type": ["string", "null"], "enum": ["indicative", "subjunctive", "jussive", "imperative", "null"] },
+        "case": { "type": ["string", "null"], "enum": ["nominative", "accusative", "genitive", "jussive", "none", "null"] },
+        "state": { "type": ["string", "null"], "enum": ["definite", "indefinite", "construct", "proper", "none", "null"] },
+        "person": { "type": ["string", "null"], "enum": ["1", "2", "3", "null"] },
+        "number": { "type": ["string", "null"], "enum": ["singular", "dual", "plural", "null"] },
+        "gender": { "type": ["string", "null"], "enum": ["masculine", "feminine", "common", "none", "null"] },
+        "rationality": { "type": ["string", "null"], "enum": ["rational", "irrational", "none", "null"] },
+        "semantic_gender": { "type": ["string", "null"], "enum": ["masculine", "feminine", "none", "null"] },
+        "morphemic_gender": { "type": ["string", "null"], "enum": ["masculine", "feminine", "none", "null"] },
+        "grammatical_gender": { "type": ["string", "null"], "enum": ["masculine", "feminine", "none", "null"] }
+      }
+    },
+    "segments": {
+      "type": "array",
+      "description": "Token-internal pieces such as waw, fa, bi, inna, stem, subject pronoun, object pronoun, possessive pronoun.",
+      "items": {
+        "type": "object",
+        "required": ["role", "surface"],
+        "additionalProperties": false,
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": ["stem", "prefix_conjunction", "prefix_preposition", "prefix_particle", "definite_article", "subject_pronoun", "object_pronoun", "possessive_pronoun", "relative_pronoun", "case_ending", "other"]
+          },
+          "surface": { "type": "string" },
+          "gloss_contribution": { "type": ["string", "null"] },
+          "person": { "type": ["string", "null"], "enum": ["1", "2", "3", "null"] },
+          "number": { "type": ["string", "null"], "enum": ["singular", "dual", "plural", "null"] },
+          "gender": { "type": ["string", "null"], "enum": ["masculine", "feminine", "common", "none", "null"] },
+          "case": { "type": ["string", "null"], "enum": ["nominative", "accusative", "genitive", "none", "null"] }
+        }
+      }
+    },
+    "syntax": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "role": { "type": ["string", "null"], "description": "subject, object, khabar, tamyiz, badal, sifa, mudaf, mudaf_ilayh, etc." },
+        "governor": { "type": ["string", "null"], "description": "loc of governing token when known." },
+        "head": { "type": ["string", "null"], "description": "loc of head token in a dependency relation." },
+        "dependency": {
+          "type": ["string", "null"],
+          "enum": ["subject", "hidden_subject", "naib_fail", "object", "first_object", "second_object", "preposition_phrase", "idafa_head", "idafa_dependent", "sifa", "badal", "tamyiz", "murakkab", "hal", "mafool_mutlaq", "mafool_liajlih", "mafool_maahu", "coordination", "condition", "answer_of_condition", "relative_clause", "khabar", "ism_kana", "khabar_kana", "ism_kada", "khabar_kada", "ism_ma_laysa", "khabar_ma_laysa", "subjunctive_governor", "jussive_governor", "negation", "imperative", "imperative_lam", "prohibition", "jawab_amr", "null"]
+        },
+        "linked_locs": { "type": "array", "items": { "type": "string", "pattern": "^\\d{1,3}:\\d{1,3}:\\d{1,3}$" } }
+      }
+    },
+    "hover_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "must_surface": { "type": "array", "items": { "type": "string" } },
+        "must_not_surface": { "type": "array", "items": { "type": "string" } },
+        "reason": { "type": ["string", "null"] }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["labels"],
+      "additionalProperties": false,
+      "properties": {
+        "labels": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Internal evidence labels such as tafsir-center:analyze_word:S:A:W:irab_sarf; never public."
+        },
+        "gate": {
+          "type": "string",
+          "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"]
+        },
+        "reasoning": { "type": ["string", "null"] }
+      }
+    },
+    "public_boundary": {
+      "type": "object",
+      "required": ["public_gloss_src", "public_gloss_kind", "external_source_names_public"],
+      "additionalProperties": false,
+      "properties": {
+        "public_gloss_src": { "const": "qamus" },
+        "public_gloss_kind": { "const": "authored" },
+        "external_source_names_public": { "const": false }
+      }
+    }
+  }
+}

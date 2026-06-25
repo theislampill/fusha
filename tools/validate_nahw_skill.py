@@ -7,6 +7,8 @@ polysemy examples are absent, conclusion-only reasoning is allowed (no grammar-r
 recipe or learner path is absent, the provenance invariant is missing, or the skill depends on MCP.
 """
 import json, os, sys
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 N = os.path.join(ROOT, "nahw")
 errs = []

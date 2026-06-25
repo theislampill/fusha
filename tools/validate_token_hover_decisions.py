@@ -14,15 +14,19 @@ Usage: python tools/validate_token_hover_decisions.py <decisions.jsonl>
 import json
 import re
 import sys
+from pathlib import Path
 
 LOC = re.compile(r"^\d{1,3}:\d{1,3}:\d{1,3}$")
 LEAK = ("tafsir", "qac", "quran.com", "quran-corpus", "tanzil", "corpus.quran")
+GATES = {"auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"}
+REVIEW_FIELDS = {"gate", "reasoning", "internal_provenance"}
 
 
 def main():
     if len(sys.argv) < 2:
         print("usage: validate_token_hover_decisions.py <decisions.jsonl>"); sys.exit(2)
     path = sys.argv[1]
+    strict_linguistic = "andon_hover_regression_repairs" in Path(path).name
     errors, n, seen = [], 0, {}
     for ln_no, ln in enumerate(open(path, encoding="utf-8"), 1):
         ln = ln.strip()
@@ -40,6 +44,16 @@ def main():
             errors.append("%s: missing gloss" % loc)
         if d.get("src") != "qamus" or d.get("kind") != "authored":
             errors.append("%s: public record must be src=qamus kind=authored" % loc)
+        has_review_fields = bool(REVIEW_FIELDS & set(d))
+        if strict_linguistic:
+            for field in ("surface", "decision_state", "gate", "reasoning"):
+                if not d.get(field):
+                    errors.append("%s: linguistic decision missing %s" % (loc, field))
+        if strict_linguistic or has_review_fields:
+            if d.get("gate") and d.get("gate") not in GATES:
+                errors.append("%s: unknown gate %r" % (loc, d.get("gate")))
+            if strict_linguistic and "internal_provenance" in d and not isinstance(d.get("internal_provenance"), list):
+                errors.append("%s: internal_provenance must be a list when present" % loc)
         g = (d.get("gloss") or "").lower()
         if any(x in g for x in LEAK):
             errors.append("%s: gloss leaks an external source name" % loc)

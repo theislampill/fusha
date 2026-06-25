@@ -85,6 +85,9 @@ The same preposition renders differently by referent: بِهِ "with/by/in it"; 
 ## 6. Pronoun / suffix handling
 Attached pronouns ـه/ـها/ـهم/ـكم/ـنا change the wording but not the head sense; do not let a suffix invent a
 new stem (and never confuse a tanwīn-alef with the pronoun نا).
+For verbs, attached object pronouns are part of the user-visible meaning. Preserve the subject agreement and the
+object referent/person/number/gender where material: `جَادَلُوكَ` is not "to argue; dispute", but a plural subject
+arguing/disputing with "you" masculine singular in context.
 
 ## 7. Negation handling
 لَمْ → past negation + jussive; لَنْ → future negation; لَا → negation / prohibition / "no"; مَا → negation or
@@ -100,6 +103,9 @@ lexeme.
 Attached باء on a majrūr noun must carry the bāʾ function in the hover. If the entry is بِـ, host-only glosses like
 "peace" for بِسَلَـٰمٍ or "Badr" for بِبَدْرٍ are incomplete; use the context sense ("with peace", "at Badr", etc.)
 or leave a precise pending when the bāʾ function is not certified.
+The visible hover is the contract: do not rely on a hidden `pre` field to teach a relation that the tooltip's best
+gloss omits. A token such as `بِسَلَـٰمٍ` needs the preposition inside the best hover text when that is what the page
+shows.
 
 ## 10. Verb–subject–object context
 The object/construction can fix a polysemous verb: أَتَى = come/bring/give/commit by object; يَقْدِرُ in a rizq
@@ -136,6 +142,9 @@ For attached بِـ, the hover must include the preposition's role, not only the
 For oath waw (واو القسم), the hover must include the oath relation; a governed noun like وَالتِّينِ is not merely
 "fig". For attached وَبِـ before a governed noun, preserve both the coordination/resumption and the bāʾ relation
 where they are certified, e.g. وَبِالنَّجْمِ as "and by/through the star(s)", not a pending host-only token.
+For bāʾ plus possessive suffixes, include both the prepositional relation and the pronoun contribution: `بِذُنُوبِهِمْ`
+is not "Sin.", and `بِذُنُوبِكُم` is not a generic suffix pending when iʿrāb confirms bāʾ + majrūr noun + possessive
+suffix.
 
 ---
 
