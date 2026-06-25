@@ -28,7 +28,17 @@ AR_ESCAPE = re.compile(r"\\u0[5-8][0-9a-fA-F][0-9a-fA-F]")
 def tracked_files():
     out = subprocess.run(["git", "ls-files", "*.json", "*.jsonl"], cwd=ROOT,
                          capture_output=True, text=True).stdout
-    return [l for l in out.splitlines() if l.strip()]
+    files = [l for l in out.splitlines() if l.strip()]
+    if files:
+        return files
+    # F14 no-git fallback: deterministic filesystem walk (a ZIP/non-git checkout must not scan vacuously)
+    for dp, _, fs in os.walk(ROOT):
+        if (os.sep + ".git") in dp or (os.sep + "out") in (dp + os.sep) or "__pycache__" in dp:
+            continue
+        for f in fs:
+            if f.endswith((".json", ".jsonl")):
+                files.append(os.path.relpath(os.path.join(dp, f), ROOT).replace("\\", "/"))
+    return files
 
 def classify(rel):
     name = os.path.basename(rel)

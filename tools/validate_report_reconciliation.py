@@ -28,6 +28,13 @@ def main():
         print("FAIL: canonical hover-gloss-terminal-scoreboard.md missing current coverage"); sys.exit(1)
     tracked = subprocess.run(["git", "ls-files", "qamus/reports/*.md", "qamus/reports/*.json"],
                              cwd=ROOT, capture_output=True, text=True).stdout.split()
+    if not tracked:  # F14 no-git fallback: filesystem walk so a ZIP checkout is not scanned vacuously
+        for dp, _, fs in os.walk(os.path.join(ROOT, "qamus", "reports")):
+            if "__pycache__" in dp:
+                continue
+            for f in fs:
+                if f.endswith((".md", ".json")):
+                    tracked.append(os.path.relpath(os.path.join(dp, f), ROOT).replace("\\", "/"))
     fails = []
     for rel in tracked:
         p = os.path.join(ROOT, rel)

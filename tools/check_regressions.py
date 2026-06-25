@@ -342,6 +342,7 @@ for _vname, _label in [("validate_sarf_skill.py", "Phase2 sarf engine complete (
 # + open-stem hygiene gates (surface-index covers usage.forms; lane sanity — no verb-clitic/false-blocker pollution)
 for _vname, _label in [("check_report_ergonomics.py", "closure-2092 report ergonomics (no crushed one-line Markdown reports)"),
                        ("validate_canonical_paths.py", "closure-2092 canonical paths (no stale index/scoreboard/coverage refs)"),
+                       ("validate_bidirectional_links.py", "closure-2092 source-graph integrity (0 orphans, no zero-count collapse)"),
                        ("validate_surface_index_covers_usage_forms.py", "closure-2092 surface index covers usage.forms (F1)"),
                        ("validate_blocker_root_cause_ledger.py", "closure-2092 blocker root-cause ledger (controlled vocab, reconciled)"),
                        ("validate_open_stem_lane_sanity.py", "closure-2092 open-stem lane sanity (host-noun-only, roots flattened, no false blockers)")]:
