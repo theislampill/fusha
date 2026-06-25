@@ -381,6 +381,7 @@ _BATCH_GATES = [
     ("validate_token_hover_decisions.py", ["andon_hover_regression_repairs_20260625_003.jsonl"], None),
     ("validate_token_hover_decisions.py", ["andon_hover_regression_repairs_20260625_004.jsonl"], None),
     ("validate_token_hover_decisions.py", ["andon_hover_regression_repairs_20260625_005.jsonl"], None),
+    ("validate_token_hover_decisions.py", ["andon_hover_regression_repairs_20260625_006.jsonl"], None),
     ("validate_token_hover_decisions.py", ["form_variant_batch_001.jsonl"], None),
     ("validate_form_variant_family_batches.py", ["form_variant_batch_001.jsonl"], "form_variant_batch_001.provenance.jsonl"),
     ("validate_token_hover_decisions.py", ["token_irab_batch_001.jsonl"], None),
