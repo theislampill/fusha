@@ -1,4 +1,4 @@
-# Tutor-runtime routing (closure-2092 Phase 7/12)
+# Tutor-runtime routing
 
 A thin routing layer (NOT a separate skill): map a learner's situation to the exact existing procedure,
 roadmap section, or drill. The engine is already `sarf` + `nahw` + `curriculum`; this is the dispatcher.
@@ -9,7 +9,7 @@ roadmap section, or drill. The engine is already `sarf` + `nahw` + `curriculum`;
 |---|---|
 | wrong/guessed root from the bare consonants | `sarf/procedures/root-decision.md` (evidence ladder; never from `norm()` alone) |
 | confused verb form / tense / voice (I vs II vs IV; active vs passive) | `sarf/procedures/verb-form.md` |
-| missed a weak/hamza/doubled radical | `sarf/procedures/weak-root.md` / `hamza-root.md` / `doubled-root.md` |
+| missed a weak/hamza/doubled radical | `sarf/procedures/weak-root.md` / `sarf/procedures/hamza-root.md` / `sarf/procedures/doubled-root.md` |
 | put a verb gloss on a noun / participle / maṣdar | `sarf/procedures/masdar-participle.md` + sarf principle 3 (POS mismatch is a blocker) |
 | accepted a host-only gloss when a written token has `بِـ`/`لِـ`/`كَـ`/`وَ`/`فَـ`/suffix pronoun | `curriculum/drills/hover-composition-and-routing.md` + `sarf/procedures/clitic-and-host-morphology.md` |
 | split tanwīn fatḥ alif as pronoun `نا` | `curriculum/drills/alphabet-and-sounds.md` + `sarf/procedures/clitic-and-host-morphology.md` |
@@ -21,7 +21,7 @@ roadmap section, or drill. The engine is already `sarf` + `nahw` + `curriculum`;
 | flattened `وَ` as always "and" or `فَـ` as always "then" | `nahw/drills/grammar-routing-hard-cases.md` + `nahw/procedures/function-token-hover-review.md` |
 | mis-rendered preposition+pronoun (إِلَيْنَا as a root) | `nahw/procedures/preposition-pronoun.md` |
 | missed PP attachment or hidden attachment | `nahw/procedures/pp-attachment-review.md` |
-| missed negation/mood effect (لم + jussive → past) | `nahw/procedures/negation.md` / `irab-case-mood.md` |
+| missed negation/mood effect (لم + jussive → past) | `nahw/procedures/negation.md` / `nahw/procedures/irab-case-mood.md` |
 | missed governing-particle mood (lan/lam/lām/causal fā'/prohibition lā) | `nahw/procedures/governing-particle-mood-review.md` |
 | wrong iḍāfa / jar-majrūr wording | `nahw/procedures/idafa-jar-majrur.md` |
 | carried a referent across (divine Name vs attribute, Prophet vs adjective) | `nahw/procedures/referent-context.md` |
@@ -32,7 +32,7 @@ roadmap section, or drill. The engine is already `sarf` + `nahw` + `curriculum`;
 
 | situation | route to |
 |---|---|
-| new learner, unknown level | `curriculum/placement-test.md` → `zero-to-fluency-roadmap.md` |
+| new learner, unknown level | `curriculum/placement-test.md` → `curriculum/zero-to-fluency-roadmap.md` |
 | wants the path end-to-end | `curriculum/zero-to-fluency-roadmap.md` (12-level ladder) |
 | wants practice from real Qurʾān | `curriculum/qamus-driven-fluency-engine.md` (Qamus examples → drills) |
 | keeps losing attached pieces inside one written token | `curriculum/drills/hover-composition-and-routing.md` |
