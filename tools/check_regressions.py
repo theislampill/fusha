@@ -383,6 +383,19 @@ for _vname, _args, _prov in _BATCH_GATES:
         except Exception:
             check("batch gate %s runnable" % _vname, False)
 
+# closure-2092: scar-family rejection fixtures (verb-clitic / voice-collision / banned families)
+_frj = os.path.join(_R, "qamus", "examples", "form_variant_rejections.jsonl")
+try:
+    _fr = [json.loads(l) for l in io.open(_frj, encoding="utf-8") if l.strip()]
+    _has_clitic = any(r.get("correct_lane") == "verb_clitic_object_or_subject_candidate" for r in _fr)
+    _has_voice = any(r.get("correct_lane") == "verb_form_or_voice" for r in _fr)
+    _has_banned = any(r.get("expect") == "reject_banned_family" for r in _fr)
+    _all_reject = all(str(r.get("expect", "")).startswith("reject") for r in _fr)
+    check("closure-2092 scar-family fixtures (>=16, verb-clitic + voice + banned, all reject)",
+          len(_fr) >= 16 and _has_clitic and _has_voice and _has_banned and _all_reject)
+except Exception:
+    check("closure-2092 scar-family fixtures parse", False)
+
 # P9 wrong-reasoning traps present and grader blocks them
 _wr = 0
 try:
