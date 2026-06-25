@@ -45,3 +45,4 @@ qamus/indexes/language_state_graph.json
 
 # Tafsir MCP raw cache (internal evidence; commit examples/ only)
 sources/tafsir_mcp/cache/*.json
+dist/claude-ai/pack/

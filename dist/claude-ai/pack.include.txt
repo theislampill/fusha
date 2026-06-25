@@ -1,0 +1,30 @@
+# claude.ai Project Knowledge pack — allowlist (text-only operational spine). One repo-relative path per line.
+# Build: python3 scripts/build_claude_ai_project_pack.py ; verify: python3 scripts/verify_claude_ai_pack.py
+README.md
+INSTALL.md
+provenance/source-boundaries.md
+qamus/data/current/README.md
+qamus/data/current/NOTICE.md
+sarf/SKILL.md
+nahw/SKILL.md
+sarf/procedures/root-decision.md
+sarf/procedures/verb-form.md
+sarf/procedures/noun-plural-gender.md
+sarf/procedures/masdar-participle.md
+sarf/procedures/proper-noun.md
+sarf/procedures/homograph-risk.md
+nahw/procedures/particle-decision.md
+nahw/procedures/preposition-pronoun.md
+nahw/procedures/idafa-jar-majrur.md
+nahw/procedures/referent-context.md
+curriculum/README.md
+curriculum/zero-to-fluency-roadmap.md
+curriculum/placement-test.md
+curriculum/mastery-checkpoints.md
+curriculum/qamus-driven-fluency-engine.md
+curriculum/tutor-runtime-routing.md
+qamus/reports/fusha-production-bridge-status.md
+qamus/reports/hover-gloss-terminal-scoreboard.md
+qamus/reports/qamus-2092-terminal-scoreboard.md
+qamus/reports/qamus-2092-audit-completion.md
+qamus/reports/closure-2092/root-cause-yield-ledger.md

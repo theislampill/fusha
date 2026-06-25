@@ -383,6 +383,23 @@ for _vname, _args, _prov in _BATCH_GATES:
         except Exception:
             check("batch gate %s runnable" % _vname, False)
 
+# closure-2092: corpus-to-Qamus read-only fixture (Nawawī40; live_write=false, no translation, Ṣaḥīḥayn plan-only)
+_corp = os.path.join(_R, "corpora", "nawawi40", "nawawi40.matn.jsonl")
+if os.path.exists(_corp):
+    _cf = os.path.join(_R, "out", "_corpus_fixture_ci")
+    os.makedirs(_cf, exist_ok=True)
+    try:
+        _ok = True
+        for _t in ("corpus_to_qamus_candidates.py", "corpus_to_hover_decisions.py"):
+            _r = subprocess.run([sys.executable, os.path.join(_R, "tools", _t), "--corpus", _corp, "--out", _cf, "--limit", "5"],
+                                capture_output=True, text=True)
+            _ok = _ok and _r.returncode == 0
+        _v = subprocess.run([sys.executable, os.path.join(_R, "tools", "validate_corpus_fixture.py"), _cf],
+                            capture_output=True, text=True)
+        check("closure-2092 corpus fixture (read-only, no translation, Ṣaḥīḥayn plan-only)", _ok and _v.returncode == 0)
+    except Exception:
+        check("closure-2092 corpus fixture runnable", False)
+
 # closure-2092: scar-family rejection fixtures (verb-clitic / voice-collision / banned families)
 _frj = os.path.join(_R, "qamus", "examples", "form_variant_rejections.jsonl")
 try:
