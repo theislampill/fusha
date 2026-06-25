@@ -1,0 +1,21 @@
+{
+  "_generator": "validate_qamus_public_crawl",
+  "complete": true,
+  "crawled": 2092,
+  "crawled_not_in_repo": 0,
+  "crawled_pct": 100.0,
+  "date": "20260625",
+  "headword_mismatches": 0,
+  "hover_resolved_seen": 94671,
+  "hover_total_seen": 109068,
+  "http_200": 2092,
+  "remaining_uncrawled": 0,
+  "render_errors": 0,
+  "repo_entries": 2092,
+  "resume_command": null,
+  "samples_headword_mismatch": [],
+  "samples_render_error": [],
+  "status_distribution": {
+    "200": 2092
+  }
+}
