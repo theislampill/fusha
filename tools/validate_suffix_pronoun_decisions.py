@@ -33,8 +33,14 @@ def main():
         if not loc or not LOC.match(str(loc)):
             errors.append("line %d: bad loc %r" % (ln_no, loc))
         poss = d.get("possessor")
-        if not poss or not g.replace("and ", "").replace("so ", "").startswith(poss):
-            errors.append("%s: gloss %r must begin with possessor %r" % (loc, g, poss))
+        # allow a tightly controlled leading conjunction/preposition before the possessor (and/for/with/
+        # by/to/so/then), case-insensitively; still require the possessor word present at the head (F13).
+        gl = g.lower().strip()
+        for _pre in ("and ", "for ", "with ", "by ", "to ", "so ", "then "):
+            if gl.startswith(_pre):
+                gl = gl[len(_pre):]; break
+        if not poss or not gl.startswith(poss.lower()):
+            errors.append("%s: gloss %r must begin with possessor %r (after an optional and/for/with/by/to/so/then)" % (loc, g, poss))
         if not d.get("stem") or not d.get("suffix"):
             errors.append("%s: missing stem/suffix" % loc)
         if d.get("src") != "qamus" or d.get("kind") != "authored":

@@ -354,6 +354,34 @@ for _vname, _label in [("check_report_ergonomics.py", "closure-2092 report ergon
         except Exception:
             check(_vname + " runnable", False)
 
+# closure-2092: committed batch families validated as HARD gates (not mere existence checks)
+_C = os.path.join(_R, "qamus", "candidates", "qamus_2092")
+_BATCH_GATES = [
+    ("validate_token_hover_decisions.py", ["form_variant_batch_001.jsonl"], None),
+    ("validate_form_variant_family_batches.py", ["form_variant_batch_001.jsonl"], "form_variant_batch_001.provenance.jsonl"),
+    ("validate_token_hover_decisions.py", ["token_irab_batch_001.jsonl"], None),
+    ("validate_token_hover_decisions.py", ["token_irab_batch_002.jsonl"], None),
+    ("validate_token_hover_decisions.py", ["token_irab_batch_003.jsonl"], None),
+    ("validate_suffix_pronoun_decisions.py", ["host_lexeme_batch_001.jsonl"], None),
+    ("validate_suffix_pronoun_decisions.py", ["suffix_pronoun_hover_batch_001.jsonl"], None),
+]
+for _vname, _args, _prov in _BATCH_GATES:
+    _vp = os.path.join(_R, "tools", _vname)
+    _bp = os.path.join(_C, _args[0])
+    if os.path.exists(_vp) and os.path.exists(_bp):
+        _cmd = [sys.executable, _vp, _bp]
+        if _prov and os.path.exists(os.path.join(_C, _prov)):
+            _cmd += ["--provenance", os.path.join(_C, _prov)]
+        try:
+            _v = subprocess.run(_cmd, capture_output=True, text=True)
+            check("closure-2092 batch gate %s(%s)" % (_vname.replace("validate_", "").replace(".py", ""), _args[0]),
+                  _v.returncode == 0)
+            if _v.returncode != 0:
+                _o = (_v.stdout or _v.stderr).strip().splitlines()
+                if _o: print("  ", _o[-1])
+        except Exception:
+            check("batch gate %s runnable" % _vname, False)
+
 # P9 wrong-reasoning traps present and grader blocks them
 _wr = 0
 try:
