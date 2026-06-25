@@ -1,0 +1,14 @@
+{
+  "availability": "optional_external_file",
+  "evidence_role": [
+    "semantic_routing",
+    "concept_aware_blocker_labels",
+    "curriculum_grouping",
+    "review_prioritization"
+  ],
+  "name": "qac-concept-map",
+  "notes": "Parse predicate relations from a user-provided qac_concept_map.md with tools/qac_concept_map_adapter.py. Internal only: concept IDs are not Arabic surfaces, hover text, or public provenance.",
+  "public_exposable": false,
+  "required_by_skills": false,
+  "title": "QAC concept map predicate graph"
+}

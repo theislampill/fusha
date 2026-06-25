@@ -8,6 +8,7 @@ regression fixtures are well-formed JSONL. Exit non-zero on any failure. No netw
 import io
 import json
 import os
+import subprocess
 import sys
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -107,13 +108,20 @@ for proc in ("sarf/procedures/root-decision.md", "sarf/procedures/verb-form.md",
              "sarf/procedures/proper-noun.md", "sarf/procedures/qamus-entry-authoring.md",
              "sarf/procedures/corpus-to-qamus.md",
              "sarf/procedures/noun-plural-gender.md", "sarf/procedures/homograph-risk.md",
-             "sarf/procedures/hover-application.md", "nahw/procedures/particle-decision.md",
+             "sarf/procedures/hover-application.md", "sarf/procedures/clitic-and-host-morphology.md",
+             "sarf/procedures/verb-form-and-mood-review.md", "nahw/procedures/particle-decision.md",
              "nahw/procedures/preposition-pronoun.md", "nahw/procedures/negation.md",
              "nahw/procedures/relative-interrogative.md", "nahw/procedures/conditionals.md",
              "nahw/procedures/irab-case-mood.md", "nahw/procedures/hover-application.md",
              "nahw/procedures/qamus-entry-authoring.md", "nahw/procedures/corpus-to-qamus.md",
              "nahw/procedures/idafa-jar-majrur.md", "nahw/procedures/referent-context.md",
-             "nahw/procedures/grammar-risk-gate.md"):
+             "nahw/procedures/grammar-risk-gate.md", "nahw/procedures/function-token-hover-review.md",
+             "nahw/procedures/ma-function-decision.md", "nahw/procedures/pp-attachment-review.md",
+             "nahw/procedures/governing-particle-mood-review.md",
+             "nahw/procedures/exception-and-vocative-review.md",
+             "qamus/procedures/grammar-resource-usage.md",
+             "qamus/procedures/source-triangulation-and-public-boundary.md",
+             "qamus/procedures/closure-lane-routing.md"):
     check("procedure exists: %s" % proc, os.path.exists(os.path.join(ROOT, proc)))
 
 # 11c. (architecture tranche) state-machine + source-graph + curriculum + corpus-pipeline infrastructure exists
@@ -191,7 +199,9 @@ check("suffix/pronoun eval encodes noun-resolve + verb-pending contract", _ev_ok
 
 # 11f. source-adapter abstraction exists (skills are MCP-free but adapter-aware) + S8 source-photo rescue pipeline
 for art in ("sources/source-adapter.schema.json", "sources/README.md", "sources/tafsir_mcp/adapter.json",
-            "sources/qac/adapter.json", "sources/quran_com/adapter.json", "sources/tanzil/adapter.json",
+            "sources/qac/adapter.json", "sources/qac/concept-map-adapter.json",
+            "sources/quran_com/adapter.json", "sources/tanzil/adapter.json",
+            "tools/qac_concept_map_adapter.py", "tools/test_qac_concept_map_adapter.py",
             "tools/source_photo_indexer.py", "tools/source_photo_cropper.py", "tools/source_photo_rescue.py",
             "tools/source_photo_verify_entry.py", "qamus/reports/source-photo-rescue-report.md",
             "qamus/indexes/source_photo_index.json"):
@@ -199,13 +209,21 @@ for art in ("sources/source-adapter.schema.json", "sources/README.md", "sources/
 # every adapter manifest is internal-only + not skill-required
 try:
     _ad_ok = True
-    for _a in ("tafsir_mcp", "qac", "quran_com", "tanzil"):
-        _m = json.load(io.open(os.path.join(ROOT, "sources", _a, "adapter.json"), encoding="utf-8"))
+    for _a in (("tafsir_mcp", "adapter.json"), ("qac", "adapter.json"),
+               ("qac", "concept-map-adapter.json"), ("quran_com", "adapter.json"),
+               ("tanzil", "adapter.json")):
+        _m = json.load(io.open(os.path.join(ROOT, "sources", _a[0], _a[1]), encoding="utf-8"))
         if _m.get("public_exposable") is not False or _m.get("required_by_skills") is not False:
             _ad_ok = False
 except Exception:
     _ad_ok = False
 check("source adapters are internal-only (public_exposable=false, required_by_skills=false)", _ad_ok)
+try:
+    _qac = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "test_qac_concept_map_adapter.py")],
+                          capture_output=True, text=True)
+    check("QAC concept-map adapter stays internal-only and parser-tested", _qac.returncode == 0)
+except Exception:
+    check("QAC concept-map adapter test runnable", False)
 # the MCP morphology extractor classifies the load-bearing cases (noun-not-verb on wazn name; Form IV active verb)
 try:
     import importlib.util as _ilu
@@ -275,7 +293,6 @@ for path in ("sarf/examples/qamus-regressions.jsonl", "sarf/examples/root-form-d
     check("fixture %s parses (%d rows)" % (path, n), ok and n > 0)
 
 # 13. completion-tranche artifacts (P0 dataset, P1 graph, P3 audit, P4 suffix lane, P9 wrong-reasoning)
-import subprocess
 _R = os.path.join(os.path.dirname(__file__), "..")
 def _exists(rel):
     return os.path.exists(os.path.join(_R, rel))
