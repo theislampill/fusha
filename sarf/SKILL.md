@@ -99,6 +99,10 @@ proclitic. A hover for بِسَلَـٰمٍ or بِبَدْرٍ must not silentl
 the entry/sense being taught is the bāʾ. Add a separate `pre` channel or a source-addressed phrase gloss, and keep
 the false-split guards in force.
 
+A broad root-family gloss is dictionary metadata, not a hover. Do not put an omnibus entry gloss such as
+"to know — also to teach and learn" on a concrete token. Pick the token's form-aware contribution ("knows",
+"taught", "learned", "known", "the All-Knowing") or leave the token pending with the exact blocker.
+
 ## 9. Homograph quarantine rules
 If two readings collapse under `norm()`, decide on the **content letter's harakah / hamza seat / shadda**, not
 on `norm`. If you cannot decide → **pending**, never a guess. (Full list in `drills/homograph-regressions.md`.)

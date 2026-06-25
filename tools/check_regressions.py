@@ -296,6 +296,21 @@ try:
     check("P3 audit: no generic pending (every pending token has an exact blocker)", not _pend_no_blocker)
 except Exception as e:
     check("P3 audit readable", False)
+_hover_artifact = os.path.join(_R, "out", "hover_stage", "wbw-lookup.json")
+if os.path.exists(_hover_artifact):
+    try:
+        _hv = subprocess.run([sys.executable, os.path.join(_R, "tools", "validate_hover_regression_cases.py"),
+                              _hover_artifact], capture_output=True, text=True)
+        check("Andon hover regression cases pass on staged lookup artifact", _hv.returncode == 0)
+        if _hv.returncode != 0:
+            _o = (_hv.stdout or _hv.stderr).strip().splitlines()
+            if _o:
+                print("  ", _o[-1])
+    except Exception:
+        check("Andon hover regression validator runnable", False)
+else:
+    check("Andon hover regression validator present (no staged lookup artifact)",
+          os.path.exists(os.path.join(_R, "tools", "validate_hover_regression_cases.py")))
 # P4 suffix/pronoun offline test
 try:
     _r = subprocess.run([sys.executable, os.path.join(_R, "tools", "test_suffix_pronoun.py")],

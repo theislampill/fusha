@@ -15,6 +15,7 @@ only as `informed_by` labels in internal schemas/scripts.
 | Source | What we may take from it (as fact) | What we must NEVER take |
 |---|---|---|
 | **QAC** (Quranic Arabic Corpus) | per-word **root** and **part-of-speech** — uncopyrightable linguistic facts | its English glosses, its morphology prose, the `.tsv`/data file itself |
+| **Tafsir MCP / Tafsir Center iʿrāb** | per-word **iʿrāb**, **sarf**, role labels, and source-address confirmation as internal evidence | any returned explanatory prose, tafsīr/translation text, or wording copied into a public hover |
 | **Tanzil** | verse/word **boundaries**, `surah:ayah` numbering, the **unaltered** Qurʾanic text as primary scripture | any Tanzil-specific formatting bundles or derived annotations as our own |
 | **Quran.com** | a place to *visually confirm* a verse and its reference while authoring | any translation, tafsīr, or word gloss text |
 | **sunnah.com** | reference confirmation only, where a ḥadīth ref is needed | hadith translation text; and note the project scope excludes Ṣaḥīḥayn/hadith from the public hover artifact |

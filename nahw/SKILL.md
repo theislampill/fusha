@@ -133,6 +133,9 @@ note, or the review queue.
 but do decompose it for the hover gloss. The mā may be relative/maṣdariyyah, interrogative, or negative; use
 iʿrāb/context evidence before authoring ("and by the One Who", "and not", "and no" are different decisions).
 For attached بِـ, the hover must include the preposition's role, not only the governed noun.
+For oath waw (واو القسم), the hover must include the oath relation; a governed noun like وَالتِّينِ is not merely
+"fig". For attached وَبِـ before a governed noun, preserve both the coordination/resumption and the bāʾ relation
+where they are certified, e.g. وَبِالنَّجْمِ as "and by/through the star(s)", not a pending host-only token.
 
 ---
 
