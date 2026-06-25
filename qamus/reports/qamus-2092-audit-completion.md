@@ -1,9 +1,6 @@
 # Qamus 2,092 mechanical audit completion
 
-> **Status vocabulary (honesty):** this report proves **mechanical rollup completeness only** — all 2,092
-> entries are **mechanically classified** with terminal rollup fields and 0 unknown buckets. It does **not**
-> mean every entry is **hover-complete**, **source-photo-verified**, or **live-page-crawled**; those are
-> separate states tracked per-field and are not implied by "audited" here.
+> **Status vocabulary (honesty):** all 2,092 entries are **mechanically classified** with terminal rollup fields and 0 unknown buckets. This does NOT mean every entry is **hover-complete**, **source-photo-verified**, or **live-page-crawled** — those are separate per-field states, not implied by 'audited' here.
 
 Matrix: `qamus/reports/qamus-2092-entry-matrix.jsonl` (2,092 rows, one per entry).
 

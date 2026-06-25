@@ -1,32 +1,32 @@
 {
   "_generator": "tools/build_root_cause_yield_ledger.py",
-  "coverage_ceiling_if_all_safe_realized": 92.92,
-  "coverage_now": 85.87,
-  "expected_safe_realizable": 3516.4,
+  "coverage_ceiling_if_all_safe_realized": 93.08,
+  "coverage_now": 86.18,
+  "expected_safe_realizable": 3442.1,
   "levers": [
     {
-      "discount": 0.45,
-      "expected_safe": 781.7,
-      "owner_gated": false,
-      "pending": 1737,
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "safe_tier": "C_pos_or_collision",
-      "source_gated": false
-    },
-    {
       "discount": 0.6,
-      "expected_safe": 770.4,
+      "expected_safe": 753.6,
       "owner_gated": false,
-      "pending": 1284,
+      "pending": 1256,
       "root_cause": "missing_form_variant_on_existing_entry",
       "safe_tier": "B_sense_select",
       "source_gated": false
     },
     {
-      "discount": 0.5,
-      "expected_safe": 525.0,
+      "discount": 0.45,
+      "expected_safe": 726.3,
       "owner_gated": false,
-      "pending": 1050,
+      "pending": 1614,
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "safe_tier": "C_pos_or_collision",
+      "source_gated": false
+    },
+    {
+      "discount": 0.5,
+      "expected_safe": 527.5,
+      "owner_gated": false,
+      "pending": 1055,
       "root_cause": "already_entry_form_present_index_miss",
       "safe_tier": null,
       "source_gated": false
@@ -87,9 +87,9 @@
     },
     {
       "discount": 0.45,
-      "expected_safe": 46.8,
+      "expected_safe": 43.7,
       "owner_gated": false,
-      "pending": 104,
+      "pending": 97,
       "root_cause": "forms_array_missing_surface",
       "safe_tier": "C_pos_or_collision",
       "source_gated": false
@@ -105,18 +105,18 @@
     },
     {
       "discount": 0.6,
-      "expected_safe": 31.2,
+      "expected_safe": 30.0,
       "owner_gated": false,
-      "pending": 52,
+      "pending": 50,
       "root_cause": "forms_array_missing_surface",
       "safe_tier": "B_sense_select",
       "source_gated": false
     },
     {
       "discount": 0.3,
-      "expected_safe": 21.6,
+      "expected_safe": 21.3,
       "owner_gated": false,
-      "pending": 72,
+      "pending": 71,
       "root_cause": "quran_refs_missing_or_incomplete",
       "safe_tier": null,
       "source_gated": false
@@ -195,7 +195,7 @@
     }
   ],
   "ninety_reachable_via_safe_authoring": true,
-  "resolved_now": 42849,
-  "tokens_needed_for_90pct": 2061,
-  "total_pending": 7051
+  "resolved_now": 43005,
+  "tokens_needed_for_90pct": 1905,
+  "total_pending": 6895
 }

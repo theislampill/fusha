@@ -1,4 +1,4 @@
-{"_generator": "tools/audit_hover_gloss_quality.py", "_summary": {"_generator": "tools/audit_hover_gloss_quality.py", "resolved_tokens": 42849, "quality_clean": 39080, "quality_clean_pct": 91.2, "flag_counts": {"homograph_reason_missing": 17792, "particle_function_missing": 12261, "too_generic_gloss": 3769, "root_not_derivable": 3653}, "repair_queue_size": 3769}}
+{"_generator": "tools/audit_hover_gloss_quality.py", "_summary": {"_generator": "tools/audit_hover_gloss_quality.py", "resolved_tokens": 43005, "quality_clean": 39236, "quality_clean_pct": 91.24, "flag_counts": {"homograph_reason_missing": 17792, "particle_function_missing": 12261, "too_generic_gloss": 3769, "root_not_derivable": 3654}, "repair_queue_size": 3769}}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "1:7:8", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "2:4:5", "surface": "إِلَيْكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:4:8", "surface": "مِن"}

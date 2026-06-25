@@ -4,12 +4,12 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 
 | bucket | lane | families | tokens | gate |
 |---:|---|---:|---:|---|
-| 1 | structural reroute — no authoring | 350 | 1,050 | repo/reindex |
+| 1 | structural reroute — no authoring | 351 | 1,055 | repo/reindex |
 | 2 | true noun-host possessive | 144 | 255 | 2-vote |
 | 3 | verb-clitic object/subject | 176 | 822 | 2-vote (token) |
-| 4 | function-word / particle-pronoun | 122 | 939 | 2-vote (token) |
+| 4 | function-word / particle-pronoun | 121 | 939 | 2-vote (token) |
 | 5 | true missing-entry proposal | 100 | 326 | owner |
-| 6 | existing-entry form authoring | 572 | 3,262 | 2-vote |
+| 6 | existing-entry form authoring | 566 | 3,101 | 2-vote |
 | 7 | token-level iʿrāb / homograph | 71 | 239 | 2-vote (token) |
 | 8 | source-photo / source-gated | 9 | 10 | source |
 | 9 | scholar-gated / genuinely ambiguous | 62 | 148 | scholar |
@@ -38,6 +38,7 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 | `جيأ` | جَآءَتْكُم جَآءَتْهَا | 12 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
 | `شرر` | بِشَرٍّۢ شَرٌّۭ | 12 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
 | `كتب` | كَاتِبًۭا كِتَٰبًۭا | 11 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
+| `كلل` | كُلَّهُۥ كُلِّهِۦ | 11 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
 | `ملك` | بال مَلِكِ | 10 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
 | `بين` | بَيِّنَةٌۭ بَيِّنَةٍۢ | 10 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
 | `رأي` | أَرَى أَرَىٰ | 10 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
@@ -47,7 +48,6 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 | `ظلل` | الظِّلُّ ظَلَّ | 8 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
 | `قتل` | قَتَلَ قَتْلَ | 8 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
 | `قرر` | تَقَرَّ قَرَارًۭا | 8 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
-| `كلل` | وَكُلٌّۭ وَكُلَّ | 8 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
 | `ضرب` | ضَرَبَ ضَرَبُوا۟ | 8 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
 | `غشو` | غَشِيَهُم يَغْشَى | 7 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
 | `عمل` | عَمَلٌۭ عَمَلٍۢ | 7 | `already_entry_form_present_index_miss` | rebuild_surface_index_from_dataset.py | yes (live index/resolver rebuild) | owner-gated: rebuild the LIVE surface index/resolver (out of |
@@ -237,15 +237,14 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 
 | family | surfaces | tokens | root cause | generator | contributes 90% | next |
 |---|---|---:|---|---|---|---|
-| `58d16ee708f4` | بِمَآ فَإِمَّا | 346 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
+| `58d16ee708f4` | بِمَآ فَإِمَّا | 365 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
 | `وإن` | وَإِن وَإِنِ | 152 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
 | `2e04f3e16655` | بِمَن بِمَنِ | 41 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
 | `وأن` | وَأَن وَأَنَّ | 33 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
-| `1ab446228cab` | بِكُم بِكُمُ | 24 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
+| `b76eee9af900` | بِكُم بِكُمُ | 24 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
 | `0bf59423714b` | أَلَا أَلَآ | 23 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
-| `430015446b77` | فَلَهُ فَلَهُۥ | 21 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
+| `430015446b77` | فَلَهُ فَلَهُۥ | 20 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
 | `98038af2d9aa` | فَهُم فَهُمُ | 19 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
-| `3c0edd60b334` | لَمَا لَمَآ | 19 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
 | `وأنا` | وَأَنَا وَأَنَا۠ | 18 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
 | `90f56fb15ef5` | فَهَل فَهَلْ | 16 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
 | `فإنما` | فَإِنَّمَا فَإِنَّمَآ | 15 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
@@ -253,13 +252,13 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 | `5c405be976bd` | فَمِنكُم فَمِنْكُمْ | 10 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
 | `بي` | بِى بِىَ | 9 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
 | `بأن` | بِأَن بِأَنَّ | 8 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
-| `61198bcd902f` | وَهِىَ | 6 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
-| `141cbc3bd2bd` | وَإِلَيْكَ وَلِىَ | 6 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
+| `61198bcd902f` | لَهِىَ وَهِىَ | 7 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
 | `2c61963db8b2` | لِّذِي وَذَا | 5 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
 | `وبما` | وَبِمَا وَبِمَآ | 5 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
 | `2c61963db8b2` | لَلَّذِى لِلَّذِى | 5 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
 | `2e7215edde83` | لَيُوسُفُ لِيُوسُفَ | 4 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
-| `141cbc3bd2bd` | لِأُو۟لِى لِّأُو۟لِى | 4 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
+| `b10a1ee04666` | لِكَىْ وَلِىَ | 4 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
+| `141cbc3bd2bd` | وَإِلَيْكَ | 3 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
 | `ياعيسي` | يَٰعِيسَى يَٰعِيسَىٰٓ | 3 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
 | `فبما` | فَبِمَا | 3 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
 | `896fc440f451` | بِهِنَّ | 3 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
@@ -267,6 +266,7 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 | `0bf59423714b` | لَٰكِنِ لَّٰكِنِ | 3 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
 | `فإنها` | فَإِنَّهَا | 3 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
 | `بنا` | بِنَا بِنَآ | 3 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
+| `141cbc3bd2bd` | لِأُو۟لِى لِّأُو۟لِى | 3 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
 | `ba6c4a322d27` | لَهُوَ | 3 | `function_word_not_form_work` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (function-word subset) -> toke |
 | `إنني` | إنني إِنَّنِى | 3 | `particle_or_pronoun_misclassified_as_stem` | build_token_irab_decisions.py | partial (token) | build_token_irab_decisions.py (particle/pronoun subset) -> t |
 
@@ -379,92 +379,90 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 
 | family | surfaces | tokens | root cause | generator | contributes 90% | next |
 |---|---|---:|---|---|---|---|
-| `خرج` | أَخْرِجُوٓا۟ أُخْرِجَتْ | 59 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `كذب` | تَكْذِيبٍۢ تُكَذِّبَانِ | 53 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `دعو` | أَتَدْعُونَ أَدْعُوٓا۟ | 51 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `خرج` | أَخْرِجُوٓا۟ أُخْرِجَتْ | 56 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `أتي` | ءَاتَتْ ءَاتَيْتَ | 50 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `أخذ` | ءَاخِذٌۢ ءَاخِذِينَ | 42 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `قتل` | أَتَقْتُلُونَ أَقَتَلْتَ | 41 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `علم` | بِأَعْلَمَ بِعَٰلِمِينَ | 39 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `كذب` | تَكْذِيبٍۢ تُكَذِّبَانِ | 45 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `دعو` | أَتَدْعُونَ أَدْعُوٓا۟ | 44 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `أخذ` | ءَاخِذٌۢ ءَاخِذِينَ | 40 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `قتل` | أَتَقْتُلُونَ أَقَتَلْتَ | 39 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `علم` | بِأَعْلَمَ بِعَٰلِمِينَ | 37 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `قول` | آلَافٍ أرنا | 37 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `تبع` | بِتَابِعٍۢ تَبِعُوا۟ | 33 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `قوم` | الصَّلَاةَ بِبَعِيدٍ | 33 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `عبد` | أَمْرِكُمْ بِٱلْعَبْدِ | 31 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `ذكر` | بِذِكْرِ بِٱلذِّكْرِ | 31 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `كبر` | أَسْتَكْبَرْتَ أَكَٰبِرَ | 29 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `شهد` | بِٱلشَّهَٰدَةِ تَشْهَدُونِ | 29 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `قوم` | الصَّلَاةَ بِبَعِيدٍ | 30 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `رود` | أَتُرِيدُونَ أَرَادَا | 29 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `نصر` | أَنصَارًۭا تَنتَصِرَانِ | 28 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `أمن` | ءَأَمِنتُم أنبياء | 28 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `أمر` | أَمْرَكُمْ أَمْرَنَا | 28 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `خلق` | بِخَلْقٍۢ بِٱلْخَلْقِ | 28 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `كبر` | أَسْتَكْبَرْتَ أَكَٰبِرَ | 27 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `كفر` | بِكَٰفِرِينَ بِٱلْكُفْرِ | 27 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `بشر` | أَبَشَرًۭا بَشَرًا | 27 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `نظر` | تَنظُرُونَ تُنظِرُونِ | 26 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `ردد` | بِرَآدِّى تَرْتَدُّوا۟ | 26 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `عدو` | أَعْدَآءًۭ أَعْدَآءِ | 26 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `نصر` | أَنصَارًۭا تَنتَصِرَانِ | 26 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `رأي` | أَرَءَيْتَ أَرِنَا | 26 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `قدر` | الْقَدْرِ بِقَٰدِرٍ | 26 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `أخر` | ءَاخَرَانِ ءَاخَرُونَ | 25 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `عزز` | بِعَزِيزٍۢ بِعِزَّةِ | 25 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `صدق` | تَصَدَّقُوا۟ صَادِقًۭا | 25 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `عبد` | أَمْرِكُمْ بِٱلْعَبْدِ | 26 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `شهد` | بِٱلشَّهَٰدَةِ تَشْهَدُونِ | 25 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `صلح` | إِصْلَاحٌۭ إِصْلَٰحًۭا | 24 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `هدي` | أَتَهْتَدِىٓ بِٱلْمُهْتَدِينَ | 24 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `عدو` | تَعْدُ تَعْدُوا۟ | 24 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `نفق` | أَنفَقُوا۟ أَنفَقْتَ | 24 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `ردد` | بِرَآدِّى تَرْتَدُّوا۟ | 24 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `حيي` | أَحْيَآءٌ أُحْىِۦ | 24 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `أخر` | ءَاخَرَانِ ءَاخَرُونَ | 23 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `بشر` | أَبَشَرًۭا بَشَرًا | 23 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `حكم` | أُحْكِمَتْ بِأَحْكَمِ | 23 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `جمع` | أَجْمَعُوٓا۟ تَجْمَعُوا۟ | 23 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `مثل` | أَمْثَلُهُمْ كَأَمْثَٰلِ | 22 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `بغي` | أَبْتَغِى بَاغٍۢ | 22 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `نظر` | تَنظُرُونَ تُنظِرُونِ | 22 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `لقي` | أَلْقِ الْتَقَتَا | 22 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `عزز` | بِعَزِيزٍۢ بِعِزَّةِ | 22 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `ضعف` | أَضْعَافًۭا أَضْعَٰفًۭا | 22 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `قدر` | الْقَدْرِ بِقَٰدِرٍ | 22 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `نعم` | أَفَبِنِعْمَةِ أَنْعَمْتَ | 21 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `خلف` | خَلْفِهِ خُلَفَآءَ | 21 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `نذر` | بِٱلنَّذْرِ بِٱلنُّذُرِ | 21 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `طوع` | تَسْتَطِع تَسْتَطِيعَ | 21 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `مثل` | أَمْثَلُهُمْ كَأَمْثَٰلِ | 20 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `بغي` | أَبْتَغِى بَغَتْ | 20 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `سلم` | أَسْلَمْتُ تَسْلِيمًا | 20 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `حلل` | تَحُلُّ تَحِلَّةَ | 20 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `حمل` | بِحَٰمِلِينَ حَمَلَتْ | 20 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `ولد` | ءَأَلِدُ بِوَٰلِدَتِى | 19 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `حرم` | حَرَامًۭا حَرَامٌۭ | 19 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `وقي` | بِٱلْمُتَّقِينَ تَتَّقُوا۟ | 19 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `صدق` | تَصَدَّقُوا۟ صَادِقًۭا | 19 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `بلغ` | أَبْلَغُوا۟ بَلَغَتِ | 19 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `عرض` | أَعْرَضُوا۟ إِعْرَاضًۭا | 19 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `نبأ` | أَتُنَبِّـُٔونَ أَنۢبِـُٔونِى | 18 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `غفر` | بِٱلْمَغْفِرَةِ تَسْتَغْفِرْ | 18 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `ولي` | تُوَلُّونَ لَتَوَلَّوا۟ | 18 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `ولد` | ءَأَلِدُ بِوَٰلِدَتِى | 17 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `وقي` | بِٱلْمُتَّقِينَ تَتَّقُوا۟ | 17 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `موت` | أَمُوتُ أَمْوَٰتٌ | 17 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `علو` | عَالِينَ عَالِيًۭا | 17 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `خلف` | خَلْفِهِ خُلَفَآءَ | 17 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `وعد` | تُوعَدُونَ تُوعِدُونَ | 17 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `أمر` | أَتَأْمُرُونَ أَمَرَهُۥ | 16 | `quran_refs_missing_or_incomplete` | (needs build_source_entry_repair_candidates.py) | weak | MISSING generator build_source_entry_repair_candidates.py -- |
-| `جزي` | تَجْزِى تُجْزَىٰ | 16 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `غفر` | بِٱلْمَغْفِرَةِ سَيُغْفَرُ | 16 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `ظهر` | بِظَٰهِرٍۢ تَظَٰهَرَا | 16 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `دخل` | أَدْخِلُوٓا۟ دَخَلَتْ | 16 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `قضي` | فَٱقْضِ قَاضٍ | 16 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `طعم` | إِطْعَامٌ إِطْعَامُ | 16 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `نجو` | تَتَنَٰجَوْا۟ تَنَٰجَيْتُمْ | 16 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `زوج` | أَزْوَاجٌ أَزْوَٰجٌۭ | 15 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `بني` | أَبْنَٰٓؤُا۟ بُنْيَٰنَهُۥ | 15 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `حسب` | أَفَحَسِبْتُمْ حَسِبْتَ | 15 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `جزي` | تَجْزِى تُجْزَىٰ | 14 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `دنو` | أَدْنَى أَدْنَىٰ | 14 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `ضرر` | بِضَآرِّينَ تُضَآرَّ | 14 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `غني` | أَغْنِيَآءَ أَغْنِيَآءُ | 14 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `طعم` | تُطْعِمُونَ طَاعِمٍۢ | 14 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `زيد` | تَزِدِ تَزِيدُونَنِى | 13 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `رسل` | بِأَيَّامِ بِرَسُولٍۢ | 13 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `جوب` | أَجِيبُوا۟ أُجِيبُ | 13 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `ملك` | بِٱلْمُلْكِ تَمْلِكُونَ | 13 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `سجد` | تَسْجُدَ تَسْجُدُوا۟ | 13 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `أذن` | بِٱلْأُذُنِ فَأَذَّنَ | 13 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `حسب` | أَفَحَسِبْتُمْ حَسِبْتَ | 13 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `وفي` | أَوْفُوا۟ تَوَفَّنِى | 12 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `ظنن` | تَظُنُّ ظَنَنتُ | 12 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `قرب` | أَقَرِيبٌ بِقَرِيبٍۢ | 12 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `ظلم` | بِظَلَّٰمٍۢ بِظُلْمٍۢ | 12 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `حفظ` | حَفِيظًۭا حَٰفِظًۭا | 12 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `بصر` | أَبْصَٰرُ بَصِيرَةٌۭ | 12 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `ضرر` | بِضَآرِّينَ تُضَآرَّ | 11 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `عذب` | بِٱلْعَذَابِ تُعَذِّبَ | 11 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `سأل` | بِسُؤَالِ سَآئِلٌۢ | 11 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `هلك` | أَهْلَكْتُ فَأَهْلَكْنَآ | 11 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `فصل` | تَفْصِيلًۭا فَصَلَتِ | 11 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `أمر` | أَمْرَكُمْ أَمْرَهَا | 11 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `صبح` | صَبَاحُ صُبْحًا | 11 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `قلب` | تُقْلَبُونَ فَيَنقَلِبُوا۟ | 11 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `طلع` | تَطَّلِعُ تَطْلُعُ | 11 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
@@ -472,22 +470,20 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 | `كرم` | أَكْرَمَنِ تُكْرِمُونَ | 11 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `متع` | تُمَتَّعُونَ فَٱسْتَمْتَعُوا۟ | 10 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `شكر` | بِٱلشَّٰكِرِينَ شَاكِرًۭا | 10 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `ملك` | بِٱلْمُلْكِ تَمْلِكُونَ | 10 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `رحم` | بِٱلرَّحْمَٰنِ رَحْمَتِنَآ | 10 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `سرر` | إِسْرَارًۭا سِرَّكُمْ | 10 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `سوي` | تَسْتَوِى تُسَوَّىٰ | 10 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `فري` | بِسُورَةٍ تَفْتَرُونَ | 10 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `قدم` | تَقَدَّمَ فَقَدِّمُوا۟ | 10 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `سبح` | تُسَبِّحُ تُسَبِّحُونَ | 10 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `ذهب` | فَيَذْهَبُ فَٱذْهَبَا | 9 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `سكن` | لِتَسْكُنُوا۟ لِمَسَٰكِينَ | 9 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `بوأ` | بَوَّأْنَا تَبَوَّءَا | 9 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `قبل` | بِقَبُولٍ فَأَقْبَلَ | 9 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `نفر` | تَنفِرُوا۟ فَٱنفِرُوا۟ | 9 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `بصر` | أَبْصَٰرُ بَصِيرَةٌۭ | 9 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `تلو` | أَتْلُوَا۟ تَتْلُونَ | 8 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `ضرب` | أَفَنَضْرِبُ تَضْرِبُوا۟ | 8 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `عهد` | بِعَهْدِ بِٱلْعَهْدِ | 8 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `رشد` | بِرَشِيدٍۢ رَشَدًۭا | 8 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `حصن` | أُحْصِنَّ مُحْصَنَٰتٍ | 8 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `دبر` | أَدْبَارِهَآ دُبُرَهُۥٓ | 8 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `ضلل` | تَضْلِيلٍ ضَالِّينَ | 8 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `كثر` | أَكْثَرَكُمْ فَأَكْثَرُوا۟ | 8 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
@@ -498,25 +494,21 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 | `سمع` | بِمُسْمِعٍۢ لَسَمِيعٌ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `بأس` | بِٱلْبَأْسَآءِ تَبْتَئِسْ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `حجج` | أَتُحَٰٓجُّوٓنِّى بِالْحَجِّ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `خصم` | تَخَاصُمُ خَصِمُونَ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `بعث` | لَتُبْعَثُنَّ لَمَبْعُوثُونَ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `بين` | بَيِّنَتٍۢ عَزِيزٌ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `غير` | أَفَغَيْرَ غَيْرَكُمْ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `ألف` | ءَالَٰفٍۢ أَلْفَيْنِ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `قطع` | فَتَقَطَّعُوا فَقَطَّعَ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `رقب` | رَقِيبًۭا رَقِيبٌ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `ذهب` | فَيَذْهَبُ فَٱذْهَبَا | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `أمم` | أُمَمًۭا وَأُمَمٌۭ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `أكل` | أَكَّٰلُونَ لَءَاكِلُونَ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `وجد` | فَوَجَدَ فَوَجَدَا | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `سير` | سَيَّارَةٌۭ سُيِّرَتْ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `عود` | بِعَادٍ لَعَادُوا۟ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `حقق` | فَالْحَقُّ لِلْحَقِّ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `عدد` | بِعِدَّتِهِم تَعُدُّوا۟ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `جري` | الْجَوَارِ تَجْرِيَانِ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `بعد` | بَعْدَهُنَّ بَٰعِدْ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `خسر` | تَخْسِيرٍۢ تُخْسِرُوا۟ | 7 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `خشع` | خَٰشِعًۭا خَٰشِعُونَ | 6 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `فسد` | فَسَادًا فَسَادًۭا | 6 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `غرب` | تَغْرُبُ مَغْرِبَ | 6 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `ثبت` | تَثْبِيتًۭا ثُبُوتِهَا | 6 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `دين` | بِٱلدِّينِ تَدَايَنتُم | 6 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
@@ -526,6 +518,7 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 | `أمن` | ءَامَنتُ ءَامَنَتْ | 6 | `quran_refs_missing_or_incomplete` | (needs build_source_entry_repair_candidates.py) | weak | MISSING generator build_source_entry_repair_candidates.py -- |
 | `كلم` | تَكْلِيمًۭا كَلِمَتُ | 6 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `كبر` | كَبُرَ كِبْرٌۭ | 6 | `forms_array_missing_surface` | build_form_variant_candidates.py | yes | form-variant lane (forms_array subset, content N/V only) |
+| `ضرب` | أَفَنَضْرِبُ تَضْرِبُوا۟ | 6 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `شقق` | تَشَقَّقُ شَقًّۭا | 6 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `قرأ` | بِقُرْءَانٍ بِٱلْقُرْءَانِ | 6 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `لبث` | فَلَبِثْتَ وَلَبِثْتَ | 6 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
@@ -541,9 +534,10 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 | `قعد` | قَاعِدًا قَعِيدٌۭ | 5 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `قسم` | تَقَاسَمُوا۟ فَٱلْمُقَسِّمَٰتِ | 5 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `بدل` | بَدَلًۭا تَبْدِيلَ | 5 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `جنب` | جُنُبًا جُنُبًۭا | 5 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `حصن` | أُحْصِنَّ مُحْصَنَٰتٍ | 5 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `ذوق` | لَذَآئِقُوا۟ لِيَذُوقُوا۟ | 5 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `نزع` | تَنَٰزَعْتُمْ لَنَنزِعَنَّ | 5 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `خصم` | تَخَاصُمُ خَصِمُونَ | 5 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `نعم` | نِعْمَةٌۭ نِعْمَةَ | 5 | `forms_array_missing_surface` | build_form_variant_candidates.py | yes | form-variant lane (forms_array subset, content N/V only) |
 | `عرف` | عَرَفُوا۟ عَرَّفَ | 5 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `طيب` | لِلطَّيِّبَٰتِ لِلطَّيِّبِينَ | 5 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
@@ -561,25 +555,26 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 | `نزل` | الْمُنْزِلُونَ لَأَنزَلَ | 5 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `أله` | ءَأَٰلِهَتُنَا ءَالِهَتَكُمْ | 5 | `quran_refs_missing_or_incomplete` | (needs build_source_entry_repair_candidates.py) | weak | MISSING generator build_source_entry_repair_candidates.py -- |
 | `فجر` | تَفْجِيرًا فَٱنفَجَرَتْ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `فسد` | كَٱلْمُفْسِدِينَ مُفْسِدُونَ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `ثوب` | ثُوِّبَ لَمَثُوبَةٌۭ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `عفو` | فَٱعْفُوا۟ وَلْيَعْفُوا۟ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `صفح` | فَٱصْفَحِ وَلْيَصْفَحُوٓا۟ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `خوف` | تَخَوُّفٍۢ تَخْوِيفًۭا | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `حصر` | أُحْصِرْتُمْ حَصِرَتْ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `حضر` | حَاضِرِى مُّحْضَرًۭا | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `قنت` | قَٰنِتِينَ وَٱلْقَٰنِتَٰتِ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `شرب` | شَرَابًۭا فَشَرِبُوا۟ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `مسس` | مَسَّنِىَ مَسَّهُمْ | 4 | `forms_array_missing_surface` | build_form_variant_candidates.py | yes | form-variant lane (forms_array subset, content N/V only) |
 | `نهي` | فَٱنتَهَىٰ وَتَنْهَوْنَ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `أخر` | أَخِّرْنَآ وَأَخَّرَ | 4 | `forms_array_missing_surface` | build_form_variant_candidates.py | yes | form-variant lane (forms_array subset, content N/V only) |
 | `ندي` | مُنَادِيًۭا نِدَآءً | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `وري` | فَأُوَٰرِىَ وَرَآءِى | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `فتن` | بِفَٰتِنِينَ فِتْنَتَهُۥ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `أكل` | أَكَّٰلُونَ لَءَاكِلُونَ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `ركع` | رَٰكِعُونَ رُكَّعًۭا | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `قصص` | تَقْصُصْ فَلَنَقُصَّنَّ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `بطل` | أَفَبِٱلْبَٰطِلِ وَبَٰطِلٌۭ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `مكر` | وَمَكْرَ وَمَكْرُ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `حزن` | حَزَنًا وَحُزْنِىٓ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `جري` | تَجْرِيَانِ فَٱلْجَٰرِيَٰتِ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `خطب` | تُخَٰطِبْنِى خِطَابًۭا | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `غرق` | أُغْرِقُوا۟ لِتُغْرِقَ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `مكن` | مَكِينٌ مَكَّنِّى | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
@@ -589,22 +584,21 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 | `ربو` | لِّيَرْبُوَا۟ وَرَبَتْ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `عظم` | وَأَعْظَمَ وَيُعْظِمْ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `نشأ` | أَنشَأْتُمْ إِنشَآءًۭ | 4 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `طوف` | لِلطَّآئِفِينَ يَطُوفُونَ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `طهر` | وَأَطْهَرُ ٱلْمُتَطَهِّرِينَ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `فيأ` | تَفِىٓءَ فَآءُو | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `عشر` | بِعَشْرٍۢ بِعَشْرِ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `طلق` | فَٱنطَلَقُوا۟ وَلِلْمُطَلَّقَٰتِ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `بسط` | بَاسِطُوٓا۟ بَسْطَةًۭ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `نهر` | بِنَهَرٍۢ بِٱلنَّهَارِ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `كلم` | أُكَلِّمَ كَلَّمَ | 3 | `forms_array_missing_surface` | build_form_variant_candidates.py | yes | form-variant lane (forms_array subset, content N/V only) |
 | `ملل` | فَلْيُمْلِلْ وَلْيُمْلِلِ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `جعل` | لِّلْمُقْوِينَ وَالْهَدْيَ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `لوي` | تَلْوُۥنَ تَلْوُۥٓا۟ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `كلل` | كُلَّهُۥ كُلِّهِۦ | 3 | `forms_array_missing_surface` | build_form_variant_candidates.py | yes | form-variant lane (forms_array subset, content N/V only) |
 | `حدد` | حُدُودَهُۥ لِحُدُودِ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `ميل` | مَيْلًا مَّيْلَةًۭ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `غير` | غَيْرَهَا فَلَيُغَيِّرُنَّ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `هجر` | فَٱهْجُرْ وَٱهْجُرْنِى | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `حذر` | حِذْرَهُمْ فَلْيَحْذَرِ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `جنب` | جُنُوبِكُمْ فَٱجْتَنِبُوا۟ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `خطأ` | بِٱلْخَاطِئَةِ خَطَٰيَٰنَآ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `سرف` | لَمُسْرِفُونَ لِلْمُسْرِفِينَ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `قصد` | قَاصِدًۭا قَصْدُ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
@@ -623,11 +617,11 @@ Buckets the de-polluted pending queue for the NEXT authoring tranche. **No apply
 | `دعو` | دُعِىَ يَدْعُنَآ | 3 | `forms_array_missing_surface` | build_form_variant_candidates.py | yes | form-variant lane (forms_array subset, content N/V only) |
 | `حصد` | حَصِيدًا حَصِيدًۭا | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `صنع` | وَلِتُصْنَعَ وَٱصْنَعِ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
+| `رشد` | بِرَشِيدٍۢ مُّرْشِدًۭا | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `سمو` | أَسْمَآءًۭ أَسْمَآءٌۭ | 3 | `forms_array_missing_surface` | build_form_variant_candidates.py | yes | form-variant lane (forms_array subset, content N/V only) |
 | `حسس` | أَحَسُّوا۟ تُحِسُّ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `وقت` | لِمِيقَٰتِ مِيقَٰتًۭا | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `زين` | بِزِينَةٍۢ وَزِينَةًۭ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
-| `سنن` | سُنَّةَ لِسُنَّةِ | 3 | `forms_array_missing_surface` | build_form_variant_candidates.py | yes | form-variant lane (forms_array subset, content N/V only) |
 | `نسي` | مَّنسِيًّۭا نَسِيًّۭا | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `بقي` | وَأَبْقَىٰ وَأَبْقَىٰٓ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |
 | `أني` | ءَانَآءَ ءَانَآئِ | 3 | `missing_form_variant_on_existing_entry` | build_form_variant_candidates.py | yes (largest lane) | build_form_variant_candidates.py --max-b 200 --max-c 200 ->  |

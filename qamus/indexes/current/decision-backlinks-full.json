@@ -31,7 +31,7 @@
       ]
     },
     "source_entry_unverified": {
-      "count": 1797,
+      "count": 1792,
       "sample": [
         "2:2:6",
         "2:4:3",
@@ -61,18 +61,16 @@
       ]
     },
     "stem_base_unknown": {
-      "count": 4874,
+      "count": 4723,
       "sample": [
         "1:6:1",
         "1:7:3",
         "2:4:10",
         "2:10:4",
         "2:11:11",
-        "2:13:12",
         "2:17:1",
         "2:17:12",
         "2:19:7",
-        "2:20:17",
         "2:22:5",
         "2:25:30",
         "2:31:1",
@@ -87,7 +85,9 @@
         "2:47:1",
         "2:48:4",
         "2:48:19",
-        "2:49:2"
+        "2:49:2",
+        "2:49:6",
+        "2:50:5"
       ]
     }
   },
@@ -233,6 +233,22 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "كَشَفْنَا"
     },
+    "state:tok:10:12:14": {
+      "entry_contexts": [
+        "30fad52d1929",
+        "3540ba349285",
+        "3aadc0459dc6",
+        "4f99a11c3127"
+      ],
+      "gloss": "his harm",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "10:12:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ضُرَّهُۥ"
+    },
     "state:tok:10:12:17": {
       "entry_contexts": [
         "30fad52d1929",
@@ -345,6 +361,24 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَظَنَّ"
     },
+    "state:tok:10:24:29": {
+      "entry_contexts": [
+        "1ac342c23555",
+        "906dde66a12e",
+        "b9c2b6507d75",
+        "bbb42df8e51c",
+        "d770d23607c7",
+        "e0323ecc79c5"
+      ],
+      "gloss": "our affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "10:24:29",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرُنَا"
+    },
     "state:tok:10:24:36": {
       "entry_contexts": [
         "1ac342c23555",
@@ -363,6 +397,20 @@
       "loc": "10:24:36",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
+    },
+    "state:tok:10:25:2": {
+      "entry_contexts": [
+        "088ebd5e2393",
+        "e88b5faa3f17"
+      ],
+      "gloss": "calls",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "10:25:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يَدْعُوٓا۟"
     },
     "state:tok:10:28:10": {
       "entry_contexts": [
@@ -1366,6 +1414,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
     },
+    "state:tok:11:40:4": {
+      "entry_contexts": [
+        "8679e622012c",
+        "e83bf2fa0b6d"
+      ],
+      "gloss": "our affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "11:40:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرُنَا"
+    },
     "state:tok:11:42:9": {
       "entry_contexts": [
         "331b6ce2346f",
@@ -1421,6 +1483,20 @@
       "loc": "11:50:4",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "هُودًۭا"
+    },
+    "state:tok:11:58:3": {
+      "entry_contexts": [
+        "69ffdedf9db4",
+        "d5ac66156b8e"
+      ],
+      "gloss": "our affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "11:58:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرُنَا"
     },
     "state:tok:11:58:5": {
       "entry_contexts": [
@@ -2017,6 +2093,19 @@
       "loc": "12:101:14",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَلِىِّۦ"
+    },
+    "state:tok:12:102:12": {
+      "entry_contexts": [
+        "2189b86e056e"
+      ],
+      "gloss": "their affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "12:102:12",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرَهُمْ"
     },
     "state:tok:12:102:3": {
       "entry_contexts": [
@@ -2900,6 +2989,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "صَٰلِحِينَ"
     },
+    "state:tok:13:10:14": {
+      "entry_contexts": [
+        "c7cdec2513e8",
+        "dcfb17c4fe01"
+      ],
+      "gloss": "by day",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "13:10:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "بِٱلنَّهَارِ"
+    },
     "state:tok:13:10:4": {
       "entry_contexts": [
         "c7cdec2513e8",
@@ -3655,6 +3758,22 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَلَمْ"
     },
+    "state:tok:14:26:1": {
+      "entry_contexts": [
+        "887fec713dc3",
+        "a5a8b696e5f7",
+        "e2b37f88f22f",
+        "e6fbd6f74df8"
+      ],
+      "gloss": "and the parable of",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "14:26:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَثَلُ"
+    },
     "state:tok:14:28:1": {
       "entry_contexts": [
         "869fa8cf6d07",
@@ -4007,6 +4126,48 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "شَرَابٌۭ"
     },
+    "state:tok:16:116:14": {
+      "entry_contexts": [
+        "4f666d15bb7e",
+        "f92aeb1d59ae"
+      ],
+      "gloss": "the lie",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "16:116:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْكَذِبَ"
+    },
+    "state:tok:16:116:20": {
+      "entry_contexts": [
+        "4f666d15bb7e",
+        "f92aeb1d59ae"
+      ],
+      "gloss": "the lie",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "16:116:20",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْكَذِبَ"
+    },
+    "state:tok:16:116:6": {
+      "entry_contexts": [
+        "4f666d15bb7e",
+        "f92aeb1d59ae"
+      ],
+      "gloss": "the lie",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "16:116:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْكَذِبَ"
+    },
     "state:tok:16:118:4": {
       "entry_contexts": [
         "56d447209801"
@@ -4245,6 +4406,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَجَلٍۢ"
     },
+    "state:tok:16:62:7": {
+      "entry_contexts": [
+        "a6cb90179874",
+        "b2bd7c33380a"
+      ],
+      "gloss": "the lie",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "16:62:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْكَذِبَ"
+    },
     "state:tok:16:69:13": {
       "entry_contexts": [
         "259fe620e117",
@@ -4352,6 +4527,20 @@
       "loc": "16:75:21",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَسْتَوُۥنَ"
+    },
+    "state:tok:16:75:4": {
+      "entry_contexts": [
+        "e0e500c4b7a5",
+        "eb140384baab"
+      ],
+      "gloss": "a servant",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "16:75:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "عَبْدًۭا"
     },
     "state:tok:16:76:14": {
       "entry_contexts": [
@@ -4723,6 +4912,23 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:17:12:11": {
+      "entry_contexts": [
+        "0805d48b2472",
+        "361a2ebe2ad4",
+        "55c548d602e9",
+        "68e173783487",
+        "fc7bfd5a3f97"
+      ],
+      "gloss": "clearly visible",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "17:12:11",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مُبْصِرَةًۭ"
+    },
     "state:tok:17:12:17": {
       "entry_contexts": [
         "0805d48b2472",
@@ -4977,6 +5183,19 @@
       "loc": "17:4:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَقَضَيْنَآ"
+    },
+    "state:tok:17:59:14": {
+      "entry_contexts": [
+        "c70d7fcaedf7"
+      ],
+      "gloss": "clearly visible",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "17:59:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مُبْصِرَةًۭ"
     },
     "state:tok:17:59:15": {
       "entry_contexts": [
@@ -5416,6 +5635,40 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "بِمِثْلِهِۦ"
     },
+    "state:tok:18:10:15": {
+      "entry_contexts": [
+        "34b231b32718",
+        "3c4403994863",
+        "449fce4a2171",
+        "ad59deed170c",
+        "d8fd4b950c4a"
+      ],
+      "gloss": "our affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "18:10:15",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرِنَا"
+    },
+    "state:tok:18:10:16": {
+      "entry_contexts": [
+        "34b231b32718",
+        "3c4403994863",
+        "449fce4a2171",
+        "ad59deed170c",
+        "d8fd4b950c4a"
+      ],
+      "gloss": "right guidance",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "18:10:16",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "رَشَدًۭا"
+    },
     "state:tok:18:12:3": {
       "entry_contexts": [
         "0db8d0c5a0f3",
@@ -5514,6 +5767,34 @@
       "loc": "18:20:3",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَظْهَرُوا۟"
+    },
+    "state:tok:18:21:17": {
+      "entry_contexts": [
+        "0ba6e776b72c",
+        "ae9b58424b21"
+      ],
+      "gloss": "their affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "18:21:17",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرَهُمْ"
+    },
+    "state:tok:18:21:29": {
+      "entry_contexts": [
+        "0ba6e776b72c",
+        "ae9b58424b21"
+      ],
+      "gloss": "their affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "18:21:29",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرِهِمْ"
     },
     "state:tok:18:23:7": {
       "entry_contexts": [
@@ -6448,6 +6729,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمِمَّنْ"
     },
+    "state:tok:19:59:1": {
+      "entry_contexts": [
+        "259fe620e117",
+        "3fe10eef5951",
+        "520d12c49024"
+      ],
+      "gloss": "then there succeeded",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "19:59:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَخَلَفَ"
+    },
     "state:tok:19:59:7": {
       "entry_contexts": [
         "259fe620e117",
@@ -6979,6 +7275,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "نَّبَاتٍۢ"
     },
+    "state:tok:20:62:2": {
+      "entry_contexts": [
+        "a47156e8ace3"
+      ],
+      "gloss": "their affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "20:62:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرَهُم"
+    },
     "state:tok:20:63:9": {
       "entry_contexts": [
         "07e9e2cce5df",
@@ -7382,6 +7691,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلصُّمُّ"
     },
+    "state:tok:21:45:8": {
+      "entry_contexts": [
+        "2b9b68ab6329",
+        "396b9de1cafa"
+      ],
+      "gloss": "the call",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "21:45:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلدُّعَآءَ"
+    },
     "state:tok:21:50:2": {
       "entry_contexts": [
         "72ba4179ff95"
@@ -7605,6 +7928,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أُمَّةً"
     },
+    "state:tok:21:93:2": {
+      "entry_contexts": [
+        "763dbd0471de"
+      ],
+      "gloss": "their affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "21:93:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرَهُم"
+    },
     "state:tok:22:11:24": {
       "entry_contexts": [
         "43f7c3170070",
@@ -7619,6 +7955,32 @@
       "loc": "22:11:24",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلْخُسْرَانُ"
+    },
+    "state:tok:22:13:1": {
+      "entry_contexts": [
+        "ddcdcc8b5d9e"
+      ],
+      "gloss": "calls",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "22:13:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يَدْعُوا۟"
+    },
+    "state:tok:22:13:3": {
+      "entry_contexts": [
+        "ddcdcc8b5d9e"
+      ],
+      "gloss": "his harm",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "22:13:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ضَرُّهُۥٓ"
     },
     "state:tok:22:18:1": {
       "entry_contexts": [
@@ -7795,6 +8157,22 @@
       "loc": "22:26:12",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "بَيْتِىَ"
+    },
+    "state:tok:22:26:13": {
+      "entry_contexts": [
+        "4c40b7dda389",
+        "ad9af170d670",
+        "d2eddd3dbdad",
+        "f12ae52e78f7"
+      ],
+      "gloss": "for those who circle",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "22:26:13",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "لِلطَّآئِفِينَ"
     },
     "state:tok:22:27:5": {
       "entry_contexts": [
@@ -8382,6 +8760,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَأَوْحَيْنَآ"
     },
+    "state:tok:23:27:10": {
+      "entry_contexts": [
+        "2b9b68ab6329"
+      ],
+      "gloss": "our affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "23:27:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرُنَا"
+    },
     "state:tok:23:27:19": {
       "entry_contexts": [
         "2b9b68ab6329"
@@ -8479,6 +8870,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَكَذَّبُوهُمَا"
     },
+    "state:tok:23:53:2": {
+      "entry_contexts": [
+        "b9a331fd0724"
+      ],
+      "gloss": "their affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "23:53:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرَهُم"
+    },
     "state:tok:23:66:3": {
       "entry_contexts": [
         "1d150a3bac99"
@@ -8547,6 +8951,19 @@
       "loc": "23:89:4",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَأَنَّىٰ"
+    },
+    "state:tok:23:91:12": {
+      "entry_contexts": [
+        "d6a4f976cb61"
+      ],
+      "gloss": "would surely have taken away",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "23:91:12",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "لَّذَهَبَ"
     },
     "state:tok:24:11:9": {
       "entry_contexts": [
@@ -9683,6 +10100,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:25:28:3": {
+      "entry_contexts": [
+        "d9567c74b0a5"
+      ],
+      "gloss": "I take",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "25:28:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَتَّخِذْ"
+    },
     "state:tok:25:29:2": {
       "entry_contexts": [
         "a9d49eb4606b"
@@ -9852,6 +10282,20 @@
       "loc": "25:71:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:25:72:3": {
+      "entry_contexts": [
+        "51186752f2f8",
+        "a79275c6cdfe"
+      ],
+      "gloss": "they witness",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "25:72:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يَشْهَدُونَ"
     },
     "state:tok:25:72:6": {
       "entry_contexts": [
@@ -10433,6 +10877,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "تِسْعِ"
     },
+    "state:tok:27:13:4": {
+      "entry_contexts": [
+        "1c64d16249f0",
+        "b2a21f632e32"
+      ],
+      "gloss": "clearly visible",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "27:13:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مُبْصِرَةًۭ"
+    },
     "state:tok:27:13:7": {
       "entry_contexts": [
         "1c64d16249f0",
@@ -10997,6 +11455,19 @@
       "loc": "27:80:7",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلصُّمَّ"
+    },
+    "state:tok:27:80:8": {
+      "entry_contexts": [
+        "dcf75e7f4b79"
+      ],
+      "gloss": "the call",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "27:80:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلدُّعَآءَ"
     },
     "state:tok:27:89:11": {
       "entry_contexts": [
@@ -12364,6 +12835,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "بَيْتِىَ"
     },
+    "state:tok:2:125:19": {
+      "entry_contexts": [
+        "16e05c2ec837",
+        "5999a42d7bdd",
+        "c26ca4dc9302"
+      ],
+      "gloss": "for those who circle",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:125:19",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "لِلطَّآئِفِينَ"
+    },
     "state:tok:2:126:20": {
       "entry_contexts": [
         "c59a0161fac8",
@@ -12505,6 +12991,20 @@
       "loc": "2:139:2",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَعْمَالُنَا"
+    },
+    "state:tok:2:13:12": {
+      "entry_contexts": [
+        "c59a0161fac8",
+        "d5a538513041"
+      ],
+      "gloss": "the foolish ones",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:13:12",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "السُّفَهَاءُ"
     },
     "state:tok:2:140:1": {
       "entry_contexts": [
@@ -12845,6 +13345,24 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:2:164:6": {
+      "entry_contexts": [
+        "1550902df279",
+        "259fe620e117",
+        "42a46ab615b9",
+        "89f4baadb89a",
+        "b8f11936525a",
+        "f12aed82488d"
+      ],
+      "gloss": "and the variation of",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:164:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَٱخْتِلَٰفِ"
+    },
     "state:tok:2:167:17": {
       "entry_contexts": [
         "767df14975e6",
@@ -12915,6 +13433,23 @@
       "loc": "2:16:6",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَمَا"
+    },
+    "state:tok:2:173:16": {
+      "entry_contexts": [
+        "08b05deced53",
+        "4f99a11c3127",
+        "5f0547e0c0c9",
+        "622a3d627d4d",
+        "9e4222baccd2"
+      ],
+      "gloss": "craving",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:173:16",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "بَاغٍۢ"
     },
     "state:tok:2:173:8": {
       "entry_contexts": [
@@ -13593,6 +14128,34 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:2:203:14": {
+      "entry_contexts": [
+        "4610ca5d83fa",
+        "543da5bcc248"
+      ],
+      "gloss": "came later",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:203:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "تَأَخَّرَ"
+    },
+    "state:tok:2:204:17": {
+      "entry_contexts": [
+        "c9b15a7407f9",
+        "e91deae107d0"
+      ],
+      "gloss": "the dispute",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:204:17",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْخِصَامِ"
+    },
     "state:tok:2:204:5": {
       "entry_contexts": [
         "c9b15a7407f9",
@@ -13642,6 +14205,27 @@
       "loc": "2:20:10",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَإِذَآ"
+    },
+    "state:tok:2:20:17": {
+      "entry_contexts": [
+        "1c64d16249f0",
+        "3041d6f44a27",
+        "3a181696800c",
+        "56d447209801",
+        "603f78439f67",
+        "7527209dda9e",
+        "830ba56d078c",
+        "bc1a285908b2",
+        "cee928fb679c"
+      ],
+      "gloss": "would surely have taken away",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:20:17",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "لَذَهَبَ"
     },
     "state:tok:2:20:19": {
       "entry_contexts": [
@@ -13709,6 +14293,21 @@
       "loc": "2:213:5",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَبَعَثَ"
+    },
+    "state:tok:2:213:8": {
+      "entry_contexts": [
+        "1c4c58d664ab",
+        "997ebd6fbaf7",
+        "f9e31261222b"
+      ],
+      "gloss": "bearers of glad tidings",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:213:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مُبَشِّرِينَ"
     },
     "state:tok:2:214:1": {
       "entry_contexts": [
@@ -13797,6 +14396,42 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:2:217:5": {
+      "entry_contexts": [
+        "3ad045e70ff7",
+        "51e9879b93ab",
+        "543da5bcc248",
+        "5c7461bd7014",
+        "b56da5c447c1",
+        "fbd04177b8dd"
+      ],
+      "gloss": "fighting",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:217:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "قِتَالٍۢ"
+    },
+    "state:tok:2:217:8": {
+      "entry_contexts": [
+        "3ad045e70ff7",
+        "51e9879b93ab",
+        "543da5bcc248",
+        "5c7461bd7014",
+        "b56da5c447c1",
+        "fbd04177b8dd"
+      ],
+      "gloss": "fighting",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:217:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "قِتَالٌۭ"
+    },
     "state:tok:2:220:13": {
       "entry_contexts": [
         "16273913c1dd",
@@ -13814,6 +14449,22 @@
       "loc": "2:220:13",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "فَإِخْوَٰنُكُمْ"
+    },
+    "state:tok:2:221:30": {
+      "entry_contexts": [
+        "83e64ea698d5",
+        "9af2077b3ec4",
+        "c59a0161fac8",
+        "ca43414f9b01"
+      ],
+      "gloss": "calls",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:221:30",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يَدْعُوٓا۟"
     },
     "state:tok:2:221:39": {
       "entry_contexts": [
@@ -14219,6 +14870,36 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَجَلَهُۥ"
     },
+    "state:tok:2:236:17": {
+      "entry_contexts": [
+        "1d1155c1ea36",
+        "74c00dac2ced",
+        "7ae3f9560bca"
+      ],
+      "gloss": "his measure",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:236:17",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "قَدَرُهُۥ"
+    },
+    "state:tok:2:236:20": {
+      "entry_contexts": [
+        "1d1155c1ea36",
+        "74c00dac2ced",
+        "7ae3f9560bca"
+      ],
+      "gloss": "his measure",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:236:20",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "قَدَرُهُۥ"
+    },
     "state:tok:2:236:8": {
       "entry_contexts": [
         "1d1155c1ea36",
@@ -14486,6 +15167,42 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَأَبْنَآئِنَا"
     },
+    "state:tok:2:247:38": {
+      "entry_contexts": [
+        "7ae3f9560bca",
+        "d458faf6ed17",
+        "da817d56cc16",
+        "e0e500c4b7a5",
+        "ef4d590e9dac"
+      ],
+      "gloss": "his dominion",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:247:38",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مُلْكَهُۥ"
+    },
+    "state:tok:2:248:6": {
+      "entry_contexts": [
+        "4211cb1f5355",
+        "6751c0e4d0fd",
+        "68e173783487",
+        "a1feead9300b",
+        "c59a0161fac8",
+        "ca5dd7eb89ec",
+        "d61581e0ee6b"
+      ],
+      "gloss": "his dominion",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:248:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مُلْكِهِۦٓ"
+    },
     "state:tok:2:249:15": {
       "entry_contexts": [
         "0c1097a796fe",
@@ -14688,6 +15405,25 @@
       "loc": "2:255:31",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَا"
+    },
+    "state:tok:2:256:7": {
+      "entry_contexts": [
+        "21dd8c76ae19",
+        "39cba2c0d961",
+        "520d12c49024",
+        "5970b19734fd",
+        "6520ab46a9dc",
+        "98b1b5514c1f",
+        "c7d1a13ae95c"
+      ],
+      "gloss": "right guidance",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:256:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلرُّشْدُ"
     },
     "state:tok:2:256:9": {
       "entry_contexts": [
@@ -14892,6 +15628,23 @@
       "loc": "2:264:29",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَقْدِرُونَ"
+    },
+    "state:tok:2:265:1": {
+      "entry_contexts": [
+        "1c64d16249f0",
+        "1f1b330dbcd0",
+        "3cd6c95e5901",
+        "4732fa608347",
+        "d1b19bc5e60d"
+      ],
+      "gloss": "and the parable of",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:265:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَمَثَلُ"
     },
     "state:tok:2:265:12": {
       "entry_contexts": [
@@ -15325,6 +16078,68 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
     },
+    "state:tok:2:282:65": {
+      "entry_contexts": [
+        "049756ecbbf9",
+        "141cbc3bd2bd",
+        "16dc0a87056e",
+        "1ffcc554ec44",
+        "21d0c74b634d",
+        "2603e0177e41",
+        "291e842312f6",
+        "2cbcf128be78",
+        "4792ce071ee0",
+        "51e6d97b4ade",
+        "65daebe73c35",
+        "69156893d156",
+        "75c598d91a0e",
+        "a17c90658e33",
+        "a7dc990b0196",
+        "c49a5ba69760",
+        "cc013b361d1c",
+        "e88b5faa3f17",
+        "f33a3c703ac5"
+      ],
+      "gloss": "the witnesses",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:282:65",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلشُّهَدَآءِ"
+    },
+    "state:tok:2:282:74": {
+      "entry_contexts": [
+        "049756ecbbf9",
+        "141cbc3bd2bd",
+        "16dc0a87056e",
+        "1ffcc554ec44",
+        "21d0c74b634d",
+        "2603e0177e41",
+        "291e842312f6",
+        "2cbcf128be78",
+        "4792ce071ee0",
+        "51e6d97b4ade",
+        "65daebe73c35",
+        "69156893d156",
+        "75c598d91a0e",
+        "a17c90658e33",
+        "a7dc990b0196",
+        "c49a5ba69760",
+        "cc013b361d1c",
+        "e88b5faa3f17",
+        "f33a3c703ac5"
+      ],
+      "gloss": "the witnesses",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:282:74",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلشُّهَدَآءُ"
+    },
     "state:tok:2:282:8": {
       "entry_contexts": [
         "049756ecbbf9",
@@ -15418,6 +16233,37 @@
       "loc": "2:282:88",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَقْسَطُ"
+    },
+    "state:tok:2:282:91": {
+      "entry_contexts": [
+        "049756ecbbf9",
+        "141cbc3bd2bd",
+        "16dc0a87056e",
+        "1ffcc554ec44",
+        "21d0c74b634d",
+        "2603e0177e41",
+        "291e842312f6",
+        "2cbcf128be78",
+        "4792ce071ee0",
+        "51e6d97b4ade",
+        "65daebe73c35",
+        "69156893d156",
+        "75c598d91a0e",
+        "a17c90658e33",
+        "a7dc990b0196",
+        "c49a5ba69760",
+        "cc013b361d1c",
+        "e88b5faa3f17",
+        "f33a3c703ac5"
+      ],
+      "gloss": "more upright",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:282:91",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَأَقْوَمُ"
     },
     "state:tok:2:282:94": {
       "entry_contexts": [
@@ -15789,6 +16635,28 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "عَيْنًۭا"
     },
+    "state:tok:2:61:37": {
+      "entry_contexts": [
+        "03a1e641ea0b",
+        "049756ecbbf9",
+        "21e7f2c7b14b",
+        "3fff82f8b3a7",
+        "43021fab6f07",
+        "6708891659a2",
+        "9c40ab09fe94",
+        "b56da5c447c1",
+        "bdfb8b4d0ccb",
+        "ecc6a0a693e1"
+      ],
+      "gloss": "was imposed",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:61:37",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَضُرِبَتْ"
+    },
     "state:tok:2:61:39": {
       "entry_contexts": [
         "03a1e641ea0b",
@@ -15975,6 +16843,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:2:85:41": {
+      "entry_contexts": [
+        "4f666d15bb7e",
+        "603eecbe7dd7",
+        "9cb9f6f53207"
+      ],
+      "gloss": "they are returned",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:85:41",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يُرَدُّونَ"
+    },
     "state:tok:2:87:26": {
       "entry_contexts": [
         "03164a6bcd54",
@@ -16112,6 +16995,20 @@
       "loc": "30:19:5",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَيُخْرِجُ"
+    },
+    "state:tok:30:22:6": {
+      "entry_contexts": [
+        "259fe620e117",
+        "aa3a666a8e7b"
+      ],
+      "gloss": "and the variation of",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "30:22:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَٱخْتِلَٰفُ"
     },
     "state:tok:30:27:17": {
       "entry_contexts": [
@@ -17197,6 +18094,48 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَأَجْرًا"
     },
+    "state:tok:33:35:6": {
+      "entry_contexts": [
+        "088ebd5e2393",
+        "1015809f59b7",
+        "16258b73df89",
+        "21e7f2c7b14b",
+        "53c20e2cb05e",
+        "57f5749e976b",
+        "c3add861b8f6",
+        "ca43414f9b01",
+        "fbd1d2c5825e"
+      ],
+      "gloss": "the devoutly obedient",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "33:35:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَٱلْقَٰنِتِينَ"
+    },
+    "state:tok:33:35:8": {
+      "entry_contexts": [
+        "088ebd5e2393",
+        "1015809f59b7",
+        "16258b73df89",
+        "21e7f2c7b14b",
+        "53c20e2cb05e",
+        "57f5749e976b",
+        "c3add861b8f6",
+        "ca43414f9b01",
+        "fbd1d2c5825e"
+      ],
+      "gloss": "and the truthful",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "33:35:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَٱلصَّٰدِقِينَ"
+    },
     "state:tok:33:37:11": {
       "entry_contexts": [
         "044c699bb45b",
@@ -17852,6 +18791,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَٱلْمُشْرِكِينَ"
     },
+    "state:tok:33:8:4": {
+      "entry_contexts": [
+        "3a414827f027"
+      ],
+      "gloss": "their truthfulness",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "33:8:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "صِدْقِهِمْ"
+    },
     "state:tok:34:12:19": {
       "entry_contexts": [
         "28c8238ab7c7",
@@ -17870,6 +18822,24 @@
       "loc": "34:12:19",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:34:12:23": {
+      "entry_contexts": [
+        "28c8238ab7c7",
+        "488d1175c005",
+        "6f8b5d590d0a",
+        "a798f183890c",
+        "cfaf17de125f",
+        "d5ac66156b8e"
+      ],
+      "gloss": "our affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "34:12:23",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرِنَا"
     },
     "state:tok:34:13:16": {
       "entry_contexts": [
@@ -18198,6 +19168,36 @@
       "loc": "35:10:11",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلطَّيِّبُ"
+    },
+    "state:tok:35:10:4": {
+      "entry_contexts": [
+        "6dd29a115a6e",
+        "7e246b9a02ea",
+        "869fa8cf6d07"
+      ],
+      "gloss": "might",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "35:10:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْعِزَّةَ"
+    },
+    "state:tok:35:10:6": {
+      "entry_contexts": [
+        "6dd29a115a6e",
+        "7e246b9a02ea",
+        "869fa8cf6d07"
+      ],
+      "gloss": "might",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "35:10:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْعِزَّةُ"
     },
     "state:tok:35:12:19": {
       "entry_contexts": [
@@ -18689,6 +19689,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "بَصِيرًۢا"
     },
+    "state:tok:35:6:8": {
+      "entry_contexts": [
+        "118bc59f6f66",
+        "9e4222baccd2"
+      ],
+      "gloss": "calls",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "35:6:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يَدْعُوا۟"
+    },
     "state:tok:35:8:18": {
       "entry_contexts": [
         "ecf5fd6d9c13"
@@ -19120,6 +20134,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "عَجِّل"
     },
+    "state:tok:38:17:6": {
+      "entry_contexts": [
+        "aa1e635cbb3d",
+        "f0573ac07683"
+      ],
+      "gloss": "our servant",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "38:17:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "عَبْدَنَا"
+    },
     "state:tok:38:19:5": {
       "entry_contexts": [
         "a5925b694669"
@@ -19132,6 +20160,21 @@
       "loc": "38:19:5",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَوَّابٌۭ"
+    },
+    "state:tok:38:20:2": {
+      "entry_contexts": [
+        "361a2ebe2ad4",
+        "edb80955e059",
+        "f6860c032374"
+      ],
+      "gloss": "his dominion",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "38:20:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مُلْكَهُۥ"
     },
     "state:tok:38:22:10": {
       "entry_contexts": [
@@ -19301,6 +20344,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱغْفِرْ"
     },
+    "state:tok:38:41:2": {
+      "entry_contexts": [
+        "1cabc12cf11c"
+      ],
+      "gloss": "our servant",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "38:41:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "عَبْدَنَآ"
+    },
     "state:tok:38:41:7": {
       "entry_contexts": [
         "1cabc12cf11c"
@@ -19313,6 +20369,19 @@
       "loc": "38:41:7",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَنِّى"
+    },
+    "state:tok:38:41:8": {
+      "entry_contexts": [
+        "1cabc12cf11c"
+      ],
+      "gloss": "touched me",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "38:41:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مَسَّنِىَ"
     },
     "state:tok:38:44:10": {
       "entry_contexts": [
@@ -19742,6 +20811,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "بِضُرٍّ"
     },
+    "state:tok:39:38:23": {
+      "entry_contexts": [
+        "4fa13413ff7f",
+        "6520ab46a9dc"
+      ],
+      "gloss": "his harm",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "39:38:23",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ضُرِّهِۦٓ"
+    },
     "state:tok:39:38:26": {
       "entry_contexts": [
         "4fa13413ff7f",
@@ -19895,6 +20978,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَا"
     },
+    "state:tok:39:67:5": {
+      "entry_contexts": [
+        "02b4ab2a615f",
+        "674fd8bf02d2"
+      ],
+      "gloss": "his measure",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "39:67:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "قَدْرِهِۦ"
+    },
     "state:tok:39:68:8": {
       "entry_contexts": [
         "fe1b51d100ae"
@@ -19980,6 +21077,23 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "تَمُوتُنَّ"
     },
+    "state:tok:3:103:13": {
+      "entry_contexts": [
+        "07c919b3a9f2",
+        "2309463bc4f2",
+        "af406a3dfc4a",
+        "c78d4e58a427",
+        "e38622790f21"
+      ],
+      "gloss": "enemies",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "3:103:13",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَعْدَآءًۭ"
+    },
     "state:tok:3:103:34": {
       "entry_contexts": [
         "07c919b3a9f2",
@@ -20038,6 +21152,22 @@
       "loc": "3:112:14",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَبَآءُو"
+    },
+    "state:tok:3:112:18": {
+      "entry_contexts": [
+        "1a662854131e",
+        "3f72628fa1ec",
+        "99f8d3c2cad5",
+        "e38622790f21"
+      ],
+      "gloss": "was imposed",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "3:112:18",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَضُرِبَتْ"
     },
     "state:tok:3:112:3": {
       "entry_contexts": [
@@ -20546,6 +21676,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَمَا"
     },
+    "state:tok:3:147:13": {
+      "entry_contexts": [
+        "17753a1fce18"
+      ],
+      "gloss": "our affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "3:147:13",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرِنَا"
+    },
     "state:tok:3:147:14": {
       "entry_contexts": [
         "17753a1fce18"
@@ -20623,6 +21766,21 @@
       "loc": "3:149:8",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَرُدُّوكُمْ"
+    },
+    "state:tok:3:14:12": {
+      "entry_contexts": [
+        "49f807f00346",
+        "aa1e635cbb3d",
+        "b93713cfed33"
+      ],
+      "gloss": "and the silver",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "3:14:12",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَٱلْفِضَّةِ"
     },
     "state:tok:3:14:3": {
       "entry_contexts": [
@@ -21043,6 +22201,36 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَـَٔامِنُوا۟"
     },
+    "state:tok:3:17:2": {
+      "entry_contexts": [
+        "2cf3cd60d684",
+        "68fbbd2981cf",
+        "fc62d7c0ebbf"
+      ],
+      "gloss": "and the truthful",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "3:17:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَٱلصَّٰدِقِينَ"
+    },
+    "state:tok:3:17:3": {
+      "entry_contexts": [
+        "2cf3cd60d684",
+        "68fbbd2981cf",
+        "fc62d7c0ebbf"
+      ],
+      "gloss": "the devoutly obedient",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "3:17:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَٱلْقَٰنِتِينَ"
+    },
     "state:tok:3:180:2": {
       "entry_contexts": [
         "3681072a840d",
@@ -21341,6 +22529,21 @@
       "loc": "3:37:11",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "دَخَلَ"
+    },
+    "state:tok:3:38:15": {
+      "entry_contexts": [
+        "83e64ea698d5",
+        "d3559a102a61",
+        "e1fb0c3b8390"
+      ],
+      "gloss": "the call",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "3:38:15",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلدُّعَآءِ"
     },
     "state:tok:3:41:7": {
       "entry_contexts": [
@@ -21725,6 +22928,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "تَأْمَنْهُ"
     },
+    "state:tok:3:75:34": {
+      "entry_contexts": [
+        "04b1fb3074b8",
+        "a655ff9c6b76",
+        "c59a0161fac8"
+      ],
+      "gloss": "the lie",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "3:75:34",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْكَذِبَ"
+    },
     "state:tok:3:75:6": {
       "entry_contexts": [
         "04b1fb3074b8",
@@ -21754,6 +22972,19 @@
       "loc": "3:77:6",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَأَيْمَٰنِهِمْ"
+    },
+    "state:tok:3:78:27": {
+      "entry_contexts": [
+        "cb4234c4878b"
+      ],
+      "gloss": "the lie",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "3:78:27",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْكَذِبَ"
     },
     "state:tok:3:78:6": {
       "entry_contexts": [
@@ -21893,6 +23124,36 @@
       "loc": "3:7:42",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَا"
+    },
+    "state:tok:3:81:14": {
+      "entry_contexts": [
+        "16dc0a87056e",
+        "272144122d35",
+        "887fec713dc3",
+        "ecfc082ac2c5"
+      ],
+      "gloss": "confirming",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "3:81:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مُّصَدِّقٌۭ"
+    },
+    "state:tok:3:83:1": {
+      "entry_contexts": [
+        "5970b19734fd",
+        "622a3d627d4d"
+      ],
+      "gloss": "then other than",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "3:83:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَفَغَيْرَ"
     },
     "state:tok:3:83:11": {
       "entry_contexts": [
@@ -22540,6 +23801,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَمَا"
     },
+    "state:tok:41:28:3": {
+      "entry_contexts": [
+        "9e4222baccd2"
+      ],
+      "gloss": "enemies",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "41:28:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَعْدَآءِ"
+    },
     "state:tok:41:28:8": {
       "entry_contexts": [
         "9e4222baccd2"
@@ -22950,6 +24224,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلْغَيْثَ"
     },
+    "state:tok:42:32:3": {
+      "entry_contexts": [
+        "521619d2d912",
+        "8f8d49c8fd17"
+      ],
+      "gloss": "the ships",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "42:32:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "الْجَوَارِ"
+    },
     "state:tok:42:33:14": {
       "entry_contexts": [
         "4fd6f53274c7",
@@ -23064,6 +24352,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَلَآ"
     },
+    "state:tok:42:52:6": {
+      "entry_contexts": [
+        "488d1175c005"
+      ],
+      "gloss": "our affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "42:52:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرِنَا"
+    },
     "state:tok:42:7:7": {
       "entry_contexts": [
         "091ddcebac61",
@@ -23145,6 +24446,20 @@
       "loc": "43:18:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَوَمَن"
+    },
+    "state:tok:43:18:7": {
+      "entry_contexts": [
+        "876ee2237209",
+        "e91deae107d0"
+      ],
+      "gloss": "the dispute",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "43:18:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْخِصَامِ"
     },
     "state:tok:43:21:1": {
       "entry_contexts": [
@@ -24148,6 +25463,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "تَتَوَلَّوْا۟"
     },
+    "state:tok:47:38:25": {
+      "entry_contexts": [
+        "136dba796cff",
+        "3575d87778cd",
+        "6feb8d7d9db3"
+      ],
+      "gloss": "other than you",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "47:38:25",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "غَيْرَكُمْ"
+    },
     "state:tok:48:10:17": {
       "entry_contexts": [
         "4c4cfa311243",
@@ -24484,6 +25814,19 @@
       "loc": "48:2:8",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَا"
+    },
+    "state:tok:48:2:9": {
+      "entry_contexts": [
+        "01de86d90f60"
+      ],
+      "gloss": "came later",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "48:2:9",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "تَأَخَّرَ"
     },
     "state:tok:48:6:4": {
       "entry_contexts": [
@@ -25103,6 +26446,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
     },
+    "state:tok:4:127:27": {
+      "entry_contexts": [
+        "b309f86b564e"
+      ],
+      "gloss": "the children",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:127:27",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْوِلْدَٰنِ"
+    },
     "state:tok:4:127:29": {
       "entry_contexts": [
         "b309f86b564e"
@@ -25488,6 +26844,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أُحِلَّتْ"
     },
+    "state:tok:4:161:6": {
+      "entry_contexts": [
+        "ecfc082ac2c5"
+      ],
+      "gloss": "their consuming",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:161:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَأَكْلِهِمْ"
+    },
     "state:tok:4:163:8": {
       "entry_contexts": [
         "201e59136f5c"
@@ -25540,6 +26909,33 @@
       "loc": "4:164:8",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
+    },
+    "state:tok:4:165:2": {
+      "entry_contexts": [
+        "4318e2561011",
+        "a6de8fd64244"
+      ],
+      "gloss": "bearers of glad tidings",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:165:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مُّبَشِّرِينَ"
+    },
+    "state:tok:4:172:6": {
+      "entry_contexts": [
+        "2f6506be29c9"
+      ],
+      "gloss": "a servant",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:172:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "عَبْدًا"
     },
     "state:tok:4:173:14": {
       "entry_contexts": [
@@ -25747,6 +27143,21 @@
       "loc": "4:23:5",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَأَخَوَٰتُكُمْ"
+    },
+    "state:tok:4:24:1": {
+      "entry_contexts": [
+        "1a9f6df3889e",
+        "202eddfdb3c5",
+        "622180fd3846"
+      ],
+      "gloss": "the chaste women",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:24:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَٱلْمُحْصَنَٰتُ"
     },
     "state:tok:4:24:22": {
       "entry_contexts": [
@@ -25961,6 +27372,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:4:31:3": {
+      "entry_contexts": [
+        "f80e6f80783a"
+      ],
+      "gloss": "major sins",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:31:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "كَبَآئِرَ"
+    },
     "state:tok:4:35:5": {
       "entry_contexts": [
         "3a2ed898b4f5",
@@ -26120,6 +27544,30 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "تَعْلَمُوا۟"
     },
+    "state:tok:4:43:14": {
+      "entry_contexts": [
+        "0a75afaafad0",
+        "23cbc83bf4b2",
+        "263779da1141",
+        "3d82e28ccae0",
+        "484b4fb9beba",
+        "4d717720aaf3",
+        "6dd29a115a6e",
+        "79cb36de6246",
+        "a95c6ac018da",
+        "d015a24b94d7",
+        "d0d7fa61ade4",
+        "e6536bf2ffd3"
+      ],
+      "gloss": "ritually impure",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:43:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "جُنُبًا"
+    },
     "state:tok:4:43:35": {
       "entry_contexts": [
         "0a75afaafad0",
@@ -26202,6 +27650,24 @@
       "loc": "4:46:19",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلدِّينِ"
+    },
+    "state:tok:4:46:30": {
+      "entry_contexts": [
+        "1c5f7c9c8e05",
+        "49fa7dfe6d04",
+        "506be512630a",
+        "576c644db783",
+        "b8e9a3a37453",
+        "cb4234c4878b"
+      ],
+      "gloss": "more upright",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:46:30",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَأَقْوَمَ"
     },
     "state:tok:4:46:5": {
       "entry_contexts": [
@@ -26495,6 +27961,25 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَٱلصَّٰلِحِينَ"
     },
+    "state:tok:4:6:10": {
+      "entry_contexts": [
+        "0805d48b2472",
+        "17753a1fce18",
+        "207e8cb6e2c8",
+        "957d29b3632b",
+        "d591d10aecfd",
+        "e919504a83fa",
+        "fbd04177b8dd"
+      ],
+      "gloss": "right guidance",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:6:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "رُشْدًۭا"
+    },
     "state:tok:4:6:20": {
       "entry_contexts": [
         "0805d48b2472",
@@ -26534,6 +28019,25 @@
       "loc": "4:6:24",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:4:6:37": {
+      "entry_contexts": [
+        "0805d48b2472",
+        "17753a1fce18",
+        "207e8cb6e2c8",
+        "957d29b3632b",
+        "d591d10aecfd",
+        "e919504a83fa",
+        "fbd04177b8dd"
+      ],
+      "gloss": "a reckoner",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:6:37",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "حَسِيبًۭا"
     },
     "state:tok:4:6:5": {
       "entry_contexts": [
@@ -26827,6 +28331,19 @@
       "loc": "4:85:9",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
+    },
+    "state:tok:4:86:15": {
+      "entry_contexts": [
+        "89f4baadb89a"
+      ],
+      "gloss": "a reckoner",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:86:15",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "حَسِيبًا"
     },
     "state:tok:4:87:13": {
       "entry_contexts": [
@@ -27234,6 +28751,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَلَمْ"
     },
+    "state:tok:50:11:8": {
+      "entry_contexts": [
+        "4ad0dcce3755",
+        "dcf75e7f4b79"
+      ],
+      "gloss": "the going forth",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "50:11:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْخُرُوجُ"
+    },
     "state:tok:50:25:2": {
       "entry_contexts": [
         "27b75a559611"
@@ -27356,6 +28887,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَسَبِّحْهُ"
     },
+    "state:tok:50:42:7": {
+      "entry_contexts": [
+        "f24ad098879a"
+      ],
+      "gloss": "the going forth",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "50:42:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْخُرُوجِ"
+    },
     "state:tok:50:5:8": {
       "entry_contexts": [
         "6a1bd8ef9357"
@@ -27368,6 +28912,19 @@
       "loc": "50:5:8",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْرٍۢ"
+    },
+    "state:tok:50:6:2": {
+      "entry_contexts": [
+        "3b927026b88a"
+      ],
+      "gloss": "they look",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "50:6:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يَنظُرُوٓا۟"
     },
     "state:tok:50:8:2": {
       "entry_contexts": [
@@ -27794,6 +29351,25 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلْمَغْفِرَةِ"
     },
+    "state:tok:53:32:3": {
+      "entry_contexts": [
+        "30fad52d1929",
+        "55dd18892bf9",
+        "7ae3f9560bca",
+        "b62b915fcd1f",
+        "c64baccb7f7a",
+        "d3559a102a61",
+        "fbd04177b8dd"
+      ],
+      "gloss": "major sins",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "53:32:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "كَبَٰٓئِرَ"
+    },
     "state:tok:53:45:4": {
       "entry_contexts": [
         "eb41bfb6d725"
@@ -28049,6 +29625,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلدَّاعِ"
     },
+    "state:tok:54:9:6": {
+      "entry_contexts": [
+        "4f0191523aa9"
+      ],
+      "gloss": "our servant",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "54:9:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "عَبْدَنَا"
+    },
     "state:tok:55:11:2": {
       "entry_contexts": [
         "07995e50da12"
@@ -28075,6 +29664,19 @@
       "loc": "55:17:3",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَرَبُّ"
+    },
+    "state:tok:55:24:2": {
+      "entry_contexts": [
+        "876ee2237209"
+      ],
+      "gloss": "the ships",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "55:24:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْجَوَارِ"
     },
     "state:tok:55:44:3": {
       "entry_contexts": [
@@ -28705,6 +30307,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَلَمْ"
     },
+    "state:tok:58:14:17": {
+      "entry_contexts": [
+        "141cbc3bd2bd"
+      ],
+      "gloss": "the lie",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "58:14:17",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْكَذِبِ"
+    },
     "state:tok:58:16:2": {
       "entry_contexts": [
         "c64baccb7f7a"
@@ -28823,6 +30438,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "بِٱلْبِرِّ"
     },
+    "state:tok:58:9:14": {
+      "entry_contexts": [
+        "5b382a023db8"
+      ],
+      "gloss": "and piety",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "58:9:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَٱلتَّقْوَىٰ"
+    },
     "state:tok:59:14:12": {
       "entry_contexts": [
         "382bb3e09b5f",
@@ -28837,6 +30465,20 @@
       "loc": "59:14:12",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "بَأْسُهُم"
+    },
+    "state:tok:59:15:8": {
+      "entry_contexts": [
+        "17ea426d371a",
+        "b38862a332fa"
+      ],
+      "gloss": "their affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "59:15:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرِهِمْ"
     },
     "state:tok:59:23:13": {
       "entry_contexts": [
@@ -29016,6 +30658,36 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَن"
     },
+    "state:tok:5:103:18": {
+      "entry_contexts": [
+        "29173b762056",
+        "411de1e1d978",
+        "9bc7e1d6a55c",
+        "a35640570120",
+        "fd658be10554"
+      ],
+      "gloss": "the lie",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:103:18",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْكَذِبَ"
+    },
+    "state:tok:5:104:12": {
+      "entry_contexts": [
+        "79cb36de6246"
+      ],
+      "gloss": "sufficient for us",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:104:12",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "حَسْبُنَا"
+    },
     "state:tok:5:104:19": {
       "entry_contexts": [
         "79cb36de6246"
@@ -29044,6 +30716,21 @@
       "loc": "5:106:13",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ذَوَا"
+    },
+    "state:tok:5:106:19": {
+      "entry_contexts": [
+        "445f9e047a5b",
+        "5f0547e0c0c9",
+        "b62b3a43c2d8"
+      ],
+      "gloss": "other than you",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:106:19",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "غَيْرِكُمْ"
     },
     "state:tok:5:106:22": {
       "entry_contexts": [
@@ -29205,6 +30892,21 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "نَفْسِكَ"
     },
+    "state:tok:5:119:7": {
+      "entry_contexts": [
+        "10e7e3a74184",
+        "1de79647e05f",
+        "291e842312f6"
+      ],
+      "gloss": "their truthfulness",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:119:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "صِدْقُهُمْ"
+    },
     "state:tok:5:12:4": {
       "entry_contexts": [
         "dbbe7132d765"
@@ -29266,6 +30968,38 @@
       "loc": "5:19:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَٰٓأَهْلَ"
+    },
+    "state:tok:5:19:17": {
+      "entry_contexts": [
+        "484b4fb9beba",
+        "6197ee2c0b2a",
+        "a6de8fd64244",
+        "e06ba04e7433"
+      ],
+      "gloss": "a bearer of good tidings",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:19:17",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "بَشِيرٍۢ"
+    },
+    "state:tok:5:19:22": {
+      "entry_contexts": [
+        "484b4fb9beba",
+        "6197ee2c0b2a",
+        "a6de8fd64244",
+        "e06ba04e7433"
+      ],
+      "gloss": "a bearer of good tidings",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:19:22",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "بَشِيرٌۭ"
     },
     "state:tok:5:19:5": {
       "entry_contexts": [
@@ -29394,6 +31128,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَرْبَعِينَ"
     },
+    "state:tok:5:29:12": {
+      "entry_contexts": [
+        "6708891659a2"
+      ],
+      "gloss": "recompense",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:29:12",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "جَزَٰٓؤُا۟"
+    },
     "state:tok:5:29:6": {
       "entry_contexts": [
         "6708891659a2"
@@ -29487,6 +31234,26 @@
       "loc": "5:2:40",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلْبِرِّ"
+    },
+    "state:tok:5:2:41": {
+      "entry_contexts": [
+        "3d82e28ccae0",
+        "4beb33ad7ecf",
+        "4f666d15bb7e",
+        "79f031f1c0cb",
+        "85f48915cba6",
+        "d2eddd3dbdad",
+        "d547df241bb6",
+        "f92aeb1d59ae"
+      ],
+      "gloss": "and piety",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:2:41",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَٱلتَّقْوَىٰ"
     },
     "state:tok:5:30:6": {
       "entry_contexts": [
@@ -29583,6 +31350,22 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
     },
+    "state:tok:5:33:10": {
+      "entry_contexts": [
+        "51e7b558eefa",
+        "7838e4ff1aef",
+        "ba21a135a54c",
+        "fb27e9575a60"
+      ],
+      "gloss": "corruption",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:33:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَسَادًا"
+    },
     "state:tok:5:33:18": {
       "entry_contexts": [
         "51e7b558eefa",
@@ -29599,6 +31382,22 @@
       "loc": "5:33:18",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَأَرْجُلُهُم"
+    },
+    "state:tok:5:33:2": {
+      "entry_contexts": [
+        "51e7b558eefa",
+        "7838e4ff1aef",
+        "ba21a135a54c",
+        "fb27e9575a60"
+      ],
+      "gloss": "recompense",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:33:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "جَزَٰٓؤُا۟"
     },
     "state:tok:5:33:20": {
       "entry_contexts": [
@@ -30309,6 +32108,38 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَطَعَامُكُمْ"
     },
+    "state:tok:5:5:14": {
+      "entry_contexts": [
+        "50c673a03370",
+        "622180fd3846",
+        "a5a8b696e5f7",
+        "ecfc082ac2c5"
+      ],
+      "gloss": "the chaste women",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:5:14",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَٱلْمُحْصَنَٰتُ"
+    },
+    "state:tok:5:5:17": {
+      "entry_contexts": [
+        "50c673a03370",
+        "622180fd3846",
+        "a5a8b696e5f7",
+        "ecfc082ac2c5"
+      ],
+      "gloss": "the chaste women",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:5:17",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَٱلْمُحْصَنَٰتُ"
+    },
     "state:tok:5:5:33": {
       "entry_contexts": [
         "50c673a03370",
@@ -30376,6 +32207,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أُنَبِّئُكُم"
     },
+    "state:tok:5:62:8": {
+      "entry_contexts": [
+        "9e4222baccd2",
+        "ab0c04b92ed3",
+        "cfa11b67fad0"
+      ],
+      "gloss": "their consuming",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:62:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَأَكْلِهِمُ"
+    },
     "state:tok:5:62:9": {
       "entry_contexts": [
         "9e4222baccd2",
@@ -30404,6 +32250,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَٱلْأَحْبَارُ"
     },
+    "state:tok:5:63:8": {
+      "entry_contexts": [
+        "81800d3a9d4b"
+      ],
+      "gloss": "their consuming",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:63:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَأَكْلِهِمُ"
+    },
     "state:tok:5:63:9": {
       "entry_contexts": [
         "81800d3a9d4b"
@@ -30416,6 +32275,24 @@
       "loc": "5:63:9",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلسُّحْتَ"
+    },
+    "state:tok:5:64:43": {
+      "entry_contexts": [
+        "0c0e1edc8c65",
+        "108315a0be83",
+        "285d790cd18a",
+        "714b269ac820",
+        "da817d56cc16",
+        "fb27e9575a60"
+      ],
+      "gloss": "corruption",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:64:43",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَسَادًۭا"
     },
     "state:tok:5:66:18": {
       "entry_contexts": [
@@ -30478,6 +32355,25 @@
       "loc": "5:6:14",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "بِرُءُوسِكُمْ"
+    },
+    "state:tok:5:6:20": {
+      "entry_contexts": [
+        "1650fb53a8c2",
+        "263779da1141",
+        "30fad52d1929",
+        "367b8d3d8988",
+        "48086cbc303a",
+        "855156f634ea",
+        "efef3e152fa8"
+      ],
+      "gloss": "ritually impure",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:6:20",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "جُنُبًۭا"
     },
     "state:tok:5:6:37": {
       "entry_contexts": [
@@ -30598,6 +32494,26 @@
       "loc": "5:89:11",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلْأَيْمَٰنَ"
+    },
+    "state:tok:5:89:13": {
+      "entry_contexts": [
+        "1b3f0d3be691",
+        "7172a5394a7b",
+        "beae77dd607f",
+        "cb83b6decfbd",
+        "dde8f621a435",
+        "df2cd8f0dcdb",
+        "e3565220ef7b",
+        "ecfc082ac2c5"
+      ],
+      "gloss": "feeding",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:89:13",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "إِطْعَامُ"
     },
     "state:tok:5:89:15": {
       "entry_contexts": [
@@ -31324,6 +33240,20 @@
       "loc": "63:7:5",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "تُنفِقُوا۟"
+    },
+    "state:tok:63:8:11": {
+      "entry_contexts": [
+        "269ebe526439",
+        "7e246b9a02ea"
+      ],
+      "gloss": "might",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "63:8:11",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْعِزَّةُ"
     },
     "state:tok:63:8:13": {
       "entry_contexts": [
@@ -32527,6 +34457,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَا"
     },
+    "state:tok:6:114:1": {
+      "entry_contexts": [
+        "361a2ebe2ad4",
+        "4e7ead35510e"
+      ],
+      "gloss": "then other than",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:114:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَفَغَيْرَ"
+    },
     "state:tok:6:114:23": {
       "entry_contexts": [
         "361a2ebe2ad4",
@@ -32569,6 +34513,19 @@
       "loc": "6:116:3",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَكْثَرَ"
+    },
+    "state:tok:6:11:6": {
+      "entry_contexts": [
+        "d099cdaad3b9"
+      ],
+      "gloss": "look",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:11:6",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱنظُرُوا۟"
     },
     "state:tok:6:120:9": {
       "entry_contexts": [
@@ -32944,6 +34901,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَجِدُ"
     },
+    "state:tok:6:145:33": {
+      "entry_contexts": [
+        "202eddfdb3c5",
+        "4f666d15bb7e",
+        "beae77dd607f"
+      ],
+      "gloss": "craving",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:145:33",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "بَاغٍۢ"
+    },
     "state:tok:6:145:6": {
       "entry_contexts": [
         "202eddfdb3c5",
@@ -33018,6 +34990,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَغَيْرَ"
     },
+    "state:tok:6:14:4": {
+      "entry_contexts": [
+        "602b2e3cbd94",
+        "beae77dd607f"
+      ],
+      "gloss": "I take",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:14:4",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَتَّخِذُ"
+    },
     "state:tok:6:14:6": {
       "entry_contexts": [
         "602b2e3cbd94",
@@ -33045,6 +35031,20 @@
       "loc": "6:150:3",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "شُهَدَآءَكُمُ"
+    },
+    "state:tok:6:150:5": {
+      "entry_contexts": [
+        "16dc0a87056e",
+        "17515e1dc9d3"
+      ],
+      "gloss": "they witness",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:150:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يَشْهَدُونَ"
     },
     "state:tok:6:151:23": {
       "entry_contexts": [
@@ -33194,6 +35194,20 @@
       "loc": "6:158:32",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "إِيمَٰنِهَا"
+    },
+    "state:tok:6:159:12": {
+      "entry_contexts": [
+        "2cb4015f1b2f",
+        "ff5d96fc5c3b"
+      ],
+      "gloss": "their affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:159:12",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرُهُمْ"
     },
     "state:tok:6:160:5": {
       "entry_contexts": [
@@ -33665,6 +35679,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَتَوَفَّىٰكُم"
     },
+    "state:tok:6:60:8": {
+      "entry_contexts": [
+        "a3829d9357ae",
+        "ba8a26f4ca79"
+      ],
+      "gloss": "by day",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:60:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "بِٱلنَّهَارِ"
+    },
     "state:tok:6:62:5": {
       "entry_contexts": [
         "0805d48b2472",
@@ -34068,6 +36096,21 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "خَوْضِهِمْ"
     },
+    "state:tok:6:91:5": {
+      "entry_contexts": [
+        "049756ecbbf9",
+        "1d1155c1ea36",
+        "a502a936a731"
+      ],
+      "gloss": "his measure",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:91:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "قَدْرِهِۦٓ"
+    },
     "state:tok:6:92:10": {
       "entry_contexts": [
         "21d0c74b634d",
@@ -34099,6 +36142,21 @@
       "loc": "6:92:12",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمَنْ"
+    },
+    "state:tok:6:92:5": {
+      "entry_contexts": [
+        "21d0c74b634d",
+        "53c20e2cb05e",
+        "61b224b183f1"
+      ],
+      "gloss": "confirming",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:92:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مُّصَدِّقُ"
     },
     "state:tok:6:93:1": {
       "entry_contexts": [
@@ -34233,6 +36291,27 @@
       "loc": "6:99:12",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَأَخْرَجْنَا"
+    },
+    "state:tok:6:99:33": {
+      "entry_contexts": [
+        "21bcc0905331",
+        "331b6ce2346f",
+        "3f3f15cb27c2",
+        "62088fedc268",
+        "6d380979b61a",
+        "6e97b4c8c1d9",
+        "a3b8899e12f5",
+        "d099cdaad3b9",
+        "f969634b2fff"
+      ],
+      "gloss": "look",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:99:33",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱنظُرُوٓا۟"
     },
     "state:tok:6:99:35": {
       "entry_contexts": [
@@ -34563,6 +36642,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلصَّٰلِحُونَ"
     },
+    "state:tok:72:14:10": {
+      "entry_contexts": [
+        "c7d1a13ae95c",
+        "fbd6c79719d6"
+      ],
+      "gloss": "right guidance",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "72:14:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "رَشَدًۭا"
+    },
     "state:tok:72:17:3": {
       "entry_contexts": [
         "6dd29a115a6e"
@@ -34656,6 +36749,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "كَفَرْتُمْ"
     },
+    "state:tok:73:17:7": {
+      "entry_contexts": [
+        "9daf7078bfe9",
+        "d6a4f976cb61"
+      ],
+      "gloss": "the children",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "73:17:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْوِلْدَٰنَ"
+    },
     "state:tok:73:18:5": {
       "entry_contexts": [
         "602b2e3cbd94"
@@ -34713,6 +36820,20 @@
       "loc": "73:20:73",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَٱسْتَغْفِرُوا۟"
+    },
+    "state:tok:73:6:7": {
+      "entry_contexts": [
+        "876ee2237209",
+        "cd8d7c16fff0"
+      ],
+      "gloss": "more upright",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "73:6:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَأَقْوَمُ"
     },
     "state:tok:73:9:3": {
       "entry_contexts": [
@@ -35467,6 +37588,22 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "لِمِيقَٰتِنَا"
     },
+    "state:tok:7:146:20": {
+      "entry_contexts": [
+        "1fd424ee1e74",
+        "b57eeb09ca28",
+        "c59a0161fac8",
+        "fbd04177b8dd"
+      ],
+      "gloss": "right guidance",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "7:146:20",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلرُّشْدِ"
+    },
     "state:tok:7:146:22": {
       "entry_contexts": [
         "1fd424ee1e74",
@@ -35651,6 +37788,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "شِئْتَ"
     },
+    "state:tok:7:155:21": {
+      "entry_contexts": [
+        "68fbbd2981cf"
+      ],
+      "gloss": "the foolish ones",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "7:155:21",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلسُّفَهَآءُ"
+    },
     "state:tok:7:155:6": {
       "entry_contexts": [
         "68fbbd2981cf"
@@ -35760,6 +37910,20 @@
       "loc": "7:168:6",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلصَّٰلِحُونَ"
+    },
+    "state:tok:7:169:1": {
+      "entry_contexts": [
+        "300a648674d2",
+        "543da5bcc248"
+      ],
+      "gloss": "then there succeeded",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "7:169:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "فَخَلَفَ"
     },
     "state:tok:7:169:15": {
       "entry_contexts": [
@@ -35983,6 +38147,33 @@
       "loc": "7:184:6",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "جِنَّةٍ"
+    },
+    "state:tok:7:185:2": {
+      "entry_contexts": [
+        "722b4065dc2a"
+      ],
+      "gloss": "they look",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "7:185:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يَنظُرُوا۟"
+    },
+    "state:tok:7:188:20": {
+      "entry_contexts": [
+        "a15e00770b49",
+        "c4230e68a96c"
+      ],
+      "gloss": "touched me",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "7:188:20",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "مَسَّنِىَ"
     },
     "state:tok:7:188:3": {
       "entry_contexts": [
@@ -36883,6 +39074,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَوُجُوهٌ"
     },
+    "state:tok:81:16:1": {
+      "entry_contexts": [
+        "32891ed7285c",
+        "521619d2d912"
+      ],
+      "gloss": "the ships",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "81:16:1",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْجَوَارِ"
+    },
     "state:tok:81:22:2": {
       "entry_contexts": [
         "54f8ff4c5829"
@@ -37365,6 +39570,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَٱعْلَمُوٓا۟"
     },
+    "state:tok:8:41:23": {
+      "entry_contexts": [
+        "2cb4015f1b2f",
+        "7ea2cfcc722e"
+      ],
+      "gloss": "our servant",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "8:41:23",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "عَبْدِنَا"
+    },
     "state:tok:8:41:27": {
       "entry_contexts": [
         "2cb4015f1b2f",
@@ -37638,6 +39857,24 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "حَلَٰلًۭا"
     },
+    "state:tok:8:72:13": {
+      "entry_contexts": [
+        "03b5507d70a2",
+        "141cbc3bd2bd",
+        "1c5f7c9c8e05",
+        "2cec1fa6610d",
+        "963f6cd9e1f0",
+        "ad59deed170c"
+      ],
+      "gloss": "and they helped",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "8:72:13",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَّنَصَرُوٓا۟"
+    },
     "state:tok:8:72:33": {
       "entry_contexts": [
         "03b5507d70a2",
@@ -37656,6 +39893,21 @@
       "loc": "8:72:33",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلدِّينِ"
+    },
+    "state:tok:8:74:10": {
+      "entry_contexts": [
+        "0e2b435dcece",
+        "68fbbd2981cf",
+        "a79275c6cdfe"
+      ],
+      "gloss": "and they helped",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "8:74:10",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَّنَصَرُوٓا۟"
     },
     "state:tok:8:74:17": {
       "entry_contexts": [
@@ -37698,6 +39950,19 @@
       "loc": "90:13:2",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "رَقَبَةٍ"
+    },
+    "state:tok:90:14:2": {
+      "entry_contexts": [
+        "daade31ef03f"
+      ],
+      "gloss": "feeding",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "90:14:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "إِطْعَامٌ"
     },
     "state:tok:90:8:1": {
       "entry_contexts": [
@@ -37870,6 +40135,20 @@
       "loc": "9:101:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَمِمَّنْ"
+    },
+    "state:tok:9:101:19": {
+      "entry_contexts": [
+        "8c060b54d4cf",
+        "fc62d7c0ebbf"
+      ],
+      "gloss": "they are returned",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "9:101:19",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يُرَدُّونَ"
     },
     "state:tok:9:107:4": {
       "entry_contexts": [
@@ -38353,6 +40632,23 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "كَرِهَ"
     },
+    "state:tok:9:34:20": {
+      "entry_contexts": [
+        "05ffcc9a615d",
+        "27dfebaac336",
+        "8d144a4c3989",
+        "c14b24d45397",
+        "f9ec5933a2c5"
+      ],
+      "gloss": "and the silver",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "9:34:20",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "وَٱلْفِضَّةَ"
+    },
     "state:tok:9:35:11": {
       "entry_contexts": [
         "34bd58ce0861",
@@ -38448,6 +40744,22 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَسْتَـْٔذِنُكَ"
     },
+    "state:tok:9:46:3": {
+      "entry_contexts": [
+        "3aadc0459dc6",
+        "55c548d602e9",
+        "ef4d590e9dac",
+        "f4c54dd88d56"
+      ],
+      "gloss": "the going forth",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "9:46:3",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "ٱلْخُرُوجَ"
+    },
     "state:tok:9:46:8": {
       "entry_contexts": [
         "3aadc0459dc6",
@@ -38524,6 +40836,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَمْ"
     },
+    "state:tok:9:50:11": {
+      "entry_contexts": [
+        "0f79975eb71d",
+        "6d7fb324a641"
+      ],
+      "gloss": "our affair",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "9:50:11",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "أَمْرَنَا"
+    },
     "state:tok:9:50:2": {
       "entry_contexts": [
         "0f79975eb71d",
@@ -38580,6 +40906,19 @@
       "loc": "9:58:11",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لَّمْ"
+    },
+    "state:tok:9:59:9": {
+      "entry_contexts": [
+        "b309f86b564e"
+      ],
+      "gloss": "sufficient for us",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "9:59:9",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "حَسْبُنَا"
     },
     "state:tok:9:5:5": {
       "entry_contexts": [
@@ -38651,6 +40990,19 @@
       "loc": "9:63:16",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلْعَظِيمُ"
+    },
+    "state:tok:9:63:2": {
+      "entry_contexts": [
+        "d6a03d1febc7"
+      ],
+      "gloss": "they know",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "9:63:2",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يَعْلَمُوٓا۟"
     },
     "state:tok:9:70:1": {
       "entry_contexts": [
@@ -38858,6 +41210,34 @@
       "loc": "9:80:11",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "مَرَّةًۭ"
+    },
+    "state:tok:9:80:5": {
+      "entry_contexts": [
+        "36ffe82c1c8a",
+        "68fbbd2981cf"
+      ],
+      "gloss": "you ask forgiveness",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "9:80:5",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "تَسْتَغْفِرْ"
+    },
+    "state:tok:9:80:8": {
+      "entry_contexts": [
+        "36ffe82c1c8a",
+        "68fbbd2981cf"
+      ],
+      "gloss": "you ask forgiveness",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "9:80:8",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "تَسْتَغْفِرْ"
     },
     "state:tok:9:81:19": {
       "entry_contexts": [
@@ -39082,6 +41462,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَيُنَبِّئُكُم"
     },
+    "state:tok:9:97:7": {
+      "entry_contexts": [
+        "e786f87489bf",
+        "fc62d7c0ebbf"
+      ],
+      "gloss": "they know",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "9:97:7",
+      "procedure": "surface-state-transition/particle-state-split",
+      "surface": "يَعْلَمُوا۟"
+    },
     "state:tok:9:99:8": {
       "entry_contexts": [
         "728e4a8ba16e"
@@ -39162,6 +41556,13 @@
       "resolved": [
         "12:80:30",
         "28:25:8"
+      ]
+    },
+    "أتخذ": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "6:14:4",
+        "25:28:3"
       ]
     },
     "أترابا": {
@@ -39385,6 +41786,13 @@
       ],
       "resolved": []
     },
+    "أعداء": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "3:103:13",
+        "41:28:3"
+      ]
+    },
     "أعدت": {
       "pending_ambiguous": [],
       "resolved": [
@@ -39432,6 +41840,13 @@
       "resolved": [
         "3:144:10",
         "21:34:7"
+      ]
+    },
+    "أفغير": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "3:83:1",
+        "6:114:1"
       ]
     },
     "أفي": {
@@ -39729,6 +42144,33 @@
         "13:21:4"
       ]
     },
+    "أمرنا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "3:147:13",
+        "9:50:11",
+        "10:24:29",
+        "11:40:4",
+        "11:58:3",
+        "18:10:15",
+        "23:27:10",
+        "34:12:23",
+        "42:52:6"
+      ]
+    },
+    "أمرهم": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "6:159:12",
+        "12:102:12",
+        "18:21:17",
+        "18:21:29",
+        "20:62:2",
+        "21:93:2",
+        "23:53:2",
+        "59:15:8"
+      ]
+    },
     "أملك": {
       "pending_ambiguous": [],
       "resolved": [
@@ -39905,6 +42347,13 @@
       "pending_ambiguous": [],
       "resolved": [
         "19:89:4"
+      ]
+    },
+    "إطعام": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "5:89:13",
+        "90:14:2"
       ]
     },
     "إلاهين": {
@@ -40148,6 +42597,14 @@
       ],
       "resolved": []
     },
+    "الجوار": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "42:32:3",
+        "55:24:2",
+        "81:16:1"
+      ]
+    },
     "الحر": {
       "pending_ambiguous": [],
       "resolved": [
@@ -40175,11 +42632,26 @@
         "37:125:5"
       ]
     },
+    "الخروج": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "9:46:3",
+        "50:11:8",
+        "50:42:7"
+      ]
+    },
     "الخسران": {
       "pending_ambiguous": [],
       "resolved": [
         "39:15:18",
         "22:11:24"
+      ]
+    },
+    "الخصام": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:204:17",
+        "43:18:7"
       ]
     },
     "الخلد": {
@@ -40210,6 +42682,14 @@
         "54:6:5",
         "2:186:9",
         "54:8:3"
+      ]
+    },
+    "الدعاء": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "3:38:15",
+        "21:45:8",
+        "27:80:8"
       ]
     },
     "الدين": {
@@ -40265,6 +42745,13 @@
         "40:38:8"
       ]
     },
+    "الرشد": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:256:7",
+        "7:146:20"
+      ]
+    },
     "السبت": {
       "pending_ambiguous": [],
       "resolved": [
@@ -40276,6 +42763,13 @@
       "resolved": [
         "5:63:9",
         "5:62:9"
+      ]
+    },
+    "السفهاء": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:13:12",
+        "7:155:21"
       ]
     },
     "السنين": {
@@ -40290,6 +42784,13 @@
       "resolved": [
         "65:2:14",
         "2:283:23"
+      ]
+    },
+    "الشهداء": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:282:65",
+        "2:282:74"
       ]
     },
     "الشهوات": {
@@ -40365,6 +42866,14 @@
         "16:79:4",
         "5:110:32",
         "3:49:17"
+      ]
+    },
+    "العزه": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "35:10:4",
+        "35:10:6",
+        "63:8:11"
       ]
     },
     "العزيز": {
@@ -40485,6 +42994,19 @@
         "13:9:4",
         "34:23:22",
         "42:22:24"
+      ]
+    },
+    "الكذب": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "3:75:34",
+        "3:78:27",
+        "5:103:18",
+        "16:62:7",
+        "16:116:6",
+        "16:116:14",
+        "16:116:20",
+        "58:14:17"
       ]
     },
     "الكلم": {
@@ -40647,6 +43169,13 @@
         "46:20:17"
       ]
     },
+    "الولدان": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "4:127:27",
+        "73:17:7"
+      ]
+    },
     "الولي": {
       "pending_ambiguous": [
         "42:9:8",
@@ -40659,6 +43188,13 @@
       "resolved": [
         "56:95:5",
         "102:7:4"
+      ]
+    },
+    "انظروا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "6:11:6",
+        "6:99:33"
       ]
     },
     "اهتدوا": {
@@ -40688,6 +43224,13 @@
       "resolved": [
         "3:52:19",
         "3:64:30"
+      ]
+    },
+    "باغ": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:173:16",
+        "6:145:33"
       ]
     },
     "بالإيمان": {
@@ -40799,6 +43342,13 @@
         "2:143:43"
       ]
     },
+    "بالنهار": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "6:60:8",
+        "13:10:14"
+      ]
+    },
     "بالواد": {
       "pending_ambiguous": [],
       "resolved": [
@@ -40889,6 +43439,13 @@
       "resolved": [
         "7:46:8",
         "7:48:6"
+      ]
+    },
+    "بشير": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "5:19:17",
+        "5:19:22"
       ]
     },
     "بشيرا": {
@@ -41091,6 +43648,13 @@
         "4:20:11"
       ]
     },
+    "تأخر": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:203:14",
+        "48:2:9"
+      ]
+    },
     "تأمرون": {
       "pending_ambiguous": [],
       "resolved": [
@@ -41231,6 +43795,13 @@
       "resolved": [
         "9:50:4",
         "3:120:4"
+      ]
+    },
+    "تستغفر": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "9:80:5",
+        "9:80:8"
       ]
     },
     "تستكبرون": {
@@ -41531,6 +44102,20 @@
       ],
       "resolved": []
     },
+    "جزاؤا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "5:29:12",
+        "5:33:2"
+      ]
+    },
+    "جنبا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "4:43:14",
+        "5:6:20"
+      ]
+    },
     "جنه": {
       "pending_ambiguous": [],
       "resolved": [
@@ -41598,6 +44183,13 @@
         "4:160:5"
       ]
     },
+    "حسبنا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "5:104:12",
+        "9:59:9"
+      ]
+    },
     "حسبي": {
       "pending_ambiguous": [],
       "resolved": [
@@ -41610,6 +44202,13 @@
       "resolved": [
         "2:167:17",
         "35:8:20"
+      ]
+    },
+    "حسيبا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "4:6:37",
+        "4:86:15"
       ]
     },
     "حطاما": {
@@ -41867,6 +44466,14 @@
       "resolved": [
         "12:65:6",
         "12:65:14"
+      ]
+    },
+    "رشدا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "4:6:10",
+        "18:10:16",
+        "72:14:10"
       ]
     },
     "رقبه": {
@@ -42140,6 +44747,13 @@
         "42:33:14"
       ]
     },
+    "صدقهم": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "5:119:7",
+        "33:8:4"
+      ]
+    },
     "صدقوا": {
       "pending_ambiguous": [],
       "resolved": [
@@ -42166,6 +44780,14 @@
       "resolved": [
         "4:94:5",
         "5:106:22"
+      ]
+    },
+    "ضره": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "10:12:14",
+        "22:13:3",
+        "39:38:23"
       ]
     },
     "طغيانا": {
@@ -42253,6 +44875,22 @@
       "resolved": [
         "34:9:28",
         "50:8:4"
+      ]
+    },
+    "عبدا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "4:172:6",
+        "16:75:4"
+      ]
+    },
+    "عبدنا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "8:41:23",
+        "38:17:6",
+        "38:41:2",
+        "54:9:6"
       ]
     },
     "عتيد": {
@@ -42441,6 +45079,13 @@
       "resolved": [
         "39:20:6",
         "39:20:9"
+      ]
+    },
+    "غيركم": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "5:106:19",
+        "47:38:25"
       ]
     },
     "فأبين": {
@@ -42741,6 +45386,13 @@
         "59:7:27"
       ]
     },
+    "فخلف": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "7:169:1",
+        "19:59:1"
+      ]
+    },
     "فخلقنا": {
       "pending_ambiguous": [],
       "resolved": [
@@ -42767,6 +45419,13 @@
       "resolved": [
         "9:124:15",
         "9:125:6"
+      ]
+    },
+    "فسادا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "5:33:10",
+        "5:64:43"
       ]
     },
     "فسبح": {
@@ -43015,11 +45674,27 @@
       ],
       "resolved": []
     },
+    "قتال": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:217:5",
+        "2:217:8"
+      ]
+    },
     "قتلوه": {
       "pending_ambiguous": [],
       "resolved": [
         "4:157:11",
         "4:157:33"
+      ]
+    },
+    "قدره": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:236:17",
+        "2:236:20",
+        "6:91:5",
+        "39:67:5"
       ]
     },
     "قدروا": {
@@ -43107,6 +45782,13 @@
         "55:24:6"
       ],
       "resolved": []
+    },
+    "كبائر": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "4:31:3",
+        "53:32:3"
+      ]
     },
     "كذبتم": {
       "pending_ambiguous": [],
@@ -43211,6 +45893,13 @@
         "7:81:2"
       ]
     },
+    "لذهب": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:20:17",
+        "23:91:12"
+      ]
+    },
     "لرب": {
       "pending_ambiguous": [],
       "resolved": [
@@ -43280,6 +45969,13 @@
       "resolved": [
         "41:10:15",
         "12:7:7"
+      ]
+    },
+    "للطائفين": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:125:19",
+        "22:26:13"
       ]
     },
     "للعبيد": {
@@ -43499,6 +46195,21 @@
         "1:4:1"
       ]
     },
+    "مبشرين": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:213:8",
+        "4:165:2"
+      ]
+    },
+    "مبصره": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "17:12:11",
+        "17:59:14",
+        "27:13:4"
+      ]
+    },
     "متعنا": {
       "pending_ambiguous": [],
       "resolved": [
@@ -43657,6 +46368,20 @@
         "7:31:7"
       ]
     },
+    "مسني": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "7:188:20",
+        "38:41:8"
+      ]
+    },
+    "مصدق": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "3:81:14",
+        "6:92:5"
+      ]
+    },
     "مطر": {
       "pending_ambiguous": [],
       "resolved": [
@@ -43757,6 +46482,14 @@
       ],
       "resolved": [
         "6:9:3"
+      ]
+    },
+    "ملكه": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:247:38",
+        "2:248:6",
+        "38:20:2"
       ]
     },
     "من": {
@@ -44041,6 +46774,22 @@
         "29:45:7"
       ]
     },
+    "وأقوم": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:282:91",
+        "4:46:30",
+        "73:6:7"
+      ]
+    },
+    "وأكلهم": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "4:161:6",
+        "5:62:8",
+        "5:63:8"
+      ]
+    },
     "وألق": {
       "pending_ambiguous": [
         "20:69:1",
@@ -44134,6 +46883,13 @@
         "54:3:2"
       ]
     },
+    "واختلاف": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:164:6",
+        "30:22:6"
+      ]
+    },
     "واخر": {
       "pending_ambiguous": [
         "38:58:1"
@@ -44220,6 +46976,13 @@
         "32:9:11"
       ]
     },
+    "والتقوي": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "5:2:41",
+        "58:9:14"
+      ]
+    },
     "والجار": {
       "pending_ambiguous": [],
       "resolved": [
@@ -44270,6 +47033,13 @@
         "33:35:10"
       ]
     },
+    "والصادقين": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "3:17:2",
+        "33:35:8"
+      ]
+    },
     "والصالحين": {
       "pending_ambiguous": [],
       "resolved": [
@@ -44308,6 +47078,20 @@
         "2:217:25"
       ]
     },
+    "والفضه": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "3:14:12",
+        "9:34:20"
+      ]
+    },
+    "والقانتين": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "3:17:3",
+        "33:35:6"
+      ]
+    },
     "والكافرون": {
       "pending_ambiguous": [],
       "resolved": [
@@ -44328,6 +47112,14 @@
         "69:9:5"
       ],
       "resolved": []
+    },
+    "والمحصنات": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "4:24:1",
+        "5:5:14",
+        "5:5:17"
+      ]
     },
     "والمسجد": {
       "pending_ambiguous": [],
@@ -44531,6 +47323,13 @@
       "resolved": [
         "17:32:7",
         "4:22:16"
+      ]
+    },
+    "وضربت": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:61:37",
+        "3:112:18"
       ]
     },
     "وطائفه": {
@@ -44851,6 +47650,13 @@
         "2:96:15"
       ]
     },
+    "ومثل": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:265:1",
+        "14:26:1"
+      ]
+    },
     "ومصدقا": {
       "pending_ambiguous": [],
       "resolved": [
@@ -45043,6 +47849,13 @@
       "resolved": [
         "54:28:1",
         "15:51:1"
+      ]
+    },
+    "ونصروا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "8:72:13",
+        "8:74:10"
       ]
     },
     "ونهارا": {
@@ -45402,6 +48215,15 @@
         "4:124:12"
       ]
     },
+    "يدعوا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:221:30",
+        "10:25:2",
+        "22:13:1",
+        "35:6:8"
+      ]
+    },
     "يدعون": {
       "pending_ambiguous": [
         "2:221:26",
@@ -45436,6 +48258,13 @@
       "resolved": [
         "2:217:33",
         "3:149:8"
+      ]
+    },
+    "يردون": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "2:85:41",
+        "9:101:19"
       ]
     },
     "يرونها": {
@@ -45547,6 +48376,13 @@
         "8:13:7"
       ]
     },
+    "يشهدون": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "6:150:5",
+        "25:72:3"
+      ]
+    },
     "يصدون": {
       "pending_ambiguous": [
         "4:61:13",
@@ -45617,6 +48453,13 @@
       "resolved": [
         "42:45:2",
         "40:46:2"
+      ]
+    },
+    "يعلموا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "9:63:2",
+        "9:97:7"
       ]
     },
     "يعمر": {
@@ -45744,6 +48587,13 @@
         "42:39:6"
       ]
     },
+    "ينظروا": {
+      "pending_ambiguous": [],
+      "resolved": [
+        "7:185:2",
+        "50:6:2"
+      ]
+    },
     "ينظرون": {
       "pending_ambiguous": [
         "2:210:2",
@@ -45842,7 +48692,7 @@
       ]
     },
     "surface-state-transition/particle-state-split": {
-      "count": 2266,
+      "count": 2422,
       "sample": [
         "61:5:6",
         "3:7:10",
@@ -46006,15 +48856,15 @@
     },
     "repair:repair_batch_001.evidence#live-entry:101401b11de8#field=root": {
       "affects_ayat": [
-        "quran:35:18",
-        "quran:24:21",
-        "quran:19:13",
-        "quran:19:19",
-        "quran:18:81",
         "quran:2:43",
         "quran:3:164",
+        "quran:19:13",
+        "quran:19:19",
+        "quran:4:49",
         "quran:24:30",
-        "quran:4:49"
+        "quran:24:21",
+        "quran:35:18",
+        "quran:18:81"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46159,8 +49009,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:2f0767751dd8#field=root": {
       "affects_ayat": [
-        "quran:93:8",
-        "quran:9:28"
+        "quran:9:28",
+        "quran:93:8"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46204,14 +49054,14 @@
     },
     "repair:repair_batch_001.evidence#live-entry:385725d86a5b#field=root": {
       "affects_ayat": [
+        "quran:28:29",
         "quran:2:21",
-        "quran:10:44",
-        "quran:20:10",
-        "quran:51:56",
+        "quran:114:2",
         "quran:19:26",
         "quran:24:27",
-        "quran:114:2",
-        "quran:28:29"
+        "quran:10:44",
+        "quran:51:56",
+        "quran:20:10"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46343,24 +49193,24 @@
     },
     "repair:repair_batch_001.evidence#live-entry:488d1175c005#field=root": {
       "affects_ayat": [
-        "quran:55:12",
-        "quran:32:9",
-        "quran:42:52",
-        "quran:16:6",
-        "quran:8:46",
-        "quran:34:12",
-        "quran:35:9",
-        "quran:19:17",
-        "quran:12:94",
-        "quran:56:89",
-        "quran:58:22",
-        "quran:17:85",
-        "quran:15:29",
-        "quran:26:193",
+        "quran:12:87",
         "quran:21:91",
-        "quran:2:87",
+        "quran:19:17",
+        "quran:32:9",
+        "quran:15:29",
+        "quran:34:12",
+        "quran:17:85",
+        "quran:42:52",
         "quran:38:36",
-        "quran:12:87"
+        "quran:8:46",
+        "quran:2:87",
+        "quran:56:89",
+        "quran:35:9",
+        "quran:12:94",
+        "quran:16:6",
+        "quran:55:12",
+        "quran:26:193",
+        "quran:58:22"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46483,8 +49333,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:6885a7c60ca3#field=root": {
       "affects_ayat": [
-        "quran:15:3",
-        "quran:18:46"
+        "quran:18:46",
+        "quran:15:3"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46550,14 +49400,14 @@
     },
     "repair:repair_batch_001.evidence#live-entry:746abe23a760#field=root": {
       "affects_ayat": [
-        "quran:24:63",
         "quran:2:19",
-        "quran:4:79",
+        "quran:38:36",
         "quran:3:165",
-        "quran:78:38",
         "quran:12:56",
         "quran:11:81",
-        "quran:38:36"
+        "quran:24:63",
+        "quran:4:79",
+        "quran:78:38"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46656,8 +49506,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:88946123f046#field=root": {
       "affects_ayat": [
-        "quran:36:52",
-        "quran:18:18"
+        "quran:18:18",
+        "quran:36:52"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46867,8 +49717,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:ab009aea619c#field=root": {
       "affects_ayat": [
-        "quran:20:112",
-        "quran:26:148"
+        "quran:26:148",
+        "quran:20:112"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46901,12 +49751,12 @@
     },
     "repair:repair_batch_001.evidence#live-entry:af75174c26a6#field=root": {
       "affects_ayat": [
-        "quran:2:96",
-        "quran:33:62",
         "quran:5:45",
-        "quran:2:259",
+        "quran:30:4",
         "quran:15:26",
-        "quran:30:4"
+        "quran:2:259",
+        "quran:33:62",
+        "quran:2:96"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -47006,13 +49856,13 @@
     },
     "repair:repair_batch_001.evidence#live-entry:c49dfdec1d36#field=root": {
       "affects_ayat": [
-        "quran:4:61",
-        "quran:43:57",
-        "quran:80:6",
-        "quran:8:35",
         "quran:4:167",
+        "quran:8:35",
+        "quran:4:160",
+        "quran:80:6",
+        "quran:43:57",
         "quran:14:16",
-        "quran:4:160"
+        "quran:4:61"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -47057,8 +49907,8 @@
     "repair:repair_batch_001.evidence#live-entry:c63837955935#field=root": {
       "affects_ayat": [
         "quran:27:90",
-        "quran:26:94",
-        "quran:67:22"
+        "quran:67:22",
+        "quran:26:94"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -47069,8 +49919,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:c9b15a7407f9#field=root": {
       "affects_ayat": [
-        "quran:19:97",
-        "quran:2:204"
+        "quran:2:204",
+        "quran:19:97"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -47158,8 +50008,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:d00d6dad1204#field=root": {
       "affects_ayat": [
-        "quran:38:58",
-        "quran:17:84"
+        "quran:17:84",
+        "quran:38:58"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -47170,8 +50020,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:d249ba3477f2#field=root": {
       "affects_ayat": [
-        "quran:22:45",
-        "quran:4:78"
+        "quran:4:78",
+        "quran:22:45"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -47193,8 +50043,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:d779132e894c#field=root": {
       "affects_ayat": [
-        "quran:72:19",
-        "quran:90:6"
+        "quran:90:6",
+        "quran:72:19"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -47216,8 +50066,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:e4ed181b19e8#field=root": {
       "affects_ayat": [
-        "quran:54:19",
-        "quran:41:16"
+        "quran:41:16",
+        "quran:54:19"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -47262,14 +50112,14 @@
     "repair:repair_batch_001.evidence#live-entry:e919504a83fa#field=root": {
       "affects_ayat": [
         "quran:68:17",
-        "quran:23:30",
-        "quran:4:6",
-        "quran:20:120",
-        "quran:8:17",
-        "quran:86:9",
         "quran:89:16",
         "quran:67:2",
-        "quran:2:249"
+        "quran:2:249",
+        "quran:8:17",
+        "quran:4:6",
+        "quran:20:120",
+        "quran:86:9",
+        "quran:23:30"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,

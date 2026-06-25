@@ -170,7 +170,11 @@ def main():
     sb.append("\n> hover-complete ≠ source-verified, and source-verified ≠ hover-complete: tracked independently above.\n")
     open(os.path.join(REPORTS,"qamus-2092-terminal-scoreboard.md"),"w",encoding="utf-8").write("\n".join(sb))
 
-    comp=["# Qamus 2,092 audit completion\n",
+    comp=["# Qamus 2,092 mechanical audit completion\n",
+          "> **Status vocabulary (honesty):** all 2,092 entries are **mechanically classified** with terminal "
+          "rollup fields and 0 unknown buckets. This does NOT mean every entry is **hover-complete**, "
+          "**source-photo-verified**, or **live-page-crawled** — those are separate per-field states, not "
+          "implied by 'audited' here.\n",
           f"Matrix: `qamus/reports/qamus-2092-entry-matrix.jsonl` ({len(rows):,} rows, one per entry).\n",
           "Row keys: entry_id, source_keys, category, root, lemma, section, source_photo_status, "
           "field_status{headword,root,forms,senses,counts,total_uses,quran_refs}, "
