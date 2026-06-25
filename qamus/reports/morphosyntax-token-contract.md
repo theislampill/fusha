@@ -21,7 +21,7 @@ English hover text alone cannot safely encode POS, person, number, gender, case,
 
 Add records conforming to `qamus/schemas/morphosyntax-token.schema.json`.
 
-The payload is internal evidence and teaching metadata. It may cite internal labels such as `tafsir-center:analyze_word:13:11:8:irab_sarf`, but the public hover artifact remains `src=qamus`, `kind=authored`.
+The payload is internal evidence and teaching metadata. It may cite internal labels such as `tafsir-center:analyze_word:13:11:8:irab_sarf`, but the public hover artifact remains `src=qamus`, `kind=authored`, `lang=en`.
 
 ## Minimum Fields By Class
 
@@ -126,12 +126,15 @@ Do not pack grammar tags or source names into `data-tr`.
 
 Future rendering should use a separate scrubbed grammar payload or tooltip section. Public HTML must not expose raw MCP/QAC/source names, internal provenance, or copied source wording.
 
-## Next Gate
+## Validator Gate
 
-Build `tools/validate_morphosyntax_token_metadata.py` to enforce:
+Run `tools/validate_morphosyntax_token_metadata.py` against morphosyntax JSONL to enforce:
 
 - unique `loc`
 - bounded enums for POS/case/mood/gender/person/number/state
-- public boundary fields
-- if `hover_contract.must_surface` is present, the built `wbw-lookup.json` best hover contains those contributions
-- no external source labels are emitted in the public artifact
+- public boundary fields: `public_gloss_src=qamus`, `public_gloss_kind=authored`, `public_gloss_lang=en`, and `external_source_names_public=false`
+- function-bearing segments carry `gloss_contribution` and a `hover_contract.must_surface`
+- attached subject/object/possessive pronouns preserve person and number tags
+- no external source labels leak into public-facing hover-contract text
+
+Future live/staged render validation should additionally compare `hover_contract.must_surface` against the built `wbw-lookup.json` best hover.

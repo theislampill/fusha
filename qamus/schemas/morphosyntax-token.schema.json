@@ -106,11 +106,12 @@
     },
     "public_boundary": {
       "type": "object",
-      "required": ["public_gloss_src", "public_gloss_kind", "external_source_names_public"],
+      "required": ["public_gloss_src", "public_gloss_kind", "public_gloss_lang", "external_source_names_public"],
       "additionalProperties": false,
       "properties": {
         "public_gloss_src": { "const": "qamus" },
         "public_gloss_kind": { "const": "authored" },
+        "public_gloss_lang": { "const": "en" },
         "external_source_names_public": { "const": false }
       }
     }

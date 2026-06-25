@@ -425,6 +425,33 @@ for _eid, _blob in ([(x, _fcs_blob) for x in ("FCS-021", "FCS-022", "FCS-023", "
                                              "IP-031", "IP-032", "IP-033", "IP-034")]):
     check("June25 eval fixture exists: %s" % _eid, _eid in _blob)
 
+# Morphosyntax token contract: grammar breakdown is a separate parse layer, with the same public hover boundary.
+for _art in ("qamus/schemas/morphosyntax-token.schema.json",
+             "qamus/reports/morphosyntax-token-contract.md",
+             "qamus/examples/morphosyntax_token.sample.jsonl",
+             "tools/validate_morphosyntax_token_metadata.py"):
+    check("morphosyntax-token contract artifact exists: %s" % _art, os.path.exists(os.path.join(_R, _art)))
+try:
+    _ms_schema = io.open(os.path.join(_R, "qamus", "schemas", "morphosyntax-token.schema.json"),
+                         encoding="utf-8").read()
+    check("morphosyntax-token schema requires public_gloss_lang=en",
+          '"public_gloss_lang"' in _ms_schema and '"const": "en"' in _ms_schema)
+except Exception:
+    check("morphosyntax-token schema readable", False)
+for _args, _label in ((["--self-test"], "morphosyntax validator self-test"),
+                      ([os.path.join(_R, "qamus", "examples", "morphosyntax_token.sample.jsonl")],
+                       "morphosyntax sample validates")):
+    try:
+        _v = subprocess.run([sys.executable, os.path.join(_R, "tools", "validate_morphosyntax_token_metadata.py")] + _args,
+                            capture_output=True, text=True)
+        check(_label, _v.returncode == 0)
+        if _v.returncode != 0:
+            _out = (_v.stdout or _v.stderr).strip().splitlines()
+            if _out:
+                print("  ", _out[-1])
+    except Exception:
+        check(_label + " runnable", False)
+
 # closure-2092: report-ergonomics gate (Markdown counterpart to artifact ergonomics) + root-cause ledger
 # + open-stem hygiene gates (surface-index covers usage.forms; lane sanity — no verb-clitic/false-blocker pollution)
 for _vname, _label in [("check_report_ergonomics.py", "closure-2092 report ergonomics (no crushed one-line Markdown reports)"),
