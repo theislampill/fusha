@@ -1,0 +1,149 @@
+{
+  "approach": "DR04 — remaining stems / authoring lane readiness",
+  "count": 8,
+  "date": "2026-06-25",
+  "findings": [
+    {
+      "affected": "tools/build_form_variant_*.py",
+      "approach": "dr04",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "existing-entry form authoring lane",
+      "finding_id": "DR04-form_variant",
+      "remaining_action": "GO — top lever for 90%",
+      "status": "confirmed_fixed",
+      "verification_method": "build_form_variant_candidates.py + build_form_variant_apply.py + validate_form_variant_family_batches.py present; 2-vote; live-apply private-context"
+    },
+    {
+      "affected": "tools/build_host_lexeme_candidates.py",
+      "approach": "dr04",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "noun-host possessive lane",
+      "finding_id": "DR04-host_lexeme",
+      "remaining_action": "GO — noun-only (verb clitics split out, lane-sanity PASS)",
+      "status": "confirmed_fixed",
+      "verification_method": "build_host_lexeme_candidates.py + validate_suffix_pronoun_decisions.py + suffix-pronoun-decision.schema.json"
+    },
+    {
+      "affected": "tools/build_token_irab_decisions.py",
+      "approach": "dr04",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "token iʿrāb / function-word lane",
+      "finding_id": "DR04-token_irab",
+      "remaining_action": "GO — two votes must agree on answer AND reason",
+      "status": "confirmed_fixed",
+      "verification_method": "build_token_irab_decisions.py + validate_token_irab_decisions.py"
+    },
+    {
+      "affected": "tools/build_verb_clitic_candidates.py",
+      "approach": "dr04",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "verb-clitic object/subject lane",
+      "finding_id": "DR04-verb_clitic",
+      "remaining_action": "review-only (two-vote); not auto",
+      "status": "confirmed_fixed",
+      "verification_method": "build_verb_clitic_candidates.py + validator + verb-clitic-candidate.schema.json (638 review-only)"
+    },
+    {
+      "affected": "tools/build_new_entry_proposals.py",
+      "approach": "dr04",
+      "blocks": {
+        "90%": true,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "missing-entry proposals lane",
+      "finding_id": "DR04-new_entry",
+      "remaining_action": "owner-gated, review-only",
+      "status": "confirmed_fixed",
+      "verification_method": "build_new_entry_proposals.py + validator + new-entry-proposal.schema.json (52 owner-gated)"
+    },
+    {
+      "affected": "tools/build_source_entry_repair_candidates.py",
+      "approach": "dr04",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "source-entry repair lane",
+      "finding_id": "DR04-source_entry_repair",
+      "remaining_action": "source-gated where source_photo mode",
+      "status": "confirmed_fixed",
+      "verification_method": "build_source_entry_repair_candidates.py + validator + schema (forms_array/quran_refs/source_photo)"
+    },
+    {
+      "affected": "index-miss-live-rebuild-instructions",
+      "approach": "dr04",
+      "blocks": {
+        "90%": true,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "index-miss lane",
+      "finding_id": "DR04-index_miss",
+      "remaining_action": "owner-gated live reindex; NOT authoring",
+      "status": "narrowed",
+      "verification_method": "live expand.py already matches usage.forms under MIN_FORM_LEN+homograph quarantine; <=1,050 upper bound"
+    },
+    {
+      "affected": "source-photo readiness",
+      "approach": "dr04",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": true,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "source-photo / scholar-gated lane",
+      "finding_id": "DR04-source_photo",
+      "remaining_action": "owner/source-gated (crops)",
+      "status": "confirmed_fixed",
+      "verification_method": "source-entry-repair source_photo mode (4 queued); corpus complete, needs head-on crops"
+    }
+  ],
+  "head": "d67f873",
+  "statuses": {
+    "confirmed_fixed": 7,
+    "narrowed": 1
+  },
+  "summary": "Lane-readiness re-derived from the current tree (generator + validator + schema confirmed present per lane). **GO:** form_variant (top lever), host_lexeme (noun-only), token_irab. **Built / review-only:** verb_clitic (638), source_entry_repair. **Owner-gated:** new_entry (52), index_miss (live reindex, not authoring). **Source/scholar-gated:** source_photo. The prior NO-GO (polluted host-lexeme, unhandled forms-array, missing generators) is resolved — all generators+validators+schemas exist and pass the regression gate."
+}

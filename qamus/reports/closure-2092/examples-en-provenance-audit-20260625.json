@@ -1,0 +1,49 @@
+{
+  "_generator": "audit_examples_en_provenance",
+  "blocks": {
+    "coverage_to_90": false,
+    "hover_authoring": false,
+    "public_repo_redistribution_cleanliness": true
+  },
+  "bracket_pct": 41.3,
+  "classification": "owner-gated (source/licensing decision)",
+  "dataset": "qamus/data/current/entries.jsonl",
+  "date": "20260625",
+  "empty_en": 0,
+  "examples_with_en": 7700,
+  "finding": "EXTERNAL-TRANSLATION-PRESENT",
+  "interpretation": "bracketed-interpolation density at this level is the signature of the Saheeh International published translation; examples[].en is a verbatim external translation, NOT Qamus-authored",
+  "remediation_options": [
+    "A) confirm Saheeh International redistribution rights for da'wah + add explicit attribution + license notice to the dataset/repo",
+    "B) replace examples[].en with an openly-licensed translation (CC0/CC-BY) — see the open-gloss deep-research",
+    "C) author original Qamus example renderings (large effort)",
+    "D) drop examples[].en from the PUBLIC dataset, keep examples[].ar + ref only (Arabic is Tanzil CC BY 3.0, already attributed)"
+  ],
+  "samples": [
+    {
+      "en": "[You disbelievers are] like those before you; they were stronger than you in power and more abundant in wealth and children. They enjoyed their portion [of worl",
+      "ref": "9:69"
+    },
+    {
+      "en": "And we used to enter into vain discourse with those who engaged [in it],",
+      "ref": "74:45"
+    },
+    {
+      "en": "Who are in [empty] discourse amusing themselves.",
+      "ref": "52:12"
+    },
+    {
+      "en": "Muhammad is the Messenger of Allah; and those with him are forceful against the disbelievers, merciful among themselves. You see them bowing and prostrating [in",
+      "ref": "48:29"
+    },
+    {
+      "en": "That Day, the people will depart separated [into categories] to be shown [the result of] their deeds.",
+      "ref": "99:6"
+    }
+  ],
+  "scope_note": "this is the entry-level example-āyah translation field in the PUBLIC dataset; it is SEPARATE from the per-word hover output (wbw-lookup 'words'), which is live-verified Qamus-authored and leak-free",
+  "total_examples": 7700,
+  "unique_en_strings": 5537,
+  "with_bracket_interpolation": 3179,
+  "with_translator_name": 0
+}

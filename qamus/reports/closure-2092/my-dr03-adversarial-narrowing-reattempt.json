@@ -1,0 +1,100 @@
+{
+  "approach": "DR03 — adversarial narrowing / false-positive control",
+  "count": 5,
+  "date": "2026-06-25",
+  "findings": [
+    {
+      "affected": "tools/validate_blocker_root_cause_ledger.py",
+      "approach": "dr03",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Repo is still globally anchored at 82.49%",
+      "finding_id": "DR03-1",
+      "remaining_action": "none — old 82.49 figure is historical, not current",
+      "status": "false_positive",
+      "verification_method": "ledger validator: 43,005/49,900=86.18% repo + live"
+    },
+    {
+      "affected": "tools/check_report_ergonomics.py",
+      "approach": "dr03",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Historical-report hygiene still broken",
+      "finding_id": "DR03-2",
+      "remaining_action": "soft warnings only (non-blocking)",
+      "status": "narrowed",
+      "verification_method": "report ergonomics PASS (89 reports, 19 soft warns); reconciliation PASS"
+    },
+    {
+      "affected": "dist/claude-ai/, curriculum/",
+      "approach": "dr03",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Learner production / drill content is missing",
+      "finding_id": "DR03-3",
+      "remaining_action": "gap was packaging/runtime, not absence of content",
+      "status": "narrowed",
+      "verification_method": "claude.ai pack present w/ learner+review self-tests; curriculum dirs exist"
+    },
+    {
+      "affected": "tools/check_regressions.py",
+      "approach": "dr03",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Real remaining gaps: stale docs, candidate schema parity, corpus validation, claude.ai packaging, under-validated sidecars",
+      "finding_id": "DR03-4",
+      "remaining_action": "none of these block; examples[].en is the one real residual",
+      "status": "confirmed_fixed",
+      "verification_method": "each has a wired validator now (canonical-paths/schemas/corpus-fixture/claude-ai-pack/batch-provenance), all PASS"
+    },
+    {
+      "affected": "examples-en-provenance-audit-20260625",
+      "approach": "dr03",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": true,
+        "sarf/nahw": false
+      },
+      "finding": "All concerns were over-stated (nothing serious remains)",
+      "finding_id": "DR03-5",
+      "remaining_action": "escalated to owner-gated (DR02-5)",
+      "status": "reopened",
+      "verification_method": "examples[].en copied-translation was UNDER-stated by every prior pass"
+    }
+  ],
+  "head": "d67f873",
+  "statuses": {
+    "confirmed_fixed": 1,
+    "false_positive": 1,
+    "narrowed": 2,
+    "reopened": 1
+  },
+  "summary": "Old concerns triaged: the '82.49% anchor' is a **false positive** (now 86.18% repo+live); 'historical hygiene broken' is **narrowed** to soft warnings; 'learner content missing' is **narrowed** (it was a packaging/runtime gap, not absence). The real residuals all have wired, passing validators. The one **reopened** item is the opposite of over-statement: the examples[].en copied-translation was UNDER-stated by every prior pass and is now escalated to an owner-gated blocker."
+}

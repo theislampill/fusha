@@ -1,0 +1,81 @@
+{
+  "approach": "DR05 — open-stem casebook / unsafe families",
+  "count": 4,
+  "date": "2026-06-25",
+  "findings": [
+    {
+      "affected": "qamus/reports/closure-2092/review-only-casebook.jsonl",
+      "approach": "dr05",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Backlog is one undifferentiated pile",
+      "finding_id": "DR05-1",
+      "remaining_action": "none — fully differentiated",
+      "status": "false_positive",
+      "verification_method": "review-only-casebook.jsonl: 1,606 families, 9 buckets, per-row lane/gate/validator/next_command/contributes_to_90"
+    },
+    {
+      "affected": "validate_open_stem_lane_sanity.py",
+      "approach": "dr05",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Structural reroutes (هدي already-present, أتي/رأي unflattened) still mis-routed",
+      "finding_id": "DR05-2",
+      "remaining_action": "owner-gated live reindex for index-miss families",
+      "status": "confirmed_fixed",
+      "verification_method": "lane-sanity PASS; casebook bucket1='structural reroute — no authoring' (هدي example) routed to reindex"
+    },
+    {
+      "affected": "tools/check_regressions.py",
+      "approach": "dr05",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Unsafe families must be frozen as rejection fixtures",
+      "finding_id": "DR05-3",
+      "remaining_action": "none",
+      "status": "confirmed_fixed",
+      "verification_method": "check_regressions scar-family fixtures (>=16: verb-clitic+voice+banned كذبوا/ويقتلون/فاستقيموا/جاءني) all REJECT"
+    },
+    {
+      "affected": "build_new_entry_proposals.py",
+      "approach": "dr05",
+      "blocks": {
+        "90%": true,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "True missing-entry families need owner-gated proposals",
+      "finding_id": "DR05-4",
+      "remaining_action": "owner decision to author entries",
+      "status": "confirmed_fixed",
+      "verification_method": "new_entry lane: 52 proposals (سوأ/رضو/ربب/صلو/زكو); owner-gated review-only"
+    }
+  ],
+  "head": "d67f873",
+  "statuses": {
+    "confirmed_fixed": 3,
+    "false_positive": 1
+  },
+  "summary": "The backlog is fully differentiated: `review-only-casebook.jsonl` holds **1,606 families across 9 buckets**, each row carrying bucket / family_key / root_cause / gate / generator / validator / next_command / contributes_to_90 — i.e. an open-stem-casebook-v2 already. Structural reroutes (هدي already-present → reindex; أتي/رأي flattened), function-word lanes, owner-gated missing entries (52), and frozen scar fixtures (كذبوا/ويقتلون/فاستقيموا/جاءني, all REJECT in the gate) are each routed to the correct lane with the correct gate."
+}

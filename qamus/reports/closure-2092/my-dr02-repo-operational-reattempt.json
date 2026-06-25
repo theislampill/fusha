@@ -1,0 +1,115 @@
+{
+  "approach": "DR02 — repo operations, paths, provenance, claude.ai pack",
+  "count": 6,
+  "date": "2026-06-25",
+  "findings": [
+    {
+      "affected": "tools/validate_canonical_paths.py",
+      "approach": "dr02",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Canonical path drift must be gated",
+      "finding_id": "DR02-1",
+      "remaining_action": "none",
+      "status": "confirmed_fixed",
+      "verification_method": "validate_canonical_paths.py PASS (379 files, 0 stale)"
+    },
+    {
+      "affected": "tools/check_regressions.py",
+      "approach": "dr02",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Batch / provenance parity must be hard-gated",
+      "finding_id": "DR02-2",
+      "remaining_action": "none",
+      "status": "confirmed_fixed",
+      "verification_method": "check_regressions.py batch + provenance gates PASS"
+    },
+    {
+      "affected": "scripts/verify_claude_ai_pack.py",
+      "approach": "dr02",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "claude.ai pack must be a small text-only operational pack, not giant JSONL",
+      "finding_id": "DR02-3",
+      "remaining_action": "none",
+      "status": "confirmed_fixed",
+      "verification_method": "verify_claude_ai_pack.py PASS (28 files, 139,983 B, <5MB, no file >500KB)"
+    },
+    {
+      "affected": "tools/validate_corpus_fixture.py",
+      "approach": "dr02",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Corpus fixture must be read-only (no live write, no translation copy)",
+      "finding_id": "DR02-4",
+      "remaining_action": "none",
+      "status": "confirmed_fixed",
+      "verification_method": "check_regressions corpus fixture gate PASS"
+    },
+    {
+      "affected": "qamus/data/current/entries.jsonl; tools/audit_examples_en_provenance.py",
+      "approach": "dr02",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": true,
+        "sarf/nahw": false
+      },
+      "finding": "examples[].en must be qamus-authored public text, NOT a copied translation — is it covered by a validator, or a policy gap?",
+      "finding_id": "DR02-5",
+      "remaining_action": "OWNER DECISION: confirm Saheeh-Intl redistribution rights+attribute / replace with open-licensed / author original / drop en from public dataset. NOTE: separate from hover output (clean).",
+      "status": "confirmed_unfixed_owner_gated",
+      "verification_method": "audit_examples_en_provenance.py: 7,700 examples, 41.3% carry Saheeh-International [bracket] signature; dataset validator gates structure/leak/private but NOT anti-copy"
+    },
+    {
+      "affected": "validate_current_qamus_dataset.py; live artifact",
+      "approach": "dr02",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Public-output (hover) provenance leak risk",
+      "finding_id": "DR02-6",
+      "remaining_action": "none for hover output",
+      "status": "confirmed_fixed",
+      "verification_method": "live words scan: 0 informed_by/qac/tanzil/ocr keys; ALLOWED_* + PRIVATE_FIELDS + LEAK_PAT gate every dataset level"
+    }
+  ],
+  "head": "d67f873",
+  "statuses": {
+    "confirmed_fixed": 5,
+    "confirmed_unfixed_owner_gated": 1
+  },
+  "summary": "Canonical-path hygiene, batch/provenance parity, the claude.ai pack, and the corpus fixture are all validator-gated and PASS. The hover output is leak-free (0 private keys live + structural gating at every dataset level). **The decisive DR02 finding: `examples[].en` is NOT qamus-authored — it is verbatim Saheeh International** (7,700 examples, 41.3% carry the `[bracket]` interpolation signature), copied into the PUBLIC dataset. The dataset validator gates structure/leak/private keys but has no anti-copy guard. Built `audit_examples_en_provenance.py` to quantify it. **Classification: owner-gated (source/licensing).** It blocks public-repo redistribution cleanliness only — NOT coverage-to-90 and NOT the (clean) hover output."
+}

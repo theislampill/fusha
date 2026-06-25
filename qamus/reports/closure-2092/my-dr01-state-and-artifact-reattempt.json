@@ -1,0 +1,115 @@
+{
+  "approach": "DR01 — state, canonical artifacts, liveness",
+  "count": 6,
+  "date": "2026-06-25",
+  "findings": [
+    {
+      "affected": "Phase0 current-truth-reconciliation-20260625",
+      "approach": "dr01",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Commit identity inconsistent across GitHub UI (a0f596b), report JSON (3d621c1), and prior final message (d67f873) — which is the real HEAD?",
+      "finding_id": "DR01-1",
+      "remaining_action": "none — real HEAD=origin/main=GitHub=d67f873; a0f596b=prior-tranche tip(stale view), 3d621c1=stale report text",
+      "status": "confirmed_fixed",
+      "verification_method": "git rev-parse + git ls-remote origin main (live remote)"
+    },
+    {
+      "affected": "current-truth-reconciliation-20260625",
+      "approach": "dr01",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Coverage numbers must be labelled repo-verified / live-verified / claimed / stale, not stated bare",
+      "finding_id": "DR01-2",
+      "remaining_action": "none",
+      "status": "confirmed_fixed",
+      "verification_method": "Phase0 report labels every number by evidence class"
+    },
+    {
+      "affected": "live /srv/.../qamus_wbw/build/wbw-lookup.json",
+      "approach": "dr01",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Live coverage was only 'private-deploy-claimed' (86.18%) — never read back from the live artifact",
+      "finding_id": "DR01-3",
+      "remaining_action": "none — upgraded to live-verified; live==repo exactly",
+      "status": "confirmed_fixed",
+      "verification_method": "read live wbw-lookup.json _meta.coverage (glossed 43005/49900=86.18, built 2026-06-25T03:48:30Z); 0 leaks in words"
+    },
+    {
+      "affected": "qamus/reports/qamus-2092-audit-completion.md",
+      "approach": "dr01",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "2,092-entry 'audited' could be mis-read as 'fully checked / hover-complete / source-verified'",
+      "finding_id": "DR01-4",
+      "remaining_action": "none — 'mechanically classified' != hover-complete/source-verified, stated explicitly",
+      "status": "confirmed_fixed",
+      "verification_method": "status-vocabulary banner emitted by audit_qamus_2092_entries.py"
+    },
+    {
+      "affected": "(Phase 2 of THIS tranche)",
+      "approach": "dr01",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Public 2,092-page crawl never performed (only a home-page 200 check)",
+      "finding_id": "DR01-5",
+      "remaining_action": "execute throttled read-only crawl + live-vs-repo reconciliation (Phase 2)",
+      "status": "confirmed_unfixed",
+      "verification_method": "read-only home check 200/2092 only; full crawl deferred prior tranche"
+    },
+    {
+      "affected": "tools/validate_report_reconciliation.py",
+      "approach": "dr01",
+      "blocks": {
+        "90%": false,
+        "authoring": false,
+        "claude.ai": false,
+        "corpus": false,
+        "public-redistribution": false,
+        "sarf/nahw": false
+      },
+      "finding": "Historical/superseded reports could masquerade as current",
+      "finding_id": "DR01-6",
+      "remaining_action": "none",
+      "status": "confirmed_fixed",
+      "verification_method": "validate_report_reconciliation.py PASS; 3d621c1 stale text flagged in Phase0"
+    }
+  ],
+  "head": "d67f873",
+  "statuses": {
+    "confirmed_fixed": 5,
+    "confirmed_unfixed": 1
+  },
+  "summary": "Settled the truth-source problem head-on (Phase 0). The real current HEAD is **d67f873**, identical across the working tree, the local tracking ref, AND the actual GitHub remote (`git ls-remote`). `a0f596b` is the prior open-stem tranche tip (a stale reviewer view); `3d621c1` is stale text inside the prior final report (its HEAD-at-generation). Coverage is **86.18% (43,005/49,900), now LIVE-verified** by reading the live wbw-lookup `_meta.coverage` (built 2026-06-25T03:48:30Z) — equal to repo. The one open DR01 item is the **public 2,092-page crawl**, executed in Phase 2 of this tranche."
+}
