@@ -82,13 +82,13 @@ A candidate is one JSON object:
     "proper_name_as_verb": false
   },
   "decision": "pending",                   // pending | certified | rejected
-  "public_render": {"src": "qamus", "kind": "authored"}
+  "public_render": {"src": "qamus", "kind": "authored", "lang": "en"}
 }
 ```
 
 `provenance.informed_by` records **which external sources were consulted**, by name, as a
 label. It does **not** contain their text. When the candidate ships, the public render object
-is the **only** thing exposed: `{"src": "qamus", "kind": "authored"}`. No `informed_by`, no
+is the **only** thing exposed: `{"src": "qamus", "kind": "authored", "lang": "en"}`. No `informed_by`, no
 external gloss, ever crosses the line.
 
 ## Stage 2 — De-duplication against the source-address graph
@@ -125,7 +125,7 @@ A certified candidate is compiled into an **apply payload** — the minimal, val
 live app needs. For a repair it is `{address, field-level changes}`; for an add it is a full
 entry record matching the live schema. The payload:
 
-- carries `public_render: {src:"qamus", kind:"authored"}` and **no** `informed_by`;
+- carries `public_render: {src:"qamus", kind:"authored", lang:"en"}` and **no** `informed_by`;
 - references Qurʾān by `surah:ayah` only, never embedding altered text;
 - is schema-validated locally (stdlib JSON) before it is allowed to leave the repo.
 

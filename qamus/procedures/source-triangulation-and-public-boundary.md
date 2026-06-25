@@ -13,6 +13,9 @@ Before authoring:
    particles are represented in the authored hover or routed to nahw.
 5. Keep source labels, screenshots, OCR snippets, and `informed_by` out of the
    public payload.
+6. For any public/runtime export record, require exactly
+   `{src:"qamus",kind:"authored",lang:"en"}`. Legacy internal mirrors may omit
+   `lang`, but export validation must not.
 
 Reject or reroute when:
 

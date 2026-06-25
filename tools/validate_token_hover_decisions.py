@@ -5,12 +5,14 @@
 Fails closed if:
   - a record lacks loc/gloss, or loc is not S:A:W;
   - src != "qamus" or kind != "authored" (public record must be clean);
+  - --require-lang-en is set and lang != "en" (required for public/runtime export);
   - the gloss text contains an external source name (Tafsir/QAC/Quran.com/Tanzil) — that would leak publicly;
   - duplicate loc (a token must have exactly one decision — the override is unambiguous).
 internal_provenance MAY cite external sources (it never ships); the public fields may not.
 
-Usage: python tools/validate_token_hover_decisions.py <decisions.jsonl>
+Usage: python tools/validate_token_hover_decisions.py [--require-lang-en] <decisions.jsonl>
 """
+import argparse
 import json
 import re
 import sys
@@ -23,9 +25,15 @@ REVIEW_FIELDS = {"gate", "reasoning", "internal_provenance"}
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("usage: validate_token_hover_decisions.py <decisions.jsonl>"); sys.exit(2)
-    path = sys.argv[1]
+    ap = argparse.ArgumentParser()
+    ap.add_argument("decisions", help="token-addressed hover-decision JSONL")
+    ap.add_argument(
+        "--require-lang-en",
+        action="store_true",
+        help="enforce lang='en' for public/runtime export; legacy internal mirrors may omit it",
+    )
+    a = ap.parse_args()
+    path = a.decisions
     strict_linguistic = "andon_hover_regression_repairs" in Path(path).name
     errors, n, seen = [], 0, {}
     for ln_no, ln in enumerate(open(path, encoding="utf-8"), 1):
@@ -44,6 +52,8 @@ def main():
             errors.append("%s: missing gloss" % loc)
         if d.get("src") != "qamus" or d.get("kind") != "authored":
             errors.append("%s: public record must be src=qamus kind=authored" % loc)
+        if a.require_lang_en and d.get("lang") != "en":
+            errors.append("%s: public/runtime export record must set lang=en" % loc)
         has_review_fields = bool(REVIEW_FIELDS & set(d))
         if strict_linguistic:
             for field in ("surface", "decision_state", "gate", "reasoning"):

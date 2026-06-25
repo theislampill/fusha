@@ -64,6 +64,7 @@ The shipped word-by-word hover/gloss artifact obeys, for **every** published ent
 ```
 gloss.src   === 'qamus'        // always; never an external source name
 gloss.kind  === 'authored'     // always; there is no public 'imported' kind
+gloss.lang  === 'en'           // always for the English hover layer
 'informed_by' not in gloss     // stripped before publication
 ```
 
@@ -122,7 +123,7 @@ Before committing to this **public** repo, confirm every item:
 - [ ] Any Qurʾanic text reproduced is **byte-for-byte unaltered**.
 - [ ] `informed_by` labels (if present) are confined to **internal** schemas and
       are **not** in any public artifact.
-- [ ] Every published gloss is `{src:'qamus', kind:'authored'}`; un-authored words
+- [ ] Every published gloss is `{src:'qamus', kind:'authored', lang:'en'}`; un-authored words
       are `PENDING`/omitted.
 
 If any box is unchecked, the commit does not go in.
@@ -133,5 +134,5 @@ If any box is unchecked, the commit does not go in.
   primary scripture**.
 - We consult external corpora the way a scholar consults a reference shelf: to
   **check** our work, named internally as evidence, never reproduced.
-- The public artifact is self-evidently ours: `{src:'qamus', kind:'authored'}`,
+- The public artifact is self-evidently ours: `{src:'qamus', kind:'authored', lang:'en'}`,
   with `PENDING` wherever our confidence runs out.

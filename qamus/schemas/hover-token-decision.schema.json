@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "fusha/hover-token-decision.schema.json",
   "title": "Token-addressed hover decision",
-  "description": "A per-token (quran:S:A:W) hover gloss that OVERRIDES the surface-key TSV. Resolves norm_strict collisions the surface-key layer cannot represent (لَمْ/لِمَ، مَن/مِن، إِنْ/إِنَّ، أَمْ/أُمّ): same norm_strict key, but the vocalized surface (and iʿrāb) selects a per-token reading. Precedence: token decision > surface-key TSV > pending. The runtime artifact is JSONL (one object per line) at qamus-service/ref/fusha-hover-token-decisions.jsonl (gitignored); the live renderer (qamus_wbw/expand.py) applies it as the highest-precedence pass, exempt from the homograph denylist. Public record stays {src:'qamus',kind:'authored'}; internal_provenance may cite QAC/Tanzil/Quran.com/Tafsir-MCP but NONE leak publicly.",
+  "description": "A per-token (quran:S:A:W) hover gloss that OVERRIDES the surface-key TSV. Resolves norm_strict collisions the surface-key layer cannot represent (لَمْ/لِمَ، مَن/مِن، إِنْ/إِنَّ، أَمْ/أُمّ): same norm_strict key, but the vocalized surface (and iʿrāb) selects a per-token reading. Precedence: token decision > surface-key TSV > pending. The runtime artifact is JSONL (one object per line) at qamus-service/ref/fusha-hover-token-decisions.jsonl (gitignored); the live renderer (qamus_wbw/expand.py) applies it as the highest-precedence pass, exempt from the homograph denylist. Public/runtime export records stay {src:'qamus',kind:'authored',lang:'en'}; legacy internal mirrors may omit lang, but validate_token_hover_decisions.py --require-lang-en enforces it at export time. internal_provenance may cite QAC/Tanzil/Quran.com/Tafsir-MCP but NONE leak publicly.",
   "type": "object",
   "required": ["loc", "gloss", "src", "kind"],
   "additionalProperties": true,
@@ -14,7 +14,7 @@
     "key": { "type": "string", "description": "the norm_strict surface key this token would otherwise collide on" },
     "src": { "const": "qamus" },
     "kind": { "const": "authored" },
-    "lang": { "type": "string" },
+    "lang": { "const": "en", "description": "Required for public/runtime export; legacy internal mirrors may omit it." },
     "internal_provenance": {
       "type": "object",
       "description": "internal-only; never shipped to the public artifact",

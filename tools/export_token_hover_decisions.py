@@ -8,7 +8,8 @@ loc resolves the collision. This emits one JSONL decision per currently-pending 
 selects a reading; SAME-surface polysemy (وَمَا، لَمَّا، bare إِنْ) is left pending (needs iʿrāb).
 
 Output (JSONL) is the runtime artifact consumed by qamus_wbw/expand.py at
-qamus-service/ref/fusha-hover-token-decisions.jsonl (gitignored). Public record stays {src:'qamus',kind:'authored'}.
+qamus-service/ref/fusha-hover-token-decisions.jsonl (gitignored). Public/runtime records stay
+{src:'qamus',kind:'authored',lang:'en'}.
 
 Config via ENV: QAMUS_WBW_SERVICES (for norm_strict), QAMUS_WBW_ARTIFACT (verses+words). No path hardcoded.
 """

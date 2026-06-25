@@ -10,6 +10,7 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -251,12 +252,38 @@ try:
     for r in _td:
         if "did not" in (r.get("gloss") or "") or r.get("gloss") == "why":
             _glosses_for_lam.add(r.get("gloss"))
-    _pubclean = all(r.get("src") == "qamus" and r.get("kind") == "authored" for r in _td)
+    _pubclean = all(r.get("src") == "qamus" and r.get("kind") == "authored" and r.get("lang", "en") == "en" for r in _td)
     _multi = len(_glosses_for_lam) >= 2  # at least 'did not' and 'why' both present
 except Exception:
     _pubclean = _multi = False
-check("token layer: public records src=qamus,kind=authored", _pubclean)
+check("token layer: public records src=qamus,kind=authored and any lang is en", _pubclean)
 check("token layer resolves a surface-key collision (>=2 distinct per-token glosses incl لَمْ/لِمَ)", _multi)
+try:
+    _validator = os.path.join(ROOT, "tools", "validate_token_hover_decisions.py")
+    _good = {"loc": "1:1:1", "gloss": "in the name", "src": "qamus", "kind": "authored", "lang": "en"}
+    _bad = {"loc": "1:1:1", "gloss": "in the name", "src": "qamus", "kind": "authored"}
+    _tmp_paths = []
+    for _row in (_good, _bad):
+        _tmp = tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".jsonl", delete=False)
+        try:
+            _tmp.write(json.dumps(_row, ensure_ascii=False) + "\n")
+            _tmp_paths.append(_tmp.name)
+        finally:
+            _tmp.close()
+    _good_run = subprocess.run([sys.executable, _validator, "--require-lang-en", _tmp_paths[0]],
+                               capture_output=True, text=True)
+    _bad_run = subprocess.run([sys.executable, _validator, "--require-lang-en", _tmp_paths[1]],
+                              capture_output=True, text=True)
+    _strict_lang_ok = _good_run.returncode == 0 and _bad_run.returncode != 0
+except Exception:
+    _strict_lang_ok = False
+finally:
+    for _p in locals().get("_tmp_paths", []):
+        try:
+            os.unlink(_p)
+        except OSError:
+            pass
+check("token layer: public/runtime export validation requires lang=en", _strict_lang_ok)
 
 # 11d. the derived grammar eval bank meets the >=72 floor and the state graph sample is non-trivial
 try:
