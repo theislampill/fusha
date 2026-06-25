@@ -1,0 +1,38 @@
+{
+  "_generator": "FINALIZATION tranche Phase 0 current-truth reconciliation",
+  "date": "2026-06-25",
+  "head": {
+    "working_tree": "d67f873",
+    "local_origin_main": "d67f873",
+    "github_refs_heads_main": "d67f873",
+    "tree_dirty": 0,
+    "branch": "main",
+    "real_current_head": "d67f873",
+    "a0f596b": "stale/historical — tip of prior open-stem hygiene tranche, 5 commits back",
+    "3d621c1": "stale internal text — HEAD when prior final report generated; superseded by 2a95bd2+d67f873",
+    "agreement": "working tree == local tracking ref == actual GitHub remote, all d67f873"
+  },
+  "coverage": {
+    "repo_verified": {"resolved": 43005, "word_locs": 49900, "pct": 86.18, "pending": 6895},
+    "live_verified": {"glossed": 43005, "word_locs": 49900, "pct": 86.18, "pending_marked": 4867,
+      "built_at": "2026-06-25T03:48:30Z", "source_sha": "65797d7d5599fadd", "entry_count": 2092,
+      "artifact": "/srv/dawah-ops/hermes-workspace/qamus-app/qamus_wbw/build/wbw-lookup.json",
+      "artifact_bytes": 8242823, "artifact_sha16": "8d3c077abac42890",
+      "served_equals_mirror": true, "rollback_prev_present": true},
+    "pending_reconciliation": "live pending_marked 4867 is the explicitly-emitted subset; 6895-4867=2028 are silent-pending word_locs; coverage numerator 43005 and pct 86.18 identical live vs repo"
+  },
+  "blockers_repo_verified": {"stem_base_unknown": 4723, "source_entry_unverified": 1792,
+    "same_surface_polysemy_requires_i3rab": 380, "proper_noun_no_qamus_entry": 0, "total": 6895},
+  "public_qamus": {"entry_count": 2092, "split": {"verb": 947, "noun": 1045, "particle": 100},
+    "home_http": 200, "class": "live-verified+repo-verified"},
+  "gates": {"total": 14, "passed": 14, "failed": 0,
+    "list": ["check_artifact_ergonomics", "check_report_ergonomics", "validate_report_reconciliation",
+      "validate_canonical_paths", "validate_current_qamus_dataset", "validate_surface_index_covers_usage_forms",
+      "validate_open_stem_lane_sanity", "validate_blocker_root_cause_ledger", "validate_qamus_completion_manifest",
+      "validate_entry_completion_rollup", "validate_bidirectional_links", "run_grammar_evals",
+      "verify_claude_ai_pack", "check_regressions"]},
+  "live_safety": {"public_provenance_leaks_in_live_words": 0, "public_gloss_shape": "src=qamus,kind=authored",
+    "arabic_source": "Tanzil Project CC BY 3.0 (attributed in _meta)"},
+  "stale_internal_head_text": ["final-post-hygiene-completion-report-20260624.json head=3d621c1 (flagged, dated historical, not rewritten)"],
+  "verdict": "GATE CLEAN — repo/local/GitHub/live all agree at d67f873 / 86.18% / 43005 resolved; no fork, no leak, no inflation; authoring may proceed"
+}
