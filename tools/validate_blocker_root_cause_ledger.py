@@ -24,6 +24,9 @@ RC_VOCAB = {
     "count_total_uses_needs_photo_check",
     "genuinely_ambiguous_pending", "verb_form_or_voice", "content_homograph",
     "particle_function", "proper_vs_common", "token_addressable_proper_noun",
+    # closure-2092 open-stem hygiene lanes
+    "verb_clitic_object_or_subject_candidate", "already_entry_form_present_index_miss",
+    "function_word_not_form_work",
 }
 
 def fail(m):
@@ -49,6 +52,9 @@ def main():
         if r["coarse_blocker"] not in COARSE: fail(f"bad coarse_blocker {r['coarse_blocker']} @ {r['loc']}")
         if r["root_cause"] not in RC_VOCAB: fail(f"root_cause out of vocab: {r['root_cause']} @ {r['loc']}")
         if r["root_cause"] == "unclassified": fail(f"unclassified token {r['loc']}")
+        # lane-sanity (open-stem hygiene): possessive-host lane must be noun-only, never verb-clitic
+        if r["root_cause"] == "host_lexeme_possessive_candidate" and r.get("qac_pos") == "V":
+            fail(f"host_lexeme_possessive_candidate with qac_pos==V @ {r['loc']} (verb-clitic must split out)")
         blk_c[r["coarse_blocker"]] += 1
 
     # reconcile vs the audit tool's CURRENT pending-by-blocker report (regenerated each rebuild) —

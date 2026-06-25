@@ -96,7 +96,9 @@ def main():
         refs = set()
         for u in e.get("usage", []):
             for fstr in (u.get("forms") or []):
-                forms.add(A.norm_strict(fstr))
+                # split multi-token forms by space, consistent with the surface index (build_surface_index)
+                for t in str(fstr).split():
+                    forms.add(A.norm_strict(t))
             for ex in (u.get("examples") or []):
                 if ex.get("ref"):
                     refs.add(str(ex["ref"]))
@@ -160,7 +162,12 @@ def main():
             qcc = root_concat(qroot)
             qpos = pos_by_as.get((sa, nk))
             host_ids = A.lemma_entry_for(surface, by_norm, by_lemma)  # entry hosts the surface?
-            root_ids = sorted(by_root_cc.get(qcc, set())) if qcc else []
+            # F3 fix: flatten the QAC root (hamza/weak) before by-root lookup, exactly as entry roots are
+            # flattened into by_root_cc — else أتي/رأي miss the existing أَتَى/رَأَى entries and get
+            # misrouted to missing_qamus_entry. by_root_cc already carries both raw and flattened keys.
+            qflat = ((qcc.replace("أ", "ا").replace("إ", "ا").replace("آ", "ا").replace("ء", "")
+                         .replace("ؤ", "و").replace("ئ", "ي").replace("ى", "ي")) if qcc else "")
+            root_ids = sorted(by_root_cc.get(qcc, set()) or by_root_cc.get(qflat, set())) if qcc else []
             is_homograph = len(surf_roots.get(nk, set())) > 1
             is_fn = nk in FN
             is_proper = nk in PROPER or (qroot and nk.replace("ال", "") in PROPER)
@@ -186,13 +193,25 @@ def main():
                 if _nsenses <= 1: return "A_safe"
                 return "B_sense_select"
 
+            # F1: is the surface itself already a stored form/headword of EITHER the entry the QAC root
+            # resolves to OR the entry the surface hosts to? If so it is a live index/resolver miss, not
+            # authoring (the form already exists in an entry; it just was not in the headword-only index).
+            _re = ent.get(root_ids[0]) if root_ids else None
+            _he = ent.get(host_ids[0]) if host_ids else None
+            already_present = bool((_re and nk in _re["forms"]) or (_he and nk in _he["forms"]))
+
             if blk == "stem_base_unknown":
                 if is_proper:
                     rc = "proper_name_or_named_entity"; yield_kind = "family"; unlock = "token_or_entry"
-                elif qpos == "P":
+                elif qpos == "P" or is_fn:
                     rc = "particle_or_pronoun_misclassified_as_stem"; unlock = "token"
+                elif has_enclitic and qpos == "V":
+                    # F2: a verb's enclitic is an object/subject pronoun, NOT a possessed-noun host.
+                    rc = "verb_clitic_object_or_subject_candidate"; unlock = "token"
                 elif has_enclitic and not host_ids:
                     rc = "host_lexeme_possessive_candidate"; yield_kind = "family"; unlock = "host_entry_or_token"
+                elif already_present:
+                    rc = "already_entry_form_present_index_miss"; unlock = "reindex_or_resolver"
                 elif root_ids:
                     rc = "missing_form_variant_on_existing_entry"; yield_kind = "entry"
                     unlock = "author_form_gloss"; safe_tier = _form_tier()
@@ -211,7 +230,13 @@ def main():
                 tgt = host_ids[0] if host_ids else None
                 emeta = ent.get(tgt) if tgt else None
                 forms_nl = {A.norm_lenient(x) for x in emeta["forms"]} if emeta else set()
-                if emeta and nk not in emeta["forms"] and A.norm_lenient(surface) not in forms_nl:
+                if qpos == "P" or is_fn:
+                    # F4: function-word / particle material is a token/particle decision, NOT form authoring.
+                    rc = "function_word_not_form_work"; unlock = "token"
+                elif already_present:
+                    # F1: the surface is already a stored form/headword -> live index/resolver miss, not authoring.
+                    rc = "already_entry_form_present_index_miss"; unlock = "reindex_or_resolver"
+                elif emeta and nk not in emeta["forms"] and A.norm_lenient(surface) not in forms_nl:
                     rc = "forms_array_missing_surface"; yield_kind = "entry"
                     unlock = "author_form_gloss"; safe_tier = _form_tier()
                 elif emeta and sa not in emeta["refs"]:
@@ -263,9 +288,10 @@ def main():
             fam[fk]["tokens"] += 1
     fam_rows = sorted(([rc, k, v["tokens"]] for (rc, k), v in fam.items()), key=lambda x: -x[2])
 
+    _cov = round(100.0 * (49900 - len(rows)) / 49900, 2)
     with open(os.path.join(OUTDIR, "blocker-root-cause-ledger.jsonl"), "w", encoding="utf-8", newline="\n") as f:
         f.write(json.dumps({"_generator": "tools/build_blocker_root_cause_ledger.py",
-                            "_source": "out/hover_stage/wbw-lookup.json @ 85.02%",
+                            "_source": "out/hover_stage/wbw-lookup.json", "_coverage_pct": _cov,
                             "_rows": len(rows)}, ensure_ascii=False) + "\n")
         for r in rows:
             f.write(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n")
@@ -284,8 +310,8 @@ def main():
 
     # readable MD
     md = ["# Blocker root-cause ledger (closure-2092)", "",
-          f"Generated by `tools/build_blocker_root_cause_ledger.py` from the live staged artifact "
-          f"(85.02%). Every one of the **{len(rows):,}** pending tokens is mapped from its coarse "
+          f"Generated by `tools/build_blocker_root_cause_ledger.py` from the staged artifact "
+          f"(coverage {_cov}%). Every one of the **{len(rows):,}** pending tokens is mapped from its coarse "
           "blocker to a specific root cause with deciding evidence.", "",
           "Row schema (JSONL): `loc, surface, nk, coarse_blocker, pending_code, root_cause, qac_root, "
           "qac_pos, host_entry, root_entry, homograph, function_word, proper, surface_pending_count, "

@@ -41,7 +41,12 @@ DISC = {
     ("proper_name_or_named_entity", None): 0.40,
     ("token_addressable_proper_noun", None): 1.0,
     ("proper_vs_common", None): 0.50,
+    # closure-2092 open-stem hygiene lanes
+    ("already_entry_form_present_index_miss", None): 0.50,   # reindex/resolver-recoverable, NOT authoring
+    ("verb_clitic_object_or_subject_candidate", None): 0.45, # token/nahw lane (object/subject pronoun)
+    ("function_word_not_form_work", None): 0.55,             # token/particle lane, not form authoring
 }
+NON_AUTHORING = {"already_entry_form_present_index_miss"}   # recoverable by index/resolver fix, not gloss work
 OWNER_GATED = {"missing_qamus_entry_candidate"}            # new entries need owner approval to go live
 SOURCE_GATED = {"source_photo_visual_needed", "source_entry_required_before_resolution",
                 "count_total_uses_needs_photo_check"}
@@ -102,22 +107,35 @@ def main():
           "(bounded multi-batch authoring, gated by 2-vote approval — not a single lever, not a wall of ambiguity)", "",
           "| rank | lever (root cause) | tier | pending | discount | expected safe | gate |",
           "|---:|---|---|---:|---:|---:|---|"]
+    REINDEX = {"already_entry_form_present_index_miss"}
+    TOKEN = {"verb_clitic_object_or_subject_candidate", "function_word_not_form_work"}
     for i, x in enumerate(lr, 1):
-        gate = "owner" if x["owner_gated"] else ("source" if x["source_gated"] else "2-vote")
+        gate = ("owner" if x["owner_gated"] else "source" if x["source_gated"]
+                else "reindex" if x["root_cause"] in REINDEX
+                else "token" if x["root_cause"] in TOKEN else "2-vote")
         md.append(f"| {i} | `{x['root_cause']}` | {x['safe_tier'] or '—'} | {x['pending']:,} | "
                   f"{x['discount']} | {x['expected_safe']:.0f} | {gate} |")
-    amb = sum(1 for r in rows if r["root_cause"] == "genuinely_ambiguous_pending")
+    rct = collections.Counter(r["root_cause"] for r in rows)
+    amb = rct.get("genuinely_ambiguous_pending", 0)
+    fv = rct.get("missing_form_variant_on_existing_entry", 0)
+    fa = rct.get("forms_array_missing_surface", 0)
+    hl = rct.get("host_lexeme_possessive_candidate", 0)
+    idx_miss = rct.get("already_entry_form_present_index_miss", 0)
     md += ["", "## Correction to the prior 'safe frontier ~86%' claim", "",
            "The prior Phase-B ledger measured only collision-free **surface-wide** auto-glossing and "
            "concluded the safe ceiling was ~86%. That is the ceiling for *one mechanism*, not the global "
            "frontier. QAC assigns a root to every pending token, so the dominant remaining lever is "
-           "**root-known form/sense authoring** (`missing_form_variant_on_existing_entry` = 3,859, "
-           "`forms_array_missing_surface` = 657, `host_lexeme_possessive` = 1,210). Each token still needs "
-           "a POS-correct, sense-selected, collision-guarded 2-vote authored gloss (it is NOT a free "
-           "`add_form` — e.g. ظَمَأٌ noun vs verbal entry 'to be thirsty'; بَنِين 'sons' vs root ب ن ي "
+           f"**root-known form/sense authoring** (`missing_form_variant_on_existing_entry` = {fv:,}, "
+           f"`forms_array_missing_surface` = {fa:,}, `host_lexeme_possessive` = {hl:,} noun-host). Each token "
+           "still needs a POS-correct, sense-selected, collision-guarded 2-vote authored gloss (it is NOT a "
+           "free `add_form` — e.g. ظَمَأٌ noun vs verbal entry 'to be thirsty'; بَنِين 'sons' vs root ب ن ي "
            "'to build'). With honest discounts the safe-realizable pool crosses 90%. The conclusion is "
            "therefore: **90% is reachable as bounded authoring work, not blocked by a wall of ambiguity** — "
-           f"the genuinely-ambiguous residue is only ~{amb} tokens (`genuinely_ambiguous_pending`).", ""]
+           f"the genuinely-ambiguous residue is only ~{amb} tokens (`genuinely_ambiguous_pending`).", "",
+           f"After the open-stem hygiene pass, **{idx_miss:,}** tokens are `already_entry_form_present_index_miss` "
+           "(the inflected form is already stored in the entry; recoverable by the live index/resolver fix, not "
+           "authoring), and verb-clitic / function-word material is split into token/particle lanes — so the "
+           "authoring lanes above are now honest about what is actually gloss-authoring work.", ""]
     open(os.path.join(OUTDIR, "root-cause-yield-ledger.md"), "w", encoding="utf-8", newline="\n").write("\n".join(md))
 
     print("YIELD LEDGER v2 OK")

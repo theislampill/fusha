@@ -1,181 +1,102 @@
 {
   "_generator": "tools/build_blocker_root_cause_ledger.py",
   "by_coarse_blocker": {
-    "proper_noun_no_qamus_entry": {
-      "token_addressable_proper_noun": 1
-    },
     "same_surface_polysemy_requires_i3rab": {
       "content_homograph": 82,
       "genuinely_ambiguous_pending": 148,
       "particle_function": 1,
+      "proper_vs_common": 1,
       "verb_form_or_voice": 148
     },
     "source_entry_unverified": {
-      "forms_array_missing_surface": 633,
-      "quran_refs_missing_or_incomplete": 394,
-      "source_photo_visual_needed": 49
+      "already_entry_form_present_index_miss": 1013,
+      "forms_array_missing_surface": 158,
+      "function_word_not_form_work": 550,
+      "quran_refs_missing_or_incomplete": 72,
+      "source_photo_visual_needed": 4
     },
     "stem_base_unknown": {
-      "host_lexeme_possessive_candidate": 1210,
-      "missing_form_variant_on_existing_entry": 3461,
-      "missing_qamus_entry_candidate": 473,
-      "nominal_derivative_candidate": 14,
-      "particle_or_pronoun_misclassified_as_stem": 418,
-      "source_entry_required_before_resolution": 8,
-      "truly_low_frequency_tail": 11
+      "already_entry_form_present_index_miss": 37,
+      "host_lexeme_possessive_candidate": 255,
+      "missing_form_variant_on_existing_entry": 3032,
+      "missing_qamus_entry_candidate": 326,
+      "particle_or_pronoun_misclassified_as_stem": 388,
+      "source_entry_required_before_resolution": 6,
+      "truly_low_frequency_tail": 8,
+      "verb_clitic_object_or_subject_candidate": 822
     }
   },
-  "family_unlock_count": 1151,
+  "family_unlock_count": 836,
   "family_unlock_top50": [
     {
-      "family": "b8e480aebafe",
-      "root_cause": "forms_array_missing_surface",
-      "tokens": 371
-    },
-    {
-      "family": "أتي",
-      "root_cause": "host_lexeme_possessive_candidate",
-      "tokens": 73
-    },
-    {
       "family": "3f3f15cb27c2",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 60
-    },
-    {
-      "family": "65c6db0170cd",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 59
     },
     {
-      "family": "ca43414f9b01",
+      "family": "65c6db0170cd",
       "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 54
-    },
-    {
-      "family": "أتي",
-      "root_cause": "missing_qamus_entry_candidate",
       "tokens": 53
-    },
-    {
-      "family": "ecfc082ac2c5",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 52
     },
     {
       "family": "83e64ea698d5",
       "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 51
+    },
+    {
+      "family": "33787ee8c0c1",
+      "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 50
     },
     {
-      "family": "c59a0161fac8",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 49
-    },
-    {
-      "family": "5c7461bd7014",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 49
-    },
-    {
-      "family": "8f8d49c8fd17",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 43
-    },
-    {
-      "family": "سوأ",
-      "root_cause": "missing_qamus_entry_candidate",
-      "tokens": 43
-    },
-    {
-      "family": "430015446b77",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 43
-    },
-    {
-      "family": "d5ac66156b8e",
+      "family": "ecfc082ac2c5",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 42
     },
     {
-      "family": "3f40e0c0eb7a",
-      "root_cause": "forms_array_missing_surface",
-      "tokens": 41
-    },
-    {
-      "family": "3041d6f44a27",
+      "family": "5c7461bd7014",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 41
     },
     {
-      "family": "رأي",
-      "root_cause": "host_lexeme_possessive_candidate",
+      "family": "سوأ",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 40
+    },
+    {
+      "family": "8f8d49c8fd17",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 39
+    },
+    {
+      "family": "430015446b77",
+      "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 37
-    },
-    {
-      "family": "a6200e6a0d07",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 36
-    },
-    {
-      "family": "60fa5302aa68",
-      "root_cause": "quran_refs_missing_or_incomplete",
-      "tokens": 35
-    },
-    {
-      "family": "60fa5302aa68",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 35
     },
     {
       "family": "5d89e690256d",
       "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 34
+      "tokens": 33
     },
     {
-      "family": "رأي",
-      "root_cause": "missing_qamus_entry_candidate",
-      "tokens": 34
-    },
-    {
-      "family": "7172a5394a7b",
+      "family": "3041d6f44a27",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 33
     },
     {
-      "family": "4f666d15bb7e",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 33
-    },
-    {
-      "family": "ecfc082ac2c5",
-      "root_cause": "host_lexeme_possessive_candidate",
-      "tokens": 31
-    },
-    {
-      "family": "4e7ead35510e",
+      "family": "b4144b892cc7",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 31
     },
     {
-      "family": "8f8d49c8fd17",
-      "root_cause": "quran_refs_missing_or_incomplete",
+      "family": "ca43414f9b01",
+      "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 31
     },
     {
-      "family": "d099cdaad3b9",
+      "family": "fbd04177b8dd",
       "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 30
-    },
-    {
-      "family": "7e246b9a02ea",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 30
-    },
-    {
-      "family": "213945255c3b",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 30
+      "tokens": 29
     },
     {
       "family": "16dc0a87056e",
@@ -183,32 +104,32 @@
       "tokens": 29
     },
     {
-      "family": "1015809f59b7",
+      "family": "213945255c3b",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 29
-    },
-    {
-      "family": "c8190204f5ad",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 29
-    },
-    {
-      "family": "fbd04177b8dd",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 27
     },
     {
       "family": "03b5507d70a2",
       "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 27
+      "tokens": 28
     },
     {
-      "family": "51e9879b93ab",
+      "family": "c59a0161fac8",
       "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 27
+      "tokens": 28
     },
     {
-      "family": "9e4222baccd2",
+      "family": "d5ac66156b8e",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 28
+    },
+    {
+      "family": "c8190204f5ad",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 28
+    },
+    {
+      "family": "7172a5394a7b",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 27
     },
@@ -218,27 +139,27 @@
       "tokens": 27
     },
     {
-      "family": "رضو",
-      "root_cause": "missing_qamus_entry_candidate",
-      "tokens": 27
-    },
-    {
-      "family": "b4144b892cc7",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 27
-    },
-    {
-      "family": "83e64ea698d5",
-      "root_cause": "host_lexeme_possessive_candidate",
-      "tokens": 27
-    },
-    {
-      "family": "fc62d7c0ebbf",
+      "family": "d099cdaad3b9",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 26
     },
     {
-      "family": "047ddb2e206e",
+      "family": "51e9879b93ab",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 26
+    },
+    {
+      "family": "9e4222baccd2",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 26
+    },
+    {
+      "family": "1fd424ee1e74",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 26
+    },
+    {
+      "family": "1d1155c1ea36",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 26
     },
@@ -248,7 +169,12 @@
       "tokens": 25
     },
     {
-      "family": "89f4baadb89a",
+      "family": "7e246b9a02ea",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 25
+    },
+    {
+      "family": "1015809f59b7",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 25
     },
@@ -258,31 +184,106 @@
       "tokens": 24
     },
     {
-      "family": "f3726bc9f962",
-      "root_cause": "host_lexeme_possessive_candidate",
-      "tokens": 24
-    },
-    {
-      "family": "1ab446228cab",
-      "root_cause": "forms_array_missing_surface",
-      "tokens": 24
-    },
-    {
-      "family": "259fe620e117",
+      "family": "60fa5302aa68",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 24
     },
     {
-      "family": "5b382a023db8",
-      "root_cause": "host_lexeme_possessive_candidate",
+      "family": "رضو",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 24
+    },
+    {
+      "family": "fc62d7c0ebbf",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 24
+    },
+    {
+      "family": "89f4baadb89a",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 24
+    },
+    {
+      "family": "da61fd38733f",
+      "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 23
+    },
+    {
+      "family": "2189b86e056e",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 23
+    },
+    {
+      "family": "f3726bc9f962",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 22
+    },
+    {
+      "family": "622a3d627d4d",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 22
+    },
+    {
+      "family": "2e2fa868686a",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 22
+    },
+    {
+      "family": "047ddb2e206e",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 22
+    },
+    {
+      "family": "f926e5fd94bb",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 21
+    },
+    {
+      "family": "259fe620e117",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 21
+    },
+    {
+      "family": "6197ee2c0b2a",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 21
+    },
+    {
+      "family": "afca6b7fb675",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 21
+    },
+    {
+      "family": "088ebd5e2393",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 20
+    },
+    {
+      "family": "f92aeb1d59ae",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 20
+    },
+    {
+      "family": "97657fc0cb1c",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 20
+    },
+    {
+      "family": "d6a4f976cb61",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 19
+    },
+    {
+      "family": "4f666d15bb7e",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 19
     }
   ],
-  "family_unlock_total_tokens": 6234,
+  "family_unlock_total_tokens": 3847,
   "form_variant_safe_tier": {
-    "A_safe": 65,
-    "B_sense_select": 1564,
-    "C_pos_or_collision": 2465
+    "A_safe": 13,
+    "B_sense_select": 1336,
+    "C_pos_or_collision": 1841
   },
   "total_pending": 7051
 }

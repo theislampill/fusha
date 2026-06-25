@@ -1,79 +1,79 @@
 {
   "_generator": "tools/build_root_cause_yield_ledger.py",
-  "coverage_ceiling_if_all_safe_realized": 92.83,
+  "coverage_ceiling_if_all_safe_realized": 92.92,
   "coverage_now": 85.87,
-  "expected_safe_realizable": 3472.7,
+  "expected_safe_realizable": 3516.4,
   "levers": [
     {
       "discount": 0.45,
-      "expected_safe": 906.8,
+      "expected_safe": 781.7,
       "owner_gated": false,
-      "pending": 2015,
+      "pending": 1737,
       "root_cause": "missing_form_variant_on_existing_entry",
       "safe_tier": "C_pos_or_collision",
       "source_gated": false
     },
     {
       "discount": 0.6,
-      "expected_safe": 859.8,
+      "expected_safe": 770.4,
       "owner_gated": false,
-      "pending": 1433,
+      "pending": 1284,
       "root_cause": "missing_form_variant_on_existing_entry",
       "safe_tier": "B_sense_select",
       "source_gated": false
     },
     {
       "discount": 0.5,
-      "expected_safe": 605.0,
+      "expected_safe": 525.0,
       "owner_gated": false,
-      "pending": 1210,
-      "root_cause": "host_lexeme_possessive_candidate",
-      "safe_tier": null,
-      "source_gated": false
-    },
-    {
-      "discount": 0.55,
-      "expected_safe": 260.2,
-      "owner_gated": true,
-      "pending": 473,
-      "root_cause": "missing_qamus_entry_candidate",
-      "safe_tier": null,
-      "source_gated": false
-    },
-    {
-      "discount": 0.55,
-      "expected_safe": 229.9,
-      "owner_gated": false,
-      "pending": 418,
-      "root_cause": "particle_or_pronoun_misclassified_as_stem",
+      "pending": 1050,
+      "root_cause": "already_entry_form_present_index_miss",
       "safe_tier": null,
       "source_gated": false
     },
     {
       "discount": 0.45,
-      "expected_safe": 202.5,
+      "expected_safe": 369.9,
       "owner_gated": false,
-      "pending": 450,
-      "root_cause": "forms_array_missing_surface",
-      "safe_tier": "C_pos_or_collision",
-      "source_gated": false
-    },
-    {
-      "discount": 0.3,
-      "expected_safe": 118.2,
-      "owner_gated": false,
-      "pending": 394,
-      "root_cause": "quran_refs_missing_or_incomplete",
+      "pending": 822,
+      "root_cause": "verb_clitic_object_or_subject_candidate",
       "safe_tier": null,
       "source_gated": false
     },
     {
-      "discount": 0.6,
-      "expected_safe": 78.6,
+      "discount": 0.55,
+      "expected_safe": 302.5,
       "owner_gated": false,
-      "pending": 131,
-      "root_cause": "forms_array_missing_surface",
-      "safe_tier": "B_sense_select",
+      "pending": 550,
+      "root_cause": "function_word_not_form_work",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.55,
+      "expected_safe": 213.4,
+      "owner_gated": false,
+      "pending": 388,
+      "root_cause": "particle_or_pronoun_misclassified_as_stem",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.55,
+      "expected_safe": 179.3,
+      "owner_gated": true,
+      "pending": 326,
+      "root_cause": "missing_qamus_entry_candidate",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.5,
+      "expected_safe": 127.5,
+      "owner_gated": false,
+      "pending": 255,
+      "root_cause": "host_lexeme_possessive_candidate",
+      "safe_tier": null,
       "source_gated": false
     },
     {
@@ -86,12 +86,12 @@
       "source_gated": false
     },
     {
-      "discount": 0.9,
+      "discount": 0.45,
       "expected_safe": 46.8,
       "owner_gated": false,
-      "pending": 52,
+      "pending": 104,
       "root_cause": "forms_array_missing_surface",
-      "safe_tier": "A_safe",
+      "safe_tier": "C_pos_or_collision",
       "source_gated": false
     },
     {
@@ -100,6 +100,24 @@
       "owner_gated": false,
       "pending": 82,
       "root_cause": "content_homograph",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.6,
+      "expected_safe": 31.2,
+      "owner_gated": false,
+      "pending": 52,
+      "root_cause": "forms_array_missing_surface",
+      "safe_tier": "B_sense_select",
+      "source_gated": false
+    },
+    {
+      "discount": 0.3,
+      "expected_safe": 21.6,
+      "owner_gated": false,
+      "pending": 72,
+      "root_cause": "quran_refs_missing_or_incomplete",
       "safe_tier": null,
       "source_gated": false
     },
@@ -114,57 +132,48 @@
     },
     {
       "discount": 0.9,
-      "expected_safe": 11.7,
+      "expected_safe": 9.9,
       "owner_gated": false,
-      "pending": 13,
+      "pending": 11,
       "root_cause": "missing_form_variant_on_existing_entry",
       "safe_tier": "A_safe",
       "source_gated": false
     },
     {
-      "discount": 0.2,
-      "expected_safe": 9.8,
-      "owner_gated": false,
-      "pending": 49,
-      "root_cause": "source_photo_visual_needed",
-      "safe_tier": null,
-      "source_gated": true
-    },
-    {
-      "discount": 0.5,
-      "expected_safe": 7.0,
-      "owner_gated": false,
-      "pending": 14,
-      "root_cause": "nominal_derivative_candidate",
-      "safe_tier": null,
-      "source_gated": false
-    },
-    {
       "discount": 0.3,
-      "expected_safe": 3.3,
+      "expected_safe": 2.4,
       "owner_gated": false,
-      "pending": 11,
+      "pending": 8,
       "root_cause": "truly_low_frequency_tail",
       "safe_tier": null,
       "source_gated": false
     },
     {
-      "discount": 0.2,
-      "expected_safe": 1.6,
+      "discount": 0.9,
+      "expected_safe": 1.8,
       "owner_gated": false,
-      "pending": 8,
+      "pending": 2,
+      "root_cause": "forms_array_missing_surface",
+      "safe_tier": "A_safe",
+      "source_gated": false
+    },
+    {
+      "discount": 0.2,
+      "expected_safe": 1.2,
+      "owner_gated": false,
+      "pending": 6,
       "root_cause": "source_entry_required_before_resolution",
       "safe_tier": null,
       "source_gated": true
     },
     {
-      "discount": 1.0,
-      "expected_safe": 1.0,
+      "discount": 0.2,
+      "expected_safe": 0.8,
       "owner_gated": false,
-      "pending": 1,
-      "root_cause": "token_addressable_proper_noun",
+      "pending": 4,
+      "root_cause": "source_photo_visual_needed",
       "safe_tier": null,
-      "source_gated": false
+      "source_gated": true
     },
     {
       "discount": 0.7,
@@ -172,6 +181,15 @@
       "owner_gated": false,
       "pending": 1,
       "root_cause": "particle_function",
+      "safe_tier": null,
+      "source_gated": false
+    },
+    {
+      "discount": 0.5,
+      "expected_safe": 0.5,
+      "owner_gated": false,
+      "pending": 1,
+      "root_cause": "proper_vs_common",
       "safe_tier": null,
       "source_gated": false
     }

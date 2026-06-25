@@ -1,0 +1,27 @@
+{
+  "_generator": "closure-2092 Phase 2 lane-hygiene (F1/F2/F3/F4)",
+  "root_cause_before": {"missing_form_variant_on_existing_entry": 3461, "host_lexeme_possessive_candidate": 1210,
+    "forms_array_missing_surface": 633, "missing_qamus_entry_candidate": 473,
+    "particle_or_pronoun_misclassified_as_stem": 418, "quran_refs_missing_or_incomplete": 394,
+    "genuinely_ambiguous_pending": 148, "verb_form_or_voice": 148, "content_homograph": 82,
+    "source_photo_visual_needed": 49, "nominal_derivative_candidate": 14, "truly_low_frequency_tail": 11,
+    "source_entry_required_before_resolution": 8, "token_addressable_proper_noun": 1, "particle_function": 1},
+  "root_cause_after": {"missing_form_variant_on_existing_entry": 3032, "already_entry_form_present_index_miss": 1050,
+    "verb_clitic_object_or_subject_candidate": 822, "function_word_not_form_work": 550,
+    "particle_or_pronoun_misclassified_as_stem": 388, "missing_qamus_entry_candidate": 326,
+    "host_lexeme_possessive_candidate": 255, "forms_array_missing_surface": 158,
+    "genuinely_ambiguous_pending": 148, "verb_form_or_voice": 148, "content_homograph": 82,
+    "quran_refs_missing_or_incomplete": 72, "truly_low_frequency_tail": 8,
+    "source_entry_required_before_resolution": 6, "source_photo_visual_needed": 4,
+    "proper_vs_common": 1, "particle_function": 1},
+  "fixes": {
+    "F1_already_present_index_miss": 1050,
+    "F2_verb_clitic_split_from_host_lexeme": 822,
+    "F2_host_lexeme_now_noun_only": 255,
+    "F3_missing_entry_rerouted_by_flatten": "أتي 55 + رأي 34 (+others) -> form-variant/existing entries",
+    "F4_function_word_split_from_forms_array": 550
+  },
+  "revised_yield": {"expected_safe_realizable": 3516, "coverage_ceiling_pct": 92.92,
+    "tokens_needed_for_90pct": 2061, "ninety_reachable": true, "status": "provisional_validated_by_lane_sanity"},
+  "gates_green": ["validate_blocker_root_cause_ledger", "validate_open_stem_lane_sanity"]
+}
