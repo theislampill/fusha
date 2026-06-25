@@ -70,7 +70,7 @@ appears. Open each āyah on `qamus.dawah.wiki` and read the form *in its sentenc
   trying.
 
 The coverage you see grows as the Qamus entries grow — the same scoreboard the project tracks
-at [`../qamus/reports/hover-gloss-scoreboard.md`](../qamus/reports/hover-gloss-scoreboard.md).
+at [`../qamus/reports/hover-gloss-terminal-scoreboard.md`](../qamus/reports/hover-gloss-terminal-scoreboard.md).
 So a word blank today may be glossed next month; revisit your hard roots.
 
 > **What the hover never does.** It never shows you who narrated the gloss, an external

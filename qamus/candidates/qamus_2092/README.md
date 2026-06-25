@@ -26,7 +26,7 @@ Every record carries `review_status:"needs_human_review"` until a human changes 
 
 ### Inputs each batch consumes
 
-- **`../../indexes/existing_qamus_index.json`** — the 2,092-entry de-dup ground truth (read-only). Used to
+- **`../../indexes/existing_qamus_index.min.json`** — the 2,092-entry de-dup ground truth (read-only). Used to
   confirm a claimed root/POS and to find the matching live entry for a clean gloss.
 - **an enriched candidate JSON** — a list of tokens, each `{norm_strict, surface, qac_root, qac_pos,
   ayah, qamus_glosses[]}` (plus optional `loc`, `nearby_tokens`, `referent`). The `qac_*` fields are
@@ -40,7 +40,7 @@ Every record carries `review_status:"needs_human_review"` until a human changes 
                  ┌─────────────────────────── dry-run (this dir) ───────────────────────────┐
 enriched         │  run_linguistic_decisions.py                                              │
 candidate  ─────▶│    --candidates <batch>.candidates.json                                   │──▶  <batch>.decisions.jsonl
-tokens           │    --index   ../../indexes/existing_qamus_index.json                       │      (authored / repair /
+tokens           │    --index   ../../indexes/existing_qamus_index.min.json                       │      (authored / repair /
                  │    --rules   <sarf-nahw-rules.json>   (optional; defaults built in)        │       quarantine / pending)
                  └───────────────────────────────────────────────────────────────────────────┘
                                                   │
@@ -63,7 +63,7 @@ tokens           │    --index   ../../indexes/existing_qamus_index.json       
 # from the repo root
 python tools/run_linguistic_decisions.py \
     --candidates qamus/candidates/qamus_2092/<batch>.candidates.json \
-    --index      qamus/indexes/existing_qamus_index.json \
+    --index      qamus/indexes/existing_qamus_index.min.json \
     --out        qamus/candidates/qamus_2092/<batch>.decisions.jsonl
 # no network, no live writes — only the --out file is touched
 ```

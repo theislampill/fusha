@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Build qamus/indexes/existing_qamus_index.json from the COMMITTED public dataset (P0).
+"""Build qamus/indexes/existing_qamus_index.min.json from the COMMITTED public dataset (P0).
 
 This makes the corpus->Qamus pipeline (corpus_to_qamus_candidates.py) dedupe against the committed
 2,092-entry dataset — NOT a hidden live dependency. Reproducible from qamus/data/current/entries.jsonl.

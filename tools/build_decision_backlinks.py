@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 """Build the operational Project-Xanadu decision-backlink graph (read-only, from committed artifacts).
 
-Ties the address families together with BIDIRECTIONAL links so every decision can answer "what supports this?"
-and "where is this used?" — no duplicated decisions, no orphan links. Consumes:
-    qamus/indexes/existing_qamus_index.json     entry nodes (qamus:v/n/p###)
+SECONDARY backlink view (the CANONICAL full graph is qamus/indexes/current/*-full.jsonl, built by
+build_full_source_address_graph.py). Ties the address families together with BIDIRECTIONAL links so every
+decision can answer "what supports this?" and "where is this used?". Consumes:
+    qamus/reports/qamus-2092-entry-matrix.jsonl  entry nodes (committed; preferred fallback)
+    corpora/sarfnahw/out/audit/entry_audit.jsonl  richer per-entry dump if present (gitignored)
     qamus/indexes/language_state_graph.sample.json  key-state nodes + decisions (state:key:*)
     qamus/indexes/quran_usage_spine.json        ayah -> tokens (quran:S:A / quran:S:A:W)
-    corpora/sarfnahw/out/audit/entry_audit.jsonl  per-entry refs + hover coverage + terminal state (gitignored dump)
 
 Writes:
     qamus/indexes/decision_backlinks.json       the backlink graph (sample-scoped to the committed state slice)
@@ -19,9 +20,9 @@ No live writes; no private paths.
 import collections
 import json
 import os
+import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-IDX = os.path.join(ROOT, "qamus", "indexes", "existing_qamus_index.json")
 LSG = os.path.join(ROOT, "qamus", "indexes", "language_state_graph.sample.json")
 SPINE = os.path.join(ROOT, "qamus", "indexes", "quran_usage_spine.json")
 AUD = os.path.join(ROOT, "corpora", "sarfnahw", "out", "audit", "entry_audit.jsonl")
@@ -35,10 +36,35 @@ def jload(p, default=None):
     return json.load(open(p, encoding="utf-8"))
 
 
+DATASET = os.path.join(ROOT, "qamus", "data", "current", "entries.jsonl")
+ENTRY_MATRIX = os.path.join(ROOT, "qamus", "reports", "qamus-2092-entry-matrix.jsonl")
+
+def _load_entry_records():
+    """Entry nodes for the backlink view. Prefer the richer (gitignored) sarfnahw audit if present;
+    else fall back to the COMMITTED entry matrix so this works in a clean checkout. (F5: the old path
+    read gitignored out/ + a non-existent legacy index path and silently produced 0 nodes.)"""
+    if os.path.exists(AUD):
+        return [json.loads(l) for l in open(AUD, encoding="utf-8") if l.strip()]
+    if os.path.exists(ENTRY_MATRIX):
+        recs = []
+        for l in open(ENTRY_MATRIX, encoding="utf-8"):
+            if not l.strip():
+                continue
+            r = json.loads(l)
+            sp = r.get("source_photo_status", "")
+            recs.append({"entry_id": r.get("entry_id"), "root": r.get("root"),
+                         "headword": r.get("lemma"), "source_address": (r.get("source_keys") or [None])[0],
+                         "n_ayah_refs": 0, "hover_coverage": 0,
+                         "terminal_state": ("needs_source_photo_review" if sp not in ("verified", "") else None),
+                         "source_photo_verified": (sp == "verified")})
+        return recs
+    return []
+
 def main():
-    idx = jload(IDX, {})
+    # NOTE: this is the SECONDARY backlink view; the CANONICAL full source-address graph is
+    # qamus/indexes/current/{source-address-full,quran-usage-spine-full,...}.jsonl (build_full_source_address_graph.py).
     lsg = jload(LSG, {"states": [], "counts": {}, "built_from": {}})
-    aud = [json.loads(l) for l in open(AUD, encoding="utf-8")] if os.path.exists(AUD) else []
+    aud = _load_entry_records()
 
     states = lsg.get("states", [])
     resolved = {s["observation"]["norm_key"]: s for s in states if s["decision"] == "resolved_qamus_authored"}
@@ -58,6 +84,12 @@ def main():
         if r.get("root"):
             by_root[r["root"]].append(eid)
     splits = {root: ids for root, ids in by_root.items() if len(ids) > 1}
+
+    # F5: fail closed — a silent entry_nodes:0 while the committed dataset exists means a broken input path.
+    if not entry and os.path.exists(DATASET):
+        print("FATAL: 0 entry nodes but the committed dataset exists — broken entry source "
+              "(expected %s or %s)." % (os.path.relpath(AUD, ROOT), os.path.relpath(ENTRY_MATRIX, ROOT)))
+        sys.exit(1)
 
     # backlinks graph (scoped to committed state slice for size; full reproducible on server)
     backlinks = {

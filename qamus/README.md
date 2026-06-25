@@ -12,14 +12,14 @@ reports. Nothing here writes to a live site, talks to a server, or ships a runti
 
 | Path | Kind | What it is |
 |---|---|---|
-| `indexes/existing_qamus_index.json` | data (generated) | Read-only snapshot of the **2,092** existing Qamus entries, keyed by source-address (`qamus:v###` / `n###` / `p###`). One record per entry with `norm` / `norm_strict` / `bare` keys, root, forms, glosses, usage refs, `source_keys` backlinks. **De-duplication ground truth** — check here before authoring any candidate. |
-| `scripts/build_existing_qamus_index.py` | script | Rebuilds the index + `reports/qamus-2092-scoreboard.md` from a directory of entry JSON files. Stdlib only; imports `tools/normalize_ar.py`. No live writes. |
-| `reports/qamus-2092-scoreboard.md` | report (generated) | Counts of the existing corpus by class / category. Regenerate with the script above. |
+| `indexes/existing_qamus_index.min.json` | data (generated) | Read-only snapshot of the **2,092** existing Qamus entries, keyed by source-address (`qamus:v###` / `n###` / `p###`). One record per entry with `norm` / `norm_strict` / `bare` keys, root, forms, glosses, usage refs, `source_keys` backlinks. **De-duplication ground truth** — check here before authoring any candidate. |
+| `scripts/build_existing_qamus_index.py` | script | Rebuilds the index + `reports/qamus-2092-terminal-scoreboard.md` from a directory of entry JSON files. Stdlib only; imports `tools/normalize_ar.py`. No live writes. |
+| `reports/qamus-2092-terminal-scoreboard.md` | report (generated) | Counts of the existing corpus by class / category. Regenerate with the script above. |
 | `reports/fusha-to-qamus-highlight-bridge.md` | report | The end-to-end pipeline: Fusha candidate → review → repair/addition payload → owner-gated apply → `qamus_wbw` rebuild → live. |
 | `reports/skill-integration-plan.md` | report | How the `sarf`, `nahw`, `source-address`, and `linguistic-decision` skills compose into one authoring/repair flow. |
 | `reports/source-address-model.md` | report | The Xanadu-style source-address graph: address grammar, repair fields, derived views, `used_by` backlinks, duplicate avoidance. |
 | `reports/source-corpus-locator-summary.md` | report | The ToC-rank → page locator method for the physical source corpus (counts only; **no image paths**). |
-| `reports/hover-gloss-scoreboard.md` | report | Portable scoreboard template (tokens / resolved / pending-by-reason / wrong-fixed / coverage) + latest figures. |
+| `reports/hover-gloss-terminal-scoreboard.md` | report | Portable scoreboard template (tokens / resolved / pending-by-reason / wrong-fixed / coverage) + latest figures. |
 | `candidates/` | data (authored, gitignored draft area) | Proposed new/repaired entries awaiting human review. Each is a self-contained payload (see the bridge report). Not present until candidate runs land. |
 
 Sibling research areas referenced by these docs:
@@ -49,7 +49,7 @@ Sibling research areas referenced by these docs:
 ```bash
 # from the repo root
 python qamus/scripts/build_existing_qamus_index.py --entries /path/to/local/entry/json/dir
-# -> rewrites qamus/indexes/existing_qamus_index.json and qamus/reports/qamus-2092-scoreboard.md
+# -> rewrites qamus/indexes/existing_qamus_index.min.json and qamus/reports/qamus-2092-terminal-scoreboard.md
 ```
 
 Read [`reports/fusha-to-qamus-highlight-bridge.md`](reports/fusha-to-qamus-highlight-bridge.md)

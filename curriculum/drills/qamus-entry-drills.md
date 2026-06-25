@@ -70,7 +70,7 @@ in the form alone. If the context is unclear → **PENDING**.
 **Q:** Where does `total_uses` come from, and may you cite a higher number you "remember"?
 **A:** `total_uses` reconciles to the entry's own `usage[]` rows (and the addresses they point
 at). Never hardcode or inflate a count — cite what the entry stores. (Same data-honesty rule the
-scoreboards enforce: [`../../qamus/reports/hover-gloss-scoreboard.md`](../../qamus/reports/hover-gloss-scoreboard.md).)
+scoreboards enforce: [`../../qamus/reports/hover-gloss-terminal-scoreboard.md`](../../qamus/reports/hover-gloss-terminal-scoreboard.md).)
 
 ### 5. Distinguish two senses on one root
 **Q:** A noun entry for root `ن ه ر` lists `sense: "river"` with forms `نَهْر`/`أَنْهَار`, and a

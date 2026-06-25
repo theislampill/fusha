@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# LEGACY: superseded by the tools/ generators (canonical machine index is existing_qamus_index.min.json; canonical graph is qamus/indexes/current/*-full.jsonl). Kept for reference; not the current canonical generator.
 """SN6 — turn the upgraded sarf/nahw knowledge into Qamus/hover CANDIDATES.
 
 Review-only. No live writes. Reads committed evidence (verb-measure examples,

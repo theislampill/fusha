@@ -35,7 +35,7 @@ existing entry or an *addition* of a new one. Authoring is driven by three input
   `وَمِنَ`), `لِمَا` from `لَمَّا` (shadda), `كُلّ` from `كَلَّا`, `نِعْمَ` from `نَعَمْ`. nahw also
   flags same-root polysemes that need context (`ٱلْمُلْك` ≠ "angels"; `يَقْدِرُ` in a *rizq*
   context = "restricts", not "is able").
-- **`indexes/existing_qamus_index.json`** is the existing-corpus ground truth.
+- **`indexes/existing_qamus_index.min.json`** is the existing-corpus ground truth.
 
 Every candidate carries a `match_key_set` computed **only** via `tools/normalize_ar.py`:
 
@@ -93,7 +93,7 @@ external gloss, ever crosses the line.
 
 ## Stage 2 — De-duplication against the source-address graph
 
-Before authoring, the candidate runner queries `existing_qamus_index.json`:
+Before authoring, the candidate runner queries `existing_qamus_index.min.json`:
 
 1. Compute `norm_strict(surface_ar)` and the bare root.
 2. Look for any existing record whose `norm_strict`, `root`, or `forms[]` matches.
@@ -154,7 +154,7 @@ in this repo — the repo's contribution ended at the certified payload.
 - **No wrong glosses by construction.** Certification can't ride on `norm()`; verb glosses are
   blocked from nouns; proper names are blocked from verb senses (`مُحَمَّد` ≠ "to praise";
   `صَٰلِحًا` ≠ Prophet Ṣāliḥ); short particles are decided by the harakah on the content letter.
-- **No duplicate work.** The source-address graph + `existing_qamus_index.json` make every
+- **No duplicate work.** The source-address graph + `existing_qamus_index.min.json` make every
   candidate either a typed repair of a known address or a fresh, reserved address.
 - **No repo→live coupling.** The repo proposes and validates; a human gates; the live side
   applies and rebuilds.

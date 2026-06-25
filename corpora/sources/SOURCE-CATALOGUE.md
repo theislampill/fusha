@@ -52,7 +52,7 @@ consistent. **No gloss text from any of these is copied into Fusha.**
 
 | label | what | how built |
 |---|---|---|
-| **Existing Qamus index** | the 2,092-entry index (`qamus/indexes/existing_qamus_index.json`) | built read-only by `qamus/scripts/build_existing_qamus_index.py` from a local export of Qamus entries; carries `norm`/`norm_strict`/`bare`/`root`/`forms` per entry |
+| **Existing Qamus index** | the 2,092-entry index (`qamus/indexes/existing_qamus_index.min.json`) | built read-only by `qamus/scripts/build_existing_qamus_index.py` from a local export of Qamus entries; carries `norm`/`norm_strict`/`bare`/`root`/`forms` per entry |
 | **`tools/normalize_ar.py`** | the three match keys + harakah helpers | the single source of truth for normalization; all catalogue scripts import it |
 
 ---

@@ -1,1928 +1,1928 @@
 {
-  "address_families": [
-    "qamus:v### / n### / p###",
-    "qamus:<entry_id>#field=<path>",
-    "quran:S:A",
-    "quran:S:A:W",
-    "wbw:S:A:W#artifact=<source_sha>",
-    "state:key:<norm_strict>",
-    "transition:<id>",
-    "external:qac#quran:S:A:W (internal)",
-    "external:tanzil#quran:S:A (internal)",
-    "source-photo:<page>#entry=<source_key> (internal)",
-    "repair:<batch>#field=<path>"
-  ],
-  "built_from": {
-    "coverage_pct": 80.68,
-    "distinct_keys": 12723,
-    "source_sha": null,
-    "total_tokens": 49900
+ "schema": "fusha/decision-backlinks@1",
+ "built_from": {
+  "coverage_pct": 80.68,
+  "distinct_keys": 12723,
+  "source_sha": null,
+  "total_tokens": 49900
+ },
+ "address_families": [
+  "qamus:v### / n### / p###",
+  "qamus:<entry_id>#field=<path>",
+  "quran:S:A",
+  "quran:S:A:W",
+  "wbw:S:A:W#artifact=<source_sha>",
+  "state:key:<norm_strict>",
+  "transition:<id>",
+  "external:qac#quran:S:A:W (internal)",
+  "external:tanzil#quran:S:A (internal)",
+  "source-photo:<page>#entry=<source_key> (internal)",
+  "repair:<batch>#field=<path>"
+ ],
+ "key_to_decision": {
+  "ءأنذرتهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "whether you warn them",
+   "used_by": [
+    "quran:2:6:6"
+   ]
   },
-  "counts": {
-    "entries_source_photo_unverified": 2092,
-    "entry_nodes": 2092,
-    "resolved_keys": 170,
-    "roots_with_multiple_entries": 7,
-    "split_keys": 156
+  "ءاباء": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "fathers (of)",
+   "used_by": [
+    "quran:24:31:27"
+   ]
   },
-  "key_to_decision": {
-    "ءأنذرتهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "whether you warn them",
-      "used_by": [
-        "quran:2:6:6"
-      ]
-    },
-    "ءاباء": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "fathers (of)",
-      "used_by": [
-        "quran:24:31:27"
-      ]
-    },
-    "ءاباءهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their fathers",
-      "used_by": [
-        "quran:33:5:10",
-        "quran:58:22:15"
-      ]
-    },
-    "ءاباؤكم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "your fathers/forefathers",
-      "used_by": [
-        "quran:6:91:37",
-        "quran:9:24:4",
-        "quran:4:11:56",
-        "quran:4:22:5"
-      ]
-    },
-    "ءابائهن": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their fathers",
-      "used_by": [
-        "quran:24:31:25"
-      ]
-    },
-    "ءاتنا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "give us",
-      "used_by": [
-        "quran:2:201:5",
-        "quran:18:62:5",
-        "quran:18:10:8"
-      ]
-    },
-    "ءاتيتم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "you (pl.) gave",
-      "used_by": [
-        "quran:30:39:2",
-        "quran:30:39:14",
-        "quran:2:233:55"
-      ]
-    },
-    "ءاتيتموهن": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "you have given them (f.)",
-      "used_by": [
-        "quran:4:19:16",
-        "quran:2:229:14",
-        "quran:60:10:36",
-        "quran:5:5:25"
-      ]
-    },
-    "ءاتيناهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "We gave them",
-      "used_by": [
-        "quran:2:121:2",
-        "quran:2:146:2",
-        "quran:35:40:20",
-        "quran:6:114:12",
-        "quran:6:89:3",
-        "+1 more"
-      ]
-    },
-    "ءاتيها": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "He has given it/her",
-      "used_by": [
-        "quran:65:7:20"
-      ]
-    },
-    "ءاخر": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "another; other",
-      "used_by": [
-        "quran:23:14:17",
-        "quran:23:117:6",
-        "quran:17:22:6",
-        "quran:25:68:7",
-        "quran:26:213:6",
-        "+1 more"
-      ]
-    },
-    "ءاخرين": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "others",
-      "used_by": [
-        "quran:6:6:31",
-        "quran:5:41:24",
-        "quran:23:31:6"
-      ]
-    },
-    "ءادم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "Adam",
-      "used_by": [
-        "quran:3:33:4",
-        "quran:2:31:2",
-        "quran:7:172:6",
-        "quran:7:31:2",
-        "quran:7:26:2",
-        "+7 more"
-      ]
-    },
-    "ءاذانهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their ears",
-      "used_by": [
-        "quran:6:25:12",
-        "quran:2:19:12",
-        "quran:18:11:3",
-        "quran:18:57:21",
-        "quran:71:7:9"
-      ]
-    },
-    "ءال": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "the family of",
-      "used_by": [
-        "quran:28:8:2",
-        "quran:34:13:13",
-        "quran:40:28:5",
-        "quran:27:56:9",
-        "quran:2:50:7",
-        "+9 more"
-      ]
-    },
-    "ءالهه": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "gods (false deities)",
-      "used_by": [
-        "quran:6:74:8",
-        "quran:21:43:3",
-        "quran:46:28:9",
-        "quran:7:138:19",
-        "quran:19:81:5",
-        "+2 more"
-      ]
-    },
-    "ءامره": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "I command him",
-      "used_by": [
-        "quran:12:32:15"
-      ]
-    },
-    "ءامن": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "believed",
-      "used_by": [
-        "quran:2:253:39",
-        "quran:9:18:6",
-        "quran:2:62:9",
-        "quran:2:177:12",
-        "quran:2:285:1",
-        "+11 more"
-      ]
-    },
-    "ءامنا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "we believe / we have faith",
-      "used_by": [
-        "quran:3:7:36",
-        "quran:3:52:16",
-        "quran:29:2:7",
-        "quran:3:53:2",
-        "quran:2:76:6",
-        "+15 more"
-      ]
-    },
-    "ءامنتم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "you (all) believed",
-      "used_by": [
-        "quran:26:49:2",
-        "quran:8:41:18",
-        "quran:2:137:5",
-        "quran:20:71:2",
-        "quran:7:123:3"
-      ]
-    },
-    "ءامنوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "they believed",
-      "used_by": [
-        "quran:48:29:48",
-        "quran:2:178:3",
-        "quran:40:35:15",
-        "quran:49:1:7",
-        "quran:46:11:5",
-        "+162 more"
-      ]
-    },
-    "ءامنين": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "secure, safe",
-      "used_by": [
-        "quran:48:27:13",
-        "quran:15:46:3",
-        "quran:34:18:17",
-        "quran:12:99:14"
-      ]
-    },
-    "ءانست": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "I perceived; I noticed",
-      "used_by": [
-        "quran:28:29:16",
-        "quran:20:10:8",
-        "quran:27:7:6"
-      ]
-    },
-    "ءاياتنا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "Our signs / verses",
-      "used_by": [
-        "quran:17:1:21",
-        "quran:28:45:15",
-        "quran:10:15:4",
-        "quran:27:13:3",
-        "quran:18:9:9",
-        "+9 more"
-      ]
-    },
-    "ءاياته": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "His signs / verses",
-      "used_by": [
-        "quran:3:103:32",
-        "quran:3:164:14",
-        "quran:41:39:2",
-        "quran:2:187:62",
-        "quran:5:89:43",
-        "+15 more"
-      ]
-    },
-    "ءاياتي": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "My signs/verses",
-      "used_by": [
-        "quran:18:106:7",
-        "quran:7:146:3",
-        "quran:21:37:6",
-        "quran:6:130:10"
-      ]
-    },
-    "ءايه": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "a sign",
-      "used_by": [
-        "quran:2:259:47",
-        "quran:19:21:9",
-        "quran:3:41:5",
-        "quran:13:27:7",
-        "quran:17:12:6",
-        "+17 more"
-      ]
-    },
-    "أءذا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "is it that when",
-      "used_by": [
-        "quran:13:5:5",
-        "quran:37:53:1",
-        "quran:32:10:2",
-        "quran:50:3:1"
-      ]
-    },
-    "أءنا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "is it that we...?",
-      "used_by": [
-        "quran:13:5:8",
-        "quran:37:53:6",
-        "quran:32:10:6"
-      ]
-    },
-    "أبصارهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their eyes; their sight",
-      "used_by": [
-        "quran:68:43:2",
-        "quran:24:30:5",
-        "quran:2:7:8",
-        "quran:54:7:2",
-        "quran:2:20:4",
-        "+2 more"
-      ]
-    },
-    "أبصارهن": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their (f.) gazes",
-      "used_by": [
-        "quran:24:31:5"
-      ]
-    },
-    "أبلغتكم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "I conveyed to you",
-      "used_by": [
-        "quran:7:79:6"
-      ]
-    },
-    "أبناءهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their sons",
-      "used_by": [
-        "quran:2:146:7",
-        "quran:28:4:13",
-        "quran:58:22:17",
-        "quran:7:127:16"
-      ]
-    },
-    "أبنائهن": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their sons",
-      "used_by": [
-        "quran:24:31:30"
-      ]
-    },
-    "أتبع": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "I follow",
-      "used_by": [
-        "quran:10:15:27",
-        "quran:46:9:15",
-        "quran:6:50:17",
-        "quran:7:203:10"
-      ]
-    },
-    "أتل": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "I recite",
-      "used_by": [
-        "quran:6:151:3"
-      ]
-    },
-    "أتيك": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "came to you",
-      "used_by": [
-        "quran:79:15:2",
-        "quran:88:1:6",
-        "quran:38:21:2"
-      ]
-    },
-    "أجر": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "reward",
-      "used_by": [
-        "quran:57:18:11",
-        "quran:9:120:51",
-        "quran:57:7:14",
-        "quran:38:86:6",
-        "quran:26:109:5",
-        "+5 more"
-      ]
-    },
-    "أجلهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their term/appointed time",
-      "used_by": [
-        "quran:35:45:20",
-        "quran:7:34:6",
-        "quran:10:11:10",
-        "quran:16:61:18",
-        "quran:7:185:18"
-      ]
-    },
-    "أجلهن": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their term",
-      "used_by": [
-        "quran:65:2:3",
-        "quran:2:234:13",
-        "quran:2:232:5",
-        "quran:65:4:17",
-        "quran:2:231:5"
-      ]
-    },
-    "أجمعين": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "all together",
-      "used_by": [
-        "quran:26:49:21",
-        "quran:6:149:8",
-        "quran:21:77:12",
-        "quran:7:124:8",
-        "quran:7:18:12",
-        "+4 more"
-      ]
-    },
-    "أحد": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "anyone / one",
-      "used_by": [
-        "quran:12:4:8",
-        "quran:4:43:28",
-        "quran:9:84:4",
-        "quran:24:21:25",
-        "quran:5:6:30",
-        "+17 more"
-      ]
-    },
-    "أحق": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "more deserving; most worthy",
-      "used_by": [
-        "quran:33:37:23",
-        "quran:5:107:18",
-        "quran:6:81:18",
-        "quran:48:26:21",
-        "quran:9:62:7",
-        "+4 more"
-      ]
-    },
-    "أحل": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "was made lawful (for you)",
-      "used_by": [
-        "quran:2:187:1",
-        "quran:5:4:3",
-        "quran:5:4:6",
-        "quran:5:96:1",
-        "quran:5:5:2"
-      ]
-    },
-    "أخت": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "a sister",
-      "used_by": [
-        "quran:4:12:60",
-        "quran:4:176:14"
-      ]
-    },
-    "أخذنا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "We seized / We took",
-      "used_by": [
-        "quran:5:14:6",
-        "quran:2:83:2",
-        "quran:9:50:10",
-        "quran:5:70:2",
-        "quran:2:93:2",
-        "+2 more"
-      ]
-    },
-    "أخر": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "other ones",
-      "used_by": [
-        "quran:2:185:27",
-        "quran:2:184:13"
-      ]
-    },
-    "أخرج": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "brought forth",
-      "used_by": [
-        "quran:48:29:33",
-        "quran:59:2:3",
-        "quran:87:4:2",
-        "quran:24:40:19"
-      ]
-    },
-    "أخرجه": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "drove him out",
-      "used_by": [
-        "quran:9:40:7"
-      ]
-    },
-    "أخري": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "another, other (f.)",
-      "used_by": [
-        "quran:35:18:5",
-        "quran:4:102:20",
-        "quran:17:69:7",
-        "quran:20:18:13",
-        "quran:53:13:4",
-        "+3 more"
-      ]
-    },
-    "أذي": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "harm, hurt",
-      "used_by": [
-        "quran:2:196:24",
-        "quran:4:102:46",
-        "quran:2:262:14",
-        "quran:2:222:6",
-        "quran:3:186:15"
-      ]
-    },
-    "أرءيتم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "have you considered?",
-      "used_by": [
-        "quran:11:88:3",
-        "quran:35:40:2",
-        "quran:6:46:2",
-        "quran:11:63:3",
-        "quran:10:59:2",
-        "+3 more"
-      ]
-    },
-    "أردتم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "you (pl.) wanted/intended",
-      "used_by": [
-        "quran:2:233:45",
-        "quran:4:20:2",
-        "quran:20:86:18"
-      ]
-    },
-    "أرض": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "the earth; land",
-      "used_by": [
-        "quran:4:97:18",
-        "quran:31:34:22",
-        "quran:7:73:27"
-      ]
-    },
-    "أريد": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "I want, I intend",
-      "used_by": [
-        "quran:11:88:15",
-        "quran:11:88:23",
-        "quran:28:27:3",
-        "quran:28:27:20",
-        "quran:51:57:2",
-        "+2 more"
-      ]
-    },
-    "أزكي": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "purer, more wholesome",
-      "used_by": [
-        "quran:24:30:9",
-        "quran:18:19:29",
-        "quran:2:232:26",
-        "quran:24:28:17"
-      ]
-    },
-    "أزواجا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "spouses; pairs; kinds",
-      "used_by": [
-        "quran:2:234:5",
-        "quran:2:240:5",
-        "quran:13:38:8",
-        "quran:30:21:8",
-        "quran:15:88:8",
-        "+7 more"
-      ]
-    },
-    "أزواجهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their spouses",
-      "used_by": [
-        "quran:33:50:50",
-        "quran:24:6:3",
-        "quran:23:6:3"
-      ]
-    },
-    "أشد": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "stronger / more severe",
-      "used_by": [
-        "quran:9:69:5",
-        "quran:47:13:5",
-        "quran:59:13:2",
-        "quran:2:74:10",
-        "quran:2:191:9",
-        "+13 more"
-      ]
-    },
-    "أشده": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "his full strength / maturity",
-      "used_by": [
-        "quran:46:15:17",
-        "quran:12:22:3",
-        "quran:6:152:11",
-        "quran:17:34:11",
-        "quran:28:14:3"
-      ]
-    },
-    "أصاب": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "it struck / befell",
-      "used_by": [
-        "quran:30:48:20",
-        "quran:38:36:8",
-        "quran:11:89:3",
-        "quran:57:22:2"
-      ]
-    },
-    "أصابك": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "befell you, struck you",
-      "used_by": [
-        "quran:4:79:2",
-        "quran:4:79:8"
-      ]
-    },
-    "أصابهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "it befell them; it struck them",
-      "used_by": [
-        "quran:3:146:11",
-        "quran:42:39:3",
-        "quran:11:81:23"
-      ]
-    },
-    "أصحاب": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "companions / people (of)",
-      "used_by": [
-        "quran:6:71:25",
-        "quran:25:24:1",
-        "quran:7:46:10",
-        "quran:10:27:23",
-        "quran:15:80:3",
-        "+41 more"
-      ]
-    },
-    "أطيعوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "obey!",
-      "used_by": [
-        "quran:8:20:4",
-        "quran:24:54:2",
-        "quran:3:32:2",
-        "quran:4:59:4"
-      ]
-    },
-    "أعجلتم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "did you hasten?",
-      "used_by": [
-        "quran:7:150:13"
-      ]
-    },
-    "أعد": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "He prepared",
-      "used_by": [
-        "quran:33:35:25",
-        "quran:33:29:10",
-        "quran:4:102:59"
-      ]
-    },
-    "أعمالكم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "your deeds",
-      "used_by": [
-        "quran:33:71:3",
-        "quran:42:15:25",
-        "quran:47:35:12",
-        "quran:2:139:4",
-        "quran:49:2:19"
-      ]
-    },
-    "أعمالهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their deeds",
-      "used_by": [
-        "quran:9:69:26",
-        "quran:99:6:6",
-        "quran:3:22:4",
-        "quran:24:39:3",
-        "quran:14:18:5",
-        "+11 more"
-      ]
-    },
-    "أف": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "a word of contempt (ugh)",
-      "used_by": [
-        "quran:17:23:19",
-        "quran:21:67:1"
-      ]
-    },
-    "أفرءيتم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "have you then seen?",
-      "used_by": [
-        "quran:56:63:1",
-        "quran:56:71:1",
-        "quran:39:38:10",
-        "quran:53:19:1",
-        "quran:56:58:1"
-      ]
-    },
-    "أفلم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "have they not...?",
-      "used_by": [
-        "quran:34:9:1",
-        "quran:22:46:1",
-        "quran:50:6:1",
-        "quran:25:40:9",
-        "quran:12:109:12",
-        "+2 more"
-      ]
-    },
-    "أفمن": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "is then he who",
-      "used_by": [
-        "quran:28:61:1",
-        "quran:39:24:1",
-        "quran:13:33:1",
-        "quran:11:17:1",
-        "quran:39:19:1",
-        "+5 more"
-      ]
-    },
-    "أقاموا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "established (the prayer)",
-      "used_by": [
-        "quran:5:66:3",
-        "quran:22:41:6"
-      ]
-    },
-    "أقرب": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "nearer / nearest",
-      "used_by": [
-        "quran:5:8:18",
-        "quran:4:11:61",
-        "quran:17:57:9",
-        "quran:2:237:25",
-        "quran:50:16:10",
-        "+3 more"
-      ]
-    },
-    "أكبر": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "greater, greatest",
-      "used_by": [
-        "quran:40:10:3",
-        "quran:3:118:23",
-        "quran:2:219:12",
-        "quran:9:72:20",
-        "quran:4:153:13",
-        "+6 more"
-      ]
-    },
-    "أكثرهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "most of them",
-      "used_by": [
-        "quran:27:61:19",
-        "quran:39:29:17",
-        "quran:8:34:19",
-        "quran:28:57:23",
-        "quran:28:13:15",
-        "+6 more"
-      ]
-    },
-    "أكرمي": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "make honorable / treat generously!",
-      "used_by": [
-        "quran:12:21:7"
-      ]
-    },
-    "أكفاركم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "are your disbelievers",
-      "used_by": [
-        "quran:54:43:1"
-      ]
-    },
-    "أليم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "painful",
-      "used_by": [
-        "quran:2:178:37",
-        "quran:12:25:23",
-        "quran:3:21:18",
-        "quran:9:34:28",
-        "quran:46:24:18",
-        "+24 more"
-      ]
-    },
-    "أليما": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "painful",
-      "used_by": [
-        "quran:48:16:28",
-        "quran:4:173:17",
-        "quran:33:8:8",
-        "quran:48:25:40",
-        "quran:73:13:5",
-        "+1 more"
-      ]
-    },
-    "أمرا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "a matter; a command",
-      "used_by": [
-        "quran:3:47:18",
-        "quran:19:21:14",
-        "quran:65:1:45",
-        "quran:43:79:3",
-        "quran:8:42:19",
-        "+7 more"
-      ]
-    },
-    "أمري": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "my affair / my command",
-      "used_by": [
-        "quran:20:26:3",
-        "quran:18:82:28",
-        "quran:20:32:3",
-        "quran:18:73:9",
-        "quran:27:32:6",
-        "+2 more"
-      ]
-    },
-    "أمم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "communities / nations",
-      "used_by": [
-        "quran:6:42:4",
-        "quran:13:30:9",
-        "quran:41:25:15",
-        "quran:6:38:11",
-        "quran:7:38:4",
-        "+2 more"
-      ]
-    },
-    "أمنتم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "you felt secure/safe",
-      "used_by": [
-        "quran:2:196:35",
-        "quran:17:69:2",
-        "quran:2:239:7",
-        "quran:67:17:2"
-      ]
-    },
-    "أمين": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "trustworthy",
-      "used_by": [
-        "quran:12:54:14",
-        "quran:7:68:7",
-        "quran:27:39:16",
-        "quran:44:18:9",
-        "quran:81:21:3",
-        "+1 more"
-      ]
-    },
-    "أنؤمن": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "shall we believe?",
-      "used_by": [
-        "quran:23:47:2",
-        "quran:2:13:9",
-        "quran:26:111:2"
-      ]
-    },
-    "أناس": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "people",
-      "used_by": [
-        "quran:2:60:17",
-        "quran:27:56:14",
-        "quran:17:71:4",
-        "quran:7:82:12"
-      ]
-    },
-    "أنزل": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "he sent down",
-      "used_by": [
-        "quran:3:7:3",
-        "quran:31:21:6",
-        "quran:6:91:9",
-        "quran:6:91:17",
-        "quran:13:27:5",
-        "+55 more"
-      ]
-    },
-    "أنزلنا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "We sent down",
-      "used_by": [
-        "quran:39:2:2",
-        "quran:59:21:2",
-        "quran:41:39:8",
-        "quran:22:5:60",
-        "quran:4:105:2",
-        "+11 more"
-      ]
-    },
-    "أنزلناه": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "We sent it down",
-      "used_by": [
-        "quran:17:105:2",
-        "quran:10:24:6",
-        "quran:6:92:3",
-        "quran:97:1:2",
-        "quran:21:50:4",
-        "+3 more"
-      ]
-    },
-    "أنصار": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "helpers",
-      "used_by": [
-        "quran:3:52:14",
-        "quran:61:14:5",
-        "quran:61:14:20",
-        "quran:2:270:15"
-      ]
-    },
-    "أنفسكم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "your own selves",
-      "used_by": [
-        "quran:2:87:23",
-        "quran:24:61:15",
-        "quran:24:61:63",
-        "quran:2:235:13",
-        "quran:2:235:41",
-        "+29 more"
-      ]
-    },
-    "أنفسهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "themselves (their own souls)",
-      "used_by": [
-        "quran:7:9:7",
-        "quran:9:111:6",
-        "quran:7:192:6",
-        "quran:4:97:6",
-        "quran:58:8:28",
-        "+44 more"
-      ]
-    },
-    "أنفقتم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "you spent",
-      "used_by": [
-        "quran:60:10:44",
-        "quran:34:39:13",
-        "quran:2:270:2",
-        "quran:2:215:6"
-      ]
-    },
-    "أنهكما": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "I forbade you both",
-      "used_by": [
-        "quran:7:22:18"
-      ]
-    },
-    "أهاكذا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "is it like this?",
-      "used_by": [
-        "quran:27:42:1"
-      ]
-    },
-    "أهدي": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "more rightly guided",
-      "used_by": [
-        "quran:4:51:16",
-        "quran:35:42:9",
-        "quran:67:22:6",
-        "quran:6:157:9"
-      ]
-    },
-    "أهل": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "people of / family of",
-      "used_by": [
-        "quran:3:75:2",
-        "quran:59:2:7",
-        "quran:2:173:9",
-        "quran:28:45:11",
-        "quran:5:3:8",
-        "+24 more"
-      ]
-    },
-    "أهلكنا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "We destroyed",
-      "used_by": [
-        "quran:19:74:2",
-        "quran:28:58:2",
-        "quran:6:6:4",
-        "quran:17:17:2",
-        "quran:19:98:2",
-        "+1 more"
-      ]
-    },
-    "أهلكناهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "We destroyed them",
-      "used_by": [
-        "quran:47:13:11",
-        "quran:44:37:9",
-        "quran:20:134:3"
-      ]
-    },
-    "أهله": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "his family, his people",
-      "used_by": [
-        "quran:2:196:63",
-        "quran:4:92:19",
-        "quran:4:92:44",
-        "quran:27:49:12",
-        "quran:19:55:3",
-        "+7 more"
-      ]
-    },
-    "أهواءهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their desires",
-      "used_by": [
-        "quran:2:120:18",
-        "quran:5:49:9",
-        "quran:2:145:22",
-        "quran:28:50:8",
-        "quran:42:15:8",
-        "+3 more"
-      ]
-    },
-    "أوحينا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "We revealed (inspired)",
-      "used_by": [
-        "quran:10:2:5",
-        "quran:42:7:2",
-        "quran:13:30:13",
-        "quran:12:3:7",
-        "quran:4:163:2",
-        "+5 more"
-      ]
-    },
-    "أوف": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "I will fulfill",
-      "used_by": [
-        "quran:2:40:10"
-      ]
-    },
-    "أوفي": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "more faithful; truer",
-      "used_by": [
-        "quran:9:111:25",
-        "quran:48:10:18",
-        "quran:3:76:3"
-      ]
-    },
-    "أول": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "first",
-      "used_by": [
-        "quran:3:96:2",
-        "quran:18:48:9",
-        "quran:17:7:18",
-        "quran:7:143:40",
-        "quran:6:163:7",
-        "+7 more"
-      ]
-    },
-    "أولائك": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "those (ones)",
-      "used_by": [
-        "quran:9:69:24",
-        "quran:10:8:1",
-        "quran:2:86:1",
-        "quran:8:72:14",
-        "quran:3:22:1",
-        "+80 more"
-      ]
-    },
-    "أولائكم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "those of you / those are you",
-      "used_by": [
-        "quran:54:43:4"
-      ]
-    },
-    "أولادكم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "your children",
-      "used_by": [
-        "quran:2:233:48",
-        "quran:4:11:4",
-        "quran:6:151:16",
-        "quran:60:3:5",
-        "quran:17:31:3",
-        "+2 more"
-      ]
-    },
-    "أولادهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their children",
-      "used_by": [
-        "quran:9:55:5",
-        "quran:6:140:5",
-        "quran:3:10:9"
-      ]
-    },
-    "أولوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "possessors of, people of",
-      "used_by": [
-        "quran:3:7:45",
-        "quran:4:8:4",
-        "quran:9:86:11",
-        "quran:39:18:12",
-        "quran:39:9:23",
-        "+5 more"
-      ]
-    },
-    "أولياء": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "allies / protectors",
-      "used_by": [
-        "quran:8:72:16",
-        "quran:5:51:8",
-        "quran:5:51:10",
-        "quran:9:71:4",
-        "quran:7:30:10",
-        "+15 more"
-      ]
-    },
-    "أيتها": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "O (vocative, feminine)",
-      "used_by": [
-        "quran:12:70:12",
-        "quran:89:27:2"
-      ]
-    },
-    "أيمانهن": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their right hands",
-      "used_by": [
-        "quran:24:31:47"
-      ]
-    },
-    "إبراهم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "Abraham (Ibrahim)",
-      "used_by": [
-        "quran:2:260:3",
-        "quran:2:124:3",
-        "quran:2:125:10",
-        "quran:2:125:14",
-        "quran:2:130:5",
-        "+7 more"
-      ]
-    },
-    "إبليس": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "Iblis (Satan)",
-      "used_by": [
-        "quran:18:50:8",
-        "quran:20:116:8",
-        "quran:2:34:8",
-        "quran:7:11:12",
-        "quran:38:74:2"
-      ]
-    },
-    "إثم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "sin",
-      "used_by": [
-        "quran:2:173:20",
-        "quran:2:219:7",
-        "quran:2:182:11",
-        "quran:2:203:11",
-        "quran:2:203:16",
-        "+1 more"
-      ]
-    },
-    "إحديهما": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "one of the two of them",
-      "used_by": [
-        "quran:2:282:68",
-        "quran:2:282:70",
-        "quran:49:9:10",
-        "quran:28:25:2",
-        "quran:28:26:2"
-      ]
-    },
-    "إخوانهن": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "their brothers",
-      "used_by": [
-        "quran:24:31:35",
-        "quran:24:31:38"
-      ]
-    },
-    "إسراءيل": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "Israel (Jacob)",
-      "used_by": [
-        "quran:2:40:2",
-        "quran:2:83:5",
-        "quran:61:6:7",
-        "quran:10:90:3",
-        "quran:10:90:24",
-        "+18 more"
-      ]
-    },
-    "إفك": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "a slander; falsehood",
-      "used_by": [
-        "quran:46:11:18",
-        "quran:25:4:7",
-        "quran:24:12:11"
-      ]
-    },
-    "إلاها": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "a god, deity",
-      "used_by": [
-        "quran:26:29:4",
-        "quran:38:5:3",
-        "quran:23:117:5",
-        "quran:17:22:5",
-        "quran:25:68:6",
-        "+4 more"
-      ]
-    },
-    "إلينا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "to us; toward us",
-      "used_by": [
-        "quran:31:23:6",
-        "quran:23:115:6",
-        "quran:12:65:15",
-        "quran:33:18:9",
-        "quran:20:134:11",
-        "+5 more"
-      ]
-    },
-    "إماما": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "a leader/model",
-      "used_by": [
-        "quran:2:124:11",
-        "quran:25:74:13",
-        "quran:11:17:14"
-      ]
-    },
-    "إملاق": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "poverty",
-      "used_by": [
-        "quran:6:151:18",
-        "quran:17:31:5"
-      ]
-    },
-    "إيمانا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "faith / belief",
-      "used_by": [
-        "quran:9:124:11",
-        "quran:9:124:16",
-        "quran:8:2:14",
-        "quran:3:173:12",
-        "quran:74:31:21"
-      ]
-    },
-    "إيمانكم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "your (pl.) faith",
-      "used_by": [
-        "quran:3:106:12",
-        "quran:2:93:24",
-        "quran:2:109:10",
-        "quran:2:143:40"
-      ]
-    },
-    "ائتيا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "come, you two",
-      "used_by": [
-        "quran:41:11:10"
-      ]
-    },
-    "ابتغاء": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "seeking, in pursuit of",
-      "used_by": [
-        "quran:3:7:23",
-        "quran:57:27:25",
-        "quran:2:265:5",
-        "quran:17:28:4",
-        "quran:13:17:17",
-        "+4 more"
-      ]
-    },
-    "ابن": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "son",
-      "used_by": [
-        "quran:2:87:11",
-        "quran:57:27:8",
-        "quran:5:75:3",
-        "quran:3:45:13",
-        "quran:4:157:6",
-        "+14 more"
-      ]
-    },
-    "ابنت": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "the daughter of",
-      "used_by": [
-        "quran:66:12:2"
-      ]
-    },
-    "اتبعت": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "you followed",
-      "used_by": [
-        "quran:2:120:17",
-        "quran:2:145:21",
-        "quran:13:37:6"
-      ]
-    },
-    "اتخذوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "they took (for themselves)",
-      "used_by": [
-        "quran:7:30:8",
-        "quran:39:3:6",
-        "quran:42:9:2",
-        "quran:7:152:3",
-        "quran:46:28:4",
-        "+8 more"
-      ]
-    },
-    "اتقوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "be mindful! / fear (Allah)",
-      "used_by": [
-        "quran:31:33:3",
-        "quran:3:102:4",
-        "quran:2:212:11",
-        "quran:16:30:3",
-        "quran:7:201:3",
-        "+13 more"
-      ]
-    },
-    "اتقي": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "was mindful (of Allah)",
-      "used_by": [
-        "quran:2:189:19",
-        "quran:53:32:31",
-        "quran:2:203:19",
-        "quran:4:77:45"
-      ]
-    },
-    "اختلافا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "discrepancy",
-      "used_by": [
-        "quran:4:82:12"
-      ]
-    },
-    "اختلفوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "they differed, disputed",
-      "used_by": [
-        "quran:4:157:19",
-        "quran:2:213:18",
-        "quran:2:213:38",
-        "quran:2:253:36",
-        "quran:10:93:11"
-      ]
-    },
-    "ادخلوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "enter! (you all)",
-      "used_by": [
-        "quran:4:154:7",
-        "quran:2:208:4",
-        "quran:5:21:2",
-        "quran:39:72:2",
-        "quran:2:58:3",
-        "+4 more"
-      ]
-    },
-    "ادخلوها": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "enter it",
-      "used_by": [
-        "quran:15:46:1",
-        "quran:50:34:1"
-      ]
-    },
-    "ادع": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "call; invoke; invite",
-      "used_by": [
-        "quran:16:125:1",
-        "quran:2:70:2",
-        "quran:2:69:2",
-        "quran:7:134:7",
-        "quran:2:68:2"
-      ]
-    },
-    "ادعهن": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "call them (f.)",
-      "used_by": [
-        "quran:2:260:32"
-      ]
-    },
-    "ادعوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "call upon; invoke (you all)",
-      "used_by": [
-        "quran:17:110:2",
-        "quran:17:110:5",
-        "quran:17:56:2",
-        "quran:7:195:21"
-      ]
-    },
-    "اذكروا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "Remember! (you all)",
-      "used_by": [
-        "quran:2:40:3",
-        "quran:5:20:6"
-      ]
-    },
-    "ازدادوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "they increased",
-      "used_by": [
-        "quran:4:137:11"
-      ]
-    },
-    "استجيبوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "respond! (plural)",
-      "used_by": [
-        "quran:42:47:1",
-        "quran:8:24:4"
-      ]
-    },
-    "استضعفوني": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "they deemed me weak",
-      "used_by": [
-        "quran:7:150:28"
-      ]
-    },
-    "استطاعوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "they were able",
-      "used_by": [
-        "quran:51:45:2",
-        "quran:2:217:37",
-        "quran:18:97:6",
-        "quran:36:67:7"
-      ]
-    },
-    "استطعتم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "you (pl.) were able",
-      "used_by": [
-        "quran:8:60:4",
-        "quran:55:33:5",
-        "quran:64:16:4",
-        "quran:11:13:12"
-      ]
-    },
-    "استغفروا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "seek forgiveness",
-      "used_by": [
-        "quran:11:3:2"
-      ]
-    },
-    "استكبروا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "they were arrogant",
-      "used_by": [
-        "quran:34:31:28",
-        "quran:41:38:2",
-        "quran:40:47:8",
-        "quran:25:21:14",
-        "quran:14:21:7",
-        "+1 more"
-      ]
-    },
-    "اسجدوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "prostrate yourselves!",
-      "used_by": [
-        "quran:18:50:4",
-        "quran:20:116:4",
-        "quran:2:34:4",
-        "quran:7:11:8"
-      ]
-    },
-    "اسكن": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "dwell",
-      "used_by": [
-        "quran:2:35:3",
-        "quran:7:19:2"
-      ]
-    },
-    "اسم": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "name (of)",
-      "used_by": [
-        "quran:22:40:25",
-        "quran:6:121:6",
-        "quran:87:1:6",
-        "quran:5:4:23",
-        "quran:6:118:4",
-        "+1 more"
-      ]
-    },
-    "اسمه": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "his name",
-      "used_by": [
-        "quran:3:45:10",
-        "quran:61:6:23",
-        "quran:19:7:5",
-        "quran:2:114:10",
-        "quran:24:36:9"
-      ]
-    },
-    "اضطر": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "he is compelled",
-      "used_by": [
-        "quran:2:173:14",
-        "quran:5:3:52",
-        "quran:6:145:31"
-      ]
-    },
-    "اعبدوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "worship! (you all)",
-      "used_by": [
-        "quran:11:61:7",
-        "quran:7:65:7",
-        "quran:7:73:7",
-        "quran:7:59:8",
-        "quran:11:84:7",
-        "+4 more"
-      ]
-    },
-    "افتراه": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "he fabricated it",
-      "used_by": [
-        "quran:21:5:6"
-      ]
-    },
-    "اقتتل": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "fought one another",
-      "used_by": [
-        "quran:2:253:26"
-      ]
-    },
-    "اقتتلوا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "they fought one another",
-      "used_by": [
-        "quran:2:253:47",
-        "quran:49:9:5"
-      ]
-    },
-    "الءاخره": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "the Hereafter",
-      "used_by": [
-        "quran:17:72:8",
-        "quran:38:7:6",
-        "quran:13:26:14",
-        "quran:28:77:6",
-        "quran:16:30:16",
-        "+44 more"
-      ]
-    },
-    "الأبصار": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "the eyes / sights",
-      "used_by": [
-        "quran:33:10:10",
-        "quran:59:2:40",
-        "quran:6:103:3",
-        "quran:6:103:6",
-        "quran:22:46:17",
-        "+1 more"
-      ]
-    },
-    "الأجلين": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "the two terms",
-      "used_by": [
-        "quran:28:28:6"
-      ]
-    },
-    "الأحاديث": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "the events / accounts",
-      "used_by": [
-        "quran:12:21:23",
-        "quran:12:101:9",
-        "quran:12:6:7"
-      ]
-    },
-    "الأخري": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "the other; the latter",
-      "used_by": [
-        "quran:2:282:71",
-        "quran:49:9:12",
-        "quran:53:47:4",
-        "quran:53:20:3"
-      ]
-    },
-    "الأعداء": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "the enemies",
-      "used_by": [
-        "quran:7:150:34"
-      ]
-    },
-    "الأعلي": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "the Most High",
-      "used_by": [
-        "quran:37:8:5",
-        "quran:87:1:8",
-        "quran:16:60:9",
-        "quran:20:68:6",
-        "quran:30:27:12"
-      ]
-    },
-    "الأعمي": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "the blind one",
-      "used_by": [
-        "quran:24:61:3",
-        "quran:80:2:3",
-        "quran:35:19:3",
-        "quran:6:50:25",
-        "quran:40:58:3",
-        "+1 more"
-      ]
-    },
-    "الأقصا": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "the farthest",
-      "used_by": [
-        "quran:17:1:15"
-      ]
-    },
-    "الأكبر": {
-      "decision": "resolved_qamus_authored",
-      "gloss": "the greatest",
-      "used_by": [
-        "quran:21:103:4",
-        "quran:9:3:9",
-        "quran:88:24:4"
-      ]
-    }
+  "ءاباءهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their fathers",
+   "used_by": [
+    "quran:33:5:10",
+    "quran:58:22:15"
+   ]
   },
-  "root_to_entries": {
-    "ذ م م": [
-      "25460db4e3ce",
-      "d99748318ce0"
-    ],
-    "ر و د": [
-      "213945255c3b",
-      "29587bc586c7"
-    ],
-    "ز ر ع": [
-      "ce909b563637",
-      "d0eac6ef4f78"
-    ],
-    "ص ر ر": [
-      "2fee38d0e6c0",
-      "6bb15cbe2246"
-    ],
-    "ص ل ي": [
-      "5999a42d7bdd",
-      "8bb806510d1d"
-    ],
-    "ط ر ف": [
-      "53bbf2c4975a",
-      "8cf8aaa84b2a"
-    ],
-    "ف ر ج": [
-      "3b927026b88a",
-      "57c90af7e9e8"
-    ]
+  "ءاباؤكم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "your fathers/forefathers",
+   "used_by": [
+    "quran:6:91:37",
+    "quran:9:24:4",
+    "quran:4:11:56",
+    "quran:4:22:5"
+   ]
   },
-  "schema": "fusha/decision-backlinks@1",
-  "split_keys": {
-    "ءاتيه": "split: roots=['أتي'] pos=['N', 'V'] surfaces=2",
-    "ءاتيهم": "split: roots=['أتي'] pos=['N', 'V'] surfaces=4",
-    "أبي": "split: roots=['أبو', 'أبي'] pos=['N', 'V'] surfaces=3",
-    "أحب": "split: roots=['حبب'] pos=['N', 'V'] surfaces=3",
-    "أحسن": "split: roots=['حسن'] pos=['N', 'V'] surfaces=3",
-    "أخذ": "split: roots=['أخذ'] pos=['N', 'V'] surfaces=3",
-    "أذن": "split: roots=['أذن'] pos=['N', 'V'] surfaces=4",
-    "أسر": "split: roots=['سرر', 'سري'] pos=['V'] surfaces=2",
-    "أسري": "split: roots=['أسر', 'سري'] pos=['N', 'V'] surfaces=1",
-    "أشق": "split: roots=['شقق'] pos=['N', 'V'] surfaces=2",
-    "أضل": "split: roots=['ضلل'] pos=['N', 'V'] surfaces=2",
-    "أظلم": "split: roots=['ظلم'] pos=['N', 'V'] surfaces=2",
-    "أعلم": "split: roots=['علم'] pos=['N', 'V'] surfaces=1",
-    "أقل": "split: roots=['قلل', 'قول'] pos=['N', 'V'] surfaces=2",
-    "أكل": "split: roots=['أكل'] pos=['N', 'V'] surfaces=2",
-    "ألا": "split: roots=[] pos=['N', 'P'] surfaces=4",
-    "ألف": "split: roots=['ألف'] pos=['N', 'V'] surfaces=5",
-    "أم": "split: roots=['أمم'] pos=['N', 'P'] surfaces=6",
-    "أمر": "split: roots=['أمر'] pos=['N', 'V'] surfaces=7",
-    "أمركم": "split: roots=['أمر'] pos=['N', 'V'] surfaces=4",
-    "أمرنا": "split: roots=['أمر'] pos=['N', 'V'] surfaces=4",
-    "أمره": "split: roots=['أمر'] pos=['N', 'V'] surfaces=4",
-    "أمرهم": "split: roots=['أمر'] pos=['N', 'V'] surfaces=5",
-    "أمن": "split: roots=['أمن'] pos=['P', 'V'] surfaces=3",
-    "أنا": "split: roots=[] pos=['N', 'P'] surfaces=5",
-    "أني": "split: roots=[] pos=['N', 'P'] surfaces=3",
-    "أهلك": "split: roots=['أهل', 'هلك'] pos=['N', 'V'] surfaces=2",
-    "إذا": "split: roots=[] pos=['N', 'P'] surfaces=4",
-    "إلا": "split: roots=['ألل'] pos=['N', 'P'] surfaces=5",
-    "الأمين": "split: roots=['أمم', 'أمن'] pos=['N'] surfaces=3",
-    "بال": "split: roots=['أول', 'بول'] pos=['N'] surfaces=3",
-    "بشر": "split: roots=['بشر', 'شرر'] pos=['N', 'V'] surfaces=5",
-    "بكم": "split: roots=['بكم'] pos=['N', 'P'] surfaces=4",
-    "بنوا": "split: roots=['بني'] pos=['N', 'V'] surfaces=2",
-    "بيت": "split: roots=['بيت'] pos=['N', 'V'] surfaces=3",
-    "تبت": "split: roots=['تبب', 'توب'] pos=['V'] surfaces=2",
-    "تبع": "split: roots=['تبع'] pos=['N', 'V'] surfaces=2",
-    "تصل": "split: roots=['صلو', 'وصل'] pos=['V'] surfaces=2",
-    "تعدوا": "split: roots=['عدد', 'عدو'] pos=['V'] surfaces=2",
-    "تقلب": "split: roots=['قلب'] pos=['N', 'V'] surfaces=3",
-    "تكن": "split: roots=['كنن', 'كون'] pos=['V'] surfaces=3",
-    "تمنوا": "split: roots=['منن', 'مني'] pos=['V'] surfaces=2",
-    "ثم": "split: roots=[] pos=['N', 'P'] surfaces=2",
-    "حج": "split: roots=['حجج'] pos=['N', 'V'] surfaces=2",
-    "حرم": "split: roots=['حرم'] pos=['N', 'V'] surfaces=4",
-    "حق": "split: roots=['حقق'] pos=['N', 'V'] surfaces=5",
-    "حمل": "split: roots=['حمل'] pos=['N', 'V'] surfaces=5",
-    "حي": "split: roots=['حيي'] pos=['N', 'V'] surfaces=2",
-    "خسر": "split: roots=['خسر'] pos=['N', 'V'] surfaces=2",
-    "خفت": "split: roots=['خفف', 'خوف'] pos=['V'] surfaces=3",
-    "خلقه": "split: roots=['خلق'] pos=['N', 'V'] surfaces=2",
-    "ذكر": "split: roots=['ذكر'] pos=['N', 'V'] surfaces=8",
-    "ذهب": "split: roots=['ذهب'] pos=['N', 'V'] surfaces=4",
-    "ربا": "split: roots=['ربب', 'ربو'] pos=['N'] surfaces=2",
-    "رجع": "split: roots=['رجع'] pos=['N', 'V'] surfaces=2",
-    "رزقهم": "split: roots=['رزق'] pos=['N', 'V'] surfaces=4",
-    "ساوي": "split: roots=['أوي', 'سوي'] pos=['V'] surfaces=2",
-    "سكن": "split: roots=['سكن'] pos=['N', 'V'] surfaces=2",
-    "سنه": "split: roots=['سنن', 'سنو', 'وسن'] pos=['N'] surfaces=5",
-    "شجر": "split: roots=['شجر'] pos=['N', 'V'] surfaces=2",
-    "شرب": "split: roots=['شرب'] pos=['N', 'V'] surfaces=5",
-    "صدق": "split: roots=['صدق'] pos=['N', 'V'] surfaces=4",
-    "ضعف": "split: roots=['ضعف'] pos=['N', 'V'] surfaces=4",
-    "ظل": "split: roots=['ظلل'] pos=['N', 'V'] surfaces=2",
-    "ظلم": "split: roots=['ظلم'] pos=['N', 'V'] surfaces=2",
-    "ظن": "split: roots=['ظنن'] pos=['N', 'V'] surfaces=1",
-    "ظنا": "split: roots=['ظنن'] pos=['N', 'V'] surfaces=3",
-    "عاد": "split: roots=['عدو', 'عود'] pos=['N', 'V'] surfaces=5",
-    "عجل": "split: roots=['عجل'] pos=['N', 'V'] surfaces=2",
-    "عزم": "split: roots=['عزم'] pos=['N', 'V'] surfaces=2",
-    "عفوا": "split: roots=['عفو'] pos=['N', 'V'] surfaces=2",
-    "علمه": "split: roots=['علم'] pos=['N', 'V'] surfaces=3",
-    "علوا": "split: roots=['علو'] pos=['N', 'V'] surfaces=2",
-    "علي": "split: roots=['علو'] pos=['N', 'P'] surfaces=7",
-    "عليكم": "split: roots=[] pos=['N', 'P'] surfaces=3",
-    "عمل": "split: roots=['عمل'] pos=['N', 'V'] surfaces=5",
-    "عمي": "split: roots=['عمي'] pos=['N', 'V'] surfaces=2",
-    "عهد": "split: roots=['عهد'] pos=['N', 'V'] surfaces=3",
-    "غضب": "split: roots=['غضب'] pos=['N', 'V'] surfaces=4",
-    "غل": "split: roots=['غلل'] pos=['N', 'V'] surfaces=3",
-    "فأجره": "split: roots=['أجر', 'جور'] pos=['N', 'V'] surfaces=2",
-    "فتح": "split: roots=['فتح'] pos=['N', 'V'] surfaces=2",
-    "فديه": "split: roots=['فدي', 'ودي'] pos=['N'] surfaces=2",
-    "فزع": "split: roots=['فزع'] pos=['N', 'V'] surfaces=2",
-    "فصل": "split: roots=['صلو', 'فصل'] pos=['N', 'V'] surfaces=3",
-    "فضرب": "split: roots=['ضرب'] pos=['N', 'V'] surfaces=2",
-    "فضل": "split: roots=['فضل'] pos=['N', 'V'] surfaces=6",
-    "فضلوا": "split: roots=['ضلل', 'فضل'] pos=['V'] surfaces=2",
-    "فعل": "split: roots=['فعل'] pos=['N', 'V'] surfaces=3",
-    "فمن": "split: roots=['منن'] pos=['P', 'V'] surfaces=8",
-    "قتل": "split: roots=['قتل'] pos=['N', 'V'] surfaces=3",
-    "قتلهم": "split: roots=['قتل'] pos=['N', 'V'] surfaces=2",
-    "قد": "split: roots=['قدد'] pos=['P', 'V'] surfaces=4",
-    "قدر": "split: roots=['قدر'] pos=['N', 'V'] surfaces=2",
-    "قدم": "split: roots=['قدم'] pos=['N', 'V'] surfaces=3",
-    "كبر": "split: roots=['كبر'] pos=['N', 'V'] surfaces=2",
-    "كذب": "split: roots=['كذب'] pos=['N', 'V'] surfaces=3",
-    "كره": "split: roots=['كرر', 'كره'] pos=['N', 'V'] surfaces=4",
-    "كشف": "split: roots=['كشف'] pos=['N', 'V'] surfaces=2",
-    "كفوا": "split: roots=['كفأ', 'كفف'] pos=['N', 'V'] surfaces=2",
-    "كلا": "split: roots=['كلل'] pos=['N', 'P'] surfaces=5",
-    "كلمه": "split: roots=['كلم'] pos=['N', 'V'] surfaces=8",
-    "لعنا": "split: roots=['لعن'] pos=['N', 'V'] surfaces=2",
-    "لعنت": "split: roots=['لعن'] pos=['N', 'V'] surfaces=2",
-    "لعنه": "split: roots=['لعن'] pos=['N', 'V'] surfaces=3",
-    "لما": "split: roots=['لمم'] pos=['N', 'P'] surfaces=8",
-    "لهو": "split: roots=['لهو'] pos=['N', 'P'] surfaces=3",
-    "ليسوا": "split: roots=['سوأ', 'ليس'] pos=['V'] surfaces=3",
-    "ما": "split: roots=[] pos=['N', 'P'] surfaces=5",
-    "مكر": "split: roots=['مكر'] pos=['N', 'V'] surfaces=3",
-    "من": "split: roots=['منن'] pos=['N', 'P', 'V'] surfaces=20",
-    "منا": "split: roots=['منن'] pos=['N', 'P'] surfaces=5",
-    "مني": "split: roots=['مني'] pos=['N', 'P'] surfaces=5",
-    "مهين": "split: roots=['مهن', 'هون'] pos=['N'] surfaces=4",
-    "نزغ": "split: roots=['نزغ'] pos=['N', 'V'] surfaces=2",
-    "نزله": "split: roots=['نزل'] pos=['N', 'V'] surfaces=2",
-    "نسوه": "split: roots=['نسو', 'نسي'] pos=['N', 'V'] surfaces=2",
-    "نصركم": "split: roots=['نصر'] pos=['N', 'V'] surfaces=2",
-    "نصيب": "split: roots=['صوب', 'نصب'] pos=['N', 'V'] surfaces=4",
-    "نظر": "split: roots=['نظر'] pos=['N', 'V'] surfaces=2",
-    "نعد": "split: roots=['عدد', 'عود'] pos=['V'] surfaces=2",
-    "نعم": "split: roots=['نعم'] pos=['P', 'V'] surfaces=3",
-    "نفر": "split: roots=['نفر'] pos=['N', 'V'] surfaces=2",
-    "نفقه": "split: roots=['فقه', 'نفق'] pos=['N', 'V'] surfaces=3",
-    "هدي": "split: roots=['هدي'] pos=['N', 'V'] surfaces=4",
-    "هديهم": "split: roots=['هدي'] pos=['N', 'V'] surfaces=2",
-    "وأحسن": "split: roots=['حسن'] pos=['N', 'V'] surfaces=3",
-    "وأخر": "split: roots=['أخر'] pos=['N', 'V'] surfaces=3",
-    "وأضل": "split: roots=['ضلل'] pos=['N', 'V'] surfaces=2",
-    "وأقل": "split: roots=['قلل', 'قول'] pos=['N', 'V'] surfaces=2",
-    "وأمر": "split: roots=['أمر', 'مرر'] pos=['N', 'V'] surfaces=2",
-    "وتب": "split: roots=['تبب', 'توب'] pos=['V'] surfaces=2",
-    "وحسن": "split: roots=['حسن'] pos=['N', 'V'] surfaces=3",
-    "ورد": "split: roots=['ردد', 'ورد'] pos=['V'] surfaces=2",
-    "وزينه": "split: roots=['زين'] pos=['N', 'V'] surfaces=3",
-    "وصد": "split: roots=['صدد'] pos=['N', 'V'] surfaces=2",
-    "وعد": "split: roots=['وعد'] pos=['N', 'V'] surfaces=5",
-    "وعدهم": "split: roots=['عدد', 'وعد'] pos=['V'] surfaces=2",
-    "وكفر": "split: roots=['كفر'] pos=['N', 'V'] surfaces=2",
-    "وكل": "split: roots=['كلل', 'وكل'] pos=['N', 'V'] surfaces=4",
-    "وكلا": "split: roots=['أكل', 'كلل'] pos=['N', 'V'] surfaces=2",
-    "وكلمه": "split: roots=['كلم'] pos=['N', 'V'] surfaces=2",
-    "ولد": "split: roots=['ولد'] pos=['N', 'V'] surfaces=3",
-    "ولي": "split: roots=['ولي'] pos=['N', 'P', 'V'] surfaces=7",
-    "وليتم": "split: roots=['تمم', 'ولي'] pos=['V'] surfaces=2",
-    "وهم": "split: roots=['همم'] pos=['P', 'V'] surfaces=5",
-    "وهن": "split: roots=['وهن'] pos=['N', 'V'] surfaces=2",
-    "ويحيي": "split: roots=['حيي'] pos=['N', 'V'] surfaces=1",
-    "يحلون": "split: roots=['حلل', 'حلي'] pos=['V'] surfaces=2",
-    "يحيي": "split: roots=['حيي'] pos=['N', 'V'] surfaces=2",
-    "يدع": "split: roots=['دعع', 'دعو'] pos=['V'] surfaces=2",
-    "يدعون": "split: roots=['دعع', 'دعو'] pos=['V'] surfaces=4",
-    "يرد": "split: roots=['ردد', 'رود'] pos=['V'] surfaces=3",
-    "يصلوا": "split: roots=['صلو', 'وصل'] pos=['V'] surfaces=2",
-    "يصلون": "split: roots=['صلو', 'وصل'] pos=['V'] surfaces=2",
-    "يصلي": "split: roots=['صلو', 'صلي'] pos=['V'] surfaces=2"
+  "ءابائهن": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their fathers",
+   "used_by": [
+    "quran:24:31:25"
+   ]
+  },
+  "ءاتنا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "give us",
+   "used_by": [
+    "quran:2:201:5",
+    "quran:18:62:5",
+    "quran:18:10:8"
+   ]
+  },
+  "ءاتيتم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "you (pl.) gave",
+   "used_by": [
+    "quran:30:39:2",
+    "quran:30:39:14",
+    "quran:2:233:55"
+   ]
+  },
+  "ءاتيتموهن": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "you have given them (f.)",
+   "used_by": [
+    "quran:4:19:16",
+    "quran:2:229:14",
+    "quran:60:10:36",
+    "quran:5:5:25"
+   ]
+  },
+  "ءاتيناهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "We gave them",
+   "used_by": [
+    "quran:2:121:2",
+    "quran:2:146:2",
+    "quran:35:40:20",
+    "quran:6:114:12",
+    "quran:6:89:3",
+    "+1 more"
+   ]
+  },
+  "ءاتيها": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "He has given it/her",
+   "used_by": [
+    "quran:65:7:20"
+   ]
+  },
+  "ءاخر": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "another; other",
+   "used_by": [
+    "quran:23:14:17",
+    "quran:23:117:6",
+    "quran:17:22:6",
+    "quran:25:68:7",
+    "quran:26:213:6",
+    "+1 more"
+   ]
+  },
+  "ءاخرين": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "others",
+   "used_by": [
+    "quran:6:6:31",
+    "quran:5:41:24",
+    "quran:23:31:6"
+   ]
+  },
+  "ءادم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "Adam",
+   "used_by": [
+    "quran:3:33:4",
+    "quran:2:31:2",
+    "quran:7:172:6",
+    "quran:7:31:2",
+    "quran:7:26:2",
+    "+7 more"
+   ]
+  },
+  "ءاذانهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their ears",
+   "used_by": [
+    "quran:6:25:12",
+    "quran:2:19:12",
+    "quran:18:11:3",
+    "quran:18:57:21",
+    "quran:71:7:9"
+   ]
+  },
+  "ءال": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "the family of",
+   "used_by": [
+    "quran:28:8:2",
+    "quran:34:13:13",
+    "quran:40:28:5",
+    "quran:27:56:9",
+    "quran:2:50:7",
+    "+9 more"
+   ]
+  },
+  "ءالهه": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "gods (false deities)",
+   "used_by": [
+    "quran:6:74:8",
+    "quran:21:43:3",
+    "quran:46:28:9",
+    "quran:7:138:19",
+    "quran:19:81:5",
+    "+2 more"
+   ]
+  },
+  "ءامره": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "I command him",
+   "used_by": [
+    "quran:12:32:15"
+   ]
+  },
+  "ءامن": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "believed",
+   "used_by": [
+    "quran:2:253:39",
+    "quran:9:18:6",
+    "quran:2:62:9",
+    "quran:2:177:12",
+    "quran:2:285:1",
+    "+11 more"
+   ]
+  },
+  "ءامنا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "we believe / we have faith",
+   "used_by": [
+    "quran:3:7:36",
+    "quran:3:52:16",
+    "quran:29:2:7",
+    "quran:3:53:2",
+    "quran:2:76:6",
+    "+15 more"
+   ]
+  },
+  "ءامنتم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "you (all) believed",
+   "used_by": [
+    "quran:26:49:2",
+    "quran:8:41:18",
+    "quran:2:137:5",
+    "quran:20:71:2",
+    "quran:7:123:3"
+   ]
+  },
+  "ءامنوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "they believed",
+   "used_by": [
+    "quran:48:29:48",
+    "quran:2:178:3",
+    "quran:40:35:15",
+    "quran:49:1:7",
+    "quran:46:11:5",
+    "+162 more"
+   ]
+  },
+  "ءامنين": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "secure, safe",
+   "used_by": [
+    "quran:48:27:13",
+    "quran:15:46:3",
+    "quran:34:18:17",
+    "quran:12:99:14"
+   ]
+  },
+  "ءانست": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "I perceived; I noticed",
+   "used_by": [
+    "quran:28:29:16",
+    "quran:20:10:8",
+    "quran:27:7:6"
+   ]
+  },
+  "ءاياتنا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "Our signs / verses",
+   "used_by": [
+    "quran:17:1:21",
+    "quran:28:45:15",
+    "quran:10:15:4",
+    "quran:27:13:3",
+    "quran:18:9:9",
+    "+9 more"
+   ]
+  },
+  "ءاياته": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "His signs / verses",
+   "used_by": [
+    "quran:3:103:32",
+    "quran:3:164:14",
+    "quran:41:39:2",
+    "quran:2:187:62",
+    "quran:5:89:43",
+    "+15 more"
+   ]
+  },
+  "ءاياتي": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "My signs/verses",
+   "used_by": [
+    "quran:18:106:7",
+    "quran:7:146:3",
+    "quran:21:37:6",
+    "quran:6:130:10"
+   ]
+  },
+  "ءايه": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "a sign",
+   "used_by": [
+    "quran:2:259:47",
+    "quran:19:21:9",
+    "quran:3:41:5",
+    "quran:13:27:7",
+    "quran:17:12:6",
+    "+17 more"
+   ]
+  },
+  "أءذا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "is it that when",
+   "used_by": [
+    "quran:13:5:5",
+    "quran:37:53:1",
+    "quran:32:10:2",
+    "quran:50:3:1"
+   ]
+  },
+  "أءنا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "is it that we...?",
+   "used_by": [
+    "quran:13:5:8",
+    "quran:37:53:6",
+    "quran:32:10:6"
+   ]
+  },
+  "أبصارهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their eyes; their sight",
+   "used_by": [
+    "quran:68:43:2",
+    "quran:24:30:5",
+    "quran:2:7:8",
+    "quran:54:7:2",
+    "quran:2:20:4",
+    "+2 more"
+   ]
+  },
+  "أبصارهن": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their (f.) gazes",
+   "used_by": [
+    "quran:24:31:5"
+   ]
+  },
+  "أبلغتكم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "I conveyed to you",
+   "used_by": [
+    "quran:7:79:6"
+   ]
+  },
+  "أبناءهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their sons",
+   "used_by": [
+    "quran:2:146:7",
+    "quran:28:4:13",
+    "quran:58:22:17",
+    "quran:7:127:16"
+   ]
+  },
+  "أبنائهن": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their sons",
+   "used_by": [
+    "quran:24:31:30"
+   ]
+  },
+  "أتبع": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "I follow",
+   "used_by": [
+    "quran:10:15:27",
+    "quran:46:9:15",
+    "quran:6:50:17",
+    "quran:7:203:10"
+   ]
+  },
+  "أتل": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "I recite",
+   "used_by": [
+    "quran:6:151:3"
+   ]
+  },
+  "أتيك": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "came to you",
+   "used_by": [
+    "quran:79:15:2",
+    "quran:88:1:6",
+    "quran:38:21:2"
+   ]
+  },
+  "أجر": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "reward",
+   "used_by": [
+    "quran:57:18:11",
+    "quran:9:120:51",
+    "quran:57:7:14",
+    "quran:38:86:6",
+    "quran:26:109:5",
+    "+5 more"
+   ]
+  },
+  "أجلهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their term/appointed time",
+   "used_by": [
+    "quran:35:45:20",
+    "quran:7:34:6",
+    "quran:10:11:10",
+    "quran:16:61:18",
+    "quran:7:185:18"
+   ]
+  },
+  "أجلهن": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their term",
+   "used_by": [
+    "quran:65:2:3",
+    "quran:2:234:13",
+    "quran:2:232:5",
+    "quran:65:4:17",
+    "quran:2:231:5"
+   ]
+  },
+  "أجمعين": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "all together",
+   "used_by": [
+    "quran:26:49:21",
+    "quran:6:149:8",
+    "quran:21:77:12",
+    "quran:7:124:8",
+    "quran:7:18:12",
+    "+4 more"
+   ]
+  },
+  "أحد": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "anyone / one",
+   "used_by": [
+    "quran:12:4:8",
+    "quran:4:43:28",
+    "quran:9:84:4",
+    "quran:24:21:25",
+    "quran:5:6:30",
+    "+17 more"
+   ]
+  },
+  "أحق": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "more deserving; most worthy",
+   "used_by": [
+    "quran:33:37:23",
+    "quran:5:107:18",
+    "quran:6:81:18",
+    "quran:48:26:21",
+    "quran:9:62:7",
+    "+4 more"
+   ]
+  },
+  "أحل": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "was made lawful (for you)",
+   "used_by": [
+    "quran:2:187:1",
+    "quran:5:4:3",
+    "quran:5:4:6",
+    "quran:5:96:1",
+    "quran:5:5:2"
+   ]
+  },
+  "أخت": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "a sister",
+   "used_by": [
+    "quran:4:12:60",
+    "quran:4:176:14"
+   ]
+  },
+  "أخذنا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "We seized / We took",
+   "used_by": [
+    "quran:5:14:6",
+    "quran:2:83:2",
+    "quran:9:50:10",
+    "quran:5:70:2",
+    "quran:2:93:2",
+    "+2 more"
+   ]
+  },
+  "أخر": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "other ones",
+   "used_by": [
+    "quran:2:185:27",
+    "quran:2:184:13"
+   ]
+  },
+  "أخرج": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "brought forth",
+   "used_by": [
+    "quran:48:29:33",
+    "quran:59:2:3",
+    "quran:87:4:2",
+    "quran:24:40:19"
+   ]
+  },
+  "أخرجه": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "drove him out",
+   "used_by": [
+    "quran:9:40:7"
+   ]
+  },
+  "أخري": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "another, other (f.)",
+   "used_by": [
+    "quran:35:18:5",
+    "quran:4:102:20",
+    "quran:17:69:7",
+    "quran:20:18:13",
+    "quran:53:13:4",
+    "+3 more"
+   ]
+  },
+  "أذي": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "harm, hurt",
+   "used_by": [
+    "quran:2:196:24",
+    "quran:4:102:46",
+    "quran:2:262:14",
+    "quran:2:222:6",
+    "quran:3:186:15"
+   ]
+  },
+  "أرءيتم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "have you considered?",
+   "used_by": [
+    "quran:11:88:3",
+    "quran:35:40:2",
+    "quran:6:46:2",
+    "quran:11:63:3",
+    "quran:10:59:2",
+    "+3 more"
+   ]
+  },
+  "أردتم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "you (pl.) wanted/intended",
+   "used_by": [
+    "quran:2:233:45",
+    "quran:4:20:2",
+    "quran:20:86:18"
+   ]
+  },
+  "أرض": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "the earth; land",
+   "used_by": [
+    "quran:4:97:18",
+    "quran:31:34:22",
+    "quran:7:73:27"
+   ]
+  },
+  "أريد": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "I want, I intend",
+   "used_by": [
+    "quran:11:88:15",
+    "quran:11:88:23",
+    "quran:28:27:3",
+    "quran:28:27:20",
+    "quran:51:57:2",
+    "+2 more"
+   ]
+  },
+  "أزكي": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "purer, more wholesome",
+   "used_by": [
+    "quran:24:30:9",
+    "quran:18:19:29",
+    "quran:2:232:26",
+    "quran:24:28:17"
+   ]
+  },
+  "أزواجا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "spouses; pairs; kinds",
+   "used_by": [
+    "quran:2:234:5",
+    "quran:2:240:5",
+    "quran:13:38:8",
+    "quran:30:21:8",
+    "quran:15:88:8",
+    "+7 more"
+   ]
+  },
+  "أزواجهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their spouses",
+   "used_by": [
+    "quran:33:50:50",
+    "quran:24:6:3",
+    "quran:23:6:3"
+   ]
+  },
+  "أشد": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "stronger / more severe",
+   "used_by": [
+    "quran:9:69:5",
+    "quran:47:13:5",
+    "quran:59:13:2",
+    "quran:2:74:10",
+    "quran:2:191:9",
+    "+13 more"
+   ]
+  },
+  "أشده": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "his full strength / maturity",
+   "used_by": [
+    "quran:46:15:17",
+    "quran:12:22:3",
+    "quran:6:152:11",
+    "quran:17:34:11",
+    "quran:28:14:3"
+   ]
+  },
+  "أصاب": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "it struck / befell",
+   "used_by": [
+    "quran:30:48:20",
+    "quran:38:36:8",
+    "quran:11:89:3",
+    "quran:57:22:2"
+   ]
+  },
+  "أصابك": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "befell you, struck you",
+   "used_by": [
+    "quran:4:79:2",
+    "quran:4:79:8"
+   ]
+  },
+  "أصابهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "it befell them; it struck them",
+   "used_by": [
+    "quran:3:146:11",
+    "quran:42:39:3",
+    "quran:11:81:23"
+   ]
+  },
+  "أصحاب": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "companions / people (of)",
+   "used_by": [
+    "quran:6:71:25",
+    "quran:25:24:1",
+    "quran:7:46:10",
+    "quran:10:27:23",
+    "quran:15:80:3",
+    "+41 more"
+   ]
+  },
+  "أطيعوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "obey!",
+   "used_by": [
+    "quran:8:20:4",
+    "quran:24:54:2",
+    "quran:3:32:2",
+    "quran:4:59:4"
+   ]
+  },
+  "أعجلتم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "did you hasten?",
+   "used_by": [
+    "quran:7:150:13"
+   ]
+  },
+  "أعد": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "He prepared",
+   "used_by": [
+    "quran:33:35:25",
+    "quran:33:29:10",
+    "quran:4:102:59"
+   ]
+  },
+  "أعمالكم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "your deeds",
+   "used_by": [
+    "quran:33:71:3",
+    "quran:42:15:25",
+    "quran:47:35:12",
+    "quran:2:139:4",
+    "quran:49:2:19"
+   ]
+  },
+  "أعمالهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their deeds",
+   "used_by": [
+    "quran:9:69:26",
+    "quran:99:6:6",
+    "quran:3:22:4",
+    "quran:24:39:3",
+    "quran:14:18:5",
+    "+11 more"
+   ]
+  },
+  "أف": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "a word of contempt (ugh)",
+   "used_by": [
+    "quran:17:23:19",
+    "quran:21:67:1"
+   ]
+  },
+  "أفرءيتم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "have you then seen?",
+   "used_by": [
+    "quran:56:63:1",
+    "quran:56:71:1",
+    "quran:39:38:10",
+    "quran:53:19:1",
+    "quran:56:58:1"
+   ]
+  },
+  "أفلم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "have they not...?",
+   "used_by": [
+    "quran:34:9:1",
+    "quran:22:46:1",
+    "quran:50:6:1",
+    "quran:25:40:9",
+    "quran:12:109:12",
+    "+2 more"
+   ]
+  },
+  "أفمن": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "is then he who",
+   "used_by": [
+    "quran:28:61:1",
+    "quran:39:24:1",
+    "quran:13:33:1",
+    "quran:11:17:1",
+    "quran:39:19:1",
+    "+5 more"
+   ]
+  },
+  "أقاموا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "established (the prayer)",
+   "used_by": [
+    "quran:5:66:3",
+    "quran:22:41:6"
+   ]
+  },
+  "أقرب": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "nearer / nearest",
+   "used_by": [
+    "quran:5:8:18",
+    "quran:4:11:61",
+    "quran:17:57:9",
+    "quran:2:237:25",
+    "quran:50:16:10",
+    "+3 more"
+   ]
+  },
+  "أكبر": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "greater, greatest",
+   "used_by": [
+    "quran:40:10:3",
+    "quran:3:118:23",
+    "quran:2:219:12",
+    "quran:9:72:20",
+    "quran:4:153:13",
+    "+6 more"
+   ]
+  },
+  "أكثرهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "most of them",
+   "used_by": [
+    "quran:27:61:19",
+    "quran:39:29:17",
+    "quran:8:34:19",
+    "quran:28:57:23",
+    "quran:28:13:15",
+    "+6 more"
+   ]
+  },
+  "أكرمي": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "make honorable / treat generously!",
+   "used_by": [
+    "quran:12:21:7"
+   ]
+  },
+  "أكفاركم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "are your disbelievers",
+   "used_by": [
+    "quran:54:43:1"
+   ]
+  },
+  "أليم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "painful",
+   "used_by": [
+    "quran:2:178:37",
+    "quran:12:25:23",
+    "quran:3:21:18",
+    "quran:9:34:28",
+    "quran:46:24:18",
+    "+24 more"
+   ]
+  },
+  "أليما": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "painful",
+   "used_by": [
+    "quran:48:16:28",
+    "quran:4:173:17",
+    "quran:33:8:8",
+    "quran:48:25:40",
+    "quran:73:13:5",
+    "+1 more"
+   ]
+  },
+  "أمرا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "a matter; a command",
+   "used_by": [
+    "quran:3:47:18",
+    "quran:19:21:14",
+    "quran:65:1:45",
+    "quran:43:79:3",
+    "quran:8:42:19",
+    "+7 more"
+   ]
+  },
+  "أمري": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "my affair / my command",
+   "used_by": [
+    "quran:20:26:3",
+    "quran:18:82:28",
+    "quran:20:32:3",
+    "quran:18:73:9",
+    "quran:27:32:6",
+    "+2 more"
+   ]
+  },
+  "أمم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "communities / nations",
+   "used_by": [
+    "quran:6:42:4",
+    "quran:13:30:9",
+    "quran:41:25:15",
+    "quran:6:38:11",
+    "quran:7:38:4",
+    "+2 more"
+   ]
+  },
+  "أمنتم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "you felt secure/safe",
+   "used_by": [
+    "quran:2:196:35",
+    "quran:17:69:2",
+    "quran:2:239:7",
+    "quran:67:17:2"
+   ]
+  },
+  "أمين": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "trustworthy",
+   "used_by": [
+    "quran:12:54:14",
+    "quran:7:68:7",
+    "quran:27:39:16",
+    "quran:44:18:9",
+    "quran:81:21:3",
+    "+1 more"
+   ]
+  },
+  "أنؤمن": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "shall we believe?",
+   "used_by": [
+    "quran:23:47:2",
+    "quran:2:13:9",
+    "quran:26:111:2"
+   ]
+  },
+  "أناس": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "people",
+   "used_by": [
+    "quran:2:60:17",
+    "quran:27:56:14",
+    "quran:17:71:4",
+    "quran:7:82:12"
+   ]
+  },
+  "أنزل": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "he sent down",
+   "used_by": [
+    "quran:3:7:3",
+    "quran:31:21:6",
+    "quran:6:91:9",
+    "quran:6:91:17",
+    "quran:13:27:5",
+    "+55 more"
+   ]
+  },
+  "أنزلنا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "We sent down",
+   "used_by": [
+    "quran:39:2:2",
+    "quran:59:21:2",
+    "quran:41:39:8",
+    "quran:22:5:60",
+    "quran:4:105:2",
+    "+11 more"
+   ]
+  },
+  "أنزلناه": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "We sent it down",
+   "used_by": [
+    "quran:17:105:2",
+    "quran:10:24:6",
+    "quran:6:92:3",
+    "quran:97:1:2",
+    "quran:21:50:4",
+    "+3 more"
+   ]
+  },
+  "أنصار": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "helpers",
+   "used_by": [
+    "quran:3:52:14",
+    "quran:61:14:5",
+    "quran:61:14:20",
+    "quran:2:270:15"
+   ]
+  },
+  "أنفسكم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "your own selves",
+   "used_by": [
+    "quran:2:87:23",
+    "quran:24:61:15",
+    "quran:24:61:63",
+    "quran:2:235:13",
+    "quran:2:235:41",
+    "+29 more"
+   ]
+  },
+  "أنفسهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "themselves (their own souls)",
+   "used_by": [
+    "quran:7:9:7",
+    "quran:9:111:6",
+    "quran:7:192:6",
+    "quran:4:97:6",
+    "quran:58:8:28",
+    "+44 more"
+   ]
+  },
+  "أنفقتم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "you spent",
+   "used_by": [
+    "quran:60:10:44",
+    "quran:34:39:13",
+    "quran:2:270:2",
+    "quran:2:215:6"
+   ]
+  },
+  "أنهكما": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "I forbade you both",
+   "used_by": [
+    "quran:7:22:18"
+   ]
+  },
+  "أهاكذا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "is it like this?",
+   "used_by": [
+    "quran:27:42:1"
+   ]
+  },
+  "أهدي": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "more rightly guided",
+   "used_by": [
+    "quran:4:51:16",
+    "quran:35:42:9",
+    "quran:67:22:6",
+    "quran:6:157:9"
+   ]
+  },
+  "أهل": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "people of / family of",
+   "used_by": [
+    "quran:3:75:2",
+    "quran:59:2:7",
+    "quran:2:173:9",
+    "quran:28:45:11",
+    "quran:5:3:8",
+    "+24 more"
+   ]
+  },
+  "أهلكنا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "We destroyed",
+   "used_by": [
+    "quran:19:74:2",
+    "quran:28:58:2",
+    "quran:6:6:4",
+    "quran:17:17:2",
+    "quran:19:98:2",
+    "+1 more"
+   ]
+  },
+  "أهلكناهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "We destroyed them",
+   "used_by": [
+    "quran:47:13:11",
+    "quran:44:37:9",
+    "quran:20:134:3"
+   ]
+  },
+  "أهله": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "his family, his people",
+   "used_by": [
+    "quran:2:196:63",
+    "quran:4:92:19",
+    "quran:4:92:44",
+    "quran:27:49:12",
+    "quran:19:55:3",
+    "+7 more"
+   ]
+  },
+  "أهواءهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their desires",
+   "used_by": [
+    "quran:2:120:18",
+    "quran:5:49:9",
+    "quran:2:145:22",
+    "quran:28:50:8",
+    "quran:42:15:8",
+    "+3 more"
+   ]
+  },
+  "أوحينا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "We revealed (inspired)",
+   "used_by": [
+    "quran:10:2:5",
+    "quran:42:7:2",
+    "quran:13:30:13",
+    "quran:12:3:7",
+    "quran:4:163:2",
+    "+5 more"
+   ]
+  },
+  "أوف": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "I will fulfill",
+   "used_by": [
+    "quran:2:40:10"
+   ]
+  },
+  "أوفي": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "more faithful; truer",
+   "used_by": [
+    "quran:9:111:25",
+    "quran:48:10:18",
+    "quran:3:76:3"
+   ]
+  },
+  "أول": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "first",
+   "used_by": [
+    "quran:3:96:2",
+    "quran:18:48:9",
+    "quran:17:7:18",
+    "quran:7:143:40",
+    "quran:6:163:7",
+    "+7 more"
+   ]
+  },
+  "أولائك": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "those (ones)",
+   "used_by": [
+    "quran:9:69:24",
+    "quran:10:8:1",
+    "quran:2:86:1",
+    "quran:8:72:14",
+    "quran:3:22:1",
+    "+80 more"
+   ]
+  },
+  "أولائكم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "those of you / those are you",
+   "used_by": [
+    "quran:54:43:4"
+   ]
+  },
+  "أولادكم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "your children",
+   "used_by": [
+    "quran:2:233:48",
+    "quran:4:11:4",
+    "quran:6:151:16",
+    "quran:60:3:5",
+    "quran:17:31:3",
+    "+2 more"
+   ]
+  },
+  "أولادهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their children",
+   "used_by": [
+    "quran:9:55:5",
+    "quran:6:140:5",
+    "quran:3:10:9"
+   ]
+  },
+  "أولوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "possessors of, people of",
+   "used_by": [
+    "quran:3:7:45",
+    "quran:4:8:4",
+    "quran:9:86:11",
+    "quran:39:18:12",
+    "quran:39:9:23",
+    "+5 more"
+   ]
+  },
+  "أولياء": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "allies / protectors",
+   "used_by": [
+    "quran:8:72:16",
+    "quran:5:51:8",
+    "quran:5:51:10",
+    "quran:9:71:4",
+    "quran:7:30:10",
+    "+15 more"
+   ]
+  },
+  "أيتها": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "O (vocative, feminine)",
+   "used_by": [
+    "quran:12:70:12",
+    "quran:89:27:2"
+   ]
+  },
+  "أيمانهن": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their right hands",
+   "used_by": [
+    "quran:24:31:47"
+   ]
+  },
+  "إبراهم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "Abraham (Ibrahim)",
+   "used_by": [
+    "quran:2:260:3",
+    "quran:2:124:3",
+    "quran:2:125:10",
+    "quran:2:125:14",
+    "quran:2:130:5",
+    "+7 more"
+   ]
+  },
+  "إبليس": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "Iblis (Satan)",
+   "used_by": [
+    "quran:18:50:8",
+    "quran:20:116:8",
+    "quran:2:34:8",
+    "quran:7:11:12",
+    "quran:38:74:2"
+   ]
+  },
+  "إثم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "sin",
+   "used_by": [
+    "quran:2:173:20",
+    "quran:2:219:7",
+    "quran:2:182:11",
+    "quran:2:203:11",
+    "quran:2:203:16",
+    "+1 more"
+   ]
+  },
+  "إحديهما": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "one of the two of them",
+   "used_by": [
+    "quran:2:282:68",
+    "quran:2:282:70",
+    "quran:49:9:10",
+    "quran:28:25:2",
+    "quran:28:26:2"
+   ]
+  },
+  "إخوانهن": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "their brothers",
+   "used_by": [
+    "quran:24:31:35",
+    "quran:24:31:38"
+   ]
+  },
+  "إسراءيل": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "Israel (Jacob)",
+   "used_by": [
+    "quran:2:40:2",
+    "quran:2:83:5",
+    "quran:61:6:7",
+    "quran:10:90:3",
+    "quran:10:90:24",
+    "+18 more"
+   ]
+  },
+  "إفك": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "a slander; falsehood",
+   "used_by": [
+    "quran:46:11:18",
+    "quran:25:4:7",
+    "quran:24:12:11"
+   ]
+  },
+  "إلاها": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "a god, deity",
+   "used_by": [
+    "quran:26:29:4",
+    "quran:38:5:3",
+    "quran:23:117:5",
+    "quran:17:22:5",
+    "quran:25:68:6",
+    "+4 more"
+   ]
+  },
+  "إلينا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "to us; toward us",
+   "used_by": [
+    "quran:31:23:6",
+    "quran:23:115:6",
+    "quran:12:65:15",
+    "quran:33:18:9",
+    "quran:20:134:11",
+    "+5 more"
+   ]
+  },
+  "إماما": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "a leader/model",
+   "used_by": [
+    "quran:2:124:11",
+    "quran:25:74:13",
+    "quran:11:17:14"
+   ]
+  },
+  "إملاق": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "poverty",
+   "used_by": [
+    "quran:6:151:18",
+    "quran:17:31:5"
+   ]
+  },
+  "إيمانا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "faith / belief",
+   "used_by": [
+    "quran:9:124:11",
+    "quran:9:124:16",
+    "quran:8:2:14",
+    "quran:3:173:12",
+    "quran:74:31:21"
+   ]
+  },
+  "إيمانكم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "your (pl.) faith",
+   "used_by": [
+    "quran:3:106:12",
+    "quran:2:93:24",
+    "quran:2:109:10",
+    "quran:2:143:40"
+   ]
+  },
+  "ائتيا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "come, you two",
+   "used_by": [
+    "quran:41:11:10"
+   ]
+  },
+  "ابتغاء": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "seeking, in pursuit of",
+   "used_by": [
+    "quran:3:7:23",
+    "quran:57:27:25",
+    "quran:2:265:5",
+    "quran:17:28:4",
+    "quran:13:17:17",
+    "+4 more"
+   ]
+  },
+  "ابن": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "son",
+   "used_by": [
+    "quran:2:87:11",
+    "quran:57:27:8",
+    "quran:5:75:3",
+    "quran:3:45:13",
+    "quran:4:157:6",
+    "+14 more"
+   ]
+  },
+  "ابنت": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "the daughter of",
+   "used_by": [
+    "quran:66:12:2"
+   ]
+  },
+  "اتبعت": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "you followed",
+   "used_by": [
+    "quran:2:120:17",
+    "quran:2:145:21",
+    "quran:13:37:6"
+   ]
+  },
+  "اتخذوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "they took (for themselves)",
+   "used_by": [
+    "quran:7:30:8",
+    "quran:39:3:6",
+    "quran:42:9:2",
+    "quran:7:152:3",
+    "quran:46:28:4",
+    "+8 more"
+   ]
+  },
+  "اتقوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "be mindful! / fear (Allah)",
+   "used_by": [
+    "quran:31:33:3",
+    "quran:3:102:4",
+    "quran:2:212:11",
+    "quran:16:30:3",
+    "quran:7:201:3",
+    "+13 more"
+   ]
+  },
+  "اتقي": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "was mindful (of Allah)",
+   "used_by": [
+    "quran:2:189:19",
+    "quran:53:32:31",
+    "quran:2:203:19",
+    "quran:4:77:45"
+   ]
+  },
+  "اختلافا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "discrepancy",
+   "used_by": [
+    "quran:4:82:12"
+   ]
+  },
+  "اختلفوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "they differed, disputed",
+   "used_by": [
+    "quran:4:157:19",
+    "quran:2:213:18",
+    "quran:2:213:38",
+    "quran:2:253:36",
+    "quran:10:93:11"
+   ]
+  },
+  "ادخلوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "enter! (you all)",
+   "used_by": [
+    "quran:4:154:7",
+    "quran:2:208:4",
+    "quran:5:21:2",
+    "quran:39:72:2",
+    "quran:2:58:3",
+    "+4 more"
+   ]
+  },
+  "ادخلوها": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "enter it",
+   "used_by": [
+    "quran:15:46:1",
+    "quran:50:34:1"
+   ]
+  },
+  "ادع": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "call; invoke; invite",
+   "used_by": [
+    "quran:16:125:1",
+    "quran:2:70:2",
+    "quran:2:69:2",
+    "quran:7:134:7",
+    "quran:2:68:2"
+   ]
+  },
+  "ادعهن": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "call them (f.)",
+   "used_by": [
+    "quran:2:260:32"
+   ]
+  },
+  "ادعوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "call upon; invoke (you all)",
+   "used_by": [
+    "quran:17:110:2",
+    "quran:17:110:5",
+    "quran:17:56:2",
+    "quran:7:195:21"
+   ]
+  },
+  "اذكروا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "Remember! (you all)",
+   "used_by": [
+    "quran:2:40:3",
+    "quran:5:20:6"
+   ]
+  },
+  "ازدادوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "they increased",
+   "used_by": [
+    "quran:4:137:11"
+   ]
+  },
+  "استجيبوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "respond! (plural)",
+   "used_by": [
+    "quran:42:47:1",
+    "quran:8:24:4"
+   ]
+  },
+  "استضعفوني": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "they deemed me weak",
+   "used_by": [
+    "quran:7:150:28"
+   ]
+  },
+  "استطاعوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "they were able",
+   "used_by": [
+    "quran:51:45:2",
+    "quran:2:217:37",
+    "quran:18:97:6",
+    "quran:36:67:7"
+   ]
+  },
+  "استطعتم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "you (pl.) were able",
+   "used_by": [
+    "quran:8:60:4",
+    "quran:55:33:5",
+    "quran:64:16:4",
+    "quran:11:13:12"
+   ]
+  },
+  "استغفروا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "seek forgiveness",
+   "used_by": [
+    "quran:11:3:2"
+   ]
+  },
+  "استكبروا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "they were arrogant",
+   "used_by": [
+    "quran:34:31:28",
+    "quran:41:38:2",
+    "quran:40:47:8",
+    "quran:25:21:14",
+    "quran:14:21:7",
+    "+1 more"
+   ]
+  },
+  "اسجدوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "prostrate yourselves!",
+   "used_by": [
+    "quran:18:50:4",
+    "quran:20:116:4",
+    "quran:2:34:4",
+    "quran:7:11:8"
+   ]
+  },
+  "اسكن": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "dwell",
+   "used_by": [
+    "quran:2:35:3",
+    "quran:7:19:2"
+   ]
+  },
+  "اسم": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "name (of)",
+   "used_by": [
+    "quran:22:40:25",
+    "quran:6:121:6",
+    "quran:87:1:6",
+    "quran:5:4:23",
+    "quran:6:118:4",
+    "+1 more"
+   ]
+  },
+  "اسمه": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "his name",
+   "used_by": [
+    "quran:3:45:10",
+    "quran:61:6:23",
+    "quran:19:7:5",
+    "quran:2:114:10",
+    "quran:24:36:9"
+   ]
+  },
+  "اضطر": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "he is compelled",
+   "used_by": [
+    "quran:2:173:14",
+    "quran:5:3:52",
+    "quran:6:145:31"
+   ]
+  },
+  "اعبدوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "worship! (you all)",
+   "used_by": [
+    "quran:11:61:7",
+    "quran:7:65:7",
+    "quran:7:73:7",
+    "quran:7:59:8",
+    "quran:11:84:7",
+    "+4 more"
+   ]
+  },
+  "افتراه": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "he fabricated it",
+   "used_by": [
+    "quran:21:5:6"
+   ]
+  },
+  "اقتتل": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "fought one another",
+   "used_by": [
+    "quran:2:253:26"
+   ]
+  },
+  "اقتتلوا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "they fought one another",
+   "used_by": [
+    "quran:2:253:47",
+    "quran:49:9:5"
+   ]
+  },
+  "الءاخره": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "the Hereafter",
+   "used_by": [
+    "quran:17:72:8",
+    "quran:38:7:6",
+    "quran:13:26:14",
+    "quran:28:77:6",
+    "quran:16:30:16",
+    "+44 more"
+   ]
+  },
+  "الأبصار": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "the eyes / sights",
+   "used_by": [
+    "quran:33:10:10",
+    "quran:59:2:40",
+    "quran:6:103:3",
+    "quran:6:103:6",
+    "quran:22:46:17",
+    "+1 more"
+   ]
+  },
+  "الأجلين": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "the two terms",
+   "used_by": [
+    "quran:28:28:6"
+   ]
+  },
+  "الأحاديث": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "the events / accounts",
+   "used_by": [
+    "quran:12:21:23",
+    "quran:12:101:9",
+    "quran:12:6:7"
+   ]
+  },
+  "الأخري": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "the other; the latter",
+   "used_by": [
+    "quran:2:282:71",
+    "quran:49:9:12",
+    "quran:53:47:4",
+    "quran:53:20:3"
+   ]
+  },
+  "الأعداء": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "the enemies",
+   "used_by": [
+    "quran:7:150:34"
+   ]
+  },
+  "الأعلي": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "the Most High",
+   "used_by": [
+    "quran:37:8:5",
+    "quran:87:1:8",
+    "quran:16:60:9",
+    "quran:20:68:6",
+    "quran:30:27:12"
+   ]
+  },
+  "الأعمي": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "the blind one",
+   "used_by": [
+    "quran:24:61:3",
+    "quran:80:2:3",
+    "quran:35:19:3",
+    "quran:6:50:25",
+    "quran:40:58:3",
+    "+1 more"
+   ]
+  },
+  "الأقصا": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "the farthest",
+   "used_by": [
+    "quran:17:1:15"
+   ]
+  },
+  "الأكبر": {
+   "decision": "resolved_qamus_authored",
+   "gloss": "the greatest",
+   "used_by": [
+    "quran:21:103:4",
+    "quran:9:3:9",
+    "quran:88:24:4"
+   ]
   }
+ },
+ "split_keys": {
+  "ءاتيه": "split: roots=['أتي'] pos=['N', 'V'] surfaces=2",
+  "ءاتيهم": "split: roots=['أتي'] pos=['N', 'V'] surfaces=4",
+  "أبي": "split: roots=['أبو', 'أبي'] pos=['N', 'V'] surfaces=3",
+  "أحب": "split: roots=['حبب'] pos=['N', 'V'] surfaces=3",
+  "أحسن": "split: roots=['حسن'] pos=['N', 'V'] surfaces=3",
+  "أخذ": "split: roots=['أخذ'] pos=['N', 'V'] surfaces=3",
+  "أذن": "split: roots=['أذن'] pos=['N', 'V'] surfaces=4",
+  "أسر": "split: roots=['سرر', 'سري'] pos=['V'] surfaces=2",
+  "أسري": "split: roots=['أسر', 'سري'] pos=['N', 'V'] surfaces=1",
+  "أشق": "split: roots=['شقق'] pos=['N', 'V'] surfaces=2",
+  "أضل": "split: roots=['ضلل'] pos=['N', 'V'] surfaces=2",
+  "أظلم": "split: roots=['ظلم'] pos=['N', 'V'] surfaces=2",
+  "أعلم": "split: roots=['علم'] pos=['N', 'V'] surfaces=1",
+  "أقل": "split: roots=['قلل', 'قول'] pos=['N', 'V'] surfaces=2",
+  "أكل": "split: roots=['أكل'] pos=['N', 'V'] surfaces=2",
+  "ألا": "split: roots=[] pos=['N', 'P'] surfaces=4",
+  "ألف": "split: roots=['ألف'] pos=['N', 'V'] surfaces=5",
+  "أم": "split: roots=['أمم'] pos=['N', 'P'] surfaces=6",
+  "أمر": "split: roots=['أمر'] pos=['N', 'V'] surfaces=7",
+  "أمركم": "split: roots=['أمر'] pos=['N', 'V'] surfaces=4",
+  "أمرنا": "split: roots=['أمر'] pos=['N', 'V'] surfaces=4",
+  "أمره": "split: roots=['أمر'] pos=['N', 'V'] surfaces=4",
+  "أمرهم": "split: roots=['أمر'] pos=['N', 'V'] surfaces=5",
+  "أمن": "split: roots=['أمن'] pos=['P', 'V'] surfaces=3",
+  "أنا": "split: roots=[] pos=['N', 'P'] surfaces=5",
+  "أني": "split: roots=[] pos=['N', 'P'] surfaces=3",
+  "أهلك": "split: roots=['أهل', 'هلك'] pos=['N', 'V'] surfaces=2",
+  "إذا": "split: roots=[] pos=['N', 'P'] surfaces=4",
+  "إلا": "split: roots=['ألل'] pos=['N', 'P'] surfaces=5",
+  "الأمين": "split: roots=['أمم', 'أمن'] pos=['N'] surfaces=3",
+  "بال": "split: roots=['أول', 'بول'] pos=['N'] surfaces=3",
+  "بشر": "split: roots=['بشر', 'شرر'] pos=['N', 'V'] surfaces=5",
+  "بكم": "split: roots=['بكم'] pos=['N', 'P'] surfaces=4",
+  "بنوا": "split: roots=['بني'] pos=['N', 'V'] surfaces=2",
+  "بيت": "split: roots=['بيت'] pos=['N', 'V'] surfaces=3",
+  "تبت": "split: roots=['تبب', 'توب'] pos=['V'] surfaces=2",
+  "تبع": "split: roots=['تبع'] pos=['N', 'V'] surfaces=2",
+  "تصل": "split: roots=['صلو', 'وصل'] pos=['V'] surfaces=2",
+  "تعدوا": "split: roots=['عدد', 'عدو'] pos=['V'] surfaces=2",
+  "تقلب": "split: roots=['قلب'] pos=['N', 'V'] surfaces=3",
+  "تكن": "split: roots=['كنن', 'كون'] pos=['V'] surfaces=3",
+  "تمنوا": "split: roots=['منن', 'مني'] pos=['V'] surfaces=2",
+  "ثم": "split: roots=[] pos=['N', 'P'] surfaces=2",
+  "حج": "split: roots=['حجج'] pos=['N', 'V'] surfaces=2",
+  "حرم": "split: roots=['حرم'] pos=['N', 'V'] surfaces=4",
+  "حق": "split: roots=['حقق'] pos=['N', 'V'] surfaces=5",
+  "حمل": "split: roots=['حمل'] pos=['N', 'V'] surfaces=5",
+  "حي": "split: roots=['حيي'] pos=['N', 'V'] surfaces=2",
+  "خسر": "split: roots=['خسر'] pos=['N', 'V'] surfaces=2",
+  "خفت": "split: roots=['خفف', 'خوف'] pos=['V'] surfaces=3",
+  "خلقه": "split: roots=['خلق'] pos=['N', 'V'] surfaces=2",
+  "ذكر": "split: roots=['ذكر'] pos=['N', 'V'] surfaces=8",
+  "ذهب": "split: roots=['ذهب'] pos=['N', 'V'] surfaces=4",
+  "ربا": "split: roots=['ربب', 'ربو'] pos=['N'] surfaces=2",
+  "رجع": "split: roots=['رجع'] pos=['N', 'V'] surfaces=2",
+  "رزقهم": "split: roots=['رزق'] pos=['N', 'V'] surfaces=4",
+  "ساوي": "split: roots=['أوي', 'سوي'] pos=['V'] surfaces=2",
+  "سكن": "split: roots=['سكن'] pos=['N', 'V'] surfaces=2",
+  "سنه": "split: roots=['سنن', 'سنو', 'وسن'] pos=['N'] surfaces=5",
+  "شجر": "split: roots=['شجر'] pos=['N', 'V'] surfaces=2",
+  "شرب": "split: roots=['شرب'] pos=['N', 'V'] surfaces=5",
+  "صدق": "split: roots=['صدق'] pos=['N', 'V'] surfaces=4",
+  "ضعف": "split: roots=['ضعف'] pos=['N', 'V'] surfaces=4",
+  "ظل": "split: roots=['ظلل'] pos=['N', 'V'] surfaces=2",
+  "ظلم": "split: roots=['ظلم'] pos=['N', 'V'] surfaces=2",
+  "ظن": "split: roots=['ظنن'] pos=['N', 'V'] surfaces=1",
+  "ظنا": "split: roots=['ظنن'] pos=['N', 'V'] surfaces=3",
+  "عاد": "split: roots=['عدو', 'عود'] pos=['N', 'V'] surfaces=5",
+  "عجل": "split: roots=['عجل'] pos=['N', 'V'] surfaces=2",
+  "عزم": "split: roots=['عزم'] pos=['N', 'V'] surfaces=2",
+  "عفوا": "split: roots=['عفو'] pos=['N', 'V'] surfaces=2",
+  "علمه": "split: roots=['علم'] pos=['N', 'V'] surfaces=3",
+  "علوا": "split: roots=['علو'] pos=['N', 'V'] surfaces=2",
+  "علي": "split: roots=['علو'] pos=['N', 'P'] surfaces=7",
+  "عليكم": "split: roots=[] pos=['N', 'P'] surfaces=3",
+  "عمل": "split: roots=['عمل'] pos=['N', 'V'] surfaces=5",
+  "عمي": "split: roots=['عمي'] pos=['N', 'V'] surfaces=2",
+  "عهد": "split: roots=['عهد'] pos=['N', 'V'] surfaces=3",
+  "غضب": "split: roots=['غضب'] pos=['N', 'V'] surfaces=4",
+  "غل": "split: roots=['غلل'] pos=['N', 'V'] surfaces=3",
+  "فأجره": "split: roots=['أجر', 'جور'] pos=['N', 'V'] surfaces=2",
+  "فتح": "split: roots=['فتح'] pos=['N', 'V'] surfaces=2",
+  "فديه": "split: roots=['فدي', 'ودي'] pos=['N'] surfaces=2",
+  "فزع": "split: roots=['فزع'] pos=['N', 'V'] surfaces=2",
+  "فصل": "split: roots=['صلو', 'فصل'] pos=['N', 'V'] surfaces=3",
+  "فضرب": "split: roots=['ضرب'] pos=['N', 'V'] surfaces=2",
+  "فضل": "split: roots=['فضل'] pos=['N', 'V'] surfaces=6",
+  "فضلوا": "split: roots=['ضلل', 'فضل'] pos=['V'] surfaces=2",
+  "فعل": "split: roots=['فعل'] pos=['N', 'V'] surfaces=3",
+  "فمن": "split: roots=['منن'] pos=['P', 'V'] surfaces=8",
+  "قتل": "split: roots=['قتل'] pos=['N', 'V'] surfaces=3",
+  "قتلهم": "split: roots=['قتل'] pos=['N', 'V'] surfaces=2",
+  "قد": "split: roots=['قدد'] pos=['P', 'V'] surfaces=4",
+  "قدر": "split: roots=['قدر'] pos=['N', 'V'] surfaces=2",
+  "قدم": "split: roots=['قدم'] pos=['N', 'V'] surfaces=3",
+  "كبر": "split: roots=['كبر'] pos=['N', 'V'] surfaces=2",
+  "كذب": "split: roots=['كذب'] pos=['N', 'V'] surfaces=3",
+  "كره": "split: roots=['كرر', 'كره'] pos=['N', 'V'] surfaces=4",
+  "كشف": "split: roots=['كشف'] pos=['N', 'V'] surfaces=2",
+  "كفوا": "split: roots=['كفأ', 'كفف'] pos=['N', 'V'] surfaces=2",
+  "كلا": "split: roots=['كلل'] pos=['N', 'P'] surfaces=5",
+  "كلمه": "split: roots=['كلم'] pos=['N', 'V'] surfaces=8",
+  "لعنا": "split: roots=['لعن'] pos=['N', 'V'] surfaces=2",
+  "لعنت": "split: roots=['لعن'] pos=['N', 'V'] surfaces=2",
+  "لعنه": "split: roots=['لعن'] pos=['N', 'V'] surfaces=3",
+  "لما": "split: roots=['لمم'] pos=['N', 'P'] surfaces=8",
+  "لهو": "split: roots=['لهو'] pos=['N', 'P'] surfaces=3",
+  "ليسوا": "split: roots=['سوأ', 'ليس'] pos=['V'] surfaces=3",
+  "ما": "split: roots=[] pos=['N', 'P'] surfaces=5",
+  "مكر": "split: roots=['مكر'] pos=['N', 'V'] surfaces=3",
+  "من": "split: roots=['منن'] pos=['N', 'P', 'V'] surfaces=20",
+  "منا": "split: roots=['منن'] pos=['N', 'P'] surfaces=5",
+  "مني": "split: roots=['مني'] pos=['N', 'P'] surfaces=5",
+  "مهين": "split: roots=['مهن', 'هون'] pos=['N'] surfaces=4",
+  "نزغ": "split: roots=['نزغ'] pos=['N', 'V'] surfaces=2",
+  "نزله": "split: roots=['نزل'] pos=['N', 'V'] surfaces=2",
+  "نسوه": "split: roots=['نسو', 'نسي'] pos=['N', 'V'] surfaces=2",
+  "نصركم": "split: roots=['نصر'] pos=['N', 'V'] surfaces=2",
+  "نصيب": "split: roots=['صوب', 'نصب'] pos=['N', 'V'] surfaces=4",
+  "نظر": "split: roots=['نظر'] pos=['N', 'V'] surfaces=2",
+  "نعد": "split: roots=['عدد', 'عود'] pos=['V'] surfaces=2",
+  "نعم": "split: roots=['نعم'] pos=['P', 'V'] surfaces=3",
+  "نفر": "split: roots=['نفر'] pos=['N', 'V'] surfaces=2",
+  "نفقه": "split: roots=['فقه', 'نفق'] pos=['N', 'V'] surfaces=3",
+  "هدي": "split: roots=['هدي'] pos=['N', 'V'] surfaces=4",
+  "هديهم": "split: roots=['هدي'] pos=['N', 'V'] surfaces=2",
+  "وأحسن": "split: roots=['حسن'] pos=['N', 'V'] surfaces=3",
+  "وأخر": "split: roots=['أخر'] pos=['N', 'V'] surfaces=3",
+  "وأضل": "split: roots=['ضلل'] pos=['N', 'V'] surfaces=2",
+  "وأقل": "split: roots=['قلل', 'قول'] pos=['N', 'V'] surfaces=2",
+  "وأمر": "split: roots=['أمر', 'مرر'] pos=['N', 'V'] surfaces=2",
+  "وتب": "split: roots=['تبب', 'توب'] pos=['V'] surfaces=2",
+  "وحسن": "split: roots=['حسن'] pos=['N', 'V'] surfaces=3",
+  "ورد": "split: roots=['ردد', 'ورد'] pos=['V'] surfaces=2",
+  "وزينه": "split: roots=['زين'] pos=['N', 'V'] surfaces=3",
+  "وصد": "split: roots=['صدد'] pos=['N', 'V'] surfaces=2",
+  "وعد": "split: roots=['وعد'] pos=['N', 'V'] surfaces=5",
+  "وعدهم": "split: roots=['عدد', 'وعد'] pos=['V'] surfaces=2",
+  "وكفر": "split: roots=['كفر'] pos=['N', 'V'] surfaces=2",
+  "وكل": "split: roots=['كلل', 'وكل'] pos=['N', 'V'] surfaces=4",
+  "وكلا": "split: roots=['أكل', 'كلل'] pos=['N', 'V'] surfaces=2",
+  "وكلمه": "split: roots=['كلم'] pos=['N', 'V'] surfaces=2",
+  "ولد": "split: roots=['ولد'] pos=['N', 'V'] surfaces=3",
+  "ولي": "split: roots=['ولي'] pos=['N', 'P', 'V'] surfaces=7",
+  "وليتم": "split: roots=['تمم', 'ولي'] pos=['V'] surfaces=2",
+  "وهم": "split: roots=['همم'] pos=['P', 'V'] surfaces=5",
+  "وهن": "split: roots=['وهن'] pos=['N', 'V'] surfaces=2",
+  "ويحيي": "split: roots=['حيي'] pos=['N', 'V'] surfaces=1",
+  "يحلون": "split: roots=['حلل', 'حلي'] pos=['V'] surfaces=2",
+  "يحيي": "split: roots=['حيي'] pos=['N', 'V'] surfaces=2",
+  "يدع": "split: roots=['دعع', 'دعو'] pos=['V'] surfaces=2",
+  "يدعون": "split: roots=['دعع', 'دعو'] pos=['V'] surfaces=4",
+  "يرد": "split: roots=['ردد', 'رود'] pos=['V'] surfaces=3",
+  "يصلوا": "split: roots=['صلو', 'وصل'] pos=['V'] surfaces=2",
+  "يصلون": "split: roots=['صلو', 'وصل'] pos=['V'] surfaces=2",
+  "يصلي": "split: roots=['صلو', 'صلي'] pos=['V'] surfaces=2"
+ },
+ "root_to_entries": {
+  "ر و د": [
+   "213945255c3b",
+   "29587bc586c7"
+  ],
+  "ذ م م": [
+   "25460db4e3ce",
+   "d99748318ce0"
+  ],
+  "ص ر ر": [
+   "2fee38d0e6c0",
+   "6bb15cbe2246"
+  ],
+  "ف ر ج": [
+   "3b927026b88a",
+   "57c90af7e9e8"
+  ],
+  "ط ر ف": [
+   "53bbf2c4975a",
+   "8cf8aaa84b2a"
+  ],
+  "ص ل ي": [
+   "5999a42d7bdd",
+   "8bb806510d1d"
+  ],
+  "ز ر ع": [
+   "ce909b563637",
+   "d0eac6ef4f78"
+  ]
+ },
+ "counts": {
+  "entry_nodes": 2092,
+  "resolved_keys": 170,
+  "split_keys": 156,
+  "roots_with_multiple_entries": 7,
+  "entries_source_photo_unverified": 2092
+ }
 }

@@ -15,8 +15,28 @@ OUT = {"verb": os.path.join(ROOT, "qamus", "reports", "verbs", "verb-proofing-ma
        "particle": os.path.join(ROOT, "qamus", "reports", "particles", "particle-proofing-matrix.md")}
 LABEL = {"verb": "Verbs", "noun": "Nouns", "particle": "Particles"}
 
+def _dedup_totals():
+    """Current de-duplicated totals from the canonical per-token audit (no hardcoded coverage)."""
+    aud = os.path.join(ROOT, "qamus", "reports", "hover-token-audit-full.jsonl")
+    res = pen = 0
+    for l in open(aud, encoding="utf-8"):
+        l = l.strip()
+        if not l:
+            continue
+        try:
+            st = json.loads(l).get("decision_state")
+        except Exception:
+            continue
+        if st == "resolved":
+            res += 1
+        elif st == "pending":
+            pen += 1
+    tot = res + pen
+    return res, pen, tot, (round(100 * res / tot, 2) if tot else 0)
+
 def main():
     rows = [json.loads(l) for l in open(MATRIX, encoding="utf-8")]
+    _res, _pen, _tot, _covpct = _dedup_totals()
     by = collections.defaultdict(lambda: {"n": 0, "hc": 0, "res": 0, "pend": 0, "wp": 0, "blk": collections.Counter()})
     for r in rows:
         s = r["section"]; d = by[s]; d["n"] += 1
@@ -32,7 +52,7 @@ def main():
              f"Per-entry audit of the **{d['n']}** {sec} entries (public `section` split — authoritative "
              f"947 verb / 1045 noun / 100 particle). **0 unknown buckets.** Regenerate: "
              f"`tools/build_proofing_matrices.py` (from `qamus-2092-entry-matrix.jsonl`). Reconciles to "
-             f"`hover-gloss-terminal-scoreboard.md` (82.49% overall) and `qamus-2092-terminal-scoreboard.md`.", "",
+             f"`hover-gloss-terminal-scoreboard.md` ({_covpct}% overall) and `qamus-2092-terminal-scoreboard.md`.", "",
              "| metric | value |", "|---|---:|",
              f"| {sec} entries | **{d['n']}** |",
              f"| entries fully hover-complete | {d['hc']} |",
@@ -41,7 +61,7 @@ def main():
              f"| pending example tokens (per-entry, overlapping) | {d['pend']:,} |",
              f"| per-section example coverage | **{pct}%** |", "",
              "> Per-entry token counts overlap (a token in a shared āyah counts for each citing entry); "
-             "the canonical de-duplicated total is the P3 audit (41,164 resolved / 8,736 pending / 49,900).", "",
+             f"the canonical de-duplicated total is the P3 audit ({_res:,} resolved / {_pen:,} pending / {_tot:,}).", "",
              "## Pending by blocker (this section)", "", "| blocker | count |", "|---|---:|"]
         for b, c in d["blk"].most_common():
             L.append(f"| `{b}` | {c:,} |")

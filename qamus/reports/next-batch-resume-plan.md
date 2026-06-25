@@ -10,7 +10,7 @@
 2. **host_lexeme_possessive** (1,210), **missing_qamus_entry** new-entry proposals (473, owner-gated), **particle/pronoun-miscoded** (418), **remaining iʿrāb** (379).
 3. Deferred audits: live public-page crawl (Phase 8), source-photo scale-up (10), claude.ai pack + tutor curriculum (11/12), corpus/hadith readiness (13), bidirectional-link validator (14).
 
-### (prior) Where we are (corrective tranche)
+### (prior) Where we are (corrective tranche) — HISTORICAL, superseded by the banner above
 
 - Live coverage **82.49%** · **41,164 / 49,900** resolved · **8,736 pending** · health 200 ·
   `source_sha=65797d7d5599fadd` · 2,092 entries (947 v / 1,045 n / 100 p) · **904 token decisions**.

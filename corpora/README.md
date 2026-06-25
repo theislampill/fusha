@@ -51,7 +51,7 @@ or any live service.
 | stage | script | reads | writes |
 |---|---|---|---|
 | 1. catalogue | `qamus/scripts/catalogue_nawawi40.py` | local matn dump (`--src`) | `nawawi40.raw_tokens.jsonl`, `nawawi40.lexeme_candidates.jsonl` |
-| 2. diff | `qamus/scripts/diff_against_qamus.py` | `existing_qamus_index.json` + lexeme candidates | `nawawi40.diff_against_quran_qamus.jsonl` |
+| 2. diff | `qamus/scripts/diff_against_qamus.py` | `existing_qamus_index.min.json` + lexeme candidates | `nawawi40.diff_against_quran_qamus.jsonl` |
 | 3. stage | `qamus/scripts/make_candidate_payloads.py` | the diff + the index | `nawawi40.new_entries.candidate.jsonl`, `nawawi40.occurrence_augments.candidate.jsonl`, `nawawi40.review_queue.jsonl` |
 
 ### Run the nawawī40 pilot
@@ -68,14 +68,14 @@ python qamus/scripts/catalogue_nawawi40.py \
 
 # 2) diff every distinct surface form against the existing Qamus:
 python qamus/scripts/diff_against_qamus.py \
-    --index qamus/indexes/existing_qamus_index.json \
+    --index qamus/indexes/existing_qamus_index.min.json \
     --lex   corpora/nawawi40/out/nawawi40.lexeme_candidates.jsonl \
     --out   corpora/nawawi40/out/nawawi40.diff_against_quran_qamus.jsonl
 
 # 3) stage reviewable candidates (nothing is published):
 python qamus/scripts/make_candidate_payloads.py \
     --diff  corpora/nawawi40/out/nawawi40.diff_against_quran_qamus.jsonl \
-    --index qamus/indexes/existing_qamus_index.json \
+    --index qamus/indexes/existing_qamus_index.min.json \
     --out   qamus/candidates/nawawi40
 ```
 

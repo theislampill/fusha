@@ -8,7 +8,7 @@ certified candidate payload (see `fusha-to-qamus-highlight-bridge.md`).
 |---|---|---|---|---|
 | **sarf** (morphology) | `../sarf/` | root, lemma, wazn/pattern, POS | surface token + `tools/normalize_ar.py` | `{root, lemma, wazn, pos}` |
 | **nahw** (syntax) | `../nahw/` | the disambiguating reading; homograph + polyseme resolution | sarf output + āyah context | `{reading, disambiguation_basis, context_refs}` |
-| **source-address** | `source-address-model.md` + `indexes/` | is this a known address (repair) or new (add); who else touches it | `existing_qamus_index.json` | `{op, target_address?, used_by}` |
+| **source-address** | `source-address-model.md` + `indexes/` | is this a known address (repair) or new (add); who else touches it | `existing_qamus_index.min.json` | `{op, target_address?, used_by}` |
 | **linguistic-decision** | this report (§ decision protocol) | certify / pending / reject; which check gates apply | all of the above | `{decision, checks, public_render}` |
 
 ## Composition order (and why this order)

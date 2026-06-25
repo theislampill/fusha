@@ -75,7 +75,7 @@ lands on the same single source of truth the gloss-authoring side uses.
   ([`../nahw/procedures/referent-context.md`](../nahw/procedures/referent-context.md)).
 - **Qamus entries** — the words a learner reads are not arbitrary. They are drawn from the
   **2,092** existing entries indexed at
-  [`../qamus/indexes/existing_qamus_index.json`](../qamus/indexes/existing_qamus_index.json),
+  [`../qamus/indexes/existing_qamus_index.min.json`](../qamus/indexes/existing_qamus_index.min.json),
   ordered by frequency within class, so early levels meet the most common words first. See
   [`qamus-learning-path.md`](qamus-learning-path.md).
 - **Hover-gloss state** — from Level 8 on, the learner reads on `qamus.dawah.wiki`, where
@@ -84,7 +84,7 @@ lands on the same single source of truth the gloss-authoring side uses.
   is not. A blank hover is a feature: it means "this word has not yet earned a certified
   gloss," and the learner falls back to procedure rather than to a guess. The coverage the
   learner sees is the same scoreboard the authoring side tracks at
-  [`../qamus/reports/hover-gloss-scoreboard.md`](../qamus/reports/hover-gloss-scoreboard.md).
+  [`../qamus/reports/hover-gloss-terminal-scoreboard.md`](../qamus/reports/hover-gloss-terminal-scoreboard.md).
 - **Source-address nodes** — every Qamus entry has a stable address (`qamus:v###` / `n###` /
   `p###`) and every Qurʾān word a position address (`quran:S:A:W`), per
   [`../qamus/reports/source-address-model.md`](../qamus/reports/source-address-model.md). The

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# LEGACY: superseded by the tools/ generators (canonical machine index is existing_qamus_index.min.json; canonical graph is qamus/indexes/current/*-full.jsonl). Kept for reference; not the current canonical generator.
 # -*- coding: utf-8 -*-
 """Build the canonical index of the existing Qamus 2,092 entries (read-only).
 

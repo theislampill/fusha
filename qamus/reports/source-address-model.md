@@ -21,7 +21,7 @@ wbw:S:A:W           the hover-gloss slot for that word              e.g. wbw:43:
 
 - `qamus:` class ids are **frequency-ordered within class** and assigned by
   `scripts/build_existing_qamus_index.py` (verbs follow the printed book order). They are the
-  keys of `indexes/existing_qamus_index.json`.
+  keys of `indexes/existing_qamus_index.min.json`.
 - `quran:S:A:W` addresses a Qurʾān **word position**, never altering the text — it is a
   pointer, so the same verbatim word is referenced, never re-typed with changes.
 - `wbw:S:A:W` is the live hover slot that a certified gloss eventually fills. The repo only
@@ -36,7 +36,7 @@ qamus:v443#form=خَائِضِينَ        one of the entry's attested forms
 qamus:v443#ref=43:83           one of the entry's usage refs
 ```
 
-(`indexes/existing_qamus_index.json` already stores `source_address` as
+(`indexes/existing_qamus_index.min.json` already stores `source_address` as
 `qamus:v###=root=...` per record — see `build_existing_qamus_index.py`.)
 
 ## Record shape at an address
@@ -115,7 +115,7 @@ address is already being worked.
 A new observation is resolved to an address **before** any authoring:
 
 1. Compute `norm_strict(surface)` and the bare root via `tools/normalize_ar.py`.
-2. Probe `existing_qamus_index.json` by `norm_strict`, `root`, and `forms[]`.
+2. Probe `existing_qamus_index.min.json` by `norm_strict`, `root`, and `forms[]`.
 3. **Hit** → `op:"repair"` against that address; show the reviewer the "before".
 4. **Miss** → `op:"add"`; a *new* address is reserved **only on certification**, appended after
    the highest id in that class (addresses are append-only and never reused).

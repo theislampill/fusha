@@ -228,7 +228,7 @@ English (it/him/them) depends on an unresolved antecedent → `pending: referent
 |---|---|
 | the closed function-word set, in real āyāt | [`../nahw/curriculum/zero-to-fluency-nahw.md`](../nahw/curriculum/zero-to-fluency-nahw.md) Stages 1–7 |
 | roots, patterns, weak letters under each word | [`../sarf/SKILL.md`](../sarf/SKILL.md), [`../sarf/procedures/root-decision.md`](../sarf/procedures/root-decision.md) |
-| how the hover gloss is authored & certified | [`../sarf/procedures/hover-application.md`](../sarf/procedures/hover-application.md), [`../qamus/reports/hover-gloss-scoreboard.md`](../qamus/reports/hover-gloss-scoreboard.md) |
+| how the hover gloss is authored & certified | [`../sarf/procedures/hover-application.md`](../sarf/procedures/hover-application.md), [`../qamus/reports/hover-gloss-terminal-scoreboard.md`](../qamus/reports/hover-gloss-terminal-scoreboard.md) |
 | reading **prose** after the Qurʾān function words | [`hadith-reading-path.md`](hadith-reading-path.md) |
 
 **The through-line.** Eight short suwar, eight tight bundles of function words, each addressed

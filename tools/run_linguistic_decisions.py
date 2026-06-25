@@ -10,7 +10,7 @@ chosen --out file, never a publish.
 
 Inputs
 ------
-  --index    qamus/indexes/existing_qamus_index.json
+  --index    qamus/indexes/existing_qamus_index.min.json
              The 2,092-entry de-dup ground truth, a dict keyed by source-address
              (qamus:v###/n###/p###). Used to confirm a root/POS the candidate claims and to find a
              same-key homograph quarantine (e.g. ٱلْمُلْك "dominion" must not borrow مَلَك "angel").
@@ -642,7 +642,7 @@ def main():
     ap = argparse.ArgumentParser(description="Apply sarf+nahw rules to enriched candidate tokens "
                                              "and emit linguistic-decision JSONL (dry-run, no writes/network).")
     ap.add_argument("--candidates", help="enriched candidate JSON (list or {tokens:[...]})")
-    ap.add_argument("--index", default="qamus/indexes/existing_qamus_index.json",
+    ap.add_argument("--index", default="qamus/indexes/existing_qamus_index.min.json",
                     help="existing Qamus index (de-dup ground truth)")
     ap.add_argument("--rules", default=None, help="sarf/nahw rule JSON (default: built-in DEFAULT_RULES)")
     ap.add_argument("--out", default="-", help="output JSONL path, or '-' for stdout")

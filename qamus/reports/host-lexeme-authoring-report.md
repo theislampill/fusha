@@ -1,3 +1,4 @@
+<!-- HISTORICAL — point-in-time B2 tranche record (live 82.49% at the time). Current canonical coverage: qamus/reports/hover-gloss-terminal-scoreboard.md. -->
 # Host-lexeme authoring (B2)
 
 The suffix/pronoun lane's `stem_base_unknown` blockers are possessed nouns whose host lexeme is **not

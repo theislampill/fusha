@@ -25,7 +25,7 @@
     "forms_array_function_word_pollution": {"verdict": "CONFIRMED",
       "forms_array_total": 633, "qac_pos_P": 494, "qac_pos_NV": 138},
     "decision_backlinks_stale_path": {"verdict": "TO_VERIFY",
-      "claim": "build_decision_backlinks.py reads missing existing_qamus_index.json -> entry_nodes:0 silent success"}
+      "claim": "build_decision_backlinks.py reads a missing legacy index path -> entry_nodes:0 silent success"}
   },
   "current_ledger_root_cause_counts": {
     "missing_form_variant_on_existing_entry": 3461, "host_lexeme_possessive_candidate": 1210,

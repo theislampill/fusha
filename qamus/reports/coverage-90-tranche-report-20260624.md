@@ -1,3 +1,4 @@
+<!-- HISTORICAL / SURFACE-FRONTIER ONLY — point-in-time record (85.02%). Its '90% not safely reachable / frontier ~86%' conclusion measured ONLY surface-wide auto-glossing and is SUPERSEDED by the closure-2092 root-cause correction (90% IS reachable via root-known authoring). Current canonical: qamus/reports/closure-2092/final-closure-report-20260624.md. Numbers below are not current. -->
 # Coverage-economics tranche — report (target 90%)
 
 Target: reach ≥90.00% hover coverage if **safely** possible, else **prove the exact safe frontier**.

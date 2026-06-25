@@ -16,7 +16,7 @@ Qamus/engine closure tranche. Attacked **root causes**, not token symptoms. The 
 
 | metric | before | after |
 |---|---:|---:|
-| HEAD | `bceb366` | `<commit C>` (= origin/main) |
+| HEAD | `bceb366` | `74607a9` (= origin/main) |
 | coverage | 85.02% | **85.87%** |
 | resolved / 49,900 | 42,424 | **42,849** |
 | pending | 7,476 | 7,051 |

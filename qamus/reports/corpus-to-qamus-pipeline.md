@@ -16,7 +16,7 @@ Qamus catalogue + hover worklist — never a live write. This is that pipeline.
 2. create a source-address node per token (`corpus:<ref>:<idx>`);
 3. run the sarf state decision (root/form via [`sarf/procedures/root-decision.md`](../../sarf/procedures/root-decision.md));
 4. run the nahw state decision (role/particle via [`nahw/procedures/particle-decision.md`](../../nahw/procedures/particle-decision.md));
-5. look up the existing Qamus (`qamus/indexes/existing_qamus_index.json`);
+5. look up the existing Qamus (`qamus/indexes/existing_qamus_index.min.json`);
 6. classify: `already_in_qamus` / `occurrence_augment` / `new_surface_existing_lemma` / `new_lemma_existing_root`
    / `new_root` / `particle_or_construction` / `review_needed`;
 7. author original gloss candidates **only through the certified author + key-aware 2-vote pipeline** (the corpus
@@ -49,7 +49,7 @@ entry's usage. Homograph keys are routed to the 2-vote, never auto-glossed.
 
 ## P10 — bound to the COMMITTED dataset (no hidden live dependency)
 
-`tools/build_existing_qamus_index.py` rebuilds `qamus/indexes/existing_qamus_index.json` **from the committed
+`tools/build_existing_qamus_index.py` rebuilds `qamus/indexes/existing_qamus_index.min.json` **from the committed
 `qamus/data/current/entries.jsonl` (all 2,092 entries)** — so the corpus pipeline now dedupes against the
 committed public dataset, not a live pull. Re-run against Nawawī40-style + synthetic fixtures (2026-06-24):
 

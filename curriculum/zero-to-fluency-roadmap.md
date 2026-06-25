@@ -10,7 +10,7 @@ Each level is given as:
 - **Goal** — the one thing this rung adds.
 - **Ṣarf / nahw skills used** — the exact procedures to read *before* and lean on *during*.
 - **Qamus entries used** — which addresses (`qamus:v###` / `n###` / `p###`) supply the words,
-  drawn from [`../qamus/indexes/existing_qamus_index.json`](../qamus/indexes/existing_qamus_index.json).
+  drawn from [`../qamus/indexes/existing_qamus_index.min.json`](../qamus/indexes/existing_qamus_index.min.json).
 - **Drill** — what to do, with original vowelized examples.
 - **Checkpoint** — the pass bar (mirrored in [`mastery-checkpoints.md`](mastery-checkpoints.md)).
 
