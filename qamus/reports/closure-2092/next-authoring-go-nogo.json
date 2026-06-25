@@ -1,0 +1,19 @@
+{
+  "_generator": "closure-2092 Phase 10 go/no-go",
+  "verdict": "GO for repo-authorable generator+validator-ready 2-vote lanes (post-hygiene); NO-GO on raw pre-hygiene counts",
+  "buckets": {
+    "6_existing_entry_form_authoring": {"tokens": 3262, "generator": "build_form_variant_candidates.py", "validator": "validate_form_variant_family_batches.py", "gate": "2-vote", "go": true},
+    "2_noun_host_possessive": {"tokens": 255, "generator": "build_host_lexeme_candidates.py", "validator": "validate_suffix_pronoun_decisions.py", "gate": "2-vote", "go": true},
+    "7_token_irab_homograph": {"tokens": 239, "generator": "build_token_irab_decisions.py", "validator": "validate_token_irab_decisions.py", "gate": "2-vote", "go": true},
+    "4_function_word_particle": {"tokens": 939, "generator": "build_token_irab_decisions.py", "gate": "2-vote token", "go": true},
+    "3_verb_clitic": {"tokens": 822, "generator": "MISSING build_verb_clitic_candidates.py", "gate": "2-vote token", "go": false},
+    "5_missing_entry_proposal": {"tokens": 326, "generator": "MISSING build_new_entry_proposals.py", "gate": "owner", "go": false},
+    "1_structural_reroute_index_miss": {"tokens": 1050, "generator": "rebuild_surface_index_from_dataset.py", "gate": "repo/reindex (live, owner-gated)", "go": false},
+    "8_source_photo": {"tokens": 10, "gate": "source", "go": false},
+    "9_scholar_ambiguous": {"tokens": 148, "gate": "scholar", "go": false}
+  },
+  "repo_authorable_generator_ready_pool": 4695,
+  "yield": {"expected_safe_realizable": 3516, "coverage_ceiling_pct": 92.92, "tokens_needed_for_90pct": 2061, "ninety_reachable": true},
+  "prerequisites_done_this_tranche": ["F1 surface index", "F2/F3/F4 lane sanity", "F12/F13 batch+provenance gates", "F20 scar fixtures", "F6/F7/F10/F11 stale fixes", "F5 graph fail-closed"],
+  "missing_before_buckets_3_5_go": ["tools/build_verb_clitic_candidates.py", "tools/build_new_entry_proposals.py + schema/validator", "tools/build_source_entry_repair_candidates.py --mode quran_refs"]
+}

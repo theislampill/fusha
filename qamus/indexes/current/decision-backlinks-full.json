@@ -1,17 +1,12 @@
 {
   "by_blocker": {
-    "proper_noun_no_qamus_entry": {
-      "count": 1,
-      "sample": [
-        "2:38:10"
-      ]
-    },
     "same_surface_polysemy_requires_i3rab": {
-      "count": 379,
+      "count": 380,
       "sample": [
         "2:19:18",
         "2:22:12",
         "2:36:4",
+        "2:38:10",
         "2:48:10",
         "2:62:12",
         "2:62:14",
@@ -32,12 +27,11 @@
         "2:178:6",
         "2:178:10",
         "2:194:6",
-        "2:210:2",
-        "2:221:26"
+        "2:210:2"
       ]
     },
     "source_entry_unverified": {
-      "count": 1076,
+      "count": 1797,
       "sample": [
         "2:2:6",
         "2:4:3",
@@ -45,55 +39,55 @@
         "2:5:3",
         "2:9:5",
         "2:9:9",
+        "2:13:4",
         "2:16:9",
+        "2:18:1",
         "2:18:4",
         "2:26:35",
+        "2:29:10",
         "2:38:5",
         "2:38:8",
+        "2:43:7",
+        "2:44:1",
+        "2:48:16",
         "2:49:15",
         "2:50:3",
+        "2:71:19",
         "2:74:21",
         "2:74:28",
         "2:74:33",
-        "2:85:17",
-        "2:85:28",
-        "2:85:45",
-        "2:90:7",
-        "2:91:2",
-        "2:102:8",
-        "2:102:17",
-        "2:102:24",
-        "2:102:43"
+        "2:83:12",
+        "2:85:17"
       ]
     },
     "stem_base_unknown": {
-      "count": 5595,
+      "count": 4874,
       "sample": [
         "1:6:1",
         "1:7:3",
         "2:4:10",
         "2:10:4",
         "2:11:11",
-        "2:13:4",
         "2:13:12",
         "2:17:1",
         "2:17:12",
-        "2:18:1",
         "2:19:7",
         "2:20:17",
         "2:22:5",
         "2:25:30",
-        "2:29:10",
         "2:31:1",
         "2:31:10",
         "2:31:11",
         "2:36:17",
         "2:40:6",
-        "2:43:7",
-        "2:44:1",
         "2:44:7",
         "2:45:4",
-        "2:45:5"
+        "2:45:5",
+        "2:45:8",
+        "2:47:1",
+        "2:48:4",
+        "2:48:19",
+        "2:49:2"
       ]
     }
   },
@@ -41138,6 +41132,12 @@
         "4:59:21"
       ]
     },
+    "تبع": {
+      "pending_ambiguous": [
+        "2:38:10"
+      ],
+      "resolved": []
+    },
     "تبعا": {
       "pending_ambiguous": [],
       "resolved": [
@@ -46006,15 +46006,15 @@
     },
     "repair:repair_batch_001.evidence#live-entry:101401b11de8#field=root": {
       "affects_ayat": [
-        "quran:4:49",
-        "quran:19:19",
         "quran:35:18",
         "quran:24:21",
         "quran:19:13",
-        "quran:24:30",
-        "quran:2:43",
+        "quran:19:19",
         "quran:18:81",
-        "quran:3:164"
+        "quran:2:43",
+        "quran:3:164",
+        "quran:24:30",
+        "quran:4:49"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46159,8 +46159,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:2f0767751dd8#field=root": {
       "affects_ayat": [
-        "quran:9:28",
-        "quran:93:8"
+        "quran:93:8",
+        "quran:9:28"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46204,14 +46204,14 @@
     },
     "repair:repair_batch_001.evidence#live-entry:385725d86a5b#field=root": {
       "affects_ayat": [
-        "quran:24:27",
-        "quran:51:56",
-        "quran:20:10",
         "quran:2:21",
-        "quran:114:2",
+        "quran:10:44",
+        "quran:20:10",
+        "quran:51:56",
         "quran:19:26",
-        "quran:28:29",
-        "quran:10:44"
+        "quran:24:27",
+        "quran:114:2",
+        "quran:28:29"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46343,24 +46343,24 @@
     },
     "repair:repair_batch_001.evidence#live-entry:488d1175c005#field=root": {
       "affects_ayat": [
-        "quran:15:29",
-        "quran:34:12",
-        "quran:58:22",
-        "quran:38:36",
-        "quran:12:87",
-        "quran:12:94",
         "quran:55:12",
-        "quran:16:6",
-        "quran:17:85",
-        "quran:26:193",
-        "quran:19:17",
+        "quran:32:9",
         "quran:42:52",
+        "quran:16:6",
+        "quran:8:46",
+        "quran:34:12",
+        "quran:35:9",
+        "quran:19:17",
+        "quran:12:94",
+        "quran:56:89",
+        "quran:58:22",
+        "quran:17:85",
+        "quran:15:29",
+        "quran:26:193",
         "quran:21:91",
         "quran:2:87",
-        "quran:8:46",
-        "quran:32:9",
-        "quran:35:9",
-        "quran:56:89"
+        "quran:38:36",
+        "quran:12:87"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46393,8 +46393,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:50c673a03370#field=root": {
       "affects_ayat": [
-        "quran:4:25",
-        "quran:5:5"
+        "quran:5:5",
+        "quran:4:25"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46471,8 +46471,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:66aa57881e6a#field=root": {
       "affects_ayat": [
-        "quran:114:4",
-        "quran:81:15"
+        "quran:81:15",
+        "quran:114:4"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46550,14 +46550,14 @@
     },
     "repair:repair_batch_001.evidence#live-entry:746abe23a760#field=root": {
       "affects_ayat": [
-        "quran:4:79",
-        "quran:38:36",
         "quran:24:63",
-        "quran:11:81",
-        "quran:78:38",
-        "quran:3:165",
         "quran:2:19",
-        "quran:12:56"
+        "quran:4:79",
+        "quran:3:165",
+        "quran:78:38",
+        "quran:12:56",
+        "quran:11:81",
+        "quran:38:36"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46789,8 +46789,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:a189e0ee8815#field=root": {
       "affects_ayat": [
-        "quran:22:31",
-        "quran:67:11"
+        "quran:67:11",
+        "quran:22:31"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -46901,12 +46901,12 @@
     },
     "repair:repair_batch_001.evidence#live-entry:af75174c26a6#field=root": {
       "affects_ayat": [
-        "quran:15:26",
+        "quran:2:96",
         "quran:33:62",
         "quran:5:45",
-        "quran:30:4",
         "quran:2:259",
-        "quran:2:96"
+        "quran:15:26",
+        "quran:30:4"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -47006,13 +47006,13 @@
     },
     "repair:repair_batch_001.evidence#live-entry:c49dfdec1d36#field=root": {
       "affects_ayat": [
-        "quran:8:35",
-        "quran:4:160",
-        "quran:14:16",
+        "quran:4:61",
         "quran:43:57",
         "quran:80:6",
-        "quran:4:61",
-        "quran:4:167"
+        "quran:8:35",
+        "quran:4:167",
+        "quran:14:16",
+        "quran:4:160"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -47056,8 +47056,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:c63837955935#field=root": {
       "affects_ayat": [
-        "quran:26:94",
         "quran:27:90",
+        "quran:26:94",
         "quran:67:22"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
@@ -47069,8 +47069,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:c9b15a7407f9#field=root": {
       "affects_ayat": [
-        "quran:2:204",
-        "quran:19:97"
+        "quran:19:97",
+        "quran:2:204"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -47193,8 +47193,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:d779132e894c#field=root": {
       "affects_ayat": [
-        "quran:90:6",
-        "quran:72:19"
+        "quran:72:19",
+        "quran:90:6"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -47216,8 +47216,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:e4ed181b19e8#field=root": {
       "affects_ayat": [
-        "quran:41:16",
-        "quran:54:19"
+        "quran:54:19",
+        "quran:41:16"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -47261,15 +47261,15 @@
     },
     "repair:repair_batch_001.evidence#live-entry:e919504a83fa#field=root": {
       "affects_ayat": [
-        "quran:89:16",
-        "quran:20:120",
-        "quran:86:9",
         "quran:68:17",
-        "quran:8:17",
-        "quran:67:2",
-        "quran:2:249",
+        "quran:23:30",
         "quran:4:6",
-        "quran:23:30"
+        "quran:20:120",
+        "quran:8:17",
+        "quran:86:9",
+        "quran:89:16",
+        "quran:67:2",
+        "quran:2:249"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,

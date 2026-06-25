@@ -1,14 +1,30 @@
 # Next-batch resume plan — exact, no vague "standing by"
 
-## Where we are (live, reconciled 2026-06-24d, closure-2092 tranche)
+## Where we are (repo-local, 2026-06-24e, open-stem hygiene tranche COMPLETE)
 
-- Live coverage **85.87%** · **42,849 / 49,900** resolved · **7,051 pending** · 2,589 token decisions · health 200. This tranche +425 (form-variant lever, 2-vote, 44.6% family approval), −0 removed, 0 wrong.
-- **FRONTIER CORRECTED (supersedes the prior "~86% / 90%-not-reachable" claim):** the root-cause ledger (`closure-2092/`) shows the prior claim measured only surface-wide auto-gloss. Every pending token has a QAC root → the dominant lever is **root-known structured authoring** (POS-correct, sense-selected, collision-guarded, 2-vote). Yield-v2: **~3,473 safe-realizable → 92.83% ceiling; 90% needs only +2,061** — bounded multi-batch work, NOT a wall (genuine-ambiguity residue ~148). Exact lanes + commands: `closure-2092/final-closure-report-20260624.md`.
+- Repo-local coverage **85.87%** · 42,849 / 49,900 · 7,051 pending (classification only; live untouched this tranche).
+- **Open-stem queue-hygiene DONE** (5 deep-research audits actioned): surface index now covers `usage[].forms`
+  (F1); host-lexeme is noun-only with verb-clitics split out (F2); roots flattened so أتي/رأي reroute (F3);
+  function-words split out of forms_array (F4); batch + provenance gates wired (F12/F13); scar fixtures (F20);
+  stale paths/status fixed (F6/F7/F10/F11); graph fail-closed (F5). All hygiene validators GREEN.
+- **The raw pre-hygiene lane counts were polluted** — do NOT resume authoring from them. Use the de-polluted
+  casebook: `closure-2092/review-only-casebook.md` + `next-authoring-go-nogo.md`.
 
-### next (closure-2092 resume, highest-yield first)
-1. **form-variant lever again** (top queue): `build_form_variant_candidates.py --max-b 200 --max-c 200` → `form-variant-2vote` workflow → `build_form_variant_apply.py` → append(backup) → `rebuild.sh` → re-stage → regenerate audit/graph/matrix/ledgers → gates → commit. ~125–200 resolves/batch.
-2. **host_lexeme_possessive** (1,210), **missing_qamus_entry** new-entry proposals (473, owner-gated), **particle/pronoun-miscoded** (418), **remaining iʿrāb** (379).
-3. Deferred audits: live public-page crawl (Phase 8), source-photo scale-up (10), claude.ai pack + tutor curriculum (11/12), corpus/hadith readiness (13), bidirectional-link validator (14).
+### Next authoring — GO lanes only (generator+validator-ready, 2-vote; hygiene validators pass)
+1. **bucket 6 — existing-entry form authoring (3,262)** [top lever]: `build_form_variant_candidates.py --max-b 200
+   --max-c 200` → `form-variant-2vote` workflow → `validate_form_variant_family_batches.py` → (LIVE apply is
+   **private-context only**: append+`rebuild.sh` happen on the server, owner-gated; this repo never writes live).
+2. **bucket 2 — noun-host possessive (255)** `build_host_lexeme_candidates.py` → 2-vote → `validate_suffix_pronoun_decisions.py`.
+3. **bucket 7/4 — token iʿrāb + function-word (239 + 939)** `build_token_irab_decisions.py` → token-irab 2-vote.
+
+### NO-GO until built (do NOT author from these raw counts)
+- **bucket 3 verb-clitic (822)** — needs `build_verb_clitic_candidates.py` (object/subject pronoun lane).
+- **bucket 5 missing-entry (326)** — needs `build_new_entry_proposals.py` + schema/validator; owner-gated, review-only.
+- **bucket 1 index-miss (1,050)** — resolves on a LIVE resolver/index rebuild (owner-gated, out of repo scope), not authoring.
+- **bucket 8/9 (158)** — source-photo / scholar-gated; stay pending by design.
+
+> LIVE-APPLY commands (`append → rebuild.sh → restart`) are **private-context only** and never run from this
+> public repo. This tranche produced NO apply payloads and authored NO glosses.
 
 ### (prior) Where we are (corrective tranche) — HISTORICAL, superseded by the banner above
 

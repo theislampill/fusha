@@ -44,8 +44,10 @@ Coarse blockers: `stem_base_unknown` 5,993→**5,595** · `source_entry_unverifi
 ## Required-field summary (Phase 18)
 
 - live mutation occurred (qamus hover layer only, via the scoped deploy loop) — **not** a webroot /
-  phpBB / wiki / DB write; rollback artifact `wbw-lookup.prev.json` retained.
-- 2,092 entries audited mechanically (entry rollup reconciled); **live public-page crawl deferred**.
+  phpBB / wiki / DB write; rollback artifact `wbw-lookup.prev.json` retained. **[log-claimed / private-deploy
+  — not repo-verifiable; the public repo never writes live.]**
+- 2,092 entries **mechanically classified** in the rollup; **hover-complete**, **source-photo-verified**,
+  and **live-page-crawled** are separate states, not implied by this claim; **live public-page crawl deferred**.
 - hover tokens represented: 49,900; newly resolved this tranche: **425**.
 - certified payloads produced: 121 families / 425 decisions (all applied).
 - source-entry repairs: forms_array sub-cause folded into the batch; quran_refs/photo lanes deferred.
