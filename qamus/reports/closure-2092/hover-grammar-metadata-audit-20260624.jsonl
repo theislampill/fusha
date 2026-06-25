@@ -1,4 +1,4 @@
-{"_generator": "tools/audit_hover_grammar_metadata.py", "resolved": 42849, "root_derivable": 26623, "root_derivable_pct": 62.13, "pos_derivable": 42572, "pos_derivable_pct": 99.35, "with_token_decision": 2589, "particles": 12794, "particles_with_function_decision": 533, "note": "gender/number/case/mood/derivative-class require a morphological analyzer not available offline; flagged missing, never fabricated. The concise PUBLIC gloss may be correct even when internal metadata is incomplete."}
+{"_generator": "tools/audit_hover_grammar_metadata.py", "resolved": 43005, "root_derivable": 26778, "root_derivable_pct": 62.27, "pos_derivable": 42728, "pos_derivable_pct": 99.36, "with_token_decision": 2745, "particles": 12794, "particles_with_function_decision": 533, "note": "gender/number/case/mood/derivative-class require a morphological analyzer not available offline; flagged missing, never fabricated. The concise PUBLIC gloss may be correct even when internal metadata is incomplete."}
 {"conf": "low", "loc": "1:1:1", "nk": "بسم", "pos": "N", "provenance_clean": true, "root": "سمو", "segmentation": false, "surface": "بِسْمِ", "token_decision": false}
 {"conf": "med", "loc": "1:1:2", "nk": "الله", "pos": "N", "provenance_clean": true, "root": "أله", "segmentation": false, "surface": "اللَّهِ", "token_decision": false}
 {"conf": "high", "loc": "1:1:3", "nk": "الرحمان", "pos": "N", "provenance_clean": true, "root": "رحم", "segmentation": false, "surface": "الرَّحْمَٰنِ", "token_decision": false}
@@ -118,6 +118,7 @@
 {"conf": "low", "loc": "2:13:9", "nk": "أنؤمن", "pos": "V", "provenance_clean": true, "root": "أمن", "segmentation": false, "surface": "أَنُؤْمِنُ", "token_decision": false}
 {"conf": "low", "loc": "2:13:10", "nk": "كما", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "كَمَا", "token_decision": false}
 {"conf": "low", "loc": "2:13:11", "nk": "امن", "pos": null, "provenance_clean": true, "root": "أمن", "segmentation": false, "surface": "آمَنَ", "token_decision": false}
+{"conf": "high", "loc": "2:13:12", "nk": "السفهاء", "pos": "N", "provenance_clean": true, "root": "سفه", "segmentation": false, "surface": "السُّفَهَاءُ", "token_decision": true}
 {"conf": "low", "loc": "2:14:1", "nk": "وإذا", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "وَإِذَا", "token_decision": false}
 {"conf": "high", "loc": "2:14:2", "nk": "لقوا", "pos": "V", "provenance_clean": true, "root": "لقي", "segmentation": false, "surface": "لَقُوا۟", "token_decision": false}
 {"conf": "high", "loc": "2:14:3", "nk": "الذين", "pos": "N", "provenance_clean": true, "root": "", "segmentation": false, "surface": "ٱلَّذِينَ", "token_decision": false}
@@ -196,6 +197,7 @@
 {"conf": "low", "loc": "2:20:14", "nk": "ولو", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "وَلَوْ", "token_decision": false}
 {"conf": "low", "loc": "2:20:15", "nk": "شاء", "pos": "V", "provenance_clean": true, "root": "شيأ", "segmentation": false, "surface": "شَآءَ", "token_decision": false}
 {"conf": "med", "loc": "2:20:16", "nk": "الله", "pos": "N", "provenance_clean": true, "root": "أله", "segmentation": false, "surface": "ٱللَّهُ", "token_decision": false}
+{"conf": "high", "loc": "2:20:17", "nk": "لذهب", "pos": "V", "provenance_clean": true, "root": "ذهب", "segmentation": false, "surface": "لَذَهَبَ", "token_decision": true}
 {"conf": "low", "loc": "2:20:18", "nk": "بسمعهم", "pos": "N", "provenance_clean": true, "root": "سمع", "segmentation": false, "surface": "بِسَمْعِهِمْ", "token_decision": false}
 {"conf": "high", "loc": "2:20:19", "nk": "وأبصارهم", "pos": "N", "provenance_clean": true, "root": "بصر", "segmentation": true, "surface": "وَأَبْصَٰرِهِمْ", "token_decision": true}
 {"conf": "low", "loc": "2:20:20", "nk": "إن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "إِنَّ", "token_decision": false}
@@ -745,6 +747,7 @@
 {"conf": "low", "loc": "2:61:34", "nk": "لكم", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "لَكُم", "token_decision": false}
 {"conf": "low", "loc": "2:61:35", "nk": "ما", "pos": "N", "provenance_clean": true, "root": "", "segmentation": false, "surface": "مَّا", "token_decision": false}
 {"conf": "low", "loc": "2:61:36", "nk": "سألتم", "pos": "V", "provenance_clean": true, "root": "سأل", "segmentation": false, "surface": "سَأَلْتُمْ", "token_decision": false}
+{"conf": "high", "loc": "2:61:37", "nk": "وضربت", "pos": "V", "provenance_clean": true, "root": "ضرب", "segmentation": false, "surface": "وَضُرِبَتْ", "token_decision": true}
 {"conf": "med", "loc": "2:61:38", "nk": "عليهم", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "عَلَيْهِمُ", "token_decision": false}
 {"conf": "high", "loc": "2:61:39", "nk": "الذله", "pos": "N", "provenance_clean": true, "root": "ذلل", "segmentation": false, "surface": "ٱلذِّلَّةُ", "token_decision": true}
 {"conf": "high", "loc": "2:61:41", "nk": "وباءو", "pos": "V", "provenance_clean": true, "root": "بوأ", "segmentation": false, "surface": "وَبَآءُو", "token_decision": true}
@@ -1089,6 +1092,7 @@
 {"conf": "med", "loc": "2:85:38", "nk": "الدنيا", "pos": "N", "provenance_clean": true, "root": "دنو", "segmentation": false, "surface": "ٱلدُّنْيَا", "token_decision": false}
 {"conf": "low", "loc": "2:85:39", "nk": "ويوم", "pos": "N", "provenance_clean": true, "root": "يوم", "segmentation": false, "surface": "وَيَوْمَ", "token_decision": false}
 {"conf": "low", "loc": "2:85:40", "nk": "القيامه", "pos": "N", "provenance_clean": true, "root": "قوم", "segmentation": false, "surface": "ٱلْقِيَٰمَةِ", "token_decision": false}
+{"conf": "high", "loc": "2:85:41", "nk": "يردون", "pos": "V", "provenance_clean": true, "root": "ردد", "segmentation": false, "surface": "يُرَدُّونَ", "token_decision": true}
 {"conf": "low", "loc": "2:85:42", "nk": "إلي", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "إِلَىٰٓ", "token_decision": false}
 {"conf": "low", "loc": "2:85:43", "nk": "أشد", "pos": "N", "provenance_clean": true, "root": "شدد", "segmentation": false, "surface": "أَشَدِّ", "token_decision": false}
 {"conf": "low", "loc": "2:85:44", "nk": "العذاب", "pos": "N", "provenance_clean": true, "root": "عذب", "segmentation": false, "surface": "ٱلْعَذَابِ", "token_decision": false}
@@ -1629,6 +1633,7 @@
 {"conf": "low", "loc": "2:125:16", "nk": "أن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "أَن", "token_decision": false}
 {"conf": "med", "loc": "2:125:17", "nk": "طهرا", "pos": "V", "provenance_clean": true, "root": "طهر", "segmentation": false, "surface": "طَهِّرَا", "token_decision": false}
 {"conf": "high", "loc": "2:125:18", "nk": "بيتي", "pos": "N", "provenance_clean": true, "root": "بيت", "segmentation": false, "surface": "بَيْتِىَ", "token_decision": true}
+{"conf": "high", "loc": "2:125:19", "nk": "للطائفين", "pos": "N", "provenance_clean": true, "root": "طوف", "segmentation": false, "surface": "لِلطَّآئِفِينَ", "token_decision": true}
 {"conf": "high", "loc": "2:125:21", "nk": "والركع", "pos": "N", "provenance_clean": true, "root": "ركع", "segmentation": false, "surface": "وَٱلرُّكَّعِ", "token_decision": false}
 {"conf": "low", "loc": "2:125:22", "nk": "السجود", "pos": "N", "provenance_clean": true, "root": "سجد", "segmentation": false, "surface": "ٱلسُّجُودِ", "token_decision": false}
 {"conf": "low", "loc": "2:126:1", "nk": "وإذ", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "وَإِذْ", "token_decision": false}
@@ -2082,6 +2087,7 @@
 {"conf": "low", "loc": "2:164:3", "nk": "خلق", "pos": "N", "provenance_clean": true, "root": "خلق", "segmentation": false, "surface": "خَلْقِ", "token_decision": false}
 {"conf": "med", "loc": "2:164:4", "nk": "السماوات", "pos": "N", "provenance_clean": true, "root": "سمو", "segmentation": false, "surface": "ٱلسَّمَٰوَٰتِ", "token_decision": false}
 {"conf": "med", "loc": "2:164:5", "nk": "والأرض", "pos": "N", "provenance_clean": true, "root": "أرض", "segmentation": false, "surface": "وَٱلْأَرْضِ", "token_decision": false}
+{"conf": "high", "loc": "2:164:6", "nk": "واختلاف", "pos": "N", "provenance_clean": true, "root": "خلف", "segmentation": false, "surface": "وَٱخْتِلَٰفِ", "token_decision": true}
 {"conf": "low", "loc": "2:164:7", "nk": "اليل", "pos": "N", "provenance_clean": true, "root": "ليل", "segmentation": false, "surface": "ٱلَّيْلِ", "token_decision": false}
 {"conf": "low", "loc": "2:164:8", "nk": "والنهار", "pos": "N", "provenance_clean": true, "root": "نهر", "segmentation": false, "surface": "وَٱلنَّهَارِ", "token_decision": false}
 {"conf": "med", "loc": "2:164:10", "nk": "التي", "pos": "N", "provenance_clean": true, "root": "", "segmentation": false, "surface": "ٱلَّتِى", "token_decision": false}
@@ -2220,6 +2226,7 @@
 {"conf": "low", "loc": "2:173:13", "nk": "فمن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "فَمَنِ", "token_decision": false}
 {"conf": "low", "loc": "2:173:14", "nk": "اضطر", "pos": "V", "provenance_clean": true, "root": "ضرر", "segmentation": false, "surface": "ٱضْطُرَّ", "token_decision": false}
 {"conf": "low", "loc": "2:173:15", "nk": "غير", "pos": "N", "provenance_clean": true, "root": "غير", "segmentation": false, "surface": "غَيْرَ", "token_decision": false}
+{"conf": "high", "loc": "2:173:16", "nk": "باغ", "pos": "N", "provenance_clean": true, "root": "بغي", "segmentation": false, "surface": "بَاغٍۢ", "token_decision": true}
 {"conf": "low", "loc": "2:173:17", "nk": "ولا", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "وَلَا", "token_decision": false}
 {"conf": "low", "loc": "2:173:19", "nk": "فلا", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "فَلَآ", "token_decision": false}
 {"conf": "low", "loc": "2:173:20", "nk": "إثم", "pos": "N", "provenance_clean": true, "root": "أثم", "segmentation": false, "surface": "إِثْمَ", "token_decision": false}
@@ -2782,6 +2789,7 @@
 {"conf": "low", "loc": "2:203:11", "nk": "إثم", "pos": "N", "provenance_clean": true, "root": "أثم", "segmentation": false, "surface": "إِثْمَ", "token_decision": false}
 {"conf": "med", "loc": "2:203:12", "nk": "عليه", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "عَلَيْهِ", "token_decision": false}
 {"conf": "high", "loc": "2:203:13", "nk": "ومن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "وَمَن", "token_decision": true}
+{"conf": "high", "loc": "2:203:14", "nk": "تأخر", "pos": "V", "provenance_clean": true, "root": "أخر", "segmentation": false, "surface": "تَأَخَّرَ", "token_decision": true}
 {"conf": "low", "loc": "2:203:15", "nk": "فلا", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "فَلَآ", "token_decision": false}
 {"conf": "low", "loc": "2:203:16", "nk": "إثم", "pos": "N", "provenance_clean": true, "root": "أثم", "segmentation": false, "surface": "إِثْمَ", "token_decision": false}
 {"conf": "med", "loc": "2:203:17", "nk": "عليه", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "عَلَيْهِ", "token_decision": false}
@@ -2807,6 +2815,7 @@
 {"conf": "low", "loc": "2:204:13", "nk": "في", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "فِى", "token_decision": false}
 {"conf": "med", "loc": "2:204:14", "nk": "قلبه", "pos": "N", "provenance_clean": true, "root": "قلب", "segmentation": false, "surface": "قَلْبِهِۦ", "token_decision": false}
 {"conf": "low", "loc": "2:204:15", "nk": "وهو", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "وَهُوَ", "token_decision": false}
+{"conf": "high", "loc": "2:204:17", "nk": "الخصام", "pos": "N", "provenance_clean": true, "root": "خصم", "segmentation": false, "surface": "ٱلْخِصَامِ", "token_decision": true}
 {"conf": "low", "loc": "2:205:1", "nk": "وإذا", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "وَإِذَا", "token_decision": false}
 {"conf": "high", "loc": "2:205:2", "nk": "تولي", "pos": "V", "provenance_clean": true, "root": "ولي", "segmentation": false, "surface": "تَوَلَّىٰ", "token_decision": false}
 {"conf": "low", "loc": "2:205:3", "nk": "سعي", "pos": "V", "provenance_clean": true, "root": "سعي", "segmentation": false, "surface": "سَعَىٰ", "token_decision": false}
@@ -2887,6 +2896,7 @@
 {"conf": "high", "loc": "2:213:5", "nk": "فبعث", "pos": "V", "provenance_clean": true, "root": "بعث", "segmentation": false, "surface": "فَبَعَثَ", "token_decision": true}
 {"conf": "med", "loc": "2:213:6", "nk": "الله", "pos": "N", "provenance_clean": true, "root": "أله", "segmentation": false, "surface": "ٱللَّهُ", "token_decision": false}
 {"conf": "low", "loc": "2:213:7", "nk": "النبين", "pos": "N", "provenance_clean": true, "root": "نبأ", "segmentation": false, "surface": "ٱلنَّبِيِّۦنَ", "token_decision": false}
+{"conf": "high", "loc": "2:213:8", "nk": "مبشرين", "pos": "N", "provenance_clean": true, "root": "بشر", "segmentation": false, "surface": "مُبَشِّرِينَ", "token_decision": true}
 {"conf": "low", "loc": "2:213:9", "nk": "ومنذرين", "pos": "N", "provenance_clean": true, "root": "نذر", "segmentation": false, "surface": "وَمُنذِرِينَ", "token_decision": false}
 {"conf": "med", "loc": "2:213:10", "nk": "وأنزل", "pos": "V", "provenance_clean": true, "root": "نزل", "segmentation": false, "surface": "وَأَنزَلَ", "token_decision": false}
 {"conf": "med", "loc": "2:213:11", "nk": "معهم", "pos": "N", "provenance_clean": true, "root": "", "segmentation": false, "surface": "مَعَهُمُ", "token_decision": false}
@@ -2978,8 +2988,10 @@
 {"conf": "low", "loc": "2:217:2", "nk": "عن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "عَنِ", "token_decision": false}
 {"conf": "med", "loc": "2:217:3", "nk": "الشهر", "pos": "N", "provenance_clean": true, "root": "شهر", "segmentation": false, "surface": "ٱلشَّهْرِ", "token_decision": false}
 {"conf": "low", "loc": "2:217:4", "nk": "الحرام", "pos": "N", "provenance_clean": true, "root": "حرم", "segmentation": false, "surface": "ٱلْحَرَامِ", "token_decision": false}
+{"conf": "high", "loc": "2:217:5", "nk": "قتال", "pos": "N", "provenance_clean": true, "root": "قتل", "segmentation": false, "surface": "قِتَالٍۢ", "token_decision": true}
 {"conf": "low", "loc": "2:217:6", "nk": "فيه", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "فِيهِ", "token_decision": false}
 {"conf": "low", "loc": "2:217:7", "nk": "قل", "pos": "V", "provenance_clean": true, "root": "قول", "segmentation": false, "surface": "قُلْ", "token_decision": false}
+{"conf": "high", "loc": "2:217:8", "nk": "قتال", "pos": "N", "provenance_clean": true, "root": "قتل", "segmentation": false, "surface": "قِتَالٌۭ", "token_decision": true}
 {"conf": "low", "loc": "2:217:9", "nk": "فيه", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "فِيهِ", "token_decision": false}
 {"conf": "high", "loc": "2:217:10", "nk": "كبير", "pos": "N", "provenance_clean": true, "root": "كبر", "segmentation": false, "surface": "كَبِيرٌۭ", "token_decision": false}
 {"conf": "low", "loc": "2:217:12", "nk": "عن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "عَن", "token_decision": false}
@@ -3102,6 +3114,7 @@
 {"conf": "low", "loc": "2:221:27", "nk": "إلي", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "إِلَى", "token_decision": false}
 {"conf": "med", "loc": "2:221:28", "nk": "النار", "pos": "N", "provenance_clean": true, "root": "نور", "segmentation": false, "surface": "ٱلنَّارِ", "token_decision": false}
 {"conf": "low", "loc": "2:221:29", "nk": "والله", "pos": "N", "provenance_clean": true, "root": "أله", "segmentation": false, "surface": "وَٱللَّهُ", "token_decision": false}
+{"conf": "high", "loc": "2:221:30", "nk": "يدعوا", "pos": "V", "provenance_clean": true, "root": "دعو", "segmentation": false, "surface": "يَدْعُوٓا۟", "token_decision": true}
 {"conf": "low", "loc": "2:221:31", "nk": "إلي", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "إِلَى", "token_decision": false}
 {"conf": "low", "loc": "2:221:32", "nk": "الجنه", "pos": "N", "provenance_clean": true, "root": "جنن", "segmentation": false, "surface": "ٱلْجَنَّةِ", "token_decision": false}
 {"conf": "low", "loc": "2:221:34", "nk": "بإذنه", "pos": "N", "provenance_clean": true, "root": "أذن", "segmentation": false, "surface": "بِإِذْنِهِۦ", "token_decision": false}
@@ -3464,8 +3477,10 @@
 {"conf": "low", "loc": "2:236:13", "nk": "فريضه", "pos": "N", "provenance_clean": true, "root": "فرض", "segmentation": false, "surface": "فَرِيضَةًۭ", "token_decision": false}
 {"conf": "low", "loc": "2:236:15", "nk": "علي", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "عَلَى", "token_decision": false}
 {"conf": "high", "loc": "2:236:16", "nk": "الموسع", "pos": "N", "provenance_clean": true, "root": "وسع", "segmentation": false, "surface": "ٱلْمُوسِعِ", "token_decision": false}
+{"conf": "high", "loc": "2:236:17", "nk": "قدره", "pos": "N", "provenance_clean": true, "root": "قدر", "segmentation": false, "surface": "قَدَرُهُۥ", "token_decision": true}
 {"conf": "med", "loc": "2:236:18", "nk": "وعلي", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "وَعَلَى", "token_decision": false}
 {"conf": "high", "loc": "2:236:19", "nk": "المقتر", "pos": "N", "provenance_clean": true, "root": "قتر", "segmentation": false, "surface": "ٱلْمُقْتِرِ", "token_decision": false}
+{"conf": "high", "loc": "2:236:20", "nk": "قدره", "pos": "N", "provenance_clean": true, "root": "قدر", "segmentation": false, "surface": "قَدَرُهُۥ", "token_decision": true}
 {"conf": "low", "loc": "2:236:21", "nk": "متاعا", "pos": "N", "provenance_clean": true, "root": "متع", "segmentation": false, "surface": "مَتَٰعًۢا", "token_decision": false}
 {"conf": "med", "loc": "2:236:22", "nk": "بالمعروف", "pos": "N", "provenance_clean": true, "root": "عرف", "segmentation": false, "surface": "بِٱلْمَعْرُوفِ", "token_decision": false}
 {"conf": "low", "loc": "2:236:23", "nk": "حقا", "pos": "N", "provenance_clean": true, "root": "حقق", "segmentation": false, "surface": "حَقًّا", "token_decision": false}
@@ -3673,6 +3688,7 @@
 {"conf": "high", "loc": "2:247:35", "nk": "والجسم", "pos": "N", "provenance_clean": true, "root": "جسم", "segmentation": false, "surface": "وَٱلْجِسْمِ", "token_decision": false}
 {"conf": "low", "loc": "2:247:36", "nk": "والله", "pos": "N", "provenance_clean": true, "root": "أله", "segmentation": false, "surface": "وَٱللَّهُ", "token_decision": false}
 {"conf": "med", "loc": "2:247:37", "nk": "يؤتي", "pos": "V", "provenance_clean": true, "root": "أتي", "segmentation": false, "surface": "يُؤْتِى", "token_decision": false}
+{"conf": "high", "loc": "2:247:38", "nk": "ملكه", "pos": "N", "provenance_clean": true, "root": "ملك", "segmentation": false, "surface": "مُلْكَهُۥ", "token_decision": true}
 {"conf": "low", "loc": "2:247:39", "nk": "من", "pos": "N", "provenance_clean": true, "root": "", "segmentation": false, "surface": "مَن", "token_decision": false}
 {"conf": "med", "loc": "2:247:40", "nk": "يشاء", "pos": "V", "provenance_clean": true, "root": "شيأ", "segmentation": false, "surface": "يَشَآءُ", "token_decision": false}
 {"conf": "low", "loc": "2:247:41", "nk": "والله", "pos": "N", "provenance_clean": true, "root": "أله", "segmentation": false, "surface": "وَٱللَّهُ", "token_decision": false}
@@ -3683,6 +3699,7 @@
 {"conf": "low", "loc": "2:248:3", "nk": "نبيهم", "pos": "N", "provenance_clean": true, "root": "نبأ", "segmentation": false, "surface": "نَبِيُّهُمْ", "token_decision": false}
 {"conf": "low", "loc": "2:248:4", "nk": "إن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "إِنَّ", "token_decision": false}
 {"conf": "high", "loc": "2:248:5", "nk": "ءايه", "pos": "N", "provenance_clean": true, "root": "أيي", "segmentation": false, "surface": "ءَايَةَ", "token_decision": false}
+{"conf": "high", "loc": "2:248:6", "nk": "ملكه", "pos": "N", "provenance_clean": true, "root": "ملك", "segmentation": false, "surface": "مُلْكِهِۦٓ", "token_decision": true}
 {"conf": "low", "loc": "2:248:7", "nk": "أن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "أَن", "token_decision": false}
 {"conf": "med", "loc": "2:248:9", "nk": "التابوت", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "ٱلتَّابُوتُ", "token_decision": false}
 {"conf": "low", "loc": "2:248:10", "nk": "فيه", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "فِيهِ", "token_decision": false}
@@ -3927,6 +3944,7 @@
 {"conf": "low", "loc": "2:256:3", "nk": "في", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "فِى", "token_decision": false}
 {"conf": "low", "loc": "2:256:5", "nk": "قد", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "قَد", "token_decision": false}
 {"conf": "med", "loc": "2:256:6", "nk": "تبين", "pos": "V", "provenance_clean": true, "root": "بين", "segmentation": false, "surface": "تَّبَيَّنَ", "token_decision": false}
+{"conf": "high", "loc": "2:256:7", "nk": "الرشد", "pos": "N", "provenance_clean": true, "root": "رشد", "segmentation": false, "surface": "ٱلرُّشْدُ", "token_decision": true}
 {"conf": "low", "loc": "2:256:8", "nk": "من", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "مِنَ", "token_decision": false}
 {"conf": "high", "loc": "2:256:9", "nk": "الغي", "pos": "N", "provenance_clean": true, "root": "غوي", "segmentation": false, "surface": "ٱلْغَىِّ", "token_decision": true}
 {"conf": "low", "loc": "2:256:10", "nk": "فمن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "فَمَن", "token_decision": false}
@@ -4180,6 +4198,7 @@
 {"conf": "med", "loc": "2:264:36", "nk": "يهدي", "pos": "V", "provenance_clean": true, "root": "هدي", "segmentation": false, "surface": "يَهْدِى", "token_decision": false}
 {"conf": "low", "loc": "2:264:37", "nk": "القوم", "pos": "N", "provenance_clean": true, "root": "قوم", "segmentation": false, "surface": "ٱلْقَوْمَ", "token_decision": false}
 {"conf": "low", "loc": "2:264:38", "nk": "الكافرين", "pos": "N", "provenance_clean": true, "root": "كفر", "segmentation": false, "surface": "ٱلْكَٰفِرِينَ", "token_decision": false}
+{"conf": "high", "loc": "2:265:1", "nk": "ومثل", "pos": "N", "provenance_clean": true, "root": "مثل", "segmentation": false, "surface": "وَمَثَلُ", "token_decision": true}
 {"conf": "med", "loc": "2:265:2", "nk": "الذين", "pos": "N", "provenance_clean": true, "root": "", "segmentation": false, "surface": "ٱلَّذِينَ", "token_decision": false}
 {"conf": "low", "loc": "2:265:3", "nk": "ينفقون", "pos": "V", "provenance_clean": true, "root": "نفق", "segmentation": false, "surface": "يُنفِقُونَ", "token_decision": false}
 {"conf": "med", "loc": "2:265:4", "nk": "أموالهم", "pos": "N", "provenance_clean": true, "root": "مول", "segmentation": false, "surface": "أَمْوَٰلَهُمُ", "token_decision": false}
@@ -4469,6 +4488,7 @@
 {"conf": "high", "loc": "2:282:61", "nk": "وامرأتان", "pos": "N", "provenance_clean": true, "root": "مرأ", "segmentation": false, "surface": "وَٱمْرَأَتَانِ", "token_decision": false}
 {"conf": "low", "loc": "2:282:62", "nk": "ممن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "مِمَّن", "token_decision": false}
 {"conf": "low", "loc": "2:282:64", "nk": "من", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "مِنَ", "token_decision": false}
+{"conf": "high", "loc": "2:282:65", "nk": "الشهداء", "pos": "N", "provenance_clean": true, "root": "شهد", "segmentation": false, "surface": "ٱلشُّهَدَآءِ", "token_decision": true}
 {"conf": "low", "loc": "2:282:66", "nk": "أن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "أَن", "token_decision": false}
 {"conf": "low", "loc": "2:282:67", "nk": "تضل", "pos": "V", "provenance_clean": true, "root": "ضلل", "segmentation": false, "surface": "تَضِلَّ", "token_decision": false}
 {"conf": "low", "loc": "2:282:68", "nk": "إحديهما", "pos": "N", "provenance_clean": true, "root": "أحد", "segmentation": false, "surface": "إِحْدَىٰهُمَا", "token_decision": false}
@@ -4476,6 +4496,7 @@
 {"conf": "low", "loc": "2:282:71", "nk": "الأخري", "pos": "N", "provenance_clean": true, "root": "أخر", "segmentation": false, "surface": "ٱلْأُخْرَىٰ", "token_decision": false}
 {"conf": "low", "loc": "2:282:72", "nk": "ولا", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "وَلَا", "token_decision": false}
 {"conf": "low", "loc": "2:282:73", "nk": "يأب", "pos": "V", "provenance_clean": true, "root": "أبي", "segmentation": false, "surface": "يَأْبَ", "token_decision": false}
+{"conf": "high", "loc": "2:282:74", "nk": "الشهداء", "pos": "N", "provenance_clean": true, "root": "شهد", "segmentation": false, "surface": "ٱلشُّهَدَآءُ", "token_decision": true}
 {"conf": "low", "loc": "2:282:75", "nk": "إذا", "pos": "N", "provenance_clean": true, "root": "", "segmentation": false, "surface": "إِذَا", "token_decision": false}
 {"conf": "low", "loc": "2:282:76", "nk": "ما", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "مَا", "token_decision": false}
 {"conf": "low", "loc": "2:282:78", "nk": "ولا", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "وَلَا", "token_decision": false}
@@ -4491,6 +4512,7 @@
 {"conf": "high", "loc": "2:282:88", "nk": "أقسط", "pos": "N", "provenance_clean": true, "root": "قسط", "segmentation": false, "surface": "أَقْسَطُ", "token_decision": true}
 {"conf": "low", "loc": "2:282:89", "nk": "عند", "pos": "N", "provenance_clean": true, "root": "عند", "segmentation": false, "surface": "عِندَ", "token_decision": false}
 {"conf": "med", "loc": "2:282:90", "nk": "الله", "pos": "N", "provenance_clean": true, "root": "أله", "segmentation": false, "surface": "ٱللَّهِ", "token_decision": false}
+{"conf": "high", "loc": "2:282:91", "nk": "وأقوم", "pos": "N", "provenance_clean": true, "root": "قوم", "segmentation": false, "surface": "وَأَقْوَمُ", "token_decision": true}
 {"conf": "high", "loc": "2:282:94", "nk": "ألا", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "أَلَّا", "token_decision": true}
 {"conf": "med", "loc": "2:282:95", "nk": "ترتابوا", "pos": "V", "provenance_clean": true, "root": "ريب", "segmentation": false, "surface": "تَرْتَابُوٓا۟", "token_decision": false}
 {"conf": "low", "loc": "2:282:96", "nk": "إلا", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "إِلَّآ", "token_decision": false}
@@ -4793,6 +4815,7 @@
 {"conf": "high", "loc": "3:14:9", "nk": "المقنطره", "pos": "N", "provenance_clean": true, "root": "قنطر", "segmentation": false, "surface": "ٱلْمُقَنطَرَةِ", "token_decision": false}
 {"conf": "low", "loc": "3:14:10", "nk": "من", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "مِنَ", "token_decision": false}
 {"conf": "med", "loc": "3:14:11", "nk": "الذهب", "pos": "N", "provenance_clean": true, "root": "ذهب", "segmentation": false, "surface": "ٱلذَّهَبِ", "token_decision": false}
+{"conf": "high", "loc": "3:14:12", "nk": "والفضه", "pos": "N", "provenance_clean": true, "root": "فضض", "segmentation": false, "surface": "وَٱلْفِضَّةِ", "token_decision": true}
 {"conf": "med", "loc": "3:14:13", "nk": "والخيل", "pos": "N", "provenance_clean": true, "root": "خيل", "segmentation": false, "surface": "وَٱلْخَيْلِ", "token_decision": false}
 {"conf": "high", "loc": "3:14:14", "nk": "المسومه", "pos": "N", "provenance_clean": true, "root": "سوم", "segmentation": false, "surface": "ٱلْمُسَوَّمَةِ", "token_decision": false}
 {"conf": "low", "loc": "3:14:15", "nk": "والأنعام", "pos": "N", "provenance_clean": true, "root": "نعم", "segmentation": false, "surface": "وَٱلْأَنْعَٰمِ", "token_decision": false}
@@ -4838,6 +4861,8 @@
 {"conf": "low", "loc": "3:16:10", "nk": "عذاب", "pos": "N", "provenance_clean": true, "root": "عذب", "segmentation": false, "surface": "عَذَابَ", "token_decision": false}
 {"conf": "med", "loc": "3:16:11", "nk": "النار", "pos": "N", "provenance_clean": true, "root": "نور", "segmentation": false, "surface": "ٱلنَّارِ", "token_decision": false}
 {"conf": "low", "loc": "3:17:1", "nk": "الصابرين", "pos": "N", "provenance_clean": true, "root": "صبر", "segmentation": false, "surface": "ٱلصَّٰبِرِينَ", "token_decision": false}
+{"conf": "high", "loc": "3:17:2", "nk": "والصادقين", "pos": "N", "provenance_clean": true, "root": "صدق", "segmentation": false, "surface": "وَٱلصَّٰدِقِينَ", "token_decision": true}
+{"conf": "high", "loc": "3:17:3", "nk": "والقانتين", "pos": "N", "provenance_clean": true, "root": "قنت", "segmentation": false, "surface": "وَٱلْقَٰنِتِينَ", "token_decision": true}
 {"conf": "high", "loc": "3:17:6", "nk": "بالأسحار", "pos": "N", "provenance_clean": true, "root": "سحر", "segmentation": false, "surface": "بِٱلْأَسْحَارِ", "token_decision": false}
 {"conf": "low", "loc": "3:19:1", "nk": "إن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "إِنَّ", "token_decision": false}
 {"conf": "high", "loc": "3:19:2", "nk": "الدين", "pos": "N", "provenance_clean": true, "root": "دين", "segmentation": false, "surface": "ٱلدِّينَ", "token_decision": false}
@@ -4974,28 +4999,3 @@
 {"conf": "low", "loc": "3:30:23", "nk": "نفسه", "pos": "N", "provenance_clean": true, "root": "نفس", "segmentation": false, "surface": "نَفْسَهُۥ", "token_decision": false}
 {"conf": "low", "loc": "3:30:24", "nk": "والله", "pos": "N", "provenance_clean": true, "root": "أله", "segmentation": false, "surface": "وَٱللَّهُ", "token_decision": false}
 {"conf": "med", "loc": "3:30:25", "nk": "رءوف", "pos": "N", "provenance_clean": true, "root": "رأف", "segmentation": false, "surface": "رَءُوفٌۢ", "token_decision": false}
-{"conf": "high", "loc": "3:30:26", "nk": "بالعباد", "pos": "N", "provenance_clean": true, "root": "عبد", "segmentation": false, "surface": "بِٱلْعِبَادِ", "token_decision": true}
-{"conf": "low", "loc": "3:31:1", "nk": "قل", "pos": "V", "provenance_clean": true, "root": "قول", "segmentation": false, "surface": "قُلْ", "token_decision": false}
-{"conf": "low", "loc": "3:31:2", "nk": "إن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "إِن", "token_decision": false}
-{"conf": "med", "loc": "3:31:3", "nk": "كنتم", "pos": "V", "provenance_clean": true, "root": "كون", "segmentation": false, "surface": "كُنتُمْ", "token_decision": false}
-{"conf": "low", "loc": "3:31:4", "nk": "تحبون", "pos": "V", "provenance_clean": true, "root": "حبب", "segmentation": false, "surface": "تُحِبُّونَ", "token_decision": false}
-{"conf": "med", "loc": "3:31:5", "nk": "الله", "pos": "N", "provenance_clean": true, "root": "أله", "segmentation": false, "surface": "ٱللَّهَ", "token_decision": false}
-{"conf": "low", "loc": "3:31:7", "nk": "يحببكم", "pos": "V", "provenance_clean": true, "root": "حبب", "segmentation": false, "surface": "يُحْبِبْكُمُ", "token_decision": false}
-{"conf": "med", "loc": "3:31:8", "nk": "الله", "pos": "N", "provenance_clean": true, "root": "أله", "segmentation": false, "surface": "ٱللَّهُ", "token_decision": false}
-{"conf": "low", "loc": "3:31:9", "nk": "ويغفر", "pos": "V", "provenance_clean": true, "root": "غفر", "segmentation": false, "surface": "وَيَغْفِرْ", "token_decision": false}
-{"conf": "low", "loc": "3:31:10", "nk": "لكم", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "لَكُمْ", "token_decision": false}
-{"conf": "med", "loc": "3:31:11", "nk": "ذنوبكم", "pos": "N", "provenance_clean": true, "root": "ذنب", "segmentation": false, "surface": "ذُنُوبَكُمْ", "token_decision": false}
-{"conf": "low", "loc": "3:31:12", "nk": "والله", "pos": "N", "provenance_clean": true, "root": "أله", "segmentation": false, "surface": "وَٱللَّهُ", "token_decision": false}
-{"conf": "low", "loc": "3:31:13", "nk": "غفور", "pos": "N", "provenance_clean": true, "root": "غفر", "segmentation": false, "surface": "غَفُورٌۭ", "token_decision": false}
-{"conf": "low", "loc": "3:31:14", "nk": "رحيم", "pos": "N", "provenance_clean": true, "root": "رحم", "segmentation": false, "surface": "رَّحِيمٌۭ", "token_decision": false}
-{"conf": "low", "loc": "3:32:1", "nk": "قل", "pos": "V", "provenance_clean": true, "root": "قول", "segmentation": false, "surface": "قُلْ", "token_decision": false}
-{"conf": "low", "loc": "3:32:2", "nk": "أطيعوا", "pos": "V", "provenance_clean": true, "root": "طوع", "segmentation": false, "surface": "أَطِيعُوا", "token_decision": false}
-{"conf": "med", "loc": "3:32:3", "nk": "الله", "pos": "N", "provenance_clean": true, "root": "أله", "segmentation": false, "surface": "اللَّهَ", "token_decision": false}
-{"conf": "high", "loc": "3:32:4", "nk": "والرسول", "pos": "N", "provenance_clean": true, "root": "رسل", "segmentation": false, "surface": "وَالرَّسُولَ", "token_decision": false}
-{"conf": "low", "loc": "3:33:1", "nk": "إن", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "إِنَّ", "token_decision": false}
-{"conf": "med", "loc": "3:33:2", "nk": "الله", "pos": "N", "provenance_clean": true, "root": "أله", "segmentation": false, "surface": "ٱللَّهَ", "token_decision": false}
-{"conf": "high", "loc": "3:33:3", "nk": "اصطفي", "pos": "V", "provenance_clean": true, "root": "صفو", "segmentation": false, "surface": "ٱصْطَفَىٰٓ", "token_decision": false}
-{"conf": "high", "loc": "3:33:4", "nk": "ءادم", "pos": "N", "provenance_clean": true, "root": "أدم", "segmentation": false, "surface": "ءَادَمَ", "token_decision": false}
-{"conf": "high", "loc": "3:33:5", "nk": "ونوحا", "pos": "P", "provenance_clean": true, "root": "", "segmentation": false, "surface": "وَنُوحًۭا", "token_decision": false}
-{"conf": "low", "loc": "3:33:6", "nk": "وءال", "pos": "N", "provenance_clean": true, "root": "أول", "segmentation": false, "surface": "وَءَالَ", "token_decision": false}
-{"conf": "med", "loc": "3:33:7", "nk": "إبراهيم", "pos": "N", "provenance_clean": true, "root": "", "segmentation": false, "surface": "إِبْرَٰهِيمَ", "token_decision": false}
