@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "source-entry-repair-candidate",
+  "description": "Review-only field-level repair for an existing entry (forms_array / quran_refs / source_photo). NEVER a blind add_form, NEVER a live mutation, NEVER carries an authored gloss.",
+  "type": "object",
+  "required": ["target_entry", "repair_type", "affected_locs", "field", "gate", "public_provenance_clean"],
+  "additionalProperties": true,
+  "properties": {
+    "target_entry": {"type": "string"},
+    "root": {"type": ["string", "null"]},
+    "headword": {"type": ["string", "null"]},
+    "repair_type": {"enum": ["forms_array", "quran_refs", "source_photo"]},
+    "affected_locs": {"type": "array", "items": {"type": "string"}},
+    "occurrences": {"type": "integer"},
+    "field": {"type": "string"},
+    "before": {"type": ["string", "null"]},
+    "after_proposed": {"type": "array"},
+    "after_proposed_refs": {"type": "array"},
+    "status": {"type": "string"},
+    "gate": {"enum": ["two_vote", "source", "owner"]},
+    "note": {"type": "string"},
+    "public_provenance_clean": {"const": true}
+  }
+}

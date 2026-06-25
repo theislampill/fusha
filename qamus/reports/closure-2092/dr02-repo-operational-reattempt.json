@@ -1,0 +1,13 @@
+{
+  "_commit": "a0f596b",
+  "batch_provenance_hard_gated": "7 batch gates + form_variant_family_batches provenance parity",
+  "bidir_validator": "PASS",
+  "canonical_path_validator": "PASS",
+  "claude_ai_pack": "verify_claude_ai_pack PASS (28 files, 140 KB, no banned/oversize)",
+  "corpus_fixture_validator": "validate_corpus_fixture PASS; Ṣaḥīḥayn plan-only",
+  "decision_backlinks_fail_closed": true,
+  "examples_en_policy": "qamus-authored per NOTICE.md; report-only boundary; no dataset rewrite",
+  "existing_qamus_index_json_as_current": false,
+  "proofing_matrix_dynamic": true,
+  "stale_paths": "0 (validate_canonical_paths, 321 files)"
+}

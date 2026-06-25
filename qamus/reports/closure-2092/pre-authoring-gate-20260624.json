@@ -1,0 +1,15 @@
+{
+  "_generator": "closure-2092 post-hygiene Phase 2 pre-authoring gate",
+  "date": "2026-06-24", "commit": "a0f596b+",
+  "gates": {"check_regressions": "PASS", "validate_current_qamus_dataset": "PASS",
+    "validate_qamus_completion_manifest": "PASS", "validate_entry_completion_rollup": "PASS",
+    "validate_surface_index_covers_usage_forms": "PASS", "validate_open_stem_lane_sanity": "PASS",
+    "validate_form_variant_family_batches(form_variant_batch_001,+provenance)": "PASS",
+    "validate_canonical_paths": "PASS", "validate_bidirectional_links": "PASS",
+    "verify_claude_ai_pack": "PASS"},
+  "deep_research_matrix": {"findings": 40, "confirmed_fixed": 31, "narrowed": 6, "false_positive": 2,
+    "confirmed_unfixed": 1, "high_severity_unfixed_blocking_authoring": 0},
+  "phase4_generators_built": ["build_verb_clitic_candidates.py (638 review-only)",
+    "build_new_entry_proposals.py (52 owner-gated)", "build_source_entry_repair_candidates.py (3 modes)"],
+  "verdict": "PROCEED — all high-severity DR findings are fixed/false-positive/narrowed/owner-gated; gates pass; GO authoring lanes are generator+validator-ready"
+}

@@ -1,0 +1,45 @@
+{
+  "_commit": "a0f596b",
+  "disposition": "fixtures frozen (form_variant_rejections.jsonl); reroutes done; new-entry families owner-gated review-only",
+  "function_word_bundles_out_of_stem": [
+    "وما",
+    "وإن",
+    "وأن",
+    "وأنا",
+    "فإنما",
+    "وله",
+    "فله",
+    "بكم",
+    "فهل"
+  ],
+  "structural_reroutes": {
+    "already_present_index_miss": 1050,
+    "ati_rai": "rerouted (residual 0)",
+    "zama": "verb-on-noun rejected fixture"
+  },
+  "true_missing_entry_families_owner_gated": [
+    "سوأ(40)",
+    "رضو(24)",
+    "ربب(16)",
+    "صلو(12)",
+    "زكو(12)",
+    "يدي(8)",
+    "سمو(7)"
+  ],
+  "unsafe_reject_fixtures": [
+    "فاستقيموا",
+    "نعف",
+    "جاءني",
+    "أرجه",
+    "بالبنين",
+    "كذبوا",
+    "ويقتلون/يقتلون",
+    "ظمأ",
+    "الملك",
+    "صالحا",
+    "يدعون",
+    "تولوا",
+    "ينظرون",
+    "يكفر"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "new-entry-proposal",
+  "description": "Owner-gated, review-only proposal for a Qamus entry whose QAC root has no entry. NEVER applied; NEVER a live id; the owner authors the definition.",
+  "type": "object",
+  "required": ["proposed_entry_id", "root", "headword_candidate", "example_locs", "gate", "public_provenance_clean"],
+  "additionalProperties": true,
+  "properties": {
+    "proposed_entry_id": {"type": "string", "pattern": "^PROPOSE:"},
+    "root": {"type": "string"},
+    "headword_candidate": {"type": "string"},
+    "pos": {"type": "string"},
+    "lemma_candidate": {"type": ["string", "null"]},
+    "forms_observed": {"type": "array", "items": {"type": "string"}},
+    "example_locs": {"type": "array", "items": {"type": "string"}},
+    "occurrences": {"type": "integer"},
+    "definition_draft": {"type": "string", "description": "blank — owner authors"},
+    "why_existing_insufficient": {"type": "string"},
+    "source_evidence_ids": {"type": "array"},
+    "gate": {"const": "owner"},
+    "public_provenance_clean": {"const": true}
+  }
+}

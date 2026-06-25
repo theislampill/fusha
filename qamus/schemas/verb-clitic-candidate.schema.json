@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "verb-clitic-candidate",
+  "description": "Review-only candidate for a verb + object/subject enclitic pronoun (NOT a possessed noun). No public gloss until a 2-vote certifies it.",
+  "type": "object",
+  "required": ["loc", "surface", "verb_stem", "qac_pos", "enclitic", "pronoun_person", "gate", "public_provenance_clean"],
+  "additionalProperties": true,
+  "properties": {
+    "loc": {"type": "string", "pattern": "^[0-9]+:[0-9]+:[0-9]+$"},
+    "surface": {"type": "string"},
+    "verb_stem": {"type": "string"},
+    "root": {"type": ["string", "null"]},
+    "lemma_candidate": {"type": ["string", "null"]},
+    "qac_pos": {"const": "V"},
+    "enclitic": {"type": "string"},
+    "pronoun_person": {"type": "string"},
+    "pronoun_gender": {"type": ["string", "null"]},
+    "pronoun_number": {"type": ["string", "null"]},
+    "clitic_role": {"enum": ["object", "subject", "unknown"]},
+    "gloss_draft": {"type": "string", "description": "blank until 2-vote certifies"},
+    "sarf_procedure": {"type": "string"},
+    "nahw_procedure": {"type": "string"},
+    "risk": {"enum": ["LOW", "MEDIUM", "HIGH"]},
+    "gate": {"const": "two_vote"},
+    "public_provenance_clean": {"const": true}
+  }
+}

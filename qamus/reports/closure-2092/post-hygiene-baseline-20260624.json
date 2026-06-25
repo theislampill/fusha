@@ -1,0 +1,37 @@
+{
+  "_generator": "post-hygiene closure tranche Phase 0; every prior claim re-verified, not trusted",
+  "date": "2026-06-24",
+  "git": {"head": "a0f596b", "origin_main": "a0f596b", "head_eq_origin": true, "dirty": 0, "a0f596b_is_current": true},
+  "gates_run_all_pass": ["check_artifact_ergonomics", "check_report_ergonomics", "validate_report_reconciliation",
+    "validate_canonical_paths", "validate_surface_index_covers_usage_forms", "validate_open_stem_lane_sanity",
+    "validate_blocker_root_cause_ledger", "validate_qamus_completion_manifest", "validate_entry_completion_rollup",
+    "validate_current_qamus_dataset", "validate_bidirectional_links", "run_grammar_evals", "check_regressions",
+    "verify_claude_ai_pack"],
+  "coverage": {
+    "repo_local": {"resolved": 42849, "pending": 7051, "total": 49900, "coverage_pct": 85.87},
+    "live_readonly": {"resolved": 42849, "pending": 7051, "coverage_pct": 85.87},
+    "reconcile": "repo-local staged artifact == live (read-only) exactly; coverage is BOTH repo-local AND live-verified",
+    "live_state_checked": true, "live_mutation_this_phase": false
+  },
+  "public_qamus_readonly": {"home_http": 200, "entries": 2092},
+  "entry_split": {"total": 2092, "verb": 947, "noun": 1045, "particle": 100},
+  "prior_claims_reverified": {
+    "surface_index_includes_usage_forms": {"by_norm_keys": 7125, "verdict": "TRUE"},
+    "host_lexeme_noun_only": {"qac_pos_V_in_host_lexeme": 0, "verdict": "TRUE"},
+    "verb_clitics_split_out": {"verb_clitic_lane": 822, "verdict": "TRUE"},
+    "ati_rai_rerouted": {"missing_entry_ati_rai_residual": 0, "verdict": "TRUE"},
+    "batch_provenance_validators_wired": {"verdict": "TRUE (form_variant_family_batches + 7 batch gates green)"},
+    "claude_ai_pack": {"verdict": "TRUE (verify_claude_ai_pack PASS)"},
+    "corpus_fixture_validator": {"verdict": "TRUE (validate_corpus_fixture PASS)"}
+  },
+  "root_cause_buckets": {"missing_form_variant_on_existing_entry": 3032, "already_entry_form_present_index_miss": 1050,
+    "verb_clitic_object_or_subject_candidate": 822, "function_word_not_form_work": 550,
+    "particle_or_pronoun_misclassified_as_stem": 388, "missing_qamus_entry_candidate": 326,
+    "host_lexeme_possessive_candidate": 255, "forms_array_missing_surface": 158, "genuinely_ambiguous_pending": 148,
+    "verb_form_or_voice": 148, "content_homograph": 82, "quran_refs_missing_or_incomplete": 72,
+    "truly_low_frequency_tail": 8, "source_entry_required_before_resolution": 6, "source_photo_visual_needed": 4,
+    "proper_vs_common": 1, "particle_function": 1},
+  "staging_influence": "out/ is gitignored; the staged artifact is the repo-local audit input only; no untracked file influences committed results",
+  "claim_provenance": "all current claims are REPO-VERIFIED and (for coverage/entry-count) LIVE-VERIFIED read-only; no live mutation this phase",
+  "verdict": "baseline reconciles; prior tranche claims all TRUE; proceed to deep-research reattempt proof"
+}

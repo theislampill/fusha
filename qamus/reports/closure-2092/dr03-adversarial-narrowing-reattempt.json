@@ -1,0 +1,21 @@
+{
+  "_commit": "a0f596b",
+  "false_positives": [
+    "repo still anchored at the old 82.49 figure as current (it is 85.87%)",
+    "check_regressions uses git ls-files (it uses filesystem checks)"
+  ],
+  "narrowed": [
+    "no-git fallback needed only in ergonomics + reconciliation validators (added)",
+    "examples[].en is qamus-authored, only leak-pattern-checkable (under-validated, not a defect)",
+    "learner production drills exist; only tutor routing/packaging was missing (added)",
+    "corpus readiness is read-only + bounded"
+  ],
+  "no_overbuild": "extended existing validators where possible; added only genuinely-missing ones",
+  "real": [
+    "stale canonical paths",
+    "missing claude.ai pack",
+    "missing corpus fixture validator",
+    "missing lane generators (verb-clitic/new-entry/source-entry)",
+    "candidate schema gaps"
+  ]
+}

@@ -383,6 +383,26 @@ for _vname, _args, _prov in _BATCH_GATES:
         except Exception:
             check("batch gate %s runnable" % _vname, False)
 
+# closure-2092 Phase 4: missing-lane generators are runnable + their validators pass (review-only, no apply)
+_stage = os.path.join(_R, "out", "hover_stage")
+os.makedirs(_stage, exist_ok=True)
+_LANE = [
+    ("build_verb_clitic_candidates.py", [], "validate_verb_clitic_candidates.py", os.path.join(_stage, "verb_clitic_cand.jsonl")),
+    ("build_new_entry_proposals.py", [], "validate_new_entry_proposals.py", os.path.join(_stage, "new_entry_proposals.jsonl")),
+    ("build_source_entry_repair_candidates.py", ["--mode", "forms_array"], "validate_source_entry_repair_candidates.py",
+     os.path.join(_stage, "source_entry_repair_forms_array.jsonl")),
+]
+for _gen, _ga, _val, _outp in _LANE:
+    _gp = os.path.join(_R, "tools", _gen)
+    if os.path.exists(_gp):
+        try:
+            _g = subprocess.run([sys.executable, _gp] + _ga, capture_output=True, text=True)
+            _v = subprocess.run([sys.executable, os.path.join(_R, "tools", _val), _outp], capture_output=True, text=True)
+            check("closure-2092 Phase4 lane %s" % _gen.replace("build_", "").replace(".py", ""),
+                  _g.returncode == 0 and _v.returncode == 0)
+        except Exception:
+            check("Phase4 lane %s runnable" % _gen, False)
+
 # closure-2092: corpus-to-Qamus read-only fixture (Nawawī40; live_write=false, no translation, Ṣaḥīḥayn plan-only)
 _corp = os.path.join(_R, "corpora", "nawawi40", "nawawi40.matn.jsonl")
 if os.path.exists(_corp):
