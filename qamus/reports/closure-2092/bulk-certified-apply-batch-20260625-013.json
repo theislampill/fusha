@@ -1,0 +1,17 @@
+{
+  "_generator": "inline combine certified follow-up rows",
+  "by_decision_state": {
+    "bulk_followup_sarf_recheck_certified": 108
+  },
+  "by_src": {
+    "qamus": 108
+  },
+  "certified_apply_batch": "qamus\\candidates\\qamus_2092\\bulk_certified_apply_batch_20260625_013.jsonl",
+  "public_invariant": "public rows are qamus-authored English only; no external labels or private paths",
+  "rows": 108,
+  "sha256": "08df586d6224e2f56ec829b746be965304db43122b5740c557dc7608a34fe38a",
+  "source_batches": [
+    "qamus\\candidates\\qamus_2092\\bulk_followup_sarf_recheck_batch_012.jsonl"
+  ],
+  "status": "certified_not_applied"
+}

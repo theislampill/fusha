@@ -1,0 +1,122 @@
+{
+  "_generator": "manual Phase 0 baseline after validated bulk table/batch generation",
+  "date": "2026-06-25",
+  "deterministic_batch": {
+    "_generator": "tools/build_bulk_deterministic_hover_decisions.py",
+    "batch": "qamus\\candidates\\qamus_2092\\bulk_deterministic_hover_batch_001.jsonl",
+    "provenance": "qamus\\candidates\\qamus_2092\\bulk_deterministic_hover_batch_001.provenance.jsonl",
+    "rows": 198,
+    "skipped": {
+      "not_deterministic": 6113
+    },
+    "source_table": "qamus\\reports\\closure-2092\\pending-source-triangulation-table.jsonl"
+  },
+  "gates_run": [
+    "python3 tools/check_regressions.py (PASS with UTF-8 I/O)",
+    "python3 tools/validate_current_qamus_dataset.py (PASS)",
+    "python3 tools/validate_qamus_completion_manifest.py (PASS)",
+    "python3 tools/validate_surface_index_covers_usage_forms.py (PASS)",
+    "python3 tools/validate_open_stem_lane_sanity.py (PASS)",
+    "python3 tools/validate_bidirectional_links.py (PASS)",
+    "python3 tools/run_grammar_evals.py (PASS)",
+    "python3 tools/validate_pending_source_triangulation_table.py ... (PASS)",
+    "python3 tools/validate_bulk_deterministic_hover_decisions.py ... (PASS)",
+    "python3 tools/validate_token_hover_decisions.py bulk_deterministic_hover_batch_001.jsonl (PASS)"
+  ],
+  "git": {
+    "dirty": [
+      "?? qamus/candidates/qamus_2092/bulk_deterministic_hover_batch_001.jsonl",
+      "?? qamus/candidates/qamus_2092/bulk_deterministic_hover_batch_001.provenance.jsonl",
+      "?? qamus/reports/closure-2092/bulk-deterministic-batch-001.json",
+      "?? qamus/reports/closure-2092/bulk-deterministic-batch-001.md",
+      "?? qamus/reports/closure-2092/pending-source-triangulation-summary.json",
+      "?? qamus/reports/closure-2092/pending-source-triangulation-summary.md",
+      "?? qamus/reports/closure-2092/pending-source-triangulation-table.jsonl",
+      "?? tools/build_bulk_deterministic_hover_decisions.py",
+      "?? tools/build_pending_source_triangulation_table.py",
+      "?? tools/test_bulk_deterministic_hover_decisions.py",
+      "?? tools/test_pending_source_triangulation_validator.py",
+      "?? tools/validate_bulk_deterministic_hover_decisions.py",
+      "?? tools/validate_pending_source_triangulation_table.py"
+    ],
+    "head": "9210155b1f17bcf94d02dec2109970b2c500a032",
+    "head_eq_origin": true,
+    "origin_eq_remote": true,
+    "origin_main": "9210155b1f17bcf94d02dec2109970b2c500a032",
+    "remote_main": "9210155b1f17bcf94d02dec2109970b2c500a032"
+  },
+  "live_apply_allowed_this_session": false,
+  "live_apply_boundary": "Fusha AGENTS.md forbids live-site mutation; this repo emits candidates/reports only. SSH was used read-only for live coverage comparison.",
+  "live_coverage_readonly": {
+    "artifact": "live wbw-lookup.json (path redacted for public repo boundary)",
+    "matches_repo_local": true,
+    "pct": 87.35,
+    "resolved": 43589,
+    "total_tokens": 49900,
+    "verified": true
+  },
+  "pending_blockers": {
+    "same_surface_polysemy_requires_i3rab": {
+      "content_homograph": 82,
+      "genuinely_ambiguous_pending": 148,
+      "particle_function": 1,
+      "proper_vs_common": 1,
+      "verb_form_or_voice": 148
+    },
+    "source_entry_unverified": {
+      "already_entry_form_present_index_miss": 1000,
+      "forms_array_missing_surface": 151,
+      "function_word_not_form_work": 550,
+      "quran_refs_missing_or_incomplete": 70,
+      "source_photo_visual_needed": 4
+    },
+    "stem_base_unknown": {
+      "already_entry_form_present_index_miss": 35,
+      "host_lexeme_possessive_candidate": 193,
+      "missing_form_variant_on_existing_entry": 2378,
+      "missing_qamus_entry_candidate": 326,
+      "particle_or_pronoun_misclassified_as_stem": 388,
+      "source_entry_required_before_resolution": 6,
+      "truly_low_frequency_tail": 8,
+      "verb_clitic_object_or_subject_candidate": 822
+    }
+  },
+  "repo_local_coverage": {
+    "pct": 87.35,
+    "pending_manifest": 6311,
+    "pending_marked_in_wbw": 4524,
+    "resolved": 43589,
+    "total_tokens": 49900
+  },
+  "target_delta_to_90": {
+    "additional_needed_from_current": 1321,
+    "bulk_deterministic_certified": 198,
+    "remaining_after_certified_if_owner_applied": 1123,
+    "target_resolved": 44910
+  },
+  "triangulation": {
+    "_generator": "build_pending_source_triangulation_table",
+    "by_gate": {
+      "auto_rule": 198,
+      "owner": 326,
+      "scholar": 149,
+      "source": 80,
+      "two_vote": 5558
+    },
+    "by_lane": {
+      "auto_resolve_deterministic": 198,
+      "form_variant": 3366,
+      "host_lexeme": 193,
+      "new_entry_proposal": 326,
+      "reject_unsafe": 1,
+      "scholar_review": 148,
+      "source_entry_repair": 76,
+      "source_photo": 4,
+      "token_irab": 1177,
+      "verb_clitic": 822
+    },
+    "deterministic": 198,
+    "public_payload_allowed": 5756,
+    "total_pending": 6311
+  }
+}

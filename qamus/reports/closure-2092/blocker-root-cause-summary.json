@@ -2,256 +2,34 @@
   "_generator": "tools/build_blocker_root_cause_ledger.py",
   "by_coarse_blocker": {
     "same_surface_polysemy_requires_i3rab": {
-      "content_homograph": 82,
-      "genuinely_ambiguous_pending": 148,
-      "particle_function": 1,
+      "genuinely_ambiguous_pending": 196,
       "proper_vs_common": 1,
-      "verb_form_or_voice": 148
+      "verb_form_or_voice": 1
     },
     "source_entry_unverified": {
-      "already_entry_form_present_index_miss": 1000,
-      "forms_array_missing_surface": 151,
-      "function_word_not_form_work": 550,
-      "quran_refs_missing_or_incomplete": 70,
+      "already_entry_form_present_index_miss": 7,
+      "forms_array_missing_surface": 1,
+      "function_word_not_form_work": 11,
+      "quran_refs_missing_or_incomplete": 65,
       "source_photo_visual_needed": 4
     },
     "stem_base_unknown": {
-      "already_entry_form_present_index_miss": 35,
-      "host_lexeme_possessive_candidate": 193,
-      "missing_form_variant_on_existing_entry": 2378,
-      "missing_qamus_entry_candidate": 326,
-      "particle_or_pronoun_misclassified_as_stem": 388,
+      "already_entry_form_present_index_miss": 1,
+      "host_lexeme_possessive_candidate": 16,
+      "missing_form_variant_on_existing_entry": 25,
+      "missing_qamus_entry_candidate": 274,
+      "particle_or_pronoun_misclassified_as_stem": 14,
       "source_entry_required_before_resolution": 6,
-      "truly_low_frequency_tail": 8,
-      "verb_clitic_object_or_subject_candidate": 822
+      "truly_low_frequency_tail": 9,
+      "verb_clitic_object_or_subject_candidate": 14
     }
   },
-  "family_unlock_count": 782,
+  "family_unlock_count": 189,
   "family_unlock_top50": [
-    {
-      "family": "33787ee8c0c1",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 50
-    },
-    {
-      "family": "3f3f15cb27c2",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 47
-    },
-    {
-      "family": "65c6db0170cd",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 44
-    },
-    {
-      "family": "سوأ",
-      "root_cause": "missing_qamus_entry_candidate",
-      "tokens": 40
-    },
-    {
-      "family": "83e64ea698d5",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 36
-    },
-    {
-      "family": "5c7461bd7014",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 32
-    },
-    {
-      "family": "ecfc082ac2c5",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 32
-    },
-    {
-      "family": "8f8d49c8fd17",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 31
-    },
-    {
-      "family": "213945255c3b",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 29
-    },
-    {
-      "family": "430015446b77",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 28
-    },
-    {
-      "family": "3041d6f44a27",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 27
-    },
-    {
-      "family": "03b5507d70a2",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 26
-    },
-    {
-      "family": "1fd424ee1e74",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 26
-    },
-    {
-      "family": "ca43414f9b01",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 25
-    },
-    {
-      "family": "7172a5394a7b",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 24
-    },
     {
       "family": "رضو",
       "root_cause": "missing_qamus_entry_candidate",
       "tokens": 24
-    },
-    {
-      "family": "5d89e690256d",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 23
-    },
-    {
-      "family": "b4144b892cc7",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 23
-    },
-    {
-      "family": "fc62d7c0ebbf",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 23
-    },
-    {
-      "family": "c8190204f5ad",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 23
-    },
-    {
-      "family": "543da5bcc248",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 22
-    },
-    {
-      "family": "fbd04177b8dd",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 22
-    },
-    {
-      "family": "a6de8fd64244",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 22
-    },
-    {
-      "family": "f926e5fd94bb",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 21
-    },
-    {
-      "family": "7e246b9a02ea",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 21
-    },
-    {
-      "family": "4d22dd9db001",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 20
-    },
-    {
-      "family": "89f4baadb89a",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 19
-    },
-    {
-      "family": "d099cdaad3b9",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 18
-    },
-    {
-      "family": "9e4222baccd2",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 18
-    },
-    {
-      "family": "088ebd5e2393",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 18
-    },
-    {
-      "family": "141cbc3bd2bd",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 18
-    },
-    {
-      "family": "da61fd38733f",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 18
-    },
-    {
-      "family": "6197ee2c0b2a",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 18
-    },
-    {
-      "family": "16dc0a87056e",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 18
-    },
-    {
-      "family": "2e2fa868686a",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 18
-    },
-    {
-      "family": "afca6b7fb675",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 18
-    },
-    {
-      "family": "191e9b80dfcd",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 18
-    },
-    {
-      "family": "1015809f59b7",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 18
-    },
-    {
-      "family": "51e9879b93ab",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 18
-    },
-    {
-      "family": "2189b86e056e",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 18
-    },
-    {
-      "family": "622a3d627d4d",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 17
-    },
-    {
-      "family": "c59a0161fac8",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 17
-    },
-    {
-      "family": "4f666d15bb7e",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 17
-    },
-    {
-      "family": "f92aeb1d59ae",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 17
-    },
-    {
-      "family": "f3726bc9f962",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 16
     },
     {
       "family": "d5ac66156b8e",
@@ -259,31 +37,249 @@
       "tokens": 16
     },
     {
-      "family": "4cb26045b5b7",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 16
+      "family": "d3559a102a61",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 12
     },
     {
-      "family": "dcf75e7f4b79",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 16
+      "family": "زكو",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 12
     },
     {
-      "family": "60fa5302aa68",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 15
+      "family": "dc571b74a440",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 9
     },
     {
-      "family": "d6a4f976cb61",
+      "family": "صلو",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 9
+    },
+    {
+      "family": "صوب",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 7
+    },
+    {
+      "family": "صدد",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 7
+    },
+    {
+      "family": "سمو",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 6
+    },
+    {
+      "family": "أثم",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 6
+    },
+    {
+      "family": "dbeb6ed80467",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 6
+    },
+    {
+      "family": "بلو",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 6
+    },
+    {
+      "family": "7527209dda9e",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 5
+    },
+    {
+      "family": "عنب",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 5
+    },
+    {
+      "family": "c59a0161fac8",
+      "root_cause": "quran_refs_missing_or_incomplete",
+      "tokens": 5
+    },
+    {
+      "family": "68e173783487",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 4
+    },
+    {
+      "family": "غشو",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 4
+    },
+    {
+      "family": "ودي",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 4
+    },
+    {
+      "family": "543da5bcc248",
       "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 15
+      "tokens": 3
+    },
+    {
+      "family": "a5cc58fc5d1a",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "أنث",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "7da67c497651",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "ربب",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "مرأ",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "نسو",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "ثلث",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "أخو",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "فأد",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "33787ee8c0c1",
+      "root_cause": "quran_refs_missing_or_incomplete",
+      "tokens": 3
+    },
+    {
+      "family": "c8190204f5ad",
+      "root_cause": "host_lexeme_possessive_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "430015446b77",
+      "root_cause": "quran_refs_missing_or_incomplete",
+      "tokens": 3
+    },
+    {
+      "family": "أنس",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "cb83b6decfbd",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "07e0a48c33cc",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "70ac567b851c",
+      "root_cause": "quran_refs_missing_or_incomplete",
+      "tokens": 3
+    },
+    {
+      "family": "03164a6bcd54",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "7ea8ac525aed",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 3
+    },
+    {
+      "family": "صبأ",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 2
+    },
+    {
+      "family": "385725d86a5b",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 2
+    },
+    {
+      "family": "a61ac6fb2c32",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 2
+    },
+    {
+      "family": "47d747ff370a",
+      "root_cause": "host_lexeme_possessive_candidate",
+      "tokens": 2
+    },
+    {
+      "family": "a3f74bb07d64",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 2
+    },
+    {
+      "family": "0c7902a19553",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 2
+    },
+    {
+      "family": "رأس",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 2
+    },
+    {
+      "family": "89f4baadb89a",
+      "root_cause": "quran_refs_missing_or_incomplete",
+      "tokens": 2
+    },
+    {
+      "family": "fd8fa2a00779",
+      "root_cause": "quran_refs_missing_or_incomplete",
+      "tokens": 2
+    },
+    {
+      "family": "1e3c24024f77",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 2
+    },
+    {
+      "family": "6f8b5d590d0a",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 2
+    },
+    {
+      "family": "أنف",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 2
+    },
+    {
+      "family": "259c0facbc90",
+      "root_cause": "missing_qamus_entry_candidate",
+      "tokens": 2
     }
   ],
-  "family_unlock_total_tokens": 3122,
+  "family_unlock_total_tokens": 385,
   "form_variant_safe_tier": {
-    "A_safe": 5,
-    "B_sense_select": 1035,
-    "C_pos_or_collision": 1489
+    "C_pos_or_collision": 26
   },
-  "total_pending": 6311
+  "total_pending": 645
 }

@@ -1,0 +1,77 @@
+{
+  "_generator": "inline function-token repair from current pending table plus prior nahw approvals",
+  "apply_batch": "qamus\\candidates\\qamus_2092\\bulk_certified_apply_batch_20260625_015.jsonl",
+  "by_gloss": {
+    "about what": 1,
+    "about who": 4,
+    "and for him": 13,
+    "and for me": 2,
+    "and how": 1,
+    "and if": 5,
+    "and in it": 1,
+    "and it is": 2,
+    "and none": 1,
+    "and not": 86,
+    "and one possessing": 3,
+    "and that which": 1,
+    "and to You": 3,
+    "and what": 23,
+    "and whatever": 10,
+    "because of what": 1,
+    "by what": 1,
+    "for Pharaoh": 1,
+    "for Solomon": 1,
+    "for indeed you": 1,
+    "for what": 13,
+    "for whoever": 8,
+    "in what": 3,
+    "like one who": 6,
+    "not to": 9,
+    "so none": 1,
+    "so not": 4,
+    "so they": 17,
+    "so upon": 1,
+    "surely": 7,
+    "surely among": 16,
+    "surely whoever": 3,
+    "then for him": 5,
+    "then if": 3,
+    "then not": 1,
+    "then one possessing": 1,
+    "then upon him": 2,
+    "then upon me": 1,
+    "to Gabriel": 1,
+    "with you": 1
+  },
+  "by_root_cause": {
+    "function_word_not_form_work": 253,
+    "particle_or_pronoun_misclassified_as_stem": 11
+  },
+  "excluded": [
+    {
+      "gloss": "brought you",
+      "loc": "12:100:27",
+      "reason": "governing_verb_semantics_not_token_gloss",
+      "surface": "بِكُم"
+    },
+    {
+      "gloss": "you are surrounded",
+      "loc": "12:66:15",
+      "reason": "governing_verb_semantics_not_token_gloss",
+      "surface": "بِكُمْ"
+    },
+    {
+      "gloss": "bring you",
+      "loc": "2:148:11",
+      "reason": "governing_verb_semantics_not_token_gloss",
+      "surface": "بِكُمُ"
+    }
+  ],
+  "excluded_rows": 3,
+  "provenance": "qamus\\candidates\\qamus_2092\\bulk_function_token_repair_batch_015.provenance.jsonl",
+  "public_invariant": "public rows are qamus-authored English only; no external labels or private paths",
+  "repair_batch": "qamus\\candidates\\qamus_2092\\bulk_function_token_repair_batch_015.jsonl",
+  "rows": 264,
+  "sha256": "161ebb4e6a042a59041aea73ee487bf4f05f72d49e633e64d204385edb77c3ea",
+  "status": "certified_not_applied"
+}

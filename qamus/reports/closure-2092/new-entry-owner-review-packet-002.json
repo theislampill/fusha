@@ -1,0 +1,1632 @@
+{
+  "_generator": "tools/build_new_entry_owner_review_packet.py",
+  "coverage_unlock": 278,
+  "proposal_count": 52,
+  "proposals": [
+    {
+      "affected_token_count": 40,
+      "definition_draft": "",
+      "example_locs": [
+        "10:27:5",
+        "11:54:7",
+        "12:24:14",
+        "12:53:7",
+        "13:22:15",
+        "13:6:2"
+      ],
+      "expected_coverage_unlock": 40,
+      "forms_observed": [
+        "أَسَٰٓـُٔوا۟",
+        "بِسُوءٍ",
+        "بِسُوٓءٍۢ",
+        "بِٱلسَّيِّئَةِ",
+        "بِٱلسُّوٓءِ",
+        "سَيِّئًا"
+      ],
+      "gate": "owner",
+      "headword_candidate": "أَسَٰٓـُٔوا۟",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 40,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:سوا",
+      "public_provenance_clean": true,
+      "root": "سوأ",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 24,
+      "definition_draft": "",
+      "example_locs": [
+        "19:55:9",
+        "19:6:8",
+        "20:130:20",
+        "24:55:20",
+        "2:120:2",
+        "2:207:7"
+      ],
+      "expected_coverage_unlock": 24,
+      "forms_observed": [
+        "أَرَضِيتُم",
+        "تَرَٰضَوْا۟",
+        "تَرَٰضَيْتُم",
+        "تَرْضَوْا۟",
+        "تَرْضَوْنَ",
+        "تَرْضَوْنَهَآ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "أَرَضِيتُم",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 24,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:رضو",
+      "public_provenance_clean": true,
+      "root": "رضو",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 16,
+      "definition_draft": "",
+      "example_locs": [
+        "100:6:3",
+        "108:2:2",
+        "10:53:6",
+        "12:39:3",
+        "18:42:18",
+        "25:30:3"
+      ],
+      "expected_coverage_unlock": 16,
+      "forms_observed": [
+        "ءَأَرْبَابٌۭ",
+        "بِرَبِّكُمْ",
+        "بِرَبِّهِۦ",
+        "بِرَبِّى",
+        "بِرَبِّىٓ",
+        "رَبَّٰنِيِّۦنَ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "ءَأَرْبَابٌۭ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 16,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:ربب",
+      "public_provenance_clean": true,
+      "root": "ربب",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 12,
+      "definition_draft": "",
+      "example_locs": [
+        "18:81:7",
+        "19:13:4",
+        "19:19:9",
+        "19:31:8",
+        "19:55:5",
+        "23:4:3"
+      ],
+      "expected_coverage_unlock": 12,
+      "forms_observed": [
+        "تَزَكَّىٰ",
+        "تُزَكُّوٓا۟",
+        "زَكَوٰةًۭ",
+        "زَكَوٰةٍۢ",
+        "زَكِيًّۭا",
+        "لِلزَّكَوٰةِ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "تَزَكَّىٰ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 12,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:زكو",
+      "public_provenance_clean": true,
+      "root": "زكو",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 12,
+      "definition_draft": "",
+      "example_locs": [
+        "14:40:4",
+        "24:58:17",
+        "24:58:26",
+        "2:238:3",
+        "33:56:10",
+        "4:102:22"
+      ],
+      "expected_coverage_unlock": 12,
+      "forms_observed": [
+        "الصَّلَاةِ",
+        "صَلَاتِى",
+        "صَلَوٰةِ",
+        "صَلَوٰتَكَ",
+        "صَلُّوا۟",
+        "فَلْيُصَلُّوا۟"
+      ],
+      "gate": "owner",
+      "headword_candidate": "الصَّلَاةِ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 12,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:صلو",
+      "public_provenance_clean": true,
+      "root": "صلو",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 8,
+      "definition_draft": "",
+      "example_locs": [
+        "23:88:3",
+        "2:237:20",
+        "2:249:24",
+        "38:44:2",
+        "38:75:9",
+        "3:26:19"
+      ],
+      "expected_coverage_unlock": 8,
+      "forms_observed": [
+        "بِأَيْدِى",
+        "بِيَدَىَّ",
+        "بِيَدِكَ",
+        "بِيَدِهِۦ",
+        "وَأَيْدِى"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِأَيْدِى",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 8,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:يدي",
+      "public_provenance_clean": true,
+      "root": "يدي",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 7,
+      "definition_draft": "",
+      "example_locs": [
+        "25:73:4",
+        "36:33:1",
+        "36:37:1",
+        "55:13:1",
+        "5:114:17",
+        "5:44:30"
+      ],
+      "expected_coverage_unlock": 7,
+      "forms_observed": [
+        "بِـَٔايَٰتِى",
+        "صُمًّا",
+        "فَبِأَىِّ",
+        "وَءَايَةًۭ",
+        "وَءَايَةٌۭ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِـَٔايَٰتِى",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 7,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:ايي",
+      "public_provenance_clean": true,
+      "root": "أيي",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 7,
+      "definition_draft": "",
+      "example_locs": [
+        "23:30:7",
+        "27:40:24",
+        "3:154:63",
+        "3:186:1",
+        "47:4:28",
+        "86:9:2"
+      ],
+      "expected_coverage_unlock": 7,
+      "forms_observed": [
+        "تُبْلَى",
+        "لَتُبْلَوُنَّ",
+        "لَمُبْتَلِينَ",
+        "لِيَبْلُوَنِىٓ",
+        "لِّيَبْلُوَا۟",
+        "وَلِيَبْتَلِىَ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "تُبْلَى",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 7,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:بلو",
+      "public_provenance_clean": true,
+      "root": "بلو",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 7,
+      "definition_draft": "",
+      "example_locs": [
+        "11:44:5",
+        "19:7:12",
+        "2:31:11",
+        "53:27:6",
+        "53:27:8",
+        "76:18:3"
+      ],
+      "expected_coverage_unlock": 7,
+      "forms_observed": [
+        "بِأَسْمَآءِ",
+        "بِٱسْمِ",
+        "تَسْمِيَةَ",
+        "تُسَمَّىٰ",
+        "سَمِيًّۭا",
+        "لَيُسَمُّونَ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِأَسْمَآءِ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 7,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:سمو",
+      "public_provenance_clean": true,
+      "root": "سمو",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 7,
+      "definition_draft": "",
+      "example_locs": [
+        "13:33:30",
+        "16:94:13",
+        "4:167:4",
+        "4:61:15",
+        "58:16:4",
+        "7:86:6"
+      ],
+      "expected_coverage_unlock": 7,
+      "forms_observed": [
+        "صَدَدتُّمْ",
+        "صُدُودًۭا",
+        "فَصَدُّوا۟",
+        "وَتَصُدُّونَ",
+        "وَصَدُّوا۟",
+        "وَصُدُّوا۟"
+      ],
+      "gate": "owner",
+      "headword_candidate": "صَدَدتُّمْ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 7,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:صدد",
+      "public_provenance_clean": true,
+      "root": "صدد",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 7,
+      "definition_draft": "",
+      "example_locs": [
+        "10:107:16",
+        "24:43:26",
+        "2:266:24",
+        "3:165:5",
+        "49:6:10",
+        "6:124:1"
+      ],
+      "expected_coverage_unlock": 7,
+      "forms_observed": [
+        "أَصَبْتُم",
+        "تُصِيبُوا۟",
+        "سَيُصِيبُ",
+        "فَأَصَابَهَآ",
+        "فَيُصِيبُ",
+        "يُصِيبُ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "أَصَبْتُم",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 7,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:صوب",
+      "public_provenance_clean": true,
+      "root": "صوب",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 7,
+      "definition_draft": "",
+      "example_locs": [
+        "21:72:6",
+        "2:87:17",
+        "4:12:61",
+        "4:95:23",
+        "57:10:30",
+        "67:1:7"
+      ],
+      "expected_coverage_unlock": 7,
+      "forms_observed": [
+        "أَفَكُلَّمَا",
+        "بِيَدِهِ",
+        "فَلِكُلِّ",
+        "وَكُلًّۭا"
+      ],
+      "gate": "owner",
+      "headword_candidate": "أَفَكُلَّمَا",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 7,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:كلل",
+      "public_provenance_clean": true,
+      "root": "كلل",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 6,
+      "definition_draft": "",
+      "example_locs": [
+        "2:276:11",
+        "45:7:4",
+        "4:107:14",
+        "5:106:51",
+        "5:29:5",
+        "68:12:4"
+      ],
+      "expected_coverage_unlock": 6,
+      "forms_observed": [
+        "أَثِيمًۭا",
+        "أَثِيمٍ",
+        "أَثِيمٍۢ",
+        "بِإِثْمِى",
+        "ٱلْءَاثِمِينَ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "أَثِيمًۭا",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 6,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:اثم",
+      "public_provenance_clean": true,
+      "root": "أثم",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 6,
+      "definition_draft": "",
+      "example_locs": [
+        "25:58:11",
+        "3:135:11",
+        "40:11:8",
+        "5:18:11",
+        "67:11:2",
+        "91:14:6"
+      ],
+      "expected_coverage_unlock": 6,
+      "forms_observed": [
+        "بِذَنۢبِهِمْ",
+        "بِذُنُوبِ",
+        "بِذُنُوبِكُم",
+        "بِذُنُوبِنَا",
+        "لِذُنُوبِهِمْ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِذَنۢبِهِمْ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 6,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:ذنب",
+      "public_provenance_clean": true,
+      "root": "ذنب",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 5,
+      "definition_draft": "",
+      "example_locs": [
+        "12:19:1",
+        "24:11:3",
+        "25:4:14",
+        "50:19:1",
+        "50:21:1"
+      ],
+      "expected_coverage_unlock": 5,
+      "forms_observed": [
+        "جَآءُو",
+        "وَجَآءَتْ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "جَآءُو",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 5,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:جيا",
+      "public_provenance_clean": true,
+      "root": "جيأ",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 5,
+      "definition_draft": "",
+      "example_locs": [
+        "32:9:6",
+        "55:12:4",
+        "56:89:1",
+        "70:4:3",
+        "8:46:8"
+      ],
+      "expected_coverage_unlock": 5,
+      "forms_observed": [
+        "رِيحُكُمْ",
+        "رُّوحِهِۦ",
+        "فَرَوْحٌۭ",
+        "وَٱلرَّيْحَانُ",
+        "وَٱلرُّوحُ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "رِيحُكُمْ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 5,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:روح",
+      "public_provenance_clean": true,
+      "root": "روح",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 5,
+      "definition_draft": "",
+      "example_locs": [
+        "17:77:10",
+        "35:43:19",
+        "35:43:24",
+        "5:45:13",
+        "5:45:14"
+      ],
+      "expected_coverage_unlock": 5,
+      "forms_observed": [
+        "بِٱلسِّنِّ",
+        "لِسُنَّتِ",
+        "لِسُنَّتِنَا",
+        "وَٱلسِّنَّ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِٱلسِّنِّ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 5,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:سنن",
+      "public_provenance_clean": true,
+      "root": "سنن",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 5,
+      "definition_draft": "",
+      "example_locs": [
+        "16:11:7",
+        "16:67:4",
+        "2:266:9",
+        "78:32:2",
+        "80:28:1"
+      ],
+      "expected_coverage_unlock": 5,
+      "forms_observed": [
+        "وَأَعْنَابٍۢ",
+        "وَأَعْنَٰبًۭا",
+        "وَعِنَبًۭا",
+        "وَٱلْأَعْنَٰبَ",
+        "وَٱلْأَعْنَٰبِ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "وَأَعْنَابٍۢ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 5,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:عنب",
+      "public_provenance_clean": true,
+      "root": "عنب",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 5,
+      "definition_draft": "",
+      "example_locs": [
+        "10:27:16",
+        "14:50:4",
+        "47:20:22",
+        "53:54:3",
+        "71:7:10"
+      ],
+      "expected_coverage_unlock": 5,
+      "forms_observed": [
+        "أُغْشِيَتْ",
+        "غَشَّىٰ",
+        "وَتَغْشَىٰ",
+        "وَٱسْتَغْشَوْا۟",
+        "ٱلْمَغْشِىِّ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "أُغْشِيَتْ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 5,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:غشو",
+      "public_provenance_clean": true,
+      "root": "غشو",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 4,
+      "definition_draft": "",
+      "example_locs": [
+        "33:1:10",
+        "65:12:1",
+        "7:127:13",
+        "8:1:14"
+      ],
+      "expected_coverage_unlock": 4,
+      "forms_observed": [
+        "تُطِعِ",
+        "لِتَعْلَمُوا",
+        "وَءَالِهَتَكَ",
+        "وَأَصْلِحُوا۟"
+      ],
+      "gate": "owner",
+      "headword_candidate": "تُطِعِ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 4,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:اله",
+      "public_provenance_clean": true,
+      "root": "أله",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 4,
+      "definition_draft": "",
+      "example_locs": [
+        "114:6:3",
+        "17:13:2",
+        "2:161:12",
+        "33:53:25"
+      ],
+      "expected_coverage_unlock": 4,
+      "forms_observed": [
+        "إِنسَٰنٍ",
+        "مُسْتَـْٔنِسِينَ",
+        "وَٱلنَّاسِ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "إِنسَٰنٍ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 4,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:انس",
+      "public_provenance_clean": true,
+      "root": "أنس",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 4,
+      "definition_draft": "",
+      "example_locs": [
+        "12:43:11",
+        "15:87:1",
+        "15:87:3",
+        "69:32:5"
+      ],
+      "expected_coverage_unlock": 4,
+      "forms_observed": [
+        "الْمَثَانِي",
+        "سَبْعًا",
+        "سَبْعُونَ",
+        "وَسَبْعَ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "الْمَثَانِي",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 4,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:سبع",
+      "public_provenance_clean": true,
+      "root": "سبع",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 4,
+      "definition_draft": "",
+      "example_locs": [
+        "13:16:28",
+        "2:17:12",
+        "31:20:30",
+        "39:69:3"
+      ],
+      "expected_coverage_unlock": 4,
+      "forms_observed": [
+        "بِنُورِ",
+        "بِنُورِهِمْ",
+        "مُّنِيرٍۢ",
+        "وَٱلنُّورُ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِنُورِ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 4,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:نور",
+      "public_provenance_clean": true,
+      "root": "نور",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 4,
+      "definition_draft": "",
+      "example_locs": [
+        "14:37:6",
+        "26:225:6",
+        "27:18:5",
+        "28:30:4"
+      ],
+      "expected_coverage_unlock": 4,
+      "forms_observed": [
+        "الْوَادِ",
+        "بِوَادٍ",
+        "وَادٍ",
+        "وَادِ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "الْوَادِ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 4,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:ودي",
+      "public_provenance_clean": true,
+      "root": "ودي",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 3,
+      "definition_draft": "",
+      "example_locs": [
+        "12:100:37",
+        "19:28:1",
+        "5:25:8"
+      ],
+      "expected_coverage_unlock": 3,
+      "forms_observed": [
+        "إِخْوَتِىٓ",
+        "وَأَخِى",
+        "يَٰٓأُخْتَ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "إِخْوَتِىٓ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 3,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:اخو",
+      "public_provenance_clean": true,
+      "root": "أخو",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 3,
+      "definition_draft": "",
+      "example_locs": [
+        "16:58:4",
+        "2:178:14",
+        "3:36:14"
+      ],
+      "expected_coverage_unlock": 3,
+      "forms_observed": [
+        "بِٱلْأُنثَىٰ",
+        "كَٱلْأُنثَىٰ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِٱلْأُنثَىٰ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 3,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:انث",
+      "public_provenance_clean": true,
+      "root": "أنث",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 3,
+      "definition_draft": "",
+      "example_locs": [
+        "17:5:4",
+        "59:2:11",
+        "7:39:2"
+      ],
+      "expected_coverage_unlock": 3,
+      "forms_observed": [
+        "أُولَىٰهُمَا",
+        "أُولَىٰهُمْ",
+        "لِأَوَّلِ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "أُولَىٰهُمَا",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 3,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:اول",
+      "public_provenance_clean": true,
+      "root": "أول",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 3,
+      "definition_draft": "",
+      "example_locs": [
+        "4:11:15",
+        "53:20:2",
+        "7:142:3"
+      ],
+      "expected_coverage_unlock": 3,
+      "forms_observed": [
+        "ثَلَٰثِينَ",
+        "ثُلُثَا",
+        "ٱلثَّالِثَةَ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "ثَلَٰثِينَ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 3,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:ثلث",
+      "public_provenance_clean": true,
+      "root": "ثلث",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 3,
+      "definition_draft": "",
+      "example_locs": [
+        "27:37:2",
+        "2:249:4",
+        "9:40:29"
+      ],
+      "expected_coverage_unlock": 3,
+      "forms_observed": [
+        "بِجُنُودٍ",
+        "بِجُنُودٍۢ",
+        "بِٱلْجُنُودِ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِجُنُودٍ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 3,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:جند",
+      "public_provenance_clean": true,
+      "root": "جند",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 3,
+      "definition_draft": "",
+      "example_locs": [
+        "79:29:4",
+        "79:46:9",
+        "93:1:5"
+      ],
+      "expected_coverage_unlock": 3,
+      "forms_observed": [
+        "ضُحَىٰهَا",
+        "وَٱلضُّحَىٰ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "ضُحَىٰهَا",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 3,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:ضحو",
+      "public_provenance_clean": true,
+      "root": "ضحو",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 3,
+      "definition_draft": "",
+      "example_locs": [
+        "14:37:17",
+        "17:36:11",
+        "6:113:3"
+      ],
+      "expected_coverage_unlock": 3,
+      "forms_observed": [
+        "أَفْـِٔدَةًۭ",
+        "أَفْـِٔدَةُ",
+        "وَٱلْفُؤَادَ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "أَفْـِٔدَةًۭ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 3,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:فاد",
+      "public_provenance_clean": true,
+      "root": "فأد",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 3,
+      "definition_draft": "",
+      "example_locs": [
+        "33:50:28",
+        "4:4:14",
+        "66:10:8"
+      ],
+      "expected_coverage_unlock": 3,
+      "forms_observed": [
+        "مَّرِيٓـًۭٔا",
+        "وَٱمْرَأَةًۭ",
+        "وَٱمْرَأَتَ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "مَّرِيٓـًۭٔا",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 3,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:مرا",
+      "public_provenance_clean": true,
+      "root": "مرأ",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 3,
+      "definition_draft": "",
+      "example_locs": [
+        "33:30:1",
+        "33:32:1",
+        "4:7:7"
+      ],
+      "expected_coverage_unlock": 3,
+      "forms_observed": [
+        "وَلِلنِّسَآءِ",
+        "يَٰنِسَآءَ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "وَلِلنِّسَآءِ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 3,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:نسو",
+      "public_provenance_clean": true,
+      "root": "نسو",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 3,
+      "definition_draft": "",
+      "example_locs": [
+        "17:71:9",
+        "39:67:13",
+        "69:19:5"
+      ],
+      "expected_coverage_unlock": 3,
+      "forms_observed": [
+        "بِيَمِينِهِۦ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِيَمِينِهِۦ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 3,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:يمن",
+      "public_provenance_clean": true,
+      "root": "يمن",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 3,
+      "definition_draft": "",
+      "example_locs": [
+        "34:18:16",
+        "78:18:1",
+        "9:29:7"
+      ],
+      "expected_coverage_unlock": 3,
+      "forms_observed": [
+        "بِٱلْيَوْمِ",
+        "فَتَأْتُونَ",
+        "وَأَيَّامًا"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِٱلْيَوْمِ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 3,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:يوم",
+      "public_provenance_clean": true,
+      "root": "يوم",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "33:32:4",
+        "38:35:10"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "كَأَحَدٍۢ",
+        "لِأَحَدٍۢ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "كَأَحَدٍۢ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:احد",
+      "public_provenance_clean": true,
+      "root": "أحد",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "5:45:10",
+        "5:45:9"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "بِٱلْأَنفِ",
+        "وَٱلْأَنفَ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِٱلْأَنفِ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:انف",
+      "public_provenance_clean": true,
+      "root": "أنف",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "11:116:23",
+        "34:34:9"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "أُتْرِفُوا۟",
+        "مُتْرَفُوهَآ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "أُتْرِفُوا۟",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:ترف",
+      "public_provenance_clean": true,
+      "root": "ترف",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "34:10:6",
+        "7:143:27"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "لِلْجَبَلِ",
+        "يَٰجِبَالُ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "لِلْجَبَلِ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:جبل",
+      "public_provenance_clean": true,
+      "root": "جبل",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "22:78:5",
+        "9:24:21"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "جِهَادِهِۦ",
+        "وَجِهَادٍۢ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "جِهَادِهِۦ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:جهد",
+      "public_provenance_clean": true,
+      "root": "جهد",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "18:93:8",
+        "21:43:6"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "دُونِنَا",
+        "دُونِهِمَا"
+      ],
+      "gate": "owner",
+      "headword_candidate": "دُونِنَا",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:دون",
+      "public_provenance_clean": true,
+      "root": "دون",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "20:94:7",
+        "2:279:2"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "بِرَأْسِىٓ",
+        "رُءُوسُ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِرَأْسِىٓ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:راس",
+      "public_provenance_clean": true,
+      "root": "رأس",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "27:22:12",
+        "34:15:3"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "سَبَإٍۭ",
+        "لِسَبَإٍۢ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "سَبَإٍۭ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:سبا",
+      "public_provenance_clean": true,
+      "root": "سبأ",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "22:17:6",
+        "2:62:7"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "وَٱلصَّٰبِـِٔينَ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "وَٱلصَّٰبِـِٔينَ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:صبا",
+      "public_provenance_clean": true,
+      "root": "صبأ",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "5:45:7",
+        "5:45:8"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "بِٱلْعَيْنِ",
+        "وَٱلْعَيْنَ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِٱلْعَيْنِ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:عين",
+      "public_provenance_clean": true,
+      "root": "عين",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "22:65:10",
+        "2:164:9"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "وَٱلْفُلْكَ",
+        "وَٱلْفُلْكِ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "وَٱلْفُلْكَ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:فلك",
+      "public_provenance_clean": true,
+      "root": "فلك",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "3:14:8",
+        "3:75:7"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "بِقِنطَارٍۢ",
+        "وَٱلْقَنَٰطِيرِ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِقِنطَارٍۢ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:قنطر",
+      "public_provenance_clean": true,
+      "root": "قنطر",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "56:18:3",
+        "78:34:1"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "وَكَأْسًۭا",
+        "وَكَأْسٍۢ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "وَكَأْسًۭا",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:كاس",
+      "public_provenance_clean": true,
+      "root": "كأس",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "25:5:6",
+        "47:25:4"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "تُمْلَىٰ",
+        "وَأَمْلَىٰ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "تُمْلَىٰ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:ملو",
+      "public_provenance_clean": true,
+      "root": "ملو",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "18:32:11",
+        "26:148:2"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "بِنَخْلٍۢ",
+        "وَنَخْلٍۢ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "بِنَخْلٍۢ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:نخل",
+      "public_provenance_clean": true,
+      "root": "نخل",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "2:237:11",
+        "73:20:10"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "فَنِصْفُ",
+        "وَنِصْفَهُۥ"
+      ],
+      "gate": "owner",
+      "headword_candidate": "فَنِصْفُ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:نصف",
+      "public_provenance_clean": true,
+      "root": "نصف",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    },
+    {
+      "affected_token_count": 2,
+      "definition_draft": "",
+      "example_locs": [
+        "4:127:30",
+        "76:8:6"
+      ],
+      "expected_coverage_unlock": 2,
+      "forms_observed": [
+        "لِلْيَتَٰمَىٰ",
+        "وَيَتِيمًۭا"
+      ],
+      "gate": "owner",
+      "headword_candidate": "لِلْيَتَٰمَىٰ",
+      "lemma_candidate": null,
+      "nahw_procedure": "qamus-entry-authoring",
+      "occurrences": 2,
+      "pos": "review_required",
+      "proposed_entry_id": "PROPOSE:يتم",
+      "public_provenance_clean": true,
+      "root": "يتم",
+      "sarf_procedure": "procedures/root-decision.md",
+      "source_evidence_ids": [
+        "qac:root"
+      ],
+      "suggested_hover_glosses": [],
+      "why_existing_insufficient": "no Qamus entry for this QAC root after flattened-root reroute"
+    }
+  ],
+  "source_proposals": "qamus\\candidates\\qamus_2092\\new_entry_proposals_batch_002.jsonl",
+  "status": "owner_gated_review_only"
+}

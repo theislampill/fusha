@@ -13,9 +13,22 @@ headword,root,section,glosses}], function_word (bool), pending_code.
 Env: QAMUS_WBW_SERVICES, QAMUS_WBW_ARTIFACT, QAMUS_DATASET.
 """
 import argparse, json, os, re, sys, collections
-sys.path.insert(0, os.environ.get("QAMUS_WBW_SERVICES", "services"))
-from qamus_wbw import expand as X
-from qamus_wbw import normalize as N
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DEFAULT_TABLE = os.path.join(ROOT, "qamus", "reports", "closure-2092", "pending-source-triangulation-table.jsonl")
+
+def load_qamus_wbw():
+    sys.path.insert(0, os.environ.get("QAMUS_WBW_SERVICES", "services"))
+    try:
+        from qamus_wbw import expand as X
+        from qamus_wbw import normalize as N
+    except ModuleNotFoundError as exc:
+        raise SystemExit(
+            "ERROR: qamus_wbw services are unavailable. Set QAMUS_WBW_SERVICES, "
+            "QAMUS_WBW_ARTIFACT, and QAMUS_DATASET, or use --from with the "
+            "triangulation-table request mode."
+        ) from exc
+    return X, N
 
 # closed-class function words whose surface key famously collides (content-letter harakah decides)
 FUNCTION_HOMOGRAPHS = {"ما","وما","فما","ان","وان","فان","لم","لما","من","ومن","فمن","ام","او","لو","ولو",
@@ -27,7 +40,55 @@ def main():
     ap.add_argument("--dataset", default=os.environ.get("QAMUS_DATASET", "/tmp/entries.jsonl"))
     ap.add_argument("--out", required=True)
     ap.add_argument("--max", type=int, default=400)
+    ap.add_argument("--from", dest="from_table", default=None,
+                    help="triangulation table request mode; emits unresolved irab/function rows")
     a = ap.parse_args()
+
+    if a.from_table:
+        rows = []
+        for line in open(a.from_table, encoding="utf-8"):
+            if not line.strip():
+                continue
+            r = json.loads(line)
+            if r.get("suggested_lane") != "token_irab":
+                continue
+            if r.get("gate") != "two_vote":
+                continue
+            rows.append({
+                "loc": r.get("loc"),
+                "surface": r.get("surface_ar") or "",
+                "key": r.get("strict_nk") or r.get("nk") or "",
+                "ayah_text": r.get("ayah_context") or "",
+                "qac_root": r.get("qac_root"),
+                "qac_pos": r.get("qac_pos"),
+                "function_word": bool(r.get("function_word")),
+                "competing": [],
+                "pending_code": r.get("blocker") or r.get("root_cause") or "",
+                "gate": "two_vote",
+                "sarf_procedure": r.get("sarf_procedure"),
+                "nahw_procedure": r.get("nahw_procedure"),
+                "known_blocker": r.get("blocker_if_not_resolved") or "",
+                "requested_output": {
+                    "decision": "approve | reject | pending",
+                    "concise_authored_gloss": "",
+                    "sarf_reasoning": "",
+                    "nahw_reasoning": "",
+                    "reason_agreement_key": "",
+                    "blocker_if_rejected": "",
+                },
+            })
+        rows = rows[:a.max]
+        os.makedirs(os.path.dirname(a.out), exist_ok=True)
+        with open(a.out, "w", encoding="utf-8", newline="\n") as f:
+            for r in rows:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
+        print(json.dumps({"requests": len(rows), "mode": "triangulation_table", "gate": "two_vote"},
+                         ensure_ascii=False))
+        return
+
+    X, N = load_qamus_wbw()
+    if not a.artifact:
+        raise SystemExit("ERROR: --artifact or QAMUS_WBW_ARTIFACT is required outside --from mode")
     d = json.load(open(a.artifact, encoding="utf-8"))
     verses, words, pending = d["verses"], d["words"], d.get("pending", {})
     X._load_qac_roots(); qpos = X._QAC_CACHE.get("pos", {}); qroot = X._QAC_CACHE.get("root", {})

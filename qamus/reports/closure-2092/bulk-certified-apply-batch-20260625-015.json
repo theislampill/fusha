@@ -1,0 +1,33 @@
+{
+  "_generator": "inline copy from bulk_function_token_repair_batch_015",
+  "by_decision_state": {
+    "bulk_function_token_repair_certified": 264
+  },
+  "by_src": {
+    "qamus": 264
+  },
+  "certified_apply_batch": "qamus\\candidates\\qamus_2092\\bulk_certified_apply_batch_20260625_015.jsonl",
+  "live_apply": {
+    "backup_artifact_basename": "wbw-lookup.json.bak-batch015-20260625T173821Z",
+    "backup_decision_basename": "fusha-hover-token-decisions.jsonl.bak-batch015-20260625T173821Z",
+    "bad_readback_count": 0,
+    "coverage_after": {
+      "pct": 94.33,
+      "pending_marked": 2218,
+      "resolved": 47070,
+      "total_tokens": 49900
+    },
+    "dry_run": "PASS: 264 rows, zero existing decision overlap, zero currently glossed locs",
+    "health_root": 200,
+    "healthz": 200,
+    "public_root": 200,
+    "rebuild": "+264 / -0 / ~0"
+  },
+  "public_invariant": "public rows are qamus-authored English only; no external labels or private paths",
+  "rows": 264,
+  "sha256": "161ebb4e6a042a59041aea73ee487bf4f05f72d49e633e64d204385edb77c3ea",
+  "source_batches": [
+    "qamus\\candidates\\qamus_2092\\bulk_function_token_repair_batch_015.jsonl"
+  ],
+  "status": "live_applied"
+}

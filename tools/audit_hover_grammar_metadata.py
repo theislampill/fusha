@@ -11,6 +11,7 @@ sys.path.insert(0, os.path.join(ROOT, "tools"))
 import audit_all_hover_tokens as A
 STAGE = os.path.join(ROOT, "out", "hover_stage")
 OUTDIR = os.path.join(ROOT, "qamus", "reports", "closure-2092")
+DATE = os.environ.get("AUDIT_DATE", "20260625")
 
 def main():
     wbw = json.load(open(os.path.join(STAGE, "wbw-lookup.json"), encoding="utf-8"))
@@ -30,6 +31,10 @@ def main():
         if len(p) >= 4: pos[(p[0], A.norm_strict(p[1]))] = p[3].strip()
 
     rows = []
+    metadata_queue = []
+    particle_queue = []
+    verb_queue = []
+    nominal_queue = []
     cov = collections.Counter()
     for loc, tok in words.items():
         sa = ":".join(loc.split(":")[:2]); nk = A.norm_strict(tok.get("ar", ""))
@@ -46,6 +51,43 @@ def main():
                      "root": r, "pos": pp, "token_decision": bool(td),
                      "segmentation": seg, "conf": tok.get("conf"),
                      "provenance_clean": (tok.get("glosses", [{}])[0].get("src") == "qamus")})
+        if not r or not pp or not seg:
+            metadata_queue.append({
+                "loc": loc,
+                "surface": tok.get("ar"),
+                "root": r,
+                "pos": pp,
+                "token_decision": bool(td),
+                "confidence": tok.get("conf"),
+                "missing_metadata_blocker": ",".join(k for k, ok in (
+                    ("root", bool(r)),
+                    ("pos", bool(pp)),
+                    ("clitic_segmentation", seg),
+                ) if not ok),
+            })
+        if pp == "P" and not td:
+            particle_queue.append({
+                "loc": loc,
+                "surface": tok.get("ar"),
+                "confidence": tok.get("conf"),
+                "missing_metadata_blocker": "particle_function",
+            })
+        if pp == "V":
+            verb_queue.append({
+                "loc": loc,
+                "surface": tok.get("ar"),
+                "root": r,
+                "confidence": tok.get("conf"),
+                "missing_metadata_blocker": "verb_person_gender_number_mood_voice_form",
+            })
+        if pp == "N":
+            nominal_queue.append({
+                "loc": loc,
+                "surface": tok.get("ar"),
+                "root": r,
+                "confidence": tok.get("conf"),
+                "missing_metadata_blocker": "noun_gender_number_case_state",
+            })
     total = len(rows)
     summ = {"_generator": "tools/audit_hover_grammar_metadata.py", "resolved": total,
             "root_derivable": cov["root_derivable"], "root_derivable_pct": round(100*cov["root_derivable"]/total, 2),
@@ -55,12 +97,33 @@ def main():
             "note": "gender/number/case/mood/derivative-class require a morphological analyzer not available offline; "
                     "flagged missing, never fabricated. The concise PUBLIC gloss may be correct even when internal "
                     "metadata is incomplete."}
-    with open(os.path.join(OUTDIR, "hover-grammar-metadata-audit-20260624.json"), "w", encoding="utf-8", newline="\n") as f:
+    queue_paths = {
+        "metadata_repair_queue": "metadata-repair-queue.jsonl",
+        "particle_function_repair_queue": "particle-function-repair-queue.jsonl",
+        "verb_feature_repair_queue": "verb-feature-repair-queue.jsonl",
+        "nominal_feature_repair_queue": "nominal-feature-repair-queue.jsonl",
+    }
+    summ["repair_queues"] = {
+        "metadata_repair_queue": len(metadata_queue),
+        "particle_function_repair_queue": len(particle_queue),
+        "verb_feature_repair_queue": len(verb_queue),
+        "nominal_feature_repair_queue": len(nominal_queue),
+    }
+    with open(os.path.join(OUTDIR, f"hover-grammar-metadata-audit-{DATE}.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(summ, f, ensure_ascii=False, sort_keys=True, indent=2); f.write("\n")
-    with open(os.path.join(OUTDIR, "hover-grammar-metadata-audit-20260624.jsonl"), "w", encoding="utf-8", newline="\n") as f:
+    with open(os.path.join(OUTDIR, f"hover-grammar-metadata-audit-{DATE}.jsonl"), "w", encoding="utf-8", newline="\n") as f:
         f.write(json.dumps(summ, ensure_ascii=False) + "\n")
         for r in rows[:5000]:   # sample (full set is regenerable); summary covers all
             f.write(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n")
+    for filename, queue in (
+        (queue_paths["metadata_repair_queue"], metadata_queue),
+        (queue_paths["particle_function_repair_queue"], particle_queue),
+        (queue_paths["verb_feature_repair_queue"], verb_queue),
+        (queue_paths["nominal_feature_repair_queue"], nominal_queue),
+    ):
+        with open(os.path.join(OUTDIR, filename), "w", encoding="utf-8", newline="\n") as f:
+            for r in queue:
+                f.write(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n")
     md = ["# Hover grammar-metadata audit (closure-2092 Phase 6)", "",
           "Generated by `tools/audit_hover_grammar_metadata.py`. Per-token derivable metadata over all "
           f"**{total:,}** resolved tokens. Honest scope: gender/number/case/mood/derivative-class need a "
@@ -70,10 +133,14 @@ def main():
           f"| POS derivable (QAC, coarse N/P/V) | {summ['pos_derivable']:,} ({summ['pos_derivable_pct']}%) |",
           f"| carries a per-loc token decision | {summ['with_token_decision']:,} |",
           f"| particles | {summ['particles']:,} ({summ['particles_with_function_decision']:,} with an explicit function decision) |",
+          f"| metadata repair queue | {len(metadata_queue):,} |",
+          f"| particle-function repair queue | {len(particle_queue):,} |",
+          f"| verb-feature repair queue | {len(verb_queue):,} |",
+          f"| nominal-feature repair queue | {len(nominal_queue):,} |",
           "", "Companion quality audit: `hover-gloss-quality-audit.*` (91.20% clean, 0 public source leaks). "
           "Repair queues = too_generic_gloss / particle_function_missing / homograph_reason_missing (internal "
           "metadata enrichment; the concise public display is not auto-rewritten).", ""]
-    open(os.path.join(OUTDIR, "hover-grammar-metadata-audit-20260624.md"), "w", encoding="utf-8", newline="\n").write("\n".join(md))
+    open(os.path.join(OUTDIR, f"hover-grammar-metadata-audit-{DATE}.md"), "w", encoding="utf-8", newline="\n").write("\n".join(md))
     print("GRAMMAR-METADATA AUDIT OK — root %d%% / POS %d%% derivable; particles %d (%d with function)"
           % (summ["root_derivable_pct"], summ["pos_derivable_pct"], summ["particles"], summ["particles_with_function_decision"]))
 

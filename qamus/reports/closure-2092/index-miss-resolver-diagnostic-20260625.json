@@ -1,0 +1,38 @@
+{
+  "_generator": "inline index-miss resolver diagnostic, 2026-06-25",
+  "by_deterministic_reason": {
+    "(root_match_or_no_form_sense)": 208,
+    "cross-POS: verb token, nominal sense gloss — needs verbal authoring": 6,
+    "entry section POS mismatch — needs authored repair/review": 436,
+    "form maps to 2 senses — ambiguous": 62,
+    "form maps to 3 senses — ambiguous": 8,
+    "function/proper — context required": 2,
+    "homograph — per-loc context required": 117,
+    "non-content POS requires function/context review": 6,
+    "single sense, POS-agree, no homograph": 1
+  },
+  "by_match_type": {
+    "exact_form": 638,
+    "root_match": 208
+  },
+  "by_pos_agreement": {
+    "agree": 192,
+    "mismatch": 640,
+    "unknown": 14
+  },
+  "by_qac_pos": {
+    "N": 678,
+    "None": 14,
+    "V": 154
+  },
+  "index_miss_rows": 846,
+  "live_baseline": {
+    "coverage_pct": 87.75,
+    "pending": 6113,
+    "resolved": 43787,
+    "total": 49900
+  },
+  "resolver_apply_recommendation": "do_not_relax_bulk_resolver; only token/form decisions for non-auto rows; exact +1 may be folded into next certified apply",
+  "source_table": "qamus/reports/closure-2092/pending-source-triangulation-table.jsonl",
+  "strict_auto_remaining": 1
+}

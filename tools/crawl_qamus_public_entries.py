@@ -17,7 +17,7 @@ Outputs (under out/crawl/, git-ignored raw):
   out/crawl/qamus-crawl-checkpoint.jsonl   (append-only, one row per crawled id; resume source)
 Stamp the committed summary/reconciliation separately via validate_qamus_public_crawl.py.
 """
-import argparse, json, os, re, sys, time, urllib.request, urllib.error
+import argparse, html, json, os, re, sys, time, urllib.request, urllib.error
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "qamus", "data", "current", "entries.jsonl")
@@ -31,6 +31,24 @@ QWORD = re.compile(r'class="qword(?: qw-pending)?"')
 QPEND = re.compile(r'class="qword qw-pending"')
 DLOC = re.compile(r'data-loc="(\d+:\d+:\d+)"')
 ERRMARK = re.compile(r"(Traceback \(most recent call last\)|Internal Server Error|500 - )", re.I)
+QSPAN = re.compile(r'<span\b[^>]*class="[^"]*\bqword\b[^"]*"[^>]*>', re.I)
+ATTR = re.compile(r'([a-zA-Z0-9_-]+)="([^"]*)"')
+
+def extract_hover_details(body):
+    rows = []
+    for match in QSPAN.finditer(body):
+        tag = match.group(0)
+        attrs = {k: html.unescape(v) for k, v in ATTR.findall(tag)}
+        loc = attrs.get("data-loc")
+        if not loc:
+            continue
+        classes = attrs.get("class", "")
+        rows.append({
+            "loc": loc,
+            "gloss": attrs.get("data-tr", ""),
+            "pending": "qw-pending" in classes.split(),
+        })
+    return rows
 
 def load_repo():
     repo = {}
@@ -43,7 +61,7 @@ def load_repo():
                          "total_uses": e.get("total_uses")}
     return repo
 
-def done_ids():
+def done_ids(require_hover_details=False):
     s = set()
     if os.path.exists(CKPT):
         for line in open(CKPT, encoding="utf-8"):
@@ -51,7 +69,10 @@ def done_ids():
             if not line:
                 continue
             try:
-                s.add(json.loads(line)["id"])
+                row = json.loads(line)
+                if require_hover_details and "hover_details" not in row:
+                    continue
+                s.add(row["id"])
             except Exception:
                 pass
     return s
@@ -77,9 +98,11 @@ def fetch(eid, timeout):
     qtot = len(QWORD.findall(body))
     qpend = len(QPEND.findall(body))
     locs = DLOC.findall(body)
+    hover_details = extract_hover_details(body)
     return {"id": eid, "url": url, "status": status, "bytes": len(body),
             "title_headword": head, "hover_total": qtot, "hover_pending": qpend,
             "hover_resolved": qtot - qpend, "data_loc_count": len(locs),
+            "hover_details": hover_details,
             "distinct_ayat": len({":".join(l.split(":")[:2]) for l in locs}),
             "render_error": bool(ERRMARK.search(body)),
             "ms": round((time.monotonic() - t0) * 1000)}
@@ -88,12 +111,14 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=0, help="max entries this run (0 = no cap)")
     ap.add_argument("--all", action="store_true", help="crawl the full repo set")
+    ap.add_argument("--refresh-hover-details", action="store_true",
+                    help="recrawl entries whose checkpoint row lacks hover_details")
     ap.add_argument("--delay", type=float, default=0.3, help="seconds between requests (throttle)")
     ap.add_argument("--timeout", type=float, default=15.0)
     a = ap.parse_args()
     os.makedirs(OUTDIR, exist_ok=True)
     repo = load_repo()
-    done = done_ids()
+    done = done_ids(require_hover_details=a.refresh_hover_details)
     todo = [eid for eid in repo if eid not in done]
     if not a.all and a.limit == 0:
         a.limit = 50  # safe default for a bounded run

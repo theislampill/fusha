@@ -1,0 +1,129 @@
+{
+  "append": {
+    "after_lines": 6861,
+    "appended": 7,
+    "before_lines": 6854
+  },
+  "backup_app_artifact_basename": "wbw-lookup.json.bak-batch017-20260625T183258Z",
+  "backup_artifact_basename": "wbw-lookup.json.bak-batch017-20260625T183258Z",
+  "backup_decision_basename": "fusha-hover-token-decisions.jsonl.bak-batch017-20260625T183258Z",
+  "bad_readback_count": 0,
+  "bad_readback_sample": [],
+  "batch": "bulk_certified_apply_batch_20260625_017.jsonl",
+  "batch_basename": "bulk_certified_apply_batch_20260625_017.jsonl",
+  "coverage_after": {
+    "pct": 94.43,
+    "pending_marked": 2167,
+    "resolved": 47121,
+    "total_tokens": 49900,
+    "verified": true
+  },
+  "date": "2026-06-25",
+  "health": {
+    "healthz": 200,
+    "public_root": 200,
+    "root": 200
+  },
+  "label": "batch017-20260625T183258Z",
+  "rebuild_rc": 0,
+  "rebuild_report": {
+    "added": 7,
+    "changed": 0,
+    "new_words": 47121,
+    "prev_words": 47114,
+    "removed": 0,
+    "sample_added": [
+      "3:162:2",
+      "4:9:15",
+      "9:66:2",
+      "19:43:4",
+      "35:35:14",
+      "37:11:4",
+      "72:3:2"
+    ],
+    "sample_changed": [],
+    "source_sha": "65797d7d5599fadd"
+  },
+  "rows": 7,
+  "sample_readbacks": [
+    {
+      "decision_state": "bulk_deterministic_auto_rule_certified",
+      "gloss": "incurred",
+      "key": "باء",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "3:162:2",
+      "src": "qamus",
+      "state_id": "state:tok:3:162:2",
+      "surface": "بَآءَ"
+    },
+    {
+      "decision_state": "bulk_deterministic_auto_rule_certified",
+      "gloss": "sound",
+      "key": "سديدا",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "4:9:15",
+      "src": "qamus",
+      "state_id": "state:tok:4:9:15",
+      "surface": "سَدِيدًا"
+    },
+    {
+      "decision_state": "bulk_deterministic_auto_rule_certified",
+      "gloss": "We pardon",
+      "key": "نعف",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "9:66:2",
+      "src": "qamus",
+      "state_id": "state:tok:9:66:2",
+      "surface": "نَعْفُ"
+    },
+    {
+      "decision_state": "bulk_deterministic_auto_rule_certified",
+      "gloss": "came to me",
+      "key": "جاءني",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "19:43:4",
+      "src": "qamus",
+      "state_id": "state:tok:19:43:4",
+      "surface": "جَآءَنِى"
+    },
+    {
+      "decision_state": "bulk_deterministic_auto_rule_certified",
+      "gloss": "fatigue",
+      "key": "لغوب",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "35:35:14",
+      "src": "qamus",
+      "state_id": "state:tok:35:35:14",
+      "surface": "لُغُوبٌۭ"
+    },
+    {
+      "decision_state": "bulk_deterministic_auto_rule_certified",
+      "gloss": "clay",
+      "key": "طين",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "37:11:4",
+      "src": "qamus",
+      "state_id": "state:tok:37:11:4",
+      "surface": "طِينٍ"
+    },
+    {
+      "decision_state": "bulk_deterministic_auto_rule_certified",
+      "gloss": "Majesty",
+      "key": "جد",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "72:3:2",
+      "src": "qamus",
+      "state_id": "state:tok:72:3:2",
+      "surface": "جَدُّ"
+    }
+  ],
+  "sha256": "73dbc956a31631a4194832fc791312b3db1fce5ed91aa81e43d85ef8aea35c7f",
+  "status": "LIVE_APPLIED"
+}

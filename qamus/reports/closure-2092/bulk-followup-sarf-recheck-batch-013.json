@@ -1,0 +1,23 @@
+{
+  "_generator": "tools/build_bulk_followup_certified_batch.py",
+  "batch_label": "batch013_sarf_recheck",
+  "by_decision": {
+    "approve": 274,
+    "pending": 51
+  },
+  "by_unresolved_reason": {
+    "candidate_pos_mismatch_entry_needed": 48,
+    "low_frequency_tail_needs_tighter_entry": 3
+  },
+  "certified_batch": "qamus\\candidates\\qamus_2092\\bulk_followup_sarf_recheck_batch_013.jsonl",
+  "certified_rows": 274,
+  "provenance": "qamus\\candidates\\qamus_2092\\bulk_followup_sarf_recheck_batch_013.provenance.jsonl",
+  "request_file": "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_013.jsonl",
+  "require_agrees_with_nahw": true,
+  "review_file": "out\\subagent_votes\\batch013_sarf_recheck_results.jsonl",
+  "review_lens": "sarf-recheck",
+  "reviews_seen": 325,
+  "status": "followup_certified_not_applied",
+  "unresolved": "qamus\\candidates\\qamus_2092\\bulk_followup_sarf_recheck_unresolved_batch_013.jsonl",
+  "unresolved_rows": 51
+}

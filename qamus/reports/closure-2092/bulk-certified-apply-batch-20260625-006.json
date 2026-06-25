@@ -1,0 +1,15 @@
+{
+  "_generator": "inline combine batch004 follow-up certified slices",
+  "by_decision_state": {
+    "bulk_followup_arbitrated_certified": 6,
+    "bulk_followup_sarf_recheck_certified": 194
+  },
+  "inputs": [
+    "qamus/candidates/qamus_2092/bulk_followup_arbitrated_batch_004.jsonl",
+    "qamus/candidates/qamus_2092/bulk_followup_sarf_recheck_batch_004.jsonl"
+  ],
+  "out": "qamus/candidates/qamus_2092/bulk_certified_apply_batch_20260625_006.jsonl",
+  "rows": 200,
+  "sha256": "cca766a76453a7d18b32b55ec4f3cc9edc3c6203c42fc9d63f08fcab882b7fb9",
+  "status": "combined_not_applied"
+}

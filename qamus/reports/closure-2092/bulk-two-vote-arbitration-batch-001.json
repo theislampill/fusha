@@ -1,0 +1,11 @@
+{
+  "_generator": "inline arbitration converter",
+  "batch": "qamus/candidates/qamus_2092/bulk_twovote_arbitrated_batch_001.jsonl",
+  "by_chosen_from": {
+    "nahw-primary": 20,
+    "sarf-primary": 18
+  },
+  "provenance": "qamus/candidates/qamus_2092/bulk_twovote_arbitrated_batch_001.provenance.jsonl",
+  "rows": 38,
+  "unresolved_rows": 44
+}

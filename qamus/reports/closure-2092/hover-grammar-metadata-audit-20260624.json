@@ -3,10 +3,10 @@
   "note": "gender/number/case/mood/derivative-class require a morphological analyzer not available offline; flagged missing, never fabricated. The concise PUBLIC gloss may be correct even when internal metadata is incomplete.",
   "particles": 12794,
   "particles_with_function_decision": 533,
-  "pos_derivable": 42728,
+  "pos_derivable": 43311,
   "pos_derivable_pct": 99.36,
-  "resolved": 43005,
-  "root_derivable": 26778,
-  "root_derivable_pct": 62.27,
-  "with_token_decision": 2745
+  "resolved": 43589,
+  "root_derivable": 27360,
+  "root_derivable_pct": 62.77,
+  "with_token_decision": 3329
 }

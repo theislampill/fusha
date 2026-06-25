@@ -5,15 +5,62 @@
   "crawled_not_in_repo": 0,
   "crawled_pct": 100.0,
   "date": "20260625",
+  "duplicate_live_locs": 26284,
   "headword_mismatches": 0,
-  "hover_resolved_seen": 94671,
-  "hover_total_seen": 109068,
+  "hover_detail_rows_seen": 109108,
+  "hover_mismatches": 7,
+  "hover_resolved_seen": 103141,
+  "hover_total_seen": 109108,
   "http_200": 2092,
   "remaining_uncrawled": 0,
   "render_errors": 0,
   "repo_entries": 2092,
   "resume_command": null,
   "samples_headword_mismatch": [],
+  "samples_hover_mismatch": [
+    {
+      "id": "047ddb2e206e",
+      "loc": "4:9:15",
+      "repo_gloss": "sound",
+      "type": "public_pending_but_repo_resolved"
+    },
+    {
+      "id": "091c93cbe962",
+      "loc": "3:162:2",
+      "repo_gloss": "incurred",
+      "type": "public_pending_but_repo_resolved"
+    },
+    {
+      "id": "1eb427fb6ebb",
+      "loc": "72:3:2",
+      "repo_gloss": "Majesty",
+      "type": "public_pending_but_repo_resolved"
+    },
+    {
+      "id": "a6200e6a0d07",
+      "loc": "19:43:4",
+      "repo_gloss": "came to me",
+      "type": "public_pending_but_repo_resolved"
+    },
+    {
+      "id": "b2b53da6259d",
+      "loc": "9:66:2",
+      "repo_gloss": "We pardon",
+      "type": "public_pending_but_repo_resolved"
+    },
+    {
+      "id": "f92aeb1d59ae",
+      "loc": "35:35:14",
+      "repo_gloss": "fatigue",
+      "type": "public_pending_but_repo_resolved"
+    },
+    {
+      "id": "ff8fc88e1bc9",
+      "loc": "37:11:4",
+      "repo_gloss": "clay",
+      "type": "public_pending_but_repo_resolved"
+    }
+  ],
   "samples_render_error": [],
   "status_distribution": {
     "200": 2092

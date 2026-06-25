@@ -1,0 +1,10 @@
+{
+  "_generator": "manual merge of strict two-vote + arbiter-certified batch018 rows",
+  "arbiter_certified_rows": 8,
+  "batch": "qamus/candidates/qamus_2092/bulk_certified_apply_batch_20260625_018.jsonl",
+  "rows": 10,
+  "sha256": "1075232f4e6264a8b031dd48000f64716cafb5fbe7ff077e3be9431cfb1f1330",
+  "status": "certified_not_applied",
+  "strict_certified_rows": 2,
+  "unresolved_after_two_vote": "qamus/candidates/qamus_2092/bulk_twovote_unresolved_batch_018.jsonl"
+}

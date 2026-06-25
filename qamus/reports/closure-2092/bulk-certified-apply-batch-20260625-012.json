@@ -1,0 +1,41 @@
+{
+  "_generator": "inline combine batch010 follow-up certified slices",
+  "by_decision_state": {
+    "bulk_followup_nahw_recheck_certified": 11,
+    "bulk_followup_sarf_recheck_certified": 2
+  },
+  "inputs": [
+    "qamus/candidates/qamus_2092/bulk_followup_sarf_recheck_batch_010.jsonl",
+    "qamus/candidates/qamus_2092/bulk_followup_nahw_recheck_batch_010.jsonl"
+  ],
+  "live_apply": {
+    "coverage_after": {
+      "pct": 93.03,
+      "resolved": 46422,
+      "total": 49900
+    },
+    "diff": {
+      "+": 13,
+      "-": 0,
+      "~": 0
+    },
+    "health_status": {
+      "healthz": 200,
+      "root": 200
+    },
+    "sample_readback": {
+      "11:17:25": "appointed place",
+      "15:29:6": "my spirit",
+      "25:75:9": "peace",
+      "28:82:4": "in his place",
+      "2:265:23": "drizzle",
+      "30:21:9": "so you may rest",
+      "33:56:13": "submission",
+      "38:15:2": "looks"
+    }
+  },
+  "out": "qamus/candidates/qamus_2092/bulk_certified_apply_batch_20260625_012.jsonl",
+  "rows": 13,
+  "sha256": "30585cf13ff7253f5c0204926ef5aa3e4982fb7205b7b704205d4c5e08ea80cf",
+  "status": "live_applied"
+}

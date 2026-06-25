@@ -24,7 +24,8 @@ STALE_RE = re.compile("|".join(STALE))
 def main():
     # confirm canonical scoreboard shows the CURRENT numbers
     canon = open(os.path.join(REP, "hover-gloss-terminal-scoreboard.md"), encoding="utf-8").read()
-    if "82.49%" not in canon and not re.search(r"8[2-9]\.\d\d%", canon):
+    canonical_pcts = [float(m.group(1)) for m in re.finditer(r"(\d{2,3}\.\d\d)%", canon)]
+    if not canonical_pcts or max(canonical_pcts) < 82.49:
         print("FAIL: canonical hover-gloss-terminal-scoreboard.md missing current coverage"); sys.exit(1)
     tracked = subprocess.run(["git", "ls-files", "qamus/reports/*.md", "qamus/reports/*.json"],
                              cwd=ROOT, capture_output=True, text=True).stdout.split()

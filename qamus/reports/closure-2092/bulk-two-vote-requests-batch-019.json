@@ -1,0 +1,40 @@
+{
+  "_generator": "tools/build_bulk_two_vote_requests.py",
+  "by_lane": {
+    "token_irab": 250
+  },
+  "chunk_size": 50,
+  "chunks": [
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_019_chunks\\chunk_001.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_019_chunks\\chunk_002.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_019_chunks\\chunk_003.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_019_chunks\\chunk_004.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_019_chunks\\chunk_005.jsonl"
+  ],
+  "eligible_rows": 479,
+  "exclude_lanes": [],
+  "exclude_loc_files": [],
+  "excluded_locs": 0,
+  "limit": 250,
+  "only_lanes": [
+    "token_irab"
+  ],
+  "reconciliation_tool": "tools/reconcile_bulk_two_vote_results.py",
+  "request_file": "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_019.jsonl",
+  "requested_output_fields": [
+    "decision",
+    "concise_authored_gloss",
+    "sarf_reasoning",
+    "nahw_reasoning",
+    "reason_agreement_key",
+    "blocker_if_rejected"
+  ],
+  "rows": 250,
+  "source_table": "qamus\\reports\\closure-2092\\pending-source-triangulation-table.jsonl",
+  "status": "requests_only_not_certified",
+  "validator": "tools/validate_bulk_two_vote_requests.py",
+  "vote_lenses": [
+    "sarf-primary",
+    "nahw-primary"
+  ]
+}

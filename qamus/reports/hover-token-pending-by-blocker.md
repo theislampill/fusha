@@ -2,14 +2,14 @@
 
 Each blocker has an exact next action; no token is generically 'pending'.
 
-## `stem_base_unknown` — 4,156 tokens
+## `stem_base_unknown` — 359 tokens
 next: author the host stem/lexeme in Qamus, then re-run the resolver
-sample locs: 1:6:1, 1:7:3, 2:4:10, 2:10:4, 2:11:11, 2:17:1, 2:17:12, 2:19:7, 2:22:5, 2:25:30, 2:31:1, 2:31:11
+sample locs: 2:4:10, 2:17:12, 2:19:7, 2:31:11, 2:47:1, 2:62:7, 2:87:17, 2:120:2, 2:161:12, 2:164:9, 2:177:37, 2:178:14
 
-## `source_entry_unverified` — 1,775 tokens
-next: add the inflected form to the entry forms[] (or verify the entry from source photo) and re-run
-sample locs: 2:2:6, 2:4:3, 2:4:6, 2:5:3, 2:9:5, 2:9:9, 2:13:4, 2:16:9, 2:18:1, 2:18:4, 2:26:35, 2:29:10
-
-## `same_surface_polysemy_requires_i3rab` — 380 tokens
+## `same_surface_polysemy_requires_i3rab` — 198 tokens
 next: author a per-loc token-addressed decision (iʿrāb) selecting the sense
-sample locs: 2:19:18, 2:22:12, 2:36:4, 2:38:10, 2:48:10, 2:62:12, 2:62:14, 2:96:12, 2:96:21, 2:102:38, 2:102:66, 2:121:11
+sample locs: 2:19:18, 2:38:10, 2:62:12, 2:62:14, 2:102:66, 2:125:9, 2:126:18, 2:144:3, 2:177:15, 2:178:6, 2:178:10, 2:194:6
+
+## `source_entry_unverified` — 88 tokens
+next: add the inflected form to the entry forms[] (or verify the entry from source photo) and re-run
+sample locs: 2:44:1, 2:91:2, 2:148:11, 2:178:23, 3:49:12, 3:49:27, 3:103:19, 4:6:8, 4:60:21, 4:84:20, 4:122:2, 5:54:18

@@ -8,6 +8,8 @@ reports exactly how many of the 2,092 were crawled and the resume command if not
 Outputs (committed — summary only, not the raw crawl):
   qamus/reports/closure-2092/live-public-entry-crawl-summary-YYYYMMDD.json
   qamus/reports/closure-2092/live-vs-repo-entry-reconciliation-YYYYMMDD.md
+  qamus/reports/closure-2092/live-hover-vs-repo-reconciliation-YYYYMMDD.jsonl
+  qamus/reports/closure-2092/live-hover-vs-repo-reconciliation-YYYYMMDD.md
 """
 import json, os, re, sys
 from collections import Counter
@@ -15,6 +17,7 @@ from collections import Counter
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "qamus", "data", "current", "entries.jsonl")
 CKPT = os.path.join(ROOT, "out", "crawl", "qamus-crawl-checkpoint.jsonl")
+AUDIT = os.path.join(ROOT, "qamus", "reports", "hover-token-audit-full.jsonl")
 OUT = os.path.join(ROOT, "qamus", "reports", "closure-2092")
 DATE = os.environ.get("AUDIT_DATE", "20260625")
 
@@ -36,12 +39,28 @@ def main():
                     r = json.loads(line); crawled[r["id"]] = r
                 except Exception:
                     pass
+    repo_hover = {}
+    if os.path.exists(AUDIT):
+        for line in open(AUDIT, encoding="utf-8"):
+            line = line.strip()
+            if not line:
+                continue
+            r = json.loads(line)
+            loc = r.get("quran_loc")
+            if loc:
+                repo_hover[loc] = {
+                    "decision_state": r.get("decision_state"),
+                    "public_gloss": r.get("public_gloss") or "",
+                }
 
     status_c = Counter()
     render_err = []
     head_mismatch = []
     not_in_repo = []
     hover_resolved = hover_total = 0
+    hover_detail_rows = 0
+    hover_mismatches = []
+    live_loc_counts = Counter()
     for eid, r in crawled.items():
         status_c[r.get("status")] += 1
         if r.get("render_error"):
@@ -57,6 +76,28 @@ def main():
                                       "repo": repo[eid].get("headword")})
             hover_resolved += r.get("hover_resolved", 0)
             hover_total += r.get("hover_total", 0)
+            for h in r.get("hover_details") or []:
+                hover_detail_rows += 1
+                loc = h.get("loc")
+                if not loc:
+                    continue
+                live_loc_counts[loc] += 1
+                repo_state = repo_hover.get(loc)
+                live_pending = h.get("pending") is True or not (h.get("gloss") or "").strip()
+                if repo_state is None:
+                    hover_mismatches.append({"type": "live_loc_not_in_repo_audit", "id": eid, "loc": loc})
+                    continue
+                repo_pending = repo_state.get("decision_state") == "pending"
+                if live_pending and not repo_pending:
+                    hover_mismatches.append({"type": "public_pending_but_repo_resolved", "id": eid, "loc": loc,
+                                             "repo_gloss": repo_state.get("public_gloss")})
+                elif (not live_pending) and repo_pending:
+                    hover_mismatches.append({"type": "public_resolved_but_repo_pending", "id": eid, "loc": loc,
+                                             "live_gloss": h.get("gloss")})
+                elif (not live_pending) and (h.get("gloss") or "") != (repo_state.get("public_gloss") or ""):
+                    hover_mismatches.append({"type": "public_gloss_differs_from_repo", "id": eid, "loc": loc,
+                                             "live_gloss": h.get("gloss"),
+                                             "repo_gloss": repo_state.get("public_gloss")})
 
     crawled_repo_ids = [e for e in crawled if e in repo]
     remaining = [e for e in repo if e not in crawled]
@@ -71,11 +112,15 @@ def main():
         "crawled_not_in_repo": len(not_in_repo),
         "remaining_uncrawled": len(remaining),
         "hover_total_seen": hover_total, "hover_resolved_seen": hover_resolved,
+        "hover_detail_rows_seen": hover_detail_rows,
+        "hover_mismatches": len(hover_mismatches),
+        "duplicate_live_locs": sum(1 for _, c in live_loc_counts.items() if c > 1),
         "complete": len(remaining) == 0,
         "resume_command": (None if not remaining else
             "python3 tools/crawl_qamus_public_entries.py --all   # resumes from checkpoint"),
         "samples_headword_mismatch": head_mismatch[:10],
         "samples_render_error": render_err[:10],
+        "samples_hover_mismatch": hover_mismatches[:10],
     }
     os.makedirs(OUT, exist_ok=True)
     with open(os.path.join(OUT, f"live-public-entry-crawl-summary-{DATE}.json"), "w", encoding="utf-8") as f:
@@ -108,8 +153,39 @@ def main():
         md.append(f"\n## Resume\n`{summary['resume_command']}` then re-run this validator.\n")
     open(os.path.join(OUT, f"live-vs-repo-entry-reconciliation-{DATE}.md"), "w", encoding="utf-8").write("\n".join(md))
 
+    hover_jsonl = os.path.join(OUT, f"live-hover-vs-repo-reconciliation-{DATE}.jsonl")
+    with open(hover_jsonl, "w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps({"_summary": {
+            "date": DATE,
+            "complete_entry_crawl": summary["complete"],
+            "hover_detail_rows_seen": hover_detail_rows,
+            "hover_mismatches": len(hover_mismatches),
+            "duplicate_live_locs": summary["duplicate_live_locs"],
+            "note": "A complete hover-level claim requires crawler rows with hover_details for every entry.",
+        }}, ensure_ascii=False, sort_keys=True) + "\n")
+        for row in hover_mismatches:
+            f.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+    hover_md = [
+        f"# Live hover vs repo reconciliation ({DATE})",
+        "",
+        ("**COMPLETE hover-detail source available.**" if hover_detail_rows else
+         "**NOT COMPLETE for hover semantics.** Existing checkpoint lacks `hover_details`; re-run `python3 tools/crawl_qamus_public_entries.py --all` after the crawler update, then re-run this validator."),
+        "",
+        "| metric | value |",
+        "|---|---:|",
+        f"| public entry crawl complete | {summary['complete']} |",
+        f"| hover detail rows seen | {hover_detail_rows:,} |",
+        f"| hover mismatches | {len(hover_mismatches):,} |",
+        f"| duplicate live locs | {summary['duplicate_live_locs']:,} |",
+        "",
+        "This report checks hover states only when raw crawl rows include `hover_details` with `loc`, `gloss`, and `pending`.",
+        "",
+    ]
+    open(os.path.join(OUT, f"live-hover-vs-repo-reconciliation-{DATE}.md"), "w", encoding="utf-8").write("\n".join(hover_md))
+
     print(f"CRAWL RECON: crawled={len(crawled)}/{len(repo)} ({summary['crawled_pct']}%) 200={ok200} "
-          f"render_err={len(render_err)} head_mismatch={len(head_mismatch)} remaining={len(remaining)}")
+          f"render_err={len(render_err)} head_mismatch={len(head_mismatch)} remaining={len(remaining)} "
+          f"hover_details={hover_detail_rows} hover_mismatches={len(hover_mismatches)}")
     # non-fatal: partial crawl is allowed; only fail on a crawled-but-broken page beyond a small floor
     broken = len(render_err) + sum(v for k, v in status_c.items() if k not in (200, None))
     if crawled and broken > 0:

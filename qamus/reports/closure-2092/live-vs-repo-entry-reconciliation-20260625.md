@@ -10,7 +10,7 @@
 | render errors | 0 |
 | headword mismatches (norm) | 0 |
 | crawled ids not in repo | 0 |
-| hover tokens seen (resolved/total) | 94,671 / 109,068 |
+| hover tokens seen (resolved/total) | 103,141 / 109,108 |
 
 ## Method (read-only, polite)
 

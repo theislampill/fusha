@@ -1,0 +1,676 @@
+{
+  "_generator": "manual audited handoff after batch017 deterministic-source-triangulated closure",
+  "applied_batches_after_88_90": [
+    {
+      "batch": "bulk_certified_apply_batch_20260625_004.jsonl",
+      "coverage_after_pct": 90.09,
+      "rows": 592
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_005.jsonl",
+      "coverage_after_pct": 90.85,
+      "rows": 383
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_006.jsonl",
+      "coverage_after_pct": 91.25,
+      "rows": 200
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_007.jsonl",
+      "coverage_after_pct": 91.63,
+      "rows": 187
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_008.jsonl",
+      "coverage_after_pct": 92.01,
+      "rows": 191
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_009.jsonl",
+      "coverage_after_pct": 92.41,
+      "rows": 201
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_010.jsonl",
+      "coverage_after_pct": 92.79,
+      "rows": 186
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_011.jsonl",
+      "coverage_after_pct": 93.0,
+      "rows": 108
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_012.jsonl",
+      "coverage_after_pct": 93.03,
+      "rows": 13
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_013.jsonl",
+      "coverage_after_pct": 93.25,
+      "rows": 108
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_014.jsonl",
+      "coverage_after_pct": 93.8,
+      "rows": 276
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_015.jsonl",
+      "coverage_after_pct": 94.33,
+      "rows": 264
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_016.jsonl",
+      "coverage_after_pct": 94.42,
+      "rows": 44
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_017.jsonl",
+      "coverage_after_pct": 94.43,
+      "rows": 7
+    }
+  ],
+  "audit_marker": "AUDIT_HANDOFF_9443_REACHED_NOT_100_COMPLETE",
+  "batch017_targeted_readback": {
+    "bad_readback_count": 0,
+    "rebuild_added": 7,
+    "rebuild_changed": 0,
+    "rebuild_removed": 0,
+    "rows": 7
+  },
+  "blocker_summary": {
+    "_generator": "tools/build_blocker_root_cause_ledger.py",
+    "by_coarse_blocker": {
+      "same_surface_polysemy_requires_i3rab": {
+        "content_homograph": 6,
+        "genuinely_ambiguous_pending": 196,
+        "proper_vs_common": 1,
+        "verb_form_or_voice": 2
+      },
+      "source_entry_unverified": {
+        "already_entry_form_present_index_miss": 180,
+        "forms_array_missing_surface": 60,
+        "function_word_not_form_work": 271,
+        "quran_refs_missing_or_incomplete": 66,
+        "source_photo_visual_needed": 4
+      },
+      "stem_base_unknown": {
+        "already_entry_form_present_index_miss": 9,
+        "host_lexeme_possessive_candidate": 179,
+        "missing_form_variant_on_existing_entry": 593,
+        "missing_qamus_entry_candidate": 274,
+        "particle_or_pronoun_misclassified_as_stem": 188,
+        "source_entry_required_before_resolution": 7,
+        "truly_low_frequency_tail": 15,
+        "verb_clitic_object_or_subject_candidate": 728
+      }
+    },
+    "family_unlock_count": 553,
+    "family_unlock_top50": [
+      {
+        "family": "6d7fb324a641",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 40
+      },
+      {
+        "family": "رضو",
+        "root_cause": "missing_qamus_entry_candidate",
+        "tokens": 24
+      },
+      {
+        "family": "d5ac66156b8e",
+        "root_cause": "quran_refs_missing_or_incomplete",
+        "tokens": 16
+      },
+      {
+        "family": "213945255c3b",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 15
+      },
+      {
+        "family": "33787ee8c0c1",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 14
+      },
+      {
+        "family": "d3559a102a61",
+        "root_cause": "missing_qamus_entry_candidate",
+        "tokens": 12
+      },
+      {
+        "family": "زكو",
+        "root_cause": "missing_qamus_entry_candidate",
+        "tokens": 12
+      },
+      {
+        "family": "ae9b58424b21",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 11
+      },
+      {
+        "family": "3f3f15cb27c2",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 9
+      },
+      {
+        "family": "dc571b74a440",
+        "root_cause": "missing_qamus_entry_candidate",
+        "tokens": 9
+      },
+      {
+        "family": "صلو",
+        "root_cause": "missing_qamus_entry_candidate",
+        "tokens": 9
+      },
+      {
+        "family": "16dc0a87056e",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 8
+      },
+      {
+        "family": "f3726bc9f962",
+        "root_cause": "host_lexeme_possessive_candidate",
+        "tokens": 8
+      },
+      {
+        "family": "49fc091f5b0b",
+        "root_cause": "forms_array_missing_surface",
+        "tokens": 8
+      },
+      {
+        "family": "4d22dd9db001",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 7
+      },
+      {
+        "family": "صوب",
+        "root_cause": "missing_qamus_entry_candidate",
+        "tokens": 7
+      },
+      {
+        "family": "83e64ea698d5",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 7
+      },
+      {
+        "family": "2e2fa868686a",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 7
+      },
+      {
+        "family": "صدد",
+        "root_cause": "missing_qamus_entry_candidate",
+        "tokens": 7
+      },
+      {
+        "family": "65c6db0170cd",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 7
+      },
+      {
+        "family": "5b382a023db8",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 7
+      },
+      {
+        "family": "سمو",
+        "root_cause": "missing_qamus_entry_candidate",
+        "tokens": 6
+      },
+      {
+        "family": "b56da5c447c1",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 6
+      },
+      {
+        "family": "d6a4f976cb61",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 6
+      },
+      {
+        "family": "4f666d15bb7e",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 6
+      },
+      {
+        "family": "أثم",
+        "root_cause": "missing_qamus_entry_candidate",
+        "tokens": 6
+      },
+      {
+        "family": "dbeb6ed80467",
+        "root_cause": "missing_qamus_entry_candidate",
+        "tokens": 6
+      },
+      {
+        "family": "بلو",
+        "root_cause": "missing_qamus_entry_candidate",
+        "tokens": 6
+      },
+      {
+        "family": "543da5bcc248",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 5
+      },
+      {
+        "family": "d099cdaad3b9",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 5
+      },
+      {
+        "family": "7527209dda9e",
+        "root_cause": "missing_qamus_entry_candidate",
+        "tokens": 5
+      },
+      {
+        "family": "a988d51ee485",
+        "root_cause": "host_lexeme_possessive_candidate",
+        "tokens": 5
+      },
+      {
+        "family": "ecfc082ac2c5",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 5
+      },
+      {
+        "family": "141cbc3bd2bd",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 5
+      },
+      {
+        "family": "9e51dc1d48ba",
+        "root_cause": "forms_array_missing_surface",
+        "tokens": 5
+      },
+      {
+        "family": "1fd424ee1e74",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 5
+      },
+      {
+        "family": "fc62d7c0ebbf",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 5
+      },
+      {
+        "family": "af6979048806",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 5
+      },
+      {
+        "family": "eb41bfb6d725",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 5
+      },
+      {
+        "family": "عنب",
+        "root_cause": "missing_qamus_entry_candidate",
+        "tokens": 5
+      },
+      {
+        "family": "6197ee2c0b2a",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 5
+      },
+      {
+        "family": "728e4a8ba16e",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 5
+      },
+      {
+        "family": "3041d6f44a27",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 5
+      },
+      {
+        "family": "c59a0161fac8",
+        "root_cause": "quran_refs_missing_or_incomplete",
+        "tokens": 5
+      },
+      {
+        "family": "أخو",
+        "root_cause": "host_lexeme_possessive_candidate",
+        "tokens": 5
+      },
+      {
+        "family": "c8190204f5ad",
+        "root_cause": "host_lexeme_possessive_candidate",
+        "tokens": 5
+      },
+      {
+        "family": "484b4fb9beba",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 5
+      },
+      {
+        "family": "8f8d49c8fd17",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 4
+      },
+      {
+        "family": "1a9f6df3889e",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 4
+      },
+      {
+        "family": "fbd04177b8dd",
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "tokens": 4
+      }
+    ],
+    "family_unlock_total_tokens": 1176,
+    "form_variant_safe_tier": {
+      "B_sense_select": 209,
+      "C_pos_or_collision": 444
+    },
+    "total_pending": 2779
+  },
+  "date": "2026-06-25",
+  "generated_pending_markers": 2167,
+  "grammar_metadata_audit": {
+    "_generator": "tools/audit_hover_grammar_metadata.py",
+    "note": "gender/number/case/mood/derivative-class require a morphological analyzer not available offline; flagged missing, never fabricated. The concise PUBLIC gloss may be correct even when internal metadata is incomplete.",
+    "particles": 13273,
+    "particles_with_function_decision": 1012,
+    "pos_derivable": 46831,
+    "pos_derivable_pct": 99.38,
+    "repair_queues": {
+      "metadata_repair_queue": 46727,
+      "nominal_feature_repair_queue": 22247,
+      "particle_function_repair_queue": 12261,
+      "verb_feature_repair_queue": 11311
+    },
+    "resolved": 47121,
+    "root_derivable": 30371,
+    "root_derivable_pct": 64.45,
+    "with_token_decision": 6861
+  },
+  "latest_live_apply": {
+    "backup_artifact_basename": "wbw-lookup.json.bak-batch017-20260625T183258Z",
+    "backup_decision_basename": "fusha-hover-token-decisions.jsonl.bak-batch017-20260625T183258Z",
+    "bad_readback_count": 0,
+    "batch": "bulk_certified_apply_batch_20260625_017.jsonl",
+    "dry_run": "PASS",
+    "health_root": 200,
+    "healthz": 200,
+    "public_root": 200,
+    "rebuild_report": {
+      "added": 7,
+      "changed": 0,
+      "new_words": 47121,
+      "prev_words": 47114,
+      "removed": 0,
+      "sample_added": [
+        "3:162:2",
+        "4:9:15",
+        "9:66:2",
+        "19:43:4",
+        "35:35:14",
+        "37:11:4",
+        "72:3:2"
+      ],
+      "sample_changed": [],
+      "source_sha": "65797d7d5599fadd"
+    },
+    "rows": 7,
+    "sha256": "73dbc956a31631a4194832fc791312b3db1fce5ed91aa81e43d85ef8aea35c7f"
+  },
+  "live_coverage_after": {
+    "pct": 94.43,
+    "resolved": 47121,
+    "total_tokens": 49900
+  },
+  "live_coverage_before": {
+    "pct": 87.35,
+    "resolved": 43589,
+    "total_tokens": 49900,
+    "verified": true
+  },
+  "live_touched": true,
+  "pending_remaining": 2779,
+  "public_crawl_after_batch016": {
+    "complete": true,
+    "crawled": 2092,
+    "current_lookup_validation_note": "validate_qamus_public_crawl.py against the batch017-synced lookup reports 7 hover mismatches, expected because the full crawl checkpoint predates batch017 by exactly 7 new hovers; batch017 is covered by targeted live row readback.",
+    "date": "2026-06-25",
+    "headword_mismatches": 0,
+    "hover_detail_rows_seen": 109108,
+    "hover_mismatches": 0,
+    "http_200": 2092,
+    "render_errors": 0,
+    "repo_entries": 2092,
+    "scope": "full 2,092-entry crawl was run after batch016; batch017 has targeted live row readback instead of a fresh full crawl"
+  },
+  "public_provenance_check": {
+    "bad_public_gloss_records": 0,
+    "checked": true,
+    "gloss_records": 47260,
+    "lookup_words": 47121
+  },
+  "quality_audit": {
+    "_generator": "tools/audit_hover_gloss_quality.py",
+    "flag_counts": {
+      "homograph_reason_missing": 17792,
+      "particle_function_missing": 12261,
+      "root_not_derivable": 3707,
+      "too_generic_gloss": 4028
+    },
+    "quality_clean": 43093,
+    "quality_clean_pct": 91.45,
+    "repair_queue_size": 4028,
+    "resolved_tokens": 47121
+  },
+  "reached_100": false,
+  "reached_90": true,
+  "total_delta_this_continuation": 3532,
+  "triangulation": {
+    "_generator": "build_pending_source_triangulation_table",
+    "by_gate": {
+      "owner": 274,
+      "scholar": 197,
+      "source": 77,
+      "two_vote": 2231
+    },
+    "by_lane": {
+      "form_variant": 842,
+      "host_lexeme": 179,
+      "new_entry_proposal": 274,
+      "reject_unsafe": 1,
+      "scholar_review": 196,
+      "source_entry_repair": 73,
+      "source_photo": 4,
+      "token_irab": 482,
+      "verb_clitic": 728
+    },
+    "deterministic": 0,
+    "public_payload_allowed": 2231,
+    "total_pending": 2779
+  },
+  "verification": [
+    "python -X utf8 tools/validate_token_hover_decisions.py qamus/candidates/qamus_2092/bulk_certified_apply_batch_20260625_017.jsonl: PASS",
+    "python -X utf8 tools/validate_pending_source_triangulation_table.py: PASS, 2,779 rows, 0 deterministic rows remaining",
+    "live dry-run batch017: PASS, 7 rows, 0 decision overlap, 0 currently glossed locs, expected +7",
+    "live apply batch017: PASS, +7 / -0 / ~0, rebuild rc 0, health 200/200/public 200, readback 7/7",
+    "python -X utf8 tools/audit_all_hover_tokens.py: PASS, 47,121/49,900=94.43%",
+    "python -X utf8 tools/build_blocker_root_cause_ledger.py: PASS, 2,779 pending",
+    "public hover gloss invariant: PASS, 47,260 gloss records, 0 public source/private leaks",
+    "python -X utf8 tools/validate_qamus_public_crawl.py: checkpoint still covers 2,092/2,092 pages, but now reports 7 hover mismatches because the full crawl predates batch017; batch017 targeted live readback is current.",
+    "python -X utf8 tools/check_regressions.py: FAIL, 5 broader project-completion checks remain outside batch017 hover apply (P4 suffix/pronoun, Phase3 nahw engine, source-graph integrity, bidirectional links runnable, corpus fixture); Windows subprocess UnicodeDecodeError noise also observed."
+  ],
+  "yield_ledger": {
+    "_generator": "tools/build_root_cause_yield_ledger.py",
+    "coverage_ceiling_if_all_safe_realized": 97.02,
+    "coverage_now": 94.43,
+    "expected_safe_realizable": 1290.5,
+    "levers": [
+      {
+        "discount": 0.45,
+        "expected_safe": 327.6,
+        "owner_gated": false,
+        "pending": 728,
+        "root_cause": "verb_clitic_object_or_subject_candidate",
+        "safe_tier": null,
+        "source_gated": false
+      },
+      {
+        "discount": 0.45,
+        "expected_safe": 180.0,
+        "owner_gated": false,
+        "pending": 400,
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "safe_tier": "C_pos_or_collision",
+        "source_gated": false
+      },
+      {
+        "discount": 0.55,
+        "expected_safe": 150.7,
+        "owner_gated": true,
+        "pending": 274,
+        "root_cause": "missing_qamus_entry_candidate",
+        "safe_tier": null,
+        "source_gated": false
+      },
+      {
+        "discount": 0.55,
+        "expected_safe": 149.0,
+        "owner_gated": false,
+        "pending": 271,
+        "root_cause": "function_word_not_form_work",
+        "safe_tier": null,
+        "source_gated": false
+      },
+      {
+        "discount": 0.6,
+        "expected_safe": 115.8,
+        "owner_gated": false,
+        "pending": 193,
+        "root_cause": "missing_form_variant_on_existing_entry",
+        "safe_tier": "B_sense_select",
+        "source_gated": false
+      },
+      {
+        "discount": 0.55,
+        "expected_safe": 103.4,
+        "owner_gated": false,
+        "pending": 188,
+        "root_cause": "particle_or_pronoun_misclassified_as_stem",
+        "safe_tier": null,
+        "source_gated": false
+      },
+      {
+        "discount": 0.5,
+        "expected_safe": 94.5,
+        "owner_gated": false,
+        "pending": 189,
+        "root_cause": "already_entry_form_present_index_miss",
+        "safe_tier": null,
+        "source_gated": false
+      },
+      {
+        "discount": 0.5,
+        "expected_safe": 89.5,
+        "owner_gated": false,
+        "pending": 179,
+        "root_cause": "host_lexeme_possessive_candidate",
+        "safe_tier": null,
+        "source_gated": false
+      },
+      {
+        "discount": 0.3,
+        "expected_safe": 19.8,
+        "owner_gated": false,
+        "pending": 66,
+        "root_cause": "quran_refs_missing_or_incomplete",
+        "safe_tier": null,
+        "source_gated": false
+      },
+      {
+        "discount": 0.45,
+        "expected_safe": 19.8,
+        "owner_gated": false,
+        "pending": 44,
+        "root_cause": "forms_array_missing_surface",
+        "safe_tier": "C_pos_or_collision",
+        "source_gated": false
+      },
+      {
+        "discount": 0.1,
+        "expected_safe": 19.6,
+        "owner_gated": false,
+        "pending": 196,
+        "root_cause": "genuinely_ambiguous_pending",
+        "safe_tier": null,
+        "source_gated": false
+      },
+      {
+        "discount": 0.6,
+        "expected_safe": 9.6,
+        "owner_gated": false,
+        "pending": 16,
+        "root_cause": "forms_array_missing_surface",
+        "safe_tier": "B_sense_select",
+        "source_gated": false
+      },
+      {
+        "discount": 0.3,
+        "expected_safe": 4.5,
+        "owner_gated": false,
+        "pending": 15,
+        "root_cause": "truly_low_frequency_tail",
+        "safe_tier": null,
+        "source_gated": false
+      },
+      {
+        "discount": 0.5,
+        "expected_safe": 3.0,
+        "owner_gated": false,
+        "pending": 6,
+        "root_cause": "content_homograph",
+        "safe_tier": null,
+        "source_gated": false
+      },
+      {
+        "discount": 0.2,
+        "expected_safe": 1.4,
+        "owner_gated": false,
+        "pending": 7,
+        "root_cause": "source_entry_required_before_resolution",
+        "safe_tier": null,
+        "source_gated": true
+      },
+      {
+        "discount": 0.5,
+        "expected_safe": 1.0,
+        "owner_gated": false,
+        "pending": 2,
+        "root_cause": "verb_form_or_voice",
+        "safe_tier": null,
+        "source_gated": false
+      },
+      {
+        "discount": 0.2,
+        "expected_safe": 0.8,
+        "owner_gated": false,
+        "pending": 4,
+        "root_cause": "source_photo_visual_needed",
+        "safe_tier": null,
+        "source_gated": true
+      },
+      {
+        "discount": 0.5,
+        "expected_safe": 0.5,
+        "owner_gated": false,
+        "pending": 1,
+        "root_cause": "proper_vs_common",
+        "safe_tier": null,
+        "source_gated": false
+      }
+    ],
+    "ninety_reachable_via_safe_authoring": true,
+    "resolved_now": 47121,
+    "tokens_needed_for_90pct": 0,
+    "total_pending": 2779
+  }
+}

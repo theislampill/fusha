@@ -1,0 +1,31 @@
+{
+  "_generator": "tools/build_bulk_followup_certified_batch.py",
+  "batch_label": "batch005-sarf-recheck",
+  "by_decision": {
+    "approve": 24,
+    "pending": 58,
+    "reject": 1
+  },
+  "by_unresolved_reason": {
+    "clitic_person_voice_uncertain": 2,
+    "function_word_not_sarf_safe": 1,
+    "gloss_shape_mismatch": 12,
+    "pos_mismatch": 1,
+    "root_pos_conflict": 1,
+    "still_context_gated": 3,
+    "still_polysemous": 19,
+    "still_source_gated": 5,
+    "verb_form_or_voice_uncertain": 15
+  },
+  "certified_batch": "qamus\\candidates\\qamus_2092\\bulk_followup_sarf_recheck_batch_005.jsonl",
+  "certified_rows": 24,
+  "provenance": "qamus\\candidates\\qamus_2092\\bulk_followup_sarf_recheck_batch_005.provenance.jsonl",
+  "request_file": "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_005.jsonl",
+  "require_agrees_with_nahw": true,
+  "review_file": "out\\subagent_votes\\batch005_sarf_recheck_results.jsonl",
+  "review_lens": "sarf-recheck",
+  "reviews_seen": 83,
+  "status": "followup_certified_not_applied",
+  "unresolved": "qamus\\candidates\\qamus_2092\\bulk_followup_sarf_recheck_unresolved_batch_005.jsonl",
+  "unresolved_rows": 59
+}

@@ -2,8 +2,8 @@
 
 All **49,900** tokens across **3,854** āyāt audited to a terminal state.
 
-- resolved: **43,589** (87.35%)
-- pending (exact-blocked): **6,311**
+- resolved: **49,255** (98.71%)
+- pending (exact-blocked): **645**
 
 Row schema: `quran_loc, surface_ar, entry_contexts, decision_state, public_gloss, conf, blocker, next_action, sarf_procedure, nahw_procedure, token_decision, pending_code`.
 

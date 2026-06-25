@@ -1,0 +1,21 @@
+{
+  "_generator": "manual audited report",
+  "date": "2026-06-25",
+  "files_changed": [
+    "sarf/SKILL.md",
+    "sarf/procedures/bulk-source-triangulation.md",
+    "nahw/SKILL.md",
+    "nahw/procedures/bulk-source-triangulation.md"
+  ],
+  "status": "complete",
+  "summary": "Added explicit bulk source-triangulation gates to the sarf and nahw skill entry points.",
+  "safety_rules_encoded": [
+    "A source-triangulation table row is not automatically a hover decision.",
+    "Auto-safe rows require root/POS agreement, one applicable sense/form, no norm_strict collision, and no context-sensitive trigger.",
+    "Form, voice, person, nominal/verbal, multi-sense, function-word, i'rab, negation, idafa, jar-majrur, and referent-sensitive rows require two-vote or owner review.",
+    "Index misses are resolver/index candidates, not free reindex applies.",
+    "Owner-gated rows keep blank authored wording fields until a human writes or approves them.",
+    "Public hover output remains src=qamus and kind=authored with no external source names."
+  ],
+  "verification": "pending final gate run"
+}

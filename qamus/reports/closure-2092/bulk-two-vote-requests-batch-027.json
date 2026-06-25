@@ -1,0 +1,39 @@
+{
+  "_generator": "tools/build_bulk_two_vote_requests.py",
+  "by_lane": {
+    "form_variant": 42,
+    "host_lexeme": 18,
+    "token_irab": 35,
+    "verb_clitic": 14
+  },
+  "chunk_size": 50,
+  "chunks": [
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_027_chunks\\chunk_001.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_027_chunks\\chunk_002.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_027_chunks\\chunk_003.jsonl"
+  ],
+  "eligible_rows": 109,
+  "exclude_lanes": [],
+  "exclude_loc_files": [],
+  "excluded_locs": 0,
+  "limit": 150,
+  "only_lanes": [],
+  "reconciliation_tool": "tools/reconcile_bulk_two_vote_results.py",
+  "request_file": "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_027.jsonl",
+  "requested_output_fields": [
+    "decision",
+    "concise_authored_gloss",
+    "sarf_reasoning",
+    "nahw_reasoning",
+    "reason_agreement_key",
+    "blocker_if_rejected"
+  ],
+  "rows": 109,
+  "source_table": "qamus\\reports\\closure-2092\\pending-source-triangulation-table.jsonl",
+  "status": "requests_only_not_certified",
+  "validator": "tools/validate_bulk_two_vote_requests.py",
+  "vote_lenses": [
+    "sarf-primary",
+    "nahw-primary"
+  ]
+}

@@ -1,5 +1,6 @@
-{"_generator": "tools/audit_hover_gloss_quality.py", "_summary": {"_generator": "tools/audit_hover_gloss_quality.py", "resolved_tokens": 43005, "quality_clean": 39236, "quality_clean_pct": 91.24, "flag_counts": {"homograph_reason_missing": 17792, "particle_function_missing": 12261, "too_generic_gloss": 3769, "root_not_derivable": 3654}, "repair_queue_size": 3769}}
+{"_generator": "tools/audit_hover_gloss_quality.py", "_summary": {"_generator": "tools/audit_hover_gloss_quality.py", "resolved_tokens": 47121, "quality_clean": 43093, "quality_clean_pct": 91.45, "flag_counts": {"homograph_reason_missing": 17792, "particle_function_missing": 12261, "too_generic_gloss": 4028, "root_not_derivable": 3707}, "repair_queue_size": 4028}}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "1:7:8", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "in what", "loc": "2:4:3", "surface": "بِمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "2:4:5", "surface": "إِلَيْكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:4:8", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:5:4", "surface": "مِّن"}
@@ -9,6 +10,8 @@
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "2:14:13", "surface": "مَعَكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "2:14:15", "surface": "نَحْنُ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "2:16:6", "surface": "فَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:16:9", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "2:18:4", "surface": "فَهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "2:19:1", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:19:3", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:19:13", "surface": "مِّنَ"}
@@ -64,6 +67,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:60:24", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:61:17", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:61:43", "surface": "مِّنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "then for them", "loc": "2:62:15", "surface": "فَلَهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:62:19", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:62:22", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:67:19", "surface": "مِنَ"}
@@ -120,6 +124,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:109:16", "surface": "مِّنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "2:111:9", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "2:112:6", "surface": "وَهُوَ"}
+{"flags": ["too_generic_gloss"], "gloss": "then for him", "loc": "2:112:8", "surface": "فَلَهُۥٓ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:112:12", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:112:15", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "2:118:8", "surface": "أَوْ"}
@@ -152,6 +157,8 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:142:3", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "2:142:19", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:144:28", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:145:11", "surface": "وَمَآ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:145:15", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:145:23", "surface": "مِّنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:145:27", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:146:10", "surface": "مِّنْهُمْ"}
@@ -169,15 +176,18 @@
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "2:158:12", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:159:6", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:159:9", "surface": "مِنۢ"}
+{"flags": ["too_generic_gloss"], "gloss": "and I", "loc": "2:160:9", "surface": "وَأَنَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:162:7", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:164:20", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:164:22", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:164:31", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:165:5", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "2:165:28", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:166:5", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "with them", "loc": "2:166:11", "surface": "بِهِمُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:167:9", "surface": "مِنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:167:12", "surface": "مِنَّا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:167:19", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:167:22", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:168:9", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "him", "loc": "2:172:3", "surface": "إياه"}
@@ -188,6 +198,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:178:18", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "2:178:24", "surface": "إِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:178:28", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "then for him", "loc": "2:178:35", "surface": "فَلَهُۥ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:182:3", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "2:182:6", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "2:182:10", "surface": "فَلَآ"}
@@ -310,6 +321,8 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "2:246:3", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:246:5", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:246:8", "surface": "مِنۢ"}
+{"flags": ["too_generic_gloss"], "gloss": "not to", "loc": "2:246:29", "surface": "أَلَّا"}
+{"flags": ["too_generic_gloss"], "gloss": "not to", "loc": "2:246:34", "surface": "أَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:246:41", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:246:51", "surface": "مِّنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "2:247:17", "surface": "وَنَحْنُ"}
@@ -346,6 +359,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:258:30", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:258:34", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "2:259:1", "surface": "أَوْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and it is", "loc": "2:259:6", "surface": "وَهِىَ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "2:259:13", "surface": "هَٰذِهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "2:259:29", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "2:259:38", "surface": "إِلَىٰ"}
@@ -361,6 +375,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:266:7", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:266:11", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:266:16", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and for him", "loc": "2:266:21", "surface": "وَلَهُۥ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:267:5", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:267:12", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:267:14", "surface": "وَلَا"}
@@ -376,8 +391,10 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:273:25", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:275:12", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:275:29", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "then for him", "loc": "2:275:32", "surface": "فَلَهُۥ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "2:275:36", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:278:9", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "then for you", "loc": "2:279:1", "surface": "فَلَكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "2:280:6", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "2:281:5", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "2:282:7", "surface": "إِلَىٰٓ"}
@@ -398,10 +415,12 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:282:111", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:282:114", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:283:21", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "2:284:5", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "2:284:13", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "2:285:5", "surface": "إِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:285:6", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:285:19", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "and to You", "loc": "2:285:26", "surface": "وَإِلَيْكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "2:286:18", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "2:286:21", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "2:286:29", "surface": "مِن"}
@@ -457,6 +476,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:49:9", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "that I", "loc": "3:49:11", "surface": "أَنِّىٓ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:49:14", "surface": "مِّنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "for what", "loc": "3:50:2", "surface": "لِّمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:50:5", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:50:15", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "3:51:6", "surface": "هَٰذَا"}
@@ -495,13 +515,17 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:78:21", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:79:16", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:81:8", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "for what", "loc": "3:81:15", "surface": "لِّمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "3:81:16", "surface": "مَعَكُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and I", "loc": "3:81:30", "surface": "وَأَنَا۠"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "3:81:31", "surface": "مَعَكُم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:81:32", "surface": "مِّنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and for him", "loc": "3:83:5", "surface": "وَلَهُۥٓ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "3:83:13", "surface": "وَإِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:85:3", "surface": "مِنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:89:4", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:91:9", "surface": "مِنْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "3:91:21", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:91:23", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:92:10", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:93:13", "surface": "مِن"}
@@ -533,6 +557,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:126:13", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:127:3", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "3:127:6", "surface": "أَوْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "3:129:5", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "3:135:5", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "3:138:1", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "3:139:1", "surface": "وَلَا"}
@@ -540,6 +565,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:140:19", "surface": "مِنكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:144:7", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "3:144:12", "surface": "أَوْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "3:145:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:145:16", "surface": "مِنْهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:145:22", "surface": "مِنْهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:146:2", "surface": "مِّن"}
@@ -547,6 +573,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "3:146:8", "surface": "فَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "3:146:15", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "3:146:17", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "3:147:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:152:15", "surface": "مِّنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:152:21", "surface": "مِنكُم"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "3:153:3", "surface": "وَلَا"}
@@ -574,14 +601,19 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:170:5", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "with them", "loc": "3:170:11", "surface": "بِهِم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:170:12", "surface": "مِّنْ"}
+{"flags": ["too_generic_gloss"], "gloss": "not to", "loc": "3:170:14", "surface": "أَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "3:170:17", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "3:175:6", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "3:176:1", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "not to", "loc": "3:176:14", "surface": "أَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:179:13", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "3:179:15", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:179:24", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "then for you", "loc": "3:179:34", "surface": "فَلَكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "3:180:1", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:180:8", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "3:181:10", "surface": "وَنَحْنُ"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "3:182:5", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:186:6", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:186:10", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "3:186:22", "surface": "مِنْ"}
@@ -617,21 +649,28 @@
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "4:7:16", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:8:9", "surface": "مِّنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:9:5", "surface": "مِنْ"}
+{"flags": ["too_generic_gloss"], "gloss": "then for them", "loc": "4:11:14", "surface": "فَلَهُنَّ"}
+{"flags": ["too_generic_gloss"], "gloss": "then for it", "loc": "4:11:21", "surface": "فَلَهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:11:26", "surface": "مِّنْهُمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:11:49", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "4:11:54", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:11:65", "surface": "مِّنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "then for you", "loc": "4:12:15", "surface": "فَلَكُمُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:12:19", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "4:12:24", "surface": "أَوْ"}
+{"flags": ["too_generic_gloss"], "gloss": "then for them", "loc": "4:12:39", "surface": "فَلَهُنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:12:43", "surface": "مِّنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "4:12:48", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "4:12:55", "surface": "أَوِ"}
+{"flags": ["too_generic_gloss"], "gloss": "and for him", "loc": "4:12:57", "surface": "وَلَهُۥٓ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "4:12:59", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:12:63", "surface": "مِّنْهُمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:12:68", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "4:12:70", "surface": "فَهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:12:74", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "4:12:79", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:12:84", "surface": "مِّنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and for him", "loc": "4:14:11", "surface": "وَلَهُۥ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:15:4", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:16:3", "surface": "منكم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:17:11", "surface": "مِن"}
@@ -676,6 +715,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "4:43:32", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:46:1", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "4:46:35", "surface": "فَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "for what", "loc": "4:47:9", "surface": "لِّمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "4:47:10", "surface": "مَعَكُم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:47:11", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "4:47:19", "surface": "أَوْ"}
@@ -832,6 +872,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:160:2", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:161:12", "surface": "مِنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:162:5", "surface": "مِنْهُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "in what", "loc": "4:162:8", "surface": "بِمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "4:162:10", "surface": "إِلَيْكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:162:13", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "4:163:3", "surface": "إِلَيْكَ"}
@@ -846,6 +887,8 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "4:173:21", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "4:173:25", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "4:174:2", "surface": "إِلَيْكُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and for him", "loc": "4:176:13", "surface": "وَلَهُۥٓ"}
+{"flags": ["too_generic_gloss"], "gloss": "then for it", "loc": "4:176:15", "surface": "فَلَهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "4:176:19", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "5:2:8", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "5:2:11", "surface": "وَلَا"}
@@ -915,6 +958,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:36:15", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:36:21", "surface": "مِنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:37:4", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "5:37:6", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:37:9", "surface": "مِنْهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:38:9", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:41:9", "surface": "مِنَ"}
@@ -927,9 +971,12 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:44:18", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "5:44:24", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "5:44:28", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "for what", "loc": "5:46:8", "surface": "لِّمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:46:11", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "for what", "loc": "5:46:19", "surface": "لِّمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:46:22", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "5:48:2", "surface": "إِلَيْكَ"}
+{"flags": ["too_generic_gloss"], "gloss": "for what", "loc": "5:48:6", "surface": "لِّمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:48:9", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "5:48:18", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:48:23", "surface": "مِنَ"}
@@ -949,6 +996,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "5:58:3", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:59:6", "surface": "مِنَّآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:59:16", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "5:59:18", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:60:5", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:60:16", "surface": "مِنْهُمُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:62:3", "surface": "مِّنْهُمْ"}
@@ -966,6 +1014,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "then not", "loc": "5:67:12", "surface": "فَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:67:17", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "5:70:7", "surface": "إِلَيْهِمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "not to", "loc": "5:71:2", "surface": "أَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:71:15", "surface": "مِّنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:73:10", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:73:23", "surface": "مِنْهُمْ"}
@@ -993,6 +1042,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "5:95:31", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:95:46", "surface": "مِنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "5:96:19", "surface": "إِلَيْهِ"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "5:99:10", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "5:103:4", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "5:103:6", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "5:103:8", "surface": "وَلَا"}
@@ -1032,6 +1082,8 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "6:10:4", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "6:10:9", "surface": "مِنْهُم"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "6:12:14", "surface": "إِلَىٰ"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "6:12:23", "surface": "فَهُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and for him", "loc": "6:13:1", "surface": "وَلَهُۥ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "6:13:7", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "6:14:9", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "6:14:11", "surface": "وَلَا"}
@@ -1045,6 +1097,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "and in", "loc": "6:25:11", "surface": "وَفِىٓ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "6:25:29", "surface": "هَٰذَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "6:28:7", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "for what", "loc": "6:28:12", "surface": "لِمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "6:35:13", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "6:35:25", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "6:35:27", "surface": "مِنَ"}
@@ -1096,6 +1149,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "6:71:9", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "6:71:27", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "6:73:1", "surface": "وَهُوَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and for him", "loc": "6:73:13", "surface": "وَلَهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "6:73:22", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "6:76:8", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "6:79:11", "surface": "مِنَ"}
@@ -1137,6 +1191,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "6:114:20", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "6:114:22", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "6:115:9", "surface": "وَهُوَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "6:116:15", "surface": "وَإِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "6:121:1", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "6:121:14", "surface": "إِلَىٰٓ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "6:122:18", "surface": "مِّنْهَا"}
@@ -1147,11 +1202,14 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "6:136:5", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "6:136:10", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and this", "loc": "6:136:13", "surface": "وَهَٰذَا"}
+{"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "6:136:15", "surface": "فَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "6:136:18", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "6:136:20", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "6:136:27", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "6:138:2", "surface": "هَٰذِهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "6:139:5", "surface": "هَٰذِهِ"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "6:139:15", "surface": "فَهُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "6:140:18", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "6:141:1", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "6:141:18", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "6:141:26", "surface": "وَلَا"}
@@ -1177,6 +1235,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "6:151:27", "surface": "مِنْهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "6:151:30", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "6:152:1", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "6:153:1", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "6:153:2", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "6:153:6", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "6:156:8", "surface": "مِن"}
@@ -1190,14 +1249,17 @@
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "6:158:29", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "6:159:8", "surface": "مِنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "6:159:13", "surface": "إِلَى"}
+{"flags": ["too_generic_gloss"], "gloss": "then for him", "loc": "6:160:4", "surface": "فَلَهُۥ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "6:160:10", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and with that", "loc": "6:163:4", "surface": "وَبِذَٰلِكَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and I", "loc": "6:163:6", "surface": "وَأَنَا۠"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "6:164:6", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "6:164:10", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "6:164:16", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "6:164:22", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "6:165:1", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "7:4:4", "surface": "أَوْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "7:7:4", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:11:15", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:13:3", "surface": "مِنْهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:13:12", "surface": "مِنَ"}
@@ -1233,6 +1295,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:50:9", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "7:50:11", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "7:51:15", "surface": "هَٰذَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "7:51:16", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:53:11", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:53:20", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "7:53:24", "surface": "أَوْ"}
@@ -1245,6 +1308,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:60:3", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:65:11", "surface": "مِّنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:67:8", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "and I", "loc": "7:68:4", "surface": "وَأَنَا۠"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:73:11", "surface": "مِّنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:73:17", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "7:73:19", "surface": "هَٰذِهِۦ"}
@@ -1252,6 +1316,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:74:2", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:77:14", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:81:5", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "7:82:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:82:9", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:83:4", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:85:11", "surface": "مِّنْ"}
@@ -1281,6 +1346,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "7:143:11", "surface": "إِلَيْكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "7:143:17", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "7:143:38", "surface": "إِلَيْكَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and I", "loc": "7:143:39", "surface": "وَأَنَا۠"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:148:4", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "7:148:6", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "7:148:17", "surface": "وَلَا"}
@@ -1355,8 +1421,11 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "8:16:10", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "8:16:15", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "8:17:15", "surface": "مِنْهُ"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "8:18:2", "surface": "وَأَنَّ"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "8:19:21", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "8:19:23", "surface": "مَعَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "8:20:7", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "for what", "loc": "8:24:9", "surface": "لِمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "8:24:19", "surface": "إِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "8:25:2", "surface": "مِنكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "8:26:16", "surface": "مِّنَ"}
@@ -1364,7 +1433,11 @@
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "8:30:9", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "8:31:12", "surface": "هَٰذَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "8:31:14", "surface": "هَٰذَآ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "8:34:1", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "8:34:11", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "8:35:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "8:41:4", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "then that", "loc": "8:41:6", "surface": "فَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "8:42:10", "surface": "مِنكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "8:46:4", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "8:46:12", "surface": "مَعَ"}
@@ -1372,6 +1445,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "8:47:5", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "8:48:11", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "8:48:25", "surface": "مِّنكُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "8:53:15", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "with them", "loc": "8:57:6", "surface": "بِهِم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "8:58:3", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "8:58:7", "surface": "إِلَيْهِمْ"}
@@ -1391,6 +1465,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:1:2", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "9:1:5", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:1:8", "surface": "مِّنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "9:2:11", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:3:2", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "9:3:5", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:3:13", "surface": "مِّنَ"}
@@ -1424,6 +1499,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:38:19", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "9:40:23", "surface": "مَعَنَا"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "9:42:17", "surface": "مَعَكُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "9:45:11", "surface": "فَهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "9:46:14", "surface": "مَعَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:48:4", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "9:49:6", "surface": "وَلَا"}
@@ -1446,6 +1522,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "and in", "loc": "9:60:12", "surface": "وَفِى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:60:18", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:61:19", "surface": "مِنكُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "then that", "loc": "9:63:8", "surface": "فَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:66:5", "surface": "مِنْكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:67:4", "surface": "مِّنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:69:2", "surface": "مِن"}
@@ -1471,6 +1548,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:86:13", "surface": "مِنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "9:86:17", "surface": "مَّعَ"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "9:87:4", "surface": "مَعَ"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "9:87:9", "surface": "فَهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:90:3", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:90:15", "surface": "مِنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "9:91:4", "surface": "وَلَا"}
@@ -1478,10 +1556,12 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:91:22", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "9:92:1", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:92:17", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "not to", "loc": "9:92:20", "surface": "أَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "9:94:2", "surface": "إِلَيْكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "9:94:5", "surface": "إِلَيْهِمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:94:15", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "9:94:23", "surface": "إِلَىٰ"}
+{"flags": ["too_generic_gloss"], "gloss": "not to", "loc": "9:97:6", "surface": "أَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:100:3", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:101:3", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "9:101:14", "surface": "نَحْنُ"}
@@ -1494,6 +1574,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "9:109:10", "surface": "أَم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:111:4", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:111:27", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "9:114:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "him", "loc": "9:114:10", "surface": "إِيَّاهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:114:18", "surface": "مِنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:117:13", "surface": "مِنۢ"}
@@ -1511,6 +1592,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "9:121:1", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "9:121:5", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "9:121:7", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "9:122:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:122:8", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "9:122:11", "surface": "مِّنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "9:122:20", "surface": "إِلَيْهِمْ"}
@@ -1539,6 +1621,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:18:2", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "10:18:8", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "10:18:23", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "10:19:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:19:11", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:20:6", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "10:20:14", "surface": "مَعَكُم"}
@@ -1564,20 +1647,26 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:31:14", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:31:18", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "so what", "loc": "10:32:5", "surface": "فَمَاذَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "10:36:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:36:10", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "10:37:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "10:37:3", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:37:7", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:37:20", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:39:13", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and I", "loc": "10:41:12", "surface": "وَأَنَا۠"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "10:42:4", "surface": "إِلَيْكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:45:8", "surface": "مِّنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "10:45:18", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "10:48:3", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "10:50:7", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:50:11", "surface": "مِنْهُ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "10:53:9", "surface": "وَمَآ"}
+{"flags": ["too_generic_gloss"], "gloss": "so in that", "loc": "10:58:5", "surface": "فَبِذَٰلِكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:59:7", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:59:10", "surface": "مِّنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "10:59:17", "surface": "أَمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "10:61:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "10:62:8", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and in", "loc": "10:64:6", "surface": "وَفِى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:68:17", "surface": "مِّن"}
@@ -1589,9 +1678,11 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:83:6", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:83:10", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "10:87:2", "surface": "إِلَىٰ"}
+{"flags": ["too_generic_gloss"], "gloss": "and I", "loc": "10:90:25", "surface": "وَأَنَا۠"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:90:26", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:91:6", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:93:8", "surface": "مِّنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "then not", "loc": "10:93:10", "surface": "فَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "10:94:7", "surface": "إِلَيْكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:94:12", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:94:17", "surface": "مِن"}
@@ -1602,9 +1693,12 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "10:107:20", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "10:107:22", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:1:11", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:1:12", "surface": "لَّدُنْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "11:3:1", "surface": "وَأَنِ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "11:3:6", "surface": "إِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "11:3:10", "surface": "إِلَىٰٓ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:5:6", "surface": "مِنْهُ"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "11:5:14", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "11:7:1", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:7:21", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "11:7:28", "surface": "هَٰذَآ"}
@@ -1624,9 +1718,13 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:17:33", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "11:23:4", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:27:5", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:27:12", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:27:21", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:27:25", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:28:8", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:28:12", "surface": "مِّنْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:29:11", "surface": "وَمَآ"}
+{"flags": ["too_generic_gloss"], "gloss": "but I", "loc": "11:29:19", "surface": "وَلَٰكِنِّىٓ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:31:1", "surface": "وَلَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:31:7", "surface": "وَلَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:31:10", "surface": "وَلَآ"}
@@ -1635,6 +1733,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:34:1", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "11:34:17", "surface": "وَإِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "11:35:1", "surface": "أَمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and I", "loc": "11:35:9", "surface": "وَأَنَا۠"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "11:36:2", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:36:7", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "11:36:13", "surface": "فَلَا"}
@@ -1644,6 +1743,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:38:9", "surface": "مِنكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:40:10", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "with him", "loc": "11:40:24", "surface": "مَعَهُۥٓ"}
+{"flags": ["too_generic_gloss"], "gloss": "and it", "loc": "11:42:1", "surface": "وَهِىَ"}
 {"flags": ["too_generic_gloss"], "gloss": "with them", "loc": "11:42:3", "surface": "بِهِمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "11:42:15", "surface": "مَّعَنَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:42:16", "surface": "وَلَا"}
@@ -1674,8 +1774,10 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "11:70:6", "surface": "إِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:70:9", "surface": "مِنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "11:70:16", "surface": "إِلَىٰ"}
+{"flags": ["too_generic_gloss"], "gloss": "and I", "loc": "11:72:4", "surface": "وَأَنَا۠"}
 {"flags": ["too_generic_gloss"], "gloss": "and this", "loc": "11:72:6", "surface": "وَهَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "11:72:10", "surface": "هَٰذَا"}
+{"flags": ["too_generic_gloss"], "gloss": "a thing", "loc": "11:72:11", "surface": "لَشَىْءٌ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:73:3", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "11:76:4", "surface": "هَٰذَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "with them", "loc": "11:77:6", "surface": "بِهِمْ"}
@@ -1689,6 +1791,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:81:16", "surface": "مِنكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:84:11", "surface": "مِّنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:84:14", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:86:8", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:88:8", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:88:11", "surface": "مِنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:88:14", "surface": "وَمَآ"}
@@ -1697,11 +1800,17 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "11:88:34", "surface": "وَإِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "11:89:6", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "11:89:9", "surface": "أَوْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:89:12", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:89:15", "surface": "مِنْكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "11:90:5", "surface": "إِلَيْهِ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:91:15", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:92:6", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "11:93:18", "surface": "مَعَكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "11:97:1", "surface": "إِلَىٰ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:97:7", "surface": "وَمَآ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:104:1", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "then in", "loc": "11:106:4", "surface": "فَفِى"}
+{"flags": ["too_generic_gloss"], "gloss": "then in", "loc": "11:108:4", "surface": "فَفِي"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "11:109:1", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "11:109:14", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "11:113:1", "surface": "وَلَا"}
@@ -1724,6 +1833,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:9:11", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:10:3", "surface": "مِّنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "12:12:2", "surface": "مَعَنَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "12:17:12", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "12:19:9", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:20:8", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:21:4", "surface": "مِن"}
@@ -1758,11 +1868,14 @@
 {"flags": ["too_generic_gloss"], "gloss": "that not", "loc": "12:40:21", "surface": "أَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "him", "loc": "12:40:24", "surface": "إِيَّاهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:42:6", "surface": "مِّنْهُمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "12:44:4", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "12:44:5", "surface": "نَحْنُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:45:4", "surface": "مِنْهُمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:48:3", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:49:3", "surface": "مِنۢ"}
+{"flags": ["too_generic_gloss"], "gloss": "and in it", "loc": "12:49:10", "surface": "وَفِيهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:51:15", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "12:53:1", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:56:7", "surface": "مِنْهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "12:56:14", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:64:10", "surface": "مِن"}
@@ -1773,13 +1886,16 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:66:8", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:67:5", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:67:9", "surface": "مِنْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "12:67:12", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:67:15", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:67:17", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:68:3", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:68:11", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:68:13", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "for what", "loc": "12:68:24", "surface": "لِّمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "12:69:6", "surface": "إِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "12:69:12", "surface": "فَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and I", "loc": "12:72:10", "surface": "وَأَنَا۠"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:76:8", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:77:8", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:78:14", "surface": "مِنَ"}
@@ -1807,9 +1923,13 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:101:7", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:102:2", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "12:102:6", "surface": "إِلَيْكَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "12:102:7", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "12:103:1", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "12:108:2", "surface": "هَٰذِهِۦ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "12:108:5", "surface": "إِلَى"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "12:108:14", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:108:16", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "12:109:1", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:109:3", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "12:109:8", "surface": "إِلَيْهِم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "12:109:9", "surface": "مِّنْ"}
@@ -1820,14 +1940,19 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:4:6", "surface": "مِّنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:6:7", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:7:8", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "13:8:7", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "13:8:10", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:10:2", "surface": "مِّنكُم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:11:3", "surface": "مِّنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:11:9", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "13:11:27", "surface": "فَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "13:11:30", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:11:32", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:11:34", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:14:6", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "13:14:15", "surface": "إِلَى"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "13:14:19", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "13:14:22", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:16:10", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "13:16:17", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "13:16:24", "surface": "أَمْ"}
@@ -1854,6 +1979,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "13:33:21", "surface": "أَم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:33:23", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:33:38", "surface": "مِنْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "13:34:9", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:34:11", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:34:13", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:35:7", "surface": "مِن"}
@@ -1862,8 +1988,10 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:37:16", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "13:37:18", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:38:4", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "13:38:10", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "13:41:7", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "13:41:14", "surface": "وَهُوَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "14:4:1", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "14:4:3", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "14:4:17", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "14:14:3", "surface": "مِنۢ"}
@@ -1871,12 +1999,16 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "14:16:5", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "14:17:2", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "14:17:7", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "14:17:10", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "14:21:16", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "14:21:19", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "14:21:29", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "14:21:33", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "14:22:13", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "14:22:17", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "14:22:24", "surface": "فَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "14:22:31", "surface": "وَمَآ"}
+{"flags": ["too_generic_gloss"], "gloss": "in what", "loc": "14:22:36", "surface": "بِمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "14:22:38", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "14:23:8", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "14:26:7", "surface": "مِن"}
@@ -1902,9 +2034,11 @@
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "14:47:1", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "14:50:2", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:5:3", "surface": "مِنْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "15:5:6", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "15:9:2", "surface": "نَحْنُ"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "15:15:6", "surface": "نَحْنُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:19:8", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "15:22:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:24:4", "surface": "مِنكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:26:4", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:26:6", "surface": "مِّنْ"}
@@ -1915,8 +2049,10 @@
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "15:41:2", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:44:6", "surface": "مِّنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:47:5", "surface": "مِّنْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "15:48:5", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:48:7", "surface": "مِّنْهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "that I", "loc": "15:49:3", "surface": "أَنِّىٓ"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "15:50:1", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "15:55:4", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:55:6", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:65:4", "surface": "مِّنَ"}
@@ -1928,6 +2064,8 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:74:7", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:79:2", "surface": "مِنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:82:3", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "15:85:1", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "15:85:5", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:87:2", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "15:88:4", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "15:88:9", "surface": "مِّنْهُمْ"}
@@ -1937,12 +2075,16 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "16:7:3", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "16:10:4", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "16:10:8", "surface": "مِّنْهُ"}
+{"flags": ["too_generic_gloss"], "gloss": "and from it", "loc": "16:10:10", "surface": "وَمِنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "16:14:1", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "16:14:6", "surface": "مِنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "16:14:10", "surface": "مِنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "16:14:18", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "with you", "loc": "16:15:7", "surface": "بِكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "is then he who", "loc": "16:17:1", "surface": "أَفَمَن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "16:20:3", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "16:21:4", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "16:23:8", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "16:26:4", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "16:26:9", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "16:26:14", "surface": "مِن"}
@@ -2005,9 +2147,11 @@
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "16:116:7", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and this", "loc": "16:116:9", "surface": "وَهَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "16:118:8", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "16:118:10", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "16:121:5", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "16:125:2", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "16:125:20", "surface": "وَهُوَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "16:127:2", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "16:127:6", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "16:127:9", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "17:1:10", "surface": "مِّنَ"}
@@ -2344,6 +2488,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "21:101:5", "surface": "مِّنَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "21:103:7", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "21:109:10", "surface": "أَم"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "22:2:16", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "22:5:7", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "22:5:11", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "22:5:14", "surface": "مِن"}
@@ -2353,6 +2498,8 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "22:5:47", "surface": "إِلَىٰٓ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "22:5:52", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "22:5:66", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "22:7:1", "surface": "وَأَنَّ"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "22:7:7", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "22:13:5", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "22:14:10", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "22:15:13", "surface": "إِلَى"}
@@ -2379,9 +2526,11 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "22:37:10", "surface": "مِنكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "22:40:3", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "22:46:10", "surface": "أَوْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "22:52:1", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "22:52:3", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "22:52:5", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "22:52:7", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "22:61:12", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "22:63:6", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "22:67:7", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "22:67:12", "surface": "إِلَىٰ"}
@@ -2409,6 +2558,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "23:33:3", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "23:33:15", "surface": "هَٰذَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "23:33:22", "surface": "مِنْهُ"}
+{"flags": ["too_generic_gloss"], "gloss": "for what", "loc": "23:36:3", "surface": "لِمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "23:46:1", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "23:48:3", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "23:60:8", "surface": "إِلَىٰ"}
@@ -2416,11 +2566,13 @@
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "23:70:1", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "23:72:1", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "23:72:7", "surface": "وَهُوَ"}
+{"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "23:76:1", "surface": "فَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "23:79:1", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "23:79:6", "surface": "وَإِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "23:88:7", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "23:88:9", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "23:91:4", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "23:91:6", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "with him", "loc": "23:91:8", "surface": "مَعَهُۥ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "23:91:9", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "23:96:6", "surface": "نَحْنُ"}
@@ -2428,6 +2580,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "23:108:4", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "23:110:7", "surface": "مِّنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "23:113:4", "surface": "أَوْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and that you", "loc": "23:115:5", "surface": "وَأَنَّكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "23:117:3", "surface": "مَعَ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "24:3:6", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "24:3:13", "surface": "أَوْ"}
@@ -2443,6 +2596,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "24:22:1", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "24:22:5", "surface": "مِنكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "24:28:6", "surface": "فَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "24:29:16", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "24:30:4", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "24:31:4", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "24:31:8", "surface": "وَلَا"}
@@ -2485,6 +2639,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "24:49:2", "surface": "إِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "24:50:4", "surface": "أَمِ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "24:50:6", "surface": "أَمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "24:54:18", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "24:55:5", "surface": "مِنكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "24:55:14", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "24:55:23", "surface": "مِّنۢ"}
@@ -2562,12 +2717,14 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "25:68:16", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "25:71:7", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "25:74:6", "surface": "مِنْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "26:8:5", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "26:13:3", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "26:13:7", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "but no", "loc": "26:15:2", "surface": "كَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "26:15:6", "surface": "مَعَكُم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "26:18:8", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "26:19:6", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "26:24:5", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "26:29:7", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "26:49:18", "surface": "مِّنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "26:52:2", "surface": "إِلَىٰ"}
@@ -2584,6 +2741,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "26:136:5", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "26:136:8", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "26:137:2", "surface": "هَٰذَآ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "26:138:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "26:138:2", "surface": "نَحْنُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "26:149:2", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "26:151:1", "surface": "وَلَا"}
@@ -2594,6 +2752,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "26:168:4", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "26:181:3", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "26:181:5", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "26:209:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "26:213:1", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "26:213:3", "surface": "مَعَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "26:213:8", "surface": "مِنَ"}
@@ -2606,12 +2765,15 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:16:11", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "27:16:15", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:17:4", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "27:17:8", "surface": "فَهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:19:3", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "27:20:9", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:20:11", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:22:11", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:23:6", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and for it", "loc": "27:23:9", "surface": "وَلَهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:24:5", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "27:24:15", "surface": "فَهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "that not", "loc": "27:25:1", "surface": "أَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "27:29:6", "surface": "إِلَىَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "27:33:2", "surface": "نَحْنُ"}
@@ -2630,6 +2792,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "27:44:24", "surface": "مَعَ"}
 {"flags": ["too_generic_gloss"], "gloss": "with you", "loc": "27:47:5", "surface": "مَّعَكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "27:49:8", "surface": "لِوَلِيِّهِۦ"}
+{"flags": ["too_generic_gloss"], "gloss": "so that", "loc": "27:52:1", "surface": "فَتِلْكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:55:5", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "27:56:1", "surface": "فَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:56:11", "surface": "مِّن"}
@@ -2641,9 +2804,13 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:75:2", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "27:80:5", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:82:4", "surface": "مِّنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "27:85:6", "surface": "فَهُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and it is", "loc": "27:88:5", "surface": "وَهِىَ"}
+{"flags": ["too_generic_gloss"], "gloss": "then for him", "loc": "27:89:4", "surface": "فَلَهُۥ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:89:6", "surface": "مِّنْهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:89:8", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "27:91:6", "surface": "هَٰذِهِ"}
+{"flags": ["too_generic_gloss"], "gloss": "and for him", "loc": "27:91:10", "surface": "وَلَهُۥ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:91:16", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "27:92:14", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "28:4:11", "surface": "مِّنْهُمْ"}
@@ -2709,9 +2876,13 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "28:57:15", "surface": "إِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "28:57:20", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "28:58:3", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "28:59:1", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "28:59:14", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "is then he who", "loc": "28:61:1", "surface": "أَفَمَن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "28:61:16", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "28:63:14", "surface": "إِلَيْكَ"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "28:66:5", "surface": "فَهُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "28:69:6", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "28:71:2", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "28:76:4", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "28:76:10", "surface": "مِنَ"}
@@ -2726,6 +2897,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "28:88:18", "surface": "وَإِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "29:8:14", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "29:8:16", "surface": "إِلَىَّ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "29:12:10", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "29:12:13", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "29:12:15", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "29:13:4", "surface": "مَّعَ"}
@@ -2734,6 +2906,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "29:17:12", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "29:17:26", "surface": "إِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "29:18:6", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "29:18:8", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "29:21:7", "surface": "وَإِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "29:25:4", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "29:25:26", "surface": "مِّن"}
@@ -2744,6 +2917,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "29:33:14", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "29:33:22", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "29:38:6", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "29:39:11", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "29:41:4", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "29:45:4", "surface": "إِلَيْكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "29:45:5", "surface": "مِنَ"}
@@ -2757,12 +2931,15 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "30:9:10", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "30:9:14", "surface": "مِنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "30:11:7", "surface": "إِلَيْهِ"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "30:15:6", "surface": "فَهُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and for him", "loc": "30:18:1", "surface": "وَلَهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "30:19:3", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "30:19:7", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "30:21:6", "surface": "مِّنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "30:21:10", "surface": "إِلَيْهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "30:27:1", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "30:27:7", "surface": "وَهُوَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and for him", "loc": "30:27:10", "surface": "وَلَهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "30:27:16", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "30:28:4", "surface": "مِّنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "30:28:8", "surface": "مِّن"}
@@ -2792,6 +2969,8 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "30:54:14", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "30:54:22", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "30:56:11", "surface": "إِلَىٰ"}
+{"flags": ["too_generic_gloss"], "gloss": "so this", "loc": "30:56:14", "surface": "فَهَٰذَا"}
+{"flags": ["too_generic_gloss"], "gloss": "but you", "loc": "30:56:17", "surface": "وَلَٰكِنَّكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "30:60:6", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "31:10:15", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "31:10:19", "surface": "مِنَ"}
@@ -2804,6 +2983,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "31:18:1", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "31:18:5", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "31:19:5", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "31:20:10", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "31:20:26", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "31:20:28", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "31:21:19", "surface": "إِلَىٰ"}
@@ -2818,6 +2998,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "31:33:27", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "31:34:12", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "31:34:18", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "32:4:6", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "32:4:17", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "32:4:19", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "32:4:21", "surface": "وَلَا"}
@@ -2827,6 +3008,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "32:8:4", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "32:9:5", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "32:11:9", "surface": "إِلَىٰ"}
+{"flags": ["too_generic_gloss"], "gloss": "then for them", "loc": "32:19:6", "surface": "فَلَهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "32:20:10", "surface": "مِنْهَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "32:24:2", "surface": "مِنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "33:1:9", "surface": "وَلَا"}
@@ -2854,6 +3036,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "33:33:4", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "33:34:6", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "33:37:29", "surface": "مِّنْهَا"}
+{"flags": ["too_generic_gloss"], "gloss": "so that", "loc": "33:37:32", "surface": "لِكَىْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "33:38:5", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "33:38:16", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "33:40:6", "surface": "مِّن"}
@@ -2885,8 +3068,11 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "33:62:6", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "33:68:4", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "33:72:12", "surface": "مِنْهَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "34:2:6", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "34:2:8", "surface": "مِنْهَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "34:2:9", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "34:2:11", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "34:2:13", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "34:2:16", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "34:3:1", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "34:3:3", "surface": "مِن"}
@@ -2905,6 +3091,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "34:13:17", "surface": "مِّنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "34:15:12", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "34:16:14", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "and is", "loc": "34:17:5", "surface": "وَهَلْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "34:23:1", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "34:23:20", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "34:25:6", "surface": "وَلَا"}
@@ -2912,11 +3099,13 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "34:31:8", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "34:31:21", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "but", "loc": "34:31:31", "surface": "لَكُنَّا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "34:34:1", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "34:34:5", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "34:37:3", "surface": "وَلَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "34:39:8", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "34:39:14", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "34:39:18", "surface": "وَهُوَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "34:45:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "34:46:14", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "34:51:5", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "34:51:8", "surface": "مِن"}
@@ -2941,6 +3130,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "35:11:21", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "35:11:23", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "35:11:25", "surface": "مِنْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "35:12:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "35:12:4", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and this", "loc": "35:12:9", "surface": "وَهَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "35:12:25", "surface": "مِن"}
@@ -2951,9 +3141,12 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "35:18:1", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "35:18:9", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "35:18:13", "surface": "مِنْهُ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "35:19:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "35:21:1", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "35:21:3", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "35:22:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "35:22:4", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "35:22:11", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "35:24:7", "surface": "مِّنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "35:27:6", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "35:28:11", "surface": "مِنْ"}
@@ -2967,6 +3160,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "35:40:12", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "35:40:14", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "35:40:19", "surface": "أَمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "35:40:22", "surface": "فَهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "35:40:25", "surface": "مِّنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "35:41:12", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "35:41:14", "surface": "مِّنۢ"}
@@ -2975,6 +3169,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "35:45:11", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "35:45:15", "surface": "إِلَىٰٓ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "36:8:7", "surface": "إِلَى"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "36:8:9", "surface": "فَهُم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "36:9:2", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "36:12:2", "surface": "نَحْنُ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "36:14:3", "surface": "إِلَيْهِمُ"}
@@ -2983,6 +3178,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "36:27:6", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "36:30:6", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "36:33:7", "surface": "مِنْهَا"}
+{"flags": ["too_generic_gloss"], "gloss": "so from it", "loc": "36:33:9", "surface": "فَمِنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "36:37:5", "surface": "مِنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "36:40:8", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "36:43:4", "surface": "فَلَا"}
@@ -2994,7 +3190,11 @@
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "36:52:7", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "36:62:3", "surface": "مِنكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "36:67:9", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "so from it", "loc": "36:72:3", "surface": "فَمِنْهَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and from it", "loc": "36:72:5", "surface": "وَمِنْهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "36:76:1", "surface": "فَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "36:76:8", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and it is", "loc": "36:78:5", "surface": "وَهِيَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "36:80:4", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "36:80:10", "surface": "مِّنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "36:81:12", "surface": "وَهُوَ"}
@@ -3002,6 +3202,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "37:8:3", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "37:8:7", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "37:11:3", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "37:30:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "37:30:5", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "37:47:4", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and with them", "loc": "37:48:1", "surface": "وَعِندَهُمْ"}
@@ -3026,6 +3227,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "38:4:5", "surface": "مِّنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "38:4:8", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "38:5:6", "surface": "هَٰذَا"}
+{"flags": ["too_generic_gloss"], "gloss": "a thing", "loc": "38:5:7", "surface": "لَشَىْءٌ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "38:7:8", "surface": "هَٰذَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "38:11:5", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "38:15:9", "surface": "مِن"}
@@ -3053,6 +3255,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "with them", "loc": "38:59:7", "surface": "بِهِمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "38:61:6", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "38:62:9", "surface": "مِّنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "38:66:4", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "38:74:5", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "38:75:11", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "38:75:13", "surface": "مِنَ"}
@@ -3077,6 +3280,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "39:23:33", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "is then he who", "loc": "39:24:1", "surface": "أَفَمَن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "39:36:7", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "39:36:12", "surface": "فَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "39:36:14", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "39:38:13", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "39:38:24", "surface": "أَوْ"}
@@ -3115,19 +3319,24 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "40:41:8", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "40:43:5", "surface": "إِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "40:43:11", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "40:43:14", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "40:43:16", "surface": "إِلَى"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "40:43:18", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "40:44:3", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "40:47:18", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "40:57:5", "surface": "مِنْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "40:58:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "40:58:9", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "40:64:13", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "40:78:4", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "40:78:6", "surface": "مِنْهُم"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "40:78:15", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "40:82:10", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "40:82:14", "surface": "مِنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and in", "loc": "41:5:1", "surface": "وَفِي"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "41:10:4", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "41:11:3", "surface": "إِلَى"}
+{"flags": ["too_generic_gloss"], "gloss": "and it is", "loc": "41:11:5", "surface": "وَهِىَ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "41:11:12", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "41:21:13", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "41:21:17", "surface": "وَإِلَيْهِ"}
@@ -3135,6 +3344,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "41:25:18", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "41:25:20", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "for this", "loc": "41:26:6", "surface": "لِهَٰذَا"}
+{"flags": ["too_generic_gloss"], "gloss": "not to", "loc": "41:30:11", "surface": "أَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "41:30:13", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "41:33:6", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "41:33:12", "surface": "مِنَ"}
@@ -3164,6 +3374,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "42:13:29", "surface": "إِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "42:13:32", "surface": "إِلَيْهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "42:13:36", "surface": "إِلَيْهِ"}
+{"flags": ["too_generic_gloss"], "gloss": "so for that", "loc": "42:15:1", "surface": "فَلِذَٰلِكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "42:15:6", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "42:15:14", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "42:15:33", "surface": "وَإِلَيْهِ"}
@@ -3190,6 +3401,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "42:47:15", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "42:47:20", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "42:50:1", "surface": "أَوْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "42:51:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "42:51:9", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "42:51:10", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "42:51:13", "surface": "أَوْ"}
@@ -3198,16 +3410,20 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "42:52:12", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "42:52:21", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "42:52:25", "surface": "إِلَىٰ"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "42:53:8", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "42:53:12", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "43:8:3", "surface": "مِنْهُم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "43:11:3", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "43:13:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "43:18:5", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "43:21:1", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "43:21:4", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "43:21:6", "surface": "فَهُم"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "43:31:4", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "43:31:8", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "43:32:5", "surface": "نَحْنُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "43:33:13", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "and this", "loc": "43:51:11", "surface": "وَهَٰذِهِ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "43:51:14", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "43:52:1", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "43:52:4", "surface": "مِّنْ"}
@@ -3220,11 +3436,15 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "43:57:8", "surface": "مِنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "43:58:4", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "43:71:4", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "and in it", "loc": "43:71:7", "surface": "وَفِيهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "43:79:1", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "44:18:3", "surface": "إِلَىَّ"}
+{"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "44:29:1", "surface": "فَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "44:29:6", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "44:30:5", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "44:31:1", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "44:31:6", "surface": "مِّنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "44:35:6", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "44:35:7", "surface": "نَحْنُ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "44:37:3", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "44:37:7", "surface": "مِن"}
@@ -3236,8 +3456,12 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "45:18:5", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "45:18:8", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "45:21:1", "surface": "أَمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "45:24:9", "surface": "وَمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "45:24:13", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "45:24:16", "surface": "مِنْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "45:32:20", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "45:32:21", "surface": "نَحْنُ"}
+{"flags": ["too_generic_gloss"], "gloss": "and for him", "loc": "45:37:1", "surface": "وَلَهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "45:37:6", "surface": "وَهُوَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "46:4:5", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "46:4:11", "surface": "مِنَ"}
@@ -3260,6 +3484,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "46:22:11", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "46:24:7", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "46:28:5", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "46:28:15", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "46:29:3", "surface": "إِلَيْكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "46:29:5", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "46:29:16", "surface": "إِلَىٰ"}
@@ -3323,6 +3548,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "49:13:5", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "50:2:6", "surface": "مِّنْهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "50:2:9", "surface": "هَٰذَا"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "50:5:6", "surface": "فَهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "50:6:3", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "50:6:11", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "50:7:8", "surface": "مِن"}
@@ -3376,8 +3602,10 @@
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "52:37:1", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "52:37:5", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "52:40:1", "surface": "أَمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "52:40:4", "surface": "فَهُم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "52:40:5", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "52:41:1", "surface": "أَمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "so they", "loc": "52:41:4", "surface": "فَهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "52:43:1", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "52:44:4", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "53:9:4", "surface": "أَوْ"}
@@ -3387,10 +3615,13 @@
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "53:24:1", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "53:30:3", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "53:30:13", "surface": "وَهُوَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "53:31:5", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "53:32:17", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "53:32:25", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and in", "loc": "53:37:3", "surface": "وَفَّىٰٓ"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "53:42:1", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "53:42:2", "surface": "إِلَىٰ"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "53:47:1", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "53:52:3", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "53:56:1", "surface": "هَٰذَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "53:56:3", "surface": "مِّنَ"}
@@ -3408,11 +3639,13 @@
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "54:44:1", "surface": "أَمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "54:44:3", "surface": "نَحْنُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "54:51:5", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "not to", "loc": "55:8:1", "surface": "أَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "55:9:4", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "55:14:3", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "55:15:3", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "55:15:5", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "55:22:2", "surface": "مِنْهُمَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and for him", "loc": "55:24:1", "surface": "وَلَهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "55:33:8", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "55:35:4", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "55:35:7", "surface": "فَلَا"}
@@ -3426,6 +3659,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "56:50:2", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "56:53:2", "surface": "مِنْهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "56:60:1", "surface": "نَحْنُ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "56:60:5", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "we", "loc": "56:60:6", "surface": "نَحْنُ"}
 {"flags": ["too_generic_gloss"], "gloss": "is it you", "loc": "56:64:1", "surface": "ءَأَنتُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "56:64:3", "surface": "أَمْ"}
@@ -3457,6 +3691,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "57:13:9", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "57:13:25", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "with", "loc": "57:14:4", "surface": "مَّعَكُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "but you", "loc": "57:14:7", "surface": "وَلَٰكِنَّكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "57:15:4", "surface": "مِنكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "57:15:6", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "57:15:7", "surface": "مِنَ"}
@@ -3478,10 +3713,12 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "57:28:10", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "so that not", "loc": "57:29:1", "surface": "لِّئَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "57:29:9", "surface": "مِّن"}
+{"flags": ["too_generic_gloss"], "gloss": "and that", "loc": "57:29:12", "surface": "وَأَنَّ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "58:2:3", "surface": "مِنكُم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "58:2:4", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "58:2:17", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "58:3:3", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "for what", "loc": "58:3:7", "surface": "لِمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "58:3:11", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "58:5:10", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "58:8:3", "surface": "إِلَى"}
@@ -3494,6 +3731,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "58:14:12", "surface": "مِّنكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "58:14:13", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "58:14:14", "surface": "مِنْهُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "then for them", "loc": "58:16:8", "surface": "فَلَهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "58:22:16", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "58:22:18", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "58:22:20", "surface": "أَوْ"}
@@ -3523,6 +3761,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "60:1:14", "surface": "إِلَيْهِم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "60:1:20", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "60:1:38", "surface": "إِلَيْهِم"}
+{"flags": ["too_generic_gloss"], "gloss": "and I", "loc": "60:1:40", "surface": "وَأَنَا۠"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "60:1:48", "surface": "مِنكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "60:3:4", "surface": "وَلَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "with him", "loc": "60:4:9", "surface": "مَعَهُۥٓ"}
@@ -3530,6 +3769,8 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "60:4:18", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "60:4:42", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "60:4:44", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and to You", "loc": "60:4:49", "surface": "وَإِلَيْكَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and to You", "loc": "60:4:51", "surface": "وَإِلَيْكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "60:7:9", "surface": "مِّنْهُم"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "60:8:12", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "60:8:17", "surface": "إِلَيْهِمْ"}
@@ -3543,6 +3784,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "that I", "loc": "61:5:10", "surface": "أَنِّى"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "61:5:13", "surface": "إِلَيْكُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "61:6:11", "surface": "إِلَيْكُم"}
+{"flags": ["too_generic_gloss"], "gloss": "for what", "loc": "61:6:13", "surface": "لِّمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "61:6:16", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "61:6:21", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "this", "loc": "61:6:29", "surface": "هَٰذَا"}
@@ -3560,6 +3802,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "63:8:4", "surface": "إِلَى"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "63:8:8", "surface": "مِنْهَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "63:9:7", "surface": "وَلَآ"}
+{"flags": ["too_generic_gloss"], "gloss": "and for him", "loc": "64:1:3", "surface": "وَلَهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "64:9:19", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "65:1:19", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "65:1:21", "surface": "وَلَا"}
@@ -3595,6 +3838,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "67:3:17", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "67:4:6", "surface": "إِلَيْكَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "67:4:9", "surface": "وَهُوَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and it is", "loc": "67:7:2", "surface": "وَهِىَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "67:8:3", "surface": "مِنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "67:10:5", "surface": "أَوْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "67:15:11", "surface": "مِن"}
@@ -3650,10 +3894,16 @@
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "72:6:4", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "72:6:8", "surface": "مِّنَ"}
 {"flags": ["too_generic_gloss"], "gloss": "and that they", "loc": "72:7:1", "surface": "وَأَنَّهُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "and that we", "loc": "72:8:1", "surface": "وَأَنَّا"}
+{"flags": ["too_generic_gloss"], "gloss": "and that we", "loc": "72:9:1", "surface": "وَأَنَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "72:9:4", "surface": "مِنْهَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and that we", "loc": "72:11:1", "surface": "وَأَنَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "72:11:2", "surface": "مِنَّا"}
+{"flags": ["too_generic_gloss"], "gloss": "and that we", "loc": "72:12:1", "surface": "وَأَنَّا"}
+{"flags": ["too_generic_gloss"], "gloss": "and that we", "loc": "72:13:1", "surface": "وَأَنَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "72:13:10", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "72:13:13", "surface": "وَلَا"}
+{"flags": ["too_generic_gloss"], "gloss": "and that we", "loc": "72:14:1", "surface": "وَأَنَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "72:14:2", "surface": "مِنَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "72:26:3", "surface": "فَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "73:8:2", "surface": "إِلَيْهِ"}
@@ -3704,9 +3954,12 @@
 {"flags": ["too_generic_gloss"], "gloss": "but no", "loc": "78:4:1", "surface": "كَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "but no", "loc": "78:5:2", "surface": "كَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "78:14:2", "surface": "مِنَ"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "78:37:4", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "78:37:9", "surface": "مِنْهُ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "79:44:1", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "or", "loc": "79:46:8", "surface": "أَوْ"}
+{"flags": ["too_generic_gloss"], "gloss": "so you", "loc": "80:6:1", "surface": "فَأَنتَ"}
+{"flags": ["too_generic_gloss"], "gloss": "so you", "loc": "80:10:1", "surface": "فَأَنتَ"}
 {"flags": ["too_generic_gloss"], "gloss": "but no", "loc": "80:23:1", "surface": "كَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "80:34:4", "surface": "مِنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "80:37:3", "surface": "مِّنْهُمْ"}
@@ -3724,8 +3977,11 @@
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "84:6:3", "surface": "إِلَىٰ"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "84:9:2", "surface": "إِلَىٰٓ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "84:16:1", "surface": "فَلَآ"}
+{"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "85:8:1", "surface": "وَمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "85:8:3", "surface": "مِنْهُمْ"}
+{"flags": ["too_generic_gloss"], "gloss": "then for them", "loc": "85:10:9", "surface": "فَلَهُمْ"}
 {"flags": ["too_generic_gloss"], "gloss": "and he is", "loc": "85:14:1", "surface": "وَهُوَ"}
+{"flags": ["too_generic_gloss"], "gloss": "for what", "loc": "85:16:2", "surface": "لِّمَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "86:6:2", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "86:7:2", "surface": "مِنۢ"}
 {"flags": ["too_generic_gloss"], "gloss": "so not", "loc": "87:6:2", "surface": "فَلَا"}
@@ -3736,6 +3992,7 @@
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "88:7:3", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "88:7:5", "surface": "مِن"}
 {"flags": ["too_generic_gloss"], "gloss": "to", "loc": "88:17:3", "surface": "إِلَى"}
+{"flags": ["too_generic_gloss"], "gloss": "with", "loc": "89:7:2", "surface": "ذَاتِ"}
 {"flags": ["too_generic_gloss"], "gloss": "but no", "loc": "89:17:1", "surface": "كَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "and not", "loc": "89:18:1", "surface": "وَلَا"}
 {"flags": ["too_generic_gloss"], "gloss": "but no", "loc": "89:21:1", "surface": "كَلَّآ"}
@@ -3757,9 +4014,11 @@
 {"flags": ["too_generic_gloss"], "gloss": "but no", "loc": "96:19:1", "surface": "كَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "97:3:4", "surface": "مِّنْ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "98:8:7", "surface": "مِن"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "101:3:1", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "but no", "loc": "102:3:1", "surface": "كَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "but no", "loc": "102:5:1", "surface": "كَلَّا"}
 {"flags": ["too_generic_gloss"], "gloss": "but no", "loc": "104:4:1", "surface": "كَلَّا"}
+{"flags": ["too_generic_gloss"], "gloss": "and what", "loc": "104:5:1", "surface": "وَمَآ"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "105:4:3", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "106:4:3", "surface": "مِّن"}
 {"flags": ["too_generic_gloss"], "gloss": "from", "loc": "106:4:6", "surface": "مِّنْ"}

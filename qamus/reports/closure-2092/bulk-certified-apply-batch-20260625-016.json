@@ -1,0 +1,34 @@
+{
+  "_generator": "inline copy from bulk_verb_form_repair_batch_016",
+  "by_decision_state": {
+    "bulk_verb_form_repair_certified": 44
+  },
+  "by_src": {
+    "qamus": 44
+  },
+  "certified_apply_batch": "qamus\\candidates\\qamus_2092\\bulk_certified_apply_batch_20260625_016.jsonl",
+  "live_apply": {
+    "backup_app_artifact_basename": "wbw-lookup.json.bak-batch016-20260625T180249Z",
+    "backup_artifact_basename": "wbw-lookup.json.bak-batch016-20260625T180249Z",
+    "backup_decision_basename": "fusha-hover-token-decisions.jsonl.bak-batch016-20260625T180249Z",
+    "bad_readback_count": 0,
+    "coverage_after": {
+      "pct": 94.42,
+      "pending_marked": 2174,
+      "resolved": 47114,
+      "total_tokens": 49900
+    },
+    "dry_run": "PASS: 44 rows, zero existing decision overlap, zero currently glossed locs",
+    "health_root": 200,
+    "healthz": 200,
+    "public_root": 200,
+    "rebuild": "+44 / -0 / ~0"
+  },
+  "public_invariant": "public rows are qamus-authored English only; no external labels or private paths",
+  "rows": 44,
+  "sha256": "072b366321e3a8e7f1003f8e48eff6bf6ec2bc3004089202a84aae6b22d57881",
+  "source_batches": [
+    "qamus\\candidates\\qamus_2092\\bulk_verb_form_repair_batch_016.jsonl"
+  ],
+  "status": "live_applied"
+}

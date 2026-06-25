@@ -1,0 +1,12 @@
+{
+  "_generator": "inline combine two remaining certified slices",
+  "by_decision_state": {
+    "bulk_two_vote_certified": 443
+  },
+  "inputs": [
+    "qamus/candidates/qamus_2092/bulk_twovote_certified_batch_002.jsonl",
+    "qamus/candidates/qamus_2092/bulk_twovote_certified_batch_003.jsonl"
+  ],
+  "out": "qamus/candidates/qamus_2092/bulk_certified_apply_batch_20260625_003.jsonl",
+  "rows": 443
+}

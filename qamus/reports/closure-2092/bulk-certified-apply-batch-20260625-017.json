@@ -1,0 +1,21 @@
+{
+  "_generator": "manual source-triangulated batch017 from validated pending-source-triangulation-table",
+  "apply_batch": "qamus/candidates/qamus_2092/bulk_certified_apply_batch_20260625_017.jsonl",
+  "coverage_before": {
+    "pending": 2786,
+    "resolved": 47114,
+    "total": 49900
+  },
+  "expected_after_apply": {
+    "pending": 2779,
+    "resolved": 47121,
+    "total": 49900
+  },
+  "public_payload_invariant": {
+    "kind": "authored",
+    "lang": "en",
+    "src": "qamus"
+  },
+  "rows": 7,
+  "source_report": "qamus/reports/closure-2092/bulk-deterministic-batch-017.json"
+}

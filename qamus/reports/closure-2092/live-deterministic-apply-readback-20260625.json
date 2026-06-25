@@ -1,0 +1,296 @@
+{
+  "_generator": "manual live readback summary, no private paths stored",
+  "applies": [
+    {
+      "batch": "bulk_deterministic_hover_batch_001.jsonl",
+      "coverage_after": {
+        "pct": 87.75,
+        "resolved": 43787,
+        "total": 49900
+      },
+      "diff": {
+        "+": 198,
+        "-": 0,
+        "~": 0
+      },
+      "rows": 198
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_001.jsonl",
+      "coverage_after": {
+        "pct": 87.93,
+        "resolved": 43879,
+        "total": 49900
+      },
+      "diff": {
+        "+": 92,
+        "-": 0,
+        "~": 0
+      },
+      "rows": 92
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_002.jsonl",
+      "coverage_after": {
+        "pct": 88.01,
+        "resolved": 43918,
+        "total": 49900
+      },
+      "diff": {
+        "+": 39,
+        "-": 0,
+        "~": 0
+      },
+      "rows": 39
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_003.jsonl",
+      "coverage_after": {
+        "pct": 88.9,
+        "resolved": 44361,
+        "total": 49900
+      },
+      "diff": {
+        "+": 443,
+        "-": 0,
+        "~": 0
+      },
+      "rows": 443
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_004.jsonl",
+      "coverage_after": {
+        "pct": 90.09,
+        "resolved": 44953,
+        "total": 49900
+      },
+      "diff": {
+        "+": 592,
+        "-": 0,
+        "~": 0
+      },
+      "rows": 592,
+      "sha256": "6e251c4e929967e6e0efdfd49d229e910c7250a6042f48fd2ccfa0238bea2cd1"
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_005.jsonl",
+      "coverage_after": {
+        "pct": 90.85,
+        "resolved": 45336,
+        "total": 49900
+      },
+      "diff": {
+        "+": 383,
+        "-": 0,
+        "~": 0
+      },
+      "rows": 383,
+      "sha256": "c0b52df52ff5eb15bd11028821c739ad15bc3af2def14f30fb96266188a92280"
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_006.jsonl",
+      "coverage_after": {
+        "pct": 91.25,
+        "resolved": 45536,
+        "total": 49900
+      },
+      "diff": {
+        "+": 200,
+        "-": 0,
+        "~": 0
+      },
+      "rows": 200,
+      "sha256": "cca766a76453a7d18b32b55ec4f3cc9edc3c6203c42fc9d63f08fcab882b7fb9"
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_007.jsonl",
+      "coverage_after": {
+        "pct": 91.63,
+        "resolved": 45723,
+        "total": 49900
+      },
+      "diff": {
+        "+": 187,
+        "-": 0,
+        "~": 0
+      },
+      "rows": 187,
+      "sha256": "6d2437dca88f20ad37a389455b0db771a9277b5630aa16b6445470b51550998f"
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_008.jsonl",
+      "coverage_after": {
+        "pct": 92.01,
+        "resolved": 45914,
+        "total": 49900
+      },
+      "diff": {
+        "+": 191,
+        "-": 0,
+        "~": 0
+      },
+      "rows": 191,
+      "sha256": "7b619be9d293c8ac4b8e1d44bbd1ebe158a9e26fdf8aebef3fcdfe6a1efcd55a"
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_009.jsonl",
+      "coverage_after": {
+        "pct": 92.41,
+        "resolved": 46115,
+        "total": 49900
+      },
+      "diff": {
+        "+": 201,
+        "-": 0,
+        "~": 0
+      },
+      "rows": 201,
+      "sha256": "e6fd3f796933edfab3f841496180d946d39641ccb40fda1911bcf896ae131352"
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_010.jsonl",
+      "coverage_after": {
+        "pct": 92.79,
+        "resolved": 46301,
+        "total": 49900
+      },
+      "diff": {
+        "+": 186,
+        "-": 0,
+        "~": 0
+      },
+      "rows": 186,
+      "sha256": "0bdb8cb93a42051e02589fe7d3cf1c7e64fbc775e7648883b4d314caca73f57c"
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_011.jsonl",
+      "coverage_after": {
+        "pct": 93.0,
+        "resolved": 46409,
+        "total": 49900
+      },
+      "diff": {
+        "+": 108,
+        "-": 0,
+        "~": 0
+      },
+      "rows": 108,
+      "sha256": "9af57b11dc8d424508ea7ac1bf056a542959dce66c749f5953d34afa5ae4c67c"
+    },
+    {
+      "batch": "bulk_certified_apply_batch_20260625_012.jsonl",
+      "coverage_after": {
+        "pct": 93.03,
+        "resolved": 46422,
+        "total": 49900
+      },
+      "diff": {
+        "+": 13,
+        "-": 0,
+        "~": 0
+      },
+      "rows": 13,
+      "sha256": "30585cf13ff7253f5c0204926ef5aa3e4982fb7205b7b704205d4c5e08ea80cf"
+    }
+  ],
+  "coverage_after": {
+    "pct": 93.03,
+    "pending_marked": 2675,
+    "resolved": 46422,
+    "total": 49900
+  },
+  "coverage_before": {
+    "pct": 87.35,
+    "pending_marked": 4524,
+    "resolved": 43589,
+    "total": 49900
+  },
+  "current_pending_by_blocker": {
+    "same_surface_polysemy_requires_i3rab": 356,
+    "source_entry_unverified": 861,
+    "stem_base_unknown": 2261
+  },
+  "date": "2026-06-25",
+  "health_status": {
+    "healthz": 200,
+    "root": 200
+  },
+  "live_touched_this_run": true,
+  "private_paths_redacted": true,
+  "public_crawl_after_batch011": {
+    "complete": true,
+    "crawled": 2092,
+    "date": "2026-06-25",
+    "headword_mismatches": 0,
+    "hover_detail_rows_seen": 109106,
+    "hover_mismatches": 0,
+    "http_200": 2092,
+    "render_errors": 0,
+    "repo_entries": 2092
+  },
+  "public_crawl_after_batch012": {
+    "complete": true,
+    "crawled": 2092,
+    "date": "2026-06-25",
+    "headword_mismatches": 0,
+    "hover_detail_rows_seen": 109106,
+    "hover_mismatches": 0,
+    "http_200": 2092,
+    "render_errors": 0,
+    "repo_entries": 2092
+  },
+  "public_provenance": {
+    "external_label_leaks": 0,
+    "kind_authored_records": 46561,
+    "lookup_words": 46422,
+    "src_qamus_records": 46561
+  },
+  "reached_90": true,
+  "remaining_pending": 3478,
+  "sample_resolved": {
+    "106:1:5": "for familiarity",
+    "10:15:30": "is revealed",
+    "10:31:21": "directs",
+    "11:106:4": "then in",
+    "11:108:4": "then in",
+    "11:12:5": "is revealed",
+    "11:17:20": "disbelieves",
+    "11:17:25": "appointed place",
+    "11:36:1": "and it was revealed",
+    "11:3:19": "turn away",
+    "12:86:8": "I know",
+    "15:29:6": "my spirit",
+    "25:75:9": "peace",
+    "28:82:4": "in his place",
+    "2:13:4": "believed",
+    "2:17:1": "their likeness",
+    "2:265:23": "drizzle",
+    "2:2:6": "guidance",
+    "30:21:9": "so you may rest",
+    "33:56:13": "submission",
+    "38:15:2": "looks",
+    "4:1:27": "kinship ties",
+    "4:3:26": "more likely",
+    "4:6:22": "rich",
+    "5:44:5": "guidance",
+    "5:4:10": "you trained",
+    "5:55:13": "bowing",
+    "5:60:4": "worse",
+    "64:6:8": "a human",
+    "6:130:27": "disbelievers",
+    "6:141:11": "its produce",
+    "6:141:9": "the crops",
+    "6:143:2": "pairs",
+    "76:27:8": "heavy",
+    "76:3:7": "ungrateful",
+    "76:4:6": "a blaze",
+    "86:13:3": "decisive",
+    "86:7:1": "comes out",
+    "86:8:4": "surely able"
+  },
+  "total_delta": {
+    "changed": 0,
+    "removed": 0,
+    "resolved": 2833
+  }
+}

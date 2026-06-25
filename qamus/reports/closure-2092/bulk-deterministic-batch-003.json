@@ -1,0 +1,10 @@
+{
+  "_generator": "tools/build_bulk_deterministic_hover_decisions.py",
+  "batch": "qamus\\candidates\\qamus_2092\\bulk_deterministic_hover_batch_003.jsonl",
+  "provenance": "qamus\\candidates\\qamus_2092\\bulk_deterministic_hover_batch_003.provenance.jsonl",
+  "rows": 1,
+  "skipped": {
+    "not_deterministic": 6020
+  },
+  "source_table": "qamus\\reports\\closure-2092\\pending-source-triangulation-table.jsonl"
+}

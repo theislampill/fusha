@@ -1,0 +1,23 @@
+{
+  "_generator": "build_pending_source_triangulation_table",
+  "total_pending": 645,
+  "deterministic": 0,
+  "by_lane": {
+    "form_variant": 34,
+    "host_lexeme": 16,
+    "new_entry_proposal": 274,
+    "reject_unsafe": 1,
+    "scholar_review": 196,
+    "source_entry_repair": 71,
+    "source_photo": 4,
+    "token_irab": 35,
+    "verb_clitic": 14
+  },
+  "by_gate": {
+    "two_vote": 99,
+    "owner": 274,
+    "scholar": 197,
+    "source": 75
+  },
+  "public_payload_allowed": 99
+}

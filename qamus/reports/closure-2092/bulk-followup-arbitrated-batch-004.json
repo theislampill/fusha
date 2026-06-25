@@ -1,0 +1,30 @@
+{
+  "_generator": "tools/build_bulk_followup_certified_batch.py",
+  "batch_label": "batch004-arbitration",
+  "by_decision": {
+    "approve": 6,
+    "pending": 14,
+    "reject": 4
+  },
+  "by_unresolved_reason": {
+    "person_or_elative_risk": 1,
+    "pos_or_sense_risk": 1,
+    "preposition_sense_risk": 1,
+    "sense_disagreement": 7,
+    "still_polysemous": 2,
+    "voice_mismatch": 2,
+    "wrong_derived_form": 3,
+    "wrong_entry_candidate": 1
+  },
+  "certified_batch": "qamus\\candidates\\qamus_2092\\bulk_followup_arbitrated_batch_004.jsonl",
+  "certified_rows": 6,
+  "provenance": "qamus\\candidates\\qamus_2092\\bulk_followup_arbitrated_batch_004.provenance.jsonl",
+  "request_file": "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_004.jsonl",
+  "require_agrees_with_nahw": false,
+  "review_file": "out\\subagent_votes\\batch004_arbitrated_chunks_001_020.jsonl",
+  "review_lens": "arbiter",
+  "reviews_seen": 24,
+  "status": "followup_certified_not_applied",
+  "unresolved": "qamus\\candidates\\qamus_2092\\bulk_followup_arbitrated_unresolved_batch_004.jsonl",
+  "unresolved_rows": 18
+}

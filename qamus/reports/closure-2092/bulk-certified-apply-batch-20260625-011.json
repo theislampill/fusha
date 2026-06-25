@@ -1,0 +1,44 @@
+{
+  "_generator": "inline combine batch009 direct plus follow-up certified slices",
+  "by_decision_state": {
+    "bulk_followup_arbitrated_certified": 17,
+    "bulk_followup_sarf_recheck_certified": 51,
+    "bulk_two_vote_certified": 40
+  },
+  "inputs": [
+    "qamus/candidates/qamus_2092/bulk_twovote_certified_batch_011.jsonl",
+    "qamus/candidates/qamus_2092/bulk_followup_arbitrated_batch_009.jsonl",
+    "qamus/candidates/qamus_2092/bulk_followup_sarf_recheck_batch_009.jsonl"
+  ],
+  "live_apply": {
+    "coverage_after": {
+      "pct": 93.0,
+      "resolved": 46409,
+      "total": 49900
+    },
+    "diff": {
+      "+": 108,
+      "-": 0,
+      "~": 0
+    },
+    "health_status": {
+      "healthz": 200,
+      "root": 200
+    },
+    "operational_note": "First apply attempt restored token backup after direct rebuild wrapper invocation hit mode 0644; retry via bash wrapper passed.",
+    "sample_readback": {
+      "10:15:30": "is revealed",
+      "10:31:21": "directs",
+      "11:106:4": "then in",
+      "11:108:4": "then in",
+      "11:12:5": "is revealed",
+      "11:17:20": "disbelieves",
+      "11:36:1": "and it was revealed",
+      "11:3:19": "turn away"
+    }
+  },
+  "out": "qamus/candidates/qamus_2092/bulk_certified_apply_batch_20260625_011.jsonl",
+  "rows": 108,
+  "sha256": "9af57b11dc8d424508ea7ac1bf056a542959dce66c749f5953d34afa5ae4c67c",
+  "status": "live_applied"
+}

@@ -22,4 +22,14 @@
 **Forbidden:** hand-editing `wbw-lookup.json`; applying with `−removed > 0` unexplained; entry mutation through
 this path (entry repairs use the owner-gated `edit_entry_record` path — see `../../qamus/candidates/repairs/`).
 
+**Regression guard:** exact/form matches can resolve a host noun before the clitic pass sees the token. After any
+host resolution, inspect the original token for a safe attached proclitic and populate the separate preposition
+channel when the stem is conflict-free. If the preposition sense is context-specific (e.g. place/time bāʾ), prefer
+a source-addressed token gloss such as "at Badr" over a generic host-only gloss.
+
+**Source-triangulation guard:** a Qamus token loc may be entry-snippet-relative or basmala-offset, so do not bind
+external evidence by `S:A:W` alone. First match the Arabic surface uniquely inside the ayah, then compare word
+translations. If the source word has a preposition segment but the agreed English drops that role (e.g. بِكُم →
+"you"), leave the token pending as `preposition_role_omitted` instead of shipping a host/pronoun-only gloss.
+
 **Test:** the rebuild smoke + `validate_linguistic_decisions.py --self-test`.

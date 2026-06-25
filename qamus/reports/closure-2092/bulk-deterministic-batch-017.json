@@ -1,0 +1,36 @@
+{
+  "_generator": "manual source-triangulated batch017 from validated pending-source-triangulation-table",
+  "apply_batch": "qamus/candidates/qamus_2092/bulk_certified_apply_batch_20260625_017.jsonl",
+  "batch": "qamus/candidates/qamus_2092/bulk_deterministic_hover_batch_017.jsonl",
+  "coverage_before": {
+    "pending": 2786,
+    "resolved": 47114,
+    "total": 49900
+  },
+  "excluded_from_auto": [
+    {
+      "loc": "8:1:15",
+      "reason": "ذو/ذات construct is context-sensitive and needs idafa review",
+      "surface": "ذَاتَ"
+    },
+    {
+      "loc": "8:7:2",
+      "reason": "ذو/ذات construct is context-sensitive and needs idafa review",
+      "surface": "ذَاتِ"
+    }
+  ],
+  "expected_after_apply": {
+    "pending": 2779,
+    "resolved": 47121,
+    "total": 49900
+  },
+  "gate_summary": [
+    "triangulation validator passed before batch creation",
+    "every public row is src=qamus, kind=authored, lang=en",
+    "all seven rows survived the current root, POS, single-sense, no-homograph gate",
+    "construct-sensitive rows were excluded from auto application"
+  ],
+  "provenance": "qamus/candidates/qamus_2092/bulk_deterministic_hover_batch_017.provenance.jsonl",
+  "rows": 7,
+  "source_table": "qamus/reports/closure-2092/pending-source-triangulation-table.jsonl"
+}

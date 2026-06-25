@@ -24,6 +24,7 @@ output · forbidden · test). **Open only the one the task needs.**
 - [`procedures/proper-noun.md`](procedures/proper-noun.md) — detect أعلام; no root-verb gloss; route to pending_proper_noun.
 - [`procedures/homograph-risk.md`](procedures/homograph-risk.md) — the `norm_strict` surface-key safety probe.
 - [`procedures/hover-application.md`](procedures/hover-application.md) — the certified live-apply path + rollback.
+- [`procedures/bulk-source-triangulation.md`](procedures/bulk-source-triangulation.md) — classify bulk pending-table rows into auto-safe, two-vote, owner-gated, or pending.
 - [`procedures/qamus-entry-authoring.md`](procedures/qamus-entry-authoring.md) — sarf evidence → reviewable entry candidate.
 - [`procedures/corpus-to-qamus.md`](procedures/corpus-to-qamus.md) — the sarf half of the corpus→Qamus pipeline.
 
@@ -93,6 +94,10 @@ Form II/IV often change sense + transitivity (يُحَذِّرُ "warns" ≠ "be
 ## 8. Common clitics & suffixes
 Proclitics وَ/فَ/بِ/لِ/كَ/ال and pronoun enclitics ـه/ـها/ـهم/ـكم/ـنا. **Clitic stripping must not invent a
 false stem** — and a final tanwīn-alef (ـًا, e.g. قُرْءَانًا) is **not** the pronoun نا (`ends_tanwin_alef`).
+If an exact/form match resolves the host before the clitic pass runs, still inspect the raw token for an attached
+proclitic. A hover for بِسَلَـٰمٍ or بِبَدْرٍ must not silently display only the host noun ("peace", "Badr") when
+the entry/sense being taught is the bāʾ. Add a separate `pre` channel or a source-addressed phrase gloss, and keep
+the false-split guards in force.
 
 ## 9. Homograph quarantine rules
 If two readings collapse under `norm()`, decide on the **content letter's harakah / hamza seat / shadda**, not

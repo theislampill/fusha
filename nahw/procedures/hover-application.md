@@ -36,6 +36,16 @@ catch; "pending(case_or_mood)" is a correct, shippable state, "ordains" on a con
 on a `norm_strict` key that mixes meanings; gating a case/mood/referent decision below `two_vote_required`;
 hand-editing the runtime lookup (the live apply path is `rebuild.sh`, not an artifact edit — see the sarf mirror).
 
+**Regression guard:** for function-word entries, never let the governed content word erase the function word. A
+بِـ entry example like بِسَلَـٰمٍ needs the bāʾ sense plus the host ("with peace"), and a locative bāʾ example like
+بِبَدْرٍ needs the place reading ("at Badr"). Likewise `وَمَا` must be read as wāw + mā in context, even though it
+remains one word token in the Qur'anic word count.
+
+**Source-triangulation guard:** source agreement is necessary but not sufficient. Bind external word evidence by a
+unique Arabic surface match inside the ayah, not by the Qamus token loc alone. If the source morphology has a
+preposition segment but the agreed English omits it (for example بِكُم glossed only as "you"), mark the token
+pending until the jar-majrūr role is authored.
+
 **Example 1 (apply a resolved flip):** لَمْ يَلِدْ — governor لَمْ + jazm certified (two votes agree). Apply the
 precise gloss "did not beget" to that slot; **do not** ship the surface "begets". Resolved, hover updated.
 

@@ -1,0 +1,152 @@
+{
+  "backup_artifact_basename": "wbw-lookup.json.bak-batch014-20260625T171909Z",
+  "backup_decision_basename": "fusha-hover-token-decisions.jsonl.bak-batch014-20260625T171909Z",
+  "bad_readback_count": 0,
+  "batch": "bulk_certified_apply_batch_20260625_014.jsonl",
+  "coverage_after": {
+    "pct": 93.8,
+    "pending_marked": 2389,
+    "resolved": 46806,
+    "total_tokens": 49900,
+    "verified": true
+  },
+  "date": "2026-06-25",
+  "health": {
+    "healthz": 200,
+    "public_root": 200,
+    "root": 200
+  },
+  "rebuild_report": {
+    "added": 276,
+    "changed": 0,
+    "new_words": 46806,
+    "prev_words": 46530,
+    "removed": 0,
+    "sample_added": [
+      "2:22:12",
+      "2:45:4",
+      "2:48:10",
+      "2:62:15",
+      "2:74:12",
+      "2:74:19",
+      "2:74:26",
+      "2:96:12"
+    ],
+    "sample_changed": [],
+    "source_sha": "65797d7d5599fadd"
+  },
+  "rows": 276,
+  "sample_readbacks": [
+    {
+      "decision_state": "bulk_two_vote_certified",
+      "gloss": "so that",
+      "key": "لكي",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "33:37:32",
+      "src": "qamus",
+      "state_id": "state:tok:33:37:32",
+      "surface": "لِكَىْ"
+    },
+    {
+      "decision_state": "bulk_followup_arbitrated_certified",
+      "gloss": "bestowed favor",
+      "key": "من",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "28:82:18",
+      "src": "qamus",
+      "state_id": "state:tok:28:82:18",
+      "surface": "مَّنَّ"
+    },
+    {
+      "decision_state": "bulk_followup_sarf_recheck_certified",
+      "gloss": "on foot",
+      "key": "رجالا",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "22:27:6",
+      "src": "qamus",
+      "state_id": "state:tok:22:27:6",
+      "surface": "رِجَالًا"
+    },
+    {
+      "decision_state": "bulk_followup_sarf_recheck_certified",
+      "gloss": "for indeed it",
+      "key": "فانها",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "22:32:6",
+      "src": "qamus",
+      "state_id": "state:tok:22:32:6",
+      "surface": "فَإِنَّهَا"
+    },
+    {
+      "decision_state": "bulk_followup_sarf_recheck_certified",
+      "gloss": "for indeed it",
+      "key": "فانها",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "22:46:14",
+      "src": "qamus",
+      "state_id": "state:tok:22:46:14",
+      "surface": "فَإِنَّهَا"
+    },
+    {
+      "decision_state": "bulk_followup_sarf_recheck_certified",
+      "gloss": "and indeed",
+      "key": "وان",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "22:47:7",
+      "src": "qamus",
+      "state_id": "state:tok:22:47:7",
+      "surface": "وَإِنَّ"
+    },
+    {
+      "decision_state": "bulk_followup_sarf_recheck_certified",
+      "gloss": "and that",
+      "key": "وان",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "22:61:12",
+      "src": "qamus",
+      "state_id": "state:tok:22:61:12",
+      "surface": "وَأَنَّ"
+    },
+    {
+      "decision_state": "bulk_followup_sarf_recheck_certified",
+      "gloss": "because",
+      "key": "بان",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "22:61:2",
+      "src": "qamus",
+      "state_id": "state:tok:22:61:2",
+      "surface": "بِأَنَّ"
+    },
+    {
+      "decision_state": "bulk_followup_sarf_recheck_certified",
+      "gloss": "because",
+      "key": "بان",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "22:6:2",
+      "src": "qamus",
+      "state_id": "state:tok:22:6:2",
+      "surface": "بِأَنَّ"
+    },
+    {
+      "decision_state": "bulk_followup_sarf_recheck_certified",
+      "gloss": "and that",
+      "key": "وان",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "22:7:1",
+      "src": "qamus",
+      "state_id": "state:tok:22:7:1",
+      "surface": "وَأَنَّ"
+    }
+  ],
+  "sha256": "4a5519ce310de72c35fb0e6870ab0f676ca412fe11254afed9d7c8ee30eadeb0"
+}

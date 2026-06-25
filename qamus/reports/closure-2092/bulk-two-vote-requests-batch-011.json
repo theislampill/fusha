@@ -1,0 +1,50 @@
+{
+  "_generator": "tools/build_bulk_two_vote_requests.py",
+  "by_lane": {
+    "form_variant": 804,
+    "token_irab": 196
+  },
+  "chunk_size": 50,
+  "chunks": [
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_001.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_002.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_003.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_004.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_005.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_006.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_007.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_008.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_009.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_010.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_011.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_012.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_013.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_014.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_015.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_016.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_017.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_018.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_019.jsonl",
+    "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011_chunks\\chunk_020.jsonl"
+  ],
+  "eligible_rows": 2928,
+  "limit": 1000,
+  "reconciliation_tool": "tools/reconcile_bulk_two_vote_results.py",
+  "request_file": "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011.jsonl",
+  "requested_output_fields": [
+    "decision",
+    "concise_authored_gloss",
+    "sarf_reasoning",
+    "nahw_reasoning",
+    "reason_agreement_key",
+    "blocker_if_rejected"
+  ],
+  "rows": 1000,
+  "source_table": "qamus\\reports\\closure-2092\\pending-source-triangulation-table.jsonl",
+  "status": "requests_only_not_certified",
+  "validator": "tools/validate_bulk_two_vote_requests.py",
+  "vote_lenses": [
+    "sarf-primary",
+    "nahw-primary"
+  ]
+}

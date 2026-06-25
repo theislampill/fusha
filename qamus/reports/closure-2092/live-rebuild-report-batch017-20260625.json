@@ -1,0 +1,18 @@
+{
+ "source_sha": "65797d7d5599fadd",
+ "prev_words": 47114,
+ "new_words": 47121,
+ "added": 7,
+ "removed": 0,
+ "changed": 0,
+ "sample_added": [
+  "3:162:2",
+  "4:9:15",
+  "9:66:2",
+  "19:43:4",
+  "35:35:14",
+  "37:11:4",
+  "72:3:2"
+ ],
+ "sample_changed": []
+}

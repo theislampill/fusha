@@ -32,6 +32,7 @@ This SKILL is the fast context gate + contract; each step is a short procedure. 
 - [`procedures/referent-context.md`](procedures/referent-context.md) — referent guard, divine-Name vs attribute, contronyms.
 - [`procedures/grammar-risk-gate.md`](procedures/grammar-risk-gate.md) — the GrammarProblems gate (answer AND reason).
 - [`procedures/hover-application.md`](procedures/hover-application.md) — syntax-sensitive tokens → precise pending, not a one-word gloss.
+- [`procedures/bulk-source-triangulation.md`](procedures/bulk-source-triangulation.md) — route bulk pending-table rows by context risk before any hover decision.
 - [`procedures/qamus-entry-authoring.md`](procedures/qamus-entry-authoring.md) — nahw evidence → function-word/construction entry candidate.
 - [`procedures/corpus-to-qamus.md`](procedures/corpus-to-qamus.md) — the nahw half of the corpus→Qamus pipeline.
 
@@ -96,6 +97,9 @@ homographic prepositions مِن / and the temporal لَمَّا.
 ## 9. Iḍāfa & jar-majrūr
 A genitive construction or preposition+noun changes gloss wording; gloss the **phrase role**, not just the
 lexeme.
+Attached باء on a majrūr noun must carry the bāʾ function in the hover. If the entry is بِـ, host-only glosses like
+"peace" for بِسَلَـٰمٍ or "Badr" for بِبَدْرٍ are incomplete; use the context sense ("with peace", "at Badr", etc.)
+or leave a precise pending when the bāʾ function is not certified.
 
 ## 10. Verb–subject–object context
 The object/construction can fix a polysemous verb: أَتَى = come/bring/give/commit by object; يَقْدِرُ in a rizq
@@ -123,6 +127,12 @@ note, or the review queue.
 
 ## 16. Regression examples
 `examples/function-word-decisions.jsonl` + `examples/ayah-context-decisions.jsonl` — real qamus-highlight cases.
+
+## Production finding (hover polish — وَمَا and attached باء)
+`وَمَا` is one Qur'anic word token but two syntactic pieces: wāw + mā. Do not count it as two corpus word tokens,
+but do decompose it for the hover gloss. The mā may be relative/maṣdariyyah, interrogative, or negative; use
+iʿrāb/context evidence before authoring ("and by the One Who", "and not", "and no" are different decisions).
+For attached بِـ, the hover must include the preposition's role, not only the governed noun.
 
 ---
 

@@ -1,0 +1,152 @@
+{
+  "backup_artifact_basename": "wbw-lookup.json.bak-batch015-20260625T173821Z",
+  "backup_decision_basename": "fusha-hover-token-decisions.jsonl.bak-batch015-20260625T173821Z",
+  "bad_readback_count": 0,
+  "batch": "bulk_certified_apply_batch_20260625_015.jsonl",
+  "coverage_after": {
+    "pct": 94.33,
+    "pending_marked": 2218,
+    "resolved": 47070,
+    "total_tokens": 49900,
+    "verified": true
+  },
+  "date": "2026-06-25",
+  "health": {
+    "healthz": 200,
+    "public_root": 200,
+    "root": 200
+  },
+  "rebuild_report": {
+    "added": 264,
+    "changed": 0,
+    "new_words": 47070,
+    "prev_words": 46806,
+    "removed": 0,
+    "sample_added": [
+      "2:4:3",
+      "2:16:9",
+      "2:18:4",
+      "2:38:5",
+      "2:83:12",
+      "2:97:5",
+      "2:102:59",
+      "2:112:8"
+    ],
+    "sample_changed": [],
+    "source_sha": "65797d7d5599fadd"
+  },
+  "rows": 264,
+  "sample_readbacks": [
+    {
+      "decision_state": "bulk_function_token_repair_certified",
+      "gloss": "and what",
+      "key": "وما",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "101:3:1",
+      "src": "qamus",
+      "state_id": "state:tok:101:3:1",
+      "surface": "وَمَآ"
+    },
+    {
+      "decision_state": "bulk_function_token_repair_certified",
+      "gloss": "and what",
+      "key": "وما",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "104:5:1",
+      "src": "qamus",
+      "state_id": "state:tok:104:5:1",
+      "surface": "وَمَآ"
+    },
+    {
+      "decision_state": "bulk_function_token_repair_certified",
+      "gloss": "and for me",
+      "key": "ولي",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "109:6:3",
+      "src": "qamus",
+      "state_id": "state:tok:109:6:3",
+      "surface": "وَلِىَ"
+    },
+    {
+      "decision_state": "bulk_function_token_repair_certified",
+      "gloss": "and not",
+      "key": "وما",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "10:19:1",
+      "src": "qamus",
+      "state_id": "state:tok:10:19:1",
+      "surface": "وَمَا"
+    },
+    {
+      "decision_state": "bulk_function_token_repair_certified",
+      "gloss": "and not",
+      "key": "وما",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "10:36:1",
+      "src": "qamus",
+      "state_id": "state:tok:10:36:1",
+      "surface": "وَمَا"
+    },
+    {
+      "decision_state": "bulk_function_token_repair_certified",
+      "gloss": "and not",
+      "key": "وما",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "10:45:18",
+      "src": "qamus",
+      "state_id": "state:tok:10:45:18",
+      "surface": "وَمَا"
+    },
+    {
+      "decision_state": "bulk_function_token_repair_certified",
+      "gloss": "and not",
+      "key": "وما",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "10:53:9",
+      "src": "qamus",
+      "state_id": "state:tok:10:53:9",
+      "surface": "وَمَآ"
+    },
+    {
+      "decision_state": "bulk_function_token_repair_certified",
+      "gloss": "surely",
+      "key": "ألا",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "10:55:1",
+      "src": "qamus",
+      "state_id": "state:tok:10:55:1",
+      "surface": "أَلَآ"
+    },
+    {
+      "decision_state": "bulk_function_token_repair_certified",
+      "gloss": "surely",
+      "key": "ألا",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "10:55:8",
+      "src": "qamus",
+      "state_id": "state:tok:10:55:8",
+      "surface": "أَلَآ"
+    },
+    {
+      "decision_state": "bulk_function_token_repair_certified",
+      "gloss": "and not",
+      "key": "وما",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "10:61:1",
+      "src": "qamus",
+      "state_id": "state:tok:10:61:1",
+      "surface": "وَمَا"
+    }
+  ],
+  "sha256": "161ebb4e6a042a59041aea73ee487bf4f05f72d49e633e64d204385edb77c3ea"
+}

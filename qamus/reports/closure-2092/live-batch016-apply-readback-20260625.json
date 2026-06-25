@@ -1,0 +1,179 @@
+{
+  "append": {
+    "after_lines": 6854,
+    "appended": 44,
+    "before_lines": 6810
+  },
+  "backup_app_artifact_basename": "wbw-lookup.json.bak-batch016-20260625T180249Z",
+  "backup_artifact_basename": "wbw-lookup.json.bak-batch016-20260625T180249Z",
+  "backup_decision_basename": "fusha-hover-token-decisions.jsonl.bak-batch016-20260625T180249Z",
+  "bad_readback_count": 0,
+  "bad_readback_sample": [],
+  "batch": "bulk_certified_apply_batch_20260625_016.jsonl",
+  "batch_basename": "bulk_certified_apply_batch_20260625_016.jsonl",
+  "coverage_after": {
+    "pct": 94.42,
+    "pending_marked": 2174,
+    "resolved": 47114,
+    "total_tokens": 49900,
+    "verified": true
+  },
+  "date": "2026-06-25",
+  "health": {
+    "healthz": 200,
+    "public_root": 200,
+    "root": 200
+  },
+  "label": "batch016-20260625T180249Z",
+  "rebuild_rc": 0,
+  "rebuild_report": {
+    "added": 44,
+    "app_coverage_after": {
+      "glossed": 47114,
+      "pct": 94.42,
+      "pending_marked": 2174,
+      "word_locs": 49900
+    },
+    "changed": 0,
+    "coverage_after": {
+      "glossed": 47114,
+      "pct": 94.42,
+      "pending_marked": 2174,
+      "word_locs": 49900
+    },
+    "new_words": 47114,
+    "prev_words": 47070,
+    "removed": 0,
+    "sample_added": [
+      "2:36:4",
+      "5:6:40",
+      "5:31:9",
+      "6:8:13",
+      "6:113:1",
+      "6:128:15",
+      "6:145:11",
+      "6:160:11",
+      "7:4:1",
+      "7:103:2",
+      "7:116:2",
+      "7:116:4"
+    ],
+    "sample_changed": [],
+    "sample_removed": []
+  },
+  "rows": 44,
+  "sample_readbacks": [
+    {
+      "decision_state": "bulk_verb_form_repair_certified",
+      "gloss": "so he drove them out",
+      "key": "فاخرجهما",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "2:36:4",
+      "src": "qamus",
+      "state_id": "state:tok:2:36:4",
+      "surface": "فَأَخْرَجَهُمَا"
+    },
+    {
+      "decision_state": "bulk_verb_form_repair_certified",
+      "gloss": "then seek clean earth",
+      "key": "فتيمموا",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "5:6:40",
+      "src": "qamus",
+      "state_id": "state:tok:5:6:40",
+      "surface": "فَتَيَمَّمُوا۟"
+    },
+    {
+      "decision_state": "bulk_verb_form_repair_certified",
+      "gloss": "he may cover",
+      "key": "يواري",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "5:31:9",
+      "src": "qamus",
+      "state_id": "state:tok:5:31:9",
+      "surface": "يُوَٰرِى"
+    },
+    {
+      "decision_state": "bulk_verb_form_repair_certified",
+      "gloss": "they are given respite",
+      "key": "ينظرون",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "6:8:13",
+      "src": "qamus",
+      "state_id": "state:tok:6:8:13",
+      "surface": "يُنظَرُونَ"
+    },
+    {
+      "decision_state": "bulk_verb_form_repair_certified",
+      "gloss": "and so may incline",
+      "key": "ولتصغي",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "6:113:1",
+      "src": "qamus",
+      "state_id": "state:tok:6:113:1",
+      "surface": "وَلِتَصْغَىٰٓ"
+    },
+    {
+      "decision_state": "bulk_verb_form_repair_certified",
+      "gloss": "benefited",
+      "key": "استمتع",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "6:128:15",
+      "src": "qamus",
+      "state_id": "state:tok:6:128:15",
+      "surface": "ٱسْتَمْتَعَ"
+    },
+    {
+      "decision_state": "bulk_verb_form_repair_certified",
+      "gloss": "he eats it",
+      "key": "يطعمه",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "6:145:11",
+      "src": "qamus",
+      "state_id": "state:tok:6:145:11",
+      "surface": "يَطْعَمُهُۥٓ"
+    },
+    {
+      "decision_state": "bulk_verb_form_repair_certified",
+      "gloss": "is repaid",
+      "key": "يجزي",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "6:160:11",
+      "src": "qamus",
+      "state_id": "state:tok:6:160:11",
+      "surface": "يُجْزَىٰٓ"
+    },
+    {
+      "decision_state": "bulk_verb_form_repair_certified",
+      "gloss": "so came upon it",
+      "key": "فجاءها",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "7:4:1",
+      "src": "qamus",
+      "state_id": "state:tok:7:4:1",
+      "surface": "فَجَاءَهَا"
+    },
+    {
+      "decision_state": "bulk_verb_form_repair_certified",
+      "gloss": "We sent",
+      "key": "بعثنا",
+      "kind": "authored",
+      "lang": "en",
+      "loc": "7:103:2",
+      "src": "qamus",
+      "state_id": "state:tok:7:103:2",
+      "surface": "بَعَثْنَا"
+    }
+  ],
+  "sha256": "072b366321e3a8e7f1003f8e48eff6bf6ec2bc3004089202a84aae6b22d57881",
+  "status": "LIVE_APPLIED"
+}

@@ -1,0 +1,29 @@
+{
+  "_generator": "tools/build_bulk_followup_certified_batch.py",
+  "batch_label": "batch011_nahw_recheck",
+  "by_decision": {
+    "reject": 10
+  },
+  "by_unresolved_reason": {
+    "entry_match_mismatch:active_participle_not_stubborn": 1,
+    "mood_function_mismatch:imperative_not_past": 1,
+    "negated_legal_permissibility:not_befalls": 1,
+    "preposition_object_sense:pardon_not_rise_above": 1,
+    "voice_role_mismatch:active_not_passive": 2,
+    "wrong_nominal_sense:good_news_not_human": 1,
+    "wrong_nominal_sense:possessed_love_not_grain": 1,
+    "wrong_participle_sense:bearers_of_good_news_not_human": 1,
+    "wrong_verb_sense:looking_not_respite": 1
+  },
+  "certified_batch": "qamus\\candidates\\qamus_2092\\bulk_followup_nahw_recheck_batch_011.jsonl",
+  "certified_rows": 0,
+  "provenance": "qamus\\candidates\\qamus_2092\\bulk_followup_nahw_recheck_batch_011.provenance.jsonl",
+  "request_file": "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_011.jsonl",
+  "require_agrees_with_nahw": true,
+  "review_file": "out\\subagent_votes\\batch011_nahw_recheck_results.jsonl",
+  "review_lens": "nahw-recheck",
+  "reviews_seen": 10,
+  "status": "followup_certified_not_applied",
+  "unresolved": "qamus\\candidates\\qamus_2092\\bulk_followup_nahw_recheck_unresolved_batch_011.jsonl",
+  "unresolved_rows": 10
+}

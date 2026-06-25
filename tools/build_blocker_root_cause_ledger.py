@@ -64,6 +64,24 @@ def root_concat(qac_root):
     if not qac_root: return ""
     return qac_root.replace(" ", "")
 
+def root_flat(cc):
+    return (cc.replace("أ", "ا").replace("إ", "ا").replace("آ", "ا").replace("ء", "")
+              .replace("ؤ", "و").replace("ئ", "ي").replace("ى", "ي"))
+
+def root_key_variants(cc):
+    if not cc:
+        return []
+    keys = [cc, root_flat(cc)]
+    # QAC sometimes records final hamza-seat weak roots as ...أ while the entry root is ...ء.
+    if cc.endswith("أ"):
+        alt = cc[:-1] + "ء"
+        keys.extend([alt, root_flat(alt)])
+    out = []
+    for k in keys:
+        if k and k not in out:
+            out.append(k)
+    return out
+
 def main():
     os.makedirs(OUTDIR, exist_ok=True)
     wbw = json.load(open(os.path.join(STAGE, "wbw-lookup.json"), encoding="utf-8"))
@@ -83,10 +101,8 @@ def main():
     by_root_cc = {}
     for r, ids in by_root.items():
         cc = r.replace(" ", "")
-        by_root_cc.setdefault(cc, set()).update(ids)
-        flat = (cc.replace("أ", "ا").replace("إ", "ا").replace("آ", "ا").replace("ء", "")
-                  .replace("ؤ", "و").replace("ئ", "ي").replace("ى", "ي"))
-        by_root_cc.setdefault(flat, set()).update(ids)
+        for key in root_key_variants(cc):
+            by_root_cc.setdefault(key, set()).update(ids)
 
     # entries: forms(norm_strict set), refs(set of S:A), root, headword
     ent = {}
@@ -129,7 +145,7 @@ def main():
         for i, surface in enumerate(wlist, 1):
             loc = f"{sa}:{i}"
             nk = A.norm_strict(surface)
-            r = roots_by_loc.get(loc) or root_by_as.get((sa, nk))
+            r = root_by_as.get((sa, nk))
             if r:
                 surf_roots[nk].add(root_concat(r))
             if loc not in words:
@@ -158,16 +174,19 @@ def main():
                 continue
             nk = A.norm_strict(surface)
             blk, code = coarse_blocker(loc, surface)
-            qroot = roots_by_loc.get(loc) or root_by_as.get((sa, nk))
+            qroot_loc = roots_by_loc.get(loc)
+            qroot_surface = root_by_as.get((sa, nk))
+            qroot = qroot_surface
             qcc = root_concat(qroot)
             qpos = pos_by_as.get((sa, nk))
             host_ids = A.lemma_entry_for(surface, by_norm, by_lemma)  # entry hosts the surface?
             # F3 fix: flatten the QAC root (hamza/weak) before by-root lookup, exactly as entry roots are
             # flattened into by_root_cc — else أتي/رأي miss the existing أَتَى/رَأَى entries and get
             # misrouted to missing_qamus_entry. by_root_cc already carries both raw and flattened keys.
-            qflat = ((qcc.replace("أ", "ا").replace("إ", "ا").replace("آ", "ا").replace("ء", "")
-                         .replace("ؤ", "و").replace("ئ", "ي").replace("ى", "ي")) if qcc else "")
-            root_ids = sorted(by_root_cc.get(qcc, set()) or by_root_cc.get(qflat, set())) if qcc else []
+            root_id_set = set()
+            for key in root_key_variants(qcc):
+                root_id_set.update(by_root_cc.get(key, set()))
+            root_ids = sorted(root_id_set) if qcc else []
             is_homograph = len(surf_roots.get(nk, set())) > 1
             is_fn = nk in FN
             is_proper = nk in PROPER or (qroot and nk.replace("ال", "") in PROPER)
@@ -188,6 +207,14 @@ def main():
                 # A: verb token, single-sense root, collision-free -> verb gloss very likely applies (2-vote confirm)
                 # B: multi-sense root -> needs per-loc sense selection
                 # C: noun/participle token (verbal entry gloss would be a POS mismatch) or homograph collision
+                def _entry_root_matches(eid):
+                    if not (eid and qcc):
+                        return False
+                    entry_keys = set(root_key_variants(root_concat(ent.get(eid, {}).get("root"))))
+                    token_keys = set(root_key_variants(qcc))
+                    return bool(entry_keys & token_keys)
+                if not qcc or qpos != "V" or not _entry_root_matches(_eid):
+                    return "C_pos_or_collision"
                 if is_homograph: return "C_pos_or_collision"
                 if qpos == "N": return "C_pos_or_collision"   # entry glosses are verbal -> noun needs authored gloss
                 if _nsenses <= 1: return "A_safe"
@@ -265,6 +292,8 @@ def main():
                 "loc": loc, "surface": surface, "nk": nk,
                 "coarse_blocker": blk, "pending_code": code, "root_cause": rc,
                 "qac_root": qcc or None, "qac_pos": qpos,
+                "qac_surface_match": bool(qroot_surface),
+                "qac_loc_surface_conflict": bool(qroot_surface and qroot_loc and root_concat(qroot_loc) != qcc),
                 "host_entry": host_ids[0] if host_ids else None,
                 "root_entry": root_ids[0] if root_ids else None,
                 "homograph": is_homograph, "function_word": is_fn, "proper": bool(is_proper),

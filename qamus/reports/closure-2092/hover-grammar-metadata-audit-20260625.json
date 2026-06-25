@@ -1,0 +1,18 @@
+{
+  "_generator": "tools/audit_hover_grammar_metadata.py",
+  "note": "gender/number/case/mood/derivative-class require a morphological analyzer not available offline; flagged missing, never fabricated. The concise PUBLIC gloss may be correct even when internal metadata is incomplete.",
+  "particles": 13273,
+  "particles_with_function_decision": 1012,
+  "pos_derivable": 46831,
+  "pos_derivable_pct": 99.38,
+  "repair_queues": {
+    "metadata_repair_queue": 46727,
+    "nominal_feature_repair_queue": 22247,
+    "particle_function_repair_queue": 12261,
+    "verb_feature_repair_queue": 11311
+  },
+  "resolved": 47121,
+  "root_derivable": 30371,
+  "root_derivable_pct": 64.45,
+  "with_token_decision": 6861
+}

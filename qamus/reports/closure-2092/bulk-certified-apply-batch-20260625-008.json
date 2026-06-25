@@ -1,0 +1,17 @@
+{
+  "_generator": "inline combine batch006 direct plus follow-up certified slices",
+  "by_decision_state": {
+    "bulk_followup_arbitrated_certified": 66,
+    "bulk_followup_sarf_recheck_certified": 18,
+    "bulk_two_vote_certified": 107
+  },
+  "inputs": [
+    "qamus/candidates/qamus_2092/bulk_twovote_certified_batch_008.jsonl",
+    "qamus/candidates/qamus_2092/bulk_followup_arbitrated_batch_006.jsonl",
+    "qamus/candidates/qamus_2092/bulk_followup_sarf_recheck_batch_006.jsonl"
+  ],
+  "out": "qamus/candidates/qamus_2092/bulk_certified_apply_batch_20260625_008.jsonl",
+  "rows": 191,
+  "sha256": "7b619be9d293c8ac4b8e1d44bbd1ebe158a9e26fdf8aebef3fcdfe6a1efcd55a",
+  "status": "combined_not_applied"
+}

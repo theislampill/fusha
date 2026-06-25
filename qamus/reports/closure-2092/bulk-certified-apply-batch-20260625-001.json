@@ -1,0 +1,13 @@
+{
+  "_generator": "inline combine certified two-vote + deterministic residual",
+  "by_decision_state": {
+    "bulk_deterministic_auto_rule": 1,
+    "bulk_two_vote_certified": 91
+  },
+  "inputs": [
+    "qamus/candidates/qamus_2092/bulk_twovote_certified_batch_001.jsonl",
+    "qamus/candidates/qamus_2092/bulk_deterministic_hover_batch_002.jsonl"
+  ],
+  "out": "qamus/candidates/qamus_2092/bulk_certified_apply_batch_20260625_001.jsonl",
+  "rows": 92
+}

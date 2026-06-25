@@ -1,0 +1,22 @@
+{
+  "_generator": "tools/reconcile_bulk_two_vote_results.py",
+  "allow_same_gloss_reason_reconcile": true,
+  "by_unresolved_reason": {
+    "both_votes_rejected": 16,
+    "missing_vote": 600,
+    "vote_disagreement": 171
+  },
+  "certified_batch": "qamus\\candidates\\qamus_2092\\bulk_twovote_certified_batch_003.jsonl",
+  "certified_rows": 213,
+  "provenance": "qamus\\candidates\\qamus_2092\\bulk_twovote_certified_batch_003.provenance.jsonl",
+  "request_file": "qamus\\candidates\\qamus_2092\\bulk_twovote_requests_batch_001.jsonl",
+  "status": "reconciled_not_applied",
+  "total_requests": 1000,
+  "unresolved": "qamus\\candidates\\qamus_2092\\bulk_twovote_unresolved_batch_003.jsonl",
+  "unresolved_rows": 787,
+  "vote_files": [
+    "out\\subagent_votes\\sarf_primary_chunks_016_025.jsonl",
+    "out\\subagent_votes\\nahw_primary_chunks_016_025.jsonl"
+  ],
+  "votes_seen": 800
+}
