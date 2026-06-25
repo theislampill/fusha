@@ -1,8 +1,18 @@
 # Next-batch resume plan — exact, no vague "standing by"
 
-## Where we are (live-verified, 2026-06-24f, post-hygiene closure tranche)
+## Where we are (live-verified, 2026-06-25, FINALIZATION/coverage-to-90 tranche)
 
-- **Live coverage 86.18%** · 43,005 / 49,900 · 6,895 pending (cycle 002 +156 applied live, 0 wrong). Need **+1,905 for 90%** (expected-safe ~3,442 → 93.08% ceiling, reachable; owner-paced multi-batch).
+- **Live coverage 87.35%** · 43,589 / 49,900 · 6,311 pending (cycle 003 form-variant +510 + host-lexeme
+  +74 = **+584 this tranche, 0 wrong**). Need **+1,321 for 90%**. Non-owner authoring lanes top out
+  ~88.5–89.4%; **90% is owner-gated** — safest lever = LIVE index-miss reindex (~1,055, 0 authoring
+  risk), then new-entry authoring (52 ready) + examples[].en licensing (DR02-5). See
+  `closure-2092/final-completion-and-90-report-20260625.md`.
+- **HEAD reconciled** (Phase 0): real HEAD=origin/main=GitHub; `a0f596b`/`3d621c1` were stale captures.
+- **Public crawl DONE**: 2,092/2,092 × HTTP 200, 0 mismatch (`live-vs-repo-entry-reconciliation`).
+- **🔴 examples[].en = verbatim Saheeh International** in public dataset (owner-gated licensing; separate
+  from clean hover output) — `examples-en-provenance-audit`.
+
+### (prior) post-hygiene closure tranche — HISTORICAL
 - **Deep-research reattempt PROVEN**: 40 findings closed (31 fixed/6 narrowed/2 false-positive/1 owner-gated), 5 approach reports, 0 high-sev blocking authoring (`closure-2092/deep-research-reattempt-matrix.*`). Missing generators built (verb-clitic/new-entry/source-entry-repair). Engine operational (sarf 11/11, nahw 16/16).
 - **Open-stem queue-hygiene DONE** (5 deep-research audits actioned): surface index now covers `usage[].forms`
   (F1); host-lexeme is noun-only with verb-clitics split out (F2); roots flattened so أتي/رأي reroute (F3);
