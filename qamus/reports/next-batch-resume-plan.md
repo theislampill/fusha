@@ -1,8 +1,9 @@
 # Next-batch resume plan — exact, no vague "standing by"
 
-## Where we are (repo-local, 2026-06-24e, open-stem hygiene tranche COMPLETE)
+## Where we are (live-verified, 2026-06-24f, post-hygiene closure tranche)
 
-- Repo-local coverage **85.87%** · 42,849 / 49,900 · 7,051 pending (classification only; live untouched this tranche).
+- **Live coverage 86.18%** · 43,005 / 49,900 · 6,895 pending (cycle 002 +156 applied live, 0 wrong). Need **+1,905 for 90%** (expected-safe ~3,442 → 93.08% ceiling, reachable; owner-paced multi-batch).
+- **Deep-research reattempt PROVEN**: 40 findings closed (31 fixed/6 narrowed/2 false-positive/1 owner-gated), 5 approach reports, 0 high-sev blocking authoring (`closure-2092/deep-research-reattempt-matrix.*`). Missing generators built (verb-clitic/new-entry/source-entry-repair). Engine operational (sarf 11/11, nahw 16/16).
 - **Open-stem queue-hygiene DONE** (5 deep-research audits actioned): surface index now covers `usage[].forms`
   (F1); host-lexeme is noun-only with verb-clitics split out (F2); roots flattened so أتي/رأي reroute (F3);
   function-words split out of forms_array (F4); batch + provenance gates wired (F12/F13); scar fixtures (F20);
