@@ -146,6 +146,27 @@ For bāʾ plus possessive suffixes, include both the prepositional relation and 
 is not "Sin.", and `بِذُنُوبِكُم` is not a generic suffix pending when iʿrāb confirms bāʾ + majrūr noun + possessive
 suffix.
 
+## Production finding (morphosyntax contract — particles, phrases, clauses)
+Before authoring a hover for a function-bearing token, classify the syntactic function, not only the surface
+particle:
+
+- `و` may be ordinary coordination, oath-preposition, or comitative wāw. Oath and comitative uses must surface
+  their contribution; do not collapse them into a bare "and" or a host-only noun hover.
+- `ف` may be resumption, coordination, result in a conditional answer, supplemental, or cause. Cause `ف` can govern
+  a following imperfect verb into the subjunctive and must not be treated like ordinary "and/then".
+- `أ`/hamza may be interrogative or equalization. Equalization hamza contributes "whether" and is not an ordinary
+  question.
+- `إن` and sisters take `ism_inna` and `khabar_inna`; negative `لا` can act like `أن`; preventive `ما` can block an
+  accusative particle's normal case effect.
+- Jar-majrūr has two layers: the preposition governs a genitive nominal, and the resulting PP attaches to a verb,
+  nominal, hidden hāl, hidden ṣifa, clause, or other explicit head.
+- Relative pronouns, subordinating conjunctions, purpose lām, and temporal conditionals must record their clause
+  relation (`relative_clause`, `subordinate_clause`, `purpose_clause`, `temporal_condition`, `answer_of_condition`).
+- Hāl, interrogative hāl, mafʿūl li-ajlih, and mafʿūl maʿahu are adverbial accusatives; the hover may be concise,
+  but the parse record must preserve case, role, and attachment.
+- Vocative particles and exceptive particles must preserve the governed noun structure; for exceptions record the
+  mustathnā minhu, mustathnā, and whether the construction is muttaṣil, munqaṭiʿ, or mufarragh.
+
 ---
 
 ## The six nahw principles (encode these)

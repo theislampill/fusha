@@ -11,6 +11,9 @@ The same Andon class kept recurring because a token hover could be "lexically tr
 - particles with attached pronouns: `إِنَّا`
 - iḍāfa and within-token possessives
 - adjective agreement, badal/apposition, tamyīz, condition/result, and PP attachment
+- clause builders: relative pronouns, subordinating particles, purpose lām, temporal conditionals
+- adverbial accusatives: hāl, mafʿūl li-ajlih, mafʿūl maʿahu
+- particle-function collisions: interrogative hamza versus equalization hamza, ordinary wāw versus oath or comitative wāw
 
 English hover text alone cannot safely encode POS, person, number, gender, case, mood, state, rationality, and dependency arcs. The remedy is a separate source-addressed parse payload keyed by `loc`.
 
@@ -27,6 +30,43 @@ The payload is internal evidence and teaching metadata. It may cite internal lab
 - Particle/preposition: function, governed token, effect on case/mood where applicable.
 - Token-internal clitic: segment role plus visible gloss contribution.
 - Dependency: role plus head/governor/linked locs for fāʿil/hidden subject, nāʾib fāʿil, objects, iḍāfa, ṣifa, badal, tamyīz, murakkab compound numbers, PP, condition/result, relative clauses, kāna/kāda sisters, and mā acting like laysa.
+
+## Particle And Phrase Gate
+
+Do not collapse same-letter particles into one hover rule:
+
+- ordinary `و` may coordinate, oath `و` governs a genitive noun like a preposition, and comitative `و` means "with" and licenses mafʿūl maʿahu.
+- `ف` may resume, coordinate, mark a conditional/result answer, be supplemental, or cause a following imperfect verb to be subjunctive.
+- `إن` and its sisters are verb-like accusative particles: record `ism_inna` and `khabar_inna`, with the subject accusative and predicate nominative.
+- negative `لا` may behave like `أن`: record its subject/predicate relation instead of treating it as bare "no".
+- preventive `ما` after an accusative particle forms kāffa wa makfūfa and blocks the usual case effect.
+- vocative particles govern an addressee and can affect case; record the vocative dependency and addressee loc.
+- exceptive particles need the exception structure: mustathnā minhu, mustathnā, and whether the expression is muttaṣil, munqaṭiʿ, or mufarragh.
+- prefixed `بـ`, `لـ`, and similar prepositions create jar-majrūr even when fused to a noun or pronoun.
+- hamza/alif may be interrogative or equalization; the equalization use should surface a "whether" contribution and is not an ordinary question.
+- purpose lām, imperative lām, and genitive lām are distinct segment roles.
+
+A PP record needs both the internal jar-majrūr relation and its attachment target: verb, nominal, hidden hāl, hidden ṣifa, clause, or other explicit loc. A public hover like `Badr`, `figs`, or `stars` is invalid for an entry/sense that is teaching the attached preposition or oath relation.
+
+## Clause Gate
+
+Record clause builders explicitly:
+
+- relative pronoun plus ṣilat al-mawṣūl: `relative_clause`
+- subordinating conjunction such as `أن`: `subordinate_clause`
+- purpose lām with implied `أن`: `purpose_clause`
+- temporal condition such as `إذا`: `temporal_condition` plus `answer_of_condition`
+
+The hover may stay concise, but the parse record must preserve the syntactic function that selected it.
+
+## Adverbial Accusative Gate
+
+For accusative adverbial constructions, record the role and attachment:
+
+- hāl: accusative circumstance; the head may be a verb, nominal, pronoun, hidden pronoun, or a previous-verse pronoun.
+- interrogative hāl: words such as `كيف` can function as circumstantial accusatives.
+- mafʿūl li-ajlih: accusative of purpose or motive.
+- mafʿūl maʿahu: comitative object after comitative wāw, not ordinary coordination.
 
 ## Verb Dependency Gate
 

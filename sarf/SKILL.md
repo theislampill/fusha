@@ -113,6 +113,10 @@ Verb form is a semantic gate, not decoration. Record triliteral form I-X or quad
 authoring: II can be causative/intensive, III can be mutual, VI reciprocal, VII/VIII reflexive or agentless,
 IX stative/color, X seeking/reflexive-causative. A hover that ignores the form, voice, person, number, or suffix
 is a dictionary gloss, not a token gloss.
+Prefix shape is not enough to classify a segment. A raw `و`, `ف`, `أ`, `ل`, or `ما` must be handed to nahw for
+function before hover authoring: ordinary conjunction, oath, comitative, resumption, cause, equalization,
+interrogation, purpose, imperative, genitive, preventive, vocative, exceptive, and negation can share deceptively
+similar surface pieces. Sarf may segment the token; nahw certifies the grammatical contribution.
 
 ## 9. Homograph quarantine rules
 If two readings collapse under `norm()`, decide on the **content letter's harakah / hamza seat / shadda**, not

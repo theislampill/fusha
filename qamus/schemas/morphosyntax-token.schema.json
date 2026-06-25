@@ -17,7 +17,7 @@
     "root": { "type": ["string", "null"] },
     "pos": {
       "type": "string",
-      "enum": ["noun", "proper_noun", "pronoun", "adjective", "participle", "masdar", "verb", "particle", "preposition", "conjunction", "relative", "number", "unknown"]
+      "enum": ["noun", "proper_noun", "pronoun", "demonstrative", "adjective", "participle", "masdar", "verb", "particle", "preposition", "conjunction", "subordinating_conjunction", "relative", "time_adverb", "locative_adverb", "interrogative", "interrogative_particle", "equalization_particle", "negative_particle", "accusative_particle", "preventive_particle", "emphatic_particle", "resumption_particle", "result_particle", "supplemental_particle", "cause_particle", "vocative_particle", "prohibitive_particle", "exceptive_particle", "purpose_particle", "comitative_particle", "initial_letters", "number", "unknown"]
     },
     "morphology": {
       "type": "object",
@@ -48,7 +48,7 @@
         "properties": {
           "role": {
             "type": "string",
-            "enum": ["stem", "prefix_conjunction", "prefix_preposition", "prefix_particle", "definite_article", "subject_pronoun", "object_pronoun", "possessive_pronoun", "relative_pronoun", "case_ending", "other"]
+            "enum": ["stem", "prefix_conjunction", "prefix_preposition", "prefix_oath", "prefix_comitative_waw", "prefix_resumption_fa", "prefix_coordination_fa", "prefix_result_fa", "prefix_supplemental_fa", "prefix_cause_fa", "prefix_interrogative_hamza", "prefix_equalization_hamza", "prefix_particle", "prefix_purpose_lam", "prefix_imperative_lam", "preventive_ma", "definite_article", "subject_pronoun", "object_pronoun", "possessive_pronoun", "relative_pronoun", "case_ending", "other"]
           },
           "surface": { "type": "string" },
           "gloss_contribution": { "type": ["string", "null"] },
@@ -68,8 +68,13 @@
         "head": { "type": ["string", "null"], "description": "loc of head token in a dependency relation." },
         "dependency": {
           "type": ["string", "null"],
-          "enum": ["subject", "hidden_subject", "naib_fail", "object", "first_object", "second_object", "preposition_phrase", "idafa_head", "idafa_dependent", "sifa", "badal", "tamyiz", "murakkab", "hal", "mafool_mutlaq", "mafool_liajlih", "mafool_maahu", "coordination", "condition", "answer_of_condition", "relative_clause", "khabar", "ism_kana", "khabar_kana", "ism_kada", "khabar_kada", "ism_ma_laysa", "khabar_ma_laysa", "subjunctive_governor", "jussive_governor", "negation", "imperative", "imperative_lam", "prohibition", "jawab_amr", "null"]
+          "enum": ["subject", "hidden_subject", "naib_fail", "object", "first_object", "second_object", "jar_majrur", "preposition_phrase", "pp_attachment", "pp_attached_to_verb", "pp_attached_to_nominal", "pp_attached_to_hidden_hal", "pp_attached_to_hidden_sifa", "oath_preposition", "idafa_head", "idafa_dependent", "sifa", "badal", "tamyiz", "murakkab", "hal", "hal_from_pronoun", "interrogative_hal", "mafool_mutlaq", "mafool_liajlih", "mafool_maahu", "coordination", "coordinated", "condition", "temporal_condition", "answer_of_condition", "relative_clause", "subordinate_clause", "purpose_clause", "interrogative", "equalization", "vocative", "vocative_addressee", "exceptive", "mustathna_minhu", "mustathna", "khabar", "ism_kana", "khabar_kana", "ism_kada", "khabar_kada", "ism_inna", "khabar_inna", "la_anna_subject", "la_anna_predicate", "kafa_makfufa", "ism_ma_laysa", "khabar_ma_laysa", "subjunctive_governor", "jussive_governor", "negation", "resumption", "result_fa", "supplemental", "cause_fa", "imperative", "imperative_lam", "prohibition", "jawab_amr", "null"]
         },
+        "phrase_type": { "type": ["string", "null"], "enum": ["PP", "VS", "NS", "SC", "none", "null"] },
+        "attachment_target_kind": { "type": ["string", "null"], "enum": ["verb", "nominal", "pronoun", "hidden_hal", "hidden_sifa", "clause", "cross_verse_pronoun", "none", "null"] },
+        "clause_kind": { "type": ["string", "null"], "enum": ["relative", "subordinate", "purpose", "condition", "answer_of_condition", "none", "null"] },
+        "condition_kind": { "type": ["string", "null"], "enum": ["temporal", "conditional_particle", "none", "null"] },
+        "exception_kind": { "type": ["string", "null"], "enum": ["muttasil", "munqati", "mufarragh", "none", "null"] },
         "linked_locs": { "type": "array", "items": { "type": "string", "pattern": "^\\d{1,3}:\\d{1,3}:\\d{1,3}$" } }
       }
     },
