@@ -31,7 +31,7 @@
       ]
     },
     "source_entry_unverified": {
-      "count": 1778,
+      "count": 1775,
       "sample": [
         "2:2:6",
         "2:4:3",
@@ -61,7 +61,7 @@
       ]
     },
     "stem_base_unknown": {
-      "count": 4227,
+      "count": 4156,
       "sample": [
         "1:6:1",
         "1:7:3",
@@ -213,6 +213,21 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "دَعْوَىٰهُمْ"
     },
+    "state:tok:10:10:5": {
+      "entry_contexts": [
+        "543da5bcc248",
+        "68e87fcb398a",
+        "83e64ea698d5"
+      ],
+      "gloss": "their greeting",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "10:10:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَتَحِيَّتُهُمْ"
+    },
     "state:tok:10:10:9": {
       "entry_contexts": [
         "543da5bcc248",
@@ -307,6 +322,19 @@
       "loc": "10:12:4",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلضُّرُّ"
+    },
+    "state:tok:10:18:12": {
+      "entry_contexts": [
+        "4f99a11c3127"
+      ],
+      "gloss": "our intercessors",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "10:18:12",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "شُفَعَٰٓؤُنَا"
     },
     "state:tok:10:18:7": {
       "entry_contexts": [
@@ -997,6 +1025,19 @@
       "loc": "10:78:2",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَجِئْتَنَا"
+    },
+    "state:tok:10:83:12": {
+      "entry_contexts": [
+        "d257e3f29283"
+      ],
+      "gloss": "their chiefs",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "10:83:12",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَمَلَإِي۟هِمْ"
     },
     "state:tok:10:90:2": {
       "entry_contexts": [
@@ -2586,6 +2627,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَهُدًۭى"
     },
+    "state:tok:12:111:4": {
+      "entry_contexts": [
+        "361a2ebe2ad4"
+      ],
+      "gloss": "their stories",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "12:111:4",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "قَصَصِهِمْ"
+    },
     "state:tok:12:17:9": {
       "entry_contexts": [
         "1a9f6df3889e",
@@ -2708,6 +2762,21 @@
       "loc": "12:30:6",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ٱلْعَزِيزِ"
+    },
+    "state:tok:12:30:8": {
+      "entry_contexts": [
+        "9af2cd82d235",
+        "aab306f0b26f",
+        "eb1198782b49"
+      ],
+      "gloss": "her servant",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "12:30:8",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "فَتَىٰهَا"
     },
     "state:tok:12:32:12": {
       "entry_contexts": [
@@ -3001,6 +3070,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "مَكِينٌ"
     },
+    "state:tok:12:56:11": {
+      "entry_contexts": [
+        "6708891659a2",
+        "7034f8b4a1f9",
+        "746abe23a760"
+      ],
+      "gloss": "our mercy",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "12:56:11",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِرَحْمَتِنَا"
+    },
     "state:tok:12:5:13": {
       "entry_contexts": [
         "d3e8b9b7c4fc",
@@ -3150,6 +3234,38 @@
       "loc": "12:70:11",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "مُؤَذِّنٌ"
+    },
+    "state:tok:12:70:3": {
+      "entry_contexts": [
+        "4be29342bd93",
+        "541ad3d59891",
+        "5d54e40a7cac",
+        "8a5693e22167"
+      ],
+      "gloss": "their provisions",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "12:70:3",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِجَهَازِهِمْ"
+    },
+    "state:tok:12:76:2": {
+      "entry_contexts": [
+        "4792ce071ee0",
+        "4af79d2fb7e5",
+        "5defcad62e03",
+        "6d0a4d73fa88"
+      ],
+      "gloss": "their sacks",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "12:76:2",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِأَوْعِيَتِهِمْ"
     },
     "state:tok:12:76:4": {
       "entry_contexts": [
@@ -4353,6 +4469,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَعَدَكُمْ"
     },
+    "state:tok:14:23:15": {
+      "entry_contexts": [
+        "89f4baadb89a"
+      ],
+      "gloss": "their greeting",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "14:23:15",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "تَحِيَّتُهُمْ"
+    },
     "state:tok:14:24:1": {
       "entry_contexts": [
         "2025eb5b6a8d",
@@ -4472,6 +4601,20 @@
       "loc": "14:43:5",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَرْتَدُّ"
+    },
+    "state:tok:14:43:8": {
+      "entry_contexts": [
+        "349b6c66ca3e",
+        "441336466eb4"
+      ],
+      "gloss": "and their hearts",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "14:43:8",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَأَفْـِٔدَتُهُمْ"
     },
     "state:tok:14:44:12": {
       "entry_contexts": [
@@ -5336,6 +5479,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "الطَّيْرِ"
     },
+    "state:tok:16:7:2": {
+      "entry_contexts": [
+        "77f39a7f56f8"
+      ],
+      "gloss": "your burdens",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "16:7:2",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَثْقَالَكُمْ"
+    },
     "state:tok:16:7:5": {
       "entry_contexts": [
         "77f39a7f56f8"
@@ -5936,6 +6092,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "مَسْـُٔولًۭا"
     },
+    "state:tok:17:44:17": {
+      "entry_contexts": [
+        "36ffe82c1c8a",
+        "664003fe8674",
+        "8f38e2c16281"
+      ],
+      "gloss": "their glorification",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "17:44:17",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "تَسْبِيحَهُمْ"
+    },
     "state:tok:17:44:6": {
       "entry_contexts": [
         "36ffe82c1c8a",
@@ -6173,6 +6344,19 @@
       "loc": "17:71:2",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "نَدْعُوا۟"
+    },
+    "state:tok:17:71:5": {
+      "entry_contexts": [
+        "6fe9ada37a9b"
+      ],
+      "gloss": "their leader",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "17:71:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِإِمَٰمِهِمْ"
     },
     "state:tok:17:72:1": {
       "entry_contexts": [
@@ -6650,6 +6834,26 @@
       "loc": "18:21:29",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْرِهِمْ"
+    },
+    "state:tok:18:22:13": {
+      "entry_contexts": [
+        "32aa5c099adc",
+        "45077ec4ecb0",
+        "4973b17c5fa4",
+        "5575581aa220",
+        "55c548d602e9",
+        "764a0d39f699",
+        "7ea2cfcc722e",
+        "eccba8b4d3f3"
+      ],
+      "gloss": "and their eighth",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "18:22:13",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَثَامِنُهُمْ"
     },
     "state:tok:18:23:7": {
       "entry_contexts": [
@@ -8984,6 +9188,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:21:68:4": {
+      "entry_contexts": [
+        "7d6e5b852be1"
+      ],
+      "gloss": "your gods",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "21:68:4",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "ءَالِهَتَكُمْ"
+    },
     "state:tok:21:68:7": {
       "entry_contexts": [
         "7d6e5b852be1"
@@ -10433,6 +10650,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَأَنَّىٰ"
     },
+    "state:tok:23:8:3": {
+      "entry_contexts": [
+        "db1a68c31812"
+      ],
+      "gloss": "their trusts",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "23:8:3",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لِأَمَٰنَٰتِهِمْ"
+    },
     "state:tok:23:91:12": {
       "entry_contexts": [
         "d6a4f976cb61"
@@ -11159,6 +11389,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَعَدَ"
     },
+    "state:tok:24:55:25": {
+      "entry_contexts": [
+        "259fe620e117",
+        "c59a0161fac8"
+      ],
+      "gloss": "their fear",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "24:55:25",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "خَوْفِهِمْ"
+    },
     "state:tok:24:55:32": {
       "entry_contexts": [
         "259fe620e117",
@@ -11766,6 +12010,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَضَلُّ"
     },
+    "state:tok:25:42:5": {
+      "entry_contexts": [
+        "65daebe73c35",
+        "f1643f45edbf"
+      ],
+      "gloss": "our gods",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "25:42:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "ءَالِهَتِنَا"
+    },
     "state:tok:25:45:1": {
       "entry_contexts": [
         "4cf293601eb9",
@@ -11995,6 +12253,20 @@
       "loc": "25:75:8",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "تَحِيَّةًۭ"
+    },
+    "state:tok:25:77:7": {
+      "entry_contexts": [
+        "312e9b5ba80b",
+        "c0d72d1edde0"
+      ],
+      "gloss": "your supplication",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "25:77:7",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "دُعَآؤُكُمْ"
     },
     "state:tok:25:77:9": {
       "entry_contexts": [
@@ -15046,6 +15318,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "بِتَابِعٍۢ"
     },
+    "state:tok:2:145:14": {
+      "entry_contexts": [
+        "5d89e690256d",
+        "7947580aed3e"
+      ],
+      "gloss": "their prayer-direction",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:145:14",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "قِبْلَتَهُمْ"
+    },
     "state:tok:2:145:17": {
       "entry_contexts": [
         "5d89e690256d",
@@ -17918,6 +18204,25 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَقْدِرُونَ"
     },
+    "state:tok:2:264:6": {
+      "entry_contexts": [
+        "1fd424ee1e74",
+        "28fd81126a28",
+        "3f40e0c0eb7a",
+        "4bba2359dc9c",
+        "6b135f78a68a",
+        "9a39cb3f0c79",
+        "bfffcf7ad1bd"
+      ],
+      "gloss": "your charities",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:264:6",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "صَدَقَٰتِكُم"
+    },
     "state:tok:2:265:1": {
       "entry_contexts": [
         "1c64d16249f0",
@@ -18076,6 +18381,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "تُنفِقُوا۟"
     },
+    "state:tok:2:272:13": {
+      "entry_contexts": [
+        "388bbd38acf6",
+        "ef7a0a3ae530",
+        "fc62d7c0ebbf"
+      ],
+      "gloss": "for yourselves",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:272:13",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "فَلِأَنفُسِكُمْ"
+    },
     "state:tok:2:272:15": {
       "entry_contexts": [
         "388bbd38acf6",
@@ -18120,6 +18440,21 @@
       "loc": "2:272:24",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يُوَفَّ"
+    },
+    "state:tok:2:272:3": {
+      "entry_contexts": [
+        "388bbd38acf6",
+        "ef7a0a3ae530",
+        "fc62d7c0ebbf"
+      ],
+      "gloss": "their guidance",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:272:3",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "هُدَىٰهُمْ"
     },
     "state:tok:2:273:14": {
       "entry_contexts": [
@@ -19578,6 +19913,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَتَّخَذْتُمْ"
     },
+    "state:tok:2:85:22": {
+      "entry_contexts": [
+        "4f666d15bb7e",
+        "603eecbe7dd7",
+        "9cb9f6f53207"
+      ],
+      "gloss": "their expulsion",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "2:85:22",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "إِخْرَاجُهُمْ"
+    },
     "state:tok:2:85:23": {
       "entry_contexts": [
         "4f666d15bb7e",
@@ -19808,6 +20158,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَٱخْتِلَٰفُ"
     },
+    "state:tok:30:22:8": {
+      "entry_contexts": [
+        "259fe620e117",
+        "aa3a666a8e7b"
+      ],
+      "gloss": "your colors",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "30:22:8",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَأَلْوَٰنِكُمْ"
+    },
     "state:tok:30:27:17": {
       "entry_contexts": [
         "df392acc2f17"
@@ -19834,6 +20198,19 @@
       "loc": "30:28:11",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَيْمَٰنُكُم"
+    },
+    "state:tok:30:28:21": {
+      "entry_contexts": [
+        "f3726bc9f962"
+      ],
+      "gloss": "your fear",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "30:28:21",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "كَخِيفَتِكُمْ"
     },
     "state:tok:30:30:12": {
       "entry_contexts": [
@@ -20778,6 +21155,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَحْسَبُونَ"
     },
+    "state:tok:33:20:16": {
+      "entry_contexts": [
+        "4a5e2bbbf2b1",
+        "e2824ef7725d"
+      ],
+      "gloss": "your news",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "33:20:16",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَنۢبَآئِكُمْ"
+    },
     "state:tok:33:20:3": {
       "entry_contexts": [
         "4a5e2bbbf2b1",
@@ -21197,6 +21588,21 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَزْوَٰجَكُمُ"
     },
+    "state:tok:33:4:18": {
+      "entry_contexts": [
+        "78741df52ca5",
+        "7f416e8c42c3",
+        "83e64ea698d5"
+      ],
+      "gloss": "your adopted sons",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "33:4:18",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَدْعِيَآءَكُمْ"
+    },
     "state:tok:33:4:21": {
       "entry_contexts": [
         "78741df52ca5",
@@ -21212,6 +21618,21 @@
       "loc": "33:4:21",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "قَوْلُكُم"
+    },
+    "state:tok:33:4:22": {
+      "entry_contexts": [
+        "78741df52ca5",
+        "7f416e8c42c3",
+        "83e64ea698d5"
+      ],
+      "gloss": "your mouths",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "33:4:22",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِأَفْوَٰهِكُمْ"
     },
     "state:tok:33:4:4": {
       "entry_contexts": [
@@ -22218,6 +22639,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "لِأَجَلٍۢ"
     },
+    "state:tok:35:14:5": {
+      "entry_contexts": [
+        "83e64ea698d5"
+      ],
+      "gloss": "your call",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "35:14:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "دُعَآءَكُمْ"
+    },
     "state:tok:35:14:9": {
       "entry_contexts": [
         "83e64ea698d5"
@@ -22976,6 +23410,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "عَلَّمْنَٰهُ"
     },
+    "state:tok:36:72:4": {
+      "entry_contexts": [
+        "269ebe526439",
+        "331b6ce2346f"
+      ],
+      "gloss": "their mounts",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "36:72:4",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "رَكُوبُهُمْ"
+    },
     "state:tok:36:76:7": {
       "entry_contexts": [
         "365fa64c3569",
@@ -23608,6 +24056,19 @@
       "loc": "38:53:3",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "تُوعَدُونَ"
+    },
+    "state:tok:38:54:3": {
+      "entry_contexts": [
+        "790533202149"
+      ],
+      "gloss": "our provision",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "38:54:3",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لَرِزْقُنَا"
     },
     "state:tok:38:5:7": {
       "entry_contexts": [
@@ -25881,6 +26342,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "قِيَٰمًۭا"
     },
+    "state:tok:3:193:17": {
+      "entry_contexts": [
+        "a3829d9357ae",
+        "bbfb049e4563"
+      ],
+      "gloss": "our evil deeds",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "3:193:17",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "سَيِّـَٔاتِنَا"
+    },
     "state:tok:3:193:20": {
       "entry_contexts": [
         "a3829d9357ae",
@@ -26537,6 +27012,20 @@
       "loc": "3:61:14",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَأَبْنَآءَكُمْ"
+    },
+    "state:tok:3:61:16": {
+      "entry_contexts": [
+        "9af2cd82d235",
+        "a81cd53fff47"
+      ],
+      "gloss": "your women",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "3:61:16",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَنِسَآءَكُمْ"
     },
     "state:tok:3:61:17": {
       "entry_contexts": [
@@ -27443,6 +27932,19 @@
       "loc": "40:51:10",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَقُومُ"
+    },
+    "state:tok:40:52:5": {
+      "entry_contexts": [
+        "b9b30e7e289e"
+      ],
+      "gloss": "their excuse",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "40:52:5",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "مَعْذِرَتُهُمْ"
     },
     "state:tok:40:56:9": {
       "entry_contexts": [
@@ -28584,6 +29086,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "بِٱلرَّحْمَٰنِ"
     },
+    "state:tok:43:33:11": {
+      "entry_contexts": [
+        "24bf5e29906c",
+        "473d89cfc13e",
+        "4cb26045b5b7"
+      ],
+      "gloss": "their houses",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "43:33:11",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لِبُيُوتِهِمْ"
+    },
     "state:tok:43:33:14": {
       "entry_contexts": [
         "24bf5e29906c",
@@ -28613,6 +29130,19 @@
       "loc": "43:33:5",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أُمَّةًۭ"
+    },
+    "state:tok:43:34:1": {
+      "entry_contexts": [
+        "d82582d4c8e6"
+      ],
+      "gloss": "for their houses",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "43:34:1",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَلِبُيُوتِهِمْ"
     },
     "state:tok:43:36:1": {
       "entry_contexts": [
@@ -28684,6 +29214,19 @@
       "loc": "43:53:6",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "ذَهَبٍ"
+    },
+    "state:tok:43:58:2": {
+      "entry_contexts": [
+        "e91deae107d0"
+      ],
+      "gloss": "our gods",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "43:58:2",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "ءَأَٰلِهَتُنَا"
     },
     "state:tok:43:58:4": {
       "entry_contexts": [
@@ -28797,6 +29340,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "مُّتَّبَعُونَ"
     },
+    "state:tok:44:35:4": {
+      "entry_contexts": [
+        "92c7557c5bf5"
+      ],
+      "gloss": "our death",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "44:35:4",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "مَوْتَتُنَا"
+    },
     "state:tok:44:35:5": {
       "entry_contexts": [
         "92c7557c5bf5"
@@ -28895,6 +29451,36 @@
       "loc": "45:21:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
+    },
+    "state:tok:45:21:13": {
+      "entry_contexts": [
+        "89f4baadb89a",
+        "ba8a26f4ca79",
+        "dcf75e7f4b79"
+      ],
+      "gloss": "their life",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "45:21:13",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "مَّحْيَاهُمْ"
+    },
+    "state:tok:45:21:14": {
+      "entry_contexts": [
+        "89f4baadb89a",
+        "ba8a26f4ca79",
+        "dcf75e7f4b79"
+      ],
+      "gloss": "their death",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "45:21:14",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَمَمَاتُهُمْ"
     },
     "state:tok:45:21:17": {
       "entry_contexts": [
@@ -29102,6 +29688,19 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أُمُّهُۥ"
     },
+    "state:tok:46:16:10": {
+      "entry_contexts": [
+        "d74277b0714a"
+      ],
+      "gloss": "their evil deeds",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "46:16:10",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "سَيِّـَٔاتِهِمْ"
+    },
     "state:tok:46:20:10": {
       "entry_contexts": [
         "c58bce4626f3"
@@ -29153,6 +29752,19 @@
       "loc": "46:20:20",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "تَسْتَكْبِرُونَ"
+    },
+    "state:tok:46:20:8": {
+      "entry_contexts": [
+        "c58bce4626f3"
+      ],
+      "gloss": "your good things",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "46:20:8",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "طَيِّبَٰتِكُمْ"
     },
     "state:tok:46:22:2": {
       "entry_contexts": [
@@ -29207,6 +29819,19 @@
       "loc": "46:24:2",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "رَأَوْهُ"
+    },
+    "state:tok:46:25:10": {
+      "entry_contexts": [
+        "d5ac66156b8e"
+      ],
+      "gloss": "their dwellings",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "46:25:10",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "مَسَٰكِنُهُمْ"
     },
     "state:tok:46:25:4": {
       "entry_contexts": [
@@ -29524,6 +30149,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "زَادَهُمْ"
     },
+    "state:tok:47:17:6": {
+      "entry_contexts": [
+        "55dd18892bf9"
+      ],
+      "gloss": "their piety",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "47:17:6",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "تَقْوَىٰهُمْ"
+    },
     "state:tok:47:18:11": {
       "entry_contexts": [
         "efabb1fe868b"
@@ -29537,6 +30175,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَأَنَّىٰ"
     },
+    "state:tok:47:18:15": {
+      "entry_contexts": [
+        "efabb1fe868b"
+      ],
+      "gloss": "their reminder",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "47:18:15",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "ذِكْرَىٰهُمْ"
+    },
     "state:tok:47:19:1": {
       "entry_contexts": [
         "a6123cbca2ff"
@@ -29549,6 +30200,19 @@
       "loc": "47:19:1",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَٱعْلَمْ"
+    },
+    "state:tok:47:19:13": {
+      "entry_contexts": [
+        "a6123cbca2ff"
+      ],
+      "gloss": "your moving about",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "47:19:13",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "مُتَقَلَّبَكُمْ"
     },
     "state:tok:47:19:9": {
       "entry_contexts": [
@@ -30391,6 +31055,24 @@
       "loc": "4:102:25",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَلْيَأْخُذُوا۟"
+    },
+    "state:tok:4:102:35": {
+      "entry_contexts": [
+        "125f1546603f",
+        "1a9f6df3889e",
+        "24c53b976cf4",
+        "71e588b17717",
+        "b8e9a3a37453",
+        "da7daba4e7d3"
+      ],
+      "gloss": "your belongings",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:102:35",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَأَمْتِعَتِكُمْ"
     },
     "state:tok:4:102:4": {
       "entry_contexts": [
@@ -31333,6 +32015,19 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَكُفْرِهِم"
     },
+    "state:tok:4:156:1": {
+      "entry_contexts": [
+        "91de73c13966"
+      ],
+      "gloss": "their disbelief",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:156:1",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَبِكُفْرِهِمْ"
+    },
     "state:tok:4:157:11": {
       "entry_contexts": [
         "1472e09bf997",
@@ -32049,6 +32744,19 @@
       "loc": "4:31:3",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "كَبَآئِرَ"
+    },
+    "state:tok:4:31:9": {
+      "entry_contexts": [
+        "f80e6f80783a"
+      ],
+      "gloss": "your evil deeds",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "4:31:9",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "سَيِّـَٔاتِكُمْ"
     },
     "state:tok:4:35:5": {
       "entry_contexts": [
@@ -34015,6 +34723,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "عَبْدٍۢ"
     },
+    "state:tok:51:14:2": {
+      "entry_contexts": [
+        "3ad045e70ff7"
+      ],
+      "gloss": "your torment",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "51:14:2",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "فِتْنَتَكُمْ"
+    },
     "state:tok:51:27:4": {
       "entry_contexts": [
         "19de33871698",
@@ -34080,6 +34801,19 @@
       "loc": "51:54:3",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَمَآ"
+    },
+    "state:tok:51:59:7": {
+      "entry_contexts": [
+        "dbeb6ed80467"
+      ],
+      "gloss": "their companions",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "51:59:7",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَصْحَٰبِهِمْ"
     },
     "state:tok:52:18:5": {
       "entry_contexts": [
@@ -34618,6 +35352,19 @@
       "loc": "54:29:2",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "صَاحِبَهُمْ"
+    },
+    "state:tok:54:36:3": {
+      "entry_contexts": [
+        "45077ec4ecb0"
+      ],
+      "gloss": "Our assault",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "54:36:3",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بَطْشَتَنَا"
     },
     "state:tok:54:3:2": {
       "entry_contexts": [
@@ -35521,6 +36268,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَقْدِرُونَ"
     },
+    "state:tok:58:12:10": {
+      "entry_contexts": [
+        "5b382a023db8",
+        "ad9af170d670"
+      ],
+      "gloss": "your private consultation",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "58:12:10",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "نَجْوَىٰكُمْ"
+    },
     "state:tok:58:12:17": {
       "entry_contexts": [
         "5b382a023db8",
@@ -36159,6 +36920,21 @@
       "loc": "5:110:48",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "كَفَفْتُ"
+    },
+    "state:tok:5:114:16": {
+      "entry_contexts": [
+        "543da5bcc248",
+        "5c1d32eee220",
+        "cc9148479eae"
+      ],
+      "gloss": "our last",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:114:16",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَءَاخِرِنَا"
     },
     "state:tok:5:115:2": {
       "entry_contexts": [
@@ -37928,6 +38704,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "فَسَادًۭا"
     },
+    "state:tok:5:65:3": {
+      "entry_contexts": [
+        "7172a5394a7b"
+      ],
+      "gloss": "their evil deeds",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "5:65:3",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "سَيِّئَاتِهِمْ"
+    },
     "state:tok:5:66:18": {
       "entry_contexts": [
         "3041d6f44a27",
@@ -38885,6 +39674,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَنصَارِىٓ"
     },
+    "state:tok:61:14:33": {
+      "entry_contexts": [
+        "4cb26045b5b7",
+        "f12ae52e78f7"
+      ],
+      "gloss": "their enemy",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "61:14:33",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "عَدُوِّهِمْ"
+    },
     "state:tok:61:5:10": {
       "entry_contexts": [
         "01133eb5431b",
@@ -39064,6 +39867,23 @@
       "loc": "63:4:19",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "قَٰتَلَهُمُ"
+    },
+    "state:tok:63:4:8": {
+      "entry_contexts": [
+        "247452622312",
+        "d458faf6ed17",
+        "ddcdeba272fa",
+        "f24ad098879a",
+        "f70dce73330b"
+      ],
+      "gloss": "their speech",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "63:4:8",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لِقَوْلِهِمْ"
     },
     "state:tok:63:5:14": {
       "entry_contexts": [
@@ -39527,6 +40347,24 @@
       "loc": "65:4:28",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يُسْرًۭا"
+    },
+    "state:tok:65:4:9": {
+      "entry_contexts": [
+        "43dd89b573c2",
+        "4b3eec0b03f7",
+        "97657fc0cb1c",
+        "b8e9a3a37453",
+        "d51b54ebae14",
+        "e319c7d90f6d"
+      ],
+      "gloss": "their waiting period",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "65:4:9",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "فَعِدَّتُهُنَّ"
     },
     "state:tok:65:5:11": {
       "entry_contexts": [
@@ -40036,6 +40874,20 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "أَمْ"
     },
+    "state:tok:68:51:6": {
+      "entry_contexts": [
+        "c64baccb7f7a",
+        "db4395f10479"
+      ],
+      "gloss": "with their eyes",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "68:51:6",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "بِأَبْصَٰرِهِمْ"
+    },
     "state:tok:68:51:9": {
       "entry_contexts": [
         "c64baccb7f7a",
@@ -40382,6 +41234,19 @@
       "loc": "6:110:12",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "طُغْيَٰنِهِمْ"
+    },
+    "state:tok:6:110:2": {
+      "entry_contexts": [
+        "b3d910cb22e7"
+      ],
+      "gloss": "their hearts",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:110:2",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَفْـِٔدَتَهُمْ"
     },
     "state:tok:6:110:3": {
       "entry_contexts": [
@@ -40858,6 +41723,36 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "مَكَانَتِكُمْ"
     },
+    "state:tok:6:136:14": {
+      "entry_contexts": [
+        "6d7fb324a641",
+        "c3cc01c15eec",
+        "da61fd38733f"
+      ],
+      "gloss": "our partners",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:136:14",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لِشُرَكَآئِنَا"
+    },
+    "state:tok:6:136:17": {
+      "entry_contexts": [
+        "6d7fb324a641",
+        "c3cc01c15eec",
+        "da61fd38733f"
+      ],
+      "gloss": "their partners",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:136:17",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لِشُرَكَآئِهِمْ"
+    },
     "state:tok:6:136:19": {
       "entry_contexts": [
         "6d7fb324a641",
@@ -40888,6 +41783,21 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَصِلُ"
     },
+    "state:tok:6:136:28": {
+      "entry_contexts": [
+        "6d7fb324a641",
+        "c3cc01c15eec",
+        "da61fd38733f"
+      ],
+      "gloss": "their associate-partners",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:136:28",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "شُرَكَآئِهِمْ"
+    },
     "state:tok:6:136:31": {
       "entry_contexts": [
         "6d7fb324a641",
@@ -40916,6 +41826,19 @@
       "loc": "6:139:11",
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "أَزْوَٰجِنَا"
+    },
+    "state:tok:6:139:8": {
+      "entry_contexts": [
+        "b2bd7c33380a"
+      ],
+      "gloss": "for our males",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:139:8",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "لِّذُكُورِنَا"
     },
     "state:tok:6:140:2": {
       "entry_contexts": [
@@ -41279,6 +42202,19 @@
       "loc": "6:154:12",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَهُدًۭى"
+    },
+    "state:tok:6:156:13": {
+      "entry_contexts": [
+        "300a648674d2"
+      ],
+      "gloss": "their study",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:156:13",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "دِرَاسَتِهِمْ"
     },
     "state:tok:6:157:16": {
       "entry_contexts": [
@@ -41695,6 +42631,24 @@
       "loc": "6:35:9",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "تَبْتَغِىَ"
+    },
+    "state:tok:6:38:12": {
+      "entry_contexts": [
+        "3d8a8bfb97e9",
+        "52705122983e",
+        "96a333d6d218",
+        "a6cb90179874",
+        "de6b2dd4db1d",
+        "f3726bc9f962"
+      ],
+      "gloss": "your likes",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "6:38:12",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَمْثَالُكُم"
     },
     "state:tok:6:38:14": {
       "entry_contexts": [
@@ -43094,6 +44048,19 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "ءَالِهَتَكُمْ"
     },
+    "state:tok:71:25:2": {
+      "entry_contexts": [
+        "f71a4907aad8"
+      ],
+      "gloss": "their sins",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "71:25:2",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "خَطِيٓـَٰٔتِهِمْ"
+    },
     "state:tok:71:25:6": {
       "entry_contexts": [
         "f71a4907aad8"
@@ -43502,6 +44469,19 @@
       "loc": "74:31:33",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَٱلْكَٰفِرُونَ"
+    },
+    "state:tok:74:31:9": {
+      "entry_contexts": [
+        "ce9f59081e33"
+      ],
+      "gloss": "their number",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "74:31:9",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "عِدَّتَهُمْ"
     },
     "state:tok:74:34:1": {
       "entry_contexts": [
@@ -46238,6 +47218,22 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَٱلْمِيزَانَ"
     },
+    "state:tok:7:85:25": {
+      "entry_contexts": [
+        "67401624eb27",
+        "7a72a3c86c7b",
+        "9f7581b5c1ac",
+        "f33a3c703ac5"
+      ],
+      "gloss": "their things",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "7:85:25",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَشْيَآءَهُمْ"
+    },
     "state:tok:7:86:20": {
       "entry_contexts": [
         "c1e7d213be6b",
@@ -46888,6 +47884,19 @@
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "بِنَصْرِهِۦ"
     },
+    "state:tok:8:27:9": {
+      "entry_contexts": [
+        "fd8fa2a00779"
+      ],
+      "gloss": "your trusts",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "8:27:9",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "أَمَٰنَٰتِكُمْ"
+    },
     "state:tok:8:29:12": {
       "entry_contexts": [
         "2cb4015f1b2f"
@@ -47344,6 +48353,24 @@
       "loc": "8:72:13",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "وَّنَصَرُوٓا۟"
+    },
+    "state:tok:8:72:25": {
+      "entry_contexts": [
+        "03b5507d70a2",
+        "141cbc3bd2bd",
+        "1c5f7c9c8e05",
+        "2cec1fa6610d",
+        "963f6cd9e1f0",
+        "ad59deed170c"
+      ],
+      "gloss": "their guardianship",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "8:72:25",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "وَلَٰيَتِهِم"
     },
     "state:tok:8:72:33": {
       "entry_contexts": [
@@ -48127,6 +49154,22 @@
       "procedure": "suffix-pronoun-state/pronoun-attachment",
       "surface": "وَعَشِيرَتُكُمْ"
     },
+    "state:tok:9:25:11": {
+      "entry_contexts": [
+        "4575c7ea97c2",
+        "4c3737e88034",
+        "8192c6194358",
+        "c4230e68a96c"
+      ],
+      "gloss": "your great numbers",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "9:25:11",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "كَثْرَتُكُمْ"
+    },
     "state:tok:9:25:12": {
       "entry_contexts": [
         "4575c7ea97c2",
@@ -48356,6 +49399,22 @@
       "loc": "9:45:2",
       "procedure": "surface-state-transition/particle-state-split",
       "surface": "يَسْتَـْٔذِنُكَ"
+    },
+    "state:tok:9:46:10": {
+      "entry_contexts": [
+        "3aadc0459dc6",
+        "55c548d602e9",
+        "ef4d590e9dac",
+        "f4c54dd88d56"
+      ],
+      "gloss": "their going forth",
+      "informed_by": [
+        "qac",
+        "qamus-dataset"
+      ],
+      "loc": "9:46:10",
+      "procedure": "suffix-pronoun-state/pronoun-attachment",
+      "surface": "ٱنۢبِعَاثَهُمْ"
     },
     "state:tok:9:46:3": {
       "entry_contexts": [
@@ -58644,7 +59703,7 @@
   },
   "by_procedure": {
     "suffix-pronoun-state/pronoun-attachment": {
-      "count": 323,
+      "count": 397,
       "sample": [
         "2:286:45",
         "48:2:7",
@@ -58838,15 +59897,15 @@
     },
     "repair:repair_batch_001.evidence#live-entry:101401b11de8#field=root": {
       "affects_ayat": [
-        "quran:19:13",
-        "quran:24:21",
-        "quran:24:30",
-        "quran:4:49",
-        "quran:18:81",
         "quran:2:43",
-        "quran:19:19",
+        "quran:35:18",
+        "quran:24:30",
+        "quran:18:81",
+        "quran:19:13",
         "quran:3:164",
-        "quran:35:18"
+        "quran:24:21",
+        "quran:19:19",
+        "quran:4:49"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -58946,8 +60005,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:2745be9c0cca#field=root": {
       "affects_ayat": [
-        "quran:6:77",
-        "quran:6:78"
+        "quran:6:78",
+        "quran:6:77"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -58991,8 +60050,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:2f0767751dd8#field=root": {
       "affects_ayat": [
-        "quran:93:8",
-        "quran:9:28"
+        "quran:9:28",
+        "quran:93:8"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -59037,13 +60096,13 @@
     "repair:repair_batch_001.evidence#live-entry:385725d86a5b#field=root": {
       "affects_ayat": [
         "quran:28:29",
-        "quran:20:10",
-        "quran:51:56",
-        "quran:2:21",
         "quran:24:27",
+        "quran:51:56",
+        "quran:114:2",
         "quran:10:44",
-        "quran:19:26",
-        "quran:114:2"
+        "quran:20:10",
+        "quran:2:21",
+        "quran:19:26"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -59175,24 +60234,24 @@
     },
     "repair:repair_batch_001.evidence#live-entry:488d1175c005#field=root": {
       "affects_ayat": [
+        "quran:32:9",
+        "quran:15:29",
+        "quran:19:17",
         "quran:26:193",
         "quran:16:6",
-        "quran:15:29",
-        "quran:2:87",
         "quran:58:22",
+        "quran:42:52",
         "quran:35:9",
         "quran:55:12",
-        "quran:38:36",
-        "quran:42:52",
+        "quran:56:89",
         "quran:8:46",
+        "quran:2:87",
+        "quran:12:94",
         "quran:34:12",
         "quran:12:87",
-        "quran:19:17",
-        "quran:56:89",
+        "quran:21:91",
         "quran:17:85",
-        "quran:12:94",
-        "quran:32:9",
-        "quran:21:91"
+        "quran:38:36"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -59382,14 +60441,14 @@
     },
     "repair:repair_batch_001.evidence#live-entry:746abe23a760#field=root": {
       "affects_ayat": [
+        "quran:11:81",
         "quran:2:19",
         "quran:24:63",
         "quran:78:38",
         "quran:12:56",
+        "quran:4:79",
         "quran:3:165",
-        "quran:11:81",
-        "quran:38:36",
-        "quran:4:79"
+        "quran:38:36"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -59734,11 +60793,11 @@
     "repair:repair_batch_001.evidence#live-entry:af75174c26a6#field=root": {
       "affects_ayat": [
         "quran:2:259",
-        "quran:30:4",
-        "quran:2:96",
+        "quran:5:45",
         "quran:33:62",
         "quran:15:26",
-        "quran:5:45"
+        "quran:2:96",
+        "quran:30:4"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -59838,13 +60897,13 @@
     },
     "repair:repair_batch_001.evidence#live-entry:c49dfdec1d36#field=root": {
       "affects_ayat": [
-        "quran:80:6",
-        "quran:4:167",
-        "quran:4:61",
         "quran:43:57",
-        "quran:8:35",
+        "quran:4:61",
+        "quran:4:160",
         "quran:14:16",
-        "quran:4:160"
+        "quran:80:6",
+        "quran:8:35",
+        "quran:4:167"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -59888,9 +60947,9 @@
     },
     "repair:repair_batch_001.evidence#live-entry:c63837955935#field=root": {
       "affects_ayat": [
+        "quran:67:22",
         "quran:27:90",
-        "quran:26:94",
-        "quran:67:22"
+        "quran:26:94"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -60025,8 +61084,8 @@
     },
     "repair:repair_batch_001.evidence#live-entry:d779132e894c#field=root": {
       "affects_ayat": [
-        "quran:90:6",
-        "quran:72:19"
+        "quran:72:19",
+        "quran:90:6"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,
@@ -60093,15 +61152,15 @@
     },
     "repair:repair_batch_001.evidence#live-entry:e919504a83fa#field=root": {
       "affects_ayat": [
-        "quran:68:17",
-        "quran:89:16",
-        "quran:4:6",
-        "quran:8:17",
-        "quran:23:30",
-        "quran:86:9",
-        "quran:20:120",
         "quran:2:249",
-        "quran:67:2"
+        "quran:89:16",
+        "quran:8:17",
+        "quran:86:9",
+        "quran:23:30",
+        "quran:4:6",
+        "quran:67:2",
+        "quran:68:17",
+        "quran:20:120"
       ],
       "blocker": "impossible_root is a curator noun-keying STYLE (69 clean nouns share it), not a confirmed error; mutating imposes a scheme on curator data",
       "certifiable": true,

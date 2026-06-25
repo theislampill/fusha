@@ -9,16 +9,16 @@
       "verb_form_or_voice": 148
     },
     "source_entry_unverified": {
-      "already_entry_form_present_index_miss": 1003,
-      "forms_array_missing_surface": 148,
+      "already_entry_form_present_index_miss": 1000,
+      "forms_array_missing_surface": 151,
       "function_word_not_form_work": 550,
-      "quran_refs_missing_or_incomplete": 73,
+      "quran_refs_missing_or_incomplete": 70,
       "source_photo_visual_needed": 4
     },
     "stem_base_unknown": {
-      "already_entry_form_present_index_miss": 37,
-      "host_lexeme_possessive_candidate": 255,
-      "missing_form_variant_on_existing_entry": 2385,
+      "already_entry_form_present_index_miss": 35,
+      "host_lexeme_possessive_candidate": 193,
+      "missing_form_variant_on_existing_entry": 2378,
       "missing_qamus_entry_candidate": 326,
       "particle_or_pronoun_misclassified_as_stem": 388,
       "source_entry_required_before_resolution": 6,
@@ -26,7 +26,7 @@
       "verb_clitic_object_or_subject_candidate": 822
     }
   },
-  "family_unlock_count": 812,
+  "family_unlock_count": 782,
   "family_unlock_top50": [
     {
       "family": "33787ee8c0c1",
@@ -51,7 +51,7 @@
     {
       "family": "83e64ea698d5",
       "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 37
+      "tokens": 36
     },
     {
       "family": "5c7461bd7014",
@@ -76,7 +76,7 @@
     {
       "family": "430015446b77",
       "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 29
+      "tokens": 28
     },
     {
       "family": "3041d6f44a27",
@@ -96,7 +96,7 @@
     {
       "family": "ca43414f9b01",
       "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 26
+      "tokens": 25
     },
     {
       "family": "7172a5394a7b",
@@ -259,11 +259,6 @@
       "tokens": 16
     },
     {
-      "family": "60fa5302aa68",
-      "root_cause": "missing_form_variant_on_existing_entry",
-      "tokens": 16
-    },
-    {
       "family": "4cb26045b5b7",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 16
@@ -274,16 +269,21 @@
       "tokens": 16
     },
     {
+      "family": "60fa5302aa68",
+      "root_cause": "missing_form_variant_on_existing_entry",
+      "tokens": 15
+    },
+    {
       "family": "d6a4f976cb61",
       "root_cause": "missing_form_variant_on_existing_entry",
       "tokens": 15
     }
   ],
-  "family_unlock_total_tokens": 3191,
+  "family_unlock_total_tokens": 3122,
   "form_variant_safe_tier": {
     "A_safe": 5,
     "B_sense_select": 1035,
-    "C_pos_or_collision": 1493
+    "C_pos_or_collision": 1489
   },
-  "total_pending": 6385
+  "total_pending": 6311
 }

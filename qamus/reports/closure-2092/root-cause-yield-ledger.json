@@ -1,14 +1,14 @@
 {
   "_generator": "tools/build_root_cause_yield_ledger.py",
-  "coverage_ceiling_if_all_safe_realized": 93.55,
-  "coverage_now": 87.2,
-  "expected_safe_realizable": 3167.3,
+  "coverage_ceiling_if_all_safe_realized": 93.63,
+  "coverage_now": 87.35,
+  "expected_safe_realizable": 3131.1,
   "levers": [
     {
       "discount": 0.45,
-      "expected_safe": 626.0,
+      "expected_safe": 622.8,
       "owner_gated": false,
-      "pending": 1391,
+      "pending": 1384,
       "root_cause": "missing_form_variant_on_existing_entry",
       "safe_tier": "C_pos_or_collision",
       "source_gated": false
@@ -24,9 +24,9 @@
     },
     {
       "discount": 0.5,
-      "expected_safe": 520.0,
+      "expected_safe": 517.5,
       "owner_gated": false,
-      "pending": 1040,
+      "pending": 1035,
       "root_cause": "already_entry_form_present_index_miss",
       "safe_tier": null,
       "source_gated": false
@@ -69,9 +69,9 @@
     },
     {
       "discount": 0.5,
-      "expected_safe": 127.5,
+      "expected_safe": 96.5,
       "owner_gated": false,
-      "pending": 255,
+      "pending": 193,
       "root_cause": "host_lexeme_possessive_candidate",
       "safe_tier": null,
       "source_gated": false
@@ -87,9 +87,9 @@
     },
     {
       "discount": 0.45,
-      "expected_safe": 45.9,
+      "expected_safe": 47.3,
       "owner_gated": false,
-      "pending": 102,
+      "pending": 105,
       "root_cause": "forms_array_missing_surface",
       "safe_tier": "C_pos_or_collision",
       "source_gated": false
@@ -114,9 +114,9 @@
     },
     {
       "discount": 0.3,
-      "expected_safe": 21.9,
+      "expected_safe": 21.0,
       "owner_gated": false,
-      "pending": 73,
+      "pending": 70,
       "root_cause": "quran_refs_missing_or_incomplete",
       "safe_tier": null,
       "source_gated": false
@@ -195,7 +195,7 @@
     }
   ],
   "ninety_reachable_via_safe_authoring": true,
-  "resolved_now": 43515,
-  "tokens_needed_for_90pct": 1395,
-  "total_pending": 6385
+  "resolved_now": 43589,
+  "tokens_needed_for_90pct": 1321,
+  "total_pending": 6311
 }
