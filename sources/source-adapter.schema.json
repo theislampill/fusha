@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "fusha/source-adapter.schema.json",
   "title": "Evidence source adapter",
-  "description": "A declarative manifest for an INTERNAL evidence source the maintainer/agent may consult through the evidence ladder. The sarf/nahw skills reference adapters GENERICALLY ('use available source adapters'); they never name a specific external service and never depend on any one being present. No adapter's content is ever public — public hover/entry records stay {src:'qamus',kind:'authored'}.",
+  "description": "A declarative manifest for an INTERNAL evidence source the maintainer/agent may consult through the evidence ladder. The sarf/nahw skills reference adapters GENERICALLY ('use available source adapters'); they never name a specific external service and never depend on any one being present. No adapter's content is ever public — public hover/entry records stay {src:'qamus',kind:'authored',lang:'en'}.",
   "type": "object",
   "required": ["name", "evidence_role", "access", "public_exposable", "required_by_skills"],
   "additionalProperties": true,

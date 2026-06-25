@@ -116,7 +116,7 @@
   "suite_invariants": [
     "Every assertion whose correct_gloss_or_pending == 'pending' MUST resolve to pending under the default (key-only) path — emitting any vowelled sibling's gloss is a regression.",
     "Every '@vowelled' / '@form-aware' assertion is reachable ONLY when the named diacritic (shadda/voice/harakah/hamza-seat) is present in the source; if absent, the sibling 'pending' assertion governs.",
-    "No assertion may ship a public gloss except as {src:'qamus',kind:'authored'}; the internal data error (أ ل م misfile, dominant-sense pull) is evidence, never surfaced.",
+    "No assertion may ship a public gloss except as {src:'qamus',kind:'authored',lang:'en'}; the internal data error (أ ل م misfile, dominant-sense pull) is evidence, never surfaced.",
     "عَلِيمٌ (nominative) and عَلِيمًا (accusative) are the SAME assertion as عَلِيم — case-marking tanwīn must not split or re-expose the quarantine."
   ]
 }

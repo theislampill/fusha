@@ -29,7 +29,7 @@ Writes (to --out):
       buckets, with the routing reason. already_in_qamus is NOT queued (no work).
 
 PUBLIC-ARTIFACT RULE: any record that could ever surface in the public hover artifact carries
-{"src":"qamus","kind":"authored"} provenance and a draft gloss is authored-only. External
+{"src":"qamus","kind":"authored","lang":"en"} provenance and a draft gloss is authored-only. External
 references may appear solely as `informed_by` labels (named, never quoted).
 
 stdlib-only. Requires tools/normalize_ar.py. NO network, NO live writes.
@@ -216,7 +216,7 @@ def main():
                     "status": "candidate",
                     "review_status": "needs_review",
                     "source_scope": ["nawawi40"],
-                    "public_provenance": {"src": "qamus", "kind": "authored"},
+                    "public_provenance": {"src": "qamus", "kind": "authored", "lang": "en"},
                     "entry": shell,
                     "frequency": cand.get("frequency"),
                     "refs": cand.get("refs"),

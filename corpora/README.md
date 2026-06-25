@@ -35,7 +35,7 @@ candidate pipeline end-to-end before anything larger.
 3. **External references are evidence, never content.** Quran.com, the Quranic Arabic Corpus
    (QAC), Tanzil, sunnah.com, named dictionaries — you may **name** them as `informed_by` /
    `access_method` labels in the catalogue, but you must **never copy their gloss text**.
-   Anything that could reach the public hover artifact carries `{"src":"qamus","kind":"authored"}`
+   Anything that could reach the public hover artifact carries `{"src":"qamus","kind":"authored","lang":"en"}`
    and an authored-only draft.
 4. **No private paths, no secrets, no live-site code.** Citation labels only — never machine
    paths, IPs, or service internals.

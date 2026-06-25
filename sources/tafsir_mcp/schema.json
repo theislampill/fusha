@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "fusha/tafsir-mcp-cache.schema.json",
   "title": "Tafsir MCP cache record",
-  "description": "One source-hashed Tafsir MCP response, held as INTERNAL Qur'an grammar/morphology evidence. Raw cache is gitignored; only tiny redacted examples are committed. Nothing here ships to the public hover artifact — public hover stays {src:'qamus',kind:'authored'}.",
+  "description": "One source-hashed Tafsir MCP response, held as INTERNAL Qur'an grammar/morphology evidence. Raw cache is gitignored; only tiny redacted examples are committed. Nothing here ships to the public hover artifact — public hover stays {src:'qamus',kind:'authored',lang:'en'}.",
   "type": "object",
   "required": ["schema", "kind", "key", "request", "source", "source_hash", "response", "public_export_allowed"],
   "additionalProperties": false,

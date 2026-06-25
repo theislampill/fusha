@@ -9,7 +9,7 @@
     "new_root": "neither root nor lemma present — new root + entry; weak/hamza roots require QAC or human confirmation before asserting radicals",
     "particle": "closed-set particle or construction — rootless; goes to the particle spine, never gets a content root"
   },
-  "candidate_shape_ref": "expected_candidate fields follow ../../qamus/schemas/qamus-entry.schema.json (status=candidate) and ../../qamus/schemas/authored-gloss.schema.json for occurrence-level rows. Public record is always {src:'qamus',kind:'authored'}; source_scope names the corpus (quran|nawawi40) as INTERNAL provenance only.",
+  "candidate_shape_ref": "expected_candidate fields follow ../../qamus/schemas/qamus-entry.schema.json (status=candidate) and ../../qamus/schemas/authored-gloss.schema.json for occurrence-level rows. Public record is always {src:'qamus',kind:'authored',lang:'en'}; source_scope names the corpus (quran|nawawi40) as INTERNAL provenance only.",
   "case_schema": {
     "id": "stable kebab id",
     "token": {"surface_ar": "vowelled surface as it appears in the corpus", "corpus": "nawawi40 | quran", "locus": "hadith:N (Nawawī number) or quran:S:A"},

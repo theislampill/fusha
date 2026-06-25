@@ -15,7 +15,7 @@
     "human_source_review_required": "needs a photographed-source or context check beyond automatic signals",
     "never_auto_resolve": "the distinguishing signal is dropped by the key (or absent in source) — pending, never the commoner reading"
   },
-  "evidence_sources_internal": "qac/norm_strict/diacritic helpers are INTERNAL evidence only; the public record is always {src:'qamus',kind:'authored'} per ../../qamus/schemas/authored-gloss.schema.json",
+  "evidence_sources_internal": "qac/norm_strict/diacritic helpers are INTERNAL evidence only; the public record is always {src:'qamus',kind:'authored',lang:'en'} per ../../qamus/schemas/authored-gloss.schema.json",
   "see_also": ["../examples/qamus-regressions.jsonl", "../rules/verb-measure-gates.json", "../rules/weak-root-gates.json", "../rules/homograph-quarantines.json", "./qamus-regression-eval.json"],
   "cases": [
     {

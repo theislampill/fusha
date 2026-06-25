@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/theIslampill/fusha/qamus/schemas/authored-gloss.schema.json",
   "title": "Authored-gloss proposal",
-  "description": "A proposal to attach an ORIGINAL qamus-authored English gloss to a Qurʾān token (or to add a sense to an entry). External references may inform the wording but their text is never copied. The PUBLIC export carries only {src:'qamus',kind:'authored'}; informed_by is INTERNAL.",
+  "description": "A proposal to attach an ORIGINAL qamus-authored English gloss to a Qurʾān token (or to add a sense to an entry). External references may inform the wording but their text is never copied. The PUBLIC export carries only {src:'qamus',kind:'authored',lang:'en'}; informed_by is INTERNAL.",
   "type": "object",
   "required": ["source_address", "surface_ar", "public_record", "decision"],
   "properties": {

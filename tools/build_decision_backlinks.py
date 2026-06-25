@@ -134,7 +134,7 @@ def main():
         "3. **Which hover glosses depend on this source entry?** entry root → keys authored from its āyāt "
         "(join `root_to_entries` ↔ resolved key-states).",
         "4. **Which external references informed this decision?** internal-only `external:*` addresses — never "
-        "exported publicly (public records are `src:\"qamus\"`).",
+        "exported publicly (public records are `src:\"qamus\",kind:\"authored\",lang:\"en\"`).",
         "5. **What public tokens change if this entry is repaired?** the entry's resolved keys' `used_by` sets.",
         "6. **Which decisions are reused/transcluded?** a key-state is referenced by backlink, never copied — one "
         "node per key.",

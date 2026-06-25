@@ -10,7 +10,7 @@ the skill. Each adapter is optional; the skill works without any of them.
   `evidence_role`, `access` (mcp/http/local/package, endpoint via ENV — no secret committed), `availability`,
   `ladder_rank`, and two hard invariants: `public_exposable: false` and `required_by_skills: false`.
 - **No adapter outranks the Qamus entry** (ladder rank 1). Adapters are confirmation/triangulation, not authority.
-- **Nothing an adapter returns is ever public.** Public hover/entry records stay `{src:"qamus",kind:"authored"}`;
+- **Nothing an adapter returns is ever public.** Public hover/entry records stay `{src:"qamus",kind:"authored",lang:"en"}`;
   adapter use is recorded only in `internal_provenance.informed_by`.
 
 ## Registered adapters

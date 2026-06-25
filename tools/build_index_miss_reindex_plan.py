@@ -95,7 +95,7 @@ def build_plan(table_path=DEFAULT_TABLE, out_path=DEFAULT_OUT, plan_path=DEFAULT
         "3. Apply only owner-approved resolver changes with diff `+N / -0 / ~0`.",
         "4. Rebuild, health-check, and regenerate the hover audit before claiming coverage.",
         "",
-        "Public provenance remains unchanged: `src=qamus`, `kind=authored`.",
+        "Public provenance remains unchanged: `src=qamus`, `kind=authored`, `lang=en`.",
     ]
     with open(plan_path, "w", encoding="utf-8", newline="\n") as handle:
         handle.write("\n".join(lines) + "\n")

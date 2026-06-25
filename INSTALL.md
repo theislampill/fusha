@@ -44,5 +44,5 @@ Read `sarf/SKILL.md` and `nahw/SKILL.md`; open the procedure named by the gate; 
 
 ## Invariants (always)
 MCP-free skills (external sources are optional internal evidence via `sources/README.md`, never a dependency,
-never public); public gloss record stays `{src:"qamus",kind:"authored"}`; no raw source/media/secret committed;
+never public); public gloss record stays `{src:"qamus",kind:"authored",lang:"en"}`; no raw source/media/secret committed;
 Qurʾān text unaltered; when uncertain, stay pending with a precise blocker.

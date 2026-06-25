@@ -39,7 +39,7 @@ def write_cache(kind, key, request, response, mcp_version=None):
         "source_hash": _hash(response),
         "response": response,
         "public_export_allowed": False,
-        "note": "INTERNAL evidence only — never shipped; public hover stays src:qamus,kind:authored",
+        "note": "INTERNAL evidence only — never shipped; public hover stays src:qamus,kind:authored,lang:en",
     }
     path = os.path.join(CACHE, "%s__%s.json" % (kind, key))
     json.dump(rec, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)

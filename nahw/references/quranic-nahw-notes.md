@@ -166,7 +166,7 @@ if __name__ == "__main__":
    b. **governing particle** (`sentence-context.md` §2) — pins POS/case/mood of the complement.
    c. **homograph harakah** (`particles.md`) — content-letter vowel/seat/shadda via the helpers.
    d. **referent guard** (§4) — resolve who/what before the register.
-4. One reading survives ⇒ emit `{src:'qamus', kind:'authored', gloss:…}`.
+4. One reading survives ⇒ emit `{src:'qamus', kind:'authored', lang:'en', gloss:…}`.
    Else ⇒ the **most specific** `pending:` reason (`homograph_haraka`, `pos_mismatch`,
    `multi_sense`, `contronym`, `referent_unresolved`, `proper_name`, `seat_collapsed`).
    **PENDING beats a wrong gloss, always.**

@@ -2,7 +2,7 @@
 
 `https://mcp.tafsir.net/mcp` (server "Tafsir MCP" v1.27.1, protocol 2025-06-18, **no auth**) is an **internal
 evidence source** for sarf/nahw decisions over Qur'anic examples. It is **never** a public data source — nothing
-it returns ships to the live hover artifact, which stays `{src:"qamus", kind:"authored"}`.
+it returns ships to the live hover artifact, which stays `{src:"qamus", kind:"authored", "lang":"en"}`.
 
 > **Decoupled from the skills.** This is a **maintainer/build tool**. The `sarf/SKILL.md` and `nahw/SKILL.md`
 > skills are self-contained — they cooperate with each other + the Qamus + the internal evidence ladder, and do
@@ -28,7 +28,7 @@ the connector tools here speak MCP streamable-HTTP (JSON-RPC 2.0) **directly** o
 - Raw cache (`cache/*.json`) is **gitignored**; only tiny redacted **examples/** are committed.
 - Every cache record is **source-hashed** (`validate_tafsir_mcp_cache.py` fails closed on mismatch).
 - Every MCP-backed decision records `internal_provenance.informed_by` including `tafsir-mcp` (internal only).
-- **No public hover output may mention Tafsir MCP / Quran.com / QAC / Tanzil.** Public = `src:"qamus"`.
+- **No public hover output may mention Tafsir MCP / Quran.com / QAC / Tanzil.** Public = `src:"qamus"`, `kind:"authored"`, `lang:"en"`.
 - MCP is **evidence, not authority**: if QAC and MCP disagree, do not auto-export; the GrammarProblems gate +
   key-aware 2-vote still apply. A correct-looking answer with no reasoning stays pending.
 

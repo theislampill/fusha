@@ -51,7 +51,7 @@ tools/      normalize_ar.py · qac_adapter.py · ocr_locator_notes
 - External references (Quran.com, QAC, Tanzil, sunnah.com) are **internal evidence for triangulation only**.
 - **Never copy external gloss text.** Authored glosses are original, qamus-style English.
 - `informed_by` is an **internal** provenance label (which sources informed the authoring). The **public**
-  qamus-highlight hover artifact must show **only** `{"src":"qamus","kind":"authored"}` — no `informed_by`,
+  qamus-highlight hover artifact must show **only** `{"src":"qamus","kind":"authored","lang":"en"}` — no `informed_by`,
   no external source names, no OCR snippets, no crop/source-image paths.
 - **Qurʾān text is never altered.** No raw source images, model weights, large OCR dumps, secrets, or private
   server paths are committed (this is a **public** repo).

@@ -22,6 +22,6 @@ particle, iḍāfa, jar-majrūr, ḥāl/badal/khabar/mafʿūl, a hidden (محذ�
 - MCP iʿrāb is internal evidence, never public, never copied into a gloss.
 
 **Provenance:** `internal_provenance.informed_by += ["tafsir-mcp"]` (internal only); public hover stays
-`{src:"qamus",kind:"authored"}`.
+`{src:"qamus",kind:"authored",lang:"en"}`.
 
 **Test:** [`../evals/irab_cases.jsonl`](../evals/irab_cases.jsonl) + [`../evals/irab-eval.jsonl`](../evals/irab-eval.jsonl).

@@ -92,6 +92,6 @@ the warning in `nahw/SKILL.md`/`AGENTS.md`.
 ## Boundaries held
 
 - No raw decks/PDFs/DOCX (incl. GrammarProblems.pdf), no media/audio, no copyrighted body text committed.
-- No external gloss text copied; external source names internal-only; public hover = `{src:"qamus",kind:"authored"}`.
+- No external gloss text copied; external source names internal-only; public hover = `{src:"qamus",kind:"authored",lang:"en"}`.
 - Qurʾān text unaltered; **0 Qamus entries mutated**; the one live change is hover-only via the established path.
 - No Ṣaḥīḥayn live import. No OCR used as authority.

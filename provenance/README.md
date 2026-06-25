@@ -14,7 +14,7 @@ rules. This file is the orientation.
 
 > **External sources are *internal evidence* used to check our own work; the only
 > thing we *publish* is original content we authored and can stand behind, and a
-> public hover/gloss artifact carries `{src:'qamus', kind:'authored'}` and nothing
+> public hover/gloss artifact carries `{src:'qamus', kind:'authored', lang:'en'}` and nothing
 > else.**
 
 Everything below is an unpacking of that sentence.
@@ -56,12 +56,13 @@ in the whole project, because it is shipped to readers at scale. Its rule is
 absolute and testable:
 
 ```
-every published gloss object  ==  { src: 'qamus', kind: 'authored', ... }
+every published gloss object  ==  { src: 'qamus', kind: 'authored', lang: 'en', ... }
 ```
 
 - `src` is **always** `'qamus'`. Never `'qac'`, `'quran.com'`, `'tanzil'`,
   `'sunnah'`, or any external name.
 - `kind` is **always** `'authored'`. There is no public `kind:'imported'`.
+- `lang` is **always** `'en'` for the English hover layer.
 - A word we have **not** authored a confident gloss for is emitted as `PENDING`
   (or simply omitted) — **never** back-filled from an external gloss. *Always
   prefer PENDING over a wrong or borrowed gloss.*

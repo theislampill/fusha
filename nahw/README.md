@@ -58,7 +58,7 @@ surface token
   └─ norm / norm_strict  → candidate entry set         (recall; tools/normalize_ar.py)
        └─ ṣarf           → candidate readings (root, pattern, POS)
             └─ NAHW      → pick ONE reading or PENDING   (this directory)
-                 └─ emit {src:'qamus', kind:'authored', gloss:…}  OR  pending
+                 └─ emit {src:'qamus', kind:'authored', lang:'en', gloss:…}  OR  pending
 ```
 
 Nahw contributes three guard rails, each documented in `references/quranic-nahw-notes.md`:

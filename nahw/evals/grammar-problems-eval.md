@@ -8,7 +8,7 @@
 
 > Every case is authored from first principles to mirror the study's *shape*, never its text. No exam item,
 > textbook sentence, or external answer key is copied. Arabic examples are vowelized and self-contained; the
-> public hover artifact still emits only `{src:"qamus", kind:"authored"}`.
+> public hover artifact still emits only `{src:"qamus", kind:"authored", "lang":"en"}`.
 
 Run it with [`tools/run_grammar_evals.py`](../../tools/run_grammar_evals.py), which reads the JSONL, scores each
 answer, and — critically — scores the **reasoning** against the sarf/nahw ladders, then asserts the gate.
@@ -146,5 +146,5 @@ objects by `tools/validate_linguistic_decisions.py`, and the GrammarProblems gat
 - No exam/textbook item, answer key, or external gloss text is copied; all 80 cases are original and isomorphic.
 - External corpora (QAC, Tanzil, etc.) are `informed_by` evidence only — never surfaced as public authority.
 - Qurʾān text is never altered; where an āyah-shaped pattern is referenced it is evidence, not a public claim.
-- Arabic examples are vowelized; the public artifact emits only `{src:"qamus", kind:"authored"}`.
+- Arabic examples are vowelized; the public artifact emits only `{src:"qamus", kind:"authored", "lang":"en"}`.
 - **PENDING beats a wrong gloss, always** — a failed link is a pending with a reason, not a ship.

@@ -11,7 +11,7 @@ honest `access_method` provenance label without ever copying source content into
   login, or a URL to copyrighted gloss text.
 - **Reference vs. content.** Sources marked *reference-only* are consulted as evidence to
   inform an **authored** Qamus gloss. We may **name** them (`informed_by: ["…"]`); we **never**
-  copy their gloss wording. The public hover artifact shows only `{src:'qamus',kind:'authored'}`.
+  copy their gloss wording. The public hover artifact shows only `{src:'qamus',kind:'authored',lang:'en'}`.
 - **Text fidelity.** Qurʾān and ḥadīth Arabic is read-only and preserved verbatim wherever it
   is tokenized. Nothing is reshaped or re-pointed.
 - A source's **license / terms** column is a reminder to check before redistributing anything —

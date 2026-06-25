@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "fusha/suffix-pronoun-decision.schema.json",
   "title": "Suffix/pronoun hover decision",
-  "description": "A token-addressed decision for the 'stem recognized + enclitic pronoun' class — a NOUN stem + a possessive enclitic (أَعْمَالُنَا = أعمال 'deeds' + نا 'our' -> 'our deeds'). It is a specialization of hover-token-decision: same per-quran:S:A:W override, plus the parsed stem/suffix/possessor and a POS gate. The possessive composition is valid ONLY on a noun; on a verb the enclitic is a subject/object pronoun ('we knew', not 'our knowledge'), so verb tokens are excluded. Public record stays {src:'qamus',kind:'authored'}.",
+  "description": "A token-addressed decision for the 'stem recognized + enclitic pronoun' class — a NOUN stem + a possessive enclitic (أَعْمَالُنَا = أعمال 'deeds' + نا 'our' -> 'our deeds'). It is a specialization of hover-token-decision: same per-quran:S:A:W override, plus the parsed stem/suffix/possessor and a POS gate. The possessive composition is valid ONLY on a noun; on a verb the enclitic is a subject/object pronoun ('we knew', not 'our knowledge'), so verb tokens are excluded. Public/runtime export record stays {src:'qamus',kind:'authored',lang:'en'}.",
   "type": "object",
   "required": ["loc", "gloss", "stem", "suffix", "possessor", "decision_state", "src", "kind"],
   "additionalProperties": true,
@@ -18,6 +18,7 @@
     "decision_state": { "const": "suffix_pronoun_decision" },
     "src": { "const": "qamus" },
     "kind": { "const": "authored" },
+    "lang": { "const": "en", "description": "Required for public/runtime export; legacy internal mirrors may omit it." },
     "internal_provenance": { "type": "object" }
   }
 }

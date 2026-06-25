@@ -21,7 +21,7 @@ extract structured fields with [`tools/mcp_to_language_state.py`](../../../tools
 - **QAC vs MCP disagree on root/POS → do not auto-export**; route to the key-aware 2-vote / pending.
 
 **Provenance:** an MCP-assisted decision records `internal_provenance.informed_by += ["tafsir-mcp"]` (internal
-only). The public hover record stays `{src:"qamus",kind:"authored"}`. MCP prose is never copied into a gloss.
+only). The public hover record stays `{src:"qamus",kind:"authored",lang:"en"}`. MCP prose is never copied into a gloss.
 
 **Test:** [`../evals/sarf_cases.jsonl`](../evals/sarf_cases.jsonl) + [`../evals/morphology-eval.jsonl`](../evals/morphology-eval.jsonl);
 cache integrity [`tools/validate_tafsir_mcp_cache.py`](../../../tools/validate_tafsir_mcp_cache.py).
