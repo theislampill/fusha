@@ -1,0 +1,13 @@
+{
+  "_generator": "closure-2092 Phase 1 surface-index fix (F1)",
+  "by_norm_keys_before": 2050, "by_norm_keys_after": 7125, "added": 5075, "removed": 0,
+  "usage_forms_keys_absent_before": 5075, "usage_forms_keys_absent_after": 0,
+  "form_bearing_keys_after": 5246,
+  "coarse_blocker_before": {"stem_base_unknown": 5595, "source_entry_unverified": 1076,
+    "same_surface_polysemy_requires_i3rab": 379, "proper_noun_no_qamus_entry": 1},
+  "coarse_blocker_after": {"stem_base_unknown": 4874, "source_entry_unverified": 1797,
+    "same_surface_polysemy_requires_i3rab": 380, "proper_noun_no_qamus_entry": 0},
+  "tokens_moved_out_of_stem_base": 721,
+  "coverage_changed": false,
+  "note": "classification only; live coverage unchanged this tranche; index-recoverable tokens resolve only on a live resolver rebuild (owner-gated, out of scope)"
+}

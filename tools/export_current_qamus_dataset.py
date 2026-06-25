@@ -124,6 +124,38 @@ def jdump(obj, path, **kw):
         json.dump(obj, f, ensure_ascii=False, sort_keys=True, indent=2, **kw)
         f.write("\n")
 
+def build_surface_index(entries):
+    """norm_strict surface index over headword + EVERY usage[].forms token (F1 fix: a headword-only
+    index miscounts inflected forms already stored in an entry as unresolved). Returns:
+      by_norm: {nk: [eid]}  (the join used by the hover resolver + audit lemma lookup)
+      detail:  {nk: [{eid, kind: headword|form, section, root}]}  (metadata to distinguish hit type/collision)
+    Shared by the server exporter and the repo-local rebuilder so they cannot drift.
+    """
+    from collections import defaultdict as _dd
+    by_norm = _dd(list)
+    detail = _dd(list)
+    for e in entries:
+        eid = e.get("id")
+        sec = e.get("section") or "?"
+        root = (e.get("root") or "").strip()
+        hw = (e.get("headword") or "").strip()
+        seen = set()
+        if hw:
+            nk = norm_strict(hw)
+            if nk:
+                by_norm[nk].append(eid); seen.add(nk)
+                detail[nk].append({"eid": eid, "kind": "headword", "section": sec, "root": root})
+        for u in e.get("usage") or []:
+            for fstr in (u.get("forms") or []):
+                for tok in str(fstr).split():
+                    fnk = norm_strict(tok)
+                    if fnk and fnk not in seen:
+                        seen.add(fnk)
+                        by_norm[fnk].append(eid)
+                        detail[fnk].append({"eid": eid, "kind": "form", "section": sec, "root": root})
+    return by_norm, detail
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--entries", default=os.environ.get("QAMUS_ENTRIES_DIR",
@@ -180,9 +212,8 @@ def main():
         hw = (pub.get("headword") or "").strip()
         if hw:
             by_lemma[hw].append(eid)
-            nk = norm_strict(hw)
-            if nk:
-                by_norm[nk].append(eid)
+        # by_norm (surface index) is built once, after the loop, by build_surface_index() so it
+        # covers headword + usage[].forms uniformly (F1 fix) and stays shared with the rebuilder.
         sec = pub.get("section") or "?"
         by_section[sec].append(eid)
         cat = pub.get("category") or "?"
@@ -195,6 +226,9 @@ def main():
                     by_quran_ref[sa].append(eid); seen_refs.add(sa)
 
     entries.sort(key=lambda e: e["id"])
+
+    # surface index (headword + usage[].forms) — shared logic, after projection
+    by_norm, surface_detail = build_surface_index(entries)
 
     # ---- data/current outputs ----
     full_path = os.path.join(data_dir, "entries.jsonl")
@@ -228,6 +262,8 @@ def main():
     jdump({k: sorted(set(v)) for k,v in by_root.items()}, os.path.join(idx_dir, "by-root.json"))
     jdump({k: sorted(set(v)) for k,v in by_lemma.items()}, os.path.join(idx_dir, "by-lemma.json"))
     jdump({k: sorted(set(v)) for k,v in by_norm.items()}, os.path.join(idx_dir, "by-normalized-surface.json"))
+    jdump({k: sorted(surface_detail[k], key=lambda h: (h["kind"], h["eid"])) for k in sorted(surface_detail)},
+          os.path.join(idx_dir, "by-normalized-surface-detail.json"))
     jdump({k: sorted(set(v)) for k,v in by_quran_ref.items()}, os.path.join(idx_dir, "by-quran-ref.json"))
     jdump({"by_category": {k: sorted(set(v)) for k,v in by_category.items()},
            "by_section": {k: sorted(set(v)) for k,v in by_section.items()}},

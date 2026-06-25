@@ -1,0 +1,40 @@
+{
+  "_generator": "open-stem readiness tranche Phase 0; claims verified against current code+data, not trusted",
+  "date": "2026-06-24",
+  "git": {"head": "74607a9", "origin_main": "74607a9", "clean": true},
+  "gates_at_baseline": {
+    "check_artifact_ergonomics": "PASS", "check_report_ergonomics": "PASS",
+    "validate_report_reconciliation": "PASS", "validate_current_qamus_dataset": "PASS",
+    "validate_qamus_completion_manifest": "PASS", "validate_entry_completion_rollup": "PASS",
+    "run_grammar_evals": "PASS", "check_regressions": "PASS"
+  },
+  "repo_local_coverage": {"note": "staged artifact from prior session; repo-local only, not live-verified",
+    "coverage_pct": 85.87, "resolved": 42849, "pending": 7051, "total": 49900},
+  "coarse_blockers": {"stem_base_unknown": 5595, "source_entry_unverified": 1076,
+    "same_surface_polysemy_requires_i3rab": 379, "proper_noun_no_qamus_entry": 1},
+  "verified_audit_claims": {
+    "surface_index_headword_only": {"verdict": "CONFIRMED",
+      "evidence": "export_current_qamus_dataset.py builds by_norm from norm_strict(headword) only (line 183-185); usage[].forms feed by_quran_ref only",
+      "usage_forms_distinct_keys": 6659, "keys_missing_from_by_norm": 5075,
+      "pending_tokens_recoverable_by_index_fix": 1100},
+    "host_lexeme_verb_clitic_pollution": {"verdict": "CONFIRMED",
+      "host_lexeme_total": 1210, "qac_pos_V": 780, "qac_pos_N": 426},
+    "missing_entry_root_flatten_misroute": {"verdict": "CONFIRMED",
+      "missing_qamus_entry_total": 473, "flatten_reroute_to_existing": 89,
+      "top_roots": {"أتي": 55, "رأي": 34}},
+    "forms_array_function_word_pollution": {"verdict": "CONFIRMED",
+      "forms_array_total": 633, "qac_pos_P": 494, "qac_pos_NV": 138},
+    "decision_backlinks_stale_path": {"verdict": "TO_VERIFY",
+      "claim": "build_decision_backlinks.py reads missing existing_qamus_index.json -> entry_nodes:0 silent success"}
+  },
+  "current_ledger_root_cause_counts": {
+    "missing_form_variant_on_existing_entry": 3461, "host_lexeme_possessive_candidate": 1210,
+    "forms_array_missing_surface": 633, "missing_qamus_entry_candidate": 473,
+    "particle_or_pronoun_misclassified_as_stem": 418, "quran_refs_missing_or_incomplete": 394,
+    "genuinely_ambiguous_pending": 148, "verb_form_or_voice": 148, "content_homograph": 82,
+    "source_photo_visual_needed": 49, "nominal_derivative_candidate": 14,
+    "truly_low_frequency_tail": 11, "source_entry_required_before_resolution": 8,
+    "token_addressable_proper_noun": 1, "particle_function": 1},
+  "verdict": "queues are polluted; HYGIENE-FIRST before any authoring; revised safe-realizable pool is PROVISIONAL until lane-sanity validators pass",
+  "boundary": "repo-local only; NO live server, NO rebuild.sh, NO append to live artifacts; classification not live coverage"
+}
