@@ -1,0 +1,22 @@
+{
+  "_generator": "closure-2092 post-hygiene Phase 3 — index-miss live rebuild (owner-gated)",
+  "date": "2026-06-24",
+  "private_live_context_present": true,
+  "applied_this_session": false,
+  "reason_not_applied": "investigation shows this is NOT a simple rebuild; it is a live resolver code-tuning change (owner-gated, two-copy production file) with an uncertain safe subset",
+  "why_not_authoring": "the inflected form is already stored in the owning entry's usage[].forms; resolving it is an index/resolver MATCH, not a new authored gloss",
+  "live_resolver_finding": "expand.py already collects usage[].forms (lines 515-567) but applies MIN_FORM_LEN=3 + multi-root/homograph quarantine + weak-match exclusions; the 1,050 repo-classified index-miss tokens are forms the live resolver DECLINES under those rules",
+  "expected_token_count": "<= 1,050 (UPPER BOUND, not guaranteed); the safe-recoverable subset is the forms excluded only by MIN_FORM_LEN / non-homograph length rules — many of the 1,050 are correctly-quarantined homographs/multi-root and MUST stay pending",
+  "corrected_expectation": "the prior tranche's '1,050 recoverable by rebuild' is OPTIMISTIC; the real recoverable count requires per-token verification against the live resolver's quarantine rules",
+  "exact_artifact_dependency": "live qamus_wbw/expand.py form-matching pass + the entries dir (server); the repo-local by-normalized-surface.json is NOT the live index",
+  "owner_gated_procedure": [
+    "1. per-token: classify each of the 1,050 as (a) safe-relaxable (excluded only by length, single-root, collision-free) or (b) correctly-quarantined (homograph/multi-root) — only (a) is eligible",
+    "2. owner-gated: back up the two-copy expand.py (live + git mirror), adjust ONLY the safe-relaxable matching for the (a) subset, keep the homograph quarantine intact",
+    "3. wbw-lookup.prev.json backup; rebuild.sh; health check curl :8791 == 200",
+    "4. diff report: expected effect = resolving the (a) subset with NO new authored gloss; -0 removed/changed",
+    "5. regenerate audit/scoreboards/ledgers; run all gates"
+  ],
+  "rollback_requirement": "expand.py backup (live+mirror) + wbw-lookup.prev.json; restore + restart on any regression",
+  "health_check_requirement": "curl -s -o /dev/null -w %{http_code} http://127.0.0.1:8791/ == 200",
+  "public_private_boundary": "expand.py is a two-copy production file (owner-gated, backed-up); this public repo NEVER writes live; no public gloss is authored in this lane"
+}
