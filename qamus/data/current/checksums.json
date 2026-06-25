@@ -28,8 +28,8 @@
     "sha256": "cd0f4ec19d64ec4634dfbbee80e12f5625ad1a34cb7e176ec8489679ad10f9d0"
   },
   "indexes/by-normalized-surface.json": {
-    "bytes": 86751,
-    "sha256": "faba91c9353d34377ebc2a0a10e1fa2380172b84a092549d724d1087613e6a30"
+    "bytes": 308868,
+    "sha256": "be0aba31516bd64c12b1d2470bcc60c56736b936afb2923b5af6841a90140464"
   },
   "indexes/by-quran-ref.json": {
     "bytes": 218342,

@@ -11,13 +11,14 @@ The change vs the prior committed index must be ADDITIVE (headword keys unchange
 added) — the rebuilder asserts that and prints the delta. Read-only over entries; writes only the two
 index files. No live/server access.
 """
-import json, os, sys
+import hashlib, json, os, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 import export_current_qamus_dataset as X
 
 DATA = os.path.join(ROOT, "qamus", "data", "current", "entries.jsonl")
 IDX = os.path.join(ROOT, "qamus", "indexes", "current")
+CHECKSUMS = os.path.join(ROOT, "qamus", "data", "current", "checksums.json")
 
 def jdump(obj, path):
     with open(path, "w", encoding="utf-8", newline="\n") as f:
@@ -44,8 +45,17 @@ def main():
 
     jdump(out_norm, prev_path)
     jdump(out_detail, os.path.join(IDX, "by-normalized-surface-detail.json"))
+    # keep the dataset checksum for the index in sync (the public-dataset acceptance gate pins it)
+    if os.path.exists(CHECKSUMS):
+        cs = json.load(open(CHECKSUMS, encoding="utf-8"))
+        key = "indexes/by-normalized-surface.json"
+        if key in cs and isinstance(cs[key], dict):
+            raw = open(prev_path, "rb").read()
+            cs[key] = {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
+            with open(CHECKSUMS, "w", encoding="utf-8", newline="\n") as f:
+                json.dump(cs, f, ensure_ascii=False, sort_keys=True, indent=2); f.write("\n")
     form_keys = sum(1 for k, hs in out_detail.items() if any(h["kind"] == "form" for h in hs))
-    print("SURFACE INDEX REBUILT — keys %d (+%d added, 0 removed); form-bearing keys %d; detail written" %
+    print("SURFACE INDEX REBUILT — keys %d (+%d added, 0 removed); form-bearing keys %d; detail + checksum updated" %
           (len(out_norm), len(added), form_keys))
 
 if __name__ == "__main__":
