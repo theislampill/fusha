@@ -70,15 +70,36 @@ Before applying a rich metadata tranche, require:
 - `V+suffix pronoun`: high learner value, but not auto-safe; requires sarf/nahw evidence for subject/object roles.
 - `N+possessive pronoun`: useful with POS/context guard.
 
-`tools/build_rich_hover_morphosyntax_candidates.py` is the first narrow candidate generator for this coverage
-work. It emits reviewable `ART+N` and ordinary-looking `CONJ+ART+N` nominal metadata candidates only when the
-local QAC tokroots stage agrees that the host token is nominal. It intentionally does not claim case, number,
-gender, or final syntax; those remain separate sarf/nahw certification work before live apply.
+`tools/build_rich_hover_morphosyntax_candidates.py` is the first review-candidate generator for this coverage
+work. It emits scrubbed, public-boundary-safe metadata candidates only when staged root/POS evidence agrees with
+the lane shape, and it keeps every segment surface concatenating back to the exact atomic Arabic token. That
+Kawkab Mono alignment guard is intentional: color may be applied to grammar pieces, but the visible Qur'anic word
+must not acquire spaces or layout gaps.
 
-On the current local staged artifact, the generator produced 5,709 schema-valid review candidates:
+The generator currently covers:
+
+- `ART+N`
+- `CONJ+ART+N`
+- bare nominal host candidates
+- particle-plus-verb candidates
+- reviewed verb-object suffix candidates such as `33:63:1` (`يَسْـَٔلُكَ`)
+- review-gated verb-clitic rows such as `26:139:2` (`فَأَهْلَكْنَاهُمْ`)
+- vocative `يَٰٓأَيُّهَا` candidates with `yā` / `ayyu` / attention-marker pieces preserved
+
+It intentionally does not treat this as a live hover apply and does not claim final case, number, gender, particle
+function, or syntax where those still need sarf/nahw certification.
+
+On the current local staged artifact, the generator produced 22,510 schema-valid review candidates:
 
 ```json
-{"art_nominal": 5154, "conj_art_nominal": 555}
+{
+  "art_nominal": 5165,
+  "bare_nominal": 12133,
+  "conj_art_nominal": 556,
+  "particle_verb": 2896,
+  "verb_object_suffix": 1664,
+  "vocative_ayyuhā": 96
+}
 ```
 
 The full generated file was validated with `tools/validate_morphosyntax_token_metadata.py`. These are not live

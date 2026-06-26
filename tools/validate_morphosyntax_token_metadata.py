@@ -32,6 +32,7 @@ LEAK_RE = re.compile(
 )
 
 FUNCTION_BEARING_SEGMENTS = {
+    "verb_prefix",
     "prefix_conjunction",
     "prefix_preposition",
     "prefix_oath",
@@ -61,6 +62,7 @@ PRONOUN_SEGMENTS = {"subject_pronoun", "object_pronoun", "possessive_pronoun"}
 
 DISPLAY_CLASS_BY_ROLE = {
     "stem": "qg-verb",  # nominal stems are permitted to override via pos-aware renderers; validator checks scrubbed role only.
+    "verb_prefix": "qg-verb",
     "prefix_conjunction": "qg-particle",
     "prefix_preposition": "qg-preposition",
     "prefix_oath": "qg-oath",
@@ -90,6 +92,7 @@ DISPLAY_CLASS_BY_ROLE = {
 
 DISPLAY_LABEL_BY_ROLE = {
     "stem": "STEM",
+    "verb_prefix": "PFX",
     "prefix_conjunction": "CONJ",
     "prefix_preposition": "P",
     "prefix_oath": "OATH",

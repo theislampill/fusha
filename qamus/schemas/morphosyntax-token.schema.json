@@ -48,7 +48,7 @@
         "properties": {
           "role": {
             "type": "string",
-            "enum": ["stem", "prefix_conjunction", "prefix_preposition", "prefix_oath", "prefix_comitative_waw", "prefix_resumption_fa", "prefix_coordination_fa", "prefix_result_fa", "prefix_supplemental_fa", "prefix_cause_fa", "prefix_interrogative_hamza", "prefix_equalization_hamza", "prefix_particle", "prefix_purpose_lam", "prefix_imperative_lam", "vocative_particle", "vocative_support", "attention_particle", "preventive_ma", "definite_article", "subject_pronoun", "object_pronoun", "possessive_pronoun", "relative_pronoun", "case_ending", "other"]
+            "enum": ["stem", "verb_prefix", "prefix_conjunction", "prefix_preposition", "prefix_oath", "prefix_comitative_waw", "prefix_resumption_fa", "prefix_coordination_fa", "prefix_result_fa", "prefix_supplemental_fa", "prefix_cause_fa", "prefix_interrogative_hamza", "prefix_equalization_hamza", "prefix_particle", "prefix_purpose_lam", "prefix_imperative_lam", "vocative_particle", "vocative_support", "attention_particle", "preventive_ma", "definite_article", "subject_pronoun", "object_pronoun", "possessive_pronoun", "relative_pronoun", "case_ending", "other"]
           },
           "surface": { "type": "string" },
           "gloss_contribution": { "type": ["string", "null"] },
