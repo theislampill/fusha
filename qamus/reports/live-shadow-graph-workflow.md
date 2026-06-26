@@ -26,7 +26,8 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   `family_size`; exact token rows in `token-index.jsonl` carry `parse_key`/`parse_id` backlinks and remain the token
   identity boundary.
 - `tools/validate_phase1_shadow_graph.py`: validates required Phase 1/2 shadow artifacts, nonzero rows, exact
-  counts, token/hover/parse linkage, no orphan count, no surface-only auto-safe parse, and public-boundary markers.
+  counts, token/hover/parse linkage, no orphan count, public-boundary markers, and the reusable parse-key family
+  contract from `tools/validate_parse_key_contract.py`.
 - `tools/scan_public_boundary.py`: classifies public readback leaks separately from internal-only provenance.
 - `tools/compare_wbw_artifacts.py`: compares WBW artifacts without reconciling or copying either side.
 - `tools/summarize_shadow_closure_queue.py`: consumes an already-built shadow graph and emits closure-lane,

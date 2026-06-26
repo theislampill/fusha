@@ -18,6 +18,11 @@ import re
 import sys
 import tempfile
 
+try:
+    from validate_parse_key_contract import parse_id_for, validate as validate_parse_key_file
+except ImportError:
+    from tools.validate_parse_key_contract import parse_id_for, validate as validate_parse_key_file
+
 
 REQUIRED_FILES = [
     "phase1-current-truth.json",
@@ -181,9 +186,14 @@ def validate_shadow_dir(shadow_dir, sample_limit=2000, allow_legacy_missing_pars
         if os.path.abspath(str(node.get("locator", ""))).startswith(abs_shadow):
             warnings.append("%s: locator points inside shadow dir" % nid)
 
-    parse_count, parse_errors, parse_samples = count_jsonl(os.path.join(shadow_dir, "parse-keys.jsonl"), sample_limit=sample_limit)
+    parse_path = os.path.join(shadow_dir, "parse-keys.jsonl")
+    parse_count, parse_errors, parse_samples = count_jsonl(parse_path, sample_limit=sample_limit)
     if parse_errors:
         errors.extend("parse-keys.jsonl: %s" % e for e in parse_errors[:20])
+    parse_contract_count, parse_contract_errors = validate_parse_key_file(parse_path)
+    counts["parse_key_contract_rows"] = parse_contract_count
+    if parse_contract_errors:
+        errors.extend("parse-key contract: %s" % e for e in parse_contract_errors[:40])
     for _line_no, row in parse_samples:
         pid = row.get("id") or row.get("parse_id") or row.get("node_id")
         if pid and not str(pid).startswith("parse:"):
@@ -313,33 +323,80 @@ def run_self_test():
         }.items():
             with io.open(os.path.join(td, rel), "w", encoding="utf-8", newline="\n") as handle:
                 handle.write(text)
-        write_json(os.path.join(td, "backlinks.json"), {"quran:1:1:1": {"has_parse": ["parse:abc"]}})
+        parse_obj = {
+            "parse_key_version": "qamus-live-shadow-parse@1",
+            "quran_loc": None,
+            "surface_raw": "ٱلشَّمْسُ",
+            "norm_strict": "الشمس",
+            "bare": "الشمس",
+            "root": "ش م س",
+            "lemma": "شَمْس",
+            "pos": "noun",
+            "qamus_entry_candidates": [
+                {
+                    "entry_id": "n-sun",
+                    "entry_address": "qamus:n:sun",
+                    "sense_id": 1,
+                    "source": "self_test",
+                }
+            ],
+            "resolved_qamus_entry_id": "qamus:n:sun",
+            "resolved_sense_id": 1,
+            "proclitics": [],
+            "enclitics": [],
+            "suffix_pronouns": [],
+            "token_internal_segments": [{"role": "stem", "surface": "شَّمْسُ"}],
+            "verb_form": None,
+            "voice": None,
+            "aspect": None,
+            "mood": None,
+            "person": None,
+            "number": "singular",
+            "gender": "feminine",
+            "case": "nominative",
+            "state": "definite",
+            "derivative_type": None,
+            "particle_function": None,
+            "governor": None,
+            "attachment": None,
+            "dependency_roles": [],
+            "referent_class": None,
+            "grammar_triggers": [],
+            "gate": "auto_safe",
+            "decision_status": "resolved",
+            "blocker": None,
+            "evidence_version": {"fixture": "validate_phase1_shadow_graph"},
+            "parse_confidence": "certified",
+        }
+        parse_id = parse_id_for(parse_obj)
+        write_json(os.path.join(td, "backlinks.json"), {"quran:1:1:1": {"has_parse": [parse_id]}})
         write_jsonl(os.path.join(td, "nodes.jsonl"), [
             {"id": "quran:1:1:1", "type": "quran_token", "source": "self-test", "status": "clean", "public_exposable": True, "locator": "1:1:1"},
             {"id": "wbw:1:1:1", "type": "wbw_hover_slot", "source": "self-test", "status": "clean", "public_exposable": True, "locator": "1:1:1"},
-            {"id": "parse:abc", "type": "parse_key", "source": "self-test", "status": "clean", "public_exposable": False, "locator": "parse:abc"},
+            {"id": parse_id, "type": "parse_key", "source": "self-test", "status": "clean", "public_exposable": False, "locator": parse_id},
             {"id": "decision:one", "type": "decision", "source": "self-test", "status": "resolved", "public_exposable": False, "locator": "decision:one"},
         ])
         write_jsonl(os.path.join(td, "edges.jsonl"), [
             {"from": "quran:1:1:1", "type": "has_hover_slot", "to": "wbw:1:1:1"},
-            {"from": "quran:1:1:1", "type": "has_parse", "to": "parse:abc"},
+            {"from": "quran:1:1:1", "type": "has_parse", "to": parse_id},
             {"from": "decision:one", "type": "resolves_token", "to": "quran:1:1:1"},
         ])
         write_jsonl(os.path.join(td, "parse-keys.jsonl"), [
             {
-                "id": "parse:abc",
-                "canonical_parse_object": {
-                    "parse_key_version": "phase1.shadow.v1",
-                    "quran_loc": "1:1:1",
-                    "gate": "human_review_required",
-                    "parse_confidence": "partial",
-                },
+                "id": parse_id,
+                "canonical_parse_object": parse_obj,
                 "seen_locs": ["quran:1:1:1"],
                 "family_size": 1,
+                "candidate_entries": ["qamus:n:sun"],
+                "blockers": [],
+                "gates": ["auto_safe"],
+                "confidences": ["certified"],
+                "family_class": "token_only_required",
+                "propagation_allowed": False,
             }
         ])
         write_jsonl(os.path.join(td, "token-index.jsonl"), [
-            {"id": "quran:1:1:1", "loc": "1:1:1", "parse_key": "parse:abc", "status": "resolved"}
+            {"id": "quran:1:1:1", "loc": "1:1:1", "parse_key": parse_id, "status": "resolved"}
         ])
         for rel in ("entry-index.jsonl", "hover-index.jsonl", "blocker-index.jsonl"):
             write_jsonl(os.path.join(td, rel), [{"id": rel, "type": "self_test"}])
@@ -348,7 +405,7 @@ def run_self_test():
                 "id": "decision:one",
                 "quran_loc": "quran:1:1:1",
                 "wbw_loc": "wbw:1:1:1",
-                "parse_id": "parse:abc",
+                "parse_id": parse_id,
                 "gloss": "self-test",
             }
         ])
@@ -366,7 +423,7 @@ def run_self_test():
             print("SELF-TEST FAIL: token missing parse linkage did not fail")
             return 1
         write_jsonl(os.path.join(td, "token-index.jsonl"), [
-            {"id": "quran:1:1:1", "loc": "1:1:1", "parse_key": "parse:abc", "status": "resolved"}
+            {"id": "quran:1:1:1", "loc": "1:1:1", "parse_key": parse_id, "status": "resolved"}
         ])
         os.remove(os.path.join(td, "edges.jsonl"))
         bad = validate_shadow_dir(td)
