@@ -294,7 +294,7 @@ def routes_for(dogfood_class, detectors):
     routes = set()
     if dogfood_class in {"known_defect", "token_only_override"}:
         routes.add("repair_candidate")
-    if dogfood_class == "pending/blocker":
+    if dogfood_class in {"pending/blocker", "populated_uncertified"}:
         routes.add("blocker_queue_row")
     if dogfood_class in {"known_defect", "needs_sarf_review", "needs_nahw_review", "token_only_override"} or detectors:
         routes.add("production_bug_lesson")
@@ -605,11 +605,13 @@ def self_test():
         token_rows = [
             {"id": "quran:4:28:7", "loc": "4:28:7", "surface": "ٱلْإِنسَانُ", "parse_id": "parse:111111111111111111111111", "parse_key": "parse:111111111111111111111111", "status": "resolved", "blocker": None, "has_wbw_record": True},
             {"id": "quran:33:63:1", "loc": "33:63:1", "surface": "يَسْأَلُكَ", "parse_id": "parse:222222222222222222222222", "parse_key": "parse:222222222222222222222222", "status": "resolved", "blocker": None, "has_wbw_record": True},
+            {"id": "quran:22:18:13", "loc": "22:18:13", "surface": "وَٱلشَّمْسُ", "parse_id": "parse:444444444444444444444444", "parse_key": "parse:444444444444444444444444", "status": "resolved", "blocker": None, "has_wbw_record": True},
             {"id": "quran:86:14:1", "loc": "86:14:1", "surface": "وَمَا", "parse_id": "parse:333333333333333333333333", "parse_key": "parse:333333333333333333333333", "status": "pending", "blocker": "ma_function_ambiguous", "has_wbw_record": False},
         ]
         hover_rows = [
             {"id": "wbw:4:28:7", "loc": "4:28:7", "surface": "ٱلْإِنسَانُ", "status": "resolved", "has_wbw_record": True},
             {"id": "wbw:33:63:1", "loc": "33:63:1", "surface": "يَسْأَلُكَ", "status": "resolved", "has_wbw_record": True},
+            {"id": "wbw:22:18:13", "loc": "22:18:13", "surface": "وَٱلشَّمْسُ", "status": "resolved", "has_wbw_record": True},
             {"id": "wbw:86:14:1", "loc": "86:14:1", "surface": "وَمَا", "status": "pending", "has_wbw_record": False},
         ]
         parse_rows = []
@@ -668,14 +670,69 @@ def self_test():
                 "propagation_allowed": row["entry_linkage"]["parse_family_class"] == "propagation_safe",
                 "runtime_parse_key": None,
             })
+        parse_rows.append({
+            "id": "parse:444444444444444444444444",
+            "canonical_parse_object": {
+                "parse_key_version": "self-test",
+                "quran_loc": "quran:22:18:13",
+                "surface_raw": "وَٱلشَّمْسُ",
+                "norm_strict": "وَٱلشَّمْسُ",
+                "bare": "شمس",
+                "root": "ش م س",
+                "lemma": None,
+                "pos": "noun",
+                "qamus_entry_candidates": [{"entry_address": "qamus:n:sun"}],
+                "qamus_component_candidates": [],
+                "resolved_qamus_entry_id": "qamus:n:sun",
+                "resolved_sense_id": 1,
+                "proclitics": [{"role": "conjunction", "surface": "وَ"}, {"role": "definite_article", "surface": "ٱلْ"}],
+                "enclitics": [],
+                "suffix_pronouns": [],
+                "token_internal_segments": [{"role": "conjunction", "surface": "وَ"}, {"role": "definite_article", "surface": "ٱلْ"}, {"role": "noun", "surface": "شَّمْسُ"}],
+                "verb_form": None,
+                "voice": None,
+                "aspect": None,
+                "mood": None,
+                "person": None,
+                "number": "singular",
+                "gender": "feminine",
+                "case": "nominative",
+                "state": "definite",
+                "derivative_type": None,
+                "particle_function": "conjunction",
+                "governor": None,
+                "attachment": None,
+                "referent_class": None,
+                "dependency_roles": [],
+                "grammar_triggers": ["prefix_conjunction", "definite_article"],
+                "gate": "human_review_required",
+                "decision_status": "resolved",
+                "blocker": None,
+                "evidence_version": {"fixture": "full-corpus-dogfood"},
+                "parse_confidence": "candidate",
+            },
+            "seen_locs": ["quran:22:18:13"],
+            "family_size": 1,
+            "candidate_entries": ["qamus:n:sun"],
+            "component_candidate_entries": [],
+            "component_candidate_join_statuses": [],
+            "blockers": [],
+            "gates": ["human_review_required"],
+            "confidences": ["candidate"],
+            "family_class": "human_review_required",
+            "propagation_allowed": False,
+            "runtime_parse_key": None,
+        })
         decision_rows = [
             {"id": "decision:token-4-28-7", "quran_loc": "quran:4:28:7", "wbw_loc": "wbw:4:28:7", "parse_id": "parse:111111111111111111111111", "gloss": "the human being"},
             {"id": "decision:token-33-63-1", "quran_loc": "quran:33:63:1", "wbw_loc": "wbw:33:63:1", "parse_id": "parse:222222222222222222222222", "gloss": "to ask, question"},
+            {"id": "decision:token-22-18-13", "quran_loc": "quran:22:18:13", "wbw_loc": "wbw:22:18:13", "parse_id": "parse:444444444444444444444444", "gloss": "and + the sun"},
         ]
         wbw = {
             "words": {
                 "4:28:7": {"ar": "ٱلْإِنسَانُ", "glosses": [{"text": "the human being", "src": "qamus", "kind": "authored", "lang": "en"}], "best": 0, "parse_key": {"key": "ART+N"}, "display": {"palette": "qamus-grammar-v1"}, "segments": [{"role": "definite_article", "surface": "ٱلْ"}, {"role": "noun", "surface": "إِنسَانُ"}]},
                 "33:63:1": {"ar": "يَسْأَلُكَ", "glosses": [{"text": "to ask, question", "src": "qamus", "kind": "authored", "lang": "en"}], "best": 0, "parse_key": {"key": "V:I:IMPF:ACT:3MS+OBJ.2MS"}, "display": {"palette": "qamus-grammar-v1"}, "segments": [{"role": "imperfect_prefix", "surface": "يَ"}, {"role": "verb_stem", "surface": "سْأَلُ"}, {"role": "object_pronoun", "surface": "كَ"}]},
+                "22:18:13": {"ar": "وَٱلشَّمْسُ", "glosses": [{"text": "and + the sun", "src": "qamus", "kind": "authored", "lang": "en"}], "best": 0},
             }
         }
         dump_jsonl(os.path.join(shadow, "token-index.jsonl"), token_rows)
@@ -684,7 +741,7 @@ def self_test():
         dump_jsonl(os.path.join(shadow, "decision-index.jsonl"), decision_rows)
         dump_json(os.path.join(shadow, "wbw-lookup.json"), wbw)
         out_jsonl, _out_meta, _out_md, meta = build_audit(shadow, out, wbw_json=os.path.join(shadow, "wbw-lookup.json"), validated_code_head="self-test-head", report_head="self-test-report")
-        result = subprocess.run([sys.executable, VALIDATOR, out_jsonl, "--expect-min-rows", "3"], text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        result = subprocess.run([sys.executable, VALIDATOR, out_jsonl, "--expect-min-rows", "4"], text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if result.returncode != 0:
             raise SystemExit(result.stdout + result.stderr)
         if meta["dogfood_class_counts"].get("known_defect") != 1:
@@ -693,6 +750,10 @@ def self_test():
             raise SystemExit("expected one rich_certified row")
         if meta["dogfood_class_counts"].get("pending/blocker") != 1:
             raise SystemExit("expected one pending/blocker row")
+        if meta["dogfood_class_counts"].get("populated_uncertified") != 1:
+            raise SystemExit("expected one populated_uncertified row")
+        if meta["route_counts"].get("blocker_queue_row", 0) < 2:
+            raise SystemExit("expected populated_uncertified rows to route to blocker queue")
     return 0
 
 
