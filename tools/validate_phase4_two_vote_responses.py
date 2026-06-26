@@ -176,6 +176,9 @@ def validate_row(row, line_no, errors, requests=None):
                 _err(errors, line_no, "identity does not match request")
             if row.get("public_boundary") != request.get("public_boundary"):
                 _err(errors, line_no, "public_boundary does not match request")
+            hint = compact(request.get("agreement_key_hint"))
+            if row.get("decision") == "approve" and hint and compact(row.get("reason_agreement_key")) != hint:
+                _err(errors, line_no, "reason_agreement_key must match request agreement_key_hint")
 
     gloss = compact(row.get("concise_authored_gloss"))
     sarf_reasoning = compact(row.get("sarf_reasoning"))
@@ -244,7 +247,7 @@ def sample_row():
         "concise_authored_gloss": "and + the trees",
         "sarf_reasoning": "Visible conjunction/article/host composition is preserved.",
         "nahw_reasoning": "The prefixed waw is a grammar-bearing function piece in context.",
-        "reason_agreement_key": "conj-art-host",
+        "reason_agreement_key": "conj-definite-noun-coordinated-list",
         "blocker_if_rejected": "",
         "safe_scope_after_vote": "token_only",
         "public_boundary": {
@@ -280,6 +283,20 @@ def self_test():
         count, errors = validate(bad)
         if count != 1 or not any("public gloss leaks" in err for err in errors):
             print("SELF-TEST FAIL bad:", errors)
+            return 1
+        request_path = os.path.join(td, "request.jsonl")
+        req = request_validator.sample_row()
+        req["public_boundary"] = row["public_boundary"]
+        write_jsonl(request_path, [req])
+        mismatch = dict(row)
+        mismatch["reason_agreement_key"] = "wrong-key"
+        write_jsonl(bad, [mismatch])
+        count, errors = validate(bad, request_path=request_path)
+        if count != 1:
+            print("SELF-TEST FAIL agreement key mismatch count:", count)
+            return 1
+        if not any("reason_agreement_key must match request agreement_key_hint" in err for err in errors):
+            print("SELF-TEST FAIL agreement key mismatch:", errors)
             return 1
     print("PASS — Phase 4 two-vote response validator self-test")
     return 0

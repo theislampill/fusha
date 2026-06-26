@@ -46,6 +46,7 @@ def main():
         assert req["candidate_evidence"]["component_candidates_can_certify"] is False
         assert req["candidate_evidence"]["component_candidate_joins"][0]["join_status"][0] == "source:rich_wbw_segment"
         assert req["vote_lenses"] == ["sarf-primary", "nahw-primary"]
+        assert req["agreement_key_hint"] == "conj-definite-noun-coordinated-list"
         assert req["public_boundary"] == {
             "src": "qamus",
             "kind": "authored",

@@ -16,6 +16,7 @@
     "gate_reasons",
     "required_evidence",
     "vote_lenses",
+    "agreement_key_hint",
     "requested_output",
     "public_boundary",
     "apply_policy",
@@ -139,6 +140,11 @@
       ],
       "minItems": 2,
       "maxItems": 2
+    },
+    "agreement_key_hint": {
+      "type": "string",
+      "minLength": 3,
+      "pattern": "^[a-z0-9][a-z0-9-]+$"
     },
     "requested_output": {
       "type": "object",

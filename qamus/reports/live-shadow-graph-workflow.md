@@ -76,14 +76,16 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   These packets are the review bridge between Phase 4 tranche planning and future sarf/nahw votes. They preserve
   component candidates in `candidate_evidence.component_candidates` / `component_candidate_joins`, keep whole-token
   candidates separate, and state that component candidates, raw surface, norm-only recall, and parse keys alone cannot
-  certify a hover.
+  certify a hover. Each packet also carries a deterministic `agreement_key_hint`; this is a review coordination key
+  only, not propagation evidence and not a weakening of the `two_vote_required` gate.
 - `tools/validate_phase4_two_vote_requests.py`: validates Phase 4 two-vote request packets. It rejects non-exact
   identities, public-boundary leakage, weakened gates, non-two-vote lanes, missing component provenance, component
-  candidates marked certifying, live/apply/coverage claims, and vacuous zero-row request files.
+  candidates marked certifying, missing `agreement_key_hint`, live/apply/coverage claims, and vacuous zero-row request
+  files.
 - `tools/validate_phase4_two_vote_responses.py`: validates exact-addressed Phase 4 sarf/nahw response rows before
   reconciliation. It requires the response to derive from a known two-vote request, preserves the exact
-  `quran:S:A:W` / `wbw:S:A:W` identity, rejects public gloss provenance leaks, and keeps component candidates
-  explicitly non-certifying.
+  `quran:S:A:W` / `wbw:S:A:W` identity, rejects public gloss provenance leaks, requires approved responses to use
+  the request's exact `agreement_key_hint`, and keeps component candidates explicitly non-certifying.
 - `tools/reconcile_phase4_two_vote_responses.py`: reconciles validated sarf and nahw response rows into internal
   review output. It certifies only same-gloss, same-reason, same-scope agreement and emits `certified_not_applied`
   rows with `apply_allowed=false`; missing, pending, rejected, or disagreeing votes stay unresolved. It does not
@@ -476,7 +478,12 @@ Phase 4 dry-run readiness smoke:
 - dry-run tranche: `11` rows, all `lane=two_vote_required`, all `required_gate=two_vote_required`, all `11` rows
   preserve rich component evidence separately from whole-token candidates
 - two-vote requests: `11` rows, all `lane=two_vote_required`, all `required_gate=two_vote_required`, all `11` rows
-  preserve component candidate evidence as non-certifying review evidence
+  preserve component candidate evidence as non-certifying review evidence; regenerated agreement-key smoke kept
+  `auto_safe_rows=0` and produced these request coordination keys:
+  `conj-definite-noun-coordinated-list=5`, `accusative-adjectival-state=1`,
+  `preposition-governed-nominal-manner=1`, `result-particle-active-verb-object-suffix=1`,
+  `resumption-passive-verb-clause=1`, `verb-object-suffix-explicit-subject=1`,
+  `vocative-particle-addressee-bridge=1`
 - sample request identity:
   `parse:15651e48a4731deea206356a` / `quran:22:18:14` / `wbw:22:18:14` / `وَٱلْقَمَرُ`
 - validators:

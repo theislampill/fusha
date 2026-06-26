@@ -15,7 +15,9 @@ def write_jsonl(path, rows):
     path.write_text("".join(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
 
 
-def response(request, lens, decision="approve", gloss="and + the trees", reason="conj-art-host"):
+def response(request, lens, decision="approve", gloss="and + the trees", reason=None):
+    if reason is None:
+        reason = request.get("agreement_key_hint", "")
     return {
         "id": "%s:%s" % (request["id"].replace("phase4-two-vote:", "phase4-two-vote-response:"), lens),
         "phase": "phase4_two_vote_response",
@@ -80,8 +82,8 @@ def main():
         assert certified[0]["component_candidates_used_as_certification"] is False
 
         responses = [
-            response(request, "sarf-primary", gloss="and + the trees", reason="conj-art-host"),
-            response(request, "nahw-primary", gloss="and the trees", reason="different-reason"),
+            response(request, "sarf-primary", gloss="and + the trees"),
+            response(request, "nahw-primary", gloss="and the trees"),
         ]
         write_jsonl(responses_path, responses)
         summary = R.reconcile_files(

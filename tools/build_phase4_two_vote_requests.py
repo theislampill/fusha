@@ -68,6 +68,40 @@ def request_id(source_tranche_id):
     return source_tranche_id.replace("phase4-tranche:", "phase4-two-vote:")
 
 
+def _component_roles(candidate_evidence):
+    roles = []
+    for join in (candidate_evidence.get("component_candidate_joins") or []):
+        for item in (join.get("join_status") or []):
+            if isinstance(item, str) and item.startswith("role:"):
+                roles.append(item.split(":", 1)[1])
+    return set(roles)
+
+
+def agreement_key_hint(tranche_row):
+    """Return the review-only reason key both votes must use if approving."""
+    evidence = tranche_row.get("candidate_evidence") or {}
+    roles = _component_roles(evidence)
+    gate_reasons = set(tranche_row.get("gate_reasons") or [])
+    surface = ((tranche_row.get("identity") or {}).get("surface_sample") or "")
+
+    if "grammar_trigger:vocative" in gate_reasons or {"vocative_particle", "addressee_bridge"} <= roles:
+        return "vocative-particle-addressee-bridge"
+    if "grammar_trigger:preposition" in gate_reasons or "preposition" in roles:
+        return "preposition-governed-nominal-manner"
+    if "grammar_trigger:adjectival_state" in gate_reasons:
+        return "accusative-adjectival-state"
+    if "result_particle" in roles or surface.startswith("ف"):
+        return "result-particle-active-verb-object-suffix"
+    if "resumption_particle" in roles:
+        return "resumption-passive-verb-clause"
+    if "grammar_trigger:suffix_pronoun" in gate_reasons or "object_pronoun" in roles:
+        return "verb-object-suffix-explicit-subject"
+    if "conjunction" in roles and ("definite_article" in roles or surface.startswith("وَٱل")):
+        return "conj-definite-noun-coordinated-list"
+    role_slug = "-".join(sorted(roles)) or "unknown"
+    return "two-vote-required-%s" % role_slug.replace("_", "-")
+
+
 def request_row(tranche_row):
     evidence = tranche_row.get("candidate_evidence") or {}
     return {
@@ -89,6 +123,7 @@ def request_row(tranche_row):
         "gate_reasons": tranche_row.get("gate_reasons") or [],
         "required_evidence": tranche_row.get("required_evidence") or [],
         "vote_lenses": ["sarf-primary", "nahw-primary"],
+        "agreement_key_hint": agreement_key_hint(tranche_row),
         "requested_output": dict(REQUESTED_OUTPUT),
         "public_boundary": dict(PUBLIC_BOUNDARY),
         "apply_policy": dict(APPLY_POLICY),
@@ -140,6 +175,9 @@ def self_test():
             return 1
         if built[0]["required_gate"] != "two_vote_required":
             print("SELF-TEST FAIL: two-vote request gate weakened")
+            return 1
+        if built[0].get("agreement_key_hint") != "conj-definite-noun-coordinated-list":
+            print("SELF-TEST FAIL: missing stable agreement key hint")
             return 1
     print("PASS — Phase 4 two-vote request builder self-test")
     return 0

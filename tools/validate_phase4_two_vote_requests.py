@@ -41,6 +41,7 @@ REQUIRED = [
     "gate_reasons",
     "required_evidence",
     "vote_lenses",
+    "agreement_key_hint",
     "requested_output",
     "public_boundary",
     "apply_policy",
@@ -150,6 +151,11 @@ def validate_row(row, line_no, errors):
 
     if row.get("vote_lenses") != ["sarf-primary", "nahw-primary"]:
         _err(errors, line_no, "vote_lenses must be sarf-primary + nahw-primary")
+    agreement_key_hint = str(row.get("agreement_key_hint") or "")
+    if not agreement_key_hint:
+        _err(errors, line_no, "missing agreement_key_hint")
+    elif not re.match(r"^[a-z0-9][a-z0-9-]+$", agreement_key_hint):
+        _err(errors, line_no, "agreement_key_hint must be a stable lowercase slug")
     requested = row.get("requested_output") or {}
     if requested.get("decision") != "approve | reject | pending":
         _err(errors, line_no, "requested_output.decision contract is wrong")
@@ -244,6 +250,7 @@ def sample_row():
             "public hover remains qamus/authored/en",
         ],
         "vote_lenses": ["sarf-primary", "nahw-primary"],
+        "agreement_key_hint": "conj-definite-noun-coordinated-list",
         "requested_output": {
             "decision": "approve | reject | pending",
             "concise_authored_gloss": "",
@@ -310,6 +317,16 @@ def self_test():
             return 1
         if not any("component_candidates_can_certify must be false" in err for err in errors):
             print("SELF-TEST FAIL bad component certifier:", errors)
+            return 1
+        missing_hint = dict(row)
+        missing_hint.pop("agreement_key_hint", None)
+        write_jsonl(bad, [missing_hint])
+        count, errors = validate(bad)
+        if count != 1:
+            print("SELF-TEST FAIL missing hint count:", count)
+            return 1
+        if not any("missing agreement_key_hint" in err for err in errors):
+            print("SELF-TEST FAIL missing agreement key hint:", errors)
             return 1
     print("PASS — Phase 4 two-vote request validator self-test")
     return 0
