@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/hover-edit-intent.schema.json",
+  "title": "Qamus graph-addressed hover edit intent",
+  "type": "object",
+  "required": [
+    "edit_intent_id",
+    "source_view",
+    "requested_scope",
+    "target_address",
+    "identity_chain",
+    "current_visible_hover",
+    "proposed_public_hover",
+    "impact_preview",
+    "propagation_policy",
+    "gate",
+    "live_mutation_allowed",
+    "public_boundary"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "edit_intent_id": { "type": "string", "pattern": "^edit-intent:" },
+    "source_view": {
+      "type": "string",
+      "enum": ["hover_inspector", "entry_backlinks", "parse_family_view", "blocker_queue", "repair_preview"]
+    },
+    "requested_scope": { "type": "string", "enum": ["token_only", "parse_family", "entry_sense", "unsafe"] },
+    "target_address": {
+      "type": "string",
+      "pattern": "^(wbw:\\d{1,3}:\\d{1,3}:\\d{1,3}|qamus:.+#field=|qamus:.+#sense=|decision:)"
+    },
+    "identity_chain": {
+      "type": "object",
+      "required": ["wbw_loc", "quran_loc", "parse_id", "decision_id", "entry_sense"],
+      "additionalProperties": false,
+      "properties": {
+        "wbw_loc": { "type": "string", "pattern": "^wbw:\\d{1,3}:\\d{1,3}:\\d{1,3}$" },
+        "quran_loc": { "type": "string", "pattern": "^quran:\\d{1,3}:\\d{1,3}:\\d{1,3}$" },
+        "parse_id": { "type": "string", "pattern": "^parse:[0-9a-f]+$" },
+        "decision_id": { "type": ["string", "null"], "pattern": "^decision:" },
+        "entry_sense": { "type": ["string", "null"], "pattern": "^qamus:.+#sense=\\d+$" },
+        "blocker": { "type": ["string", "null"], "pattern": "^blocker:" }
+      }
+    },
+    "current_visible_hover": { "type": "string", "minLength": 1 },
+    "proposed_public_hover": { "type": ["string", "null"] },
+    "impact_preview": {
+      "type": "object",
+      "required": ["required_before_apply", "preview_id", "affected_token_count", "sample_tokens"],
+      "additionalProperties": false,
+      "properties": {
+        "required_before_apply": { "const": true },
+        "preview_id": { "type": ["string", "null"], "pattern": "^repair-preview:" },
+        "affected_token_count": { "type": "integer", "minimum": 0 },
+        "affected_hover_count": { "type": "integer", "minimum": 0 },
+        "affected_parse_key_count": { "type": "integer", "minimum": 0 },
+        "sample_tokens": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^quran:\\d{1,3}:\\d{1,3}:\\d{1,3}$" }
+        }
+      }
+    },
+    "propagation_policy": {
+      "type": "object",
+      "required": [
+        "exact_token_identity_required",
+        "raw_surface_identity_allowed",
+        "parse_key_primary_identity",
+        "norm_only_certification_allowed",
+        "family_propagation_allowed",
+        "collision_free_required"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "exact_token_identity_required": { "const": true },
+        "raw_surface_identity_allowed": { "const": false },
+        "parse_key_primary_identity": { "const": false },
+        "norm_only_certification_allowed": { "const": false },
+        "family_propagation_allowed": { "type": "boolean" },
+        "collision_free_required": { "type": "boolean" }
+      }
+    },
+    "gate": {
+      "type": "string",
+      "enum": ["token_review", "auto_safe_after_preview", "two_vote_required", "human_review_required", "owner_review_required", "never_auto"]
+    },
+    "live_mutation_allowed": { "const": false },
+    "public_boundary": { "$ref": "public-private-boundary.schema.json" }
+  }
+}
