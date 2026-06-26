@@ -98,6 +98,14 @@ The tools intentionally do not embed private server paths. Server acceptance pas
 - `tools/validate_phase4_draft_token_decision_ledger.py`: validates that draft ledger rows derive from the exact hover
   decision plan, preserve `quran:S:A:W` / `wbw:S:A:W` identity, reject public provenance leakage, keep all live/apply
   policy fields false, and require the future backup/rebuild/validation/health/readback gates.
+- `tools/build_phase4_owner_authorization_request.py`: bundles a validated apply-readiness manifest and source-only
+  draft token-decision ledger into one owner review request. It hashes both artifacts, records exact row counts and
+  sample source-clean token decisions, and keeps `owner_authorization.status=not_provided`, `apply_allowed=false`,
+  `live_mutation_allowed=false`, `wbw_rebuild_allowed=false`, `service_restart_allowed=false`,
+  `mirror_sync_allowed=false`, and `closure_claim_allowed=false`.
+- `tools/validate_phase4_owner_authorization_request.py`: validates that the owner request is still only a request. It
+  rejects provided/approved authorization, mismatched manifest or draft-ledger hashes/counts, public provenance leaks,
+  non-source-clean sample decisions, and any live/apply/closure policy flag set true.
 - `tools/plan_shadow_hover_edit_intent.py`: read-only CLI for planning future hover-edit intents from a validated
   Phase 3 admin/debug pack. It emits validator-clean JSONL rows for token-only, parse-family, or entry/sense edit
   intent review, preserves exact `wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> qamus:<id>#sense=<n>` identity, and
@@ -434,6 +442,9 @@ Dry-run inputs and outputs:
 - post-adjudication unresolved rows: `0`
 - post-adjudication hover decision plan rows: `11`
 - post-adjudication draft token-decision ledger rows: `11`
+- post-adjudication owner authorization request rows: `1`
+- post-adjudication owner authorization request id:
+  `phase4-owner-authorization-request:a322533d81c96154`
 - source-only review/apply artifact leak-pattern matches: `0`
 - `apply_allowed=false`, `live_mutation_allowed=false`,
   `closure_claim_allowed=false`
@@ -472,6 +483,8 @@ Validation evidence:
 - `python tools/validate_phase4_apply_readiness_manifest.py <post-adjudication-apply-readiness-manifest.json> --plan-jsonl <post-adjudication-hover-decision-plan.jsonl>` -> `PASS`
 - `python tools/build_phase4_draft_token_decision_ledger.py <post-adjudication-hover-decision-plan.jsonl>` -> `PASS`
 - `python tools/validate_phase4_draft_token_decision_ledger.py <post-adjudication-draft-token-decision-ledger.jsonl> --plan-jsonl <post-adjudication-hover-decision-plan.jsonl>` -> `PASS`
+- `python tools/build_phase4_owner_authorization_request.py --manifest-json <post-adjudication-apply-readiness-manifest.json> --draft-ledger-jsonl <post-adjudication-draft-token-decision-ledger.jsonl>` -> `PASS`
+- `python tools/validate_phase4_owner_authorization_request.py <owner-authorization-request.json> --manifest-json <post-adjudication-apply-readiness-manifest.json> --draft-ledger-jsonl <post-adjudication-draft-token-decision-ledger.jsonl>` -> `PASS`
 
 Residual blocker precision was hardened in the reconciler. When both sarf and
 nahw approve the same token with the same reason key and same scope, but differ
@@ -530,6 +543,9 @@ Generated ignored adjudication replay packet:
 - combined certified rows: `11`
 - hover decision plan rows: `11`
 - draft token-decision ledger rows: `11`
+- owner authorization request rows: `1`
+- owner authorization request id:
+  `phase4-owner-authorization-request:a322533d81c96154`
 - source-only review/apply artifact leak-pattern matches: `0`
 - `apply_allowed=false`, `live_mutation_allowed=false`,
   `closure_claim_allowed=false`
@@ -602,6 +618,22 @@ This draft ledger is not the live append-only token decision ledger. It copies
 only the source-clean public token decision shape and plan lineage into a
 review artifact, keeping `apply_allowed=false`, `live_mutation_allowed=false`,
 and all future backup/rebuild/validation/health/readback gates required.
+
+A final source-only owner authorization request can now bind the exact
+apply-readiness manifest hash to the exact draft token-decision ledger hash for
+review, without itself granting permission:
+
+- schema: `qamus/schemas/phase4-owner-authorization-request.schema.json`
+- builder: `tools/build_phase4_owner_authorization_request.py`
+- validator: `tools/validate_phase4_owner_authorization_request.py`
+- sample: `qamus/examples/phase4_owner_authorization_request.sample.json`
+- test: `tools/test_phase4_owner_authorization_request.py`
+- output status: `owner_review_required_not_authorized`
+
+The request is intentionally inert. It requires an owner to authorize the exact
+request id and artifact hashes before any future live apply. It rejects public
+provenance leakage and keeps live mutation, WBW rebuild, service restart,
+mirror sync, and closure claims disabled.
 
 ## Phase 3 Latest Read-Only Admin/Debug Refresh
 
