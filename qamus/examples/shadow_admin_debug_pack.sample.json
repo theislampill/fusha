@@ -42,6 +42,7 @@
       "blocker_counts": {
         "suffix_pronoun": 1
       },
+      "candidate_scope": "whole_token_or_resolved_entry",
       "dependent_hover_count": 1,
       "dependent_token_count": 1,
       "entry_id": "qamus:5935ecfb1ec5",

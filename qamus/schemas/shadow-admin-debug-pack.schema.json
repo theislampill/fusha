@@ -111,6 +111,7 @@
         "view": { "const": "entry_backlinks" },
         "public_exposable": { "const": false },
         "entry_id": { "type": "string", "pattern": "^qamus:" },
+        "candidate_scope": { "const": "whole_token_or_resolved_entry" },
         "dependent_token_count": { "type": "integer", "minimum": 0 },
         "dependent_hover_count": { "type": "integer", "minimum": 0 },
         "parse_key_count": { "type": "integer", "minimum": 0 },

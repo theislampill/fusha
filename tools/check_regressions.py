@@ -614,6 +614,13 @@ for _script, _args, _label in (
         ("validate_shadow_admin_route_contract.py",
          [os.path.join(_R, "qamus", "examples", "shadow_admin_route_contract.sample.json")],
          "Phase3 shadow admin route contract sample validates"),
+        ("validate_shadow_admin_route_contract.py",
+         [
+             os.path.join(_R, "qamus", "examples", "shadow_admin_route_contract.sample.json"),
+             "--pack",
+             os.path.join(_R, "qamus", "examples", "shadow_admin_debug_pack.sample.json"),
+         ],
+         "Phase3 shadow admin route contract matches debug pack sample"),
         ("plan_phase4_closure_tranche.py", ["--self-test"], "Phase4 dry-run closure tranche planner self-test"),
         ("validate_phase4_closure_tranche.py", ["--self-test"], "Phase4 dry-run closure tranche validator self-test"),
         ("validate_phase4_closure_tranche.py",

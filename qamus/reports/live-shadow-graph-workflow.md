@@ -192,7 +192,8 @@ python tools/build_shadow_admin_debug_pack.py --shadow-dir <isolated shadow outp
   --sample-token quran:22:18:17 \
   --sample-token quran:2:21:1
 python tools/validate_shadow_admin_debug_pack.py <isolated static admin-debug output>/admin-debug-pack.json
-python tools/validate_shadow_admin_route_contract.py qamus/examples/shadow_admin_route_contract.sample.json
+python tools/validate_shadow_admin_route_contract.py qamus/examples/shadow_admin_route_contract.sample.json \
+  --pack <isolated static admin-debug output>/admin-debug-pack.json
 python tools/plan_phase4_closure_tranche.py <review pack jsonl> \
   --out-jsonl <isolated static admin-debug output>/phase4-dry-run-tranche.jsonl \
   --max-rows 25
@@ -261,6 +262,8 @@ python tools/validate_shadow_admin_debug_pack.py --self-test
 python tools/validate_shadow_admin_debug_pack.py qamus/examples/shadow_admin_debug_pack.sample.json
 python tools/validate_shadow_admin_route_contract.py --self-test
 python tools/validate_shadow_admin_route_contract.py qamus/examples/shadow_admin_route_contract.sample.json
+python tools/validate_shadow_admin_route_contract.py qamus/examples/shadow_admin_route_contract.sample.json \
+  --pack qamus/examples/shadow_admin_debug_pack.sample.json
 python tools/plan_phase4_closure_tranche.py --self-test
 python tools/validate_phase4_closure_tranche.py --self-test
 python tools/validate_phase4_closure_tranche.py qamus/examples/phase4_closure_tranche.sample.jsonl

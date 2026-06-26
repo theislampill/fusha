@@ -100,13 +100,14 @@ def index_parse_rows(parse_rows):
     parse_by_token = {}
     entry_to_parse = defaultdict(set)
     entry_to_tokens = defaultdict(set)
+    component_entry_to_parse = defaultdict(set)
+    component_entry_to_tokens = defaultdict(set)
     for row in parse_rows:
         parse_by_id[row.get("id")] = row
         seen_locs = row.get("seen_locs") or []
         for loc in seen_locs:
             parse_by_token[loc] = row
         entries = set(row.get("candidate_entries") or [])
-        entries.update(row.get("component_candidate_entries") or [])
         parse_obj = row.get("canonical_parse_object") or {}
         if parse_obj.get("resolved_qamus_entry_id"):
             entries.add(parse_obj["resolved_qamus_entry_id"])
@@ -114,7 +115,18 @@ def index_parse_rows(parse_rows):
             entry_to_parse[entry].add(row.get("id"))
             for loc in seen_locs:
                 entry_to_tokens[entry].add(loc)
-    return parse_by_id, parse_by_token, entry_to_parse, entry_to_tokens
+        for entry in row.get("component_candidate_entries") or []:
+            component_entry_to_parse[entry].add(row.get("id"))
+            for loc in seen_locs:
+                component_entry_to_tokens[entry].add(loc)
+    return (
+        parse_by_id,
+        parse_by_token,
+        entry_to_parse,
+        entry_to_tokens,
+        component_entry_to_parse,
+        component_entry_to_tokens,
+    )
 
 
 def decision_indexes(decisions):
@@ -208,6 +220,7 @@ def build_entry_view(entry_id, entry_by_id, entry_to_parse, entry_to_tokens, par
         "view": "entry_backlinks",
         "public_exposable": False,
         "entry_id": entry_id,
+        "candidate_scope": "whole_token_or_resolved_entry",
         "headword": entry.get("headword"),
         "section": entry.get("section"),
         "dependent_token_count": len(token_locs),
@@ -323,7 +336,14 @@ def build_pack(shadow_dir, out_dir, sample_tokens=None, sample_entries=None, max
     decision_rows = load_jsonl(rel_file(shadow_dir, "decision-index.jsonl"))
     parse_rows = load_jsonl(rel_file(shadow_dir, "parse-keys.jsonl"))
     blocker_rows = load_jsonl(rel_file(shadow_dir, "blocker-index.jsonl"))
-    parse_by_id, parse_by_token, entry_to_parse, entry_to_tokens = index_parse_rows(parse_rows)
+    (
+        parse_by_id,
+        parse_by_token,
+        entry_to_parse,
+        entry_to_tokens,
+        _component_entry_to_parse,
+        _component_entry_to_tokens,
+    ) = index_parse_rows(parse_rows)
     decisions_by_quran, _decisions_by_wbw, decisions_by_parse = decision_indexes(decision_rows)
 
     if not sample_tokens:
@@ -338,7 +358,6 @@ def build_pack(shadow_dir, out_dir, sample_tokens=None, sample_entries=None, max
     for inspector in hover_inspectors:
         candidates = inspector.get("entry_candidates") or {}
         inferred_entries.extend(candidates.get("whole_token_candidates") or [])
-        inferred_entries.extend(candidates.get("component_candidates") or [])
     entry_ids = list(dict.fromkeys((sample_entries or []) + inferred_entries))
     entry_backlinks = [
         build_entry_view(entry_id, entry_by_id, entry_to_parse, entry_to_tokens, parse_by_id, decisions_by_parse, max_samples)
@@ -445,6 +464,12 @@ def self_test():
             return 1
         if inspector["edit_scopes"]["parse_key_family"]["family_propagation_allowed"]:
             print("SELF-TEST FAIL: two-vote parse family should not propagate")
+            return 1
+        if any(item.get("entry_id") == "qamus:p:kaf" for item in pack.get("entry_backlinks") or []):
+            print("SELF-TEST FAIL: component candidate leaked into entry backlinks")
+            return 1
+        if pack["entry_backlinks"][0].get("candidate_scope") != "whole_token_or_resolved_entry":
+            print("SELF-TEST FAIL: entry backlink scope missing")
             return 1
         if pack.get("live_mutation_allowed"):
             print("SELF-TEST FAIL: pack permits live mutation")

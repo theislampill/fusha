@@ -17,6 +17,7 @@ import tempfile
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCHEMA = os.path.join(ROOT, "qamus", "schemas", "shadow-admin-route-contract.schema.json")
 SAMPLE = os.path.join(ROOT, "qamus", "examples", "shadow_admin_route_contract.sample.json")
+PACK_SAMPLE = os.path.join(ROOT, "qamus", "examples", "shadow_admin_debug_pack.sample.json")
 
 REQUIRED_VIEWS = {
     "hover_inspector",
@@ -247,22 +248,58 @@ def validate_contract(contract):
     return errors
 
 
-def validate(path):
+def validate_pack_compatibility(contract, pack, errors):
+    if not isinstance(pack, dict):
+        _err(errors, "source pack must be an object")
+        return
+    expected_version = contract.get("source_pack_version")
+    if pack.get("version") != expected_version:
+        _err(errors, "source pack version must match contract source_pack_version %r" % expected_version)
+    if pack.get("public_exposable") is not False:
+        _err(errors, "source pack public_exposable must be false")
+    if pack.get("live_mutation_allowed") is not False:
+        _err(errors, "source pack live_mutation_allowed must be false")
+    validate_public_boundary(pack.get("public_boundary"), errors, "source_pack.public_boundary")
+
+    pack_fields = set(pack.keys())
+    routes = contract.get("routes") or []
+    for index, route in enumerate(routes):
+        prefix = "routes[%d]" % index
+        for field in route.get("output_pack_fields") or []:
+            if field not in pack_fields:
+                _err(errors, "%s.output_pack_fields references missing source pack field %r" % (prefix, field))
+
+
+def validate(path, pack_path=None):
     if not os.path.exists(path):
         return 0, ["missing route contract: %s" % path]
     try:
         contract = load_json(path)
     except Exception as exc:
         return 0, ["bad JSON: %s" % exc]
-    return 1, validate_contract(contract)
+    errors = validate_contract(contract)
+    if pack_path:
+        if not os.path.exists(pack_path):
+            errors.append("missing source pack: %s" % pack_path)
+        else:
+            try:
+                pack = load_json(pack_path)
+            except Exception as exc:
+                errors.append("bad source pack JSON: %s" % exc)
+            else:
+                validate_pack_compatibility(contract, pack, errors)
+    return 1, errors
 
 
 def self_test():
     with tempfile.TemporaryDirectory(prefix="shadow-admin-route-contract-") as td:
         good = load_json(SAMPLE)
+        good_pack = load_json(PACK_SAMPLE)
         good_path = os.path.join(td, "good.json")
+        good_pack_path = os.path.join(td, "good-pack.json")
         dump_json(good_path, good)
-        count, errors = validate(good_path)
+        dump_json(good_pack_path, good_pack)
+        count, errors = validate(good_path, good_pack_path)
         if count != 1 or errors:
             print("SELF-TEST FAIL good:", errors)
             return 1
@@ -275,9 +312,14 @@ def self_test():
         bad["live_mutation_allowed"] = True
         bad["source_pack_contract"]["accepts_live_paths"] = True
         bad["source_pack_contract"]["allowed_pack_roots"] = ["/srv/qamus-app/"]
+        bad_pack = copy.deepcopy(good_pack)
+        bad_pack.pop("hover_inspectors", None)
+        bad_pack["version"] = "stale-pack"
         bad_path = os.path.join(td, "bad.json")
+        bad_pack_path = os.path.join(td, "bad-pack.json")
         dump_json(bad_path, bad)
-        count, errors = validate(bad_path)
+        dump_json(bad_pack_path, bad_pack)
+        count, errors = validate(bad_path, bad_pack_path)
         if count != 1:
             print("SELF-TEST FAIL bad count:", count)
             return 1
@@ -288,6 +330,8 @@ def self_test():
             "live_mutation_allowed must be False",
             "source_pack_contract.accepts_live_paths",
             "source_pack_contract.allowed_pack_roots contains unsafe root",
+            "source pack version must match",
+            "references missing source pack field",
             "forbidden route/public token",
         )
         joined = "\n".join(errors)
@@ -302,13 +346,14 @@ def self_test():
 def main():
     parser = argparse.ArgumentParser(description="Validate read-only Qamus shadow admin route contract JSON.")
     parser.add_argument("json", nargs="?")
+    parser.add_argument("--pack", help="Optional shadow admin debug pack JSON to cross-check route output fields.")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
     if args.self_test:
         raise SystemExit(self_test())
     if not args.json:
         parser.error("json path is required unless --self-test is used")
-    count, errors = validate(args.json)
+    count, errors = validate(args.json, args.pack)
     print("checked %d shadow admin route contract files" % count)
     if errors:
         for err in errors:

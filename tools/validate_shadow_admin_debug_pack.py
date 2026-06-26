@@ -128,6 +128,8 @@ def validate_hover_inspector(row, index, errors):
     for key in ("whole_token_candidates", "component_candidates"):
         if key in candidates and not isinstance(candidates.get(key), list):
             _err(errors, "%s.entry_candidates.%s must be an array" % (prefix, key))
+    if candidates.get("component_candidates") and row.get("propagation_allowed") is True:
+        _err(errors, "%s component candidates must not make propagation_allowed true" % prefix)
     for msg in public_boundary_errors(row.get("public_boundary"), "%s.public_boundary" % prefix):
         _err(errors, msg)
 
@@ -140,6 +142,8 @@ def validate_entry_backlink(row, index, errors):
         _err(errors, "%s.public_exposable must be false" % prefix)
     if not str(row.get("entry_id") or "").startswith("qamus:"):
         _err(errors, "%s.entry_id must start with qamus:" % prefix)
+    if row.get("candidate_scope") != "whole_token_or_resolved_entry":
+        _err(errors, "%s.candidate_scope must be whole_token_or_resolved_entry" % prefix)
     for key in ("dependent_token_count", "dependent_hover_count", "parse_key_count"):
         if not isinstance(row.get(key), int) or row.get(key) < 0:
             _err(errors, "%s.%s must be nonnegative integer" % (prefix, key))
@@ -170,6 +174,8 @@ def validate_parse_family(row, index, errors):
         _err(errors, "%s.family_size must be nonnegative integer" % prefix)
     if not isinstance(row.get("propagation_allowed"), bool):
         _err(errors, "%s.propagation_allowed must be boolean" % prefix)
+    if row.get("component_candidate_entries") and row.get("propagation_allowed") is True:
+        _err(errors, "%s component candidates must not make propagation_allowed true" % prefix)
     for loc in row.get("seen_locs_sample") or []:
         if not QURAN.match(str(loc)):
             _err(errors, "%s.seen_locs_sample has bad loc %r" % (prefix, loc))
@@ -316,6 +322,7 @@ def good_pack():
         "view": "entry_backlinks",
         "public_exposable": False,
         "entry_id": "qamus:5935ecfb1ec5",
+        "candidate_scope": "whole_token_or_resolved_entry",
         "dependent_token_count": 1,
         "dependent_hover_count": 1,
         "parse_key_count": 1,
@@ -335,6 +342,7 @@ def good_pack():
         "parse_id": "parse:aaaaaaaa",
         "family_size": 1,
         "propagation_allowed": False,
+        "component_candidate_entries": ["qamus:p:kaf"],
         "seen_locs_sample": ["quran:33:63:1"],
         "hover_slots_sample": ["wbw:33:63:1"],
         "public_boundary": boundary,
@@ -383,6 +391,9 @@ def self_test():
         dump_json(good, pack)
         bad_pack = good_pack()
         bad_pack["hover_inspectors"][0]["wbw_loc"] = "wbw:33:63:2"
+        bad_pack["hover_inspectors"][0]["propagation_allowed"] = True
+        bad_pack["parse_family_views"][0]["propagation_allowed"] = True
+        bad_pack["entry_backlinks"][0]["candidate_scope"] = "component_candidate"
         bad_pack["live_mutation_allowed"] = True
         dump_json(bad, bad_pack)
         count, errors = validate(good)
@@ -398,6 +409,12 @@ def self_test():
             return 1
         if not any("live_mutation_allowed must be false" in err for err in errors):
             print("SELF-TEST FAIL bad missing live mutation:", errors)
+            return 1
+        if not any("component candidates must not make propagation_allowed true" in err for err in errors):
+            print("SELF-TEST FAIL bad missing component propagation:", errors)
+            return 1
+        if not any("candidate_scope must be whole_token_or_resolved_entry" in err for err in errors):
+            print("SELF-TEST FAIL bad missing entry scope:", errors)
             return 1
     print("PASS — shadow admin debug pack validator self-test")
     return 0
