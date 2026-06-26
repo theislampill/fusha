@@ -70,6 +70,21 @@ Before applying a rich metadata tranche, require:
 - `V+suffix pronoun`: high learner value, but not auto-safe; requires sarf/nahw evidence for subject/object roles.
 - `N+possessive pronoun`: useful with POS/context guard.
 
+`tools/build_rich_hover_morphosyntax_candidates.py` is the first narrow candidate generator for this coverage
+work. It emits reviewable `ART+N` and ordinary-looking `CONJ+ART+N` nominal metadata candidates only when the
+local QAC tokroots stage agrees that the host token is nominal. It intentionally does not claim case, number,
+gender, or final syntax; those remain separate sarf/nahw certification work before live apply.
+
+On the current local staged artifact, the generator produced 5,709 schema-valid review candidates:
+
+```json
+{"art_nominal": 5154, "conj_art_nominal": 555}
+```
+
+The full generated file was validated with `tools/validate_morphosyntax_token_metadata.py`. These are not live
+applies; they are a reviewable metadata tranche that can be routed through the normal token-decision/rebuild/readback
+gate.
+
 ## Non-Negotiables
 
 - Do not split visible Arabic into layout segment boxes.

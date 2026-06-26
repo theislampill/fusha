@@ -477,6 +477,16 @@ try:
     check("wbw audit gates Kawkab segment alignment", "rich_kawkab_segment_width_mismatch" in _audit_blob)
 except Exception:
     check("wbw lookup morphosyntax audit readable", False)
+try:
+    _v = run_text([sys.executable, os.path.join(_R, "tools", "build_rich_hover_morphosyntax_candidates.py"),
+                   "--self-test"])
+    check("rich-hover morphosyntax candidate generator self-test", _v.returncode == 0)
+    if _v.returncode != 0:
+        _out = (_v.stdout or _v.stderr).strip().splitlines()
+        if _out:
+            print("  ", _out[-1])
+except Exception:
+    check("rich-hover morphosyntax candidate generator runnable", False)
 
 for _script, _label in (("test_bulk_two_vote_requests.py", "bulk two-vote builder self-test"),
                         ("test_bulk_two_vote_request_validator.py", "bulk two-vote validator self-test")):
