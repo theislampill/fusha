@@ -49,6 +49,15 @@ EXPECTED_BOUNDARY = {
     "external_source_names_public": False,
     "internal_provenance_public": False,
 }
+EXPECTED_SOURCE_PACK_CONTRACT = {
+    "artifact_type": "shadow_admin_debug_pack",
+    "version": "qamus-shadow-admin-debug-pack@1",
+    "requires_validated_pack": True,
+    "accepts_live_paths": False,
+    "accepts_public_webroot_paths": False,
+    "accepts_dirty_mirror_repo": False,
+    "route_reads_only": True,
+}
 ADDRESS_TYPES = {
     "quran_loc",
     "wbw_loc",
@@ -127,6 +136,31 @@ def validate_route_defaults(defaults, errors):
         _err(errors, "route_defaults.source_pack_required must be true")
 
 
+def validate_source_pack_contract(contract, errors):
+    if not isinstance(contract, dict):
+        _err(errors, "source_pack_contract must be an object")
+        return
+    for key, value in EXPECTED_SOURCE_PACK_CONTRACT.items():
+        actual = contract.get(key)
+        if isinstance(value, bool):
+            if actual is not value:
+                _err(errors, "source_pack_contract.%s must be %r" % (key, value))
+        elif actual != value:
+            _err(errors, "source_pack_contract.%s must be %r" % (key, value))
+    roots = contract.get("allowed_pack_roots")
+    if not isinstance(roots, list) or not roots:
+        _err(errors, "source_pack_contract.allowed_pack_roots must be a non-empty array")
+        return
+    allowed = {"out/", "qamus/examples/"}
+    for root in roots:
+        if root not in allowed:
+            _err(errors, "source_pack_contract.allowed_pack_roots contains unsafe root %r" % root)
+    lowered = json.dumps(contract, ensure_ascii=False).lower()
+    for word in FORBIDDEN_ROUTE_WORDS:
+        if word in lowered:
+            _err(errors, "source_pack_contract contains forbidden route/public token %r" % word)
+
+
 def validate_route(route, index, errors):
     prefix = "routes[%d]" % index
     if not isinstance(route, dict):
@@ -186,6 +220,7 @@ def validate_contract(contract):
     for key, value in expected.items():
         if contract.get(key) != value:
             _err(errors, "%s must be %r" % (key, value))
+    validate_source_pack_contract(contract.get("source_pack_contract"), errors)
     validate_identity_policy(contract.get("identity_policy"), errors)
     validate_route_defaults(contract.get("route_defaults"), errors)
     validate_public_boundary(contract.get("public_boundary"), errors, "public_boundary")
@@ -238,6 +273,8 @@ def self_test():
         bad["routes"][0]["read_only"] = False
         bad["identity_policy"]["raw_surface_identity_allowed"] = True
         bad["live_mutation_allowed"] = True
+        bad["source_pack_contract"]["accepts_live_paths"] = True
+        bad["source_pack_contract"]["allowed_pack_roots"] = ["/srv/qamus-app/"]
         bad_path = os.path.join(td, "bad.json")
         dump_json(bad_path, bad)
         count, errors = validate(bad_path)
@@ -249,6 +286,8 @@ def self_test():
             "read_only must be true",
             "raw_surface_identity_allowed",
             "live_mutation_allowed must be False",
+            "source_pack_contract.accepts_live_paths",
+            "source_pack_contract.allowed_pack_roots contains unsafe root",
             "forbidden route/public token",
         )
         joined = "\n".join(errors)

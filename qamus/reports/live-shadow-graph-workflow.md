@@ -59,8 +59,9 @@ The tools intentionally do not embed private server paths. Server acceptance pas
 - `tools/validate_shadow_admin_route_contract.py`: validates the future app/admin route contract for this static
   pack before any live route exists. It requires admin-only authenticated `GET` routes, exact graph identities,
   `live_mutation_allowed=false`, no apply/write/mutate route wording, no raw-surface identity, no parse-key-primary
-  identity, and a source-clean public/private boundary. This prevents a future UI scaffold from quietly becoming an
-  edit/apply endpoint.
+  identity, a validated static `shadow_admin_debug_pack` source-pack contract, and a source-clean public/private
+  boundary. The source-pack contract rejects live paths, public webroot paths, and dirty mirror repos as route inputs,
+  so a future UI scaffold cannot quietly become an edit/apply endpoint or rediscover live data outside the sealed pack.
 - `tools/plan_phase4_closure_tranche.py`: consumes a validated shadow review-pack JSONL and emits a bounded Phase 4
   dry-run tranche. It prioritizes source-addressed review work, carries whole-token and rich component candidate
   evidence separately, and keeps every row `allowed_next_step=review_only`, `apply_allowed=false`,
@@ -153,7 +154,8 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   quarantine, missing-entry, never-auto, and component-enriched two-vote lanes without committing live graph dumps.
 - `qamus/examples/shadow_admin_route_contract.sample.json`: tiny future-route contract fixture for read-only,
   admin-only token inspector, entry backlinks, parse family, blocker queue, repair preview, and edit-intent preview
-  surfaces. It deliberately contains no app implementation and no live path.
+  surfaces. It deliberately contains no app implementation and no live path, and now states that future routes consume
+  only a validated static `shadow_admin_debug_pack` from `out/` or committed sample fixtures.
 
 ## Acceptance Gates
 

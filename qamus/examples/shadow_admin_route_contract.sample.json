@@ -168,6 +168,19 @@
       "view": "edit_intent_preview"
     }
   ],
+  "source_pack_contract": {
+    "accepts_dirty_mirror_repo": false,
+    "accepts_live_paths": false,
+    "accepts_public_webroot_paths": false,
+    "allowed_pack_roots": [
+      "out/",
+      "qamus/examples/"
+    ],
+    "artifact_type": "shadow_admin_debug_pack",
+    "requires_validated_pack": true,
+    "route_reads_only": true,
+    "version": "qamus-shadow-admin-debug-pack@1"
+  },
   "source_pack_version": "qamus-shadow-admin-debug-pack@1",
   "version": "qamus-shadow-admin-route-contract@1"
 }
