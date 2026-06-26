@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/backlink-index.schema.json",
+  "title": "Qamus source graph reverse backlink index",
+  "type": "object",
+  "required": ["schema", "generated_from", "backlinks"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "qamus/backlink-index@1" },
+    "generated_from": { "type": "string" },
+    "backlinks": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "counts": { "type": "object" }
+  }
+}

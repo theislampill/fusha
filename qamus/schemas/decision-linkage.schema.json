@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/decision-linkage.schema.json",
+  "title": "Qamus hover decision linkage",
+  "type": "object",
+  "required": ["decision_id", "quran_loc", "wbw_loc", "parse_id", "gate", "public_boundary"],
+  "additionalProperties": false,
+  "properties": {
+    "decision_id": { "type": "string", "pattern": "^decision:" },
+    "quran_loc": { "type": "string", "pattern": "^\\d{1,3}:\\d{1,3}:\\d{1,3}$" },
+    "wbw_loc": { "type": "string", "pattern": "^wbw:\\d{1,3}:\\d{1,3}:\\d{1,3}$" },
+    "parse_id": { "type": "string", "pattern": "^parse:" },
+    "entry_sense": { "type": ["string", "null"], "pattern": "^qamus:|^$" },
+    "gate": { "type": "string" },
+    "status": { "type": "string", "enum": ["resolved", "pending", "blocked", "superseded"] },
+    "internal_evidence": { "type": "array", "items": { "type": "string" } },
+    "public_boundary": { "$ref": "public-private-boundary.schema.json" }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/typed-edge.schema.json",
+  "title": "Qamus typed source graph edge",
+  "type": "object",
+  "required": ["from", "type", "to", "source", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "from": { "type": "string" },
+    "type": {
+      "type": "string",
+      "enum": [
+        "has_hover_slot",
+        "has_parse",
+        "seen_at",
+        "candidate_entry",
+        "resolved_entry",
+        "blocked_by",
+        "resolves_token",
+        "renders_hover",
+        "based_on_parse",
+        "resolves_entry",
+        "used_procedure",
+        "informed_by_internal",
+        "affects_field",
+        "may_affect_hover",
+        "blocks_token"
+      ]
+    },
+    "to": { "type": "string" },
+    "source": { "type": "string" },
+    "status": { "type": "string", "enum": ["exact", "inferred", "candidate", "missing", "conflict", "blocked"] },
+    "join_status": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(exact|candidate|inferred|missing|conflict):"
+      }
+    },
+    "public_exposable": { "type": "boolean", "default": false },
+    "note": { "type": ["string", "null"] }
+  }
+}

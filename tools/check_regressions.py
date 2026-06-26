@@ -488,6 +488,39 @@ try:
 except Exception:
     check("rich-hover morphosyntax candidate generator runnable", False)
 
+for _art in (
+        "qamus/schemas/parse-key.schema.json",
+        "qamus/schemas/typed-edge.schema.json",
+        "qamus/schemas/backlink-index.schema.json",
+        "qamus/schemas/decision-linkage.schema.json",
+        "qamus/schemas/blocker-linkage.schema.json",
+        "qamus/schemas/repair-impact-preview.schema.json",
+        "qamus/schemas/public-private-boundary.schema.json",
+        "qamus/schemas/production-bug-lesson.schema.json",
+        "qamus/procedures/production-bug-lessons.md",
+        "qamus/reports/live-shadow-graph-workflow.md",
+):
+    check("Phase2 live-shadow graph contract artifact exists: %s" % _art, os.path.exists(os.path.join(_R, _art)))
+
+for _script, _args, _label in (
+        ("build_live_shadow_graph.py", ["--self-test"], "Phase2 live shadow graph builder self-test"),
+        ("validate_phase1_shadow_graph.py", ["--self-test"], "Phase2 shadow graph validator self-test"),
+        ("scan_public_boundary.py", ["--self-test"], "Phase2 public-boundary scanner self-test"),
+        ("compare_wbw_artifacts.py", ["--self-test"], "Phase2 WBW compare self-test"),
+        ("validate_production_bug_lessons.py",
+         [os.path.join(_R, "qamus", "examples", "production_bug_lesson.sample.jsonl")],
+         "Phase2 production bug lesson sample validates"),
+):
+    try:
+        _v = run_text([sys.executable, os.path.join(_R, "tools", _script)] + _args)
+        check(_label, _v.returncode == 0)
+        if _v.returncode != 0:
+            _out = (_v.stdout or _v.stderr).strip().splitlines()
+            if _out:
+                print("  ", _out[-1])
+    except Exception:
+        check(_label + " runnable", False)
+
 for _script, _label in (("test_bulk_two_vote_requests.py", "bulk two-vote builder self-test"),
                         ("test_bulk_two_vote_request_validator.py", "bulk two-vote validator self-test")):
     try:

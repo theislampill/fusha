@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/repair-impact-preview.schema.json",
+  "title": "Qamus repair impact preview",
+  "type": "object",
+  "required": ["target_address", "scope", "before", "after", "affected_hover_slots", "gate", "rollback"],
+  "additionalProperties": false,
+  "properties": {
+    "target_address": { "type": "string", "pattern": "^qamus:" },
+    "scope": { "type": "string", "enum": ["token_only", "parse_family", "entry_sense", "unsafe"] },
+    "before": {},
+    "after": {},
+    "affected_tokens": { "type": "array", "items": { "type": "string", "pattern": "^quran:" } },
+    "affected_hover_slots": { "type": "array", "items": { "type": "string", "pattern": "^wbw:" } },
+    "affected_parse_keys": { "type": "array", "items": { "type": "string", "pattern": "^parse:" } },
+    "gate": { "type": "string" },
+    "rollback": { "type": "object" },
+    "public_boundary": { "$ref": "public-private-boundary.schema.json" }
+  }
+}

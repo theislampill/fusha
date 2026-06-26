@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/public-private-boundary.schema.json",
+  "title": "Qamus public/private provenance boundary",
+  "type": "object",
+  "required": ["src", "kind", "lang", "external_source_names_public", "internal_provenance_public"],
+  "additionalProperties": false,
+  "properties": {
+    "src": { "const": "qamus" },
+    "kind": { "const": "authored" },
+    "lang": { "const": "en" },
+    "external_source_names_public": { "const": false },
+    "internal_provenance_public": { "const": false },
+    "public_fields": { "type": "array", "items": { "type": "string" } },
+    "private_fields": { "type": "array", "items": { "type": "string" } }
+  }
+}

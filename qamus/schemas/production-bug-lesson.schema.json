@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/production-bug-lesson.schema.json",
+  "title": "Qamus production bug lesson",
+  "type": "object",
+  "required": [
+    "bug_class",
+    "token_addresses",
+    "visible_bad_hover",
+    "corrected_hover_or_pending_reason",
+    "what_failed",
+    "sarf_lesson",
+    "nahw_lesson",
+    "learner_explanation",
+    "drill_prompt",
+    "level",
+    "procedure_links",
+    "regression_fixture_link",
+    "validator_link"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "bug_class": { "type": "string" },
+    "token_addresses": { "type": "array", "items": { "type": "string", "pattern": "^quran:\\d{1,3}:\\d{1,3}:\\d{1,3}$" } },
+    "visible_bad_hover": { "type": "string" },
+    "corrected_hover_or_pending_reason": { "type": "string" },
+    "what_failed": { "type": "string" },
+    "sarf_lesson": { "type": "string" },
+    "nahw_lesson": { "type": "string" },
+    "learner_explanation": { "type": "string" },
+    "drill_prompt": { "type": "string" },
+    "level": { "type": "string", "enum": ["beginner", "intermediate", "advanced"] },
+    "procedure_links": { "type": "array", "items": { "type": "string" } },
+    "regression_fixture_link": { "type": "string" },
+    "validator_link": { "type": "string" },
+    "source_addresses": { "type": "array", "items": { "type": "string" } }
+  }
+}
