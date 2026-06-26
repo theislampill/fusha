@@ -56,6 +56,15 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   `live_mutation_allowed=false`, no apply/write/mutate route wording, no raw-surface identity, no parse-key-primary
   identity, and a source-clean public/private boundary. This prevents a future UI scaffold from quietly becoming an
   edit/apply endpoint.
+- `tools/plan_phase4_closure_tranche.py`: consumes a validated shadow review-pack JSONL and emits a bounded Phase 4
+  dry-run tranche. It prioritizes source-addressed review work, carries whole-token and rich component candidate
+  evidence separately, and keeps every row `allowed_next_step=review_only`, `apply_allowed=false`,
+  `live_mutation_allowed=false`, and `closure_claim_allowed=false`. Component candidates from rich WBW segments remain
+  review evidence only; they cannot weaken a row to an auto-safe gate.
+- `tools/validate_phase4_closure_tranche.py`: validates the Phase 4 dry-run tranche contract. It rejects malformed
+  `quran:S:A:W`/`wbw:S:A:W` identities, parse-key-primary identity, source-boundary leaks, live/apply/coverage claims,
+  component candidates inside propagation-safe rows, and any component-enriched row that has been weakened to an
+  auto-safe gate.
 - `tools/plan_shadow_hover_edit_intent.py`: read-only CLI for planning future hover-edit intents from a validated
   Phase 3 admin/debug pack. It emits validator-clean JSONL rows for token-only, parse-family, or entry/sense edit
   intent review, preserves exact `wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> qamus:<id>#sense=<n>` identity, and
@@ -157,6 +166,11 @@ python tools/build_shadow_admin_debug_pack.py --shadow-dir <isolated shadow outp
   --sample-token quran:2:21:1
 python tools/validate_shadow_admin_debug_pack.py <isolated static admin-debug output>/admin-debug-pack.json
 python tools/validate_shadow_admin_route_contract.py qamus/examples/shadow_admin_route_contract.sample.json
+python tools/plan_phase4_closure_tranche.py <review pack jsonl> \
+  --out-jsonl <isolated static admin-debug output>/phase4-dry-run-tranche.jsonl \
+  --max-rows 25
+python tools/validate_phase4_closure_tranche.py \
+  <isolated static admin-debug output>/phase4-dry-run-tranche.jsonl
 python tools/query_shadow_admin_debug_pack.py --pack <isolated static admin-debug output>/admin-debug-pack.json \
   --token quran:33:63:1
 python tools/query_shadow_admin_debug_pack.py --pack <isolated static admin-debug output>/admin-debug-pack.json \
@@ -206,6 +220,9 @@ python tools/validate_shadow_admin_debug_pack.py --self-test
 python tools/validate_shadow_admin_debug_pack.py qamus/examples/shadow_admin_debug_pack.sample.json
 python tools/validate_shadow_admin_route_contract.py --self-test
 python tools/validate_shadow_admin_route_contract.py qamus/examples/shadow_admin_route_contract.sample.json
+python tools/plan_phase4_closure_tranche.py --self-test
+python tools/validate_phase4_closure_tranche.py --self-test
+python tools/validate_phase4_closure_tranche.py qamus/examples/phase4_closure_tranche.sample.jsonl
 python tools/query_shadow_admin_debug_pack.py --self-test
 python tools/plan_shadow_hover_edit_intent.py --self-test
 python tools/plan_shadow_repair_impact_preview.py --self-test
