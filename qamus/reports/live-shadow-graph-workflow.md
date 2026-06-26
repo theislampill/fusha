@@ -39,6 +39,9 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   builds cannot be treated as evidence unless they prove input artifact identity, output isolation, no live mutation,
   no WBW rebuild, no service restart, no mirror sync, nonzero counts, zero orphan edges, detector-gap warnings, and a
   source-clean public boundary.
+- `tools/validate_public_private_boundary.py`: validates the reusable public/private boundary object used by
+  decision, edit-intent, repair-preview, and manifest artifacts. It keeps `src=qamus`, `kind=authored`, `lang=en`,
+  public source-name flags false, and forbids public field names that smuggle adapter labels or private paths.
 - `tools/validate_shadow_review_pack.py`: validates that review-pack rows are non-vacuous, exact-addressed with
   `quran:S:A:W` and `wbw:S:A:W`, source-clean at the public boundary, and explicitly non-mutating.
 - `tools/validate_decision_linkage.py`: validates that authored decision rows link exact `quran:S:A:W` tokens,
@@ -95,6 +98,8 @@ CI should use fixture/self-test mode only:
 python tools/build_live_shadow_graph.py --self-test
 python tools/validate_live_shadow_run_manifest.py --self-test
 python tools/validate_live_shadow_run_manifest.py qamus/examples/live_shadow_run_manifest.sample.json
+python tools/validate_public_private_boundary.py --self-test
+python tools/validate_public_private_boundary.py qamus/examples/public_private_boundary.sample.json
 python tools/validate_phase1_shadow_graph.py --self-test
 python tools/summarize_shadow_closure_queue.py --self-test
 python tools/validate_shadow_review_pack.py --self-test

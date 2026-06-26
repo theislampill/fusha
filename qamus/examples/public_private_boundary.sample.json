@@ -1,0 +1,19 @@
+{
+  "external_source_names_public": false,
+  "internal_provenance_public": false,
+  "kind": "authored",
+  "lang": "en",
+  "private_fields": [
+    "internal_evidence",
+    "adapter_labels",
+    "reviewer_notes",
+    "source_artifact_hash"
+  ],
+  "public_fields": [
+    "gloss",
+    "src",
+    "kind",
+    "lang"
+  ],
+  "src": "qamus"
+}
