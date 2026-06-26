@@ -506,6 +506,7 @@ for _art in (
         "qamus/schemas/phase4-closure-tranche.schema.json",
         "qamus/schemas/phase4-two-vote-request.schema.json",
         "qamus/schemas/phase4-two-vote-response.schema.json",
+        "qamus/schemas/phase4-gloss-adjudication-request.schema.json",
         "qamus/examples/public_private_boundary.sample.json",
         "qamus/examples/detector_maturity.sample.json",
         "qamus/examples/live_shadow_run_manifest.sample.json",
@@ -520,6 +521,7 @@ for _art in (
         "qamus/examples/phase4_closure_tranche.sample.jsonl",
         "qamus/examples/phase4_two_vote_request.sample.jsonl",
         "qamus/examples/phase4_two_vote_response.sample.jsonl",
+        "qamus/examples/phase4_gloss_adjudication_request.sample.jsonl",
         "qamus/procedures/production-bug-lessons.md",
         "nahw/procedures/grammar-problems-issue-clusters.md",
         "nahw/rules/grammar-problems-issue-clusters.json",
@@ -543,6 +545,8 @@ for _art in (
         "tools/validate_phase4_two_vote_requests.py",
         "tools/validate_phase4_two_vote_responses.py",
         "tools/reconcile_phase4_two_vote_responses.py",
+        "tools/build_phase4_gloss_adjudication_requests.py",
+        "tools/validate_phase4_gloss_adjudication_requests.py",
         "tools/query_shadow_admin_debug_pack.py",
         "tools/plan_shadow_hover_edit_intent.py",
         "tools/plan_shadow_repair_impact_preview.py",
@@ -638,6 +642,13 @@ for _script, _args, _label in (
          "Phase4 exact-addressed two-vote response sample validates"),
         ("reconcile_phase4_two_vote_responses.py", ["--self-test"],
          "Phase4 exact-addressed two-vote response reconciler self-test"),
+        ("build_phase4_gloss_adjudication_requests.py", ["--self-test"],
+         "Phase4 exact-addressed gloss adjudication request builder self-test"),
+        ("validate_phase4_gloss_adjudication_requests.py", ["--self-test"],
+         "Phase4 exact-addressed gloss adjudication request validator self-test"),
+        ("validate_phase4_gloss_adjudication_requests.py",
+         [os.path.join(_R, "qamus", "examples", "phase4_gloss_adjudication_request.sample.jsonl")],
+         "Phase4 exact-addressed gloss adjudication request sample validates"),
         ("query_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack query self-test"),
         ("plan_shadow_hover_edit_intent.py", ["--self-test"], "Phase3 shadow hover edit intent planner self-test"),
         ("plan_shadow_repair_impact_preview.py", ["--self-test"], "Phase3 shadow repair impact preview planner self-test"),
@@ -662,7 +673,8 @@ for _script, _args, _label in (
 for _script, _label in (("test_bulk_two_vote_requests.py", "bulk two-vote builder self-test"),
                         ("test_bulk_two_vote_request_validator.py", "bulk two-vote validator self-test"),
                         ("test_phase4_two_vote_requests.py", "Phase4 exact-addressed two-vote request self-test"),
-                        ("test_phase4_two_vote_reconciliation.py", "Phase4 exact-addressed two-vote reconciliation self-test")):
+                        ("test_phase4_two_vote_reconciliation.py", "Phase4 exact-addressed two-vote reconciliation self-test"),
+                        ("test_phase4_gloss_adjudication_requests.py", "Phase4 exact-addressed gloss adjudication self-test")):
     try:
         _v = run_text([sys.executable, os.path.join(_R, "tools", _script)])
         check(_label, _v.returncode == 0)

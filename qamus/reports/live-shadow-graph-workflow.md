@@ -464,6 +464,25 @@ This is the intended fail-closed outcome: the token is promising and
 source-addressed, but the public hover wording still needs resolution before any
 append-only decision or live apply path can be considered.
 
+A review-only gloss adjudication bridge now converts that exact unresolved row
+into an owner/scholar wording request without weakening any gate:
+
+- schema: `qamus/schemas/phase4-gloss-adjudication-request.schema.json`
+- builder: `tools/build_phase4_gloss_adjudication_requests.py`
+- validator: `tools/validate_phase4_gloss_adjudication_requests.py`
+- sample: `qamus/examples/phase4_gloss_adjudication_request.sample.jsonl`
+- generated ignored dry-run packet:
+  `out/phase4-dryrun-20260626-161512-3ae13976bdef/gloss-adjudication-requests.jsonl`
+- generated rows: `1`
+- candidate glosses: `in a recognized manner`; `with recognized fairness`
+- allowed next step: `owner_or_scholar_gloss_adjudication_only`
+- `apply_allowed=false`, `live_mutation_allowed=false`,
+  `closure_claim_allowed=false`
+
+The adjudication packet is still not an apply artifact. It is the next
+source-addressed review object needed to choose or author one public Qamus
+wording while preserving the sarf/nahw evidence boundary.
+
 ## Phase 3 Latest Read-Only Admin/Debug Refresh
 
 Status: latest read-only admin/debug scaffold smoke completed from pushed `main`
