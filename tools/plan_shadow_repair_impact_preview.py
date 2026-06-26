@@ -113,21 +113,29 @@ def rollback_for_intent(intent, changed_field):
 
 def to_repair_preview(intent):
     chain = intent.get("identity_chain") or {}
+    intent_preview = intent.get("impact_preview") or {}
     tokens = sample_tokens(intent)
     hovers = [quran_to_wbw(loc) for loc in tokens]
     parse_id = chain.get("parse_id")
     changed_field = changed_field_for_intent(intent)
+    affected_token_count = int(intent_preview.get("affected_token_count") or len(tokens))
+    affected_hover_count = int(intent_preview.get("affected_hover_count") or len(hovers))
+    affected_parse_key_count = int(intent_preview.get("affected_parse_key_count") or (1 if parse_id else 0))
     return {
-        "preview_id": (intent.get("impact_preview") or {}).get("preview_id")
+        "preview_id": intent_preview.get("preview_id")
         or "repair-preview:%s" % str(intent.get("edit_intent_id")).split(":", 1)[-1],
         "target_address": changed_field if intent.get("requested_scope") != "entry_sense" else intent.get("target_address"),
         "scope": intent.get("requested_scope"),
         "before": {"gloss": intent.get("current_visible_hover")},
         "after": {"gloss": intent.get("proposed_public_hover")},
         "changed_fields": [changed_field],
+        "affected_token_count": affected_token_count,
+        "affected_hover_count": affected_hover_count,
+        "affected_parse_key_count": affected_parse_key_count,
         "affected_tokens": tokens,
         "affected_hover_slots": hovers,
         "affected_parse_keys": [parse_id] if parse_id else [],
+        "sample_tokens_are_complete": len(tokens) == affected_token_count and len(hovers) == affected_hover_count,
         "gate": intent.get("gate"),
         "rollback": rollback_for_intent(intent, changed_field),
         "live_mutation_allowed": False,
@@ -164,6 +172,12 @@ def self_test():
     rows = plan_previews(SAMPLE_INTENTS)
     if len(rows) != 3:
         print("SELF-TEST FAIL: expected 3 preview rows, got %d" % len(rows))
+        return 1
+    if any(row["affected_token_count"] < len(row["affected_tokens"]) for row in rows):
+        print("SELF-TEST FAIL: preview counts are smaller than listed affected tokens")
+        return 1
+    if rows[1]["sample_tokens_are_complete"] is not True:
+        print("SELF-TEST FAIL: sample fixture parse-family preview should be complete")
         return 1
     if rows[0]["target_address"] != "qamus:5935ecfb1ec5#field=token_overrides[wbw:33:63:1].gloss":
         print("SELF-TEST FAIL: token-only target was not qamus field-addressed")

@@ -94,9 +94,10 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   data, rebuild WBW, mutate entries, or create repair ledgers.
 - `tools/plan_shadow_repair_impact_preview.py`: read-only CLI that turns validated hover-edit intent rows into
   validated repair-impact-preview rows. It makes the future apply target explicit as a `qamus:<id>#field=<path>`
-  address, carries affected token/hover/parse samples forward, adds a rollback strategy, and keeps
-  `live_mutation_allowed=false`. It is still a preview artifact only; no decision ledger, entry JSON, WBW artifact, or
-  app route is changed. Token-only previews that have no resolved entry/sense use the deterministic overlay target
+  address, carries explicit affected token/hover/parse counts separately from sampled address lists, adds
+  `sample_tokens_are_complete`, adds a rollback strategy, and keeps `live_mutation_allowed=false`. It is still a
+  preview artifact only; no decision ledger, entry JSON, WBW artifact, or app route is changed. Token-only previews
+  that have no resolved entry/sense use the deterministic overlay target
   `qamus:hover-overrides#field=token_overrides[wbw:S:A:W].gloss` rather than inventing an entry.
 - `tools/build_production_bug_lesson.py`: Phase 3.5 bridge from graph-addressed hover edit intents to production
   bug lesson rows. It copies exact token, hover slot, parse, decision, entry/sense, gate, scope, and target-address
@@ -393,19 +394,33 @@ mirror after separate app-repo review.
 
 Fresh Phase 3 smoke on the Phase 2.9 sealed graph:
 
-- input shadow graph: `out/live-shadow-runs/20260626-110034/shadow-output-phase2p9-sealed`
-- static admin/debug pack: `out/live-shadow-runs/20260626-110034/admin-debug-pack-phase3/admin-debug-pack.json`
+- source HEAD for refresh: `46f8c7a961aafa1b23849c137420cf7887f04868`
+- input shadow graph: `out/live-shadow-runs/20260626-110034/shadow-output-phase2p9-refresh-2b8dfb8`
+- static admin/debug pack:
+  `out/live-shadow-runs/20260626-110034/admin-debug-pack-phase3-refresh-46f8c7a/admin-debug-pack.json`
 - pack counts: `49,900` token rows, `49,900` hover rows, `17,065` parse rows, `9,106` decision rows,
-  `2,092` entry rows, `9` blocker classes
+  `2,092` entry rows, `9` blocker classes, `6` token inspector samples, `13` entry backlink samples
 - validated pack: `python tools/validate_shadow_admin_debug_pack.py <pack>` -> `PASS`
-- exercised reverse traces: `quran:33:63:1`, `quran:22:18:17`, `quran:2:21:1`, `quran:3:66:7`
+- exercised gated reverse traces: `quran:33:63:1` suffix pronoun (`two_vote_required`),
+  `quran:22:18:17` conjunction/article/noun (`two_vote_required`), `quran:2:21:1` vocative bridge
+  (`two_vote_required`), `quran:4:28:8` adjectival-state row (`two_vote_required`), and
+  `quran:2:178:22` preposition row (`two_vote_required`)
+- exercised safe parse-family trace: `quran:2:30:2` / `parse:1bbe8fa09823c3c0d064dc83`, surface `قَالَ`,
+  family size `236`, gate `auto_safe`, propagation allowed for preview only
 - exercised future edit scopes without mutation:
   - token-only: `wbw:33:63:1`, affected tokens `1`
-  - parse-family: `parse:004b6763a44604bd07253686`, affected tokens `6`, gate `auto_safe_after_preview`
-  - entry/sense: `qamus:p:967098527388#sense=1`, affected tokens `1`, gate `two_vote_required`
+  - parse-family: `parse:1bbe8fa09823c3c0d064dc83`, affected tokens `236`, gate
+    `auto_safe_after_preview`, sample list `12`, `sample_tokens_are_complete=false`
+  - entry/sense: `qamus:n:6751c0e4d0fd#sense=1`, affected tokens `6`, gate `two_vote_required`
 - validated edit intents and repair previews:
   `python tools/validate_hover_edit_intent.py <all-edit-intents.jsonl>` -> `PASS`;
   `python tools/validate_repair_impact_preview.py <repair-impact-previews.jsonl>` -> `PASS`
+- repair preview rows now carry explicit `affected_token_count`, `affected_hover_count`,
+  `affected_parse_key_count`, and `sample_tokens_are_complete` fields so a compact sample list cannot be mistaken for
+  full blast-radius coverage.
+- production bug lesson smoke:
+  `python tools/validate_production_bug_lessons.py <production-bug-lesson-refresh-46f8c7a.jsonl>` -> `PASS`
+  for `verb_object_suffix_omitted` on `quran:33:63:1` / `wbw:33:63:1`.
 
 Fresh Phase 3.25 / 3.5 grammar-regression gate:
 

@@ -50,9 +50,13 @@ REQUIRED = [
     "before",
     "after",
     "changed_fields",
+    "affected_token_count",
+    "affected_hover_count",
+    "affected_parse_key_count",
     "affected_tokens",
     "affected_hover_slots",
     "affected_parse_keys",
+    "sample_tokens_are_complete",
     "gate",
     "rollback",
     "live_mutation_allowed",
@@ -129,6 +133,18 @@ def validate_row(row, line_no, errors):
     tokens = row.get("affected_tokens") or []
     hovers = row.get("affected_hover_slots") or []
     parses = row.get("affected_parse_keys") or []
+    token_count = row.get("affected_token_count")
+    hover_count = row.get("affected_hover_count")
+    parse_count = row.get("affected_parse_key_count")
+    for field, value in (
+        ("affected_token_count", token_count),
+        ("affected_hover_count", hover_count),
+        ("affected_parse_key_count", parse_count),
+    ):
+        if not isinstance(value, int) or value < 0:
+            _err(errors, line_no, "%s must be a nonnegative integer" % field)
+    if row.get("sample_tokens_are_complete") is not True and row.get("sample_tokens_are_complete") is not False:
+        _err(errors, line_no, "sample_tokens_are_complete must be boolean")
     for loc in tokens:
         if not QURAN.match(str(loc)):
             _err(errors, line_no, "bad affected token %r" % loc)
@@ -138,14 +154,26 @@ def validate_row(row, line_no, errors):
     for parse in parses:
         if not PARSE.match(str(parse)):
             _err(errors, line_no, "bad affected parse key %r" % parse)
+    if isinstance(token_count, int) and len(tokens) > token_count:
+        _err(errors, line_no, "affected_tokens sample exceeds affected_token_count")
+    if isinstance(hover_count, int) and len(hovers) > hover_count:
+        _err(errors, line_no, "affected_hover_slots sample exceeds affected_hover_count")
+    if isinstance(parse_count, int) and len(parses) > parse_count:
+        _err(errors, line_no, "affected_parse_keys sample exceeds affected_parse_key_count")
+    sample_complete = row.get("sample_tokens_are_complete")
+    if sample_complete is True and (
+        (isinstance(token_count, int) and len(tokens) != token_count)
+        or (isinstance(hover_count, int) and len(hovers) != hover_count)
+    ):
+        _err(errors, line_no, "sample_tokens_are_complete true requires token and hover sample lengths to match counts")
     if scope != "unsafe" and (not tokens or not hovers):
         _err(errors, line_no, "safe preview scopes must list affected tokens and hover slots")
-    if scope == "token_only" and (len(tokens) != 1 or len(hovers) != 1):
+    if scope == "token_only" and (token_count != 1 or hover_count != 1 or len(tokens) != 1 or len(hovers) != 1):
         _err(errors, line_no, "token_only preview must affect exactly one token and one hover")
-    if scope == "parse_family" and len(set(parses)) != 1:
+    if scope == "parse_family" and (parse_count != 1 or len(set(parses)) != 1):
         _err(errors, line_no, "parse_family preview must cite exactly one parse family")
-    if scope == "entry_sense" and not parses:
-        _err(errors, line_no, "entry_sense preview must list affected parse keys")
+    if scope == "entry_sense" and (not parses or not isinstance(parse_count, int) or parse_count < len(parses)):
+        _err(errors, line_no, "entry_sense preview must list affected parse keys and count")
     if scope == "unsafe" and gate != "never_auto":
         _err(errors, line_no, "unsafe preview must use never_auto gate")
 
@@ -183,9 +211,13 @@ def good_row(scope="token_only"):
         "before": {"gloss": "to ask, question"},
         "after": {"gloss": "ask you"},
         "changed_fields": ["qamus:5935ecfb1ec5#field=senses[2].gloss"],
+        "affected_token_count": 1,
+        "affected_hover_count": 1,
+        "affected_parse_key_count": 1,
         "affected_tokens": ["quran:33:63:1"],
         "affected_hover_slots": ["wbw:33:63:1"],
         "affected_parse_keys": ["parse:aaaaaaaa"],
+        "sample_tokens_are_complete": True,
         "gate": "token_review",
         "rollback": {"strategy": "append_only_revert", "artifact": "decision:<new>#revert"},
         "live_mutation_allowed": False,
@@ -203,9 +235,13 @@ def good_row(scope="token_only"):
         base.update({
             "preview_id": "repair-preview:sample-family",
             "scope": "parse_family",
+            "affected_token_count": 2,
+            "affected_hover_count": 2,
+            "affected_parse_key_count": 1,
             "affected_tokens": ["quran:22:18:13", "quran:22:18:14"],
             "affected_hover_slots": ["wbw:22:18:13", "wbw:22:18:14"],
             "affected_parse_keys": ["parse:bbbbbbbb"],
+            "sample_tokens_are_complete": True,
             "gate": "auto_safe_after_preview",
         })
     elif scope == "entry_sense":
@@ -214,9 +250,13 @@ def good_row(scope="token_only"):
             "scope": "entry_sense",
             "target_address": "qamus:8f8d49c8fd17#field=senses[1].gloss",
             "changed_fields": ["qamus:8f8d49c8fd17#field=senses[1].gloss"],
+            "affected_token_count": 2,
+            "affected_hover_count": 2,
+            "affected_parse_key_count": 2,
             "affected_tokens": ["quran:33:63:1", "quran:44:14:2"],
             "affected_hover_slots": ["wbw:33:63:1", "wbw:44:14:2"],
             "affected_parse_keys": ["parse:aaaaaaaa", "parse:cccccccc"],
+            "sample_tokens_are_complete": True,
             "gate": "two_vote_required",
             "rollback": {"strategy": "restore_backup", "artifact": "backup:<entry-json-before>"},
         })
