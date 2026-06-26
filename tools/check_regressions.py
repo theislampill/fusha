@@ -520,6 +520,7 @@ for _art in (
         "tools/validate_hover_edit_intent.py",
         "tools/validate_repair_impact_preview.py",
         "tools/validate_shadow_review_pack.py",
+        "tools/summarize_rich_wbw_roles.py",
 ):
     check("Phase2 live-shadow graph contract artifact exists: %s" % _art, os.path.exists(os.path.join(_R, _art)))
 
@@ -567,6 +568,7 @@ for _script, _args, _label in (
         ("validate_production_bug_lessons.py",
          [os.path.join(_R, "qamus", "examples", "production_bug_lesson.sample.jsonl")],
          "Phase2 production bug lesson sample validates"),
+        ("summarize_rich_wbw_roles.py", ["--self-test"], "Phase2 rich WBW role taxonomy self-test"),
 ):
     try:
         _v = run_text([sys.executable, os.path.join(_R, "tools", _script)] + _args)

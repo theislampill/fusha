@@ -476,6 +476,8 @@ def classify_gate(status, candidates, segments, confidence, blocker):
         "prefix_oath",
         "prefix_comitative_waw",
         "prefix_cause_fa",
+        "adjectival_state",
+        "circumstantial_state",
     }
     if roles & grammar_sensitive:
         return "two_vote_required"
@@ -615,6 +617,8 @@ def parse_obj_for_token(loc, surface, row, candidates, component_candidates, sta
         triggers.append("function_particle")
     if any("vocative" in role for role in roles) or "addressee_bridge" in roles:
         triggers.append("vocative")
+    if any(role in ("adjectival_state", "circumstantial_state") for role in roles):
+        triggers.append("adjectival_state")
     if blocker:
         triggers.append("blocker")
     confidence = "rich_metadata" if runtime_parse_key and segments else ("lexical_candidate" if candidates else "surface_only")
@@ -1311,6 +1315,14 @@ def make_fixture_inputs(base):
             },
             "2:21:2": {"surface": "النَّاسُ", "pos": "noun"},
             "2:21:3": {"surface": "مَا", "pos": "particle", "particle_function": "ambiguous", "gate": "never_auto"},
+            "4:28:8": {
+                "surface": "ضَعِيفًا",
+                "pos": "noun",
+                "parse_key": {"key": "N/ADJ:ACC:M:SG:INDEF"},
+                "segments": [
+                    {"role": "adjectival_state", "text": "ضَعِيفًا"}
+                ],
+            },
             "22:18:17": {
                 "surface": "وَٱلشَّجَرُ",
                 "pos": "noun",
@@ -1373,7 +1385,7 @@ def self_test():
         if missing:
             print("SELF-TEST FAIL: missing %s" % missing)
             return 1
-        if counts["token_universe"] != 6 or counts["token_decisions"] != 4:
+        if counts["token_universe"] != 7 or counts["token_decisions"] != 4:
             print("SELF-TEST FAIL: bad fixture counts %r" % counts)
             return 1
         if not counts.get("fusha_reference", {}).get("source_address_full_present"):
@@ -1414,6 +1426,12 @@ def self_test():
         if not rich_conj or rich_conj.get("gate") != "two_vote_required":
             got_gate = (rich_conj or {}).get("gate")
             print("SELF-TEST FAIL: rich conjunction token must not be auto-safe: got %r" % got_gate)
+            return 1
+        rich_state = next((row["canonical_parse_object"] for row in parse_rows if "quran:4:28:8" in row.get("seen_locs", [])), None)
+        if not rich_state or rich_state.get("gate") == "auto_safe" or "adjectival_state" not in (rich_state.get("grammar_triggers") or []):
+            got_gate = (rich_state or {}).get("gate")
+            got_triggers = (rich_state or {}).get("grammar_triggers")
+            print("SELF-TEST FAIL: rich adjectival/state token must not be auto-safe: got %r triggers %r" % (got_gate, got_triggers))
             return 1
         rich_conj_row = next((row for row in parse_rows if "quran:22:18:17" in row.get("seen_locs", [])), None)
         if not rich_conj_row or rich_conj_row.get("candidate_entries"):

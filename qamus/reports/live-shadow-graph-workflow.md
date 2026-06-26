@@ -34,6 +34,12 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   blocker, family-size, sample-token summaries, and optional source-addressed review-pack JSONL rows. It is
   read-only and does not inspect or mutate live inputs. Review-pack rows include `gate_reasons` so two-vote,
   collision, source-disagreement, pending, and preview-only lanes are explainable instead of mere labels.
+- `tools/summarize_rich_wbw_roles.py`: consumes `parse-keys.jsonl` from an already-built shadow graph and emits a
+  strict rich-WBW segment-role taxonomy. It reports every observed role, occurrence counts, lanes/gates, samples, and
+  whether the role is explicitly gated, explicitly allowlisted, or unknown. Strict mode fails if an unknown role is
+  observed, or if a grammar-sensitive role such as `preposition`, `conjunction`, `vocative_particle`,
+  `object_pronoun`, `result_particle`, `resumption_particle`, or `adjectival_state` appears in an `auto_safe` gate or
+  `propagation_safe` lane.
 - `tools/validate_detector_maturity.py`: validates standalone or embedded detector-maturity records so Phase 2
   reports cannot treat `two_vote_required=0` or `source_disagreement=0` as proof that no such cases exist.
 - `tools/validate_live_shadow_run_manifest.py`: validates `phase2-run-manifest.json` so future live-readonly graph
@@ -103,6 +109,9 @@ python tools/summarize_shadow_closure_queue.py <isolated shadow output> \
   --out-md <review report> \
   --review-pack-jsonl <review pack jsonl>
 python tools/validate_shadow_review_pack.py <review pack jsonl>
+python tools/summarize_rich_wbw_roles.py --shadow-dir <isolated shadow output> \
+  --out-md <rich-role-taxonomy report> \
+  --strict
 python tools/scan_public_boundary.py --public <public entry URL> --shadow-dir <isolated shadow output>
 python tools/compare_wbw_artifacts.py <live wbw lookup> <mirror wbw lookup>
 python tools/validate_detector_maturity.py <review pack jsonl or detector maturity json>
@@ -120,6 +129,7 @@ python tools/validate_parse_key_contract.py --self-test
 python tools/validate_parse_key_contract.py qamus/examples/parse_key.sample.jsonl
 python tools/validate_phase1_shadow_graph.py --self-test
 python tools/summarize_shadow_closure_queue.py --self-test
+python tools/summarize_rich_wbw_roles.py --self-test
 python tools/validate_shadow_review_pack.py --self-test
 python tools/validate_shadow_review_pack.py qamus/examples/shadow_review_pack.sample.jsonl
 python tools/validate_decision_linkage.py --self-test
@@ -152,3 +162,74 @@ python tools/validate_production_bug_lessons.py qamus/examples/production_bug_le
 - Public hover output remains `src=qamus`, `kind=authored`, `lang=en`.
 - Internal provenance may exist, but public scans must remain zero-leak.
 - Mirror mismatch is report-only until a separate guarded sync is authorized.
+
+## Phase 2.9 Closeout Snapshot
+
+Status: Phase 2 sealed as a read-only graph/build/validation substrate. This closeout does not claim hover coverage
+improvement and did not mutate live Qamus, rebuild WBW, sync the mirror, restart services, or start admin UI work.
+
+Run source:
+
+- Fresh checkout HEAD before closeout: `3daf0fb3ae9764e461e7a5e0826ba0c900de6ddb`.
+- Local read-only snapshot path: `out/live-shadow-runs/20260626-084040`.
+- Sealed shadow graph output: `out/live-shadow-runs/20260626-084040/shadow-output-phase2p9-sealed`.
+- Live inputs were copied/streamed to the local snapshot first; the builder consumed local read-only copies.
+
+Sealed graph counts:
+
+- entries: `2,092`
+- section split: `noun 1045`, `particle 100`, `verb 947`
+- token universe: `49,900`
+- live word records: `49,260`
+- token decisions: `9,111`
+- nodes: `153,033`
+- edges: `254,526`
+- parse keys: `17,065`
+- orphan edges: `0`
+- public success leak count: `0`
+- unresolved tokens: `640`
+
+Sealed parse-family classes:
+
+- `propagation_safe`: `1,870`
+- `token_only_required`: `4,530`
+- `human_review_required`: `517`
+- `quarantine_collision`: `585`
+- `two_vote_required`: `11`
+- `unknown_parse`: `9,552`
+
+The previous `missing_entry=1` rich-row gap was an Andon: `4:28:8` carried role `adjectival_state` with an
+`auto_safe` gate. Phase 2.9 patches the builder so `adjectival_state` / `circumstantial_state` are grammar-sensitive
+triggers and cannot remain auto-safe. The sealed run therefore moves that row into `two_vote_required`.
+
+Rich WBW role taxonomy from the sealed run:
+
+- rich parse rows: `12`
+- observed roles: `13`
+- strict taxonomy risks: `0`
+- explicitly gated roles observed: `addressee_bridge`, `adjectival_state`, `conjunction`, `object_pronoun`,
+  `preposition`, `result_particle`, `resumption_particle`, `vocative_particle`
+- explicitly allowlisted roles observed: `definite_article`, `imperfect_prefix`, `noun`, `verb`, `verb_stem`
+
+Required rich gate cases were confirmed as `two_vote_required` and non-propagating in the sealed run:
+
+- `quran:22:18:13` `وَٱلشَّمْسُ`
+- `quran:22:18:14` `وَٱلْقَمَرُ`
+- `quran:22:18:15` `وَٱلنُّجُومُ`
+- `quran:22:18:16` `وَٱلْجِبَالُ`
+- `quran:22:18:17` `وَٱلشَّجَرُ`
+- `quran:2:178:22` `بِٱلْمَعْرُوفِ`
+- `quran:2:21:1` `يَٰٓأَيُّهَا`
+
+Public boundary scan:
+
+- public sampled pages: `https://qamus.dawah.wiki/e/5935ecfb1ec5`,
+  `https://qamus.dawah.wiki/e/a23a0c853dd8`, `https://qamus.dawah.wiki/e/c59a0161fac8`
+- HTTP statuses: all `200`
+- public leak count: `0`
+- internal-only provenance count: `5` in the live WBW artifact copy
+- shadow graph adapter labels: present internally, not public-exposed
+
+Mirror mismatch classification remains unchanged and report-only:
+
+`content-equivalent-or-near-equivalent; metadata/source-hash divergent; not safe for mutation until separately reconciled`.
