@@ -295,6 +295,35 @@ Status: started as repo-only tooling. Phase 3 scaffolding is deliberately static
 The scaffold consumes durable Phase 2 shadow outputs and produces an inspector pack that a future app/admin route can
 mirror after separate app-repo review.
 
+Fresh Phase 3 smoke on the Phase 2.9 sealed graph:
+
+- input shadow graph: `out/live-shadow-runs/20260626-110034/shadow-output-phase2p9-sealed`
+- static admin/debug pack: `out/live-shadow-runs/20260626-110034/admin-debug-pack-phase3/admin-debug-pack.json`
+- pack counts: `49,900` token rows, `49,900` hover rows, `17,065` parse rows, `9,106` decision rows,
+  `2,092` entry rows, `9` blocker classes
+- validated pack: `python tools/validate_shadow_admin_debug_pack.py <pack>` -> `PASS`
+- exercised reverse traces: `quran:33:63:1`, `quran:22:18:17`, `quran:2:21:1`, `quran:3:66:7`
+- exercised future edit scopes without mutation:
+  - token-only: `wbw:33:63:1`, affected tokens `1`
+  - parse-family: `parse:004b6763a44604bd07253686`, affected tokens `6`, gate `auto_safe_after_preview`
+  - entry/sense: `qamus:p:967098527388#sense=1`, affected tokens `1`, gate `two_vote_required`
+- validated edit intents and repair previews:
+  `python tools/validate_hover_edit_intent.py <all-edit-intents.jsonl>` -> `PASS`;
+  `python tools/validate_repair_impact_preview.py <repair-impact-previews.jsonl>` -> `PASS`
+
+Fresh Phase 3.25 / 3.5 grammar-regression gate:
+
+- regenerated `nahw/evals/grammar-problems-phase3p25-mining.jsonl` and `.md` from
+  `nahw/evals/grammar-problems-derived-eval.jsonl`
+- rows: `88`
+- classifications: `already_covered_issue_1=45`, `already_covered_issue_2=12`,
+  `already_covered_issue_3=18`, `correct_positive_regression=13`
+- validator: `python tools/validate_grammar_regression_mining.py nahw/evals/grammar-problems-phase3p25-mining.jsonl`
+  -> `PASS`
+- grouped issue coverage:
+  `python tools/validate_grammar_issue_clusters.py nahw/rules/grammar-problems-issue-clusters.json --mining nahw/evals/grammar-problems-phase3p25-mining.jsonl`
+  -> `PASS`
+
 The current scaffold covers:
 
 - hover inspector: `wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> decision/gloss/gate/blocker`
