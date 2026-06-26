@@ -319,10 +319,12 @@ improvement and did not mutate live Qamus, rebuild WBW, sync the mirror, restart
 
 Run source:
 
-- Fresh checkout HEAD before closeout refresh: `2b8dfb8f3f68bc648b6f23f9a98ea8a050fe2f80`.
-- Local read-only snapshot path: `out/live-shadow-runs/20260626-110034`.
-- Refreshed shadow graph output: `out/live-shadow-runs/20260626-110034/shadow-output-phase2p9-refresh-2b8dfb8`.
-- Live inputs were copied/streamed to the local snapshot first; the builder consumed local read-only copies.
+- source HEAD: `31a7654dde3e8a1e16ff9cb7926ec273f824f916`
+- remote main/codex phase2-shadow-graph readback: `31a7654dde3e8a1e16ff9cb7926ec273f824f916`
+- isolated server shadow output label: `phase2p9-20260626-180157`
+- latest-HEAD tools ran from an isolated extracted archive, not from the stale server checkout.
+- live inputs were consumed read-only with `--live-readonly`, `--no-live-write`, and forbidden output roots for the
+  live app, live service data, mirror repo, and public webroot.
 
 Sealed graph counts:
 
@@ -347,9 +349,9 @@ Sealed parse-family classes:
 - `two_vote_required`: `11`
 - `unknown_parse`: `9,552`
 
-The previous `missing_entry=1` rich-row gap was an Andon: `4:28:8` carried role `adjectival_state` with an
-`auto_safe` gate. Phase 2.9 patches the builder so `adjectival_state` / `circumstantial_state` are grammar-sensitive
-triggers and cannot remain auto-safe. The sealed run therefore moves that row into `two_vote_required`.
+Phase 2.8's component-candidate guardrail is active in this sealed run: rich WBW segment evidence is stored
+separately from whole-token entry candidates, carries `source:rich_wbw_segment`, role, segment text, and token
+location provenance, and does not weaken any lane into `auto_safe` / `propagation_safe_candidate`.
 
 Rich WBW role taxonomy from the sealed run:
 
@@ -364,10 +366,6 @@ Rich WBW role taxonomy from the sealed run:
   `preposition`, `result_particle`, `resumption_particle`, `vocative_particle`
 - explicitly allowlisted roles observed: `definite_article`, `imperfect_prefix`, `noun`, `verb`, `verb_stem`
 
-Phase 2.8 component-candidate guardrail is active in this sealed run: rich WBW segment evidence is stored separately
-from whole-token entry candidates, carries `source:rich_wbw_segment`, role, segment text, and token location provenance,
-and does not weaken any lane into `auto_safe` / `propagation_safe_candidate`.
-
 Required rich gate cases were confirmed as `two_vote_required` and non-propagating in the sealed run:
 
 - `quran:22:18:13` `وَٱلشَّمْسُ`
@@ -377,6 +375,19 @@ Required rich gate cases were confirmed as `two_vote_required` and non-propagati
 - `quran:22:18:17` `وَٱلشَّجَرُ`
 - `quran:2:178:22` `بِٱلْمَعْرُوفِ`
 - `quran:2:21:1` `يَٰٓأَيُّهَا`
+
+Validator evidence:
+
+- `python tools/build_live_shadow_graph.py --self-test` -> `PASS`
+- `python tools/build_live_shadow_graph.py --live-readonly --no-live-write ...` -> `PASS`
+- `python tools/validate_phase1_shadow_graph.py <shadow-output>` -> `PASS`
+- `python tools/validate_live_shadow_run_manifest.py --expect-live-counts <manifest>` -> `PASS`
+- `python tools/summarize_shadow_closure_queue.py <shadow-output> ...` -> `PASS`
+- `python tools/summarize_rich_wbw_roles.py --shadow-dir <shadow-output> --strict` -> `PASS`
+- `python tools/validate_rich_wbw_gate_cases.py --shadow-dir <shadow-output> --review-pack-jsonl <review-pack>` ->
+  `PASS`
+- `python tools/validate_shadow_review_pack.py <review-pack>` -> `PASS`
+- `python tools/compare_wbw_artifacts.py <live-wbw> <mirror-wbw>` -> report-only comparison completed
 
 Public boundary scan:
 
