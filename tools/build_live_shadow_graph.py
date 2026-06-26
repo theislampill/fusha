@@ -324,7 +324,7 @@ def load_fusha_reference(index_dir, entry_addresses):
 def parse_obj_for_token(loc, surface, row, candidates, candidate_joins, decision, exact_candidate_count):
     status = "resolved" if decision else "pending"
     blocker = row.get("blocker") or (None if decision else "unknown_parse")
-    gate = row.get("gate") or decision.get("gate") if decision else None
+    gate = row.get("gate") or (decision.get("gate") if decision else None)
     if not gate:
         gate = "auto_safe" if exact_candidate_count == 1 and len(candidates) == 1 and decision else "human_review_required"
     parse = {
@@ -799,7 +799,7 @@ def make_fixture_inputs(base):
         write_json(os.path.join(entries, "%s.json" % entry["id"]), entry)
     wbw = {
         "words": {
-            "2:21:1": {"surface": "يَا", "pos": "particle", "particle_function": "vocative"},
+            "2:21:1": {"surface": "يَا", "pos": "particle", "particle_function": "vocative", "gate": "never_auto"},
             "2:21:2": {"surface": "النَّاسُ", "pos": "noun"},
             "33:63:1": {"surface": "يَسْأَلُكَ", "pos": "verb", "suffix_pronouns": ["كَ"], "grammar_triggers": ["object_pronoun"]},
         }
@@ -832,6 +832,16 @@ def self_test():
             return 1
         if not counts.get("fusha_reference", {}).get("source_address_full_present"):
             print("SELF-TEST FAIL: Fusha enrichment metadata missing")
+            return 1
+        parse_rows = []
+        with io.open(os.path.join(out, "parse-keys.jsonl"), encoding="utf-8") as handle:
+            for line in handle:
+                if line.strip():
+                    parse_rows.append(json.loads(line))
+        vocative = next((row["parse"] for row in parse_rows if row["parse"].get("quran_loc") == "2:21:1"), None)
+        if not vocative or vocative.get("gate") != "never_auto":
+            got_gate = (vocative or {}).get("gate")
+            print("SELF-TEST FAIL: pending row gate was not preserved: got %r" % got_gate)
             return 1
         try:
             build(entries, wbw, decisions, os.path.join(entries, "bad"), fixture_mode=False)
