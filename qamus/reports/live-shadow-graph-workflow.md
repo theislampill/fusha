@@ -521,6 +521,22 @@ preview, not a token-decision ledger row. The apply policy still requires a
 separate append-only ledger, backup, rebuild, validation, health check, and
 targeted public readback before any live apply can exist.
 
+A second source-only apply-readiness manifest now hashes that hover decision
+plan and records the future apply gates without authorizing them:
+
+- schema: `qamus/schemas/phase4-apply-readiness-manifest.schema.json`
+- builder: `tools/build_phase4_apply_readiness_manifest.py`
+- validator: `tools/validate_phase4_apply_readiness_manifest.py`
+- sample: `qamus/examples/phase4_apply_readiness_manifest.sample.json`
+- test: `tools/test_phase4_apply_readiness_manifest.py`
+- output status: `pre_apply_not_authorized`
+
+The manifest is a review artifact only. It records symbolic truth owners,
+required future gates, rollback requirements, source-clean sample decisions,
+and the source plan hash. It does not permit live mutation, WBW rebuild,
+service restart, mirror sync, parse-key identity, raw-surface identity, or
+component-candidate certification.
+
 ## Phase 3 Latest Read-Only Admin/Debug Refresh
 
 Status: latest read-only admin/debug scaffold smoke completed from pushed `main`

@@ -509,6 +509,7 @@ for _art in (
         "qamus/schemas/phase4-gloss-adjudication-request.schema.json",
         "qamus/schemas/phase4-gloss-adjudication-response.schema.json",
         "qamus/schemas/phase4-hover-decision-plan.schema.json",
+        "qamus/schemas/phase4-apply-readiness-manifest.schema.json",
         "qamus/examples/public_private_boundary.sample.json",
         "qamus/examples/detector_maturity.sample.json",
         "qamus/examples/live_shadow_run_manifest.sample.json",
@@ -526,6 +527,7 @@ for _art in (
         "qamus/examples/phase4_gloss_adjudication_request.sample.jsonl",
         "qamus/examples/phase4_gloss_adjudication_response.sample.jsonl",
         "qamus/examples/phase4_hover_decision_plan.sample.jsonl",
+        "qamus/examples/phase4_apply_readiness_manifest.sample.json",
         "qamus/procedures/production-bug-lessons.md",
         "nahw/procedures/grammar-problems-issue-clusters.md",
         "nahw/rules/grammar-problems-issue-clusters.json",
@@ -555,6 +557,8 @@ for _art in (
         "tools/reconcile_phase4_gloss_adjudication_responses.py",
         "tools/build_phase4_hover_decision_plan.py",
         "tools/validate_phase4_hover_decision_plan.py",
+        "tools/build_phase4_apply_readiness_manifest.py",
+        "tools/validate_phase4_apply_readiness_manifest.py",
         "tools/query_shadow_admin_debug_pack.py",
         "tools/plan_shadow_hover_edit_intent.py",
         "tools/plan_shadow_repair_impact_preview.py",
@@ -675,6 +679,17 @@ for _script, _args, _label in (
         ("validate_phase4_hover_decision_plan.py",
          [os.path.join(_R, "qamus", "examples", "phase4_hover_decision_plan.sample.jsonl")],
          "Phase4 hover decision plan sample validates"),
+        ("build_phase4_apply_readiness_manifest.py", ["--self-test"],
+         "Phase4 apply-readiness manifest builder self-test"),
+        ("validate_phase4_apply_readiness_manifest.py", ["--self-test"],
+         "Phase4 apply-readiness manifest validator self-test"),
+        ("validate_phase4_apply_readiness_manifest.py",
+         [
+             os.path.join(_R, "qamus", "examples", "phase4_apply_readiness_manifest.sample.json"),
+             "--plan-jsonl",
+             os.path.join(_R, "qamus", "examples", "phase4_hover_decision_plan.sample.jsonl"),
+         ],
+         "Phase4 apply-readiness manifest sample validates"),
         ("query_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack query self-test"),
         ("plan_shadow_hover_edit_intent.py", ["--self-test"], "Phase3 shadow hover edit intent planner self-test"),
         ("plan_shadow_repair_impact_preview.py", ["--self-test"], "Phase3 shadow repair impact preview planner self-test"),
@@ -703,7 +718,8 @@ for _script, _label in (("test_bulk_two_vote_requests.py", "bulk two-vote builde
                         ("test_phase4_gloss_adjudication_requests.py", "Phase4 exact-addressed gloss adjudication self-test"),
                         ("test_phase4_gloss_adjudication_response_reconciliation.py",
                          "Phase4 exact-addressed gloss adjudication response reconciliation self-test"),
-                        ("test_phase4_hover_decision_plan.py", "Phase4 hover decision plan self-test")):
+                        ("test_phase4_hover_decision_plan.py", "Phase4 hover decision plan self-test"),
+                        ("test_phase4_apply_readiness_manifest.py", "Phase4 apply-readiness manifest self-test")):
     try:
         _v = run_text([sys.executable, os.path.join(_R, "tools", _script)])
         check(_label, _v.returncode == 0)
