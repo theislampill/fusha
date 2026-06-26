@@ -441,8 +441,10 @@ Durable tooling:
 
 - `tools/build_full_corpus_hover_dogfood_audit.py`
 - `tools/validate_full_corpus_hover_dogfood_audit.py`
+- `tools/build_dogfood_production_bug_lessons.py`
 - `qamus/schemas/full-corpus-hover-dogfood-audit.schema.json`
 - `qamus/examples/full_corpus_hover_dogfood_audit.sample.jsonl`
+- `qamus/examples/dogfood_production_bug_lesson.sample.jsonl`
 
 Row classes:
 
@@ -477,6 +479,13 @@ Every non-certified row must route to at least one of:
 - sarf/nahw procedure improvement
 - drill/regression fixture
 - renderer/rich-hover requirement
+
+Rows routed to `production_bug_lesson` must be convertible into
+`qamus/schemas/production-bug-lesson.schema.json` by
+`tools/build_dogfood_production_bug_lessons.py`. The builder preserves the exact
+`quran:S:A:W`, `wbw:S:A:W`, `parse:<hash>`, decision, entry/sense, gate, and
+blocker evidence from the dogfood row. It emits pending reasons rather than
+inventing corrected hover prose when the audit has not certified a repair.
 
 This lane is the real dogfooding pass for populated hovers. A live row being present, repo/live parity, zero public
 crawl mismatch, or a Phase 4 narrow apply packet is not sufficient evidence of sarf/nahw correctness or learner-ready
