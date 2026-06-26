@@ -36,12 +36,14 @@ This SKILL is the fast context gate + contract; each step is a short procedure. 
 - [`procedures/referent-context.md`](procedures/referent-context.md) — referent guard, divine-Name vs attribute, contronyms.
 - [`procedures/exception-and-vocative-review.md`](procedures/exception-and-vocative-review.md) — route vocative and exceptive structures with governed case roles.
 - [`procedures/grammar-risk-gate.md`](procedures/grammar-risk-gate.md) — the GrammarProblems gate (answer AND reason).
+- [`procedures/grammar-problems-issue-clusters.md`](procedures/grammar-problems-issue-clusters.md) — Phase 3.5 grouped issue buckets before corpus-facing authoring.
 - [`procedures/hover-application.md`](procedures/hover-application.md) — syntax-sensitive tokens → precise pending, not a one-word gloss.
 - [`procedures/bulk-source-triangulation.md`](procedures/bulk-source-triangulation.md) — route bulk pending-table rows by context risk before any hover decision.
 - [`procedures/qamus-entry-authoring.md`](procedures/qamus-entry-authoring.md) — nahw evidence → function-word/construction entry candidate.
 - [`procedures/corpus-to-qamus.md`](procedures/corpus-to-qamus.md) — the nahw half of the corpus→Qamus pipeline.
 
 **Rules** (`rules/`): particle-context, preposition-pronoun, negation, irab-safety-gates, grammar-problems-gates,
+**grammar-problems-issue-clusters**,
 two-vote-required-rules, context-sense, **state-transition-rules** (the syntax side of the
 [language state machine](../qamus/reports/language-state-machine-report.md): مَن/مِن، لَمْ/لِمَ، أَن/إِن/أَنَّ/إِنَّ
 forbidden collisions). **Evals** (`evals/`): grammar-problems-matrix, **grammar-problems-derived-eval.jsonl**

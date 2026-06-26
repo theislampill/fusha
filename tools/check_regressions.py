@@ -512,6 +512,8 @@ for _art in (
         "qamus/examples/shadow_review_pack.sample.jsonl",
         "qamus/examples/shadow_admin_debug_pack.sample.json",
         "qamus/procedures/production-bug-lessons.md",
+        "nahw/procedures/grammar-problems-issue-clusters.md",
+        "nahw/rules/grammar-problems-issue-clusters.json",
         "nahw/evals/grammar-problems-phase3p25-mining.jsonl",
         "nahw/evals/grammar-problems-phase3p25-mining.md",
         "qamus/reports/live-shadow-graph-workflow.md",
@@ -530,6 +532,7 @@ for _art in (
         "tools/plan_shadow_repair_impact_preview.py",
         "tools/build_grammar_regression_mining.py",
         "tools/validate_grammar_regression_mining.py",
+        "tools/validate_grammar_issue_clusters.py",
         "tools/summarize_rich_wbw_roles.py",
         "tools/build_shadow_admin_debug_pack.py",
 ):
@@ -593,6 +596,8 @@ for _script, _args, _label in (
         ("validate_grammar_regression_mining.py",
          [os.path.join(_R, "nahw", "evals", "grammar-problems-phase3p25-mining.jsonl")],
          "Phase3.25 grammar regression mining ledger validates"),
+        ("validate_grammar_issue_clusters.py", ["--self-test"], "Phase3.5 grammar issue clusters validator self-test"),
+        ("validate_grammar_issue_clusters.py", [], "Phase3.5 grammar issue clusters validate mining coverage"),
 ):
     try:
         _v = run_text([sys.executable, os.path.join(_R, "tools", _script)] + _args)

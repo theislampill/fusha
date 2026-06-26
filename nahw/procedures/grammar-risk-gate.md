@@ -22,3 +22,7 @@ decision lacks reasoning, or a never-auto/human decision is marked exportable.
 **Forbidden:** shipping a grammar decision on the answer alone; gating below the trigger tier.
 
 **Test:** `tools/check_regressions.py` (grammar-gate assertions); `validate_linguistic_decisions.py --self-test`.
+
+**Phase 3.5 issue routing:** before Phase 4 corpus-facing grammar authoring, map each GrammarProblems-mined row
+through [`grammar-problems-issue-clusters.md`](grammar-problems-issue-clusters.md). The row must be covered by
+Issue #1, Issue #2, Issue #3, or explicitly promoted to a new root-cause cluster with a production bug lesson.

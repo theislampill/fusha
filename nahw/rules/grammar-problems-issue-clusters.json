@@ -1,0 +1,160 @@
+{
+  "schema": "fusha/grammar-problems-issue-clusters@1",
+  "phase": "3.5",
+  "purpose": "Machine-readable grouping of the Phase 3.25 GrammarProblems mining ledger into the nahw issues that must be taught, gated, and cited before Phase 4 corpus-facing grammar authoring.",
+  "classification_map": {
+    "already_covered_issue_1": "issue_1_wrong_reasoning",
+    "already_covered_issue_2": "issue_2_function_attachment",
+    "already_covered_issue_3": "issue_3_morphosyntax_preservation",
+    "correct_positive_regression": "positive_regression_control",
+    "new_root_cause_cluster": "new_root_cause_required"
+  },
+  "clusters": [
+    {
+      "id": "issue_1_wrong_reasoning",
+      "label": "Issue #1 - right answer with wrong i'rab/reasoning is unsafe",
+      "bug_class": "right_answer_wrong_irab_reasoning",
+      "gate": "two_vote_required",
+      "production_rule": "A grammar-sensitive hover or entry repair is unsafe unless the conclusion and the syntactic reason both pass.",
+      "sarf_lesson": "Do not let a correct-looking lexical match bypass form, voice, mood, or norm_strict checks.",
+      "nahw_lesson": "Reject conclusion-only i'rab, case, mood, exception, or deep essay reasoning even when the final English answer looks plausible.",
+      "learner_explanation": "The reason is part of the answer. If the parse is wrong, the gloss cannot be trusted.",
+      "procedure_links": [
+        "nahw/procedures/grammar-risk-gate.md",
+        "nahw/procedures/irab-teaching-diagnosis.md",
+        "nahw/procedures/irab-case-mood.md"
+      ],
+      "drill_links": [
+        "nahw/drills/grammar-reasoning-safety.md",
+        "nahw/drills/irab-case-mood.md"
+      ],
+      "regression_links": [
+        "nahw/evals/grammar-problems-derived-eval.jsonl",
+        "nahw/evals/grammar-wrong-reasoning-cases.jsonl",
+        "nahw/evals/grammar-problems-phase3p25-mining.jsonl"
+      ],
+      "validator_links": [
+        "tools/grade_grammar_reasoning.py",
+        "tools/run_grammar_evals.py",
+        "tools/validate_grammar_regression_mining.py",
+        "tools/validate_grammar_issue_clusters.py"
+      ],
+      "future_action": "Keep all deep, essay, analysis, evaluation, generation, and wrong-reasoning-trap cases behind answer-plus-reasoning review."
+    },
+    {
+      "id": "issue_2_function_attachment",
+      "label": "Issue #2 - function, attachment, and role ambiguity",
+      "bug_class": "function_attachment_ambiguity",
+      "gate": "two_vote_required",
+      "production_rule": "Function words and phrase roles must preserve their syntactic contribution before a hover can propagate.",
+      "sarf_lesson": "Segment proclitics and hosts, but defer the meaning of particles, prepositions, and attachment to nahw.",
+      "nahw_lesson": "Classify idafa, jar-majrur, hal, tamyiz, badal, istithna, tanazu, and PP attachment before authoring the visible hover.",
+      "learner_explanation": "A small particle or attachment can change what the whole token teaches.",
+      "procedure_links": [
+        "nahw/procedures/function-token-hover-review.md",
+        "nahw/procedures/idafa-jar-majrur.md",
+        "nahw/procedures/pp-attachment-review.md",
+        "nahw/procedures/exception-and-vocative-review.md"
+      ],
+      "drill_links": [
+        "nahw/drills/grammar-routing-hard-cases.md",
+        "nahw/drills/idafa-and-jar-majrur.md",
+        "nahw/drills/particle-disambiguation.md"
+      ],
+      "regression_links": [
+        "nahw/evals/particle-function-eval.jsonl",
+        "nahw/evals/irab-polysemy-eval.jsonl",
+        "nahw/evals/grammar-problems-phase3p25-mining.jsonl"
+      ],
+      "validator_links": [
+        "tools/validate_grammar_regression_mining.py",
+        "tools/validate_grammar_issue_clusters.py",
+        "tools/check_regressions.py"
+      ],
+      "future_action": "Route function and attachment cases to exact token/parse evidence; keep ambiguous attachment pending instead of using a host-only gloss."
+    },
+    {
+      "id": "issue_3_morphosyntax_preservation",
+      "label": "Issue #3 - morphosyntax and visible-token preservation",
+      "bug_class": "morphosyntax_preservation_failure",
+      "gate": "two_vote_required",
+      "production_rule": "The visible hover must preserve morphology that materially changes the token: voice, form, mood, case, suffix pronoun, and clitic contribution.",
+      "sarf_lesson": "Preserve form, voice, derived type, suffix pronouns, and strict vocalized surface before proposing a gloss.",
+      "nahw_lesson": "Use case, mood, governing particle, and role to decide whether the morphology can be rendered safely or must stay pending.",
+      "learner_explanation": "The same root can teach different things when form, voice, case, or suffix changes.",
+      "procedure_links": [
+        "sarf/procedures/clitic-and-host-morphology.md",
+        "sarf/procedures/verb-form-and-mood-review.md",
+        "nahw/procedures/governing-particle-mood-review.md",
+        "nahw/procedures/pronoun-attachment.md"
+      ],
+      "drill_links": [
+        "sarf/drills/clitic-and-host-morphology.md",
+        "nahw/drills/irab-case-mood.md",
+        "nahw/drills/sentence-context.md"
+      ],
+      "regression_links": [
+        "sarf/evals/false-clitic-split-eval.jsonl",
+        "nahw/evals/suffix-pronoun-eval.jsonl",
+        "nahw/evals/grammar-problems-phase3p25-mining.jsonl"
+      ],
+      "validator_links": [
+        "tools/validate_morphosyntax_token_metadata.py",
+        "tools/validate_grammar_regression_mining.py",
+        "tools/validate_grammar_issue_clusters.py",
+        "tools/check_regressions.py"
+      ],
+      "future_action": "Do not collapse a composed or inflected token into a lemma gloss; surface each material grammatical contribution or leave a precise pending."
+    },
+    {
+      "id": "positive_regression_control",
+      "label": "Correct positive regression - direct cases remain safe only under existing gates",
+      "bug_class": "positive_regression_control",
+      "gate": "auto_safe_if_other_conditions_met",
+      "production_rule": "Direct cases may remain positive controls, but auto_safe still requires strict surface, source-address, and no grammar-context dependency.",
+      "sarf_lesson": "A positive control proves the guard can accept simple rows; it does not authorize norm-only propagation.",
+      "nahw_lesson": "Even direct grammar rows are only safe when the construction has no unresolved context dependency.",
+      "learner_explanation": "Some cases are straightforward, but they still pass through the same evidence ladder.",
+      "procedure_links": [
+        "nahw/procedures/grammar-risk-gate.md"
+      ],
+      "drill_links": [
+        "nahw/drills/grammar-reasoning-safety.md"
+      ],
+      "regression_links": [
+        "nahw/evals/grammar-problems-phase3p25-mining.jsonl"
+      ],
+      "validator_links": [
+        "tools/validate_grammar_regression_mining.py",
+        "tools/validate_grammar_issue_clusters.py",
+        "tools/check_regressions.py"
+      ],
+      "future_action": "Keep these as controls; do not promote them into broad closure evidence."
+    },
+    {
+      "id": "new_root_cause_required",
+      "label": "New root-cause cluster requiring a new issue",
+      "bug_class": "new_root_cause_cluster",
+      "gate": "human_review_required",
+      "production_rule": "Any mined failure not covered by Issues #1-#3 must create a named issue before Phase 4 authoring proceeds.",
+      "sarf_lesson": "Name the morphology failure before adding fixes.",
+      "nahw_lesson": "Name the syntax failure before adding fixes.",
+      "learner_explanation": "A new failure pattern becomes a lesson, drill, regression, and validator before it becomes production policy.",
+      "procedure_links": [
+        "qamus/procedures/production-bug-lessons.md",
+        "nahw/procedures/grammar-risk-gate.md"
+      ],
+      "drill_links": [
+        "nahw/drills/grammar-reasoning-safety.md"
+      ],
+      "regression_links": [
+        "nahw/evals/grammar-problems-phase3p25-mining.jsonl"
+      ],
+      "validator_links": [
+        "tools/validate_production_bug_lessons.py",
+        "tools/validate_grammar_issue_clusters.py"
+      ],
+      "future_action": "Move the ledger row to new_root_cause_cluster with proposed_issue_id, then add procedure, drill, fixture, and validator before corpus authoring."
+    }
+  ]
+}
