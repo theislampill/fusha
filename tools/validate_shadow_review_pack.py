@@ -23,6 +23,7 @@ PARSE = re.compile(r"^parse:[0-9a-f]+$")
 QUEUE = re.compile(r"^queue:parse_[0-9a-f]+$")
 LANES = {
     "human_review_required",
+    "never_auto",
     "quarantine_collision",
     "two_vote_required",
     "missing_entry",
@@ -191,6 +192,8 @@ def validate_row(row, line_no, errors):
         ]
         if not any(str(status).startswith("exact:") for status in statuses):
             _err(errors, line_no, "propagation_safe_candidate requires exact join evidence")
+    if lane == "never_auto" and row.get("required_gate") != "never_auto":
+        _err(errors, line_no, "never_auto lane must preserve required_gate=never_auto")
 
 
 def validate(path):
@@ -245,18 +248,48 @@ def good_row():
     }
 
 
+def never_auto_row():
+    row = good_row()
+    row.update({
+        "id": "queue:parse_deadbeef",
+        "parse_id": "parse:deadbeef",
+        "lane": "never_auto",
+        "scope": "quarantine",
+        "recommended_action": "do not propagate; resolve blocker or route to owner/scholar review before any token decision",
+        "required_gate": "never_auto",
+        "surface_sample": "مَا",
+        "quran_locs": ["quran:2:21:1"],
+        "wbw_locs": ["wbw:2:21:1"],
+        "token_sample": ["quran:2:21:1"],
+        "candidate_entries": ["qamus:p:ma"],
+        "candidate_join_statuses": [
+            {"entry": "qamus:p:ma", "join_status": ["exact:decision_entry"]}
+        ],
+    })
+    row["parse"] = dict(row["parse"])
+    row["parse"].update({
+        "gate": "never_auto",
+        "decision_status": "resolved",
+        "parse_confidence": "candidate",
+        "particle_function": "function_sensitive",
+        "grammar_triggers": ["ma_function"],
+    })
+    return row
+
+
 def self_test():
     with tempfile.TemporaryDirectory(prefix="review-pack-") as td:
         good = os.path.join(td, "good.jsonl")
         bad = os.path.join(td, "bad.jsonl")
         with io.open(good, "w", encoding="utf-8") as handle:
             handle.write(json.dumps(good_row(), ensure_ascii=False, sort_keys=True) + "\n")
+            handle.write(json.dumps(never_auto_row(), ensure_ascii=False, sort_keys=True) + "\n")
         row = good_row()
         row["quran_locs"] = ["33:63:1"]
         with io.open(bad, "w", encoding="utf-8") as handle:
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
         count, errors = validate(good)
-        if count != 1 or errors:
+        if count != 2 or errors:
             print("SELF-TEST FAIL good:", errors)
             return 1
         count, errors = validate(bad)

@@ -137,6 +137,12 @@ def lane_action(lane):
             "recommended_action": "review candidate entry/sense/function before propagation",
             "gate": "human_review_required",
         }
+    if lane == "never_auto":
+        return {
+            "scope": "quarantine",
+            "recommended_action": "do not propagate; resolve blocker or route to owner/scholar review before any token decision",
+            "gate": "never_auto",
+        }
     if lane == "quarantine_collision":
         return {
             "scope": "quarantine",
@@ -375,17 +381,22 @@ def run_self_test():
             {"id": "quran:1:1:1", "loc": "1:1:1", "surface": "بِسْمِ", "parse_id": "parse:a", "status": "resolved", "blocker": None, "has_wbw_record": True},
             {"id": "quran:1:1:2", "loc": "1:1:2", "surface": "اللَّهِ", "parse_id": "parse:b", "status": "pending", "blocker": "unknown_parse", "has_wbw_record": False},
             {"id": "quran:1:1:3", "loc": "1:1:3", "surface": "الرَّحْمَٰنِ", "parse_id": "parse:c", "status": "resolved", "blocker": None, "has_wbw_record": True},
+            {"id": "quran:1:1:4", "loc": "1:1:4", "surface": "مَالِكِ", "parse_id": "parse:d", "status": "resolved", "blocker": None, "has_wbw_record": True},
         ])
         write_jsonl(os.path.join(shadow, "parse-keys.jsonl"), [
             {"id": "parse:a", "parse": {"qamus_entry_candidates": ["qamus:p:one"], "qamus_entry_candidate_joins": [{"entry": "qamus:p:one", "join_status": ["exact:decision_entry"]}], "gate": "auto_safe", "parse_confidence": "candidate", "blocker": None}},
             {"id": "parse:b", "parse": {"qamus_entry_candidates": [], "gate": "human_review_required", "parse_confidence": "surface_only", "blocker": "unknown_parse"}},
             {"id": "parse:c", "parse": {"qamus_entry_candidates": ["qamus:n:one", "qamus:v:two"], "gate": "human_review_required", "parse_confidence": "candidate", "blocker": None}},
+            {"id": "parse:d", "parse": {"qamus_entry_candidates": ["qamus:n:two"], "qamus_entry_candidate_joins": [{"entry": "qamus:n:two", "join_status": ["exact:decision_entry"]}], "gate": "never_auto", "parse_confidence": "candidate", "blocker": None}},
         ])
         write_jsonl(os.path.join(shadow, "decision-index.jsonl"), [{"id": "decision:1"}])
         write_jsonl(os.path.join(shadow, "blocker-index.jsonl"), [{"id": "blocker:unknown_parse", "count": 1}])
         summary = summarize(shadow)
-        if summary["computed"]["token_rows"] != 3:
+        if summary["computed"]["token_rows"] != 4:
             print("SELF-TEST FAIL: token count")
+            return 1
+        if summary["lane_counts"].get("never_auto") != 1:
+            print("SELF-TEST FAIL: never_auto lane")
             return 1
         if summary["lane_counts"].get("blocked:unknown_parse") != 1:
             print("SELF-TEST FAIL: blocker lane")
@@ -403,6 +414,10 @@ def run_self_test():
         if any(row["apply_policy"].get("detector_maturity", {}).get("zero_count_policy") != "zero_does_not_prove_absence" for row in pack):
             print("SELF-TEST FAIL: review pack detector maturity")
             return 1
+        never_auto_rows = [row for row in pack if row["lane"] == "never_auto"]
+        if not never_auto_rows or never_auto_rows[0]["required_gate"] != "never_auto":
+            print("SELF-TEST FAIL: never_auto gate")
+            return 1
         out_md = os.path.join(td, "summary.md")
         write_markdown(out_md, summary)
         md_text = io.open(out_md, encoding="utf-8").read()
@@ -414,7 +429,7 @@ def run_self_test():
             return 1
         out_pack = os.path.join(td, "review-pack.jsonl")
         write_jsonl(out_pack, pack)
-        if sum(1 for _ in read_jsonl(out_pack)) != 3:
+        if sum(1 for _ in read_jsonl(out_pack)) != 4:
             print("SELF-TEST FAIL: review pack jsonl")
             return 1
     print("PASS — shadow closure queue summarizer self-test")

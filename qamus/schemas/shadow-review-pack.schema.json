@@ -33,7 +33,7 @@
     },
     "lane": {
       "type": "string",
-      "pattern": "^(blocked:[a-z0-9_]+|human_review_required|quarantine_collision|two_vote_required|missing_entry|unknown_parse|propagation_safe_candidate|token_only_required)$"
+      "pattern": "^(blocked:[a-z0-9_]+|human_review_required|never_auto|quarantine_collision|two_vote_required|missing_entry|unknown_parse|propagation_safe_candidate|token_only_required)$"
     },
     "scope": {
       "type": "string"
