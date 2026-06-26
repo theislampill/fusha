@@ -525,6 +525,7 @@ for _art in (
         "tools/validate_shadow_admin_debug_pack.py",
         "tools/query_shadow_admin_debug_pack.py",
         "tools/plan_shadow_hover_edit_intent.py",
+        "tools/plan_shadow_repair_impact_preview.py",
         "tools/summarize_rich_wbw_roles.py",
         "tools/build_shadow_admin_debug_pack.py",
 ):
@@ -582,6 +583,7 @@ for _script, _args, _label in (
          "Phase3 shadow admin debug pack sample validates"),
         ("query_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack query self-test"),
         ("plan_shadow_hover_edit_intent.py", ["--self-test"], "Phase3 shadow hover edit intent planner self-test"),
+        ("plan_shadow_repair_impact_preview.py", ["--self-test"], "Phase3 shadow repair impact preview planner self-test"),
 ):
     try:
         _v = run_text([sys.executable, os.path.join(_R, "tools", _script)] + _args)

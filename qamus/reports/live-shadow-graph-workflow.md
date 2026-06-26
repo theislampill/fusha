@@ -56,6 +56,12 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   intent review, preserves exact `wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> qamus:<id>#sense=<n>` identity, and
   refuses parse-family intents when the pack marks that family non-propagation-safe. It does not write live Qamus
   data, rebuild WBW, mutate entries, or create repair ledgers.
+- `tools/plan_shadow_repair_impact_preview.py`: read-only CLI that turns validated hover-edit intent rows into
+  validated repair-impact-preview rows. It makes the future apply target explicit as a `qamus:<id>#field=<path>`
+  address, carries affected token/hover/parse samples forward, adds a rollback strategy, and keeps
+  `live_mutation_allowed=false`. It is still a preview artifact only; no decision ledger, entry JSON, WBW artifact, or
+  app route is changed. Token-only previews that have no resolved entry/sense use the deterministic overlay target
+  `qamus:hover-overrides#field=token_overrides[wbw:S:A:W].gloss` rather than inventing an entry.
 - `tools/validate_detector_maturity.py`: validates standalone or embedded detector-maturity records so Phase 2
   reports cannot treat `two_vote_required=0` or `source_disagreement=0` as proof that no such cases exist.
 - `tools/validate_live_shadow_run_manifest.py`: validates `phase2-run-manifest.json` so future live-readonly graph
@@ -147,6 +153,10 @@ python tools/plan_shadow_hover_edit_intent.py --pack <isolated static admin-debu
   --proposed-hover "ask you" \
   --out-jsonl <isolated static admin-debug output>/token-edit-intent.jsonl
 python tools/validate_hover_edit_intent.py <isolated static admin-debug output>/token-edit-intent.jsonl
+python tools/plan_shadow_repair_impact_preview.py \
+  --intent-jsonl <isolated static admin-debug output>/token-edit-intent.jsonl \
+  --out-jsonl <isolated static admin-debug output>/token-repair-preview.jsonl
+python tools/validate_repair_impact_preview.py <isolated static admin-debug output>/token-repair-preview.jsonl
 ```
 
 CI should use fixture/self-test mode only:
@@ -167,6 +177,7 @@ python tools/validate_shadow_admin_debug_pack.py --self-test
 python tools/validate_shadow_admin_debug_pack.py qamus/examples/shadow_admin_debug_pack.sample.json
 python tools/query_shadow_admin_debug_pack.py --self-test
 python tools/plan_shadow_hover_edit_intent.py --self-test
+python tools/plan_shadow_repair_impact_preview.py --self-test
 python tools/validate_shadow_review_pack.py --self-test
 python tools/validate_shadow_review_pack.py qamus/examples/shadow_review_pack.sample.jsonl
 python tools/validate_decision_linkage.py --self-test
