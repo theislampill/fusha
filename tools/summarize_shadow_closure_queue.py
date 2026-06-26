@@ -22,6 +22,12 @@ REQUIRED = [
     "blocker-index.jsonl",
 ]
 
+DETECTOR_MATURITY = {
+    "two_vote_required": "partial_shadow_gate",
+    "source_disagreement": "reserved_detector_gap",
+    "zero_count_policy": "zero_does_not_prove_absence",
+}
+
 
 def read_json(path):
     with io.open(path, encoding="utf-8") as handle:
@@ -212,6 +218,7 @@ def review_pack_row(parse_id, lane, parse_obj, tokens):
             "live_mutation_allowed": False,
             "identity": "quran:S:A:W plus wbw:S:A:W; parse key is not primary identity",
             "public_boundary": "src=qamus, kind=authored, lang=en; no external provenance",
+            "detector_maturity": DETECTOR_MATURITY,
         },
     }
     return row
@@ -292,6 +299,7 @@ def summarize(shadow_dir, sample_limit=8):
     result = {
         "shadow_dir": shadow_dir,
         "truth_counts": truth.get("counts") or {},
+        "detector_maturity": DETECTOR_MATURITY,
         "computed": {
             "token_rows": len(token_rows),
             "decision_rows": len(decision_rows),
@@ -335,6 +343,9 @@ def write_markdown(path, summary, sample_limit=8):
         for lane, count in summary["lane_counts"].items():
             tokens = summary["lane_token_counts"].get(lane, 0)
             handle.write("- `%s`: `%s` parse families / `%s` tokens\n" % (lane, count, tokens))
+        handle.write("\n## Detector Maturity\n\n")
+        for key, value in sorted(summary["detector_maturity"].items()):
+            handle.write("- `%s`: `%s`\n" % (key, value))
         handle.write("\n## Pending Blockers\n\n")
         for blocker, count in summary["blocker_counts"].items():
             handle.write("- `%s`: `%s` tokens\n" % (blocker, count))
@@ -389,10 +400,17 @@ def run_self_test():
         if not all(loc.startswith("quran:") for row in pack for loc in row["quran_locs"]):
             print("SELF-TEST FAIL: review pack quran addresses")
             return 1
+        if any(row["apply_policy"].get("detector_maturity", {}).get("zero_count_policy") != "zero_does_not_prove_absence" for row in pack):
+            print("SELF-TEST FAIL: review pack detector maturity")
+            return 1
         out_md = os.path.join(td, "summary.md")
         write_markdown(out_md, summary)
-        if "Shadow Closure Queue Summary" not in io.open(out_md, encoding="utf-8").read():
+        md_text = io.open(out_md, encoding="utf-8").read()
+        if "Shadow Closure Queue Summary" not in md_text:
             print("SELF-TEST FAIL: markdown")
+            return 1
+        if "zero_does_not_prove_absence" not in md_text:
+            print("SELF-TEST FAIL: detector maturity markdown")
             return 1
         out_pack = os.path.join(td, "review-pack.jsonl")
         write_jsonl(out_pack, pack)
@@ -441,6 +459,7 @@ def main():
         write_jsonl(args.review_pack_jsonl, review_rows)
     print(json.dumps({
         "computed": summary["computed"],
+        "detector_maturity": summary["detector_maturity"],
         "lane_counts": summary["lane_counts"],
         "lane_token_counts": summary["lane_token_counts"],
         "blocker_counts": summary["blocker_counts"],

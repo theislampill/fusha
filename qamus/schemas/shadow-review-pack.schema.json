@@ -160,7 +160,7 @@
     },
     "apply_policy": {
       "type": "object",
-      "required": ["live_mutation_allowed", "identity", "public_boundary"],
+      "required": ["live_mutation_allowed", "identity", "public_boundary", "detector_maturity"],
       "additionalProperties": false,
       "properties": {
         "live_mutation_allowed": {
@@ -172,6 +172,22 @@
         },
         "public_boundary": {
           "const": "src=qamus, kind=authored, lang=en; no external provenance"
+        },
+        "detector_maturity": {
+          "type": "object",
+          "required": ["two_vote_required", "source_disagreement", "zero_count_policy"],
+          "additionalProperties": false,
+          "properties": {
+            "two_vote_required": {
+              "const": "partial_shadow_gate"
+            },
+            "source_disagreement": {
+              "const": "reserved_detector_gap"
+            },
+            "zero_count_policy": {
+              "const": "zero_does_not_prove_absence"
+            }
+          }
         }
       }
     }

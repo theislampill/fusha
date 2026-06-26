@@ -78,7 +78,8 @@ python tools/validate_production_bug_lessons.py qamus/examples/production_bug_le
 - `parse:<hash>` is a grammar-family key, never primary identity.
 - `quran:S:A:W` and `wbw:S:A:W` remain the exact token/hover identities.
 - Surface-only and norm-only rows must never certify or propagate.
-- Two-vote and source-disagreement counts are detector maturity signals; zero does not prove absence.
+- Two-vote and source-disagreement counts are detector maturity signals; zero does not prove absence. Review-pack
+  rows carry this as required `apply_policy.detector_maturity`, and the validator rejects overconfident claims.
 - Public hover output remains `src=qamus`, `kind=authored`, `lang=en`.
 - Internal provenance may exist, but public scans must remain zero-leak.
 - Mirror mismatch is report-only until a separate guarded sync is authorized.

@@ -41,6 +41,11 @@ FORBIDDEN_PUBLIC_LABELS = (
     "source_photo",
     "/srv/",
 )
+DETECTOR_MATURITY = {
+    "two_vote_required": "partial_shadow_gate",
+    "source_disagreement": "reserved_detector_gap",
+    "zero_count_policy": "zero_does_not_prove_absence",
+}
 REQUIRED = [
     "id",
     "parse_id",
@@ -158,6 +163,17 @@ def validate_row(row, line_no, errors):
     public_boundary = str(policy.get("public_boundary") or "")
     if public_boundary != "src=qamus, kind=authored, lang=en; no external provenance":
         _err(errors, line_no, "public boundary must be source-clean qamus/authored/en")
+    maturity = policy.get("detector_maturity")
+    if maturity != DETECTOR_MATURITY:
+        _err(errors, line_no, "detector_maturity must preserve Phase 2 detector-gap warning")
+    if isinstance(maturity, dict):
+        bad_claims = [
+            "%s=%s" % (key, value)
+            for key, value in maturity.items()
+            if str(value).lower() in ("complete", "trusted_complete", "absence_proven")
+        ]
+        if bad_claims:
+            _err(errors, line_no, "detector_maturity overclaims completion: %s" % ", ".join(bad_claims))
     public_blob = json.dumps(policy, ensure_ascii=False).lower()
     for label in FORBIDDEN_PUBLIC_LABELS:
         if label in public_blob:
@@ -224,6 +240,7 @@ def good_row():
             "live_mutation_allowed": False,
             "identity": "quran:S:A:W plus wbw:S:A:W; parse key is not primary identity",
             "public_boundary": "src=qamus, kind=authored, lang=en; no external provenance",
+            "detector_maturity": DETECTOR_MATURITY,
         },
     }
 
