@@ -30,8 +30,12 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   read-only and does not inspect or mutate live inputs.
 - `tools/validate_shadow_review_pack.py`: validates that review-pack rows are non-vacuous, exact-addressed with
   `quran:S:A:W` and `wbw:S:A:W`, source-clean at the public boundary, and explicitly non-mutating.
+- `tools/validate_repair_impact_preview.py`: validates graph-addressed token-only, parse-family, and entry/sense
+  repair previews before any future apply path can use them.
 - `tools/validate_production_bug_lessons.py`: keeps production hover failures connected to sarf/nahw procedure,
   regression, learner explanation, drill, and validator work.
+- `qamus/examples/repair_impact_preview.sample.jsonl`: tiny fixture slice covering the three edit scopes without
+  touching live Qamus data.
 - `qamus/examples/shadow_review_pack.sample.jsonl`: tiny fixture slice covering propagation-preview, collision
   quarantine, and missing-entry lanes without committing live graph dumps.
 
@@ -68,6 +72,8 @@ python tools/validate_phase1_shadow_graph.py --self-test
 python tools/summarize_shadow_closure_queue.py --self-test
 python tools/validate_shadow_review_pack.py --self-test
 python tools/validate_shadow_review_pack.py qamus/examples/shadow_review_pack.sample.jsonl
+python tools/validate_repair_impact_preview.py --self-test
+python tools/validate_repair_impact_preview.py qamus/examples/repair_impact_preview.sample.jsonl
 python tools/scan_public_boundary.py --self-test
 python tools/compare_wbw_artifacts.py --self-test
 python tools/validate_production_bug_lessons.py qamus/examples/production_bug_lesson.sample.jsonl

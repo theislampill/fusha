@@ -498,10 +498,12 @@ for _art in (
         "qamus/schemas/public-private-boundary.schema.json",
         "qamus/schemas/production-bug-lesson.schema.json",
         "qamus/schemas/shadow-review-pack.schema.json",
+        "qamus/examples/repair_impact_preview.sample.jsonl",
         "qamus/examples/shadow_review_pack.sample.jsonl",
         "qamus/procedures/production-bug-lessons.md",
         "qamus/reports/live-shadow-graph-workflow.md",
         "tools/summarize_shadow_closure_queue.py",
+        "tools/validate_repair_impact_preview.py",
         "tools/validate_shadow_review_pack.py",
 ):
     check("Phase2 live-shadow graph contract artifact exists: %s" % _art, os.path.exists(os.path.join(_R, _art)))
@@ -516,6 +518,10 @@ for _script, _args, _label in (
         ("validate_shadow_review_pack.py",
          [os.path.join(_R, "qamus", "examples", "shadow_review_pack.sample.jsonl")],
          "Phase2 shadow review-pack sample validates"),
+        ("validate_repair_impact_preview.py", ["--self-test"], "Phase2 repair impact preview validator self-test"),
+        ("validate_repair_impact_preview.py",
+         [os.path.join(_R, "qamus", "examples", "repair_impact_preview.sample.jsonl")],
+         "Phase2 repair impact preview sample validates"),
         ("validate_production_bug_lessons.py",
          [os.path.join(_R, "qamus", "examples", "production_bug_lesson.sample.jsonl")],
          "Phase2 production bug lesson sample validates"),
