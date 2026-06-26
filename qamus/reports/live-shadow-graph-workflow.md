@@ -420,6 +420,68 @@ Mirror mismatch classification remains unchanged and report-only:
 
 `content-equivalent-or-near-equivalent; metadata/source-hash divergent; not safe for mutation until separately reconciled`.
 
+## Full-Corpus Hover Dogfood Audit Lane
+
+Status: added as a read-only audit lane after the Phase 2.9 graph/readiness seal. This lane does not reopen Phase 2.9
+unless graph/tool/schema/live-input/public-boundary/mirror-affecting code or data changes. Report-only refreshes must
+record both:
+
+- `validated_code_head`: the latest code head whose graph/build/validator behavior was verified
+- `report_head`: the later report/documentation head, if any
+
+Purpose:
+
+- audit all `49,900` Qur'an token slots and every live populated WBW hover row
+- distinguish visible hover population from grammar-certified, learner-explainable rich hover readiness
+- route already-populated but defective hovers into repair/blocker/lesson/skill/drill/renderer queues
+- keep the audit read-only: no live Qamus mutation, no WBW rebuild, no service restart, no mirror sync, and no hover
+  coverage claim
+
+Durable tooling:
+
+- `tools/build_full_corpus_hover_dogfood_audit.py`
+- `tools/validate_full_corpus_hover_dogfood_audit.py`
+- `qamus/schemas/full-corpus-hover-dogfood-audit.schema.json`
+- `qamus/examples/full_corpus_hover_dogfood_audit.sample.jsonl`
+
+Row classes:
+
+- `rich_certified`
+- `populated_uncertified`
+- `string_correct_but_not_rich`
+- `known_defect`
+- `needs_sarf_review`
+- `needs_nahw_review`
+- `needs_renderer_segments`
+- `token_only_override`
+- `pending/blocker`
+
+Seed production-defect detectors:
+
+- `suffix_omitted`
+- `conjunction_article_omitted`
+- `vocative_collapse`
+- `preposition_oath_host_only_hover`
+- `article_duplication`
+- `finite_verb_dictionary_root_gloss_leakage`
+- `nominal_pos_leakage`
+- `function_preposition_flattening`
+- `clitic_host_collapse`
+- `surface_family_requires_token_only_override`
+
+Every non-certified row must route to at least one of:
+
+- repair candidate
+- blocker queue row
+- production-bug lesson
+- sarf/nahw procedure improvement
+- drill/regression fixture
+- renderer/rich-hover requirement
+
+This lane is the real dogfooding pass for populated hovers. A live row being present, repo/live parity, zero public
+crawl mismatch, or a Phase 4 narrow apply packet is not sufficient evidence of sarf/nahw correctness or learner-ready
+breakdown.
+
 ## Phase 4 Current-HEAD Dry-Run Blocker Refinement
 
 Status: review-only dry run refreshed from latest pushed current HEAD

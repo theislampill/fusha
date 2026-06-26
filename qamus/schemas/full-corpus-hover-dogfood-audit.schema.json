@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/full-corpus-hover-dogfood-audit.schema.json",
+  "title": "Qamus full-corpus hover dogfood audit row",
+  "description": "Read-only row-level audit of live Qur'an hover-gloss grammar completeness. Populated hover text is not sufficient for certification.",
+  "type": "object",
+  "required": [
+    "id",
+    "audit_scope",
+    "quran_loc",
+    "wbw_loc",
+    "surface",
+    "current_visible_gloss",
+    "hover_presence",
+    "rich_rendered",
+    "dogfood_class",
+    "status",
+    "token_internal_segments",
+    "sarf",
+    "nahw",
+    "entry_linkage",
+    "procedures",
+    "public_boundary",
+    "certification",
+    "learner_breakdown",
+    "learner_breakdown_blocker",
+    "detectors",
+    "routes",
+    "source"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^dogfood:wbw:\\d{1,3}:\\d{1,3}:\\d{1,3}$"
+    },
+    "audit_scope": {
+      "const": "full_corpus_hover_dogfood"
+    },
+    "quran_loc": {
+      "type": "string",
+      "pattern": "^quran:\\d{1,3}:\\d{1,3}:\\d{1,3}$"
+    },
+    "wbw_loc": {
+      "type": "string",
+      "pattern": "^wbw:\\d{1,3}:\\d{1,3}:\\d{1,3}$"
+    },
+    "surface": {
+      "type": ["string", "null"]
+    },
+    "current_visible_gloss": {
+      "type": ["string", "null"]
+    },
+    "hover_presence": {
+      "type": "string",
+      "enum": ["missing", "pending", "populated"]
+    },
+    "rich_rendered": {
+      "type": "boolean"
+    },
+    "dogfood_class": {
+      "type": "string",
+      "enum": [
+        "rich_certified",
+        "populated_uncertified",
+        "string_correct_but_not_rich",
+        "known_defect",
+        "needs_sarf_review",
+        "needs_nahw_review",
+        "needs_renderer_segments",
+        "token_only_override",
+        "pending/blocker"
+      ]
+    },
+    "status": {
+      "type": ["string", "null"]
+    },
+    "token_internal_segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "surface"],
+        "additionalProperties": true,
+        "properties": {
+          "role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "surface": {
+            "type": ["string", "null"]
+          }
+        }
+      }
+    },
+    "sarf": {
+      "type": "object",
+      "required": [
+        "root",
+        "pos",
+        "verb_form",
+        "voice",
+        "aspect",
+        "mood",
+        "person",
+        "number",
+        "gender",
+        "case",
+        "state",
+        "derivative_type",
+        "proclitics",
+        "enclitics",
+        "suffix_pronouns"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "root": {"type": ["string", "null"]},
+        "pos": {"type": ["string", "null"]},
+        "verb_form": {"type": ["string", "null"]},
+        "voice": {"type": ["string", "null"]},
+        "aspect": {"type": ["string", "null"]},
+        "mood": {"type": ["string", "null"]},
+        "person": {"type": ["string", "null"]},
+        "number": {"type": ["string", "null"]},
+        "gender": {"type": ["string", "null"]},
+        "case": {"type": ["string", "null"]},
+        "state": {"type": ["string", "null"]},
+        "derivative_type": {"type": ["string", "null"]},
+        "proclitics": {"type": "array"},
+        "enclitics": {"type": "array"},
+        "suffix_pronouns": {"type": "array"}
+      }
+    },
+    "nahw": {
+      "type": "object",
+      "required": [
+        "particle_function",
+        "governor",
+        "attachment",
+        "dependency_roles",
+        "referent_class",
+        "blocker"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "particle_function": {"type": ["string", "null"]},
+        "governor": {"type": ["string", "null"]},
+        "attachment": {"type": ["string", "null"]},
+        "dependency_roles": {"type": "array"},
+        "referent_class": {"type": ["string", "null"]},
+        "blocker": {"type": ["string", "null"]}
+      }
+    },
+    "entry_linkage": {
+      "type": "object",
+      "required": [
+        "parse_id",
+        "parse_family_class",
+        "parse_family_size",
+        "parse_gate",
+        "parse_confidence",
+        "whole_token_candidates",
+        "component_candidate_entries",
+        "resolved_qamus_entry_id",
+        "resolved_sense_id",
+        "no_entry_function_token_rationale",
+        "decision_ids"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "parse_id": {"type": ["string", "null"], "pattern": "^parse:[0-9a-f]+$"},
+        "parse_family_class": {"type": ["string", "null"]},
+        "parse_family_size": {"type": "integer", "minimum": 0},
+        "parse_gate": {"type": ["string", "null"]},
+        "parse_confidence": {"type": ["string", "null"]},
+        "whole_token_candidates": {"type": "array", "items": {"type": "string"}},
+        "component_candidate_entries": {"type": "array", "items": {"type": "string"}},
+        "resolved_qamus_entry_id": {"type": ["string", "null"]},
+        "resolved_sense_id": {"type": ["integer", "string", "null"]},
+        "no_entry_function_token_rationale": {"type": ["string", "null"]},
+        "decision_ids": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "procedures": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "public_boundary": {
+      "type": "object",
+      "required": [
+        "src",
+        "kind",
+        "lang",
+        "internal_provenance_public",
+        "external_source_names_public",
+        "public_leak_detected"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "src": {"const": "qamus"},
+        "kind": {"const": "authored"},
+        "lang": {"const": "en"},
+        "internal_provenance_public": {"const": false},
+        "external_source_names_public": {"const": false},
+        "public_leak_detected": {"const": false}
+      }
+    },
+    "certification": {
+      "type": "object",
+      "required": [
+        "mode",
+        "string_populated_only",
+        "rich_certified",
+        "propagation_allowed",
+        "requires_two_vote",
+        "validated_code_head",
+        "report_head"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "mode": {"type": "string"},
+        "string_populated_only": {"type": "boolean"},
+        "rich_certified": {"type": "boolean"},
+        "propagation_allowed": {"type": "boolean"},
+        "requires_two_vote": {"type": "boolean"},
+        "validated_code_head": {"type": ["string", "null"]},
+        "report_head": {"type": ["string", "null"]}
+      }
+    },
+    "learner_breakdown": {
+      "type": ["string", "null"]
+    },
+    "learner_breakdown_blocker": {
+      "type": ["string", "null"]
+    },
+    "detectors": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "routes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "repair_candidate",
+          "blocker_queue_row",
+          "production_bug_lesson",
+          "sarf_nahw_procedure_improvement",
+          "drill_regression_fixture",
+          "renderer_rich_hover_requirement"
+        ]
+      }
+    },
+    "source": {
+      "const": "read_only_shadow_graph"
+    }
+  }
+}
