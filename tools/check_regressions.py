@@ -604,6 +604,7 @@ for _script, _args, _label in (
          "Phase3.5 production bug lesson from edit intent sample validates"),
         ("build_production_bug_lesson.py", ["--self-test"], "Phase3.5 production bug lesson builder self-test"),
         ("summarize_rich_wbw_roles.py", ["--self-test"], "Phase2 rich WBW role taxonomy self-test"),
+        ("validate_rich_wbw_gate_cases.py", ["--self-test"], "Phase2.9 rich WBW gate-case validator self-test"),
         ("build_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack self-test"),
         ("validate_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack validator self-test"),
         ("validate_shadow_admin_debug_pack.py",

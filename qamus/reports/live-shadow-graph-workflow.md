@@ -40,6 +40,11 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   observed, or if a grammar-sensitive role such as `preposition`, `conjunction`, `vocative_particle`,
   `object_pronoun`, `result_particle`, `resumption_particle`, or `adjectival_state` appears in an `auto_safe` gate or
   `propagation_safe` lane.
+- `tools/validate_rich_wbw_gate_cases.py`: Phase 2.9 closeout guard for the named rich-WBW rows that motivated the
+  current parser/renderer contract. It checks that `وَٱلشَّمْسُ`, `وَٱلْقَمَرُ`, `وَٱلنُّجُومُ`, `وَٱلْجِبَالُ`,
+  `وَٱلشَّجَرُ`, `بِٱلْمَعْرُوفِ`, and `يَٰٓأَيُّهَا` are present in both parse-key and review-pack artifacts, remain
+  `two_vote_required`, carry rich component evidence in component-only fields, and are not weakened into auto-safe
+  propagation. It also rejects any rich component evidence that is placed into whole-token `qamus_entry_candidates`.
 - `tools/build_shadow_admin_debug_pack.py`: Phase 3 read-only admin/debug scaffolding. It consumes an already-built
   shadow graph and emits a static local `index.html` plus `admin-debug-pack.json` with hover inspectors, entry
   backlinks, parse-family views, blocker queues, and repair-preview stubs. It is not a live route, does not discover
@@ -173,6 +178,8 @@ python tools/validate_shadow_review_pack.py <review pack jsonl>
 python tools/summarize_rich_wbw_roles.py --shadow-dir <isolated shadow output> \
   --out-md <rich-role-taxonomy report> \
   --strict
+python tools/validate_rich_wbw_gate_cases.py --shadow-dir <isolated shadow output> \
+  --review-pack-jsonl <review pack jsonl>
 python tools/scan_public_boundary.py --public <public entry URL> --shadow-dir <isolated shadow output>
 python tools/compare_wbw_artifacts.py <live wbw lookup> <mirror wbw lookup>
 python tools/validate_detector_maturity.py <review pack jsonl or detector maturity json>
@@ -245,6 +252,7 @@ python tools/validate_parse_key_contract.py qamus/examples/parse_key.sample.json
 python tools/validate_phase1_shadow_graph.py --self-test
 python tools/summarize_shadow_closure_queue.py --self-test
 python tools/summarize_rich_wbw_roles.py --self-test
+python tools/validate_rich_wbw_gate_cases.py --self-test
 python tools/build_shadow_admin_debug_pack.py --self-test
 python tools/validate_shadow_admin_debug_pack.py --self-test
 python tools/validate_shadow_admin_debug_pack.py qamus/examples/shadow_admin_debug_pack.sample.json
@@ -305,9 +313,9 @@ improvement and did not mutate live Qamus, rebuild WBW, sync the mirror, restart
 
 Run source:
 
-- Fresh checkout HEAD before closeout: `5ed6ffeb50758c71ee3b419e6be743e65bf8d9d5`.
+- Fresh checkout HEAD before closeout refresh: `2b8dfb8f3f68bc648b6f23f9a98ea8a050fe2f80`.
 - Local read-only snapshot path: `out/live-shadow-runs/20260626-110034`.
-- Sealed shadow graph output: `out/live-shadow-runs/20260626-110034/shadow-output-phase2p9-sealed`.
+- Refreshed shadow graph output: `out/live-shadow-runs/20260626-110034/shadow-output-phase2p9-refresh-2b8dfb8`.
 - Live inputs were copied/streamed to the local snapshot first; the builder consumed local read-only copies.
 
 Sealed graph counts:
@@ -345,6 +353,7 @@ Rich WBW role taxonomy from the sealed run:
 - rich parse rows with component candidate evidence: `10`
 - rich review-pack rows with component candidate evidence: `10`
 - rich component candidate auto-safe/propagation violations: `0`
+- named rich gate cases checked by `tools/validate_rich_wbw_gate_cases.py`: `7`
 - explicitly gated roles observed: `addressee_bridge`, `adjectival_state`, `conjunction`, `object_pronoun`,
   `preposition`, `result_particle`, `resumption_particle`, `vocative_particle`
 - explicitly allowlisted roles observed: `definite_article`, `imperfect_prefix`, `noun`, `verb`, `verb_stem`
