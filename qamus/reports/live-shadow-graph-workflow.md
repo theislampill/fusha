@@ -32,6 +32,8 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   `quran:S:A:W` and `wbw:S:A:W`, source-clean at the public boundary, and explicitly non-mutating.
 - `tools/validate_production_bug_lessons.py`: keeps production hover failures connected to sarf/nahw procedure,
   regression, learner explanation, drill, and validator work.
+- `qamus/examples/shadow_review_pack.sample.jsonl`: tiny fixture slice covering propagation-preview, collision
+  quarantine, and missing-entry lanes without committing live graph dumps.
 
 ## Acceptance Gates
 
@@ -65,6 +67,7 @@ python tools/build_live_shadow_graph.py --self-test
 python tools/validate_phase1_shadow_graph.py --self-test
 python tools/summarize_shadow_closure_queue.py --self-test
 python tools/validate_shadow_review_pack.py --self-test
+python tools/validate_shadow_review_pack.py qamus/examples/shadow_review_pack.sample.jsonl
 python tools/scan_public_boundary.py --self-test
 python tools/compare_wbw_artifacts.py --self-test
 python tools/validate_production_bug_lessons.py qamus/examples/production_bug_lesson.sample.jsonl
