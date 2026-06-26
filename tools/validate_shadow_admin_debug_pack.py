@@ -253,6 +253,16 @@ def validate_pack(pack):
         validate_entry_backlink(row, index, errors)
     for index, row in enumerate(families):
         validate_parse_family(row, index, errors)
+    inspector_quran_locs = {row.get("quran_loc") for row in inspectors}
+    inspector_wbw_locs = {row.get("wbw_loc") for row in inspectors}
+    for index, row in enumerate(entries):
+        prefix = "entry_backlinks[%d]" % index
+        for loc in row.get("sample_tokens") or []:
+            if loc not in inspector_quran_locs:
+                _err(errors, "%s sample token missing hover inspector: %s" % (prefix, loc))
+        for loc in row.get("sample_hover_slots") or []:
+            if loc not in inspector_wbw_locs:
+                _err(errors, "%s sample hover missing hover inspector: %s" % (prefix, loc))
     validate_blocker_queue(pack.get("blocker_queue"), errors)
     for msg in public_boundary_errors(pack.get("public_boundary"), "public_boundary"):
         _err(errors, msg)
@@ -326,6 +336,9 @@ def good_pack():
         "dependent_token_count": 1,
         "dependent_hover_count": 1,
         "parse_key_count": 1,
+        "sample_tokens": ["quran:33:63:1"],
+        "sample_hover_slots": ["wbw:33:63:1"],
+        "sample_parse_keys": ["parse:aaaaaaaa"],
         "repair_preview_stub": {
             "scope": "entry_sense",
             "live_mutation_allowed": False,
@@ -387,6 +400,7 @@ def self_test():
     with tempfile.TemporaryDirectory(prefix="shadow-admin-pack-validator-") as td:
         good = os.path.join(td, "good.json")
         bad = os.path.join(td, "bad.json")
+        missing_entry_sample = os.path.join(td, "missing-entry-sample.json")
         pack = good_pack()
         dump_json(good, pack)
         bad_pack = good_pack()
@@ -396,6 +410,10 @@ def self_test():
         bad_pack["entry_backlinks"][0]["candidate_scope"] = "component_candidate"
         bad_pack["live_mutation_allowed"] = True
         dump_json(bad, bad_pack)
+        missing_entry_sample_pack = good_pack()
+        missing_entry_sample_pack["entry_backlinks"][0]["sample_tokens"] = ["quran:33:63:2"]
+        missing_entry_sample_pack["entry_backlinks"][0]["sample_hover_slots"] = ["wbw:33:63:2"]
+        dump_json(missing_entry_sample, missing_entry_sample_pack)
         count, errors = validate(good)
         if count != 1 or errors:
             print("SELF-TEST FAIL good:", errors)
@@ -415,6 +433,13 @@ def self_test():
             return 1
         if not any("candidate_scope must be whole_token_or_resolved_entry" in err for err in errors):
             print("SELF-TEST FAIL bad missing entry scope:", errors)
+            return 1
+        count, errors = validate(missing_entry_sample)
+        if count != 1:
+            print("SELF-TEST FAIL missing-entry-sample count:", count)
+            return 1
+        if not any("sample token missing hover inspector" in err for err in errors):
+            print("SELF-TEST FAIL missing entry sample inspector:", errors)
             return 1
     print("PASS — shadow admin debug pack validator self-test")
     return 0

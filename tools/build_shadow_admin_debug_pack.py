@@ -349,10 +349,20 @@ def build_pack(shadow_dir, out_dir, sample_tokens=None, sample_entries=None, max
     if not sample_tokens:
         sample_tokens = ["quran:33:63:1", "quran:22:18:17", "quran:2:21:1"]
     sample_tokens = [normalize_quran_loc(token) for token in sample_tokens]
-    hover_inspectors = [
-        build_hover_inspector(token, token_by_id, hover_by_id, parse_by_token, decisions_by_quran)
-        for token in sample_tokens
-    ]
+    hover_inspectors = []
+    inspected_tokens = set()
+
+    def add_hover_inspector(token):
+        token = normalize_quran_loc(token)
+        if token in inspected_tokens:
+            return
+        hover_inspectors.append(
+            build_hover_inspector(token, token_by_id, hover_by_id, parse_by_token, decisions_by_quran)
+        )
+        inspected_tokens.add(token)
+
+    for token in sample_tokens:
+        add_hover_inspector(token)
 
     inferred_entries = []
     for inspector in hover_inspectors:
@@ -363,6 +373,11 @@ def build_pack(shadow_dir, out_dir, sample_tokens=None, sample_entries=None, max
         build_entry_view(entry_id, entry_by_id, entry_to_parse, entry_to_tokens, parse_by_id, decisions_by_parse, max_samples)
         for entry_id in entry_ids[:max_samples * 2]
     ]
+    # Entry/sense repair previews need a complete exact-address chain for the
+    # sample blast-radius tokens, not just the initially requested examples.
+    for entry in entry_backlinks:
+        for token in entry.get("sample_tokens") or []:
+            add_hover_inspector(token)
 
     parse_family_views = []
     seen_parse_ids = set()

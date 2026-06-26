@@ -410,12 +410,11 @@ mirror after separate app-repo review.
 
 Fresh Phase 3 smoke on the Phase 2.9 sealed graph:
 
-- source HEAD for refresh: `46f8c7a961aafa1b23849c137420cf7887f04868`
-- input shadow graph: `out/live-shadow-runs/20260626-110034/shadow-output-phase2p9-refresh-2b8dfb8`
-- static admin/debug pack:
-  `out/live-shadow-runs/20260626-110034/admin-debug-pack-phase3-refresh-46f8c7a/admin-debug-pack.json`
+- source HEAD for refresh: `922af2ec334fa6037a32deca9e231ac8a1c65633`
+- input shadow graph: sealed Phase 2.9 shadow outputs copied into a local ignored `out/` review directory
+- static admin/debug pack: local ignored `out/phase3-admin-debug-20260626-142444-922af2ec334f/admin-debug-pack.json`
 - pack counts: `49,900` token rows, `49,900` hover rows, `17,065` parse rows, `9,106` decision rows,
-  `2,092` entry rows, `9` blocker classes, `6` token inspector samples, `13` entry backlink samples
+  `2,092` entry rows, `9` blocker classes, `6` requested token samples, `2` entry backlink samples
 - validated pack: `python tools/validate_shadow_admin_debug_pack.py <pack>` -> `PASS`
 - exercised gated reverse traces: `quran:33:63:1` suffix pronoun (`two_vote_required`),
   `quran:22:18:17` conjunction/article/noun (`two_vote_required`), `quran:2:21:1` vocative bridge
@@ -434,8 +433,13 @@ Fresh Phase 3 smoke on the Phase 2.9 sealed graph:
 - repair preview rows now carry explicit `affected_token_count`, `affected_hover_count`,
   `affected_parse_key_count`, and `sample_tokens_are_complete` fields so a compact sample list cannot be mistaken for
   full blast-radius coverage.
+- entry/sense previews now require a complete sample-token inspector chain. `tools/build_shadow_admin_debug_pack.py`
+  adds hover inspectors for entry backlink sample tokens, and `tools/validate_shadow_admin_debug_pack.py` rejects any
+  entry sample token or hover slot that lacks a matching inspector. This prevents future admin/edit scaffolding from
+  showing an entry blast-radius sample that cannot be followed back through
+  `wbw:S:A:W -> quran:S:A:W -> parse:<hash>`.
 - production bug lesson smoke:
-  `python tools/validate_production_bug_lessons.py <production-bug-lesson-refresh-46f8c7a.jsonl>` -> `PASS`
+  `python tools/validate_production_bug_lessons.py <production-bug-lesson.jsonl>` -> `PASS`
   for `verb_object_suffix_omitted` on `quran:33:63:1` / `wbw:33:63:1`.
 
 Fresh Phase 3.25 / 3.5 grammar-regression gate:
