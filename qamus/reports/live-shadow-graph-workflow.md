@@ -62,6 +62,11 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   `live_mutation_allowed=false`. It is still a preview artifact only; no decision ledger, entry JSON, WBW artifact, or
   app route is changed. Token-only previews that have no resolved entry/sense use the deterministic overlay target
   `qamus:hover-overrides#field=token_overrides[wbw:S:A:W].gloss` rather than inventing an entry.
+- `tools/build_production_bug_lesson.py`: Phase 3.5 bridge from graph-addressed hover edit intents to production
+  bug lesson rows. It copies exact token, hover slot, parse, decision, entry/sense, gate, scope, and target-address
+  provenance from a validated edit intent, while the reviewer supplies the sarf/nahw lesson text. The emitted JSONL
+  validates with `tools/validate_production_bug_lessons.py` and remains read-only: no live Qamus data, WBW artifact,
+  entry JSON, decision ledger, or app route is changed.
 - `tools/validate_detector_maturity.py`: validates standalone or embedded detector-maturity records so Phase 2
   reports cannot treat `two_vote_required=0` or `source_disagreement=0` as proof that no such cases exist.
 - `tools/validate_live_shadow_run_manifest.py`: validates `phase2-run-manifest.json` so future live-readonly graph
@@ -157,6 +162,21 @@ python tools/plan_shadow_repair_impact_preview.py \
   --intent-jsonl <isolated static admin-debug output>/token-edit-intent.jsonl \
   --out-jsonl <isolated static admin-debug output>/token-repair-preview.jsonl
 python tools/validate_repair_impact_preview.py <isolated static admin-debug output>/token-repair-preview.jsonl
+python tools/build_production_bug_lesson.py \
+  --intent-jsonl <isolated static admin-debug output>/token-edit-intent.jsonl \
+  --edit-intent-id edit-intent:token-33-63-1 \
+  --bug-class verb_object_suffix_omitted \
+  --what-failed "The entry/lemma gloss omitted the attached object pronoun." \
+  --sarf-lesson "Segment the host and suffix pronoun before choosing a hover." \
+  --nahw-lesson "The explicit following subject does not erase the attached object." \
+  --learner-explanation "The final kaaf contributes 'you'." \
+  --drill-prompt "Mark the prefix, stem, and object pronoun in يَسْأَلُكَ." \
+  --level beginner \
+  --procedure-link sarf/procedures/clitic-and-host-morphology.md \
+  --procedure-link nahw/procedures/pronoun-attachment.md \
+  --regression-fixture-link qamus/examples/production_bug_lesson.sample.jsonl \
+  --out-jsonl <isolated static admin-debug output>/token-production-bug-lesson.jsonl
+python tools/validate_production_bug_lessons.py <isolated static admin-debug output>/token-production-bug-lesson.jsonl
 ```
 
 CI should use fixture/self-test mode only:
@@ -178,6 +198,7 @@ python tools/validate_shadow_admin_debug_pack.py qamus/examples/shadow_admin_deb
 python tools/query_shadow_admin_debug_pack.py --self-test
 python tools/plan_shadow_hover_edit_intent.py --self-test
 python tools/plan_shadow_repair_impact_preview.py --self-test
+python tools/build_production_bug_lesson.py --self-test
 python tools/validate_shadow_review_pack.py --self-test
 python tools/validate_shadow_review_pack.py qamus/examples/shadow_review_pack.sample.jsonl
 python tools/validate_decision_linkage.py --self-test
@@ -192,6 +213,7 @@ python tools/validate_detector_maturity.py --self-test
 python tools/validate_detector_maturity.py qamus/examples/detector_maturity.sample.json
 python tools/validate_detector_maturity.py qamus/examples/shadow_review_pack.sample.jsonl
 python tools/validate_production_bug_lessons.py qamus/examples/production_bug_lesson.sample.jsonl
+python tools/validate_production_bug_lessons.py qamus/examples/production_bug_lesson_from_intent.sample.jsonl
 ```
 
 ## Guardrails

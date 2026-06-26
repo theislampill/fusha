@@ -13,8 +13,16 @@ import tempfile
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOC = re.compile(r"^quran:\d{1,3}:\d{1,3}:\d{1,3}$")
 WBW = re.compile(r"^wbw:\d{1,3}:\d{1,3}:\d{1,3}$")
+PARSE = re.compile(r"^parse:[0-9a-f]+$")
+DECISION = re.compile(r"^decision:")
+EDIT_INTENT = re.compile(r"^edit-intent:")
+ENTRY_SENSE = re.compile(r"^qamus:.+#sense=\d+$")
+BLOCKER = re.compile(r"^blocker:")
 BUG_CLASS = re.compile(r"^[a-z0-9_]+$")
 LEVELS = {"beginner", "intermediate", "advanced"}
+SCOPES = {"token_only", "parse_family", "entry_sense", "unsafe"}
+GATES = {"token_review", "auto_safe_after_preview", "two_vote_required", "human_review_required",
+         "owner_review_required", "never_auto"}
 REQUIRED = [
     "bug_class",
     "token_addresses",
@@ -70,6 +78,20 @@ def validate(path):
                 errors.append("line %d: source_addresses missing %s" % (line_no, wbw))
         if row.get("level") not in LEVELS:
             errors.append("line %d: bad level %r" % (line_no, row.get("level")))
+        if row.get("edit_intent_id") is not None and not EDIT_INTENT.match(str(row.get("edit_intent_id"))):
+            errors.append("line %d: bad edit_intent_id %r" % (line_no, row.get("edit_intent_id")))
+        if row.get("requested_scope") is not None and row.get("requested_scope") not in SCOPES:
+            errors.append("line %d: bad requested_scope %r" % (line_no, row.get("requested_scope")))
+        if row.get("parse_id") is not None and not PARSE.match(str(row.get("parse_id"))):
+            errors.append("line %d: bad parse_id %r" % (line_no, row.get("parse_id")))
+        if row.get("decision_id") is not None and not DECISION.match(str(row.get("decision_id"))):
+            errors.append("line %d: bad decision_id %r" % (line_no, row.get("decision_id")))
+        if row.get("entry_sense") is not None and not ENTRY_SENSE.match(str(row.get("entry_sense"))):
+            errors.append("line %d: bad entry_sense %r" % (line_no, row.get("entry_sense")))
+        if row.get("gate") is not None and row.get("gate") not in GATES:
+            errors.append("line %d: bad gate %r" % (line_no, row.get("gate")))
+        if row.get("blocker") is not None and not BLOCKER.match(str(row.get("blocker"))):
+            errors.append("line %d: bad blocker %r" % (line_no, row.get("blocker")))
         procedure_links = row.get("procedure_links") or []
         if not any(str(p).startswith(("sarf/", "nahw/", "qamus/")) for p in procedure_links):
             errors.append("line %d: procedure_links must point into sarf/nahw/qamus" % line_no)
@@ -102,6 +124,13 @@ def self_test():
             "regression_fixture_link": "qamus/examples/production_bug_lesson.sample.jsonl",
             "validator_link": "tools/validate_production_bug_lessons.py",
             "source_addresses": ["quran:33:63:1", "wbw:33:63:1"],
+            "edit_intent_id": "edit-intent:token-33-63-1",
+            "requested_scope": "token_only",
+            "target_address": "wbw:33:63:1",
+            "parse_id": "parse:aaaaaaaa",
+            "decision_id": "decision:token-33-63-1",
+            "entry_sense": "qamus:5935ecfb1ec5#sense=2",
+            "gate": "token_review",
         }
         with io.open(path, "w", encoding="utf-8") as handle:
             handle.write(json.dumps(good, ensure_ascii=False, sort_keys=True) + "\n")
