@@ -1,0 +1,381 @@
+{
+  "audit_scope": "full_corpus_hover_dogfood_queue_summary",
+  "blocker_counts": {
+    "visible hover drops attached object pronoun كَ and uses lemma-style infinitive": 1,
+    "ما-function unresolved; route to nahw review rather than string-populating": 1
+  },
+  "class_counts": {
+    "known_defect": 1,
+    "pending/blocker": 1,
+    "rich_certified": 1
+  },
+  "detector_counts": {
+    "finite_verb_dictionary_root_gloss_leakage": 1,
+    "function_preposition_flattening": 1,
+    "suffix_omitted": 1
+  },
+  "headline": {
+    "known_defect_or_token_only_override": 1,
+    "no_public_leak": true,
+    "pending_blockers": 1,
+    "populated_uncertified_or_string_only": 0,
+    "rich_certified": 1
+  },
+  "hover_presence_counts": {
+    "missing": 1,
+    "populated": 2
+  },
+  "identity_boundary": {
+    "hover_identity": "wbw:S:A:W",
+    "live_mutation_allowed": false,
+    "parse_key_role": "grammar-family key only; never primary identity",
+    "token_identity": "quran:S:A:W"
+  },
+  "not_claimed": [
+    "hover coverage improvement",
+    "grammatical correctness completion",
+    "live Qamus mutation",
+    "WBW rebuild",
+    "parse-key propagation approval"
+  ],
+  "parse_family_class_counts": {
+    "propagation_safe": 1,
+    "quarantine_collision": 1,
+    "two_vote_required": 1
+  },
+  "parse_gate_counts": {
+    "auto_safe": 1,
+    "never_auto": 1,
+    "two_vote_required": 1
+  },
+  "production_bug_lessons": {
+    "bug_class_counts": {
+      "verb_object_suffix_omitted": 1
+    },
+    "count": 1,
+    "examples_by_bug_class": {
+      "verb_object_suffix_omitted": [
+        {
+          "entry_sense": "qamus:5935ecfb1ec5#sense=2",
+          "gate": "two_vote_required",
+          "source_addresses": [
+            "quran:33:63:1",
+            "wbw:33:63:1"
+          ],
+          "target_address": "wbw:33:63:1",
+          "visible_bad_hover": "to ask, question"
+        }
+      ]
+    }
+  },
+  "public_leak_count": 0,
+  "queues": {
+    "drill_regression_fixtures": {
+      "count": 2,
+      "examples": [
+        {
+          "blocker": "visible hover drops attached object pronoun كَ and uses lemma-style infinitive",
+          "current_visible_gloss": "to ask, question",
+          "decision_ids": [
+            "decision:token-33-63-1"
+          ],
+          "detectors": [
+            "suffix_omitted",
+            "finite_verb_dictionary_root_gloss_leakage"
+          ],
+          "dogfood_class": "known_defect",
+          "entry": "qamus:5935ecfb1ec5",
+          "parse_family_class": "two_vote_required",
+          "parse_gate": "two_vote_required",
+          "parse_id": "parse:222222222222222222222222",
+          "public_leak_detected": false,
+          "quran_loc": "quran:33:63:1",
+          "requires_two_vote": true,
+          "rich_rendered": true,
+          "routes": [
+            "repair_candidate",
+            "production_bug_lesson",
+            "sarf_nahw_procedure_improvement",
+            "drill_regression_fixture"
+          ],
+          "sense": 2,
+          "surface": "يَسْأَلُكَ",
+          "wbw_loc": "wbw:33:63:1"
+        },
+        {
+          "blocker": "ما-function unresolved; route to nahw review rather than string-populating",
+          "current_visible_gloss": null,
+          "decision_ids": [],
+          "detectors": [
+            "function_preposition_flattening"
+          ],
+          "dogfood_class": "pending/blocker",
+          "entry": null,
+          "parse_family_class": "quarantine_collision",
+          "parse_gate": "never_auto",
+          "parse_id": "parse:333333333333333333333333",
+          "public_leak_detected": false,
+          "quran_loc": "quran:86:14:1",
+          "requires_two_vote": true,
+          "rich_rendered": true,
+          "routes": [
+            "blocker_queue_row",
+            "sarf_nahw_procedure_improvement",
+            "drill_regression_fixture"
+          ],
+          "sense": null,
+          "surface": "وَمَا",
+          "wbw_loc": "wbw:86:14:1"
+        }
+      ],
+      "next_action": "convert to learner-facing drill plus regression fixture when bug class is stable"
+    },
+    "known_defects": {
+      "count": 1,
+      "examples": [
+        {
+          "blocker": "visible hover drops attached object pronoun كَ and uses lemma-style infinitive",
+          "current_visible_gloss": "to ask, question",
+          "decision_ids": [
+            "decision:token-33-63-1"
+          ],
+          "detectors": [
+            "suffix_omitted",
+            "finite_verb_dictionary_root_gloss_leakage"
+          ],
+          "dogfood_class": "known_defect",
+          "entry": "qamus:5935ecfb1ec5",
+          "parse_family_class": "two_vote_required",
+          "parse_gate": "two_vote_required",
+          "parse_id": "parse:222222222222222222222222",
+          "public_leak_detected": false,
+          "quran_loc": "quran:33:63:1",
+          "requires_two_vote": true,
+          "rich_rendered": true,
+          "routes": [
+            "repair_candidate",
+            "production_bug_lesson",
+            "sarf_nahw_procedure_improvement",
+            "drill_regression_fixture"
+          ],
+          "sense": 2,
+          "surface": "يَسْأَلُكَ",
+          "wbw_loc": "wbw:33:63:1"
+        }
+      ],
+      "next_action": "review as graph-addressed repair candidates; no live apply without owner-gated apply plan"
+    },
+    "pending_blockers": {
+      "count": 1,
+      "examples": [
+        {
+          "blocker": "ما-function unresolved; route to nahw review rather than string-populating",
+          "current_visible_gloss": null,
+          "decision_ids": [],
+          "detectors": [
+            "function_preposition_flattening"
+          ],
+          "dogfood_class": "pending/blocker",
+          "entry": null,
+          "parse_family_class": "quarantine_collision",
+          "parse_gate": "never_auto",
+          "parse_id": "parse:333333333333333333333333",
+          "public_leak_detected": false,
+          "quran_loc": "quran:86:14:1",
+          "requires_two_vote": true,
+          "rich_rendered": true,
+          "routes": [
+            "blocker_queue_row",
+            "sarf_nahw_procedure_improvement",
+            "drill_regression_fixture"
+          ],
+          "sense": null,
+          "surface": "وَمَا",
+          "wbw_loc": "wbw:86:14:1"
+        }
+      ],
+      "next_action": "keep in blocker queue with exact blocker and sarf/nahw route"
+    },
+    "populated_uncertified": {
+      "count": 0,
+      "examples": [],
+      "next_action": "audit populated string hovers; visible text alone is not dogfood certification"
+    },
+    "production_bug_lessons": {
+      "count": 1,
+      "examples": [
+        {
+          "blocker": "visible hover drops attached object pronoun كَ and uses lemma-style infinitive",
+          "current_visible_gloss": "to ask, question",
+          "decision_ids": [
+            "decision:token-33-63-1"
+          ],
+          "detectors": [
+            "suffix_omitted",
+            "finite_verb_dictionary_root_gloss_leakage"
+          ],
+          "dogfood_class": "known_defect",
+          "entry": "qamus:5935ecfb1ec5",
+          "parse_family_class": "two_vote_required",
+          "parse_gate": "two_vote_required",
+          "parse_id": "parse:222222222222222222222222",
+          "public_leak_detected": false,
+          "quran_loc": "quran:33:63:1",
+          "requires_two_vote": true,
+          "rich_rendered": true,
+          "routes": [
+            "repair_candidate",
+            "production_bug_lesson",
+            "sarf_nahw_procedure_improvement",
+            "drill_regression_fixture"
+          ],
+          "sense": 2,
+          "surface": "يَسْأَلُكَ",
+          "wbw_loc": "wbw:33:63:1"
+        }
+      ],
+      "next_action": "emit or review production-bug lessons that update sarf/nahw drills and regressions"
+    },
+    "renderer_requirements": {
+      "count": 0,
+      "examples": [],
+      "next_action": "route to rich-hover segment/rendering requirement; do not treat as gloss closure"
+    },
+    "repair_candidates": {
+      "count": 1,
+      "examples": [
+        {
+          "blocker": "visible hover drops attached object pronoun كَ and uses lemma-style infinitive",
+          "current_visible_gloss": "to ask, question",
+          "decision_ids": [
+            "decision:token-33-63-1"
+          ],
+          "detectors": [
+            "suffix_omitted",
+            "finite_verb_dictionary_root_gloss_leakage"
+          ],
+          "dogfood_class": "known_defect",
+          "entry": "qamus:5935ecfb1ec5",
+          "parse_family_class": "two_vote_required",
+          "parse_gate": "two_vote_required",
+          "parse_id": "parse:222222222222222222222222",
+          "public_leak_detected": false,
+          "quran_loc": "quran:33:63:1",
+          "requires_two_vote": true,
+          "rich_rendered": true,
+          "routes": [
+            "repair_candidate",
+            "production_bug_lesson",
+            "sarf_nahw_procedure_improvement",
+            "drill_regression_fixture"
+          ],
+          "sense": 2,
+          "surface": "يَسْأَلُكَ",
+          "wbw_loc": "wbw:33:63:1"
+        }
+      ],
+      "next_action": "turn into owner-gated repair preview before any entry/sense or token decision"
+    },
+    "rich_certified": {
+      "count": 1,
+      "examples": [
+        {
+          "blocker": null,
+          "current_visible_gloss": "the human being",
+          "decision_ids": [
+            "decision:token-4-28-7"
+          ],
+          "detectors": [],
+          "dogfood_class": "rich_certified",
+          "entry": "qamus:n:human",
+          "parse_family_class": "propagation_safe",
+          "parse_gate": "auto_safe",
+          "parse_id": "parse:111111111111111111111111",
+          "public_leak_detected": false,
+          "quran_loc": "quran:4:28:7",
+          "requires_two_vote": false,
+          "rich_rendered": true,
+          "routes": [],
+          "sense": 1,
+          "surface": "ٱلْإِنسَانُ",
+          "wbw_loc": "wbw:4:28:7"
+        }
+      ],
+      "next_action": "treat as certified only for the recorded exact token and gate evidence"
+    },
+    "sarf_nahw_procedure_improvements": {
+      "count": 2,
+      "examples": [
+        {
+          "blocker": "visible hover drops attached object pronoun كَ and uses lemma-style infinitive",
+          "current_visible_gloss": "to ask, question",
+          "decision_ids": [
+            "decision:token-33-63-1"
+          ],
+          "detectors": [
+            "suffix_omitted",
+            "finite_verb_dictionary_root_gloss_leakage"
+          ],
+          "dogfood_class": "known_defect",
+          "entry": "qamus:5935ecfb1ec5",
+          "parse_family_class": "two_vote_required",
+          "parse_gate": "two_vote_required",
+          "parse_id": "parse:222222222222222222222222",
+          "public_leak_detected": false,
+          "quran_loc": "quran:33:63:1",
+          "requires_two_vote": true,
+          "rich_rendered": true,
+          "routes": [
+            "repair_candidate",
+            "production_bug_lesson",
+            "sarf_nahw_procedure_improvement",
+            "drill_regression_fixture"
+          ],
+          "sense": 2,
+          "surface": "يَسْأَلُكَ",
+          "wbw_loc": "wbw:33:63:1"
+        },
+        {
+          "blocker": "ما-function unresolved; route to nahw review rather than string-populating",
+          "current_visible_gloss": null,
+          "decision_ids": [],
+          "detectors": [
+            "function_preposition_flattening"
+          ],
+          "dogfood_class": "pending/blocker",
+          "entry": null,
+          "parse_family_class": "quarantine_collision",
+          "parse_gate": "never_auto",
+          "parse_id": "parse:333333333333333333333333",
+          "public_leak_detected": false,
+          "quran_loc": "quran:86:14:1",
+          "requires_two_vote": true,
+          "rich_rendered": true,
+          "routes": [
+            "blocker_queue_row",
+            "sarf_nahw_procedure_improvement",
+            "drill_regression_fixture"
+          ],
+          "sense": null,
+          "surface": "وَمَا",
+          "wbw_loc": "wbw:86:14:1"
+        }
+      ],
+      "next_action": "feed procedure/eval/drill hardening; do not only patch the row"
+    },
+    "token_only_overrides": {
+      "count": 0,
+      "examples": [],
+      "next_action": "prepare token-addressed override review; do not propagate by surface or parse family"
+    }
+  },
+  "rich_rendered_count": 3,
+  "route_counts": {
+    "blocker_queue_row": 1,
+    "drill_regression_fixture": 2,
+    "production_bug_lesson": 1,
+    "repair_candidate": 1,
+    "sarf_nahw_procedure_improvement": 2
+  },
+  "row_count": 3
+}
