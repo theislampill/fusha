@@ -414,8 +414,8 @@ Mirror mismatch classification remains unchanged and report-only:
 
 ## Phase 4 Current-HEAD Dry-Run Blocker Refinement
 
-Status: review-only dry run completed from local current HEAD
-`3ae13976bdefd4af6bc75fa454f6c291001f8875`. This did not mutate live
+Status: review-only dry run refreshed from latest pushed current HEAD
+`a9ff84b1e4bd7469f71b57683a3b20bd4224d9c2`. This did not mutate live
 Qamus, rebuild WBW, restart services, sync the mirror, apply hover decisions,
 or claim closure progress.
 
@@ -424,11 +424,15 @@ Dry-run inputs and outputs:
 - sealed shadow graph:
   `out/live-shadow-runs/20260626-110034/shadow-output-phase2p9-sealed`
 - dry-run output:
-  `out/phase4-dryrun-20260626-161512-3ae13976bdef`
+  `out/phase4-dryrun-20260626-180341-a9ff84b1e4bd`
 - two-vote request rows: `11`
-- validated response rows: `22`
+- validated source-only response rows replayed against the fresh request packet:
+  `22`
 - reconciled certified rows: `10`
 - reconciled unresolved rows: `1`
+- hover decision plan rows: `10`
+- draft token-decision ledger rows: `10`
+- source-only review/apply artifact leak-pattern matches: `0`
 - `apply_allowed=false`, `live_mutation_allowed=false`,
   `closure_claim_allowed=false`
 
@@ -450,6 +454,14 @@ Validation evidence:
 - `python tools/validate_phase4_two_vote_requests.py <phase4-two-vote-requests.jsonl>` -> `PASS`
 - `python tools/validate_phase4_two_vote_responses.py <combined-responses.jsonl> --requests <phase4-two-vote-requests.jsonl>` -> `PASS`
 - `python tools/reconcile_phase4_two_vote_responses.py --requests <phase4-two-vote-requests.jsonl> --responses <combined-responses.jsonl> ...` -> `PASS`
+- `python tools/build_phase4_gloss_adjudication_requests.py <unresolved.jsonl>` -> `PASS`
+- `python tools/validate_phase4_gloss_adjudication_requests.py <gloss-adjudication-requests.jsonl>` -> `PASS`
+- `python tools/build_phase4_hover_decision_plan.py <certified.jsonl>` -> `PASS`
+- `python tools/validate_phase4_hover_decision_plan.py <hover-decision-plan.jsonl>` -> `PASS`
+- `python tools/build_phase4_apply_readiness_manifest.py <hover-decision-plan.jsonl>` -> `PASS`
+- `python tools/validate_phase4_apply_readiness_manifest.py <apply-readiness-manifest.json> --plan-jsonl <hover-decision-plan.jsonl>` -> `PASS`
+- `python tools/build_phase4_draft_token_decision_ledger.py <hover-decision-plan.jsonl>` -> `PASS`
+- `python tools/validate_phase4_draft_token_decision_ledger.py <draft-token-decision-ledger.jsonl> --plan-jsonl <hover-decision-plan.jsonl>` -> `PASS`
 
 Residual blocker precision was hardened in the reconciler. When both sarf and
 nahw approve the same token with the same reason key and same scope, but differ
@@ -480,7 +492,7 @@ into an owner/scholar wording request without weakening any gate:
 - validator: `tools/validate_phase4_gloss_adjudication_requests.py`
 - sample: `qamus/examples/phase4_gloss_adjudication_request.sample.jsonl`
 - generated ignored dry-run packet:
-  `out/phase4-dryrun-20260626-161512-3ae13976bdef/gloss-adjudication-requests.jsonl`
+  `out/phase4-dryrun-20260626-180341-a9ff84b1e4bd/gloss-adjudication-requests.jsonl`
 - generated rows: `1`
 - candidate glosses: `in a recognized manner`; `with recognized fairness`
 - allowed next step: `owner_or_scholar_gloss_adjudication_only`
