@@ -30,6 +30,27 @@
       "type": "array",
       "items": { "type": "string", "pattern": "^qamus:" }
     },
+    "component_candidate_entries": {
+      "description": "Component-level candidate evidence from rich token segments. It is never primary identity, never a whole-token candidate, and never sufficient for propagation.",
+      "type": "array",
+      "items": { "type": "string", "pattern": "^qamus:" }
+    },
+    "component_candidate_join_statuses": {
+      "description": "Source/role/segment/location provenance for component_candidate_entries.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["entry", "join_status"],
+        "properties": {
+          "entry": { "type": "string", "pattern": "^qamus:" },
+          "join_status": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
     "blockers": { "type": "array", "items": { "type": "string" } },
     "gates": {
       "type": "array",
@@ -127,6 +148,40 @@
                   "pattern": "^(exact|candidate|inferred|missing|conflict):"
                 }
               }
+            }
+          }
+        },
+        "qamus_component_candidates": {
+          "description": "Component-level Qamus evidence for rich WBW pieces only. These rows do not certify the full token.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["entry_address", "source", "role", "segment_text"],
+            "properties": {
+              "entry_id": { "type": ["string", "integer", "null"] },
+              "entry_address": { "type": "string", "pattern": "^qamus:" },
+              "sense_id": { "type": ["string", "integer", "null"] },
+              "source": { "type": "string" },
+              "role": { "type": "string" },
+              "segment_text": { "type": "string" },
+              "root": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "component_candidate_joins": {
+          "description": "Normalized component candidate provenance retained inside the canonical parse object.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["entry", "source", "role", "segment_text"],
+            "properties": {
+              "entry": { "type": "string", "pattern": "^qamus:" },
+              "source": { "type": "string" },
+              "role": { "type": "string" },
+              "segment_text": { "type": "string" },
+              "root": { "type": ["string", "null"] }
             }
           }
         },

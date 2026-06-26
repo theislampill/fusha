@@ -108,7 +108,7 @@ The tools intentionally do not embed private server paths. Server acceptance pas
 - `qamus/examples/repair_impact_preview.sample.jsonl`: tiny fixture slice covering the three edit scopes without
   touching live Qamus data.
 - `qamus/examples/shadow_review_pack.sample.jsonl`: tiny fixture slice covering propagation-preview, collision
-  quarantine, missing-entry, and never-auto lanes without committing live graph dumps.
+  quarantine, missing-entry, never-auto, and component-enriched two-vote lanes without committing live graph dumps.
 
 ## Acceptance Gates
 

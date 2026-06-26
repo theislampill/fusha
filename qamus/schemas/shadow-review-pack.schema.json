@@ -120,6 +120,39 @@
         }
       }
     },
+    "component_candidate_entries": {
+      "description": "Component-level Qamus evidence for rich WBW segments only. These are not whole-token candidates and must not certify propagation, closure, or auto-safe status.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^qamus:"
+      }
+    },
+    "component_candidate_join_statuses": {
+      "description": "Provenance for component_candidate_entries. Each join must preserve source, segment role, segment text, and exact token location.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["entry", "join_status"],
+        "additionalProperties": false,
+        "properties": {
+          "entry": {
+            "type": "string",
+            "pattern": "^qamus:"
+          },
+          "join_status": {
+            "type": "array",
+            "contains": {
+              "type": "string",
+              "pattern": "^source:"
+            },
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "parse": {
       "type": "object",
       "required": [

@@ -359,6 +359,68 @@ def propagation_preview_row():
     return row
 
 
+def component_enriched_two_vote_row():
+    row = good_row()
+    row.update({
+        "id": "queue:parse_c0ffee12",
+        "parse_id": "parse:c0ffee12",
+        "lane": "two_vote_required",
+        "scope": "token_or_family_after_votes",
+        "recommended_action": "build two-vote review packet with source-addressed reasoning",
+        "required_gate": "two_vote_required",
+        "gate_reasons": [
+            "grammar_trigger:function_particle",
+            "parse_gate:two_vote_required",
+            "requires_independent_reason_agreement",
+        ],
+        "surface_sample": "وَٱلشَّجَرُ",
+        "quran_locs": ["quran:22:18:17"],
+        "wbw_locs": ["wbw:22:18:17"],
+        "token_sample": ["quran:22:18:17"],
+        "candidate_entries": [],
+        "candidate_join_statuses": [],
+        "component_candidate_entries": ["qamus:p:waw", "qamus:p:al", "qamus:n:tree"],
+        "component_candidate_join_statuses": [
+            {
+                "entry": "qamus:p:waw",
+                "join_status": [
+                    "source:rich_wbw_segment",
+                    "role:conjunction",
+                    "segment_text:وَ",
+                    "token_loc:quran:22:18:17",
+                ],
+            },
+            {
+                "entry": "qamus:p:al",
+                "join_status": [
+                    "source:rich_wbw_segment",
+                    "role:definite_article",
+                    "segment_text:ٱل",
+                    "token_loc:quran:22:18:17",
+                ],
+            },
+            {
+                "entry": "qamus:n:tree",
+                "join_status": [
+                    "source:rich_wbw_segment",
+                    "role:stem",
+                    "segment_text:شَّجَرُ",
+                    "token_loc:quran:22:18:17",
+                ],
+            },
+        ],
+    })
+    row["parse"] = dict(row["parse"])
+    row["parse"].update({
+        "gate": "two_vote_required",
+        "decision_status": "resolved",
+        "parse_confidence": "rich_metadata",
+        "pos": "noun",
+        "grammar_triggers": ["function_particle"],
+    })
+    return row
+
+
 def source_disagreement_row():
     row = good_row()
     row.update({
@@ -387,24 +449,48 @@ def self_test():
             handle.write(json.dumps(good_row(), ensure_ascii=False, sort_keys=True) + "\n")
             handle.write(json.dumps(never_auto_row(), ensure_ascii=False, sort_keys=True) + "\n")
             handle.write(json.dumps(propagation_preview_row(), ensure_ascii=False, sort_keys=True) + "\n")
+            handle.write(json.dumps(component_enriched_two_vote_row(), ensure_ascii=False, sort_keys=True) + "\n")
             handle.write(json.dumps(source_disagreement_row(), ensure_ascii=False, sort_keys=True) + "\n")
         row = good_row()
         row["quran_locs"] = ["33:63:1"]
         weak_propagation = propagation_preview_row()
         weak_propagation["required_gate"] = "auto_safe"
+        component_propagation = component_enriched_two_vote_row()
+        component_propagation.update({
+            "lane": "propagation_safe_candidate",
+            "scope": "parse_key_family_readonly_preview",
+            "required_gate": "auto_safe_after_preview",
+            "gate_reasons": ["parse_gate:auto_safe", "requires_pre_apply_family_preview"],
+        })
+        component_propagation["parse"] = dict(component_propagation["parse"])
+        component_propagation["parse"].update({
+            "gate": "auto_safe",
+            "grammar_triggers": [],
+        })
         with io.open(bad, "w", encoding="utf-8") as handle:
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
             handle.write(json.dumps(weak_propagation, ensure_ascii=False, sort_keys=True) + "\n")
+            handle.write(json.dumps(component_propagation, ensure_ascii=False, sort_keys=True) + "\n")
         count, errors = validate(good)
-        if count != 4 or errors:
+        if count != 5 or errors:
             print("SELF-TEST FAIL good:", errors)
             return 1
+        component_rows = [
+            row for _line, row in iter_jsonl(good)
+            if row.get("component_candidate_entries")
+        ]
+        if len(component_rows) != 1 or component_rows[0].get("lane") != "two_vote_required":
+            print("SELF-TEST FAIL component lane:", component_rows)
+            return 1
         count, errors = validate(bad)
-        if count != 2 or not any("bad quran loc" in err for err in errors):
+        if count != 3 or not any("bad quran loc" in err for err in errors):
             print("SELF-TEST FAIL bad:", errors)
             return 1
         if not any("propagation_safe_candidate must use required_gate=auto_safe_after_preview" in err for err in errors):
             print("SELF-TEST FAIL weak propagation:", errors)
+            return 1
+        if not any("component candidates cannot support propagation_safe_candidate" in err for err in errors):
+            print("SELF-TEST FAIL component propagation:", errors)
             return 1
     print("PASS — shadow review-pack validator self-test")
     return 0

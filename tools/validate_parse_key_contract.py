@@ -334,6 +334,55 @@ def self_test():
             print("SELF-TEST FAIL collision propagation:", errors)
             return 1
 
+        component_two_vote = copy.deepcopy(rows[1])
+        component_two_vote["component_candidate_entries"] = ["qamus:p:kaf"]
+        component_two_vote["component_candidate_join_statuses"] = [
+            {
+                "entry": "qamus:p:kaf",
+                "join_status": [
+                    "source:rich_wbw_segment",
+                    "role:object_pronoun",
+                    "segment_text:كَ",
+                    "token_loc:quran:33:63:1",
+                ],
+            }
+        ]
+        component_two_vote["canonical_parse_object"]["qamus_component_candidates"] = [
+            {
+                "entry_address": "qamus:p:kaf",
+                "entry_id": "p-kaf",
+                "sense_id": 1,
+                "source": "rich_wbw_segment",
+                "role": "object_pronoun",
+                "segment_text": "كَ",
+            }
+        ]
+        component_two_vote["canonical_parse_object"]["component_candidate_joins"] = [
+            {
+                "entry": "qamus:p:kaf",
+                "source": "rich_wbw_segment",
+                "role": "object_pronoun",
+                "segment_text": "كَ",
+            }
+        ]
+        component_two_vote["id"] = parse_id_for(component_two_vote["canonical_parse_object"])
+        count, errors = validate_obj_rows([component_two_vote])
+        if count != 1 or errors or component_two_vote.get("family_class") != "two_vote_required":
+            print("SELF-TEST FAIL component two-vote:", errors)
+            return 1
+
+        bad_component_propagation = copy.deepcopy(component_two_vote)
+        bad_component_propagation["family_class"] = "propagation_safe"
+        bad_component_propagation["propagation_allowed"] = True
+        bad_component_propagation["gates"] = ["auto_safe"]
+        bad_component_propagation["canonical_parse_object"]["gate"] = "auto_safe"
+        bad_component_propagation["canonical_parse_object"]["grammar_triggers"] = []
+        bad_component_propagation["id"] = parse_id_for(bad_component_propagation["canonical_parse_object"])
+        count, errors = validate_obj_rows([bad_component_propagation])
+        if not any("component candidates cannot contribute to propagation_allowed" in err for err in errors):
+            print("SELF-TEST FAIL component propagation:", errors)
+            return 1
+
         bad_hash = copy.deepcopy(rows[0])
         bad_hash["id"] = "parse:aaaaaaaa"
         count, errors = validate_obj_rows([bad_hash])
