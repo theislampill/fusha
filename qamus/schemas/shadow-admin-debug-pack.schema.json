@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/shadow-admin-debug-pack.schema.json",
+  "title": "Qamus shadow admin debug pack",
+  "type": "object",
+  "required": [
+    "version",
+    "public_exposable",
+    "live_mutation_allowed",
+    "views",
+    "summary",
+    "hover_inspectors",
+    "entry_backlinks",
+    "parse_family_views",
+    "blocker_queue",
+    "public_boundary"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": "qamus-shadow-admin-debug-pack@1" },
+    "public_exposable": { "const": false },
+    "live_mutation_allowed": { "const": false },
+    "source_shadow_dir": { "type": "string" },
+    "views": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["hover_inspector", "entry_backlinks", "parse_family_view", "blocker_queue", "repair_preview"]
+      },
+      "uniqueItems": true
+    },
+    "summary": {
+      "type": "object",
+      "required": ["token_rows", "hover_rows", "entry_rows", "decision_rows", "parse_rows", "blocker_classes"],
+      "additionalProperties": { "type": "integer", "minimum": 0 },
+      "properties": {
+        "token_rows": { "type": "integer", "minimum": 1 },
+        "hover_rows": { "type": "integer", "minimum": 1 },
+        "entry_rows": { "type": "integer", "minimum": 1 },
+        "decision_rows": { "type": "integer", "minimum": 0 },
+        "parse_rows": { "type": "integer", "minimum": 1 },
+        "blocker_classes": { "type": "integer", "minimum": 0 },
+        "sample_token_count": { "type": "integer", "minimum": 0 },
+        "sample_entry_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "hover_inspectors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/hover_inspector" }
+    },
+    "entry_backlinks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry_backlinks" }
+    },
+    "parse_family_views": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/parse_family_view" }
+    },
+    "blocker_queue": { "$ref": "#/$defs/blocker_queue" },
+    "public_boundary": { "$ref": "public-private-boundary.schema.json" }
+  },
+  "$defs": {
+    "quran_loc": { "type": "string", "pattern": "^quran:\\d{1,3}:\\d{1,3}:\\d{1,3}$" },
+    "wbw_loc": { "type": "string", "pattern": "^wbw:\\d{1,3}:\\d{1,3}:\\d{1,3}$" },
+    "parse_id": { "type": ["string", "null"], "pattern": "^parse:" },
+    "public_boundary": { "$ref": "public-private-boundary.schema.json" },
+    "hover_inspector": {
+      "type": "object",
+      "required": [
+        "view",
+        "public_exposable",
+        "quran_loc",
+        "wbw_loc",
+        "parse_id",
+        "parse_key_family_size",
+        "propagation_allowed",
+        "entry_candidates",
+        "decision_ids",
+        "public_boundary",
+        "edit_scopes"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "view": { "const": "hover_inspector" },
+        "public_exposable": { "const": false },
+        "quran_loc": { "$ref": "#/$defs/quran_loc" },
+        "wbw_loc": { "$ref": "#/$defs/wbw_loc" },
+        "parse_id": { "$ref": "#/$defs/parse_id" },
+        "parse_key_family_size": { "type": "integer", "minimum": 0 },
+        "propagation_allowed": { "type": "boolean" },
+        "entry_candidates": { "type": "object" },
+        "decision_ids": { "type": "array", "items": { "type": ["string", "null"] } },
+        "public_boundary": { "$ref": "public-private-boundary.schema.json" },
+        "edit_scopes": { "type": "object" }
+      }
+    },
+    "entry_backlinks": {
+      "type": "object",
+      "required": [
+        "view",
+        "public_exposable",
+        "entry_id",
+        "dependent_token_count",
+        "dependent_hover_count",
+        "parse_key_count",
+        "repair_preview_stub",
+        "public_boundary"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "view": { "const": "entry_backlinks" },
+        "public_exposable": { "const": false },
+        "entry_id": { "type": "string", "pattern": "^qamus:" },
+        "dependent_token_count": { "type": "integer", "minimum": 0 },
+        "dependent_hover_count": { "type": "integer", "minimum": 0 },
+        "parse_key_count": { "type": "integer", "minimum": 0 },
+        "repair_preview_stub": {
+          "type": "object",
+          "required": ["live_mutation_allowed", "required_before_apply", "affected_token_count", "affected_hover_count"],
+          "additionalProperties": true,
+          "properties": {
+            "live_mutation_allowed": { "const": false },
+            "required_before_apply": { "const": true },
+            "affected_token_count": { "type": "integer", "minimum": 0 },
+            "affected_hover_count": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "public_boundary": { "$ref": "public-private-boundary.schema.json" }
+      }
+    },
+    "parse_family_view": {
+      "type": "object",
+      "required": [
+        "view",
+        "public_exposable",
+        "parse_id",
+        "family_size",
+        "propagation_allowed",
+        "seen_locs_sample",
+        "hover_slots_sample",
+        "public_boundary"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "view": { "const": "parse_family_view" },
+        "public_exposable": { "const": false },
+        "parse_id": { "type": "string", "pattern": "^parse:" },
+        "family_size": { "type": "integer", "minimum": 0 },
+        "propagation_allowed": { "type": "boolean" },
+        "seen_locs_sample": { "type": "array", "items": { "$ref": "#/$defs/quran_loc" } },
+        "hover_slots_sample": { "type": "array", "items": { "$ref": "#/$defs/wbw_loc" } },
+        "public_boundary": { "$ref": "public-private-boundary.schema.json" }
+      }
+    },
+    "blocker_queue": {
+      "type": "object",
+      "required": ["view", "public_exposable", "blocker_classes", "public_boundary"],
+      "additionalProperties": true,
+      "properties": {
+        "view": { "const": "blocker_queue" },
+        "public_exposable": { "const": false },
+        "blocker_classes": { "type": "array" },
+        "public_boundary": { "$ref": "public-private-boundary.schema.json" }
+      }
+    }
+  }
+}

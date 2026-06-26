@@ -1,0 +1,275 @@
+{
+  "blocker_queue": {
+    "blocker_classes": [
+      {
+        "blocker": "blocker:suffix_pronoun",
+        "count": 1,
+        "parse_key_count": 1,
+        "pos_counts": {
+          "V": 1
+        },
+        "public_exposable": false,
+        "sample_surfaces": [
+          "يَسْأَلُكَ"
+        ],
+        "sample_tokens": [
+          "quran:33:63:1"
+        ]
+      }
+    ],
+    "public_boundary": {
+      "external_source_names_public": false,
+      "internal_provenance_public": false,
+      "kind": "authored",
+      "lang": "en",
+      "private_fields": [
+        "internal_evidence",
+        "adapter_labels"
+      ],
+      "public_fields": [
+        "gloss",
+        "src",
+        "kind",
+        "lang"
+      ],
+      "src": "qamus"
+    },
+    "public_exposable": false,
+    "view": "blocker_queue"
+  },
+  "entry_backlinks": [
+    {
+      "blocker_counts": {
+        "suffix_pronoun": 1
+      },
+      "dependent_hover_count": 1,
+      "dependent_token_count": 1,
+      "entry_id": "qamus:5935ecfb1ec5",
+      "gate_counts": {
+        "two_vote_required": 1
+      },
+      "headword": "سَأَلَ",
+      "parse_key_count": 1,
+      "public_boundary": {
+        "external_source_names_public": false,
+        "internal_provenance_public": false,
+        "kind": "authored",
+        "lang": "en",
+        "private_fields": [
+          "internal_evidence",
+          "adapter_labels"
+        ],
+        "public_fields": [
+          "gloss",
+          "src",
+          "kind",
+          "lang"
+        ],
+        "src": "qamus"
+      },
+      "public_exposable": false,
+      "repair_preview_stub": {
+        "affected_hover_count": 1,
+        "affected_token_count": 1,
+        "live_mutation_allowed": false,
+        "required_before_apply": true,
+        "rollback_strategy": "no_apply_preview_only",
+        "scope": "entry_sense"
+      },
+      "sample_hover_slots": [
+        "wbw:33:63:1"
+      ],
+      "sample_parse_keys": [
+        "parse:aaaaaaaa"
+      ],
+      "sample_tokens": [
+        "quran:33:63:1"
+      ],
+      "section": "verb",
+      "view": "entry_backlinks"
+    }
+  ],
+  "hover_inspectors": [
+    {
+      "blocker": null,
+      "current_visible_hover": "ask you",
+      "decision_ids": [
+        "decision:token-33-63-1"
+      ],
+      "edit_scopes": {
+        "parse_key_family": {
+          "affected_token_count": 1,
+          "allowed_for_preview": true,
+          "family_propagation_allowed": false,
+          "required_gate": "two_vote_required"
+        },
+        "token_only": {
+          "affected_token_count": 1,
+          "allowed_for_preview": true,
+          "required_gate": "token_review"
+        }
+      },
+      "entry_candidates": {
+        "component_candidate_entries": [
+          "qamus:p:kaf"
+        ],
+        "component_candidate_joins": [
+          "candidate"
+        ],
+        "raw_component_candidates": [
+          {
+            "entry_address": "qamus:p:kaf",
+            "role": "object_pronoun",
+            "source": "rich_wbw_segment",
+            "token_loc": "quran:33:63:1"
+          }
+        ],
+        "raw_whole_token_candidates": [
+          {
+            "entry_address": "qamus:5935ecfb1ec5",
+            "join_status": "candidate"
+          }
+        ],
+        "whole_token_candidates": [
+          "qamus:5935ecfb1ec5"
+        ]
+      },
+      "family_class": "two_vote_required",
+      "gate": "two_vote_required",
+      "gates": [
+        "two_vote_required"
+      ],
+      "grammar_triggers": [
+        "suffix_pronoun"
+      ],
+      "parse_id": "parse:aaaaaaaa",
+      "parse_key_family_size": 1,
+      "propagation_allowed": false,
+      "public_boundary": {
+        "external_source_names_public": false,
+        "internal_provenance_public": false,
+        "kind": "authored",
+        "lang": "en",
+        "private_fields": [
+          "internal_evidence",
+          "adapter_labels"
+        ],
+        "public_fields": [
+          "gloss",
+          "src",
+          "kind",
+          "lang"
+        ],
+        "src": "qamus"
+      },
+      "public_exposable": false,
+      "quran_loc": "quran:33:63:1",
+      "status": "resolved",
+      "surface": "يَسْأَلُكَ",
+      "token_internal_segments": [
+        {
+          "role": "imperfect_prefix",
+          "surface": "يَ"
+        },
+        {
+          "role": "verb_stem",
+          "surface": "سْأَلُ"
+        },
+        {
+          "role": "object_pronoun",
+          "surface": "كَ"
+        }
+      ],
+      "view": "hover_inspector",
+      "wbw_loc": "wbw:33:63:1"
+    }
+  ],
+  "live_mutation_allowed": false,
+  "parse_family_views": [
+    {
+      "candidate_entries": [
+        "qamus:5935ecfb1ec5"
+      ],
+      "component_candidate_entries": [
+        "qamus:p:kaf"
+      ],
+      "decision_ids": [
+        "decision:token-33-63-1"
+      ],
+      "family_class": "two_vote_required",
+      "family_size": 1,
+      "gates": [
+        "two_vote_required"
+      ],
+      "grammar_triggers": [
+        "suffix_pronoun"
+      ],
+      "hover_slots_sample": [
+        "wbw:33:63:1"
+      ],
+      "norm_strict": "يسالك",
+      "parse_id": "parse:aaaaaaaa",
+      "propagation_allowed": false,
+      "public_boundary": {
+        "external_source_names_public": false,
+        "internal_provenance_public": false,
+        "kind": "authored",
+        "lang": "en",
+        "private_fields": [
+          "internal_evidence",
+          "adapter_labels"
+        ],
+        "public_fields": [
+          "gloss",
+          "src",
+          "kind",
+          "lang"
+        ],
+        "src": "qamus"
+      },
+      "public_exposable": false,
+      "seen_locs_sample": [
+        "quran:33:63:1"
+      ],
+      "surface": "يَسْأَلُكَ",
+      "view": "parse_family_view"
+    }
+  ],
+  "public_boundary": {
+    "external_source_names_public": false,
+    "internal_provenance_public": false,
+    "kind": "authored",
+    "lang": "en",
+    "private_fields": [
+      "internal_evidence",
+      "adapter_labels"
+    ],
+    "public_fields": [
+      "gloss",
+      "src",
+      "kind",
+      "lang"
+    ],
+    "src": "qamus"
+  },
+  "public_exposable": false,
+  "source_shadow_dir": "out/live-shadow-runs/sample/shadow-output",
+  "summary": {
+    "blocker_classes": 1,
+    "decision_rows": 1,
+    "entry_rows": 1,
+    "hover_rows": 1,
+    "parse_rows": 1,
+    "sample_entry_count": 1,
+    "sample_token_count": 1,
+    "token_rows": 1
+  },
+  "version": "qamus-shadow-admin-debug-pack@1",
+  "views": [
+    "blocker_queue",
+    "entry_backlinks",
+    "hover_inspector",
+    "parse_family_view",
+    "repair_preview"
+  ]
+}

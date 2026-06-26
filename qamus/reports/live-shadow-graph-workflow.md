@@ -44,6 +44,9 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   shadow graph and emits a static local `index.html` plus `admin-debug-pack.json` with hover inspectors, entry
   backlinks, parse-family views, blocker queues, and repair-preview stubs. It is not a live route, does not discover
   server paths, refuses likely live/runtime output paths, and always marks the pack `live_mutation_allowed=false`.
+- `tools/validate_shadow_admin_debug_pack.py`: validates the Phase 3 static admin/debug pack contract. It rejects
+  empty packs, missing Phase 3 views, broken `quran:S:A:W -> wbw:S:A:W` identity chains, public-exposable inspector
+  records, `live_mutation_allowed=true`, malformed repair-preview stubs, and public-boundary leaks.
 - `tools/validate_detector_maturity.py`: validates standalone or embedded detector-maturity records so Phase 2
   reports cannot treat `two_vote_required=0` or `source_disagreement=0` as proof that no such cases exist.
 - `tools/validate_live_shadow_run_manifest.py`: validates `phase2-run-manifest.json` so future live-readonly graph
@@ -124,6 +127,7 @@ python tools/build_shadow_admin_debug_pack.py --shadow-dir <isolated shadow outp
   --sample-token quran:33:63:1 \
   --sample-token quran:22:18:17 \
   --sample-token quran:2:21:1
+python tools/validate_shadow_admin_debug_pack.py <isolated static admin-debug output>/admin-debug-pack.json
 ```
 
 CI should use fixture/self-test mode only:
@@ -140,6 +144,8 @@ python tools/validate_phase1_shadow_graph.py --self-test
 python tools/summarize_shadow_closure_queue.py --self-test
 python tools/summarize_rich_wbw_roles.py --self-test
 python tools/build_shadow_admin_debug_pack.py --self-test
+python tools/validate_shadow_admin_debug_pack.py --self-test
+python tools/validate_shadow_admin_debug_pack.py qamus/examples/shadow_admin_debug_pack.sample.json
 python tools/validate_shadow_review_pack.py --self-test
 python tools/validate_shadow_review_pack.py qamus/examples/shadow_review_pack.sample.jsonl
 python tools/validate_decision_linkage.py --self-test

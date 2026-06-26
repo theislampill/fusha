@@ -501,6 +501,7 @@ for _art in (
         "qamus/schemas/live-shadow-run-manifest.schema.json",
         "qamus/schemas/production-bug-lesson.schema.json",
         "qamus/schemas/shadow-review-pack.schema.json",
+        "qamus/schemas/shadow-admin-debug-pack.schema.json",
         "qamus/examples/public_private_boundary.sample.json",
         "qamus/examples/detector_maturity.sample.json",
         "qamus/examples/live_shadow_run_manifest.sample.json",
@@ -509,6 +510,7 @@ for _art in (
         "qamus/examples/hover_edit_intent.sample.jsonl",
         "qamus/examples/repair_impact_preview.sample.jsonl",
         "qamus/examples/shadow_review_pack.sample.jsonl",
+        "qamus/examples/shadow_admin_debug_pack.sample.json",
         "qamus/procedures/production-bug-lessons.md",
         "qamus/reports/live-shadow-graph-workflow.md",
         "tools/summarize_shadow_closure_queue.py",
@@ -520,6 +522,7 @@ for _art in (
         "tools/validate_hover_edit_intent.py",
         "tools/validate_repair_impact_preview.py",
         "tools/validate_shadow_review_pack.py",
+        "tools/validate_shadow_admin_debug_pack.py",
         "tools/summarize_rich_wbw_roles.py",
         "tools/build_shadow_admin_debug_pack.py",
 ):
@@ -571,6 +574,10 @@ for _script, _args, _label in (
          "Phase2 production bug lesson sample validates"),
         ("summarize_rich_wbw_roles.py", ["--self-test"], "Phase2 rich WBW role taxonomy self-test"),
         ("build_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack self-test"),
+        ("validate_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack validator self-test"),
+        ("validate_shadow_admin_debug_pack.py",
+         [os.path.join(_R, "qamus", "examples", "shadow_admin_debug_pack.sample.json")],
+         "Phase3 shadow admin debug pack sample validates"),
 ):
     try:
         _v = run_text([sys.executable, os.path.join(_R, "tools", _script)] + _args)
