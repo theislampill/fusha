@@ -104,6 +104,23 @@ def required_evidence(row):
     ]
 
 
+def candidate_address(candidate):
+    if isinstance(candidate, dict):
+        return candidate.get("entry_address") or candidate.get("entry")
+    return candidate
+
+
+def candidate_addresses(candidates):
+    result = []
+    seen = set()
+    for candidate in candidates or []:
+        entry = candidate_address(candidate)
+        if entry and entry not in seen:
+            result.append(entry)
+            seen.add(entry)
+    return result
+
+
 def tranche_row(review_row, priority):
     parse_id = review_row["parse_id"]
     row_id = review_row["id"]
@@ -127,9 +144,9 @@ def tranche_row(review_row, priority):
             "surface_sample": review_row.get("surface_sample") or "",
         },
         "candidate_evidence": {
-            "whole_token_candidates": review_row.get("candidate_entries") or [],
+            "whole_token_candidates": candidate_addresses(review_row.get("candidate_entries") or []),
             "whole_token_candidate_joins": review_row.get("candidate_join_statuses") or [],
-            "component_candidates": review_row.get("component_candidate_entries") or [],
+            "component_candidates": candidate_addresses(review_row.get("component_candidate_entries") or []),
             "component_candidate_joins": review_row.get("component_candidate_join_statuses") or [],
         },
         "gate_reasons": review_row.get("gate_reasons") or [],
@@ -161,6 +178,17 @@ def self_test():
             review_validator.propagation_preview_row(),
             review_validator.never_auto_row(),
         ]
+        rows[1]["candidate_entries"] = [
+            {
+                "entry_address": "qamus:n:earth",
+                "entry_id": "earth",
+                "sense_id": 1,
+                "source": "usage_form",
+            }
+        ]
+        if candidate_addresses([{"entry_address": "qamus:p:waw"}, {"entry": "qamus:n:tree"}]) != ["qamus:p:waw", "qamus:n:tree"]:
+            print("SELF-TEST FAIL: rich candidate object normalization failed")
+            return 1
         write_jsonl(review_pack, rows)
         out_rows = plan(review_pack, lanes=["two_vote_required", "propagation_safe_candidate"])
         if len(out_rows) != 2:
@@ -172,6 +200,12 @@ def self_test():
         if out_rows[0]["candidate_evidence"]["component_candidates"] and out_rows[0]["required_gate"] != "two_vote_required":
             print("SELF-TEST FAIL: component candidates weakened gate")
             return 1
+        for row in out_rows:
+            evidence = row["candidate_evidence"]
+            for field in ("whole_token_candidates", "component_candidates"):
+                if any(isinstance(candidate, dict) for candidate in evidence[field]):
+                    print("SELF-TEST FAIL: %s leaked rich candidate objects" % field)
+                    return 1
         if any(row["apply_policy"]["apply_allowed"] for row in out_rows):
             print("SELF-TEST FAIL: dry-run tranche allowed apply")
             return 1
