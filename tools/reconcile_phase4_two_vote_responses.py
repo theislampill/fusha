@@ -110,6 +110,19 @@ def certified_row(request, responses):
     }
 
 
+def disagreement_reason(sarf, nahw):
+    same_gloss = compact(sarf.get("concise_authored_gloss")) == compact(nahw.get("concise_authored_gloss"))
+    same_reason = compact(sarf.get("reason_agreement_key")) == compact(nahw.get("reason_agreement_key"))
+    same_scope = sarf.get("safe_scope_after_vote") == nahw.get("safe_scope_after_vote")
+    if same_reason and same_scope and not same_gloss:
+        return "gloss_wording_disagreement"
+    if same_gloss and same_scope and not same_reason:
+        return "reason_disagreement"
+    if same_gloss and same_reason and not same_scope:
+        return "scope_disagreement"
+    return "vote_disagreement"
+
+
 def reconcile_one(request, responses):
     missing = [lens for lens in LENSES if lens not in responses]
     if missing:
@@ -127,7 +140,7 @@ def reconcile_one(request, responses):
     same_reason = compact(sarf.get("reason_agreement_key")) == compact(nahw.get("reason_agreement_key"))
     same_scope = sarf.get("safe_scope_after_vote") == nahw.get("safe_scope_after_vote")
     if not (same_gloss and same_reason and same_scope):
-        return None, unresolved_row(request, responses, "vote_disagreement")
+        return None, unresolved_row(request, responses, disagreement_reason(sarf, nahw))
     return certified_row(request, responses), None
 
 

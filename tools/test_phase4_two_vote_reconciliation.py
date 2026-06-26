@@ -113,7 +113,7 @@ def main():
         assert summary["certified_rows"] == 0, summary
         assert summary["unresolved_rows"] == 1, summary
         unresolved = [json.loads(line) for line in unresolved_path.read_text(encoding="utf-8").splitlines()]
-        assert unresolved[0]["unresolved_reason"] == "vote_disagreement"
+        assert unresolved[0]["unresolved_reason"] == "gloss_wording_disagreement"
         assert unresolved[0]["identity"]["wbw_locs"] == ["wbw:22:18:17"]
 
         write_jsonl(requests_path, [request])

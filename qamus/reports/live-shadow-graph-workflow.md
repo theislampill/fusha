@@ -404,6 +404,66 @@ Mirror mismatch classification remains unchanged and report-only:
 
 `content-equivalent-or-near-equivalent; metadata/source-hash divergent; not safe for mutation until separately reconciled`.
 
+## Phase 4 Current-HEAD Dry-Run Blocker Refinement
+
+Status: review-only dry run completed from local current HEAD
+`3ae13976bdefd4af6bc75fa454f6c291001f8875`. This did not mutate live
+Qamus, rebuild WBW, restart services, sync the mirror, apply hover decisions,
+or claim closure progress.
+
+Dry-run inputs and outputs:
+
+- sealed shadow graph:
+  `out/live-shadow-runs/20260626-110034/shadow-output-phase2p9-sealed`
+- dry-run output:
+  `out/phase4-dryrun-20260626-161512-3ae13976bdef`
+- two-vote request rows: `11`
+- validated response rows: `22`
+- reconciled certified rows: `10`
+- reconciled unresolved rows: `1`
+- `apply_allowed=false`, `live_mutation_allowed=false`,
+  `closure_claim_allowed=false`
+
+The current-HEAD queue still preserves the Phase 2.8 component-candidate
+boundary:
+
+- all dry-run request rows are `lane=two_vote_required`
+- `auto_safe_rows=0`
+- `component_candidate_rows=11`
+- component candidates remain non-certifying and cannot weaken the gate
+
+Validation evidence:
+
+- `python tools/summarize_shadow_closure_queue.py <sealed-shadow> --review-lane two_vote_required` -> `PASS`
+- `python tools/validate_shadow_review_pack.py <two-vote-review-pack.jsonl>` -> `PASS`
+- `python tools/plan_phase4_closure_tranche.py <two-vote-review-pack.jsonl> --lane two_vote_required` -> `PASS`
+- `python tools/validate_phase4_closure_tranche.py <phase4-two-vote-dryrun-tranche.jsonl>` -> `PASS`
+- `python tools/build_phase4_two_vote_requests.py <phase4-two-vote-dryrun-tranche.jsonl>` -> `PASS`
+- `python tools/validate_phase4_two_vote_requests.py <phase4-two-vote-requests.jsonl>` -> `PASS`
+- `python tools/validate_phase4_two_vote_responses.py <combined-responses.jsonl> --requests <phase4-two-vote-requests.jsonl>` -> `PASS`
+- `python tools/reconcile_phase4_two_vote_responses.py --requests <phase4-two-vote-requests.jsonl> --responses <combined-responses.jsonl> ...` -> `PASS`
+
+Residual blocker precision was hardened in the reconciler. When both sarf and
+nahw approve the same token with the same reason key and same scope, but differ
+only on public gloss wording, the unresolved row is now
+`gloss_wording_disagreement` instead of generic `vote_disagreement`.
+
+Current residual example:
+
+- token: `quran:2:178:22` / `wbw:2:178:22`
+- surface: `بِٱلْمَعْرُوفِ`
+- parse: `parse:e5e4e1aeb56a7fdd636257b0`
+- internal grammar evidence: `بـ` governs the genitive host; the host is a
+  derived/genitive nominal from `ع ر ف`
+- shared reason key: `preposition-governed-nominal-manner`
+- sarf vote gloss: `in a recognized manner`
+- nahw vote gloss: `with recognized fairness`
+- unresolved reason: `gloss_wording_disagreement`
+
+This is the intended fail-closed outcome: the token is promising and
+source-addressed, but the public hover wording still needs resolution before any
+append-only decision or live apply path can be considered.
+
 ## Phase 3 Latest Read-Only Admin/Debug Refresh
 
 Status: latest read-only admin/debug scaffold smoke completed from pushed `main`
