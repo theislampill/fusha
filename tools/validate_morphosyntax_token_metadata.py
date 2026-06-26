@@ -30,6 +30,7 @@ LEAK_RE = re.compile(
     r"tanzil|tafsir|mcp|informed_by)\b",
     re.I,
 )
+WHITESPACE_RE = re.compile(r"\s")
 
 FUNCTION_BEARING_SEGMENTS = {
     "verb_prefix",
@@ -144,6 +145,10 @@ def _bad_public_text(value):
     return False
 
 
+def _has_whitespace(value):
+    return isinstance(value, str) and WHITESPACE_RE.search(value)
+
+
 def _display_class_for(role, pos=None):
     if role == "stem" and pos in {"noun", "adjective", "participle", "masdar", "number"}:
         return "qg-noun"
@@ -178,6 +183,12 @@ def _validate_invariants(record, seen):
     seen.add(loc)
     if not LOC_RE.match(str(loc)):
         errors.append("%s: bad loc" % loc)
+
+    surface = record.get("surface")
+    if not isinstance(surface, str) or not surface:
+        errors.append("%s: surface must be a nonempty string" % loc)
+    elif _has_whitespace(surface):
+        errors.append("%s: surface must be whitespace-free so the written token stays atomic" % loc)
 
     public_boundary = record.get("public_boundary") or {}
     if public_boundary.get("public_gloss_src") != "qamus":
@@ -244,6 +255,11 @@ def _validate_invariants(record, seen):
     for index, segment in enumerate(segments):
         role = segment.get("role") if isinstance(segment, dict) else None
         contribution = (segment.get("gloss_contribution") or "").strip() if isinstance(segment, dict) else ""
+        segment_surface = segment.get("surface") if isinstance(segment, dict) else None
+        if not isinstance(segment_surface, str) or not segment_surface:
+            errors.append("%s: segment[%d].surface must be a nonempty string" % (loc, index))
+        elif _has_whitespace(segment_surface):
+            errors.append("%s: segment[%d].surface must be whitespace-free; breakdown cannot encode visual gaps" % (loc, index))
         if role in FUNCTION_BEARING_SEGMENTS:
             if not contribution:
                 errors.append("%s: segment[%d] %s needs gloss_contribution" % (loc, index, role))
@@ -780,6 +796,20 @@ def _self_test():
         _write_jsonl(bad_article, duplicate_article)
         _, errors = validate_file(bad_article)
         assert any("stem gloss duplicates definite_article contribution" in e for e in errors), errors
+
+        spaced_surface = _sample_records()
+        spaced_surface[4]["surface"] = "وَ ٱلشَّمْسُ"
+        bad_surface = os.path.join(td, "spaced-surface.jsonl")
+        _write_jsonl(bad_surface, spaced_surface)
+        _, errors = validate_file(bad_surface)
+        assert any("surface must be whitespace-free" in e for e in errors), errors
+
+        spaced_segment = _sample_records()
+        spaced_segment[4]["segments"][0]["surface"] = "وَ "
+        bad_segment = os.path.join(td, "spaced-segment.jsonl")
+        _write_jsonl(bad_segment, spaced_segment)
+        _, errors = validate_file(bad_segment)
+        assert any("segment[0].surface must be whitespace-free" in e for e in errors), errors
 
     print("validate_morphosyntax_token_metadata self-test OK")
 

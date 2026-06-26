@@ -179,6 +179,8 @@ Rules:
 - `display.palette` is currently `qamus-grammar-v1`.
 - `display.segments[]` aligns one-for-one with `segments[]` and supplies scrubbed classes for token coloring.
   These are semantic/display records, not a requirement to split the visible Arabic word into DOM segment boxes.
+- `surface` and every `segments[].surface` are nonempty and whitespace-free. Token composition may be explained in
+  rows, parse keys, or color metadata, but the metadata must not encode spaces or gaps inside a written Arabic word.
 - These fields are grammar metadata. They are not public provenance and must not contain QAC/Tafsir/source names.
 
 The screenshot packs justify the shape: QAC uses colored segment labels under Arabic tokens plus dependency arcs and
@@ -201,6 +203,7 @@ Run `tools/validate_morphosyntax_token_metadata.py` against morphosyntax JSONL t
 - ASCII `parse_key.key`
 - `display.palette=qamus-grammar-v1`
 - `display.segments[]` alignment with `segments[]`
+- whitespace-free token and segment surfaces, so renderer inputs cannot physically split a Qurʾānic written token
 - public boundary fields: `public_gloss_src=qamus`, `public_gloss_kind=authored`, `public_gloss_lang=en`, and `external_source_names_public=false`
 - function-bearing segments carry `gloss_contribution` and a `hover_contract.must_surface`
 - attached subject/object/possessive pronouns preserve person and number tags

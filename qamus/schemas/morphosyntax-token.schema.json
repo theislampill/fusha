@@ -12,7 +12,12 @@
       "pattern": "^\\d{1,3}:\\d{1,3}:\\d{1,3}$",
       "description": "Quran token address S:A:W."
     },
-    "surface": { "type": "string" },
+    "surface": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^\\s]+$",
+      "description": "Exact written Quran token surface. Must stay whitespace-free; breakdown belongs in segments, not visible gaps."
+    },
     "lemma": { "type": ["string", "null"] },
     "root": { "type": ["string", "null"] },
     "pos": {
@@ -50,7 +55,12 @@
             "type": "string",
             "enum": ["stem", "verb_prefix", "prefix_conjunction", "prefix_preposition", "prefix_oath", "prefix_comitative_waw", "prefix_resumption_fa", "prefix_coordination_fa", "prefix_result_fa", "prefix_supplemental_fa", "prefix_cause_fa", "prefix_interrogative_hamza", "prefix_equalization_hamza", "prefix_particle", "prefix_purpose_lam", "prefix_imperative_lam", "vocative_particle", "vocative_support", "attention_particle", "preventive_ma", "definite_article", "subject_pronoun", "object_pronoun", "possessive_pronoun", "relative_pronoun", "case_ending", "other"]
           },
-          "surface": { "type": "string" },
+          "surface": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[^\\s]+$",
+            "description": "Token-internal segment surface. Must be whitespace-free so renderers cannot encode spacing inside an Arabic word."
+          },
           "gloss_contribution": { "type": ["string", "null"] },
           "person": { "type": ["string", "null"], "enum": ["1", "2", "3", "null"] },
           "number": { "type": ["string", "null"], "enum": ["singular", "dual", "plural", "null"] },
