@@ -58,7 +58,7 @@ The tools intentionally do not embed private server paths. Server acceptance pas
 - `qamus/examples/repair_impact_preview.sample.jsonl`: tiny fixture slice covering the three edit scopes without
   touching live Qamus data.
 - `qamus/examples/shadow_review_pack.sample.jsonl`: tiny fixture slice covering propagation-preview, collision
-  quarantine, and missing-entry lanes without committing live graph dumps.
+  quarantine, missing-entry, and never-auto lanes without committing live graph dumps.
 
 ## Acceptance Gates
 
@@ -117,6 +117,8 @@ python tools/validate_production_bug_lessons.py qamus/examples/production_bug_le
 - Surface-only and norm-only rows must never certify or propagate.
 - Two-vote and source-disagreement counts are detector maturity signals; zero does not prove absence. Review-pack
   rows carry this as required `apply_policy.detector_maturity`, and the validator rejects overconfident claims.
+- `propagation_safe_candidate` means "read-only impact preview is allowed next", not "auto-apply"; review-pack rows
+  must preserve `scope=parse_key_family_readonly_preview` and `required_gate=auto_safe_after_preview`.
 - Public hover output remains `src=qamus`, `kind=authored`, `lang=en`.
 - Internal provenance may exist, but public scans must remain zero-leak.
 - Mirror mismatch is report-only until a separate guarded sync is authorized.

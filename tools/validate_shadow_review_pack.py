@@ -192,6 +192,10 @@ def validate_row(row, line_no, errors):
         ]
         if not any(str(status).startswith("exact:") for status in statuses):
             _err(errors, line_no, "propagation_safe_candidate requires exact join evidence")
+        if row.get("required_gate") != "auto_safe_after_preview":
+            _err(errors, line_no, "propagation_safe_candidate must use required_gate=auto_safe_after_preview")
+        if row.get("scope") != "parse_key_family_readonly_preview":
+            _err(errors, line_no, "propagation_safe_candidate must use parse_key_family_readonly_preview scope")
     if lane == "never_auto" and row.get("required_gate") != "never_auto":
         _err(errors, line_no, "never_auto lane must preserve required_gate=never_auto")
 
@@ -277,6 +281,37 @@ def never_auto_row():
     return row
 
 
+def propagation_preview_row():
+    row = good_row()
+    row.update({
+        "id": "queue:parse_abcdef12",
+        "parse_id": "parse:abcdef12",
+        "lane": "propagation_safe_candidate",
+        "scope": "parse_key_family_readonly_preview",
+        "recommended_action": "preview exact token family before any append-only propagation",
+        "required_gate": "auto_safe_after_preview",
+        "family_size": 2,
+        "resolved_token_count": 2,
+        "unresolved_token_count": 0,
+        "surface_sample": "ٱلْأَرْضِ",
+        "quran_locs": ["quran:22:18:12", "quran:29:22:5"],
+        "wbw_locs": ["wbw:22:18:12", "wbw:29:22:5"],
+        "token_sample": ["quran:22:18:12", "quran:29:22:5"],
+        "candidate_entries": ["qamus:n:earth"],
+        "candidate_join_statuses": [
+            {"entry": "qamus:n:earth", "join_status": ["exact:entry_surface", "exact:strict_surface"]}
+        ],
+    })
+    row["parse"] = dict(row["parse"])
+    row["parse"].update({
+        "gate": "auto_safe",
+        "parse_confidence": "strict_and_entry_joined",
+        "pos": "noun",
+        "grammar_triggers": [],
+    })
+    return row
+
+
 def self_test():
     with tempfile.TemporaryDirectory(prefix="review-pack-") as td:
         good = os.path.join(td, "good.jsonl")
@@ -284,17 +319,24 @@ def self_test():
         with io.open(good, "w", encoding="utf-8") as handle:
             handle.write(json.dumps(good_row(), ensure_ascii=False, sort_keys=True) + "\n")
             handle.write(json.dumps(never_auto_row(), ensure_ascii=False, sort_keys=True) + "\n")
+            handle.write(json.dumps(propagation_preview_row(), ensure_ascii=False, sort_keys=True) + "\n")
         row = good_row()
         row["quran_locs"] = ["33:63:1"]
+        weak_propagation = propagation_preview_row()
+        weak_propagation["required_gate"] = "auto_safe"
         with io.open(bad, "w", encoding="utf-8") as handle:
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+            handle.write(json.dumps(weak_propagation, ensure_ascii=False, sort_keys=True) + "\n")
         count, errors = validate(good)
-        if count != 2 or errors:
+        if count != 3 or errors:
             print("SELF-TEST FAIL good:", errors)
             return 1
         count, errors = validate(bad)
-        if count != 1 or not any("bad quran loc" in err for err in errors):
+        if count != 2 or not any("bad quran loc" in err for err in errors):
             print("SELF-TEST FAIL bad:", errors)
+            return 1
+        if not any("propagation_safe_candidate must use required_gate=auto_safe_after_preview" in err for err in errors):
+            print("SELF-TEST FAIL weak propagation:", errors)
             return 1
     print("PASS — shadow review-pack validator self-test")
     return 0

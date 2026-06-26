@@ -163,9 +163,9 @@ def lane_action(lane):
         }
     if lane == "propagation_safe_candidate":
         return {
-            "scope": "parse_family",
-            "recommended_action": "eligible for guarded propagation preview; still require impact list",
-            "gate": "auto_safe_with_preview",
+            "scope": "parse_key_family_readonly_preview",
+            "recommended_action": "preview exact token family before any append-only propagation",
+            "gate": "auto_safe_after_preview",
         }
     if lane == "token_only_required":
         return {
@@ -382,6 +382,7 @@ def run_self_test():
             {"id": "quran:1:1:2", "loc": "1:1:2", "surface": "اللَّهِ", "parse_id": "parse:b", "status": "pending", "blocker": "unknown_parse", "has_wbw_record": False},
             {"id": "quran:1:1:3", "loc": "1:1:3", "surface": "الرَّحْمَٰنِ", "parse_id": "parse:c", "status": "resolved", "blocker": None, "has_wbw_record": True},
             {"id": "quran:1:1:4", "loc": "1:1:4", "surface": "مَالِكِ", "parse_id": "parse:d", "status": "resolved", "blocker": None, "has_wbw_record": True},
+            {"id": "quran:1:1:5", "loc": "1:1:5", "surface": "بِسْمِ", "parse_id": "parse:a", "status": "resolved", "blocker": None, "has_wbw_record": True},
         ])
         write_jsonl(os.path.join(shadow, "parse-keys.jsonl"), [
             {"id": "parse:a", "parse": {"qamus_entry_candidates": ["qamus:p:one"], "qamus_entry_candidate_joins": [{"entry": "qamus:p:one", "join_status": ["exact:decision_entry"]}], "gate": "auto_safe", "parse_confidence": "candidate", "blocker": None}},
@@ -392,7 +393,7 @@ def run_self_test():
         write_jsonl(os.path.join(shadow, "decision-index.jsonl"), [{"id": "decision:1"}])
         write_jsonl(os.path.join(shadow, "blocker-index.jsonl"), [{"id": "blocker:unknown_parse", "count": 1}])
         summary = summarize(shadow)
-        if summary["computed"]["token_rows"] != 4:
+        if summary["computed"]["token_rows"] != 5:
             print("SELF-TEST FAIL: token count")
             return 1
         if summary["lane_counts"].get("never_auto") != 1:
@@ -413,6 +414,13 @@ def run_self_test():
             return 1
         if any(row["apply_policy"].get("detector_maturity", {}).get("zero_count_policy") != "zero_does_not_prove_absence" for row in pack):
             print("SELF-TEST FAIL: review pack detector maturity")
+            return 1
+        propagation_rows = [row for row in pack if row["lane"] == "propagation_safe_candidate"]
+        if not propagation_rows or propagation_rows[0]["required_gate"] != "auto_safe_after_preview":
+            print("SELF-TEST FAIL: propagation preview gate")
+            return 1
+        if propagation_rows[0]["scope"] != "parse_key_family_readonly_preview":
+            print("SELF-TEST FAIL: propagation preview scope")
             return 1
         never_auto_rows = [row for row in pack if row["lane"] == "never_auto"]
         if not never_auto_rows or never_auto_rows[0]["required_gate"] != "never_auto":
