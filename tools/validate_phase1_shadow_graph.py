@@ -66,6 +66,8 @@ EDGE_TYPES = {
     "resolves_entry",
     "informed_by_internal",
     "blocks_token",
+    "component_candidate_entry",
+    "component_candidate_for_token",
 }
 
 
@@ -380,6 +382,8 @@ def run_self_test():
             {"from": "quran:1:1:1", "type": "has_hover_slot", "to": "wbw:1:1:1"},
             {"from": "quran:1:1:1", "type": "has_parse", "to": parse_id},
             {"from": "decision:one", "type": "resolves_token", "to": "quran:1:1:1"},
+            {"from": parse_id, "type": "component_candidate_entry", "to": "qamus:n:sun", "status": "component_only"},
+            {"from": "qamus:n:sun", "type": "component_candidate_for_token", "to": "quran:1:1:1", "status": "component_only"},
         ])
         write_jsonl(os.path.join(td, "parse-keys.jsonl"), [
             {
@@ -414,6 +418,11 @@ def run_self_test():
             print("SELF-TEST FAIL")
             for err in result["errors"]:
                 print("  -", err)
+            return 1
+        if any("component_candidate" in warning for warning in result["warnings"]):
+            print("SELF-TEST FAIL: component candidate edges should be recognized, not warned")
+            for warning in result["warnings"]:
+                print("  -", warning)
             return 1
         write_jsonl(os.path.join(td, "token-index.jsonl"), [
             {"id": "quran:1:1:1", "loc": "1:1:1", "status": "resolved"}
