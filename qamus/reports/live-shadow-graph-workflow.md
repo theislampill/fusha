@@ -476,6 +476,46 @@ Latest Phase 3 validator evidence:
 - `python3 tools/validate_repair_impact_preview.py <repair-impact-previews.jsonl>` -> `PASS`
 - `python3 tools/validate_production_bug_lessons.py <production-bug-lesson.jsonl>` -> `PASS`
 
+## Phase 3.25 / 3.5 Latest Grammar Gate Refresh
+
+Status: latest repo-side GrammarProblems regression-mining and grouped nahw
+issue validation rerun completed from pushed HEAD
+`af60907bc6e7dfebf2725b6ca518a54c2825c19f`. This remains a pre-authoring
+gate only; it does not perform corpus-facing grammar authoring or live Qamus
+mutation.
+
+Latest Phase 3.25 mining evidence:
+
+- command: `python tools\build_grammar_regression_mining.py`
+- regenerated rows: `88`
+- classification counts:
+  - `already_covered_issue_1`: `45`
+  - `already_covered_issue_2`: `12`
+  - `already_covered_issue_3`: `18`
+  - `correct_positive_regression`: `13`
+- no `new_root_cause_cluster` rows were present in this rerun
+
+Latest Phase 3.5 grouped issue validation:
+
+- command:
+  `python tools\validate_grammar_issue_clusters.py nahw\rules\grammar-problems-issue-clusters.json --mining nahw\evals\grammar-problems-phase3p25-mining.jsonl`
+- mapped clusters:
+  - `issue_1_wrong_reasoning`: `45`
+  - `issue_2_function_attachment`: `12`
+  - `issue_3_morphosyntax_preservation`: `18`
+  - `positive_regression_control`: `13`
+- validation result: `PASS`
+
+Latest GrammarProblems executable eval:
+
+- command: `python tools\run_grammar_evals.py`
+- cases: `88`
+- errors: `0`
+- levels: `ajurrumiyyah=16`, `qatr_al_nada=39`, `awdah_al_masalik=33`
+- gates: `two_vote_required=75`, `auto_safe=13`
+- wrong-reasoning traps exercised: `8`
+- result: `PASS`
+
 ## Phase 3 Read-Only Admin/Debug Scaffold
 
 Status: started as repo-only tooling. Phase 3 scaffolding is deliberately static and local before any app route exists.
