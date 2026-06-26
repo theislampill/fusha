@@ -2,85 +2,168 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/theIslampill/fusha/qamus/schemas/parse-key.schema.json",
   "title": "Qamus parse-key grammar family node",
-  "description": "A deterministic, versioned grammar-equivalence key. This is never primary identity; exact identity remains quran:S:A:W and wbw:S:A:W.",
+  "description": "A deterministic, versioned grammar-equivalence family row. This is never primary identity; exact identity remains quran:S:A:W and wbw:S:A:W.",
   "type": "object",
   "required": [
     "id",
-    "parse_key_version",
-    "quran_loc",
-    "surface_raw",
-    "norm_strict",
-    "bare",
-    "pos",
-    "token_internal_segments",
-    "grammar_triggers",
-    "gate",
-    "decision_status",
-    "evidence_version",
-    "parse_confidence"
+    "canonical_parse_object",
+    "seen_locs",
+    "family_size",
+    "candidate_entries",
+    "blockers",
+    "gates",
+    "confidences",
+    "family_class",
+    "propagation_allowed"
   ],
   "additionalProperties": false,
   "properties": {
     "id": { "type": "string", "pattern": "^parse:[0-9a-f]{8,}$" },
-    "parse_key_version": { "type": "string" },
-    "quran_loc": { "type": "string", "pattern": "^\\d{1,3}:\\d{1,3}:\\d{1,3}$" },
-    "surface_raw": { "type": "string" },
-    "norm_strict": { "type": "string" },
-    "bare": { "type": "string" },
-    "root": { "type": ["string", "null"] },
-    "lemma": { "type": ["string", "null"] },
-    "pos": { "type": "string" },
-    "qamus_entry_candidates": { "type": "array", "items": { "type": "string", "pattern": "^qamus:" } },
-    "qamus_entry_candidate_joins": {
+    "canonical_parse_object": { "$ref": "#/$defs/parseObject" },
+    "seen_locs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "pattern": "^quran:\\d{1,3}:\\d{1,3}:\\d{1,3}$" }
+    },
+    "family_size": { "type": "integer", "minimum": 1 },
+    "candidate_entries": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^qamus:" }
+    },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "gates": {
       "type": "array",
       "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": ["entry", "join_status"],
-        "properties": {
-          "entry": { "type": "string", "pattern": "^qamus:" },
-          "join_status": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^(exact|candidate|inferred|missing|conflict):"
-            }
-          }
-        }
+        "type": "string",
+        "enum": ["auto_safe", "two_vote_required", "human_review_required", "never_auto", "unknown"]
       }
     },
-    "resolved_qamus_entry_id": { "type": ["string", "null"] },
-    "resolved_sense_id": { "type": ["string", "integer", "null"] },
-    "proclitics": { "type": "array" },
-    "enclitics": { "type": "array" },
-    "suffix_pronouns": { "type": "array" },
-    "token_internal_segments": { "type": "array" },
-    "verb_form": { "type": ["string", "null"] },
-    "voice": { "type": ["string", "null"] },
-    "aspect": { "type": ["string", "null"] },
-    "mood": { "type": ["string", "null"] },
-    "person": { "type": ["string", "null"] },
-    "number": { "type": ["string", "null"] },
-    "gender": { "type": ["string", "null"] },
-    "case": { "type": ["string", "null"] },
-    "state": { "type": ["string", "null"] },
-    "derivative_type": { "type": ["string", "null"] },
-    "particle_function": { "type": ["string", "null"] },
-    "governor": { "type": ["string", "null"] },
-    "attachment": { "type": ["string", "null"] },
-    "dependency_roles": { "type": "array" },
-    "referent_class": { "type": ["string", "null"] },
-    "grammar_triggers": { "type": "array", "items": { "type": "string" } },
-    "gate": {
-      "type": "string",
-      "enum": ["auto_safe", "two_vote_required", "human_review_required", "never_auto", "unknown"]
+    "confidences": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["certified", "two_vote", "candidate", "partial", "rich_metadata", "lexical_candidate", "surface_only", "unknown"]
+      }
     },
-    "decision_status": { "type": "string", "enum": ["resolved", "pending", "blocked", "unknown"] },
-    "blocker": { "type": ["string", "null"] },
-    "evidence_version": { "type": "string" },
-    "parse_confidence": {
+    "family_class": {
       "type": "string",
-      "enum": ["certified", "two_vote", "candidate", "partial", "surface_only", "unknown"]
+      "enum": [
+        "propagation_safe",
+        "propagation_safe_candidate",
+        "token_only_required",
+        "two_vote_required",
+        "human_review_required",
+        "never_auto",
+        "quarantine_collision",
+        "source_disagreement",
+        "missing_entry",
+        "unknown_parse"
+      ]
+    },
+    "propagation_allowed": { "type": "boolean" },
+    "runtime_parse_key": {
+      "description": "Optional builder/runtime key material retained for audit comparison; not primary identity.",
+      "type": ["string", "object", "null"]
+    }
+  },
+  "$defs": {
+    "parseObject": {
+      "type": "object",
+      "required": [
+        "parse_key_version",
+        "quran_loc",
+        "surface_raw",
+        "norm_strict",
+        "bare",
+        "pos",
+        "token_internal_segments",
+        "grammar_triggers",
+        "gate",
+        "decision_status",
+        "evidence_version",
+        "parse_confidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "parse_key_version": { "type": "string" },
+        "quran_loc": { "type": ["string", "null"], "pattern": "^\\d{1,3}:\\d{1,3}:\\d{1,3}$" },
+        "surface_raw": { "type": "string" },
+        "norm_strict": { "type": "string" },
+        "bare": { "type": "string" },
+        "root": { "type": ["string", "null"] },
+        "lemma": { "type": ["string", "null"] },
+        "pos": { "type": "string" },
+        "qamus_entry_candidates": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              { "type": "string", "pattern": "^qamus:" },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["entry_address"],
+                "properties": {
+                  "entry_id": { "type": ["string", "integer", "null"] },
+                  "entry_address": { "type": "string", "pattern": "^qamus:" },
+                  "sense_id": { "type": ["string", "integer", "null"] },
+                  "source": { "type": ["string", "null"] }
+                }
+              }
+            ]
+          }
+        },
+        "qamus_entry_candidate_joins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["entry", "join_status"],
+            "properties": {
+              "entry": { "type": "string", "pattern": "^qamus:" },
+              "join_status": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^(exact|candidate|inferred|missing|conflict):"
+                }
+              }
+            }
+          }
+        },
+        "resolved_qamus_entry_id": { "type": ["string", "null"] },
+        "resolved_sense_id": { "type": ["string", "integer", "null"] },
+        "proclitics": { "type": "array" },
+        "enclitics": { "type": "array" },
+        "suffix_pronouns": { "type": "array" },
+        "token_internal_segments": { "type": "array" },
+        "verb_form": { "type": ["string", "null"] },
+        "voice": { "type": ["string", "null"] },
+        "aspect": { "type": ["string", "null"] },
+        "mood": { "type": ["string", "null"] },
+        "person": { "type": ["string", "null"] },
+        "number": { "type": ["string", "null"] },
+        "gender": { "type": ["string", "null"] },
+        "case": { "type": ["string", "null"] },
+        "state": { "type": ["string", "null"] },
+        "derivative_type": { "type": ["string", "null"] },
+        "particle_function": { "type": ["string", "null"] },
+        "governor": { "type": ["string", "null"] },
+        "attachment": { "type": ["string", "null"] },
+        "dependency_roles": { "type": "array" },
+        "referent_class": { "type": ["string", "null"] },
+        "grammar_triggers": { "type": "array", "items": { "type": "string" } },
+        "gate": {
+          "type": "string",
+          "enum": ["auto_safe", "two_vote_required", "human_review_required", "never_auto", "unknown"]
+        },
+        "decision_status": { "type": "string", "enum": ["resolved", "pending", "blocked", "unknown"] },
+        "blocker": { "type": ["string", "null"] },
+        "evidence_version": { "type": ["string", "object"] },
+        "parse_confidence": {
+          "type": "string",
+          "enum": ["certified", "two_vote", "candidate", "partial", "rich_metadata", "lexical_candidate", "surface_only", "unknown"]
+        }
+      }
     }
   },
   "$comment": "A parse key may support reuse only after collision/gate checks. norm() or surface-only recall must never certify or mark auto_safe."

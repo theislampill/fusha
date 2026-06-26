@@ -46,10 +46,13 @@ QURAN_ID_RE = re.compile(r"^quran:\d{1,3}:\d{1,3}:\d{1,3}$")
 WBW_ID_RE = re.compile(r"^wbw:\d{1,3}:\d{1,3}:\d{1,3}$")
 NODE_ID_PREFIXES = ("qamus:", "quran:", "wbw:", "parse:", "decision:", "blocker:", "external:", "repair:")
 EDGE_TYPES = {
+    "has_field",
+    "has_sense",
     "has_hover_slot",
     "has_parse",
     "seen_at",
     "candidate_entry",
+    "candidate_for_token",
     "resolved_entry",
     "blocked_by",
     "resolves_token",
@@ -185,7 +188,7 @@ def validate_shadow_dir(shadow_dir, sample_limit=2000, allow_legacy_missing_pars
         pid = row.get("id") or row.get("parse_id") or row.get("node_id")
         if pid and not str(pid).startswith("parse:"):
             errors.append("parse key row has non-parse id: %s" % pid)
-        obj = row.get("parse") or row.get("parse_object") or row
+        obj = row.get("parse") or row.get("parse_object") or row.get("canonical_parse_object") or row
         if not obj.get("parse_key_version"):
             message = "%s: missing parse_key_version" % (pid or "<parse row>")
             if allow_legacy_missing_parse_version:
@@ -197,6 +200,20 @@ def validate_shadow_dir(shadow_dir, sample_limit=2000, allow_legacy_missing_pars
             errors.append("%s: bad quran_loc %r" % (pid or "<parse row>", loc))
         if obj.get("gate") == "auto_safe" and obj.get("parse_confidence") == "surface_only":
             errors.append("%s: surface-only parse marked auto_safe" % (pid or "<parse row>"))
+
+    _token_count, token_errors, token_samples = count_jsonl(
+        os.path.join(shadow_dir, "token-index.jsonl"),
+        sample_limit=sample_limit,
+    )
+    if token_errors:
+        errors.extend("token-index.jsonl: %s" % e for e in token_errors[:20])
+    for line_no, row in token_samples:
+        tid = row.get("id") or row.get("quran")
+        if not QURAN_ID_RE.match(str(tid or "")):
+            errors.append("token-index.jsonl line %d: token id must be quran:S:A:W" % line_no)
+        parse_ref = row.get("parse_id") or row.get("parse_key")
+        if not str(parse_ref or "").startswith("parse:"):
+            errors.append("token-index.jsonl line %d: missing parse_id/parse_key" % line_no)
 
     edge_count, edge_errors, edge_samples = count_jsonl(os.path.join(shadow_dir, "edges.jsonl"), sample_limit=sample_limit)
     if edge_errors:
@@ -311,15 +328,20 @@ def run_self_test():
         write_jsonl(os.path.join(td, "parse-keys.jsonl"), [
             {
                 "id": "parse:abc",
-                "parse": {
+                "canonical_parse_object": {
                     "parse_key_version": "phase1.shadow.v1",
                     "quran_loc": "1:1:1",
                     "gate": "human_review_required",
                     "parse_confidence": "partial",
                 },
+                "seen_locs": ["quran:1:1:1"],
+                "family_size": 1,
             }
         ])
-        for rel in ("entry-index.jsonl", "token-index.jsonl", "hover-index.jsonl", "blocker-index.jsonl"):
+        write_jsonl(os.path.join(td, "token-index.jsonl"), [
+            {"id": "quran:1:1:1", "loc": "1:1:1", "parse_key": "parse:abc", "status": "resolved"}
+        ])
+        for rel in ("entry-index.jsonl", "hover-index.jsonl", "blocker-index.jsonl"):
             write_jsonl(os.path.join(td, rel), [{"id": rel, "type": "self_test"}])
         write_jsonl(os.path.join(td, "decision-index.jsonl"), [
             {
@@ -336,6 +358,16 @@ def run_self_test():
             for err in result["errors"]:
                 print("  -", err)
             return 1
+        write_jsonl(os.path.join(td, "token-index.jsonl"), [
+            {"id": "quran:1:1:1", "loc": "1:1:1", "status": "resolved"}
+        ])
+        missing_parse = validate_shadow_dir(td)
+        if missing_parse["ok"]:
+            print("SELF-TEST FAIL: token missing parse linkage did not fail")
+            return 1
+        write_jsonl(os.path.join(td, "token-index.jsonl"), [
+            {"id": "quran:1:1:1", "loc": "1:1:1", "parse_key": "parse:abc", "status": "resolved"}
+        ])
         os.remove(os.path.join(td, "edges.jsonl"))
         bad = validate_shadow_dir(td)
         if bad["ok"]:

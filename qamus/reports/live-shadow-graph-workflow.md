@@ -22,7 +22,9 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   recorded as `exact`, `candidate`, or `inferred` join statuses; candidate/inferred joins cannot make a parse family
   propagation-safe. New runs also emit `phase2-run-manifest.json`, a compact receipt tying the generated graph to
   input hashes, no-write flags, forbidden-root guards, counts, detector-maturity warnings, and the public/private
-  boundary.
+  boundary. `parse-keys.jsonl` is one row per parse family with `canonical_parse_object`, `seen_locs`, and
+  `family_size`; exact token rows in `token-index.jsonl` carry `parse_key`/`parse_id` backlinks and remain the token
+  identity boundary.
 - `tools/validate_phase1_shadow_graph.py`: validates required Phase 1/2 shadow artifacts, nonzero rows, exact
   counts, token/hover/parse linkage, no orphan count, no surface-only auto-safe parse, and public-boundary markers.
 - `tools/scan_public_boundary.py`: classifies public readback leaks separately from internal-only provenance.
@@ -114,6 +116,8 @@ python tools/validate_production_bug_lessons.py qamus/examples/production_bug_le
 
 - `parse:<hash>` is a grammar-family key, never primary identity.
 - `quran:S:A:W` and `wbw:S:A:W` remain the exact token/hover identities.
+- `parse-keys.jsonl` is a family index, not a per-token ledger. Use `seen_locs`/`token-index.jsonl` for exact
+  locations and never edit or propagate from a parse key without the preview/gate lane.
 - Surface-only and norm-only rows must never certify or propagate.
 - Two-vote and source-disagreement counts are detector maturity signals; zero does not prove absence. Review-pack
   rows carry this as required `apply_policy.detector_maturity`, and the validator rejects overconfident claims.

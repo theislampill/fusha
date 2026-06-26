@@ -66,12 +66,52 @@ def parse_candidate_statuses(parse_obj):
         if entry:
             result[entry] = set(join.get("join_status") or [])
     if not result:
-        for entry in parse_obj.get("qamus_entry_candidates") or []:
-            result[entry] = {"candidate:unspecified"}
+        for candidate in parse_obj.get("qamus_entry_candidates") or []:
+            if isinstance(candidate, dict):
+                entry = candidate.get("entry_address")
+                source = candidate.get("source") or "unspecified"
+            else:
+                entry = candidate
+                source = "unspecified"
+            if entry:
+                result[entry] = {"candidate:%s" % source}
     return result
 
 
+def has_exact_candidate_join(parse_obj):
+    return any(
+        any(str(status).startswith("exact:") for status in statuses)
+        for statuses in parse_candidate_statuses(parse_obj).values()
+    )
+
+
+def parse_id_for_token(token):
+    return token.get("parse_id") or token.get("parse_key")
+
+
+def parse_object_from_row(row):
+    obj = row.get("parse") or row.get("parse_object") or row.get("canonical_parse_object") or row
+    if obj is not row and row.get("family_class"):
+        obj = dict(obj)
+        obj["_family_class"] = row.get("family_class")
+    return obj
+
+
 def classify_parse_family(parse_id, parse_obj, tokens):
+    generated_family_class = parse_obj.get("_family_class")
+    if generated_family_class == "propagation_safe":
+        return "propagation_safe_candidate"
+    if generated_family_class in {
+        "token_only_required",
+        "two_vote_required",
+        "human_review_required",
+        "never_auto",
+        "quarantine_collision",
+        "missing_entry",
+        "unknown_parse",
+        "source_disagreement",
+    }:
+        return generated_family_class
     candidate_statuses = parse_candidate_statuses(parse_obj)
     candidates = set(candidate_statuses)
     exact = {
@@ -99,7 +139,7 @@ def classify_parse_family(parse_id, parse_obj, tokens):
         return "unknown_parse"
     if gate in ("two_vote_required", "human_review_required", "never_auto"):
         return gate
-    if len(exact) == 1 and len(tokens) > 1 and not unresolved:
+    if len((exact or candidate_or_exact)) == 1 and len(tokens) > 1 and not unresolved:
         return "propagation_safe_candidate"
     if len(candidate_or_exact) == 1 and len(tokens) == 1:
         return "token_only_required"
@@ -245,11 +285,11 @@ def summarize(shadow_dir, sample_limit=8):
         parse_row_count += 1
         pid = row.get("id")
         if pid and pid not in parse_by_id:
-            parse_by_id[pid] = row.get("parse") or row
+            parse_by_id[pid] = parse_object_from_row(row)
 
     tokens_by_parse = defaultdict(list)
     for token in token_rows:
-        tokens_by_parse[token.get("parse_id")].append(token)
+        tokens_by_parse[parse_id_for_token(token)].append(token)
 
     lane_counts = Counter()
     lane_token_counts = Counter()
@@ -300,7 +340,8 @@ def summarize(shadow_dir, sample_limit=8):
             "blocker": parse_obj.get("blocker"),
             "parse_confidence": parse_obj.get("parse_confidence"),
         })
-        review_rows.append(review_pack_row(parse_id, lane, parse_obj, tokens))
+        if lane != "propagation_safe_candidate" or has_exact_candidate_join(parse_obj):
+            review_rows.append(review_pack_row(parse_id, lane, parse_obj, tokens))
 
     result = {
         "shadow_dir": shadow_dir,
@@ -383,18 +424,24 @@ def run_self_test():
             {"id": "quran:1:1:3", "loc": "1:1:3", "surface": "الرَّحْمَٰنِ", "parse_id": "parse:c", "status": "resolved", "blocker": None, "has_wbw_record": True},
             {"id": "quran:1:1:4", "loc": "1:1:4", "surface": "مَالِكِ", "parse_id": "parse:d", "status": "resolved", "blocker": None, "has_wbw_record": True},
             {"id": "quran:1:1:5", "loc": "1:1:5", "surface": "بِسْمِ", "parse_id": "parse:a", "status": "resolved", "blocker": None, "has_wbw_record": True},
+            {"id": "quran:1:1:6", "loc": "1:1:6", "surface": "بِسْمِ", "parse_key": "parse:e", "status": "resolved", "blocker": None, "has_wbw_record": True},
+            {"id": "quran:1:1:7", "loc": "1:1:7", "surface": "بِسْمِ", "parse_key": "parse:e", "status": "resolved", "blocker": None, "has_wbw_record": True},
         ])
         write_jsonl(os.path.join(shadow, "parse-keys.jsonl"), [
             {"id": "parse:a", "parse": {"qamus_entry_candidates": ["qamus:p:one"], "qamus_entry_candidate_joins": [{"entry": "qamus:p:one", "join_status": ["exact:decision_entry"]}], "gate": "auto_safe", "parse_confidence": "candidate", "blocker": None}},
             {"id": "parse:b", "parse": {"qamus_entry_candidates": [], "gate": "human_review_required", "parse_confidence": "surface_only", "blocker": "unknown_parse"}},
             {"id": "parse:c", "parse": {"qamus_entry_candidates": ["qamus:n:one", "qamus:v:two"], "gate": "human_review_required", "parse_confidence": "candidate", "blocker": None}},
             {"id": "parse:d", "parse": {"qamus_entry_candidates": ["qamus:n:two"], "qamus_entry_candidate_joins": [{"entry": "qamus:n:two", "join_status": ["exact:decision_entry"]}], "gate": "never_auto", "parse_confidence": "candidate", "blocker": None}},
+            {"id": "parse:e", "canonical_parse_object": {"qamus_entry_candidates": [{"entry_address": "qamus:p:two", "entry_id": "p2", "sense_id": None, "source": "usage_form"}], "gate": "auto_safe", "parse_confidence": "lexical_candidate", "blocker": None}, "seen_locs": ["quran:1:1:6", "quran:1:1:7"], "family_size": 2},
         ])
         write_jsonl(os.path.join(shadow, "decision-index.jsonl"), [{"id": "decision:1"}])
         write_jsonl(os.path.join(shadow, "blocker-index.jsonl"), [{"id": "blocker:unknown_parse", "count": 1}])
         summary = summarize(shadow)
-        if summary["computed"]["token_rows"] != 5:
+        if summary["computed"]["token_rows"] != 7:
             print("SELF-TEST FAIL: token count")
+            return 1
+        if summary["lane_counts"].get("propagation_safe_candidate") != 2:
+            print("SELF-TEST FAIL: parse_key/canonical_parse_object compatibility")
             return 1
         if summary["lane_counts"].get("never_auto") != 1:
             print("SELF-TEST FAIL: never_auto lane")
