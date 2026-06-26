@@ -502,6 +502,25 @@ The reconciled response chooses or authors one source-clean public Qamus
 wording for the exact blocker. It does not append a live token decision, rebuild
 WBW, sync the mirror, or claim hover coverage.
 
+A follow-up review-only hover decision plan now converts certified-not-applied
+rows into exact token-addressed previews for a future apply lane:
+
+- schema: `qamus/schemas/phase4-hover-decision-plan.schema.json`
+- builder: `tools/build_phase4_hover_decision_plan.py`
+- validator: `tools/validate_phase4_hover_decision_plan.py`
+- sample: `qamus/examples/phase4_hover_decision_plan.sample.jsonl`
+- test: `tools/test_phase4_hover_decision_plan.py`
+- accepted sources: `phase4_two_vote_reconciled` and
+  `phase4_gloss_adjudication_reconciled` rows with `status=certified_not_applied`
+- output status: `planned_not_applied`
+
+Each plan row is expanded to one exact `quran:S:A:W` / `wbw:S:A:W` pair and
+includes a `token_decision_preview` shaped like a future Qamus token decision
+(`loc`, `gloss`, `src=qamus`, `kind=authored`, `lang=en`). It remains a
+preview, not a token-decision ledger row. The apply policy still requires a
+separate append-only ledger, backup, rebuild, validation, health check, and
+targeted public readback before any live apply can exist.
+
 ## Phase 3 Latest Read-Only Admin/Debug Refresh
 
 Status: latest read-only admin/debug scaffold smoke completed from pushed `main`

@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/phase4-hover-decision-plan.schema.json",
+  "title": "Qamus Phase 4 hover decision plan row",
+  "type": "object",
+  "required": [
+    "id",
+    "phase",
+    "source_phase",
+    "source_certified_id",
+    "source_certified_ids",
+    "status",
+    "parse_id",
+    "identity",
+    "public_hover",
+    "token_decision_preview",
+    "safe_scope",
+    "reason_agreement_key",
+    "apply_policy"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^phase4-hover-decision-plan:\\d{1,3}_\\d{1,3}_\\d{1,3}:[0-9a-f]+$"
+    },
+    "phase": {
+      "const": "phase4_hover_decision_plan"
+    },
+    "source_phase": {
+      "enum": [
+        "phase4_two_vote_reconciled",
+        "phase4_gloss_adjudication_reconciled"
+      ]
+    },
+    "source_certified_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_certified_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "status": {
+      "const": "planned_not_applied"
+    },
+    "parse_id": {
+      "type": "string",
+      "pattern": "^parse:[0-9a-f]+$"
+    },
+    "identity": {
+      "type": "object",
+      "required": [
+        "quran_loc",
+        "wbw_loc",
+        "parse_id",
+        "surface_sample"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "quran_loc": {
+          "type": "string",
+          "pattern": "^quran:\\d{1,3}:\\d{1,3}:\\d{1,3}$"
+        },
+        "wbw_loc": {
+          "type": "string",
+          "pattern": "^wbw:\\d{1,3}:\\d{1,3}:\\d{1,3}$"
+        },
+        "parse_id": {
+          "type": "string",
+          "pattern": "^parse:[0-9a-f]+$"
+        },
+        "surface_sample": {
+          "type": "string"
+        }
+      }
+    },
+    "public_hover": {
+      "type": "object",
+      "required": [
+        "gloss",
+        "src",
+        "kind",
+        "lang"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "gloss": {
+          "type": "string",
+          "minLength": 1
+        },
+        "src": {
+          "const": "qamus"
+        },
+        "kind": {
+          "const": "authored"
+        },
+        "lang": {
+          "const": "en"
+        }
+      }
+    },
+    "token_decision_preview": {
+      "type": "object",
+      "required": [
+        "loc",
+        "gloss",
+        "src",
+        "kind",
+        "lang"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "loc": {
+          "type": "string",
+          "pattern": "^\\d{1,3}:\\d{1,3}:\\d{1,3}$"
+        },
+        "gloss": {
+          "type": "string",
+          "minLength": 1
+        },
+        "src": {
+          "const": "qamus"
+        },
+        "kind": {
+          "const": "authored"
+        },
+        "lang": {
+          "const": "en"
+        }
+      }
+    },
+    "safe_scope": {
+      "enum": [
+        "token_only",
+        "parse_family_after_impact_preview",
+        "pending"
+      ]
+    },
+    "reason_agreement_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "apply_policy": {
+      "type": "object",
+      "required": [
+        "apply_allowed",
+        "live_mutation_allowed",
+        "closure_claim_allowed",
+        "append_only_ledger_required",
+        "requires_backup_rebuild_health_readback_before_apply",
+        "identity",
+        "public_boundary",
+        "component_candidates_can_certify",
+        "raw_surface_identity_allowed",
+        "parse_key_primary_identity"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "apply_allowed": {
+          "const": false
+        },
+        "live_mutation_allowed": {
+          "const": false
+        },
+        "closure_claim_allowed": {
+          "const": false
+        },
+        "append_only_ledger_required": {
+          "const": true
+        },
+        "requires_backup_rebuild_health_readback_before_apply": {
+          "const": true
+        },
+        "identity": {
+          "type": "string",
+          "pattern": "quran:S:A:W"
+        },
+        "public_boundary": {
+          "const": "src=qamus, kind=authored, lang=en; no external provenance"
+        },
+        "component_candidates_can_certify": {
+          "const": false
+        },
+        "raw_surface_identity_allowed": {
+          "const": false
+        },
+        "parse_key_primary_identity": {
+          "const": false
+        }
+      }
+    }
+  }
+}
