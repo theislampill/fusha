@@ -443,6 +443,8 @@ def classify_gate(status, candidates, segments, confidence, blocker):
     roles = {str(segment.get("role", "")) for segment in segments if isinstance(segment, dict)}
     if blocker or confidence == "surface_only" or len({candidate.get("entry_address") for candidate in candidates}) > 1:
         return "human_review_required"
+    if any("preposition" in role for role in roles) or any(role in ("conjunction", "resumption_particle") for role in roles):
+        return "two_vote_required"
     grammar_sensitive = {
         "object_pronoun",
         "possessive_pronoun",
@@ -1104,6 +1106,16 @@ def make_fixture_inputs(base):
         "words": {
             "2:21:1": {"surface": "يَا", "pos": "particle", "particle_function": "vocative", "gate": "never_auto"},
             "2:21:2": {"surface": "النَّاسُ", "pos": "noun"},
+            "22:18:17": {
+                "surface": "وَٱلشَّجَرُ",
+                "pos": "noun",
+                "parse_key": {"key": "CONJ+ART+N:NOM:DEF:SG"},
+                "segments": [
+                    {"role": "conjunction", "text": "وَ"},
+                    {"role": "definite_article", "text": "ٱل"},
+                    {"role": "noun", "text": "شَّجَرُ"}
+                ],
+            },
             "33:63:1": {"surface": "يَسْأَلُكَ", "pos": "verb", "suffix_pronouns": ["كَ"], "grammar_triggers": ["object_pronoun"]},
             "33:63:2": {"surface": "يَسْأَلُكَ", "pos": "verb", "suffix_pronouns": ["كَ"], "grammar_triggers": ["object_pronoun"]},
         }
@@ -1112,6 +1124,7 @@ def make_fixture_inputs(base):
     write_json(wbw_path, wbw)
     decisions = os.path.join(input_root, "decisions.jsonl")
     write_jsonl(decisions, [
+        {"loc": "22:18:17", "gloss": "and + the trees"},
         {"loc": "33:63:1", "gloss": "ask you", "gate": "two_vote_required"},
         {"loc": "33:63:2", "gloss": "ask you", "gate": "two_vote_required"},
         {"loc": "33:63:2", "gloss": "ask you", "gate": "two_vote_required", "id": "superseding_fixture_row"},
@@ -1135,7 +1148,7 @@ def self_test():
         if missing:
             print("SELF-TEST FAIL: missing %s" % missing)
             return 1
-        if counts["token_universe"] != 4 or counts["token_decisions"] != 3:
+        if counts["token_universe"] != 5 or counts["token_decisions"] != 4:
             print("SELF-TEST FAIL: bad fixture counts %r" % counts)
             return 1
         if not counts.get("fusha_reference", {}).get("source_address_full_present"):
@@ -1165,6 +1178,11 @@ def self_test():
         if not vocative or vocative.get("gate") != "never_auto":
             got_gate = (vocative or {}).get("gate")
             print("SELF-TEST FAIL: pending row gate was not preserved: got %r" % got_gate)
+            return 1
+        rich_conj = next((row["canonical_parse_object"] for row in parse_rows if "quran:22:18:17" in row.get("seen_locs", [])), None)
+        if not rich_conj or rich_conj.get("gate") != "two_vote_required":
+            got_gate = (rich_conj or {}).get("gate")
+            print("SELF-TEST FAIL: rich conjunction token must not be auto-safe: got %r" % got_gate)
             return 1
         try:
             build(entries, wbw, decisions, os.path.join(entries, "bad"), fixture_mode=False)

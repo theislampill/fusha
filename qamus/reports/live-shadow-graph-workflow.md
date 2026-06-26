@@ -46,6 +46,10 @@ The tools intentionally do not embed private server paths. Server acceptance pas
 - `tools/validate_parse_key_contract.py`: validates parse-key family rows as grammar-reuse nodes, not identities. It
   checks exact token backlinks, canonical hash stability, family-size reconciliation, no surface-only auto-safe rows,
   no multi-candidate propagation, and no grammar-sensitive trigger marked propagation-safe.
+- Rich WBW segment roles such as `conjunction`, `resumption_particle`, and `preposition` are grammar-sensitive for
+  propagation. Even when a visible token is resolved, these rows must not become `auto_safe` merely because the family
+  has one token; they require the same gate discipline as the corresponding `function_particle` / `preposition`
+  parse triggers.
 - `tools/validate_shadow_review_pack.py`: validates that review-pack rows are non-vacuous, exact-addressed with
   `quran:S:A:W` and `wbw:S:A:W`, source-clean at the public boundary, and explicitly non-mutating.
 - `tools/validate_decision_linkage.py`: validates that authored decision rows link exact `quran:S:A:W` tokens,
