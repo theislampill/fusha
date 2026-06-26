@@ -512,6 +512,8 @@ for _art in (
         "qamus/examples/shadow_review_pack.sample.jsonl",
         "qamus/examples/shadow_admin_debug_pack.sample.json",
         "qamus/procedures/production-bug-lessons.md",
+        "nahw/evals/grammar-problems-phase3p25-mining.jsonl",
+        "nahw/evals/grammar-problems-phase3p25-mining.md",
         "qamus/reports/live-shadow-graph-workflow.md",
         "tools/summarize_shadow_closure_queue.py",
         "tools/validate_detector_maturity.py",
@@ -526,6 +528,8 @@ for _art in (
         "tools/query_shadow_admin_debug_pack.py",
         "tools/plan_shadow_hover_edit_intent.py",
         "tools/plan_shadow_repair_impact_preview.py",
+        "tools/build_grammar_regression_mining.py",
+        "tools/validate_grammar_regression_mining.py",
         "tools/summarize_rich_wbw_roles.py",
         "tools/build_shadow_admin_debug_pack.py",
 ):
@@ -584,6 +588,11 @@ for _script, _args, _label in (
         ("query_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack query self-test"),
         ("plan_shadow_hover_edit_intent.py", ["--self-test"], "Phase3 shadow hover edit intent planner self-test"),
         ("plan_shadow_repair_impact_preview.py", ["--self-test"], "Phase3 shadow repair impact preview planner self-test"),
+        ("build_grammar_regression_mining.py", ["--self-test"], "Phase3.25 grammar regression mining builder self-test"),
+        ("validate_grammar_regression_mining.py", ["--self-test"], "Phase3.25 grammar regression mining validator self-test"),
+        ("validate_grammar_regression_mining.py",
+         [os.path.join(_R, "nahw", "evals", "grammar-problems-phase3p25-mining.jsonl")],
+         "Phase3.25 grammar regression mining ledger validates"),
 ):
     try:
         _v = run_text([sys.executable, os.path.join(_R, "tools", _script)] + _args)
