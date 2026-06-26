@@ -1,0 +1,132 @@
+{
+  "artifacts_written": [
+    {
+      "bytes": 931,
+      "exists": true,
+      "name": "nodes.jsonl",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "bytes": 1203,
+      "exists": true,
+      "name": "edges.jsonl",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ],
+  "builder": "tools/build_live_shadow_graph.py",
+  "counts": {
+    "entries": 3,
+    "fusha_reference": {
+      "index_dir_supplied": true,
+      "source_address_full_present": true,
+      "token_universe_source_present": false
+    },
+    "live_word_records": 3,
+    "orphan_edges": 0,
+    "parse_family_classes": {
+      "human_review_required": 1,
+      "token_only_required": 2
+    },
+    "parse_keys": 3,
+    "public_success_leak_count": 0,
+    "sections": {
+      "noun": 1,
+      "particle": 1,
+      "verb": 1
+    },
+    "token_decisions": 1,
+    "token_universe": 3,
+    "unresolved_tokens": 0
+  },
+  "detector_maturity": {
+    "source_disagreement": "reserved_detector_gap",
+    "two_vote_required": "partial_shadow_gate",
+    "zero_count_policy": "zero_does_not_prove_absence"
+  },
+  "fixture_mode": true,
+  "generated_utc": "2026-06-26T00:00:00Z",
+  "identity_hierarchy": {
+    "decision": "decision:*",
+    "entry": "qamus:*",
+    "hover_slot": "wbw:S:A:W",
+    "norm_only_certification_allowed": false,
+    "parse_family": "parse:<hash>",
+    "parse_key_primary_identity": false,
+    "quran_token": "quran:S:A:W",
+    "raw_surface_identity_allowed": false
+  },
+  "input_artifacts": [
+    {
+      "bytes": 332,
+      "exists": true,
+      "file_count": 3,
+      "json_file_count": 3,
+      "kind": "directory",
+      "path": "fixtures/live-shadow/entries",
+      "required": true,
+      "role": "entries_dir",
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    {
+      "bytes": 221,
+      "exists": true,
+      "kind": "file",
+      "path": "fixtures/live-shadow/wbw.json",
+      "required": true,
+      "role": "wbw_json",
+      "row_count": null,
+      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    {
+      "bytes": 83,
+      "exists": true,
+      "kind": "file",
+      "path": "fixtures/live-shadow/decisions.jsonl",
+      "required": false,
+      "role": "decision_ledger",
+      "row_count": 1,
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ],
+  "live_mutation_allowed": false,
+  "live_readonly": true,
+  "mirror_sync_allowed": false,
+  "no_live_write": true,
+  "output_guard": {
+    "forbidden_roots": [
+      "fixtures/live-shadow/live-app"
+    ],
+    "forbidden_roots_checked": 1,
+    "out_dir": "out/live-shadow-fixture",
+    "output_inside_forbidden_root": false,
+    "overwrite_refused_for_existing_artifacts": true
+  },
+  "public_boundary": {
+    "external_source_names_public": false,
+    "internal_provenance_public": false,
+    "kind": "authored",
+    "lang": "en",
+    "private_fields": [
+      "informed_by",
+      "internal_evidence",
+      "adapter_labels",
+      "reviewer_notes"
+    ],
+    "public_fields": [
+      "gloss",
+      "src",
+      "kind",
+      "lang"
+    ],
+    "src": "qamus"
+  },
+  "public_readback_scan": {
+    "leak_count": null,
+    "note": "Run tools/scan_public_boundary.py for HTTP public readback evidence.",
+    "status": "not_run_by_builder"
+  },
+  "run_mode": "fixture",
+  "schema_version": "qamus-live-shadow-run-manifest@1",
+  "service_restart_allowed": false,
+  "wbw_rebuild_allowed": false
+}

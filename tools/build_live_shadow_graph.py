@@ -16,6 +16,7 @@ Required real run shape:
 Fixture mode is for CI/self-test and does not claim live counts.
 """
 import argparse
+from datetime import datetime, timezone
 import hashlib
 import io
 import json
@@ -46,6 +47,7 @@ PHASE_FILES = [
     "mirror-diff-summary.md",
     "sample-traces.md",
     "validator-report.md",
+    "phase2-run-manifest.json",
 ]
 GATES_UNSAFE_FOR_PROPAGATION = {"human_review_required", "never_auto", "unknown"}
 
@@ -87,6 +89,78 @@ def write_jsonl(path, rows):
     with io.open(path, "w", encoding="utf-8", newline="\n") as handle:
         for row in rows:
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+
+
+def sha256_file(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def file_row_count(path):
+    if not path or not os.path.exists(path):
+        return None
+    if path.endswith(".jsonl"):
+        with io.open(path, encoding="utf-8") as handle:
+            return sum(1 for line in handle if line.strip())
+    return None
+
+
+def describe_file(path, role, required=True):
+    row = {
+        "role": role,
+        "path": path,
+        "required": required,
+        "exists": bool(path and os.path.exists(path)),
+        "kind": "file",
+        "sha256": None,
+        "bytes": None,
+        "row_count": None,
+    }
+    if row["exists"]:
+        row["sha256"] = sha256_file(path)
+        row["bytes"] = os.path.getsize(path)
+        row["row_count"] = file_row_count(path)
+    return row
+
+
+def describe_dir(path, role, required=True):
+    row = {
+        "role": role,
+        "path": path,
+        "required": required,
+        "exists": bool(path and os.path.isdir(path)),
+        "kind": "directory",
+        "sha256": None,
+        "bytes": None,
+        "file_count": 0,
+        "json_file_count": 0,
+    }
+    if not row["exists"]:
+        return row
+    digest = hashlib.sha256()
+    total = 0
+    file_count = 0
+    json_count = 0
+    for root, _dirs, files in os.walk(path):
+        for name in sorted(files):
+            file_count += 1
+            if name.endswith(".json"):
+                json_count += 1
+            full = os.path.join(root, name)
+            rel = os.path.relpath(full, path).replace(os.sep, "/")
+            size = os.path.getsize(full)
+            total += size
+            digest.update(rel.encode("utf-8"))
+            digest.update(str(size).encode("ascii"))
+            digest.update(sha256_file(full).encode("ascii"))
+    row["sha256"] = digest.hexdigest()
+    row["bytes"] = total
+    row["file_count"] = file_count
+    row["json_file_count"] = json_count
+    return row
 
 
 def load_entries(entries_dir):
@@ -421,7 +495,90 @@ def write_sample_traces(out_dir, entry_index, token_index, decision_index, parse
         handle.write("\n".join(lines).rstrip() + "\n")
 
 
-def build(entries_dir, wbw_json, decision_ledger, out_dir, fixture_mode=False, forbidden_roots=None, fusha_index_dir=None):
+def write_run_manifest(
+        out_dir,
+        counts,
+        entries_dir,
+        wbw_json,
+        decision_ledger,
+        fusha_index_dir,
+        fixture_mode,
+        live_readonly,
+        no_live_write,
+        forbidden_roots):
+    artifact_rows = []
+    for name in PHASE_FILES:
+        if name == "phase2-run-manifest.json":
+            continue
+        path = os.path.join(out_dir, name)
+        artifact_rows.append({
+            "name": name,
+            "exists": os.path.exists(path),
+            "bytes": os.path.getsize(path) if os.path.exists(path) else None,
+            "sha256": sha256_file(path) if os.path.exists(path) else None,
+        })
+    manifest = {
+        "schema_version": "qamus-live-shadow-run-manifest@1",
+        "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
+        "builder": "tools/build_live_shadow_graph.py",
+        "run_mode": "fixture" if fixture_mode else "live_readonly",
+        "fixture_mode": bool(fixture_mode),
+        "live_readonly": bool(live_readonly or fixture_mode),
+        "no_live_write": bool(no_live_write),
+        "live_mutation_allowed": False,
+        "wbw_rebuild_allowed": False,
+        "service_restart_allowed": False,
+        "mirror_sync_allowed": False,
+        "identity_hierarchy": {
+            "quran_token": "quran:S:A:W",
+            "hover_slot": "wbw:S:A:W",
+            "entry": "qamus:*",
+            "decision": "decision:*",
+            "parse_family": "parse:<hash>",
+            "parse_key_primary_identity": False,
+            "raw_surface_identity_allowed": False,
+            "norm_only_certification_allowed": False,
+        },
+        "input_artifacts": [
+            describe_dir(entries_dir, "entries_dir"),
+            describe_file(wbw_json, "wbw_json"),
+            describe_file(decision_ledger, "decision_ledger", required=False),
+            describe_dir(fusha_index_dir, "fusha_index_dir", required=False),
+        ],
+        "output_guard": {
+            "out_dir": out_dir,
+            "forbidden_roots": forbidden_roots or [],
+            "forbidden_roots_checked": len(forbidden_roots or []),
+            "output_inside_forbidden_root": False,
+            "overwrite_refused_for_existing_artifacts": True,
+        },
+        "counts": counts,
+        "public_boundary": {
+            "public_fields": ["gloss", "src", "kind", "lang"],
+            "private_fields": ["informed_by", "internal_evidence", "adapter_labels", "reviewer_notes"],
+            "src": "qamus",
+            "kind": "authored",
+            "lang": "en",
+            "external_source_names_public": False,
+            "internal_provenance_public": False,
+        },
+        "public_readback_scan": {
+            "status": "not_run_by_builder",
+            "leak_count": None,
+            "note": "Run tools/scan_public_boundary.py for HTTP public readback evidence.",
+        },
+        "detector_maturity": {
+            "two_vote_required": "partial_shadow_gate",
+            "source_disagreement": "reserved_detector_gap",
+            "zero_count_policy": "zero_does_not_prove_absence",
+        },
+        "artifacts_written": artifact_rows,
+    }
+    write_json(os.path.join(out_dir, "phase2-run-manifest.json"), manifest)
+
+
+def build(entries_dir, wbw_json, decision_ledger, out_dir, fixture_mode=False, forbidden_roots=None, fusha_index_dir=None,
+          live_readonly=False, no_live_write=True):
     forbidden_roots = forbidden_roots or []
     ensure_safe_output(out_dir, [entries_dir, os.path.dirname(wbw_json), os.path.dirname(decision_ledger or "")], forbidden_roots, fixture_mode)
 
@@ -617,6 +774,18 @@ def build(entries_dir, wbw_json, decision_ledger, out_dir, fixture_mode=False, f
     write_sample_traces(out_dir, entry_index, token_index, decision_index, parse_to_tokens, parse_candidates, parse_exact_candidates, parse_candidate_statuses)
     with io.open(os.path.join(out_dir, "validator-report.md"), "w", encoding="utf-8", newline="\n") as handle:
         handle.write("# Validator Report\n\nAll Phase 1 shadow validators passed\n")
+    write_run_manifest(
+        out_dir,
+        counts,
+        entries_dir,
+        wbw_json,
+        decision_ledger,
+        fusha_index_dir,
+        fixture_mode,
+        live_readonly,
+        no_live_write,
+        forbidden_roots,
+    )
     return counts
 
 
@@ -653,7 +822,7 @@ def self_test():
     with tempfile.TemporaryDirectory(prefix="shadow-builder-") as td:
         entries, wbw, decisions, indexes = make_fixture_inputs(td)
         out = os.path.join(td, "out")
-        counts = build(entries, wbw, decisions, out, fixture_mode=True, fusha_index_dir=indexes)
+        counts = build(entries, wbw, decisions, out, fixture_mode=True, fusha_index_dir=indexes, no_live_write=True)
         missing = [name for name in PHASE_FILES if not os.path.exists(os.path.join(out, name))]
         if missing:
             print("SELF-TEST FAIL: missing %s" % missing)
@@ -704,6 +873,8 @@ def main():
         fixture_mode=args.fixture_mode,
         forbidden_roots=args.forbid_output_root,
         fusha_index_dir=args.fusha_index_dir,
+        live_readonly=args.live_readonly,
+        no_live_write=args.no_live_write,
     )
     print(json.dumps(counts, ensure_ascii=False, sort_keys=True, indent=2))
     print("PASS — shadow graph built without live mutation")

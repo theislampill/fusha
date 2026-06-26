@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/live-shadow-run-manifest.schema.json",
+  "title": "Qamus live-readonly shadow graph run manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "builder",
+    "run_mode",
+    "fixture_mode",
+    "live_readonly",
+    "no_live_write",
+    "live_mutation_allowed",
+    "wbw_rebuild_allowed",
+    "service_restart_allowed",
+    "mirror_sync_allowed",
+    "identity_hierarchy",
+    "input_artifacts",
+    "output_guard",
+    "counts",
+    "public_boundary",
+    "public_readback_scan",
+    "detector_maturity",
+    "artifacts_written"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "qamus-live-shadow-run-manifest@1" },
+    "generated_utc": { "type": "string" },
+    "builder": { "const": "tools/build_live_shadow_graph.py" },
+    "run_mode": { "enum": ["fixture", "live_readonly"] },
+    "fixture_mode": { "type": "boolean" },
+    "live_readonly": { "type": "boolean" },
+    "no_live_write": { "const": true },
+    "live_mutation_allowed": { "const": false },
+    "wbw_rebuild_allowed": { "const": false },
+    "service_restart_allowed": { "const": false },
+    "mirror_sync_allowed": { "const": false },
+    "identity_hierarchy": {
+      "type": "object",
+      "required": [
+        "quran_token",
+        "hover_slot",
+        "entry",
+        "decision",
+        "parse_family",
+        "parse_key_primary_identity",
+        "raw_surface_identity_allowed",
+        "norm_only_certification_allowed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "quran_token": { "const": "quran:S:A:W" },
+        "hover_slot": { "const": "wbw:S:A:W" },
+        "entry": { "const": "qamus:*" },
+        "decision": { "const": "decision:*" },
+        "parse_family": { "const": "parse:<hash>" },
+        "parse_key_primary_identity": { "const": false },
+        "raw_surface_identity_allowed": { "const": false },
+        "norm_only_certification_allowed": { "const": false }
+      }
+    },
+    "input_artifacts": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["role", "path", "required", "exists", "kind", "sha256", "bytes"],
+        "additionalProperties": true,
+        "properties": {
+          "role": {
+            "enum": ["entries_dir", "wbw_json", "decision_ledger", "fusha_index_dir"]
+          },
+          "path": { "type": ["string", "null"] },
+          "required": { "type": "boolean" },
+          "exists": { "type": "boolean" },
+          "kind": { "enum": ["file", "directory"] },
+          "sha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+          "bytes": { "type": ["integer", "null"], "minimum": 0 },
+          "row_count": { "type": ["integer", "null"], "minimum": 0 },
+          "file_count": { "type": "integer", "minimum": 0 },
+          "json_file_count": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "output_guard": {
+      "type": "object",
+      "required": [
+        "out_dir",
+        "forbidden_roots",
+        "forbidden_roots_checked",
+        "output_inside_forbidden_root",
+        "overwrite_refused_for_existing_artifacts"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "out_dir": { "type": "string", "minLength": 1 },
+        "forbidden_roots": { "type": "array", "items": { "type": "string" } },
+        "forbidden_roots_checked": { "type": "integer", "minimum": 0 },
+        "output_inside_forbidden_root": { "const": false },
+        "overwrite_refused_for_existing_artifacts": { "const": true }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": [
+        "entries",
+        "sections",
+        "token_universe",
+        "live_word_records",
+        "token_decisions",
+        "parse_keys",
+        "unresolved_tokens",
+        "orphan_edges",
+        "public_success_leak_count",
+        "parse_family_classes"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "entries": { "type": "integer", "minimum": 1 },
+        "sections": { "type": "object" },
+        "token_universe": { "type": "integer", "minimum": 1 },
+        "live_word_records": { "type": "integer", "minimum": 0 },
+        "token_decisions": { "type": "integer", "minimum": 0 },
+        "parse_keys": { "type": "integer", "minimum": 1 },
+        "unresolved_tokens": { "type": "integer", "minimum": 0 },
+        "orphan_edges": { "const": 0 },
+        "public_success_leak_count": { "const": 0 },
+        "parse_family_classes": { "type": "object" }
+      }
+    },
+    "public_boundary": { "$ref": "public-private-boundary.schema.json" },
+    "public_readback_scan": {
+      "type": "object",
+      "required": ["status", "leak_count"],
+      "additionalProperties": true,
+      "properties": {
+        "status": {
+          "enum": ["not_run_by_builder", "public_readback_scanned"]
+        },
+        "leak_count": { "type": ["integer", "null"], "minimum": 0 }
+      }
+    },
+    "detector_maturity": {
+      "$ref": "detector-maturity.schema.json#/properties/detectors"
+    },
+    "artifacts_written": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "exists", "bytes", "sha256"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "exists": { "const": true },
+          "bytes": { "type": "integer", "minimum": 1 },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        }
+      }
+    }
+  }
+}

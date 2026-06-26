@@ -20,7 +20,9 @@ The tools intentionally do not embed private server paths. Server acceptance pas
 - `tools/build_live_shadow_graph.py`: builds a shadow graph from explicit local input paths and refuses unsafe output
   roots. It requires `--live-readonly` and `--no-live-write` outside fixture mode. Optional Fusha graph exports are
   recorded as `exact`, `candidate`, or `inferred` join statuses; candidate/inferred joins cannot make a parse family
-  propagation-safe.
+  propagation-safe. New runs also emit `phase2-run-manifest.json`, a compact receipt tying the generated graph to
+  input hashes, no-write flags, forbidden-root guards, counts, detector-maturity warnings, and the public/private
+  boundary.
 - `tools/validate_phase1_shadow_graph.py`: validates required Phase 1/2 shadow artifacts, nonzero rows, exact
   counts, token/hover/parse linkage, no orphan count, no surface-only auto-safe parse, and public-boundary markers.
 - `tools/scan_public_boundary.py`: classifies public readback leaks separately from internal-only provenance.
@@ -30,6 +32,10 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   read-only and does not inspect or mutate live inputs.
 - `tools/validate_detector_maturity.py`: validates standalone or embedded detector-maturity records so Phase 2
   reports cannot treat `two_vote_required=0` or `source_disagreement=0` as proof that no such cases exist.
+- `tools/validate_live_shadow_run_manifest.py`: validates `phase2-run-manifest.json` so future live-readonly graph
+  builds cannot be treated as evidence unless they prove input artifact identity, output isolation, no live mutation,
+  no WBW rebuild, no service restart, no mirror sync, nonzero counts, zero orphan edges, detector-gap warnings, and a
+  source-clean public boundary.
 - `tools/validate_shadow_review_pack.py`: validates that review-pack rows are non-vacuous, exact-addressed with
   `quran:S:A:W` and `wbw:S:A:W`, source-clean at the public boundary, and explicitly non-mutating.
 - `tools/validate_decision_linkage.py`: validates that authored decision rows link exact `quran:S:A:W` tokens,
@@ -43,6 +49,8 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   regression, learner explanation, drill, and validator work.
 - `qamus/examples/detector_maturity.sample.json`: tiny fixture slice for the reusable detector-gap warning:
   zero-count detector output is not absence proof.
+- `qamus/examples/live_shadow_run_manifest.sample.json`: tiny fixture receipt showing the no-mutation run contract
+  without committing live server paths or full live graph blobs.
 - `qamus/examples/decision_linkage.sample.jsonl`: tiny fixture slice covering resolved, pending, and superseded
   decision rows with exact token/hover addresses.
 - `qamus/examples/hover_edit_intent.sample.jsonl`: tiny fixture slice covering token-only, parse-family, and
@@ -82,6 +90,8 @@ CI should use fixture/self-test mode only:
 
 ```bash
 python tools/build_live_shadow_graph.py --self-test
+python tools/validate_live_shadow_run_manifest.py --self-test
+python tools/validate_live_shadow_run_manifest.py qamus/examples/live_shadow_run_manifest.sample.json
 python tools/validate_phase1_shadow_graph.py --self-test
 python tools/summarize_shadow_closure_queue.py --self-test
 python tools/validate_shadow_review_pack.py --self-test
