@@ -1,0 +1,173 @@
+{
+  "admin_only": true,
+  "identity_policy": {
+    "exact_token_identity_required": true,
+    "norm_only_certification_allowed": false,
+    "parse_key_primary_identity": false,
+    "raw_surface_identity_allowed": false
+  },
+  "live_mutation_allowed": false,
+  "public_boundary": {
+    "external_source_names_public": false,
+    "internal_provenance_public": false,
+    "kind": "authored",
+    "lang": "en",
+    "private_fields": [
+      "internal_evidence",
+      "adapter_labels",
+      "reviewer_notes"
+    ],
+    "public_fields": [
+      "gloss",
+      "src",
+      "kind",
+      "lang"
+    ],
+    "src": "qamus"
+  },
+  "public_exposable": false,
+  "requires_auth": true,
+  "route_defaults": {
+    "allowed_methods": [
+      "GET"
+    ],
+    "apply_routes_allowed": false,
+    "mutating_methods_allowed": false,
+    "source_pack_required": true
+  },
+  "route_surface": "read_only_admin_debug",
+  "routes": [
+    {
+      "admin_only": true,
+      "auth_required": true,
+      "input_address_types": [
+        "wbw_loc",
+        "quran_loc"
+      ],
+      "live_mutation_allowed": false,
+      "method": "GET",
+      "output_pack_fields": [
+        "hover_inspectors",
+        "parse_family_views",
+        "entry_backlinks"
+      ],
+      "path_template": "/admin/qamus/shadow/hover/:wbw_loc",
+      "private_debug_allowed": true,
+      "public_exposable": false,
+      "public_payload_allowed": false,
+      "read_only": true,
+      "route_id": "route:hover-inspector",
+      "view": "hover_inspector"
+    },
+    {
+      "admin_only": true,
+      "auth_required": true,
+      "input_address_types": [
+        "qamus_entry"
+      ],
+      "live_mutation_allowed": false,
+      "method": "GET",
+      "output_pack_fields": [
+        "entry_backlinks",
+        "parse_family_views",
+        "hover_inspectors"
+      ],
+      "path_template": "/admin/qamus/shadow/entry/:entry_id",
+      "private_debug_allowed": true,
+      "public_exposable": false,
+      "public_payload_allowed": false,
+      "read_only": true,
+      "route_id": "route:entry-backlinks",
+      "view": "entry_backlinks"
+    },
+    {
+      "admin_only": true,
+      "auth_required": true,
+      "input_address_types": [
+        "parse_id"
+      ],
+      "live_mutation_allowed": false,
+      "method": "GET",
+      "output_pack_fields": [
+        "parse_family_views",
+        "hover_inspectors",
+        "entry_backlinks"
+      ],
+      "path_template": "/admin/qamus/shadow/parse/:parse_id",
+      "private_debug_allowed": true,
+      "public_exposable": false,
+      "public_payload_allowed": false,
+      "read_only": true,
+      "route_id": "route:parse-family",
+      "view": "parse_family_view"
+    },
+    {
+      "admin_only": true,
+      "auth_required": true,
+      "input_address_types": [
+        "blocker_id"
+      ],
+      "live_mutation_allowed": false,
+      "method": "GET",
+      "output_pack_fields": [
+        "blocker_queue",
+        "hover_inspectors"
+      ],
+      "path_template": "/admin/qamus/shadow/blockers/:blocker_id",
+      "private_debug_allowed": true,
+      "public_exposable": false,
+      "public_payload_allowed": false,
+      "read_only": true,
+      "route_id": "route:blocker-queue",
+      "view": "blocker_queue"
+    },
+    {
+      "admin_only": true,
+      "auth_required": true,
+      "input_address_types": [
+        "qamus_field",
+        "entry_sense",
+        "repair_preview_id"
+      ],
+      "live_mutation_allowed": false,
+      "method": "GET",
+      "output_pack_fields": [
+        "entry_backlinks",
+        "parse_family_views",
+        "hover_inspectors"
+      ],
+      "path_template": "/admin/qamus/shadow/repair-preview/:target_address",
+      "private_debug_allowed": true,
+      "public_exposable": false,
+      "public_payload_allowed": false,
+      "read_only": true,
+      "route_id": "route:repair-preview",
+      "view": "repair_preview"
+    },
+    {
+      "admin_only": true,
+      "auth_required": true,
+      "input_address_types": [
+        "edit_intent_id",
+        "wbw_loc",
+        "decision_id"
+      ],
+      "live_mutation_allowed": false,
+      "method": "GET",
+      "output_pack_fields": [
+        "hover_inspectors",
+        "entry_backlinks",
+        "parse_family_views"
+      ],
+      "path_template": "/admin/qamus/shadow/edit-intent-preview/:edit_intent_id",
+      "private_debug_allowed": true,
+      "public_exposable": false,
+      "public_payload_allowed": false,
+      "read_only": true,
+      "route_id": "route:edit-intent-preview",
+      "view": "edit_intent_preview"
+    }
+  ],
+  "source_pack_version": "qamus-shadow-admin-debug-pack@1",
+  "version": "qamus-shadow-admin-route-contract@1"
+}

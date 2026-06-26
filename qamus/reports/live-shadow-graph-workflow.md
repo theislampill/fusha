@@ -51,6 +51,11 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   (`wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> entry candidates -> affected siblings`), forward traces
   (`qamus:<id> -> dependent tokens -> parse families -> decisions/hover slots`), and parse-family traces without
   re-reading live artifacts or using raw Arabic surfaces as identity.
+- `tools/validate_shadow_admin_route_contract.py`: validates the future app/admin route contract for this static
+  pack before any live route exists. It requires admin-only authenticated `GET` routes, exact graph identities,
+  `live_mutation_allowed=false`, no apply/write/mutate route wording, no raw-surface identity, no parse-key-primary
+  identity, and a source-clean public/private boundary. This prevents a future UI scaffold from quietly becoming an
+  edit/apply endpoint.
 - `tools/plan_shadow_hover_edit_intent.py`: read-only CLI for planning future hover-edit intents from a validated
   Phase 3 admin/debug pack. It emits validator-clean JSONL rows for token-only, parse-family, or entry/sense edit
   intent review, preserves exact `wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> qamus:<id>#sense=<n>` identity, and
@@ -114,6 +119,9 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   touching live Qamus data.
 - `qamus/examples/shadow_review_pack.sample.jsonl`: tiny fixture slice covering propagation-preview, collision
   quarantine, missing-entry, never-auto, and component-enriched two-vote lanes without committing live graph dumps.
+- `qamus/examples/shadow_admin_route_contract.sample.json`: tiny future-route contract fixture for read-only,
+  admin-only token inspector, entry backlinks, parse family, blocker queue, repair preview, and edit-intent preview
+  surfaces. It deliberately contains no app implementation and no live path.
 
 ## Acceptance Gates
 
@@ -148,6 +156,7 @@ python tools/build_shadow_admin_debug_pack.py --shadow-dir <isolated shadow outp
   --sample-token quran:22:18:17 \
   --sample-token quran:2:21:1
 python tools/validate_shadow_admin_debug_pack.py <isolated static admin-debug output>/admin-debug-pack.json
+python tools/validate_shadow_admin_route_contract.py qamus/examples/shadow_admin_route_contract.sample.json
 python tools/query_shadow_admin_debug_pack.py --pack <isolated static admin-debug output>/admin-debug-pack.json \
   --token quran:33:63:1
 python tools/query_shadow_admin_debug_pack.py --pack <isolated static admin-debug output>/admin-debug-pack.json \
@@ -195,6 +204,8 @@ python tools/summarize_rich_wbw_roles.py --self-test
 python tools/build_shadow_admin_debug_pack.py --self-test
 python tools/validate_shadow_admin_debug_pack.py --self-test
 python tools/validate_shadow_admin_debug_pack.py qamus/examples/shadow_admin_debug_pack.sample.json
+python tools/validate_shadow_admin_route_contract.py --self-test
+python tools/validate_shadow_admin_route_contract.py qamus/examples/shadow_admin_route_contract.sample.json
 python tools/query_shadow_admin_debug_pack.py --self-test
 python tools/plan_shadow_hover_edit_intent.py --self-test
 python tools/plan_shadow_repair_impact_preview.py --self-test

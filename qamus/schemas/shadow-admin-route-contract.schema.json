@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/shadow-admin-route-contract.schema.json",
+  "title": "Qamus shadow admin route contract",
+  "type": "object",
+  "required": [
+    "version",
+    "source_pack_version",
+    "route_surface",
+    "public_exposable",
+    "live_mutation_allowed",
+    "requires_auth",
+    "admin_only",
+    "identity_policy",
+    "route_defaults",
+    "routes",
+    "public_boundary"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": "qamus-shadow-admin-route-contract@1" },
+    "source_pack_version": { "const": "qamus-shadow-admin-debug-pack@1" },
+    "route_surface": { "const": "read_only_admin_debug" },
+    "public_exposable": { "const": false },
+    "live_mutation_allowed": { "const": false },
+    "requires_auth": { "const": true },
+    "admin_only": { "const": true },
+    "identity_policy": {
+      "type": "object",
+      "required": [
+        "exact_token_identity_required",
+        "raw_surface_identity_allowed",
+        "parse_key_primary_identity",
+        "norm_only_certification_allowed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "exact_token_identity_required": { "const": true },
+        "raw_surface_identity_allowed": { "const": false },
+        "parse_key_primary_identity": { "const": false },
+        "norm_only_certification_allowed": { "const": false }
+      }
+    },
+    "route_defaults": {
+      "type": "object",
+      "required": [
+        "allowed_methods",
+        "mutating_methods_allowed",
+        "apply_routes_allowed",
+        "source_pack_required"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "allowed_methods": {
+          "type": "array",
+          "items": { "const": "GET" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "mutating_methods_allowed": { "const": false },
+        "apply_routes_allowed": { "const": false },
+        "source_pack_required": { "const": true }
+      }
+    },
+    "routes": {
+      "type": "array",
+      "minItems": 5,
+      "items": { "$ref": "#/$defs/route" }
+    },
+    "public_boundary": { "$ref": "public-private-boundary.schema.json" }
+  },
+  "$defs": {
+    "address_type": {
+      "type": "string",
+      "enum": [
+        "quran_loc",
+        "wbw_loc",
+        "parse_id",
+        "qamus_entry",
+        "qamus_field",
+        "entry_sense",
+        "decision_id",
+        "blocker_id",
+        "repair_preview_id",
+        "edit_intent_id"
+      ]
+    },
+    "view": {
+      "type": "string",
+      "enum": [
+        "hover_inspector",
+        "entry_backlinks",
+        "parse_family_view",
+        "blocker_queue",
+        "repair_preview",
+        "edit_intent_preview"
+      ]
+    },
+    "route": {
+      "type": "object",
+      "required": [
+        "route_id",
+        "view",
+        "method",
+        "path_template",
+        "admin_only",
+        "auth_required",
+        "read_only",
+        "public_exposable",
+        "live_mutation_allowed",
+        "input_address_types",
+        "output_pack_fields",
+        "private_debug_allowed",
+        "public_payload_allowed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "route_id": { "type": "string", "pattern": "^route:" },
+        "view": { "$ref": "#/$defs/view" },
+        "method": { "const": "GET" },
+        "path_template": { "type": "string", "pattern": "^/admin/qamus/shadow/" },
+        "admin_only": { "const": true },
+        "auth_required": { "const": true },
+        "read_only": { "const": true },
+        "public_exposable": { "const": false },
+        "live_mutation_allowed": { "const": false },
+        "input_address_types": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/address_type" },
+          "uniqueItems": true
+        },
+        "output_pack_fields": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "private_debug_allowed": { "const": true },
+        "public_payload_allowed": { "const": false }
+      }
+    }
+  }
+}
