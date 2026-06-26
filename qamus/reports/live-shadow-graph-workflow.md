@@ -28,6 +28,8 @@ The tools intentionally do not embed private server paths. Server acceptance pas
 - `tools/summarize_shadow_closure_queue.py`: consumes an already-built shadow graph and emits closure-lane,
   blocker, family-size, sample-token summaries, and optional source-addressed review-pack JSONL rows. It is
   read-only and does not inspect or mutate live inputs.
+- `tools/validate_shadow_review_pack.py`: validates that review-pack rows are non-vacuous, exact-addressed with
+  `quran:S:A:W` and `wbw:S:A:W`, source-clean at the public boundary, and explicitly non-mutating.
 - `tools/validate_production_bug_lessons.py`: keeps production hover failures connected to sarf/nahw procedure,
   regression, learner explanation, drill, and validator work.
 
@@ -51,6 +53,7 @@ python tools/validate_phase1_shadow_graph.py <isolated shadow output>
 python tools/summarize_shadow_closure_queue.py <isolated shadow output> \
   --out-md <review report> \
   --review-pack-jsonl <review pack jsonl>
+python tools/validate_shadow_review_pack.py <review pack jsonl>
 python tools/scan_public_boundary.py --public <public entry URL> --shadow-dir <isolated shadow output>
 python tools/compare_wbw_artifacts.py <live wbw lookup> <mirror wbw lookup>
 ```
@@ -61,6 +64,7 @@ CI should use fixture/self-test mode only:
 python tools/build_live_shadow_graph.py --self-test
 python tools/validate_phase1_shadow_graph.py --self-test
 python tools/summarize_shadow_closure_queue.py --self-test
+python tools/validate_shadow_review_pack.py --self-test
 python tools/scan_public_boundary.py --self-test
 python tools/compare_wbw_artifacts.py --self-test
 python tools/validate_production_bug_lessons.py qamus/examples/production_bug_lesson.sample.jsonl

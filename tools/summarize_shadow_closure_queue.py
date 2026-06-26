@@ -173,6 +173,7 @@ def review_pack_row(parse_id, lane, parse_obj, tokens):
     action = lane_action(lane)
     candidate_joins = parse_obj.get("qamus_entry_candidate_joins") or []
     token_locs = [t.get("loc") for t in tokens if t.get("loc")]
+    quran_locs = ["quran:%s" % loc for loc in token_locs]
     wbw_locs = ["wbw:%s" % loc for loc in token_locs]
     row = {
         "id": "queue:%s" % parse_id.replace(":", "_"),
@@ -185,7 +186,7 @@ def review_pack_row(parse_id, lane, parse_obj, tokens):
         "resolved_token_count": len(tokens) - len(unresolved),
         "unresolved_token_count": len(unresolved),
         "surface_sample": next((t.get("surface") for t in tokens if t.get("surface")), ""),
-        "quran_locs": token_locs,
+        "quran_locs": quran_locs,
         "wbw_locs": wbw_locs,
         "token_sample": [t.get("id") for t in tokens[:10]],
         "candidate_entries": parse_obj.get("qamus_entry_candidates") or [],
@@ -384,6 +385,9 @@ def run_self_test():
         pack = summary["review_pack"]
         if not any(row["recommended_action"].startswith("resolve entry") for row in pack):
             print("SELF-TEST FAIL: review pack collision action")
+            return 1
+        if not all(loc.startswith("quran:") for row in pack for loc in row["quran_locs"]):
+            print("SELF-TEST FAIL: review pack quran addresses")
             return 1
         out_md = os.path.join(td, "summary.md")
         write_markdown(out_md, summary)
