@@ -26,6 +26,7 @@ LANES = {
     "never_auto",
     "quarantine_collision",
     "two_vote_required",
+    "source_disagreement",
     "missing_entry",
     "unknown_parse",
     "propagation_safe_candidate",
@@ -54,6 +55,7 @@ REQUIRED = [
     "scope",
     "recommended_action",
     "required_gate",
+    "gate_reasons",
     "family_size",
     "resolved_token_count",
     "unresolved_token_count",
@@ -182,6 +184,14 @@ def validate_row(row, line_no, errors):
 
     if lane == "quarantine_collision" and len(row.get("candidate_entries") or []) < 2:
         _err(errors, line_no, "quarantine_collision must expose multiple candidate entries")
+    gate_reasons = row.get("gate_reasons")
+    if not isinstance(gate_reasons, list) or not gate_reasons:
+        _err(errors, line_no, "gate_reasons must be a non-empty array")
+    if lane in {"two_vote_required", "source_disagreement", "quarantine_collision", "human_review_required", "never_auto"}:
+        if not any(str(reason).startswith(("grammar_trigger:", "blocker:", "source_disagreement", "candidate_collision", "parse_gate:")) for reason in gate_reasons or []):
+            _err(errors, line_no, "%s lane must explain its gate_reasons" % lane)
+    if lane == "source_disagreement" and "source_disagreement" not in (gate_reasons or []):
+        _err(errors, line_no, "source_disagreement lane must include source_disagreement gate reason")
     if lane == "missing_entry" and row.get("candidate_entries"):
         _err(errors, line_no, "missing_entry lane must not carry candidate_entries")
     if lane == "propagation_safe_candidate":
@@ -221,6 +231,7 @@ def good_row():
         "scope": "token_or_family_after_votes",
         "recommended_action": "build two-vote review packet with source-addressed reasoning",
         "required_gate": "two_vote_required",
+        "gate_reasons": ["parse_gate:two_vote_required", "requires_independent_reason_agreement"],
         "family_size": 1,
         "resolved_token_count": 1,
         "unresolved_token_count": 0,
@@ -261,6 +272,7 @@ def never_auto_row():
         "scope": "quarantine",
         "recommended_action": "do not propagate; resolve blocker or route to owner/scholar review before any token decision",
         "required_gate": "never_auto",
+        "gate_reasons": ["grammar_trigger:ma_function", "parse_gate:never_auto"],
         "surface_sample": "مَا",
         "quran_locs": ["quran:2:21:1"],
         "wbw_locs": ["wbw:2:21:1"],
@@ -302,6 +314,7 @@ def propagation_preview_row():
             {"entry": "qamus:n:earth", "join_status": ["exact:entry_surface", "exact:strict_surface"]}
         ],
     })
+    row["gate_reasons"] = ["parse_gate:auto_safe", "requires_pre_apply_family_preview"]
     row["parse"] = dict(row["parse"])
     row["parse"].update({
         "gate": "auto_safe",
@@ -309,6 +322,26 @@ def propagation_preview_row():
         "pos": "noun",
         "grammar_triggers": [],
     })
+    return row
+
+
+def source_disagreement_row():
+    row = good_row()
+    row.update({
+        "id": "queue:parse_feedface",
+        "parse_id": "parse:feedface",
+        "lane": "source_disagreement",
+        "scope": "quarantine",
+        "recommended_action": "resolve source/join disagreement before any token or family edit",
+        "required_gate": "human_review_required",
+        "gate_reasons": ["source_disagreement", "parse_gate:human_review_required"],
+        "candidate_entries": ["qamus:n:one"],
+        "candidate_join_statuses": [
+            {"entry": "qamus:n:one", "join_status": ["conflict:source_surface_mismatch"]}
+        ],
+    })
+    row["parse"] = dict(row["parse"])
+    row["parse"].update({"gate": "human_review_required"})
     return row
 
 
@@ -320,6 +353,7 @@ def self_test():
             handle.write(json.dumps(good_row(), ensure_ascii=False, sort_keys=True) + "\n")
             handle.write(json.dumps(never_auto_row(), ensure_ascii=False, sort_keys=True) + "\n")
             handle.write(json.dumps(propagation_preview_row(), ensure_ascii=False, sort_keys=True) + "\n")
+            handle.write(json.dumps(source_disagreement_row(), ensure_ascii=False, sort_keys=True) + "\n")
         row = good_row()
         row["quran_locs"] = ["33:63:1"]
         weak_propagation = propagation_preview_row()
@@ -328,7 +362,7 @@ def self_test():
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
             handle.write(json.dumps(weak_propagation, ensure_ascii=False, sort_keys=True) + "\n")
         count, errors = validate(good)
-        if count != 3 or errors:
+        if count != 4 or errors:
             print("SELF-TEST FAIL good:", errors)
             return 1
         count, errors = validate(bad)

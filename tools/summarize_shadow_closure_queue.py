@@ -85,6 +85,13 @@ def has_exact_candidate_join(parse_obj):
     )
 
 
+def has_conflict_join(parse_obj):
+    return any(
+        any(str(status).startswith(("conflict:", "source_disagreement:")) for status in statuses)
+        for statuses in parse_candidate_statuses(parse_obj).values()
+    )
+
+
 def parse_id_for_token(token):
     return token.get("parse_id") or token.get("parse_key")
 
@@ -129,6 +136,8 @@ def classify_parse_family(parse_id, parse_obj, tokens):
     confidence = parse_obj.get("parse_confidence")
     unresolved = [t for t in tokens if t.get("status") != "resolved"]
 
+    if has_conflict_join(parse_obj):
+        return "source_disagreement"
     if blocker and unresolved:
         return "blocked:%s" % blocker
     if not candidates:
@@ -144,6 +153,34 @@ def classify_parse_family(parse_id, parse_obj, tokens):
     if len(candidate_or_exact) == 1 and len(tokens) == 1:
         return "token_only_required"
     return "human_review_required"
+
+
+def gate_reasons(parse_obj, lane, tokens):
+    reasons = set()
+    for trigger in parse_obj.get("grammar_triggers") or []:
+        reasons.add("grammar_trigger:%s" % trigger)
+    blocker = parse_obj.get("blocker")
+    if blocker:
+        reasons.add("blocker:%s" % blocker)
+    confidence = parse_obj.get("parse_confidence")
+    if confidence:
+        reasons.add("parse_confidence:%s" % confidence)
+    gate = parse_obj.get("gate")
+    if gate:
+        reasons.add("parse_gate:%s" % gate)
+    if has_conflict_join(parse_obj) or lane == "source_disagreement":
+        reasons.add("source_disagreement")
+    if len(parse_candidate_statuses(parse_obj)) > 1 or lane == "quarantine_collision":
+        reasons.add("candidate_collision")
+    if any(t.get("status") != "resolved" for t in tokens):
+        reasons.add("has_unresolved_tokens")
+    if any(not t.get("has_wbw_record") for t in tokens):
+        reasons.add("missing_wbw_record")
+    if lane == "two_vote_required":
+        reasons.add("requires_independent_reason_agreement")
+    if lane == "propagation_safe_candidate":
+        reasons.add("requires_pre_apply_family_preview")
+    return sorted(reasons)
 
 
 def lane_action(lane):
@@ -187,6 +224,12 @@ def lane_action(lane):
         return {
             "scope": "quarantine",
             "recommended_action": "resolve entry/sense/function collision; do not fan out",
+            "gate": "human_review_required",
+        }
+    if lane == "source_disagreement":
+        return {
+            "scope": "quarantine",
+            "recommended_action": "resolve source/join disagreement before any token or family edit",
             "gate": "human_review_required",
         }
     if lane == "missing_entry":
@@ -234,6 +277,7 @@ def review_pack_row(parse_id, lane, parse_obj, tokens):
         "scope": action["scope"],
         "recommended_action": action["recommended_action"],
         "required_gate": action["gate"],
+        "gate_reasons": gate_reasons(parse_obj, lane, tokens),
         "family_size": len(tokens),
         "resolved_token_count": len(tokens) - len(unresolved),
         "unresolved_token_count": len(unresolved),
@@ -426,6 +470,7 @@ def run_self_test():
             {"id": "quran:1:1:5", "loc": "1:1:5", "surface": "بِسْمِ", "parse_id": "parse:a", "status": "resolved", "blocker": None, "has_wbw_record": True},
             {"id": "quran:1:1:6", "loc": "1:1:6", "surface": "بِسْمِ", "parse_key": "parse:e", "status": "resolved", "blocker": None, "has_wbw_record": True},
             {"id": "quran:1:1:7", "loc": "1:1:7", "surface": "بِسْمِ", "parse_key": "parse:e", "status": "resolved", "blocker": None, "has_wbw_record": True},
+            {"id": "quran:1:1:8", "loc": "1:1:8", "surface": "مَلِكِ", "parse_key": "parse:f", "status": "resolved", "blocker": None, "has_wbw_record": True},
         ])
         write_jsonl(os.path.join(shadow, "parse-keys.jsonl"), [
             {"id": "parse:a", "parse": {"qamus_entry_candidates": ["qamus:p:one"], "qamus_entry_candidate_joins": [{"entry": "qamus:p:one", "join_status": ["exact:decision_entry"]}], "gate": "auto_safe", "parse_confidence": "candidate", "blocker": None}},
@@ -433,11 +478,12 @@ def run_self_test():
             {"id": "parse:c", "parse": {"qamus_entry_candidates": ["qamus:n:one", "qamus:v:two"], "gate": "human_review_required", "parse_confidence": "candidate", "blocker": None}},
             {"id": "parse:d", "parse": {"qamus_entry_candidates": ["qamus:n:two"], "qamus_entry_candidate_joins": [{"entry": "qamus:n:two", "join_status": ["exact:decision_entry"]}], "gate": "never_auto", "parse_confidence": "candidate", "blocker": None}},
             {"id": "parse:e", "canonical_parse_object": {"qamus_entry_candidates": [{"entry_address": "qamus:p:two", "entry_id": "p2", "sense_id": None, "source": "usage_form"}], "gate": "auto_safe", "parse_confidence": "lexical_candidate", "blocker": None}, "seen_locs": ["quran:1:1:6", "quran:1:1:7"], "family_size": 2},
+            {"id": "parse:f", "parse": {"qamus_entry_candidates": ["qamus:n:king"], "qamus_entry_candidate_joins": [{"entry": "qamus:n:king", "join_status": ["conflict:source_surface_mismatch"]}], "gate": "human_review_required", "parse_confidence": "candidate", "blocker": None}},
         ])
         write_jsonl(os.path.join(shadow, "decision-index.jsonl"), [{"id": "decision:1"}])
         write_jsonl(os.path.join(shadow, "blocker-index.jsonl"), [{"id": "blocker:unknown_parse", "count": 1}])
         summary = summarize(shadow)
-        if summary["computed"]["token_rows"] != 7:
+        if summary["computed"]["token_rows"] != 8:
             print("SELF-TEST FAIL: token count")
             return 1
         if summary["lane_counts"].get("propagation_safe_candidate") != 2:
@@ -451,6 +497,9 @@ def run_self_test():
             return 1
         if summary["lane_counts"].get("quarantine_collision") != 1:
             print("SELF-TEST FAIL: collision lane")
+            return 1
+        if summary["lane_counts"].get("source_disagreement") != 1:
+            print("SELF-TEST FAIL: source disagreement lane")
             return 1
         pack = summary["review_pack"]
         if not any(row["recommended_action"].startswith("resolve entry") for row in pack):
@@ -484,7 +533,7 @@ def run_self_test():
             return 1
         out_pack = os.path.join(td, "review-pack.jsonl")
         write_jsonl(out_pack, pack)
-        if sum(1 for _ in read_jsonl(out_pack)) != 4:
+        if sum(1 for _ in read_jsonl(out_pack)) != 5:
             print("SELF-TEST FAIL: review pack jsonl")
             return 1
     print("PASS — shadow closure queue summarizer self-test")

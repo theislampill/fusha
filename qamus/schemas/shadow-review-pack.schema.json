@@ -10,6 +10,7 @@
     "scope",
     "recommended_action",
     "required_gate",
+    "gate_reasons",
     "family_size",
     "resolved_token_count",
     "unresolved_token_count",
@@ -33,7 +34,7 @@
     },
     "lane": {
       "type": "string",
-      "pattern": "^(blocked:[a-z0-9_]+|human_review_required|never_auto|quarantine_collision|two_vote_required|missing_entry|unknown_parse|propagation_safe_candidate|token_only_required)$"
+      "pattern": "^(blocked:[a-z0-9_]+|human_review_required|never_auto|quarantine_collision|source_disagreement|two_vote_required|missing_entry|unknown_parse|propagation_safe_candidate|token_only_required)$"
     },
     "scope": {
       "type": "string"
@@ -45,6 +46,14 @@
     "required_gate": {
       "type": "string",
       "minLength": 1
+    },
+    "gate_reasons": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
     },
     "family_size": {
       "type": "integer",

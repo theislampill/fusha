@@ -31,7 +31,8 @@ The tools intentionally do not embed private server paths. Server acceptance pas
 - `tools/compare_wbw_artifacts.py`: compares WBW artifacts without reconciling or copying either side.
 - `tools/summarize_shadow_closure_queue.py`: consumes an already-built shadow graph and emits closure-lane,
   blocker, family-size, sample-token summaries, and optional source-addressed review-pack JSONL rows. It is
-  read-only and does not inspect or mutate live inputs.
+  read-only and does not inspect or mutate live inputs. Review-pack rows include `gate_reasons` so two-vote,
+  collision, source-disagreement, pending, and preview-only lanes are explainable instead of mere labels.
 - `tools/validate_detector_maturity.py`: validates standalone or embedded detector-maturity records so Phase 2
   reports cannot treat `two_vote_required=0` or `source_disagreement=0` as proof that no such cases exist.
 - `tools/validate_live_shadow_run_manifest.py`: validates `phase2-run-manifest.json` so future live-readonly graph
