@@ -1,0 +1,18 @@
+{
+  "applies_to": [
+    "phase2_shadow_graph",
+    "shadow_closure_queue",
+    "shadow_review_pack"
+  ],
+  "detectors": {
+    "source_disagreement": "reserved_detector_gap",
+    "two_vote_required": "partial_shadow_gate",
+    "zero_count_policy": "zero_does_not_prove_absence"
+  },
+  "reporting_policy": {
+    "requires_live_readonly_shadow_graph": true,
+    "zero_counts_are_detector_outputs_only": true,
+    "zero_counts_must_not_claim_absence": true
+  },
+  "schema_version": "qamus-detector-maturity@1"
+}

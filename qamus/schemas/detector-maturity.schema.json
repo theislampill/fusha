@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/detector-maturity.schema.json",
+  "title": "Qamus shadow graph detector maturity",
+  "type": "object",
+  "required": ["schema_version", "applies_to", "detectors", "reporting_policy"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "qamus-detector-maturity@1" },
+    "applies_to": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": ["phase2_shadow_graph", "shadow_closure_queue", "shadow_review_pack"]
+      }
+    },
+    "detectors": {
+      "type": "object",
+      "required": ["two_vote_required", "source_disagreement", "zero_count_policy"],
+      "additionalProperties": false,
+      "properties": {
+        "two_vote_required": { "const": "partial_shadow_gate" },
+        "source_disagreement": { "const": "reserved_detector_gap" },
+        "zero_count_policy": { "const": "zero_does_not_prove_absence" }
+      }
+    },
+    "reporting_policy": {
+      "type": "object",
+      "required": [
+        "zero_counts_are_detector_outputs_only",
+        "zero_counts_must_not_claim_absence",
+        "requires_live_readonly_shadow_graph"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "zero_counts_are_detector_outputs_only": { "const": true },
+        "zero_counts_must_not_claim_absence": { "const": true },
+        "requires_live_readonly_shadow_graph": { "const": true }
+      }
+    }
+  }
+}

@@ -28,6 +28,8 @@ The tools intentionally do not embed private server paths. Server acceptance pas
 - `tools/summarize_shadow_closure_queue.py`: consumes an already-built shadow graph and emits closure-lane,
   blocker, family-size, sample-token summaries, and optional source-addressed review-pack JSONL rows. It is
   read-only and does not inspect or mutate live inputs.
+- `tools/validate_detector_maturity.py`: validates standalone or embedded detector-maturity records so Phase 2
+  reports cannot treat `two_vote_required=0` or `source_disagreement=0` as proof that no such cases exist.
 - `tools/validate_shadow_review_pack.py`: validates that review-pack rows are non-vacuous, exact-addressed with
   `quran:S:A:W` and `wbw:S:A:W`, source-clean at the public boundary, and explicitly non-mutating.
 - `tools/validate_decision_linkage.py`: validates that authored decision rows link exact `quran:S:A:W` tokens,
@@ -39,6 +41,8 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   repair previews before any future apply path can use them.
 - `tools/validate_production_bug_lessons.py`: keeps production hover failures connected to sarf/nahw procedure,
   regression, learner explanation, drill, and validator work.
+- `qamus/examples/detector_maturity.sample.json`: tiny fixture slice for the reusable detector-gap warning:
+  zero-count detector output is not absence proof.
 - `qamus/examples/decision_linkage.sample.jsonl`: tiny fixture slice covering resolved, pending, and superseded
   decision rows with exact token/hover addresses.
 - `qamus/examples/hover_edit_intent.sample.jsonl`: tiny fixture slice covering token-only, parse-family, and
@@ -71,6 +75,7 @@ python tools/summarize_shadow_closure_queue.py <isolated shadow output> \
 python tools/validate_shadow_review_pack.py <review pack jsonl>
 python tools/scan_public_boundary.py --public <public entry URL> --shadow-dir <isolated shadow output>
 python tools/compare_wbw_artifacts.py <live wbw lookup> <mirror wbw lookup>
+python tools/validate_detector_maturity.py <review pack jsonl or detector maturity json>
 ```
 
 CI should use fixture/self-test mode only:
@@ -89,6 +94,9 @@ python tools/validate_repair_impact_preview.py --self-test
 python tools/validate_repair_impact_preview.py qamus/examples/repair_impact_preview.sample.jsonl
 python tools/scan_public_boundary.py --self-test
 python tools/compare_wbw_artifacts.py --self-test
+python tools/validate_detector_maturity.py --self-test
+python tools/validate_detector_maturity.py qamus/examples/detector_maturity.sample.json
+python tools/validate_detector_maturity.py qamus/examples/shadow_review_pack.sample.jsonl
 python tools/validate_production_bug_lessons.py qamus/examples/production_bug_lesson.sample.jsonl
 ```
 
