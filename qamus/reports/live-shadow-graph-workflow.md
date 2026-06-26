@@ -65,6 +65,15 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   `quran:S:A:W`/`wbw:S:A:W` identities, parse-key-primary identity, source-boundary leaks, live/apply/coverage claims,
   component candidates inside propagation-safe rows, and any component-enriched row that has been weakened to an
   auto-safe gate.
+- `tools/build_phase4_two_vote_requests.py`: consumes a validated Phase 4 dry-run tranche and emits exact-addressed
+  two-vote request packets only for rows still in `lane=two_vote_required` with `required_gate=two_vote_required`.
+  These packets are the review bridge between Phase 4 tranche planning and future sarf/nahw votes. They preserve
+  component candidates in `candidate_evidence.component_candidates` / `component_candidate_joins`, keep whole-token
+  candidates separate, and state that component candidates, raw surface, norm-only recall, and parse keys alone cannot
+  certify a hover.
+- `tools/validate_phase4_two_vote_requests.py`: validates Phase 4 two-vote request packets. It rejects non-exact
+  identities, public-boundary leakage, weakened gates, non-two-vote lanes, missing component provenance, component
+  candidates marked certifying, live/apply/coverage claims, and vacuous zero-row request files.
 - `tools/plan_shadow_hover_edit_intent.py`: read-only CLI for planning future hover-edit intents from a validated
   Phase 3 admin/debug pack. It emits validator-clean JSONL rows for token-only, parse-family, or entry/sense edit
   intent review, preserves exact `wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> qamus:<id>#sense=<n>` identity, and
@@ -171,6 +180,11 @@ python tools/plan_phase4_closure_tranche.py <review pack jsonl> \
   --max-rows 25
 python tools/validate_phase4_closure_tranche.py \
   <isolated static admin-debug output>/phase4-dry-run-tranche.jsonl
+python tools/build_phase4_two_vote_requests.py \
+  <isolated static admin-debug output>/phase4-dry-run-tranche.jsonl \
+  --out-jsonl <isolated static admin-debug output>/phase4-two-vote-requests.jsonl
+python tools/validate_phase4_two_vote_requests.py \
+  <isolated static admin-debug output>/phase4-two-vote-requests.jsonl
 python tools/query_shadow_admin_debug_pack.py --pack <isolated static admin-debug output>/admin-debug-pack.json \
   --token quran:33:63:1
 python tools/query_shadow_admin_debug_pack.py --pack <isolated static admin-debug output>/admin-debug-pack.json \
@@ -223,6 +237,9 @@ python tools/validate_shadow_admin_route_contract.py qamus/examples/shadow_admin
 python tools/plan_phase4_closure_tranche.py --self-test
 python tools/validate_phase4_closure_tranche.py --self-test
 python tools/validate_phase4_closure_tranche.py qamus/examples/phase4_closure_tranche.sample.jsonl
+python tools/build_phase4_two_vote_requests.py --self-test
+python tools/validate_phase4_two_vote_requests.py --self-test
+python tools/validate_phase4_two_vote_requests.py qamus/examples/phase4_two_vote_request.sample.jsonl
 python tools/query_shadow_admin_debug_pack.py --self-test
 python tools/plan_shadow_hover_edit_intent.py --self-test
 python tools/plan_shadow_repair_impact_preview.py --self-test

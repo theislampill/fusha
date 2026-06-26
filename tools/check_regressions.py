@@ -504,6 +504,7 @@ for _art in (
         "qamus/schemas/shadow-admin-debug-pack.schema.json",
         "qamus/schemas/shadow-admin-route-contract.schema.json",
         "qamus/schemas/phase4-closure-tranche.schema.json",
+        "qamus/schemas/phase4-two-vote-request.schema.json",
         "qamus/examples/public_private_boundary.sample.json",
         "qamus/examples/detector_maturity.sample.json",
         "qamus/examples/live_shadow_run_manifest.sample.json",
@@ -516,6 +517,7 @@ for _art in (
         "qamus/examples/shadow_admin_debug_pack.sample.json",
         "qamus/examples/shadow_admin_route_contract.sample.json",
         "qamus/examples/phase4_closure_tranche.sample.jsonl",
+        "qamus/examples/phase4_two_vote_request.sample.jsonl",
         "qamus/procedures/production-bug-lessons.md",
         "nahw/procedures/grammar-problems-issue-clusters.md",
         "nahw/rules/grammar-problems-issue-clusters.json",
@@ -535,6 +537,8 @@ for _art in (
         "tools/validate_shadow_admin_route_contract.py",
         "tools/plan_phase4_closure_tranche.py",
         "tools/validate_phase4_closure_tranche.py",
+        "tools/build_phase4_two_vote_requests.py",
+        "tools/validate_phase4_two_vote_requests.py",
         "tools/query_shadow_admin_debug_pack.py",
         "tools/plan_shadow_hover_edit_intent.py",
         "tools/plan_shadow_repair_impact_preview.py",
@@ -610,6 +614,11 @@ for _script, _args, _label in (
         ("validate_phase4_closure_tranche.py",
          [os.path.join(_R, "qamus", "examples", "phase4_closure_tranche.sample.jsonl")],
          "Phase4 dry-run closure tranche sample validates"),
+        ("build_phase4_two_vote_requests.py", ["--self-test"], "Phase4 exact-addressed two-vote request builder self-test"),
+        ("validate_phase4_two_vote_requests.py", ["--self-test"], "Phase4 exact-addressed two-vote request validator self-test"),
+        ("validate_phase4_two_vote_requests.py",
+         [os.path.join(_R, "qamus", "examples", "phase4_two_vote_request.sample.jsonl")],
+         "Phase4 exact-addressed two-vote request sample validates"),
         ("query_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack query self-test"),
         ("plan_shadow_hover_edit_intent.py", ["--self-test"], "Phase3 shadow hover edit intent planner self-test"),
         ("plan_shadow_repair_impact_preview.py", ["--self-test"], "Phase3 shadow repair impact preview planner self-test"),
@@ -632,7 +641,8 @@ for _script, _args, _label in (
         check(_label + " runnable", False)
 
 for _script, _label in (("test_bulk_two_vote_requests.py", "bulk two-vote builder self-test"),
-                        ("test_bulk_two_vote_request_validator.py", "bulk two-vote validator self-test")):
+                        ("test_bulk_two_vote_request_validator.py", "bulk two-vote validator self-test"),
+                        ("test_phase4_two_vote_requests.py", "Phase4 exact-addressed two-vote request self-test")):
     try:
         _v = run_text([sys.executable, os.path.join(_R, "tools", _script)])
         check(_label, _v.returncode == 0)

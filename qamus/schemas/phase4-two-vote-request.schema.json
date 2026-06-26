@@ -1,0 +1,258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/phase4-two-vote-request.schema.json",
+  "title": "Qamus Phase 4 exact-addressed two-vote request row",
+  "type": "object",
+  "required": [
+    "id",
+    "phase",
+    "source_tranche_id",
+    "parse_id",
+    "lane",
+    "required_gate",
+    "allowed_next_step",
+    "identity",
+    "candidate_evidence",
+    "gate_reasons",
+    "required_evidence",
+    "vote_lenses",
+    "requested_output",
+    "public_boundary",
+    "apply_policy",
+    "cannot_certify_from"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^phase4-two-vote:queue_parse_[0-9a-f]+$"
+    },
+    "phase": {
+      "const": "phase4_two_vote_request"
+    },
+    "source_tranche_id": {
+      "type": "string",
+      "pattern": "^phase4-tranche:queue_parse_[0-9a-f]+$"
+    },
+    "parse_id": {
+      "type": "string",
+      "pattern": "^parse:[0-9a-f]+$"
+    },
+    "lane": {
+      "const": "two_vote_required"
+    },
+    "required_gate": {
+      "const": "two_vote_required"
+    },
+    "allowed_next_step": {
+      "const": "two_vote_review_only"
+    },
+    "identity": {
+      "type": "object",
+      "required": ["quran_locs", "wbw_locs", "parse_id", "surface_sample"],
+      "additionalProperties": false,
+      "properties": {
+        "quran_locs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^quran:\\d{1,3}:\\d{1,3}:\\d{1,3}$"
+          }
+        },
+        "wbw_locs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^wbw:\\d{1,3}:\\d{1,3}:\\d{1,3}$"
+          }
+        },
+        "parse_id": {
+          "type": "string",
+          "pattern": "^parse:[0-9a-f]+$"
+        },
+        "surface_sample": {
+          "type": "string"
+        }
+      }
+    },
+    "candidate_evidence": {
+      "type": "object",
+      "required": [
+        "whole_token_candidates",
+        "whole_token_candidate_joins",
+        "component_candidates",
+        "component_candidate_joins",
+        "component_candidates_can_certify"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "whole_token_candidates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^qamus:"
+          }
+        },
+        "whole_token_candidate_joins": {
+          "type": "array"
+        },
+        "component_candidates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^qamus:"
+          }
+        },
+        "component_candidate_joins": {
+          "type": "array"
+        },
+        "component_candidates_can_certify": {
+          "const": false
+        }
+      }
+    },
+    "gate_reasons": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "required_evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "vote_lenses": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "sarf-primary"
+        },
+        {
+          "const": "nahw-primary"
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "requested_output": {
+      "type": "object",
+      "required": [
+        "decision",
+        "concise_authored_gloss",
+        "sarf_reasoning",
+        "nahw_reasoning",
+        "reason_agreement_key",
+        "blocker_if_rejected",
+        "safe_scope_after_vote"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "decision": {
+          "const": "approve | reject | pending"
+        },
+        "concise_authored_gloss": {
+          "const": ""
+        },
+        "sarf_reasoning": {
+          "const": ""
+        },
+        "nahw_reasoning": {
+          "const": ""
+        },
+        "reason_agreement_key": {
+          "const": ""
+        },
+        "blocker_if_rejected": {
+          "const": ""
+        },
+        "safe_scope_after_vote": {
+          "const": "token_only | parse_family_after_impact_preview | pending"
+        }
+      }
+    },
+    "public_boundary": {
+      "type": "object",
+      "required": [
+        "src",
+        "kind",
+        "lang",
+        "external_text_allowed",
+        "external_source_names_public_allowed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "src": {
+          "const": "qamus"
+        },
+        "kind": {
+          "const": "authored"
+        },
+        "lang": {
+          "const": "en"
+        },
+        "external_text_allowed": {
+          "const": false
+        },
+        "external_source_names_public_allowed": {
+          "const": false
+        }
+      }
+    },
+    "apply_policy": {
+      "type": "object",
+      "required": [
+        "apply_allowed",
+        "live_mutation_allowed",
+        "closure_claim_allowed",
+        "identity",
+        "public_boundary",
+        "component_candidates_can_certify",
+        "raw_surface_identity_allowed",
+        "parse_key_primary_identity"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "apply_allowed": {
+          "const": false
+        },
+        "live_mutation_allowed": {
+          "const": false
+        },
+        "closure_claim_allowed": {
+          "const": false
+        },
+        "identity": {
+          "type": "string",
+          "pattern": "quran:S:A:W"
+        },
+        "public_boundary": {
+          "const": "src=qamus, kind=authored, lang=en; no external provenance"
+        },
+        "component_candidates_can_certify": {
+          "const": false
+        },
+        "raw_surface_identity_allowed": {
+          "const": false
+        },
+        "parse_key_primary_identity": {
+          "const": false
+        }
+      }
+    },
+    "cannot_certify_from": {
+      "type": "array",
+      "contains": {
+        "const": "component_candidates"
+      },
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
