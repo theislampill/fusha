@@ -9,6 +9,11 @@ classifying *before* glossing.
 Each stage gives: **what you learn → the procedure that does the work → the drill that proves
 it → live Qamus examples to read → the mastery checkpoint you must pass before moving on.**
 Do the stages in order; a later stage assumes the earlier reflex is automatic.
+From Stage 1 onward, a rich-hover answer must also be able to produce the morphology side of
+the parse-key/color contract: visible pieces, compact `parse_key.key`, and scrubbed display
+classes. See
+[`../drills/clitic-and-host-morphology.md`](../drills/clitic-and-host-morphology.md) and
+[`../../curriculum/qamus-hover-parse-key-and-color.md`](../../curriculum/qamus-hover-parse-key-and-color.md).
 
 > One discipline runs through every stage: **`norm()` proposes, it never certifies.** It drops
 > the hamza seat and all harakāt, so it can widen recall but can never decide a root, a form, or

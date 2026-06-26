@@ -75,6 +75,11 @@ gate.
   "function_class": "none | oath_waw | comitative_waw | cause_fa | preventive_ma | negative_ma_like_laysa | pp_attachment | exception | vocative | clause_link",
   "attachment": {"head": null, "relation": null},
   "composition": {"proclitic_functions": [], "host_role": null, "suffix_roles": []},
+  "parse_key": {"key": "CONJ+V:I:IMPF:ACT:3MS", "summary": "coordinating waw plus indicative imperfect verb"},
+  "display": {"palette": "qamus-grammar-v1", "segments": [
+    {"segment_index": 0, "role": "prefix_conjunction", "class": "qg-particle", "label": "CONJ"},
+    {"segment_index": 1, "role": "stem", "class": "qg-verb", "label": "STEM"}
+  ]},
   "candidate_glosses": ["ordains","restricts"], "contextual_choice": "restricts",
   "decision": "resolved | pending", "reason": "paired with يبسط الرزق; contrast indicates restricts",
   "confidence": "medium", "allowed_for_hover": true
@@ -114,6 +119,12 @@ or leave a precise pending when the bāʾ function is not certified.
 The visible hover is the contract: do not rely on a hidden `pre` field to teach a relation that the tooltip's best
 gloss omits. A token such as `بِسَلَـٰمٍ` needs the preposition inside the best hover text when that is what the page
 shows.
+For any future rich hover, nahw must also make the syntax side of the parse-key/display contract renderable:
+`parse_key.key` (compact ASCII), `parse_key.summary`, and one `qamus-grammar-v1` display class per visible function
+segment or phrase role. Use `qg-particle`, `qg-preposition`, `qg-oath`, `qg-comitative`, `qg-result`,
+`qg-relative`, `qg-vocative`, `qg-exception`, and `qg-relation` for syntactic functions. If the function, governor,
+attachment, clause role, or iʿrāb is not certified, rich-hover rendering is not ready; route to two-vote,
+scholar, owner, or precise pending.
 
 ## 10. Verb–subject–object context
 The object/construction can fix a polysemous verb: أَتَى = come/bring/give/commit by object; يَقْدِرُ in a rizq

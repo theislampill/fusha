@@ -15,6 +15,9 @@ The engine can pull the existing Qamus, **generate new Qamus** from a corpus, au
 (the GrammarProblems gate: right answer *and* right reasoning), teach ajami learners, and know when a token must
 stay **pending**. It is **MCP-free** — it consults *available source adapters* (`sources/README.md`) only as
 optional internal evidence. Full architecture + worked examples: `curriculum/qamus-driven-fluency-engine.md`.
+For rich learner hovers, the engine now also targets a source-clean parse-key/color layer:
+`curriculum/qamus-hover-parse-key-and-color.md` explains how sarf/nahw decisions become a compact `parse_key`
+and scrubbed `qamus-grammar-v1` display classes without leaking QAC/Tafsir/screenshot provenance.
 
 **The engine in five examples** (each a regression fixture): أَعْمَالُنَا → "our deeds" (noun stem + possessive,
 POS-gated); لَمْ vs لِمَ → "did not" vs "why" (particle state split); مِن vs مَن → "from" vs "who/whoever" (harakat

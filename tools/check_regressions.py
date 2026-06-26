@@ -86,6 +86,19 @@ def grammar_gate(triggers):
     return "auto_safe"
 
 
+def run_text(cmd, **kwargs):
+    """Run a subprocess and decode captured output as UTF-8 on Windows too."""
+    kwargs.setdefault("capture_output", True)
+    kwargs.setdefault("text", True)
+    kwargs.setdefault("encoding", "utf-8")
+    kwargs.setdefault("errors", "replace")
+    env = os.environ.copy()
+    env.setdefault("PYTHONUTF8", "1")
+    env.setdefault("PYTHONIOENCODING", "utf-8")
+    kwargs.setdefault("env", env)
+    return subprocess.run(cmd, **kwargs)
+
+
 check("iʿrāb decision requires two-vote (not auto)", grammar_gate(["irab"]) == "two_vote_required")
 check("norm-only / OCR-only / copied-gloss can NEVER auto-resolve",
       grammar_gate(["norm_only_match"]) == "never_auto_resolve"
@@ -220,8 +233,7 @@ except Exception:
     _ad_ok = False
 check("source adapters are internal-only (public_exposable=false, required_by_skills=false)", _ad_ok)
 try:
-    _qac = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "test_qac_concept_map_adapter.py")],
-                          capture_output=True, text=True)
+    _qac = run_text([sys.executable, os.path.join(ROOT, "tools", "test_qac_concept_map_adapter.py")])
     check("QAC concept-map adapter stays internal-only and parser-tested", _qac.returncode == 0)
 except Exception:
     check("QAC concept-map adapter test runnable", False)
@@ -270,10 +282,8 @@ try:
             _tmp_paths.append(_tmp.name)
         finally:
             _tmp.close()
-    _good_run = subprocess.run([sys.executable, _validator, "--require-lang-en", _tmp_paths[0]],
-                               capture_output=True, text=True)
-    _bad_run = subprocess.run([sys.executable, _validator, "--require-lang-en", _tmp_paths[1]],
-                              capture_output=True, text=True)
+    _good_run = run_text([sys.executable, _validator, "--require-lang-en", _tmp_paths[0]])
+    _bad_run = run_text([sys.executable, _validator, "--require-lang-en", _tmp_paths[1]])
     _strict_lang_ok = _good_run.returncode == 0 and _bad_run.returncode != 0
 except Exception:
     _strict_lang_ok = False
@@ -346,8 +356,8 @@ except Exception as e:
 _hover_artifact = os.path.join(_R, "out", "hover_stage", "wbw-lookup.json")
 if os.path.exists(_hover_artifact):
     try:
-        _hv = subprocess.run([sys.executable, os.path.join(_R, "tools", "validate_hover_regression_cases.py"),
-                              _hover_artifact], capture_output=True, text=True)
+        _hv = run_text([sys.executable, os.path.join(_R, "tools", "validate_hover_regression_cases.py"),
+                        _hover_artifact])
         check("Andon hover regression cases pass on staged lookup artifact", _hv.returncode == 0)
         if _hv.returncode != 0:
             _o = (_hv.stdout or _hv.stderr).strip().splitlines()
@@ -360,23 +370,20 @@ else:
           os.path.exists(os.path.join(_R, "tools", "validate_hover_regression_cases.py")))
 # P4 suffix/pronoun offline test
 try:
-    _r = subprocess.run([sys.executable, os.path.join(_R, "tools", "test_suffix_pronoun.py")],
-                        capture_output=True, text=True)
+    _r = run_text([sys.executable, os.path.join(_R, "tools", "test_suffix_pronoun.py")])
     check("P4 suffix/pronoun invariants pass (test_suffix_pronoun.py)", _r.returncode == 0)
 except Exception:
     check("P4 suffix/pronoun test runnable", False)
 # A0 report reconciliation: no stale-as-current scoreboards
 try:
-    _rr = subprocess.run([sys.executable, os.path.join(_R, "tools", "validate_report_reconciliation.py")],
-                         capture_output=True, text=True)
+    _rr = run_text([sys.executable, os.path.join(_R, "tools", "validate_report_reconciliation.py")])
     check("A0 report reconciliation (no stale-as-current scoreboards)", _rr.returncode == 0)
 except Exception:
     check("A0 report reconciliation runnable", False)
 
 # A1 artifact ergonomics: committed artifacts must be reviewable/diffable
 try:
-    _erg = subprocess.run([sys.executable, os.path.join(_R, "tools", "check_artifact_ergonomics.py")],
-                          capture_output=True, text=True)
+    _erg = run_text([sys.executable, os.path.join(_R, "tools", "check_artifact_ergonomics.py")])
     check("A1 artifact ergonomics (no one-line mega-indexes; pretty/JSONL; trailing newlines)",
           _erg.returncode == 0)
 except Exception:
@@ -386,7 +393,7 @@ except Exception:
 for _vname, _label in [("validate_qamus_completion_manifest.py", "Phase4 per-token completion manifest (49,900 terminal, risk-tagged)"),
                        ("validate_entry_completion_rollup.py", "Phase4 per-entry completion rollup (2,092, 0 unknown)")]:
     try:
-        _v = subprocess.run([sys.executable, os.path.join(_R, "tools", _vname)], capture_output=True, text=True)
+        _v = run_text([sys.executable, os.path.join(_R, "tools", _vname)])
         check(_label, _v.returncode == 0)
     except Exception:
         check(_vname + " runnable", False)
@@ -395,7 +402,7 @@ for _vname, _label in [("validate_qamus_completion_manifest.py", "Phase4 per-tok
 for _vname, _label in [("validate_sarf_skill.py", "Phase2 sarf engine complete (derivatives + Madinah modes + false-clitic)"),
                        ("validate_nahw_skill.py", "Phase3 nahw engine complete (particle functions + iʿrāb polysemy)")]:
     try:
-        _v = subprocess.run([sys.executable, os.path.join(_R, "tools", _vname)], capture_output=True, text=True)
+        _v = run_text([sys.executable, os.path.join(_R, "tools", _vname)])
         check(_label, _v.returncode == 0)
     except Exception:
         check(_vname + " runnable", False)
@@ -436,14 +443,15 @@ try:
                          encoding="utf-8").read()
     check("morphosyntax-token schema requires public_gloss_lang=en",
           '"public_gloss_lang"' in _ms_schema and '"const": "en"' in _ms_schema)
+    check("morphosyntax-token schema requires parse_key + qamus-grammar-v1 display palette",
+          '"parse_key"' in _ms_schema and '"display"' in _ms_schema and '"qamus-grammar-v1"' in _ms_schema)
 except Exception:
     check("morphosyntax-token schema readable", False)
 for _args, _label in ((["--self-test"], "morphosyntax validator self-test"),
                       ([os.path.join(_R, "qamus", "examples", "morphosyntax_token.sample.jsonl")],
                        "morphosyntax sample validates")):
     try:
-        _v = subprocess.run([sys.executable, os.path.join(_R, "tools", "validate_morphosyntax_token_metadata.py")] + _args,
-                            capture_output=True, text=True)
+        _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_morphosyntax_token_metadata.py")] + _args)
         check(_label, _v.returncode == 0)
         if _v.returncode != 0:
             _out = (_v.stdout or _v.stderr).strip().splitlines()
@@ -455,7 +463,7 @@ for _args, _label in ((["--self-test"], "morphosyntax validator self-test"),
 for _script, _label in (("test_bulk_two_vote_requests.py", "bulk two-vote builder self-test"),
                         ("test_bulk_two_vote_request_validator.py", "bulk two-vote validator self-test")):
     try:
-        _v = subprocess.run([sys.executable, os.path.join(_R, "tools", _script)], capture_output=True, text=True)
+        _v = run_text([sys.executable, os.path.join(_R, "tools", _script)])
         check(_label, _v.returncode == 0)
         if _v.returncode != 0:
             _out = (_v.stdout or _v.stderr).strip().splitlines()
@@ -474,7 +482,7 @@ for _vname, _label in [("check_report_ergonomics.py", "closure-2092 report ergon
                        ("validate_open_stem_lane_sanity.py", "closure-2092 open-stem lane sanity (host-noun-only, roots flattened, no false blockers)")]:
     if os.path.exists(os.path.join(_R, "tools", _vname)):
         try:
-            _v = subprocess.run([sys.executable, os.path.join(_R, "tools", _vname)], capture_output=True, text=True)
+            _v = run_text([sys.executable, os.path.join(_R, "tools", _vname)])
             check(_label, _v.returncode == 0)
             if _v.returncode != 0:
                 print("  ", (_v.stdout or _v.stderr).strip().splitlines()[-1] if (_v.stdout or _v.stderr).strip() else "")
@@ -511,7 +519,7 @@ for _vname, _args, _prov in _BATCH_GATES:
         if _prov and os.path.exists(os.path.join(_C, _prov)):
             _cmd += ["--provenance", os.path.join(_C, _prov)]
         try:
-            _v = subprocess.run(_cmd, capture_output=True, text=True)
+            _v = run_text(_cmd)
             check("closure-2092 batch gate %s(%s)" % (_vname.replace("validate_", "").replace(".py", ""), _args[0]),
                   _v.returncode == 0)
             if _v.returncode != 0:
@@ -533,8 +541,8 @@ for _gen, _ga, _val, _outp in _LANE:
     _gp = os.path.join(_R, "tools", _gen)
     if os.path.exists(_gp):
         try:
-            _g = subprocess.run([sys.executable, _gp] + _ga, capture_output=True, text=True)
-            _v = subprocess.run([sys.executable, os.path.join(_R, "tools", _val), _outp], capture_output=True, text=True)
+            _g = run_text([sys.executable, _gp] + _ga)
+            _v = run_text([sys.executable, os.path.join(_R, "tools", _val), _outp])
             check("closure-2092 Phase4 lane %s" % _gen.replace("build_", "").replace(".py", ""),
                   _g.returncode == 0 and _v.returncode == 0)
         except Exception:
@@ -548,11 +556,9 @@ if os.path.exists(_corp):
     try:
         _ok = True
         for _t in ("corpus_to_qamus_candidates.py", "corpus_to_hover_decisions.py"):
-            _r = subprocess.run([sys.executable, os.path.join(_R, "tools", _t), "--corpus", _corp, "--out", _cf, "--limit", "5"],
-                                capture_output=True, text=True)
+            _r = run_text([sys.executable, os.path.join(_R, "tools", _t), "--corpus", _corp, "--out", _cf, "--limit", "5"])
             _ok = _ok and _r.returncode == 0
-        _v = subprocess.run([sys.executable, os.path.join(_R, "tools", "validate_corpus_fixture.py"), _cf],
-                            capture_output=True, text=True)
+        _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_corpus_fixture.py"), _cf])
         check("closure-2092 corpus fixture (read-only, no translation, Ṣaḥīḥayn plan-only)", _ok and _v.returncode == 0)
     except Exception:
         check("closure-2092 corpus fixture runnable", False)

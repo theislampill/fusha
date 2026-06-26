@@ -64,6 +64,10 @@ learner loop, and route hard cases to sarf/nahw:
 [`../sarf/procedures/clitic-and-host-morphology.md`](../sarf/procedures/clitic-and-host-morphology.md),
 [`../nahw/procedures/function-token-hover-review.md`](../nahw/procedures/function-token-hover-review.md),
 and [`../nahw/procedures/ma-function-decision.md`](../nahw/procedures/ma-function-decision.md).
+When the composition is clear, turn it into a parse-key/color handoff with
+[`drills/parse-key-and-color-layer.md`](drills/parse-key-and-color-layer.md): compact
+`parse_key.key`, a short summary, and scrubbed display classes such as `qg-verb`,
+`qg-preposition`, `qg-pronoun`, and `qg-oath`.
 
 Concept metadata may warn you that a surface could be a person, place, people, plant, body
 part, or book. Treat that as a flag to review the context, not as a translation.
@@ -86,6 +90,9 @@ appears. Open each āyah on `qamus.dawah.wiki` and read the form *in its sentenc
   wāw, fāʾ, article, tanwīn, or a suffix pronoun, the hover must preserve that contribution
   when it is certified. `بِسَلَامٍ` is not safely taught by host-only "peace," and
   `جَادَلُوكَ` is not safely taught by bare "to argue."
+- **Ask whether the parse key could render.** A future rich hover should show the Arabic
+  segments in color and a compact parse key. If the token cannot produce a source-clean
+  parse key, treat the rich hover as not ready even if the plain best gloss is useful.
 
 The coverage you see grows as the Qamus entries grow — the same scoreboard the project tracks
 at [`../qamus/reports/hover-gloss-terminal-scoreboard.md`](../qamus/reports/hover-gloss-terminal-scoreboard.md).

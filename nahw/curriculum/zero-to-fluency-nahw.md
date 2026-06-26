@@ -24,6 +24,11 @@ the disciplined answer is **pending**, never a confident wrong reading.
 Drill files: [`drills-beginner.md`](drills-beginner.md) · [`drills-intermediate.md`](drills-intermediate.md) ·
 [`drills-advanced.md`](drills-advanced.md). The current closure hard-tail drill is
 [`../drills/grammar-routing-hard-cases.md`](../drills/grammar-routing-hard-cases.md).
+For rich-hover work, every resolved syntax decision must also be able to produce the syntax
+side of the parse-key/color contract: a compact `parse_key.key` and scrubbed display classes
+whose colors follow function, not surface shape. See
+[`../../curriculum/qamus-hover-parse-key-and-color.md`](../../curriculum/qamus-hover-parse-key-and-color.md)
+and [`../../curriculum/drills/parse-key-and-color-layer.md`](../../curriculum/drills/parse-key-and-color-layer.md).
 
 ---
 

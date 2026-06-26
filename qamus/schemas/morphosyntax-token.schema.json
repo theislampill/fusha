@@ -4,7 +4,7 @@
   "title": "Qamus per-token morphosyntax metadata",
   "description": "Internal, source-addressed grammar metadata for a Quran token. This is separate from the concise public hover gloss. It records POS, morphology, clitics, case/mood/state, agreement, and dependency links so hovers can be checked and future teaching UI can show a breakdown without stuffing source labels or long grammar notes into data-tr.",
   "type": "object",
-  "required": ["loc", "surface", "pos", "evidence", "public_boundary"],
+  "required": ["loc", "surface", "pos", "parse_key", "display", "evidence", "public_boundary"],
   "additionalProperties": false,
   "properties": {
     "loc": {
@@ -56,6 +56,67 @@
           "number": { "type": ["string", "null"], "enum": ["singular", "dual", "plural", "null"] },
           "gender": { "type": ["string", "null"], "enum": ["masculine", "feminine", "common", "none", "null"] },
           "case": { "type": ["string", "null"], "enum": ["nominative", "accusative", "genitive", "none", "null"] }
+        }
+      }
+    },
+    "parse_key": {
+      "type": "object",
+      "description": "Scrubbed, renderer-ready parse key for the token. This is authored/internal grammar metadata, not public provenance and not copied source text.",
+      "required": ["key", "summary", "components"],
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Compact ASCII key such as V:III:PERF:ACT:3MP+OBJ.2MS or P:BI+N:GEN+POSS.3MP."
+        },
+        "summary": {
+          "type": "string",
+          "description": "Short human-readable parse summary for learner/reviewer tooltips."
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "value"],
+            "additionalProperties": false,
+            "properties": {
+              "label": { "type": "string" },
+              "value": { "type": "string" },
+              "note": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "display": {
+      "type": "object",
+      "description": "Stable color-role metadata for future Qamus hover rendering. Classes are semantic UI roles, not external source labels.",
+      "required": ["palette", "segments"],
+      "additionalProperties": false,
+      "properties": {
+        "palette": {
+          "type": "string",
+          "enum": ["qamus-grammar-v1"]
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["segment_index", "role", "class", "label"],
+            "additionalProperties": false,
+            "properties": {
+              "segment_index": { "type": "integer" },
+              "role": { "type": "string" },
+              "class": {
+                "type": "string",
+                "enum": ["qg-article", "qg-case", "qg-comitative", "qg-exception", "qg-negative", "qg-noun", "qg-oath", "qg-particle", "qg-preposition", "qg-pronoun", "qg-proper-noun", "qg-relation", "qg-relative", "qg-result", "qg-unknown", "qg-verb", "qg-vocative"]
+              },
+              "label": {
+                "type": "string",
+                "description": "Short visible tag such as V, N, PRON, P, REL, ACC, PP, or VOC."
+              }
+            }
+          }
         }
       }
     },

@@ -190,7 +190,9 @@ or `ما` whose clause function is not decisive, write the exact `pending:` reas
 using the **hover layer** as a backstop, not a crutch.
 
 **Ṣarf / nahw skills used.** Everything from Levels 2–7, plus the hover-application discipline
-in [`../sarf/procedures/hover-application.md`](../sarf/procedures/hover-application.md).
+in [`../sarf/procedures/hover-application.md`](../sarf/procedures/hover-application.md) and the
+parse-key/color contract in
+[`qamus-hover-parse-key-and-color.md`](qamus-hover-parse-key-and-color.md).
 
 **Qamus entries used.** Whatever the āyah's words resolve to. On `qamus.dawah.wiki`, hover or
 tap each word: a covered word shows an **authored** gloss (`{src:'qamus', kind:'authored',
@@ -203,15 +205,18 @@ hover to check. Where the hover is blank, do not invent a gloss — write your P
 (homograph? root unclear? noun-vs-verb?) and route it to the matching procedure. Verify the
 whole meaning against the muṣḥaf. If a token contains an attached bā', lām, kāf, wāw, fā', or
 suffix pronoun, prove that the attached piece did not disappear from the learner-facing
-answer; the learner drill for this is
+  answer; the learner drill for this is
 [`drills/hover-composition-and-routing.md`](drills/hover-composition-and-routing.md), backed by
 the reviewer-side sarf drill
 [`../sarf/drills/clitic-and-host-morphology.md`](../sarf/drills/clitic-and-host-morphology.md).
+For a rich hover, go one step further: produce the compact `parse_key.key` and segment color
+classes from [`drills/parse-key-and-color-layer.md`](drills/parse-key-and-color-layer.md).
 
 **Checkpoint.** Read a short āyah you have not seen, glossing each covered word and producing a
 *named* PENDING for each uncovered one. A host-only hover on a token with a visible attached
 preposition, function particle, or suffix pronoun fails the checkpoint — zero confident wrong
-glosses.
+glosses. A rich-hover answer also fails if it cannot show a parse key and one scrubbed display
+class per visible segment.
 
 ---
 

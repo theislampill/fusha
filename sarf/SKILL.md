@@ -59,6 +59,8 @@ entry candidates + optional QAC root/POS.
   "person": "3rd_or_unknown", "gender": "masculine_or_unknown", "number": "singular_or_unknown",
   "case_or_mood": "raf_or_nasb_or_jazm_or_jarr_or_unknown",
   "visible_morphology": {"proclitics": [], "host": "يأتي", "suffixes": [], "inflection": null},
+  "parse_key": {"key": "V:I:IMPF:ACT:3MS", "summary": "Form I imperfect active verb, third masculine singular"},
+  "display": {"palette": "qamus-grammar-v1", "segments": [{"segment_index": 0, "role": "stem", "class": "qg-verb", "label": "STEM"}]},
   "attached_clitics": [], "suffix_pronoun": null,
   "qac_root": "أ ت ي", "qac_pos": "V", "qamus_entry_candidates": ["entry_id"],
   "risk_flags": ["multi_sense_root", "hamza_sensitive", "sense_selection_required"],
@@ -106,6 +108,11 @@ the false-split guards in force.
 If the public tooltip renders only the best gloss text, the best gloss itself must carry the attached clitic's
 contribution; metadata like `pre: "with / by"` is evidence, not a user-visible repair. For example, `بِسَلَـٰمٍ`
 must surface as "with peace" or "in peace" where certified, not best=`peace` plus hidden preposition metadata.
+For any future rich hover, sarf must also emit the morphology side of the parse-key/display contract:
+`parse_key.key` (compact ASCII), `parse_key.summary`, and one `qamus-grammar-v1` display class per visible segment.
+Use `qg-verb`, `qg-noun`, `qg-proper-noun`, `qg-pronoun`, `qg-preposition`, `qg-article`, or `qg-case` as
+appropriate. If sarf cannot account for a visible segment, the row is not ready for rich-hover rendering and should
+defer to nahw or pending with an exact blocker.
 
 A broad root-family gloss is dictionary metadata, not a hover. Do not put an omnibus entry gloss such as
 "to know — also to teach and learn" on a concrete token. Pick the token's form-aware contribution ("knows",

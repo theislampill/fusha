@@ -59,6 +59,64 @@ FUNCTION_BEARING_SEGMENTS = {
 
 PRONOUN_SEGMENTS = {"subject_pronoun", "object_pronoun", "possessive_pronoun"}
 
+DISPLAY_CLASS_BY_ROLE = {
+    "stem": "qg-verb",  # nominal stems are permitted to override via pos-aware renderers; validator checks scrubbed role only.
+    "prefix_conjunction": "qg-particle",
+    "prefix_preposition": "qg-preposition",
+    "prefix_oath": "qg-oath",
+    "prefix_comitative_waw": "qg-comitative",
+    "prefix_resumption_fa": "qg-particle",
+    "prefix_coordination_fa": "qg-particle",
+    "prefix_result_fa": "qg-result",
+    "prefix_supplemental_fa": "qg-particle",
+    "prefix_cause_fa": "qg-result",
+    "prefix_interrogative_hamza": "qg-particle",
+    "prefix_equalization_hamza": "qg-particle",
+    "prefix_particle": "qg-particle",
+    "prefix_purpose_lam": "qg-particle",
+    "prefix_imperative_lam": "qg-particle",
+    "vocative_particle": "qg-vocative",
+    "vocative_support": "qg-vocative",
+    "attention_particle": "qg-particle",
+    "preventive_ma": "qg-particle",
+    "definite_article": "qg-article",
+    "subject_pronoun": "qg-pronoun",
+    "object_pronoun": "qg-pronoun",
+    "possessive_pronoun": "qg-pronoun",
+    "relative_pronoun": "qg-relative",
+    "case_ending": "qg-case",
+    "other": "qg-unknown",
+}
+
+DISPLAY_LABEL_BY_ROLE = {
+    "stem": "STEM",
+    "prefix_conjunction": "CONJ",
+    "prefix_preposition": "P",
+    "prefix_oath": "OATH",
+    "prefix_comitative_waw": "COM",
+    "prefix_resumption_fa": "REM",
+    "prefix_coordination_fa": "CONJ",
+    "prefix_result_fa": "RES",
+    "prefix_supplemental_fa": "SUP",
+    "prefix_cause_fa": "CAUS",
+    "prefix_interrogative_hamza": "INTG",
+    "prefix_equalization_hamza": "EQL",
+    "prefix_particle": "PART",
+    "prefix_purpose_lam": "PURP",
+    "prefix_imperative_lam": "IMPV",
+    "vocative_particle": "VOC",
+    "vocative_support": "VOC",
+    "attention_particle": "ATTN",
+    "preventive_ma": "KAFF",
+    "definite_article": "ART",
+    "subject_pronoun": "PRON",
+    "object_pronoun": "PRON",
+    "possessive_pronoun": "PRON",
+    "relative_pronoun": "REL",
+    "case_ending": "CASE",
+    "other": "UNK",
+}
+
 
 def _load_schema():
     return json.load(io.open(SCHEMA_PATH, encoding="utf-8"))
@@ -81,6 +139,29 @@ def _bad_public_text(value):
     if isinstance(value, list):
         return any(_bad_public_text(v) for v in value)
     return False
+
+
+def _display_class_for(role, pos=None):
+    if role == "stem" and pos in {"noun", "adjective", "participle", "masdar", "number"}:
+        return "qg-noun"
+    if role == "stem" and pos == "proper_noun":
+        return "qg-proper-noun"
+    return DISPLAY_CLASS_BY_ROLE.get(role, "qg-unknown")
+
+
+def _display_for(record):
+    """Build the canonical scrubbed display rows for sample fixtures."""
+    pos = record.get("pos")
+    rows = []
+    for index, segment in enumerate(record.get("segments") or []):
+        role = segment.get("role")
+        rows.append({
+            "segment_index": index,
+            "role": role,
+            "class": _display_class_for(role, pos),
+            "label": DISPLAY_LABEL_BY_ROLE.get(role, "UNK"),
+        })
+    return {"palette": "qamus-grammar-v1", "segments": rows}
 
 
 def _validate_invariants(record, seen):
@@ -110,11 +191,45 @@ def _validate_invariants(record, seen):
         if _bad_public_text(hover_contract.get(key)):
             errors.append("%s: hover_contract.%s leaks an internal source label" % (loc, key))
 
+    parse_key = record.get("parse_key") or {}
+    key_text = parse_key.get("key") or ""
+    if not isinstance(key_text, str) or not key_text.strip():
+        errors.append("%s: parse_key.key is required" % loc)
+    elif not key_text.isascii():
+        errors.append("%s: parse_key.key must be compact ASCII" % loc)
+    if _bad_public_text(parse_key.get("key")) or _bad_public_text(parse_key.get("summary")):
+        errors.append("%s: parse_key leaks an internal source label" % loc)
+    for index, component in enumerate(parse_key.get("components") or []):
+        if _bad_public_text(component.get("label")) or _bad_public_text(component.get("value")) or _bad_public_text(component.get("note")):
+            errors.append("%s: parse_key.components[%d] leaks an internal source label" % (loc, index))
+
     must_surface = hover_contract.get("must_surface") or []
     segments = record.get("segments") or []
     if segments and not isinstance(segments, list):
         errors.append("%s: segments must be an array" % loc)
         return errors
+
+    display = record.get("display") or {}
+    if display.get("palette") != "qamus-grammar-v1":
+        errors.append("%s: display.palette must be qamus-grammar-v1" % loc)
+    display_segments = display.get("segments") or []
+    if segments and len(display_segments) != len(segments):
+        errors.append("%s: display.segments must align 1:1 with segments" % loc)
+    for index, display_segment in enumerate(display_segments):
+        if _bad_public_text(display_segment.get("role")) or _bad_public_text(display_segment.get("class")) or _bad_public_text(display_segment.get("label")):
+            errors.append("%s: display.segments[%d] leaks an internal source label" % (loc, index))
+        if index < len(segments):
+            role = segments[index].get("role") if isinstance(segments[index], dict) else None
+            expected_class = _display_class_for(role, record.get("pos"))
+            if display_segment.get("segment_index") != index:
+                errors.append("%s: display.segments[%d].segment_index must be %d" % (loc, index, index))
+            if display_segment.get("role") != role:
+                errors.append("%s: display.segments[%d].role must match segment role %s" % (loc, index, role))
+            if display_segment.get("class") != expected_class:
+                errors.append("%s: display.segments[%d].class must be %s for role %s" % (loc, index, expected_class, role))
+            expected_label = DISPLAY_LABEL_BY_ROLE.get(role, "UNK")
+            if display_segment.get("label") != expected_label:
+                errors.append("%s: display.segments[%d].label must be %s for role %s" % (loc, index, expected_label, role))
 
     has_visible_article = any(
         isinstance(segment, dict)
@@ -158,7 +273,7 @@ def validate_file(path):
 
 
 def _sample_records():
-    return [
+    rows = [
         {
             "loc": "22:68:2",
             "surface": "جَادَلُوكَ",
@@ -508,6 +623,97 @@ def _sample_records():
             },
         },
     ]
+    specs = [
+        {
+            "key": "V:III:PERF:ACT:3MP+OBJ.2MS",
+            "summary": "Form III perfect verb with plural subject and second-person masculine singular object suffix.",
+            "components": [
+                {"label": "V", "value": "Form III perfect active"},
+                {"label": "SUBJ", "value": "3rd masculine plural"},
+                {"label": "OBJ", "value": "2nd masculine singular"},
+            ],
+        },
+        {
+            "key": "CONJ+P:BI+ART+N:GEN:DEF",
+            "summary": "Conjunction plus bā preposition, definite genitive noun, and PP attachment.",
+            "components": [
+                {"label": "CONJ", "value": "and"},
+                {"label": "P", "value": "by/through"},
+                {"label": "N", "value": "definite genitive noun"},
+            ],
+        },
+        {
+            "key": "ACC_PART:INNA+PRON.1P",
+            "summary": "Accusative particle with attached first-person plural pronoun.",
+            "components": [
+                {"label": "ACC", "value": "inna particle"},
+                {"label": "PRON", "value": "1st person plural"},
+            ],
+        },
+        {
+            "key": "ART+N:GEN:DEF",
+            "summary": "Definite genitive noun inside a jar-majrur phrase.",
+            "components": [
+                {"label": "ART", "value": "the"},
+                {"label": "N", "value": "genitive definite noun"},
+            ],
+        },
+        {
+            "key": "CONJ+ART+N:NOM:DEF",
+            "summary": "Coordinating waw plus definite nominative noun.",
+            "components": [
+                {"label": "CONJ", "value": "and"},
+                {"label": "ART", "value": "the"},
+                {"label": "N", "value": "nominative definite noun"},
+            ],
+        },
+        {
+            "key": "CONJ+ART+N:NOM:DEF",
+            "summary": "Coordinating waw plus definite nominative noun.",
+            "components": [
+                {"label": "CONJ", "value": "and"},
+                {"label": "ART", "value": "the"},
+                {"label": "N", "value": "nominative definite noun"},
+            ],
+        },
+        {
+            "key": "ART+N:NOM:DEF:PL",
+            "summary": "Definite nominative plural noun functioning as subject.",
+            "components": [
+                {"label": "ART", "value": "the"},
+                {"label": "N", "value": "nominative definite plural noun"},
+            ],
+        },
+        {
+            "key": "VOC_PART",
+            "summary": "Standalone vocative particle linked to its addressee.",
+            "components": [
+                {"label": "VOC", "value": "O"},
+            ],
+        },
+        {
+            "key": "VOC_SUPPORT+ATTN",
+            "summary": "Vocative support plus attention particle; yā carries the separate O.",
+            "components": [
+                {"label": "VOC", "value": "you who"},
+                {"label": "ATTN", "value": "attention marker"},
+            ],
+        },
+        {
+            "key": "FA+V:IV:PERF:ACT:1P+OBJ.3MP",
+            "summary": "Fā prefix plus Form IV perfect verb with first-person plural subject and third-person plural object suffix.",
+            "components": [
+                {"label": "FA", "value": "so/then"},
+                {"label": "V", "value": "Form IV perfect active"},
+                {"label": "SUBJ", "value": "1st person plural"},
+                {"label": "OBJ", "value": "3rd masculine plural"},
+            ],
+        },
+    ]
+    for row, spec in zip(rows, specs):
+        row["parse_key"] = spec
+        row["display"] = _display_for(row)
+    return rows
 
 
 def _write_jsonl(path, rows):
@@ -550,6 +756,20 @@ def _self_test():
         _write_jsonl(bad_leak, leak)
         _, errors = validate_file(bad_leak)
         assert any("leaks an internal source label" in e for e in errors), errors
+
+        parse_leak = _sample_records()
+        parse_leak[0]["parse_key"]["summary"] = "QAC says verb"
+        bad_parse_leak = os.path.join(td, "parse-leak.jsonl")
+        _write_jsonl(bad_parse_leak, parse_leak)
+        _, errors = validate_file(bad_parse_leak)
+        assert any("parse_key leaks an internal source label" in e for e in errors), errors
+
+        bad_display = _sample_records()
+        bad_display[0]["display"]["segments"][1]["class"] = "qg-noun"
+        bad_display_file = os.path.join(td, "bad-display.jsonl")
+        _write_jsonl(bad_display_file, bad_display)
+        _, errors = validate_file(bad_display_file)
+        assert any("display.segments[1].class must be qg-pronoun" in e for e in errors), errors
 
         duplicate_article = _sample_records()
         duplicate_article[6]["segments"][1]["gloss_contribution"] = "the foolish ones"

@@ -11,6 +11,10 @@ the *construct/phrase relationship*, not the bare head; (4) when the frame is ge
 ambiguous, emit the **most specific `pending:` reason** rather than the commoner reading.
 Ambiguous iḍāfa / jār-majrūr boundaries and multi-function `مَا` carry a **two-vote** gate
 ([`../procedures/grammar-risk-gate.md`](../procedures/grammar-risk-gate.md)).
+For rich-hover work, add (5) a compact parse key and function-based display classes. A
+preposition is `qg-preposition`, an oath/comitative waw is not the same class as ordinary
+coordination, and a relative `ما` is not colored like negative `ما` merely because the surface
+matches.
 
 ---
 

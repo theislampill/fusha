@@ -69,6 +69,13 @@ gates. When a hover is blank, the curriculum teaches the learner to name the blo
 unknown entry, clitic role, function particle, PP attachment, iʿrāb, proper-name collision, or
 source repair. A precise blank is part of the method.
 
+The next learner-facing layer is a **parse-key and color contract**: every rich hover should be
+able to show how the Arabic token is composed and why the best gloss is safe. That contract is
+documented in [`qamus-hover-parse-key-and-color.md`](qamus-hover-parse-key-and-color.md) and
+drilled in [`drills/parse-key-and-color-layer.md`](drills/parse-key-and-color-layer.md). It
+uses scrubbed Qamus role classes such as `qg-verb`, `qg-noun`, `qg-preposition`, and
+`qg-pronoun`; it does not expose QAC/Tafsir/screenshot labels as public provenance.
+
 ## How the ladder links the rest of the repo
 
 The curriculum does **not** restate ṣarf or nahw — it *routes* to them. Each level names the
@@ -125,8 +132,10 @@ curriculum/
   placement-test.md              ← self-scoring test → your starting level
   mastery-checkpoints.md         ← per-level checkpoints + error → remediation procedure map
   repo-state-and-mission-audit-20260625.md ← current GitHub/repo-state audit for curriculum updates
+  qamus-hover-parse-key-and-color.md ← rich-hover parse-key + color-role guidance
   drills/
     hover-composition-and-routing.md ← written token → pieces → sarf/nahw route → safe hover
+    parse-key-and-color-layer.md     ← pieces → parse_key + display palette rows
 ```
 
 A learner's path through these files: take [`placement-test.md`](placement-test.md) to find a
@@ -135,6 +144,10 @@ time, use [`qamus-learning-path.md`](qamus-learning-path.md) for the daily readi
 [`drills/hover-composition-and-routing.md`](drills/hover-composition-and-routing.md) whenever a
 written token hides multiple pieces, and clear each rung against
 [`mastery-checkpoints.md`](mastery-checkpoints.md) before moving up.
+When working on rich hovers, pair
+[`drills/hover-composition-and-routing.md`](drills/hover-composition-and-routing.md) with
+[`drills/parse-key-and-color-layer.md`](drills/parse-key-and-color-layer.md): first account for
+the pieces, then produce a validated parse-key/display contract.
 
 ## Hard rules honored here
 

@@ -16,5 +16,7 @@ precise blocker when evidence is insufficient. It is **MCP-free** — it consult
 (`sources/README.md`) only as optional internal evidence, never as a dependency; **nothing external is ever
 public**. Public hover records stay `{src:"qamus",kind:"authored",lang:"en"}`. QAC grammar screenshots and
 concept-map metadata are internal routing/curriculum aids only; see `qamus/procedures/grammar-resource-usage.md`.
-Never use them as hover text or public provenance. See `INSTALL.md` for install + usage; `sarf/SKILL.md` is
-its morphology partner.
+Never use them as hover text or public provenance. Nahw decisions must also preserve token function for rich
+hovers: produce a compact `parse_key` and scrubbed `qamus-grammar-v1` display classes for particles, governors,
+attachments, clauses, and i'rab-sensitive roles, or defer with an exact blocker. See `INSTALL.md` for install +
+usage; `sarf/SKILL.md` is its morphology partner.

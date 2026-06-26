@@ -131,14 +131,54 @@ The parse payload should drive validators:
 The live renderer should be able to color both the Arabic token and the hover breakdown from this payload. Keep the
 public best gloss concise, but expose a scrubbed learner view with stable segment classes:
 
-- conjunction/resumption/result/cause particles
-- prepositions, oath wāw, and jar-majrūr hosts
-- definite article
-- verb stem and verb form
-- subject, object, and possessive pronouns
-- vocative support and attention particles
+- conjunction/resumption/result/cause particles (`qg-particle`, `qg-result`)
+- prepositions, oath wāw, and comitative wāw (`qg-preposition`, `qg-oath`, `qg-comitative`)
+- definite article (`qg-article`)
+- verb stem and verb form (`qg-verb`)
+- nouns and proper-name hosts (`qg-noun`, `qg-proper-noun`)
+- subject, object, and possessive pronouns (`qg-pronoun`)
+- relative, vocative, exception, and case pieces (`qg-relative`, `qg-vocative`, `qg-exception`, `qg-case`)
 
 The color layer must be generated from scrubbed segment roles, not from external source names or copied source text.
+
+## Parse-Key Contract
+
+Every morphosyntax token record now carries a `parse_key` object and a `display` object. These are the bridge from
+the sarf/nahw decision to a future hover UI:
+
+```json
+{
+  "parse_key": {
+    "key": "V:III:PERF:ACT:3MP+OBJ.2MS",
+    "summary": "Form III perfect verb with plural subject and second-person masculine singular object suffix.",
+    "components": [
+      {"label": "V", "value": "Form III perfect active"},
+      {"label": "SUBJ", "value": "3rd masculine plural"},
+      {"label": "OBJ", "value": "2nd masculine singular"}
+    ]
+  },
+  "display": {
+    "palette": "qamus-grammar-v1",
+    "segments": [
+      {"segment_index": 0, "role": "stem", "class": "qg-verb", "label": "STEM"},
+      {"segment_index": 1, "role": "object_pronoun", "class": "qg-pronoun", "label": "PRON"}
+    ]
+  }
+}
+```
+
+Rules:
+
+- `parse_key.key` is compact ASCII for machines and logs. It should be stable across renderer changes.
+- `parse_key.summary` is short learner/reviewer prose, authored by Qamus/Fusha, not copied from a screenshot/source.
+- `parse_key.components[]` is the line the tooltip can render: label, value, optional note.
+- `display.palette` is currently `qamus-grammar-v1`.
+- `display.segments[]` aligns one-for-one with `segments[]` and supplies scrubbed classes for token coloring.
+- These fields are grammar metadata. They are not public provenance and must not contain QAC/Tafsir/source names.
+
+The screenshot packs justify the shape: QAC uses colored segment labels under Arabic tokens plus dependency arcs and
+phrase labels. Qamus should keep the intuitive color idea, but drive it from its own role classes and authored
+parse keys so the public boundary remains clean.
 
 ## Public Boundary
 
@@ -152,9 +192,13 @@ Run `tools/validate_morphosyntax_token_metadata.py` against morphosyntax JSONL t
 
 - unique `loc`
 - bounded enums for POS/case/mood/gender/person/number/state
+- required `parse_key` and `display` payloads
+- ASCII `parse_key.key`
+- `display.palette=qamus-grammar-v1`
+- `display.segments[]` alignment with `segments[]`
 - public boundary fields: `public_gloss_src=qamus`, `public_gloss_kind=authored`, `public_gloss_lang=en`, and `external_source_names_public=false`
 - function-bearing segments carry `gloss_contribution` and a `hover_contract.must_surface`
 - attached subject/object/possessive pronouns preserve person and number tags
-- no external source labels leak into public-facing hover-contract text
+- no external source labels leak into public-facing hover-contract, parse-key, or display text
 
 Future live/staged render validation should additionally compare `hover_contract.must_surface` against the built `wbw-lookup.json` best hover.

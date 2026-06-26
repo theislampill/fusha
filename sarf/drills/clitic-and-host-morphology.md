@@ -20,6 +20,8 @@ host/root/POS:
 suffix or subject/object marker:
 needs nahw for function? yes/no
 public hover may show:
+parse_key.key:
+display classes:
 pending reason if unsafe:
 ```
 
@@ -46,6 +48,19 @@ attached piece's contribution. A hidden `pre` field is not enough for a learner.
 | `قُرْءَانًا` | noun + tanwin-alif | final `ـًا` is tanwin, not pronoun `نا` | false split into stem + "us" |
 | `ٱلْمُلْك` | article + noun | article is part of the noun; no lām preposition | false split `لـ` + host |
 
+## Parse-key extension
+
+After each segmentation, produce the rich-hover handoff:
+
+- `parse_key.key`: compact ASCII, such as `P:BI+N:GEN`, `CONJ+P:BI+ART+N:GEN:DEF`,
+  or `V:IV:PERF:ACT:1P+OBJ.3MS`.
+- `display classes`: one class per visible piece, such as `qg-preposition`,
+  `qg-article`, `qg-noun`, `qg-verb`, and `qg-pronoun`.
+
+If the class would depend on nahw (`و` as oath/comitative/conjunction, `ف` as cause/result,
+`ل` as purpose/imperative/genitive), write `pending: particle_function_uncertified` instead of
+choosing a color by surface shape.
+
 ## Decision rule
 
 - If segmentation is clear and the host/root/POS is certified, hand the function
@@ -63,3 +78,5 @@ Take ten covered hover rows and ten pending rows. For each, prove that no visibl
 attached piece disappeared from the learner-facing answer. Any host-only hover
 on a token with a visible bā', lām, kāf, oath/comitative wāw, fā', or suffix
 pronoun fails the drill.
+For rich-hover readiness, the answer must also include a parse key and exactly one
+display class for each visible segment.

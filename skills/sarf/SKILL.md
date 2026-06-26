@@ -17,4 +17,6 @@ learners. It is **MCP-free** — it consults *available source adapters* (`sourc
 internal evidence, never as a dependency, and **nothing external is ever public** (public gloss record stays
 `{src:"qamus",kind:"authored",lang:"en"}`). QAC grammar screenshots and concept-map metadata are internal
 routing/curriculum aids only; see `qamus/procedures/grammar-resource-usage.md`. Never use them as hover text
-or public provenance. See `INSTALL.md` for install + usage; `nahw/SKILL.md` is its syntax partner.
+or public provenance. Sarf decisions must also preserve token composition for rich hovers: produce a compact
+`parse_key` and scrubbed `qamus-grammar-v1` display classes for visible roots/forms/clitics, or defer with an
+exact blocker. See `INSTALL.md` for install + usage; `nahw/SKILL.md` is its syntax partner.

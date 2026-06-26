@@ -3,6 +3,10 @@
 Recognition + production from the qamus-highlight scars. Built from
 [`../evals/particle-function-eval.jsonl`](../evals/particle-function-eval.jsonl).
 
+For rich-hover work, every answer must also name the display class. Same surface, different
+function, different class: oath `و` is `qg-oath`, comitative `و` is `qg-comitative`, ordinary
+`و` is `qg-particle`; causal/result `ف` is `qg-result`, not generic connector color.
+
 ## 1. مَا (negation / relative / interrogative / maṣdariyya)
 - وَمَا يَعْلَمُ تَأْوِيلَهُ إِلَّا اللَّهُ → **negation** "and not". | مَا عِندَكُم → **relative** "what". | مَا تِلْكَ → **interrogative** "what?".
 - Test: مَا أَصْبَرَهُمْ → **exclamatory** "how patient they are!".
@@ -28,3 +32,11 @@ Recognition + production from the qamus-highlight scars. Built from
 
 ## 8. فاء / واو / لام (multi-function)
 - فَتَلَقَّىٰ → "then". | وَٱلْعَصْرِ → "**by**" (oath واو). | لِيُنفِقْ → "**let** him spend" (lām amr). | لِلَّهِ → "to/for Allah" (lām jarr).
+
+Parse-key practice:
+
+- `وَٱلْعَصْرِ` in an oath frame → `OATH+ART+N:GEN:DEF`, classes
+  `qg-oath + qg-article + qg-noun`.
+- `فَتَنفَعَهُ` with causal fā' → `FA:CAUSE+V:SUBJ+OBJ`, classes
+  `qg-result + qg-verb + qg-pronoun`.
+- `وَمَا` → do not finalize until `ما` is classified; classes depend on the function.

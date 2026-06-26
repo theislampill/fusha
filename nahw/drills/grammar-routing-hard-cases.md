@@ -97,8 +97,14 @@ required evidence:
 allowed lane:
 unsafe shortcut rejected:
 public hover allowed? yes/no
+parse_key.key:
+display classes:
 pending reason:
 ```
 
 Pass only when every allowed hover preserves the token's contribution and every
 unsafe row is routed to an exact blocker.
+For rich-hover readiness, also pass only when each resolved row has a compact
+ASCII parse key and segment/function classes from the `qamus-grammar-v1` palette.
+If the grammar route is not certified, do not assign a reassuring color; keep
+the blocker visible.

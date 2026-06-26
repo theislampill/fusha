@@ -26,6 +26,11 @@ Primary lanes:
 - `source_repair_gated`: bad source location, source surface, or entry-form
   evidence.
 - `scholar_gated`: i'rab disagreement or unresolved grammar ambiguity.
+- `rich_hover_parse_key`: a plain authored hover may be correct, but the
+  learner/rendering layer still needs a validated `parse_key` and
+  `qamus-grammar-v1` display classes. This is curriculum/metadata polish unless
+  the missing parse key reveals a host-only clitic, wrong function particle, or
+  other real hover defect.
 
 Stop a broad lane when a sample repeatedly hits the same blocker, yield drops to
 zero, or failures show the tool is choosing the wrong token or wrong grammatical

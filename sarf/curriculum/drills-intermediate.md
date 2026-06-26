@@ -7,6 +7,9 @@ radicals and read a wazn ([`drills-beginner.md`](drills-beginner.md)).
 
 Each drill names the **procedure that solves it** — not as a footnote but as the method you run.
 Cover the answer; decide form / shape / root; then check the reasoning *and* the procedure.
+For any token you would expose in a rich hover, add the morphology side of the parse key:
+`parse_key.key` plus one `qamus-grammar-v1` display class per visible segment. The root/form
+answer is not enough if a suffix pronoun, article, or augment disappeared.
 
 > The form, the voice, and the class each change the English. A root match is **necessary, not
 > sufficient** — bind to the entry/sense whose **form** fits. Carry the discipline of
@@ -116,6 +119,8 @@ A governing negative, not the surface tense, sets the English. (Cross-skill into
       pick active vs passive (Part B6)?
 - [ ] Did I **recover** the hidden radical from the family/QAC, not from `norm()` (Part C)?
 - [ ] Where form/voice/sense was uncertain, did I gate at `two_vote` or go **pending**?
+- [ ] Could I produce a compact parse key and segment classes such as `qg-verb`,
+      `qg-noun`, `qg-pronoun`, `qg-article`, or did I leave an exact blocker?
 
 Advance to [`drills-advanced.md`](drills-advanced.md) only when Parts A–C are reliable. When in
 doubt: **PENDING beats wrong.**

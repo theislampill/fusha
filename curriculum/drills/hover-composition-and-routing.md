@@ -12,7 +12,8 @@ fields:
 3. sarf class of the host,
 4. nahw function of attached particles or clause pieces,
 5. semantic/concept flag, if any,
-6. result: allowed hover, learner explanation, or `pending:` blocker.
+6. parse-key/display readiness,
+7. result: allowed hover, learner explanation, or `pending:` blocker.
 
 Public hover output stays source-clean: `{src:'qamus', kind:'authored', lang:'en'}`. QAC,
 grammar screenshots, external dictionaries, source-triangulation output, and Tafsir/i'rab notes
@@ -34,6 +35,27 @@ hover wording.
 | `صَٰلِحًا` | common adjective/noun surface | concept flag may warn about Ṣāliḥ the messenger, but context decides |
 | `بِبَدْرٍ` | `بِـ` + proper place name | preserve both the preposition and named-place status; concept metadata is a routing flag |
 | `إِلَيْنَا` | preposition stem + pronoun `ـنا` | "to us"; hamza-seat/root guard prevents false `ل ي ن` |
+
+## Parse-key handoff
+
+After the routing decision, produce a renderable handoff:
+
+```text
+parse_key.key:
+parse_key.summary:
+display classes:
+```
+
+Examples:
+
+- `جَادَلُوكَ` → `V:III:PERF:ACT:3MP+OBJ.2MS`, display `qg-verb + qg-pronoun`.
+- `بِسْمِ` → `P:BI+N:GEN`, display `qg-preposition + qg-noun`.
+- `وَٱلْعَصْرِ` in an oath frame → `OATH+ART+N:GEN:DEF`, display
+  `qg-oath + qg-article + qg-noun`.
+
+If the row cannot produce a parse key because the function or attachment is not certified, the
+result is not a rich hover. Route to the exact blocker and keep the public hover blank or
+minimal according to the closure lane.
 
 ## Routing rules
 
@@ -57,7 +79,11 @@ hover wording.
 - [ ] Did preposition + host tokens avoid host-only hovers?
 - [ ] Did semantic concept metadata stay internal and non-authoritative?
 - [ ] Did the final result separate token hover, phrase explanation, and learner note?
+- [ ] Did the result include a compact ASCII `parse_key.key` and one display class per visible
+      segment?
 
 Use this drill before [`ayah-reading-drills.md`](ayah-reading-drills.md), after hard misses in
 [`quranic-function-words.md`](quranic-function-words.md), and whenever a Qamus closure row looks
 "obvious" only because the attached piece was ignored.
+Then run [`parse-key-and-color-layer.md`](parse-key-and-color-layer.md) to turn the composition
+into a renderer-ready parse-key/color contract.
