@@ -499,6 +499,7 @@ for _art in (
         "qamus/schemas/production-bug-lesson.schema.json",
         "qamus/procedures/production-bug-lessons.md",
         "qamus/reports/live-shadow-graph-workflow.md",
+        "tools/summarize_shadow_closure_queue.py",
 ):
     check("Phase2 live-shadow graph contract artifact exists: %s" % _art, os.path.exists(os.path.join(_R, _art)))
 
@@ -507,6 +508,7 @@ for _script, _args, _label in (
         ("validate_phase1_shadow_graph.py", ["--self-test"], "Phase2 shadow graph validator self-test"),
         ("scan_public_boundary.py", ["--self-test"], "Phase2 public-boundary scanner self-test"),
         ("compare_wbw_artifacts.py", ["--self-test"], "Phase2 WBW compare self-test"),
+        ("summarize_shadow_closure_queue.py", ["--self-test"], "Phase2 shadow closure queue summarizer self-test"),
         ("validate_production_bug_lessons.py",
          [os.path.join(_R, "qamus", "examples", "production_bug_lesson.sample.jsonl")],
          "Phase2 production bug lesson sample validates"),
