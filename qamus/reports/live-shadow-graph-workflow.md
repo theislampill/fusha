@@ -404,6 +404,78 @@ Mirror mismatch classification remains unchanged and report-only:
 
 `content-equivalent-or-near-equivalent; metadata/source-hash divergent; not safe for mutation until separately reconciled`.
 
+## Phase 3 Latest Read-Only Admin/Debug Refresh
+
+Status: latest read-only admin/debug scaffold smoke completed from pushed `main`
+HEAD `40a98fa32b2d3036a1ababe1157771c487bd1fda`. This remains scaffolding only:
+no live Qamus mutation, no WBW rebuild, no service restart, no mirror sync, and
+no hover coverage claim.
+
+Server-side latest checkout and input/output paths:
+
+- tools clone: `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase3-tools-40a98fa-20260626-195928`
+- input shadow graph: `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-fcffc79-20260626-194628`
+- static admin/debug pack: `/tmp/qamus-phase3-admin-debug-40a98fa-20260626-195928/admin-debug-pack.json`
+
+Output-root guard evidence:
+
+- first attempted output under `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/...` was rejected:
+  `refusing likely live/runtime output path`
+- final output used `/tmp/qamus-phase3-admin-debug-40a98fa-20260626-195928`, leaving live/app/service paths untouched
+
+Admin/debug pack counts:
+
+- token rows: `49,900`
+- hover rows: `49,900`
+- parse rows: `17,065`
+- decision rows: `9,106`
+- entry rows: `2,092`
+- blocker classes: `9`
+- sample tokens: `6`
+- sample entries: `2`
+
+Validated sampled traces:
+
+- `quran:33:63:1` suffix-pronoun/token-only exemplar
+- `quran:22:18:17` conjunction/article/noun rich-WBW exemplar
+- `quran:2:21:1` vocative/addressee bridge exemplar
+- `quran:4:28:8` adjectival-state exemplar
+- `quran:2:178:22` preposition/governed nominal exemplar
+- `parse:1bbe8fa09823c3c0d064dc83` safe parse-family preview exemplar
+- `qamus:v:430015446b77` entry backlink / entry-sense preview exemplar
+
+Read-only edit-intent and repair-impact smoke:
+
+- token-only intent target: `wbw:33:63:1`, repair preview affected tokens/hovers/parse keys: `1 / 1 / 1`
+- parse-family intent target:
+  `qamus:v:430015446b77#field=parse_family[parse:1bbe8fa09823c3c0d064dc83].hover_pattern`,
+  repair preview affected tokens/hovers/parse keys: `236 / 236 / 1`
+- entry/sense intent target: `qamus:v:430015446b77#sense=1`,
+  repair preview affected tokens/hovers/parse keys: `736 / 736 / 57`
+- every preview row has `live_mutation_allowed=false`
+
+Production bug lesson bridge smoke:
+
+- bug class: `verb_object_suffix_omitted`
+- target: `wbw:33:63:1`
+- visible bad hover: `to ask, question`
+- corrected hover / lesson target: `ask you`
+- learner level: `beginner`
+
+Latest Phase 3 validator evidence:
+
+- `python3 tools/build_shadow_admin_debug_pack.py --shadow-dir <phase2p9-shadow> --out-dir /tmp/...` -> `PASS`
+- `python3 tools/validate_shadow_admin_debug_pack.py <pack>` -> `PASS`
+- `python3 tools/validate_shadow_admin_route_contract.py qamus/examples/shadow_admin_route_contract.sample.json --pack <pack>` -> `PASS`
+- `python3 tools/query_shadow_admin_debug_pack.py --pack <pack> --token quran:33:63:1` -> `PASS`
+- `python3 tools/query_shadow_admin_debug_pack.py --pack <pack> --token quran:22:18:17` -> `PASS`
+- `python3 tools/query_shadow_admin_debug_pack.py --pack <pack> --token quran:2:21:1` -> `PASS`
+- `python3 tools/query_shadow_admin_debug_pack.py --pack <pack> --parse parse:1bbe8fa09823c3c0d064dc83` -> `PASS`
+- `python3 tools/query_shadow_admin_debug_pack.py --pack <pack> --entry qamus:v:430015446b77` -> `PASS`
+- `python3 tools/validate_hover_edit_intent.py <all-edit-intents.jsonl>` -> `PASS`
+- `python3 tools/validate_repair_impact_preview.py <repair-impact-previews.jsonl>` -> `PASS`
+- `python3 tools/validate_production_bug_lessons.py <production-bug-lesson.jsonl>` -> `PASS`
+
 ## Phase 3 Read-Only Admin/Debug Scaffold
 
 Status: started as repo-only tooling. Phase 3 scaffolding is deliberately static and local before any app route exists.
