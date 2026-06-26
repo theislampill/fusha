@@ -74,6 +74,14 @@ The tools intentionally do not embed private server paths. Server acceptance pas
 - `tools/validate_phase4_two_vote_requests.py`: validates Phase 4 two-vote request packets. It rejects non-exact
   identities, public-boundary leakage, weakened gates, non-two-vote lanes, missing component provenance, component
   candidates marked certifying, live/apply/coverage claims, and vacuous zero-row request files.
+- `tools/validate_phase4_two_vote_responses.py`: validates exact-addressed Phase 4 sarf/nahw response rows before
+  reconciliation. It requires the response to derive from a known two-vote request, preserves the exact
+  `quran:S:A:W` / `wbw:S:A:W` identity, rejects public gloss provenance leaks, and keeps component candidates
+  explicitly non-certifying.
+- `tools/reconcile_phase4_two_vote_responses.py`: reconciles validated sarf and nahw response rows into internal
+  review output. It certifies only same-gloss, same-reason, same-scope agreement and emits `certified_not_applied`
+  rows with `apply_allowed=false`; missing, pending, rejected, or disagreeing votes stay unresolved. It does not
+  mutate live Qamus data, rebuild WBW, or claim closure progress.
 - `tools/plan_shadow_hover_edit_intent.py`: read-only CLI for planning future hover-edit intents from a validated
   Phase 3 admin/debug pack. It emits validator-clean JSONL rows for token-only, parse-family, or entry/sense edit
   intent review, preserves exact `wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> qamus:<id>#sense=<n>` identity, and
@@ -185,6 +193,14 @@ python tools/build_phase4_two_vote_requests.py \
   --out-jsonl <isolated static admin-debug output>/phase4-two-vote-requests.jsonl
 python tools/validate_phase4_two_vote_requests.py \
   <isolated static admin-debug output>/phase4-two-vote-requests.jsonl
+python tools/validate_phase4_two_vote_responses.py \
+  <isolated static admin-debug output>/phase4-two-vote-responses.jsonl \
+  --requests <isolated static admin-debug output>/phase4-two-vote-requests.jsonl
+python tools/reconcile_phase4_two_vote_responses.py \
+  --requests <isolated static admin-debug output>/phase4-two-vote-requests.jsonl \
+  --responses <isolated static admin-debug output>/phase4-two-vote-responses.jsonl \
+  --certified-out <isolated static admin-debug output>/phase4-two-vote-certified.jsonl \
+  --unresolved-out <isolated static admin-debug output>/phase4-two-vote-unresolved.jsonl
 python tools/query_shadow_admin_debug_pack.py --pack <isolated static admin-debug output>/admin-debug-pack.json \
   --token quran:33:63:1
 python tools/query_shadow_admin_debug_pack.py --pack <isolated static admin-debug output>/admin-debug-pack.json \
@@ -240,6 +256,10 @@ python tools/validate_phase4_closure_tranche.py qamus/examples/phase4_closure_tr
 python tools/build_phase4_two_vote_requests.py --self-test
 python tools/validate_phase4_two_vote_requests.py --self-test
 python tools/validate_phase4_two_vote_requests.py qamus/examples/phase4_two_vote_request.sample.jsonl
+python tools/validate_phase4_two_vote_responses.py --self-test
+python tools/validate_phase4_two_vote_responses.py qamus/examples/phase4_two_vote_response.sample.jsonl
+python tools/reconcile_phase4_two_vote_responses.py --self-test
+python tools/test_phase4_two_vote_reconciliation.py
 python tools/query_shadow_admin_debug_pack.py --self-test
 python tools/plan_shadow_hover_edit_intent.py --self-test
 python tools/plan_shadow_repair_impact_preview.py --self-test

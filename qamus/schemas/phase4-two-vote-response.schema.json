@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/phase4-two-vote-response.schema.json",
+  "title": "Qamus Phase 4 exact-addressed two-vote response row",
+  "type": "object",
+  "required": [
+    "id",
+    "phase",
+    "source_request_id",
+    "parse_id",
+    "lens",
+    "decision",
+    "identity",
+    "concise_authored_gloss",
+    "sarf_reasoning",
+    "nahw_reasoning",
+    "reason_agreement_key",
+    "blocker_if_rejected",
+    "safe_scope_after_vote",
+    "public_boundary",
+    "component_candidates_used_as_certification"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^phase4-two-vote-response:queue_parse_[0-9a-f]+:(sarf-primary|nahw-primary)$"
+    },
+    "phase": {
+      "const": "phase4_two_vote_response"
+    },
+    "source_request_id": {
+      "type": "string",
+      "pattern": "^phase4-two-vote:queue_parse_[0-9a-f]+$"
+    },
+    "parse_id": {
+      "type": "string",
+      "pattern": "^parse:[0-9a-f]+$"
+    },
+    "lens": {
+      "enum": ["sarf-primary", "nahw-primary"]
+    },
+    "decision": {
+      "enum": ["approve", "reject", "pending"]
+    },
+    "identity": {
+      "type": "object"
+    },
+    "concise_authored_gloss": {
+      "type": "string"
+    },
+    "sarf_reasoning": {
+      "type": "string"
+    },
+    "nahw_reasoning": {
+      "type": "string"
+    },
+    "reason_agreement_key": {
+      "type": "string"
+    },
+    "blocker_if_rejected": {
+      "type": "string"
+    },
+    "safe_scope_after_vote": {
+      "enum": ["token_only", "parse_family_after_impact_preview", "pending"]
+    },
+    "public_boundary": {
+      "type": "object"
+    },
+    "component_candidates_used_as_certification": {
+      "const": false
+    }
+  }
+}
