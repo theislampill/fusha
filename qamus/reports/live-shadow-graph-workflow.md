@@ -40,6 +40,10 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   observed, or if a grammar-sensitive role such as `preposition`, `conjunction`, `vocative_particle`,
   `object_pronoun`, `result_particle`, `resumption_particle`, or `adjectival_state` appears in an `auto_safe` gate or
   `propagation_safe` lane.
+- `tools/build_shadow_admin_debug_pack.py`: Phase 3 read-only admin/debug scaffolding. It consumes an already-built
+  shadow graph and emits a static local `index.html` plus `admin-debug-pack.json` with hover inspectors, entry
+  backlinks, parse-family views, blocker queues, and repair-preview stubs. It is not a live route, does not discover
+  server paths, refuses likely live/runtime output paths, and always marks the pack `live_mutation_allowed=false`.
 - `tools/validate_detector_maturity.py`: validates standalone or embedded detector-maturity records so Phase 2
   reports cannot treat `two_vote_required=0` or `source_disagreement=0` as proof that no such cases exist.
 - `tools/validate_live_shadow_run_manifest.py`: validates `phase2-run-manifest.json` so future live-readonly graph
@@ -115,6 +119,11 @@ python tools/summarize_rich_wbw_roles.py --shadow-dir <isolated shadow output> \
 python tools/scan_public_boundary.py --public <public entry URL> --shadow-dir <isolated shadow output>
 python tools/compare_wbw_artifacts.py <live wbw lookup> <mirror wbw lookup>
 python tools/validate_detector_maturity.py <review pack jsonl or detector maturity json>
+python tools/build_shadow_admin_debug_pack.py --shadow-dir <isolated shadow output> \
+  --out-dir <isolated static admin-debug output> \
+  --sample-token quran:33:63:1 \
+  --sample-token quran:22:18:17 \
+  --sample-token quran:2:21:1
 ```
 
 CI should use fixture/self-test mode only:
@@ -130,6 +139,7 @@ python tools/validate_parse_key_contract.py qamus/examples/parse_key.sample.json
 python tools/validate_phase1_shadow_graph.py --self-test
 python tools/summarize_shadow_closure_queue.py --self-test
 python tools/summarize_rich_wbw_roles.py --self-test
+python tools/build_shadow_admin_debug_pack.py --self-test
 python tools/validate_shadow_review_pack.py --self-test
 python tools/validate_shadow_review_pack.py qamus/examples/shadow_review_pack.sample.jsonl
 python tools/validate_decision_linkage.py --self-test
@@ -233,3 +243,26 @@ Public boundary scan:
 Mirror mismatch classification remains unchanged and report-only:
 
 `content-equivalent-or-near-equivalent; metadata/source-hash divergent; not safe for mutation until separately reconciled`.
+
+## Phase 3 Read-Only Admin/Debug Scaffold
+
+Status: started as repo-only tooling. Phase 3 scaffolding is deliberately static and local before any app route exists.
+The scaffold consumes durable Phase 2 shadow outputs and produces an inspector pack that a future app/admin route can
+mirror after separate app-repo review.
+
+The current scaffold covers:
+
+- hover inspector: `wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> decision/gloss/gate/blocker`
+- entry backlinks: entry candidates/components -> dependent token locations, hover slots, parse keys, blockers
+- parse-family view: family size, lanes, gates, propagation status, candidate/component evidence, sibling samples
+- blocker queue: blocker classes grouped with sample tokens, parse counts, and POS counts
+- repair preview stub: read-only affected counts and `live_mutation_allowed=false`
+
+The scaffold intentionally does not:
+
+- mutate live Qamus
+- rebuild WBW
+- start or restart services
+- expose internal provenance as public payload
+- perform hover authoring or closure
+- use raw Arabic surface text as identity
