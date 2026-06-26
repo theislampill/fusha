@@ -779,15 +779,15 @@ The scaffold intentionally does not:
 ## Phase 2.8 / 2.9 Latest Closeout Refresh
 
 Status: latest live-readonly closeout rerun completed from pushed `main` and
-`codex/phase2-shadow-graph` HEAD `fcffc792264d340d2dea56b14cf074b0855d141e`.
+`codex/phase2-shadow-graph` HEAD `b010037b55f4b411a1732fa7d81bc2e0d435f5cc`.
 This was a graph/readiness run only: no live Qamus mutation, no WBW rebuild, no
 service restart, no mirror sync, and no hover coverage claim.
 
 Server-side latest checkout and shadow paths:
 
-- tools clone: `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-tools-fcffc79-20260626-194628`
-- shadow output: `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-fcffc79-20260626-194628`
-- local repo status after commit/push: clean detached HEAD at `fcffc792264d340d2dea56b14cf074b0855d141e`
+- tools clone label: `phase2p9-tools-b010037-20260626-214536`
+- shadow output label: `phase2p9-b010037-20260626-214536`
+- local repo status after closeout refresh: clean detached HEAD at `b010037b55f4b411a1732fa7d81bc2e0d435f5cc`
 
 Single-run counts from the latest live-readonly shadow build:
 
@@ -840,6 +840,10 @@ Rich WBW role taxonomy from the latest run:
   `verb=2`, `verb_stem=1`
 - no unknown rich role was observed
 - no explicitly gated role appeared in an `auto_safe` gate or `propagation_safe` lane
+- rich WBW segment evidence remains component-only: component candidates are stored
+  separately from whole-token `candidate_entries`, preserve `source=rich_wbw_segment`
+  plus role/segment/token provenance, and do not contribute to `auto_safe`, source
+  agreement, propagation safety, closure coverage, or hover coverage
 
 Required rich gate cases were re-confirmed as `two_vote_required` and non-propagating:
 
