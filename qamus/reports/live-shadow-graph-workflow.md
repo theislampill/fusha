@@ -90,6 +90,14 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   review output. It certifies only same-gloss, same-reason, same-scope agreement and emits `certified_not_applied`
   rows with `apply_allowed=false`; missing, pending, rejected, or disagreeing votes stay unresolved. It does not
   mutate live Qamus data, rebuild WBW, or claim closure progress.
+- `tools/build_phase4_draft_token_decision_ledger.py`: converts a validated Phase 4 hover decision plan into a
+  source-only draft token-decision ledger for owner review. The emitted rows copy only the source-clean
+  `token_decision_preview` (`loc`, `gloss`, `src=qamus`, `kind=authored`, `lang=en`) plus plan lineage. They remain
+  `status=draft_not_applied` and cannot mutate live Qamus data, rebuild WBW, or substitute for the owner-gated
+  append-only live ledger.
+- `tools/validate_phase4_draft_token_decision_ledger.py`: validates that draft ledger rows derive from the exact hover
+  decision plan, preserve `quran:S:A:W` / `wbw:S:A:W` identity, reject public provenance leakage, keep all live/apply
+  policy fields false, and require the future backup/rebuild/validation/health/readback gates.
 - `tools/plan_shadow_hover_edit_intent.py`: read-only CLI for planning future hover-edit intents from a validated
   Phase 3 admin/debug pack. It emits validator-clean JSONL rows for token-only, parse-family, or entry/sense edit
   intent review, preserves exact `wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> qamus:<id>#sense=<n>` identity, and
@@ -536,6 +544,21 @@ required future gates, rollback requirements, source-clean sample decisions,
 and the source plan hash. It does not permit live mutation, WBW rebuild,
 service restart, mirror sync, parse-key identity, raw-surface identity, or
 component-candidate certification.
+
+A companion source-only draft token-decision ledger can now be generated from
+the same hover decision plan for owner review:
+
+- schema: `qamus/schemas/phase4-draft-token-decision-ledger.schema.json`
+- builder: `tools/build_phase4_draft_token_decision_ledger.py`
+- validator: `tools/validate_phase4_draft_token_decision_ledger.py`
+- sample: `qamus/examples/phase4_draft_token_decision_ledger.sample.jsonl`
+- test: `tools/test_phase4_draft_token_decision_ledger.py`
+- output status: `draft_not_applied`
+
+This draft ledger is not the live append-only token decision ledger. It copies
+only the source-clean public token decision shape and plan lineage into a
+review artifact, keeping `apply_allowed=false`, `live_mutation_allowed=false`,
+and all future backup/rebuild/validation/health/readback gates required.
 
 ## Phase 3 Latest Read-Only Admin/Debug Refresh
 
