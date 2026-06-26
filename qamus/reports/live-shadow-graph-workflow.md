@@ -430,8 +430,10 @@ Dry-run inputs and outputs:
   `22`
 - reconciled certified rows: `10`
 - reconciled unresolved rows: `1`
-- hover decision plan rows: `10`
-- draft token-decision ledger rows: `10`
+- post-adjudication certified rows: `11`
+- post-adjudication unresolved rows: `0`
+- post-adjudication hover decision plan rows: `11`
+- post-adjudication draft token-decision ledger rows: `11`
 - source-only review/apply artifact leak-pattern matches: `0`
 - `apply_allowed=false`, `live_mutation_allowed=false`,
   `closure_claim_allowed=false`
@@ -462,6 +464,14 @@ Validation evidence:
 - `python tools/validate_phase4_apply_readiness_manifest.py <apply-readiness-manifest.json> --plan-jsonl <hover-decision-plan.jsonl>` -> `PASS`
 - `python tools/build_phase4_draft_token_decision_ledger.py <hover-decision-plan.jsonl>` -> `PASS`
 - `python tools/validate_phase4_draft_token_decision_ledger.py <draft-token-decision-ledger.jsonl> --plan-jsonl <hover-decision-plan.jsonl>` -> `PASS`
+- `python tools/validate_phase4_gloss_adjudication_responses.py <gloss-adjudication-responses.jsonl> --requests <gloss-adjudication-requests.jsonl>` -> `PASS`
+- `python tools/reconcile_phase4_gloss_adjudication_responses.py --requests <gloss-adjudication-requests.jsonl> --responses <gloss-adjudication-responses.jsonl> ...` -> `PASS`
+- `python tools/build_phase4_hover_decision_plan.py <certified-plus-adjudicated.jsonl>` -> `PASS`
+- `python tools/validate_phase4_hover_decision_plan.py <post-adjudication-hover-decision-plan.jsonl>` -> `PASS`
+- `python tools/build_phase4_apply_readiness_manifest.py <post-adjudication-hover-decision-plan.jsonl>` -> `PASS`
+- `python tools/validate_phase4_apply_readiness_manifest.py <post-adjudication-apply-readiness-manifest.json> --plan-jsonl <post-adjudication-hover-decision-plan.jsonl>` -> `PASS`
+- `python tools/build_phase4_draft_token_decision_ledger.py <post-adjudication-hover-decision-plan.jsonl>` -> `PASS`
+- `python tools/validate_phase4_draft_token_decision_ledger.py <post-adjudication-draft-token-decision-ledger.jsonl> --plan-jsonl <post-adjudication-hover-decision-plan.jsonl>` -> `PASS`
 
 Residual blocker precision was hardened in the reconciler. When both sarf and
 nahw approve the same token with the same reason key and same scope, but differ
@@ -502,6 +512,27 @@ into an owner/scholar wording request without weakening any gate:
 The adjudication packet is still not an apply artifact. It is the next
 source-addressed review object needed to choose or author one public Qamus
 wording while preserving the sarf/nahw evidence boundary.
+
+The latest review-only adjudication replay selected the conservative candidate
+`in a recognized manner` for `بِٱلْمَعْرُوفِ`, preserving the visible bāʾ
+relation and the governed nominal without over-specifying context. Internal
+iʿrāb evidence confirmed the preposition plus genitive-host structure; no
+external evidence label or source text is present in the public-hover-shaped
+rows.
+
+Generated ignored adjudication replay packet:
+
+- output:
+  `out/phase4-dryrun-20260626-181705-0c2a4ba22e94-adjudicated`
+- response rows: `1`
+- gloss-adjudication certified rows: `1`
+- gloss-adjudication unresolved rows: `0`
+- combined certified rows: `11`
+- hover decision plan rows: `11`
+- draft token-decision ledger rows: `11`
+- source-only review/apply artifact leak-pattern matches: `0`
+- `apply_allowed=false`, `live_mutation_allowed=false`,
+  `closure_claim_allowed=false`
 
 A matching review-only response/reconciliation bridge now validates an
 authorized wording selection and converts it to a `certified_not_applied`
