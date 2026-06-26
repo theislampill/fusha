@@ -51,6 +51,11 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   (`wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> entry candidates -> affected siblings`), forward traces
   (`qamus:<id> -> dependent tokens -> parse families -> decisions/hover slots`), and parse-family traces without
   re-reading live artifacts or using raw Arabic surfaces as identity.
+- `tools/plan_shadow_hover_edit_intent.py`: read-only CLI for planning future hover-edit intents from a validated
+  Phase 3 admin/debug pack. It emits validator-clean JSONL rows for token-only, parse-family, or entry/sense edit
+  intent review, preserves exact `wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> qamus:<id>#sense=<n>` identity, and
+  refuses parse-family intents when the pack marks that family non-propagation-safe. It does not write live Qamus
+  data, rebuild WBW, mutate entries, or create repair ledgers.
 - `tools/validate_detector_maturity.py`: validates standalone or embedded detector-maturity records so Phase 2
   reports cannot treat `two_vote_required=0` or `source_disagreement=0` as proof that no such cases exist.
 - `tools/validate_live_shadow_run_manifest.py`: validates `phase2-run-manifest.json` so future live-readonly graph
@@ -136,6 +141,12 @@ python tools/query_shadow_admin_debug_pack.py --pack <isolated static admin-debu
   --token quran:33:63:1
 python tools/query_shadow_admin_debug_pack.py --pack <isolated static admin-debug output>/admin-debug-pack.json \
   --entry qamus:<id>
+python tools/plan_shadow_hover_edit_intent.py --pack <isolated static admin-debug output>/admin-debug-pack.json \
+  --scope token_only \
+  --token quran:33:63:1 \
+  --proposed-hover "ask you" \
+  --out-jsonl <isolated static admin-debug output>/token-edit-intent.jsonl
+python tools/validate_hover_edit_intent.py <isolated static admin-debug output>/token-edit-intent.jsonl
 ```
 
 CI should use fixture/self-test mode only:
@@ -155,6 +166,7 @@ python tools/build_shadow_admin_debug_pack.py --self-test
 python tools/validate_shadow_admin_debug_pack.py --self-test
 python tools/validate_shadow_admin_debug_pack.py qamus/examples/shadow_admin_debug_pack.sample.json
 python tools/query_shadow_admin_debug_pack.py --self-test
+python tools/plan_shadow_hover_edit_intent.py --self-test
 python tools/validate_shadow_review_pack.py --self-test
 python tools/validate_shadow_review_pack.py qamus/examples/shadow_review_pack.sample.jsonl
 python tools/validate_decision_linkage.py --self-test
