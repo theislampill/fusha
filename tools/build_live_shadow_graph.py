@@ -50,6 +50,11 @@ PHASE_FILES = [
 GATES_UNSAFE_FOR_PROPAGATION = {"human_review_required", "never_auto", "unknown"}
 
 
+def quran_address(loc):
+    loc = str(loc or "")
+    return loc if loc.startswith("quran:") else "quran:%s" % loc
+
+
 def norm_strict(text):
     if not text:
         return ""
@@ -332,7 +337,7 @@ def write_sample_traces(out_dir, entry_index, token_index, decision_index, parse
         token_by_id[token["id"]] = token
     decision_by_quran = {}
     for decision in decision_index:
-        decision_by_quran["quran:%s" % decision["quran_loc"]] = decision
+        decision_by_quran[quran_address(decision["quran_loc"])] = decision
 
     def loc_from_quran(quran_id):
         return quran_id.split(":", 1)[1] if quran_id.startswith("quran:") else quran_id
@@ -375,13 +380,13 @@ def write_sample_traces(out_dir, entry_index, token_index, decision_index, parse
     if safe_parse:
         chosen.append(("safe parse-family siblings", safe_parse, parse_to_tokens[safe_parse][0]))
     for decision in decision_index:
-        quran_id = "quran:%s" % decision["quran_loc"]
+        quran_id = quran_address(decision["quran_loc"])
         if token_by_id.get(quran_id, {}).get("surface"):
             chosen.append(("token-addressed decision", decision["parse_id"], quran_id))
             break
     else:
         for decision in decision_index[:1]:
-            chosen.append(("token-addressed decision", decision["parse_id"], "quran:%s" % decision["quran_loc"]))
+            chosen.append(("token-addressed decision", decision["parse_id"], quran_address(decision["quran_loc"])))
     for token in token_index:
         if token.get("status") == "pending" and token.get("surface"):
             chosen.append(("pending blocker", token["parse_id"], token["id"]))
@@ -525,7 +530,7 @@ def build(entries_dir, wbw_json, decision_ledger, out_dir, fixture_mode=False, f
         if decision:
             did = "decision:%s" % (decision.get("id") or decision.get("state_id") or loc.replace(":", "_"))
             nodes.append({"id": did, "type": "decision", "source": "decision-ledger", "status": "resolved", "public_exposable": False, "locator": loc, "used_by_count": 0})
-            decision_index.append({"id": did, "quran_loc": loc, "wbw_loc": wbw_id, "parse_id": parse_id, "gloss": decision.get("gloss")})
+            decision_index.append({"id": did, "quran_loc": quran, "wbw_loc": wbw_id, "parse_id": parse_id, "gloss": decision.get("gloss")})
             for edge in (
                 {"from": did, "type": "resolves_token", "to": quran, "source": "builder", "status": "exact", "public_exposable": False},
                 {"from": did, "type": "renders_hover", "to": wbw_id, "source": "builder", "status": "exact", "public_exposable": False},

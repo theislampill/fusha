@@ -42,6 +42,8 @@ EXPECTED_SECTIONS = {"noun": 1045, "verb": 947, "particle": 100}
 EXPECTED_ENTRIES = 2092
 EXPECTED_TOKEN_UNIVERSE = 49900
 LOC_RE = re.compile(r"^\d{1,3}:\d{1,3}:\d{1,3}$")
+QURAN_ID_RE = re.compile(r"^quran:\d{1,3}:\d{1,3}:\d{1,3}$")
+WBW_ID_RE = re.compile(r"^wbw:\d{1,3}:\d{1,3}:\d{1,3}$")
 NODE_ID_PREFIXES = ("qamus:", "quran:", "wbw:", "parse:", "decision:", "blocker:", "external:", "repair:")
 EDGE_TYPES = {
     "has_hover_slot",
@@ -211,6 +213,23 @@ def validate_shadow_dir(shadow_dir, sample_limit=2000, allow_legacy_missing_pars
         if not str(dst).startswith(NODE_ID_PREFIXES):
             errors.append("bad edge target prefix: %s" % dst)
 
+    _decision_count, decision_errors, decision_samples = count_jsonl(
+        os.path.join(shadow_dir, "decision-index.jsonl"),
+        sample_limit=100000,
+    )
+    if decision_errors:
+        errors.extend("decision-index.jsonl: %s" % e for e in decision_errors[:20])
+    for line_no, row in decision_samples:
+        did = row.get("id") or row.get("decision_id")
+        if not did or not str(did).startswith("decision:"):
+            errors.append("decision-index.jsonl line %d: missing decision id" % line_no)
+        if not QURAN_ID_RE.match(str(row.get("quran_loc") or "")):
+            errors.append("decision-index.jsonl line %d: quran_loc must be quran:S:A:W" % line_no)
+        if not WBW_ID_RE.match(str(row.get("wbw_loc") or "")):
+            errors.append("decision-index.jsonl line %d: wbw_loc must be wbw:S:A:W" % line_no)
+        if not str(row.get("parse_id") or "").startswith("parse:"):
+            errors.append("decision-index.jsonl line %d: parse_id must be parse:<hash>" % line_no)
+
     backlinks = read_json(os.path.join(shadow_dir, "backlinks.json"))
     if not backlinks:
         errors.append("backlinks.json is empty")
@@ -300,8 +319,17 @@ def run_self_test():
                 },
             }
         ])
-        for rel in ("entry-index.jsonl", "token-index.jsonl", "hover-index.jsonl", "decision-index.jsonl", "blocker-index.jsonl"):
+        for rel in ("entry-index.jsonl", "token-index.jsonl", "hover-index.jsonl", "blocker-index.jsonl"):
             write_jsonl(os.path.join(td, rel), [{"id": rel, "type": "self_test"}])
+        write_jsonl(os.path.join(td, "decision-index.jsonl"), [
+            {
+                "id": "decision:one",
+                "quran_loc": "quran:1:1:1",
+                "wbw_loc": "wbw:1:1:1",
+                "parse_id": "parse:abc",
+                "gloss": "self-test",
+            }
+        ])
         result = validate_shadow_dir(td)
         if not result["ok"]:
             print("SELF-TEST FAIL")
