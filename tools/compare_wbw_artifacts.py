@@ -49,6 +49,19 @@ def rich_count(records):
     return sum(1 for _loc, row in records.items() if isinstance(row, dict) and (row.get("parse_key") or row.get("display") or row.get("segments")))
 
 
+def metadata(obj):
+    if isinstance(obj, dict):
+        for key in ("_meta", "meta"):
+            if isinstance(obj.get(key), dict):
+                return obj[key]
+    return {}
+
+
+def meta_value(obj, key):
+    meta = metadata(obj)
+    return meta.get(key) if isinstance(meta, dict) else None
+
+
 def compare(live_path, mirror_path):
     live = load(live_path)
     mirror = load(mirror_path)
@@ -63,8 +76,9 @@ def compare(live_path, mirror_path):
             "path": live_path,
             "sha256": sha256(live_path),
             "size": os.path.getsize(live_path),
-            "source_sha": (live.get("meta") or {}).get("source_sha") or live.get("source_sha"),
-            "built_at": (live.get("meta") or {}).get("built_at") or live.get("built_at"),
+            "source_sha": meta_value(live, "source_sha") or live.get("source_sha"),
+            "built_at": meta_value(live, "built_at") or live.get("built_at"),
+            "coverage": meta_value(live, "coverage") or meta_value(live, "coverage_counts"),
             "records": len(live_records),
             "rich_records": rich_count(live_records),
         },
@@ -72,8 +86,9 @@ def compare(live_path, mirror_path):
             "path": mirror_path,
             "sha256": sha256(mirror_path),
             "size": os.path.getsize(mirror_path),
-            "source_sha": (mirror.get("meta") or {}).get("source_sha") or mirror.get("source_sha"),
-            "built_at": (mirror.get("meta") or {}).get("built_at") or mirror.get("built_at"),
+            "source_sha": meta_value(mirror, "source_sha") or mirror.get("source_sha"),
+            "built_at": meta_value(mirror, "built_at") or mirror.get("built_at"),
+            "coverage": meta_value(mirror, "coverage") or meta_value(mirror, "coverage_counts"),
             "records": len(mirror_records),
             "rich_records": rich_count(mirror_records),
         },
@@ -97,15 +112,18 @@ def self_test():
         a = os.path.join(td, "a.json")
         b = os.path.join(td, "b.json")
         with io.open(a, "w", encoding="utf-8") as handle:
-            json.dump({"meta": {"source_sha": "a"}, "words": {"1:1:1": {"gloss": "one"}}}, handle)
+            json.dump({"_meta": {"source_sha": "a", "coverage": {"resolved": 1}}, "words": {"1:1:1": {"gloss": "one"}}}, handle)
         with io.open(b, "w", encoding="utf-8") as handle:
-            json.dump({"meta": {"source_sha": "b"}, "words": {"1:1:1": {"gloss": "one"}}}, handle)
+            json.dump({"_meta": {"source_sha": "b", "coverage": {"resolved": 1}}, "words": {"1:1:1": {"gloss": "one"}}}, handle)
         same_rows = compare(a, b)
         if same_rows["changed_common_token_locs"] != 0 or "metadata/source-hash divergent" not in same_rows["classification"]:
             print("SELF-TEST FAIL: metadata-only divergence not classified")
             return 1
+        if same_rows["live"]["source_sha"] != "a" or same_rows["live"]["coverage"] != {"resolved": 1}:
+            print("SELF-TEST FAIL: _meta source/coverage not read")
+            return 1
         with io.open(b, "w", encoding="utf-8") as handle:
-            json.dump({"meta": {"source_sha": "b"}, "words": {"1:1:1": {"gloss": "two"}}}, handle)
+            json.dump({"_meta": {"source_sha": "b"}, "words": {"1:1:1": {"gloss": "two"}}}, handle)
         changed = compare(a, b)
         if changed["changed_common_token_locs"] != 1:
             print("SELF-TEST FAIL: changed token row not detected")
