@@ -101,6 +101,10 @@ def parse_object_from_row(row):
     if obj is not row and row.get("family_class"):
         obj = dict(obj)
         obj["_family_class"] = row.get("family_class")
+    if obj is not row:
+        for field in ("component_candidate_entries", "component_candidate_join_statuses"):
+            if field in row:
+                obj["_%s" % field] = row.get(field)
     return obj
 
 
@@ -267,6 +271,8 @@ def review_pack_row(parse_id, lane, parse_obj, tokens):
     unresolved = [t for t in tokens if t.get("status") != "resolved"]
     action = lane_action(lane)
     candidate_joins = parse_obj.get("qamus_entry_candidate_joins") or []
+    component_candidate_entries = parse_obj.get("_component_candidate_entries") or []
+    component_candidate_joins = parse_obj.get("_component_candidate_join_statuses") or []
     token_locs = [t.get("loc") for t in tokens if t.get("loc")]
     quran_locs = ["quran:%s" % loc for loc in token_locs]
     wbw_locs = ["wbw:%s" % loc for loc in token_locs]
@@ -292,6 +298,14 @@ def review_pack_row(parse_id, lane, parse_obj, tokens):
                 "join_status": join.get("join_status") or [],
             }
             for join in candidate_joins
+        ],
+        "component_candidate_entries": component_candidate_entries,
+        "component_candidate_join_statuses": [
+            {
+                "entry": join.get("entry"),
+                "join_status": join.get("join_status") or [],
+            }
+            for join in component_candidate_joins
         ],
         "parse": {
             "gate": parse_obj.get("gate"),
@@ -368,6 +382,7 @@ def summarize(shadow_dir, sample_limit=8):
                 "surface_sample": next((t.get("surface") for t in tokens if t.get("surface")), ""),
                 "token_sample": [t.get("id") for t in tokens[:5]],
                 "candidate_entries": parse_obj.get("qamus_entry_candidates") or [],
+                "component_candidate_entries": parse_obj.get("_component_candidate_entries") or [],
                 "gate": parse_obj.get("gate"),
                 "blocker": parse_obj.get("blocker"),
                 "parse_confidence": parse_obj.get("parse_confidence"),
@@ -380,6 +395,7 @@ def summarize(shadow_dir, sample_limit=8):
             "surface_sample": next((t.get("surface") for t in tokens if t.get("surface")), ""),
             "token_sample": [t.get("id") for t in tokens[:5]],
             "candidate_entries": parse_obj.get("qamus_entry_candidates") or [],
+            "component_candidate_entries": parse_obj.get("_component_candidate_entries") or [],
             "gate": parse_obj.get("gate"),
             "blocker": parse_obj.get("blocker"),
             "parse_confidence": parse_obj.get("parse_confidence"),

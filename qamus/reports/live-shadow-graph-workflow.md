@@ -50,6 +50,12 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   `addressee_bridge` are grammar-sensitive for propagation. Even when a visible token is resolved, these rows must not
   become `auto_safe` merely because the family has one token; they require the same gate discipline as the corresponding
   `function_particle` / `preposition` / `vocative` parse triggers.
+- Rich WBW component evidence is deliberately separate from whole-token Qamus candidates. The builder may emit
+  `qamus_component_candidates`, `component_candidate_entries`, and `component_candidate_join_statuses` with
+  `source=rich_wbw_segment`, role, segment text, and token loc provenance. These fields are review/impact-preview
+  evidence only: they must not contribute to `auto_safe`, source agreement, propagation safety, closure coverage, or
+  hover coverage, and they must not infer a missing host entry merely from an article, preposition, conjunction, or
+  vocative component.
 - `tools/validate_shadow_review_pack.py`: validates that review-pack rows are non-vacuous, exact-addressed with
   `quran:S:A:W` and `wbw:S:A:W`, source-clean at the public boundary, and explicitly non-mutating.
 - `tools/validate_decision_linkage.py`: validates that authored decision rows link exact `quran:S:A:W` tokens,
@@ -137,6 +143,8 @@ python tools/validate_production_bug_lessons.py qamus/examples/production_bug_le
 - `parse-keys.jsonl` is a family index, not a per-token ledger. Use `seen_locs`/`token-index.jsonl` for exact
   locations and never edit or propagate from a parse key without the preview/gate lane.
 - Surface-only and norm-only rows must never certify or propagate.
+- Component candidates from rich WBW segments are not whole-token candidates. They may help a reviewer understand
+  which pieces are visible in a composite token, but they cannot make a family propagation-safe or count as closure.
 - Two-vote and source-disagreement counts are detector maturity signals; zero does not prove absence. Review-pack
   rows carry this as required `apply_policy.detector_maturity`, and the validator rejects overconfident claims.
 - `propagation_safe_candidate` means "read-only impact preview is allowed next", not "auto-apply"; review-pack rows

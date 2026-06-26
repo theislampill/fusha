@@ -21,6 +21,8 @@ QURAN = re.compile(r"^quran:\d{1,3}:\d{1,3}:\d{1,3}$")
 WBW = re.compile(r"^wbw:\d{1,3}:\d{1,3}:\d{1,3}$")
 PARSE = re.compile(r"^parse:[0-9a-f]+$")
 QUEUE = re.compile(r"^queue:parse_[0-9a-f]+$")
+QAMUS = re.compile(r"^qamus:")
+QURAN_LOC_STATUS = re.compile(r"^token_loc:quran:\d{1,3}:\d{1,3}:\d{1,3}$")
 LANES = {
     "human_review_required",
     "never_auto",
@@ -195,6 +197,8 @@ def validate_row(row, line_no, errors):
     if lane == "missing_entry" and row.get("candidate_entries"):
         _err(errors, line_no, "missing_entry lane must not carry candidate_entries")
     if lane == "propagation_safe_candidate":
+        if row.get("component_candidate_entries"):
+            _err(errors, line_no, "component candidates cannot support propagation_safe_candidate")
         statuses = [
             status
             for join in row.get("candidate_join_statuses") or []
@@ -208,6 +212,36 @@ def validate_row(row, line_no, errors):
             _err(errors, line_no, "propagation_safe_candidate must use parse_key_family_readonly_preview scope")
     if lane == "never_auto" and row.get("required_gate") != "never_auto":
         _err(errors, line_no, "never_auto lane must preserve required_gate=never_auto")
+
+    component_entries = set(row.get("component_candidate_entries") or [])
+    for entry in component_entries:
+        if not isinstance(entry, str) or not QAMUS.match(entry):
+            _err(errors, line_no, "component_candidate_entries values must be qamus:*")
+    component_joins = row.get("component_candidate_join_statuses") or []
+    joined_entries = set()
+    if component_entries and not isinstance(component_joins, list):
+        _err(errors, line_no, "component_candidate_join_statuses must be an array")
+        component_joins = []
+    for join in component_joins:
+        if not isinstance(join, dict):
+            _err(errors, line_no, "component_candidate_join_statuses rows must be objects")
+            continue
+        entry = join.get("entry")
+        if isinstance(entry, str) and QAMUS.match(entry):
+            joined_entries.add(entry)
+        else:
+            _err(errors, line_no, "component candidate join entry must be qamus:*")
+        statuses = set(join.get("join_status") or [])
+        if not any(str(status).startswith("source:") for status in statuses):
+            _err(errors, line_no, "component candidate join must preserve source:* provenance")
+        if not any(str(status).startswith("role:") for status in statuses):
+            _err(errors, line_no, "component candidate join must preserve role:* provenance")
+        if not any(str(status).startswith("segment_text:") for status in statuses):
+            _err(errors, line_no, "component candidate join must preserve segment_text:* provenance")
+        if not any(QURAN_LOC_STATUS.match(str(status)) for status in statuses):
+            _err(errors, line_no, "component candidate join must preserve token_loc:quran:S:A:W provenance")
+    if component_entries and not component_entries.issubset(joined_entries):
+        _err(errors, line_no, "component_candidate_entries must have matching join rows")
 
 
 def validate(path):

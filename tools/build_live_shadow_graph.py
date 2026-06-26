@@ -306,6 +306,26 @@ def build_entry_surface_index(entries):
     return index
 
 
+def root_key(text):
+    return norm_strict(str(text or "").replace(" ", ""))
+
+
+def build_entry_root_index(entries):
+    index = defaultdict(list)
+    for entry in entries:
+        root = root_key(entry.get("root"))
+        if not root:
+            continue
+        index[root].append({
+            "entry_id": entry.get("id"),
+            "entry_address": entry_address(entry),
+            "sense_id": None,
+            "source": "entry_root",
+            "root": entry.get("root"),
+        })
+    return index
+
+
 def address_for_entry_id(entry_id, entry_addresses):
     if not entry_id:
         return None
@@ -468,6 +488,8 @@ def classify_family(record):
     if "surface_only" in record["confidences"]:
         return "unknown_parse"
     if not record["candidate_entries"]:
+        if "two_vote_required" in record["gates"] and record.get("component_candidate_entries"):
+            return "two_vote_required"
         return "missing_entry"
     if len(record["candidate_entries"]) > 1:
         return "quarantine_collision"
@@ -478,7 +500,101 @@ def classify_family(record):
     return "propagation_safe" if record["family_size"] > 1 else "token_only_required"
 
 
-def parse_obj_for_token(loc, surface, row, candidates, status, blocker, live_source_sha, decision_ledger_sha, entries_by_id):
+def family_component_candidate(candidate):
+    return {
+        key: candidate.get(key)
+        for key in (
+            "entry_id",
+            "entry_address",
+            "sense_id",
+            "source",
+            "role",
+            "segment_text",
+            "root",
+        )
+        if candidate.get(key) is not None
+    }
+
+
+def component_candidate_join(candidate, include_token_loc=True):
+    join = {
+        "entry": candidate.get("entry_address"),
+        "source": candidate.get("source"),
+        "role": candidate.get("role"),
+        "segment_text": candidate.get("segment_text"),
+        "root": candidate.get("root"),
+    }
+    if include_token_loc:
+        join["token_loc"] = candidate.get("token_loc")
+    return {k: v for k, v in join.items() if v is not None}
+
+
+def build_component_candidates(loc, row, surface_index, root_index):
+    """Return component-level entry evidence that cannot certify propagation.
+
+    Whole-token candidates represent possible Qamus entries for the rendered
+    token. Component candidates only explain the parts inside rich WBW tokens
+    (for example conjunction/article/host pieces, or a root-backed verb
+    candidate). They are intentionally kept out of qamus_entry_candidates.
+    """
+    out = []
+    seen = set()
+    segments = (row.get("segments") if isinstance(row, dict) else None) or []
+    qloc = quran_address(loc)
+    for segment in segments:
+        if not isinstance(segment, dict):
+            continue
+        text = segment.get("surface") or segment.get("text") or segment.get("segment") or ""
+        key = norm_strict(text)
+        if not key:
+            continue
+        role = str(segment.get("role") or "unknown")
+        for candidate in surface_index.get(key, []):
+            item = dict(candidate)
+            item.update({
+                "source": "rich_wbw_segment",
+                "role": role,
+                "segment_text": text,
+                "token_loc": qloc,
+            })
+            dedupe = (
+                item.get("entry_address"),
+                item.get("sense_id"),
+                item.get("source"),
+                item.get("role"),
+                item.get("segment_text"),
+                item.get("token_loc"),
+            )
+            if dedupe in seen:
+                continue
+            seen.add(dedupe)
+            out.append(item)
+    root = root_key(row.get("root") if isinstance(row, dict) else None)
+    if root:
+        for candidate in root_index.get(root, []):
+            item = dict(candidate)
+            item.update({
+                "source": "decision_root",
+                "role": "root",
+                "segment_text": candidate.get("root") or row.get("root"),
+                "token_loc": qloc,
+            })
+            dedupe = (
+                item.get("entry_address"),
+                item.get("sense_id"),
+                item.get("source"),
+                item.get("role"),
+                item.get("segment_text"),
+                item.get("token_loc"),
+            )
+            if dedupe in seen:
+                continue
+            seen.add(dedupe)
+            out.append(item)
+    return out
+
+
+def parse_obj_for_token(loc, surface, row, candidates, component_candidates, status, blocker, live_source_sha, decision_ledger_sha, entries_by_id):
     segments = (row.get("segments") if isinstance(row, dict) else None) or []
     runtime_parse_key = (row.get("parse_key") if isinstance(row, dict) else None) or {}
     runtime_key = runtime_parse_key.get("key") if isinstance(runtime_parse_key, dict) else ""
@@ -519,6 +635,8 @@ def parse_obj_for_token(loc, surface, row, candidates, status, blocker, live_sou
         "lemma": lemma,
         "pos": infer_pos(row, segments),
         "qamus_entry_candidates": candidates,
+        "qamus_component_candidates": component_candidates,
+        "component_candidate_joins": [component_candidate_join(candidate) for candidate in component_candidates],
         "resolved_qamus_entry_id": None,
         "resolved_sense_id": None,
         "proclitics": proclitics,
@@ -554,6 +672,14 @@ def parse_obj_for_token(loc, surface, row, candidates, status, blocker, live_sou
     # grammar-family key, so the loc is retained in token rows but excluded
     # from the hash.
     family["quran_loc"] = None
+    family["qamus_component_candidates"] = [
+        family_component_candidate(candidate)
+        for candidate in component_candidates
+    ]
+    family["component_candidate_joins"] = [
+        component_candidate_join(candidate, include_token_loc=False)
+        for candidate in component_candidates
+    ]
     return "parse:%s" % sha_obj(family), parse, family, runtime_parse_key
 
 
@@ -765,6 +891,7 @@ def build(entries_dir, wbw_json, decision_ledger, out_dir, fixture_mode=False, f
     wbw = load_json(wbw_json)
     decisions, decision_row_count = load_decisions(decision_ledger)
     surface_index = build_entry_surface_index(entries)
+    root_index = build_entry_root_index(entries)
     entry_addresses = {str(entry.get("id")): entry_address(entry) for entry in entries}
     entries_by_id = {str(entry.get("id")): entry for entry in entries}
     fusha_ref = load_fusha_reference(fusha_index_dir, entry_addresses)
@@ -788,8 +915,10 @@ def build(entries_dir, wbw_json, decision_ledger, out_dir, fixture_mode=False, f
     blocker_index = defaultdict(list)
     parse_to_tokens = defaultdict(list)
     parse_candidates = defaultdict(set)
+    parse_component_candidates = defaultdict(set)
     parse_exact_candidates = defaultdict(set)
     parse_candidate_statuses = defaultdict(lambda: defaultdict(set))
+    parse_component_candidate_statuses = defaultdict(lambda: defaultdict(set))
     parse_canonical = {}
     parse_runtime = {}
     parse_blockers = defaultdict(set)
@@ -869,11 +998,27 @@ def build(entries_dir, wbw_json, decision_ledger, out_dir, fixture_mode=False, f
                 continue
             seen_candidates.add(key)
             candidates.append(candidate)
+        _pre_parse_id, pre_parse, _pre_family, _pre_runtime = parse_obj_for_token(
+            loc,
+            surface,
+            row if isinstance(row, dict) else {},
+            candidates,
+            [],
+            status,
+            blocker,
+            live_source_sha,
+            decision_ledger_sha,
+            entries_by_id,
+        )
+        component_candidates = []
+        if pre_parse.get("gate") != "auto_safe":
+            component_candidates = build_component_candidates(loc, row if isinstance(row, dict) else {}, surface_index, root_index)
         parse_id, parse, family, runtime_parse_key = parse_obj_for_token(
             loc,
             surface,
             row if isinstance(row, dict) else {},
             candidates,
+            component_candidates,
             status,
             blocker,
             live_source_sha,
@@ -895,6 +1040,18 @@ def build(entries_dir, wbw_json, decision_ledger, out_dir, fixture_mode=False, f
                 continue
             parse_candidates[parse_id].add(entry_addr)
             parse_candidate_statuses[parse_id][entry_addr].add("candidate:%s" % (candidate.get("source") or "live_surface"))
+        for candidate in component_candidates:
+            entry_addr = candidate.get("entry_address")
+            if not entry_addr:
+                continue
+            parse_component_candidates[parse_id].add(entry_addr)
+            parse_component_candidate_statuses[parse_id][entry_addr].add("source:%s" % (candidate.get("source") or "unknown"))
+            if candidate.get("role"):
+                parse_component_candidate_statuses[parse_id][entry_addr].add("role:%s" % candidate.get("role"))
+            if candidate.get("segment_text"):
+                parse_component_candidate_statuses[parse_id][entry_addr].add("segment_text:%s" % candidate.get("segment_text"))
+            if candidate.get("token_loc"):
+                parse_component_candidate_statuses[parse_id][entry_addr].add("token_loc:%s" % candidate.get("token_loc"))
         nodes.append({"id": quran, "type": "quran_token", "source": "live-input", "status": status, "public_exposable": True, "locator": loc, "used_by_count": 0})
         nodes.append({"id": wbw_id, "type": "wbw_hover_slot", "source": "live-input", "status": status, "public_exposable": True, "locator": loc, "used_by_count": 0})
         nodes.append({"id": parse_id, "type": "parse_key", "source": "derived", "status": parse["gate"], "public_exposable": False, "locator": parse_id, "derived_from": quran, "used_by_count": 0})
@@ -925,6 +1082,30 @@ def build(entries_dir, wbw_json, decision_ledger, out_dir, fixture_mode=False, f
                 "to": quran,
                 "source": "builder",
                 "status": edge_status,
+                "join_status": sorted(statuses),
+                "public_exposable": False,
+            }
+            edges.append(reverse_edge)
+            backlinks[reverse_edge["to"]][reverse_edge["type"]].append(reverse_edge["from"])
+        for cand in sorted(parse_component_candidate_statuses.get(parse_id, {})):
+            statuses = parse_component_candidate_statuses[parse_id].get(cand, set())
+            edge = {
+                "from": parse_id,
+                "type": "component_candidate_entry",
+                "to": cand,
+                "source": "builder",
+                "status": "component_only",
+                "join_status": sorted(statuses),
+                "public_exposable": False,
+            }
+            edges.append(edge)
+            backlinks[cand]["component_candidate_entry"].append(parse_id)
+            reverse_edge = {
+                "from": cand,
+                "type": "component_candidate_for_token",
+                "to": quran,
+                "source": "builder",
+                "status": "component_only",
                 "join_status": sorted(statuses),
                 "public_exposable": False,
             }
@@ -1018,6 +1199,11 @@ def build(entries_dir, wbw_json, decision_ledger, out_dir, fixture_mode=False, f
             "seen_locs": sorted(tokens, key=lambda q: tuple(int(part) for part in str(q).split(":", 1)[1].split(":"))),
             "family_size": len(tokens),
             "candidate_entries": sorted(parse_candidates.get(parse_id, [])),
+            "component_candidate_entries": sorted(parse_component_candidates.get(parse_id, [])),
+            "component_candidate_join_statuses": [
+                {"entry": entry, "join_status": sorted(statuses)}
+                for entry, statuses in sorted(parse_component_candidate_statuses.get(parse_id, {}).items())
+            ],
             "blockers": sorted(parse_blockers.get(parse_id, [])),
             "gates": sorted(parse_gates.get(parse_id, [])),
             "confidences": sorted(parse_confidences.get(parse_id, [])),
@@ -1103,8 +1289,14 @@ def make_fixture_inputs(base):
     os.makedirs(input_root)
     entries = os.path.join(input_root, "entries")
     os.makedirs(entries)
-    for i, section in enumerate(["noun", "verb", "particle"], 1):
-        entry = {"id": "fixture%d" % i, "section": section, "headword": ["الناس", "يسأل", "يا"][i - 1], "usage": []}
+    fixture_entries = [
+        {"id": "fixture1", "section": "noun", "headword": "النَّاسُ", "usage": []},
+        {"id": "fixture2", "section": "verb", "headword": "سَأَلَ", "root": "س أ ل", "usage": []},
+        {"id": "fixture3", "section": "particle", "headword": "يَا", "usage": [{"sense": 1, "forms": ["يَا"]}]},
+        {"id": "fixture4", "section": "particle", "headword": "وَ", "usage": [{"sense": 1, "forms": ["وَ"]}]},
+        {"id": "fixture5", "section": "particle", "headword": "الْ", "usage": [{"sense": 1, "forms": ["الْ", "ٱل"]}]},
+    ]
+    for entry in fixture_entries:
         write_json(os.path.join(entries, "%s.json" % entry["id"]), entry)
     wbw = {
         "words": {
@@ -1129,8 +1321,28 @@ def make_fixture_inputs(base):
                     {"role": "noun", "text": "شَّجَرُ"}
                 ],
             },
-            "33:63:1": {"surface": "يَسْأَلُكَ", "pos": "verb", "suffix_pronouns": ["كَ"], "grammar_triggers": ["object_pronoun"]},
-            "33:63:2": {"surface": "يَسْأَلُكَ", "pos": "verb", "suffix_pronouns": ["كَ"], "grammar_triggers": ["object_pronoun"]},
+            "33:63:1": {
+                "surface": "يَسْأَلُكَ",
+                "pos": "verb",
+                "root": "س أ ل",
+                "parse_key": {"key": "V:I:IMPF:ACT:3MS+OBJ.2MS"},
+                "segments": [
+                    {"role": "imperfect_prefix", "surface": "يَ"},
+                    {"role": "verb_stem", "surface": "سْأَلُ"},
+                    {"role": "object_pronoun", "surface": "كَ"},
+                ],
+            },
+            "33:63:2": {
+                "surface": "يَسْأَلُكَ",
+                "pos": "verb",
+                "root": "س أ ل",
+                "parse_key": {"key": "V:I:IMPF:ACT:3MS+OBJ.2MS"},
+                "segments": [
+                    {"role": "imperfect_prefix", "surface": "يَ"},
+                    {"role": "verb_stem", "surface": "سْأَلُ"},
+                    {"role": "object_pronoun", "surface": "كَ"},
+                ],
+            },
         }
     }
     wbw_path = os.path.join(input_root, "wbw.json")
@@ -1202,6 +1414,23 @@ def self_test():
         if not rich_conj or rich_conj.get("gate") != "two_vote_required":
             got_gate = (rich_conj or {}).get("gate")
             print("SELF-TEST FAIL: rich conjunction token must not be auto-safe: got %r" % got_gate)
+            return 1
+        rich_conj_row = next((row for row in parse_rows if "quran:22:18:17" in row.get("seen_locs", [])), None)
+        if not rich_conj_row or rich_conj_row.get("candidate_entries"):
+            print("SELF-TEST FAIL: component candidates leaked into whole-token candidates: %r" % (rich_conj_row or {}))
+            return 1
+        if rich_conj_row.get("family_class") != "two_vote_required" or rich_conj_row.get("propagation_allowed"):
+            print("SELF-TEST FAIL: component-enriched rich row weakened its gate: %r" % rich_conj_row)
+            return 1
+        expected_components = {"qamus:p:fixture4", "qamus:p:fixture5"}
+        if not expected_components.issubset(set(rich_conj_row.get("component_candidate_entries") or [])):
+            print("SELF-TEST FAIL: rich row missing component candidates: %r" % rich_conj_row.get("component_candidate_entries"))
+            return 1
+        if not any("source:rich_wbw_segment" in set(join.get("join_status") or []) for join in rich_conj_row.get("component_candidate_join_statuses") or []):
+            print("SELF-TEST FAIL: rich component provenance missing: %r" % rich_conj_row.get("component_candidate_join_statuses"))
+            return 1
+        if not yasaluka_families[0].get("component_candidate_entries") or yasaluka_families[0].get("family_class") != "two_vote_required":
+            print("SELF-TEST FAIL: root-backed verb component candidate must remain two-vote: %r" % yasaluka_families[0])
             return 1
         try:
             build(entries, wbw, decisions, os.path.join(entries, "bad"), fixture_mode=False)

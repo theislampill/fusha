@@ -24,6 +24,7 @@ PARSE = re.compile(r"^parse:[0-9a-f]{8,}$")
 QURAN = re.compile(r"^quran:\d{1,3}:\d{1,3}:\d{1,3}$")
 QURAN_BARE = re.compile(r"^\d{1,3}:\d{1,3}:\d{1,3}$")
 QAMUS = re.compile(r"^qamus:")
+QURAN_LOC_STATUS = re.compile(r"^token_loc:quran:\d{1,3}:\d{1,3}:\d{1,3}$")
 
 REQUIRED_ROW = (
     "id",
@@ -191,6 +192,42 @@ def validate_row(row, line_no, errors):
     row_candidates = set(row.get("candidate_entries") or [])
     if parse_candidates and parse_candidates != row_candidates:
         _err(errors, line_no, "candidate_entries must match canonical qamus_entry_candidates")
+    component_entries = set(row.get("component_candidate_entries") or [])
+    for value in component_entries:
+        if not isinstance(value, str) or not QAMUS.match(value):
+            _err(errors, line_no, "component_candidate_entries values must be qamus:* addresses")
+    canonical_components = {
+        candidate.get("entry_address")
+        for candidate in parse_obj.get("qamus_component_candidates") or []
+        if isinstance(candidate, dict) and candidate.get("entry_address")
+    }
+    if canonical_components and not canonical_components.issubset(component_entries):
+        _err(errors, line_no, "component_candidate_entries must include canonical qamus_component_candidates")
+    joins = row.get("component_candidate_join_statuses") or []
+    if component_entries and not isinstance(joins, list):
+        _err(errors, line_no, "component_candidate_join_statuses must be an array when component candidates exist")
+        joins = []
+    joined_entries = set()
+    for join in joins:
+        if not isinstance(join, dict):
+            _err(errors, line_no, "component_candidate_join_statuses rows must be objects")
+            continue
+        entry = join.get("entry")
+        if not isinstance(entry, str) or not QAMUS.match(entry):
+            _err(errors, line_no, "component candidate join entry must be qamus:*")
+        else:
+            joined_entries.add(entry)
+        statuses = set(join.get("join_status") or [])
+        if not any(str(status).startswith("source:") for status in statuses):
+            _err(errors, line_no, "component candidate join must preserve source:* provenance")
+        if not any(str(status).startswith("role:") for status in statuses):
+            _err(errors, line_no, "component candidate join must preserve role:* provenance")
+        if not any(str(status).startswith("segment_text:") for status in statuses):
+            _err(errors, line_no, "component candidate join must preserve segment_text:* provenance")
+        if not any(QURAN_LOC_STATUS.match(str(status)) for status in statuses):
+            _err(errors, line_no, "component candidate join must preserve token_loc:quran:S:A:W provenance")
+    if component_entries and not component_entries.issubset(joined_entries):
+        _err(errors, line_no, "component_candidate_entries must have matching join rows")
 
     gate = parse_obj.get("gate")
     if gate not in GATES:
@@ -236,6 +273,8 @@ def validate_row(row, line_no, errors):
             _err(errors, line_no, "propagation_allowed rows cannot carry blockers")
         if len(row_candidates) != 1:
             _err(errors, line_no, "propagation_allowed requires exactly one candidate entry")
+        if component_entries:
+            _err(errors, line_no, "component candidates cannot contribute to propagation_allowed")
         if confidence in UNSAFE_AUTO_CONFIDENCES or set(row.get("confidences") or []) & UNSAFE_AUTO_CONFIDENCES:
             _err(errors, line_no, "surface/unknown parse confidence cannot propagate")
         if triggers & (COLLISION_TRIGGERS | GRAMMAR_SENSITIVE_TRIGGERS):
