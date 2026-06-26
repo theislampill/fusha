@@ -507,3 +507,102 @@ The scaffold intentionally does not:
 - expose internal provenance as public payload
 - perform hover authoring or closure
 - use raw Arabic surface text as identity
+
+## Phase 2.8 / 2.9 Latest Closeout Refresh
+
+Status: latest live-readonly closeout rerun completed from pushed `main` and
+`codex/phase2-shadow-graph` HEAD `fcffc792264d340d2dea56b14cf074b0855d141e`.
+This was a graph/readiness run only: no live Qamus mutation, no WBW rebuild, no
+service restart, no mirror sync, and no hover coverage claim.
+
+Server-side latest checkout and shadow paths:
+
+- tools clone: `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-tools-fcffc79-20260626-194628`
+- shadow output: `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-fcffc79-20260626-194628`
+- local repo status after commit/push: clean detached HEAD at `fcffc792264d340d2dea56b14cf074b0855d141e`
+
+Single-run counts from the latest live-readonly shadow build:
+
+- entries: `2,092` (`noun=1045`, `verb=947`, `particle=100`)
+- token universe: `49,900`
+- live word records: `49,260`
+- unresolved tokens: `640`
+- token decisions: `9,111`
+- parse keys: `17,065`
+- nodes: `153,033`
+- edges: `254,526`
+- decision index rows: `9,106`
+- backlink top-level keys: `143,734`
+- orphan edges: `0`
+- public success leak count: `0`
+
+Latest parse-family classes:
+
+- `propagation_safe`: `1,870`
+- `token_only_required`: `4,530`
+- `human_review_required`: `517`
+- `quarantine_collision`: `585`
+- `unknown_parse`: `9,552`
+- `two_vote_required`: `11`
+
+Latest lane token counts:
+
+- `propagation_safe_candidate`: `18,038`
+- `token_only_required`: `4,530`
+- `human_review_required`: `640`
+- `quarantine_collision`: `5,580`
+- `unknown_parse`: `21,101`
+- `two_vote_required`: `11`
+
+Detector maturity remains explicit:
+
+- `two_vote_required`: `partial_shadow_gate`
+- `source_disagreement`: `reserved_detector_gap`
+- `zero_count_policy`: `zero_does_not_prove_absence`
+
+Rich WBW role taxonomy from the latest run:
+
+- rich parse rows: `12`
+- observed roles: `13`
+- strict taxonomy risks: `0`
+- explicitly gated roles: `addressee_bridge=1`, `adjectival_state=1`, `conjunction=5`,
+  `object_pronoun=2`, `preposition=1`, `result_particle=1`, `resumption_particle=1`,
+  `vocative_particle=1`
+- explicitly allowlisted roles: `definite_article=7`, `imperfect_prefix=1`, `noun=7`,
+  `verb=2`, `verb_stem=1`
+- no unknown rich role was observed
+- no explicitly gated role appeared in an `auto_safe` gate or `propagation_safe` lane
+
+Required rich gate cases were re-confirmed as `two_vote_required` and non-propagating:
+
+- `quran:22:18:13` `وَٱلشَّمْسُ`
+- `quran:22:18:14` `وَٱلْقَمَرُ`
+- `quran:22:18:15` `وَٱلنُّجُومُ`
+- `quran:22:18:16` `وَٱلْجِبَالُ`
+- `quran:22:18:17` `وَٱلشَّجَرُ`
+- `quran:2:178:22` `بِٱلْمَعْرُوفِ`
+- `quran:2:21:1` `يَٰٓأَيُّهَا`
+
+Latest validator evidence:
+
+- `python3 tools/build_live_shadow_graph.py --live-readonly --no-live-write ...` -> `PASS`
+- `python3 tools/validate_phase1_shadow_graph.py <shadow-output>` -> `PASS`
+- `python3 tools/summarize_shadow_closure_queue.py <shadow-output> ...` -> `PASS`
+- `python3 tools/validate_shadow_review_pack.py <review-pack>` -> `PASS`
+- `python3 tools/summarize_rich_wbw_roles.py --shadow-dir <shadow-output> --strict` -> `PASS`
+- `python3 tools/validate_rich_wbw_gate_cases.py --shadow-dir <shadow-output> --review-pack-jsonl <review-pack>` -> `PASS`
+- `python3 tools/scan_public_boundary.py --public https://qamus.dawah.wiki/e/5935ecfb1ec5 --internal <live-wbw> --shadow-dir <shadow-output>` -> `PASS`, public leak count `0`
+- `python3 tools/compare_wbw_artifacts.py <live-wbw> <mirror-wbw>` -> report-only comparison completed
+
+Public/private boundary from the latest scan:
+
+- public sampled page: `https://qamus.dawah.wiki/e/5935ecfb1ec5`
+- HTTP status: `200`
+- public leak count: `0`
+- live WBW internal-only provenance labels remain present internally:
+  `Tanzil`, `informed_by`, `qac`, `tafsir`, `mcp`
+- shadow graph contains internal adapter labels in shadow artifacts only; no public exposure was detected
+
+Mirror mismatch classification remains unchanged and report-only:
+
+`content-equivalent-or-near-equivalent; metadata/source-hash divergent; not safe for mutation until separately reconciled`.
