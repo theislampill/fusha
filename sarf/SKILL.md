@@ -109,9 +109,11 @@ If the public tooltip renders only the best gloss text, the best gloss itself mu
 contribution; metadata like `pre: "with / by"` is evidence, not a user-visible repair. For example, `بِسَلَـٰمٍ`
 must surface as "with peace" or "in peace" where certified, not best=`peace` plus hidden preposition metadata.
 For any future rich hover, sarf must also emit the morphology side of the parse-key/display contract:
-`parse_key.key` (compact ASCII), `parse_key.summary`, and one `qamus-grammar-v1` display class per visible segment.
+`parse_key.key` (compact ASCII), `parse_key.summary`, and one `qamus-grammar-v1` display class per grammatical
+piece. These display classes may drive non-destructive color on an atomic visible Arabic word; they do not require
+splitting the word into DOM segment boxes.
 Use `qg-verb`, `qg-noun`, `qg-proper-noun`, `qg-pronoun`, `qg-preposition`, `qg-article`, or `qg-case` as
-appropriate. If sarf cannot account for a visible segment, the row is not ready for rich-hover rendering and should
+appropriate. If sarf cannot account for a grammatical piece, the row is not ready for rich-hover rendering and should
 defer to nahw or pending with an exact blocker.
 
 A broad root-family gloss is dictionary metadata, not a hover. Do not put an omnibus entry gloss such as

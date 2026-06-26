@@ -8,8 +8,9 @@ radicals and read a wazn ([`drills-beginner.md`](drills-beginner.md)).
 Each drill names the **procedure that solves it** — not as a footnote but as the method you run.
 Cover the answer; decide form / shape / root; then check the reasoning *and* the procedure.
 For any token you would expose in a rich hover, add the morphology side of the parse key:
-`parse_key.key` plus one `qamus-grammar-v1` display class per visible segment. The root/form
-answer is not enough if a suffix pronoun, article, or augment disappeared.
+`parse_key.key` plus one `qamus-grammar-v1` display class per grammatical piece. The root/form
+answer is not enough if a suffix pronoun, article, or augment disappeared, even when the visible
+Arabic word is rendered atomically for shaping safety.
 
 > The form, the voice, and the class each change the English. A root match is **necessary, not
 > sufficient** — bind to the entry/sense whose **form** fits. Carry the discipline of

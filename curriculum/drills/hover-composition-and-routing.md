@@ -79,8 +79,8 @@ minimal according to the closure lane.
 - [ ] Did preposition + host tokens avoid host-only hovers?
 - [ ] Did semantic concept metadata stay internal and non-authoritative?
 - [ ] Did the final result separate token hover, phrase explanation, and learner note?
-- [ ] Did the result include a compact ASCII `parse_key.key` and one display class per visible
-      segment?
+- [ ] Did the result include a compact ASCII `parse_key.key` and one display class per
+      grammatical piece, without requiring the visible Arabic word to be physically split?
 
 Use this drill before [`ayah-reading-drills.md`](ayah-reading-drills.md), after hard misses in
 [`quranic-function-words.md`](quranic-function-words.md), and whenever a Qamus closure row looks

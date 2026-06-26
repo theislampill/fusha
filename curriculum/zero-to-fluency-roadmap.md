@@ -216,7 +216,7 @@ classes from [`drills/parse-key-and-color-layer.md`](drills/parse-key-and-color-
 *named* PENDING for each uncovered one. A host-only hover on a token with a visible attached
 preposition, function particle, or suffix pronoun fails the checkpoint — zero confident wrong
 glosses. A rich-hover answer also fails if it cannot show a parse key and one scrubbed display
-class per visible segment.
+class per grammatical piece, while keeping the visible Arabic word readable and unbroken.
 
 ---
 

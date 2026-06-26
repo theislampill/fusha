@@ -54,7 +54,7 @@ After each segmentation, produce the rich-hover handoff:
 
 - `parse_key.key`: compact ASCII, such as `P:BI+N:GEN`, `CONJ+P:BI+ART+N:GEN:DEF`,
   or `V:IV:PERF:ACT:1P+OBJ.3MS`.
-- `display classes`: one class per visible piece, such as `qg-preposition`,
+- `display classes`: one class per grammatical piece, such as `qg-preposition`,
   `qg-article`, `qg-noun`, `qg-verb`, and `qg-pronoun`.
 
 If the class would depend on nahw (`و` as oath/comitative/conjunction, `ف` as cause/result,
@@ -79,4 +79,5 @@ attached piece disappeared from the learner-facing answer. Any host-only hover
 on a token with a visible bā', lām, kāf, oath/comitative wāw, fā', or suffix
 pronoun fails the drill.
 For rich-hover readiness, the answer must also include a parse key and exactly one
-display class for each visible segment.
+display class for each grammatical piece. The UI may keep the written Arabic word atomic;
+the classes still prove that no proclitic, article, stem, or suffix vanished.

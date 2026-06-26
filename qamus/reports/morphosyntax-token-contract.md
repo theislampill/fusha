@@ -140,6 +140,10 @@ public best gloss concise, but expose a scrubbed learner view with stable segmen
 - relative, vocative, exception, and case pieces (`qg-relative`, `qg-vocative`, `qg-exception`, `qg-case`)
 
 The color layer must be generated from scrubbed segment roles, not from external source names or copied source text.
+For Arabic shaping safety, `display.segments[]` does not require visible segment elements inside the word. A live
+renderer may keep the visible Arabic token as one text run and project the segment roles through gradient stops,
+overlays, rails, or tooltip rows. The hard invariant is that every grammatical piece has a scrubbed segment record
+and that the visible token text remains unchanged.
 
 ## Parse-Key Contract
 
@@ -174,6 +178,7 @@ Rules:
 - `parse_key.components[]` is the line the tooltip can render: label, value, optional note.
 - `display.palette` is currently `qamus-grammar-v1`.
 - `display.segments[]` aligns one-for-one with `segments[]` and supplies scrubbed classes for token coloring.
+  These are semantic/display records, not a requirement to split the visible Arabic word into DOM segment boxes.
 - These fields are grammar metadata. They are not public provenance and must not contain QAC/Tafsir/source names.
 
 The screenshot packs justify the shape: QAC uses colored segment labels under Arabic tokens plus dependency arcs and
@@ -201,4 +206,6 @@ Run `tools/validate_morphosyntax_token_metadata.py` against morphosyntax JSONL t
 - attached subject/object/possessive pronouns preserve person and number tags
 - no external source labels leak into public-facing hover-contract, parse-key, or display text
 
-Future live/staged render validation should additionally compare `hover_contract.must_surface` against the built `wbw-lookup.json` best hover.
+Future live/staged render validation should additionally compare `hover_contract.must_surface` against the built
+`wbw-lookup.json` best hover and assert that any visible Arabic token keeps the same normalized text content as
+the source token.

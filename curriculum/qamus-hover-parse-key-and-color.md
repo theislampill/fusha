@@ -36,8 +36,8 @@ The three packs show a consistent pattern:
   inna and sisters, negative la/preventive ma, fa functions, vocatives, and exception structures.
 
 The design lesson is not "copy the screenshots." The design lesson is: a learner needs
-visible Arabic pieces, compact labels, a parse key, and a note when a token is too grammar-bound
-for a one-word dictionary gloss.
+the written Arabic token to stay readable, with color cues, compact labels, a parse key,
+and a note when a token is too grammar-bound for a one-word dictionary gloss.
 
 ## Parse-Key Shape
 
@@ -99,7 +99,7 @@ color-blind learners and for screenshots/printouts.
 A future rich Qamus hover should separate four layers:
 
 1. Best gloss: one concise authored English contribution.
-2. Arabic composition: colored Arabic segments in right-to-left order.
+2. Arabic composition: a readable Arabic token plus colored breakdown rows in right-to-left order.
 3. Parse key: compact components such as `P + N:gen + PRON.3ms`.
 4. Learner note: one sentence only when needed to explain a blocker or construction.
 
@@ -109,14 +109,17 @@ layer, not in the token's best gloss.
 
 ## Renderer Advice
 
-The live renderer should eventually read scrubbed morphosyntax metadata, not infer color from
-raw text:
+The live renderer should read scrubbed morphosyntax metadata, not infer color from raw text.
+For Arabic shaping safety, the visible Qur'anic word must remain one atomic written token.
+Do not insert spaces, flex children, inline-block segment boxes, margins, or padding inside the
+visible Arabic word. Color may be applied to the word by a gradient, overlay, underline/rail, or
+other non-destructive mechanism whose stops are derived from `display.segments[]`.
+
+Preferred visible-word shape:
 
 ```html
-<span class="qg-token" dir="rtl" data-loc="97:1:2">
-  <span class="qg-seg qg-verb" data-label="V">أَنزَلْ</span>
-  <span class="qg-seg qg-pronoun" data-label="PRON">نَا</span>
-  <span class="qg-seg qg-pronoun" data-label="PRON">هُ</span>
+<span class="qword qg-colored" dir="rtl" lang="ar" data-loc="97:1:2">
+  أَنزَلْنَاهُ
 </span>
 ```
 
@@ -129,9 +132,15 @@ SUBJ: 1st person plural
 OBJ: 3rd masculine singular
 ```
 
-The HTML must not contain source names in public tooltip text or `data-tr`. Internal evidence
-may stay in server-side/provenance records, but the public DOM should expose only scrubbed
-role classes, labels, and authored Qamus text.
+The tooltip may render explicit `.qg-seg` rows for the breakdown, and those rows should reuse
+the same role classes/colors as the visible word. The HTML must not contain source names in
+public tooltip text or `data-tr`. Internal evidence may stay in server-side/provenance records,
+but the public DOM should expose only scrubbed role classes, labels, and authored Qamus text.
+
+Kawkab Mono live-rendering note: with the Qamus mono font, color-stop math should align to
+the glyph run, not to padded segment boxes. Browser acceptance should assert that the visible
+token's `textContent` equals the original token and that no `.qg-seg` children were inserted
+inside the visible word.
 
 ## Decision Rules
 
