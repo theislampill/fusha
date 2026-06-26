@@ -42,6 +42,7 @@ REQUIRED = [
     "required_evidence",
     "vote_lenses",
     "agreement_key_hint",
+    "gloss_style_hint",
     "requested_output",
     "public_boundary",
     "apply_policy",
@@ -65,8 +66,13 @@ def _err(errors, line_no, msg):
     errors.append("line %d: %s" % (line_no, msg))
 
 
+def compact(value):
+    return " ".join(str(value or "").strip().split())
+
+
 def _forbidden_public_text(row):
     public = {
+        "gloss_style_hint": row.get("gloss_style_hint"),
         "requested_output": row.get("requested_output"),
         "public_boundary": row.get("public_boundary"),
         "apply_policy": row.get("apply_policy"),
@@ -156,6 +162,24 @@ def validate_row(row, line_no, errors):
         _err(errors, line_no, "missing agreement_key_hint")
     elif not re.match(r"^[a-z0-9][a-z0-9-]+$", agreement_key_hint):
         _err(errors, line_no, "agreement_key_hint must be a stable lowercase slug")
+    hint = row.get("gloss_style_hint") or {}
+    if not isinstance(hint, dict):
+        _err(errors, line_no, "gloss_style_hint must be an object")
+        hint = {}
+    preferred = compact(hint.get("preferred_concise_authored_gloss"))
+    if hint.get("required_when_approving") is True and not preferred:
+        _err(errors, line_no, "gloss_style_hint required_when_approving needs preferred_concise_authored_gloss")
+    if hint.get("required_when_approving") is False and preferred:
+        _err(errors, line_no, "gloss_style_hint preferred gloss cannot be set when not required")
+    if hint.get("style") not in ("composition_explicit", "contextual_plain", "none"):
+        _err(errors, line_no, "gloss_style_hint.style is invalid")
+    if hint.get("source") != "request_builder_review_contract":
+        _err(errors, line_no, "gloss_style_hint.source must be request_builder_review_contract")
+    if hint.get("certifies_decision") is not False:
+        _err(errors, line_no, "gloss_style_hint.certifies_decision must be false")
+    for label in FORBIDDEN_PUBLIC_LABELS:
+        if label in preferred.lower():
+            _err(errors, line_no, "gloss_style_hint preferred gloss leaks forbidden label %r" % label)
     requested = row.get("requested_output") or {}
     if requested.get("decision") != "approve | reject | pending":
         _err(errors, line_no, "requested_output.decision contract is wrong")
@@ -251,6 +275,13 @@ def sample_row():
         ],
         "vote_lenses": ["sarf-primary", "nahw-primary"],
         "agreement_key_hint": "conj-definite-noun-coordinated-list",
+        "gloss_style_hint": {
+            "preferred_concise_authored_gloss": "and + the trees",
+            "required_when_approving": True,
+            "style": "composition_explicit",
+            "source": "request_builder_review_contract",
+            "certifies_decision": False,
+        },
         "requested_output": {
             "decision": "approve | reject | pending",
             "concise_authored_gloss": "",
@@ -317,6 +348,17 @@ def self_test():
             return 1
         if not any("component_candidates_can_certify must be false" in err for err in errors):
             print("SELF-TEST FAIL bad component certifier:", errors)
+            return 1
+        bad_hint = dict(row)
+        bad_hint["gloss_style_hint"] = dict(row["gloss_style_hint"])
+        bad_hint["gloss_style_hint"]["certifies_decision"] = True
+        write_jsonl(bad, [bad_hint])
+        count, errors = validate(bad)
+        if count != 1:
+            print("SELF-TEST FAIL bad hint count:", count)
+            return 1
+        if not any("gloss_style_hint.certifies_decision must be false" in err for err in errors):
+            print("SELF-TEST FAIL bad hint certifier:", errors)
             return 1
         missing_hint = dict(row)
         missing_hint.pop("agreement_key_hint", None)

@@ -49,6 +49,19 @@ NO_CERTIFY = [
     "parse_key_alone",
 ]
 
+PREFERRED_GLOSS_BY_SURFACE = {
+    "وَٱلشَّمْسُ": "and + the sun",
+    "وَٱلْقَمَرُ": "and + the moon",
+    "وَٱلنُّجُومُ": "and + the stars",
+    "وَٱلْجِبَالُ": "and + the mountains",
+    "وَٱلشَّجَرُ": "and + the trees",
+    "يَسْـَٔلُكَ": "ask you",
+    "وَخُلِقَ": "and was created",
+    "ضَعِيفًۭا": "weak",
+    "يَٰٓأَيُّهَا": "O you",
+    "فَأَهْلَكْنَاهُمْ": "so We destroyed them",
+}
+
 
 def iter_jsonl(path):
     with io.open(path, encoding="utf-8") as handle:
@@ -102,6 +115,24 @@ def agreement_key_hint(tranche_row):
     return "two-vote-required-%s" % role_slug.replace("_", "-")
 
 
+def gloss_style_hint(tranche_row):
+    """Return a review-only style hint for exact public wording convergence.
+
+    The hint is not evidence and does not certify a row. It only prevents two
+    independent approving votes from disagreeing on harmless display style such
+    as "and the moon" vs "and + the moon".
+    """
+    surface = ((tranche_row.get("identity") or {}).get("surface_sample") or "")
+    preferred = PREFERRED_GLOSS_BY_SURFACE.get(surface, "")
+    return {
+        "preferred_concise_authored_gloss": preferred,
+        "required_when_approving": bool(preferred),
+        "style": "composition_explicit" if " + " in preferred else ("contextual_plain" if preferred else "none"),
+        "source": "request_builder_review_contract",
+        "certifies_decision": False,
+    }
+
+
 def request_row(tranche_row):
     evidence = tranche_row.get("candidate_evidence") or {}
     return {
@@ -124,6 +155,7 @@ def request_row(tranche_row):
         "required_evidence": tranche_row.get("required_evidence") or [],
         "vote_lenses": ["sarf-primary", "nahw-primary"],
         "agreement_key_hint": agreement_key_hint(tranche_row),
+        "gloss_style_hint": gloss_style_hint(tranche_row),
         "requested_output": dict(REQUESTED_OUTPUT),
         "public_boundary": dict(PUBLIC_BOUNDARY),
         "apply_policy": dict(APPLY_POLICY),
@@ -178,6 +210,13 @@ def self_test():
             return 1
         if built[0].get("agreement_key_hint") != "conj-definite-noun-coordinated-list":
             print("SELF-TEST FAIL: missing stable agreement key hint")
+            return 1
+        hint = built[0].get("gloss_style_hint") or {}
+        if hint.get("preferred_concise_authored_gloss") != "and + the trees":
+            print("SELF-TEST FAIL: missing stable preferred gloss hint")
+            return 1
+        if hint.get("certifies_decision") is not False:
+            print("SELF-TEST FAIL: gloss style hint must not certify a decision")
             return 1
     print("PASS — Phase 4 two-vote request builder self-test")
     return 0

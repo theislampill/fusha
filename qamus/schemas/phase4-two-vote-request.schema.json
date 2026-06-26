@@ -17,6 +17,7 @@
     "required_evidence",
     "vote_lenses",
     "agreement_key_hint",
+    "gloss_style_hint",
     "requested_output",
     "public_boundary",
     "apply_policy",
@@ -145,6 +146,34 @@
       "type": "string",
       "minLength": 3,
       "pattern": "^[a-z0-9][a-z0-9-]+$"
+    },
+    "gloss_style_hint": {
+      "type": "object",
+      "required": [
+        "preferred_concise_authored_gloss",
+        "required_when_approving",
+        "style",
+        "source",
+        "certifies_decision"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "preferred_concise_authored_gloss": {
+          "type": "string"
+        },
+        "required_when_approving": {
+          "type": "boolean"
+        },
+        "style": {
+          "enum": ["composition_explicit", "contextual_plain", "none"]
+        },
+        "source": {
+          "const": "request_builder_review_contract"
+        },
+        "certifies_decision": {
+          "const": false
+        }
+      }
     },
     "requested_output": {
       "type": "object",

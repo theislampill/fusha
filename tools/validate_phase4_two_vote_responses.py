@@ -179,6 +179,15 @@ def validate_row(row, line_no, errors, requests=None):
             hint = compact(request.get("agreement_key_hint"))
             if row.get("decision") == "approve" and hint and compact(row.get("reason_agreement_key")) != hint:
                 _err(errors, line_no, "reason_agreement_key must match request agreement_key_hint")
+            style_hint = request.get("gloss_style_hint") or {}
+            preferred_gloss = compact(style_hint.get("preferred_concise_authored_gloss"))
+            if (
+                row.get("decision") == "approve"
+                and style_hint.get("required_when_approving") is True
+                and preferred_gloss
+                and compact(row.get("concise_authored_gloss")) != preferred_gloss
+            ):
+                _err(errors, line_no, "approved concise_authored_gloss must match request gloss_style_hint")
 
     gloss = compact(row.get("concise_authored_gloss"))
     sarf_reasoning = compact(row.get("sarf_reasoning"))
@@ -297,6 +306,16 @@ def self_test():
             return 1
         if not any("reason_agreement_key must match request agreement_key_hint" in err for err in errors):
             print("SELF-TEST FAIL agreement key mismatch:", errors)
+            return 1
+        gloss_mismatch = dict(row)
+        gloss_mismatch["concise_authored_gloss"] = "and the trees"
+        write_jsonl(bad, [gloss_mismatch])
+        count, errors = validate(bad, request_path=request_path)
+        if count != 1:
+            print("SELF-TEST FAIL gloss hint mismatch count:", count)
+            return 1
+        if not any("approved concise_authored_gloss must match request gloss_style_hint" in err for err in errors):
+            print("SELF-TEST FAIL gloss hint mismatch:", errors)
             return 1
     print("PASS — Phase 4 two-vote response validator self-test")
     return 0

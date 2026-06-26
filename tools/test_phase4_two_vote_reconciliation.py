@@ -86,6 +86,24 @@ def main():
             response(request, "nahw-primary", gloss="and the trees"),
         ]
         write_jsonl(responses_path, responses)
+        count, errors = V.validate(str(responses_path), request_path=str(requests_path))
+        assert count == 2
+        assert any("approved concise_authored_gloss must match request gloss_style_hint" in err for err in errors), errors
+
+        no_hint_request = dict(request)
+        no_hint_request["gloss_style_hint"] = {
+            "preferred_concise_authored_gloss": "",
+            "required_when_approving": False,
+            "style": "none",
+            "source": "request_builder_review_contract",
+            "certifies_decision": False,
+        }
+        write_jsonl(requests_path, [no_hint_request])
+        responses = [
+            response(no_hint_request, "sarf-primary", gloss="and + the trees"),
+            response(no_hint_request, "nahw-primary", gloss="and the trees"),
+        ]
+        write_jsonl(responses_path, responses)
         summary = R.reconcile_files(
             str(requests_path),
             str(responses_path),
@@ -98,6 +116,7 @@ def main():
         assert unresolved[0]["unresolved_reason"] == "vote_disagreement"
         assert unresolved[0]["identity"]["wbw_locs"] == ["wbw:22:18:17"]
 
+        write_jsonl(requests_path, [request])
         bad = response(request, "sarf-primary", gloss="QAC says and + the trees")
         write_jsonl(responses_path, [bad])
         count, errors = V.validate(str(responses_path), request_path=str(requests_path))
