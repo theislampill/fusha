@@ -854,15 +854,17 @@ The scaffold intentionally does not:
 ## Phase 2.8 / 2.9 Latest Closeout Refresh
 
 Status: latest live-readonly closeout rerun completed from pushed `main` and
-`codex/phase2-shadow-graph` HEAD `b010037b55f4b411a1732fa7d81bc2e0d435f5cc`.
+`codex/phase2-shadow-graph` HEAD `4a66210c315878f59a6cb372814729ccc184c1ab`.
 This was a graph/readiness run only: no live Qamus mutation, no WBW rebuild, no
 service restart, no mirror sync, and no hover coverage claim.
 
 Server-side latest checkout and shadow paths:
 
-- tools clone label: `phase2p9-tools-b010037-20260626-214536`
-- shadow output label: `phase2p9-b010037-20260626-214536`
-- local repo status after closeout refresh: clean detached HEAD at `b010037b55f4b411a1732fa7d81bc2e0d435f5cc`
+- tools clone label: `phase2p9-tools-4a66210-20260626-225033`
+- shadow output label: `phase2p9-4a66210-20260626-225033`
+- local repo status before closeout refresh: clean detached HEAD at `4a66210c315878f59a6cb372814729ccc184c1ab`
+- remote readback before closeout refresh: both `main` and `codex/phase2-shadow-graph` pointed at
+  `4a66210c315878f59a6cb372814729ccc184c1ab`
 
 Single-run counts from the latest live-readonly shadow build:
 
@@ -934,6 +936,7 @@ Latest validator evidence:
 
 - `python3 tools/build_live_shadow_graph.py --live-readonly --no-live-write ...` -> `PASS`
 - `python3 tools/validate_phase1_shadow_graph.py <shadow-output>` -> `PASS`
+- `python3 tools/validate_live_shadow_run_manifest.py --expect-live-counts <shadow-output>/phase2-run-manifest.json` -> `PASS`
 - `python3 tools/summarize_shadow_closure_queue.py <shadow-output> ...` -> `PASS`
 - `python3 tools/validate_shadow_review_pack.py <review-pack>` -> `PASS`
 - `python3 tools/summarize_rich_wbw_roles.py --shadow-dir <shadow-output> --strict` -> `PASS`
