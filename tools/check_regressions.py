@@ -436,7 +436,8 @@ for _eid, _blob in ([(x, _fcs_blob) for x in ("FCS-021", "FCS-022", "FCS-023", "
 for _art in ("qamus/schemas/morphosyntax-token.schema.json",
              "qamus/reports/morphosyntax-token-contract.md",
              "qamus/examples/morphosyntax_token.sample.jsonl",
-             "tools/validate_morphosyntax_token_metadata.py"):
+             "tools/validate_morphosyntax_token_metadata.py",
+             "tools/audit_wbw_lookup_morphosyntax.py"):
     check("morphosyntax-token contract artifact exists: %s" % _art, os.path.exists(os.path.join(_R, _art)))
 try:
     _ms_schema = io.open(os.path.join(_R, "qamus", "schemas", "morphosyntax-token.schema.json"),
@@ -459,6 +460,16 @@ for _args, _label in ((["--self-test"], "morphosyntax validator self-test"),
                 print("  ", _out[-1])
     except Exception:
         check(_label + " runnable", False)
+
+try:
+    _v = run_text([sys.executable, os.path.join(_R, "tools", "audit_wbw_lookup_morphosyntax.py"), "--self-test"])
+    check("wbw lookup morphosyntax audit self-test", _v.returncode == 0)
+    if _v.returncode != 0:
+        _out = (_v.stdout or _v.stderr).strip().splitlines()
+        if _out:
+            print("  ", _out[-1])
+except Exception:
+    check("wbw lookup morphosyntax audit self-test runnable", False)
 
 for _script, _label in (("test_bulk_two_vote_requests.py", "bulk two-vote builder self-test"),
                         ("test_bulk_two_vote_request_validator.py", "bulk two-vote validator self-test")):
