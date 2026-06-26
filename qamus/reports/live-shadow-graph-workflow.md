@@ -455,6 +455,35 @@ Fresh Phase 3.25 / 3.5 grammar-regression gate:
   `python tools/validate_grammar_issue_clusters.py nahw/rules/grammar-problems-issue-clusters.json --mining nahw/evals/grammar-problems-phase3p25-mining.jsonl`
   -> `PASS`
 
+Phase 4 dry-run readiness smoke:
+
+- status: review-only dry run completed from the complete sealed Phase 2.9 shadow graph; no live Qamus mutation, no
+  WBW rebuild, no service restart, no mirror sync, and no hover coverage claim.
+- source HEAD for dry run: `84505746635e150739e446f2cab9914369c2873d`
+- complete shadow input: ignored local copy under
+  `out/live-shadow-runs/20260626-110034/shadow-output-phase2p9-sealed`
+- dry-run output: ignored local directory `out/phase4-dryrun-20260626-143455-84505746635e`
+- initial dry-run attempt against the compact Phase 3 admin input copy was rejected because that copy lacks
+  `phase1-current-truth.json`; Phase 4 queue tooling must consume a complete sealed shadow graph, not an admin-pack
+  slice.
+- closure queue summary: `two_vote_required=11`, `human_review_required=517`, `propagation_safe_candidate=1870`,
+  `quarantine_collision=585`, `token_only_required=4530`, `unknown_parse=9552`
+- lane token counts: `two_vote_required=11`, `human_review_required=640`, `propagation_safe_candidate=18038`,
+  `quarantine_collision=5580`, `token_only_required=4530`, `unknown_parse=21101`
+- detector maturity remains explicit: `two_vote_required=partial_shadow_gate`,
+  `source_disagreement=reserved_detector_gap`, `zero_count_policy=zero_does_not_prove_absence`
+- review pack: `11` rows, all `lane=two_vote_required`, all `required_gate=two_vote_required`
+- dry-run tranche: `11` rows, all `lane=two_vote_required`, all `required_gate=two_vote_required`, all `11` rows
+  preserve rich component evidence separately from whole-token candidates
+- two-vote requests: `11` rows, all `lane=two_vote_required`, all `required_gate=two_vote_required`, all `11` rows
+  preserve component candidate evidence as non-certifying review evidence
+- sample request identity:
+  `parse:15651e48a4731deea206356a` / `quran:22:18:14` / `wbw:22:18:14` / `وَٱلْقَمَرُ`
+- validators:
+  - `python tools/validate_shadow_review_pack.py <two-vote-review-pack.jsonl>` -> `PASS`
+  - `python tools/validate_phase4_closure_tranche.py <phase4-two-vote-dryrun-tranche.jsonl>` -> `PASS`
+  - `python tools/validate_phase4_two_vote_requests.py <phase4-two-vote-requests.jsonl>` -> `PASS`
+
 The current scaffold covers:
 
 - hover inspector: `wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> decision/gloss/gate/blocker`
