@@ -47,6 +47,10 @@ The tools intentionally do not embed private server paths. Server acceptance pas
 - `tools/validate_shadow_admin_debug_pack.py`: validates the Phase 3 static admin/debug pack contract. It rejects
   empty packs, missing Phase 3 views, broken `quran:S:A:W -> wbw:S:A:W` identity chains, public-exposable inspector
   records, `live_mutation_allowed=true`, malformed repair-preview stubs, and public-boundary leaks.
+- `tools/query_shadow_admin_debug_pack.py`: read-only CLI for the validated Phase 3 pack. It answers reverse traces
+  (`wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> entry candidates -> affected siblings`), forward traces
+  (`qamus:<id> -> dependent tokens -> parse families -> decisions/hover slots`), and parse-family traces without
+  re-reading live artifacts or using raw Arabic surfaces as identity.
 - `tools/validate_detector_maturity.py`: validates standalone or embedded detector-maturity records so Phase 2
   reports cannot treat `two_vote_required=0` or `source_disagreement=0` as proof that no such cases exist.
 - `tools/validate_live_shadow_run_manifest.py`: validates `phase2-run-manifest.json` so future live-readonly graph
@@ -128,6 +132,10 @@ python tools/build_shadow_admin_debug_pack.py --shadow-dir <isolated shadow outp
   --sample-token quran:22:18:17 \
   --sample-token quran:2:21:1
 python tools/validate_shadow_admin_debug_pack.py <isolated static admin-debug output>/admin-debug-pack.json
+python tools/query_shadow_admin_debug_pack.py --pack <isolated static admin-debug output>/admin-debug-pack.json \
+  --token quran:33:63:1
+python tools/query_shadow_admin_debug_pack.py --pack <isolated static admin-debug output>/admin-debug-pack.json \
+  --entry qamus:<id>
 ```
 
 CI should use fixture/self-test mode only:
@@ -146,6 +154,7 @@ python tools/summarize_rich_wbw_roles.py --self-test
 python tools/build_shadow_admin_debug_pack.py --self-test
 python tools/validate_shadow_admin_debug_pack.py --self-test
 python tools/validate_shadow_admin_debug_pack.py qamus/examples/shadow_admin_debug_pack.sample.json
+python tools/query_shadow_admin_debug_pack.py --self-test
 python tools/validate_shadow_review_pack.py --self-test
 python tools/validate_shadow_review_pack.py qamus/examples/shadow_review_pack.sample.jsonl
 python tools/validate_decision_linkage.py --self-test

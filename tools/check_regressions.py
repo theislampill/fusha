@@ -523,6 +523,7 @@ for _art in (
         "tools/validate_repair_impact_preview.py",
         "tools/validate_shadow_review_pack.py",
         "tools/validate_shadow_admin_debug_pack.py",
+        "tools/query_shadow_admin_debug_pack.py",
         "tools/summarize_rich_wbw_roles.py",
         "tools/build_shadow_admin_debug_pack.py",
 ):
@@ -578,6 +579,7 @@ for _script, _args, _label in (
         ("validate_shadow_admin_debug_pack.py",
          [os.path.join(_R, "qamus", "examples", "shadow_admin_debug_pack.sample.json")],
          "Phase3 shadow admin debug pack sample validates"),
+        ("query_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack query self-test"),
 ):
     try:
         _v = run_text([sys.executable, os.path.join(_R, "tools", _script)] + _args)
