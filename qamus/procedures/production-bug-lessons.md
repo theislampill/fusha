@@ -18,6 +18,7 @@ Minimum fields:
 
 - `bug_class`
 - exact `quran:S:A:W` token addresses
+- exact `source_addresses` including both the `quran:S:A:W` token and its `wbw:S:A:W` hover slot
 - visible bad hover
 - corrected hover or exact pending reason
 - what failed
@@ -32,3 +33,7 @@ Minimum fields:
 
 Do not use this file to apply live changes. It is a bridge from production evidence back into reusable instruction,
 fixtures, and gates.
+
+Each lesson must remain graph-addressed. A lesson that says "the word X was wrong" is not enough; it must identify
+the exact rendered hover slot, link to the sarf/nahw/qamus procedure that should prevent recurrence, and point to a
+validator or regression fixture. This keeps ANDON reports from becoming chat-only corrections.

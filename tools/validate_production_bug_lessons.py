@@ -12,6 +12,8 @@ import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOC = re.compile(r"^quran:\d{1,3}:\d{1,3}:\d{1,3}$")
+WBW = re.compile(r"^wbw:\d{1,3}:\d{1,3}:\d{1,3}$")
+BUG_CLASS = re.compile(r"^[a-z0-9_]+$")
 LEVELS = {"beginner", "intermediate", "advanced"}
 REQUIRED = [
     "bug_class",
@@ -27,7 +29,12 @@ REQUIRED = [
     "procedure_links",
     "regression_fixture_link",
     "validator_link",
+    "source_addresses",
 ]
+
+
+def repo_path_exists(relpath):
+    return os.path.exists(os.path.join(ROOT, relpath.replace("/", os.sep)))
 
 
 def validate(path):
@@ -46,13 +53,32 @@ def validate(path):
         for field in REQUIRED:
             if field not in row or row[field] in ("", [], None):
                 errors.append("line %d: missing %s" % (line_no, field))
+        if not BUG_CLASS.match(str(row.get("bug_class") or "")):
+            errors.append("line %d: bug_class must be snake_case" % line_no)
         for loc in row.get("token_addresses") or []:
             if not LOC.match(str(loc)):
                 errors.append("line %d: bad token address %r" % (line_no, loc))
+        source_addresses = row.get("source_addresses") or []
+        for addr in source_addresses:
+            if not (LOC.match(str(addr)) or WBW.match(str(addr))):
+                errors.append("line %d: bad source address %r" % (line_no, addr))
+        for loc in row.get("token_addresses") or []:
+            if loc not in source_addresses:
+                errors.append("line %d: source_addresses missing %s" % (line_no, loc))
+            wbw = "wbw:" + str(loc).split(":", 1)[1]
+            if wbw not in source_addresses:
+                errors.append("line %d: source_addresses missing %s" % (line_no, wbw))
         if row.get("level") not in LEVELS:
             errors.append("line %d: bad level %r" % (line_no, row.get("level")))
-        if not any(str(p).startswith(("sarf/", "nahw/", "qamus/")) for p in row.get("procedure_links") or []):
+        procedure_links = row.get("procedure_links") or []
+        if not any(str(p).startswith(("sarf/", "nahw/", "qamus/")) for p in procedure_links):
             errors.append("line %d: procedure_links must point into sarf/nahw/qamus" % line_no)
+        for relpath in procedure_links:
+            if not repo_path_exists(str(relpath)):
+                errors.append("line %d: procedure link missing: %s" % (line_no, relpath))
+        for relpath in (row.get("regression_fixture_link"), row.get("validator_link")):
+            if relpath and not repo_path_exists(str(relpath)):
+                errors.append("line %d: linked file missing: %s" % (line_no, relpath))
     if count == 0:
         errors.append("zero bug lessons")
     return count, errors
@@ -75,6 +101,7 @@ def self_test():
             "procedure_links": ["sarf/procedures/clitic-and-host-morphology.md"],
             "regression_fixture_link": "qamus/examples/production_bug_lesson.sample.jsonl",
             "validator_link": "tools/validate_production_bug_lessons.py",
+            "source_addresses": ["quran:33:63:1", "wbw:33:63:1"],
         }
         with io.open(path, "w", encoding="utf-8") as handle:
             handle.write(json.dumps(good, ensure_ascii=False, sort_keys=True) + "\n")
