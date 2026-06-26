@@ -443,6 +443,8 @@ def classify_gate(status, candidates, segments, confidence, blocker):
     roles = {str(segment.get("role", "")) for segment in segments if isinstance(segment, dict)}
     if blocker or confidence == "surface_only" or len({candidate.get("entry_address") for candidate in candidates}) > 1:
         return "human_review_required"
+    if any("vocative" in role for role in roles) or "addressee_bridge" in roles:
+        return "two_vote_required"
     if any("preposition" in role for role in roles) or any(role in ("conjunction", "resumption_particle") for role in roles):
         return "two_vote_required"
     grammar_sensitive = {
@@ -495,6 +497,8 @@ def parse_obj_for_token(loc, surface, row, candidates, status, blocker, live_sou
         triggers.append("preposition")
     if any(role in ("conjunction", "resumption_particle") for role in roles):
         triggers.append("function_particle")
+    if any("vocative" in role for role in roles) or "addressee_bridge" in roles:
+        triggers.append("vocative")
     if blocker:
         triggers.append("blocker")
     confidence = "rich_metadata" if runtime_parse_key and segments else ("lexical_candidate" if candidates else "surface_only")
@@ -1104,8 +1108,17 @@ def make_fixture_inputs(base):
         write_json(os.path.join(entries, "%s.json" % entry["id"]), entry)
     wbw = {
         "words": {
-            "2:21:1": {"surface": "يَا", "pos": "particle", "particle_function": "vocative", "gate": "never_auto"},
+            "2:21:1": {
+                "surface": "يَٰٓأَيُّهَا",
+                "pos": "VOC",
+                "parse_key": {"key": "VOC:YAA+AYYUHA"},
+                "segments": [
+                    {"role": "vocative_particle", "surface": "يَا"},
+                    {"role": "addressee_bridge", "surface": "أَيُّهَا"},
+                ],
+            },
             "2:21:2": {"surface": "النَّاسُ", "pos": "noun"},
+            "2:21:3": {"surface": "مَا", "pos": "particle", "particle_function": "ambiguous", "gate": "never_auto"},
             "22:18:17": {
                 "surface": "وَٱلشَّجَرُ",
                 "pos": "noun",
@@ -1148,7 +1161,7 @@ def self_test():
         if missing:
             print("SELF-TEST FAIL: missing %s" % missing)
             return 1
-        if counts["token_universe"] != 5 or counts["token_decisions"] != 4:
+        if counts["token_universe"] != 6 or counts["token_decisions"] != 4:
             print("SELF-TEST FAIL: bad fixture counts %r" % counts)
             return 1
         if not counts.get("fusha_reference", {}).get("source_address_full_present"):
@@ -1175,8 +1188,14 @@ def self_test():
             print("SELF-TEST FAIL: token rows must expose parse_key")
             return 1
         vocative = next((row["canonical_parse_object"] for row in parse_rows if "quran:2:21:1" in row.get("seen_locs", [])), None)
-        if not vocative or vocative.get("gate") != "never_auto":
+        if not vocative or vocative.get("gate") != "two_vote_required" or "vocative" not in (vocative.get("grammar_triggers") or []):
             got_gate = (vocative or {}).get("gate")
+            got_triggers = (vocative or {}).get("grammar_triggers")
+            print("SELF-TEST FAIL: rich vocative token must not be auto-safe: got %r triggers %r" % (got_gate, got_triggers))
+            return 1
+        pending = next((row["canonical_parse_object"] for row in parse_rows if "quran:2:21:3" in row.get("seen_locs", [])), None)
+        if not pending or pending.get("gate") != "never_auto":
+            got_gate = (pending or {}).get("gate")
             print("SELF-TEST FAIL: pending row gate was not preserved: got %r" % got_gate)
             return 1
         rich_conj = next((row["canonical_parse_object"] for row in parse_rows if "quran:22:18:17" in row.get("seen_locs", [])), None)

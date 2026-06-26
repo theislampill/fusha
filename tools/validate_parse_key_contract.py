@@ -82,6 +82,7 @@ GRAMMAR_SENSITIVE_TRIGGERS = {
     "suffix_pronoun",
     "preposition",
     "function_particle",
+    "vocative",
     "case_or_mood",
     "irab",
     "referent_sensitive_gloss",
