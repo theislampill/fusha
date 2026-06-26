@@ -20,12 +20,12 @@ needs all of the following in the rendered DOM:
 
 | Loc | Surface | Required composition | Parse key observed |
 |---|---|---|---|
-| 22:18:13 | `وَٱلشَّمْسُ` | conjunction + article + noun | `CONJ+ART+N:DEF:NOM` |
-| 22:18:14 | `وَٱلْقَمَرُ` | conjunction + article + noun | `CONJ+ART+N:DEF:NOM` |
-| 22:18:15 | `وَٱلنُّجُومُ` | conjunction + article + noun | `CONJ+ART+N:DEF:NOM:PL` |
-| 22:18:16 | `وَٱلْجِبَالُ` | conjunction + article + noun | `CONJ+ART+N:DEF:NOM:PL` |
-| 22:18:17 | `وَٱلشَّجَرُ` | conjunction + article + collective noun | `CONJ+ART+N:DEF:NOM:COLL` |
-| 26:139:2 | `فَأَهْلَكْنَاهُمْ` | result particle + Form IV verb + object pronoun | `RES+V:IV:PERF:ACT:1P+OBJ.3MP` |
+| 22:18:13 | `وَٱلشَّمْسُ` | conjunction + article + noun | `CONJ+ART+N:NOM:DEF:SG` |
+| 22:18:14 | `وَٱلْقَمَرُ` | conjunction + article + noun | `CONJ+ART+N:NOM:DEF:SG` |
+| 22:18:15 | `وَٱلنُّجُومُ` | conjunction + article + noun | `CONJ+ART+N:NOM:DEF:PL` |
+| 22:18:16 | `وَٱلْجِبَالُ` | conjunction + article + noun | `CONJ+ART+N:NOM:DEF:PL` |
+| 22:18:17 | `وَٱلشَّجَرُ` | conjunction + article + collective noun | `CONJ+ART+N:NOM:DEF:SG` |
+| 26:139:2 | `فَأَهْلَكْنَاهُمْ` | result particle + Form IV verb + object pronoun | `RESULT+V:IV:PERF:ACT:1P+OBJ.3MP` |
 | 2:21:1 | `يَا` / `أَيُّهَا` | vocative particle + addressee formula | `VOC:YAA+AYYUHA` |
 | 33:63:1 | `يَسْأَلُكَ` | imperfect prefix + Form I stem + 2ms object pronoun | `V:I:IMPF:ACT:3MS+OBJ.2MS` |
 | 2:178:22 | `بِٱلْمَعْرُوفِ` | attached bāʾ + article + genitive noun host | `P:BI+ART+N:GEN:DEF` |
@@ -42,8 +42,10 @@ Browser readback asserted, for each named case:
 - expected learner-facing gloss text;
 - no public DOM leakage of external source/provenance labels.
 
-The blocking exemplar `33:63:1` specifically exposed the suffix `كَ` as its own `qg-pronoun` segment with
-the contribution `you`, so the former lemma gloss `to ask, question` is no longer acceptable for that token.
+The blocking exemplar `33:63:1` specifically exposed `يَـ`, `سْـَٔلُ`, and `كَ` as `qg-verb-prefix`,
+`qg-verb-stem`, and `qg-pronoun` segments, with `كَ` contributing `you`; the former lemma gloss
+`to ask, question` is no longer acceptable for that token. The split vocative `2:21:1` readback also
+confirmed `يَا` as `O` and `أَيُّهَا` as `you (who)`.
 
 ## Boundary
 
