@@ -218,9 +218,9 @@ improvement and did not mutate live Qamus, rebuild WBW, sync the mirror, restart
 
 Run source:
 
-- Fresh checkout HEAD before closeout: `3daf0fb3ae9764e461e7a5e0826ba0c900de6ddb`.
-- Local read-only snapshot path: `out/live-shadow-runs/20260626-084040`.
-- Sealed shadow graph output: `out/live-shadow-runs/20260626-084040/shadow-output-phase2p9-sealed`.
+- Fresh checkout HEAD before closeout: `5ed6ffeb50758c71ee3b419e6be743e65bf8d9d5`.
+- Local read-only snapshot path: `out/live-shadow-runs/20260626-110034`.
+- Sealed shadow graph output: `out/live-shadow-runs/20260626-110034/shadow-output-phase2p9-sealed`.
 - Live inputs were copied/streamed to the local snapshot first; the builder consumed local read-only copies.
 
 Sealed graph counts:
@@ -255,9 +255,16 @@ Rich WBW role taxonomy from the sealed run:
 - rich parse rows: `12`
 - observed roles: `13`
 - strict taxonomy risks: `0`
+- rich parse rows with component candidate evidence: `10`
+- rich review-pack rows with component candidate evidence: `10`
+- rich component candidate auto-safe/propagation violations: `0`
 - explicitly gated roles observed: `addressee_bridge`, `adjectival_state`, `conjunction`, `object_pronoun`,
   `preposition`, `result_particle`, `resumption_particle`, `vocative_particle`
 - explicitly allowlisted roles observed: `definite_article`, `imperfect_prefix`, `noun`, `verb`, `verb_stem`
+
+Phase 2.8 component-candidate guardrail is active in this sealed run: rich WBW segment evidence is stored separately
+from whole-token entry candidates, carries `source:rich_wbw_segment`, role, segment text, and token location provenance,
+and does not weaken any lane into `auto_safe` / `propagation_safe_candidate`.
 
 Required rich gate cases were confirmed as `two_vote_required` and non-propagating in the sealed run:
 
