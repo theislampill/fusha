@@ -209,3 +209,20 @@ Run `tools/validate_morphosyntax_token_metadata.py` against morphosyntax JSONL t
 Future live/staged render validation should additionally compare `hover_contract.must_surface` against the built
 `wbw-lookup.json` best hover and assert that any visible Arabic token keeps the same normalized text content as
 the source token.
+
+## Kawkab Coverage Gate
+
+Run `tools/audit_wbw_lookup_morphosyntax.py <wbw-lookup.json> --fail-on none` on staged or live lookup artifacts
+before treating rich hover coverage as broad. The summary includes a `rich_metadata` section with:
+
+- total WBW records;
+- records carrying complete `parse_key` + `display` + `segments`;
+- records with partial rich metadata, which must not render as certified rich hovers;
+- records whose segment surfaces align to the atomic Arabic token under Kawkab Mono character-width math;
+- missing candidate lanes such as `candidate_art_nominal`, `candidate_conj_art_nominal`,
+  `candidate_ba_art_nominal`, and `candidate_suffix_or_pronoun`.
+
+For Kawkab-safe coloring, the normalized segment surfaces must add up to the normalized visible token. A mismatch
+means the gradient/color stops may drift across the monospaced glyph run, so the record should stay blocked until
+the segment surfaces are repaired. This gate measures metadata readiness; it does not mutate live Qamus data and
+does not authorize heuristic renderer coloring for unparsed words.

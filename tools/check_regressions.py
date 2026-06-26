@@ -470,6 +470,13 @@ try:
             print("  ", _out[-1])
 except Exception:
     check("wbw lookup morphosyntax audit self-test runnable", False)
+try:
+    _audit_blob = io.open(os.path.join(_R, "tools", "audit_wbw_lookup_morphosyntax.py"),
+                          encoding="utf-8").read()
+    check("wbw audit reports rich metadata coverage", "rich_metadata" in _audit_blob)
+    check("wbw audit gates Kawkab segment alignment", "rich_kawkab_segment_width_mismatch" in _audit_blob)
+except Exception:
+    check("wbw lookup morphosyntax audit readable", False)
 
 for _script, _label in (("test_bulk_two_vote_requests.py", "bulk two-vote builder self-test"),
                         ("test_bulk_two_vote_request_validator.py", "bulk two-vote validator self-test")):
