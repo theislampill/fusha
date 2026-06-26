@@ -42,6 +42,9 @@ The tools intentionally do not embed private server paths. Server acceptance pas
 - `tools/validate_public_private_boundary.py`: validates the reusable public/private boundary object used by
   decision, edit-intent, repair-preview, and manifest artifacts. It keeps `src=qamus`, `kind=authored`, `lang=en`,
   public source-name flags false, and forbids public field names that smuggle adapter labels or private paths.
+- `tools/validate_parse_key_contract.py`: validates parse-key family rows as grammar-reuse nodes, not identities. It
+  checks exact token backlinks, canonical hash stability, family-size reconciliation, no surface-only auto-safe rows,
+  no multi-candidate propagation, and no grammar-sensitive trigger marked propagation-safe.
 - `tools/validate_shadow_review_pack.py`: validates that review-pack rows are non-vacuous, exact-addressed with
   `quran:S:A:W` and `wbw:S:A:W`, source-clean at the public boundary, and explicitly non-mutating.
 - `tools/validate_decision_linkage.py`: validates that authored decision rows link exact `quran:S:A:W` tokens,
@@ -57,6 +60,8 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   zero-count detector output is not absence proof.
 - `qamus/examples/live_shadow_run_manifest.sample.json`: tiny fixture receipt showing the no-mutation run contract
   without committing live server paths or full live graph blobs.
+- `qamus/examples/parse_key.sample.jsonl`: tiny fixture slice covering a propagation-safe noun family, a
+  two-vote-required verb suffix family, and a quarantined `ما` collision family.
 - `qamus/examples/decision_linkage.sample.jsonl`: tiny fixture slice covering resolved, pending, and superseded
   decision rows with exact token/hover addresses.
 - `qamus/examples/hover_edit_intent.sample.jsonl`: tiny fixture slice covering token-only, parse-family, and
@@ -100,6 +105,8 @@ python tools/validate_live_shadow_run_manifest.py --self-test
 python tools/validate_live_shadow_run_manifest.py qamus/examples/live_shadow_run_manifest.sample.json
 python tools/validate_public_private_boundary.py --self-test
 python tools/validate_public_private_boundary.py qamus/examples/public_private_boundary.sample.json
+python tools/validate_parse_key_contract.py --self-test
+python tools/validate_parse_key_contract.py qamus/examples/parse_key.sample.jsonl
 python tools/validate_phase1_shadow_graph.py --self-test
 python tools/summarize_shadow_closure_queue.py --self-test
 python tools/validate_shadow_review_pack.py --self-test
