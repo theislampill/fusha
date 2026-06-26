@@ -100,6 +100,122 @@ def classify_parse_family(parse_id, parse_obj, tokens):
     return "human_review_required"
 
 
+def lane_action(lane):
+    if lane.startswith("blocked:stem_base_unknown"):
+        return {
+            "scope": "source_entry_or_parser_repair",
+            "recommended_action": "repair stem/base mapping before authoring hover",
+            "gate": "source_or_owner_review",
+        }
+    if lane.startswith("blocked:source_entry_unverified"):
+        return {
+            "scope": "source_entry_repair",
+            "recommended_action": "verify Qamus source entry before token decision",
+            "gate": "source_review",
+        }
+    if lane.startswith("blocked:same_surface_polysemy_requires_i3rab"):
+        return {
+            "scope": "token_only_or_small_family",
+            "recommended_action": "classify same-surface polysemy with i'rab/context evidence",
+            "gate": "scholar_or_two_vote",
+        }
+    if lane == "two_vote_required":
+        return {
+            "scope": "token_or_family_after_votes",
+            "recommended_action": "build two-vote review packet with source-addressed reasoning",
+            "gate": "two_vote_required",
+        }
+    if lane == "human_review_required":
+        return {
+            "scope": "human_review",
+            "recommended_action": "review candidate entry/sense/function before propagation",
+            "gate": "human_review_required",
+        }
+    if lane == "quarantine_collision":
+        return {
+            "scope": "quarantine",
+            "recommended_action": "resolve entry/sense/function collision; do not fan out",
+            "gate": "human_review_required",
+        }
+    if lane == "missing_entry":
+        return {
+            "scope": "entry_creation_or_mapping",
+            "recommended_action": "route to owner for missing Qamus entry or mapping repair",
+            "gate": "owner_review",
+        }
+    if lane == "unknown_parse":
+        return {
+            "scope": "parser_enrichment",
+            "recommended_action": "add sarf/nahw evidence before certification",
+            "gate": "human_review_required",
+        }
+    if lane == "propagation_safe_candidate":
+        return {
+            "scope": "parse_family",
+            "recommended_action": "eligible for guarded propagation preview; still require impact list",
+            "gate": "auto_safe_with_preview",
+        }
+    if lane == "token_only_required":
+        return {
+            "scope": "token_only",
+            "recommended_action": "append token-addressed decision only",
+            "gate": "token_review",
+        }
+    return {
+        "scope": "review",
+        "recommended_action": "review lane before any apply",
+        "gate": "human_review_required",
+    }
+
+
+def review_pack_row(parse_id, lane, parse_obj, tokens):
+    unresolved = [t for t in tokens if t.get("status") != "resolved"]
+    action = lane_action(lane)
+    candidate_joins = parse_obj.get("qamus_entry_candidate_joins") or []
+    token_locs = [t.get("loc") for t in tokens if t.get("loc")]
+    wbw_locs = ["wbw:%s" % loc for loc in token_locs]
+    row = {
+        "id": "queue:%s" % parse_id.replace(":", "_"),
+        "parse_id": parse_id,
+        "lane": lane,
+        "scope": action["scope"],
+        "recommended_action": action["recommended_action"],
+        "required_gate": action["gate"],
+        "family_size": len(tokens),
+        "resolved_token_count": len(tokens) - len(unresolved),
+        "unresolved_token_count": len(unresolved),
+        "surface_sample": next((t.get("surface") for t in tokens if t.get("surface")), ""),
+        "quran_locs": token_locs,
+        "wbw_locs": wbw_locs,
+        "token_sample": [t.get("id") for t in tokens[:10]],
+        "candidate_entries": parse_obj.get("qamus_entry_candidates") or [],
+        "candidate_join_statuses": [
+            {
+                "entry": join.get("entry"),
+                "join_status": join.get("join_status") or [],
+            }
+            for join in candidate_joins
+        ],
+        "parse": {
+            "gate": parse_obj.get("gate"),
+            "blocker": parse_obj.get("blocker"),
+            "decision_status": parse_obj.get("decision_status"),
+            "parse_confidence": parse_obj.get("parse_confidence"),
+            "pos": parse_obj.get("pos"),
+            "root": parse_obj.get("root"),
+            "lemma": parse_obj.get("lemma"),
+            "particle_function": parse_obj.get("particle_function"),
+            "grammar_triggers": parse_obj.get("grammar_triggers") or [],
+        },
+        "apply_policy": {
+            "live_mutation_allowed": False,
+            "identity": "quran:S:A:W plus wbw:S:A:W; parse key is not primary identity",
+            "public_boundary": "src=qamus, kind=authored, lang=en; no external provenance",
+        },
+    }
+    return row
+
+
 def summarize(shadow_dir, sample_limit=8):
     missing = [name for name in REQUIRED if not os.path.exists(os.path.join(shadow_dir, name))]
     if missing:
@@ -138,6 +254,7 @@ def summarize(shadow_dir, sample_limit=8):
             blocker_counts[token.get("blocker") or "unknown"] += 1
 
     family_rows = []
+    review_rows = []
     for parse_id, tokens in sorted(tokens_by_parse.items()):
         parse_obj = parse_by_id.get(parse_id, {})
         lane = classify_parse_family(parse_id, parse_obj, tokens)
@@ -169,6 +286,7 @@ def summarize(shadow_dir, sample_limit=8):
             "blocker": parse_obj.get("blocker"),
             "parse_confidence": parse_obj.get("parse_confidence"),
         })
+        review_rows.append(review_pack_row(parse_id, lane, parse_obj, tokens))
 
     result = {
         "shadow_dir": shadow_dir,
@@ -200,6 +318,7 @@ def summarize(shadow_dir, sample_limit=8):
             for k, v in sorted(unresolved_samples.items())
         },
         "families": family_rows,
+        "review_pack": review_rows,
     }
     return result
 
@@ -262,10 +381,19 @@ def run_self_test():
         if summary["lane_counts"].get("quarantine_collision") != 1:
             print("SELF-TEST FAIL: collision lane")
             return 1
+        pack = summary["review_pack"]
+        if not any(row["recommended_action"].startswith("resolve entry") for row in pack):
+            print("SELF-TEST FAIL: review pack collision action")
+            return 1
         out_md = os.path.join(td, "summary.md")
         write_markdown(out_md, summary)
         if "Shadow Closure Queue Summary" not in io.open(out_md, encoding="utf-8").read():
             print("SELF-TEST FAIL: markdown")
+            return 1
+        out_pack = os.path.join(td, "review-pack.jsonl")
+        write_jsonl(out_pack, pack)
+        if sum(1 for _ in read_jsonl(out_pack)) != 3:
+            print("SELF-TEST FAIL: review pack jsonl")
             return 1
     print("PASS — shadow closure queue summarizer self-test")
     return 0
@@ -277,6 +405,11 @@ def main():
     parser.add_argument("--out-json")
     parser.add_argument("--out-md")
     parser.add_argument("--families-jsonl")
+    parser.add_argument("--review-pack-jsonl")
+    parser.add_argument("--review-lane", action="append",
+                        help="only emit review-pack rows for this lane; may be repeated")
+    parser.add_argument("--review-max-families", type=int,
+                        help="cap emitted review-pack families after lane filtering")
     parser.add_argument("--sample-limit", type=int, default=8)
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
@@ -288,11 +421,20 @@ def main():
     if args.out_json:
         compact = dict(summary)
         compact.pop("families", None)
+        compact.pop("review_pack", None)
         write_json(args.out_json, compact)
     if args.out_md:
         write_markdown(args.out_md, summary, sample_limit=args.sample_limit)
     if args.families_jsonl:
         write_jsonl(args.families_jsonl, summary["families"])
+    if args.review_pack_jsonl:
+        review_rows = summary["review_pack"]
+        if args.review_lane:
+            wanted = set(args.review_lane)
+            review_rows = [row for row in review_rows if row.get("lane") in wanted]
+        if args.review_max_families is not None:
+            review_rows = review_rows[:args.review_max_families]
+        write_jsonl(args.review_pack_jsonl, review_rows)
     print(json.dumps({
         "computed": summary["computed"],
         "lane_counts": summary["lane_counts"],
