@@ -483,6 +483,25 @@ The adjudication packet is still not an apply artifact. It is the next
 source-addressed review object needed to choose or author one public Qamus
 wording while preserving the sarf/nahw evidence boundary.
 
+A matching review-only response/reconciliation bridge now validates an
+authorized wording selection and converts it to a `certified_not_applied`
+artifact, still without live mutation or closure claims:
+
+- schema: `qamus/schemas/phase4-gloss-adjudication-response.schema.json`
+- validator: `tools/validate_phase4_gloss_adjudication_responses.py`
+- reconciler: `tools/reconcile_phase4_gloss_adjudication_responses.py`
+- sample: `qamus/examples/phase4_gloss_adjudication_response.sample.jsonl`
+- test: `tools/test_phase4_gloss_adjudication_response_reconciliation.py`
+- accepted source: the exact `phase4-gloss-adjudication:*` request id and the
+  same `quran:S:A:W` / `wbw:S:A:W` / `parse:<hash>` identity
+- output status: `certified_not_applied`
+- `apply_allowed=false`, `live_mutation_allowed=false`,
+  `closure_claim_allowed=false`
+
+The reconciled response chooses or authors one source-clean public Qamus
+wording for the exact blocker. It does not append a live token decision, rebuild
+WBW, sync the mirror, or claim hover coverage.
+
 ## Phase 3 Latest Read-Only Admin/Debug Refresh
 
 Status: latest read-only admin/debug scaffold smoke completed from pushed `main`

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/phase4-gloss-adjudication-response.schema.json",
+  "title": "Qamus Phase 4 gloss wording adjudication response row",
+  "type": "object",
+  "required": [
+    "id",
+    "phase",
+    "source_adjudication_request_id",
+    "parse_id",
+    "identity",
+    "decision",
+    "selected_concise_authored_gloss",
+    "selection_source",
+    "adjudication_reason",
+    "safe_scope_after_adjudication",
+    "public_boundary",
+    "apply_policy"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^phase4-gloss-adjudication-response:queue_parse_[0-9a-f]+$"
+    },
+    "phase": {
+      "const": "phase4_gloss_adjudication_response"
+    },
+    "source_adjudication_request_id": {
+      "type": "string",
+      "pattern": "^phase4-gloss-adjudication:queue_parse_[0-9a-f]+$"
+    },
+    "parse_id": {
+      "type": "string",
+      "pattern": "^parse:[0-9a-f]+$"
+    },
+    "identity": {
+      "type": "object"
+    },
+    "decision": {
+      "const": "select"
+    },
+    "selected_concise_authored_gloss": {
+      "type": "string",
+      "minLength": 1
+    },
+    "selection_source": {
+      "enum": ["candidate", "new_authored"]
+    },
+    "adjudication_reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "safe_scope_after_adjudication": {
+      "enum": ["token_only", "parse_family_after_impact_preview", "pending"]
+    },
+    "public_boundary": {
+      "type": "object"
+    },
+    "apply_policy": {
+      "type": "object"
+    }
+  }
+}
