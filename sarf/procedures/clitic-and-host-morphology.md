@@ -195,3 +195,24 @@ VN-09 added fresh suffix and component-only controls:
 When VN-09-style component evidence is present, store it as component evidence
 with provenance. Do not add it to whole-token candidate counts, propagation
 safety, source agreement, closure coverage, or hover coverage.
+
+## Dogfood finding: VN-10 suffix and component evidence remain below apply
+
+VN-10 added more rows where a visible suffix or component is easy to miss:
+
+- `وَارِدَهُمْ` and `تَرْهَقُهُمْ` need the `هُمْ` contribution recorded in
+  the learner breakdown before any wording is trusted.
+- `وَقُودُهَا` is a nominal host with `هَا`; a host-only "fuel" style hover
+  is not rich-certified until the suffix/referent is visible.
+- `رَٰعِنَا` and `رَعَوْهَا` require exact host plus suffix or address-context
+  review. The final letters must not be hidden under entry-family prose.
+- `فَدَمَّرْنَٰهُمْ`, `فَأَعِينُونِى`, and `وَأَعَانَهُۥ` are useful
+  component candidates, but fā'/wāw, finite form, and attached objects keep
+  them below whole-token certification.
+- `بِغَيْظِكُمْ` is bā' + host + `كُمْ`; both the preposition and suffix are
+  visible morphology that must be routed to nahw for relation/attachment.
+
+Rule: a VN-10 row with component evidence or a visible suffix can become a
+repair candidate only after exact-address review. It is never live-applyable
+from the dogfood tranche, and component evidence never contributes to hover
+coverage or propagation safety.

@@ -273,3 +273,25 @@ token exposes form, voice/aspect/mood, person/number/gender, and suffixes.
 Weak, hamzated, and doubled roots remain load-bearing: `تَشْتَهِيهِ`,
 `ٱسْتَيْـَٔسُوا۟`, `خَرَّ`, and `مُطْمَئِنٌّۢ` need root-class handling before
 surface-family reuse.
+
+## Dogfood finding: VN-10 finite form before entry prose
+
+VN-10 repeated finite-verb leakage in a fresh entry range:
+
+- `طَبَعَ`, `ٱسْتَعِينُوا۟`, `تَعَاوَنُوا۟`, `دَمَّرْنَا`, and
+  `تَرْهَقُهُمْ` were string-populated from entry prose such as "to seal",
+  "to assist", "to destroy", or "to cover". They still need exact aspect,
+  voice, person/number/gender, form, and object/suffix review before a token
+  hover is learner-safe.
+- `فَأَعِينُونِى`, `وَأَعَانَهُۥ`, `فَدَمَّرْنَٰهُمْ`,
+  `فَفِرُّوٓا۟`, and `وَمُقَصِّرِينَ` are component-only rows. Their host
+  family helps route review, but the whole token still contains fā'/wāw,
+  finite or nominal form, and sometimes an object suffix.
+- `لِيَغِيظَ` and `لِيُضِيعَ` are lām-on-verb rows. Sarf records the finite
+  host; nahw must certify the lām function, mood/governor, and clause
+  relation.
+
+Rule: VN-10 candidates may populate English strings without satisfying the
+finite-form contract. Do not mark them rich-certified or propagation-safe
+until the exact written token exposes the finite host and every visible
+clitic/suffix/function piece.

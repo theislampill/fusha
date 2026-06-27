@@ -244,6 +244,22 @@ renderer metadata miss. Do not treat a populated hover as rich-certified unless
 the function pieces, suffixes, parse key, and learner-facing breakdown are
 present.
 
+## 4l. VN-10 lām/bā', suffix, and renderer-only routing
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `بِغَيْظِكُمْ` | bā' + host + `كُمْ` + PP attachment/referent | verb-family "to enrage" |
+| `لِيَغِيظَ` / `لِيُضِيعَ` | lām function, mood/governor, and finite host | component-only host evidence |
+| `وَارِدَهُمْ` | suffix/referent and POS review | entry-family prose with hidden `هُمْ` |
+| `وَقُودُهَا` | nominal host plus `هَا` suffix and context | host-only fuel wording |
+| `ٱلْمُسْتَعَانُ` | nominal/passive-participle-like role and referent | "to assist" infinitive |
+| `ٱلْمُوقَدَةُ` | passive participle/adjectival role | active kindling verb family |
+| `حَثِيثًۭا` and similar rows | renderer metadata backfill if wording survives review | claiming rich certification from string presence |
+
+VN-10 keeps the apply boundary explicit: none of these rows can be live-applied
+from dogfood alone. They need exact token identity, rich segments, compatible
+sarf/nahw reasoning, and two-vote/MCP/source evidence where grammar-sensitive.
+
 ## 5. QAC concept metadata is a routing aid only
 
 If concept metadata says a form may be a prophet, historic person, people,

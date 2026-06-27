@@ -203,3 +203,22 @@ host, suffix, POS, and function pieces, plus the exact address.
 Rule: VN-09 rows may be string-populated and still not teach the learner.
 Certification needs finite form, suffixes, lām/function pieces, and
 component-vs-whole-token proof.
+
+## O. VN-10 dogfood: finite prose, suffixes, and nominal rows
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `طَبَعَ` | `to seal one's heart` | perfect finite verb contribution by exact context |
+| `ٱسْتَعِينُوا۟` | bare `to assist` | imperative/derived form, plural subject, and context |
+| `تَعَاوَنُوا۟` | entry-family "to assist" | Form VI/plural finite contribution |
+| `فَدَمَّرْنَٰهُمْ` | component destroy evidence | fā' + finite host + `هُمْ` object, whole-token proof |
+| `وَارِدَهُمْ` | entry prose with hidden suffix | host/POS plus `هُمْ` suffix relation |
+| `وَقُودُهَا` | fuel host with no suffix | nominal host + `هَا` suffix |
+| `ٱلْمُسْتَعَانُ` | `to assist` | nominal/passive-participle-like POS review |
+| `ٱلْمُوقَدَةُ` | active kindling verb family | definite passive-participle/adjectival role |
+
+Rule: VN-10 rows separate three outcomes. Finite verbs require form/person
+review, suffix-bearing hosts require visible pronoun accounting, and
+nominal-looking rows in verb families require derivative/POS review. Rows whose
+only defect is missing rich display metadata go to renderer backfill, not live
+apply.

@@ -173,3 +173,22 @@ VN-09 repeated nominal/POS leakage inside verb and mixed families:
 VN-09 also found entry-family collisions such as `لِمَا` / `لَّمَّا` /
 `ٱللَّمَمَ`, and `يَعْصِمُكَ` / `عَاصِمٍۢ` / `بِعِصَمِ`. Split by strict
 surface, POS, form, suffix, and function before any candidate is reusable.
+
+## Dogfood finding: VN-10 verb-entry nominal/POS leakage
+
+VN-10 found more nominal surfaces travelling through verb-entry families:
+
+- `ٱلْمُسْتَعَانُ` is nominal/passive-participle-like, not the infinitive
+  "to assist".
+- `ٱلْغَيْظِ` / `ٱلْغَيْظَ` are anger/rage nouns inside an enrage family.
+- `ٱلْمَفَرُّ`, `ٱلْوِرْدُ`, `ٱلْبَطْشَةَ`, and `ٱلرِّعَآءُ` need lexical
+  noun, masdar, place, or plural/person review before any verb-entry wording.
+- `ٱلْمُوقَدَةُ` is definite passive-participle/adjectival-looking; do not
+  certify it from an active "to kindle" entry alone.
+- `ٱلْأَسْوَدِ` is adjectival/color morphology; exact POS and i'rab/context
+  outrank root-family prose.
+
+Rule: if a verb-entry tranche yields a definite noun, masdar, participle,
+elative, adjective, or lexical noun, route to nominal/POS review. The row may
+be string-readable, but it is not rich-certified until noun type, case/state,
+derivative class, and any suffix/referent are visible.

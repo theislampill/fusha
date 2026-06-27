@@ -66,3 +66,20 @@ If the lām or bā' contribution is clear enough for public wording, it must be
 visible. If function or attachment is still unknown, use exact blockers such as
 `lam_function_uncertified`, `mood_governor_uncertified`,
 `pp_attachment_uncertified`, or `comparison_attachment_uncertified`.
+
+## Dogfood finding: VN-10 component relations stay gated
+
+VN-10 repeated the PP/function boundary in rows such as:
+
+- `بِغَيْظِكُمْ`: preposition + governed host + suffix + attachment required.
+- `لِيَغِيظَ` / `لِيُضِيعَ`: lām function and mood/governor required before
+  the verb-family host can be used.
+- `لَزُلْفَىٰ` and `لَمَعْزُولُونَ`: raw initial lām is not automatically a
+  purpose or genitive lām.
+- `كِفْلٌۭ` / `كِفْلَيْنِ`: raw kāf-looking spelling does not prove a
+  comparison/preposition; segment evidence is required.
+
+Rule: PP or lām/kāf/bā evidence discovered as a component candidate is a route
+to review, not a public hover. Keep these rows `component_only_blocker` or
+`two_vote_exact_address_review` until attachment, function, and token POS
+agree.

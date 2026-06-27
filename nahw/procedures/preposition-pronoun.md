@@ -77,3 +77,21 @@ VN-09 added two guards:
 Use `not_clitic_surface_prefix` for lexical initial-letter false positives and
 `component_only_blocker` when the preposition/host evidence is below the whole
 written token.
+
+## Dogfood finding: VN-10 bā' and lām rows need relation proof
+
+VN-10 added fresh relation rows:
+
+- `بِغَيْظِكُمْ` is bā' + host noun + `كُمْ`; a verb-family hover such as
+  "to enrage" hides the preposition, host, suffix, and PP attachment.
+- `لِيَغِيظَ` and `لِيُضِيعَ` are lām-on-finite-verb rows. They require lām
+  function, governed mood, and clause relation before any public wording is
+  trusted.
+- `لَزُلْفَىٰ`, `لَمَعْزُولُونَ`, `كِفْلٌۭ`, and `كِفْلَيْنِ` show that raw
+  initial letters can trigger false preposition lanes. Use exact segmentation
+  evidence before routing to a PP/function decision.
+
+If the relation is not certified, emit `preposition_role_uncertified`,
+`lam_function_uncertified`, `mood_governor_uncertified`, or
+`pp_attachment_uncertified`. Do not let component evidence from a host family
+become a whole-token hover.
