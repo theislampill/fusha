@@ -172,6 +172,76 @@ def _display_for(record):
     return {"palette": "qamus-grammar-v1", "segments": rows}
 
 
+def _sarf_pos_for(pos):
+    if pos == "verb":
+        return "fiʿl"
+    if pos in {
+        "particle",
+        "preposition",
+        "conjunction",
+        "subordinating_conjunction",
+        "relative",
+        "interrogative_particle",
+        "equalization_particle",
+        "negative_particle",
+        "accusative_particle",
+        "preventive_particle",
+        "emphatic_particle",
+        "resumption_particle",
+        "result_particle",
+        "supplemental_particle",
+        "cause_particle",
+        "vocative_particle",
+        "prohibitive_particle",
+        "exceptive_particle",
+        "purpose_particle",
+        "comitative_particle",
+        "initial_letters",
+    }:
+        return "ḥarf"
+    if pos == "unknown":
+        return "unknown"
+    return "ism"
+
+
+def _rich_sarf_for(record):
+    pos = record.get("pos")
+    morphology = record.get("morphology") or {}
+    is_verb = pos == "verb"
+    is_nominal = _sarf_pos_for(pos) == "ism"
+    return {
+        "pos": _sarf_pos_for(pos),
+        "root": record.get("root"),
+        "pattern": None,
+        "verb_form": morphology.get("verb_form") if is_verb else "not_applicable",
+        "voice": morphology.get("voice") if is_verb else "not_applicable",
+        "tense_aspect": morphology.get("aspect") if is_verb else "not_applicable",
+        "mood": morphology.get("mood") or ("unknown" if is_verb else "not_applicable"),
+        "person": morphology.get("person") if is_verb else "not_applicable",
+        "number": morphology.get("number") or ("unknown" if is_verb else "not_applicable"),
+        "gender": morphology.get("gender") or ("unknown" if is_verb else "not_applicable"),
+        "noun_number": morphology.get("number") if is_nominal else "not_applicable",
+        "definiteness": morphology.get("state") if is_nominal else "not_applicable",
+        "case": morphology.get("case") if is_nominal else "not_applicable",
+        "derivative_type": "proper_noun" if pos == "proper_noun" else ("common_noun" if is_nominal else "not_applicable"),
+    }
+
+
+def _rich_nahw_for(record, function, role=None, summary=None):
+    syntax = record.get("syntax") or {}
+    return {
+        "function": function,
+        "iʿrab_role": role or syntax.get("role"),
+        "governor": syntax.get("governor"),
+        "governed_by": syntax.get("head"),
+        "pp_attachment": syntax.get("attachment_target_kind"),
+        "idafa_relation": "idafa" if syntax.get("dependency") in {"idafa_head", "idafa_dependent"} else None,
+        "pronoun_referent": None,
+        "clause_relation": syntax.get("clause_kind"),
+        "reasoning_summary": summary or "The parse record preserves the token contribution before hover wording is certified.",
+    }
+
+
 def _validate_invariants(record, seen):
     errors = []
     loc = record.get("loc") or "<missing loc>"
@@ -183,12 +253,32 @@ def _validate_invariants(record, seen):
     seen.add(loc)
     if not LOC_RE.match(str(loc)):
         errors.append("%s: bad loc" % loc)
+    wbw_loc = record.get("wbw_loc")
+    if wbw_loc != "wbw:%s" % loc:
+        errors.append("%s: wbw_loc must equal wbw:%s" % (loc, loc))
 
     surface = record.get("surface")
     if not isinstance(surface, str) or not surface:
         errors.append("%s: surface must be a nonempty string" % loc)
     elif _has_whitespace(surface):
         errors.append("%s: surface must be whitespace-free so the written token stays atomic" % loc)
+
+    if record.get("src") != "qamus":
+        errors.append("%s: src must be qamus" % loc)
+    if record.get("kind") != "authored":
+        errors.append("%s: kind must be authored" % loc)
+    if record.get("lang") != "en":
+        errors.append("%s: lang must be en" % loc)
+    for key in ("gloss", "learner_explanation", "blocker"):
+        if _bad_public_text(record.get(key)):
+            errors.append("%s: %s leaks an internal source label" % (loc, key))
+
+    decision_state = record.get("decision_state")
+    blocker = record.get("blocker")
+    if decision_state in {"pending", "blocked"} and not blocker:
+        errors.append("%s: %s records need an exact blocker reason" % (loc, decision_state))
+    if decision_state in {"rich_candidate", "rich_certified", "token_only_override"} and blocker:
+        errors.append("%s: non-blocked records must not carry blocker text" % loc)
 
     public_boundary = record.get("public_boundary") or {}
     if public_boundary.get("public_gloss_src") != "qamus":
@@ -199,6 +289,16 @@ def _validate_invariants(record, seen):
         errors.append("%s: public_gloss_lang must be en" % loc)
     if public_boundary.get("external_source_names_public") is not False:
         errors.append("%s: external_source_names_public must be false" % loc)
+    if public_boundary.get("public_gloss_src") != record.get("src"):
+        errors.append("%s: public_boundary src must match top-level src" % loc)
+    if public_boundary.get("public_gloss_kind") != record.get("kind"):
+        errors.append("%s: public_boundary kind must match top-level kind" % loc)
+    if public_boundary.get("public_gloss_lang") != record.get("lang"):
+        errors.append("%s: public_boundary lang must match top-level lang" % loc)
+
+    nahw = record.get("nahw") or {}
+    if _bad_public_text(nahw.get("reasoning_summary")):
+        errors.append("%s: nahw.reasoning_summary leaks an internal source label" % loc)
 
     hover_contract = record.get("hover_contract") or {}
     for key in ("must_surface", "must_not_surface", "reason"):
@@ -216,6 +316,10 @@ def _validate_invariants(record, seen):
     for index, component in enumerate(parse_key.get("components") or []):
         if _bad_public_text(component.get("label")) or _bad_public_text(component.get("value")) or _bad_public_text(component.get("note")):
             errors.append("%s: parse_key.components[%d] leaks an internal source label" % (loc, index))
+
+    evidence = record.get("evidence") or {}
+    if decision_state == "rich_certified" and evidence.get("gate") == "never_auto_resolve":
+        errors.append("%s: never_auto_resolve evidence cannot be rich_certified" % loc)
 
     must_surface = hover_contract.get("must_surface") or []
     segments = record.get("segments") or []
@@ -729,7 +833,66 @@ def _sample_records():
             ],
         },
     ]
-    for row, spec in zip(rows, specs):
+    glosses = [
+        "they argued with you",
+        "and by the star",
+        "indeed We",
+        "the earth, land",
+        "and + the sun",
+        "and + the moon",
+        "the foolish ones",
+        "O",
+        "you who",
+        "so We destroyed them",
+    ]
+    learner_explanations = [
+        "The verb stem contributes the action, and the attached kāf contributes the masculine singular object you.",
+        "The written token carries conjunction, bā preposition, article, and host noun contributions.",
+        "The particle contributes emphasis, and the attached pronoun contributes We.",
+        "The article contributes the, while the host noun contributes earth or land.",
+        "The wāw contributes and, the article contributes the, and the host noun contributes sun.",
+        "The wāw contributes and, the article contributes the, and the host noun contributes moon.",
+        "The article contributes the once; the host noun contributes foolish ones without repeating the article.",
+        "The split vocative particle contributes O and points to the following addressee.",
+        "This token carries the vocative support expression; the preceding yā carries O.",
+        "The fā prefix links the clause, the Form IV verb stem contributes destroyed, and the suffix pronouns contribute We and them.",
+    ]
+    nahw_functions = [
+        "finite_verb_with_object_suffix",
+        "conjunction_plus_prepositional_phrase",
+        "accusative_particle_with_attached_pronoun",
+        "definite_genitive_nominal",
+        "coordination",
+        "coordination",
+        "definite_nominal_subject",
+        "vocative_particle",
+        "vocative_support",
+        "finite_verb_with_subject_and_object_suffixes",
+    ]
+    nahw_summaries = [
+        "The object suffix must be preserved in the hover, not hidden as metadata.",
+        "The bā relation and the host noun are both visible grammar contributions.",
+        "The inna construction requires the attached pronoun to remain visible.",
+        "The genitive nominal remains definite because of the article and its syntactic environment.",
+        "The coordinating wāw and article are separate visible contributions before the noun.",
+        "The coordinating wāw and article are separate visible contributions before the noun.",
+        "The article is a separate contribution; duplicating it in the host gloss is a defect.",
+        "The vocative particle should not swallow the following addressee support token.",
+        "The addressee support token should not duplicate the separate yā contribution.",
+        "The verb carries explicit subject and object pronoun segments that must surface before certification.",
+    ]
+    for row, spec, gloss, learner, function, summary in zip(rows, specs, glosses, learner_explanations, nahw_functions, nahw_summaries):
+        row["wbw_loc"] = "wbw:%s" % row["loc"]
+        row["key"] = row["surface"]
+        row["gloss"] = gloss
+        row["src"] = "qamus"
+        row["kind"] = "authored"
+        row["lang"] = "en"
+        row["decision_state"] = "rich_candidate"
+        row["sarf"] = _rich_sarf_for(row)
+        row["nahw"] = _rich_nahw_for(row, function, summary=summary)
+        row["learner_explanation"] = learner
+        row["blocker"] = None
         row["parse_key"] = spec
         row["display"] = _display_for(row)
     return rows
@@ -749,11 +912,11 @@ def _self_test():
         assert n == 10 and not errors, errors
 
         missing_lang = _sample_records()
-        del missing_lang[0]["public_boundary"]["public_gloss_lang"]
+        del missing_lang[0]["lang"]
         bad_lang = os.path.join(td, "missing-lang.jsonl")
         _write_jsonl(bad_lang, missing_lang)
         _, errors = validate_file(bad_lang)
-        assert any("public_gloss_lang" in e for e in errors), errors
+        assert any("missing required key 'lang'" in e or "lang must be en" in e for e in errors), errors
 
         lost_suffix = _sample_records()
         lost_suffix[0]["segments"][1]["gloss_contribution"] = None
@@ -810,6 +973,20 @@ def _self_test():
         _write_jsonl(bad_segment, spaced_segment)
         _, errors = validate_file(bad_segment)
         assert any("segment[0].surface must be whitespace-free" in e for e in errors), errors
+
+        blocked_without_reason = _sample_records()
+        blocked_without_reason[0]["decision_state"] = "blocked"
+        bad_blocked = os.path.join(td, "blocked-without-reason.jsonl")
+        _write_jsonl(bad_blocked, blocked_without_reason)
+        _, errors = validate_file(bad_blocked)
+        assert any("blocked records need an exact blocker reason" in e for e in errors), errors
+
+        mismatch_wbw = _sample_records()
+        mismatch_wbw[0]["wbw_loc"] = "wbw:1:1:1"
+        bad_wbw = os.path.join(td, "mismatch-wbw.jsonl")
+        _write_jsonl(bad_wbw, mismatch_wbw)
+        _, errors = validate_file(bad_wbw)
+        assert any("wbw_loc must equal" in e for e in errors), errors
 
     print("validate_morphosyntax_token_metadata self-test OK")
 

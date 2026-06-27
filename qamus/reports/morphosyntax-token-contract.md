@@ -23,6 +23,34 @@ Add records conforming to `qamus/schemas/morphosyntax-token.schema.json`.
 
 The payload is internal evidence and teaching metadata. It may cite internal labels such as `tafsir-center:analyze_word:13:11:8:irab_sarf`, but the public hover artifact remains `src=qamus`, `kind=authored`, `lang=en`.
 
+## Phase RICH-00 Record Shape
+
+The rich-hover phase upgrades this payload from "metadata attached to a gloss" into the token-level contract that
+answers: can this hover teach the learner what each Arabic piece contributes?
+
+Every rich record must keep identity and reuse keys separate:
+
+- `loc`: exact Qur'an token identity (`S:A:W`).
+- `wbw_loc`: exact rendered hover slot identity (`wbw:S:A:W`).
+- `parse_key.key`: compact grammar-family key. This is useful for reuse and debugging, but it is **not** the
+  primary identity and never authorizes propagation by itself.
+- `src`, `kind`, `lang`: source-clean public boundary, always `qamus`, `authored`, `en`.
+- `decision_state`: one of `rich_candidate`, `rich_certified`, `pending`, `blocked`, or `token_only_override`.
+
+The record carries two teaching views:
+
+- `sarf`: morphology state (`ism` / `fiʿl` / `ḥarf`, root, pattern, verb form, voice, mood, person, number, gender,
+  definiteness, case, derivative type).
+- `nahw`: syntax/function state (function, i'rab role, governor, governed relation, PP attachment, idafa relation,
+  pronoun referent, clause relation, source-clean reasoning summary).
+
+The `segments[]`, `parse_key`, `display`, `hover_contract`, and `learner_explanation` fields must agree. A readable
+English hover is not enough; the row must explain the visible Arabic pieces. If the row cannot do that safely, it
+uses `pending` or `blocked` with an exact `blocker` reason.
+
+The accepted schema deliberately duplicates public boundary fields at the top level and inside `public_boundary`.
+That makes public-leak checks simple for exporters while keeping older validators able to assert the boundary.
+
 ## Minimum Fields By Class
 
 - Verb: POS, form, voice, aspect, mood when applicable, subject agreement, object suffix if present.
@@ -198,6 +226,10 @@ Future rendering should use a separate scrubbed grammar payload or tooltip secti
 Run `tools/validate_morphosyntax_token_metadata.py` against morphosyntax JSONL to enforce:
 
 - unique `loc`
+- exact `wbw_loc=wbw:<loc>`
+- top-level `src=qamus`, `kind=authored`, `lang=en`, matching `public_boundary`
+- `decision_state` with blocker text required for `pending` and `blocked`
+- required `sarf`, `nahw`, and `learner_explanation` fields for the rich teaching layer
 - bounded enums for POS/case/mood/gender/person/number/state
 - required `parse_key` and `display` payloads
 - ASCII `parse_key.key`
@@ -212,6 +244,25 @@ Run `tools/validate_morphosyntax_token_metadata.py` against morphosyntax JSONL t
 Future live/staged render validation should additionally compare `hover_contract.must_surface` against the built
 `wbw-lookup.json` best hover and assert that any visible Arabic token keeps the same normalized text content as
 the source token.
+
+## Certification Gates
+
+A row may be `rich_certified` only after these gates pass:
+
+1. Address gate: `loc` and `wbw_loc` are exact and do not drift.
+2. Public gate: authored Qamus gloss only; no source labels, snippets, screenshots, private paths, or copied text.
+3. Sarf gate: POS, root/pattern/form/voice/mood/agreement/clitics/suffixes/articles are accounted for where
+   applicable.
+4. Nahw gate: function, i'rab, case/mood, governor, PP/jar-majrur, idafa, clause relation, vocative/exception/oath,
+   and referent are accounted for where applicable.
+5. Learner gate: the explanation teaches the visible Arabic contribution rather than merely restating the English.
+6. Two-vote/source gate: grammar-sensitive rows require two independent checks that agree on conclusion and reason;
+   source triangulation is internal-only evidence.
+7. Renderer gate: `display.palette=qamus-grammar-v1` and segment classes are valid. If live rendering cannot display
+   the data yet, emit a renderer requirement rather than claiming live support.
+
+The Nature paper about orthogonalized state-machine learning may be cited in curriculum architecture as an analogy
+for hidden-state separation, but it is not Arabic linguistic evidence and must never appear in hover provenance.
 
 ## Kawkab Coverage Gate
 

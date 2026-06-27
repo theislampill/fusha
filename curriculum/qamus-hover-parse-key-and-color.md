@@ -13,6 +13,10 @@ Every future rich hover should be able to answer three questions:
 2. How is the Arabic written token composed?
 3. Which parse facts made that gloss safe, pending, or blocked?
 
+Phase RICH-00 adds a fourth question:
+
+4. Can this hover teach the learner what each Arabic piece contributes?
+
 The public best gloss remains concise and source-clean:
 
 ```json
@@ -23,6 +27,45 @@ The breakdown belongs in the separate morphosyntax layer described by
 [`../qamus/reports/morphosyntax-token-contract.md`](../qamus/reports/morphosyntax-token-contract.md)
 and validated by
 [`../tools/validate_morphosyntax_token_metadata.py`](../tools/validate_morphosyntax_token_metadata.py).
+
+## Rich Record Contract
+
+Do not treat `parse_key` as the token identity. The identity stack is:
+
+- `loc` = exact Qur'an word address (`S:A:W`).
+- `wbw_loc` = exact rendered hover slot (`wbw:S:A:W`).
+- `qamus` entry/sense linkage = lexicon identity when resolved.
+- `parse_key.key` = reusable grammar-family key only after sarf/nahw gates say reuse is safe.
+
+A rich record carries public authored text plus teaching metadata:
+
+```json
+{
+  "loc": "33:63:1",
+  "wbw_loc": "wbw:33:63:1",
+  "surface": "يَسْأَلُكَ",
+  "gloss": "ask you",
+  "src": "qamus",
+  "kind": "authored",
+  "lang": "en",
+  "decision_state": "rich_candidate",
+  "parse_key": {"key": "V:I:IMPF:ACT:3MS+OBJ.2MS", "summary": "Form I imperfect active verb with attached object pronoun."},
+  "sarf": {"pos": "fiʿl", "root": "س أ ل", "verb_form": "I"},
+  "nahw": {"function": "finite_verb", "pronoun_referent": "2ms addressee"},
+  "segments": [
+    {"surface": "يَ", "role": "verb_prefix", "gloss_contribution": "3ms imperfect marker"},
+    {"surface": "سْأَلُ", "role": "stem", "gloss_contribution": "ask"},
+    {"surface": "كَ", "role": "object_pronoun", "gloss_contribution": "you"}
+  ],
+  "learner_explanation": "The imperfect verb stem contributes ask, and the attached kaf contributes you."
+}
+```
+
+The example is a contract shape, not an authorization to apply that hover live. Live apply remains a separate,
+owner-gated process with backup, rebuild, validation, public readback, and rollback.
+
+If a row is grammar-sensitive and the two checks agree on English but disagree on the grammatical reason, the row
+is not rich-certified. It stays pending or blocked with an exact reason.
 
 ## What The ZIP Packs Add
 
@@ -153,6 +196,18 @@ inside the visible word.
   decides the wording, the parse key must record the relation or leave the row pending.
 - If QAC concept metadata flags a person/place/people/plant/body-part/etc., use it for routing
   and curriculum grouping only. It is not a translation source.
+- If a row depends on particle function, i'rab, case, mood, PP attachment, idafa, vocative/exception/oath,
+  attached-pronoun referent, or token-only override, require two independent checks that agree on conclusion and
+  reason before `rich_certified`.
+- If the renderer cannot show the rich breakdown yet, emit a renderer requirement instead of pretending the row is
+  live-rich.
+
+## Hidden-State Curriculum Frame
+
+The Nature paper on orthogonalized state-machine learning is useful only as architecture analogy: learners and the
+system start with same-looking surfaces, then sarf/nahw split them into distinct hidden states. That supports the
+parse-key/curriculum idea, but it is not Arabic evidence. Do not cite it for Qur'anic grammar decisions and do not
+put it in public hover provenance.
 
 ## Drill Link
 

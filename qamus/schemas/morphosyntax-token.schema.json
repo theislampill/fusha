@@ -4,7 +4,7 @@
   "title": "Qamus per-token morphosyntax metadata",
   "description": "Internal, source-addressed grammar metadata for a Quran token. This is separate from the concise public hover gloss. It records POS, morphology, clitics, case/mood/state, agreement, and dependency links so hovers can be checked and future teaching UI can show a breakdown without stuffing source labels or long grammar notes into data-tr.",
   "type": "object",
-  "required": ["loc", "surface", "pos", "parse_key", "display", "evidence", "public_boundary"],
+  "required": ["loc", "wbw_loc", "surface", "key", "gloss", "src", "kind", "lang", "decision_state", "pos", "sarf", "nahw", "parse_key", "display", "learner_explanation", "blocker", "evidence", "public_boundary"],
   "additionalProperties": false,
   "properties": {
     "loc": {
@@ -12,17 +12,85 @@
       "pattern": "^\\d{1,3}:\\d{1,3}:\\d{1,3}$",
       "description": "Quran token address S:A:W."
     },
+    "wbw_loc": {
+      "type": "string",
+      "pattern": "^wbw:\\d{1,3}:\\d{1,3}:\\d{1,3}$",
+      "description": "Exact Qamus word-by-word hover slot address. This is the rendered hover identity, separate from the Quran token identity."
+    },
     "surface": {
       "type": "string",
       "minLength": 1,
       "pattern": "^[^\\s]+$",
       "description": "Exact written Quran token surface. Must stay whitespace-free; breakdown belongs in segments, not visible gaps."
     },
+    "key": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Lookup/display key for the token. This is not certification; norm-only recall is never enough for rich certification."
+    },
+    "gloss": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Concise, authored Qamus hover contribution. It must be source-clean and may not copy external wording."
+    },
+    "src": { "const": "qamus" },
+    "kind": { "const": "authored" },
+    "lang": { "const": "en" },
+    "decision_state": {
+      "type": "string",
+      "enum": ["rich_candidate", "rich_certified", "pending", "blocked", "token_only_override"],
+      "description": "Rich-hover state. Rich certification requires the address, public-boundary, sarf, nahw, learner, source/two-vote, and renderer gates."
+    },
     "lemma": { "type": ["string", "null"] },
     "root": { "type": ["string", "null"] },
     "pos": {
       "type": "string",
       "enum": ["noun", "proper_noun", "pronoun", "demonstrative", "adjective", "participle", "masdar", "verb", "particle", "preposition", "conjunction", "subordinating_conjunction", "relative", "time_adverb", "locative_adverb", "interrogative", "interrogative_particle", "equalization_particle", "negative_particle", "accusative_particle", "preventive_particle", "emphatic_particle", "resumption_particle", "result_particle", "supplemental_particle", "cause_particle", "vocative_particle", "prohibitive_particle", "exceptive_particle", "purpose_particle", "comitative_particle", "initial_letters", "number", "unknown"]
+    },
+    "sarf": {
+      "type": "object",
+      "description": "Learner/reviewer-facing morphology state. This is the Fusha explanation layer, not a public provenance label.",
+      "required": ["pos", "root", "pattern", "verb_form", "voice", "tense_aspect", "mood", "person", "number", "gender", "noun_number", "definiteness", "case", "derivative_type"],
+      "additionalProperties": false,
+      "properties": {
+        "pos": { "type": "string", "enum": ["ism", "fiʿl", "ḥarf", "unknown"] },
+        "root": { "type": ["string", "null"] },
+        "pattern": { "type": ["string", "null"] },
+        "verb_form": { "type": ["string", "null"] },
+        "voice": { "type": ["string", "null"], "enum": ["active", "passive", "unknown", "not_applicable", "null"] },
+        "tense_aspect": { "type": ["string", "null"], "enum": ["perfect", "imperfect", "imperative", "participle", "masdar", "not_applicable", "unknown", "null"] },
+        "mood": { "type": ["string", "null"], "enum": ["indicative", "subjunctive", "jussive", "imperative", "not_applicable", "unknown", "null"] },
+        "person": { "type": ["string", "null"], "enum": ["1", "2", "3", "not_applicable", "unknown", "null"] },
+        "number": { "type": ["string", "null"], "enum": ["singular", "dual", "plural", "not_applicable", "unknown", "null"] },
+        "gender": { "type": ["string", "null"], "enum": ["masculine", "feminine", "common", "none", "not_applicable", "unknown", "null"] },
+        "noun_number": { "type": ["string", "null"], "enum": ["singular", "dual", "plural", "collective", "not_applicable", "unknown", "null"] },
+        "definiteness": { "type": ["string", "null"], "enum": ["definite", "indefinite", "construct", "proper", "none", "not_applicable", "unknown", "null"] },
+        "case": { "type": ["string", "null"], "enum": ["nominative", "accusative", "genitive", "jussive", "none", "not_applicable", "unknown", "null"] },
+        "derivative_type": {
+          "type": ["string", "null"],
+          "enum": ["masdar", "ism_fail", "ism_mafool", "sifa_mushabbaha", "sighat_mubalaghah", "ism_tafdil", "ism_zaman_makan", "ism_ala", "proper_noun", "common_noun", "not_applicable", "unknown", "null"]
+        }
+      }
+    },
+    "nahw": {
+      "type": "object",
+      "description": "Learner/reviewer-facing syntax/function state that explains why the token means this here.",
+      "required": ["function", "iʿrab_role", "governor", "governed_by", "pp_attachment", "idafa_relation", "pronoun_referent", "clause_relation", "reasoning_summary"],
+      "additionalProperties": false,
+      "properties": {
+        "function": { "type": ["string", "null"] },
+        "iʿrab_role": { "type": ["string", "null"] },
+        "governor": { "type": ["string", "null"] },
+        "governed_by": { "type": ["string", "null"] },
+        "pp_attachment": { "type": ["string", "null"] },
+        "idafa_relation": { "type": ["string", "null"] },
+        "pronoun_referent": { "type": ["string", "null"] },
+        "clause_relation": { "type": ["string", "null"] },
+        "reasoning_summary": {
+          "type": "string",
+          "description": "Short source-clean reasoning. Use evidence sidecars for private source details."
+        }
+      }
     },
     "morphology": {
       "type": "object",
@@ -157,6 +225,15 @@
         "must_not_surface": { "type": "array", "items": { "type": "string" } },
         "reason": { "type": ["string", "null"] }
       }
+    },
+    "learner_explanation": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Source-clean sentence explaining what the visible Arabic pieces contribute. It must not merely restate the English gloss."
+    },
+    "blocker": {
+      "type": ["string", "null"],
+      "description": "Exact pending or blocked reason. Null only when the row is not pending/blocked."
     },
     "evidence": {
       "type": "object",
