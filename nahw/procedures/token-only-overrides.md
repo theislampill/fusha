@@ -54,6 +54,22 @@ gloss.
 - `بِٱلْمَعْرُوفِ` and the 22:18 wāw + article + host cluster remain
   component-only or two-vote rows until the whole written token is parsed.
 
+## VN-19 examples
+
+- `قِطَّنَا`, `يَوْمُكُمُ`, `يَوْمِكُمْ`, `يَوْمِهِمْ`, and
+  `يَوْمَهُمُ` share common nominal families, but suffix, case, and referent
+  make each hover exact-addressed.
+- `ٱلْيَوْمَ`, `يَوْمٍ`, `ٱلْأَيَّامُ`, and related day-family rows cannot
+  receive one family-wide wording until definiteness, case, number, and
+  sentence role are known.
+- `سَنَةٍۢ`, `سَنَةٍ`, and `سَنَةًۭ` may be string-populated as "year", but
+  their case and i'rab context still decide whether they can become
+  learner-ready.
+- `أَطْرَافِهَا`, `طَرْفُهُمْ`, and `وَأَطْرَافَ` require exact token
+  accounting for host number/case plus suffix or wāw contribution.
+- `ٱلسَّبْتِ` must stay exact-addressed when the visible hover leaks
+  verb-infinitive prose into a noun token.
+
 ## Output
 
 Emit a token-only row with:

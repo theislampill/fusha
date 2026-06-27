@@ -230,3 +230,18 @@ rule → recognition Q → production Q → answer. Generated/extendable from
 Rule: VN-18 rows can be string-populated while still unteachable. A rich hover
 needs noun type, derivative class, definiteness, case/state, suffix or referent
 role, and nahw context.
+
+## <a name="vn19-day-sabbath-edge"></a>21. VN-19: day, Sabbath, and edge-family nouns
+
+| token | tempting shortcut | required review |
+|---|---|---|
+| `ٱلسَّبْتِ` | verb-like "to observe the Sabbath" | noun token, definiteness, case, and context |
+| `قِطَّنَا` | bare "share" | noun host plus `نَا` suffix/referent |
+| `يَوْمُكُمُ` / `يَوْمِكُمْ` | day-family gloss | suffix/addressee plus case/context |
+| `يَوْمِهِمْ` / `يَوْمَهُمُ` | host-only "day" | third-person suffix/referent and role |
+| `أَطْرَافِهَا` / `طَرْفُهُمْ` | edge/side family gloss | noun host plus suffix and i'rab role |
+| `وَأَطْرَافَ` | edge host candidate | wāw, case, and nominal context |
+
+Rule: VN-19 noun rows can be populated and still unteachable. A rich hover
+needs noun type, number, definiteness, case/state, suffix/referent where
+present, and nahw role.

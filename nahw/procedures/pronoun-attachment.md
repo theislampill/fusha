@@ -183,6 +183,24 @@ Rule: the suffix is part of the visible token contribution. VN-18 rows must
 state host type, suffix role, and referent/context before they can become
 learner-ready hovers.
 
+## Dogfood finding: VN-19 day/share/edge suffixes need exact referents
+
+VN-19 adds noun-host suffix rows and component finite rows:
+
+- `قِطَّنَا` requires the share/portion host plus the attached `نَا`
+  possessor or contextual referent. A bare "share" hover is below rich
+  certification.
+- `يَوْمُكُمُ`, `يَوْمِكُمْ`, and `يَوْمِهِمْ` require day-family host,
+  case/context, and the addressee or third-person suffix contribution.
+- `أَطْرَافِهَا` and `طَرْفُهُمْ` require edge/side host plus the attached
+  suffix referent.
+- `لِيَسْحَتَكُم` carries a finite host plus `كُم`; because lām and mood are
+  also present, it stays two-vote/exact-address gated.
+
+Rule: VN-19 suffix rows must state host type, suffix role, and referent/context
+before they can become learner-ready hovers. Noun hosts route to
+possessive/referent review; finite hosts route to object/addressee review.
+
 **Test:** [`nahw/evals/suffix-pronoun-eval.jsonl`](../evals/suffix-pronoun-eval.jsonl);
 rules [`nahw/rules/pronoun-attachment-rules.json`](../rules/pronoun-attachment-rules.json).
 

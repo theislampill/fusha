@@ -237,3 +237,21 @@ Rule: route VN-18 function rows to `preposition_role_uncertified`,
 `oath_or_conjunction_function_uncertified`, `lam_function_uncertified`,
 `mood_governor_uncertified`, or `component_only_blocker` until the function
 and attachment/reasoning are certified.
+
+## Dogfood finding: VN-19 relation rows include false-positive noun surfaces
+
+VN-19 repeats the distinction between real function particles and lexical
+surfaces that merely look relation-sensitive:
+
+- `سَنَةٍۢ`, `سَنَةٍ`, and `سَنَةًۭ` repeatedly require exact case, i'rab, and
+  relation context. They are not PP rows unless a segmented preposition or
+  governing relation is actually present.
+- `لَنَسْفَعًۢا` and `لِيَسْحَتَكُم` require lām/function, mood, finite host,
+  and suffix review; host prose alone cannot certify the hover.
+- `وَأَطْرَافَ`, `فَسَاهَمَ`, `فَشَرِّدْ`, and `وَٱشْتَعَلَ` carry wāw/fā'
+  function decisions that must be certified before propagation.
+
+Rule: route VN-19 rows to `not_clitic_surface_prefix`,
+`preposition_role_uncertified`, `lam_function_uncertified`,
+`mood_governor_uncertified`, or `component_only_blocker` as appropriate. Do
+not accept raw first-letter or host-family evidence as a relation proof.

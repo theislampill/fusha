@@ -440,3 +440,20 @@ propagate without an impact preview and compatible sarf/nahw reasons.
 VN-18 keeps one-family and function-stack rows exact-addressed. Do not let a
 common English family gloss hide suffixes, prepositions, wāw/fā'/lām functions,
 or case/mood evidence.
+
+## 4u. VN-19 day-family, suffix, and relation rows
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `قِطَّنَا` | noun host plus `نَا` possessor/referent | host-only `share` |
+| `يَوْمُكُمُ` / `يَوْمِكُمْ` | day host plus suffix and case/context | bare `day` |
+| `يَوْمِهِمْ` / `يَوْمَهُمُ` | third-person suffix/referent plus role | family-wide propagation |
+| `سَنَةٍۢ` / `سَنَةًۭ` | case/i'rab and exact relation context | assuming string `year` is rich-certified |
+| `أَطْرَافِهَا` / `طَرْفُهُمْ` | edge/side host plus suffix/referent | host-only edge/side wording |
+| `لَنَسْفَعًۢا` / `لِيَسْحَتَكُم` | lām/function, finite host, mood, and suffix where present | host evidence as whole-token hover |
+| `وَأَطْرَافَ` / `فَسَاهَمَ` | wāw/fā' function plus host | component evidence as propagation proof |
+| renderer-only rows | rich metadata backfill if wording survives review | string presence as certification |
+
+VN-19 keeps day, year, edge, and finite-function rows exact-addressed. Do not
+let common entry prose hide suffixes, wāw/fā'/lām functions, case/i'rab, or
+component-only evidence boundaries.

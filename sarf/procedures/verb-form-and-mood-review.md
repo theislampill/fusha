@@ -466,3 +466,22 @@ object contribution:
 Rule: VN-18 finite rows remain exact-address repair candidates. Do not let
 dictionary infinitives or root-family prose stand in for aspect, form,
 agreement, and suffix/object contribution.
+
+## Dogfood finding: VN-19 finite rows need tense, agreement, and mood proof
+
+VN-19 adds finite rows whose current hover can read like entry prose rather
+than a token contribution:
+
+- `تَذْهَلُ`, `تَذُودَانِ`, `أَذَاعُوا۟`, `رَبِحَت`, `يَرْتَعْ`,
+  and `رَانَ` need exact finite form, subject/agreement, and context before
+  they can teach a learner.
+- `لَنَسْفَعًۢا`, `فَسَاهَمَ`, `فَشَرِّدْ`, `وَٱشْتَعَلَ`, and
+  `لِيَسْحَتَكُم` additionally carry function particles or suffixes, so their
+  host evidence is never a complete hover.
+- If a finite token is governed by lām, fā', wāw, negation, or another
+  function piece, sarf may identify the host but nahw must certify the
+  function, mood, and clause relation before wording can propagate.
+
+Rule: VN-19 finite rows remain exact-address repair candidates. A future hover
+must name the finite form, voice/aspect/mood where relevant, person/number/
+gender, and any attached object or function piece.

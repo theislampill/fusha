@@ -350,3 +350,21 @@ too broad for learners:
 Rule: VN-18 nominal rows stay below rich certification until noun type,
 derivative class, definiteness, case/state, suffix/referent, and context are
 visible. Root or entry-family agreement alone is not enough.
+
+## Dogfood finding: VN-19 day, Sabbath, and edge rows require nominal review
+
+VN-19 adds nominal rows where a populated string can still mis-teach the token:
+
+- `ٱلسَّبْتِ` is a noun row; a hover shaped like "to observe the Sabbath" is
+  verb-infinitive leakage unless the exact token is reviewed as a nominal.
+- `قِطَّنَا`, `يَوْمُكُمُ`, `يَوْمِكُمْ`, `يَوْمِهِمْ`, and
+  `يَوْمَهُمُ` are nominal hosts with suffix/referent or case/context
+  contribution. A bare "day" or "share" family gloss is not learner-complete.
+- `أَطْرَافِهَا`, `طَرْفُهُمْ`, and `وَأَطْرَافَ` need noun type, case,
+  number, and suffix or wāw contribution before entry reuse is safe.
+- `وَأَتْرَفْنَٰهُمْ` shows why root-near component evidence must not pull a
+  finite verb into a noun lane.
+
+Rule: VN-19 nominal rows stay below rich certification until noun type,
+definiteness, case/state, number, suffix/referent, and nahw role are visible.
+Root or surface-family agreement alone is not enough.

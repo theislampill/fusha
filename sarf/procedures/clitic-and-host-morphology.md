@@ -368,3 +368,22 @@ Rule: VN-18 component candidates remain review fuel only, even when the current
 visible string looks plausible. A row can gain rich component evidence while
 staying blocked; do not count component candidates toward propagation safety,
 closure coverage, hover coverage, or live apply.
+
+## Dogfood finding: VN-19 component rows include finite hosts and lexical traps
+
+VN-19 repeated the same component boundary in a tranche where component
+evidence can look tempting because the host is a real verb or familiar noun:
+
+- `لَنَسْفَعًۢا`, `فَسَاهَمَ`, `فَشَرِّدْ`, `وَٱشْتَعَلَ`, and
+  `لِيَسْحَتَكُم` expose finite or imperative host evidence, but the whole
+  token still includes lām, fā', wāw, suffix, or mood/function review.
+- `وَأَطْرَافَ` exposes a useful edge/side host, but the wāw and exact case
+  still belong to the visible token.
+- `وَأَتْرَفْنَٰهُمْ` is especially unsafe as component evidence: a lexical
+  or root-near noun lane can see part of the surface, while the whole token is
+  a finite verb plus suffix.
+
+Rule: VN-19 component candidates must stay below the whole-token lane. Keep
+`source=rich_wbw_segment` component candidates separate from
+whole-token Qamus candidates, and keep the row at `component_only_blocker` or
+exact-address review until the full written token is parsed.

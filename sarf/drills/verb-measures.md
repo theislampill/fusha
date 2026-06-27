@@ -353,3 +353,18 @@ English hover.
 
 VN-18 keeps these rows non-applyable. The exercise is to name finite form,
 agreement, and suffix/object contribution before proposing a hover candidate.
+
+## X. VN-19 dogfood: finite row review before dictionary prose
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `تَذْهَلُ` / `تَذُودَانِ` | bare infinitive entry prose | finite imperfect form and subject/agreement |
+| `أَذَاعُوا۟` / `رَبِحَت` | dictionary gloss only | perfect form, agreement, and context |
+| `يَرْتَعْ` / `رَانَ` | root-family wording only | exact finite shape and clause role |
+| `لَنَسْفَعًۢا` | host evidence without lām/function | lām/negation or emphasis function plus finite/mood review |
+| `لِيَسْحَتَكُم` | host-only destruction wording | lām function, finite host, and `كُم` object |
+| component rows | host family as whole-token proof | prefix/function/host/suffix parse |
+
+VN-19 keeps finite rows non-applyable. The exercise is to name verb form,
+voice/aspect/mood where relevant, person/number/gender, and object/function
+pieces before proposing any English hover.
