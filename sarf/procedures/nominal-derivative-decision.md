@@ -311,3 +311,22 @@ learner hover:
 Rule: material nouns and participles can be string-correct but not
 rich-certified. Keep them in renderer/nominal review or exact-address repair
 until noun type, definiteness, case/state, and suffix contribution are clear.
+
+## Dogfood finding: VN-17 noun/POS rows can sit inside verb-looking families
+
+VN-17 found more rows where root-family or entry prose would mis-teach the
+token:
+
+- `رَجًّا`, `زَلَقًا`, `شُغُلٍۢ`, `ظُفُرٍ`, and `عَبَثًۭا`
+  are nominal, masdar, lexical, or adverbial-looking rows. They do not accept
+  a finite-verb infinitive hover merely because their root has a verb entry.
+- `سَٰبِغَٰتٍۢ`, `شَٰخِصَةٌ`, `عُتُلٍّ`, and `وَغَوَّاصٍۢ` need
+  derivative/adjective/participle class plus case/state/context before reuse.
+- `سَلَّمَ` exposed a POS-linkage collision: a noun-entry lane can still show
+  verb-infinitive prose. Exact POS and source address decide whether this is a
+  noun repair candidate, a token-only override, or a blocker.
+
+Rule: if a VN-17 row is nominal, derivative, adjective, masdar, lexical noun,
+or POS-colliding, block verb-infinitive reuse. Rich certification needs noun
+type, derivative class, definiteness, case/state, suffix/referent when present,
+and nahw role.

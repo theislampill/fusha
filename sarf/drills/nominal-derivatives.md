@@ -200,3 +200,19 @@ rule → recognition Q → production Q → answer. Generated/extendable from
   host-only gloss does not explain the written token.
 - Gate: exact noun type, state, case, number, and suffix must be named before a
   nominal row can move beyond `populated_uncertified`.
+
+## <a name="vn17-noun-pos-collisions"></a>19. VN-17: noun/POS collisions and suffix hosts
+
+- Recognition: `رَجًّا`, `زَلَقًا`, `شُغُلٍۢ`, `ظُفُرٍ`, and
+  `عَبَثًۭا` are nominal, masdar, lexical, or adverbial rows. They must not
+  inherit a finite-verb infinitive hover from the entry family.
+- Recognition: `سَٰبِغَٰتٍۢ`, `شَٰخِصَةٌ`, `عُتُلٍّ`, and
+  `وَغَوَّاصٍۢ` need derivative/adjective/participle class, case/state, and
+  context before any public wording is trusted.
+- Recognition: `سَلَّمَ` appeared in a noun-entry lane with an infinitive-style
+  hover. Treat this as exact POS/linkage review, not a surface-family decision.
+- Recognition: `أَصْلُهَا`, `أُصُولِهَا`, `كُرْسِيُّهُ`, and
+  `زَيْتُهَا` are noun hosts with attached suffix/referent contribution.
+- Gate: if the row is nominal, prove noun type, number, definiteness,
+  case/state, suffix/referent where present, and nahw role. Otherwise keep it
+  token-only or pending.

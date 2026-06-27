@@ -406,3 +406,20 @@ need exact-address evidence before live apply.
 VN-16 makes the segmentation step explicit: a real lām, bā', or fā' must be
 proved before nahw routes the row as a governor or attachment. If the letter is
 part of the lexical host, the row stays in sarf/POS or suffix review.
+
+## 4s. VN-17 token-only overrides, suffixes, and relation rows
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `ٱلْأَنفَالِ` / `ٱلْأَنفَالُ` | exact case/context and token-only impact preview | surface-family propagation |
+| `أَصْلُهَا` / `أُصُولِهَا` | noun host number plus `هَا` referent | host-only root/origin wording |
+| `بِمُزَحْزِحِهِۦ` | bā' + host + `هِۦ` and PP attachment | host-family evidence only |
+| `وَلِيُمَحِّصَ` | wāw + lām function + finite host and mood | treating host evidence as a hover |
+| `لَيُزْلِقُونَكَ` | lām/function + finite host + `كَ` object | component-only slipping evidence |
+| `قَوَارِيرَ` / `قَوَارِيرَا۠` | exact orthography/case and context | one surface-family gloss |
+| `أَوْتَادًا` / `ٱلْأَوْتَادِ` | definiteness, case, and sentence role | raw noun family reuse |
+| renderer-only rows | rich metadata backfill if wording survives review | string presence as certification |
+
+VN-17 adds a dedicated token-only gate: the exact Qur'anic token remains the
+identity. Surface and parse families can suggest siblings, but they cannot
+propagate without an impact preview and compatible sarf/nahw reasons.

@@ -34,6 +34,7 @@ This SKILL is the fast context gate + contract; each step is a short procedure. 
 - [`procedures/pp-attachment-review.md`](procedures/pp-attachment-review.md) — decide the PP head: verb, nominal, hidden hāl, hidden ṣifa, or clause.
 - [`procedures/irab-case-mood.md`](procedures/irab-case-mood.md) — case/mood reading → why it forces the two-vote gate.
 - [`procedures/referent-context.md`](procedures/referent-context.md) — referent guard, divine-Name vs attribute, contronyms.
+- [`procedures/token-only-overrides.md`](procedures/token-only-overrides.md) — exact-address token overrides when surface/parse families are unsafe.
 - [`procedures/exception-and-vocative-review.md`](procedures/exception-and-vocative-review.md) — route vocative and exceptive structures with governed case roles.
 - [`procedures/grammar-risk-gate.md`](procedures/grammar-risk-gate.md) — the GrammarProblems gate (answer AND reason).
 - [`procedures/grammar-problems-issue-clusters.md`](procedures/grammar-problems-issue-clusters.md) — Phase 3.5 grouped issue buckets before corpus-facing authoring.

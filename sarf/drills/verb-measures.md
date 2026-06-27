@@ -323,3 +323,19 @@ review or component-only blocker.
 VN-16 keeps the same hard rule: a finite verb hover is not certified by the
 entry's infinitive prose. Passive voice, derived form, subject/agreement, and
 attached objects are learner-visible parts of the token.
+
+## V. VN-17 dogfood: passive, weak, and suffix-heavy finite rows
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `رُجَّتِ` | bare `to shake violently` | passive/perfect voice, agreement, and context |
+| `أَرْكَسَهُم` / `أُرْكِسُوا` | entry prose `to regress` | Form IV/passive-active distinction plus suffix or subject |
+| `زُحْزِحَ` | `to be kept away` as entry prose only | passive finite form and exact context |
+| `سُعِدُوا` | happiness family gloss | passive/finite form and plural agreement |
+| `تَشْخَصُ` / `يَشْوِى` / `صَغَتْ` | root-family infinitive wording | exact finite shape, weak/hamzated/root review, and subject |
+| `يَطْمِثْهُنَّ` / `أَظْفَرَكُمْ` | dictionary infinitive without object | finite host plus attached object suffix |
+| `لَيُزْلِقُونَكَ` | component host evidence | lām/function + finite host + `كَ` object |
+
+VN-17 keeps finite rows non-applyable. The exercise is to state the verb form,
+voice/aspect/mood, person/number/gender, and suffix role before proposing any
+English hover.

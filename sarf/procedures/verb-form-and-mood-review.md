@@ -430,3 +430,21 @@ missing form, voice, or object accounting:
 Rule: VN-16 rows remain exact-address repair candidates. Passive voice,
 reduplicated/derived stems, and object suffixes are part of the token
 contribution, not optional metadata.
+
+## Dogfood finding: VN-17 finite and passive rows remain exact-addressed
+
+VN-17 added another batch where a populated string can look acceptable while
+still failing the finite-token contract:
+
+- `رُجَّتِ`, `أُرْكِسُوا`, `زُحْزِحَ`, and `سُعِدُوا` require voice,
+  aspect, and agreement review. Do not replace them with dictionary prose such
+  as "to shake", "to avert", or "to be happy".
+- `أَرْكَسَهُم`, `لَيُزْلِقُونَكَ`, `يَطْمِثْهُنَّ`,
+  and `أَظْفَرَكُمْ` require finite host plus visible object/addressee suffix.
+- `تَشْخَصُ`, `يَشْوِى`, and `صَغَتْ` require exact form, subject agreement,
+  weak/hamzated/root-sensitive review, and context before English wording.
+
+Rule: finite VN-17 rows are repair candidates, not token decisions. Keep them
+below live apply until form, voice/aspect/mood, person/number/gender, and
+attached suffix roles are visible to the learner and agreed by the required
+sarf/nahw gate.

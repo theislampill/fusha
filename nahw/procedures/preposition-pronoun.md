@@ -202,3 +202,19 @@ segmentation:
 
 Rule: mark false positives as `not_clitic_surface_prefix`. Only a segmented
 particle can enter preposition/comparison/lām-function review.
+
+## Dogfood finding: VN-17 bā' and lām relation rows need whole-token proof
+
+VN-17 adds relation rows where a host-family match would be incomplete:
+
+- `بِمُزَحْزِحِهِۦ` contains bā' + a governed host + `هِۦ`; the hover cannot
+  be certified from the host "remover/delayer" alone.
+- `وَلِيُمَحِّصَ` contains a prefixed wāw plus a lām-on-imperfect structure.
+  Sarf can identify the Form II host, but nahw must decide the lām function,
+  mood/governor, and clause relation before wording can propagate.
+
+Rule: VN-17 relation rows require segmented preposition/function, governed
+host, suffix where present, and attachment or mood proof. Use
+`preposition_role_uncertified`, `lam_function_uncertified`,
+`mood_governor_uncertified`, or `component_only_blocker`; do not accept a
+host-only hover.

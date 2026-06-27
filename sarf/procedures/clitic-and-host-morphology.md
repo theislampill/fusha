@@ -331,3 +331,22 @@ needs:
 Rule: in VN-16, component candidates remain review fuel only. They may create
 blocker rows and drills; they must not create whole-token certification or
 family-wide propagation.
+
+## Dogfood finding: VN-17 component candidates still cannot certify the token
+
+VN-17 repeated the same boundary in a fresh verb/noun tranche:
+
+- `بِمُزَحْزِحِهِۦ`, `لَيُزْلِقُونَكَ`, `وَأَسْبَغَ`,
+  `وَسَعِيدٌۭ`, `وَيَسْفِكُ`, `أَشْكُوا۟`, `وَاضْمُمْ`,
+  and `وَٱضْمُمْ` may expose a useful host or function component.
+- Those components remain `source=rich_wbw_segment` evidence below the written
+  token. They cannot supply a whole-token Qamus entry, source agreement,
+  propagation safety, hover coverage, or live apply.
+- If the token contains a prefix, article, lām/bā'/wāw/fā' function, or suffix
+  pronoun, the learner breakdown must show that piece before the hover can be
+  trusted.
+
+Rule: VN-17 rows can gain component candidates while remaining blockers. Keep
+component candidates in their own field or edge label, and keep the whole-token
+lane at `component_only_blocker`, `rich_metadata_plus_exact_address_review`, or
+`two_vote_exact_address_review` until the full surface is parsed.

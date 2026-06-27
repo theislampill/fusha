@@ -151,6 +151,22 @@ Rule: the suffix row is not certified by showing only the host gloss. Record
 whether the suffix is object, possessor, subject/agreement, or referent, and
 route uncertain cases to two-vote review.
 
+## Dogfood finding: VN-17 suffix rows split nominal possessors from verb objects
+
+VN-17 repeated the suffix rule across noun hosts and finite hosts:
+
+- `أَصْلُهَا`, `أُصُولِهَا`, `مَضَاجِعِهِمْ`, `غِطَآءَكَ`,
+  `كُرْسِيُّهُ`, `زَيْتُهَا`, `غَزْلَهَا`, and `أَقْفَالُهَا`
+  are nominal hosts with possessor or referent-sensitive suffixes.
+- `أَرْكَسَهُم`, `لَيُزْلِقُونَكَ`, `يَطْمِثْهُنَّ`,
+  and `أَظْفَرَكُمْ` are finite hosts with object/addressee suffixes.
+- A populated hover that can be read without the suffix is still
+  `populated_uncertified` or `token_only_override`.
+
+Rule: VN-17 suffix rows must name host type and suffix role before they are
+learner-ready. Route noun hosts to possessive/referent review and finite hosts
+to verb-object/addressee review.
+
 **Test:** [`nahw/evals/suffix-pronoun-eval.jsonl`](../evals/suffix-pronoun-eval.jsonl);
 rules [`nahw/rules/pronoun-attachment-rules.json`](../rules/pronoun-attachment-rules.json).
 
