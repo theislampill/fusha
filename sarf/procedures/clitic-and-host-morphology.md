@@ -350,3 +350,21 @@ Rule: VN-17 rows can gain component candidates while remaining blockers. Keep
 component candidates in their own field or edge label, and keep the whole-token
 lane at `component_only_blocker`, `rich_metadata_plus_exact_address_review`, or
 `two_vote_exact_address_review` until the full surface is parsed.
+
+## Dogfood finding: VN-18 component rows include high-frequency function hosts
+
+VN-18 repeated the component boundary in a tranche with very frequent learner
+tokens:
+
+- `بِٱلْمَعْرُوفِ` is not certified by the host "known/customary" alone; it
+  requires bā' + article + governed host and attachment review.
+- `وَٱلشَّمْسُ`, `وَٱلْقَمَرُ`, `وَٱلنُّجُومُ`,
+  `وَٱلْجِبَالُ`, and `وَٱلشَّجَرُ` expose wāw + article + noun hosts, but
+  the component evidence cannot certify the whole written token.
+- `يَـُٔودُهُۥ` and `يُوبِقْهُنَّ` show why a host-family match still needs
+  suffix/object accounting before a learner hover can move forward.
+
+Rule: VN-18 component candidates remain review fuel only, even when the current
+visible string looks plausible. A row can gain rich component evidence while
+staying blocked; do not count component candidates toward propagation safety,
+closure coverage, hover coverage, or live apply.

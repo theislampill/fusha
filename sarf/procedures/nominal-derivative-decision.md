@@ -330,3 +330,23 @@ Rule: if a VN-17 row is nominal, derivative, adjective, masdar, lexical noun,
 or POS-colliding, block verb-infinitive reuse. Rich certification needs noun
 type, derivative class, definiteness, case/state, suffix/referent when present,
 and nahw role.
+
+## Dogfood finding: VN-18 one/only rows and POS leakage
+
+VN-18 adds high-frequency nominal rows where a populated string can still be
+too broad for learners:
+
+- `أَحَدُهُمْ`, `أَحَدِهِم`, `أَحَدِهِمَا`, `أَحَدَكُم`,
+  and related forms require exact case/state plus suffix/referent review. The
+  bare family gloss "one / anyone" is only a candidate.
+- `وَٰحِدٍۢ`, `ٱلْوَٰحِدُ`, and `وَٰحِدَةًۭ` require definiteness,
+  gender/number, and sentence role before a family-wide gloss is safe.
+- `ثَانِىَ`, `كُلًّۭا`, `أُو۟لِى`, and `كُرْهٌۭ` show noun or adjective
+  rows receiving verb-infinitive-looking prose; exact POS and i'rab decide the
+  learner contribution.
+- `مَّوْبِقًۭا` and `وَاجِفَةٌ` are nominal/adjectival rows near verb-entry
+  families and must not inherit finite-verb wording.
+
+Rule: VN-18 nominal rows stay below rich certification until noun type,
+derivative class, definiteness, case/state, suffix/referent, and context are
+visible. Root or entry-family agreement alone is not enough.

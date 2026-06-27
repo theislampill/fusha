@@ -40,6 +40,20 @@ gloss.
 - `أَوْتَادًا` and `ٱلْأَوْتَادِ` need definiteness and case/context review
   before a family-wide hover is safe.
 
+## VN-18 examples
+
+- `أَحَدُهُمْ`, `أَحَدِهِم`, `أَحَدِهِمَا`, and `أَحَدَكُم`
+  share the one/anyone family, but suffix, case, and referent make the hover
+  exact-addressed.
+- `وَٰحِدٍۢ`, `وَٰحِدًا`, `وَٰحِدَةًۭ`, and `ٱلْوَٰحِدُ`
+  require gender, case, definiteness, and sentence role before one family
+  wording can propagate.
+- `ثَانِىَ`, `كُلًّۭا`, `أُو۟لِى`, and `كُرْهٌۭ` show why a token-only
+  review may be needed even when the entry family is obvious: exact POS and
+  i'rab decide what the learner should see.
+- `بِٱلْمَعْرُوفِ` and the 22:18 wāw + article + host cluster remain
+  component-only or two-vote rows until the whole written token is parsed.
+
 ## Output
 
 Emit a token-only row with:

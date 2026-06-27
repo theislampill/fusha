@@ -339,3 +339,17 @@ attached objects are learner-visible parts of the token.
 VN-17 keeps finite rows non-applyable. The exercise is to state the verb form,
 voice/aspect/mood, person/number/gender, and suffix role before proposing any
 English hover.
+
+## W. VN-18 dogfood: finite movement and destruction rows
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `نَكَصَ` / `تَنكِصُونَ` | bare `to back away` | finite form and subject/agreement |
+| `يُهْرَعُونَ` | entry prose `to hurry` only | imperfect agreement and context |
+| `يَهِيجُ` / `يَهِيمُونَ` | root-family wording only | exact finite shape and subject role |
+| `يُوبِقْهُنَّ` | `to doom/destroy` without `هُنَّ` | finite host plus object/referent suffix |
+| `مَّوْبِقًۭا` | finite verb treatment | nominal/POS review and case/state |
+| component rows | host family as whole-token proof | prefix/function/host/suffix parse |
+
+VN-18 keeps these rows non-applyable. The exercise is to name finite form,
+agreement, and suffix/object contribution before proposing a hover candidate.

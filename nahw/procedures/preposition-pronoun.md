@@ -218,3 +218,22 @@ host, suffix where present, and attachment or mood proof. Use
 `preposition_role_uncertified`, `lam_function_uncertified`,
 `mood_governor_uncertified`, or `component_only_blocker`; do not accept a
 host-only hover.
+
+## Dogfood finding: VN-18 bā' and wāw rows need function proof
+
+VN-18 repeats the relation rule with high-visibility rows:
+
+- `بِٱلْمَعْرُوفِ` requires bā' + article + governed host plus attachment; a
+  host-only "known/customary" gloss is incomplete.
+- `وَٱلشَّمْسُ`, `وَٱلْقَمَرُ`, `وَٱلنُّجُومُ`,
+  `وَٱلْجِبَالُ`, and `وَٱلشَّجَرُ` require wāw function, article, noun
+  host, and case/state review before a family or component candidate can
+  propagate.
+- `فَلَيُبَتِّكُنَّ` and `فَانْبَجَسَتْ` show that fā'/lām/function stacks
+  must be reviewed with finite host and suffix/agreement, not as host-only
+  strings.
+
+Rule: route VN-18 function rows to `preposition_role_uncertified`,
+`oath_or_conjunction_function_uncertified`, `lam_function_uncertified`,
+`mood_governor_uncertified`, or `component_only_blocker` until the function
+and attachment/reasoning are certified.

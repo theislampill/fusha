@@ -167,6 +167,22 @@ Rule: VN-17 suffix rows must name host type and suffix role before they are
 learner-ready. Route noun hosts to possessive/referent review and finite hosts
 to verb-object/addressee review.
 
+## Dogfood finding: VN-18 one-family suffixes need referent review
+
+VN-18 repeats the suffix rule through a very frequent nominal family:
+
+- `أَحَدُهُمْ`, `أَحَدِهِم`, `أَحَدِهِمَا`, `أَحَدُهُمَآ`,
+  `أَحَدَكُم`, and `أَحَدُهُم` require the host "one/any one" plus the
+  attached pronoun's possessor/referent role.
+- `يُوبِقْهُنَّ` is a finite verb host whose suffix is an object/referent
+  decision, not a possessive ending.
+- A current hover that only says "one" or only gives a dictionary verb phrase
+  remains `populated_uncertified` even if the English string is not absurd.
+
+Rule: the suffix is part of the visible token contribution. VN-18 rows must
+state host type, suffix role, and referent/context before they can become
+learner-ready hovers.
+
 **Test:** [`nahw/evals/suffix-pronoun-eval.jsonl`](../evals/suffix-pronoun-eval.jsonl);
 rules [`nahw/rules/pronoun-attachment-rules.json`](../rules/pronoun-attachment-rules.json).
 

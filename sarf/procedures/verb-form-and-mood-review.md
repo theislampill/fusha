@@ -448,3 +448,21 @@ Rule: finite VN-17 rows are repair candidates, not token decisions. Keep them
 below live apply until form, voice/aspect/mood, person/number/gender, and
 attached suffix roles are visible to the learner and agreed by the required
 sarf/nahw gate.
+
+## Dogfood finding: VN-18 finite rows mix motion, haste, and destruction forms
+
+VN-18 adds a compact finite set where entry prose would flatten tense, form, or
+object contribution:
+
+- `نَكَصَ` and `تَنكِصُونَ` require exact finite shape and subject/agreement
+  review; a bare "to back away" hover is not rich-certified.
+- `يُهْرَعُونَ`, `يَهِيجُ`, and `يَهِيمُونَ` require finite imperfect form,
+  subject agreement, and context before English wording can propagate.
+- `يُوبِقْهُنَّ` requires the finite host plus `هُنَّ` object/referent role.
+  A learner hover that can be read without the suffix is still defective.
+- `مَّوْبِقًۭا` is a nominal/POS row near a verb family; it routes out of
+  finite-verb review and into nominal derivative/POS review.
+
+Rule: VN-18 finite rows remain exact-address repair candidates. Do not let
+dictionary infinitives or root-family prose stand in for aspect, form,
+agreement, and suffix/object contribution.

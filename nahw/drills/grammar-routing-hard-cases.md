@@ -423,3 +423,20 @@ part of the lexical host, the row stays in sarf/POS or suffix review.
 VN-17 adds a dedicated token-only gate: the exact Qur'anic token remains the
 identity. Surface and parse families can suggest siblings, but they cannot
 propagate without an impact preview and compatible sarf/nahw reasons.
+
+## 4t. VN-18 one-family suffixes and function stacks
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `أَحَدُهُمْ` / `أَحَدِهِمَا` | suffix/referent plus case/context | bare one/anyone gloss |
+| `أَحَدَكُم` | addressee suffix and exact role | family-wide propagation |
+| `بِٱلْمَعْرُوفِ` | bā' + article + governed host + attachment | host-only known/customary wording |
+| `وَٱلشَّمْسُ` / `وَٱلْقَمَرُ` | wāw function + article + host | component evidence as whole-token proof |
+| `فَلَيُبَتِّكُنَّ` | fā'/lām function + finite host + suffix | host-only cutting wording |
+| `يُوبِقْهُنَّ` | finite host plus `هُنَّ` object/referent | dictionary infinitive |
+| `ثَانِىَ` / `كُرْهٌۭ` | exact POS/i'rab and context | verb-infinitive leakage |
+| renderer-only rows | rich metadata backfill if wording survives review | string presence as certification |
+
+VN-18 keeps one-family and function-stack rows exact-addressed. Do not let a
+common English family gloss hide suffixes, prepositions, wāw/fā'/lām functions,
+or case/mood evidence.

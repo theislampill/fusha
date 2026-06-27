@@ -216,3 +216,17 @@ rule → recognition Q → production Q → answer. Generated/extendable from
 - Gate: if the row is nominal, prove noun type, number, definiteness,
   case/state, suffix/referent where present, and nahw role. Otherwise keep it
   token-only or pending.
+
+## <a name="vn18-one-family-and-pos"></a>20. VN-18: one-family nouns and POS leakage
+
+| token | tempting shortcut | required review |
+|---|---|---|
+| `أَحَدُهُمْ` / `أَحَدِهِمَا` | bare one/anyone family gloss | suffix/referent plus case/context |
+| `وَٰحِدٍۢ` / `ٱلْوَٰحِدُ` | one family propagation | gender, number, definiteness, case |
+| `ثَانِىَ` | verb-like "to fold" leakage | exact adjective/nominal POS and i'rab |
+| `كُلًّۭا` / `أُو۟لِى` | broad family gloss | noun/pronoun-like function and case |
+| `مَّوْبِقًۭا` / `وَاجِفَةٌ` | finite verb entry prose | nominal/adjectival class and role |
+
+Rule: VN-18 rows can be string-populated while still unteachable. A rich hover
+needs noun type, derivative class, definiteness, case/state, suffix or referent
+role, and nahw context.
