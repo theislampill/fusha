@@ -10,7 +10,7 @@
     "wbw_rebuild_allowed": false
   },
   "generated_by": "tools/build_phase4_owner_authorization_request.py",
-  "id": "phase4-owner-authorization-request:3703600fc2b6e4a7",
+  "id": "phase4-owner-authorization-request:565626ca2d2c7488",
   "owner_authorization": {
     "authorized_at": null,
     "authorized_by": null,
@@ -77,7 +77,7 @@
     "apply_readiness_manifest": {
       "artifact": "phase4_apply_readiness_manifest_from_dogfood_review.sample.json",
       "id": "phase4-apply-readiness:f619e0a7e44ddf50",
-      "sha256": "fc0d9814c5f48edd68ce664f430b6c58657df1d3a8db3118769d06d9c13543a8",
+      "sha256": "12192bcb906e5847a933ff85821342aed2f32fb36cb6555f50295d66530ac031",
       "status": "pre_apply_not_authorized"
     },
     "draft_token_decision_ledger": {

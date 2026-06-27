@@ -24,6 +24,35 @@
     "service_restart_allowed": false,
     "wbw_rebuild_allowed": false
   },
+  "excluded_tranche_rows": {
+    "excluded_by_gate": {
+      "human_review_required": 1
+    },
+    "excluded_by_lane": {
+      "quarantine_collision": 1
+    },
+    "excluded_count": 1,
+    "sample_excluded": [
+      {
+        "lane": "quarantine_collision",
+        "parse_id": "parse:333333333333333333333333",
+        "quran_locs": [
+          "quran:86:14:1"
+        ],
+        "recommended_action": "quarantine until candidate collision is resolved by exact-token nahw/sarf review",
+        "required_gate": "human_review_required",
+        "surface_sample": "وَمَا",
+        "wbw_locs": [
+          "wbw:86:14:1"
+        ]
+      }
+    ],
+    "source_tranche": {
+      "artifact": "phase4_closure_tranche_from_dogfood_review.sample.jsonl",
+      "row_count": 3,
+      "sha256": "4cf192654bb1a0351a6d7f62f88ada01566f8093eeb116763dda49040510926a"
+    }
+  },
   "generated_by": "tools/build_phase4_apply_readiness_manifest.py",
   "id": "phase4-apply-readiness:f619e0a7e44ddf50",
   "phase": "phase4_apply_readiness_manifest",

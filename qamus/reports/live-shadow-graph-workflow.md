@@ -105,7 +105,10 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   `status=pre_apply_not_authorized`, the draft ledger remains `status=draft_not_applied`, and the owner request
   remains `status=owner_review_required_not_authorized` with `owner_authorization.status=not_provided`. These
   artifacts are review packets only; they do not authorize live Qamus mutation, WBW rebuild, service restart, mirror
-  sync, or hover closure claims.
+  sync, or hover closure claims. The dogfood-derived apply-readiness manifest also records one dry-run tranche
+  exclusion: `quran:86:14:1` / `wbw:86:14:1` (`وَمَا`) remains outside the plan as a `quarantine_collision`
+  requiring `human_review_required`, so the owner packet exposes why the row is absent rather than silently
+  narrowing the tranche.
 - `tools/validate_phase4_two_vote_requests.py`: validates Phase 4 two-vote request packets. It rejects non-exact
   identities, public-boundary leakage, weakened gates, non-two-vote lanes, missing component provenance, component
   candidates marked certifying, missing `agreement_key_hint`, live/apply/coverage claims, and vacuous zero-row request

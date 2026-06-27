@@ -1837,6 +1837,34 @@ check(
 )
 
 try:
+    _dogfood_apply_manifest = json.load(io.open(
+        os.path.join(_R, "qamus", "examples", "phase4_apply_readiness_manifest_from_dogfood_review.sample.json"),
+        encoding="utf-8",
+    ))
+except Exception:
+    _dogfood_apply_manifest = {}
+_dogfood_exclusions = _dogfood_apply_manifest.get("excluded_tranche_rows") or {}
+_dogfood_excluded_samples = {
+    _sample.get("surface_sample"): _sample
+    for _sample in (_dogfood_exclusions.get("sample_excluded") or [])
+}
+_dogfood_wama_excluded = _dogfood_excluded_samples.get("وَمَا", {})
+check(
+    "dogfood-derived apply-readiness manifest preserves excluded wama blocker",
+    bool(
+        _dogfood_exclusions.get("excluded_count") == 1
+        and _dogfood_exclusions.get("excluded_by_lane") == {"quarantine_collision": 1}
+        and _dogfood_exclusions.get("excluded_by_gate") == {"human_review_required": 1}
+        and (_dogfood_exclusions.get("source_tranche") or {}).get("artifact") == "phase4_closure_tranche_from_dogfood_review.sample.jsonl"
+        and _dogfood_wama_excluded.get("quran_locs") == ["quran:86:14:1"]
+        and _dogfood_wama_excluded.get("wbw_locs") == ["wbw:86:14:1"]
+        and _dogfood_wama_excluded.get("parse_id") == "parse:333333333333333333333333"
+        and _dogfood_wama_excluded.get("lane") == "quarantine_collision"
+        and _dogfood_wama_excluded.get("required_gate") == "human_review_required"
+    ),
+)
+
+try:
     _rich_sample_dir = os.path.join(_R, "qamus", "examples")
     _rich_exact_ok = True
     _rich_exact_checked = 0

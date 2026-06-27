@@ -114,7 +114,65 @@ def gate_rows():
     }
 
 
-def build_manifest(plan_jsonl, out_json):
+def excluded_tranche_summary(source_tranche_jsonl, plan_jsonl):
+    if not source_tranche_jsonl:
+        return None
+    tranche_rows = list(iter_jsonl(source_tranche_jsonl))
+    plan_parse_ids = set()
+    plan_quran_locs = set()
+    plan_wbw_locs = set()
+    for row in iter_jsonl(plan_jsonl):
+        identity = row.get("identity") or {}
+        plan_parse_ids.add(row.get("parse_id") or identity.get("parse_id"))
+        plan_quran_locs.add(identity.get("quran_loc"))
+        plan_wbw_locs.add(identity.get("wbw_loc"))
+
+    sample_excluded = []
+    excluded_count = 0
+    excluded_by_lane = {}
+    excluded_by_gate = {}
+    for row in tranche_rows:
+        identity = row.get("identity") or {}
+        parse_id = row.get("parse_id") or identity.get("parse_id")
+        quran_locs = identity.get("quran_locs") or []
+        wbw_locs = identity.get("wbw_locs") or []
+        is_in_plan = (
+            parse_id in plan_parse_ids
+            or any(loc in plan_quran_locs for loc in quran_locs)
+            or any(loc in plan_wbw_locs for loc in wbw_locs)
+        )
+        if is_in_plan:
+            continue
+        excluded_count += 1
+        lane = row.get("lane") or "unknown"
+        gate = row.get("required_gate") or "unknown"
+        excluded_by_lane[lane] = excluded_by_lane.get(lane, 0) + 1
+        excluded_by_gate[gate] = excluded_by_gate.get(gate, 0) + 1
+        if len(sample_excluded) < 8:
+            sample_excluded.append({
+                "parse_id": parse_id,
+                "surface_sample": identity.get("surface_sample", ""),
+                "quran_locs": quran_locs,
+                "wbw_locs": wbw_locs,
+                "lane": lane,
+                "required_gate": gate,
+                "recommended_action": row.get("recommended_action", ""),
+            })
+
+    return {
+        "source_tranche": {
+            "artifact": os.path.basename(source_tranche_jsonl),
+            "sha256": sha256_file(source_tranche_jsonl),
+            "row_count": len(tranche_rows),
+        },
+        "excluded_count": excluded_count,
+        "excluded_by_lane": dict(sorted(excluded_by_lane.items())),
+        "excluded_by_gate": dict(sorted(excluded_by_gate.items())),
+        "sample_excluded": sample_excluded,
+    }
+
+
+def build_manifest(plan_jsonl, out_json, source_tranche_jsonl=None):
     plan_sha = sha256_file(plan_jsonl)
     summary = plan_summary(plan_jsonl)
     manifest = {
@@ -178,6 +236,9 @@ def build_manifest(plan_jsonl, out_json):
         },
         "sample_tokens": summary["sample_tokens"],
     }
+    excluded_summary = excluded_tranche_summary(source_tranche_jsonl, plan_jsonl)
+    if excluded_summary:
+        manifest["excluded_tranche_rows"] = excluded_summary
     write_json(out_json, manifest)
     return manifest
 
@@ -243,10 +304,28 @@ def self_test():
     with tempfile.TemporaryDirectory(prefix="phase4-apply-readiness-build-") as td:
         plan = os.path.join(td, "plan.jsonl")
         manifest_path = os.path.join(td, "manifest.json")
+        tranche = os.path.join(td, "tranche.jsonl")
+        blocked = {
+            "id": "phase4-tranche:queue_parse_333333333333333333333333",
+            "parse_id": "parse:333333333333333333333333",
+            "identity": {
+                "quran_locs": ["quran:86:14:1"],
+                "wbw_locs": ["wbw:86:14:1"],
+                "parse_id": "parse:333333333333333333333333",
+                "surface_sample": "وَمَا",
+            },
+            "lane": "quarantine_collision",
+            "required_gate": "human_review_required",
+            "recommended_action": "quarantine until candidate collision is resolved by exact-token nahw/sarf review",
+        }
         write_jsonl(plan, [sample_plan_row()])
-        manifest = build_manifest(plan, manifest_path)
+        write_jsonl(tranche, [blocked])
+        manifest = build_manifest(plan, manifest_path, source_tranche_jsonl=tranche)
         if manifest["source_plan"]["row_count"] != 1:
             print("SELF-TEST FAIL: wrong row_count")
+            return 1
+        if manifest["excluded_tranche_rows"]["excluded_count"] != 1:
+            print("SELF-TEST FAIL: wrong excluded_count")
             return 1
         count, errors = validator.validate(manifest_path, plan)
         if count != 1 or errors:
@@ -260,6 +339,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("plan_jsonl", nargs="?")
     parser.add_argument("--out-json")
+    parser.add_argument("--source-tranche-jsonl")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
     if args.self_test:
@@ -267,10 +347,11 @@ def main():
     if not args.plan_jsonl:
         parser.error("plan_jsonl is required unless --self-test is used")
     out_path = args.out_json or os.path.splitext(args.plan_jsonl)[0] + ".apply-readiness.json"
-    manifest = build_manifest(args.plan_jsonl, out_path)
+    manifest = build_manifest(args.plan_jsonl, out_path, source_tranche_jsonl=args.source_tranche_jsonl)
     print(json.dumps({
         "manifest": out_path,
         "row_count": manifest["source_plan"]["row_count"],
+        "excluded_tranche_rows": (manifest.get("excluded_tranche_rows") or {}).get("excluded_count", 0),
         "apply_authorized": manifest["apply_policy"]["apply_authorized"],
         "live_mutation_allowed": manifest["apply_policy"]["live_mutation_allowed"],
         "status": manifest["status"],

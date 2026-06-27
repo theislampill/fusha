@@ -154,7 +154,60 @@ def validate_plan_match(row, plan_jsonl, errors):
         _err(errors, "source_plan.row_count does not match plan_jsonl")
 
 
-def validate(path, plan_jsonl=None):
+def validate_excluded_tranche_rows(row, source_tranche_jsonl, errors):
+    excluded = row.get("excluded_tranche_rows")
+    if excluded is None:
+        return
+    if not isinstance(excluded, dict):
+        _err(errors, "excluded_tranche_rows must be an object")
+        return
+    source = excluded.get("source_tranche") or {}
+    if "/" in str(source.get("artifact") or "") or "\\" in str(source.get("artifact") or ""):
+        _err(errors, "excluded_tranche_rows.source_tranche.artifact must be a basename, not a path")
+    if not SHA256.match(str(source.get("sha256") or "")):
+        _err(errors, "excluded_tranche_rows.source_tranche.sha256 must be a sha256 hex digest")
+    if not isinstance(source.get("row_count"), int) or source.get("row_count") <= 0:
+        _err(errors, "excluded_tranche_rows.source_tranche.row_count must be positive")
+    if source_tranche_jsonl:
+        if not os.path.exists(source_tranche_jsonl):
+            _err(errors, "source_tranche_jsonl does not exist: %s" % source_tranche_jsonl)
+        else:
+            rows = list(iter_jsonl(source_tranche_jsonl))
+            if source.get("sha256") != sha256_file(source_tranche_jsonl):
+                _err(errors, "excluded_tranche_rows.source_tranche.sha256 does not match source_tranche_jsonl")
+            if source.get("row_count") != len(rows):
+                _err(errors, "excluded_tranche_rows.source_tranche.row_count does not match source_tranche_jsonl")
+
+    excluded_count = excluded.get("excluded_count")
+    if not isinstance(excluded_count, int) or excluded_count < 0:
+        _err(errors, "excluded_tranche_rows.excluded_count must be a non-negative integer")
+    sample_excluded = excluded.get("sample_excluded") or []
+    if excluded_count and not sample_excluded:
+        _err(errors, "excluded_tranche_rows.sample_excluded must be non-empty when excluded_count is positive")
+    by_lane = excluded.get("excluded_by_lane") or {}
+    by_gate = excluded.get("excluded_by_gate") or {}
+    if not all(isinstance(value, int) for value in by_lane.values()):
+        _err(errors, "excluded_tranche_rows.excluded_by_lane values must be integers")
+    elif sum(by_lane.values()) != excluded_count:
+        _err(errors, "excluded_tranche_rows.excluded_by_lane must sum to excluded_count")
+    if not all(isinstance(value, int) for value in by_gate.values()):
+        _err(errors, "excluded_tranche_rows.excluded_by_gate values must be integers")
+    elif sum(by_gate.values()) != excluded_count:
+        _err(errors, "excluded_tranche_rows.excluded_by_gate must sum to excluded_count")
+    for idx, sample in enumerate(sample_excluded, 1):
+        if not str(sample.get("parse_id") or "").startswith("parse:"):
+            _err(errors, "excluded_tranche_rows.sample_excluded[%d].parse_id is invalid" % idx)
+        if not sample.get("quran_locs"):
+            _err(errors, "excluded_tranche_rows.sample_excluded[%d].quran_locs must be non-empty" % idx)
+        if not sample.get("wbw_locs"):
+            _err(errors, "excluded_tranche_rows.sample_excluded[%d].wbw_locs must be non-empty" % idx)
+        if not str(sample.get("lane") or "").strip():
+            _err(errors, "excluded_tranche_rows.sample_excluded[%d].lane must be non-empty" % idx)
+        if not str(sample.get("required_gate") or "").strip():
+            _err(errors, "excluded_tranche_rows.sample_excluded[%d].required_gate must be non-empty" % idx)
+
+
+def validate(path, plan_jsonl=None, source_tranche_jsonl=None):
     errors = []
     if not os.path.exists(SCHEMA):
         _err(errors, "schema missing: %s" % SCHEMA)
@@ -194,6 +247,7 @@ def validate(path, plan_jsonl=None):
     validate_policy(row, errors)
     validate_public_boundary(row, errors)
     validate_required_gates(row, errors)
+    validate_excluded_tranche_rows(row, source_tranche_jsonl, errors)
 
     rollback = row.get("rollback") or {}
     if rollback.get("required") is not True:
@@ -282,13 +336,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("manifest_json", nargs="?")
     parser.add_argument("--plan-jsonl")
+    parser.add_argument("--source-tranche-jsonl")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
     if args.self_test:
         raise SystemExit(self_test())
     if not args.manifest_json:
         parser.error("manifest_json is required unless --self-test is used")
-    count, errors = validate(args.manifest_json, args.plan_jsonl)
+    count, errors = validate(args.manifest_json, args.plan_jsonl, args.source_tranche_jsonl)
     print("checked %d Phase 4 apply-readiness manifest" % count)
     if errors:
         print("FAIL")
