@@ -147,3 +147,17 @@ only matched under `norm()` (seat dropped), reject it with `pending: seat_collap
 4. `بِهِ`='with it/in it', `لَهُ`='for him/to him', `عِنْدَ`='with/near/in the sight of',
    `إِلَيْنَا`='to us' (**never** 'soft').
 5. Unsure of the sense shade ⇒ broadest correct gloss, or `pending:` — never a narrow guess.
+
+## VN-02 dogfood: bā', oath wāw, and nominal hosts
+
+| token | visible pieces | unsafe hover |
+|---|---|---|
+| `بِٱلْمَعْرُوفِ` | `بِـ` + article + majrūr nominal host | treating component evidence as whole-token repair-ready |
+| `بِدَيْنٍ` | attached bā' + majrūr noun "debt" | verb-derived "to be indebted to" |
+| `دِينِ` | genitive/construct noun | verbal root infinitive |
+| `وَوَالِدٍۢ` | oath/coordination wāw + majrūr nominal | birth/parent verb-family prose |
+| `فَضْلِهِۦ` | genitive noun + 3ms possessive suffix | root-family "to favor" prose |
+
+Rule: after a preposition or oath particle, a nominal host is not certified by a
+verb entry. Preserve the relation and the case/possessor before polishing the
+English.

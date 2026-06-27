@@ -34,3 +34,20 @@ still fail the token hover contract:
 
 Use referent context to select a concise token contribution or a precise
 pending reason; put broader teaching notes in curriculum, not in the hover.
+
+## Dogfood finding: VN-02 name/common and title context
+
+VN-02 reinforced that proper-name context is a nahw gate, not merely sarf:
+
+- `صَالِحًا` in a deed/action context is common/adjectival; in a prophet
+  narrative it can be the name Ṣāliḥ. The exact āyah must decide.
+- `يُحْيِي` is a finite verb in context even though a nearby name family
+  `يَحْيَى` exists. POS and referent must agree before entry linkage.
+- `عَادَ` as a verb must not inherit `عَاد` the people. Harakāt plus clause
+  role matter.
+- `ٱلْمَسِيحُ` is a title with article/case behavior; the hover may say "the
+  Messiah", but the rich layer must show the title token rather than hiding it
+  inside another proper-name entry.
+
+When the context proof is missing, use `pending(referent_sensitive)` or
+`human_review_required`; do not choose the more familiar name.

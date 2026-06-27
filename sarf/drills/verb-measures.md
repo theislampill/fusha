@@ -77,3 +77,18 @@ weak root. → [`weak-verbs.md`](../references/weak-verbs.md).
 Rule: if the token is finite, the hover is not certified until aspect, voice,
 person/number/gender, form, and any suffix pronoun are available to the learner.
 An English string may be plausible and still remain `populated_uncertified`.
+
+## G. VN-02 dogfood: voice, derived form, and suffixes block lemma prose
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `وَفَضَّلْنَٰهُمْ` | favor/bounty entry paragraph | `وَ` + Form II perfect 1cp + `هُمْ` object |
+| `فُضِّلُوا۟` | active "to favor" wording | passive Form II perfect 3mp |
+| `يُولَدْ` | active "to have children / beget" family | passive/jussive weak verb under negation |
+| `فَشُدُّوا۟` | "to be strong" family | doubled-root imperative 2mp plus `فَ` |
+| `ٱسْتَـْٔذَنَكَ` | bare "to seek permission" | hamzated Form X perfect plus `كَ` object |
+| `وَٱصْطَبِرْ` | Form I patience infinitive | Form VIII imperative plus `وَ` |
+
+Rule: a finite or imperative verb is not certified by its root-family prose.
+The parse must show form, voice, aspect/mood, person/number, proclitics, and
+visible suffixes.

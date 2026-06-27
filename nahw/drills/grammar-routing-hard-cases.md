@@ -113,6 +113,21 @@ or no-entry rationale are all present.
 These rows are not fixed by more English fluency. They need exact address,
 parse key, sarf shape, and nahw context agreement before any live repair packet.
 
+## 4d. VN-02 voice, negation, and referent gates
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `يُولَدْ` | passive/jussive under negation; decide with sarf + negation gate | active "to have children / beget" family prose |
+| `لَسْتُنَّ` | finite laysa form with 2fp subject and predicate governance | generic "is/are not" without subject suffix |
+| `أَوَلَيْسَ` | interrogative + waw + laysa composition | bare negation/laysa component hover |
+| `يُحْيِي` | verb POS and referent check | Prophet Yahya name hover |
+| `صَالِحًا` | common adjective vs Prophet name by exact context | surface-family propagation |
+| `عَادَ` | finite verb vs people-name by harakāt/POS/context | proper-people hover |
+| `ٱلْمَسِيحُ` | title/article/case rich metadata | hiding title form inside another proper-name entry |
+
+If the row is readable but not explainable through exact token identity,
+function, and referent, keep it `populated_uncertified`.
+
 ## 5. QAC concept metadata is a routing aid only
 
 If concept metadata says a form may be a prophet, historic person, people,

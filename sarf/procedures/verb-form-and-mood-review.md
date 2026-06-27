@@ -87,3 +87,24 @@ breakdown are present:
 Passive voice, hamzated/madd-sensitive roots, and derived form are part of the
 token, not polish. `قِيلَ`, `ءَاتَيْنَا`, `وَأْتُوا`, and `يُبَيِّن` stay
 review-gated until voice/form/root are certified at the exact address.
+
+## Dogfood finding: VN-02 voice, root, and suffix blockers
+
+The VN-02 tranche added more finite-verb blockers:
+
+- `وَفَضَّلْنَٰهُمْ`: Form II perfect active 1cp with `هُمْ` object. Reject
+  broad فضل entry prose until the learner can see the subject and object.
+- `فُضِّلُوا۟`: passive Form II perfect 3mp. Reject active "to favor" prose.
+- `يُولَدْ`: weak-root passive imperfect/jussive under negation. Reject active
+  "to have children / beget" family prose.
+- `أَصْبَرَهُمْ`: Form IV/exclamatory-looking shape plus `هُمْ`; do not
+  inherit a plain Form I صبر infinitive.
+- `وَٱصْطَبِرْ`: Form VIII imperative plus `وَ`; do not flatten to "to be
+  patient".
+- `ٱسْتَـْٔذَنَكَ`: hamzated Form X perfect with `كَ` object; record the suffix
+  before any "sought permission from you" hover.
+- `فَشُدُّوا۟`: doubled-root imperative 2mp plus `فَ`; do not certify from a
+  generic "strong" family entry.
+
+When the exact token has passive voice, imperative force, derived form, or an
+attached object, any dictionary infinitive is a blocker, not a fallback.

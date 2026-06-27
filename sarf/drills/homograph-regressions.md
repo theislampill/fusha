@@ -111,3 +111,15 @@ For **every** short function word and every hamza/shadda‑bearing content word:
 
 **PENDING beats wrong** — and on these pairs, the wrong gloss is the one that flips the
 meaning of the āyah.
+
+## VN-02 name/POS homograph additions
+
+| pair | distinguishing feature | correct decision |
+|---|---|---|
+| `يَحْيَى` vs `يُحْيِي` | fatḥa/maqṣūra proper-name surface vs ḍamma imperfect verb | route the first to Yahya name review, the second to ح ي ي verb review |
+| `صَٰلِح` name vs `صَالِح` adjective | referent and clause role | Prophet Ṣāliḥ only in prophet narrative; otherwise common/adjectival review |
+| `عَاد` people vs `عَادَ` verb | final fatḥa and clause role | people-name or finite verb cannot propagate to each other |
+| `أَحْمَدُ` name vs praise/elative family | explicit name context | name-as-name row only; do not infer a generic praise gloss |
+
+Use `norm_strict`, vocalization, POS, and referent context together. If any
+piece is missing, quarantine rather than picking the familiar reading.

@@ -70,3 +70,17 @@ rule → recognition Q → production Q → answer. Generated/extendable from
 - Recognition: `شَرِيكَ` is a nominal "partner/associate" in context, not an omnibus shirk-family entry.
 - Gate: if a token is nominal but linked through a verb/root entry, route as `token_only_override` or
   `needs_sarf_review`; never let the entry family choose the hover by surface alone.
+
+## <a name="vn02-proper-common"></a>11. VN-02: title, proper name, and common-word collisions
+
+- Recognition: `يُحْيِي` is a finite verb in 36:78, not the proper noun
+  `يَحْيَى`. Vocalization and POS block the name hover.
+- Recognition: `صَالِحًا` may be the Prophet Ṣāliḥ or the common adjective
+  "righteous"; exact context decides.
+- Recognition: `ٱلْمَسِيحُ` is a definite title token. It needs article +
+  title/case metadata even when the English gloss "the Messiah" is safe.
+- Recognition: `عَادَ` is a finite verb in some rows and the people-name in
+  others. Harakāt/POS decide.
+- Gate: proper-name, title, and common/adjectival uses remain
+  `populated_uncertified` until proper/common status, case, and source address
+  are explicit. A safe-looking name string is not rich certification.

@@ -67,3 +67,23 @@ role prose. `إِبْلِيسَ` must not teach "to lose hope" as the token hove
 linkage is not certified. Keep etymon, ontology, and role notes internal or in
 curriculum; public hovers need a name-as-name record or an exact pending
 reason.
+
+## Dogfood finding: VN-02 proper/common and POS collisions
+
+VN-02 found several name/title families where a populated hover or candidate
+entry is still not rich-certified:
+
+- `يَحْيَى` the proper noun and `يُحْيِي` the finite verb must be separated by
+  vocalization, POS, and exact address. A Yahya name entry never certifies a
+  verb meaning "gives life / revives".
+- `صَٰلِحًۭا` can be Prophet Ṣāliḥ or a common adjective/participle
+  "righteous". Context decides; neither reading propagates by surface alone.
+- `ٱلْمَسِيحُ` is a definite title/nominal form and needs article + title/case
+  metadata even if the linked entry family is `عِيسَى`.
+- `أَحْمَدُ` is a distinct proper-name surface; do not flatten it into the
+  `مُحَمَّد` surface or a praise/elative family without explicit name evidence.
+- `عَاد` can be a people-name or a finite verb (`عَادَ`). Harakāt/POS decide.
+
+If a name-like row has a safe-looking string but null proper/common, case, or
+POS metadata, classify it `populated_uncertified` or `needs_renderer_segments`,
+not `rich_certified`.
