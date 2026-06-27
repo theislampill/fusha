@@ -571,11 +571,13 @@ Durable tooling:
 
 - `tools/build_full_corpus_hover_dogfood_audit.py`
 - `tools/validate_full_corpus_hover_dogfood_audit.py`
+- `tools/validate_full_corpus_dogfood_subagent_lanes.py`
 - `tools/summarize_full_corpus_dogfood_queue.py`
 - `tools/build_full_corpus_dogfood_review_pack.py`
 - `tools/build_dogfood_production_bug_lessons.py`
 - `qamus/schemas/full-corpus-hover-dogfood-audit.schema.json`
 - `qamus/examples/full_corpus_hover_dogfood_audit.sample.jsonl`
+- `qamus/examples/full_corpus_dogfood_subagent_lane.sample.jsonl`
 - `qamus/examples/full_corpus_dogfood_queue_summary.sample.json`
 - `qamus/examples/full_corpus_dogfood_review_pack.sample.jsonl`
 - `qamus/examples/dogfood_production_bug_lesson.sample.jsonl`
@@ -642,6 +644,68 @@ but does not invent corrected hover wording and does not weaken gates.
 This lane is the real dogfooding pass for populated hovers. A live row being present, repo/live parity, zero public
 crawl mismatch, or a Phase 4 narrow apply packet is not sufficient evidence of sarf/nahw correctness or learner-ready
 breakdown.
+
+### Fresh full-corpus dogfood run: 82c63dd
+
+Status: read-only full-corpus audit plus six bounded subagent lanes. This did
+not mutate live Qamus, rebuild WBW, restart services, sync the mirror, apply
+hover decisions, or claim hover coverage/correctness completion.
+
+Run identity:
+
+- validated code head: `e04e36821f8a21a35bd9e09fa364fa8af1cc6343`
+- report head: `82c63ddb0640368b02fbce1c87a150c89a8e39af`
+- remote output:
+  `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/full-corpus-dogfood-82c63dd-20260627-004825`
+- local copied output:
+  `out/full-corpus-dogfood-82c63dd-20260627-004825`
+
+Controller audit counts:
+
+- rows audited: `49,900`
+- populated hover rows: `49,260`
+- pending/blocker rows: `640`
+- `rich_certified`: `0`
+- `populated_uncertified`: `44,719`
+- `token_only_override`: `4,530`
+- `known_defect`: `11`
+- public leak count: `0`
+
+This is the important dogfood correction: the audit currently certifies zero
+rows as learner-ready rich hovers even though most rows are visibly populated.
+Visible hover text remains a starting point for review, not completion proof.
+
+Subagent lane outputs were generated as JSONL-only read-only evidence under
+`out/full-corpus-dogfood-82c63dd-20260627-004825/subagent-lanes/` and validated
+with `tools/validate_full_corpus_dogfood_subagent_lanes.py`. Every subagent row
+has `may_apply_live:false`.
+
+Lane summary:
+
+- `sarf-component-auditor`: `28,886` rows; top classes
+  `populated_uncertified=23,705`, `token_only_override=4,530`,
+  `needs_sarf_review=270`, `needs_renderer_segments=241`
+- `nahw-function-auditor`: `19,310` rows; top class
+  `needs_nahw_review=18,550`
+- `rich-renderer-auditor`: `49,900` rows; top classes
+  `populated_uncertified=22,840`, `string_correct_but_not_rich=15,342`,
+  `needs_renderer_segments=6,537`, `token_only_override=4,530`
+- `production-bug-detector`: `4,541` rows; `token_only_override=4,530`,
+  `known_defect=11`
+- `qamus-entry-linkage-auditor`: `49,260` populated-hover rows;
+  top issue `missing_exact_entry_sense_linkage=35,524`
+- `learner-explanation-auditor`: `49,900` rows; all rows remain blocked from
+  rich learner certification
+
+Dominant route implications:
+
+- exact entry/sense linkage and no-entry function-token rationales are the
+  largest current structural gap
+- renderer rich segment metadata is required even for hovers whose English
+  string looks plausible
+- sarf/nahw lessons, drills, regressions, and validators must be updated from
+  confirmed bug classes before corpus-facing authoring
+- no row from this audit is an authorization to apply live changes
 
 ## Phase 4 Current-HEAD Dry-Run Blocker Refinement
 
