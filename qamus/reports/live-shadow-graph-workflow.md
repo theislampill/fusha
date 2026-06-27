@@ -521,20 +521,44 @@ routes such as `production_bug_lesson`, `drill_regression_fixture`, or
 The 169 reconciliation rows are held out of any apply path until the controller
 chooses the owner-gated terminal queue for each exact `wbw:S:A:W`.
 
+Next-state queue files were then generated from the controller output. These
+queues are bounded review inputs, not apply packets:
+
+- output path:
+  `out/full-corpus-dogfood-82c63dd-20260627-004825/review-packets/subagent-reviews/next-state-queues/`
+- queue rows / unique WBW locations: `780`
+- rows requiring two-vote: `424`
+- `controller_reconciliation` rows held out of action queues: `169`
+- public leak count: `0`
+- `may_apply_live`: `false`
+
+Queue counts after withholding controller-conflict rows:
+
+- `blocker_queue_row`: `226`
+- `controller_reconciliation`: `169`
+- `drill_regression_fixture`: `71`
+- `entry_linkage_review`: `91`
+- `renderer_requirement`: `199`
+- `repair_candidate`: `2`
+- `sarf_nahw_procedure_improvement`: `22`
+
 Durable tooling added for this lane:
 
 - `tools/build_full_corpus_dogfood_lane_packets.py`
 - `tools/validate_full_corpus_dogfood_review_outputs.py`
 - `tools/summarize_full_corpus_dogfood_review_outputs.py`
 - `tools/reconcile_full_corpus_dogfood_review_outputs.py`
+- `tools/build_full_corpus_dogfood_next_state_queues.py`
 - `qamus/examples/full_corpus_dogfood_lane_packet.sample.jsonl`
 - `qamus/examples/full_corpus_dogfood_review_output.sample.jsonl`
 - `qamus/examples/full_corpus_dogfood_reconciliation.sample.jsonl`
+- `qamus/examples/full_corpus_dogfood_next_state_queue.sample.jsonl`
 
 The regression suite now checks the packet builder self-test, packet fixture
 validation, review-output validator self-test, review-output fixture validation,
 review-output summarizer self-test, sample summary, controller reconciliation
-self-test, and reconciliation fixture validation.
+self-test, reconciliation fixture validation, next-state queue self-test, and
+next-state queue fixture validation.
 
 ## Phase 2.9 Seal Refresh - 2026-06-27
 
