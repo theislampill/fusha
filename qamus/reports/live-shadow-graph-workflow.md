@@ -821,6 +821,16 @@ blocker text, required evidence, and a read-only apply policy. It links an
 available dogfood-derived production-bug lesson by exact `wbw:S:A:W` address,
 but does not invent corrected hover wording and does not weaken gates.
 
+`tools/build_shadow_review_pack_from_dogfood_review.py` bridges those dogfood
+review packets into the stricter shadow-review-pack dialect used by Phase 4
+dry-run planning. It preserves exact token identity, keeps whole-token Qamus
+candidates separate from `component_candidate_entries`, records component
+provenance as `source:rich_wbw_segment` with role, segment text, and token loc,
+and keeps component-only evidence out of `propagation_safe_candidate` lanes.
+The sample `qamus/examples/shadow_review_pack_from_dogfood_review.sample.jsonl`
+therefore lets dogfood findings enter the two-vote/closure-planning pipeline
+without surface-string lookup, live mutation, or auto-safe fan-out.
+
 `tools/reconcile_full_corpus_dogfood_review_outputs.py` is the main-thread
 controller for subagent outputs. It collapses validated lane rows to one
 controller-owned row per exact `wbw:S:A:W`; when reviewers disagree, the row
