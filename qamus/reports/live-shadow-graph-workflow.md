@@ -420,6 +420,95 @@ Mirror mismatch classification remains unchanged and report-only:
 
 `content-equivalent-or-near-equivalent; metadata/source-hash divergent; not safe for mutation until separately reconciled`.
 
+## Full-Corpus Dogfood Bounded Review Packets
+
+Status: bounded packet/review workflow added for the full-corpus hover dogfood
+audit. This is routing evidence only: no live Qamus mutation, no WBW rebuild, no
+service restart, no mirror sync, no hover apply, and no hover coverage claim.
+
+Generated evidence path:
+
+- `out/full-corpus-dogfood-82c63dd-20260627-004825/review-packets/`
+
+The packet builder reduces the full dogfood audit into exact-addressed review
+packets before any subagent sees rows. It preserves `quran:S:A:W` and
+`wbw:S:A:W` as identity, keeps `may_apply_live=false`, and emits bounded
+packets by priority/class/risk instead of sending the 201,797 lane rows
+directly to reviewers.
+
+Generated packet files:
+
+- `known_defect`: `11` packets
+- `token_only_override_top200`: `200` packets
+- `sarf_component_top200`: `200` packets
+- `nahw_function_top200`: `200` packets
+- `rich_renderer_segments_top200`: `200` packets
+- `production_bug_top200`: `200` packets
+- `entry_linkage_top200`: `200` packets
+- `learner_explanation_top200`: `200` packets
+- issue-family packets: `9` files x `100` packets each
+
+Six bounded subagent review lanes were run against the packets and validated as
+JSONL-only, source-clean, non-applying routing evidence:
+
+- `sarf-component-reviewer`: `41` rows
+- `nahw-function-reviewer`: `313` rows
+- `rich-renderer-reviewer`: `300` rows
+- `production-bug-lesson-writer`: `230` rows
+- `qamus-entry-linkage-reviewer`: `211` rows
+- `learner-explanation-reviewer`: `400` rows
+
+Strict review-output validation passed for all six files after the controller
+caught and corrected one generated-output schema drift: the production-bug lane
+used `source-clean` shorthand and was normalized to canonical
+`source_clean:qamus/authored/en` in the generated review artifact.
+
+Validated review summary:
+
+- total review rows: `1,495`
+- unique packets / WBW locations reviewed: `780`
+- rows requiring two-vote: `633`
+- packet next-state conflicts for controller reconciliation: `169`
+- WBW next-state conflicts for controller reconciliation: `169`
+- `may_apply_live`: `false`
+
+Next-state routing counts:
+
+- `renderer_requirement`: `502`
+- `entry_linkage_review`: `435`
+- `blocker_queue_row`: `287`
+- `drill_regression_fixture`: `179`
+- `repair_candidate`: `40`
+- `sarf_nahw_procedure_improvement`: `36`
+- `production_bug_lesson`: `14`
+- `no_action`: `2`
+
+Classification counts from bounded review:
+
+- `token_only_override`: `796`
+- `needs_renderer_segments`: `400`
+- `needs_nahw_review`: `227`
+- `known_defect`: `61`
+- `string_correct_but_not_rich`: `6`
+- `needs_sarf_review`: `5`
+
+The next-state conflicts are not failures. They are explicit Andon flags for
+the main controller to reconcile cross-lane findings before any owner-gated
+repair, blocker, lesson, fixture, renderer, or entry-linkage packet can move
+toward Phase 4.
+
+Durable tooling added for this lane:
+
+- `tools/build_full_corpus_dogfood_lane_packets.py`
+- `tools/validate_full_corpus_dogfood_review_outputs.py`
+- `tools/summarize_full_corpus_dogfood_review_outputs.py`
+- `qamus/examples/full_corpus_dogfood_lane_packet.sample.jsonl`
+- `qamus/examples/full_corpus_dogfood_review_output.sample.jsonl`
+
+The regression suite now checks the packet builder self-test, packet fixture
+validation, review-output validator self-test, review-output fixture validation,
+review-output summarizer self-test, and sample summary.
+
 ## Phase 2.9 Seal Refresh - 2026-06-27
 
 Status: supersedes the preceding closeout refresh for Phase 2.9 sealing. This
