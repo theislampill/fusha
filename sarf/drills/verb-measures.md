@@ -107,3 +107,19 @@ visible suffixes.
 Rule: component evidence can explain pieces, but it cannot certify the written
 token. Finite wording, passive voice, weak/doubled roots, and object suffixes
 stay gated until the exact token is parse-key ready.
+
+## I. VN-04 dogfood: weak, hamzated, and shadda-bearing finite verbs
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `فَأَنسَىٰهُ` | `to forget; neglect` | `فَ` + finite causative/weak-root host + `هُ` object |
+| `ذَرْهُمْ` | `to leave someone or something` | imperative weak-root host + `هُمْ` object |
+| `وَيَذَرَكَ` | bare leave-family prose | `وَ` function + imperfect/subjunctive-looking verb + `كَ` object |
+| `بَدِّلْهُ` | `to change or replace` | imperative/Form II host + `هُ` object |
+| `وَلَيُبَدِّلَنَّهُم` | broad replace-family prose | `وَ` + lām/emphasis + finite Form II/IV review + `هُم` object |
+| `تُبَدَّلُ` | active replace infinitive | passive finite verb |
+| `يَصُدُّونَ` / `يَصِدُّونَ` | one stripped-root hover | shadda + vowel/POS/context review |
+
+Rule: weak radicals, passive signatures, emphatic nūn, and shadda are not
+typography. They are the reason the token cannot be certified from an entry
+infinitive or component-only root match.

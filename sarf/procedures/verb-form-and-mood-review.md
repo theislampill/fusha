@@ -128,3 +128,27 @@ Subagent review also flagged passive and weak-root rows (`وَقُضِىَ`,
 `تُوَفَّىٰ`, `يَجْرِى`) and doubled-root rows (`تَمَسُّوهُنَّ`, `مَسَّ`).
 For these, `norm_strict()` is not enough: expand weak/doubled morphology and
 record passive/active voice before authoring a hover.
+
+## Dogfood finding: VN-04 weak roots, shadda, and component-only verbs
+
+The VN-04 tranche repeated the finite-verb leakage pattern in weak, hamzated,
+and shadda-bearing forms:
+
+- `فَأَنسَىٰهُ`, `أَنسَىٰنِيهُ`, `نَنسَىٰهُمْ`, and `فَنَسِيَهُمْ`
+  come from the defective/hamzated-looking `ن س ي` family. They must preserve
+  the finite form, causative or base reading, subject, and object suffix.
+- `ذَرْهُمْ`, `فَذَرْهُمْ`, and `وَيَذَرَكَ` are not the dictionary entry
+  `to leave someone or something`. They need imperative/imperfect review,
+  weak-root recovery, and visible object suffixes.
+- `بَدِّلْهُ`, `أُبَدِّلَهُ`, `يُبْدِلَهُمَا`, `وَلَيُبَدِّلَنَّهُم`,
+  and `بَدَّلْنَٰهُمْ` need form, voice, subject, object, and emphatic-nun
+  handling before the English can be trusted.
+- `تُنسَىٰ`, `تُبَدَّلُ`, `يُتْرَكُوا`, and `ٱسْتُحْفِظُوا` are passive or
+  governed finite surfaces. Reject active/root infinitives.
+- `يَصُدُّونَ`, `يَصِدُّونَ`, `تَصَدَّىٰ`, `أَسَرَّ`, and `تَسُرُّ` need
+  shadda/geminate and form evidence; stripped skeletons collapse unsafe rows.
+
+Component-only evidence may explain a host or suffix, but it does not certify
+the written token. A VN-04 row with visible proclitic, form marker, passive
+vowels, object suffix, or emphatic nun remains `component_only_blocker`,
+`token_only_review`, or `two_vote_required` until whole-token evidence exists.

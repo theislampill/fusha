@@ -57,3 +57,18 @@ verb-entry or component evidence:
 When a token is nominal but the only evidence is a verb/root family, route to
 `token_only_review` or `component_only_blocker`. Do not let component
 candidates become whole-token certification.
+
+## Dogfood finding: VN-04 ذ ك ر shape collisions
+
+The VN-04 tranche exposed a compact POS/voice collision in the `ذ ك ر` family:
+
+- `ذَكَرٍ`, `ٱلذَّكَرُ`, and `ٱلذُّكُورَ` are male/masculine nominal rows.
+- `ذِكْر`, `ٱلذِّكْرَ`, and `ذِكْرِ` are remembrance/reminder nominal rows.
+- `ذُكِرَ` and `ذُكِّرَ` are passive finite-verb surfaces.
+
+These surfaces cannot share a hover by root family or lenient normalization.
+The vowels, article, case ending, and passive signature are the gate. If the
+surface is `ٱلذِّكْرَ`, reject a verb infinitive such as "to remember"; if the
+surface is `ذُكِرَ`, reject a nominal "male" or root-family noun row. Route the
+row to exact-address sarf + nahw review when the entry linkage cannot prove
+which POS/voice is intended.

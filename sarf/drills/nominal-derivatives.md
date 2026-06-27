@@ -101,3 +101,18 @@ rule → recognition Q → production Q → answer. Generated/extendable from
 - Gate: concept entries and component candidates are internal routing evidence.
   They do not replace noun type, number, gender, state, case, and possessor
   review.
+
+## <a name="vn04-dhikr-dhakar"></a>13. VN-04: ذ ك ر is not one hover family
+
+- Recognition: `ٱلذِّكْرَ` carrying "to take note of, mention; remember..."
+  is a definite noun/reminder surface, not a verb infinitive.
+- Recognition: `ذُكِرَ` carrying the same broad entry prose is a passive finite
+  verb surface; it needs voice/POS review, not a noun-entry shortcut.
+- Recognition: `ذَكَرٍ`, `ٱلذَّكَرُ`, and `ٱلذُّكُورَ` are male/masculine
+  nominal rows; they do not certify `ذِكْر` reminder rows.
+- Recognition: `سَآئِبَةٍ`, `وَصِيلَةٍ`, `بَحِيرَةٍ`, and `حَامٍ` are
+  customary livestock noun rows. Their entry strings may be readable, but rich
+  certification still needs noun shape, case, and any visible particle such as
+  `وَ`.
+- Gate: vowels and article/case are source evidence. Do not collapse `ذَكَر`,
+  `ذِكْر`, and `ذُكِرَ` under a root-family hover.

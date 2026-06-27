@@ -144,6 +144,21 @@ Readable English is not enough. A row remains `populated_uncertified` when the
 learner cannot see the function particle, noun role, attached possessor/object,
 or i'rab relation that makes the wording true.
 
+## 4f. VN-04 weak verbs and ذ ك ر POS/voice routing
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `فَأَنسَىٰهُ` | fā' relation plus finite weak/causative verb and `هُ` object | root infinitive "to forget" |
+| `ذَرْهُمْ` | imperative force plus `هُمْ` object and clause context | entry prose "to leave someone..." |
+| `وَيَذَرَكَ` | wāw function, governed mood/context, and `كَ` object | bare weak-root gloss |
+| `ٱلذِّكْرَ` | definite nominal role and local sense | verb infinitive "to remember" |
+| `ذُكِرَ` | passive finite verb and clause role | noun-entry or active/root-family prose |
+| `وَصِيلَةٍ` | wāw function plus customary noun/case review | host-only custom noun string with no particle/case |
+
+The same root may yield a masculine noun, a reminder noun, or a passive verb.
+Nahw must keep the clause role and any particle relation separate from sarf's
+root/POS decision.
+
 ## 5. QAC concept metadata is a routing aid only
 
 If concept metadata says a form may be a prophet, historic person, people,
