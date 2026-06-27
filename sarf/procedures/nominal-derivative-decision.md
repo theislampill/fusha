@@ -116,3 +116,23 @@ When a live row is populated but the evidence path is "verb entry -> nominal
 surface", emit `verb_entry_nominal_derivative_pos_leak` or
 `nominal_pos_may_leak_verbal_infinitive`. This is a skill defect unless the
 row is explicitly documented as renderer-only or Qamus-data-only.
+
+## Dogfood finding: VN-07 obligation derivatives inside a verb tranche
+
+VN-07 found `فَرِيضَةً`, `مَّفْرُوضًا`, and `فَارِضٌ` near the `فَرَضَ`
+verb-entry family. These are nominal, participial, or adjectival surfaces,
+not finite "to ordain" hovers.
+
+For obligation/allotment rows:
+
+- Read the exact surface before reusing a verb-entry gloss.
+- If the token is `مفعول`-like (`مَّفْرُوضًا`), route as passive participle or
+  nominal derivative: "ordained / prescribed / allotted" by context.
+- If the token is a lexical noun (`فَرِيضَةً`), route as a noun such as
+  "portion / obligation / prescribed share" by exact context.
+- If the token is adjectival or active-participle-looking (`فَارِضٌ`), do not
+  certify from the finite verb family without POS and context review.
+
+The repeated defect class is `verb_entry_nominal_derivative_pos_leak`: the row
+may be English-readable, but it is not rich-certified until the nominal shape,
+case/state, and syntactic role are visible to the learner.

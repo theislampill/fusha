@@ -156,3 +156,17 @@ Rule: a rich component or source-key candidate can improve review routing, but
 it cannot certify the written token. If the row is a particle, lexical noun, or
 nominal derivative inside a verb-entry family, route by the token's POS and
 nahw context before any hover trust.
+
+## L. VN-07 dogfood: strict surface before familiar verb roots
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `مِنِّى` / `مِّنِّى` | `تَمَنَّى` wish-verb evidence | preposition `مِن` + first-person suffix and attachment context |
+| `يَتَمَنَّوْهُ` | bare `to desire or wish` | Form V imperfect plural host + `هُ` object |
+| `مَوَازِينُهُۥ` | `to weigh` | plural scales noun + `هُ` suffix |
+| `ٱلْمِيزَان` / `وَزْنًا` | finite weighing verb | balance/weight noun or masdar role |
+| `فَرِيضَةً` / `مَّفْرُوضًا` | `to ordain` | nominal derivative/ordained portion role |
+
+Rule: strict surface, POS, suffixes, and derivative shape come before root
+family reuse. The learner should see why the token contributes "from me",
+"they wish for it", or "his scales", not only the dictionary family.

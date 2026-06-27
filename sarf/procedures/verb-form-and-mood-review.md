@@ -205,3 +205,25 @@ key is not whole-token proof. Before any propagation, classify the token as
 function particle, finite verb, lexical noun, nominal derivative, or
 component-only evidence. Anything else remains `two_vote_required`,
 `needs_sarf_review`, or `needs_nahw_review`.
+
+## Dogfood finding: VN-07 strict surface before verb-family reuse
+
+VN-07 repeated the same rule with different shapes:
+
+- `مِنِّى` / `مِّنِّى` entered the `تَمَنَّى` tranche. The row is a
+  preposition plus first-person suffix pronoun, not a Form V wish verb.
+- `يَتَمَنَّوْهُ` is a finite Form V imperfect verb with an attached `هُ`
+  object. The hover cannot be the entry prose "to desire or wish" unless the
+  object contribution is visible.
+- `مَوَازِينُهُۥ`, `ٱلْمَوَازِينَ`, `ٱلْمِيزَان`, and `وَزْنًا` entered the
+  `وَزَنُوهُمْ` family. They are scales/balance/weight nouns or masdar rows
+  with number/state/case and sometimes suffix morphology, not finite "to
+  weigh" hovers.
+- `فَرِيضَةً`, `مَّفْرُوضًا`, and `فَارِضٌ` are obligation/ordained/old
+  nominal rows near `فَرَضَ`. Treat the token POS and derivative shape before
+  reusing a verb-entry gloss.
+
+For VN-07 rows, a readable English phrase such as "from", "his scales",
+"to desire or wish", or "to ordain" is only a starting clue. The finite verb
+form, suffix pronoun, nominal derivative, or particle+pronoun composition
+decides the dogfood lane.

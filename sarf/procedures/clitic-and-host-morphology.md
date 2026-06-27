@@ -159,3 +159,21 @@ Record component candidates with provenance (`source=rich_wbw_segment`, role,
 segment text, token loc) when available, but never let them weaken the gate.
 Component candidates do not create `auto_safe`, source agreement, closure
 coverage, or hover coverage.
+
+## Dogfood finding: VN-07 suffixes survive candidate enrichment
+
+VN-07 added fresh examples where a candidate is useful for routing but unsafe
+for certification:
+
+- `مِنِّى` is `مِن` plus a first-person suffix pronoun. A `تَمَنَّى`
+  entry-family candidate is not allowed to hide the preposition or the suffix.
+- `يَتَمَنَّوْهُ` must expose the finite host and the `هُ` object. The suffix
+  cannot be stored only as private metadata while the visible hover remains a
+  bare infinitive.
+- `مَوَازِينُهُۥ` and `بَالَهُمْ` are noun hosts with attached possessor or
+  reference suffixes. A host-only hover such as "scales" or "state" remains
+  below rich certification until the suffix is explained.
+
+When a row gains component candidates, preserve two facts separately: the
+component evidence and the whole-token gate. Component evidence may tell the
+reviewer what pieces exist, but it never authorizes parse-family propagation.

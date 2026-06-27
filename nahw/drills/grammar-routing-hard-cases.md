@@ -194,6 +194,21 @@ VN-06 proves that candidate enrichment is not certification. If the token
 arrives through a component-only or source-key join, nahw still decides the
 function, attachment, and context before the hover can be learner-safe.
 
+## 4i. VN-07 preposition, near-verb, and noun-family routing
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `مِنِّى` / `مِّنِّى` | `مِن` preposition + first-person suffix and attachment/referent context | treating it as `تَمَنَّى` evidence |
+| `يَتَمَنَّوْهُ` | finite Form V verb plus `هُ` object | bare wish-family infinitive |
+| `يَكَادُ` / `كَادُوا` | kāda-sister construction and following predicate/context | generic "to almost do" |
+| `مَوَازِينُهُۥ` | plural noun plus suffix and judgment/scales context | finite `to weigh` |
+| `فَارِضٌ` / `فَرِيضَةً` | noun/adjective/masdar role by case and context | verb-entry "to ordain" |
+
+The same root family can produce a governed particle row, a finite verb, a
+near-verb construction, a masdar, or a possessed noun. Candidate linkage only
+points to a review lane; nahw still decides function, attachment, and
+contextual contribution.
+
 ## 5. QAC concept metadata is a routing aid only
 
 If concept metadata says a form may be a prophet, historic person, people,

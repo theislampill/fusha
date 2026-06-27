@@ -78,3 +78,21 @@ Route these by function and strict surface, not by the verb-entry source key:
 This is not a live-apply instruction. It is a dogfood gate: if a particle or
 function token enters a verb/noun tranche through component evidence, keep the
 row out of `rich_certified` and out of parse-family propagation.
+
+## VN-07 dogfood: preposition plus pronoun vs verb-family candidate
+
+VN-07 found `مِنِّى` / `مِّنِّى` rows while reviewing the `تَمَنَّى` verb
+entry. These are not wish-verb tokens. They are the preposition `مِن` with an
+attached first-person pronoun, so the hover lane depends on jar-majrūr
+attachment, speaker/referent context, and public wording such as "from me" or
+"from Me" by exact address.
+
+Do not certify these from:
+
+- stripped-surface similarity to `تَمَنَّى`;
+- source-key or component candidate evidence alone;
+- a generic "from" string that hides the attached pronoun.
+
+If the row cannot show the preposition relation and suffix pronoun visibly,
+route it to `needs_nahw_review` or `needs_renderer_segments`, not
+`rich_certified`.
