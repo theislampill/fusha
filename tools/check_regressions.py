@@ -1532,6 +1532,37 @@ check("VN-20 sample keeps nominal/POS leakage rows gated", _vn20_nominal_pos_gat
 check("VN-20 sample keeps suffix, relation, and token-only rows gated", _vn20_suffix_relation_gated)
 check("VN-20 sample contains no live-applyable candidate rows", _vn20_no_auto_apply)
 
+# Dogfood-derived Phase 4 request should carry the actual yasaluka review hint
+# without turning the sample into an applyable decision.
+try:
+    _dogfood_two_vote = [
+        json.loads(_l)
+        for _l in io.open(
+            os.path.join(_R, "qamus", "examples", "phase4_two_vote_request_from_dogfood_review.sample.jsonl"),
+            encoding="utf-8",
+        )
+        if _l.strip()
+    ]
+except Exception:
+    _dogfood_two_vote = []
+_dogfood_yasaluka = _dogfood_two_vote[0] if _dogfood_two_vote else {}
+_dogfood_yasaluka_hint = _dogfood_yasaluka.get("gloss_style_hint") or {}
+_dogfood_yasaluka_policy = _dogfood_yasaluka.get("apply_policy") or {}
+check(
+    "dogfood-derived yasaluka two-vote request keeps ask-you review hint",
+    bool(
+        _dogfood_yasaluka
+        and (_dogfood_yasaluka.get("identity") or {}).get("surface_sample") == "يَسْأَلُكَ"
+        and _dogfood_yasaluka.get("agreement_key_hint") == "verb-object-suffix-explicit-subject"
+        and _dogfood_yasaluka_hint.get("preferred_concise_authored_gloss") == "ask you"
+        and _dogfood_yasaluka_hint.get("required_when_approving") is True
+        and _dogfood_yasaluka_hint.get("certifies_decision") is False
+        and _dogfood_yasaluka_policy.get("apply_allowed") is False
+        and _dogfood_yasaluka_policy.get("live_mutation_allowed") is False
+        and (_dogfood_yasaluka.get("candidate_evidence") or {}).get("component_candidates_can_certify") is False
+    ),
+)
+
 try:
     _rich_sample_dir = os.path.join(_R, "qamus", "examples")
     _rich_exact_ok = True

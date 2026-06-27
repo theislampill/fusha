@@ -55,6 +55,7 @@ PREFERRED_GLOSS_BY_SURFACE = {
     "وَٱلنُّجُومُ": "and + the stars",
     "وَٱلْجِبَالُ": "and + the mountains",
     "وَٱلشَّجَرُ": "and + the trees",
+    "يَسْأَلُكَ": "ask you",
     "يَسْـَٔلُكَ": "ask you",
     "وَخُلِقَ": "and was created",
     "ضَعِيفًۭا": "weak",
