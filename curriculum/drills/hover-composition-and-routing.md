@@ -35,6 +35,12 @@ hover wording.
 | `صَٰلِحًا` | common adjective/noun surface | concept flag may warn about Ṣāliḥ the messenger, but context decides |
 | `بِبَدْرٍ` | `بِـ` + proper place name | preserve both the preposition and named-place status; concept metadata is a routing flag |
 | `إِلَيْنَا` | preposition stem + pronoun `ـنا` | "to us"; hamza-seat/root guard prevents false `ل ي ن` |
+| `وَٱلشَّجَرُ` | `وَ` + `ٱل` + host noun | fallback "and + the trees" is not enough; breakdown and segment roles must be present |
+| `يَسْـَٔلُكَ` | imperfect prefix + verb stem + object suffix `كَ` | "ask you" must expose object suffix; lemma-only "to ask" fails |
+| `فَأَهْلَكْنَاهُمْ` | `فَ` + Form IV verb with 1pl subject + object `هم` | fluent phrase must still expose form, subject, object, and fā' role |
+| `يَٰٓأَيُّهَا` | vocative call + bridge + attention particle | phrase "O humanity" belongs to the construction; token pieces still need roles |
+| `وَخُلِقَ` | wāw + passive perfect verb | phrase may be correct while still missing resumption/passive proof |
+| `ضَعِيفًۭا` | nominal/adjectival host + accusative indefinite ending | "weak" is not rich-certified until case/role and entry linkage are explicit |
 
 ## Parse-key handoff
 
@@ -87,3 +93,18 @@ Use this drill before [`ayah-reading-drills.md`](ayah-reading-drills.md), after 
 "obvious" only because the attached piece was ignored.
 Then run [`parse-key-and-color-layer.md`](parse-key-and-color-layer.md) to turn the composition
 into a renderer-ready parse-key/color contract.
+
+## Dogfood controller prompt
+
+For every production hover defect batch, add a `skill_impact` row:
+
+- `sarf_update`: procedure/eval/drill changed, or exact no-op reason;
+- `nahw_update`: procedure/eval/drill changed, or exact no-op reason;
+- `qamus_only`: true only when the skill already covers the class and the row
+  only needs data, renderer, or entry linkage repair;
+- `next_gate`: controller reconciliation, two-vote, owner repair preview, or
+  human review.
+
+Do not count a batch as skill-dogfooded until repeated defect classes either
+changed sarf/nahw artifacts or have documented no-op reasons tied to existing
+rules.

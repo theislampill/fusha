@@ -23,6 +23,9 @@ Use this with:
 | `فَـ` | particle function | resumption, coordination, result, supplement, cause | always "then" |
 | `أَ` | hamza function | interrogation or equalization ("whether") | treating every hamza as a question |
 | `لَا` | negation/prohibition/genus/preventive context | simple negation, prohibition+jussive, no-of-genus, la like anna | generic "no" |
+| `يَٰٓأَيُّهَا` | vocative formula pieces | `يَا` call + `أَيُّ` bridge + `هَا` attention + following addressee | one-piece "you (who)" |
+| `وَخُلِقَ` | wāw function + passive verb | resumption/coordination plus passive perfect verb | phrase text with no role proof |
+| `بِٱلْمَعْرُوفِ` | bā' relation and PP attachment | preposition + definite nominal + attachment/review gate | host phrase with no bā' role |
 
 When the function is unclear, the correct output is a precise pending reason,
 not a broad particle gloss.
@@ -108,3 +111,11 @@ For rich-hover readiness, also pass only when each resolved row has a compact
 ASCII parse key and segment/function classes from the `qamus-grammar-v1` palette.
 If the grammar route is not certified, do not assign a reassuring color; keep
 the blocker visible.
+
+Dogfood batch check: the row may be string-populated and still fail this drill.
+For each repeated defect class, produce one of:
+
+- nahw procedure updated;
+- nahw eval/drill fixture added;
+- documented no-op because the issue is Qamus data, entry linkage, or renderer
+  only.

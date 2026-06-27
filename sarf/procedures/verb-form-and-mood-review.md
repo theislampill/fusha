@@ -19,6 +19,23 @@ Bare infinitive hovers are unsafe for finite verbs when person, number, suffix,
 imperative force, passive voice, or context materially changes the visible
 token contribution.
 
+## Dogfood finding: finite verbs need internal composition
+
+The 2026-06-27 dogfood batch promoted two verb defects into permanent checks:
+
+- `يَسْـَٔلُكَ`: record `يَـ` imperfect prefix, `سْـَٔلُ` host stem/root, and
+  `كَ` attached object pronoun. The hover may be concise, but the breakdown must
+  preserve `OBJ.2MS`; a lemma-style "to ask, question" or a hidden-only suffix is
+  not rich-certified.
+- `فَأَهْلَكْنَاهُمْ`: record `فَ` separately, then the Form IV perfect active
+  1st-person plural verb with attached 3rd-person masculine plural object. A
+  fluent phrase such as "so We destroyed them" still needs a parse key and
+  component table before it can be used as a model row.
+
+When the subject is supplied by a following explicit noun, the verb form still
+keeps its own person/number/gender. Do not replace the finite morphology with a
+dictionary entry gloss.
+
 Rich-hover readiness:
 
 - include form/voice/aspect/person/number in `parse_key.key`, e.g.

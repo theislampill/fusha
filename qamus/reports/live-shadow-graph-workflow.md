@@ -542,6 +542,36 @@ Queue counts after withholding controller-conflict rows:
 - `repair_candidate`: `2`
 - `sarf_nahw_procedure_improvement`: `22`
 
+Known-defect readiness was then built from those next-state queues as a
+bounded controller bridge for the highest-priority dogfood rows:
+
+- output path:
+  `out/full-corpus-dogfood-82c63dd-20260627-004825/review-packets/subagent-reviews/next-state-queues/known-defect-readiness/`
+- readiness rows / unique WBW locations: `11`
+- `controller_reconciliation_required`: `11`
+- rows requiring two-vote: `11`
+- production-bug lessons required: `11`
+- repair preview allowed: `0`
+- public leak count: `0`
+- `may_apply_live`: `false`
+
+This is intentional: every current `known_defect` row remains exact-addressed
+and high-priority, but all 11 have multi-lane disagreement and therefore need
+controller reconciliation before any owner-gated repair-preview packet can be
+treated as ready. The rows may still feed production-bug lessons and
+sarf/nahw/renderer follow-up, but they do not authorize live apply, parse-key
+family propagation, or raw-surface propagation.
+
+The 11 rows were then carried into a skill-impact dogfood batch, not just a
+queue artifact. See
+[`full-corpus-dogfood-batch-20260627.md`](full-corpus-dogfood-batch-20260627.md)
+and
+[`../examples/full_corpus_dogfood_known_defect_skill_impact.sample.jsonl`](../examples/full_corpus_dogfood_known_defect_skill_impact.sample.jsonl).
+That batch updates sarf/nahw procedures, drills, and eval fixtures for the
+repeated defect classes, while recording explicit no-op reasons for rows whose
+gap is Qamus data, renderer, entry linkage, or i'rab review rather than a new
+sarf rule.
+
 Durable tooling added for this lane:
 
 - `tools/build_full_corpus_dogfood_lane_packets.py`
@@ -549,16 +579,20 @@ Durable tooling added for this lane:
 - `tools/summarize_full_corpus_dogfood_review_outputs.py`
 - `tools/reconcile_full_corpus_dogfood_review_outputs.py`
 - `tools/build_full_corpus_dogfood_next_state_queues.py`
+- `tools/build_full_corpus_dogfood_known_defect_readiness.py`
 - `qamus/examples/full_corpus_dogfood_lane_packet.sample.jsonl`
 - `qamus/examples/full_corpus_dogfood_review_output.sample.jsonl`
 - `qamus/examples/full_corpus_dogfood_reconciliation.sample.jsonl`
 - `qamus/examples/full_corpus_dogfood_next_state_queue.sample.jsonl`
+- `qamus/examples/full_corpus_dogfood_known_defect_readiness.sample.jsonl`
 
 The regression suite now checks the packet builder self-test, packet fixture
 validation, review-output validator self-test, review-output fixture validation,
 review-output summarizer self-test, sample summary, controller reconciliation
 self-test, reconciliation fixture validation, next-state queue self-test, and
-next-state queue fixture validation.
+next-state queue fixture validation. It also checks known-defect readiness
+self-test and fixture validation, including the rule that controller-conflicted
+known defects cannot become repair-preview-ready.
 
 ## Phase 2.9 Seal Refresh - 2026-06-27
 
@@ -714,12 +748,18 @@ Durable tooling:
 - `tools/validate_full_corpus_dogfood_subagent_lanes.py`
 - `tools/summarize_full_corpus_dogfood_queue.py`
 - `tools/build_full_corpus_dogfood_review_pack.py`
+- `tools/reconcile_full_corpus_dogfood_review_outputs.py`
+- `tools/build_full_corpus_dogfood_next_state_queues.py`
+- `tools/build_full_corpus_dogfood_known_defect_readiness.py`
 - `tools/build_dogfood_production_bug_lessons.py`
 - `qamus/schemas/full-corpus-hover-dogfood-audit.schema.json`
 - `qamus/examples/full_corpus_hover_dogfood_audit.sample.jsonl`
 - `qamus/examples/full_corpus_dogfood_subagent_lane.sample.jsonl`
 - `qamus/examples/full_corpus_dogfood_queue_summary.sample.json`
 - `qamus/examples/full_corpus_dogfood_review_pack.sample.jsonl`
+- `qamus/examples/full_corpus_dogfood_reconciliation.sample.jsonl`
+- `qamus/examples/full_corpus_dogfood_next_state_queue.sample.jsonl`
+- `qamus/examples/full_corpus_dogfood_known_defect_readiness.sample.jsonl`
 - `qamus/examples/dogfood_production_bug_lesson.sample.jsonl`
 
 Row classes:
@@ -780,6 +820,22 @@ routes, parse gate/family class, entry/sense linkage, sarf/nahw evidence,
 blocker text, required evidence, and a read-only apply policy. It links an
 available dogfood-derived production-bug lesson by exact `wbw:S:A:W` address,
 but does not invent corrected hover wording and does not weaken gates.
+
+`tools/reconcile_full_corpus_dogfood_review_outputs.py` is the main-thread
+controller for subagent outputs. It collapses validated lane rows to one
+controller-owned row per exact `wbw:S:A:W`; when reviewers disagree, the row
+must enter controller reconciliation instead of an action queue.
+
+`tools/build_full_corpus_dogfood_next_state_queues.py` converts controller rows
+into bounded next-state queues by route. Conflicted rows go to
+`controller_reconciliation`; they do not enter repair, blocker, renderer, or
+lesson queues as if the route were settled.
+
+`tools/build_full_corpus_dogfood_known_defect_readiness.py` narrows the
+highest-priority `known_defect` rows into exact-address readiness records. The
+tool preserves the original queue state and proves that controller-conflicted
+known defects can require production-bug lessons while still allowing no repair
+preview, no surface/family propagation, and no live apply.
 
 This lane is the real dogfooding pass for populated hovers. A live row being present, repo/live parity, zero public
 crawl mismatch, or a Phase 4 narrow apply packet is not sufficient evidence of sarf/nahw correctness or learner-ready

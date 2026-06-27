@@ -44,9 +44,13 @@ attached piece's contribution. A hidden `pre` field is not enough for a learner.
 | `فَذَٰلِكُنَّ` | fā' + demonstrative + feminine plural suffix | fā' and addressed group both matter | bare "that" with no fā'/suffix |
 | `جَادَلُوكَ` | verb + plural subject + `كَ` object | verb clitic is visible: "they ... you" | infinitive "to argue" |
 | `أَنزَلْنَاهُ` | Form IV verb + `نا` subject + `ه` object | person/object shape belongs in the hover | bare "sent down" |
+| `يَسْـَٔلُكَ` | imperfect prefix + verb stem + `كَ` object | suffix is visible: "ask you" plus parse proof | lemma-only "to ask, question" |
+| `فَأَهْلَكْنَاهُمْ` | fā' + Form IV perfect 1pl verb + `هم` object | fā', subject, form, and object all matter | phrase with no component breakdown |
 | `يَحْفَظُونَهُ` | imperfect verb + plural subject + object `ه` | subject and object are part of the token's contribution | bare "guard" |
 | `قُرْءَانًا` | noun + tanwin-alif | final `ـًا` is tanwin, not pronoun `نا` | false split into stem + "us" |
 | `ٱلْمُلْك` | article + noun | article is part of the noun; no lām preposition | false split `لـ` + host |
+| `وَٱلشَّجَرُ` | wāw + article + noun | rich hover teaches all three pieces | `and + the trees` as the only explanation |
+| `بِٱلْمَعْرُوفِ` | bā' + article + nominal host | preposition, definiteness, and host all appear in breakdown | generic phrase with no bā' component |
 
 ## Parse-key extension
 
@@ -81,3 +85,8 @@ pronoun fails the drill.
 For rich-hover readiness, the answer must also include a parse key and exactly one
 display class for each grammatical piece. The UI may keep the written Arabic word atomic;
 the classes still prove that no proclitic, article, stem, or suffix vanished.
+
+Dogfood batch check: for the 2026-06-27 known-defect rows, write a
+`skill_impact` note for each repeated class. If sarf already has the rule, say
+which procedure/eval enforces it; if not, add the rule before routing the row
+back to Qamus data repair.
