@@ -153,3 +153,19 @@ rule → recognition Q → production Q → answer. Generated/extendable from
   possessed, or adverbial role review when the entry family is broad.
 - Gate: a row can gain more useful component candidates while staying
   `two_vote_required`. Component evidence is not a repair-ready hover.
+
+## <a name="vn14-verb-entry-nominals"></a>16. VN-14: verb-entry families can carry nominal rows
+
+- Recognition: `وَسَطًا`, `ٱلْوُسْطَىٰ`, `أَوْسَطِ`, and
+  `أَوْسَطُهُمْ` are not automatically finite verbs just because they sit in
+  a `و س ط` entry family. Decide exact POS, elative/nominal type, case/state,
+  and suffix before trusting the hover.
+- Recognition: `ٱلْوَسْوَاسِ` is definite lexical/nominal, not the finite
+  verb `وَسْوَسَ`.
+- Recognition: `ثَمَرِهِۦ` is a noun host plus suffix/referent. A hover like
+  "to fruit; bear fruit" is verb-entry prose leakage.
+- Recognition: `بَدِيعُ` and `بِدْعًا` require nominal/adjectival or relation
+  review; the entry family "to invent" does not certify the token.
+- Gate: if a detector says "finite verb" but the exact surface is nominal,
+  stop and reroute. The fix is not a live hover apply; it is POS/derivative
+  review plus a precise blocker or repair candidate.

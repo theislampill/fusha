@@ -251,3 +251,26 @@ verb-entry prose:
 Rule: a string can be populated and still be a POS leak. VN-13 noun/derivative
 rows route to exact-address repair candidates or blockers, not to family-wide
 propagation.
+
+## Dogfood finding: VN-14 nominal rows inside verb-entry families
+
+VN-14 added another mixed tranche where verb-entry families produce useful
+candidate evidence for non-verb rows:
+
+- `وَسَطًا`, `ٱلْوُسْطَىٰ`, `أَوْسَطِ`, and `أَوْسَطُهُمْ`
+  are middle/best/moderation nominal or elative-looking rows near a
+  `و س ط` verb family. They require noun/adjective type, state/case, and any
+  suffix review before reuse.
+- `ٱلْوَسْوَاسِ` is a definite lexical/nominal surface in a whisper verb
+  family. Do not treat the article-bearing noun as the finite verb
+  `وَسْوَسَ`.
+- `بَدِيعُ`, `بِدْعًا`, and `ٱبْتَدَعُوهَا` show the opposite pressures in
+  one family: nominal/adjectival surfaces need POS/case review while the finite
+  verb row needs form/object review.
+- `ثَمَرِهِۦٓ` remains a noun host plus suffix/referent row. The visible
+  hover "to fruit; bear fruit" is entry prose leakage, not a rich noun hover.
+
+Rule: if the exact surface is a noun, adjective, elative, masdar, participle,
+or lexical noun, block verb-infinitive reuse even when the entry family is
+morphologically related. Rich certification needs the nominal class plus
+case/state, article, and suffix/referent contribution.

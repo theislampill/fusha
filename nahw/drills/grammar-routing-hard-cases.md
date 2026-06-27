@@ -355,3 +355,20 @@ grammar is sensitive.
 VN-13 adds no live-apply exception. A candidate must still pass exact address,
 public-safe authored text, compatible sarf/nahw reasons, source/MCP evidence
 where needed, and two-vote review for grammar-sensitive rows.
+
+## 4p. VN-14 suffix, relation, and detector-boundary controls
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `أَصْوَافِهَا` | noun host plus `هَا` possessor/referent | host-only `wool` |
+| `يَلْمِزُكَ` / `وَدَّعَكَ` | finite host plus `كَ` object/addressee | dictionary infinitive only |
+| `بِجَهَازِهِمْ` | bā' + host + `هِمْ` and PP attachment | supply/provide host prose |
+| `لِيُدْحِضُوا۟` / `لِيَمِيزَ` | lām function + mood/governor + clause relation | component host evidence |
+| `بِدْعًا` / `كَهَيْـَٔةِ` | relation/comparison or attachment review | root-family invention/shape prose |
+| `وَٱلشَّجَرُ` | component-only blocker until wāw/article/host function agree | host candidate as whole token |
+| `ثَمَرِهِۦ` | noun host + suffix/referent; possible POS repair | verb infinitive "to fruit" |
+| renderer-only rows | rich metadata backfill if no grammar defect exists | claiming rich certification from text presence |
+
+VN-14 keeps the two-vote and MCP/source-evidence gates intact. A candidate can
+be useful for review while remaining non-applyable because the suffix, relation,
+or POS/function reasoning is not yet certified.

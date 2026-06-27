@@ -272,3 +272,20 @@ component-only boundary is missing, the row is not a learner-ready hover.
 Rule: VN-13 confirms the dogfood target is not "string exists". A row can
 be populated, linked, or component-enriched and still need sarf/nahw review
 before any candidate wording becomes applyable.
+
+## S. VN-14 dogfood: finite rows must be separated from nominal/POS rows
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `تُوَسْوِسُ` | bare `to whisper` | finite imperfect form, subject/agreement, and context |
+| `يَطْلُبُهُۥ` | `to request, demand` | finite host plus `هُ` object/referent |
+| `يَلْمِزُكَ` | `to defame, speak ill of` | finite host plus `كَ` addressee object |
+| `وَدَّعَكَ` | farewell entry prose without addressee | finite host plus `كَ` object/context |
+| `وَسَطًا` / `أَوْسَطِ` | treating all `و س ط` rows as finite verbs | nominal/elative POS, case/state, and context |
+| `ٱلْوَسْوَاسِ` | finite whisper verb | definite lexical/nominal POS review |
+| `بِجَهَازِهِمْ` | host family or supply verb alone | bā' + host + suffix and PP attachment |
+| renderer-only rows | rich certification from hover presence | route to renderer metadata backfill unless grammar is implicated |
+
+VN-14 adds an Andon lesson: do not let a detector named "verb tranche" classify
+all rows as finite verbs. Exact surface/POS comes first, then form, suffix,
+function, and learner breakdown.

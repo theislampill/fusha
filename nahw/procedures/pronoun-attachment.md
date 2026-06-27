@@ -99,6 +99,25 @@ If a populated hover can be read without the suffix, it is not rich-certified.
 Route it to exact-address review, and require two compatible reasons when the
 referent or clause role affects the English.
 
+## Dogfood finding: VN-14 mixed noun and verb suffix rows
+
+VN-14 confirmed the same suffix rule across noun hosts, verb hosts, and
+prepositional constructions:
+
+- `أَصْوَافِهَا`, `حَرْثَكُمْ`, and `ثَمَرِهِۦٓ` are nominal hosts.
+  Their suffixes are possessive or referent-sensitive and cannot disappear
+  under the host noun or a verb-family entry gloss.
+- `ٱبْتَدَعُوهَا`, `خَرَقَهَا`, `جَهَّزَهُم`, `يَطْلُبُهُۥ`,
+  `يَلْمِزُكَ`, `يُطِيقُونَهُۥ`, and `وَدَّعَكَ` are verb hosts.
+  Their suffixes are object/addressee decisions and require exact-address
+  review before the English can be trusted.
+- `بِجَهَازِهِمْ` adds bā' + governed host + suffix. The suffix role and PP
+  attachment must be reasoned with the preposition, not hidden as host metadata.
+
+If the learner can read the hover without the suffix, the row is still
+`populated_uncertified` or `token_only_override`. Route it to suffix-pronoun
+review, not live apply.
+
 **Test:** [`nahw/evals/suffix-pronoun-eval.jsonl`](../evals/suffix-pronoun-eval.jsonl);
 rules [`nahw/rules/pronoun-attachment-rules.json`](../rules/pronoun-attachment-rules.json).
 

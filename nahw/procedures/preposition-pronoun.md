@@ -149,3 +149,22 @@ Use `component_only_blocker`, `wa_function_uncertified`,
 `fa_function_uncertified`, `preposition_role_uncertified`, or
 `pp_attachment_uncertified`; do not convert these rows into safe propagation
 from a host gloss.
+
+## Dogfood finding: VN-14 bā', lām, and kāf relation rows stay exact-addressed
+
+VN-14 added relation rows whose host-family prose can look useful while the
+function is still uncertified:
+
+- `بِجَهَازِهِمْ` is bā' + governed host + `هِمْ`; the preposition relation,
+  noun host, suffix, and attachment all need review before wording can
+  propagate.
+- `بِدْعًا` and `كَهَيْـَٔةِ` require relation/function and attachment review;
+  raw entry prose such as "to invent" or "to shape/form" is not a token hover.
+- `لِيُدْحِضُوا۟`, `لِيَمِيزَ`, and similar lām-on-verb rows require lām
+  function, mood/governor, and clause relation proof before any public wording
+  is trusted.
+
+Use `preposition_role_uncertified`, `comparison_attachment_uncertified`,
+`lam_function_uncertified`, `mood_governor_uncertified`, or
+`component_only_blocker`. A relation row needs two compatible reasons when the
+function affects i'rab, mood, attachment, or English wording.

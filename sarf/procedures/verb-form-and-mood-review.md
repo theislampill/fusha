@@ -364,3 +364,27 @@ range:
 Rule: VN-13 repair candidates are not live decisions. A row may be useful for
 sarf training and still require `rich_metadata_plus_exact_address_review`,
 `two_vote_exact_address_review`, or `component_only_blocker`.
+
+## Dogfood finding: VN-14 finite rows split from nominal/POS rows
+
+VN-14 corrected an over-broad detector that initially treated every verb-entry
+row as finite. After the correction, the tranche separates finite hosts from
+nominal or lexical rows inside the same entry family:
+
+- `تُوَسْوِسُ`, `يَطْلُبُهُۥ`, `يَلْمِزُكَ`, `يُطِيقُونَهُۥ`,
+  and `وَدَّعَكَ` are finite or form-sensitive rows. Entry prose such as
+  "to whisper", "to request", "to defame", or "to be capable" is only routing
+  evidence until the exact token exposes form, voice/aspect, agreement, and
+  any object suffix.
+- `وَسَطًا`, `ٱلْوُسْطَىٰ`, `أَوْسَطِ`, `ٱلْوَسْوَاسِ`,
+  `بَدِيعُ`, `بِدْعًا`, and `نُسْخَتِهَا` are nominal, derivative,
+  lexical, or POS-sensitive rows near verb entries. They are not finite verbs
+  and must route to nominal/POS review before hover trust.
+- `فَوَسَطْنَ`, `وَخَرَقُوا۟`, and `وَمُسْتَوْدَعَهَا` are
+  component-only evidence. Their host family can route review, but it cannot
+  certify the whole written token.
+
+Rule: first decide whether the exact surface is a finite verb host, a
+nominal/POS row, or component-only evidence. Only finite rows use this verb
+form contract directly; nominal rows hand off to nominal derivative/POS review,
+and component-only rows remain blockers.

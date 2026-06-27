@@ -275,3 +275,24 @@ VN-13 added suffix-heavy noun and verb rows:
 Rule: keep `component_only_evidence` separate from `whole_token_candidate`.
 VN-13 rows can gain better component evidence without weakening the gate or
 creating a source-agreement, hover-coverage, or live-apply claim.
+
+## Dogfood finding: VN-14 component evidence and suffixes stay separated
+
+VN-14 repeated the component-boundary and suffix-accounting controls:
+
+- `وَٱلشَّجَرُ`, `فَوَسَطْنَ`, `بِجَهَازِهِمْ`,
+  `وَخَرَقُوا۟`, and `وَمُسْتَوْدَعَهَا` are component-only rows in the
+  dogfood inventory. Component candidates may improve routing, but they do not
+  become whole-token decisions and they do not count toward propagation
+  safety.
+- `أَصْوَافِهَا`, `حَرْثَكُمْ`, and `ثَمَرِهِۦٓ` are noun hosts
+  with visible suffix or referent contribution. Host-only nouns such as
+  "wool", "harvest", or fruit-family prose are not rich-certified.
+- `ٱبْتَدَعُوهَا`, `خَرَقَهَا`, `جَهَّزَهُم`, `يَلْمِزُكَ`,
+  `يُطِيقُونَهُۥ`, and `وَدَّعَكَ` are finite verb hosts with object or
+  addressee-sensitive suffixes. The suffix must be visible in the learner
+  breakdown before candidate wording can move forward.
+
+Rule: a VN-14 row may gain component candidates and still remain
+`component_only_blocker`, `rich_metadata_plus_exact_address_review`, or
+`two_vote_exact_address_review`. Component candidates never weaken the gate.
