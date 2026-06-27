@@ -222,3 +222,19 @@ review, suffix-bearing hosts require visible pronoun accounting, and
 nominal-looking rows in verb families require derivative/POS review. Rows whose
 only defect is missing rich display metadata go to renderer backfill, not live
 apply.
+
+## P. VN-11 dogfood: pronoun collisions and component-only known defects
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `غَنِمْتُم` / `غَنِمْتُمْ` | `to take war gains` | finite perfect plural contribution by exact context |
+| `تَسْتَغِيثُونَ` / `يَسْتَغِيثُوا۟` | bare `to cry for aid` | finite form, subject, and context |
+| `ٱقْذِفِيهِ` / `قَبَضْنَٰهُ` | verb-family prose with hidden suffix | verb host + attached suffix/object relation |
+| `فَأَهْلَكْنَاهُمْ` | component-only destroy/ruin evidence | fā' + finite host + `هُمْ`, whole-token proof |
+| `هُمْ` / `هُمُ` | verb-entry family propagation | standalone pronoun/function-token review |
+| `مَغَانِمُ` / `غَنَمُ` | finite war-gains verb | plural nominal/livestock POS review |
+| `لِفُرُوجِهِمْ` | component host evidence | lām + host + suffix + attachment review |
+
+Rule: VN-11 adds a negative control. A Qamus candidate may be attached to a
+standalone pronoun or component row, but that does not make the row a verb,
+does not make it propagation-safe, and does not authorize live apply.

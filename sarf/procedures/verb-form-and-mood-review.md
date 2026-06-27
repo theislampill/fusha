@@ -295,3 +295,26 @@ Rule: VN-10 candidates may populate English strings without satisfying the
 finite-form contract. Do not mark them rich-certified or propagation-safe
 until the exact written token exposes the finite host and every visible
 clitic/suffix/function piece.
+
+## Dogfood finding: VN-11 finite rows and pronoun collisions
+
+VN-11 repeated finite-form leakage and added a fresh collision class:
+
+- `غَنِمْتُم` / `غَنِمْتُمْ`, `تَسْتَغِيثُونَ`, `يَسْتَغِيثُوا۟`,
+  `يُغَاثُوا۟`, and `يُغَاثُ` were populated from entry prose such as
+  "to take war gains" or "to cry for aid". They are finite or voice-sensitive
+  token rows, not dictionary infinitives.
+- `قَبَضْنَٰهُ`, `ٱقْذِفِيهِ`, and `فَقَذَفْنَٰهَا` require the verb host,
+  person/number/voice or mood, and the attached suffix/object contribution
+  before public wording can be reviewed.
+- `فَأَهْلَكْنَاهُمْ` appeared as a known defect but only component evidence in
+  this tranche. Keep it blocked until fā' function, finite host, and `هُمْ`
+  object agree under exact-address review.
+- Standalone pronoun rows such as `هُمْ` / `هُمُ` can collide with a verb-entry
+  family. Do not route them as finite verbs; hand them to nahw as pronoun or
+  function-token rows.
+
+Rule: VN-11 rows may have a useful Qamus candidate and still remain
+`component_only_blocker`, `two_vote_exact_address_review`, or
+`needs_nahw_review`. A finite verb candidate never certifies a standalone
+pronoun, and component evidence never certifies the whole written token.

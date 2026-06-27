@@ -260,6 +260,22 @@ VN-10 keeps the apply boundary explicit: none of these rows can be live-applied
 from dogfood alone. They need exact token identity, rich segments, compatible
 sarf/nahw reasoning, and two-vote/MCP/source evidence where grammar-sensitive.
 
+## 4m. VN-11 pronouns, lām/kāf rows, and known component defects
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `هُمْ` / `هُمُ` | standalone pronoun role and referent review | verb-entry source-key propagation |
+| `لِفُرُوجِهِمْ` | lām relation + host + `هِمْ` + PP/attachment | host-only private-parts gloss |
+| `كَسَادَهَا` / `كَبَدٍ` | exact lexical or relation classification | raw kāf as comparison/preposition |
+| `لَٱنفَضُّوا۟` | lām function/mood plus finite host | treating initial lām as automatically safe |
+| `فَأَهْلَكْنَاهُمْ` | fā' + finite host + `هُمْ`, whole-token proof | component-only host evidence |
+| `كُفُّوٓا۟` | POS/mood review | noun-tranche entry text as token hover |
+| renderer-only rows | metadata backfill if no grammar defect exists | claiming rich certification from text presence |
+
+VN-11 reinforces the edit boundary: a row can be populated, source-linked, or
+component-matched and still fail rich hover certification. Route by exact
+token, role, attachment, and compatible reason before any family propagation.
+
 ## 5. QAC concept metadata is a routing aid only
 
 If concept metadata says a form may be a prophet, historic person, people,

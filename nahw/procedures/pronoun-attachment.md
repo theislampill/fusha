@@ -46,6 +46,24 @@ If the row is already string-populated but lacks this breakdown, route it to
 `token_only_override` or `needs_nahw_review`; do not mark it complete from hover
 presence alone.
 
+## Dogfood finding: VN-11 standalone pronouns are not verb-entry proof
+
+VN-11 found high-volume `هُمْ` / `هُمُ` rows linked through a verb-entry family.
+These are standalone pronoun/function-token rows, not finite verb hosts and not
+nominal suffixes.
+
+For these rows:
+
+- keep the exact token identity (`quran:S:A:W`, `wbw:S:A:W`) as the address;
+- classify the token as independent pronoun or function-token evidence before
+  any Qamus entry/sense reuse;
+- require referent and sentence role review before rich certification;
+- block parse-family propagation from a verb-entry source key.
+
+Do not treat "they, their" string presence as dogfood completion. It is only a
+candidate public wording until the token has pronoun role, referent, and rich
+display breakdown.
+
 **Test:** [`nahw/evals/suffix-pronoun-eval.jsonl`](../evals/suffix-pronoun-eval.jsonl);
 rules [`nahw/rules/pronoun-attachment-rules.json`](../rules/pronoun-attachment-rules.json).
 

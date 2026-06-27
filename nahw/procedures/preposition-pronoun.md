@@ -95,3 +95,20 @@ If the relation is not certified, emit `preposition_role_uncertified`,
 `lam_function_uncertified`, `mood_governor_uncertified`, or
 `pp_attachment_uncertified`. Do not let component evidence from a host family
 become a whole-token hover.
+
+## Dogfood finding: VN-11 lām/kāf relation rows stay exact-addressed
+
+VN-11 added relation rows that look English-readable but remain grammar gated:
+
+- `لِفُرُوجِهِمْ` is lām + governed host + `هِمْ`; the preposition relation,
+  host noun, suffix, and attachment all need review.
+- `لَٱنفَضُّوا۟`, `لَنَاكِبُونَ`, and similar initial-lām rows cannot be
+  assumed to be purpose/preposition lām without trusted segmentation and mood
+  or POS context.
+- `كَسَادَهَا`, `كَبَدٍ`, and `كَالِحُونَ` show that raw kāf/initial-kāf
+  shape can be lexical or comparison-like by context. Do not route a raw
+  initial letter as a preposition without segmentation evidence.
+
+Rule: relation/function rows require exact function and attachment proof. If
+the row is component-only, it stays `component_only_blocker`; if whole-token but
+grammar-sensitive, it stays `two_vote_exact_address_review`.

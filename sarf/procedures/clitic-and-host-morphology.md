@@ -216,3 +216,23 @@ Rule: a VN-10 row with component evidence or a visible suffix can become a
 repair candidate only after exact-address review. It is never live-applyable
 from the dogfood tranche, and component evidence never contributes to hover
 coverage or propagation safety.
+
+## Dogfood finding: VN-11 suffixes and component blockers
+
+VN-11 found another suffix-heavy tranche:
+
+- `ٱقْذِفِيهِ`, `قَبَضْنَٰهُ`, `أَهَمَّتْهُمْ`, and `فَأَهْلَكْنَاهُمْ`
+  need the verb host plus attached suffix/object relation visible before any
+  hover wording is trusted.
+- `ظَعْنِكُمْ`, `كَسَادَهَا`, and `نَحْبَهُۥ` are nominal hosts with suffix
+  or referent contribution. They cannot be treated as host-only noun hovers.
+- `لِفُرُوجِهِمْ` contains lām + host + `هِمْ`; component evidence may find a
+  candidate entry, but the whole token remains blocked until the preposition,
+  host, suffix, and attachment are all reviewed.
+- `فَٱسْتَغَٰثَهُ`, `فَٱقْذِفِيهِ`, and `فَقَذَفْنَٰهَا` are useful
+  component candidates only. Keep the candidate provenance separate from
+  whole-token entry candidates.
+
+Rule: a visible suffix, even on a row whose English looks plausible, must have
+its own learner-facing accounting. A component-only hit can create a blocker or
+review packet, but never an applyable token decision.

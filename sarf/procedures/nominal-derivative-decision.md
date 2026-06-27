@@ -192,3 +192,21 @@ Rule: if a verb-entry tranche yields a definite noun, masdar, participle,
 elative, adjective, or lexical noun, route to nominal/POS review. The row may
 be string-readable, but it is not rich-certified until noun type, case/state,
 derivative class, and any suffix/referent are visible.
+
+## Dogfood finding: VN-11 nominal/POS and pronoun/function collisions
+
+VN-11 added more rows where entry-family reuse would mis-teach the token:
+
+- `مَغَانِمُ`, `مَغَانِمَ`, and `غَنَمُ` sit near a war-gains verb family, but
+  the first two are plural nominal spoils and the last is sheep/livestock by
+  exact context.
+- `ٱلْغَيْثَ`, `غَيْثٍ`, `فِضَّةٍۢ`, and `فُرُوجَهُمْ` are nouns or nominal
+  hosts; they must not inherit finite verb prose.
+- `كُفُّوٓا۟` appeared in a noun tranche while the live string looked like a
+  verb infinitive. Route by exact POS/mood/context, not by entry family.
+- `هُمْ` / `هُمُ` rows near a verb-entry source key are standalone pronoun or
+  function-token evidence, not nominal derivatives and not finite verbs.
+
+Rule: strict surface plus POS decides the lane before root or source-key
+familiarity. If the candidate is a pronoun/function token, route to nahw; if it
+is a noun, record noun type, number, state/case, and suffix before hover trust.

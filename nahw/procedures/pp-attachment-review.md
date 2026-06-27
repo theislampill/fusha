@@ -83,3 +83,20 @@ Rule: PP or lām/kāf/bā evidence discovered as a component candidate is a rout
 to review, not a public hover. Keep these rows `component_only_blocker` or
 `two_vote_exact_address_review` until attachment, function, and token POS
 agree.
+
+## Dogfood finding: VN-11 relation rows and false-prefix guards
+
+VN-11 repeated PP/function gating in a different entry range:
+
+- `لِفُرُوجِهِمْ`: lām relation + host + suffix + attachment required.
+- `لَٱنفَضُّوا۟`: lām plus finite host needs function/mood review before the
+  verb-family candidate can be used.
+- `كَسَادَهَا`, `كَبَدٍ`, and `كَالِحُونَ`: initial kāf may be lexical or
+  comparison-like; raw surface is not attachment proof.
+- `لِوَاذًۭا`, `لَحْنِ`, and `لَنَاكِبُونَ`: lām-looking rows need exact
+  segmentation and syntactic role before review.
+
+Rule: the presence of a plausible English string does not certify attachment.
+The dogfood lane may emit a repair candidate or renderer requirement, but live
+apply still waits for exact-address proof, two compatible reasons when needed,
+and no public provenance leakage.
