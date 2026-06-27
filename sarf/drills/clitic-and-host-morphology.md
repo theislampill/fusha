@@ -59,9 +59,13 @@ attached piece's contribution. A hidden `pre` field is not enough for a learner.
 | `تُخَالِطُوهُمْ` | imperfect verb + plural subject + object `هم` | object suffix must be visible: "you mix/associate with them" | nominal/root leakage such as "partners" |
 | `تُمْسِكُوهُنَّ` | imperfect verb + plural subject + object `هن` | feminine plural object belongs in the hover | bare "to hold/keep" |
 | `تَكْتُبُوهَا` | imperfect verb + plural subject + object `ها` | object suffix triggers "write it/her" plus referent review | bare "to write" |
+| `تُبَٰشِرُوهُنَّ` | imperfect verb + object `هن` | contextual wording must still expose the feminine plural object | action phrase with no `هُنَّ` proof |
+| `تَجِدُوهُ` | imperfect verb + object `ه` | "it/him" belongs in the token contribution | bare "to find" |
 | `أَبْوَٰبِهَا` | plural noun + possessive suffix `ها` | noun-host suffix: "its doors/gates" when certified | host-only "doors" |
 | `شَيَٰطِينِهِمْ` | plural noun host + possessive suffix `هم` | preserve plural host and "their"; concept prose belongs elsewhere | concept paragraph or host-only "devils" |
+| `أُجُورَكُمْ` | plural noun host + possessive suffix `كم` | preserve "your" before entry-family prose | generic "reward" with no possessor |
 | `قُرْءَانًا` | noun + tanwin-alif | final `ـًا` is tanwin, not pronoun `نا` | false split into stem + "us" |
+| `دِهَاقًۭا` | noun/adjective + tanwīn/case | no suffix pronoun exists; detector must not invent one | treating case/tanwīn as an object suffix |
 | `ٱلْمُلْك` | article + noun | article is part of the noun; no lām preposition | false split `لـ` + host |
 | `وَٱلشَّجَرُ` | wāw + article + noun | rich hover teaches all three pieces | `and + the trees` as the only explanation |
 | `بِٱلْمَعْرُوفِ` | bā' + article + nominal host | preposition, definiteness, and host all appear in breakdown | generic phrase with no bā' component |

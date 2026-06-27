@@ -59,3 +59,14 @@ rule → recognition Q → production Q → answer. Generated/extendable from
   not a paragraph.
 - Gate: `masdar_gets_semantic_family_spread` and `possessive_plural_noun_gets_concept_entry_spread` rows stay
   token-address gated until the noun class, number, definiteness, and any attached possessor are explicit.
+
+## <a name="vn01-nominal-leak"></a>10. VN-01: nominal surfaces inside verb entries
+
+- Recognition: `مَّخْتُومٍ` carrying "to seal" is passive/nominal, not a verb infinitive.
+- Recognition: `مِثْلُ` carrying "to be like" is a nominal comparison token; nahw certifies the construction after
+  sarf blocks the infinitive.
+- Recognition: `وَعْدُ` is a maṣdar/noun "promise", not the finite act "to promise".
+- Recognition: `مَيْتًا` is an adjectival/nominal state "dead", not a verbal phrase.
+- Recognition: `شَرِيكَ` is a nominal "partner/associate" in context, not an omnibus shirk-family entry.
+- Gate: if a token is nominal but linked through a verb/root entry, route as `token_only_override` or
+  `needs_sarf_review`; never let the entry family choose the hover by surface alone.

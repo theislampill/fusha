@@ -100,6 +100,19 @@ These rows may already look acceptable in English. They are still not
 `rich_certified` until exact address, governor/attachment, parse key, and entry
 or no-entry rationale are all present.
 
+## 4c. VN-01 same-surface and suffix-context hovers
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `حَمِيمٍ` | same-surface nominal sense by āyah context | carrying "intimate friend" into a punishment/boiling context |
+| `نَكَٰلًۭا` | accusative nominal role plus exact sense review | shackles sense by root family only |
+| `مِثْلُ` | nominal comparison construction | verb infinitive "to be like" as best hover |
+| `تُبَٰشِرُوهُنَّ` | contextual verb-object relation with `هُنَّ` visible | phrase gloss that hides the attached object |
+| `تَجِدُوهُ` | verb-object relation and referent review | bare "to find" |
+
+These rows are not fixed by more English fluency. They need exact address,
+parse key, sarf shape, and nahw context agreement before any live repair packet.
+
 ## 5. QAC concept metadata is a routing aid only
 
 If concept metadata says a form may be a prophet, historic person, people,

@@ -64,3 +64,16 @@ POS‑mismatch defect.
 
 **Rule:** recover the hidden radical from the family (muḍāriʿ / QAC) before matching; never let `norm()` decide a
 weak root. → [`weak-verbs.md`](../references/weak-verbs.md).
+
+## F. VN-01 dogfood: finite token, not entry infinitive
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `تَجِدُوهُ` | bare `to find` | imperfect verb + `هُ` object contribution |
+| `تُبَٰشِرُوهُنَّ` | phrase/action gloss with no object suffix proof | verb host + feminine plural object `هُنَّ` |
+| `عَادَيْتُم` | root family "enemy" prose only | finite person/number and form review |
+| `يَعِدُ` | collapsed weak-root family routing | weak-root/source-address check before candidate entry |
+
+Rule: if the token is finite, the hover is not certified until aspect, voice,
+person/number/gender, form, and any suffix pronoun are available to the learner.
+An English string may be plausible and still remain `populated_uncertified`.
