@@ -469,6 +469,27 @@ for _args, _label in ((["--self-test"], "morphosyntax validator self-test"),
     except Exception:
         check(_label + " runnable", False)
 
+for _args, _label in (
+        (["--self-test"], "rich-hover certification validator self-test"),
+        ([
+             os.path.join(_R, "qamus", "examples", "rich_cert_p_rich_cert_01_particle_function.sample.jsonl"),
+             "--evidence-jsonl",
+             os.path.join(_R, "qamus", "examples", "rich_cert_p_rich_cert_01_particle_function_evidence.sample.jsonl"),
+             "--renderer-jsonl",
+             os.path.join(_R, "qamus", "examples", "rich_cert_p_rich_cert_01_renderer_fixture.sample.jsonl"),
+         ],
+         "P-RICH-CERT-01 particle certification sample validates"),
+):
+    try:
+        _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_rich_hover_certification.py")] + _args)
+        check(_label, _v.returncode == 0)
+        if _v.returncode != 0:
+            _out = (_v.stdout or _v.stderr).strip().splitlines()
+            if _out:
+                print("  ", _out[-1])
+    except Exception:
+        check(_label + " runnable", False)
+
 try:
     _v = run_text([sys.executable, os.path.join(_R, "tools", "audit_wbw_lookup_morphosyntax.py"), "--self-test"])
     check("wbw lookup morphosyntax audit self-test", _v.returncode == 0)
