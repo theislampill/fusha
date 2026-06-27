@@ -318,3 +318,27 @@ Rule: VN-11 rows may have a useful Qamus candidate and still remain
 `component_only_blocker`, `two_vote_exact_address_review`, or
 `needs_nahw_review`. A finite verb candidate never certifies a standalone
 pronoun, and component evidence never certifies the whole written token.
+
+## Dogfood finding: VN-12 finite rows and object suffixes
+
+VN-12 repeated the same finite-form failure in a new source-key range:
+
+- `أَضَآءَ`, `تُثِيرُ`, `أَفْرِغْ`, `تَحُسُّونَهُم`, and
+  `يُضَيِّفُوهُمَا` were populated from entry prose such as "to light/shine",
+  "to stir up/plough", or "to host guests". These are exact finite or
+  command-like tokens, not dictionary infinitives.
+- `يُحَرِّفُونَهُۥ`, `ثَقِفْتُمُوهُمْ`, `جَاوَزَهُۥ`,
+  `فَرَشْنَٰهَا`, and `أَسْرَهُمْ` require the host action plus the attached
+  object or possessor/reference contribution before a learner can trust the
+  hover.
+- `فَلْيُؤَدِّ`, `فَٱصْطَادُوا۟`, `وَجَٰوَزْنَا`, and
+  `لِّيُوَاطِـُٔوا۟` are component-only routing evidence. Lām/fā'/wāw
+  function, mood, finite form, and suffix roles keep them below whole-token
+  certification.
+- `تُخَالِطُوهُمْ` surfaced a nominal leak: "partners" is not a finite verb
+  hover for the exact written token.
+
+Rule: VN-12 rows may be string-populated, source-linked, or component-linked
+and still fail the finite-form contract. Before certification, expose form,
+voice/aspect/mood, person/number/gender, subject/object or suffix role, and
+whether evidence is whole-token or component-only.

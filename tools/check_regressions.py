@@ -598,6 +598,10 @@ for _art in (
         "qamus/examples/full_corpus_dogfood_vn11_skill_impact.sample.jsonl",
         "qamus/examples/dogfood_vn11_production_bug_lesson.sample.jsonl",
         "qamus/reports/full-corpus-dogfood-vn11-20260627.md",
+        "qamus/examples/full_corpus_dogfood_vn12_inventory.sample.jsonl",
+        "qamus/examples/full_corpus_dogfood_vn12_skill_impact.sample.jsonl",
+        "qamus/examples/dogfood_vn12_production_bug_lesson.sample.jsonl",
+        "qamus/reports/full-corpus-dogfood-vn12-20260627.md",
         "qamus/examples/full_corpus_dogfood_queue_summary.sample.json",
         "qamus/examples/full_corpus_dogfood_review_pack.sample.jsonl",
         "qamus/examples/phase4_closure_tranche.sample.jsonl",
@@ -824,6 +828,76 @@ check("VN-11 sample keeps renderer metadata backfill rows non-live-applyable", _
 check("VN-11 sample keeps pronoun/function collisions exact-address gated", _vn11_pronoun_collision_gated)
 check("VN-11 sample keeps suffix and relation rows gated", _vn11_suffix_relation_gated)
 
+try:
+    _vn12_inventory = [
+        json.loads(_l)
+        for _l in io.open(
+            os.path.join(_R, "qamus", "examples", "full_corpus_dogfood_vn12_inventory.sample.jsonl"),
+            encoding="utf-8",
+        )
+        if _l.strip()
+    ]
+    _vn12_component = [
+        _r for _r in _vn12_inventory
+        if _r.get("evidence_kind") == "component_only_evidence"
+    ]
+    _vn12_blocked = _vn12_component and all(
+        _r.get("may_apply_live") is False
+        and _r.get("recommended_next_action") == "blocker_queue_row"
+        and _r.get("required_next_gate") == "component_only_blocker"
+        and "component_only_candidate_no_whole_token_propagation" in (_r.get("detected_issue") or "")
+        for _r in _vn12_component
+    )
+    _vn12_has_renderer_backfill = any(
+        _r.get("evidence_kind") == "whole_token_candidate"
+        and _r.get("required_next_gate") == "rich_renderer_metadata_backfill"
+        and _r.get("may_apply_live") is False
+        for _r in _vn12_inventory
+    )
+    _vn12_finite_gated = any(
+        "finite_verb_dictionary_gloss_or_form_review" in (_r.get("detected_issue") or "")
+        and _r.get("may_apply_live") is False
+        and _r.get("required_next_gate") in (
+            "component_only_blocker",
+            "rich_metadata_plus_exact_address_review",
+            "two_vote_exact_address_review",
+        )
+        for _r in _vn12_inventory
+    )
+    _vn12_nominal_pos_gated = any(
+        (
+            "verb_entry_nominal_derivative_or_lexical_noun_pos_review" in (_r.get("detected_issue") or "")
+            or "noun_hover_may_leak_verb_infinitive" in (_r.get("detected_issue") or "")
+        )
+        and _r.get("may_apply_live") is False
+        for _r in _vn12_inventory
+    )
+    _vn12_suffix_relation_gated = any(
+        (
+            "suffix_or_attached_pronoun_requires_visible_accounting" in (_r.get("detected_issue") or "")
+            or "preposition_or_attached_relation_requires_nahw_review" in (_r.get("detected_issue") or "")
+        )
+        and _r.get("required_next_gate") in (
+            "component_only_blocker",
+            "two_vote_exact_address_review",
+            "rich_metadata_plus_exact_address_review",
+            "rich_renderer_metadata_backfill",
+        )
+        and _r.get("may_apply_live") is False
+        for _r in _vn12_inventory
+    )
+except Exception:
+    _vn12_blocked = False
+    _vn12_has_renderer_backfill = False
+    _vn12_finite_gated = False
+    _vn12_nominal_pos_gated = False
+    _vn12_suffix_relation_gated = False
+check("VN-12 sample preserves component-only evidence as non-applyable blocker rows", _vn12_blocked)
+check("VN-12 sample keeps renderer metadata backfill rows non-live-applyable", _vn12_has_renderer_backfill)
+check("VN-12 sample keeps finite verb rows exact-address gated", _vn12_finite_gated)
+check("VN-12 sample keeps nominal/POS leakage rows gated", _vn12_nominal_pos_gated)
+check("VN-12 sample keeps suffix and relation rows gated", _vn12_suffix_relation_gated)
+
 for _script, _args, _label in (
         ("build_live_shadow_graph.py", ["--self-test"], "Phase2 live shadow graph builder self-test"),
         ("validate_phase1_shadow_graph.py", ["--self-test"], "Phase2 shadow graph validator self-test"),
@@ -927,6 +1001,9 @@ for _script, _args, _label in (
         ("validate_production_bug_lessons.py",
          [os.path.join(_R, "qamus", "examples", "dogfood_vn11_production_bug_lesson.sample.jsonl")],
          "VN-11 dogfood production bug lesson sample validates"),
+        ("validate_production_bug_lessons.py",
+         [os.path.join(_R, "qamus", "examples", "dogfood_vn12_production_bug_lesson.sample.jsonl")],
+         "VN-12 dogfood production bug lesson sample validates"),
         ("summarize_rich_wbw_roles.py", ["--self-test"], "Phase2 rich WBW role taxonomy self-test"),
         ("validate_rich_wbw_gate_cases.py", ["--self-test"], "Phase2.9 rich WBW gate-case validator self-test"),
         ("build_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack self-test"),

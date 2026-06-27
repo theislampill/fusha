@@ -238,3 +238,20 @@ apply.
 Rule: VN-11 adds a negative control. A Qamus candidate may be attached to a
 standalone pronoun or component row, but that does not make the row a verb,
 does not make it propagation-safe, and does not authorize live apply.
+
+## Q. VN-12 dogfood: finite rows, suffixes, and nominal leakage
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `يُحَرِّفُونَهُۥ` | `to twist/deviate from meaning` | finite Form II host + subject/agreement + `هُ` object |
+| `ثَقِفْتُمُوهُمْ` | `to find/come upon in battle` | finite perfect `2mp` host + `هُمْ` object |
+| `تُخَالِطُوهُمْ` | `partners` | finite verb host + object suffix; reject nominal leak |
+| `ٱلصَّيْدِ` / `صَيْدُ` | `to hunt` | nominal/game or masdar role by exact context |
+| `مَالَ` / `مَالِ` | raw surface-family propagation | exact POS/function context before reuse |
+| `كَزَرْعٍ` | host-only cultivation | kāf relation + governed host + attachment |
+| `فَرَشْنَٰهَا` | bare `to spread out` | fā' + finite host + `هَا` object |
+| `وَفُرُشٍۢ` | host candidate as whole-token proof | wāw function + nominal host; component-only blocker |
+
+Rule: VN-12 rows force the same question every time: "What is the written
+token made of?" If any visible prefix, suffix, finite-form field, POS shift, or
+component-only boundary is missing, the row is not a learner-ready hover.

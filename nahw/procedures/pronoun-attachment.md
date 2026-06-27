@@ -64,6 +64,23 @@ Do not treat "they, their" string presence as dogfood completion. It is only a
 candidate public wording until the token has pronoun role, referent, and rich
 display breakdown.
 
+## Dogfood finding: VN-12 verb objects and possessive hosts
+
+VN-12 added more populated rows where suffixes must be reasoned by host:
+
+- `يُحَرِّفُونَهُۥ`, `ثَقِفْتُمُوهُمْ`, `جَاوَزَهُۥ`,
+  `تُخَالِطُوهُمْ`, and `فَرَشْنَٰهَا` are verb hosts. Their suffixes are
+  object/referent decisions, never possessive endings.
+- `أَسْرَهُمْ` is a noun host; its suffix is a possessive/referent decision
+  and cannot be hidden under the host noun alone.
+- Component-only rows with suffixes remain blockers until exact token
+  analysis agrees on host POS, suffix role, and contextual referent.
+
+If the proposed hover is English-readable but does not account for the suffix,
+route it to `verb_object_pronoun_review`, `suffix_pronoun_decision`, or
+`referent_unresolved`. Do not pass a row merely because two sources share a
+host gloss.
+
 **Test:** [`nahw/evals/suffix-pronoun-eval.jsonl`](../evals/suffix-pronoun-eval.jsonl);
 rules [`nahw/rules/pronoun-attachment-rules.json`](../rules/pronoun-attachment-rules.json).
 

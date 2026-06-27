@@ -236,3 +236,23 @@ VN-11 found another suffix-heavy tranche:
 Rule: a visible suffix, even on a row whose English looks plausible, must have
 its own learner-facing accounting. A component-only hit can create a blocker or
 review packet, but never an applyable token decision.
+
+## Dogfood finding: VN-12 component candidates and object suffixes
+
+VN-12 added another control set for component-only evidence and attached
+pronouns:
+
+- `يُحَرِّفُونَهُۥ`, `ثَقِفْتُمُوهُمْ`, `جَاوَزَهُۥ`, and
+  `فَرَشْنَٰهَا` are verb hosts with attached object suffixes. A hover that
+  exposes only the host action remains below rich certification.
+- `أَسْرَهُمْ` is a nominal host with a suffix/referent contribution. It needs
+  host class and suffix role before any entry-family wording is safe.
+- `فَلْيُؤَدِّ`, `فَٱصْطَادُوا۟`, `وَجَٰوَزْنَا`, `كَزَرْعٍ`, and
+  `وَفُرُشٍۢ` may gain useful component candidates, but those candidates must
+  stay separate from whole-token Qamus entry candidates.
+
+Rule: component candidates can improve review routing only. They do not count
+toward source agreement, propagation safety, hover coverage, or live apply.
+If the visible token contains a clitic, conjunction, preposition/comparison
+piece, or suffix pronoun, keep that piece visible in the learner breakdown or
+emit an exact blocker.

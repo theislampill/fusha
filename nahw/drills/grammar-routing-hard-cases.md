@@ -320,3 +320,21 @@ For each repeated defect class, produce one of:
 - nahw eval/drill fixture added;
 - documented no-op because the issue is Qamus data, entry linkage, or renderer
   only.
+
+## 4n. VN-12 comparison, suffix, and nominal/POS routing
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `يُحَرِّفُونَهُۥ` | verb object suffix and referent review | root/entry prose without `هُ` |
+| `ثَقِفْتُمُوهُمْ` | finite subject ending plus `هُمْ` object | dictionary infinitive only |
+| `تُخَالِطُوهُمْ` | finite verb + object suffix + context | nominal "partners" leak |
+| `كَزَرْعٍ` | comparison/preposition relation + host + attachment | host-only cultivation |
+| `فَلْيُؤَدِّ` | fā' + lām function + mood/governor | component host evidence |
+| `مَالَ` / `مَالِ` | exact POS/function and sentence role | surface-family propagation |
+| `وَفُرُشٍۢ` | wāw function + nominal host; component-only blocker | host candidate as whole token |
+| renderer-only noun rows | rich metadata backfill if wording survives review | claiming certification from string presence |
+
+VN-12 keeps live apply closed. A row may enter a repair packet only as a
+candidate; it still needs exact address, public-safe authored wording,
+compatible sarf/nahw reasons, and two-vote or MCP/source evidence when the
+grammar is sensitive.

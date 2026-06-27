@@ -112,3 +112,22 @@ VN-11 added relation rows that look English-readable but remain grammar gated:
 Rule: relation/function rows require exact function and attachment proof. If
 the row is component-only, it stays `component_only_blocker`; if whole-token but
 grammar-sensitive, it stays `two_vote_exact_address_review`.
+
+## Dogfood finding: VN-12 comparison and mood-governing relations
+
+VN-12 added rows whose visible strings can look plausible while the function
+piece is still uncertified:
+
+- `كَزَرْعٍ` contains a comparison/preposition-like kāf plus governed host.
+  The host noun candidate is not whole-token proof.
+- `فَلْيُؤَدِّ` combines fā' plus imperative/purpose-like lām on a finite
+  host. The lām function and mood/governor must be reviewed before wording is
+  trusted.
+- `لِّيُوَاطِـُٔوا۟` and similar lām-on-verb rows require function, mood, and
+  clause relation review.
+- `وَفُرُشٍۢ` has wāw plus a nominal host; a component host candidate does not
+  decide whether the public hover should include the conjunction.
+
+Use `comparison_attachment_uncertified`, `lam_function_uncertified`,
+`mood_governor_uncertified`, or `component_only_blocker` rather than
+propagating from host text.

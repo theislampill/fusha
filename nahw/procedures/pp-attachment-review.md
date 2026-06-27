@@ -100,3 +100,19 @@ Rule: the presence of a plausible English string does not certify attachment.
 The dogfood lane may emit a repair candidate or renderer requirement, but live
 apply still waits for exact-address proof, two compatible reasons when needed,
 and no public provenance leakage.
+
+## Dogfood finding: VN-12 attachment rows remain review lanes
+
+VN-12 repeated the attachment boundary with fresh examples:
+
+- `كَزَرْعٍ` needs comparison/preposition function, governed host, and
+  attachment proof.
+- `فَلْيُؤَدِّ` and `لِّيُوَاطِـُٔوا۟` need lām function and mood/governor
+  review before a host verb candidate can be used.
+- `وَفُرُشٍۢ`, `وَجَٰوَزْنَا`, and similar wāw/fā' rows may have useful host
+  candidates, but the whole-token relation and clause attachment still need
+  exact-address review.
+
+Rule: component evidence is a route to the PP/function reviewer, not an
+attachment decision. Keep the row non-applyable until function, host, case or
+mood, and attachment agree.

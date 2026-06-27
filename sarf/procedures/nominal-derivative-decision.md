@@ -210,3 +210,23 @@ VN-11 added more rows where entry-family reuse would mis-teach the token:
 Rule: strict surface plus POS decides the lane before root or source-key
 familiarity. If the candidate is a pronoun/function token, route to nahw; if it
 is a noun, record noun type, number, state/case, and suffix before hover trust.
+
+## Dogfood finding: VN-12 nominal/POS leakage in verb families
+
+VN-12 found verb-entry families attached to nominal or POS-sensitive rows:
+
+- `ٱلصَّيْدِ`, `ٱلصَّيْدَ`, and `صَيْدُ` must be reviewed as game/hunting
+  nouns or masdars by exact context, not as the finite/infinitive "to hunt".
+- `مَالَ` and `مَالِ` are surface-collision rows where wealth, mā/lām, and
+  verb-family readings can collide. Treat them as exact-address nahw/POS
+  decisions, not surface-family propagation.
+- `شِفَآءٌۭ`, `جُوعٍۢ`, `زَرْعٍ`, `ضَيْفِ`, and `أَسَفًا` are nominal or
+  lexical rows near verb/root families. The live English may be readable but
+  is not rich-certified until noun type, case/state, and syntactic role are
+  visible.
+- `تُخَالِطُوهُمْ` exposed the inverse defect: a nominal word such as
+  "partners" must not be used for a finite verb host.
+
+Rule: VN-12 candidates must pass strict surface, POS, derivative class, and
+context before reuse. If the row is nominal, do not import verb-infinitive
+prose; if the row is finite, do not import a nominal gloss.
