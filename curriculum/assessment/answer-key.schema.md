@@ -28,6 +28,8 @@ Rules:
   vocative, oath, token-only override, and wrong-reasoning traps.
 - The validator enforces this especially for Level 7+ rows: a hard-grammar checkpoint at Level 7 or later may not
   set `two_vote_required=false`.
+- The canonical sample fixture must include at least one absolute-beginner row, one middle-band row, and one
+  Level 7+ hard-grammar row so tutoring starts before the advanced dogfood cases.
 - `forbidden_answers` should name the actual dogfood failure when possible: dictionary infinitive leakage,
   host-only preposition gloss, suffix omission, component-only overclaim, or root-family vibes.
 - Open-ended items may use rubrics, but the rubric must say what is required, optional, and forbidden.

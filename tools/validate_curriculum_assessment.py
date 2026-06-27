@@ -11,6 +11,7 @@ import argparse
 import json
 import os
 import sys
+from pathlib import Path
 from typing import Iterable
 
 
@@ -81,6 +82,7 @@ def validate(path: str) -> list[str]:
     ids = set()
     hard_rows = 0
     two_vote_rows = 0
+    level_numbers: set[int] = set()
     for row in rows:
         lineno = row.pop("_line")
         missing = REQUIRED - set(row)
@@ -100,7 +102,9 @@ def validate(path: str) -> list[str]:
             if term in blob:
                 errors.append(f"{path}:{lineno}: public assessment row leaks internal/source term {term!r}")
         is_hard = any(term.lower() in blob.lower() for term in HARD_TERMS)
-        is_level_7_plus = any(level >= 7 for level in _level_numbers(row["level"]))
+        row_levels = _level_numbers(row["level"])
+        level_numbers.update(row_levels)
+        is_level_7_plus = any(level >= 7 for level in row_levels)
         if is_hard:
             hard_rows += 1
             if row["two_vote_required"]:
@@ -113,6 +117,15 @@ def validate(path: str) -> list[str]:
         errors.append(f"{path}: expected at least one hard-grammar row")
     if two_vote_rows == 0:
         errors.append(f"{path}: expected at least one two_vote_required hard-grammar row")
+    if Path(path).name == "level-checkpoints.sample.jsonl":
+        required_bands = {
+            "absolute-beginner level 0-1": any(level <= 1 for level in level_numbers),
+            "middle level 4-6": any(4 <= level <= 6 for level in level_numbers),
+            "hard-grammar level 7+": any(level >= 7 for level in level_numbers),
+        }
+        for label, present in required_bands.items():
+            if not present:
+                errors.append(f"{path}: canonical checkpoint sample lacks {label} coverage")
     return errors
 
 
