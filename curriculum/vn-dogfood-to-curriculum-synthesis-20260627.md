@@ -48,6 +48,29 @@ Repeated issue counts from reports with explicit issue tables:
 
 These are dogfood movements and review routes, not live applies.
 
+## Architecture Learning Frame
+
+The owner-provided `sarfnahw` source folder included a Nature neuroscience
+paper on learning hidden state-machine-like representations through progressive
+decorrelation of initially similar observations. This is not Arabic evidence,
+but it is useful architecture and pedagogy evidence for the Fusha loop:
+
+`same-looking Arabic surface -> hidden sarf/nahw state -> typed parse key -> safe hover or named blocker`
+
+The VN tranches should therefore be understood as progressive
+orthogonalization of false surface-neighbor families. A learner, tutor, or
+future agent starts with undifferentiated surface recognition, then learns to
+split tokens by root/POS, clitic role, finite morphology, particle function,
+attachment, referent, and entry/sense. Rich hovers and parse keys store that
+learned distinction; they are not decorative metadata.
+
+Boundary:
+
+- use the paper to explain why rich parse states and state transitions matter;
+- do not use it as Qur'anic grammar evidence;
+- do not cite it in public hover provenance;
+- do not copy its wording into Qamus-authored hover text.
+
 ## Instructional Units
 
 ### 1. Finite Verbs Are Not Dictionary Entries

@@ -53,7 +53,7 @@ The folder contains 81 filesystem items: 75 files and 6 directories.
 | `.png` | 46 | QAC grammar screenshots; internal visual reference only |
 | `.apkg` | 11 | AMAU Anki decks; internal sequencing metadata only |
 | `.pdf` | 10 | GrammarProblems plus nine verb-chart PDFs |
-| `.md` | 4 | Three QAC pack reviews plus one unrelated Nature article |
+| `.md` | 4 | Three QAC pack reviews plus one Nature architecture/learning-theory article |
 | `.json` | 3 | QAC pack manifests |
 | `.docx` | 1 | Verb-table supplement |
 
@@ -125,7 +125,7 @@ The folder contains 81 filesystem items: 75 files and 6 directories.
 | `qac_grammar_review_pack_part3/images/10_vocative_particle_munada_089_27.png` | PNG | Vocative/munada visual reference. |
 | `qac_grammar_review_pack_part3/images/11_exceptive_particles_092_20.png` | PNG | Exceptive particle visual reference. |
 | `qac_grammar_review_pack_part3/images/12_exceptive_expression_types_rules.png` | PNG | Exception type/rule visual reference. |
-| `s41586-024-08548-w.md` | Markdown | No-op for sarf/nahw; unrelated neuroscience article. Do not import. |
+| `s41586-024-08548-w.md` | Markdown | Architecture/learning-theory evidence for hidden-state separation and parse-key pedagogy; not Arabic linguistic evidence. |
 | `set-of-9-important-arabic-verb-charts_1.pdf` | PDF | Verb chart; extraction is glyph-name-heavy, use only as internal visual/checklist material. |
 | `set-of-9-important-arabic-verb-charts_2.pdf` | PDF | Verb chart; extraction is glyph-name-heavy, use only as internal visual/checklist material. |
 | `set-of-9-important-arabic-verb-charts_3.pdf` | PDF | Verb chart; extraction is glyph-name-heavy, use only as internal visual/checklist material. |
@@ -210,10 +210,28 @@ are valuable as an internal sequencing signal:
 They should not be imported as public text. The safe reuse is structural:
 spacing, ordering, and drill cadence.
 
-### Unrelated material
+### Architecture-only material
 
 `s41586-024-08548-w.md` is a neuroscience article about hippocampal state
-machines. It is not a sarf/nahw source and should not be imported.
+machines, hidden-state inference, and decorrelation of initially similar
+representations. It is related to Fusha as a conceptual architecture analogy:
+surface-near Arabic tokens must be separated into distinct hidden sarf/nahw
+states before a hover can be trusted.
+
+Safe use:
+
+- support the parse-key/state-machine doctrine;
+- explain why dogfood tranches split false surface-family merges;
+- frame curriculum as movement from surface recognition to structured state
+  distinctions;
+- motivate rich hover metadata as the learned hidden grammar state.
+
+Unsafe use:
+
+- do not cite it for Arabic grammar decisions;
+- do not use it as source evidence for Qur'anic token analysis;
+- do not put it in public Qamus hover provenance;
+- do not copy its wording into learner/public hover text.
 
 ## Proposed Skill And Curriculum Changes
 
@@ -227,6 +245,7 @@ machines. It is not a sarf/nahw source and should not be imported.
 | nahw suffix/referent | Host decides suffix role; referent-sensitive rows need two-vote or pending. | Covered by `nahw/procedures/pronoun-attachment.md`; VN synthesis adds learner units. |
 | curriculum | Add a post-VN dogfood synthesis mapping repeated defects to learner units. | Implemented in `curriculum/vn-dogfood-to-curriculum-synthesis-20260627.md`. |
 | rich hover | Expand field checklist for rich hover tooltip/parse key. | Already covered by `curriculum/qamus-hover-parse-key-and-color.md`; this audit restates the field set below. |
+| architecture | Use hidden-state/decorrelation language to explain why parse keys are grammar-state records rather than flat strings. | Added as conceptual framing only; no Arabic evidence or public provenance role. |
 
 ## Proposed Rich-Hover / Parse-Key Fields
 
@@ -260,7 +279,8 @@ A rich hover should be able to expose or internally carry:
   not treat extracted text as authoritative.
 - DOCX verb list: useful as weak/geminate examples, but examples should be
   rewritten with Qamus/Qur'anic tokens when promoted to public drills.
-- Nature markdown: unrelated; no import.
+- Nature markdown: architecture/learning-theory support only; no Arabic
+  evidence, public provenance, copied wording, or grammar-decision authority.
 - No new sarf/nahw procedure edit is required solely by this folder audit,
   because the relevant procedure gaps were already updated by the dogfood
   tranche series. Future edits should be driven by a concrete failing row or
