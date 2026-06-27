@@ -80,19 +80,21 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   only, not propagation evidence and not a weakening of the `two_vote_required` gate.
 - `qamus/examples/phase4_closure_tranche_from_dogfood_review.sample.jsonl`,
   `qamus/examples/phase4_two_vote_request_from_dogfood_review.sample.jsonl`, and
-  `qamus/examples/phase4_two_vote_response_from_dogfood_review.sample.jsonl`: tiny review-only bridge samples proving a
-  real dogfood defect (`quran:33:63:1` / `wbw:33:63:1`, suffix/object-pronoun omission in `يَسْأَلُكَ`) can move from
-  the dogfood review pack into a Phase 4 tranche, into a two-vote request, and through matching sarf/nahw response
-  rows without becoming live-applicable. The request carries `ask you` as a non-certifying review style hint so
-  approving votes converge on suffix-preserving wording, while keeping the whole-token entry candidate separate from
-  the component-only `كَ` candidate and preserving `apply_allowed=false`, `live_mutation_allowed=false`, and
-  `closure_claim_allowed=false`. Reconciliation of the dogfood response fixture yields only
-  `status=certified_not_applied`; it is not a live decision ledger row and does not authorize hover application.
-- `qamus/examples/phase4_hover_decision_plan_from_dogfood_review.sample.jsonl`: carries that reconciled `يَسْأَلُكَ`
-  result one more non-live step into a source-clean hover-decision preview. The row emits the future token-decision
-  shape (`loc=33:63:1`, `gloss=ask you`, `src=qamus`, `kind=authored`, `lang=en`) while remaining
-  `status=planned_not_applied`, `safe_scope=token_only`, and guarded by append-only ledger, backup, rebuild, health,
-  and public readback requirements before any owner-authorized apply.
+  `qamus/examples/phase4_two_vote_response_from_dogfood_review.sample.jsonl`: tiny review-only bridge samples proving
+  real dogfood defects can move from the dogfood review pack into a Phase 4 tranche, into two-vote requests, and
+  through matching sarf/nahw response rows without becoming live-applicable. The current samples cover
+  `quran:33:63:1` / `wbw:33:63:1` (`يَسْأَلُكَ`, suffix/object-pronoun omission) and `quran:26:139:2` /
+  `wbw:26:139:2` (`فَأَهْلَكْنَاهُمْ`, fāʾ + finite Form IV verb + attached object pronoun). The requests carry
+  non-certifying review style hints (`ask you`, `so We destroyed them`) so approving votes converge on
+  component-preserving wording, while keeping component candidates separate from whole-token candidates and preserving
+  `apply_allowed=false`, `live_mutation_allowed=false`, and `closure_claim_allowed=false`. Reconciliation of the
+  dogfood response fixture yields only `status=certified_not_applied`; it is not a live decision ledger row and does
+  not authorize hover application.
+- `qamus/examples/phase4_hover_decision_plan_from_dogfood_review.sample.jsonl`: carries the reconciled dogfood
+  exemplars one more non-live step into source-clean hover-decision previews. The rows emit future token-decision
+  shapes (`loc=33:63:1`, `gloss=ask you` and `loc=26:139:2`, `gloss=so We destroyed them`, each with `src=qamus`,
+  `kind=authored`, `lang=en`) while remaining `status=planned_not_applied`, `safe_scope=token_only`, and guarded by
+  append-only ledger, backup, rebuild, health, and public readback requirements before any owner-authorized apply.
 - `tools/validate_phase4_two_vote_requests.py`: validates Phase 4 two-vote request packets. It rejects non-exact
   identities, public-boundary leakage, weakened gates, non-two-vote lanes, missing component provenance, component
   candidates marked certifying, missing `agreement_key_hint`, live/apply/coverage claims, and vacuous zero-row request

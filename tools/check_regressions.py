@@ -1534,8 +1534,8 @@ check("VN-20 sample keeps nominal/POS leakage rows gated", _vn20_nominal_pos_gat
 check("VN-20 sample keeps suffix, relation, and token-only rows gated", _vn20_suffix_relation_gated)
 check("VN-20 sample contains no live-applyable candidate rows", _vn20_no_auto_apply)
 
-# Dogfood-derived Phase 4 request should carry the actual yasaluka review hint
-# without turning the sample into an applyable decision.
+# Dogfood-derived Phase 4 requests should carry exact review hints without
+# turning the samples into applyable decisions.
 try:
     _dogfood_two_vote = [
         json.loads(_l)
@@ -1547,7 +1547,11 @@ try:
     ]
 except Exception:
     _dogfood_two_vote = []
-_dogfood_yasaluka = _dogfood_two_vote[0] if _dogfood_two_vote else {}
+_dogfood_requests_by_surface = {
+    (_row.get("identity") or {}).get("surface_sample"): _row
+    for _row in _dogfood_two_vote
+}
+_dogfood_yasaluka = _dogfood_requests_by_surface.get("يَسْأَلُكَ", {})
 _dogfood_yasaluka_hint = _dogfood_yasaluka.get("gloss_style_hint") or {}
 _dogfood_yasaluka_policy = _dogfood_yasaluka.get("apply_policy") or {}
 check(
@@ -1562,6 +1566,26 @@ check(
         and _dogfood_yasaluka_policy.get("apply_allowed") is False
         and _dogfood_yasaluka_policy.get("live_mutation_allowed") is False
         and (_dogfood_yasaluka.get("candidate_evidence") or {}).get("component_candidates_can_certify") is False
+    ),
+)
+_dogfood_fahalaknahum = _dogfood_requests_by_surface.get("فَأَهْلَكْنَاهُمْ", {})
+_dogfood_fahalaknahum_hint = _dogfood_fahalaknahum.get("gloss_style_hint") or {}
+_dogfood_fahalaknahum_policy = _dogfood_fahalaknahum.get("apply_policy") or {}
+_dogfood_fahalaknahum_evidence = _dogfood_fahalaknahum.get("candidate_evidence") or {}
+check(
+    "dogfood-derived fa-ahlaknahum two-vote request keeps finite-verb object review hint",
+    bool(
+        _dogfood_fahalaknahum
+        and (_dogfood_fahalaknahum.get("identity") or {}).get("surface_sample") == "فَأَهْلَكْنَاهُمْ"
+        and _dogfood_fahalaknahum.get("agreement_key_hint") == "result-particle-active-verb-object-suffix"
+        and _dogfood_fahalaknahum_hint.get("preferred_concise_authored_gloss") == "so We destroyed them"
+        and _dogfood_fahalaknahum_hint.get("required_when_approving") is True
+        and _dogfood_fahalaknahum_hint.get("certifies_decision") is False
+        and _dogfood_fahalaknahum_policy.get("apply_allowed") is False
+        and _dogfood_fahalaknahum_policy.get("live_mutation_allowed") is False
+        and _dogfood_fahalaknahum_evidence.get("component_candidates_can_certify") is False
+        and not _dogfood_fahalaknahum_evidence.get("whole_token_candidates")
+        and bool(_dogfood_fahalaknahum_evidence.get("component_candidates"))
     ),
 )
 
@@ -1579,18 +1603,36 @@ try:
     ]
 except Exception:
     _dogfood_two_vote_responses = []
-_dogfood_response_lenses = {_r.get("lens") for _r in _dogfood_two_vote_responses}
+_dogfood_responses_by_surface = {}
+for _row in _dogfood_two_vote_responses:
+    _surface = (_row.get("identity") or {}).get("surface_sample")
+    _dogfood_responses_by_surface.setdefault(_surface, []).append(_row)
+_dogfood_yasaluka_responses = _dogfood_responses_by_surface.get("يَسْأَلُكَ", [])
+_dogfood_yasaluka_response_lenses = {_r.get("lens") for _r in _dogfood_yasaluka_responses}
 check(
     "dogfood-derived yasaluka two-vote responses keep matching ask-you reason",
     bool(
-        len(_dogfood_two_vote_responses) == 2
-        and _dogfood_response_lenses == {"sarf-primary", "nahw-primary"}
-        and all(_r.get("decision") == "approve" for _r in _dogfood_two_vote_responses)
-        and all(_r.get("concise_authored_gloss") == "ask you" for _r in _dogfood_two_vote_responses)
-        and all(_r.get("reason_agreement_key") == "verb-object-suffix-explicit-subject" for _r in _dogfood_two_vote_responses)
-        and all(_r.get("safe_scope_after_vote") == "token_only" for _r in _dogfood_two_vote_responses)
-        and all(_r.get("component_candidates_used_as_certification") is False for _r in _dogfood_two_vote_responses)
-        and all((_r.get("identity") or {}).get("surface_sample") == "يَسْأَلُكَ" for _r in _dogfood_two_vote_responses)
+        len(_dogfood_yasaluka_responses) == 2
+        and _dogfood_yasaluka_response_lenses == {"sarf-primary", "nahw-primary"}
+        and all(_r.get("decision") == "approve" for _r in _dogfood_yasaluka_responses)
+        and all(_r.get("concise_authored_gloss") == "ask you" for _r in _dogfood_yasaluka_responses)
+        and all(_r.get("reason_agreement_key") == "verb-object-suffix-explicit-subject" for _r in _dogfood_yasaluka_responses)
+        and all(_r.get("safe_scope_after_vote") == "token_only" for _r in _dogfood_yasaluka_responses)
+        and all(_r.get("component_candidates_used_as_certification") is False for _r in _dogfood_yasaluka_responses)
+    ),
+)
+_dogfood_fahalaknahum_responses = _dogfood_responses_by_surface.get("فَأَهْلَكْنَاهُمْ", [])
+_dogfood_fahalaknahum_response_lenses = {_r.get("lens") for _r in _dogfood_fahalaknahum_responses}
+check(
+    "dogfood-derived fa-ahlaknahum two-vote responses keep matching finite-verb object reason",
+    bool(
+        len(_dogfood_fahalaknahum_responses) == 2
+        and _dogfood_fahalaknahum_response_lenses == {"sarf-primary", "nahw-primary"}
+        and all(_r.get("decision") == "approve" for _r in _dogfood_fahalaknahum_responses)
+        and all(_r.get("concise_authored_gloss") == "so We destroyed them" for _r in _dogfood_fahalaknahum_responses)
+        and all(_r.get("reason_agreement_key") == "result-particle-active-verb-object-suffix" for _r in _dogfood_fahalaknahum_responses)
+        and all(_r.get("safe_scope_after_vote") == "token_only" for _r in _dogfood_fahalaknahum_responses)
+        and all(_r.get("component_candidates_used_as_certification") is False for _r in _dogfood_fahalaknahum_responses)
     ),
 )
 
@@ -1627,22 +1669,32 @@ try:
             for _l in io.open(_unresolved_path, encoding="utf-8")
             if _l.strip()
         ]
+        _certified_by_surface = {
+            (_row.get("identity") or {}).get("surface_sample"): _row
+            for _row in _certified_rows
+        }
+        _cert_yasaluka = _certified_by_surface.get("يَسْأَلُكَ", {})
+        _cert_fahalaknahum = _certified_by_surface.get("فَأَهْلَكْنَاهُمْ", {})
         _dogfood_reconcile_ok = (
             _validate_r.returncode == 0
             and _reconcile_r.returncode == 0
-            and len(_certified_rows) == 1
+            and len(_certified_rows) == 2
             and len(_unresolved_rows) == 0
-            and _certified_rows[0].get("status") == "certified_not_applied"
-            and (_certified_rows[0].get("public_hover") or {}).get("gloss") == "ask you"
-            and _certified_rows[0].get("safe_scope_after_vote") == "token_only"
-            and _certified_rows[0].get("component_candidates_used_as_certification") is False
-            and (_certified_rows[0].get("apply_policy") or {}).get("apply_allowed") is False
-            and (_certified_rows[0].get("apply_policy") or {}).get("live_mutation_allowed") is False
-            and (_certified_rows[0].get("apply_policy") or {}).get("closure_claim_allowed") is False
+            and _cert_yasaluka.get("status") == "certified_not_applied"
+            and (_cert_yasaluka.get("public_hover") or {}).get("gloss") == "ask you"
+            and _cert_yasaluka.get("safe_scope_after_vote") == "token_only"
+            and _cert_yasaluka.get("component_candidates_used_as_certification") is False
+            and _cert_fahalaknahum.get("status") == "certified_not_applied"
+            and (_cert_fahalaknahum.get("public_hover") or {}).get("gloss") == "so We destroyed them"
+            and _cert_fahalaknahum.get("safe_scope_after_vote") == "token_only"
+            and _cert_fahalaknahum.get("component_candidates_used_as_certification") is False
+            and all((_row.get("apply_policy") or {}).get("apply_allowed") is False for _row in _certified_rows)
+            and all((_row.get("apply_policy") or {}).get("live_mutation_allowed") is False for _row in _certified_rows)
+            and all((_row.get("apply_policy") or {}).get("closure_claim_allowed") is False for _row in _certified_rows)
         )
 except Exception:
     _dogfood_reconcile_ok = False
-check("dogfood-derived yasaluka two-vote responses reconcile only to certified_not_applied", _dogfood_reconcile_ok)
+check("dogfood-derived two-vote responses reconcile only to certified_not_applied", _dogfood_reconcile_ok)
 
 try:
     _dogfood_hover_plan_rows = [
@@ -1655,7 +1707,11 @@ try:
     ]
 except Exception:
     _dogfood_hover_plan_rows = []
-_dogfood_hover_plan = _dogfood_hover_plan_rows[0] if _dogfood_hover_plan_rows else {}
+_dogfood_hover_plans_by_surface = {
+    (_row.get("identity") or {}).get("surface_sample"): _row
+    for _row in _dogfood_hover_plan_rows
+}
+_dogfood_hover_plan = _dogfood_hover_plans_by_surface.get("يَسْأَلُكَ", {})
 _dogfood_hover_plan_identity = _dogfood_hover_plan.get("identity") or {}
 _dogfood_hover_plan_preview = _dogfood_hover_plan.get("token_decision_preview") or {}
 _dogfood_hover_plan_policy = _dogfood_hover_plan.get("apply_policy") or {}
@@ -1663,7 +1719,7 @@ _dogfood_hover_plan_source_ids = set(_dogfood_hover_plan.get("source_certified_i
 check(
     "dogfood-derived yasaluka hover plan stays planned_not_applied and source-clean",
     bool(
-        len(_dogfood_hover_plan_rows) == 1
+        len(_dogfood_hover_plan_rows) == 2
         and _dogfood_hover_plan.get("status") == "planned_not_applied"
         and _dogfood_hover_plan.get("source_phase") == "phase4_two_vote_reconciled"
         and _dogfood_hover_plan_identity.get("quran_loc") == "quran:33:63:1"
@@ -1691,6 +1747,43 @@ check(
         and _dogfood_hover_plan_policy.get("component_candidates_can_certify") is False
         and _dogfood_hover_plan_policy.get("raw_surface_identity_allowed") is False
         and _dogfood_hover_plan_policy.get("parse_key_primary_identity") is False
+    ),
+)
+_dogfood_fahalaknahum_plan = _dogfood_hover_plans_by_surface.get("فَأَهْلَكْنَاهُمْ", {})
+_dogfood_fahalaknahum_plan_identity = _dogfood_fahalaknahum_plan.get("identity") or {}
+_dogfood_fahalaknahum_plan_preview = _dogfood_fahalaknahum_plan.get("token_decision_preview") or {}
+_dogfood_fahalaknahum_plan_policy = _dogfood_fahalaknahum_plan.get("apply_policy") or {}
+_dogfood_fahalaknahum_plan_source_ids = set(_dogfood_fahalaknahum_plan.get("source_certified_ids") or [])
+check(
+    "dogfood-derived fa-ahlaknahum hover plan stays planned_not_applied and source-clean",
+    bool(
+        _dogfood_fahalaknahum_plan.get("status") == "planned_not_applied"
+        and _dogfood_fahalaknahum_plan.get("source_phase") == "phase4_two_vote_reconciled"
+        and _dogfood_fahalaknahum_plan_identity.get("quran_loc") == "quran:26:139:2"
+        and _dogfood_fahalaknahum_plan_identity.get("wbw_loc") == "wbw:26:139:2"
+        and _dogfood_fahalaknahum_plan_identity.get("surface_sample") == "فَأَهْلَكْنَاهُمْ"
+        and _dogfood_fahalaknahum_plan.get("reason_agreement_key") == "result-particle-active-verb-object-suffix"
+        and _dogfood_fahalaknahum_plan.get("safe_scope") == "token_only"
+        and _dogfood_fahalaknahum_plan_preview == {
+            "loc": "26:139:2",
+            "gloss": "so We destroyed them",
+            "src": "qamus",
+            "kind": "authored",
+            "lang": "en",
+        }
+        and _dogfood_fahalaknahum_plan_source_ids == {
+            "phase4-two-vote:queue_parse_261392261392261392261392",
+            "phase4-two-vote-response:queue_parse_261392261392261392261392:sarf-primary",
+            "phase4-two-vote-response:queue_parse_261392261392261392261392:nahw-primary",
+        }
+        and _dogfood_fahalaknahum_plan_policy.get("apply_allowed") is False
+        and _dogfood_fahalaknahum_plan_policy.get("live_mutation_allowed") is False
+        and _dogfood_fahalaknahum_plan_policy.get("closure_claim_allowed") is False
+        and _dogfood_fahalaknahum_plan_policy.get("append_only_ledger_required") is True
+        and _dogfood_fahalaknahum_plan_policy.get("requires_backup_rebuild_health_readback_before_apply") is True
+        and _dogfood_fahalaknahum_plan_policy.get("component_candidates_can_certify") is False
+        and _dogfood_fahalaknahum_plan_policy.get("raw_surface_identity_allowed") is False
+        and _dogfood_fahalaknahum_plan_policy.get("parse_key_primary_identity") is False
     ),
 )
 
