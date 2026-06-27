@@ -426,8 +426,11 @@ try:
                        encoding="utf-8").read()
 except Exception:
     _fcs_blob = _pf_blob = _ip_blob = ""
-for _eid, _blob in ([(x, _fcs_blob) for x in ("FCS-021", "FCS-022", "FCS-023", "FCS-024", "FCS-025")] +
-                    [(x, _pf_blob) for x in ("PF-033", "PF-034", "PF-035", "PF-036", "PF-037", "PF-038")] +
+for _eid, _blob in ([(x, _fcs_blob) for x in ("FCS-021", "FCS-022", "FCS-023", "FCS-024", "FCS-025",
+                                             "FCS-045", "FCS-046", "FCS-047", "FCS-048", "FCS-049", "FCS-050")] +
+                    [(x, _pf_blob) for x in ("PF-033", "PF-034", "PF-035", "PF-036", "PF-037", "PF-038",
+                                            "PF-054", "PF-055", "PF-056", "PF-057", "PF-058", "PF-059",
+                                            "PF-060", "PF-061", "PF-062")] +
                     [(x, _ip_blob) for x in ("IP-026", "IP-027", "IP-028", "IP-029", "IP-030",
                                              "IP-031", "IP-032", "IP-033", "IP-034")]):
     check("June25 eval fixture exists: %s" % _eid, _eid in _blob)
@@ -543,6 +546,10 @@ for _art in (
         "qamus/examples/full_corpus_dogfood_particle_tranche_inventory.sample.jsonl",
         "qamus/examples/full_corpus_dogfood_particle_tranche_skill_impact.sample.jsonl",
         "qamus/examples/dogfood_particle_tranche_production_bug_lesson.sample.jsonl",
+        "qamus/examples/full_corpus_dogfood_particle_remaining67_inventory.sample.jsonl",
+        "qamus/examples/full_corpus_dogfood_particle_remaining67_skill_impact.sample.jsonl",
+        "qamus/examples/dogfood_particle_remaining67_production_bug_lesson.sample.jsonl",
+        "qamus/reports/full-corpus-dogfood-particle-remaining67-20260627.md",
         "qamus/examples/full_corpus_dogfood_queue_summary.sample.json",
         "qamus/examples/full_corpus_dogfood_review_pack.sample.jsonl",
         "qamus/examples/phase4_closure_tranche.sample.jsonl",
@@ -682,6 +689,9 @@ for _script, _args, _label in (
         ("validate_production_bug_lessons.py",
          [os.path.join(_R, "qamus", "examples", "dogfood_particle_tranche_production_bug_lesson.sample.jsonl")],
          "Particle tranche dogfood production bug lesson sample validates"),
+        ("validate_production_bug_lessons.py",
+         [os.path.join(_R, "qamus", "examples", "dogfood_particle_remaining67_production_bug_lesson.sample.jsonl")],
+         "Remaining particle dogfood production bug lesson sample validates"),
         ("summarize_rich_wbw_roles.py", ["--self-test"], "Phase2 rich WBW role taxonomy self-test"),
         ("validate_rich_wbw_gate_cases.py", ["--self-test"], "Phase2.9 rich WBW gate-case validator self-test"),
         ("build_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack self-test"),

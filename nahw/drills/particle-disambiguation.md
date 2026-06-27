@@ -48,7 +48,13 @@ For each row, choose the route and explain why it is not automatically safe:
 | token | visible hover | route |
 |---|---|---|
 | `ثُمَّ` | then, later | sequence/scope review; add clause relation before rich certification |
+| `ثَمَّ` | then, later | locative/adverbial review; do not inherit the `ثُمَّ` sequence lane |
 | `هَلْ` | has/have/is/are...? | question-frame review; yes/no interrogative, not a bundled English list |
+| `إِذَا` / `إِذًا` | therefore, then | split temporal-condition from inferential/result before certification |
+| `مَاذَا` | what, whatever, that or who | classify `ما` and the clause role; no blended default hover |
+| `لِكَيْلَا` | so that ... not | segment lām + `كَيْ` + `لا`; record purpose, negation, and governed mood |
+| `لَيْتَنِي` | it is wished that | preserve `لَيْتَ` plus first-person suffix; exact-token review only |
+| `أَنَا` / `أَنَّا` | that, because | split independent pronoun from subordinator+pronoun by shadda and clause role |
 | `إِلَّا` | except | exception review; mustathnā/minhu, polarity, type, and case are required |
 | `وَإِذَا` | and when | temporal-condition review; preserve leading wāw separately |
 | `مِنْهَا` | from | PP/referent review, not `مَن/ما` relative review |

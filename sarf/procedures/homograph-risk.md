@@ -16,6 +16,10 @@ POS/person; unsafe if the key mixes meanings.
    → **unsafe → pending**.
 4. Diacritic content-letter homographs (مَن/مِن، لَمْ/لِمَ، لِمَا/لَمَّا، كُلّ/كَلَّا، ذِكْر/ذَكَر): decide on the
    content-letter harakah ([`../rules/homograph-quarantines.json`](../rules/homograph-quarantines.json)) or pending.
+5. Particle dogfood collision probes must include fused and inflected forms:
+   `لَكُنَّا` is not `لَكِنْ`; `نِعْمَ` is not `نَعَمْ`; `قُدَّ` is not `قَدْ`;
+   `أُمّ` is not `أَمْ`; `ثَمَّ` is not `ثُمَّ`; `أَنَا` is not `أَنَّا`.
+   If the evidence is only `norm_strict` equality, route to quarantine.
 
 **Output:** safe → author; unsafe → pending with the precise reason.
 

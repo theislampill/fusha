@@ -254,7 +254,13 @@ Classify each live-style hover as `rich_certified`, `needs_nahw_review`,
 | `وَمَا` | and not | classify `ما` as negative/relative/interrogative/etc.; preserve wāw |
 | `لَا` | did not or do not | select one function from the governed noun/verb frame |
 | `ثُمَّ` | then, later | attach sequence and clause scope |
+| `ثَمَّ` | then, later | prove locative/adverbial "there"; never reuse the `ثُمَّ` sequence lane |
 | `هَلْ` | has/have/is/are...? | certify yes/no question frame |
+| `إِذَا` / `إِذًا` | therefore, then | split temporal-condition from inferential/result |
+| `مَاذَا` | what, whatever, that or who | classify `ما` and the clause role; reject blended defaults |
+| `لِكَيْلَا` | so that ... not | segment purpose lām + `كَيْ` + `لا`, then check governed mood |
+| `لَيْتَنِي` | it is wished that | account for the first-person suffix; bare `لَيْتَ` is incomplete |
+| `أَنَا` / `أَنَّا` | that, because | independent pronoun vs subordinator+pronoun collision |
 | `إِلَّا` | except | record exception polarity/type/case behavior |
 
 Rows that are string-correct but lack this proof are `populated_uncertified`,

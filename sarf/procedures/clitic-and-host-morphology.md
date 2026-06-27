@@ -86,6 +86,22 @@ lexical host and record `not_clitic_surface_prefix`. Do not let component-level
 candidate evidence from a particle-like initial letter create a whole-token
 Qamus entry candidate, propagation-safe parse family, or closure-coverage claim.
 
+## Dogfood finding: component candidates stay below the whole token
+
+The remaining-particle dogfood tranche found rows where component candidates are
+real and useful, but still unsafe as whole-token entry evidence:
+
+- `فَأَهْلَكْنَاهُمْ`: result/sequence `فَـ` + Form IV verb host + object
+  pronoun `هُمْ`;
+- `يَسْـَٔلُكَ`: imperfect verb host + object suffix `كَ`;
+- `لَيْتَنِي`: wishing particle host + first-person suffix `نِي`;
+- `لِكَيْلَا`: purpose lām + `كَيْ` + negation `لا`.
+
+These pieces may feed a rich renderer or learner breakdown. They must not create
+a whole-token particle/pronoun candidate, an `auto_safe` parse family, or a
+surface-family hover. If a suffix or composite particle is visible, the
+token-addressed hover must account for it or remain pending.
+
 ## Dogfood finding: preposition and oath hosts need their governors
 
 The 2026-06-27 preposition/oath dogfood batch found host-only hovers on tokens

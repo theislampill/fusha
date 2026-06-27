@@ -47,6 +47,15 @@ For high-frequency particle entries, distinguish "string looks acceptable" from
   conditional clause relation is attached;
 - `question_frame_uncertified` for `هَلْ` and hamza until yes/no,
   equalization, or other interrogative function is known.
+- `entry_pair_collision` for pairs such as `إِذَا`/`إِذًا` and
+  `ثُمَّ`/`ثَمَّ` when one inventory contains both functions. Split by strict
+  vocalized surface and clause role before any rich certification.
+- `composite_particle_uncertified` for `لِكَيْلَا`, `لَيْتَنِي`, and similar
+  fused forms until every visible piece and its governor/suffix contribution is
+  recorded.
+- `pronoun_subordinator_collision` for `أَنَا` versus `أَنَّا`; the former is
+  an independent pronoun and the latter introduces a clause with pronoun
+  contribution.
 
 If the current row only proves a component candidate (`وَ`, `فَ`, `بِـ`, `لِـ`,
 `ال`) inside a larger token, keep it out of whole-token entry resolution. It may

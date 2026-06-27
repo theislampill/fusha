@@ -46,6 +46,21 @@ Route repeated classes as follows:
   the hover.
 - `إِذْ` / `إِذَا`: route to temporal/conditional clause review, preserving any
   leading wāw separately.
+- `إِذَا` / `إِذًا`: split the final alif/tanwīn surface before review.
+  `إِذَا` is temporal/conditional or fujāʾiyya; `إِذًا` is inferential/result.
+  They cannot share one rich parse key or one entry inventory.
+- `ثُمَّ` / `ثَمَّ`: split the sequence particle from the locative/demonstrative
+  adverb. A `ثَمَّ` row must not inherit a `ثُمَّ` "then" hover by shared
+  consonant shape.
+- `هَلْ`: classify as a yes/no interrogative frame and attach the following
+  clause. A bundled English list such as "has/have/is/are/will/can?" is not a
+  rich-certified hover.
+- `مَاذَا`: classify the `ما` function and `ذا` contribution in context. Do not
+  certify a blended default such as "what/whatever/that/who".
+- `أَنَا` / `أَنَّا`: split independent pronoun from subordinator+pronoun by
+  shadda, surface, and clause role.
+- `كَيْ` / `لِكَيْلَا`: record purpose-governor scope, negation, and governed
+  subjunctive before rich certification.
 - `إِلَّا`: route to exception review with polarity, omitted/mentioned
   mustathnā minhu, exception type, and case behavior.
 

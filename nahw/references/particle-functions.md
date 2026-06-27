@@ -19,11 +19,16 @@ fixture: [`../evals/particle-function-eval.jsonl`](../evals/particle-function-ev
 | **واو** | ʿāṭifa · istiʾnāf · qasam (oath) · ḥāl (circumstantial) | followed by an oath noun? a circumstantial clause? | وَٱلْعَصْرِ (oath) |
 | **لام** | jarr · amr (command+jussive) · taʿlīl · tawkīd/ibtidāʾ | kasra+noun=jarr; sukūn+jussive verb=amr; لـ+sentence=tawkīd | لِيُنفِقْ (amr) / لِلَّهِ (jarr) |
 | **حَتَّىٰ** | ghāya (until)+jarr · ʿāṭifa · ibtidāʾ | end-limit? | حَتَّىٰ مَطْلَعِ ٱلْفَجْرِ |
-| **إِذْ / إِذَا** | إِذْ past ẓarf · إِذَا future conditional-temporal / fujāʾiyya | tense of the clause | وَإِذْ قَالَ / إِذَا جَآءَ |
+| **إِذْ / إِذَا / إِذًا** | إِذْ past ẓarf · إِذَا future conditional-temporal / fujāʾiyya · إِذًا inferential/result | tense and result relation of the clause; final alif/tanwīn matters | وَإِذْ قَالَ / إِذَا جَآءَ / إِذًا |
 | **حَيْثُ** | place ẓarf (mabnī) | "where/from where" | مِنْ حَيْثُ |
 | **كَأَنَّ / لَٰكِنَّ / لَعَلَّ** | sisters of inna: tashbīh · istidrāk · tarajjī | naṣb of ism | كَأَنَّهُمْ / وَلَٰكِنَّ / لَعَلَّكُمْ |
 | **كَلَّا** | radʿ (deterrence) 'nay!' | ≠ كُلّ 'all' | كَلَّا سَيَعْلَمُونَ |
 | **لِمَ** | interrogative 'why' (لـ+ما) | ≠ لَمْ 'did not' (content-letter harakah) | لِمَ تَقُولُونَ |
+| **ثُمَّ / ثَمَّ** | ثُمَّ sequence/transition · ثَمَّ locative/adverbial "there" | shadda/vowelized strict surface and clause/locative role | ثُمَّ أَمَاتَهُ / ثَمَّ |
+| **هَلْ** | yes/no interrogative | following question frame and clause scope | هَلْ أَتَىٰكَ |
+| **كَيْ / لِكَيْلَا** | purpose/subjunctive governor · composite purpose+negation | governed subjunctive, purpose relation, negation scope | كَيْ / لِكَيْلَا |
+| **مَاذَا** | interrogative/relative composite (`ما` + `ذا`) | classify `ما` function and clause role; no blended default | مَاذَا يُرِيدُ |
+| **أَنَا / أَنَّا** | أَنَا independent pronoun · أَنَّا subordinator plus pronoun/clause | shadda and clause role | أَنَا / أَنَّا |
 
 **The rule:** read the content-letter harakah first (مَن/مِن، لِمَ/لَمْ، أَمْ/أُمّ), then the clause role.
 A surface key alone can never separate these — only iʿrāb + context can.
