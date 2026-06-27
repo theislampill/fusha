@@ -118,6 +118,23 @@ If the learner can read the hover without the suffix, the row is still
 `populated_uncertified` or `token_only_override`. Route it to suffix-pronoun
 review, not live apply.
 
+## Dogfood finding: VN-15 noun possessors and verb objects split by host
+
+VN-15 added a mixed suffix set:
+
+- `بَقْلِهَا`, `أَلْوَٰنُهُۥ`, `لَّوْنُهَا`, and `أَلْوَٰنُهَا` are noun
+  hosts. Their suffixes are possessor or referent decisions and cannot be
+  hidden behind "herbs" or "colour/type".
+- `وَقِفُوهُمْ`, `يَأْلُونَكُمْ`, `يَخْذُلْكُمْ`, `خَوَّلْنَٰهُ`,
+  `لَيَصْرِمُنَّهَا`, and `لَيَسْتَفِزُّونَكَ` are finite verb hosts. Their
+  suffixes are object/addressee or emphatic decisions, not possessive endings.
+- Component-only rows with suffixes remain blockers until the whole written
+  token proves host POS, suffix role, and contextual referent.
+
+Rule: if a populated hover is readable without the suffix, it is not
+rich-certified. Route noun hosts to possessive/referent review and verb hosts
+to object/subject/addressee review.
+
 **Test:** [`nahw/evals/suffix-pronoun-eval.jsonl`](../evals/suffix-pronoun-eval.jsonl);
 rules [`nahw/rules/pronoun-attachment-rules.json`](../rules/pronoun-attachment-rules.json).
 

@@ -289,3 +289,21 @@ before any candidate wording becomes applyable.
 VN-14 adds an Andon lesson: do not let a detector named "verb tranche" classify
 all rows as finite verbs. Exact surface/POS comes first, then form, suffix,
 function, and learner breakdown.
+
+## T. VN-15 dogfood: entry prose is not a finite verb hover
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `يُوَفِّقِ` | `to reconcile` as bare entry prose | finite imperfect/form review and exact context |
+| `يَأْلُونَكُمْ` | `to vow` without the addressee suffix | finite host plus `كُمْ` object/addressee accounting |
+| `يَخْذُلْكُمْ` | `to abandon` with hidden `كُمْ` | finite host plus visible object suffix |
+| `أَطْفَأَهَا` | `to extinguish` without `هَا` | finite/perfect host plus object/referent |
+| `يَسْتَفِزَّهُم` | `to incite` without `هُم` | derived finite host plus object suffix |
+| `وَقِفُوهُمْ` | component-only detain evidence | wāw + imperative/finite host + `هُمْ`, whole-token proof |
+| `فَيُحْفِكُمْ` | host evidence as whole token | fā' function + finite host + `كُمْ` object |
+| `لِيُطْفِـُٔوا۟` | host evidence only | lām function/mood + finite plural host |
+
+Rule: rewrite each entry prose line into a token-aware gloss candidate only
+after naming the finite form, subject/agreement, object suffix, and any
+governing function. If those fields are missing, route the row to exact-address
+review or component-only blocker.

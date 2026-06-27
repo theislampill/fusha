@@ -388,3 +388,25 @@ Rule: first decide whether the exact surface is a finite verb host, a
 nominal/POS row, or component-only evidence. Only finite rows use this verb
 form contract directly; nominal rows hand off to nominal derivative/POS review,
 and component-only rows remain blockers.
+
+## Dogfood finding: VN-15 finite strings and suffixes stay exact-addressed
+
+VN-15 repeated the same finite-form leakage in the `v678-v722` tranche:
+
+- `يُوَفِّقِ`, `يُؤْلُونَ`, `يَأْلُونَكُمْ`, `يَخْذُلْكُمْ`,
+  `أَطْفَأَهَا`, and `يَسْتَفِزَّهُم` are finite or form-sensitive rows.
+  Entry prose such as "to reconcile", "to vow", "to abandon", "to
+  extinguish", or "to incite" is only a routing hint until aspect, form,
+  voice, agreement, and object/referent roles are visible.
+- `وَقِفُوهُمْ`, `خَوَّلْنَٰهُ`, `لَيَصْرِمُنَّهَا`, and
+  `لَيَسْتَفِزُّونَكَ` require the host verb plus object suffix or emphatic
+  nūn accounting. A hidden suffix field is not learner-ready morphology.
+- `وَتَوْفِيقًا`, `فَيُحْفِكُمْ`, `لِيُطْفِـُٔوا۟`,
+  `وَٱسْتَفْزِزْ`, and `فَٱفْسَحُوا۟` may provide component evidence for a
+  host or function piece. They remain component-only blockers until the whole
+  written token is parsed.
+
+Rule: VN-15 rows may be repair candidates, but none are token decisions. Keep
+finite rows in exact-address review until the verb form, mood/governor where
+relevant, subject/object suffixes, and component-vs-whole-token boundary are
+all visible to the learner.

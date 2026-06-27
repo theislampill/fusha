@@ -296,3 +296,20 @@ VN-14 repeated the component-boundary and suffix-accounting controls:
 Rule: a VN-14 row may gain component candidates and still remain
 `component_only_blocker`, `rich_metadata_plus_exact_address_review`, or
 `two_vote_exact_address_review`. Component candidates never weaken the gate.
+
+## Dogfood finding: VN-15 component evidence is review fuel only
+
+VN-15 repeated the component-boundary rule with finite, nominal, and function
+pieces:
+
+- `وَتَوْفِيقًا`, `وَقِفُوهُمْ`, `فَيُحْفِكُمْ`, `وَالذَّارِيَاتِ`,
+  `لِيُطْفِـُٔوا۟`, and `وَتُعَزِّرُوهُ` may expose useful pieces, but the
+  evidence is below the written-token decision.
+- A component candidate may record `source=rich_wbw_segment`, role, segment
+  text, and token loc. It must not become a whole-token Qamus candidate.
+- Do not infer a missing host noun or verb entry from an article, preposition,
+  conjunction, vocative, lām, fā', or suffix component.
+
+Rule: component evidence can route review, lessons, and blocker queues. It
+cannot contribute to `auto_safe`, source agreement, propagation safety,
+closure coverage, hover coverage, or live apply.

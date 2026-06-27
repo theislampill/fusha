@@ -193,6 +193,25 @@ elative, adjective, or lexical noun, route to nominal/POS review. The row may
 be string-readable, but it is not rich-certified until noun type, case/state,
 derivative class, and any suffix/referent are visible.
 
+## Dogfood finding: VN-15 nominal rows inside verb families
+
+VN-15 found another set of nominal or derivative rows that cannot inherit
+finite verb prose:
+
+- `وِفَاقًا` and `تَوْفِيقِىٓ` are nominal or maṣdar-like rows in a
+  reconcile/success family. Do not certify them from a finite verb gloss.
+- `ٱلْءَازِفَةُ`, `ٱلْمُخْبِتِينَ`, `وَالذَّارِيَاتِ`, and
+  `مَطْوِيَّٰتٌۢ` are definite, plural, participial, adjectival, or lexical
+  nominal rows near verb entries. They need POS, derivative class, case/state,
+  and any article/function pieces before hover trust.
+- `ٱلْأَسْوَدِ`, `ٱلْأَبْيَضُ`, and `ٱلْأَخْضَرِ` show that color/adjectival
+  morphology is not a verb infinitive. Exact article, case, and ṣifa/context
+  review decide the learner hover.
+
+Rule: a verb-entry source key is not token POS evidence. If the exact surface
+is nominal, adjective, participle, elative, or lexical noun, route to
+nominal/POS review even when the entry-family English string is plausible.
+
 ## Dogfood finding: VN-11 nominal/POS and pronoun/function collisions
 
 VN-11 added more rows where entry-family reuse would mis-teach the token:

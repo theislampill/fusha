@@ -372,3 +372,21 @@ where needed, and two-vote review for grammar-sensitive rows.
 VN-14 keeps the two-vote and MCP/source-evidence gates intact. A candidate can
 be useful for review while remaining non-applyable because the suffix, relation,
 or POS/function reasoning is not yet certified.
+
+## 4q. VN-15 false-prefix, suffix, and PP routing
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `بَقْلِهَا` | noun host plus `هَا` possessor/referent | host-only `herbs` |
+| `أَلْوَٰنُهُۥ` / `لَّوْنُهَا` | noun host plus suffix/referent | host-only `colour/type` |
+| `يَأْلُونَكُمْ` / `يَخْذُلْكُمْ` | finite host plus `كُمْ` object | dictionary infinitive only |
+| `لَيَسْتَفِزُّونَكَ` | lām/function plus finite host plus `كَ` | entry prose without addressee |
+| `كَالصَّرِيمِ` | comparison/preposition plus host and PP attachment | host-only crop/reaped-state wording |
+| `بِٱلْعُرْوَةِ` / `بِقَبَسٍ` | bā' + governed host + attachment | host candidate only |
+| `أَعْنَٰبٍۢ` / `كَافُورًا` / `بِيضٌۭ` | exact nominal/POS review or false-prefix guard | raw initial bā/kāf as a preposition |
+| component-only rows | route to blocker queue until whole-token parse exists | treating segment evidence as propagation proof |
+
+VN-15 adds a false-positive guard: detectors may flag bā/kāf/lām-looking
+surfaces, but nahw should only route them as PP/function rows when segmentation
+proves a real particle. If the particle is real, attachment and relation still
+need exact-address evidence before live apply.

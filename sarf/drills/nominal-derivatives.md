@@ -169,3 +169,20 @@ rule → recognition Q → production Q → answer. Generated/extendable from
 - Gate: if a detector says "finite verb" but the exact surface is nominal,
   stop and reroute. The fix is not a live hover apply; it is POS/derivative
   review plus a precise blocker or repair candidate.
+
+## <a name="vn15-colors-and-nominals"></a>17. VN-15: color and nominal rows in verb families
+
+- Recognition: `ٱلْءَازِفَةُ` is a definite nominal row; a broad "to be fast
+  approaching" verb entry is not a token hover.
+- Recognition: `ٱلْمُخْبِتِينَ`, `وَالذَّارِيَاتِ`, and
+  `مَطْوِيَّٰتٌۢ` are plural, participial, adjectival, or lexical nominal
+  rows that need noun/adjective review before entry-family reuse.
+- Recognition: `ٱلْأَسْوَدِ`, `ٱلْأَبْيَضُ`, and `ٱلْأَخْضَرِ` are
+  color/adjectival surfaces. Their article, case, and ṣifa/context role matter
+  before the learner hover is trusted.
+- Recognition: `وِفَاقًا` and `تَوْفِيقِىٓ` may sit near a verb entry, but
+  the exact row must first be classified as masdar/nominal/possessed or
+  finite, not guessed from the English family.
+- Gate: a verb source key is only candidate evidence. If the exact token is a
+  noun, adjective, participle, elative, color adjective, or masdar, route to
+  nominal/POS review and keep `may_apply_live=false`.

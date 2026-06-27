@@ -132,3 +132,20 @@ still not certified:
 Rule: attachment proof is a reasoned relation, not a text match. VN-13 keeps
 these rows in blocker, two-vote, or repair-candidate queues until exact
 function, host, and attachment agree.
+
+## Dogfood finding: VN-15 PP/comparison rows require a head
+
+VN-15 repeated the attachment boundary with rows such as `كَالصَّرِيمِ`,
+`بِٱلْعُرْوَةِ`, `بِالْعَرَاءِ`, `بِٱلْعَرَآءِ`, and `بِقَبَسٍ`.
+
+For these rows, a string-plausible relation is not enough. Record:
+
+- the actual particle or comparison prefix;
+- the governed host and case/state;
+- whether the attachment head is a visible verb, visible nominal, hidden hāl,
+  hidden ṣifa, or still unknown;
+- whether the English relation depends on that attachment.
+
+Rows with only host evidence or missing attachment head remain
+`pp_attachment_uncertified` or `two_vote_exact_address_review`, not live
+decisions.

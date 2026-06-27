@@ -168,3 +168,21 @@ Use `preposition_role_uncertified`, `comparison_attachment_uncertified`,
 `lam_function_uncertified`, `mood_governor_uncertified`, or
 `component_only_blocker`. A relation row needs two compatible reasons when the
 function affects i'rab, mood, attachment, or English wording.
+
+## Dogfood finding: VN-15 false-prefix and true relation rows
+
+VN-15 added a mixed preposition/function detector warning:
+
+- True relation rows such as `كَالصَّرِيمِ`, `بِٱلْعُرْوَةِ`,
+  `بِالْعَرَاءِ`, `بِٱلْعَرَآءِ`, and `بِقَبَسٍ` need preposition or
+  comparison function, governed host, and attachment proof.
+- False-prefix or ordinary nominal rows such as `أَعْنَٰبٍۢ`, `كَافُورًا`,
+  and `بِيضٌۭ` must not enter a PP/function lane merely because a detector saw
+  an initial bā/kāf-looking shape.
+- Component-only function evidence can route review but cannot certify the
+  whole token or relax the two-vote gate.
+
+Use `not_clitic_surface_prefix` when segmentation does not prove a real
+preposition/comparison particle. Use `preposition_role_uncertified` or
+`pp_attachment_uncertified` when the particle is real but relation or
+attachment is not certified.
