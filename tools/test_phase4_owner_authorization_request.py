@@ -82,6 +82,38 @@ def main():
         assert count == 1, errors
         assert not errors, errors
 
+        excluded_manifest_path = os.path.join(td, "apply-readiness-with-exclusion.json")
+        tranche_path = os.path.join(td, "source-tranche.jsonl")
+        excluded_request_path = os.path.join(td, "owner-request-with-exclusion.json")
+        blocked = {
+            "id": "phase4-tranche:queue_parse_333333333333333333333333",
+            "parse_id": "parse:333333333333333333333333",
+            "identity": {
+                "quran_locs": ["quran:86:14:1"],
+                "wbw_locs": ["wbw:86:14:1"],
+                "parse_id": "parse:333333333333333333333333",
+                "surface_sample": "وَمَا",
+            },
+            "lane": "quarantine_collision",
+            "required_gate": "human_review_required",
+            "recommended_action": "quarantine until candidate collision is resolved by exact-token nahw/sarf review",
+        }
+        manifest_builder.write_jsonl(tranche_path, [blocked])
+        excluded_manifest = manifest_builder.build_manifest(PLAN_SAMPLE, excluded_manifest_path, source_tranche_jsonl=tranche_path)
+        request = request_builder.build_request(excluded_manifest_path, draft_path, excluded_request_path)
+        assert request["excluded_tranche_rows"] == excluded_manifest["excluded_tranche_rows"]
+        assert request["excluded_tranche_rows"]["excluded_count"] == 1
+        count, errors = validator.validate(excluded_request_path, excluded_manifest_path, draft_path)
+        assert count == 1, errors
+        assert not errors, errors
+
+        bad = read_json(excluded_request_path)
+        del bad["excluded_tranche_rows"]
+        bad_path = os.path.join(td, "bad-missing-excluded.json")
+        write_json(bad_path, bad)
+        _count, errors = validator.validate(bad_path, excluded_manifest_path, draft_path)
+        assert any("excluded_tranche_rows must be copied" in err for err in errors), errors
+
         bad = read_json(request_path)
         bad["owner_authorization"]["status"] = "approved"
         bad["apply_policy"]["apply_allowed"] = True

@@ -162,6 +162,64 @@ def validate_samples(row, errors):
             _err(errors, "sample_decisions[%d].token_decision must be source-clean" % idx)
 
 
+def validate_excluded_tranche_rows(row, manifest_json, errors):
+    excluded = row.get("excluded_tranche_rows")
+    manifest_excluded = None
+    if manifest_json and os.path.exists(manifest_json):
+        manifest_row = read_json(manifest_json)
+        manifest_excluded = manifest_row.get("excluded_tranche_rows")
+    if manifest_excluded and excluded is None:
+        _err(errors, "excluded_tranche_rows must be copied from apply-readiness manifest")
+        return
+    if excluded is None:
+        return
+    if not isinstance(excluded, dict):
+        _err(errors, "excluded_tranche_rows must be an object")
+        return
+    if manifest_json and os.path.exists(manifest_json) and excluded != manifest_excluded:
+        _err(errors, "excluded_tranche_rows must match apply-readiness manifest")
+
+    source = excluded.get("source_tranche") or {}
+    if "/" in str(source.get("artifact") or "") or "\\" in str(source.get("artifact") or ""):
+        _err(errors, "excluded_tranche_rows.source_tranche.artifact must be a basename")
+    if not SHA256.match(str(source.get("sha256") or "")):
+        _err(errors, "excluded_tranche_rows.source_tranche.sha256 must be sha256")
+    if not isinstance(source.get("row_count"), int) or source.get("row_count") <= 0:
+        _err(errors, "excluded_tranche_rows.source_tranche.row_count must be positive")
+
+    excluded_count = excluded.get("excluded_count")
+    if not isinstance(excluded_count, int) or excluded_count < 0:
+        _err(errors, "excluded_tranche_rows.excluded_count must be a non-negative integer")
+        excluded_count = 0
+    by_lane = excluded.get("excluded_by_lane") or {}
+    by_gate = excluded.get("excluded_by_gate") or {}
+    if not all(isinstance(value, int) for value in by_lane.values()):
+        _err(errors, "excluded_tranche_rows.excluded_by_lane values must be integers")
+    elif sum(by_lane.values()) != excluded_count:
+        _err(errors, "excluded_tranche_rows.excluded_by_lane must sum to excluded_count")
+    if not all(isinstance(value, int) for value in by_gate.values()):
+        _err(errors, "excluded_tranche_rows.excluded_by_gate values must be integers")
+    elif sum(by_gate.values()) != excluded_count:
+        _err(errors, "excluded_tranche_rows.excluded_by_gate must sum to excluded_count")
+
+    sample_excluded = excluded.get("sample_excluded") or []
+    if excluded_count and not sample_excluded:
+        _err(errors, "excluded_tranche_rows.sample_excluded must be non-empty when excluded_count is positive")
+    for idx, sample in enumerate(sample_excluded, 1):
+        if not str(sample.get("parse_id") or "").startswith("parse:"):
+            _err(errors, "excluded_tranche_rows.sample_excluded[%d].parse_id is invalid" % idx)
+        if not sample.get("quran_locs"):
+            _err(errors, "excluded_tranche_rows.sample_excluded[%d].quran_locs must be non-empty" % idx)
+        if not sample.get("wbw_locs"):
+            _err(errors, "excluded_tranche_rows.sample_excluded[%d].wbw_locs must be non-empty" % idx)
+        if not str(sample.get("lane") or "").strip():
+            _err(errors, "excluded_tranche_rows.sample_excluded[%d].lane must be non-empty" % idx)
+        if not str(sample.get("required_gate") or "").strip():
+            _err(errors, "excluded_tranche_rows.sample_excluded[%d].required_gate must be non-empty" % idx)
+        if not str(sample.get("recommended_action") or "").strip():
+            _err(errors, "excluded_tranche_rows.sample_excluded[%d].recommended_action must be non-empty" % idx)
+
+
 def validate(path, manifest_json=None, draft_ledger_jsonl=None):
     errors = []
     if not os.path.exists(SCHEMA):
@@ -183,6 +241,7 @@ def validate(path, manifest_json=None, draft_ledger_jsonl=None):
     validate_policy(row, errors)
     validate_public_boundary(row, errors)
     validate_samples(row, errors)
+    validate_excluded_tranche_rows(row, manifest_json, errors)
     if len(row.get("required_before_live_apply") or []) < 8:
         _err(errors, "required_before_live_apply must list all future apply gates")
     found = leaks(row)

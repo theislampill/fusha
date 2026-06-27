@@ -1865,6 +1865,23 @@ check(
 )
 
 try:
+    _dogfood_owner_request = json.load(io.open(
+        os.path.join(_R, "qamus", "examples", "phase4_owner_authorization_request_from_dogfood_review.sample.json"),
+        encoding="utf-8",
+    ))
+except Exception:
+    _dogfood_owner_request = {}
+check(
+    "dogfood-derived owner authorization request preserves excluded wama blocker",
+    bool(
+        _dogfood_owner_request.get("excluded_tranche_rows") == _dogfood_exclusions
+        and ((_dogfood_owner_request.get("excluded_tranche_rows") or {}).get("sample_excluded") or [{}])[0].get("surface_sample") == "وَمَا"
+        and (_dogfood_owner_request.get("apply_policy") or {}).get("apply_allowed") is False
+        and (_dogfood_owner_request.get("owner_authorization") or {}).get("status") == "not_provided"
+    ),
+)
+
+try:
     _rich_sample_dir = os.path.join(_R, "qamus", "examples")
     _rich_exact_ok = True
     _rich_exact_checked = 0

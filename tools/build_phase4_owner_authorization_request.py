@@ -155,6 +155,8 @@ def build_request(manifest_json, draft_ledger_jsonl, out_json):
         "required_before_live_apply": list(REQUIRED_BEFORE_LIVE_APPLY),
         "sample_decisions": sample_decision_rows(summary["rows"]),
     }
+    if manifest.get("excluded_tranche_rows"):
+        request["excluded_tranche_rows"] = manifest["excluded_tranche_rows"]
     leaks = leak_labels(request)
     if leaks:
         raise ValueError("request contains forbidden public/private label %r" % leaks[0])
