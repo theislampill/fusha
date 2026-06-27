@@ -89,7 +89,9 @@ Status: current-code validation smoke only. This does not rerun the live
 shadow graph, does not reopen Phase 2.9, and does not authorize apply.
 
 - `validated_code_head`: `676be98dd8e35219fae6340d033e325cf5b722bb`
-- `report_head`: same as `validated_code_head`
+- `report_head`: `ba22e880ebe2e58f1ce35acf21422c5104260d50`
+- commits after `validated_code_head` are report-only for this file, so they do
+  not reopen the Phase 2.9 live-shadow graph gate;
 - previous live-shadow counts remain historical evidence from their recorded
   run heads; this section proves only that the committed Phase 4 sample packet
   chain still validates under the current code.
