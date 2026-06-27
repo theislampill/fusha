@@ -23,6 +23,12 @@ particle. The exact shadda/tanwīn and token address must block exception
 propagation. Treat an English "except" string as populated text only until the
 exception frame is proven; treat lexical `إِلًّا` as a noun/POS row.
 
+VN-09 dogfood note: `لَّمَّا` can appear with a negative/exception-like
+construction such as `there is no ... except`, but that readable English is not
+the same as an exception-frame proof. Before rich certification, record the
+construction type, polarity, scope, and case policy where relevant. Do not let
+`لَّمَّا` propagate from `لِمَا`, temporal `لَمَّا`, or lexical `لَمَم` rows.
+
 Vocatives:
 
 - identify the vocative particle;

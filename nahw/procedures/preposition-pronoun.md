@@ -60,3 +60,20 @@ Route `لِلَّهِ` as:
 
 False suffix guards also matter: `لَهُوَ` contains lām/emphasis + pronoun, and
 `لِلَّهِ` contains lām + proper noun, not a noun host plus possessor suffix.
+
+## Dogfood finding: VN-09 true prepositions and false raw-prefix routes
+
+VN-09 added two guards:
+
+- True attached relations such as `كَلَمْحِ`, `بِعِصَمِ`,
+  `بِٱلْبُخْلِ`, `كَٱلْجَوَابِ`, `بِسِيمَٰهُمْ`, `بِسَبَبٍ`, and
+  `بِٱلشَّفَقِ` need preposition/comparison plus host and attachment review.
+  Do not certify from a bare host or from component-only evidence.
+- Raw initial letters are not enough. Lexical rows such as `كَادِحٌ`,
+  `لِبَدًا`, `لُغُوبٌۭ`, `بَاخِعٌ`, `بَازِغًا`, and `بَاسِقَاتٍ` should not
+  enter a preposition lane unless segmentation evidence proves a real
+  preposition.
+
+Use `not_clitic_surface_prefix` for lexical initial-letter false positives and
+`component_only_blocker` when the preposition/host evidence is below the whole
+written token.

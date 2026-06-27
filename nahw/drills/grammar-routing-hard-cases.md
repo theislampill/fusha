@@ -226,6 +226,24 @@ function token into a lexical noun, and proper-name PP rows can look like suffix
 rows when the detector only sees final letters. Do not let either path weaken
 the two-vote gate.
 
+## 4k. VN-09 lām/mā, suffix, and renderer-only routing
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `لِمَا` | lām relation plus classified `ما` function and attachment | using "for what/to that which" as proof |
+| `لَّمَّا` | negative/temporal/exception construction by context | merging with `لِمَا` or lexical `لَمَم` |
+| `لِتُضَيِّقُوا۟` | lām function/mood plus finite plural verb | component-only ضيق evidence |
+| `كَلَمْحِ` | comparison/preposition plus host and attachment | host-only blink gloss |
+| `يَعْصِمُكَ` | finite verb plus `كَ` object | infinitive "to protect" |
+| `أَقْوَٰتَهَا` | nominal host plus `هَا` suffix and referent | host-only sustenance |
+| `لَأَوَّٰهٌ` | exact lexical/POS review; no raw lām route unless segmented | false preposition/emphasis split |
+| renderer-only rows | metadata backfill if no grammar defect exists | inventing a new sarf/nahw rule for missing display segments |
+
+VN-09 separates three outcomes: grammar defect, component-only blocker, and
+renderer metadata miss. Do not treat a populated hover as rich-certified unless
+the function pieces, suffixes, parse key, and learner-facing breakdown are
+present.
+
 ## 5. QAC concept metadata is a routing aid only
 
 If concept metadata says a form may be a prophet, historic person, people,

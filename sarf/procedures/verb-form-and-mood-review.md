@@ -246,3 +246,30 @@ VN-08 repeated the finite-verb leakage pattern:
 Rule: a VN-08 row may be populated and still remain `needs_sarf_review` or
 `needs_renderer_segments` until the exact token carries form, voice, suffix,
 and component-vs-whole-token proof.
+
+## Dogfood finding: VN-09 finite verb lemma leakage
+
+VN-09 found more populated hovers where the live string was only an entry
+infinitive:
+
+- `يَشْتَهُونَ` was shown as `to desire`. The token is an imperfect plural
+  finite verb; record aspect, person/number, and context before a hover such
+  as "they desire" is reviewable.
+- `يَعْصِمُكَ` and `يَجْتَبِيكَ` were shown with entry-family prose while the
+  attached `كَ` object was not learner-visible. Preserve the finite verb host
+  plus `2ms` object suffix.
+- `وَفَدَيْنَٰهُ` is not certified by a ransom-family infinitive. The written
+  token contains wāw, a finite/perfect host, and `هُ` object.
+- `لِتُضَيِّقُوا۟` is component-only evidence until lām function/mood, finite
+  form, and plural subject are reviewed.
+- `لِّيَطْمَئِنَّ` needs lām/governor and form/mood review before any
+  tranquility-family hover is trusted.
+
+Rule: a VN-09 finite row can be useful evidence and still stay
+`component_only_blocker`, `needs_sarf_review`, or `two_vote_required`. Do not
+let an entry/root gloss become a public token hover unless the exact written
+token exposes form, voice/aspect/mood, person/number/gender, and suffixes.
+
+Weak, hamzated, and doubled roots remain load-bearing: `تَشْتَهِيهِ`,
+`ٱسْتَيْـَٔسُوا۟`, `خَرَّ`, and `مُطْمَئِنٌّۢ` need root-class handling before
+surface-family reuse.

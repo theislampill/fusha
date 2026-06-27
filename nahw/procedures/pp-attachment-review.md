@@ -47,3 +47,22 @@ VN-08 repeated the same attachment boundary in two ways:
 
 Component-only bā/lām evidence remains a blocker row until the whole written
 token has an exact parse and an attachment decision.
+
+## Dogfood finding: VN-09 lām-on-verb and comparison/PP rows
+
+VN-09 added lām-on-verb and comparison rows that need nahw before hover trust:
+
+- `لِتُضَيِّقُوا۟`, `لِّيَطْمَئِنَّ`, `لِيَفْتَدُوا۟`,
+  `لِّتَسْلُكُوا۟`, and `لِتَشْقَىٰٓ` require lām function, governed mood, and
+  clause relation review.
+- `لَمُدْرَكُونَ` and `لَيُسْجَنَنَّ` are emphatic or oath/emphasis-like lām
+  contexts, not purpose lām by default.
+- `كَلَمْحِ` and `كَٱلْجَوَابِ` need comparison/preposition plus host and
+  attachment proof.
+- `بِعِصَمِ`, `بِٱلْبُخْلِ`, and `بِسَبَبٍ` need PP attachment; host-only
+  glosses are not rich-certified.
+
+If the lām or bā' contribution is clear enough for public wording, it must be
+visible. If function or attachment is still unknown, use exact blockers such as
+`lam_function_uncertified`, `mood_governor_uncertified`,
+`pp_attachment_uncertified`, or `comparison_attachment_uncertified`.

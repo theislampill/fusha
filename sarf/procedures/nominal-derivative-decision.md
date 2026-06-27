@@ -153,3 +153,23 @@ VN-08 added several nominal/POS traps:
 If a row's English is readable but its evidence path is root/entry/component
 candidate rather than exact token POS, keep it in `token_only_review`,
 `needs_nahw_review`, or `component_only_blocker`.
+
+## Dogfood finding: VN-09 entry-family collision and nominal suffixes
+
+VN-09 repeated nominal/POS leakage inside verb and mixed families:
+
+- `ٱلشَّهَوَٰتِ` is a plural nominal row in the desire family, not a finite
+  "to desire" token.
+- `مَوَٰقِيتُ` is a plural noun/time row, not a finite appointed-time verb
+  hover.
+- `ٱلسِّجْنُ` is a prison noun, not a "to imprison" verb.
+- `ٱلْأَشْقَى` is an elative/superlative adjective, not a finite misery verb.
+- `مَوَاخِرَ`, `وَالنَّاشِطَاتِ`, `وَمُهَيْمِنًا`, and `وَأَجْدَرُ` need
+  nominal derivative or adjective review before any root-family gloss is
+  trusted.
+- `أَقْوَٰتَهَا` and `تَفَثَهُمْ` are suffix-bearing nominal hosts; the suffix
+  must survive in sarf output even if nahw later decides the exact English.
+
+VN-09 also found entry-family collisions such as `لِمَا` / `لَّمَّا` /
+`ٱللَّمَمَ`, and `يَعْصِمُكَ` / `عَاصِمٍۢ` / `بِعِصَمِ`. Split by strict
+surface, POS, form, suffix, and function before any candidate is reusable.

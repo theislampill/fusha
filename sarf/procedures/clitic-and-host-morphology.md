@@ -177,3 +177,21 @@ for certification:
 When a row gains component candidates, preserve two facts separately: the
 component evidence and the whole-token gate. Component evidence may tell the
 reviewer what pieces exist, but it never authorizes parse-family propagation.
+
+## Dogfood finding: VN-09 suffixes and component rows remain visible
+
+VN-09 added fresh suffix and component-only controls:
+
+- `يَعْصِمُكَ` and `يَجْتَبِيكَ` are finite verb hosts plus `كَ` object. A
+  hover that reads like "to protect" or an entry explanation without "you" is
+  not learner-ready.
+- `أَقْوَٰتَهَا` and `تَفَثَهُمْ` are nominal hosts with attached possessor or
+  referent suffixes. The suffix contribution must be in the best hover or in
+  rich segment rows before certification.
+- `لِتُضَيِّقُوا۟`, `وَفَدَيْنَٰهُ`, `كَلَمْحِ`, and `لَأَوَّٰهٌ` can yield
+  useful component candidates, but the whole token still carries a proclitic,
+  function, finite form, suffix, or lexical-host decision that must be proven.
+
+When VN-09-style component evidence is present, store it as component evidence
+with provenance. Do not add it to whole-token candidate counts, propagation
+safety, source agreement, closure coverage, or hover coverage.

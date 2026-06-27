@@ -586,6 +586,10 @@ for _art in (
         "qamus/examples/full_corpus_dogfood_vn08_skill_impact.sample.jsonl",
         "qamus/examples/dogfood_vn08_production_bug_lesson.sample.jsonl",
         "qamus/reports/full-corpus-dogfood-vn08-20260627.md",
+        "qamus/examples/full_corpus_dogfood_vn09_inventory.sample.jsonl",
+        "qamus/examples/full_corpus_dogfood_vn09_skill_impact.sample.jsonl",
+        "qamus/examples/dogfood_vn09_production_bug_lesson.sample.jsonl",
+        "qamus/reports/full-corpus-dogfood-vn09-20260627.md",
         "qamus/examples/full_corpus_dogfood_queue_summary.sample.json",
         "qamus/examples/full_corpus_dogfood_review_pack.sample.jsonl",
         "qamus/examples/phase4_closure_tranche.sample.jsonl",
@@ -684,6 +688,39 @@ except Exception:
     _vn08_blocked = False
 check("VN-08 sample preserves component-only evidence as non-applyable blocker rows", _vn08_blocked)
 
+try:
+    _vn09_inventory = [
+        json.loads(_l)
+        for _l in io.open(
+            os.path.join(_R, "qamus", "examples", "full_corpus_dogfood_vn09_inventory.sample.jsonl"),
+            encoding="utf-8",
+        )
+        if _l.strip()
+    ]
+    _vn09_component = [
+        _r for _r in _vn09_inventory
+        if _r.get("evidence_kind") == "component_only_evidence"
+    ]
+    _vn09_blocked = _vn09_component and all(
+        _r.get("may_apply_live") is False
+        and _r.get("recommended_next_action") == "blocker_queue_row"
+        and _r.get("required_next_gate") == "component_only_blocker"
+        and "component_only_candidate_no_whole_token_propagation" in (_r.get("detected_issue") or "")
+        for _r in _vn09_component
+    )
+    _vn09_has_whole_renderer_only = any(
+        _r.get("evidence_kind") == "whole_token_candidate"
+        and _r.get("recommended_next_action") == "repair_candidate"
+        and _r.get("required_next_gate") == "rich_renderer_metadata_backfill"
+        and _r.get("may_apply_live") is False
+        for _r in _vn09_inventory
+    )
+except Exception:
+    _vn09_blocked = False
+    _vn09_has_whole_renderer_only = False
+check("VN-09 sample preserves component-only evidence as non-applyable blocker rows", _vn09_blocked)
+check("VN-09 sample keeps renderer metadata backfill rows non-live-applyable", _vn09_has_whole_renderer_only)
+
 for _script, _args, _label in (
         ("build_live_shadow_graph.py", ["--self-test"], "Phase2 live shadow graph builder self-test"),
         ("validate_phase1_shadow_graph.py", ["--self-test"], "Phase2 shadow graph validator self-test"),
@@ -778,6 +815,9 @@ for _script, _args, _label in (
         ("validate_production_bug_lessons.py",
          [os.path.join(_R, "qamus", "examples", "dogfood_vn08_production_bug_lesson.sample.jsonl")],
          "VN-08 dogfood production bug lesson sample validates"),
+        ("validate_production_bug_lessons.py",
+         [os.path.join(_R, "qamus", "examples", "dogfood_vn09_production_bug_lesson.sample.jsonl")],
+         "VN-09 dogfood production bug lesson sample validates"),
         ("summarize_rich_wbw_roles.py", ["--self-test"], "Phase2 rich WBW role taxonomy self-test"),
         ("validate_rich_wbw_gate_cases.py", ["--self-test"], "Phase2.9 rich WBW gate-case validator self-test"),
         ("build_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack self-test"),

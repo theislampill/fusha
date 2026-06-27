@@ -186,3 +186,20 @@ family reuse. The learner should see why the token contributes "from me",
 Rule: component-level candidates may make review faster, but they are not
 learner-ready morphology. Whole-token certification needs the visible prefix,
 host, suffix, POS, and function pieces, plus the exact address.
+
+## N. VN-09 dogfood: finite verbs, suffixes, and lām-on-verb rows
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `يَشْتَهُونَ` | `to desire` | imperfect plural finite contribution by exact context |
+| `يَعْصِمُكَ` | `to protect against harm` | finite verb host + `كَ` object |
+| `يَجْتَبِيكَ` | long entry-family explanation | finite verb host + `كَ` object |
+| `وَفَدَيْنَٰهُ` | bare ransom-family infinitive | wāw + finite/perfect host + `هُ` object |
+| `لِتُضَيِّقُوا۟` | component-only ضيق evidence | lām function/mood + finite plural host |
+| `لِّيَطْمَئِنَّ` | bare tranquility infinitive | lām/governor plus form/mood review |
+| `أَقْوَٰتَهَا` | host-only sustenance | nominal host + `هَا` suffix |
+| `تَفَثَهُمْ` | host-only grooming | nominal host + `هُمْ` suffix |
+
+Rule: VN-09 rows may be string-populated and still not teach the learner.
+Certification needs finite form, suffixes, lām/function pieces, and
+component-vs-whole-token proof.
