@@ -1546,6 +1546,44 @@ check("VN-20 sample contains no live-applyable candidate rows", _vn20_no_auto_ap
 # Dogfood-derived Phase 4 requests should carry exact review hints without
 # turning the samples into applyable decisions.
 try:
+    _dogfood_phase4_tranche_rows = [
+        json.loads(_l)
+        for _l in io.open(
+            os.path.join(_R, "qamus", "examples", "phase4_closure_tranche_from_dogfood_review.sample.jsonl"),
+            encoding="utf-8",
+        )
+        if _l.strip()
+    ]
+except Exception:
+    _dogfood_phase4_tranche_rows = []
+_dogfood_phase4_tranche_by_surface = {
+    (_row.get("identity") or {}).get("surface_sample"): _row
+    for _row in _dogfood_phase4_tranche_rows
+}
+_dogfood_wama_tranche = _dogfood_phase4_tranche_by_surface.get("وَمَا", {})
+_dogfood_wama_tranche_policy = _dogfood_wama_tranche.get("apply_policy") or {}
+_dogfood_wama_tranche_candidates = _dogfood_wama_tranche.get("candidate_evidence") or {}
+check(
+    "dogfood-derived wama blocker is preserved in Phase4 dry-run tranche only",
+    bool(
+        _dogfood_wama_tranche
+        and _dogfood_wama_tranche.get("lane") == "quarantine_collision"
+        and _dogfood_wama_tranche.get("required_gate") == "human_review_required"
+        and (_dogfood_wama_tranche.get("identity") or {}).get("quran_locs") == ["quran:86:14:1"]
+        and (_dogfood_wama_tranche.get("identity") or {}).get("wbw_locs") == ["wbw:86:14:1"]
+        and _dogfood_wama_tranche.get("recommended_action") == "quarantine until candidate collision is resolved by exact-token nahw/sarf review"
+        and "human review resolves blocker before any edit" in (_dogfood_wama_tranche.get("required_evidence") or [])
+        and _dogfood_wama_tranche_candidates.get("whole_token_candidates") == ["qamus:p:ma_negative", "qamus:p:ma_relative"]
+        and _dogfood_wama_tranche_policy.get("apply_allowed") is False
+        and _dogfood_wama_tranche_policy.get("live_mutation_allowed") is False
+        and _dogfood_wama_tranche_policy.get("closure_claim_allowed") is False
+        and _dogfood_wama_tranche_policy.get("component_candidates_can_certify") is False
+        and _dogfood_wama_tranche_policy.get("raw_surface_identity_allowed") is False
+        and _dogfood_wama_tranche_policy.get("parse_key_primary_identity") is False
+    ),
+)
+
+try:
     _dogfood_two_vote = [
         json.loads(_l)
         for _l in io.open(
@@ -1560,6 +1598,7 @@ _dogfood_requests_by_surface = {
     (_row.get("identity") or {}).get("surface_sample"): _row
     for _row in _dogfood_two_vote
 }
+check("dogfood-derived wama blocker is not emitted as a two-vote request", "وَمَا" not in _dogfood_requests_by_surface)
 _dogfood_yasaluka = _dogfood_requests_by_surface.get("يَسْأَلُكَ", {})
 _dogfood_yasaluka_hint = _dogfood_yasaluka.get("gloss_style_hint") or {}
 _dogfood_yasaluka_policy = _dogfood_yasaluka.get("apply_policy") or {}
@@ -1720,6 +1759,7 @@ _dogfood_hover_plans_by_surface = {
     (_row.get("identity") or {}).get("surface_sample"): _row
     for _row in _dogfood_hover_plan_rows
 }
+check("dogfood-derived wama blocker is not emitted as a hover decision plan", "وَمَا" not in _dogfood_hover_plans_by_surface)
 _dogfood_hover_plan = _dogfood_hover_plans_by_surface.get("يَسْأَلُكَ", {})
 _dogfood_hover_plan_identity = _dogfood_hover_plan.get("identity") or {}
 _dogfood_hover_plan_preview = _dogfood_hover_plan.get("token_decision_preview") or {}

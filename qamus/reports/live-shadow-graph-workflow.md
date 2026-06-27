@@ -82,7 +82,10 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   `qamus/examples/phase4_two_vote_request_from_dogfood_review.sample.jsonl`, and
   `qamus/examples/phase4_two_vote_response_from_dogfood_review.sample.jsonl`: tiny review-only bridge samples proving
   real dogfood defects can move from the dogfood review pack into a Phase 4 tranche, into two-vote requests, and
-  through matching sarf/nahw response rows without becoming live-applicable. The current samples cover
+  through matching sarf/nahw response rows without becoming live-applicable. The dry-run tranche also preserves
+  `quran:86:14:1` / `wbw:86:14:1` (`وَمَا`) as a `quarantine_collision` blocker row; that row is deliberately
+  not emitted into two-vote, hover-decision-plan, draft-ledger, or owner-authorization artifacts until the exact
+  `ما` function collision is resolved. The current approving review samples cover
   `quran:33:63:1` / `wbw:33:63:1` (`يَسْأَلُكَ`, suffix/object-pronoun omission) and `quran:26:139:2` /
   `wbw:26:139:2` (`فَأَهْلَكْنَاهُمْ`, fāʾ + finite Form IV verb + attached object pronoun). The requests carry
   non-certifying review style hints (`ask you`, `so We destroyed them`) so approving votes converge on
