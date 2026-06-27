@@ -45,3 +45,23 @@ If the clitic function is syntactic rather than purely morphological, sarf
 records the segmentation and defers to nahw. Do not invent a color/parse-key
 explanation for a segment whose function is still unknown; use an exact blocker
 such as `particle_function_uncertified` or `preposition_role_uncertified`.
+
+## Dogfood finding: preposition and oath hosts need their governors
+
+The 2026-06-27 preposition/oath dogfood batch found host-only hovers on tokens
+whose visible governor is part of the written word.
+
+Sarf must preserve these pieces before nahw chooses the contextual function:
+
+- `بِذُنُوبِهِمْ`: `بِـ` + plural noun host + possessive suffix `هِمْ`.
+- `بِذُنُوبِكُم`: `بِـ` + plural noun host + possessive suffix `كُم`.
+- `بِرُوحِ` / `بِرُوحٍ`: `بِـ` + host noun; referent and relation stay gated.
+- `بِبَابِلَ`: `بِـ` + proper place host.
+- `وَطُورِ`: oath/coordinating `وَ` + governed host.
+- `وَهَٰذَا`: oath/coordinating `وَ` + demonstrative host.
+
+Do not let an article, preposition, oath particle, or suffix pronoun become
+component-only metadata while the public hover reads like the bare host. If the
+host is known but the governor/function is not, emit the segmentation and route
+to nahw with `preposition_role_uncertified`, `oath_function_uncertified`, or
+`pp_attachment_uncertified`.

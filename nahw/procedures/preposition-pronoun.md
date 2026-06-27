@@ -16,3 +16,28 @@
 **Forbidden:** glossing the preposition as a content word; reading إِلَيْنَا as ل‑ي‑ن; `norm()` certification.
 
 **Test:** `examples/function-word-decisions.jsonl` (بِهِ, إِلَيْنَا, عَلَيْهِمْ, فِيهِ); regression إِلَيْنَا≠لين.
+
+## Dogfood finding: bā' plus host plus suffix is not a host gloss
+
+The 2026-06-27 full-corpus dogfood pass exposed populated hovers where the
+visible bā' relation, governed host, and possessive suffix were not all
+learner-visible.
+
+Route these as preposition phrase rows, not host-only rows:
+
+- `بِذُنُوبِهِمْ`: bā' + plural host + `هِمْ`; a hover such as `Sin.` drops both
+  the causal/prepositional relation and "their".
+- `بِذُنُوبِكُم`: bā' + plural host + `كُم`; do not leave this as a generic
+  suffix pending when the row needs bā' + possessed host review.
+- `بِرُوحِ` / `بِرُوحٍ`: bā' + host noun; host-only "spirit" is incomplete until
+  the bā' relation and referent are certified.
+- `بِٱلْغَيْبِ`: bā' + article + host; a host gloss for "unseen" is not the PP
+  contribution unless the "in/by/with" relation is visible.
+- `بِبَابِلَ`: bā' + proper place name; host-only "Babylon" loses the locative
+  contribution.
+
+If the prepositional relation is clear enough for an authored token hover, the
+best public gloss must include it. If the relation or attachment is not
+certified, use an exact blocker such as `preposition_role_uncertified`,
+`pp_attachment_uncertified`, or `referent_unresolved`; do not mark the row
+rich-certified from the host noun alone.

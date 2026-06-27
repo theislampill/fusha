@@ -26,6 +26,10 @@ Use this with:
 | `يَٰٓأَيُّهَا` | vocative formula pieces | `يَا` call + `أَيُّ` bridge + `هَا` attention + following addressee | one-piece "you (who)" |
 | `وَخُلِقَ` | wāw function + passive verb | resumption/coordination plus passive perfect verb | phrase text with no role proof |
 | `بِٱلْمَعْرُوفِ` | bā' relation and PP attachment | preposition + definite nominal + attachment/review gate | host phrase with no bā' role |
+| `بِذُنُوبِهِمْ` | bā' relation + possessed host | causal/prepositional relation plus possessor; PP attachment if needed | host-only "sin/sins" |
+| `بِرُوحِ` | bā' relation + referent | relation and referent decide "with/by"; host-only is unsafe | bare "spirit" |
+| `وَطُورِ` | oath/coordinating wāw | qasam frame and governed host | host-only "Mount" |
+| `وَهَٰذَا` | oath/coordinating wāw + demonstrative | frame and demonstrative reference | bare "this" |
 | `تُخَالِطُوهُمْ` | attached object pronoun | verb-object relation; "with them" is not optional | treating the entry noun "partners" as the token hover |
 | `لَأَعْنَتَكُمْ` | lām/emphasis + Form IV verb + object `كم` | mood/force and "you" need review | bare hardship lemma |
 | `تُمْسِكُوهُنَّ` | verb + feminine plural object | object referent and command/context gate | "hold" without "them" |

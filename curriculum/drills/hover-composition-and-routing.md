@@ -34,6 +34,11 @@ hover wording.
 | `قُرْءَانًا` | host noun + tanwin fatḥ alif | `ـًا` is nunation, not pronoun `نا`; no clitic split |
 | `صَٰلِحًا` | common adjective/noun surface | concept flag may warn about Ṣāliḥ the messenger, but context decides |
 | `بِبَدْرٍ` | `بِـ` + proper place name | preserve both the preposition and named-place status; concept metadata is a routing flag |
+| `بِبَابِلَ` | `بِـ` + proper place name | preserve locative/contextual bā'; host-only "Babylon" fails |
+| `بِذُنُوبِهِمْ` | `بِـ` + plural host + possessive `هِمْ` | causal/prepositional relation and "their" both need learner-visible proof |
+| `بِرُوحِ` | `بِـ` + host noun | relation and referent stay gated; host-only "spirit" is not rich-certified |
+| `وَطُورِ` | oath/coordinating `وَ` + host noun | oath frame must be named before a family-wide hover can propagate |
+| `وَهَٰذَا` | oath/coordinating `وَ` + demonstrative | demonstrative text may be right while the particle function remains gated |
 | `إِلَيْنَا` | preposition stem + pronoun `ـنا` | "to us"; hamza-seat/root guard prevents false `ل ي ن` |
 | `وَٱلشَّجَرُ` | `وَ` + `ٱل` + host noun | fallback "and + the trees" is not enough; breakdown and segment roles must be present |
 | `يَسْـَٔلُكَ` | imperfect prefix + verb stem + object suffix `كَ` | "ask you" must expose object suffix; lemma-only "to ask" fails |

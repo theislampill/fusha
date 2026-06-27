@@ -37,9 +37,14 @@ attached piece's contribution. A hidden `pre` field is not enough for a learner.
 | `بِبَدْرٍ` | `بِـ` + place name `بدر` | bā' contributes locative/contextual relation | host-only "Badr" |
 | `لِلَّهِ` | `لِـ` + article + proper noun | lām contributes "for/to/belonging to" in context | host-only "Allah" |
 | `بِذُنُوبِهِمْ` | bā' + plural noun + possessive suffix | preposition and "their" both matter | "sins" with no bā' or pronoun |
+| `بِذُنُوبِكُم` | bā' + plural noun + possessive suffix | preposition and "your" both matter | suffix-pending with no bā' lane |
+| `بِرُوحِ` | bā' + host noun | bā' relation and referent review both matter | host-only "spirit" |
+| `بِبَابِلَ` | bā' + proper place name | bā' contributes locative/contextual relation | host-only "Babylon" |
 | `وَبِالنَّجْمِ` | wāw + bā' + article + noun | route wāw/bā' to nahw; preserve both if certified | bare "star" |
 | `وَالتِّينِ` | oath/conjunction wāw + article + noun | route wāw function; oath reading must preserve "by" | bare "figs" |
 | `وَالزَّيْتُونِ` | wāw + article + noun | preserve oath/coordination contribution in context | bare "olives" |
+| `وَطُورِ` | oath/conjunction wāw + host/place noun | oath reading must preserve "by Mount" | host-only "Mount" |
+| `وَهَٰذَا` | oath/conjunction wāw + demonstrative | frame plus demonstrative both matter | bare "this" with no oath/coordination |
 | `كَأَنَّهُمْ` | kāf-like particle cluster + pronoun | do not reduce to a root of the host letters | host-root guess |
 | `فَذَٰلِكُنَّ` | fā' + demonstrative + feminine plural suffix | fā' and addressed group both matter | bare "that" with no fā'/suffix |
 | `جَادَلُوكَ` | verb + plural subject + `كَ` object | verb clitic is visible: "they ... you" | infinitive "to argue" |
