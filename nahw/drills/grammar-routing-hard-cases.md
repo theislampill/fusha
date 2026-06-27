@@ -177,6 +177,23 @@ nahw. If the row needs object referent, PP/idiom attachment, body-part sense,
 or false-clitic rejection, keep it out of `rich_certified` until the exact
 address has a context decision.
 
+## 4h. VN-06 function-token and verb-entry candidate collisions
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `مِن` / `مِّنَ` | preposition + jar-majrūr attachment review | treating the row as evidence for verb `مَنَّ` |
+| `مَنْ` | relative/interrogative/conditional function by clause context | merging it with `مِن` or a verb root family |
+| `ٱلْمَنَّ` | definite lexical noun entry review | verb-entry or particle-family propagation |
+| `بَيْنَ` | locative/adverb/prepositional construction by context | broad verb-entry candidate from source key |
+| `حَوْلَهُۥ` | adverbial/nominal host plus `هُ` suffix | host-only "around" with no possessor/reference review |
+| `ثَمَرَةٍ` | noun role, case/state, and local referent | `to bear fruit` from the verb entry |
+| `مَرَضٌ` | noun/state and referent-sensitive sickness context | finite verb or omnibus spiritual-sickness prose |
+| `ٱشْتَرَوُا` | exact form and context-selected contronym sense | "sell, buy, or trade depending on form" |
+
+VN-06 proves that candidate enrichment is not certification. If the token
+arrives through a component-only or source-key join, nahw still decides the
+function, attachment, and context before the hover can be learner-safe.
+
 ## 5. QAC concept metadata is a routing aid only
 
 If concept metadata says a form may be a prophet, historic person, people,

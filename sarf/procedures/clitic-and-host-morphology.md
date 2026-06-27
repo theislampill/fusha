@@ -138,3 +138,24 @@ VN-05 added two clitic hygiene guards:
 Use `not_clitic_surface_prefix` for lexical initial letters and
 `component_only_candidate_no_whole_token_propagation` for rows where a
 component is real but the whole token is not yet certified.
+
+## Dogfood finding: VN-06 component candidate vs whole token
+
+VN-06 repeated the component-only guard at larger scale:
+
+- A `مِن` or `مَنْ` function-token row may be discovered while reviewing a
+  `مَنَّ` verb entry. The token is still a particle/function token, not a verb
+  host.
+- A row such as `حَوْلَهُۥ` contains a lexical/adverbial host plus `هُ`; the
+  suffix must be accounted for, but the row is not certified by the verb/root
+  family alone.
+- `بَيْنَ`, `مِن`, and `بِكُمُ` require nahw preposition/function review; a
+  first-letter or source-key match is not morphology proof.
+- `ٱلْمَنَّ`, `ثَمَرَةٍ`, and `مَرَضٌ` can be useful entry candidates, but they
+  are noun hosts and stay below whole-token certification until POS/state/case
+  are explicit.
+
+Record component candidates with provenance (`source=rich_wbw_segment`, role,
+segment text, token loc) when available, but never let them weaken the gate.
+Component candidates do not create `auto_safe`, source agreement, closure
+coverage, or hover coverage.

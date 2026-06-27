@@ -135,3 +135,21 @@ rule → recognition Q → production Q → answer. Generated/extendable from
 - Gate: root and entry family are not enough. Separate article, number, state,
   suffix, derivative type, and referent before moving a populated noun hover
   out of `populated_uncertified`.
+
+## <a name="vn06-verb-entry-nouns"></a>15. VN-06: lexical nouns inside verb-entry candidate families
+
+- Recognition: `ثَمَرَةٍ` carrying only fruit-family evidence from
+  `أَثْمَرَ` is a noun token. It needs noun case/state and context before rich
+  certification.
+- Recognition: `ثَمَرِهِۦ` also carries a possessor. A bare host or verb entry
+  does not teach the suffix.
+- Recognition: `مَرَضٌ` and `مَرَضًا` are sickness/state nouns. Do not use the
+  finite `مَرِضْتُ` verb lane as their hover proof.
+- Recognition: `ٱلْمَنَّ` is a definite lexical noun ("manna"), not the verb
+  `مَنَّ` and not the preposition `مِن`.
+- Recognition: `مُصَلًّى` is a place/nominal derivative; a prayer verb
+  infinitive is not its token contribution.
+- Recognition: `غَضَبٍ`, `خِزْيٌ`, `ذُو`, and `حَوْلَهُۥ` need exact nominal,
+  possessed, or adverbial role review when the entry family is broad.
+- Gate: a row can gain more useful component candidates while staying
+  `two_vote_required`. Component evidence is not a repair-ready hover.

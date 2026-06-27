@@ -60,3 +60,21 @@ For high-frequency particle entries, distinguish "string looks acceptable" from
 If the current row only proves a component candidate (`وَ`, `فَ`, `بِـ`, `لِـ`,
 `ال`) inside a larger token, keep it out of whole-token entry resolution. It may
 feed renderer segmentation, but it must not make the token propagation-safe.
+
+## VN-06 dogfood: function tokens misfiled through verb-entry candidates
+
+The VN-06 verb/noun tranche found many `م ن ن` entry-family rows where the
+surface was actually `مِن`, `مِّن`, `مِنَ`, `مَنْ`, or `ٱلْمَنَّ`.
+
+Route these by function and strict surface, not by the verb-entry source key:
+
+- `مِن` / `مِّن` / `مِنَ` -> preposition and jar-majrūr attachment review.
+- `مَنْ` -> relative/interrogative/conditional review by context.
+- `ٱلْمَنَّ` -> lexical noun/entry review, not the `مَنَّ` verb.
+- Any row whose current English gloss contains a slash or family list
+  (`who / whoever`, `sell, buy, or trade depending on form`) remains
+  `two_vote_required` until context selects the function or form.
+
+This is not a live-apply instruction. It is a dogfood gate: if a particle or
+function token enters a verb/noun tranche through component evidence, keep the
+row out of `rich_certified` and out of parse-family propagation.

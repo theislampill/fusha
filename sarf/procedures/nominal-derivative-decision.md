@@ -93,3 +93,26 @@ If the row is string-correct but lacks number/state/case/suffix or
 referent/context proof, route it to `needs_renderer_segments` or
 `needs_nahw_review`. A root-family entry cannot certify a noun token merely
 because the English word is plausible.
+
+## Dogfood finding: VN-06 lexical nouns inside verb-entry families
+
+VN-06 found nominal rows that were easy to read in English but unsafe as
+verb-entry hovers:
+
+- `ثَمَرَةٍ` and `ثَمَرِهِۦ` are fruit nouns. They must not be certified from
+  `أَثْمَرَ` ("to bear fruit") without noun number/state/case and any
+  possessive suffix.
+- `مَرَضٌ` / `مَرَضًا` are sickness/state nouns. They can be context-sensitive
+  ("illness", "spiritual sickness", "hypocrisy") and are not the finite verb
+  `مَرِضْتُ`.
+- `ٱلْمَنَّ` is a lexical noun ("manna") and not the verb `مَنَّ`; the article
+  and host noun shape are part of the decision.
+- `مُصَلًّى` is a place/nominal derivative; do not turn it into a finite
+  prayer verb.
+- `غَضَبٍ`, `خِزْيٌ`, `ذُو`, and `حَوْلَهُۥ` need nominal/adverbial or
+  possessed-noun review before the hover can teach a learner.
+
+When a live row is populated but the evidence path is "verb entry -> nominal
+surface", emit `verb_entry_nominal_derivative_pos_leak` or
+`nominal_pos_may_leak_verbal_infinitive`. This is a skill defect unless the
+row is explicitly documented as renderer-only or Qamus-data-only.

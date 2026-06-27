@@ -139,3 +139,20 @@ infinitive or component-only root match.
 Rule: entry class and root family are routing hints, not token identity. A verb
 entry can contain nominal derivatives, and a finite verb can contain suffixes
 and passive voice that the entry infinitive does not teach.
+
+## K. VN-06 dogfood: verb entries can contain non-verbs
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `مِن` / `مِّنَ` | treating `from` rows as `مَنَّ` verb-family evidence | strict particle surface + nahw preposition review |
+| `مَنْ` | one shared lane with `مِن` or `مَنَّ` | relative/interrogative/conditional context |
+| `ٱلْمَنَّ` | verb-entry proof from `مَنَّ` | article + lexical noun host review |
+| `ثَمَرَةٍ` | `to bear fruit` verb hover | noun/case/state review |
+| `مَرَضٌ` | finite `to be sick` wording | sickness/state noun review |
+| `ٱشْتَرَوُا` | `to sell, buy, or trade depending on form` | exact form/sense/transitivity review |
+| `تَلْبِسُوا` | broad dress/confuse family prose | finite verb form, mood, and object/context review |
+
+Rule: a rich component or source-key candidate can improve review routing, but
+it cannot certify the written token. If the row is a particle, lexical noun, or
+nominal derivative inside a verb-entry family, route by the token's POS and
+nahw context before any hover trust.

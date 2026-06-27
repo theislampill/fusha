@@ -176,3 +176,32 @@ For VN-05 rows, a populated English string moves only to
 the exact token has form/voice/aspect/person/number, visible suffixes, and any
 governing particle recorded. Component-only host evidence remains below the
 whole token and cannot create a parse-family hover.
+
+## Dogfood finding: VN-06 verb-entry candidate leakage
+
+The VN-06 tranche exposed a different failure mode: a verb entry can collect
+component or family evidence that is useful for search, while the exact token is
+not a verb at all.
+
+- `مِن`, `مِّن`, `مِنَ`, `مَنْ`, and `ٱلْمَنَّ` appeared in the `م ن ن`
+  verb-entry tranche. These rows must not inherit a `مَنَّ` verb lane: they are
+  prepositions, relative/interrogative/conditional particles, or a lexical noun
+  by strict surface and context.
+- `ثَمَرَةٍ`, `ثَمَرِهِۦ`, and related fruit rows appeared in a verb-entry
+  family. They are nominal hosts with number/state/case and sometimes suffix
+  morphology, not finite `أَثْمَرَ` hovers.
+- `مَرَضٌ`, `مَرَضًا`, and adjectival/health rows appeared beside finite
+  `مَرِضْتُ`. Treat the noun/state token separately from the verb.
+- `غَضَبٍ`, `خِزْيٌ`, `حَوْلَهُۥ`, `بَيْنَ`, and `مُصَلًّى` show the same
+  problem: nominal, adverbial, or place/derived rows can live near verb roots
+  but still need their own POS and syntax review.
+- `ٱشْتَرَوُا`, `يَوَدُّ`, `ٱسْتَسْقَىٰ`, and `تَلْبِسُوا` are finite verbs
+  whose entry glosses contain slash/omnibus prose. Pick the exact form,
+  transitivity, voice, and object relation; do not ship "sell/buy/trade
+  depending on form" or a bare infinitive as a token hover.
+
+For VN-06, a Qamus entry candidate discovered from a rich component or source
+key is not whole-token proof. Before any propagation, classify the token as
+function particle, finite verb, lexical noun, nominal derivative, or
+component-only evidence. Anything else remains `two_vote_required`,
+`needs_sarf_review`, or `needs_nahw_review`.
