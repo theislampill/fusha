@@ -638,6 +638,7 @@ for _art in (
         "qamus/examples/phase4_two_vote_request.sample.jsonl",
         "qamus/examples/phase4_two_vote_request_from_dogfood_review.sample.jsonl",
         "qamus/examples/phase4_two_vote_response.sample.jsonl",
+        "qamus/examples/phase4_two_vote_response_from_dogfood_review.sample.jsonl",
         "qamus/examples/phase4_gloss_adjudication_request.sample.jsonl",
         "qamus/examples/phase4_gloss_adjudication_response.sample.jsonl",
         "qamus/examples/phase4_hover_decision_plan.sample.jsonl",
@@ -1563,6 +1564,85 @@ check(
     ),
 )
 
+_dogfood_two_vote_request_path = os.path.join(
+    _R, "qamus", "examples", "phase4_two_vote_request_from_dogfood_review.sample.jsonl"
+)
+_dogfood_two_vote_response_path = os.path.join(
+    _R, "qamus", "examples", "phase4_two_vote_response_from_dogfood_review.sample.jsonl"
+)
+try:
+    _dogfood_two_vote_responses = [
+        json.loads(_l)
+        for _l in io.open(_dogfood_two_vote_response_path, encoding="utf-8")
+        if _l.strip()
+    ]
+except Exception:
+    _dogfood_two_vote_responses = []
+_dogfood_response_lenses = {_r.get("lens") for _r in _dogfood_two_vote_responses}
+check(
+    "dogfood-derived yasaluka two-vote responses keep matching ask-you reason",
+    bool(
+        len(_dogfood_two_vote_responses) == 2
+        and _dogfood_response_lenses == {"sarf-primary", "nahw-primary"}
+        and all(_r.get("decision") == "approve" for _r in _dogfood_two_vote_responses)
+        and all(_r.get("concise_authored_gloss") == "ask you" for _r in _dogfood_two_vote_responses)
+        and all(_r.get("reason_agreement_key") == "verb-object-suffix-explicit-subject" for _r in _dogfood_two_vote_responses)
+        and all(_r.get("safe_scope_after_vote") == "token_only" for _r in _dogfood_two_vote_responses)
+        and all(_r.get("component_candidates_used_as_certification") is False for _r in _dogfood_two_vote_responses)
+        and all((_r.get("identity") or {}).get("surface_sample") == "يَسْأَلُكَ" for _r in _dogfood_two_vote_responses)
+    ),
+)
+
+try:
+    with tempfile.TemporaryDirectory(prefix="dogfood-two-vote-reconcile-") as _td:
+        _certified_path = os.path.join(_td, "certified.jsonl")
+        _unresolved_path = os.path.join(_td, "unresolved.jsonl")
+        _validate_r = run_text([
+            sys.executable,
+            os.path.join(_R, "tools", "validate_phase4_two_vote_responses.py"),
+            _dogfood_two_vote_response_path,
+            "--requests",
+            _dogfood_two_vote_request_path,
+        ])
+        _reconcile_r = run_text([
+            sys.executable,
+            os.path.join(_R, "tools", "reconcile_phase4_two_vote_responses.py"),
+            "--requests",
+            _dogfood_two_vote_request_path,
+            "--responses",
+            _dogfood_two_vote_response_path,
+            "--certified-out",
+            _certified_path,
+            "--unresolved-out",
+            _unresolved_path,
+        ])
+        _certified_rows = [
+            json.loads(_l)
+            for _l in io.open(_certified_path, encoding="utf-8")
+            if _l.strip()
+        ]
+        _unresolved_rows = [
+            json.loads(_l)
+            for _l in io.open(_unresolved_path, encoding="utf-8")
+            if _l.strip()
+        ]
+        _dogfood_reconcile_ok = (
+            _validate_r.returncode == 0
+            and _reconcile_r.returncode == 0
+            and len(_certified_rows) == 1
+            and len(_unresolved_rows) == 0
+            and _certified_rows[0].get("status") == "certified_not_applied"
+            and (_certified_rows[0].get("public_hover") or {}).get("gloss") == "ask you"
+            and _certified_rows[0].get("safe_scope_after_vote") == "token_only"
+            and _certified_rows[0].get("component_candidates_used_as_certification") is False
+            and (_certified_rows[0].get("apply_policy") or {}).get("apply_allowed") is False
+            and (_certified_rows[0].get("apply_policy") or {}).get("live_mutation_allowed") is False
+            and (_certified_rows[0].get("apply_policy") or {}).get("closure_claim_allowed") is False
+        )
+except Exception:
+    _dogfood_reconcile_ok = False
+check("dogfood-derived yasaluka two-vote responses reconcile only to certified_not_applied", _dogfood_reconcile_ok)
+
 try:
     _rich_sample_dir = os.path.join(_R, "qamus", "examples")
     _rich_exact_ok = True
@@ -1829,6 +1909,11 @@ for _script, _args, _label in (
         ("validate_phase4_two_vote_responses.py",
          [os.path.join(_R, "qamus", "examples", "phase4_two_vote_response.sample.jsonl")],
          "Phase4 exact-addressed two-vote response sample validates"),
+        ("validate_phase4_two_vote_responses.py",
+         [os.path.join(_R, "qamus", "examples", "phase4_two_vote_response_from_dogfood_review.sample.jsonl"),
+          "--requests",
+          os.path.join(_R, "qamus", "examples", "phase4_two_vote_request_from_dogfood_review.sample.jsonl")],
+         "Dogfood-derived Phase4 exact-addressed two-vote response sample validates"),
         ("reconcile_phase4_two_vote_responses.py", ["--self-test"],
          "Phase4 exact-addressed two-vote response reconciler self-test"),
         ("build_phase4_gloss_adjudication_requests.py", ["--self-test"],

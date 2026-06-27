@@ -78,13 +78,16 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   candidates separate, and state that component candidates, raw surface, norm-only recall, and parse keys alone cannot
   certify a hover. Each packet also carries a deterministic `agreement_key_hint`; this is a review coordination key
   only, not propagation evidence and not a weakening of the `two_vote_required` gate.
-- `qamus/examples/phase4_closure_tranche_from_dogfood_review.sample.jsonl` and
-  `qamus/examples/phase4_two_vote_request_from_dogfood_review.sample.jsonl`: tiny review-only bridge samples proving a
+- `qamus/examples/phase4_closure_tranche_from_dogfood_review.sample.jsonl`,
+  `qamus/examples/phase4_two_vote_request_from_dogfood_review.sample.jsonl`, and
+  `qamus/examples/phase4_two_vote_response_from_dogfood_review.sample.jsonl`: tiny review-only bridge samples proving a
   real dogfood defect (`quran:33:63:1` / `wbw:33:63:1`, suffix/object-pronoun omission in `يَسْأَلُكَ`) can move from
-  the dogfood review pack into a Phase 4 tranche and then into a two-vote request without becoming live-applicable.
-  The request carries `ask you` as a non-certifying review style hint so approving votes converge on suffix-preserving
-  wording, while keeping the whole-token entry candidate separate from the component-only `كَ` candidate and preserving
-  `apply_allowed=false`, `live_mutation_allowed=false`, and `closure_claim_allowed=false`.
+  the dogfood review pack into a Phase 4 tranche, into a two-vote request, and through matching sarf/nahw response
+  rows without becoming live-applicable. The request carries `ask you` as a non-certifying review style hint so
+  approving votes converge on suffix-preserving wording, while keeping the whole-token entry candidate separate from
+  the component-only `كَ` candidate and preserving `apply_allowed=false`, `live_mutation_allowed=false`, and
+  `closure_claim_allowed=false`. Reconciliation of the dogfood response fixture yields only
+  `status=certified_not_applied`; it is not a live decision ledger row and does not authorize hover application.
 - `tools/validate_phase4_two_vote_requests.py`: validates Phase 4 two-vote request packets. It rejects non-exact
   identities, public-boundary leakage, weakened gates, non-two-vote lanes, missing component provenance, component
   candidates marked certifying, missing `agreement_key_hint`, live/apply/coverage claims, and vacuous zero-row request
