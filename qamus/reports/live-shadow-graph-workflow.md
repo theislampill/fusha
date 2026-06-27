@@ -442,10 +442,12 @@ Durable tooling:
 - `tools/build_full_corpus_hover_dogfood_audit.py`
 - `tools/validate_full_corpus_hover_dogfood_audit.py`
 - `tools/summarize_full_corpus_dogfood_queue.py`
+- `tools/build_full_corpus_dogfood_review_pack.py`
 - `tools/build_dogfood_production_bug_lessons.py`
 - `qamus/schemas/full-corpus-hover-dogfood-audit.schema.json`
 - `qamus/examples/full_corpus_hover_dogfood_audit.sample.jsonl`
 - `qamus/examples/full_corpus_dogfood_queue_summary.sample.json`
+- `qamus/examples/full_corpus_dogfood_review_pack.sample.jsonl`
 - `qamus/examples/dogfood_production_bug_lesson.sample.jsonl`
 
 Row classes:
@@ -498,6 +500,14 @@ queues (`known_defects`, `token_only_overrides`, `pending_blockers`,
 addresses, parse ids, gates, detectors, and blocker text. It is a
 prioritization artifact only: no live apply, no WBW rebuild, no coverage claim,
 and no parse-key propagation approval.
+
+`tools/build_full_corpus_dogfood_review_pack.py` turns prioritized dogfood rows
+into exact-addressed reviewer/subagent packets. Each row begins from
+`quran:S:A:W` and `wbw:S:A:W`, carries the current visible hover, detectors,
+routes, parse gate/family class, entry/sense linkage, sarf/nahw evidence,
+blocker text, required evidence, and a read-only apply policy. It links an
+available dogfood-derived production-bug lesson by exact `wbw:S:A:W` address,
+but does not invent corrected hover wording and does not weaken gates.
 
 This lane is the real dogfooding pass for populated hovers. A live row being present, repo/live parity, zero public
 crawl mismatch, or a Phase 4 narrow apply packet is not sufficient evidence of sarf/nahw correctness or learner-ready
