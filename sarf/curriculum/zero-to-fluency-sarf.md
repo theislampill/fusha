@@ -14,6 +14,9 @@ the parse-key/color contract: visible pieces, compact `parse_key.key`, and scrub
 classes. See
 [`../drills/clitic-and-host-morphology.md`](../drills/clitic-and-host-morphology.md) and
 [`../../curriculum/qamus-hover-parse-key-and-color.md`](../../curriculum/qamus-hover-parse-key-and-color.md).
+For a dogfood-derived map of repeated morphology failures and where to remediate them, use
+[`dogfood-sarf-map.md`](dogfood-sarf-map.md) with
+[`../drills/dogfood-sarf-remediation.md`](../drills/dogfood-sarf-remediation.md).
 
 > One discipline runs through every stage: **`norm()` proposes, it never certifies.** It drops
 > the hamza seat and all harakāt, so it can widen recall but can never decide a root, a form, or

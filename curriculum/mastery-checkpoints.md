@@ -16,10 +16,18 @@ to do before you climb. This file does two jobs:
 ## How to use a checkpoint
 
 - Attempt the checkpoint **cold** — no hover, no notes.
+- Grade it with [`assessment/grading-rubric.md`](assessment/grading-rubric.md), an answer key,
+  or a structured rubric. Objective items should use
+  [`assessment/level-checkpoints.sample.jsonl`](assessment/level-checkpoints.sample.jsonl) as the fixture pattern.
+- Record the attempt in [`progress/learner-progress.template.md`](progress/learner-progress.template.md).
 - If you pass the bar, climb.
 - If you miss, find your error's **shape** in the remediation table below, open the procedure it
-  points to, re-drill that *one* thing, and re-attempt. Do not re-take the whole level; fix the
-  specific machinery that slipped.
+  points to, log it in [`progress/missed-error-log.template.md`](progress/missed-error-log.template.md),
+  re-drill that *one* thing, and re-attempt. Do not re-take the whole level; fix the specific
+  machinery that slipped.
+- For iʿrāb, case, mood, particle function, PP attachment, exception, vocative, oath, pronoun
+  referent, token-only override, or component-only evidence, require two independent checks or an
+  answer-key-backed rubric. English agreement without grammar agreement does not clear the item.
 
 ---
 

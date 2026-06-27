@@ -17,6 +17,29 @@ Each level is given as:
 The arc: **Levels 1–8 build everything needed to read one short āyah.** Levels 9–12 widen that
 reading from a single āyah to a root family, to classical prose, to the open corpus.
 
+## Scope And Clearance
+
+This is a **reading-focused** fuṣḥā roadmap. It trains script, sarf, nahw, Qurʾānic token-level
+reasoning, hover-gloss discipline, and parse-key/rich-hover awareness. It is not a complete
+speaking course, listening course, dialect course, or full Modern Standard Arabic news/conversation
+curriculum, though the grammar backbone transfers to those studies.
+
+Level advancement is explicit:
+
+1. Attempt the checkpoint cold.
+2. Grade with [`assessment/grading-rubric.md`](assessment/grading-rubric.md), an answer key, or a
+   structured rubric.
+3. Record level state in [`progress/learner-progress.template.md`](progress/learner-progress.template.md).
+4. Record misses in [`progress/missed-error-log.template.md`](progress/missed-error-log.template.md).
+5. Assign remediation from [`mastery-checkpoints.md`](mastery-checkpoints.md) or
+   [`drills/dogfood-error-remediation-index.md`](drills/dogfood-error-remediation-index.md).
+6. For Levels 7+ and every iʿrāb, case, mood, particle-function, PP-attachment, exception,
+   vocative, oath, pronoun-referent, token-only, or component-only item, require two independent
+   checks or an answer-key-backed rubric. If checks agree on English but disagree on grammar,
+   do not clear the level.
+
+Use [`tutor-session-protocol.md`](tutor-session-protocol.md) when a tutor or agent runs the session.
+
 ---
 
 ## Level 1 — Script & sounds

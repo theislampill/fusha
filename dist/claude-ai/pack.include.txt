@@ -23,6 +23,13 @@ curriculum/placement-test.md
 curriculum/mastery-checkpoints.md
 curriculum/qamus-driven-fluency-engine.md
 curriculum/tutor-runtime-routing.md
+curriculum/tutor-session-protocol.md
+curriculum/assessment/grading-rubric.md
+curriculum/assessment/answer-key.schema.md
+curriculum/assessment/level-checkpoints.sample.jsonl
+curriculum/progress/learner-progress.template.md
+curriculum/progress/missed-error-log.template.md
+curriculum/drills/dogfood-error-remediation-index.md
 qamus/reports/fusha-production-bridge-status.md
 qamus/reports/hover-gloss-terminal-scoreboard.md
 qamus/reports/qamus-2092-terminal-scoreboard.md

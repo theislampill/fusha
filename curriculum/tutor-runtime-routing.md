@@ -3,6 +3,10 @@
 A thin routing layer (NOT a separate skill): map a learner's situation to the exact existing procedure,
 roadmap section, or drill. The engine is already `sarf` + `nahw` + `curriculum`; this is the dispatcher.
 
+For an actual tutoring session, start with
+[`tutor-session-protocol.md`](tutor-session-protocol.md). It requires a progress file, missed-error log,
+roadmap, assessment rubric, and explicit sarf/nahw procedure loading before a level is marked cleared.
+
 ## Learner mistake → sarf/nahw procedure
 
 | learner error | route to |
@@ -37,10 +41,14 @@ roadmap section, or drill. The engine is already `sarf` + `nahw` + `curriculum`;
 | wants practice from real Qurʾān | `curriculum/qamus-driven-fluency-engine.md` (Qamus examples → drills) |
 | keeps losing attached pieces inside one written token | `curriculum/drills/hover-composition-and-routing.md` |
 | checking mastery before advancing | `curriculum/mastery-checkpoints.md` |
+| running a live tutoring session | `curriculum/tutor-session-protocol.md` + `curriculum/assessment/grading-rubric.md` |
+| tracking learner state | `curriculum/progress/learner-progress.template.md` |
+| tracking repeated misses | `curriculum/progress/missed-error-log.template.md` |
 | right answer but shaky reasoning | the GrammarProblems gate (`nahw/SKILL.md` §grammar-safety) — a correct answer with wrong iʿrāb is unsafe |
 
 ## Discipline
 
 - Blank beats wrong: if the learner (or you) cannot certify the root + POS + sense, mark it **pending**
   with the exact blocker, then route to the procedure that resolves that blocker.
-- Production/speaking practice and answer-keys live in the curriculum drills; this file only routes to them.
+- Production/speaking practice is outside this reading-first curriculum scope. Answer keys, grading rubrics,
+  and state templates live under `curriculum/assessment/` and `curriculum/progress/`; this file only routes to them.

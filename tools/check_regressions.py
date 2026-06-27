@@ -150,6 +150,11 @@ for art in ("qamus/schemas/language-state.schema.json", "qamus/schemas/token-sta
             "tools/grade_grammar_reasoning.py", "nahw/evals/grammar-problems-derived-eval.jsonl",
             "sarf/rules/surface-state-transition-rules.json", "nahw/rules/state-transition-rules.json",
             "curriculum/README.md", "curriculum/zero-to-fluency-roadmap.md",
+            "curriculum/assessment/grading-rubric.md", "curriculum/assessment/answer-key.schema.md",
+            "curriculum/assessment/level-checkpoints.sample.jsonl",
+            "curriculum/progress/learner-progress.template.md",
+            "curriculum/progress/missed-error-log.template.md",
+            "curriculum/tutor-session-protocol.md",
             "sarf/curriculum/zero-to-fluency-sarf.md", "nahw/curriculum/zero-to-fluency-nahw.md"):
     check("architecture artifact exists: %s" % art, os.path.exists(os.path.join(ROOT, art)))
 
@@ -665,6 +670,7 @@ for _art in (
         "tools/validate_live_shadow_run_manifest.py",
         "tools/validate_public_private_boundary.py",
         "tools/validate_parse_key_contract.py",
+        "tools/validate_curriculum_assessment.py",
         "tools/validate_decision_linkage.py",
         "tools/validate_hover_edit_intent.py",
         "tools/validate_repair_impact_preview.py",
@@ -1838,6 +1844,11 @@ for _script, _args, _label in (
         ("validate_parse_key_contract.py",
          [os.path.join(_R, "qamus", "examples", "parse_key.sample.jsonl")],
          "Phase2 parse-key sample validates"),
+        ("validate_curriculum_assessment.py", ["--self-test"],
+         "curriculum assessment validator self-test"),
+        ("validate_curriculum_assessment.py",
+         [os.path.join(_R, "curriculum", "assessment", "level-checkpoints.sample.jsonl")],
+         "curriculum assessment checkpoint sample validates"),
         ("validate_detector_maturity.py", ["--self-test"], "Phase2 detector maturity validator self-test"),
         ("validate_detector_maturity.py",
          [os.path.join(_R, "qamus", "examples", "detector_maturity.sample.json")],

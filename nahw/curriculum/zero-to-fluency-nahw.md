@@ -29,6 +29,9 @@ side of the parse-key/color contract: a compact `parse_key.key` and scrubbed dis
 whose colors follow function, not surface shape. See
 [`../../curriculum/qamus-hover-parse-key-and-color.md`](../../curriculum/qamus-hover-parse-key-and-color.md)
 and [`../../curriculum/drills/parse-key-and-color-layer.md`](../../curriculum/drills/parse-key-and-color-layer.md).
+For a dogfood-derived map of repeated function/syntax failures and where to remediate them, use
+[`dogfood-nahw-map.md`](dogfood-nahw-map.md) with
+[`../drills/dogfood-nahw-remediation.md`](../drills/dogfood-nahw-remediation.md).
 
 ---
 

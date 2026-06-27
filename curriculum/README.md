@@ -29,6 +29,10 @@ against words the learner will actually meet, and proves the gain by having the 
 slightly harder passage than the level before. The end state is not "knows the grammar" — it
 is **reads fuṣḥā independently, and reaches for the right tool when stuck.**
 
+Fluency here is **reading-focused**: Qurʾānic Arabic and classical/register-adjacent fuṣḥā reading,
+with sarf + nahw reasoning for unseen texts. The grammar backbone transfers to broader Arabic study,
+but this repo is not a complete speaking, listening, dialect, or general MSA news/conversation course.
+
 ## The 12-level ladder
 
 The full ladder, with goals, the exact ṣarf/nahw skills each level uses, the Qamus entries it
@@ -131,12 +135,17 @@ curriculum/
   hadith-reading-path.md         ← Nawawī40 prose path, with Ṣaḥīḥayn kept owner-gated
   placement-test.md              ← self-scoring test → your starting level
   mastery-checkpoints.md         ← per-level checkpoints + error → remediation procedure map
+  assessment/                    ← answer-key schema, grading rubric, sample checkpoint rows
+  progress/                      ← learner progress + missed-error log templates (templates only)
+  tutor-session-protocol.md      ← tutoring startup and grading loop
   repo-state-and-mission-audit-20260625.md ← current GitHub/repo-state audit for curriculum updates
   qamus-hover-parse-key-and-color.md ← rich-hover parse-key + color-role guidance
   vn-dogfood-to-curriculum-synthesis-20260627.md ← verb/noun dogfood defects mapped to learner units
+  reports/dogfood-curriculum-crosswalk-20260627.md ← dogfood finding → curriculum/drill crosswalk
   drills/
     hover-composition-and-routing.md ← written token → pieces → sarf/nahw route → safe hover
     parse-key-and-color-layer.md     ← pieces → parse_key + display palette rows
+    dogfood-error-remediation-index.md ← repeated hover failure → remediation route
 ```
 
 A learner's path through these files: take [`placement-test.md`](placement-test.md) to find a
@@ -145,6 +154,9 @@ time, use [`qamus-learning-path.md`](qamus-learning-path.md) for the daily readi
 [`drills/hover-composition-and-routing.md`](drills/hover-composition-and-routing.md) whenever a
 written token hides multiple pieces, and clear each rung against
 [`mastery-checkpoints.md`](mastery-checkpoints.md) before moving up.
+Use [`assessment/grading-rubric.md`](assessment/grading-rubric.md) and
+[`progress/learner-progress.template.md`](progress/learner-progress.template.md) to make that
+clearance stateful rather than informal.
 When working on rich hovers, pair
 [`drills/hover-composition-and-routing.md`](drills/hover-composition-and-routing.md) with
 [`drills/parse-key-and-color-layer.md`](drills/parse-key-and-color-layer.md): first account for
@@ -153,6 +165,24 @@ After a dogfood tranche, use
 [`vn-dogfood-to-curriculum-synthesis-20260627.md`](vn-dogfood-to-curriculum-synthesis-20260627.md)
 to decide whether the finding belongs in a sarf procedure, a nahw procedure, a drill, a
 regression fixture, a renderer requirement, or a documented no-op.
+
+## Assessment, Progress, And Tutoring Runtime
+
+The ladder is not an honor system. A learner clears a level only after attempting the checkpoint
+cold and grading it with an answer key, rubric, or procedure-linked two-check rule:
+
+- [`assessment/grading-rubric.md`](assessment/grading-rubric.md) defines level-clearance rules.
+- [`assessment/answer-key.schema.md`](assessment/answer-key.schema.md) defines the JSONL checkpoint format.
+- [`assessment/level-checkpoints.sample.jsonl`](assessment/level-checkpoints.sample.jsonl) gives concrete,
+  dogfood-derived sample checkpoint rows.
+- [`progress/learner-progress.template.md`](progress/learner-progress.template.md) tracks level state.
+- [`progress/missed-error-log.template.md`](progress/missed-error-log.template.md) tracks recurring misses.
+- [`tutor-session-protocol.md`](tutor-session-protocol.md) tells a tutor/agent how to load the repo, grade,
+  remediate, and avoid confidence-only hard grammar grading.
+
+For iʿrāb, case, mood, particle function, PP attachment, exception, vocative, oath, pronoun referent, token-only
+override, and component-only evidence, the tutor requires two independent checks or an answer-key-backed rubric.
+If two checks agree on English but disagree on the grammar reason, the level is not cleared.
 
 ## Hard rules honored here
 

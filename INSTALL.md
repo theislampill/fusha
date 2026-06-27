@@ -14,7 +14,9 @@ python scripts/install_claude_skills.py --target /custom/skills/dir
 python scripts/verify_skill_install.py --dir ~/.claude/skills/fusha-sarf   # verify an installed skill
 ```
 
-After install, the skills appear as `fusha-sarf` and `fusha-nahw` (procedures, rules, evals, curriculum included).
+After install, the skills appear as `fusha-sarf` and `fusha-nahw` (procedures, rules, evals, and each skill's own
+curriculum/drills included). The full zero-to-fluency tutoring runtime also uses the repo-level `curriculum/`
+assessment/progress files; use the repo checkout or the claude.ai project pack when running a learner session.
 
 ## Use with Codex
 Codex reads skills from `~/.codex/skills/<name>/SKILL.md` and instructions from `AGENTS.md`:
@@ -32,7 +34,7 @@ Read `sarf/SKILL.md` and `nahw/SKILL.md`; open the procedure named by the gate; 
 
 ## What you can do with it
 - **Learn Fusha (ajami → fluency):** `curriculum/` (12-level roadmap, qamus/quran/hadith paths, drills,
-  placement test) + `curriculum/qamus-driven-fluency-engine.md`.
+  placement test, assessment rubric, progress templates) + `curriculum/qamus-driven-fluency-engine.md`.
 - **Author Qamus entries from a corpus:** `tools/corpus_to_qamus_candidates.py` (Nawawī40-proven, 0 live writes)
   + `sarf/procedures/qamus-entry-authoring.md` + `nahw/procedures/qamus-entry-authoring.md`.
 - **Author hover glosses:** `sarf/procedures/hover-application.md`, the four-gate pipeline, the token-addressed +
