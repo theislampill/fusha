@@ -243,3 +243,19 @@ For every particle: (1) strip proclitics, (2) read the **content** letter's hara
 shadda with the `tools.normalize_ar` helpers, (3) check the syntactic frame, (4) emit the
 resolved gloss **or** the most specific `pending:` reason. A wrong particle gloss poisons the
 whole āyah's parse — **PENDING beats a guess.**
+
+## Dogfood drill: populated is not certified
+
+Classify each live-style hover as `rich_certified`, `needs_nahw_review`,
+`needs_renderer_segments`, or `pending/blocker`:
+
+| surface | current hover | required proof |
+|---|---|---|
+| `وَمَا` | and not | classify `ما` as negative/relative/interrogative/etc.; preserve wāw |
+| `لَا` | did not or do not | select one function from the governed noun/verb frame |
+| `ثُمَّ` | then, later | attach sequence and clause scope |
+| `هَلْ` | has/have/is/are...? | certify yes/no question frame |
+| `إِلَّا` | except | record exception polarity/type/case behavior |
+
+Rows that are string-correct but lack this proof are `populated_uncertified`,
+not complete dogfooding.

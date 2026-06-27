@@ -9,6 +9,13 @@ Exceptions:
 - classify type: connected, disconnected, or empty/main noun omitted;
 - decide whether case follows accusative exception rules or apposition.
 
+Dogfood note: `إِلَّا` rows with a readable "except" hover are still not
+rich-certified unless the exception frame is recorded. The controller row must
+name the polarity, whether the main noun is mentioned or omitted, the exception
+type (connected, disconnected, or mufarragh), and the case policy. If any of
+those are unknown, classify the row as `needs_nahw_review` with
+`exception_structure_uncertified`, not `rich_certified`.
+
 Vocatives:
 
 - identify the vocative particle;

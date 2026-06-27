@@ -66,6 +66,26 @@ If the token is a lexical word such as `يَابِسٍ` ("dry") or `يَابِس
 `not_vocative_surface_prefix`. Do not send it to nahw as a vocative merely from
 `startswith("يا")`.
 
+## Dogfood finding: lexical initial letters are not clitics
+
+The particle-first dogfood tranche found the same false-positive shape outside
+vocatives. A raw token can begin with bā', lām, fā', or kāf without containing a
+real attached particle. Examples include `بُكْمٌ`, `بِكْرٌ`, `بِطَانَةً`,
+`لِسَانِ`, and `فَالِقُ`.
+
+Before routing a row to preposition/oath/result/clitic review, require positive
+segmentation evidence:
+
+- a corpus/morphology segment for the particle;
+- a governed majrūr host for `بِـ` / `لِـ` / `كَـ`;
+- a clause/function trigger for `فَـ` or `وَ`;
+- a token-internal segment record from a trusted parser or rich WBW layer.
+
+If only the raw first letter matches a particle, keep the written token as one
+lexical host and record `not_clitic_surface_prefix`. Do not let component-level
+candidate evidence from a particle-like initial letter create a whole-token
+Qamus entry candidate, propagation-safe parse family, or closure-coverage claim.
+
 ## Dogfood finding: preposition and oath hosts need their governors
 
 The 2026-06-27 preposition/oath dogfood batch found host-only hovers on tokens

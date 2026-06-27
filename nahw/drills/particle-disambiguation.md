@@ -40,3 +40,18 @@ Parse-key practice:
 - `فَتَنفَعَهُ` with causal fā' → `FA:CAUSE+V:SUBJ+OBJ`, classes
   `qg-result + qg-verb + qg-pronoun`.
 - `وَمَا` → do not finalize until `ما` is classified; classes depend on the function.
+
+## 9. Particle dogfood triage
+
+For each row, choose the route and explain why it is not automatically safe:
+
+| token | visible hover | route |
+|---|---|---|
+| `ثُمَّ` | then, later | sequence/scope review; add clause relation before rich certification |
+| `هَلْ` | has/have/is/are...? | question-frame review; yes/no interrogative, not a bundled English list |
+| `إِلَّا` | except | exception review; mustathnā/minhu, polarity, type, and case are required |
+| `وَإِذَا` | and when | temporal-condition review; preserve leading wāw separately |
+| `مِنْهَا` | from | PP/referent review, not `مَن/ما` relative review |
+
+If the row is already covered by an eval or procedure, write the no-op reason.
+Do not invent a new skill rule merely to show activity.

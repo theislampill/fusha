@@ -13,6 +13,10 @@
    Stop here only to *route*: إِنَّ exits, إِنْ proceeds.
 2. **إِذَا** — "when / whenever": a *realized* or expected condition; followed by a past-form verb read as
    present/future, apodosis often introduced by فَـ. → resolved "when".
+   Dogfood guard: preserve any leading `وَ` separately (`وَإِذَا`, `وَإِذْ`).
+   A visible "and when" hover is not rich-certified until the temporal or
+   temporal-condition clause role and the answer/result relation, if present,
+   are recorded.
 3. **لَوْ** — counterfactual "if (had) …, (would have) …": signals an unreal past condition; the جواب often opens with
    لَـ (لَوْ … لَـ …). → resolved "if (only) / had it been".
 4. **مَنْ / مَا as conditional** — مَنْ + two jussive verbs ("whoever does X, Y") or مَا + two jussives ("whatever …")

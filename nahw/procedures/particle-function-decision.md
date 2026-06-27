@@ -31,3 +31,23 @@ a right gloss with wrong function/reasoning is **rejected** (`grammar-risk-gate`
 ## Test
 `evals/particle-function-eval.jsonl` + `evals/irab-polysemy-eval.jsonl` — each row's `context_function`
 / `reading` must hold; 3:7:27 وَمَا = "and not", أَلَّا = "that not", فَمَا = "so not".
+
+## Particle-tranche dogfood routing
+
+For high-frequency particle entries, distinguish "string looks acceptable" from
+"function is certified." The dogfood controller should emit the exact next gate:
+
+- `function_word_hover_not_learner_ready` when the hover is readable but lacks a
+  function, scope, parse key, or learner breakdown;
+- `negation_scope_or_particle_function_uncertified` when the particle governs a
+  verb/noun mood or case that has not been recorded;
+- `exception_structure_uncertified` for `إِلَّا` until the exception polarity,
+  type, and case behavior are known;
+- `temporal_clause_role_uncertified` for `إِذْ` / `إِذَا` until the temporal or
+  conditional clause relation is attached;
+- `question_frame_uncertified` for `هَلْ` and hamza until yes/no,
+  equalization, or other interrogative function is known.
+
+If the current row only proves a component candidate (`وَ`, `فَ`, `بِـ`, `لِـ`,
+`ال`) inside a larger token, keep it out of whole-token entry resolution. It may
+feed renderer segmentation, but it must not make the token propagation-safe.
