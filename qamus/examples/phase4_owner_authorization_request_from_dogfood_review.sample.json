@@ -1,0 +1,93 @@
+{
+  "apply_policy": {
+    "apply_allowed": false,
+    "closure_claim_allowed": false,
+    "live_mutation_allowed": false,
+    "mirror_sync_allowed": false,
+    "owner_authorization_required": true,
+    "service_restart_allowed": false,
+    "source_only": true,
+    "wbw_rebuild_allowed": false
+  },
+  "generated_by": "tools/build_phase4_owner_authorization_request.py",
+  "id": "phase4-owner-authorization-request:3703600fc2b6e4a7",
+  "owner_authorization": {
+    "authorized_at": null,
+    "authorized_by": null,
+    "authorized_scope": "none",
+    "required": true,
+    "status": "not_provided"
+  },
+  "phase": "phase4_owner_authorization_request",
+  "public_boundary": {
+    "external_source_names_public": false,
+    "internal_provenance_public": false,
+    "kind": "authored",
+    "lang": "en",
+    "src": "qamus"
+  },
+  "required_before_live_apply": [
+    "owner explicitly authorizes exact request id and artifact hashes",
+    "append-only token-decision ledger target is identified",
+    "rollback backup or append-only revert path is identified",
+    "WBW rebuild command and output path are owner-approved",
+    "token-decision and public-boundary validators pass",
+    "service health check passes after rebuild",
+    "targeted public readback proves intended hovers",
+    "public boundary scan reports zero leaks",
+    "mirror mismatch is either reconciled or explicitly excluded from this apply"
+  ],
+  "sample_decisions": [
+    {
+      "id": "phase4-draft-token-decision:33_63_1:222222222222222222222222",
+      "identity": {
+        "parse_id": "parse:222222222222222222222222",
+        "quran_loc": "quran:33:63:1",
+        "surface_sample": "يَسْأَلُكَ",
+        "wbw_loc": "wbw:33:63:1"
+      },
+      "safe_scope": "token_only",
+      "token_decision": {
+        "gloss": "ask you",
+        "kind": "authored",
+        "lang": "en",
+        "loc": "33:63:1",
+        "src": "qamus"
+      }
+    },
+    {
+      "id": "phase4-draft-token-decision:26_139_2:261392261392261392261392",
+      "identity": {
+        "parse_id": "parse:261392261392261392261392",
+        "quran_loc": "quran:26:139:2",
+        "surface_sample": "فَأَهْلَكْنَاهُمْ",
+        "wbw_loc": "wbw:26:139:2"
+      },
+      "safe_scope": "token_only",
+      "token_decision": {
+        "gloss": "so We destroyed them",
+        "kind": "authored",
+        "lang": "en",
+        "loc": "26:139:2",
+        "src": "qamus"
+      }
+    }
+  ],
+  "source_artifacts": {
+    "apply_readiness_manifest": {
+      "artifact": "phase4_apply_readiness_manifest_from_dogfood_review.sample.json",
+      "id": "phase4-apply-readiness:f619e0a7e44ddf50",
+      "sha256": "fc0d9814c5f48edd68ce664f430b6c58657df1d3a8db3118769d06d9c13543a8",
+      "status": "pre_apply_not_authorized"
+    },
+    "draft_token_decision_ledger": {
+      "artifact": "phase4_draft_token_decision_ledger_from_dogfood_review.sample.jsonl",
+      "decision_id_count": 2,
+      "quran_loc_count": 2,
+      "row_count": 2,
+      "sha256": "4f30d212b5150f10c5b7f85ec088544ca845621fb621685f8152bdf04915383b",
+      "wbw_loc_count": 2
+    }
+  },
+  "status": "owner_review_required_not_authorized"
+}

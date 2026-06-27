@@ -1,0 +1,129 @@
+{
+  "abort_conditions": [
+    "source plan validator fails",
+    "source plan sha or row count changes unexpectedly",
+    "append-only ledger target is missing",
+    "backup or rollback artifact is missing",
+    "derived WBW rebuild fails",
+    "token-decision validation fails",
+    "public-boundary scan reports a public leak",
+    "health check fails",
+    "targeted public readback mismatches intended hover",
+    "repo or live HEAD moves during a gated apply"
+  ],
+  "apply_policy": {
+    "apply_allowed": false,
+    "apply_authorized": false,
+    "closure_claim_allowed": false,
+    "component_candidates_can_certify": false,
+    "decision_plan_only": true,
+    "live_mutation_allowed": false,
+    "mirror_sync_allowed": false,
+    "parse_key_primary_identity": false,
+    "raw_surface_identity_allowed": false,
+    "service_restart_allowed": false,
+    "wbw_rebuild_allowed": false
+  },
+  "generated_by": "tools/build_phase4_apply_readiness_manifest.py",
+  "id": "phase4-apply-readiness:f619e0a7e44ddf50",
+  "phase": "phase4_apply_readiness_manifest",
+  "public_boundary": {
+    "external_source_names_public": false,
+    "internal_provenance_public": false,
+    "kind": "authored",
+    "lang": "en",
+    "src": "qamus"
+  },
+  "required_gates": {
+    "append_only_ledger": {
+      "evidence_required": "A future apply must append last-wins token decisions; it must not rewrite unrelated rows.",
+      "required": true,
+      "status": "not_run"
+    },
+    "backup": {
+      "evidence_required": "A future apply must identify a rollback artifact before any live write.",
+      "required": true,
+      "status": "not_run"
+    },
+    "health_check": {
+      "evidence_required": "A future apply must prove the service/app health check after rebuild.",
+      "required": true,
+      "status": "not_run"
+    },
+    "public_boundary_scan": {
+      "evidence_required": "A future apply must prove zero public provenance leakage.",
+      "required": true,
+      "status": "not_run"
+    },
+    "rebuild": {
+      "evidence_required": "A future apply must rebuild the derived hover artifact from the append-only ledger.",
+      "required": true,
+      "status": "not_run"
+    },
+    "rollback_rehearsal": {
+      "evidence_required": "A future apply must have an explicit rollback command or append-only revert path.",
+      "required": true,
+      "status": "not_run"
+    },
+    "targeted_public_readback": {
+      "evidence_required": "A future apply must read back affected public pages and exact hover payloads.",
+      "required": true,
+      "status": "not_run"
+    },
+    "validation": {
+      "evidence_required": "A future apply must run token-decision, public-boundary, and exact-address validators.",
+      "required": true,
+      "status": "not_run"
+    }
+  },
+  "rollback": {
+    "required": true,
+    "status": "not_run",
+    "strategy": "append_only_revert_or_restore_backup"
+  },
+  "sample_tokens": [
+    {
+      "parse_id": "parse:222222222222222222222222",
+      "plan_id": "phase4-hover-decision-plan:33_63_1:222222222222222222222222",
+      "public_hover": {
+        "gloss": "ask you",
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "quran_loc": "quran:33:63:1",
+      "surface_sample": "يَسْأَلُكَ",
+      "wbw_loc": "wbw:33:63:1"
+    },
+    {
+      "parse_id": "parse:261392261392261392261392",
+      "plan_id": "phase4-hover-decision-plan:26_139_2:261392261392261392261392",
+      "public_hover": {
+        "gloss": "so We destroyed them",
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "quran_loc": "quran:26:139:2",
+      "surface_sample": "فَأَهْلَكْنَاهُمْ",
+      "wbw_loc": "wbw:26:139:2"
+    }
+  ],
+  "source_plan": {
+    "artifact": "phase4_hover_decision_plan_from_dogfood_review.sample.jsonl",
+    "parse_id_count": 2,
+    "plan_id_count": 2,
+    "quran_loc_count": 2,
+    "row_count": 2,
+    "sha256": "f619e0a7e44ddf506f18baef0973b76af7b1a2bb207133c67ecdc413a703ec9d",
+    "wbw_loc_count": 2
+  },
+  "status": "pre_apply_not_authorized",
+  "truth_owners": {
+    "hover_decision_plan": "phase4_hover_decision_plan_jsonl",
+    "live_entries": "live_entries_truth_owner_symbolic",
+    "live_wbw_lookup": "live_wbw_lookup_truth_owner_symbolic",
+    "public_render": "public_http_readback_truth_owner_symbolic",
+    "token_decision_ledger": "live_token_decision_ledger_truth_owner_symbolic"
+  }
+}

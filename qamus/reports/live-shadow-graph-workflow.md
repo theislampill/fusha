@@ -95,6 +95,14 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   shapes (`loc=33:63:1`, `gloss=ask you` and `loc=26:139:2`, `gloss=so We destroyed them`, each with `src=qamus`,
   `kind=authored`, `lang=en`) while remaining `status=planned_not_applied`, `safe_scope=token_only`, and guarded by
   append-only ledger, backup, rebuild, health, and public readback requirements before any owner-authorized apply.
+- `qamus/examples/phase4_apply_readiness_manifest_from_dogfood_review.sample.json`,
+  `qamus/examples/phase4_draft_token_decision_ledger_from_dogfood_review.sample.jsonl`, and
+  `qamus/examples/phase4_owner_authorization_request_from_dogfood_review.sample.json`: carry the same two dogfood
+  exemplars into the final source-only pre-apply review shape. The manifest remains
+  `status=pre_apply_not_authorized`, the draft ledger remains `status=draft_not_applied`, and the owner request
+  remains `status=owner_review_required_not_authorized` with `owner_authorization.status=not_provided`. These
+  artifacts are review packets only; they do not authorize live Qamus mutation, WBW rebuild, service restart, mirror
+  sync, or hover closure claims.
 - `tools/validate_phase4_two_vote_requests.py`: validates Phase 4 two-vote request packets. It rejects non-exact
   identities, public-boundary leakage, weakened gates, non-two-vote lanes, missing component provenance, component
   candidates marked certifying, missing `agreement_key_hint`, live/apply/coverage claims, and vacuous zero-row request
