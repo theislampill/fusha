@@ -132,13 +132,14 @@ The tools intentionally do not embed private server paths. Server acceptance pas
 - `tools/build_phase4_owner_authorization_request.py`: bundles a validated apply-readiness manifest and source-only
   draft token-decision ledger into one owner review request. It hashes both artifacts, records exact row counts and
   sample source-clean token decisions, carries through any `excluded_tranche_rows` blocker summary from the linked
-  apply-readiness manifest, and keeps `owner_authorization.status=not_provided`, `apply_allowed=false`,
+  apply-readiness manifest, emits the exact owner statement requirements that must name the request id and artifact
+  hashes, and keeps `owner_authorization.status=not_provided`, `apply_allowed=false`,
   `live_mutation_allowed=false`, `wbw_rebuild_allowed=false`, `service_restart_allowed=false`,
   `mirror_sync_allowed=false`, and `closure_claim_allowed=false`.
 - `tools/validate_phase4_owner_authorization_request.py`: validates that the owner request is still only a request. It
   rejects provided/approved authorization, mismatched manifest or draft-ledger hashes/counts, public provenance leaks,
-  missing or drifted excluded-blocker summaries, non-source-clean sample decisions, and any live/apply/closure policy
-  flag set true.
+  missing or drifted excluded-blocker summaries, weak owner statement requirements, non-source-clean sample decisions,
+  and any live/apply/closure policy flag set true.
 - `tools/plan_shadow_hover_edit_intent.py`: read-only CLI for planning future hover-edit intents from a validated
   Phase 3 admin/debug pack. It emits validator-clean JSONL rows for token-only, parse-family, or entry/sense edit
   intent review, preserves exact `wbw:S:A:W -> quran:S:A:W -> parse:<hash> -> qamus:<id>#sense=<n>` identity, and

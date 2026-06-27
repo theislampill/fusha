@@ -9,6 +9,26 @@
     "source_only": true,
     "wbw_rebuild_allowed": false
   },
+  "authorization_requirements": {
+    "excluded_rows_remain_blocked": false,
+    "must_reference_artifacts": [
+      {
+        "artifact": "apply-readiness-manifest.json",
+        "id": "phase4-apply-readiness:ad5fea58fe372c36",
+        "name": "apply_readiness_manifest",
+        "sha256": "94b920ce9e25d98bcbe29a55702c1cb8bf9a30f2bea9f7daf98fc5031ed37631"
+      },
+      {
+        "artifact": "draft-token-decision-ledger.jsonl",
+        "name": "draft_token_decision_ledger",
+        "row_count": 2,
+        "sha256": "02d96d028dc88a9b61ded80a4130549068ee920a6ec2c3b852904fff7fc25b99"
+      }
+    ],
+    "must_reference_request_id": "phase4-owner-authorization-request:7b2bdecc80f07385",
+    "must_state_live_apply_scope": "listed_draft_token_decision_rows_only",
+    "required_owner_statement": "Authorize phase4-owner-authorization-request:7b2bdecc80f07385 for listed draft token-decision rows only; apply_readiness_manifest sha256=94b920ce9e25d98bcbe29a55702c1cb8bf9a30f2bea9f7daf98fc5031ed37631; draft_token_decision_ledger sha256=02d96d028dc88a9b61ded80a4130549068ee920a6ec2c3b852904fff7fc25b99"
+  },
   "generated_by": "tools/build_phase4_owner_authorization_request.py",
   "id": "phase4-owner-authorization-request:7b2bdecc80f07385",
   "owner_authorization": {

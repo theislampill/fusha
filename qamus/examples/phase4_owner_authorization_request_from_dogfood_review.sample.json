@@ -9,6 +9,26 @@
     "source_only": true,
     "wbw_rebuild_allowed": false
   },
+  "authorization_requirements": {
+    "excluded_rows_remain_blocked": true,
+    "must_reference_artifacts": [
+      {
+        "artifact": "phase4_apply_readiness_manifest_from_dogfood_review.sample.json",
+        "id": "phase4-apply-readiness:f619e0a7e44ddf50",
+        "name": "apply_readiness_manifest",
+        "sha256": "12192bcb906e5847a933ff85821342aed2f32fb36cb6555f50295d66530ac031"
+      },
+      {
+        "artifact": "phase4_draft_token_decision_ledger_from_dogfood_review.sample.jsonl",
+        "name": "draft_token_decision_ledger",
+        "row_count": 2,
+        "sha256": "4f30d212b5150f10c5b7f85ec088544ca845621fb621685f8152bdf04915383b"
+      }
+    ],
+    "must_reference_request_id": "phase4-owner-authorization-request:565626ca2d2c7488",
+    "must_state_live_apply_scope": "listed_draft_token_decision_rows_only",
+    "required_owner_statement": "Authorize phase4-owner-authorization-request:565626ca2d2c7488 for listed draft token-decision rows only; apply_readiness_manifest sha256=12192bcb906e5847a933ff85821342aed2f32fb36cb6555f50295d66530ac031; draft_token_decision_ledger sha256=4f30d212b5150f10c5b7f85ec088544ca845621fb621685f8152bdf04915383b; excluded tranche rows remain blocked"
+  },
   "excluded_tranche_rows": {
     "excluded_by_gate": {
       "human_review_required": 1

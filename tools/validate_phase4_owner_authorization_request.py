@@ -108,6 +108,49 @@ def validate_source_artifacts(row, manifest_json, draft_ledger_jsonl, errors):
                 _err(errors, "draft_token_decision_ledger wbw_loc_count mismatch")
 
 
+def validate_authorization_requirements(row, errors):
+    requirements = row.get("authorization_requirements") or {}
+    source = row.get("source_artifacts") or {}
+    manifest = source.get("apply_readiness_manifest") or {}
+    draft = source.get("draft_token_decision_ledger") or {}
+    if requirements.get("must_reference_request_id") != row.get("id"):
+        _err(errors, "authorization_requirements.must_reference_request_id must match request id")
+    if requirements.get("must_state_live_apply_scope") != "listed_draft_token_decision_rows_only":
+        _err(errors, "authorization_requirements.must_state_live_apply_scope must be listed_draft_token_decision_rows_only")
+    has_exclusions = bool(row.get("excluded_tranche_rows"))
+    if requirements.get("excluded_rows_remain_blocked") is not has_exclusions:
+        _err(errors, "authorization_requirements.excluded_rows_remain_blocked must match excluded_tranche_rows presence")
+
+    artifact_rows = requirements.get("must_reference_artifacts") or []
+    artifacts = {artifact.get("name"): artifact for artifact in artifact_rows if isinstance(artifact, dict)}
+    manifest_req = artifacts.get("apply_readiness_manifest") or {}
+    draft_req = artifacts.get("draft_token_decision_ledger") or {}
+    if manifest_req.get("artifact") != manifest.get("artifact"):
+        _err(errors, "authorization_requirements apply_readiness_manifest artifact mismatch")
+    if manifest_req.get("sha256") != manifest.get("sha256"):
+        _err(errors, "authorization_requirements apply_readiness_manifest sha256 mismatch")
+    if manifest_req.get("id") != manifest.get("id"):
+        _err(errors, "authorization_requirements apply_readiness_manifest id mismatch")
+    if draft_req.get("artifact") != draft.get("artifact"):
+        _err(errors, "authorization_requirements draft_token_decision_ledger artifact mismatch")
+    if draft_req.get("sha256") != draft.get("sha256"):
+        _err(errors, "authorization_requirements draft_token_decision_ledger sha256 mismatch")
+    if draft_req.get("row_count") != draft.get("row_count"):
+        _err(errors, "authorization_requirements draft_token_decision_ledger row_count mismatch")
+
+    statement = str(requirements.get("required_owner_statement") or "")
+    for required in (
+        row.get("id"),
+        manifest.get("sha256"),
+        draft.get("sha256"),
+        "listed draft token-decision rows only",
+    ):
+        if required and required not in statement:
+            _err(errors, "authorization_requirements.required_owner_statement must include %s" % required)
+    if has_exclusions and "excluded tranche rows remain blocked" not in statement:
+        _err(errors, "authorization_requirements.required_owner_statement must keep excluded rows blocked")
+
+
 def validate_owner_authorization(row, errors):
     owner = row.get("owner_authorization") or {}
     if owner.get("required") is not True:
@@ -237,6 +280,7 @@ def validate(path, manifest_json=None, draft_ledger_jsonl=None):
     if row.get("generated_by") != "tools/build_phase4_owner_authorization_request.py":
         _err(errors, "generated_by must name the builder")
     validate_source_artifacts(row, manifest_json, draft_ledger_jsonl, errors)
+    validate_authorization_requirements(row, errors)
     validate_owner_authorization(row, errors)
     validate_policy(row, errors)
     validate_public_boundary(row, errors)

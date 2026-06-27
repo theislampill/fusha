@@ -9,6 +9,7 @@
     "status",
     "generated_by",
     "source_artifacts",
+    "authorization_requirements",
     "owner_authorization",
     "apply_policy",
     "public_boundary",
@@ -216,6 +217,73 @@
               }
             }
           }
+        }
+      }
+    },
+    "authorization_requirements": {
+      "type": "object",
+      "required": [
+        "required_owner_statement",
+        "must_reference_request_id",
+        "must_reference_artifacts",
+        "must_state_live_apply_scope",
+        "excluded_rows_remain_blocked"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "required_owner_statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "must_reference_request_id": {
+          "type": "string",
+          "pattern": "^phase4-owner-authorization-request:[0-9a-f]{16}$"
+        },
+        "must_reference_artifacts": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "artifact",
+              "sha256"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "enum": [
+                  "apply_readiness_manifest",
+                  "draft_token_decision_ledger"
+                ]
+              },
+              "artifact": {
+                "type": "string",
+                "minLength": 1,
+                "not": {
+                  "pattern": "[/\\\\]"
+                }
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^phase4-apply-readiness:[0-9a-f]{16}$"
+              },
+              "row_count": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        },
+        "must_state_live_apply_scope": {
+          "const": "listed_draft_token_decision_rows_only"
+        },
+        "excluded_rows_remain_blocked": {
+          "type": "boolean"
         }
       }
     },

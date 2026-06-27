@@ -97,6 +97,35 @@ def sample_decision_rows(rows):
     return samples
 
 
+def authorization_requirements(request_id, manifest_json, manifest_sha, manifest, draft_ledger_jsonl, draft_sha, summary, has_exclusions):
+    owner_statement = (
+        "Authorize %s for listed draft token-decision rows only; "
+        "apply_readiness_manifest sha256=%s; draft_token_decision_ledger sha256=%s"
+    ) % (request_id, manifest_sha, draft_sha)
+    if has_exclusions:
+        owner_statement += "; excluded tranche rows remain blocked"
+    return {
+        "required_owner_statement": owner_statement,
+        "must_reference_request_id": request_id,
+        "must_reference_artifacts": [
+            {
+                "name": "apply_readiness_manifest",
+                "artifact": os.path.basename(manifest_json),
+                "sha256": manifest_sha,
+                "id": manifest.get("id"),
+            },
+            {
+                "name": "draft_token_decision_ledger",
+                "artifact": os.path.basename(draft_ledger_jsonl),
+                "sha256": draft_sha,
+                "row_count": summary["row_count"],
+            },
+        ],
+        "must_state_live_apply_scope": "listed_draft_token_decision_rows_only",
+        "excluded_rows_remain_blocked": bool(has_exclusions),
+    }
+
+
 def build_request(manifest_json, draft_ledger_jsonl, out_json):
     manifest = read_json(manifest_json)
     summary = draft_summary(draft_ledger_jsonl)
@@ -107,8 +136,9 @@ def build_request(manifest_json, draft_ledger_jsonl, out_json):
     if not summary["rows"]:
         raise ValueError("draft token-decision ledger must contain at least one row")
     request_hash = hashlib.sha256((manifest_sha + draft_sha).encode("ascii")).hexdigest()
+    request_id = "phase4-owner-authorization-request:%s" % request_hash[:16]
     request = {
-        "id": "phase4-owner-authorization-request:%s" % request_hash[:16],
+        "id": request_id,
         "phase": "phase4_owner_authorization_request",
         "status": "owner_review_required_not_authorized",
         "generated_by": "tools/build_phase4_owner_authorization_request.py",
@@ -128,6 +158,16 @@ def build_request(manifest_json, draft_ledger_jsonl, out_json):
                 "wbw_loc_count": len(set(summary["wbw_locs"])),
             },
         },
+        "authorization_requirements": authorization_requirements(
+            request_id,
+            manifest_json,
+            manifest_sha,
+            manifest,
+            draft_ledger_jsonl,
+            draft_sha,
+            summary,
+            bool(manifest.get("excluded_tranche_rows")),
+        ),
         "owner_authorization": {
             "required": True,
             "status": "not_provided",

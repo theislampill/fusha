@@ -1880,6 +1880,22 @@ check(
         and (_dogfood_owner_request.get("owner_authorization") or {}).get("status") == "not_provided"
     ),
 )
+_dogfood_owner_requirements = _dogfood_owner_request.get("authorization_requirements") or {}
+_dogfood_owner_statement = _dogfood_owner_requirements.get("required_owner_statement") or ""
+_dogfood_owner_manifest = (_dogfood_owner_request.get("source_artifacts") or {}).get("apply_readiness_manifest") or {}
+_dogfood_owner_draft = (_dogfood_owner_request.get("source_artifacts") or {}).get("draft_token_decision_ledger") or {}
+check(
+    "dogfood-derived owner authorization requires exact request id and artifact hashes",
+    bool(
+        _dogfood_owner_requirements.get("must_reference_request_id") == _dogfood_owner_request.get("id")
+        and _dogfood_owner_requirements.get("must_state_live_apply_scope") == "listed_draft_token_decision_rows_only"
+        and _dogfood_owner_requirements.get("excluded_rows_remain_blocked") is True
+        and _dogfood_owner_request.get("id") in _dogfood_owner_statement
+        and _dogfood_owner_manifest.get("sha256") in _dogfood_owner_statement
+        and _dogfood_owner_draft.get("sha256") in _dogfood_owner_statement
+        and "excluded tranche rows remain blocked" in _dogfood_owner_statement
+    ),
+)
 
 try:
     _rich_sample_dir = os.path.join(_R, "qamus", "examples")

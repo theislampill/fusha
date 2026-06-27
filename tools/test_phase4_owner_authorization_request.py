@@ -71,6 +71,11 @@ def main():
         assert request["apply_policy"]["closure_claim_allowed"] is False
         assert request["source_artifacts"]["apply_readiness_manifest"]["status"] == "pre_apply_not_authorized"
         assert request["source_artifacts"]["draft_token_decision_ledger"]["row_count"] == 2
+        assert request["authorization_requirements"]["must_reference_request_id"] == request["id"]
+        assert request["authorization_requirements"]["must_state_live_apply_scope"] == "listed_draft_token_decision_rows_only"
+        assert request["authorization_requirements"]["excluded_rows_remain_blocked"] is False
+        assert request["source_artifacts"]["apply_readiness_manifest"]["sha256"] in request["authorization_requirements"]["required_owner_statement"]
+        assert request["source_artifacts"]["draft_token_decision_ledger"]["sha256"] in request["authorization_requirements"]["required_owner_statement"]
         assert request["public_boundary"]["src"] == "qamus"
         assert request["public_boundary"]["kind"] == "authored"
         assert request["public_boundary"]["lang"] == "en"
@@ -103,6 +108,8 @@ def main():
         request = request_builder.build_request(excluded_manifest_path, draft_path, excluded_request_path)
         assert request["excluded_tranche_rows"] == excluded_manifest["excluded_tranche_rows"]
         assert request["excluded_tranche_rows"]["excluded_count"] == 1
+        assert request["authorization_requirements"]["excluded_rows_remain_blocked"] is True
+        assert "excluded tranche rows remain blocked" in request["authorization_requirements"]["required_owner_statement"]
         count, errors = validator.validate(excluded_request_path, excluded_manifest_path, draft_path)
         assert count == 1, errors
         assert not errors, errors
@@ -113,6 +120,14 @@ def main():
         write_json(bad_path, bad)
         _count, errors = validator.validate(bad_path, excluded_manifest_path, draft_path)
         assert any("excluded_tranche_rows must be copied" in err for err in errors), errors
+
+        bad = read_json(excluded_request_path)
+        bad["authorization_requirements"]["required_owner_statement"] = "authorize it"
+        bad_path = os.path.join(td, "bad-weak-owner-statement.json")
+        write_json(bad_path, bad)
+        _count, errors = validator.validate(bad_path, excluded_manifest_path, draft_path)
+        assert any("required_owner_statement must include" in err for err in errors), errors
+        assert any("must keep excluded rows blocked" in err for err in errors), errors
 
         bad = read_json(request_path)
         bad["owner_authorization"]["status"] = "approved"
