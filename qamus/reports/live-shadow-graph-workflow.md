@@ -88,6 +88,11 @@ The tools intentionally do not embed private server paths. Server acceptance pas
   the component-only `كَ` candidate and preserving `apply_allowed=false`, `live_mutation_allowed=false`, and
   `closure_claim_allowed=false`. Reconciliation of the dogfood response fixture yields only
   `status=certified_not_applied`; it is not a live decision ledger row and does not authorize hover application.
+- `qamus/examples/phase4_hover_decision_plan_from_dogfood_review.sample.jsonl`: carries that reconciled `يَسْأَلُكَ`
+  result one more non-live step into a source-clean hover-decision preview. The row emits the future token-decision
+  shape (`loc=33:63:1`, `gloss=ask you`, `src=qamus`, `kind=authored`, `lang=en`) while remaining
+  `status=planned_not_applied`, `safe_scope=token_only`, and guarded by append-only ledger, backup, rebuild, health,
+  and public readback requirements before any owner-authorized apply.
 - `tools/validate_phase4_two_vote_requests.py`: validates Phase 4 two-vote request packets. It rejects non-exact
   identities, public-boundary leakage, weakened gates, non-two-vote lanes, missing component provenance, component
   candidates marked certifying, missing `agreement_key_hint`, live/apply/coverage claims, and vacuous zero-row request

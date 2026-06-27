@@ -642,6 +642,7 @@ for _art in (
         "qamus/examples/phase4_gloss_adjudication_request.sample.jsonl",
         "qamus/examples/phase4_gloss_adjudication_response.sample.jsonl",
         "qamus/examples/phase4_hover_decision_plan.sample.jsonl",
+        "qamus/examples/phase4_hover_decision_plan_from_dogfood_review.sample.jsonl",
         "qamus/examples/phase4_apply_readiness_manifest.sample.json",
         "qamus/examples/phase4_draft_token_decision_ledger.sample.jsonl",
         "qamus/examples/phase4_owner_authorization_request.sample.json",
@@ -1644,6 +1645,56 @@ except Exception:
 check("dogfood-derived yasaluka two-vote responses reconcile only to certified_not_applied", _dogfood_reconcile_ok)
 
 try:
+    _dogfood_hover_plan_rows = [
+        json.loads(_l)
+        for _l in io.open(
+            os.path.join(_R, "qamus", "examples", "phase4_hover_decision_plan_from_dogfood_review.sample.jsonl"),
+            encoding="utf-8",
+        )
+        if _l.strip()
+    ]
+except Exception:
+    _dogfood_hover_plan_rows = []
+_dogfood_hover_plan = _dogfood_hover_plan_rows[0] if _dogfood_hover_plan_rows else {}
+_dogfood_hover_plan_identity = _dogfood_hover_plan.get("identity") or {}
+_dogfood_hover_plan_preview = _dogfood_hover_plan.get("token_decision_preview") or {}
+_dogfood_hover_plan_policy = _dogfood_hover_plan.get("apply_policy") or {}
+_dogfood_hover_plan_source_ids = set(_dogfood_hover_plan.get("source_certified_ids") or [])
+check(
+    "dogfood-derived yasaluka hover plan stays planned_not_applied and source-clean",
+    bool(
+        len(_dogfood_hover_plan_rows) == 1
+        and _dogfood_hover_plan.get("status") == "planned_not_applied"
+        and _dogfood_hover_plan.get("source_phase") == "phase4_two_vote_reconciled"
+        and _dogfood_hover_plan_identity.get("quran_loc") == "quran:33:63:1"
+        and _dogfood_hover_plan_identity.get("wbw_loc") == "wbw:33:63:1"
+        and _dogfood_hover_plan_identity.get("surface_sample") == "يَسْأَلُكَ"
+        and _dogfood_hover_plan.get("reason_agreement_key") == "verb-object-suffix-explicit-subject"
+        and _dogfood_hover_plan.get("safe_scope") == "token_only"
+        and _dogfood_hover_plan_preview == {
+            "loc": "33:63:1",
+            "gloss": "ask you",
+            "src": "qamus",
+            "kind": "authored",
+            "lang": "en",
+        }
+        and _dogfood_hover_plan_source_ids == {
+            "phase4-two-vote:queue_parse_222222222222222222222222",
+            "phase4-two-vote-response:queue_parse_222222222222222222222222:sarf-primary",
+            "phase4-two-vote-response:queue_parse_222222222222222222222222:nahw-primary",
+        }
+        and _dogfood_hover_plan_policy.get("apply_allowed") is False
+        and _dogfood_hover_plan_policy.get("live_mutation_allowed") is False
+        and _dogfood_hover_plan_policy.get("closure_claim_allowed") is False
+        and _dogfood_hover_plan_policy.get("append_only_ledger_required") is True
+        and _dogfood_hover_plan_policy.get("requires_backup_rebuild_health_readback_before_apply") is True
+        and _dogfood_hover_plan_policy.get("component_candidates_can_certify") is False
+        and _dogfood_hover_plan_policy.get("raw_surface_identity_allowed") is False
+        and _dogfood_hover_plan_policy.get("parse_key_primary_identity") is False
+    ),
+)
+
+try:
     _rich_sample_dir = os.path.join(_R, "qamus", "examples")
     _rich_exact_ok = True
     _rich_exact_checked = 0
@@ -1941,6 +1992,9 @@ for _script, _args, _label in (
         ("validate_phase4_hover_decision_plan.py",
          [os.path.join(_R, "qamus", "examples", "phase4_hover_decision_plan.sample.jsonl")],
          "Phase4 hover decision plan sample validates"),
+        ("validate_phase4_hover_decision_plan.py",
+         [os.path.join(_R, "qamus", "examples", "phase4_hover_decision_plan_from_dogfood_review.sample.jsonl")],
+         "Dogfood-derived Phase4 hover decision plan sample validates"),
         ("build_phase4_apply_readiness_manifest.py", ["--self-test"],
          "Phase4 apply-readiness manifest builder self-test"),
         ("validate_phase4_apply_readiness_manifest.py", ["--self-test"],
