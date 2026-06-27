@@ -582,6 +582,10 @@ for _art in (
         "qamus/examples/full_corpus_dogfood_vn07_skill_impact.sample.jsonl",
         "qamus/examples/dogfood_vn07_production_bug_lesson.sample.jsonl",
         "qamus/reports/full-corpus-dogfood-vn07-20260627.md",
+        "qamus/examples/full_corpus_dogfood_vn08_inventory.sample.jsonl",
+        "qamus/examples/full_corpus_dogfood_vn08_skill_impact.sample.jsonl",
+        "qamus/examples/dogfood_vn08_production_bug_lesson.sample.jsonl",
+        "qamus/reports/full-corpus-dogfood-vn08-20260627.md",
         "qamus/examples/full_corpus_dogfood_queue_summary.sample.json",
         "qamus/examples/full_corpus_dogfood_review_pack.sample.jsonl",
         "qamus/examples/phase4_closure_tranche.sample.jsonl",
@@ -656,6 +660,29 @@ for _art in (
         "tools/build_shadow_admin_debug_pack.py",
 ):
     check("Phase2 live-shadow graph contract artifact exists: %s" % _art, os.path.exists(os.path.join(_R, _art)))
+
+try:
+    _vn08_inventory = [
+        json.loads(_l)
+        for _l in io.open(
+            os.path.join(_R, "qamus", "examples", "full_corpus_dogfood_vn08_inventory.sample.jsonl"),
+            encoding="utf-8",
+        )
+        if _l.strip()
+    ]
+    _vn08_component = [
+        _r for _r in _vn08_inventory
+        if _r.get("evidence_kind") == "component_only_evidence"
+    ]
+    _vn08_blocked = _vn08_component and all(
+        _r.get("may_apply_live") is False
+        and _r.get("recommended_next_action") == "blocker_queue_row"
+        and "component_only_candidate_no_whole_token_propagation" in (_r.get("detected_issue") or "")
+        for _r in _vn08_component
+    )
+except Exception:
+    _vn08_blocked = False
+check("VN-08 sample preserves component-only evidence as non-applyable blocker rows", _vn08_blocked)
 
 for _script, _args, _label in (
         ("build_live_shadow_graph.py", ["--self-test"], "Phase2 live shadow graph builder self-test"),
@@ -748,6 +775,9 @@ for _script, _args, _label in (
         ("validate_production_bug_lessons.py",
          [os.path.join(_R, "qamus", "examples", "dogfood_vn07_production_bug_lesson.sample.jsonl")],
          "VN-07 dogfood production bug lesson sample validates"),
+        ("validate_production_bug_lessons.py",
+         [os.path.join(_R, "qamus", "examples", "dogfood_vn08_production_bug_lesson.sample.jsonl")],
+         "VN-08 dogfood production bug lesson sample validates"),
         ("summarize_rich_wbw_roles.py", ["--self-test"], "Phase2 rich WBW role taxonomy self-test"),
         ("validate_rich_wbw_gate_cases.py", ["--self-test"], "Phase2.9 rich WBW gate-case validator self-test"),
         ("build_shadow_admin_debug_pack.py", ["--self-test"], "Phase3 shadow admin debug pack self-test"),

@@ -35,3 +35,15 @@ certified attachment, governor, or exact entry/sense. Classify these as
 Component candidates from rich WBW segments may explain `لِـ`, `بِـ`, or a
 host noun, but they do not become whole-token candidates and they never weaken
 the gate to `auto_safe`.
+
+VN-08 repeated the same attachment boundary in two ways:
+
+- `لِلَّهِ` can be string-correct as "belongs to Allah" or "to Allah", but it
+  is not rich-certified until lām, the proper-name host, and the attachment or
+  predicate relation are recorded.
+- `بِالْخُنَّسِ` and `بِزَعْمِهِمْ` may arrive through host or component
+  evidence, but a hover that teaches only "lurking" or "to claim" drops the
+  preposition, governed noun, suffix (where present), and attachment head.
+
+Component-only bā/lām evidence remains a blocker row until the whole written
+token has an exact parse and an attachment decision.

@@ -27,3 +27,23 @@ gloss text into a public artifact.
 **Test:** validate the table and every emitted batch separately: source-triangulation validator, deterministic
 hover validator, two-vote request validator, and artifact ergonomics. A clean table is not the same thing as a
 certified gloss batch.
+
+## Dogfood finding: component candidates are evidence, not whole-token proof
+
+VN-08 found rows where rich component evidence improved routing but could have
+looked deceptively certifiable:
+
+- `فَتَرَبَّصُوا۟` may contain a recognizable `تَرَبَّص` verb host, but the
+  written token still includes fā' and a finite plural verb form. Component
+  evidence cannot certify a bare "to wait" hover.
+- `بِمُعَذَّبِينَ` may contain punishment-family evidence, but the written
+  token includes bā', a governed plural/passive-participle-looking host, and a
+  PP relation.
+- `بِالْخُنَّسِ` and `بِزَعْمِهِمْ` need preposition, article/host, suffix, and
+  attachment review before any hover can be treated as rich.
+
+Keep component-level candidates in distinct fields or edge labels such as
+`qamus_component_candidates` / `component_candidate_joins`. They may influence
+review routing, but they must not contribute to `auto_safe`, source agreement,
+propagation safety, closure coverage, hover coverage, or repair-preview
+readiness.

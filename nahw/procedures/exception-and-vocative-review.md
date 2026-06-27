@@ -16,6 +16,13 @@ type (connected, disconnected, or mufarragh), and the case policy. If any of
 those are unknown, classify the row as `needs_nahw_review` with
 `exception_structure_uncertified`, not `rich_certified`.
 
+VN-08 dogfood note: do not route by a stripped `إلا`-looking surface alone.
+`إِلَّا` / `إِلَّآ` need the exception frame above, but `إِلًّۭا` at
+`9:8:8` and `9:10:5` is a lexical noun ("bond/tie"), not the exception
+particle. The exact shadda/tanwīn and token address must block exception
+propagation. Treat an English "except" string as populated text only until the
+exception frame is proven; treat lexical `إِلًّا` as a noun/POS row.
+
 Vocatives:
 
 - identify the vocative particle;

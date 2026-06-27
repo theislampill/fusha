@@ -209,6 +209,23 @@ near-verb construction, a masdar, or a possessed noun. Candidate linkage only
 points to a review lane; nahw still decides function, attachment, and
 contextual contribution.
 
+## 4j. VN-08 exception, PP, and suffix false-positive routing
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `إِلَّآ` | exception frame: polarity, mustathnā/minhu, type, case policy | "except" string alone |
+| `إِلًّۭا` | lexical noun/POS row | exception-particle route from stripped surface |
+| `لِلَّهِ` | lām + Allah proper-name PP and attachment/predicate context | host-only "Allah" or false suffix-pronoun route |
+| `بِكْرٌ` | lexical noun/adjective exact surface | false bā' preposition split |
+| `بِالْخُنَّسِ` | bā' + article/host + attachment review | component-only "lurking" |
+| `بِزَعْمِهِمْ` | bā' + masdar/host + `هِمْ` + attachment | bare "to claim" |
+| `شَانِئَكَ` / `إِصْرَهُمْ` | noun host plus suffix/referent | host-only "hater" or "burden" |
+
+VN-08 teaches two negative controls: exact surface can turn an apparent
+function token into a lexical noun, and proper-name PP rows can look like suffix
+rows when the detector only sees final letters. Do not let either path weaken
+the two-vote gate.
+
 ## 5. QAC concept metadata is a routing aid only
 
 If concept metadata says a form may be a prophet, historic person, people,

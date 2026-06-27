@@ -41,3 +41,22 @@ best public gloss must include it. If the relation or attachment is not
 certified, use an exact blocker such as `preposition_role_uncertified`,
 `pp_attachment_uncertified`, or `referent_unresolved`; do not mark the row
 rich-certified from the host noun alone.
+
+## Dogfood finding: lām plus Allah is not a suffix-pronoun row
+
+VN-08 found high-volume `لِلَّهِ` rows linked near the phrase `حَاشَ لِلَّه`.
+These are lām + the proper name Allah in a jar-majrūr construction. Do not
+classify the final `هِ` shape as an attached pronoun, and do not certify a
+host-only "Allah" hover when the lām relation contributes "to/for/belongs to"
+by context.
+
+Route `لِلَّهِ` as:
+
+- lām/preposition or ownership/relation review;
+- proper-name governed host review;
+- PP attachment / predicate relation review;
+- two-vote when the English contribution depends on attachment or phrase
+  context.
+
+False suffix guards also matter: `لَهُوَ` contains lām/emphasis + pronoun, and
+`لِلَّهِ` contains lām + proper noun, not a noun host plus possessor suffix.

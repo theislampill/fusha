@@ -170,3 +170,19 @@ nahw context before any hover trust.
 Rule: strict surface, POS, suffixes, and derivative shape come before root
 family reuse. The learner should see why the token contributes "from me",
 "they wish for it", or "his scales", not only the dictionary family.
+
+## M. VN-08 dogfood: passive verbs, exact nouns, and component-only evidence
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `يُخَفَّفُ` | broad `to be light or make easy` prose | passive/imperfect finite analysis and context |
+| `تَرَبُّصُ` | finite `to wait` hover | masdar/nominal POS and role |
+| `فَتَرَبَّصُوا۟` | component-only host evidence becoming whole-token proof | fā' function + finite plural verb analysis |
+| `يُبَايِعُونَكَ` | pledge-family infinitive with no object | finite verb + `كَ` object |
+| `كَالُوهُمْ` | `to weigh or measure` with no object/surface form | finite verb + `هُمْ` object and exact context |
+| `رَكَّبَكَ` | build/stack prose with no object | finite host + `كَ` object |
+| `إِلًّۭا` | exception-particle route | lexical noun/POS review |
+
+Rule: component-level candidates may make review faster, but they are not
+learner-ready morphology. Whole-token certification needs the visible prefix,
+host, suffix, POS, and function pieces, plus the exact address.

@@ -227,3 +227,22 @@ For VN-07 rows, a readable English phrase such as "from", "his scales",
 "to desire or wish", or "to ordain" is only a starting clue. The finite verb
 form, suffix pronoun, nominal derivative, or particle+pronoun composition
 decides the dogfood lane.
+
+## Dogfood finding: VN-08 passive/finite rows and component-only verbs
+
+VN-08 repeated the finite-verb leakage pattern:
+
+- `يُخَفَّفُ` is a passive/imperfect-looking verb surface; do not certify it
+  from a broad "to be light or make easy" entry gloss without voice, aspect,
+  person/number/gender, and governor/context review.
+- `يُبَايِعُونَكَ`, `كَالُوهُمْ`, and `رَكَّبَكَ` carry visible object
+  suffixes. The suffix contribution must be present in the learner breakdown.
+- `تَرَبُّصُ` is a nominal/masdar-like row in a verb family; it cannot inherit
+  finite "to wait" prose.
+- `فَتَرَبَّصُوا۟` appeared as component-only evidence. It may guide review,
+  but the fā' function and finite plural form keep the row below whole-token
+  certification.
+
+Rule: a VN-08 row may be populated and still remain `needs_sarf_review` or
+`needs_renderer_segments` until the exact token carries form, voice, suffix,
+and component-vs-whole-token proof.

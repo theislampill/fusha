@@ -136,3 +136,20 @@ For obligation/allotment rows:
 The repeated defect class is `verb_entry_nominal_derivative_pos_leak`: the row
 may be English-readable, but it is not rich-certified until the nominal shape,
 case/state, and syntactic role are visible to the learner.
+
+## Dogfood finding: VN-08 nominal rows near verb or particle candidates
+
+VN-08 added several nominal/POS traps:
+
+- `تَرَبُّصُ` is a masdar/nominal row in the waiting family, not a finite
+  "to wait" token.
+- `إِلًّۭا` is a lexical noun ("bond/tie") and must not be routed as the
+  exception particle `إِلَّا`.
+- `بِكْرٌ` is a lexical noun/adjective row; a leading bā-looking spelling in
+  the transliteration or stripped shape must not create a bā' + host PP route.
+- `لِلَّهِ` is a preposition/proper-name phrase, not a possessed noun suffix
+  row.
+
+If a row's English is readable but its evidence path is root/entry/component
+candidate rather than exact token POS, keep it in `token_only_review`,
+`needs_nahw_review`, or `component_only_blocker`.
