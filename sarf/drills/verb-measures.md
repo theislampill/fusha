@@ -368,3 +368,18 @@ agreement, and suffix/object contribution before proposing a hover candidate.
 VN-19 keeps finite rows non-applyable. The exercise is to name verb form,
 voice/aspect/mood where relevant, person/number/gender, and object/function
 pieces before proposing any English hover.
+
+## Y. VN-20 dogfood: final finite rows and component-only blockers
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `قَصَمْنَا` | bare `to destroy` | finite perfect host, subject/agreement, and context |
+| `يَنقَضَّ` / `أَقْلِعِى` | dictionary infinitive only | exact imperfect/imperative form and clause role |
+| `وَأَقْنَىٰ` / `وَأَكْدَىٰٓ` | host evidence as whole token | waw function plus finite host |
+| `فَتُكْوَىٰ` | passive/branding host only | fa' function, finite host, voice, and context |
+| `فَٱلْتَقَمَهُ` / `فَأَلْهَمَهَا` | host-only verb wording | fa' + finite host + attached object/referent |
+| `لَمَسَخْنَٰهُمْ` | verb family without `هُمْ` | lam/function + finite host + object suffix |
+| component rows | propagation-ready host family | full written-token parse and no live apply |
+
+VN-20 closes the finite tranche series with the same rule: a verb hover must
+teach the finite token, not the entry's infinitive prose.

@@ -70,6 +70,19 @@ gloss.
 - `ٱلسَّبْتِ` must stay exact-addressed when the visible hover leaks
   verb-infinitive prose into a noun token.
 
+## VN-20 examples
+
+- `سَيْنَآءَ` and `سِينِينَ` share a place-name family but still need exact
+  address, case, and context before family wording can propagate.
+- `طُوًۭى` and `أَقْطَارِ` require exact valley/place or side/region context
+  and i'rab role.
+- `بِبَدْرٍ` and `بِبَكَّةَ` require the bā' relation plus named-place host
+  and PP attachment; a place name alone drops visible grammar.
+- `مَكَّةَ` and `ٱلْكَعْبَةِ` need exact location, case, and contextual role.
+- `وَأَقْنَىٰ`, `وَأَكْدَىٰٓ`, `فَٱلْتَقَمَهُ`, and `فَأَلْهَمَهَا`
+  require function piece plus finite host and suffix where present before any
+  sibling propagation.
+
 ## Output
 
 Emit a token-only row with:

@@ -201,6 +201,25 @@ Rule: VN-19 suffix rows must state host type, suffix role, and referent/context
 before they can become learner-ready hovers. Noun hosts route to
 possessive/referent review; finite hosts route to object/addressee review.
 
+## Dogfood finding: VN-20 suffix rows include noun hosts and finite hosts
+
+VN-20 found many populated strings where the attached pronoun can still be
+invisible to the learner:
+
+- `مَنَاكِبِهَا` requires a plural noun host plus `هَا` possessor or
+  contextual referent; "pathways" alone is not rich-certified.
+- `بَيْنَهُمْ`, `بَيْنَكُم`, and `بَيْنَكُمْ` require relation wording plus
+  the attached pronoun target. A bare "between" hover is below certification.
+- `فَٱلْتَقَمَهُ`, `فَأَلْهَمَهَا`, and `لَمَسَخْنَٰهُمْ` are finite hosts
+  with object/referent suffixes and function pieces.
+- If a current hover can be read without the suffix, route it to exact-address
+  repair or blocker review instead of applying it.
+
+Rule: VN-20 suffix rows must name host type, suffix role, and referent/context.
+Noun hosts route to possessor/referent review; finite hosts route to
+object/addressee review; function-prefixed finite hosts additionally need
+particle/mood review.
+
 **Test:** [`nahw/evals/suffix-pronoun-eval.jsonl`](../evals/suffix-pronoun-eval.jsonl);
 rules [`nahw/rules/pronoun-attachment-rules.json`](../rules/pronoun-attachment-rules.json).
 

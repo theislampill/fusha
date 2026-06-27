@@ -485,3 +485,24 @@ than a token contribution:
 Rule: VN-19 finite rows remain exact-address repair candidates. A future hover
 must name the finite form, voice/aspect/mood where relevant, person/number/
 gender, and any attached object or function piece.
+
+## Dogfood finding: VN-20 final finite tranche still rejects entry prose
+
+VN-20 closes the verb/noun tranche series with another finite set where the
+current string is populated but not learner-certified:
+
+- `قَصَمْنَا`, `يَنقَضَّ`, `أَقْلِعِى`, `ٱنكَدَرَتْ`, `كُشِطَتْ`, and
+  `يَكْلَؤُكُم` need exact finite form, subject/agreement, weak or hamzated
+  root handling where relevant, and context before wording can propagate.
+- `وَأَقْنَىٰ`, `وَأَكْدَىٰٓ`, `فَتُكْوَىٰ`, `فَٱلْتَقَمَهُ`,
+  `فَأَلْهَمَهَا`, `لَمَسَخْنَٰهُمْ`, `وَنَمِيرُ`, and `وَٱنْحَرْ`
+  expose useful host evidence, but the whole token includes a function piece,
+  suffix, or mood/attachment decision.
+- `فَٱلْتَقَمَهُ`, `فَأَلْهَمَهَا`, and `لَمَسَخْنَٰهُمْ` are especially
+  unsafe because the learner must see the finite host and attached object or
+  referent before trusting the English.
+
+Rule: VN-20 finite rows remain exact-address repair candidates or
+component-only blockers. A populated infinitive such as "to bless" or "to
+swallow" is not a token hover until form, voice/aspect/mood, agreement,
+function pieces, and suffix objects are visible.

@@ -387,3 +387,21 @@ Rule: VN-19 component candidates must stay below the whole-token lane. Keep
 `source=rich_wbw_segment` component candidates separate from
 whole-token Qamus candidates, and keep the row at `component_only_blocker` or
 exact-address review until the full written token is parsed.
+
+## Dogfood finding: VN-20 component candidates must not certify final rows
+
+VN-20 repeated the component boundary in the final verb/noun tranche:
+
+- `وَأَقْنَىٰ` and `وَأَكْدَىٰٓ` expose verb-host evidence, but the initial
+  waw still belongs to the written token.
+- `فَتُكْوَىٰ`, `فَٱلْتَقَمَهُ`, and `فَأَلْهَمَهَا` add fa' plus a finite
+  host; the object suffix in the latter two must not disappear.
+- `لَمَسَخْنَٰهُمْ` adds lam plus a finite host plus `هُمْ`; none of those
+  pieces may be used as if they were a whole-token entry.
+- `وَنَمِيرُ` and `وَٱنْحَرْ` show that even simple-looking waw + host rows
+  stay below propagation until function and host form are certified.
+
+Rule: VN-20 component candidates may improve routing evidence, but they stay
+separate from whole-token candidates. They do not contribute to `auto_safe`,
+source agreement, propagation safety, closure coverage, hover coverage, or
+live apply.

@@ -368,3 +368,21 @@ VN-19 adds nominal rows where a populated string can still mis-teach the token:
 Rule: VN-19 nominal rows stay below rich certification until noun type,
 definiteness, case/state, number, suffix/referent, and nahw role are visible.
 Root or surface-family agreement alone is not enough.
+
+## Dogfood finding: VN-20 noun rows still reject verb-infinitive leakage
+
+VN-20 added a small but important POS leakage set:
+
+- `خَلْفٌ` is a nominal row. Do not teach it with an infinitive-shaped hover
+  such as "to succeed someone" unless the exact token is separately reviewed
+  as a noun and contextual role.
+- `جُنُبٍۢ` is a nominal/adjectival side-distance row. It needs case,
+  definiteness/state, and sentence role before wording can propagate.
+- `ٱلْأَسْوَاقِ`, `ٱلْكَعْبَةِ`, `ٱلْمَجَٰلِسِ`, `ٱلْجُودِىِّ`,
+  `ٱلصَّفَا`, and `ٱلْأَيْمَٰنَ` also show that article-bearing noun rows
+  can be string-populated while still needing rich article + host metadata.
+
+Rule: VN-20 nominal rows remain below rich certification until noun type,
+definiteness/article, case/state, number, suffix or referent where present, and
+nahw role are explicit. A verb-entry paraphrase on a noun token is a blocker,
+not a candidate hover.

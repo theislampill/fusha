@@ -457,3 +457,20 @@ or case/mood evidence.
 VN-19 keeps day, year, edge, and finite-function rows exact-addressed. Do not
 let common entry prose hide suffixes, wāw/fā'/lām functions, case/i'rab, or
 component-only evidence boundaries.
+
+## 4v. VN-20: preposition hosts, place names, and final component rows
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `بِبَدْرٍ` | ba' relation + place host + PP attachment | `Badr` as host-only hover |
+| `بِبَكَّةَ` | ba' relation + named place + case/context | `Bakkah` without the preposition |
+| `مَنَاكِبِهَا` | noun host plus `هَا` referent | host-only pathways/regions |
+| `بَيْنَهُمْ` / `بَيْنَكُمْ` | relational host plus attached pronoun target | bare `between` |
+| `وَأَقْنَىٰ` / `وَأَكْدَىٰٓ` | waw function + finite host | component host evidence as whole hover |
+| `فَٱلْتَقَمَهُ` / `فَأَلْهَمَهَا` | fa' + finite host + suffix object/referent | host-only verb wording |
+| `خَلْفٌ` / `جُنُبٍۢ` | nominal/POS and case review | verb-infinitive leakage |
+| renderer-only rows | rich metadata backfill if wording survives review | string presence as certification |
+
+VN-20 keeps every final-tranche candidate read-only. Prepositions, relational
+nouns, suffixes, and component-only rows need exact-address sarf/nahw proof
+before any live apply plan.

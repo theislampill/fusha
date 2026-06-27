@@ -245,3 +245,18 @@ role, and nahw context.
 Rule: VN-19 noun rows can be populated and still unteachable. A rich hover
 needs noun type, number, definiteness, case/state, suffix/referent where
 present, and nahw role.
+
+## <a name="vn20-nominal-final"></a>22. VN-20: nominal rows, place names, and POS leakage
+
+| token | tempting shortcut | required review |
+|---|---|---|
+| `خَلْفٌ` | verb-like "to succeed someone" | noun token, case, and context |
+| `جُنُبٍۢ` | broad side/distance prose | nominal/adjectival role and case |
+| `ٱلْأَسْوَاقِ` | bare marketplaces | article + plural noun host + case |
+| `ٱلْكَعْبَةِ` / `بِبَكَّةَ` | place name only | case and governing relation |
+| `ٱلْمَجَٰلِسِ` | host-only gathering place | article, plural noun, and i'rab role |
+| `ٱلْأَيْمَٰنَ` / `ٱلْيَمِينِ` | broad right/oath family | exact noun sense, case, and context |
+
+Rule: VN-20 noun rows can be populated and still below rich certification. A
+learner-ready hover needs noun type, definiteness/article, case/state, number,
+suffix or relation where present, and the nahw role.
