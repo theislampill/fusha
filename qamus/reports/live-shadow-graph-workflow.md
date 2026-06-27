@@ -420,6 +420,136 @@ Mirror mismatch classification remains unchanged and report-only:
 
 `content-equivalent-or-near-equivalent; metadata/source-hash divergent; not safe for mutation until separately reconciled`.
 
+## Phase 2.9 Seal Refresh - 2026-06-27
+
+Status: supersedes the preceding closeout refresh for Phase 2.9 sealing. This
+was still a graph/readiness run only: no live Qamus mutation, no WBW rebuild, no
+service restart, no mirror sync, and no hover coverage claim.
+
+Head separation:
+
+- `validated_code_head`: `e04e36821f8a21a35bd9e09fa364fa8af1cc6343`
+- `report_head`: the containing report-only commit after this section is committed
+- pushed branches validated before the live-readonly run: `main` and
+  `codex/phase2-shadow-graph` both pointed at
+  `e04e36821f8a21a35bd9e09fa364fa8af1cc6343`
+
+Server-side shadow artifacts:
+
+- fresh tools checkout:
+  `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-tools-e04e368-20260627-002844/repo`
+- shadow output:
+  `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-e04e368-20260627-002844`
+- closeout summary:
+  `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-e04e368-20260627-002844/phase2p9-closeout-summary.json`
+
+Single-run counts from the sealed live-readonly shadow build:
+
+- entries: `2,092` (`noun=1045`, `verb=947`, `particle=100`)
+- token universe: `49,900`
+- live word records: `49,260`
+- unresolved tokens: `640`
+- token decisions: `9,111`
+- parse keys: `17,065`
+- nodes: `153,033`
+- edges: `254,526`
+- decision index rows: `9,106`
+- backlink top-level keys: `143,734`
+- orphan edges: `0`
+- public success leak count: `0`
+
+Parse-family classes:
+
+- `propagation_safe`: `1,870`
+- `token_only_required`: `4,530`
+- `human_review_required`: `517`
+- `quarantine_collision`: `585`
+- `unknown_parse`: `9,552`
+- `two_vote_required`: `11`
+
+Lane token counts:
+
+- `propagation_safe_candidate`: `18,038`
+- `token_only_required`: `4,530`
+- `human_review_required`: `640`
+- `quarantine_collision`: `5,580`
+- `unknown_parse`: `21,101`
+- `two_vote_required`: `11`
+
+Detector maturity remains explicit:
+
+- `two_vote_required`: `partial_shadow_gate`
+- `source_disagreement`: `reserved_detector_gap`
+- `zero_count_policy`: `zero_does_not_prove_absence`
+
+Rich WBW role taxonomy:
+
+- rich parse rows: `12`
+- observed roles: `13`
+- strict taxonomy risks: `0`
+- explicitly gated roles: `addressee_bridge=1`, `adjectival_state=1`, `conjunction=5`,
+  `object_pronoun=2`, `preposition=1`, `result_particle=1`, `resumption_particle=1`,
+  `vocative_particle=1`
+- explicitly allowlisted roles: `definite_article=7`, `imperfect_prefix=1`, `noun=7`,
+  `verb=2`, `verb_stem=1`
+- unknown roles: `0`
+- no explicitly gated role appeared in an `auto_safe` gate or `propagation_safe` lane
+- anti-vacuity guard is active: strict rich-role taxonomy fails if parse-key rows,
+  rich rows, or observed roles are unexpectedly zero
+
+Required rich gate cases were re-confirmed as `two_vote_required` and non-propagating:
+
+- `quran:22:18:13` `وَٱلشَّمْسُ`
+- `quran:22:18:14` `وَٱلْقَمَرُ`
+- `quran:22:18:15` `وَٱلنُّجُومُ`
+- `quran:22:18:16` `وَٱلْجِبَالُ`
+- `quran:22:18:17` `وَٱلشَّجَرُ`
+- `quran:2:178:22` `بِٱلْمَعْرُوفِ`
+- `quran:2:21:1` `يَٰٓأَيُّهَا`
+
+Component-candidate guardrail remains active:
+
+- rich WBW segment evidence is stored separately from whole-token Qamus candidates
+- compact component joins require `source=rich_wbw_segment`, role, segment text, and
+  exact token loc provenance
+- component candidates cannot weaken a row into `auto_safe`, cannot certify source
+  agreement, and cannot count as closure or hover coverage
+
+Validator evidence from the sealed run:
+
+- `python3 tools/build_live_shadow_graph.py --live-readonly --no-live-write ...` -> `PASS`
+- `python3 tools/validate_phase1_shadow_graph.py <shadow-output>` -> `PASS`
+- `python3 tools/validate_live_shadow_run_manifest.py <shadow-output>/phase2-run-manifest.json --expect-live-counts` -> `PASS`
+- `python3 tools/summarize_shadow_closure_queue.py <shadow-output> --out-json ... --review-lane two_vote_required` -> `PASS`
+- `python3 tools/validate_shadow_review_pack.py <review-pack>` -> `PASS`
+- `python3 tools/validate_detector_maturity.py <review-pack>` -> `PASS`
+- `python3 tools/summarize_rich_wbw_roles.py --parse-keys <shadow-output>/parse-keys.jsonl --strict` -> `PASS`
+- `python3 tools/validate_rich_wbw_gate_cases.py --parse-keys <shadow-output>/parse-keys.jsonl --review-pack <review-pack>` -> `PASS`
+- `python3 tools/scan_public_boundary.py --public https://qamus.dawah.wiki/e/5935ecfb1ec5 --internal <live-wbw> --shadow-dir <shadow-output>` -> `PASS`, public leak count `0`
+- `python3 tools/compare_wbw_artifacts.py <live-wbw> <mirror-wbw>` -> report-only comparison completed
+
+Public/private boundary from the sealed scan:
+
+- public sampled page: `https://qamus.dawah.wiki/e/5935ecfb1ec5`
+- HTTP status: `200`
+- public leak count: `0`
+- internal-only provenance count: `5`
+- private path leak count: `0`
+- live WBW internal-only provenance labels remain present internally:
+  `Tanzil`, `informed_by`, `qac`, `tafsir`, `mcp`
+
+Mirror mismatch classification remains report-only:
+
+`content-equivalent-or-near-equivalent; metadata/source-hash divergent; not safe for mutation until separately reconciled`.
+
+Mirror comparison details:
+
+- added in live: `0`
+- removed from live: `0`
+- changed common token locs: `0`
+- live WBW SHA: `4725e739a9b46293892574e4bdd04d32690a325ad2f641439cf1b9a74f7d48f5`
+- mirror WBW SHA: `8e14ecab70fbb21588e97e208c21015c8ead0dd7bb08e85667ea54a51dffb79d`
+
 ## Full-Corpus Hover Dogfood Audit Lane
 
 Status: added as a read-only audit lane after the Phase 2.9 graph/readiness seal. This lane does not reopen Phase 2.9
