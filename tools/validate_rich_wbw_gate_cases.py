@@ -162,7 +162,8 @@ def join_preserves_component_provenance(join, loc):
         source = join.get("source")
         role = join.get("role")
         segment = join.get("segment_text")
-        return source == "rich_wbw_segment" and bool(role) and bool(segment)
+        token_loc = join.get("token_loc")
+        return source == "rich_wbw_segment" and bool(role) and bool(segment) and token_loc == loc
     return (
         "source:rich_wbw_segment" in statuses
         and any(str(status).startswith("role:") for status in statuses)
@@ -343,6 +344,43 @@ def self_test():
         errors = validate(parse_keys, review_pack)
         if errors:
             print("SELF-TEST FAIL: valid rich gate cases were rejected")
+            for error in errors:
+                print("  " + error)
+            return 1
+        compact_bad_rows = list(review_rows)
+        compact_bad_rows[0] = dict(compact_bad_rows[0])
+        first_roles = sorted(DEFAULT_CASES[compact_bad_rows[0]["quran_locs"][0]]["roles"])
+        compact_bad_rows[0]["component_candidate_join_statuses"] = [
+            {
+                "entry": "qamus:p:compact",
+                "source": "rich_wbw_segment",
+                "role": role,
+                "segment_text": role,
+            }
+            for role in first_roles
+        ]
+        write_jsonl(review_pack, compact_bad_rows)
+        errors = validate(parse_keys, review_pack)
+        if not any("token provenance" in error for error in errors):
+            print("SELF-TEST FAIL: compact component join without token_loc was not rejected")
+            return 1
+        compact_good_rows = list(review_rows)
+        compact_good_rows[0] = dict(compact_good_rows[0])
+        first_loc = compact_good_rows[0]["quran_locs"][0]
+        compact_good_rows[0]["component_candidate_join_statuses"] = [
+            {
+                "entry": "qamus:p:compact",
+                "source": "rich_wbw_segment",
+                "role": role,
+                "segment_text": role,
+                "token_loc": first_loc,
+            }
+            for role in first_roles
+        ]
+        write_jsonl(review_pack, compact_good_rows)
+        errors = validate(parse_keys, review_pack)
+        if errors:
+            print("SELF-TEST FAIL: compact component join with token_loc was rejected")
             for error in errors:
                 print("  " + error)
             return 1

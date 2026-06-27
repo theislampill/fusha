@@ -130,6 +130,12 @@ def summarize(parse_keys_path):
         rows.append(bucket)
     rows.sort(key=lambda item: item["role"])
     risks = []
+    if total_parse_rows == 0:
+        risks.append("no parse-key rows found")
+    if rich_parse_rows == 0:
+        risks.append("no rich WBW segment rows found")
+    if not rows:
+        risks.append("no rich WBW segment roles observed")
     for row in rows:
         if row["policy"] == "unknown":
             risks.append("unknown role: %s" % row["role"])
@@ -256,10 +262,26 @@ def self_test():
         good = os.path.join(td, "good.jsonl")
         bad = os.path.join(td, "bad.jsonl")
         unknown = os.path.join(td, "unknown.jsonl")
-        for path, rows in ((good, good_rows), (bad, bad_rows), (unknown, unknown_rows)):
+        empty = os.path.join(td, "empty.jsonl")
+        no_rich = os.path.join(td, "no-rich.jsonl")
+        no_rich_rows = [
+            {
+                "id": "parse:no-rich",
+                "family_size": 1,
+                "family_class": "token_only_required",
+                "gates": ["auto_safe"],
+                "seen_locs": ["quran:1:1:1"],
+                "canonical_parse_object": {
+                    "surface_raw": "x",
+                    "token_internal_segments": [],
+                },
+            }
+        ]
+        for path, rows in ((good, good_rows), (bad, bad_rows), (unknown, unknown_rows), (no_rich, no_rich_rows)):
             with open(path, "w", encoding="utf-8", newline="\n") as handle:
                 for row in rows:
                     handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+        open(empty, "w", encoding="utf-8").close()
         good_summary = summarize(good)
         if not good_summary["strict_pass"]:
             print("SELF-TEST FAIL: good taxonomy should pass: %r" % good_summary["risks"])
@@ -271,6 +293,14 @@ def self_test():
         unknown_summary = summarize(unknown)
         if unknown_summary["strict_pass"] or not any("surprise_role" in risk for risk in unknown_summary["risks"]):
             print("SELF-TEST FAIL: unknown role was not caught: %r" % unknown_summary["risks"])
+            return 1
+        empty_summary = summarize(empty)
+        if empty_summary["strict_pass"] or not any("no parse-key rows" in risk for risk in empty_summary["risks"]):
+            print("SELF-TEST FAIL: empty taxonomy passed: %r" % empty_summary["risks"])
+            return 1
+        no_rich_summary = summarize(no_rich)
+        if no_rich_summary["strict_pass"] or not any("no rich WBW segment rows" in risk for risk in no_rich_summary["risks"]):
+            print("SELF-TEST FAIL: no-rich taxonomy passed: %r" % no_rich_summary["risks"])
             return 1
     print("PASS — rich WBW segment role taxonomy self-test")
     return 0
