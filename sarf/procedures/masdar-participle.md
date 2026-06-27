@@ -40,6 +40,23 @@ diacritized wazn; the bare root never certifies a shape.
 - Reading a maṣdar's harakāt off a bare root (the ذِكْر / ذَكَر / ذَكَرَ pull;
   [`../references/masdar-participle-notes.md`](../references/masdar-participle-notes.md)).
 
+## Dogfood finding: populated hover is not shape certification
+
+The full-corpus dogfood pass found populated hovers where a live token was a nominal derivative or nominal result
+but inherited the Qamus entry's infinitive/root gloss. Examples:
+
+- `ٱلْمُفْلِحُونَ` (2:5:8) carried "to succeed", but the token is a plural active-participle/nominal group:
+  "the successful ones".
+- `بِنَآءً` (2:22:7) carried "to build", but the token is a noun/result, not a finite verb.
+- `مُّطَهَّرَةٌ` (2:25:31) carried "to purify", but the token is a passive participle/adjectival form:
+  "purified".
+- `جَاعِلٌ` (2:30:6) carried "to make", but the token is an active participle: "one who makes/places".
+
+Treat this as `populated_hover_pos_leakage`: visible text exists, but it is not dogfood-complete until the
+hover's English shape matches the token's sarf shape. A nominal token with a "to ..." hover routes to token-only
+review plus production-bug lesson/regression fixture; it is never repair-ready merely because the root meaning is
+recognizable.
+
 **Example 1 — the كَظِيم repair lesson.** Surface كَظِيمٌ (12:84, 16:58, 43:17), root ك ظ م. The wazn is **فَعِيل
 = ṣifa mushabbaha**, so the shape is `quality`, not an act. The shipped gloss read *"to suppress (or choke with)
 anger or distress"* — a finite verb on a quality-adjective. Reshaped to **"(one) suppressing his grief; filled

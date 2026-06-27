@@ -31,6 +31,15 @@ Public record stays exactly `{src:"qamus",kind:"authored",lang:"en"}` — the ma
 ambiguous ending pick the commoner reading; reading a fixed pronoun/particle vowel as a case marker; shipping a
 case/mood decision on the answer alone — a correct gloss with wrong iʿrāb reasoning is unsafe and must be rejected.
 
+## Dogfood handoff: iʿrāb cannot rescue POS leakage
+
+If sarf identifies a token as a noun, adjective, maṣdar, active participle, passive participle, or ṣifa but the
+visible hover is an English infinitive (`to ...`), return it to sarf shape review before assigning a syntactic role.
+Case/iʿrāb can explain *where the nominal sits* — subject, predicate, object, ḥāl, tamyīz, majrūr, and so on — but
+it cannot make a nominal token into a finite verb hover. Dogfood examples include `ٱلْمُفْلِحُونَ` with "to
+succeed", `بِنَآءً` with "to build", and `جَاعِلٌ` with "to make". These rows remain token-only/two-vote until the
+nominal contribution is authored; do not certify them by adding an iʿrāb label over the wrong English shape.
+
 **Why two votes:** iʿrāb assignment and mood→tense flips are the GrammarProblems study's worst area (signs of
 iʿrāb; building of the present verb — جزم/نصب of the muḍāriʿ). LLM self-assurance collapses exactly here, so any
 case/mood-affecting decision is **`two_vote_required`, hover `never_auto`** (mood-tense flips may be

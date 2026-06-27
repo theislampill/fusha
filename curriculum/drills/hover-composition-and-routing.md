@@ -52,6 +52,8 @@ hover wording.
 | `يَابِسٍ` | lexical host only | not every initial yā is a vocative; sarf must block false `يا` splitting |
 | `وَخُلِقَ` | wāw + passive perfect verb | phrase may be correct while still missing resumption/passive proof |
 | `ضَعِيفًۭا` | nominal/adjectival host + accusative indefinite ending | "weak" is not rich-certified until case/role and entry linkage are explicit |
+| `ٱلْمُفْلِحُونَ` | `ٱل` + nominal active-participle plural host | reject entry-root "to succeed"; token contributes "the successful ones" |
+| `بِنَآءً` | nominal result/object form | reject verb gloss "to build"; token contributes a noun such as "a structure/building/canopy" |
 
 ## Parse-key handoff
 

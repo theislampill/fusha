@@ -37,3 +37,15 @@ rule → recognition Q → production Q → answer. Generated/extendable from
 ## <a name="false-split"></a>7. False clitic split (segmentation)
 - ٱلْمُلْك ≠ مُلك+ك (ك is a radical); لَهُ = "for him" (preposition+pronoun); قُرْءَانًا ≠ stem+نا (tanwīn-alif);
   رَحْمَة's ة is feminine, not the pronoun ه. Drill: segment each into proclitic+stem+enclitic by morphology.
+
+## <a name="populated-pos-leak"></a>8. Populated hover still wrong: nominal POS leakage
+- Pair: أَفْلَحَ "to succeed" / ٱلْمُفْلِحُونَ "the successful ones". Rule: a live hover can be populated and still
+  fail dogfooding if it uses the entry/root infinitive on a nominal token.
+- Recognition: `ٱلْمُفْلِحُونَ` currently carrying "to succeed" is not rich-certified. It is a plural nominal
+  contribution — **"the successful ones"** — and needs token-only review.
+- Recognition: `بِنَآءً` carrying "to build" is a noun/result such as **"a structure / building / canopy"**, not the
+  verb "to build".
+- Recognition: `مُّطَهَّرَةٌ` carrying "to purify" is a passive participle/adjectival form: **"purified"**.
+- Production: reshape `جَاعِلٌ` from "to make" to an active participle contribution: **"one who makes/places"**.
+- Gate: these are `populated_hover_pos_leakage` rows. Do not move them to repair-ready until exact token address,
+  sarf shape, and token contribution are reviewed; do not propagate by surface family.
