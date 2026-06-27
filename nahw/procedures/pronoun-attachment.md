@@ -135,6 +135,22 @@ Rule: if a populated hover is readable without the suffix, it is not
 rich-certified. Route noun hosts to possessive/referent review and verb hosts
 to object/subject/addressee review.
 
+## Dogfood finding: VN-16 suffixes must name host type
+
+VN-16 adds another exact-address suffix set:
+
+- `يَكْبِتَهُمْ`, `لِتَلْفِتَنَا`, `أَلْفَيْنَا`, `نُنَكِّسْهُ`,
+  `فَهَزَمُوهُم`, `يَتِرَكُمْ`, `فَـَٔازَرَهُۥ`, and `تَؤُزُّهُمْ`
+  are finite verb hosts with object/addressee or referent-sensitive suffixes.
+- `لُحُومُهَا` is a nominal host whose suffix is possessive or referent
+  sensitive by context.
+- Component-only suffix rows remain blocked until the whole token proves host
+  POS, suffix role, and the contextual referent.
+
+Rule: the suffix row is not certified by showing only the host gloss. Record
+whether the suffix is object, possessor, subject/agreement, or referent, and
+route uncertain cases to two-vote review.
+
 **Test:** [`nahw/evals/suffix-pronoun-eval.jsonl`](../evals/suffix-pronoun-eval.jsonl);
 rules [`nahw/rules/pronoun-attachment-rules.json`](../rules/pronoun-attachment-rules.json).
 

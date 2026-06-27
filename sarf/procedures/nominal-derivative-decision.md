@@ -293,3 +293,21 @@ Rule: if the exact surface is a noun, adjective, elative, masdar, participle,
 or lexical noun, block verb-infinitive reuse even when the entry family is
 morphologically related. Rich certification needs the nominal class plus
 case/state, article, and suffix/referent contribution.
+
+## Dogfood finding: VN-16 material nouns, participles, and lexical rows
+
+VN-16 adds another mixed tranche where entry-family evidence can misroute the
+learner hover:
+
+- `مُكِبًّا` is not a finite verb; route it as participial/nominal or hāl-like
+  by exact context before wording.
+- `لَذَّةٍ`, `لَّذَّةٍۢ`, `ٱللُّؤْلُؤُ`, `ٱللُّؤْلُؤِ`,
+  `ٱلْحَدِيدِ`, `ٱلْحَدِيدَ`, `ٱلْقِطْرِ`, and `ٱلْيَاقُوتُ`
+  are lexical/material noun rows. Their article, case/state, number, and
+  context must be visible before rich certification.
+- `لُحُومُهَا` is a noun host plus suffix/referent row. Do not accept
+  "flesh, meat" as learner-complete until `هَا` is accounted for.
+
+Rule: material nouns and participles can be string-correct but not
+rich-certified. Keep them in renderer/nominal review or exact-address repair
+until noun type, definiteness, case/state, and suffix contribution are clear.

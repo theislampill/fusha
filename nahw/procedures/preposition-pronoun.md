@@ -186,3 +186,19 @@ Use `not_clitic_surface_prefix` when segmentation does not prove a real
 preposition/comparison particle. Use `preposition_role_uncertified` or
 `pp_attachment_uncertified` when the particle is real but relation or
 attachment is not certified.
+
+## Dogfood finding: VN-16 lexical bā' and lām are not particles
+
+VN-16 shows why raw first-letter detectors must stay subordinate to strict
+segmentation:
+
+- `لِتَلْفِتَنَا` is a real lām-on-verb candidate and needs lām function,
+  mood/governor, finite host, and `نَا` object review.
+- `لِبَاسٌۭ` is a lexical noun, not a lām governor merely because it begins
+  with lām and kasrah.
+- `بِضَٰعَةًۭ`, `بِضَاعَتَهُمْ`, `بِضَٰعَتُنَا`, and
+  `بِضَٰعَتَهُمْ` are merchandise/possession rows whose initial bā' belongs
+  to the host unless segmentation proves a separate preposition.
+
+Rule: mark false positives as `not_clitic_surface_prefix`. Only a segmented
+particle can enter preposition/comparison/lām-function review.

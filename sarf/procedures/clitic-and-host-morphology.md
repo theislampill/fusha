@@ -313,3 +313,21 @@ pieces:
 Rule: component evidence can route review, lessons, and blocker queues. It
 cannot contribute to `auto_safe`, source agreement, propagation safety,
 closure coverage, hover coverage, or live apply.
+
+## Dogfood finding: VN-16 component rows still block whole-token reuse
+
+VN-16 repeated the component boundary in rows such as `فَكُبْكِبُوا`,
+`فَكُبَّتْ`, `وَيُكَوِّرُ`, `وَتَلَذُّ`, `لِتَلْفِتَنَا`,
+`وَٱلْتَفَّتِ`, `وَأَلْفَيَا`, and `يَمْحُوا۟`.
+
+These may reveal useful host-family evidence, but the whole written token still
+needs:
+
+- the prefixed function piece, if any;
+- the finite or nominal host;
+- every visible suffix pronoun;
+- the nahw function/mood/attachment when a particle governs the host.
+
+Rule: in VN-16, component candidates remain review fuel only. They may create
+blocker rows and drills; they must not create whole-token certification or
+family-wide propagation.

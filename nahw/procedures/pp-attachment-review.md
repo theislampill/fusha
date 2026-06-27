@@ -149,3 +149,15 @@ For these rows, a string-plausible relation is not enough. Record:
 Rows with only host evidence or missing attachment head remain
 `pp_attachment_uncertified` or `two_vote_exact_address_review`, not live
 decisions.
+
+## Dogfood finding: VN-16 attachment starts after segmentation
+
+VN-16 found mostly detector boundary rows rather than certified PP rows:
+`لِتَلْفِتَنَا` needs lām function and mood review, while `لِبَاسٌۭ` and
+`بِضَاعَتَهُمْ` are lexical-host rows unless a separate particle is proved.
+
+Attachment review therefore begins only after sarf/segmentation says there is
+a real particle or comparison prefix. Once that is proved, record the governed
+host, case/mood effect, attachment head, and whether English wording depends
+on the attachment. Without those, the row stays a repair candidate or blocker,
+not a live decision.

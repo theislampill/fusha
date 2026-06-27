@@ -390,3 +390,19 @@ VN-15 adds a false-positive guard: detectors may flag bā/kāf/lām-looking
 surfaces, but nahw should only route them as PP/function rows when segmentation
 proves a real particle. If the particle is real, attachment and relation still
 need exact-address evidence before live apply.
+
+## 4r. VN-16 finite suffixes and false-prefix boundaries
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `لِتَلْفِتَنَا` | lām function/mood + finite host + `نَا` object | treating host evidence as a complete hover |
+| `يَكْبِتَهُمْ` / `فَهَزَمُوهُم` | verb object/referent review | dictionary infinitive without the object suffix |
+| `لُحُومُهَا` | noun host plus suffix/referent review | host-only `meat/flesh` |
+| `لِبَاسٌۭ` | lexical noun; not a lām governor by raw first letter | false lām-prefix review |
+| `بِضَاعَتَهُمْ` / `بِضَٰعَتُنَا` | lexical noun host plus suffix | false bā'-preposition lane |
+| `فَكُبْكِبُوا` / `فَكُبَّتْ` | component-only blocker until whole token is certified | component host evidence as propagation proof |
+| renderer-only rows | rich metadata backfill if wording survives review | claiming correctness from populated text |
+
+VN-16 makes the segmentation step explicit: a real lām, bā', or fā' must be
+proved before nahw routes the row as a governor or attachment. If the letter is
+part of the lexical host, the row stays in sarf/POS or suffix review.

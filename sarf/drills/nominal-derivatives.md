@@ -186,3 +186,17 @@ rule → recognition Q → production Q → answer. Generated/extendable from
 - Gate: a verb source key is only candidate evidence. If the exact token is a
   noun, adjective, participle, elative, color adjective, or masdar, route to
   nominal/POS review and keep `may_apply_live=false`.
+
+## <a name="vn16-material-nouns"></a>18. VN-16: material nouns, participles, and possessed hosts
+
+- Recognition: `مُكِبًّا` is a participial/nominal surface inside a verb-family
+  review lane. It is not automatically a finite verb hover.
+- Recognition: `لَذَّةٍ` and `لَّذَّةٍۢ` are lexical/masdar-like noun rows whose
+  case/state and sentence role matter before a hover can teach them.
+- Recognition: `ٱللُّؤْلُؤُ`, `ٱللُّؤْلُؤِ`, `ٱلْحَدِيدِ`,
+  `ٱلْحَدِيدَ`, `ٱلْقِطْرِ`, and `ٱلْيَاقُوتُ` are material nouns. Their
+  definiteness/case is part of the token, not decoration.
+- Recognition: `لُحُومُهَا` is a plural noun host plus suffix/referent. A
+  host-only gloss does not explain the written token.
+- Gate: exact noun type, state, case, number, and suffix must be named before a
+  nominal row can move beyond `populated_uncertified`.

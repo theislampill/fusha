@@ -410,3 +410,23 @@ Rule: VN-15 rows may be repair candidates, but none are token decisions. Keep
 finite rows in exact-address review until the verb form, mood/governor where
 relevant, subject/object suffixes, and component-vs-whole-token boundary are
 all visible to the learner.
+
+## Dogfood finding: VN-16 passive and suffix-heavy finite rows
+
+VN-16 found finite rows whose populated strings can sound plausible while still
+missing form, voice, or object accounting:
+
+- `كُبِتَ`, `كُبِتُوا۟`, and `كُوِّرَتْ` require passive/voice and
+  agreement review. Do not reduce them to entry prose such as "to debase" or
+  "to wrap around".
+- `يَكْبِتَهُمْ`, `أَلْفَيْنَا`, `نُنَكِّسْهُ`, `فَهَزَمُوهُم`,
+  `يَتِرَكُمْ`, `فَـَٔازَرَهُۥ`, and `تَؤُزُّهُمْ` require the finite host
+  plus attached object/referent suffix. A learner hover that can be read
+  without the suffix is still below certification.
+- `لِتَلْفِتَنَا` adds a lām-governed finite host plus `نَا`; sarf can identify
+  the host and suffix, but nahw must certify the lām function and mood before
+  wording can propagate.
+
+Rule: VN-16 rows remain exact-address repair candidates. Passive voice,
+reduplicated/derived stems, and object suffixes are part of the token
+contribution, not optional metadata.

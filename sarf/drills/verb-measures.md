@@ -307,3 +307,19 @@ Rule: rewrite each entry prose line into a token-aware gloss candidate only
 after naming the finite form, subject/agreement, object suffix, and any
 governing function. If those fields are missing, route the row to exact-address
 review or component-only blocker.
+
+## U. VN-16 dogfood: passive finite rows and hidden objects
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `كُبِتَ` / `كُبِتُوا۟` | bare `to debase` | passive/voice, finite agreement, and context |
+| `كُوِّرَتْ` / `يُكَوِّرُ` | root-family `to wrap around` | form, voice/aspect, subject/agreement |
+| `يَكْبِتَهُمْ` | entry prose without `هُمْ` | finite host plus attached object/referent |
+| `لِتَلْفِتَنَا` | host-only turning/glance wording | lām function + finite host + `نَا` object |
+| `فَهَزَمُوهُم` | `to defeat` alone | fā' function + finite host + `هُم` object |
+| `نُنَكِّسْهُ` / `تَؤُزُّهُمْ` | dictionary infinitive only | derived finite host plus suffix/referent |
+| component-only finite rows | host candidate as whole-token proof | exact token parse and no live apply |
+
+VN-16 keeps the same hard rule: a finite verb hover is not certified by the
+entry's infinitive prose. Passive voice, derived form, subject/agreement, and
+attached objects are learner-visible parts of the token.
