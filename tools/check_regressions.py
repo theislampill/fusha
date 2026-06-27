@@ -1528,6 +1528,40 @@ check("VN-20 sample keeps nominal/POS leakage rows gated", _vn20_nominal_pos_gat
 check("VN-20 sample keeps suffix, relation, and token-only rows gated", _vn20_suffix_relation_gated)
 check("VN-20 sample contains no live-applyable candidate rows", _vn20_no_auto_apply)
 
+try:
+    _rich_sample_dir = os.path.join(_R, "qamus", "examples")
+    _rich_exact_ok = True
+    _rich_exact_checked = 0
+    _rich_exact_bad = None
+    for _name in sorted(os.listdir(_rich_sample_dir)):
+        if not (_name.startswith("rich_hover_") and _name.endswith(".sample.jsonl")):
+            continue
+        if "_evidence." in _name:
+            continue
+        _path = os.path.join(_rich_sample_dir, _name)
+        for _lineno, _line in enumerate(io.open(_path, encoding="utf-8"), 1):
+            _line = _line.strip()
+            if not _line:
+                continue
+            _row = json.loads(_line)
+            _segments = _row.get("segments") or []
+            if not _segments:
+                continue
+            _rich_exact_checked += 1
+            _concat = "".join(_seg.get("surface", "") for _seg in _segments)
+            if _concat != _row.get("surface"):
+                _rich_exact_ok = False
+                _rich_exact_bad = "%s:%s:%s" % (_name, _lineno, _row.get("loc"))
+                break
+        if not _rich_exact_ok:
+            break
+    check("rich-hover sample segment surfaces concatenate exactly (%d rows)" % _rich_exact_checked,
+          _rich_exact_ok and _rich_exact_checked >= 400)
+    if _rich_exact_bad:
+        print("  first mismatch:", _rich_exact_bad)
+except Exception:
+    check("rich-hover sample segment-surface exactness check runnable", False)
+
 for _script, _args, _label in (
         ("build_live_shadow_graph.py", ["--self-test"], "Phase2 live shadow graph builder self-test"),
         ("validate_phase1_shadow_graph.py", ["--self-test"], "Phase2 shadow graph validator self-test"),
