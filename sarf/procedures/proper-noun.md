@@ -87,3 +87,21 @@ entry is still not rich-certified:
 If a name-like row has a safe-looking string but null proper/common, case, or
 POS metadata, classify it `populated_uncertified` or `needs_renderer_segments`,
 not `rich_certified`.
+
+## Dogfood finding: VN-03 group, prophet, and common collisions
+
+VN-03 found more surface-family collisions:
+
+- `هُودًا` may be the ethnonym/group reading "Jews" or the Prophet Hūd
+  depending on vocalization and context. Do not let a `يَهُود` group entry
+  certify a prophet-name row, or the reverse.
+- `وُدًّا` / `وَدًّا` can be common "love" or a named idol/person context.
+  Referent context must decide.
+- `ٱلرُّومُ`, `قُرَيْشٍ`, `نَصْرَانِيًّا`, `قِسِّيسِينَ`, and
+  `ٱلْأَحْبَارِ` are group/person/occupational nouns with number and role
+  morphology. A good-looking group label is still not rich certification
+  unless the token's number, definiteness, and referent class are recorded.
+
+Group nouns, singular nisba forms, prophet names, idols, and common nouns must
+not propagate through one surface family. Use exact address plus referent and
+POS evidence.

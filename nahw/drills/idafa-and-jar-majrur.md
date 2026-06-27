@@ -161,3 +161,16 @@ only matched under `norm()` (seat dropped), reject it with `pending: seat_collap
 Rule: after a preposition or oath particle, a nominal host is not certified by a
 verb entry. Preserve the relation and the case/possessor before polishing the
 English.
+
+## VN-03 dogfood: dīn, covenant, and possessed nominal rows
+
+| token | visible pieces | unsafe hover |
+|---|---|---|
+| `ٱلدِّينِ` | definite/genitive lexical noun, often in construct context | verbal prose "to be bound..." |
+| `دِينُكُمْ` | noun host + `كُمْ` possessor | broad entry prose with no "your" contribution |
+| `بِعَهْدِ` | attached bā' + majrūr noun | "to make a covenant..." verb definition |
+| `زِينَتَهُنَّ` | noun host + `هُنَّ` possessor | verb-family adornment prose with hidden possessor |
+
+Rule: a token can be semantically related to a verb family while still being a
+governed noun or possessed noun in the āyah. Nahw must preserve the relation
+and possessor before any polished English is accepted.

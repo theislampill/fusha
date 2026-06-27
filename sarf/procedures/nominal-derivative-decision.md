@@ -36,3 +36,24 @@
 ## Test
 `evals/nominal-derivative-error-eval.jsonl` — every row's `expected_decision` must hold; a change that
 re-introduces a verb gloss for عَلِيم/كَظِيم/عَادٍ is wrong.
+
+## Dogfood finding: VN-03 nominal rows inside verb families
+
+The VN-03 tranche found nominal/adjectival rows that were still linked through
+verb-entry or component evidence:
+
+- `ضَعِيفًا` is an accusative indefinite nominal/adjectival token. The visible
+  word "weak" may be reasonable, but a verb-entry component cannot certify its
+  noun/adjective role or i'rab.
+- `ٱلدِّينِ`, `دِينُكُمْ`, and other `دِين` rows are lexical nouns in
+  definite, genitive, or possessed constructions. Reject "to be bound..." as a
+  token hover unless the exact row is actually verbal.
+- `مُسَلَّمَةٌ`, `مُسْلِمَيْنِ`, `مُسْلِمَات`, and `ٱلْمُسْلِمُونَ` are
+  shaped nominal/participle/person tokens. The abstract concept "Islam" is
+  curriculum metadata, not a complete hover for these surfaces.
+- `زِينَتَهُنَّ` and similar rows carry a nominal host plus possessor even
+  when they sit in a verb/root family.
+
+When a token is nominal but the only evidence is a verb/root family, route to
+`token_only_review` or `component_only_blocker`. Do not let component
+candidates become whole-token certification.

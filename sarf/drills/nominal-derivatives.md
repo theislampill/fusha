@@ -84,3 +84,20 @@ rule → recognition Q → production Q → answer. Generated/extendable from
 - Gate: proper-name, title, and common/adjectival uses remain
   `populated_uncertified` until proper/common status, case, and source address
   are explicit. A safe-looking name string is not rich certification.
+
+## <a name="vn03-noun-verb-entry"></a>12. VN-03: noun surfaces inside verb or concept entries
+
+- Recognition: `ضَعِيفًا` carrying only component evidence from a verb entry
+  is not a finite verb. It is an accusative indefinite nominal/adjectival token;
+  exact i'rab still gates rich certification.
+- Recognition: `ٱلدِّينِ` carrying "to be bound..." is a noun in a definite or
+  genitive construction, not a verb infinitive.
+- Recognition: `دِينُكُمْ` must preserve the `كُمْ` possessor; a broad
+  "Faith, religion..." entry gloss is string-populated but not rich.
+- Recognition: `مُسْلِمَيْنِ` and `مُسَلَّمَةٌ` are shaped nominal/participle
+  or adjectival tokens. The concept "Islam" alone is not the token hover.
+- Recognition: `زِينَتَهُنَّ` is a nominal host plus feminine-plural possessor,
+  even if it appears in a زين verb family.
+- Gate: concept entries and component candidates are internal routing evidence.
+  They do not replace noun type, number, gender, state, case, and possessor
+  review.

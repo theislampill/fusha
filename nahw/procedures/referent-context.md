@@ -51,3 +51,20 @@ VN-02 reinforced that proper-name context is a nahw gate, not merely sarf:
 
 When the context proof is missing, use `pending(referent_sensitive)` or
 `human_review_required`; do not choose the more familiar name.
+
+## Dogfood finding: VN-03 group and scripture referents
+
+VN-03 added group/title referent guards:
+
+- `هُود` rows can point to Jewish ethnonym forms or Prophet Hūd; context and
+  source address decide.
+- `وَدّ` / `وُدّ` rows can be a named object/person or common love; do not
+  let one reading propagate.
+- Scripture/book surfaces such as `زَبُورًا`, `زُبَر`, `صُحُفًا`, and
+  `ٱلصُّحُفُ` vary between title, common plural, chunks, scrolls, and records.
+  The hover needs exact context, not only a book-family entry.
+- Collective and occupational nouns (`ٱلرُّومُ`, `قُرَيْشٍ`, `قِسِّيسِينَ`,
+  `ٱلْأَحْبَارِ`) require number/class metadata before rich certification.
+
+If the referent class is not certified, route to `human_review_required` rather
+than a familiar title/group string.

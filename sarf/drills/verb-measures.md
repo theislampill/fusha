@@ -92,3 +92,18 @@ An English string may be plausible and still remain `populated_uncertified`.
 Rule: a finite or imperative verb is not certified by its root-family prose.
 The parse must show form, voice, aspect/mood, person/number, proclitics, and
 visible suffixes.
+
+## H. VN-03 dogfood: finite verbs and component-only rows
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `عَقَلُوهُ` | `to reason; understand` | perfect plural verb + `هُ` object contribution |
+| `أَعْجَلَكَ` | bare `to hasten` | finite/derived form plus `كَ` object |
+| `وَيَسْتَعْجِلُونَكَ` | component-only "to hasten" family | `وَ` + finite verb + `كَ` object, with whole-token evidence |
+| `فَأَهْلَكْنَاهُمْ` | readable phrase treated as complete proof | `فَ` + Form IV perfect 1cp + `هُمْ`, two-vote whole-token gate |
+| `وَقُضِىَ` | active "to decree/judge" prose | passive voice and `وَ` function |
+| `تَمَسُّوهُنَّ` | "touch" without object | doubled root + feminine-plural object `هُنَّ` |
+
+Rule: component evidence can explain pieces, but it cannot certify the written
+token. Finite wording, passive voice, weak/doubled roots, and object suffixes
+stay gated until the exact token is parse-key ready.

@@ -128,6 +128,22 @@ parse key, sarf shape, and nahw context agreement before any live repair packet.
 If the row is readable but not explainable through exact token identity,
 function, and referent, keep it `populated_uncertified`.
 
+## 4e. VN-03 noun/verb component and suffix-context gates
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `فَأَهْلَكْنَاهُمْ` | `فَ` function plus Form IV verb-object stack; two-vote whole-token proof | treating component evidence as a resolved row |
+| `ضَعِيفًا` | nominal/adjectival accusative role and predicate/state context | assuming the good English word "weak" is rich certification |
+| `ٱلدِّينِ` | definite/genitive noun role, often construct context | verb infinitive "to be bound..." |
+| `دِينُكُمْ` | possessed noun with `كُمْ`; construction decides wording | broad faith/religion prose with no possessor |
+| `بِعَهْدِ` | attached bā' plus majrūr nominal and PP attachment | verb phrase "to make a covenant..." |
+| `زِينَتَهُنَّ` | nominal host plus feminine-plural possessor; referent/context review | verb-family or host-only adornment prose |
+| `وَيَسْتَعْجِلُونَكَ` | wāw function plus verb-object relation | bare "to hasten" |
+
+Readable English is not enough. A row remains `populated_uncertified` when the
+learner cannot see the function particle, noun role, attached possessor/object,
+or i'rab relation that makes the wording true.
+
 ## 5. QAC concept metadata is a routing aid only
 
 If concept metadata says a form may be a prophet, historic person, people,

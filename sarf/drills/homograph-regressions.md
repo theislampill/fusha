@@ -123,3 +123,16 @@ meaning of the āyah.
 
 Use `norm_strict`, vocalization, POS, and referent context together. If any
 piece is missing, quarantine rather than picking the familiar reading.
+
+## VN-03 group/proper/common additions
+
+| pair | distinguishing feature | correct decision |
+|---|---|---|
+| `هُود` group surface vs Prophet `هُود` | referent and source-address context | Jews/ethnonym rows and Prophet Hūd rows do not certify each other |
+| `وُدًّا` common love vs `وَدّ` named idol/person context | vocalization plus referent | common noun or name row only by exact context |
+| `وَحْي` lexical initial wāw vs wāw proclitic | strict segmentation | do not route lexical `و` through particle-function review unless a proclitic is proven |
+| `زَبُور` title vs `زُبَر` common chunks/books | number/vowels and context | scripture title, scrolls, records, and chunks need separate exact-address review |
+
+These rows are especially tempting for surface-family propagation. They remain
+`token_only_review` or `human_review_required` until POS, vocalization, and
+referent all agree.

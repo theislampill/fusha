@@ -108,3 +108,23 @@ The VN-02 tranche added more finite-verb blockers:
 
 When the exact token has passive voice, imperative force, derived form, or an
 attached object, any dictionary infinitive is a blocker, not a fallback.
+
+## Dogfood finding: VN-03 component evidence and finite suffixes
+
+The VN-03 tranche found the same finite-verb failure in new families:
+
+- `عَقَلُوهُ`: perfect plural verb plus `هُ` object. Reject a bare "to
+  reason; understand" hover until the suffix and referent are visible.
+- `أَعْجَلَكَ` and `وَيَسْتَعْجِلُونَكَ`: derived/finite verb forms with
+  attached `كَ`. Reject a bare "to hasten" hover.
+- `فَأَهْلَكْنَاهُمْ`: component evidence is useful, but it is not a
+  whole-token certificate. Preserve `فَ`, Form IV perfect active 1cp, and
+  `هُمْ` object before treating "so We destroyed them" as rich-certified.
+- `ذُوقُوا۟`, `كَسَبَ`, `تَحْمِلْ`, `يَجْرِى`, and `بَعَثَ` rows show that
+  even unsuffixed finite verbs can inherit dictionary infinitives. They still
+  need aspect, voice, person/number/gender, and derived-form review.
+
+Subagent review also flagged passive and weak-root rows (`وَقُضِىَ`,
+`تُوَفَّىٰ`, `يَجْرِى`) and doubled-root rows (`تَمَسُّوهُنَّ`, `مَسَّ`).
+For these, `norm_strict()` is not enough: expand weak/doubled morphology and
+record passive/active voice before authoring a hover.
