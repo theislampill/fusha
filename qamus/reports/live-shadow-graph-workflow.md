@@ -497,17 +497,44 @@ the main controller to reconcile cross-lane findings before any owner-gated
 repair, blocker, lesson, fixture, renderer, or entry-linkage packet can move
 toward Phase 4.
 
+Controller reconciliation was then run over the same six validated review files
+to emit one exact-addressed row per reviewed WBW location:
+
+- reconciled rows / unique WBW locations: `780`
+- `routed`: `611`
+- `needs_controller_reconciliation`: `169`
+- rows requiring two-vote after reconciliation: `424`
+- `may_apply_live`: `false`
+
+Primary route counts after reconciliation:
+
+- `blocker_queue_row`: `277`
+- `renderer_requirement`: `199`
+- `entry_linkage_review`: `173`
+- `drill_regression_fixture`: `71`
+- `repair_candidate`: `38`
+- `sarf_nahw_procedure_improvement`: `22`
+
+Route evidence remains multi-valued where needed. A token may retain secondary
+routes such as `production_bug_lesson`, `drill_regression_fixture`, or
+`entry_linkage_review` even when the primary route is a blocker or repair queue.
+The 169 reconciliation rows are held out of any apply path until the controller
+chooses the owner-gated terminal queue for each exact `wbw:S:A:W`.
+
 Durable tooling added for this lane:
 
 - `tools/build_full_corpus_dogfood_lane_packets.py`
 - `tools/validate_full_corpus_dogfood_review_outputs.py`
 - `tools/summarize_full_corpus_dogfood_review_outputs.py`
+- `tools/reconcile_full_corpus_dogfood_review_outputs.py`
 - `qamus/examples/full_corpus_dogfood_lane_packet.sample.jsonl`
 - `qamus/examples/full_corpus_dogfood_review_output.sample.jsonl`
+- `qamus/examples/full_corpus_dogfood_reconciliation.sample.jsonl`
 
 The regression suite now checks the packet builder self-test, packet fixture
 validation, review-output validator self-test, review-output fixture validation,
-review-output summarizer self-test, and sample summary.
+review-output summarizer self-test, sample summary, controller reconciliation
+self-test, and reconciliation fixture validation.
 
 ## Phase 2.9 Seal Refresh - 2026-06-27
 
