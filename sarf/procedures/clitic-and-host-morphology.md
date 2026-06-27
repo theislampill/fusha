@@ -256,3 +256,22 @@ toward source agreement, propagation safety, hover coverage, or live apply.
 If the visible token contains a clitic, conjunction, preposition/comparison
 piece, or suffix pronoun, keep that piece visible in the learner breakdown or
 emit an exact blocker.
+
+## Dogfood finding: VN-13 suffixes and component routes stay separated
+
+VN-13 added suffix-heavy noun and verb rows:
+
+- `سُهُولِهَا`, `نُورَهُۥ`, `نُورِهِۦ`, `نُّورِكُمْ`,
+  `سَمْكَهَا`, and `أَهْلِهِۦ` are noun hosts with possessor or referent
+  suffixes. A host-only hover such as "plains", "light", "height", or
+  "family" remains below rich certification until the suffix is taught.
+- `لَأَعْنَتَكُمْ`, `ٱقْتَرَفْتُمُوهَا`, `يَسْتَصْرِخُهُۥ`,
+  `فَاتَكُمْ`, and `فَتَطْرُدَهُمْ` are finite hosts with object or
+  addressee-sensitive suffixes. Do not hide them behind an infinitive.
+- `وَٱلشَّمْسُ`, `وَٱلْقَمَرُ`, `وَخَابَ`, `فَصَبَّ`, and
+  `وَقَدَّتْ` show that component candidates can identify a host but still
+  leave the whole token blocked for the prefixed function and exact context.
+
+Rule: keep `component_only_evidence` separate from `whole_token_candidate`.
+VN-13 rows can gain better component evidence without weakening the gate or
+creating a source-agreement, hover-coverage, or live-apply claim.

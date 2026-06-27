@@ -338,3 +338,20 @@ VN-12 keeps live apply closed. A row may enter a repair packet only as a
 candidate; it still needs exact address, public-safe authored wording,
 compatible sarf/nahw reasons, and two-vote or MCP/source evidence when the
 grammar is sensitive.
+
+## 4o. VN-13 conjunction, suffix, and POS-routing controls
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `وَٱلشَّمْسُ` / `وَٱلْقَمَرُ` | wāw function + article + nominal host + case/state | host candidate or visible text alone |
+| `سُهُولِهَا` / `نُورَهُۥ` | noun host plus suffix/referent review | host-only "plains" or "light" |
+| `لَأَعْنَتَكُمْ` | lām/function + finite host + `كُمْ` object | hardship-family infinitive |
+| `ٱقْتَرَفْتُمُوهَا` | finite subject ending plus `هَا` object | dictionary infinitive only |
+| `بِمُصْرِخِكُمْ` | bā' + host + suffix and attachment | root-family "cry for help" |
+| `مَطَرَ` / `طَٰٓئِرٍۢ` | exact POS/context and possible token-only repair | noun entry getting verb infinitive wording |
+| `وَخَابَ` / `فَصَبَّ` | component-only blocker until prefixed function and host agree | component host proof as whole-token proof |
+| renderer-only rows | rich metadata backfill if no grammar defect exists | claiming rich certification from hover presence |
+
+VN-13 adds no live-apply exception. A candidate must still pass exact address,
+public-safe authored text, compatible sarf/nahw reasons, source/MCP evidence
+where needed, and two-vote review for grammar-sensitive rows.

@@ -131,3 +131,21 @@ piece is still uncertified:
 Use `comparison_attachment_uncertified`, `lam_function_uncertified`,
 `mood_governor_uncertified`, or `component_only_blocker` rather than
 propagating from host text.
+
+## Dogfood finding: VN-13 prefixed relation rows stay grammar-gated
+
+VN-13 repeated function/attachment boundaries:
+
+- `وَٱلشَّمْسُ` and `وَٱلْقَمَرُ` are wāw + article + nominal host rows. A
+  component host candidate does not certify the whole token or the wāw
+  function.
+- `وَخَابَ`, `وَزَهَقَ`, `فَصَبَّ`, `وَصَدَفَ`, and `وَقَدَّتْ`
+  have prefixed sequence/function pieces plus a finite host; component
+  evidence remains a blocker until the whole token is reviewed.
+- `بِمُصْرِخِكُمْ`, `بِطَارِدِ`, and similar rows need preposition,
+  governed host, suffix or object where present, and attachment proof.
+
+Use `component_only_blocker`, `wa_function_uncertified`,
+`fa_function_uncertified`, `preposition_role_uncertified`, or
+`pp_attachment_uncertified`; do not convert these rows into safe propagation
+from a host gloss.

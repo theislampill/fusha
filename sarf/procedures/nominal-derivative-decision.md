@@ -230,3 +230,24 @@ VN-12 found verb-entry families attached to nominal or POS-sensitive rows:
 Rule: VN-12 candidates must pass strict surface, POS, derivative class, and
 context before reuse. If the row is nominal, do not import verb-infinitive
 prose; if the row is finite, do not import a nominal gloss.
+
+## Dogfood finding: VN-13 noun rows can leak verb prose
+
+VN-13 found noun and derivative rows whose populated hovers still look like
+verb-entry prose:
+
+- `مَطَرَ`, `مَّطَرًۭا`, and `مَطَرُ` were linked to a rain noun entry while
+  the visible text said "to rain or shower as torment"; exact noun/POS and
+  context must decide the token contribution.
+- `طَٰٓئِرٍۢ`, `ٱلطَّيْرُ`, `عَجَلٍۢ`, and `ٱلْغَيْثَ` are
+  nominal or context-sensitive rows that must not inherit
+  infinitive wording such as "to be stunned", "to fly", "to hasten", or
+  "to be aided with water".
+- Verb-entry families also yielded nominal-looking rows such as
+  `ٱلْحَمِيَّةَ`, `إِعْصَارٌۭ`, `الْمُعْصِرَاتِ`, `شُرَّعًۭا`,
+  `تَفَٰوُتٍۢ`, and `قَتَرٌۭ`. These require noun type, derivative class,
+  case/state, and context before learner wording.
+
+Rule: a string can be populated and still be a POS leak. VN-13 noun/derivative
+rows route to exact-address repair candidates or blockers, not to family-wide
+propagation.

@@ -81,6 +81,24 @@ route it to `verb_object_pronoun_review`, `suffix_pronoun_decision`, or
 `referent_unresolved`. Do not pass a row merely because two sources share a
 host gloss.
 
+## Dogfood finding: VN-13 suffixes include noun possessors and verb objects
+
+VN-13 added a mixed suffix control set:
+
+- `سُهُولِهَا`, `نُورَهُۥ`, `نُورِهِۦ`, `نُّورِكُمْ`,
+  `سَمْكَهَا`, and `أَهْلِهِۦ` are noun hosts. Their suffixes are
+  possessive or referent decisions and cannot disappear under the host noun.
+- `لَأَعْنَتَكُمْ`, `ٱقْتَرَفْتُمُوهَا`, `فَاتَكُمْ`,
+  `يَسْتَصْرِخُهُۥ`, and `فَتَطْرُدَهُمْ` are verb hosts. Their suffixes
+  are object/addressee decisions, not possessives.
+- `بِمُصْرِخِكُمْ` adds a preposition/nominal-host/suffix layer; the
+  suffix still needs host-POS and attachment review before English wording is
+  trusted.
+
+If a populated hover can be read without the suffix, it is not rich-certified.
+Route it to exact-address review, and require two compatible reasons when the
+referent or clause role affects the English.
+
 **Test:** [`nahw/evals/suffix-pronoun-eval.jsonl`](../evals/suffix-pronoun-eval.jsonl);
 rules [`nahw/rules/pronoun-attachment-rules.json`](../rules/pronoun-attachment-rules.json).
 

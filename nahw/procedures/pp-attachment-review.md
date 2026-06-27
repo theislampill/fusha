@@ -116,3 +116,19 @@ VN-12 repeated the attachment boundary with fresh examples:
 Rule: component evidence is a route to the PP/function reviewer, not an
 attachment decision. Keep the row non-applyable until function, host, case or
 mood, and attachment agree.
+
+## Dogfood finding: VN-13 attachment and conjunction rows need exact siblings
+
+VN-13 adds rows where the visible English can be plausible while the syntax is
+still not certified:
+
+- `وَٱلشَّمْسُ` and `وَٱلْقَمَرُ` need wāw function, article/host
+  segmentation, case/state, and rich display before they can teach a learner.
+- `بِمُصْرِخِكُمْ` and `بِطَارِدِ` need bā' relation plus host and suffix or
+  clause attachment; host/root evidence alone is not enough.
+- `لَأَعْنَتَكُمْ` and lām-like rows require function/mood/referent review
+  before a finite host candidate becomes a public hover.
+
+Rule: attachment proof is a reasoned relation, not a text match. VN-13 keeps
+these rows in blocker, two-vote, or repair-candidate queues until exact
+function, host, and attachment agree.

@@ -342,3 +342,25 @@ Rule: VN-12 rows may be string-populated, source-linked, or component-linked
 and still fail the finite-form contract. Before certification, expose form,
 voice/aspect/mood, person/number/gender, subject/object or suffix role, and
 whether evidence is whole-token or component-only.
+
+## Dogfood finding: VN-13 finite rows stay below token decisions
+
+VN-13 repeated finite-form and component-boundary defects in a fresh source-key
+range:
+
+- `أَحْرَصَ`, `حَرَصْتَ`, `يَحْسُدُونَ`, `يُخَٰدِعُونَ`,
+  `صَبَبْنَا`, and `فَاتَكُمْ` are finite or form-sensitive tokens. Entry
+  prose such as "to be keen", "to envy", "to deceive", or "to pour" is only a
+  routing hint until aspect, form, subject/agreement, and object or suffix
+  contribution are visible.
+- `لَأَعْنَتَكُمْ`, `ٱقْتَرَفْتُمُوهَا`, `يَسْتَصْرِخُهُۥ`,
+  and `فَتَطْرُدَهُمْ` need the finite host plus visible object or suffix
+  accounting. Some also carry a function particle that belongs to nahw.
+- `وَخَابَ`, `وَزَهَقَ`, `فَصَبَّ`, and `وَقَدَّتْ` are component-only or
+  prefixed rows. The host/root family may route review, but the whole written
+  token is still blocked until the prefixed function, finite host, and exact
+  context are certified.
+
+Rule: VN-13 repair candidates are not live decisions. A row may be useful for
+sarf training and still require `rich_metadata_plus_exact_address_review`,
+`two_vote_exact_address_review`, or `component_only_blocker`.

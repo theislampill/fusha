@@ -255,3 +255,20 @@ does not make it propagation-safe, and does not authorize live apply.
 Rule: VN-12 rows force the same question every time: "What is the written
 token made of?" If any visible prefix, suffix, finite-form field, POS shift, or
 component-only boundary is missing, the row is not a learner-ready hover.
+
+## R. VN-13 dogfood: finite hosts, suffixes, and renderer-only rows
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `أَحْرَصَ` / `حَرَصْتَ` | bare `to be keen` | finite form/person/context review |
+| `يُخَٰدِعُونَ` / `يَخْدَعُونَ` | bare `to deceive` | form/voice/aspect and exact subject/context |
+| `لَأَعْنَتَكُمْ` | infinitive hardship prose | lām/function plus finite host + `كُمْ` object |
+| `ٱقْتَرَفْتُمُوهَا` | `to commit or earn` | finite perfect `2mp` host + `هَا` object |
+| `سُهُولِهَا` / `نُورَهُۥ` | host-only noun | noun host + suffix/referent |
+| `مَطَرَ` / `طَٰٓئِرٍۢ` | verb-infinitive wording on noun/context rows | exact POS and context before repair |
+| `وَٱلشَّمْسُ` / `وَٱلْقَمَرُ` | component host evidence as whole-token proof | wāw + article + nominal host and function review |
+| renderer-only rows | hover presence as certification | parse key, display segments, and learner breakdown |
+
+Rule: VN-13 confirms the dogfood target is not "string exists". A row can
+be populated, linked, or component-enriched and still need sarf/nahw review
+before any candidate wording becomes applyable.
