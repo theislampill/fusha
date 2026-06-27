@@ -13,7 +13,11 @@ Vocatives:
 
 - identify the vocative particle;
 - record the addressee and whether it is definite, indefinite, or an idafa head;
+- identify whether `أَيُّهَا` / `أَيَّتُهَا` is a Qur'anic vocative bridge,
+  not a standalone relative/demonstrative gloss;
 - preserve attached pronouns and possessed forms;
+- preserve the difference between the call particle, bridge/support word,
+  attention particle, and following addressee;
 - do not collapse `يا قومنا` to only `our people`.
 
 Dogfood note: `يَٰٓأَيُّهَا` is not a one-piece "you (who)" hover. Treat it as a
@@ -27,6 +31,17 @@ vocative formula whose pieces must remain explainable:
 If the entry linkage or no-entry function-token rationale is missing, route to
 entry-linkage review plus nahw review. Do not repair by raw surface text, and do
 not propagate the formula without exact token addresses and a two-vote gate.
+
+Dogfood note: a readable phrase can still be uncertified. `يَٰٓـَٔادَمُ`,
+`يَٰقَوْمِ`, `يَٰمُوسَىٰ`, and `يَٰبَنِىٓ` may read fluently as "O Adam",
+"O my people", "O Moses", or "O children...", but the rich hover still needs a
+breakdown of call particle plus addressee and, where present, possession or
+iḍāfa. A host-only addressee gloss is not learner-ready.
+
+False-positive guard: nahw should not accept a vocative route from raw surface
+shape alone. If sarf identifies the initial yā as part of a lexical host
+(`يَابِسٍ`, `يَابِسَٰتٍ`), classify the vocative detector as a false positive
+and do not create a vocative parse key.
 
 When case behavior or scope affects the hover, route to nahw/two-vote or
 scholar review.

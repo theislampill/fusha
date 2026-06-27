@@ -48,6 +48,8 @@ hover wording.
 | `تُمْسِكُوهُنَّ` | imperfect verb + subject marker + object `هن` | "you hold/keep them" feminine plural; suffix must be teachable |
 | `أَبْوَٰبِهَا` | plural noun + possessive `ها` | noun-host suffix: "its doors/gates" if base and referent are certified |
 | `يَٰٓأَيُّهَا` | vocative call + bridge + attention particle | phrase "O humanity" belongs to the construction; token pieces still need roles |
+| `يَٰقَوْمِ` | vocative call + addressee/possessed host | "O my people" still needs call + addressee/possession in the learner breakdown |
+| `يَابِسٍ` | lexical host only | not every initial yā is a vocative; sarf must block false `يا` splitting |
 | `وَخُلِقَ` | wāw + passive perfect verb | phrase may be correct while still missing resumption/passive proof |
 | `ضَعِيفًۭا` | nominal/adjectival host + accusative indefinite ending | "weak" is not rich-certified until case/role and entry linkage are explicit |
 

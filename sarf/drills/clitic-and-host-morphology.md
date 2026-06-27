@@ -61,6 +61,8 @@ attached piece's contribution. A hidden `pre` field is not enough for a learner.
 | `ٱلْمُلْك` | article + noun | article is part of the noun; no lām preposition | false split `لـ` + host |
 | `وَٱلشَّجَرُ` | wāw + article + noun | rich hover teaches all three pieces | `and + the trees` as the only explanation |
 | `بِٱلْمَعْرُوفِ` | bā' + article + nominal host | preposition, definiteness, and host all appear in breakdown | generic phrase with no bā' component |
+| `يَابِسٍ` | one lexical adjective/noun host, not `يا` + host | yā is part of the stem; keep the token out of the vocative lane | false vocative split from `startswith("يا")` |
+| `يَابِسَٰتٍ` | one lexical feminine plural host | stem letters stay together before nahw routing | false vocative/addressee split |
 
 ## Parse-key extension
 

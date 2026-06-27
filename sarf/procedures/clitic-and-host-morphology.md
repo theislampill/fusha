@@ -46,6 +46,26 @@ records the segmentation and defers to nahw. Do not invent a color/parse-key
 explanation for a segment whose function is still unknown; use an exact blocker
 such as `particle_function_uncertified` or `preposition_role_uncertified`.
 
+## Dogfood finding: lexical yā is not automatically vocative
+
+The vocative dogfood packet also exposed the opposite failure: rows such as
+`يَابِسٍ` and `يَابِسَٰتٍ` were pulled into the vocative lane by surface shape.
+Sarf must not split a lexical stem merely because the raw surface begins with a
+yā-like sequence.
+
+Before routing to the vocative procedure, prove a real vocative piece:
+
+- an independent or prefixed call particle `يَا`;
+- a vocative support form such as `أَيُّهَا` / `أَيَّتُهَا`;
+- a following addressee or a fused munāda form;
+- corpus/morphology evidence that the initial letters are not part of the host
+  noun/adjective/verb.
+
+If the token is a lexical word such as `يَابِسٍ` ("dry") or `يَابِسَٰتٍ`
+("dry [feminine plural]"), keep the whole stem as the host and record
+`not_vocative_surface_prefix`. Do not send it to nahw as a vocative merely from
+`startswith("يا")`.
+
 ## Dogfood finding: preposition and oath hosts need their governors
 
 The 2026-06-27 preposition/oath dogfood batch found host-only hovers on tokens

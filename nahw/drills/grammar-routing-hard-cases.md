@@ -24,6 +24,9 @@ Use this with:
 | `أَ` | hamza function | interrogation or equalization ("whether") | treating every hamza as a question |
 | `لَا` | negation/prohibition/genus/preventive context | simple negation, prohibition+jussive, no-of-genus, la like anna | generic "no" |
 | `يَٰٓأَيُّهَا` | vocative formula pieces | `يَا` call + `أَيُّ` bridge + `هَا` attention + following addressee | one-piece "you (who)" |
+| `يَٰٓـَٔادَمُ` | fused vocative + proper-name addressee | call particle plus addressee; case/addressee role matters | bare "Adam" or phrase with no vocative structure |
+| `يَٰقَوْمِ` | vocative + possessed/common addressee | call particle plus addressee; possession/iḍāfa may matter | bare "people" or "my people" with hidden call |
+| `يَابِسٍ` | not a vocative | sarf must keep yā inside the lexical stem | routing by raw `يا` prefix |
 | `وَخُلِقَ` | wāw function + passive verb | resumption/coordination plus passive perfect verb | phrase text with no role proof |
 | `بِٱلْمَعْرُوفِ` | bā' relation and PP attachment | preposition + definite nominal + attachment/review gate | host phrase with no bā' role |
 | `بِذُنُوبِهِمْ` | bā' relation + possessed host | causal/prepositional relation plus possessor; PP attachment if needed | host-only "sin/sins" |

@@ -13,9 +13,19 @@ Review:
 - `أ`: interrogative or equalization.
 - `لا`: simple negation, prohibition, or negation of genus.
 - `إلا`: exception structure with polarity and case effects.
+- `يا` / `أيها`: vocative call, bridge, attention, and addressee structure.
 
 If function controls meaning and evidence is insufficient, route to two-vote or
 scholar review. Do not use a default one-gloss particle policy.
+
+Vocative guard:
+
+- `يَا` contributes the call "O" when it is a real vocative particle.
+- `أَيُّهَا` / `أَيَّتُهَا` contributes a bridge/support plus attention
+  particle in a vocative formula.
+- the following noun or phrase supplies the addressee.
+- surfaces such as `يَابِسٍ` are not vocatives merely because their first
+  letters resemble `يا`; require sarf segmentation evidence first.
 
 ## Dogfood finding: readable text is not rich certification
 
@@ -34,6 +44,8 @@ repair-preview:
   attachment or a precise blocker. Do not certify from host meaning alone.
 - `فَأَهْلَكْنَاهُمْ`: decide the fā' role before treating the finite verb and
   object suffix as a reusable family.
+- `يَٰٓأَيُّهَا`: keep call, bridge, attention, and addressee separate; a
+  phrase-like "O you (who)" is not rich certification.
 
 If the function role is known enough for a fallback phrase but not enough for a
 rich row, classify the row as `string_correct_but_not_rich`,
