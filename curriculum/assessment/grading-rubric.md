@@ -13,6 +13,9 @@ rubric.
 | Levels 7+ | answer key/rubric plus two independent checks for hard grammar, or route to pending/remediation |
 | Any hard grammar | two independent checks when the item depends on iʿrāb, case, mood, particle function, PP attachment, pronoun referent, exception, vocative, oath, or token-only override |
 
+Machine-readable Level 7+ checkpoint fixtures must mark those hard-grammar rows with `two_vote_required=true`;
+`tools/validate_curriculum_assessment.py` rejects rows that try to clear that gate silently.
+
 If two checks agree on the English answer but disagree on the grammatical reason, the answer is not cleared.
 
 ## Objective Item Rubric

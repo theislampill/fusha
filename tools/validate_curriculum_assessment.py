@@ -47,6 +47,13 @@ HARD_TERMS = (
 )
 
 
+def _level_numbers(value: object) -> list[int]:
+    """Extract numeric roadmap levels from simple strings like "7", "7+", or "8-10"."""
+    import re
+
+    return [int(match) for match in re.findall(r"\d+", str(value))]
+
+
 def _load_jsonl(path: str) -> list[dict]:
     rows: list[dict] = []
     with open(path, encoding="utf-8") as fh:
@@ -93,10 +100,15 @@ def validate(path: str) -> list[str]:
             if term in blob:
                 errors.append(f"{path}:{lineno}: public assessment row leaks internal/source term {term!r}")
         is_hard = any(term.lower() in blob.lower() for term in HARD_TERMS)
+        is_level_7_plus = any(level >= 7 for level in _level_numbers(row["level"]))
         if is_hard:
             hard_rows += 1
             if row["two_vote_required"]:
                 two_vote_rows += 1
+            if is_level_7_plus and not row["two_vote_required"]:
+                errors.append(
+                    f"{path}:{lineno}: Level 7+ hard-grammar row must set two_vote_required=true"
+                )
     if hard_rows == 0:
         errors.append(f"{path}: expected at least one hard-grammar row")
     if two_vote_rows == 0:
@@ -120,17 +132,28 @@ def self_test() -> int:
         "remediation_route": "nahw/drills/dogfood-nahw-remediation.md",
         "two_vote_required": True,
     }
+    bad = dict(good)
+    bad["id"] = "bad-level-7-hard-row"
+    bad["two_vote_required"] = False
     import tempfile
 
     with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False, suffix=".jsonl") as fh:
         fh.write(json.dumps(good, ensure_ascii=False) + "\n")
         tmp = fh.name
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False, suffix=".jsonl") as fh:
+        fh.write(json.dumps(bad, ensure_ascii=False) + "\n")
+        bad_tmp = fh.name
     try:
         errors = validate(tmp)
+        bad_errors = validate(bad_tmp)
     finally:
         os.unlink(tmp)
+        os.unlink(bad_tmp)
     if errors:
         print("\n".join(errors))
+        return 1
+    if not any("Level 7+ hard-grammar row" in err for err in bad_errors):
+        print("self-test failed: weak Level 7+ hard-grammar row was accepted")
         return 1
     print("CURRICULUM ASSESSMENT SELF-TEST OK")
     return 0
