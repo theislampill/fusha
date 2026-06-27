@@ -26,6 +26,10 @@ Use this with:
 | `يَٰٓأَيُّهَا` | vocative formula pieces | `يَا` call + `أَيُّ` bridge + `هَا` attention + following addressee | one-piece "you (who)" |
 | `وَخُلِقَ` | wāw function + passive verb | resumption/coordination plus passive perfect verb | phrase text with no role proof |
 | `بِٱلْمَعْرُوفِ` | bā' relation and PP attachment | preposition + definite nominal + attachment/review gate | host phrase with no bā' role |
+| `تُخَالِطُوهُمْ` | attached object pronoun | verb-object relation; "with them" is not optional | treating the entry noun "partners" as the token hover |
+| `لَأَعْنَتَكُمْ` | lām/emphasis + Form IV verb + object `كم` | mood/force and "you" need review | bare hardship lemma |
+| `تُمْسِكُوهُنَّ` | verb + feminine plural object | object referent and command/context gate | "hold" without "them" |
+| `تَكْتُبُوهَا` | verb + object `ها` | referent decides it/her but suffix must remain visible | bare "write" |
 
 When the function is unclear, the correct output is a precise pending reason,
 not a broad particle gloss.

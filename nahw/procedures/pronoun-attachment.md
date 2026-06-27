@@ -25,6 +25,27 @@ case emit a `suffix_pronoun_decision`. Grammar-affecting → the GrammarProblems
 **Forbidden:** treating a verb-subject نا as possessive "our"; treating tanwīn-alef as the نا pronoun; exporting a
 possessive gloss without confirming a noun host.
 
+## Dogfood finding: populated verb hovers can still omit the object
+
+The 2026-06-27 full-corpus dogfood suffix batch found populated hovers whose
+entry text exists but whose token contribution still drops an attached object
+pronoun. Rows such as `ثَقِفْتُمُوهُمْ`, `تُخَالِطُوهُمْ`,
+`تُمْسِكُوهُنَّ`, `تَمَسُّوهُنَّ`, and `تَكْتُبُوهَا` are not
+rich-certified if the visible hover is only a lemma/root-family gloss or if the
+object suffix appears only in hidden metadata.
+
+For a verb host, record the suffix as object or subject before accepting the
+hover:
+
+- `ـهُمْ` -> object "them" when attached to a transitive verb.
+- `ـهُنَّ` -> object "them" feminine plural where context supports it.
+- `ـهَا` -> object "it/her" and therefore a referent/reasoning gate when the
+  antecedent changes the English.
+
+If the row is already string-populated but lacks this breakdown, route it to
+`token_only_override` or `needs_nahw_review`; do not mark it complete from hover
+presence alone.
+
 **Test:** [`nahw/evals/suffix-pronoun-eval.jsonl`](../evals/suffix-pronoun-eval.jsonl);
 rules [`nahw/rules/pronoun-attachment-rules.json`](../rules/pronoun-attachment-rules.json).
 

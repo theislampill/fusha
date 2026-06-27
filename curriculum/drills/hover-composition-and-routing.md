@@ -38,6 +38,10 @@ hover wording.
 | `وَٱلشَّجَرُ` | `وَ` + `ٱل` + host noun | fallback "and + the trees" is not enough; breakdown and segment roles must be present |
 | `يَسْـَٔلُكَ` | imperfect prefix + verb stem + object suffix `كَ` | "ask you" must expose object suffix; lemma-only "to ask" fails |
 | `فَأَهْلَكْنَاهُمْ` | `فَ` + Form IV verb with 1pl subject + object `هم` | fluent phrase must still expose form, subject, object, and fā' role |
+| `ثَقِفْتُمُوهُمْ` | perfect verb + subject marker + object `هم` | "you all found/came upon them"; root-family text without "them" fails |
+| `تُخَالِطُوهُمْ` | imperfect verb + subject marker + object `هم` | "you mix/associate with them"; noun leakage such as "partners" fails |
+| `تُمْسِكُوهُنَّ` | imperfect verb + subject marker + object `هن` | "you hold/keep them" feminine plural; suffix must be teachable |
+| `أَبْوَٰبِهَا` | plural noun + possessive `ها` | noun-host suffix: "its doors/gates" if base and referent are certified |
 | `يَٰٓأَيُّهَا` | vocative call + bridge + attention particle | phrase "O humanity" belongs to the construction; token pieces still need roles |
 | `وَخُلِقَ` | wāw + passive perfect verb | phrase may be correct while still missing resumption/passive proof |
 | `ضَعِيفًۭا` | nominal/adjectival host + accusative indefinite ending | "weak" is not rich-certified until case/role and entry linkage are explicit |

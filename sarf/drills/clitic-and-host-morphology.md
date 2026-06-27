@@ -47,6 +47,11 @@ attached piece's contribution. A hidden `pre` field is not enough for a learner.
 | `يَسْـَٔلُكَ` | imperfect prefix + verb stem + `كَ` object | suffix is visible: "ask you" plus parse proof | lemma-only "to ask, question" |
 | `فَأَهْلَكْنَاهُمْ` | fā' + Form IV perfect 1pl verb + `هم` object | fā', subject, form, and object all matter | phrase with no component breakdown |
 | `يَحْفَظُونَهُ` | imperfect verb + plural subject + object `ه` | subject and object are part of the token's contribution | bare "guard" |
+| `ثَقِفْتُمُوهُمْ` | perfect verb + plural subject + object `هم` | finite verb and object matter: "you all found/came upon them" | lemma-only "to find/come upon" |
+| `تُخَالِطُوهُمْ` | imperfect verb + plural subject + object `هم` | object suffix must be visible: "you mix/associate with them" | nominal/root leakage such as "partners" |
+| `تُمْسِكُوهُنَّ` | imperfect verb + plural subject + object `هن` | feminine plural object belongs in the hover | bare "to hold/keep" |
+| `تَكْتُبُوهَا` | imperfect verb + plural subject + object `ها` | object suffix triggers "write it/her" plus referent review | bare "to write" |
+| `أَبْوَٰبِهَا` | plural noun + possessive suffix `ها` | noun-host suffix: "its doors/gates" when certified | host-only "doors" |
 | `قُرْءَانًا` | noun + tanwin-alif | final `ـًا` is tanwin, not pronoun `نا` | false split into stem + "us" |
 | `ٱلْمُلْك` | article + noun | article is part of the noun; no lām preposition | false split `لـ` + host |
 | `وَٱلشَّجَرُ` | wāw + article + noun | rich hover teaches all three pieces | `and + the trees` as the only explanation |

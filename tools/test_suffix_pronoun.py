@@ -8,6 +8,7 @@ live resolver enforces:
   - a verb host's enclitic is subject/object, never possessive (عَلِمْنَا ≠ "our knowledge")
   - a norm_strict homograph must not borrow a wrong lemma (ذِكْر ≠ ذَكَر)
   - a preposition+pronoun is a phrase, not a possessed noun (فَمِنكُم = "from you")
+  - a verb+object suffix enters explicit object-pronoun review, not possessive completion
   - valid possessives compose <possessor> <base> with the right enclitic
 Fails closed (exit 1) on any violation.
 """
@@ -22,7 +23,19 @@ def bare(s): return DIAC.sub("", (s or "")).replace("ٱ", "ا")
 TANWIN_ALEF = re.compile(r"ً[ۖ-ۭ]*ا$")
 
 ENC = {"كما","هما","كم","كن","هم","هن","نا","ها","ه","ك","ي"}
-POSS = {"نا":"our","كم":"your","هم":"their","ه":"his","ها":"her","ك":"your","ي":"my","هما":"their","كما":"your","هن":"their","كن":"your"}
+POSS = {
+    "نا": ("our",),
+    "كم": ("your",),
+    "هم": ("their",),
+    "ه": ("his", "its"),
+    "ها": ("her", "its"),
+    "ك": ("your",),
+    "ي": ("my",),
+    "هما": ("their",),
+    "كما": ("your",),
+    "هن": ("their",),
+    "كن": ("your",),
+}
 
 def is_tanwin_alef(surface):
     return bool(TANWIN_ALEF.search(surface or ""))
@@ -49,12 +62,22 @@ def main():
             suf = c.get("suffix")
             if suf not in ENC:
                 fails.append(f"{sid}: suffix {suf} not a recognized enclitic")
-            poss = POSS.get(suf)
+            poss = POSS.get(suf, ())
             eg = (c.get("expect_gloss") or "")
             # gloss must start with the possessor word (allowing 'and '/'so ' proclitic)
             core = eg.replace("and ", "").replace("so ", "")
-            if poss and core and not core.startswith(poss):
-                fails.append(f"{sid}: gloss '{eg}' does not start with possessor '{poss}'")
+            if poss and core and not any(core.startswith(p) for p in poss):
+                fails.append(f"{sid}: gloss '{eg}' does not start with one of {poss}")
+            continue
+        # 2b. verb host with object suffix: explicit review state, never possessive
+        if st == "verb_object_pronoun_review":
+            if host != "V":
+                fails.append(f"{sid}: verb object review composed on non-verb host {host}")
+            if c.get("expect_gloss") is not None:
+                fails.append(f"{sid}: verb object review must keep null gloss until token hover is certified")
+            suf = c.get("suffix")
+            if suf not in ENC:
+                fails.append(f"{sid}: suffix {suf} not a recognized enclitic")
             continue
         # 3. verb host → never possessive
         if st == "pending" and host == "V":
@@ -80,7 +103,7 @@ def main():
         if s not in surfaces:
             fails.append(f"missing named class: {s}")
     # required negative classes
-    for need_state in ("pending","not_a_suffix","rejected_homograph"):
+    for need_state in ("pending","not_a_suffix","rejected_homograph","verb_object_pronoun_review"):
         if need_state not in seen_classes:
             fails.append(f"missing required negative class: {need_state}")
 
@@ -89,7 +112,7 @@ def main():
         print("FAIL:")
         for f in fails: print("  -", f)
         sys.exit(1)
-    print("PASS — tanwīn-alef guard, verb-exclusion, homograph-rejection, preposition-phrase, and all named possessive classes hold")
+    print("PASS - tanwin-alef guard, verb-exclusion, homograph-rejection, preposition-phrase, and all named possessive classes hold")
 
 if __name__ == "__main__":
     main()

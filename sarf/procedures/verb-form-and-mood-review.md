@@ -36,6 +36,26 @@ When the subject is supplied by a following explicit noun, the verb form still
 keeps its own person/number/gender. Do not replace the finite morphology with a
 dictionary entry gloss.
 
+## Dogfood finding: form resolution is not enough for populated verb hovers
+
+The next full-corpus dogfood packet found populated verb hovers that still
+behave like dictionary entries. `ثَقِفْتُمُوهُمْ`,
+`تُخَالِطُوهُمْ`, `لَأَعْنَتَكُمْ`, `تُمْسِكُوهُنَّ`,
+`سَرِّحُوهُنَّ`, `تَمَسُّوهُنَّ`, and `تَكْتُبُوهَا` must preserve the
+finite verb shape and attached object, not only the root/lemma meaning.
+
+For these rows, the sarf decision must include:
+
+- aspect and form where known;
+- subject agreement or subject suffix;
+- visible object suffix and person/number/gender;
+- proclitic or governing particle that may change mood or force.
+
+A hover such as "to find/come upon", "partners", "to hold", or "to write" is a
+populated string, not a token hover, when the suffix object is missing. Keep the
+row in the dogfood queue until the suffix is visible to the learner or an exact
+blocker explains why it cannot yet be shown.
+
 Rich-hover readiness:
 
 - include form/voice/aspect/person/number in `parse_key.key`, e.g.

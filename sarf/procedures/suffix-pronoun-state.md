@@ -24,6 +24,24 @@ applied via the token layer ([`../../qamus/reports/token-addressed-hover-layer.m
 **Forbidden:** possessive gloss on a verb host; overwriting a proper noun/idiom; turning every enclitic into
 "his/their" regardless of the actual pronoun; guessing the base gloss when the stem is unknown.
 
+## Dogfood finding: noun suffix resolution must not hide verb suffix defects
+
+The 2026-06-27 suffix batch contains both genuine noun-host possessives
+(`أَبْوَٰبِهَا`, `آبَاءَكُمْ`, `نِسَآؤُكُمْ`) and verb-host object
+suffixes (`ثَقِفْتُمُوهُمْ`, `تُمْسِكُوهُنَّ`, `تَكْتُبُوهَا`). Do not
+let the noun-host procedure inflate coverage for the verb-host rows.
+
+The correct split is:
+
+- noun host + suffix -> possessive decision, e.g. "its doors", "your fathers",
+  "your women/wives" when the base gloss and referent are certified;
+- verb host + suffix -> hand to
+  [`../../nahw/procedures/pronoun-attachment.md`](../../nahw/procedures/pronoun-attachment.md)
+  and the verb-form gate; never emit a possessive decision.
+
+If the host POS is not certified, route to `suffix_host_pos_uncertified` instead
+of guessing from the suffix shape.
+
 **Test:** [`nahw/evals/suffix-pronoun-eval.jsonl`](../../nahw/evals/suffix-pronoun-eval.jsonl) (أعمالنا resolves;
 عَلِمْنَا verb stays pending; قُرْءَانًا not-a-suffix). Generator
 [`tools/build_suffix_pronoun_decisions.py`](../../tools/build_suffix_pronoun_decisions.py) (POS-gated);
