@@ -159,6 +159,24 @@ The same root may yield a masculine noun, a reminder noun, or a passive verb.
 Nahw must keep the clause role and any particle relation separate from sarf's
 root/POS decision.
 
+## 4g. VN-05 verb-entry nouns and body-part referents
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `يُوصِيكُمُ` | finite verb plus `كُم` object and command/instruction context | entry infinitive "to instruct..." |
+| `تَبَرُّوهُمْ` | finite verb plus `هُمْ` object and object relation | root-family kindness prose |
+| `ٱلْقَصَصِ` | definite noun/story role and local case/context | verb infinitive "to relate a story" |
+| `غَالِبٌ` | nominal/active-participle role | finite/infinitive "to overcome" |
+| `فَرِجَالًا` | whole-token proof plus travel/body-part context | component-only "legs" |
+| `يَدَيْهِ` | dual/suffix morphology plus idiom/referent review | omnibus `hand` entry paragraph |
+| `وُجُوهَهُمْ` | plural/suffix morphology plus referent-sensitive face/context review | one hover listing face, pleasure, daybreak, and divine-reference alternatives |
+| `لَّازِبٍ` | adjective/host role; no lām particle unless segmentation proves it | lām-preposition or lām-purpose route from first letter |
+
+VN-05 rows prove that "readable" English is not equivalent to learner-safe
+nahw. If the row needs object referent, PP/idiom attachment, body-part sense,
+or false-clitic rejection, keep it out of `rich_certified` until the exact
+address has a context decision.
+
 ## 5. QAC concept metadata is a routing aid only
 
 If concept metadata says a form may be a prophet, historic person, people,

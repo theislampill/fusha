@@ -152,3 +152,27 @@ Component-only evidence may explain a host or suffix, but it does not certify
 the written token. A VN-04 row with visible proclitic, form marker, passive
 vowels, object suffix, or emphatic nun remains `component_only_blocker`,
 `token_only_review`, or `two_vote_required` until whole-token evidence exists.
+
+## Dogfood finding: VN-05 finite verbs, voice, and verb-entry nouns
+
+The VN-05 tranche repeated the same defect in new verb families:
+
+- `لِيَسْتَخْفُوا۟`, `يُخْفِينَ`, and `أَخْفَيْتُمْ` are finite derived forms
+  in the خ ف ي family. They cannot be certified from a broad "to hide" entry
+  gloss without form, voice, person/number, and governor/mood review.
+- `فَسَيَكْفِيكَهُمُ`, `كَفَيْنَٰكَ`, `وَقَاسَمَهُمَآ`, and
+  `تَبَرُّوهُمْ` preserve visible object suffixes. A learner-facing hover must
+  account for `كَ`, `هُم`, `هُمُ`, or `هُمَا`; hidden suffix metadata is not
+  enough.
+- `ٱسْتُهْزِئَ`, `وَيُسْتَهْزَأُ`, `وَسَيُجَنَّبُهَا`, and `فَعُمِّيَتْ`
+  are passive-looking or voice-sensitive rows. Reject active infinitive
+  shortcuts such as "to mock" or "to set aside" until passive voice is visible.
+- `مُسْتَخْفٍۭ`, `هُزُوًۭا`, `ٱلْوُثْقَىٰ`, `مَّقْسُومٌ`, and
+  `لَقَسَمٌۭ` are nominal/adjectival rows inside verb-entry families. Entry
+  class does not decide token POS.
+
+For VN-05 rows, a populated English string moves only to
+`needs_sarf_review`, `needs_nahw_review`, or `needs_renderer_segments` until
+the exact token has form/voice/aspect/person/number, visible suffixes, and any
+governing particle recorded. Component-only host evidence remains below the
+whole token and cannot create a parse-family hover.

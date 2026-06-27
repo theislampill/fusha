@@ -121,3 +121,20 @@ component-only metadata while the public hover reads like the bare host. If the
 host is known but the governor/function is not, emit the segmentation and route
 to nahw with `preposition_role_uncertified`, `oath_function_uncertified`, or
 `pp_attachment_uncertified`.
+
+## Dogfood finding: VN-05 false lām and component-only noun rows
+
+VN-05 added two clitic hygiene guards:
+
+- `لَّازِبٍ` is a lexical adjective with root-initial lām/shadda, not an
+  attached lām preposition, oath lām, or purpose lām. Do not route an initial
+  lām-looking host to nahw unless segmentation evidence proves a real lām
+  particle.
+- `وَرَجِلِكَ`, `وَأَرْجُلَكُم`, `فَرِجَالًا`, and similar rows can contain
+  useful component candidates, but the component candidate is below the
+  written token. Whole-token review must preserve the proclitic, host noun,
+  number/case, and suffix before any hover can be certified.
+
+Use `not_clitic_surface_prefix` for lexical initial letters and
+`component_only_candidate_no_whole_token_propagation` for rows where a
+component is real but the whole token is not yet certified.

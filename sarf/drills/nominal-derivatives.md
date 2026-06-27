@@ -116,3 +116,22 @@ rule → recognition Q → production Q → answer. Generated/extendable from
   `وَ`.
 - Gate: vowels and article/case are source evidence. Do not collapse `ذَكَر`,
   `ذِكْر`, and `ذُكِرَ` under a root-family hover.
+
+## <a name="vn05-body-part-lemma-shape"></a>14. VN-05: body-part, story noun, and lemma-shape collisions
+
+- Recognition: `ٱلْقَصَصِ` carrying "to relate a story..." is a definite noun
+  surface. It needs story/narrative noun review, not verb-infinitive prose.
+- Recognition: `غَالِبٌ` carrying "to overcome, defeat" is an active
+  participle or nominal/adjectival surface. Do not put a finite/infinitive verb
+  gloss on it.
+- Recognition: `رَجُلَيْنِ`, `رِجَالًا`, `فَرِجَالًا`, and `أَرْجُلِهِم`
+  share a root family but not one hover lane: man/men, on-foot usage, and
+  leg/feet readings require lemma-shape and context review.
+- Recognition: `ٱلْقُلُوبُ`, `قَلْبَهُۥ`, `يَدَيْهِ`, and `وُجُوهَهُمْ`
+  are not rich-certified by bare lemma strings like "heart", "hand", or
+  "face". Number, article/state, and suffix/possessor are learner-visible.
+- Recognition: `لَّازِبٍ` begins with lām as part of the lexical host; it is
+  not a prefixed lām particle.
+- Gate: root and entry family are not enough. Separate article, number, state,
+  suffix, derivative type, and referent before moving a populated noun hover
+  out of `populated_uncertified`.

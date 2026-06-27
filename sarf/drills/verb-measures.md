@@ -123,3 +123,19 @@ stay gated until the exact token is parse-key ready.
 Rule: weak radicals, passive signatures, emphatic nūn, and shadda are not
 typography. They are the reason the token cannot be certified from an entry
 infinitive or component-only root match.
+
+## J. VN-05 dogfood: finite verbs, passive voice, and entry-class traps
+
+| surface | reject | require before hover trust |
+|---|---|---|
+| `لِيَسْتَخْفُوا۟` | broad `to hide` family | lām/governor review + derived finite verb form/person/number |
+| `تُخْفُوهُ` | `to hide` with no object | finite verb host + `هُ` object suffix |
+| `فَسَيَكْفِيكَهُمُ` | bare `to be sufficient` | `فَ`/future stack + finite verb + `كَ`/`هُمُ` object structure |
+| `تَبَرُّوهُمْ` | root-family kindness prose | finite verb + `هُمْ` object |
+| `ٱسْتُهْزِئَ` / `وَيُسْتَهْزَأُ` | active `to mock` | passive voice and clause role |
+| `غَالِبٌ` | `to overcome, defeat` | nominal/active-participle role before wording |
+| `ٱلْقَصَصِ` | `to relate a story` | definite noun/story role and case/context |
+
+Rule: entry class and root family are routing hints, not token identity. A verb
+entry can contain nominal derivatives, and a finite verb can contain suffixes
+and passive voice that the entry infinitive does not teach.

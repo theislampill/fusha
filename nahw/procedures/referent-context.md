@@ -68,3 +68,20 @@ VN-03 added group/title referent guards:
 
 If the referent class is not certified, route to `human_review_required` rather
 than a familiar title/group string.
+
+## Dogfood finding: VN-05 body-part and root-family referent guards
+
+VN-05 added another referent-sensitive cluster:
+
+- `يَد` rows can mean physical hand, front/before (`بين يديه`), agency,
+  idiom, or a sensitive divine-reference context. Number/suffix evidence is
+  necessary but not sufficient; context chooses the actual hover.
+- `وَجْه` rows can be face, direction, purpose/pleasure, time-of-day idiom, or
+  a divine-reference construction. Omnibus hover text listing all possibilities
+  is not a context decision.
+- `ر ج ل` rows can be man/men, leg/feet, foot-soldier/on-foot usage, or a
+  component-only noun inside a larger written token.
+
+These rows stay `needs_nahw_review` or `needs_renderer_segments` until the
+referent/construction is certified at the exact source address. Do not let a
+safe-looking English lemma turn into parse-family propagation.

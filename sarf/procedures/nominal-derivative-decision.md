@@ -72,3 +72,24 @@ surface is `ٱلذِّكْرَ`, reject a verb infinitive such as "to remember";
 surface is `ذُكِرَ`, reject a nominal "male" or root-family noun row. Route the
 row to exact-address sarf + nahw review when the entry linkage cannot prove
 which POS/voice is intended.
+
+## Dogfood finding: VN-05 verb-entry nouns and lemma-shape collisions
+
+VN-05 found nominal rows that were still traveling through verb/root families:
+
+- `ٱلْقَصَصِ` is a definite/genitive noun surface in the ق ص ص family. It must
+  not inherit the finite/infinitive gloss "to relate a story".
+- `غَالِبٌ` is a nominal or active-participle-looking surface. It must not
+  inherit the verb infinitive "to overcome, defeat" without nominal role
+  review.
+- `رَجُلَيْنِ`, `رِجَالًا`, `فَرِجَالًا`, and `أَرْجُلِهِم` show that
+  ر ج ل is not one hover family. Man/men, leg/feet, and "on foot" readings
+  require lemma/shape/context separation.
+- `وُجُوهَهُمْ`, `وَجْهِهِۦ`, and related `وَجْه` rows must keep
+  singular/plural and suffix morphology before choosing a common, idiomatic,
+  or referent-sensitive sense.
+
+If the row is string-correct but lacks number/state/case/suffix or
+referent/context proof, route it to `needs_renderer_segments` or
+`needs_nahw_review`. A root-family entry cannot certify a noun token merely
+because the English word is plausible.
