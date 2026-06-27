@@ -17,3 +17,20 @@
 **Forbidden:** a Name/Prophet/proper-noun sense on a common word (or vice-versa) without context certifying it.
 
 **Gate:** referent-sensitive / multi-sense → two_vote ([`grammar-risk-gate.md`](grammar-risk-gate.md)).
+
+## Dogfood finding: VN-00 referent and concept-prose guards
+
+VN-00 reinforced that a populated hover can be semantically interesting and
+still fail the token hover contract:
+
+- `ٱلْجَنَّةَ` may be Garden/Paradise by context, but the garden/jinn/madness
+  collision stays exact-address gated.
+- `إِلَٰهٌ` / `إِلَٰهَ` are common nouns in no-god constructions; do not inherit
+  the Allah proper-name entry.
+- `ٱلْأَنْهَٰرُ` should not expose contextual phrase prose such as "in
+  Paradise" unless the public hover is intentionally phrase-level and
+  source-addressed.
+- `ٱلْعَٰلَمِينَ` should not carry a concept paragraph in the hover slot.
+
+Use referent context to select a concise token contribution or a precise
+pending reason; put broader teaching notes in curriculum, not in the hover.

@@ -45,3 +45,19 @@ If the relation is clear, the learner hover must preserve it. If it is not
 clear, use `preposition_role_uncertified`, `oath_function_uncertified`,
 `pp_attachment_uncertified`, or `referent_unresolved` rather than a smooth
 host-only gloss.
+
+## Dogfood finding: VN-00 construct and suffix relations
+
+VN-00 found many populated strings that were plausible English but not
+relationship-certified:
+
+- `لِلَّهِ`: lām + proper name; host-only Allah is not enough.
+- `رَبِّ`, `رَّبِّهِمْ`, `رَبَّكُمُ`, `رَّبِّكُمْ`, `رَبَّنَا`: the lord/master
+  host must preserve iḍāfa or attached possessor.
+- `مَٰلِكِ`: the head contribution depends on the following genitive; do not
+  propagate a bare headword across the malik/mulk/malak family.
+- `بَيْنَكُم`: zarf + attached pronoun, not a verb-derived entry candidate.
+
+If the hover is already phrase-shaped ("belongs to Allah", "Master of"), that
+still is not rich certification. Require exact address, relation, case, and
+entry/sense linkage before repair preview.

@@ -49,3 +49,13 @@ rule → recognition Q → production Q → answer. Generated/extendable from
 - Production: reshape `جَاعِلٌ` from "to make" to an active participle contribution: **"one who makes/places"**.
 - Gate: these are `populated_hover_pos_leakage` rows. Do not move them to repair-ready until exact token address,
   sarf shape, and token contribution are reviewed; do not propagate by surface family.
+
+## <a name="vn00-family-spread"></a>9. VN-00: family spread is not a nominal hover
+- Recognition: `عَذَابٌ` carrying only "to punish" or a verb family is a noun/maṣdar result, not the verb.
+- Recognition: `إِحْسَانًا` carrying "good, beautiful, excellent, best..." mixes adjective, doer, elative, and maṣdar
+  meanings. Classify the maṣdar/action noun before authoring a hover.
+- Recognition: `ٱلْمُحْسِنِينَ` is an active participle plural. It needs plural/doer shape, not a broad "goodness" family.
+- Recognition: `ٱلْعَٰلَمِينَ` may need concept teaching elsewhere, but the hover slot needs a concise token contribution,
+  not a paragraph.
+- Gate: `masdar_gets_semantic_family_spread` and `possessive_plural_noun_gets_concept_entry_spread` rows stay
+  token-address gated until the noun class, number, definiteness, and any attached possessor are explicit.

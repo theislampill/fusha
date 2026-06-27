@@ -86,6 +86,20 @@ to `pp_attachment_uncertified`.
 | vocative | caller particle + munada structure | noun gloss only |
 | exception | mustathna, mustathna minhu, type | bare `إِلَّا` without exception frame |
 
+## 4b. VN-00 relationship hovers that are not rich yet
+
+| token | route before hover trust | unsafe shortcut |
+|---|---|---|
+| `لِلَّهِ` | lām + proper noun plus clause role | host-only "Allah" or entry-only "belongs to" with no address proof |
+| `لِلْمَلَٰٓئِكَةِ` | lām + article + plural host, then PP attachment | component host "angels" as whole-token hover |
+| `بِإِحْسَٰنٍ` | bā' relation plus maṣdar/case role | family spread from ح س ن |
+| `بَيْنَكُم` | zarf + attached pronoun and attachment target | treating the letters as a verb-entry candidate |
+| `لِيَحْكُمَ` | purpose lām governing subjunctive imperfect | simple "for/to" plus verb lemma |
+
+These rows may already look acceptable in English. They are still not
+`rich_certified` until exact address, governor/attachment, parse key, and entry
+or no-entry rationale are all present.
+
 ## 5. QAC concept metadata is a routing aid only
 
 If concept metadata says a form may be a prophet, historic person, people,

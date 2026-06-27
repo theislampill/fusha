@@ -58,3 +58,12 @@ risk); `tools/check_regressions.py`; the live `pending_proper_noun` bucket in
   keeping name↔common homographs out of the auto-safe lane ([`hover-application.md`](hover-application.md)).
 - **ajami learners** — teaches that a Qurʾanic name carries no lesson in its consonants: نُوح is "the Prophet
   Nūḥ", not a word to parse, so the learner stops hunting a root where there is only a name.
+
+## Dogfood finding: names do not expose etymon prose as hovers
+
+VN-00 found proper-name rows where the visible hover drifted into etymon or
+role prose. `إِبْلِيسَ` must not teach "to lose hope" as the token hover, and
+`هَٰرُوتَ` must not be flattened into a role phrase if the exact name/role
+linkage is not certified. Keep etymon, ontology, and role notes internal or in
+curriculum; public hovers need a name-as-name record or an exact pending
+reason.

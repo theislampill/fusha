@@ -66,3 +66,24 @@ Rich-hover readiness:
   relation to nahw before finalizing the parse key;
 - leave the row pending if the verb can only be described by a root-family or
   infinitive gloss.
+
+## Dogfood finding: VN-00 finite-verb leakage
+
+The VN-00 verb+noun calibration tranche found that common populated verb hovers
+still leak dictionary prose onto exact finite tokens. Treat these as
+`finite_verb_dictionary_gloss_leakage` until the parse key and visible
+breakdown are present:
+
+- `قَالُوا`: not a spread definition of saying; record perfect active 3mp.
+- `قُلْنَا`: not a bare root; record the imperative/perfect shape and first
+  plural subject where applicable.
+- `ظَلَمُونَا`: record 3mp subject plus `نا` object; a bare "wronged" or
+  infinitive hides the attached pronoun.
+- `وَيُرِيكُمْ`: record waw function, Form IV causative sense, and `كم`
+  object suffix.
+- `وَيُعَلِّمُكُمُ`: record Form II teaching sense and `كم` object suffix;
+  do not reuse an omnibus "know/teach/learn" entry gloss.
+
+Passive voice, hamzated/madd-sensitive roots, and derived form are part of the
+token, not polish. `قِيلَ`, `ءَاتَيْنَا`, `وَأْتُوا`, and `يُبَيِّن` stay
+review-gated until voice/form/root are certified at the exact address.

@@ -23,3 +23,15 @@ Use blocker labels:
 
 If the attachment head controls the English contribution and is unclear, route
 to nahw/two-vote or scholar review.
+
+## Dogfood finding: string-correct PP hovers are not attachment proof
+
+The VN-00 tranche found rows such as `لِلَّهِ`, `لِلْمَلَٰٓئِكَةِ`,
+`بِإِحْسَٰنٍ`, `بَيْنَكُم`, and `لِيَحْكُمَ` where the visible English may
+include the preposition or purpose relation, but the graph still lacks a
+certified attachment, governor, or exact entry/sense. Classify these as
+`string_correct_but_not_rich` or `needs_nahw_review`, not `rich_certified`.
+
+Component candidates from rich WBW segments may explain `لِـ`, `بِـ`, or a
+host noun, but they do not become whole-token candidates and they never weaken
+the gate to `auto_safe`.

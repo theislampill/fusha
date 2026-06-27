@@ -22,3 +22,21 @@
 مُلْك↔مَلِك, البِرّ↔البَرّ).
 
 **Test:** `examples/qamus-regressions.jsonl`; `tools/check_regressions.py` key‑collision checks.
+
+## Dogfood finding: VN-00 noun family leakage
+
+The VN-00 calibration tranche found populated noun hovers that had lexical
+content but still failed sarf certification:
+
+- plural hosts with possessive suffixes: `شَيَٰطِينِهِمْ`, `رَّبِّهِمْ`,
+  `رَبَّكُمُ`, `رَبَّنَا`;
+- dual/broken plural number loss: `ٱلْمَلَكَيْنِ`, `جَنَّٰتٍ`;
+- proper/common or homograph collision: `إِبْلِيسَ`, `هَٰرُوتَ`, `مُلْك`,
+  `مَلِك`, `مَٰلِكِ`;
+- concept prose in the hover slot: `ٱلْعَٰلَمِينَ` and `ٱلشَّيَٰطِينُ`
+  received explanatory entries instead of concise token contributions.
+
+For these rows, a Qamus entry candidate or concept note is not a whole-token
+hover. Record number, definiteness, suffix/possessive relation, and proper vs
+common status first. If the row needs the concept note for curriculum, keep it
+outside the public hover text.
