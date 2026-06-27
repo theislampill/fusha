@@ -133,6 +133,7 @@ curriculum/
   mastery-checkpoints.md         ← per-level checkpoints + error → remediation procedure map
   repo-state-and-mission-audit-20260625.md ← current GitHub/repo-state audit for curriculum updates
   qamus-hover-parse-key-and-color.md ← rich-hover parse-key + color-role guidance
+  vn-dogfood-to-curriculum-synthesis-20260627.md ← verb/noun dogfood defects mapped to learner units
   drills/
     hover-composition-and-routing.md ← written token → pieces → sarf/nahw route → safe hover
     parse-key-and-color-layer.md     ← pieces → parse_key + display palette rows
@@ -148,6 +149,10 @@ When working on rich hovers, pair
 [`drills/hover-composition-and-routing.md`](drills/hover-composition-and-routing.md) with
 [`drills/parse-key-and-color-layer.md`](drills/parse-key-and-color-layer.md): first account for
 the pieces, then produce a validated parse-key/display contract.
+After a dogfood tranche, use
+[`vn-dogfood-to-curriculum-synthesis-20260627.md`](vn-dogfood-to-curriculum-synthesis-20260627.md)
+to decide whether the finding belongs in a sarf procedure, a nahw procedure, a drill, a
+regression fixture, a renderer requirement, or a documented no-op.
 
 ## Hard rules honored here
 
