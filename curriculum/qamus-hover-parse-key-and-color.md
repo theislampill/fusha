@@ -125,6 +125,7 @@ Use stable role classes. Do not bind colors directly to source tags; bind them t
 | oath waw | `qg-oath` | red/orange accent |
 | comitative waw | `qg-comitative` | orange accent |
 | function particle | `qg-particle` | violet accent |
+| negative particle | `qg-negative` | red-violet accent |
 | result/cause fa | `qg-result` | magenta accent |
 | definite article | `qg-article` | neutral small tag |
 | relative pronoun | `qg-relative` | olive accent |

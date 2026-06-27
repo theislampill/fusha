@@ -161,6 +161,8 @@ public best gloss concise, but expose a scrubbed learner view with stable segmen
 
 - conjunction/resumption/result/cause particles (`qg-particle`, `qg-result`)
 - prepositions, oath wāw, and comitative wāw (`qg-preposition`, `qg-oath`, `qg-comitative`)
+- whole-token function particles such as negation, exception, interrogation, time adverb, accusative-particle,
+  subordinating, conditional, and purpose particles (`qg-negative`, `qg-exception`, `qg-particle`)
 - definite article (`qg-article`)
 - verb stem and verb form (`qg-verb`)
 - nouns and proper-name hosts (`qg-noun`, `qg-proper-noun`)
