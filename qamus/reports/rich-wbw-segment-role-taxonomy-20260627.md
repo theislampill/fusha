@@ -82,3 +82,38 @@ live apply plan. Practical options:
 - further rich metadata reconciliation against a fresh live-readonly shadow graph;
 - owner-reviewed two-vote/adjudication work that produces source-clean draft
   decisions but still stops before live mutation.
+
+## Current-HEAD Phase 4 Packet Sanity
+
+Status: current-code validation smoke only. This does not rerun the live
+shadow graph, does not reopen Phase 2.9, and does not authorize apply.
+
+- `validated_code_head`: `676be98dd8e35219fae6340d033e325cf5b722bb`
+- `report_head`: same as `validated_code_head`
+- previous live-shadow counts remain historical evidence from their recorded
+  run heads; this section proves only that the committed Phase 4 sample packet
+  chain still validates under the current code.
+
+Current-HEAD validation evidence:
+
+- `python tools/validate_phase4_closure_tranche.py qamus/examples/phase4_closure_tranche.sample.jsonl`
+  -> `PASS`, 2 review-only rows.
+- `python tools/validate_phase4_two_vote_requests.py qamus/examples/phase4_two_vote_request.sample.jsonl`
+  -> `PASS`, 1 exact-addressed review-only row.
+- `python tools/validate_phase4_two_vote_responses.py qamus/examples/phase4_two_vote_response.sample.jsonl`
+  -> `PASS`, 1 exact-addressed review-only row.
+- `python tools/validate_phase4_gloss_adjudication_requests.py qamus/examples/phase4_gloss_adjudication_request.sample.jsonl`
+  -> `PASS`, 1 exact-addressed review-only row.
+- `python tools/validate_phase4_gloss_adjudication_responses.py qamus/examples/phase4_gloss_adjudication_response.sample.jsonl`
+  -> `PASS`, 1 exact-addressed review-only row.
+- `python tools/validate_phase4_hover_decision_plan.py qamus/examples/phase4_hover_decision_plan.sample.jsonl`
+  -> `PASS`, 2 exact-addressed review-only rows.
+- `python tools/validate_phase4_apply_readiness_manifest.py qamus/examples/phase4_apply_readiness_manifest.sample.json --plan-jsonl qamus/examples/phase4_hover_decision_plan.sample.jsonl`
+  -> `PASS`, 1 source-only non-mutating manifest.
+- `python tools/validate_phase4_draft_token_decision_ledger.py qamus/examples/phase4_draft_token_decision_ledger.sample.jsonl --plan-jsonl qamus/examples/phase4_hover_decision_plan.sample.jsonl`
+  -> `PASS`, 2 source-only non-mutating draft rows.
+- `python tools/validate_phase4_owner_authorization_request.py qamus/examples/phase4_owner_authorization_request.sample.json --manifest-json qamus/examples/phase4_apply_readiness_manifest.sample.json --draft-ledger-jsonl qamus/examples/phase4_draft_token_decision_ledger.sample.jsonl`
+  -> `PASS`, 1 source-only owner request with authorization not provided.
+
+The Phase 4 sample chain therefore remains a valid owner-review scaffold, not
+a live token-decision ledger and not a closure/correctness claim.
