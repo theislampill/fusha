@@ -856,11 +856,33 @@ try:
     for _name, _needle in (
         ("rh-live-00-two-vote-response-reconciliation-20260627.md", "certified-not-applied rows | 9"),
         ("rh-live-00-renderer-admin-preview-plan-20260627.md", "ordinary public hover behavior"),
+        ("rh-live-00-admin-preview-bundle-manifest-20260628.md", "machine-checkable bundle gate"),
     ):
         _text = io.open(os.path.join(_report_dir, _name), encoding="utf-8").read()
         check("RH-LIVE-00 report present: " + _name, _needle in _text)
 except Exception:
     check("RH-LIVE-00 report presence/readability", False)
+
+try:
+    _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_rh_live_admin_preview_bundle_manifest.py"),
+                   "--self-test"])
+    check("RH-LIVE-00 admin-preview bundle manifest validator self-test", _v.returncode == 0)
+    if _v.returncode != 0:
+        _out = (_v.stdout or _v.stderr).strip().splitlines()
+        if _out:
+            print("  ", _out[-1])
+except Exception:
+    check("RH-LIVE-00 admin-preview bundle manifest validator runnable", False)
+try:
+    _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_rh_live_admin_preview_bundle_manifest.py"),
+                   os.path.join(_R, "qamus", "examples", "rh_live_00_admin_preview_bundle_manifest.sample.json")])
+    check("RH-LIVE-00 admin-preview bundle manifest sample validates", _v.returncode == 0)
+    if _v.returncode != 0:
+        _out = (_v.stdout or _v.stderr).strip().splitlines()
+        if _out:
+            print("  ", _out[-1])
+except Exception:
+    check("RH-LIVE-00 admin-preview bundle manifest sample runnable", False)
 
 try:
     _v = run_text([sys.executable, os.path.join(_R, "tools", "audit_wbw_lookup_morphosyntax.py"), "--self-test"])

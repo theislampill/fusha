@@ -1,0 +1,90 @@
+{
+  "admin_preview": {
+    "admin_only": true,
+    "route_contract_path": "qamus/examples/shadow_admin_route_contract.sample.json",
+    "route_view": "rich_hover_preview"
+  },
+  "artifacts": {
+    "certified_not_applied": {
+      "path": "qamus/examples/rh_live_00_two_vote_certified_not_applied.sample.jsonl",
+      "rows": 9,
+      "sha256": "1cebf6eca24867f1c1b1869782cbdaa44f87a8e318c6906417ea54aae3dff5cd"
+    },
+    "preview_candidates": {
+      "path": "qamus/examples/rh_live_00_preview_candidates.sample.jsonl",
+      "rows": 9,
+      "sha256": "182a28418d8f652d62be22e5e87db9502a8e6c4b164eaf86d4c29d19aa181241"
+    },
+    "renderer_admin_plan": {
+      "path": "qamus/reports/rh-live-00-renderer-admin-preview-plan-20260627.md",
+      "sha256": "ccb8fe3cff3550629386ec210e7a7d9e2c845c351ffa811096b3703c7edd51ff"
+    },
+    "route_contract": {
+      "path": "qamus/examples/shadow_admin_route_contract.sample.json",
+      "sha256": "399b22a0ac6a19a7056cf5bc319688784b7420b346fa36f401523fadf70b5fa2"
+    },
+    "source_readiness": {
+      "path": "qamus/examples/rh_live_00_source_triangulation_readiness.sample.jsonl",
+      "rows": 9,
+      "sha256": "39c8f3b65b3cb6d2e4f6c8211109aba77b50b1c4919809c49aec46982f85f544"
+    },
+    "source_readiness_report": {
+      "path": "qamus/reports/rh-live-00-source-triangulation-readiness-20260627.md",
+      "sha256": "5d5c7f87fde94019bc164fe80c1d43f60c16ce7147190f2e9d3030b4f4dad2ae"
+    },
+    "two_vote_reconciliation_report": {
+      "path": "qamus/reports/rh-live-00-two-vote-response-reconciliation-20260627.md",
+      "sha256": "d4052702bf37d742f1c84af484daed38346bb87c0db532a7d778ccedf15c0669"
+    },
+    "two_vote_requests": {
+      "path": "qamus/examples/rh_live_00_two_vote_request_from_source_readiness.sample.jsonl",
+      "rows": 9,
+      "sha256": "1676a42912cffee7615f395326b8ea716dc44304ead9b24afb3274acd86f5481"
+    },
+    "two_vote_responses": {
+      "path": "qamus/examples/rh_live_00_two_vote_response_from_source_readiness.sample.jsonl",
+      "rows": 18,
+      "sha256": "10ebcabdb556be904ea2c4724a66ce70869c807ac5ec19683e07c83145a03660"
+    },
+    "two_vote_unresolved": {
+      "path": "qamus/examples/rh_live_00_two_vote_unresolved.sample.jsonl",
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "preview_readiness_report": {
+      "path": "qamus/reports/rh-live-00-preview-readiness-20260627.md",
+      "sha256": "0f2280512c995bb99846bc466f6e1358568eb52b8039f9f78442431bc9db09c6"
+    }
+  },
+  "expected": {
+    "all_rows_exact_address_two_vote_ready": true,
+    "certified_not_applied_rows": 9,
+    "preview_candidate_rows": 9,
+    "response_rows": 18,
+    "source_readiness_rows": 9,
+    "unresolved_rows": 0,
+    "request_rows": 9
+  },
+  "policy": {
+    "component_candidates_can_certify": false,
+    "hover_ledger_mutation_allowed": false,
+    "live_mutation_allowed": false,
+    "may_apply_live": false,
+    "mirror_sync_allowed": false,
+    "owner_authorization_required": true,
+    "parse_key_primary_identity": false,
+    "public_rollout_allowed": false,
+    "service_restart_allowed": false,
+    "wbw_rebuild_allowed": false
+  },
+  "public_boundary": {
+    "external_source_names_public": false,
+    "internal_provenance_public": false,
+    "kind": "authored",
+    "lang": "en",
+    "src": "qamus"
+  },
+  "stage": "RH-LIVE-00",
+  "status": "repo_only_admin_preview_bundle_not_live",
+  "version": "rh-live-admin-preview-bundle@1"
+}
