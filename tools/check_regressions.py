@@ -771,6 +771,16 @@ try:
             print("  ", _out[-1])
 except Exception:
     check("RH-LIVE-00 source-triangulation readiness sample runnable", False)
+try:
+    _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_phase4_two_vote_requests.py"),
+                   os.path.join(_R, "qamus", "examples", "rh_live_00_two_vote_request_from_source_readiness.sample.jsonl")])
+    check("RH-LIVE-00 source-derived two-vote request sample validates", _v.returncode == 0)
+    if _v.returncode != 0:
+        _out = (_v.stdout or _v.stderr).strip().splitlines()
+        if _out:
+            print("  ", _out[-1])
+except Exception:
+    check("RH-LIVE-00 source-derived two-vote request sample runnable", False)
 
 try:
     _v = run_text([sys.executable, os.path.join(_R, "tools", "audit_wbw_lookup_morphosyntax.py"), "--self-test"])
