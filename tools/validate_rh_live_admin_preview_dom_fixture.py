@@ -28,6 +28,44 @@ EXPECTED_ROWS = {
     "wbw:3:123:4": ("quran:3:123:4", "بِبَدْرٍ", "parse:04f29c83d06ef13407a750b1"),
     "wbw:2:213:37": ("quran:2:213:37", "لِمَا", "parse:ae6f25c79ca4888cd052cc03"),
 }
+REQUIRED_PANELS = {
+    "identity",
+    "sarf",
+    "nahw",
+    "segments",
+    "learner",
+    "gates",
+}
+REQUIRED_GATES = {
+    "address",
+    "public_boundary",
+    "sarf",
+    "nahw",
+    "source_two_vote",
+    "renderer",
+    "owner",
+    "live_apply",
+}
+ROLE_CLASS_REQUIREMENTS = {
+    "verb_prefix": "qg-verb-prefix",
+    "verb_stem": "qg-verb-stem",
+    "subject_pronoun": "qg-subject-pronoun",
+    "object_pronoun": "qg-object-pronoun",
+    "prefix_result_fa": "qg-result-fa",
+    "prefix_conjunction": "qg-conjunction",
+    "prefix_preposition": "qg-preposition",
+    "prefix_lam": "qg-lam",
+    "particle_ma": "qg-ma-particle",
+    "definite_article": "qg-article",
+    "noun_stem": "qg-noun-stem",
+    "proper_noun_stem": "qg-proper-noun",
+}
+GENERIC_ONLY_CLASSES = {
+    "qg-verb",
+    "qg-noun",
+    "qg-particle",
+    "qg-pronoun",
+}
 FORBIDDEN_PUBLIC_STRINGS = (
     "informed_by",
     "qac",
@@ -66,6 +104,8 @@ class FixtureParser(html.parser.HTMLParser):
         self.current_card = None
         self.current_word = None
         self.current_tooltip = None
+        self.current_segment_row = None
+        self.current_learner = None
         self.capture_parse_key = None
         self.body_attrs = {}
 
@@ -80,8 +120,33 @@ class FixtureParser(html.parser.HTMLParser):
                 "words": [],
                 "tooltip_rows": [],
                 "parse_keys": [],
+                "panels": set(),
+                "gates": {},
+                "segment_rows": [],
+                "learner_text": "",
+                "grammar_tags": set(),
             }
             self.cards.append(self.current_card)
+        if self.current_card and tag == "details" and has_class(attrs, "qg-panel"):
+            panel = attrs.get("data-panel")
+            if panel:
+                self.current_card["panels"].add(panel)
+        if self.current_card and tag == "li" and has_class(attrs, "qg-gate-row"):
+            gate = attrs.get("data-gate")
+            if gate:
+                self.current_card["gates"][gate] = attrs.get("data-state")
+        if self.current_card and tag == "tr" and has_class(attrs, "qg-segment-row"):
+            self.current_segment_row = {
+                "attrs": attrs,
+                "text": "",
+            }
+            self.current_card["segment_rows"].append(self.current_segment_row)
+        if self.current_card and tag == "p" and has_class(attrs, "qg-learner-explanation"):
+            self.current_learner = ""
+        if self.current_card and tag == "span" and has_class(attrs, "qg-preview-tag"):
+            tag_name = attrs.get("data-tag")
+            if tag_name:
+                self.current_card["grammar_tags"].add(tag_name)
         if self.current_card and tag == "span" and has_class(attrs, "qg-word"):
             self.current_word = {
                 "attrs": attrs,
@@ -114,6 +179,14 @@ class FixtureParser(html.parser.HTMLParser):
             open_tag, open_attrs = self.stack[-1] if self.stack else (None, {})
             if open_tag == "div" and has_class(open_attrs, "qg-tooltip"):
                 self.current_tooltip = None
+        if self.current_segment_row and tag == "tr":
+            open_tag, open_attrs = self.stack[-1] if self.stack else (None, {})
+            if open_tag == "tr" and has_class(open_attrs, "qg-segment-row"):
+                self.current_segment_row = None
+        if self.current_learner is not None and tag == "p":
+            if self.current_card is not None:
+                self.current_card["learner_text"] += self.current_learner.strip()
+            self.current_learner = None
         if self.current_card and tag == "section":
             open_tag, open_attrs = self.stack[-1] if self.stack else (None, {})
             if open_tag == "section" and has_class(open_attrs, "rh-live-preview-card"):
@@ -130,6 +203,10 @@ class FixtureParser(html.parser.HTMLParser):
                 self.current_word["segments"][-1]["text"] += data
         if self.current_card and self.current_card["tooltip_rows"]:
             self.current_card["tooltip_rows"][-1]["text"] += data
+        if self.current_segment_row is not None:
+            self.current_segment_row["text"] += data
+        if self.current_learner is not None:
+            self.current_learner += data
 
 
 def add(errors, message):
@@ -153,6 +230,9 @@ def validate_css(text, errors):
         add(errors, "fixture must require non-breaking Arabic token wrappers")
     if "line-height: 1.9" not in text and "line-height:1.9" not in lower:
         add(errors, "fixture must reserve vertical room for Arabic diacritics")
+    for css_class in sorted(set(ROLE_CLASS_REQUIREMENTS.values())):
+        if "." + css_class not in text:
+            add(errors, "fixture CSS must define role-aware class %s" % css_class)
 
 
 def validate_fixture(path):
@@ -167,8 +247,8 @@ def validate_fixture(path):
     parser = FixtureParser()
     parser.feed(text)
     body = parser.body_attrs
-    if body.get("data-rh-live-stage") != "RH-LIVE-00":
-        add(errors, "body must identify RH-LIVE-00 stage")
+    if body.get("data-rh-live-stage") != "RH-LIVE-00.5":
+        add(errors, "body must identify RH-LIVE-00.5 stage")
     if body.get("data-admin-only") != "true":
         add(errors, "body must be admin-only")
     if body.get("data-live-mutation-allowed") != "false":
@@ -194,6 +274,20 @@ def validate_fixture(path):
         for key in ("data-public-exposable", "data-may-apply-live", "data-live-renderer-claim"):
             if attrs.get(key) != "false":
                 add(errors, "%s %s must be false" % (wbw, key))
+        missing_panels = REQUIRED_PANELS - card["panels"]
+        if missing_panels:
+            add(errors, "%s missing enriched preview panels: %s" % (wbw, sorted(missing_panels)))
+        missing_gates = REQUIRED_GATES - set(card["gates"])
+        if missing_gates:
+            add(errors, "%s missing gate rows: %s" % (wbw, sorted(missing_gates)))
+        if card["gates"].get("owner") != "not_authorized":
+            add(errors, "%s owner gate must stay not_authorized" % wbw)
+        if card["gates"].get("live_apply") != "blocked":
+            add(errors, "%s live apply gate must stay blocked" % wbw)
+        if not card["learner_text"]:
+            add(errors, "%s missing learner explanation text" % wbw)
+        if not card["grammar_tags"]:
+            add(errors, "%s must expose preview-only grammar tags" % wbw)
 
         word = visible_word_for(card)
         if not word:
@@ -219,17 +313,34 @@ def validate_fixture(path):
         visible_roles = {segment["attrs"].get("data-role") for segment in word["segments"]}
         for segment in word["segments"]:
             classes = segment["attrs"].get("class", "").split()
+            role = segment["attrs"].get("data-role")
             if "qg-seg" not in classes:
                 add(errors, "%s segment missing qg-seg class" % wbw)
-            if not any(name.startswith("qg-") and name != "qg-seg" for name in classes):
-                add(errors, "%s segment missing role color class" % wbw)
-            if not segment["attrs"].get("data-role"):
+            if not role:
                 add(errors, "%s segment missing data-role" % wbw)
+                continue
+            required_class = ROLE_CLASS_REQUIREMENTS.get(role)
+            if required_class and required_class not in classes:
+                add(errors, "%s role %s must use class %s" % (wbw, role, required_class))
+            if required_class and not (set(classes) - GENERIC_ONLY_CLASSES - {"qg-seg"}):
+                add(errors, "%s role %s has only broad POS classes" % (wbw, role))
         if expected_parse not in card["parse_keys"]:
             add(errors, "%s tooltip parse-key element missing expected key" % wbw)
         tooltip_roles = {row["role"] for row in card["tooltip_rows"]}
         if visible_roles - tooltip_roles:
             add(errors, "%s tooltip breakdown missing roles: %s" % (wbw, sorted(visible_roles - tooltip_roles)))
+        segment_table_roles = {row["attrs"].get("data-role") for row in card["segment_rows"]}
+        if visible_roles - segment_table_roles:
+            add(errors, "%s segment contribution table missing roles: %s" % (wbw, sorted(visible_roles - segment_table_roles)))
+        for row in card["segment_rows"]:
+            row_attrs = row["attrs"]
+            role = row_attrs.get("data-role")
+            expected_class = ROLE_CLASS_REQUIREMENTS.get(role)
+            if expected_class and row_attrs.get("data-display-class") != expected_class:
+                add(errors, "%s table role %s data-display-class must be %s" % (wbw, role, expected_class))
+            for field in ("data-gloss", "data-sarf", "data-nahw", "data-kind", "data-affects"):
+                if not row_attrs.get(field):
+                    add(errors, "%s table role %s missing %s" % (wbw, role, field))
     missing = set(EXPECTED_ROWS) - seen
     if missing:
         add(errors, "missing preview cards: %s" % sorted(missing))
@@ -247,13 +358,20 @@ def self_test():
         raise SystemExit("self-test failed: " + "; ".join(errors[:20]))
     text = io.open(SAMPLE, encoding="utf-8").read()
     bad = text.replace("data-surface=\"يَسْأَلُكَ\"", "data-surface=\"يَسْأَلُكَ\"", 1)
-    bad = bad.replace("يَ</span><span class=\"qg-seg qg-verb qg-verb-stem\"", "يَ </span><span class=\"qg-seg qg-verb qg-verb-stem\"", 1)
+    bad = bad.replace("يَ</span><span class=\"qg-seg qg-verb-stem\"", "يَ </span><span class=\"qg-seg qg-verb-stem\"", 1)
     with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
         bad_path = os.path.join(tmp, "bad.html")
         write_text(bad_path, bad)
         bad_errors = validate_fixture(bad_path)
         if not any("textContent must equal exact surface" in error or "must not contain inserted whitespace" in error for error in bad_errors):
             raise SystemExit("self-test failed: inserted Arabic spacing regression was not caught")
+    bad = text.replace('class="qg-seg qg-verb-prefix" data-role="verb_prefix"', 'class="qg-seg qg-verb" data-role="verb_prefix"', 1)
+    with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
+        bad_path = os.path.join(tmp, "bad-role.html")
+        write_text(bad_path, bad)
+        bad_errors = validate_fixture(bad_path)
+        if not any("role verb_prefix must use class qg-verb-prefix" in error for error in bad_errors):
+            raise SystemExit("self-test failed: broad POS role-color regression was not caught")
     print("RH-LIVE admin-preview DOM fixture self-test OK")
 
 

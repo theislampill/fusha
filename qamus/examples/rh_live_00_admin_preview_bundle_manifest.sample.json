@@ -7,7 +7,7 @@
   "artifacts": {
     "admin_preview_dom_fixture": {
       "path": "qamus/examples/rh_live_00_admin_preview_dom_fixture.sample.html",
-      "sha256": "ac281d6fd68a3c14826852891a41e5a53936b4ad7c0705ea6e430b44b9ae5d74"
+      "sha256": "0805910ef868e92122a5468ee935ed424b5e08a77ac3a76e4b28d1027cc48206"
     },
     "certified_not_applied": {
       "path": "qamus/examples/rh_live_00_two_vote_certified_not_applied.sample.jsonl",
@@ -21,7 +21,7 @@
     },
     "renderer_admin_plan": {
       "path": "qamus/reports/rh-live-00-renderer-admin-preview-plan-20260627.md",
-      "sha256": "ccb8fe3cff3550629386ec210e7a7d9e2c845c351ffa811096b3703c7edd51ff"
+      "sha256": "c5ef4647c8d731bac0c6a8c24cd30008794bca08771b1e7dd825856fd7081616"
     },
     "route_contract": {
       "path": "qamus/examples/shadow_admin_route_contract.sample.json",

@@ -37,6 +37,31 @@ Initial preview rows:
 5. Use the `qamus-grammar-v1` palette and stable classes such as `qg-verb`, `qg-verb-prefix`, `qg-verb-stem`,
    `qg-pronoun`, `qg-particle`, `qg-conjunction`, `qg-preposition`, `qg-article`, and `qg-noun`.
 
+## RH-LIVE-00.5 Role-Aware Palette
+
+The admin preview must teach grammatical contribution, not only broad POS. The visible Arabic segment can carry a
+broad family through the label, but the color class should identify the known role.
+
+| Role | Class | Visual treatment | Explanation | Example |
+|---|---|---|---|---|
+| `verb_prefix` | `qg-verb-prefix` | cyan with underline | inflectional or imperfect marker | `يَ` in `يَسْأَلُكَ` |
+| `verb_stem` | `qg-verb-stem` | bright cyan | lexical verb host | `سْأَلُ`, `أَهْلَكْ` |
+| `subject_pronoun` | `qg-subject-pronoun` | violet dotted underline | attached subject marker | `نَا` in `فَأَهْلَكْنَاهُمْ` |
+| `object_pronoun` | `qg-object-pronoun` | magenta underline | attached object/addressee | `كَ`, `هُمْ` |
+| `prefix_conjunction` | `qg-conjunction` | blue | coordination/list relation | `وَ` |
+| `prefix_result_fa` | `qg-result-fa` | rose underline | result/resumption relation | `فَ` |
+| `prefix_preposition` | `qg-preposition` | teal underline | jarr / PP relation | `بِ` |
+| `prefix_lam` | `qg-lam` | amber underline | lām relation or governor under review | `لِ` in `لِمَا` |
+| `particle_ma` | `qg-ma-particle` | orange | context-sensitive mā function | `مَا` |
+| `definite_article` | `qg-article` | gold underline | definiteness | `ال`, `ٱل` |
+| `noun_stem` | `qg-noun-stem` | light neutral | nominal host | `شَّمْسُ` |
+| `proper_noun_stem` | `qg-proper-noun` | warm gold | proper-name host | `بَدْرٍ` |
+
+Color is never the only cue. Tooltip rows and segment tables must also show role labels, display classes, gloss
+contribution, sarf contribution, nahw contribution, segment kind, and what the segment affects. If the exact grammar
+field is absent from the current review artifact, the admin preview must show a pending/null value rather than inventing
+a fact.
+
 ## Repo-Side Route Contract
 
 The static shadow-admin contract now reserves an admin-only/read-only `rich_hover_preview` view at
@@ -84,6 +109,8 @@ Before any live preview enablement:
 4. Assert:
    - `.qg-seg` or equivalent segment markers exist in preview mode;
    - parse-key element exists in preview tooltip;
+   - known segment roles use role-aware classes, not only broad POS colors;
+   - the token identity, sarf, nahw, segment table, learner explanation, and gate/status panels are present;
    - visible Arabic token textContent equals the original token with no inserted spaces;
    - segment classes are role-aware;
    - normal public hover remains unchanged when the flag is disabled;

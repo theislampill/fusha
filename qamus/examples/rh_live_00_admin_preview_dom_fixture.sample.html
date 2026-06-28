@@ -2,27 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>RH-LIVE-00 admin preview DOM fixture</title>
+  <title>RH-LIVE-00.5 admin preview DOM fixture</title>
   <style>
     :root {
-      --qg-particle: #5db7ff;
-      --qg-article: #f2c94c;
-      --qg-verb: #67e8f9;
-      --qg-noun: #f8fafc;
+      --qg-bg: #182229;
+      --qg-card: #202c35;
+      --qg-border: #33424c;
+      --qg-muted: #b6c4cf;
+      --qg-text: #f8fafc;
+      --qg-chip: #dbeafe;
+      --qg-verb-prefix: #38bdf8;
+      --qg-verb-stem: #67e8f9;
+      --qg-subject-pronoun: #a78bfa;
+      --qg-object-pronoun: #f0abfc;
+      --qg-conjunction: #60a5fa;
+      --qg-result-fa: #fb7185;
       --qg-preposition: #2dd4bf;
-      --qg-pronoun: #c084fc;
+      --qg-lam: #f59e0b;
+      --qg-ma-particle: #fb923c;
+      --qg-article: #f2c94c;
+      --qg-noun-stem: #f8fafc;
+      --qg-proper-noun: #fde68a;
     }
 
     .rh-live-preview-fixture {
-      color: #f8fafc;
-      background: #182229;
+      color: var(--qg-text);
+      background: var(--qg-bg);
       font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 1rem;
     }
 
     .rh-live-preview-card {
-      border: 1px solid #33424c;
+      background: var(--qg-card);
+      border: 1px solid var(--qg-border);
       margin: 1rem 0;
       padding: 1rem;
+    }
+
+    .qg-card-heading {
+      margin: 0 0 .75rem;
+      font-size: 1.05rem;
+    }
+
+    .qg-gloss {
+      color: var(--qg-chip);
+      font-weight: 700;
+      margin-block-end: .5rem;
     }
 
     .qg-word,
@@ -44,35 +70,126 @@
       word-spacing: 0;
     }
 
-    .qg-particle,
-    .qg-conjunction {
-      color: var(--qg-particle);
+    .qg-verb-prefix {
+      color: var(--qg-verb-prefix);
+      text-decoration: underline;
+      text-decoration-color: var(--qg-verb-prefix);
+      text-decoration-thickness: .08em;
+      text-underline-offset: .18em;
     }
 
-    .qg-article {
-      color: var(--qg-article);
-    }
-
-    .qg-verb,
-    .qg-verb-prefix,
     .qg-verb-stem {
-      color: var(--qg-verb);
+      color: var(--qg-verb-stem);
     }
 
-    .qg-noun {
-      color: var(--qg-noun);
+    .qg-subject-pronoun {
+      color: var(--qg-subject-pronoun);
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-decoration-color: var(--qg-subject-pronoun);
+      text-underline-offset: .2em;
+    }
+
+    .qg-object-pronoun {
+      color: var(--qg-object-pronoun);
+      text-decoration: underline;
+      text-decoration-color: var(--qg-object-pronoun);
+      text-underline-offset: .2em;
+    }
+
+    .qg-conjunction {
+      color: var(--qg-conjunction);
+    }
+
+    .qg-result-fa {
+      color: var(--qg-result-fa);
+      text-decoration: underline;
+      text-decoration-color: var(--qg-result-fa);
+      text-underline-offset: .18em;
     }
 
     .qg-preposition {
       color: var(--qg-preposition);
+      text-decoration: underline;
+      text-decoration-color: var(--qg-preposition);
+      text-underline-offset: .18em;
     }
 
-    .qg-pronoun {
-      color: var(--qg-pronoun);
+    .qg-lam {
+      color: var(--qg-lam);
+      text-decoration: underline;
+      text-decoration-color: var(--qg-lam);
+      text-underline-offset: .18em;
+    }
+
+    .qg-ma-particle {
+      color: var(--qg-ma-particle);
+    }
+
+    .qg-article {
+      color: var(--qg-article);
+      text-decoration: underline;
+      text-decoration-color: var(--qg-article);
+      text-underline-offset: .16em;
+    }
+
+    .qg-noun-stem {
+      color: var(--qg-noun-stem);
+    }
+
+    .qg-proper-noun {
+      color: var(--qg-proper-noun);
+    }
+
+    .qg-panel {
+      border-block-start: 1px solid var(--qg-border);
+      margin-block-start: .75rem;
+      padding-block-start: .75rem;
+    }
+
+    .qg-panel summary {
+      color: var(--qg-chip);
+      cursor: default;
+      font-weight: 700;
+      margin-block-end: .35rem;
+    }
+
+    .qg-kv,
+    .qg-gates {
+      margin: .25rem 0;
+      padding: 0;
+    }
+
+    .qg-kv div,
+    .qg-gate-row {
+      line-height: 1.7;
+    }
+
+    .qg-kv dt,
+    .qg-gate-name {
+      color: var(--qg-muted);
+      display: inline;
+      font-weight: 700;
+    }
+
+    .qg-kv dd {
+      display: inline;
+      margin: 0 0 0 .35rem;
+    }
+
+    .qg-role-badge,
+    .qg-gate-state,
+    .qg-preview-tag {
+      border: 1px solid var(--qg-border);
+      border-radius: .35rem;
+      color: var(--qg-chip);
+      display: inline;
+      font-size: .8rem;
+      padding: .08rem .35rem;
     }
 
     .qg-tooltip {
-      border-block-start: 1px solid #33424c;
+      border-block-start: 1px solid var(--qg-border);
       margin-block-start: .75rem;
       padding-block-start: .75rem;
     }
@@ -92,125 +209,146 @@
       line-height: 1.8;
       padding-block: .12em;
     }
+
+    .qg-segment-table {
+      border-collapse: collapse;
+      margin-block-start: .5rem;
+      width: 100%;
+    }
+
+    .qg-segment-table th,
+    .qg-segment-table td {
+      border-block-start: 1px solid var(--qg-border);
+      line-height: 1.55;
+      padding: .35rem .45rem;
+      text-align: start;
+      vertical-align: top;
+    }
+
+    .qg-segment-table th {
+      color: var(--qg-muted);
+      font-size: .86rem;
+    }
+
+    .qg-learner-explanation {
+      line-height: 1.65;
+      max-width: 72rem;
+    }
   </style>
 </head>
-<body class="rh-live-preview-fixture" data-rh-live-stage="RH-LIVE-00" data-admin-only="true" data-live-mutation-allowed="false">
+<body class="rh-live-preview-fixture" data-rh-live-stage="RH-LIVE-00.5" data-admin-only="true" data-live-mutation-allowed="false">
   <main>
     <section class="rh-live-preview-card" data-quran-loc="quran:33:63:1" data-wbw-loc="wbw:33:63:1" data-src="qamus" data-kind="authored" data-lang="en" data-public-exposable="false" data-may-apply-live="false" data-live-renderer-claim="false">
+      <h2 class="qg-card-heading">33:63:1 admin preview</h2>
       <div class="qg-gloss">ask you</div>
-      <span class="qg-word" dir="rtl" lang="ar" data-surface="يَسْأَلُكَ" data-parse-key="parse:36a0d0ceeef8ebe3bc89f45d"><span class="qg-seg qg-verb qg-verb-prefix" data-role="verb_prefix">يَ</span><span class="qg-seg qg-verb qg-verb-stem" data-role="stem">سْأَلُ</span><span class="qg-seg qg-pronoun" data-role="object_pronoun">كَ</span></span>
+      <span class="qg-word" dir="rtl" lang="ar" data-surface="يَسْأَلُكَ" data-parse-key="parse:36a0d0ceeef8ebe3bc89f45d"><span class="qg-seg qg-verb-prefix" data-role="verb_prefix">يَ</span><span class="qg-seg qg-verb-stem" data-role="verb_stem">سْأَلُ</span><span class="qg-seg qg-object-pronoun" data-role="object_pronoun">كَ</span></span>
       <div class="qg-tooltip" role="tooltip">
-        <div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-verb qg-verb-prefix" data-role="verb_prefix">يَ</span><span class="qg-seg qg-verb qg-verb-stem" data-role="stem">سْأَلُ</span><span class="qg-seg qg-pronoun" data-role="object_pronoun">كَ</span></div>
+        <div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-verb-prefix" data-role="verb_prefix">يَ</span><span class="qg-seg qg-verb-stem" data-role="verb_stem">سْأَلُ</span><span class="qg-seg qg-object-pronoun" data-role="object_pronoun">كَ</span></div>
         <code class="qg-parse-key">parse:36a0d0ceeef8ebe3bc89f45d</code>
         <ul class="qg-breakdown">
-          <li class="qg-breakdown-row" data-role="verb_prefix"><span class="qg-seg qg-verb qg-verb-prefix">يَ</span> PFX - imperfect verb marker</li>
-          <li class="qg-breakdown-row" data-role="stem"><span class="qg-seg qg-verb qg-verb-stem">سْأَلُ</span> STEM - ask</li>
-          <li class="qg-breakdown-row" data-role="object_pronoun"><span class="qg-seg qg-pronoun">كَ</span> PRON - you</li>
+          <li class="qg-breakdown-row" data-role="verb_prefix"><span class="qg-seg qg-verb-prefix">يَ</span> <span class="qg-role-badge">PFX</span> imperfect marker; sarf: finite verb prefix; nahw: agrees with following explicit subject.</li>
+          <li class="qg-breakdown-row" data-role="verb_stem"><span class="qg-seg qg-verb-stem">سْأَلُ</span> <span class="qg-role-badge">STEM</span> lexical host: ask; sarf: Form I imperfect active; nahw: verbal predicate in context.</li>
+          <li class="qg-breakdown-row" data-role="object_pronoun"><span class="qg-seg qg-object-pronoun">كَ</span> <span class="qg-role-badge">OBJ</span> attached object pronoun: you; sarf: 2ms suffix; nahw: object/addressee contribution.</li>
         </ul>
       </div>
+      <details class="qg-panel qg-identity-panel" data-panel="identity" open><summary>Token identity</summary><dl class="qg-kv"><div><dt>quran</dt><dd>quran:33:63:1</dd></div><div><dt>wbw</dt><dd>wbw:33:63:1</dd></div><div><dt>surface</dt><dd>يَسْأَلُكَ</dd></div><div><dt>normalized key</dt><dd data-state="pending">pending</dd></div><div><dt>renderer fixture</dt><dd>rh_live_00_admin_preview_dom_fixture.sample.html</dd></div><div><dt>certification</dt><dd>certified_not_applied</dd></div><div><dt>preview</dt><dd>admin_preview_only</dd></div><div><dt>next gate</dt><dd>owner-authorized admin route smoke</dd></div><div><dt>owner/live</dt><dd>not authorized for live mutation</dd></div></dl></details>
+      <details class="qg-panel qg-sarf-panel" data-panel="sarf" open><summary>Sarf</summary><dl class="qg-kv"><div><dt>POS</dt><dd>fiʿl</dd></div><div><dt>root</dt><dd>س أ ل</dd></div><div><dt>pattern</dt><dd data-state="pending">pending</dd></div><div><dt>form</dt><dd>I</dd></div><div><dt>voice</dt><dd>active</dd></div><div><dt>tense/aspect</dt><dd>imperfect</dd></div><div><dt>mood</dt><dd data-state="pending">pending exact iʿrāb in preview</dd></div><div><dt>person/number/gender</dt><dd>3ms host; explicit plural subject follows in context</dd></div><div><dt>derivative type</dt><dd>null</dd></div><div><dt>root notes</dt><dd>hamzated root reviewed; suffix must remain visible</dd></div></dl></details>
+      <details class="qg-panel qg-nahw-panel" data-panel="nahw" open><summary>Nahw</summary><dl class="qg-kv"><div><dt>iʿrāb role</dt><dd>finite verb with attached object pronoun</dd></div><div><dt>case/mood</dt><dd data-state="pending">pending in preview display</dd></div><div><dt>governor/governed-by</dt><dd>not governed by a visible mood particle in this fixture</dd></div><div><dt>particle function</dt><dd>null</dd></div><div><dt>pronoun referent</dt><dd>addressed “you”; exact referent remains review-contextual</dd></div><div><dt>clause relation</dt><dd>main verbal clause in the cited usage</dd></div><div><dt>grammar tags</dt><dd><span class="qg-preview-tag" data-tag="object">object</span> <span class="qg-preview-tag" data-tag="pronoun_referent">pronoun referent</span></dd></div></dl></details>
+      <details class="qg-panel qg-segment-panel" data-panel="segments" open><summary>Segment contribution table</summary><table class="qg-segment-table"><thead><tr><th>surface</th><th>role</th><th>class</th><th>label</th><th>gloss</th><th>sarf</th><th>nahw</th><th>kind</th><th>affects</th></tr></thead><tbody><tr class="qg-segment-row" data-role="verb_prefix" data-display-class="qg-verb-prefix" data-gloss="imperfect marker" data-sarf="finite verb prefix" data-nahw="subject agreement marker" data-kind="prefix" data-affects="person-number-gender"><td><span class="qg-seg qg-verb-prefix">يَ</span></td><td>verb_prefix</td><td>qg-verb-prefix</td><td>PFX</td><td>imperfect marker</td><td>finite verb prefix</td><td>subject agreement marker</td><td>prefix</td><td>person/number/gender</td></tr><tr class="qg-segment-row" data-role="verb_stem" data-display-class="qg-verb-stem" data-gloss="ask" data-sarf="Form I imperfect active stem" data-nahw="verbal predicate" data-kind="host" data-affects="lexical-host"><td><span class="qg-seg qg-verb-stem">سْأَلُ</span></td><td>verb_stem</td><td>qg-verb-stem</td><td>STEM</td><td>ask</td><td>Form I imperfect active stem</td><td>verbal predicate</td><td>host</td><td>lexical host</td></tr><tr class="qg-segment-row" data-role="object_pronoun" data-display-class="qg-object-pronoun" data-gloss="you" data-sarf="attached 2ms object suffix" data-nahw="object/addressee" data-kind="suffix_pronoun" data-affects="object-referent"><td><span class="qg-seg qg-object-pronoun">كَ</span></td><td>object_pronoun</td><td>qg-object-pronoun</td><td>OBJ</td><td>you</td><td>attached 2ms object suffix</td><td>object/addressee</td><td>suffix pronoun</td><td>object referent</td></tr></tbody></table></details>
+      <details class="qg-panel qg-learner-panel" data-panel="learner" open><summary>Learner explanation</summary><p class="qg-learner-explanation">This token contributes a finite asking action plus an attached “you” object. The flat dictionary hover “to ask, question” is insufficient because it hides the finite verb state and drops the visible kāf suffix. Public rollout still needs owner authorization and live preview readback.</p></details>
+      <details class="qg-panel qg-gate-panel" data-panel="gates" open><summary>Gates and status</summary><ul class="qg-gates"><li class="qg-gate-row" data-gate="address" data-state="pass"><span class="qg-gate-name">address</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="public_boundary" data-state="pass"><span class="qg-gate-name">public boundary</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="sarf" data-state="pass"><span class="qg-gate-name">sarf</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="nahw" data-state="preview"><span class="qg-gate-name">nahw</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="source_two_vote" data-state="certified_not_applied"><span class="qg-gate-name">source/two-vote</span> <span class="qg-gate-state">certified-not-applied</span></li><li class="qg-gate-row" data-gate="renderer" data-state="fixture_only"><span class="qg-gate-name">renderer</span> <span class="qg-gate-state">fixture-only</span></li><li class="qg-gate-row" data-gate="owner" data-state="not_authorized"><span class="qg-gate-name">owner</span> <span class="qg-gate-state">not authorized</span></li><li class="qg-gate-row" data-gate="live_apply" data-state="blocked"><span class="qg-gate-name">live apply</span> <span class="qg-gate-state">blocked</span></li></ul><p>Preview metadata is not certification; exact-address two-vote is not public rollout; renderer support is not hover correctness; readable English is not enough.</p></details>
     </section>
+
     <section class="rh-live-preview-card" data-quran-loc="quran:26:139:2" data-wbw-loc="wbw:26:139:2" data-src="qamus" data-kind="authored" data-lang="en" data-public-exposable="false" data-may-apply-live="false" data-live-renderer-claim="false">
+      <h2 class="qg-card-heading">26:139:2 admin preview</h2>
       <div class="qg-gloss">so We destroyed them</div>
-      <span class="qg-word" dir="rtl" lang="ar" data-surface="فَأَهْلَكْنَاهُمْ" data-parse-key="parse:b18c2b82bf5b26af9a4d7bad"><span class="qg-seg qg-particle" data-role="prefix_coordination_fa">فَ</span><span class="qg-seg qg-verb qg-verb-stem" data-role="stem">أَهْلَكْ</span><span class="qg-seg qg-pronoun" data-role="subject_pronoun">نَا</span><span class="qg-seg qg-pronoun" data-role="object_pronoun">هُمْ</span></span>
-      <div class="qg-tooltip" role="tooltip">
-        <div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-particle" data-role="prefix_coordination_fa">فَ</span><span class="qg-seg qg-verb qg-verb-stem" data-role="stem">أَهْلَكْ</span><span class="qg-seg qg-pronoun" data-role="subject_pronoun">نَا</span><span class="qg-seg qg-pronoun" data-role="object_pronoun">هُمْ</span></div>
-        <code class="qg-parse-key">parse:b18c2b82bf5b26af9a4d7bad</code>
-        <ul class="qg-breakdown">
-          <li class="qg-breakdown-row" data-role="prefix_coordination_fa"><span class="qg-seg qg-particle">فَ</span> FA - so / then</li>
-          <li class="qg-breakdown-row" data-role="stem"><span class="qg-seg qg-verb qg-verb-stem">أَهْلَكْ</span> STEM - destroyed</li>
-          <li class="qg-breakdown-row" data-role="subject_pronoun"><span class="qg-seg qg-pronoun">نَا</span> PRON - We</li>
-          <li class="qg-breakdown-row" data-role="object_pronoun"><span class="qg-seg qg-pronoun">هُمْ</span> PRON - them</li>
-        </ul>
-      </div>
+      <span class="qg-word" dir="rtl" lang="ar" data-surface="فَأَهْلَكْنَاهُمْ" data-parse-key="parse:b18c2b82bf5b26af9a4d7bad"><span class="qg-seg qg-result-fa" data-role="prefix_result_fa">فَ</span><span class="qg-seg qg-verb-stem" data-role="verb_stem">أَهْلَكْ</span><span class="qg-seg qg-subject-pronoun" data-role="subject_pronoun">نَا</span><span class="qg-seg qg-object-pronoun" data-role="object_pronoun">هُمْ</span></span>
+      <div class="qg-tooltip" role="tooltip"><div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-result-fa" data-role="prefix_result_fa">فَ</span><span class="qg-seg qg-verb-stem" data-role="verb_stem">أَهْلَكْ</span><span class="qg-seg qg-subject-pronoun" data-role="subject_pronoun">نَا</span><span class="qg-seg qg-object-pronoun" data-role="object_pronoun">هُمْ</span></div><code class="qg-parse-key">parse:b18c2b82bf5b26af9a4d7bad</code><ul class="qg-breakdown"><li class="qg-breakdown-row" data-role="prefix_result_fa"><span class="qg-seg qg-result-fa">فَ</span> <span class="qg-role-badge">FA</span> result/resumption relation; nahw function remains visible.</li><li class="qg-breakdown-row" data-role="verb_stem"><span class="qg-seg qg-verb-stem">أَهْلَكْ</span> <span class="qg-role-badge">STEM</span> lexical host: destroy.</li><li class="qg-breakdown-row" data-role="subject_pronoun"><span class="qg-seg qg-subject-pronoun">نَا</span> <span class="qg-role-badge">SUBJ</span> subject marker: We.</li><li class="qg-breakdown-row" data-role="object_pronoun"><span class="qg-seg qg-object-pronoun">هُمْ</span> <span class="qg-role-badge">OBJ</span> attached object pronoun: them.</li></ul></div>
+      <details class="qg-panel qg-identity-panel" data-panel="identity" open><summary>Token identity</summary><dl class="qg-kv"><div><dt>quran</dt><dd>quran:26:139:2</dd></div><div><dt>wbw</dt><dd>wbw:26:139:2</dd></div><div><dt>surface</dt><dd>فَأَهْلَكْنَاهُمْ</dd></div><div><dt>normalized key</dt><dd data-state="pending">pending</dd></div><div><dt>renderer fixture</dt><dd>rh_live_00_admin_preview_dom_fixture.sample.html</dd></div><div><dt>certification</dt><dd>certified_not_applied</dd></div><div><dt>preview</dt><dd>admin_preview_only</dd></div><div><dt>next gate</dt><dd>owner-authorized admin route smoke</dd></div><div><dt>owner/live</dt><dd>not authorized for live mutation</dd></div></dl></details>
+      <details class="qg-panel qg-sarf-panel" data-panel="sarf" open><summary>Sarf</summary><dl class="qg-kv"><div><dt>POS</dt><dd>fiʿl plus prefixed function particle</dd></div><div><dt>root</dt><dd>ه ل ك</dd></div><div><dt>pattern</dt><dd data-state="pending">pending</dd></div><div><dt>form</dt><dd>IV</dd></div><div><dt>voice</dt><dd>active</dd></div><div><dt>tense/aspect</dt><dd>perfect</dd></div><div><dt>mood</dt><dd>null</dd></div><div><dt>person/number/gender</dt><dd>1p subject suffix plus 3mp object suffix</dd></div><div><dt>derivative type</dt><dd>null</dd></div><div><dt>root notes</dt><dd>suffixes must not vanish into a host-only gloss</dd></div></dl></details>
+      <details class="qg-panel qg-nahw-panel" data-panel="nahw" open><summary>Nahw</summary><dl class="qg-kv"><div><dt>iʿrāb role</dt><dd>verbal clause with subject and object pronouns</dd></div><div><dt>case/mood</dt><dd>null for perfect host; object pronoun attached</dd></div><div><dt>governor/governed-by</dt><dd>fāʾ relation reviewed as context link</dd></div><div><dt>particle function</dt><dd>result/resumption fāʾ in preview</dd></div><div><dt>pronoun referent</dt><dd>object “them” remains exact-address contextual</dd></div><div><dt>clause relation</dt><dd>connected to prior discourse by fāʾ</dd></div><div><dt>grammar tags</dt><dd><span class="qg-preview-tag" data-tag="subject">subject</span> <span class="qg-preview-tag" data-tag="object">object</span> <span class="qg-preview-tag" data-tag="resumption_fa">resumption fāʾ</span></dd></div></dl></details>
+      <details class="qg-panel qg-segment-panel" data-panel="segments" open><summary>Segment contribution table</summary><table class="qg-segment-table"><thead><tr><th>surface</th><th>role</th><th>class</th><th>label</th><th>gloss</th><th>sarf</th><th>nahw</th><th>kind</th><th>affects</th></tr></thead><tbody><tr class="qg-segment-row" data-role="prefix_result_fa" data-display-class="qg-result-fa" data-gloss="so / then" data-sarf="prefixed function particle" data-nahw="result or resumption relation" data-kind="particle" data-affects="clause-relation"><td><span class="qg-seg qg-result-fa">فَ</span></td><td>prefix_result_fa</td><td>qg-result-fa</td><td>FA</td><td>so / then</td><td>prefixed function particle</td><td>result or resumption relation</td><td>particle</td><td>clause relation</td></tr><tr class="qg-segment-row" data-role="verb_stem" data-display-class="qg-verb-stem" data-gloss="destroyed" data-sarf="Form IV perfect active stem" data-nahw="verbal predicate" data-kind="host" data-affects="lexical-host"><td><span class="qg-seg qg-verb-stem">أَهْلَكْ</span></td><td>verb_stem</td><td>qg-verb-stem</td><td>STEM</td><td>destroyed</td><td>Form IV perfect active stem</td><td>verbal predicate</td><td>host</td><td>lexical host</td></tr><tr class="qg-segment-row" data-role="subject_pronoun" data-display-class="qg-subject-pronoun" data-gloss="We" data-sarf="attached 1p subject suffix" data-nahw="subject" data-kind="suffix_pronoun" data-affects="subject"><td><span class="qg-seg qg-subject-pronoun">نَا</span></td><td>subject_pronoun</td><td>qg-subject-pronoun</td><td>SUBJ</td><td>We</td><td>attached 1p subject suffix</td><td>subject</td><td>suffix pronoun</td><td>subject</td></tr><tr class="qg-segment-row" data-role="object_pronoun" data-display-class="qg-object-pronoun" data-gloss="them" data-sarf="attached 3mp object suffix" data-nahw="object" data-kind="suffix_pronoun" data-affects="object-referent"><td><span class="qg-seg qg-object-pronoun">هُمْ</span></td><td>object_pronoun</td><td>qg-object-pronoun</td><td>OBJ</td><td>them</td><td>attached 3mp object suffix</td><td>object</td><td>suffix pronoun</td><td>object referent</td></tr></tbody></table></details>
+      <details class="qg-panel qg-learner-panel" data-panel="learner" open><summary>Learner explanation</summary><p class="qg-learner-explanation">The token is not only a verb: it begins with a discourse fāʾ and ends with subject and object pronouns. A rich preview must show why “destroyed” alone is incomplete.</p></details>
+      <details class="qg-panel qg-gate-panel" data-panel="gates" open><summary>Gates and status</summary><ul class="qg-gates"><li class="qg-gate-row" data-gate="address" data-state="pass"><span class="qg-gate-name">address</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="public_boundary" data-state="pass"><span class="qg-gate-name">public boundary</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="sarf" data-state="pass"><span class="qg-gate-name">sarf</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="nahw" data-state="preview"><span class="qg-gate-name">nahw</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="source_two_vote" data-state="certified_not_applied"><span class="qg-gate-name">source/two-vote</span> <span class="qg-gate-state">certified-not-applied</span></li><li class="qg-gate-row" data-gate="renderer" data-state="fixture_only"><span class="qg-gate-name">renderer</span> <span class="qg-gate-state">fixture-only</span></li><li class="qg-gate-row" data-gate="owner" data-state="not_authorized"><span class="qg-gate-name">owner</span> <span class="qg-gate-state">not authorized</span></li><li class="qg-gate-row" data-gate="live_apply" data-state="blocked"><span class="qg-gate-name">live apply</span> <span class="qg-gate-state">blocked</span></li></ul><p>Preview metadata is not certification; exact-address two-vote is not public rollout; renderer support is not hover correctness; readable English is not enough.</p></details>
     </section>
+
     <section class="rh-live-preview-card" data-quran-loc="quran:22:18:13" data-wbw-loc="wbw:22:18:13" data-src="qamus" data-kind="authored" data-lang="en" data-public-exposable="false" data-may-apply-live="false" data-live-renderer-claim="false">
+      <h2 class="qg-card-heading">22:18:13 admin preview</h2>
       <div class="qg-gloss">and + the sun</div>
-      <span class="qg-word" dir="rtl" lang="ar" data-surface="وَٱلشَّمْسُ" data-parse-key="parse:3bb865fcc29d0a2d68e8880e"><span class="qg-seg qg-particle qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱل</span><span class="qg-seg qg-noun" data-role="stem">شَّمْسُ</span></span>
-      <div class="qg-tooltip" role="tooltip">
-        <div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-particle qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱل</span><span class="qg-seg qg-noun" data-role="stem">شَّمْسُ</span></div>
-        <code class="qg-parse-key">parse:3bb865fcc29d0a2d68e8880e</code>
-        <ul class="qg-breakdown">
-          <li class="qg-breakdown-row" data-role="prefix_conjunction"><span class="qg-seg qg-particle qg-conjunction">وَ</span> CONJ - and</li>
-          <li class="qg-breakdown-row" data-role="definite_article"><span class="qg-seg qg-article">ٱل</span> ART - the</li>
-          <li class="qg-breakdown-row" data-role="stem"><span class="qg-seg qg-noun">شَّمْسُ</span> N - sun</li>
-        </ul>
-      </div>
+      <span class="qg-word" dir="rtl" lang="ar" data-surface="وَٱلشَّمْسُ" data-parse-key="parse:3bb865fcc29d0a2d68e8880e"><span class="qg-seg qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱل</span><span class="qg-seg qg-noun-stem" data-role="noun_stem">شَّمْسُ</span></span>
+      <div class="qg-tooltip" role="tooltip"><div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱل</span><span class="qg-seg qg-noun-stem" data-role="noun_stem">شَّمْسُ</span></div><code class="qg-parse-key">parse:3bb865fcc29d0a2d68e8880e</code><ul class="qg-breakdown"><li class="qg-breakdown-row" data-role="prefix_conjunction"><span class="qg-seg qg-conjunction">وَ</span> <span class="qg-role-badge">CONJ</span> coordination contribution.</li><li class="qg-breakdown-row" data-role="definite_article"><span class="qg-seg qg-article">ٱل</span> <span class="qg-role-badge">ART</span> definiteness contribution.</li><li class="qg-breakdown-row" data-role="noun_stem"><span class="qg-seg qg-noun-stem">شَّمْسُ</span> <span class="qg-role-badge">N</span> nominal host: sun.</li></ul></div>
+      <details class="qg-panel qg-identity-panel" data-panel="identity" open><summary>Token identity</summary><dl class="qg-kv"><div><dt>quran</dt><dd>quran:22:18:13</dd></div><div><dt>wbw</dt><dd>wbw:22:18:13</dd></div><div><dt>surface</dt><dd>وَٱلشَّمْسُ</dd></div><div><dt>normalized key</dt><dd data-state="pending">pending</dd></div><div><dt>renderer fixture</dt><dd>rh_live_00_admin_preview_dom_fixture.sample.html</dd></div><div><dt>certification</dt><dd>certified_not_applied</dd></div><div><dt>preview</dt><dd>admin_preview_only</dd></div><div><dt>next gate</dt><dd>owner-authorized admin route smoke</dd></div><div><dt>owner/live</dt><dd>not authorized for live mutation</dd></div></dl></details>
+      <details class="qg-panel qg-sarf-panel" data-panel="sarf" open><summary>Sarf</summary><dl class="qg-kv"><div><dt>POS</dt><dd>ism with prefixed conjunction and article</dd></div><div><dt>root</dt><dd data-state="pending">pending in preview</dd></div><div><dt>pattern</dt><dd>null</dd></div><div><dt>form</dt><dd>null</dd></div><div><dt>voice</dt><dd>null</dd></div><div><dt>tense/aspect</dt><dd>null</dd></div><div><dt>mood</dt><dd>null</dd></div><div><dt>number/gender</dt><dd>singular common noun in preview</dd></div><div><dt>definiteness</dt><dd>definite by article</dd></div><div><dt>derivative type</dt><dd>common noun</dd></div></dl></details>
+      <details class="qg-panel qg-nahw-panel" data-panel="nahw" open><summary>Nahw</summary><dl class="qg-kv"><div><dt>iʿrāb role</dt><dd>coordinated nominal in a list</dd></div><div><dt>case</dt><dd data-state="pending">pending in preview panel</dd></div><div><dt>governor/governed-by</dt><dd>coordinated with surrounding nouns</dd></div><div><dt>particle function</dt><dd>wāw conjunction</dd></div><div><dt>grammar tags</dt><dd><span class="qg-preview-tag" data-tag="coordination">coordination</span></dd></div></dl></details>
+      <details class="qg-panel qg-segment-panel" data-panel="segments" open><summary>Segment contribution table</summary><table class="qg-segment-table"><thead><tr><th>surface</th><th>role</th><th>class</th><th>label</th><th>gloss</th><th>sarf</th><th>nahw</th><th>kind</th><th>affects</th></tr></thead><tbody><tr class="qg-segment-row" data-role="prefix_conjunction" data-display-class="qg-conjunction" data-gloss="and" data-sarf="proclitic function token" data-nahw="coordination" data-kind="particle" data-affects="clause-or-list-relation"><td><span class="qg-seg qg-conjunction">وَ</span></td><td>prefix_conjunction</td><td>qg-conjunction</td><td>CONJ</td><td>and</td><td>proclitic function token</td><td>coordination</td><td>particle</td><td>list relation</td></tr><tr class="qg-segment-row" data-role="definite_article" data-display-class="qg-article" data-gloss="the" data-sarf="definite article" data-nahw="definiteness" data-kind="article" data-affects="definiteness"><td><span class="qg-seg qg-article">ٱل</span></td><td>definite_article</td><td>qg-article</td><td>ART</td><td>the</td><td>definite article</td><td>definiteness</td><td>article</td><td>definiteness</td></tr><tr class="qg-segment-row" data-role="noun_stem" data-display-class="qg-noun-stem" data-gloss="sun" data-sarf="nominal host" data-nahw="coordinated noun" data-kind="host" data-affects="nominal-role"><td><span class="qg-seg qg-noun-stem">شَّمْسُ</span></td><td>noun_stem</td><td>qg-noun-stem</td><td>N</td><td>sun</td><td>nominal host</td><td>coordinated noun</td><td>host</td><td>nominal role</td></tr></tbody></table></details>
+      <details class="qg-panel qg-learner-panel" data-panel="learner" open><summary>Learner explanation</summary><p class="qg-learner-explanation">The word contains three visible contributions: wāw connects this noun to the list, the article marks definiteness, and the host names the sun. A flat “sun” hover hides the conjunction and article.</p></details>
+      <details class="qg-panel qg-gate-panel" data-panel="gates" open><summary>Gates and status</summary><ul class="qg-gates"><li class="qg-gate-row" data-gate="address" data-state="pass"><span class="qg-gate-name">address</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="public_boundary" data-state="pass"><span class="qg-gate-name">public boundary</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="sarf" data-state="preview"><span class="qg-gate-name">sarf</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="nahw" data-state="preview"><span class="qg-gate-name">nahw</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="source_two_vote" data-state="certified_not_applied"><span class="qg-gate-name">source/two-vote</span> <span class="qg-gate-state">certified-not-applied</span></li><li class="qg-gate-row" data-gate="renderer" data-state="fixture_only"><span class="qg-gate-name">renderer</span> <span class="qg-gate-state">fixture-only</span></li><li class="qg-gate-row" data-gate="owner" data-state="not_authorized"><span class="qg-gate-name">owner</span> <span class="qg-gate-state">not authorized</span></li><li class="qg-gate-row" data-gate="live_apply" data-state="blocked"><span class="qg-gate-name">live apply</span> <span class="qg-gate-state">blocked</span></li></ul><p>Preview metadata is not certification; exact-address two-vote is not public rollout; renderer support is not hover correctness; readable English is not enough.</p></details>
     </section>
+
     <section class="rh-live-preview-card" data-quran-loc="quran:22:18:14" data-wbw-loc="wbw:22:18:14" data-src="qamus" data-kind="authored" data-lang="en" data-public-exposable="false" data-may-apply-live="false" data-live-renderer-claim="false">
-      <div class="qg-gloss">and + the moon</div>
-      <span class="qg-word" dir="rtl" lang="ar" data-surface="وَٱلْقَمَرُ" data-parse-key="parse:75719beef5a053262449dced"><span class="qg-seg qg-particle qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱلْ</span><span class="qg-seg qg-noun" data-role="stem">قَمَرُ</span></span>
-      <div class="qg-tooltip" role="tooltip">
-        <div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-particle qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱلْ</span><span class="qg-seg qg-noun" data-role="stem">قَمَرُ</span></div>
-        <code class="qg-parse-key">parse:75719beef5a053262449dced</code>
-        <ul class="qg-breakdown">
-          <li class="qg-breakdown-row" data-role="prefix_conjunction"><span class="qg-seg qg-particle qg-conjunction">وَ</span> CONJ - and</li>
-          <li class="qg-breakdown-row" data-role="definite_article"><span class="qg-seg qg-article">ٱلْ</span> ART - the</li>
-          <li class="qg-breakdown-row" data-role="stem"><span class="qg-seg qg-noun">قَمَرُ</span> N - moon</li>
-        </ul>
-      </div>
+      <h2 class="qg-card-heading">22:18:14 admin preview</h2><div class="qg-gloss">and + the moon</div><span class="qg-word" dir="rtl" lang="ar" data-surface="وَٱلْقَمَرُ" data-parse-key="parse:75719beef5a053262449dced"><span class="qg-seg qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱلْ</span><span class="qg-seg qg-noun-stem" data-role="noun_stem">قَمَرُ</span></span>
+      <div class="qg-tooltip" role="tooltip"><div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱلْ</span><span class="qg-seg qg-noun-stem" data-role="noun_stem">قَمَرُ</span></div><code class="qg-parse-key">parse:75719beef5a053262449dced</code><ul class="qg-breakdown"><li class="qg-breakdown-row" data-role="prefix_conjunction"><span class="qg-seg qg-conjunction">وَ</span> <span class="qg-role-badge">CONJ</span> and</li><li class="qg-breakdown-row" data-role="definite_article"><span class="qg-seg qg-article">ٱلْ</span> <span class="qg-role-badge">ART</span> the</li><li class="qg-breakdown-row" data-role="noun_stem"><span class="qg-seg qg-noun-stem">قَمَرُ</span> <span class="qg-role-badge">N</span> moon</li></ul></div>
+      <details class="qg-panel qg-identity-panel" data-panel="identity" open><summary>Token identity</summary><dl class="qg-kv"><div><dt>quran</dt><dd>quran:22:18:14</dd></div><div><dt>wbw</dt><dd>wbw:22:18:14</dd></div><div><dt>surface</dt><dd>وَٱلْقَمَرُ</dd></div><div><dt>normalized key</dt><dd data-state="pending">pending</dd></div><div><dt>renderer fixture</dt><dd>rh_live_00_admin_preview_dom_fixture.sample.html</dd></div><div><dt>certification</dt><dd>certified_not_applied</dd></div><div><dt>preview</dt><dd>admin_preview_only</dd></div><div><dt>next gate</dt><dd>owner-authorized admin route smoke</dd></div><div><dt>owner/live</dt><dd>not authorized for live mutation</dd></div></dl></details>
+      <details class="qg-panel qg-sarf-panel" data-panel="sarf" open><summary>Sarf</summary><dl class="qg-kv"><div><dt>POS</dt><dd>ism with prefixed conjunction and article</dd></div><div><dt>root</dt><dd data-state="pending">pending in preview</dd></div><div><dt>number/gender</dt><dd>singular common noun in preview</dd></div><div><dt>definiteness</dt><dd>definite by article</dd></div><div><dt>derivative type</dt><dd>common noun</dd></div></dl></details>
+      <details class="qg-panel qg-nahw-panel" data-panel="nahw" open><summary>Nahw</summary><dl class="qg-kv"><div><dt>iʿrāb role</dt><dd>coordinated nominal in a list</dd></div><div><dt>case</dt><dd data-state="pending">pending in preview panel</dd></div><div><dt>particle function</dt><dd>wāw conjunction</dd></div><div><dt>grammar tags</dt><dd><span class="qg-preview-tag" data-tag="coordination">coordination</span></dd></div></dl></details>
+      <details class="qg-panel qg-segment-panel" data-panel="segments" open><summary>Segment contribution table</summary><table class="qg-segment-table"><tbody><tr class="qg-segment-row" data-role="prefix_conjunction" data-display-class="qg-conjunction" data-gloss="and" data-sarf="proclitic function token" data-nahw="coordination" data-kind="particle" data-affects="list-relation"><td><span class="qg-seg qg-conjunction">وَ</span></td><td>prefix_conjunction</td><td>qg-conjunction</td><td>CONJ</td><td>and</td><td>proclitic function token</td><td>coordination</td><td>particle</td><td>list relation</td></tr><tr class="qg-segment-row" data-role="definite_article" data-display-class="qg-article" data-gloss="the" data-sarf="definite article" data-nahw="definiteness" data-kind="article" data-affects="definiteness"><td><span class="qg-seg qg-article">ٱلْ</span></td><td>definite_article</td><td>qg-article</td><td>ART</td><td>the</td><td>definite article</td><td>definiteness</td><td>article</td><td>definiteness</td></tr><tr class="qg-segment-row" data-role="noun_stem" data-display-class="qg-noun-stem" data-gloss="moon" data-sarf="nominal host" data-nahw="coordinated noun" data-kind="host" data-affects="nominal-role"><td><span class="qg-seg qg-noun-stem">قَمَرُ</span></td><td>noun_stem</td><td>qg-noun-stem</td><td>N</td><td>moon</td><td>nominal host</td><td>coordinated noun</td><td>host</td><td>nominal role</td></tr></tbody></table></details>
+      <details class="qg-panel qg-learner-panel" data-panel="learner" open><summary>Learner explanation</summary><p class="qg-learner-explanation">The preview keeps the word atomic while showing conjunction, article, and host noun contributions.</p></details>
+      <details class="qg-panel qg-gate-panel" data-panel="gates" open><summary>Gates and status</summary><ul class="qg-gates"><li class="qg-gate-row" data-gate="address" data-state="pass"><span class="qg-gate-name">address</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="public_boundary" data-state="pass"><span class="qg-gate-name">public boundary</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="sarf" data-state="preview"><span class="qg-gate-name">sarf</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="nahw" data-state="preview"><span class="qg-gate-name">nahw</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="source_two_vote" data-state="certified_not_applied"><span class="qg-gate-name">source/two-vote</span> <span class="qg-gate-state">certified-not-applied</span></li><li class="qg-gate-row" data-gate="renderer" data-state="fixture_only"><span class="qg-gate-name">renderer</span> <span class="qg-gate-state">fixture-only</span></li><li class="qg-gate-row" data-gate="owner" data-state="not_authorized"><span class="qg-gate-name">owner</span> <span class="qg-gate-state">not authorized</span></li><li class="qg-gate-row" data-gate="live_apply" data-state="blocked"><span class="qg-gate-name">live apply</span> <span class="qg-gate-state">blocked</span></li></ul><p>Preview metadata is not certification; exact-address two-vote is not public rollout; renderer support is not hover correctness; readable English is not enough.</p></details>
     </section>
+
     <section class="rh-live-preview-card" data-quran-loc="quran:22:18:15" data-wbw-loc="wbw:22:18:15" data-src="qamus" data-kind="authored" data-lang="en" data-public-exposable="false" data-may-apply-live="false" data-live-renderer-claim="false">
-      <div class="qg-gloss">and + the stars</div>
-      <span class="qg-word" dir="rtl" lang="ar" data-surface="وَٱلنُّجُومُ" data-parse-key="parse:96f4f4e1c6c2327f09cfe6da"><span class="qg-seg qg-particle qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱل</span><span class="qg-seg qg-noun" data-role="stem">نُّجُومُ</span></span>
-      <div class="qg-tooltip" role="tooltip">
-        <div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-particle qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱل</span><span class="qg-seg qg-noun" data-role="stem">نُّجُومُ</span></div>
-        <code class="qg-parse-key">parse:96f4f4e1c6c2327f09cfe6da</code>
-        <ul class="qg-breakdown">
-          <li class="qg-breakdown-row" data-role="prefix_conjunction"><span class="qg-seg qg-particle qg-conjunction">وَ</span> CONJ - and</li>
-          <li class="qg-breakdown-row" data-role="definite_article"><span class="qg-seg qg-article">ٱل</span> ART - the</li>
-          <li class="qg-breakdown-row" data-role="stem"><span class="qg-seg qg-noun">نُّجُومُ</span> N - stars</li>
-        </ul>
-      </div>
+      <h2 class="qg-card-heading">22:18:15 admin preview</h2><div class="qg-gloss">and + the stars</div><span class="qg-word" dir="rtl" lang="ar" data-surface="وَٱلنُّجُومُ" data-parse-key="parse:96f4f4e1c6c2327f09cfe6da"><span class="qg-seg qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱل</span><span class="qg-seg qg-noun-stem" data-role="noun_stem">نُّجُومُ</span></span>
+      <div class="qg-tooltip" role="tooltip"><div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱل</span><span class="qg-seg qg-noun-stem" data-role="noun_stem">نُّجُومُ</span></div><code class="qg-parse-key">parse:96f4f4e1c6c2327f09cfe6da</code><ul class="qg-breakdown"><li class="qg-breakdown-row" data-role="prefix_conjunction"><span class="qg-seg qg-conjunction">وَ</span> <span class="qg-role-badge">CONJ</span> and</li><li class="qg-breakdown-row" data-role="definite_article"><span class="qg-seg qg-article">ٱل</span> <span class="qg-role-badge">ART</span> the</li><li class="qg-breakdown-row" data-role="noun_stem"><span class="qg-seg qg-noun-stem">نُّجُومُ</span> <span class="qg-role-badge">N</span> stars</li></ul></div>
+      <details class="qg-panel qg-identity-panel" data-panel="identity" open><summary>Token identity</summary><dl class="qg-kv"><div><dt>quran</dt><dd>quran:22:18:15</dd></div><div><dt>wbw</dt><dd>wbw:22:18:15</dd></div><div><dt>surface</dt><dd>وَٱلنُّجُومُ</dd></div><div><dt>normalized key</dt><dd data-state="pending">pending</dd></div><div><dt>renderer fixture</dt><dd>rh_live_00_admin_preview_dom_fixture.sample.html</dd></div><div><dt>certification</dt><dd>certified_not_applied</dd></div><div><dt>preview</dt><dd>admin_preview_only</dd></div><div><dt>next gate</dt><dd>owner-authorized admin route smoke</dd></div><div><dt>owner/live</dt><dd>not authorized for live mutation</dd></div></dl></details>
+      <details class="qg-panel qg-sarf-panel" data-panel="sarf" open><summary>Sarf</summary><dl class="qg-kv"><div><dt>POS</dt><dd>ism with prefixed conjunction and article</dd></div><div><dt>root</dt><dd data-state="pending">pending in preview</dd></div><div><dt>number/gender</dt><dd>plural common noun in preview</dd></div><div><dt>definiteness</dt><dd>definite by article</dd></div><div><dt>derivative type</dt><dd>common noun</dd></div></dl></details>
+      <details class="qg-panel qg-nahw-panel" data-panel="nahw" open><summary>Nahw</summary><dl class="qg-kv"><div><dt>iʿrāb role</dt><dd>coordinated nominal in a list</dd></div><div><dt>case</dt><dd data-state="pending">pending in preview panel</dd></div><div><dt>particle function</dt><dd>wāw conjunction</dd></div><div><dt>grammar tags</dt><dd><span class="qg-preview-tag" data-tag="coordination">coordination</span></dd></div></dl></details>
+      <details class="qg-panel qg-segment-panel" data-panel="segments" open><summary>Segment contribution table</summary><table class="qg-segment-table"><tbody><tr class="qg-segment-row" data-role="prefix_conjunction" data-display-class="qg-conjunction" data-gloss="and" data-sarf="proclitic function token" data-nahw="coordination" data-kind="particle" data-affects="list-relation"><td><span class="qg-seg qg-conjunction">وَ</span></td><td>prefix_conjunction</td><td>qg-conjunction</td><td>CONJ</td><td>and</td><td>proclitic function token</td><td>coordination</td><td>particle</td><td>list relation</td></tr><tr class="qg-segment-row" data-role="definite_article" data-display-class="qg-article" data-gloss="the" data-sarf="definite article" data-nahw="definiteness" data-kind="article" data-affects="definiteness"><td><span class="qg-seg qg-article">ٱل</span></td><td>definite_article</td><td>qg-article</td><td>ART</td><td>the</td><td>definite article</td><td>definiteness</td><td>article</td><td>definiteness</td></tr><tr class="qg-segment-row" data-role="noun_stem" data-display-class="qg-noun-stem" data-gloss="stars" data-sarf="nominal host" data-nahw="coordinated noun" data-kind="host" data-affects="nominal-role"><td><span class="qg-seg qg-noun-stem">نُّجُومُ</span></td><td>noun_stem</td><td>qg-noun-stem</td><td>N</td><td>stars</td><td>nominal host</td><td>coordinated noun</td><td>host</td><td>nominal role</td></tr></tbody></table></details>
+      <details class="qg-panel qg-learner-panel" data-panel="learner" open><summary>Learner explanation</summary><p class="qg-learner-explanation">The preview keeps the article distinct from the noun and prevents a host-only “stars” reading from hiding wāw and definiteness.</p></details>
+      <details class="qg-panel qg-gate-panel" data-panel="gates" open><summary>Gates and status</summary><ul class="qg-gates"><li class="qg-gate-row" data-gate="address" data-state="pass"><span class="qg-gate-name">address</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="public_boundary" data-state="pass"><span class="qg-gate-name">public boundary</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="sarf" data-state="preview"><span class="qg-gate-name">sarf</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="nahw" data-state="preview"><span class="qg-gate-name">nahw</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="source_two_vote" data-state="certified_not_applied"><span class="qg-gate-name">source/two-vote</span> <span class="qg-gate-state">certified-not-applied</span></li><li class="qg-gate-row" data-gate="renderer" data-state="fixture_only"><span class="qg-gate-name">renderer</span> <span class="qg-gate-state">fixture-only</span></li><li class="qg-gate-row" data-gate="owner" data-state="not_authorized"><span class="qg-gate-name">owner</span> <span class="qg-gate-state">not authorized</span></li><li class="qg-gate-row" data-gate="live_apply" data-state="blocked"><span class="qg-gate-name">live apply</span> <span class="qg-gate-state">blocked</span></li></ul><p>Preview metadata is not certification; exact-address two-vote is not public rollout; renderer support is not hover correctness; readable English is not enough.</p></details>
     </section>
+
     <section class="rh-live-preview-card" data-quran-loc="quran:22:18:16" data-wbw-loc="wbw:22:18:16" data-src="qamus" data-kind="authored" data-lang="en" data-public-exposable="false" data-may-apply-live="false" data-live-renderer-claim="false">
-      <div class="qg-gloss">and + the mountains</div>
-      <span class="qg-word" dir="rtl" lang="ar" data-surface="وَٱلْجِبَالُ" data-parse-key="parse:1a7abc3d798b942b370fcc14"><span class="qg-seg qg-particle qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱلْ</span><span class="qg-seg qg-noun" data-role="stem">جِبَالُ</span></span>
-      <div class="qg-tooltip" role="tooltip">
-        <div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-particle qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱلْ</span><span class="qg-seg qg-noun" data-role="stem">جِبَالُ</span></div>
-        <code class="qg-parse-key">parse:1a7abc3d798b942b370fcc14</code>
-        <ul class="qg-breakdown">
-          <li class="qg-breakdown-row" data-role="prefix_conjunction"><span class="qg-seg qg-particle qg-conjunction">وَ</span> CONJ - and</li>
-          <li class="qg-breakdown-row" data-role="definite_article"><span class="qg-seg qg-article">ٱلْ</span> ART - the</li>
-          <li class="qg-breakdown-row" data-role="stem"><span class="qg-seg qg-noun">جِبَالُ</span> N - mountains</li>
-        </ul>
-      </div>
+      <h2 class="qg-card-heading">22:18:16 admin preview</h2><div class="qg-gloss">and + the mountains</div><span class="qg-word" dir="rtl" lang="ar" data-surface="وَٱلْجِبَالُ" data-parse-key="parse:1a7abc3d798b942b370fcc14"><span class="qg-seg qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱلْ</span><span class="qg-seg qg-noun-stem" data-role="noun_stem">جِبَالُ</span></span>
+      <div class="qg-tooltip" role="tooltip"><div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱلْ</span><span class="qg-seg qg-noun-stem" data-role="noun_stem">جِبَالُ</span></div><code class="qg-parse-key">parse:1a7abc3d798b942b370fcc14</code><ul class="qg-breakdown"><li class="qg-breakdown-row" data-role="prefix_conjunction"><span class="qg-seg qg-conjunction">وَ</span> <span class="qg-role-badge">CONJ</span> and</li><li class="qg-breakdown-row" data-role="definite_article"><span class="qg-seg qg-article">ٱلْ</span> <span class="qg-role-badge">ART</span> the</li><li class="qg-breakdown-row" data-role="noun_stem"><span class="qg-seg qg-noun-stem">جِبَالُ</span> <span class="qg-role-badge">N</span> mountains</li></ul></div>
+      <details class="qg-panel qg-identity-panel" data-panel="identity" open><summary>Token identity</summary><dl class="qg-kv"><div><dt>quran</dt><dd>quran:22:18:16</dd></div><div><dt>wbw</dt><dd>wbw:22:18:16</dd></div><div><dt>surface</dt><dd>وَٱلْجِبَالُ</dd></div><div><dt>normalized key</dt><dd data-state="pending">pending</dd></div><div><dt>renderer fixture</dt><dd>rh_live_00_admin_preview_dom_fixture.sample.html</dd></div><div><dt>certification</dt><dd>certified_not_applied</dd></div><div><dt>preview</dt><dd>admin_preview_only</dd></div><div><dt>next gate</dt><dd>owner-authorized admin route smoke</dd></div><div><dt>owner/live</dt><dd>not authorized for live mutation</dd></div></dl></details>
+      <details class="qg-panel qg-sarf-panel" data-panel="sarf" open><summary>Sarf</summary><dl class="qg-kv"><div><dt>POS</dt><dd>ism with prefixed conjunction and article</dd></div><div><dt>root</dt><dd data-state="pending">pending in preview</dd></div><div><dt>number/gender</dt><dd>plural common noun in preview</dd></div><div><dt>definiteness</dt><dd>definite by article</dd></div><div><dt>derivative type</dt><dd>common noun</dd></div></dl></details>
+      <details class="qg-panel qg-nahw-panel" data-panel="nahw" open><summary>Nahw</summary><dl class="qg-kv"><div><dt>iʿrāb role</dt><dd>coordinated nominal in a list</dd></div><div><dt>case</dt><dd data-state="pending">pending in preview panel</dd></div><div><dt>particle function</dt><dd>wāw conjunction</dd></div><div><dt>grammar tags</dt><dd><span class="qg-preview-tag" data-tag="coordination">coordination</span></dd></div></dl></details>
+      <details class="qg-panel qg-segment-panel" data-panel="segments" open><summary>Segment contribution table</summary><table class="qg-segment-table"><tbody><tr class="qg-segment-row" data-role="prefix_conjunction" data-display-class="qg-conjunction" data-gloss="and" data-sarf="proclitic function token" data-nahw="coordination" data-kind="particle" data-affects="list-relation"><td><span class="qg-seg qg-conjunction">وَ</span></td><td>prefix_conjunction</td><td>qg-conjunction</td><td>CONJ</td><td>and</td><td>proclitic function token</td><td>coordination</td><td>particle</td><td>list relation</td></tr><tr class="qg-segment-row" data-role="definite_article" data-display-class="qg-article" data-gloss="the" data-sarf="definite article" data-nahw="definiteness" data-kind="article" data-affects="definiteness"><td><span class="qg-seg qg-article">ٱلْ</span></td><td>definite_article</td><td>qg-article</td><td>ART</td><td>the</td><td>definite article</td><td>definiteness</td><td>article</td><td>definiteness</td></tr><tr class="qg-segment-row" data-role="noun_stem" data-display-class="qg-noun-stem" data-gloss="mountains" data-sarf="nominal host" data-nahw="coordinated noun" data-kind="host" data-affects="nominal-role"><td><span class="qg-seg qg-noun-stem">جِبَالُ</span></td><td>noun_stem</td><td>qg-noun-stem</td><td>N</td><td>mountains</td><td>nominal host</td><td>coordinated noun</td><td>host</td><td>nominal role</td></tr></tbody></table></details>
+      <details class="qg-panel qg-learner-panel" data-panel="learner" open><summary>Learner explanation</summary><p class="qg-learner-explanation">The preview distinguishes the relational wāw, the article, and the noun host without spacing the Qurʾānic word apart.</p></details>
+      <details class="qg-panel qg-gate-panel" data-panel="gates" open><summary>Gates and status</summary><ul class="qg-gates"><li class="qg-gate-row" data-gate="address" data-state="pass"><span class="qg-gate-name">address</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="public_boundary" data-state="pass"><span class="qg-gate-name">public boundary</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="sarf" data-state="preview"><span class="qg-gate-name">sarf</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="nahw" data-state="preview"><span class="qg-gate-name">nahw</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="source_two_vote" data-state="certified_not_applied"><span class="qg-gate-name">source/two-vote</span> <span class="qg-gate-state">certified-not-applied</span></li><li class="qg-gate-row" data-gate="renderer" data-state="fixture_only"><span class="qg-gate-name">renderer</span> <span class="qg-gate-state">fixture-only</span></li><li class="qg-gate-row" data-gate="owner" data-state="not_authorized"><span class="qg-gate-name">owner</span> <span class="qg-gate-state">not authorized</span></li><li class="qg-gate-row" data-gate="live_apply" data-state="blocked"><span class="qg-gate-name">live apply</span> <span class="qg-gate-state">blocked</span></li></ul><p>Preview metadata is not certification; exact-address two-vote is not public rollout; renderer support is not hover correctness; readable English is not enough.</p></details>
     </section>
+
     <section class="rh-live-preview-card" data-quran-loc="quran:22:18:17" data-wbw-loc="wbw:22:18:17" data-src="qamus" data-kind="authored" data-lang="en" data-public-exposable="false" data-may-apply-live="false" data-live-renderer-claim="false">
-      <div class="qg-gloss">and + the trees</div>
-      <span class="qg-word" dir="rtl" lang="ar" data-surface="وَٱلشَّجَرُ" data-parse-key="parse:2a41694fd7b48715aad6a9d3"><span class="qg-seg qg-particle qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱل</span><span class="qg-seg qg-noun" data-role="stem">شَّجَرُ</span></span>
-      <div class="qg-tooltip" role="tooltip">
-        <div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-particle qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱل</span><span class="qg-seg qg-noun" data-role="stem">شَّجَرُ</span></div>
-        <code class="qg-parse-key">parse:2a41694fd7b48715aad6a9d3</code>
-        <ul class="qg-breakdown">
-          <li class="qg-breakdown-row" data-role="prefix_conjunction"><span class="qg-seg qg-particle qg-conjunction">وَ</span> CONJ - and</li>
-          <li class="qg-breakdown-row" data-role="definite_article"><span class="qg-seg qg-article">ٱل</span> ART - the</li>
-          <li class="qg-breakdown-row" data-role="stem"><span class="qg-seg qg-noun">شَّجَرُ</span> N - trees</li>
-        </ul>
-      </div>
+      <h2 class="qg-card-heading">22:18:17 admin preview</h2><div class="qg-gloss">and + the trees</div><span class="qg-word" dir="rtl" lang="ar" data-surface="وَٱلشَّجَرُ" data-parse-key="parse:2a41694fd7b48715aad6a9d3"><span class="qg-seg qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱل</span><span class="qg-seg qg-noun-stem" data-role="noun_stem">شَّجَرُ</span></span>
+      <div class="qg-tooltip" role="tooltip"><div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-conjunction" data-role="prefix_conjunction">وَ</span><span class="qg-seg qg-article" data-role="definite_article">ٱل</span><span class="qg-seg qg-noun-stem" data-role="noun_stem">شَّجَرُ</span></div><code class="qg-parse-key">parse:2a41694fd7b48715aad6a9d3</code><ul class="qg-breakdown"><li class="qg-breakdown-row" data-role="prefix_conjunction"><span class="qg-seg qg-conjunction">وَ</span> <span class="qg-role-badge">CONJ</span> and</li><li class="qg-breakdown-row" data-role="definite_article"><span class="qg-seg qg-article">ٱل</span> <span class="qg-role-badge">ART</span> the</li><li class="qg-breakdown-row" data-role="noun_stem"><span class="qg-seg qg-noun-stem">شَّجَرُ</span> <span class="qg-role-badge">N</span> trees</li></ul></div>
+      <details class="qg-panel qg-identity-panel" data-panel="identity" open><summary>Token identity</summary><dl class="qg-kv"><div><dt>quran</dt><dd>quran:22:18:17</dd></div><div><dt>wbw</dt><dd>wbw:22:18:17</dd></div><div><dt>surface</dt><dd>وَٱلشَّجَرُ</dd></div><div><dt>normalized key</dt><dd data-state="pending">pending</dd></div><div><dt>renderer fixture</dt><dd>rh_live_00_admin_preview_dom_fixture.sample.html</dd></div><div><dt>certification</dt><dd>certified_not_applied</dd></div><div><dt>preview</dt><dd>admin_preview_only</dd></div><div><dt>next gate</dt><dd>owner-authorized admin route smoke</dd></div><div><dt>owner/live</dt><dd>not authorized for live mutation</dd></div></dl></details>
+      <details class="qg-panel qg-sarf-panel" data-panel="sarf" open><summary>Sarf</summary><dl class="qg-kv"><div><dt>POS</dt><dd>ism with prefixed conjunction and article</dd></div><div><dt>root</dt><dd data-state="pending">pending in preview</dd></div><div><dt>number/gender</dt><dd>collective/common noun in preview</dd></div><div><dt>definiteness</dt><dd>definite by article</dd></div><div><dt>derivative type</dt><dd>common noun</dd></div></dl></details>
+      <details class="qg-panel qg-nahw-panel" data-panel="nahw" open><summary>Nahw</summary><dl class="qg-kv"><div><dt>iʿrāb role</dt><dd>coordinated nominal in a list</dd></div><div><dt>case</dt><dd data-state="pending">pending in preview panel</dd></div><div><dt>particle function</dt><dd>wāw conjunction</dd></div><div><dt>grammar tags</dt><dd><span class="qg-preview-tag" data-tag="coordination">coordination</span></dd></div></dl></details>
+      <details class="qg-panel qg-segment-panel" data-panel="segments" open><summary>Segment contribution table</summary><table class="qg-segment-table"><tbody><tr class="qg-segment-row" data-role="prefix_conjunction" data-display-class="qg-conjunction" data-gloss="and" data-sarf="proclitic function token" data-nahw="coordination" data-kind="particle" data-affects="list-relation"><td><span class="qg-seg qg-conjunction">وَ</span></td><td>prefix_conjunction</td><td>qg-conjunction</td><td>CONJ</td><td>and</td><td>proclitic function token</td><td>coordination</td><td>particle</td><td>list relation</td></tr><tr class="qg-segment-row" data-role="definite_article" data-display-class="qg-article" data-gloss="the" data-sarf="definite article" data-nahw="definiteness" data-kind="article" data-affects="definiteness"><td><span class="qg-seg qg-article">ٱل</span></td><td>definite_article</td><td>qg-article</td><td>ART</td><td>the</td><td>definite article</td><td>definiteness</td><td>article</td><td>definiteness</td></tr><tr class="qg-segment-row" data-role="noun_stem" data-display-class="qg-noun-stem" data-gloss="trees" data-sarf="nominal host" data-nahw="coordinated noun" data-kind="host" data-affects="nominal-role"><td><span class="qg-seg qg-noun-stem">شَّجَرُ</span></td><td>noun_stem</td><td>qg-noun-stem</td><td>N</td><td>trees</td><td>nominal host</td><td>coordinated noun</td><td>host</td><td>nominal role</td></tr></tbody></table></details>
+      <details class="qg-panel qg-learner-panel" data-panel="learner" open><summary>Learner explanation</summary><p class="qg-learner-explanation">The role colors distinguish the coordinating wāw, the definite article, and the nominal host while preserving the original written word.</p></details>
+      <details class="qg-panel qg-gate-panel" data-panel="gates" open><summary>Gates and status</summary><ul class="qg-gates"><li class="qg-gate-row" data-gate="address" data-state="pass"><span class="qg-gate-name">address</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="public_boundary" data-state="pass"><span class="qg-gate-name">public boundary</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="sarf" data-state="preview"><span class="qg-gate-name">sarf</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="nahw" data-state="preview"><span class="qg-gate-name">nahw</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="source_two_vote" data-state="certified_not_applied"><span class="qg-gate-name">source/two-vote</span> <span class="qg-gate-state">certified-not-applied</span></li><li class="qg-gate-row" data-gate="renderer" data-state="fixture_only"><span class="qg-gate-name">renderer</span> <span class="qg-gate-state">fixture-only</span></li><li class="qg-gate-row" data-gate="owner" data-state="not_authorized"><span class="qg-gate-name">owner</span> <span class="qg-gate-state">not authorized</span></li><li class="qg-gate-row" data-gate="live_apply" data-state="blocked"><span class="qg-gate-name">live apply</span> <span class="qg-gate-state">blocked</span></li></ul><p>Preview metadata is not certification; exact-address two-vote is not public rollout; renderer support is not hover correctness; readable English is not enough.</p></details>
     </section>
+
     <section class="rh-live-preview-card" data-quran-loc="quran:3:123:4" data-wbw-loc="wbw:3:123:4" data-src="qamus" data-kind="authored" data-lang="en" data-public-exposable="false" data-may-apply-live="false" data-live-renderer-claim="false">
-      <div class="qg-gloss">at Badr</div>
-      <span class="qg-word" dir="rtl" lang="ar" data-surface="بِبَدْرٍ" data-parse-key="parse:04f29c83d06ef13407a750b1"><span class="qg-seg qg-preposition" data-role="prefix_preposition">بِ</span><span class="qg-seg qg-noun" data-role="stem">بَدْرٍ</span></span>
-      <div class="qg-tooltip" role="tooltip">
-        <div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-preposition" data-role="prefix_preposition">بِ</span><span class="qg-seg qg-noun" data-role="stem">بَدْرٍ</span></div>
-        <code class="qg-parse-key">parse:04f29c83d06ef13407a750b1</code>
-        <ul class="qg-breakdown">
-          <li class="qg-breakdown-row" data-role="prefix_preposition"><span class="qg-seg qg-preposition">بِ</span> P - at / by / with</li>
-          <li class="qg-breakdown-row" data-role="stem"><span class="qg-seg qg-noun">بَدْرٍ</span> PN - Badr</li>
-        </ul>
-      </div>
+      <h2 class="qg-card-heading">3:123:4 admin preview</h2><div class="qg-gloss">at Badr</div><span class="qg-word" dir="rtl" lang="ar" data-surface="بِبَدْرٍ" data-parse-key="parse:04f29c83d06ef13407a750b1"><span class="qg-seg qg-preposition" data-role="prefix_preposition">بِ</span><span class="qg-seg qg-proper-noun" data-role="proper_noun_stem">بَدْرٍ</span></span>
+      <div class="qg-tooltip" role="tooltip"><div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-preposition" data-role="prefix_preposition">بِ</span><span class="qg-seg qg-proper-noun" data-role="proper_noun_stem">بَدْرٍ</span></div><code class="qg-parse-key">parse:04f29c83d06ef13407a750b1</code><ul class="qg-breakdown"><li class="qg-breakdown-row" data-role="prefix_preposition"><span class="qg-seg qg-preposition">بِ</span> <span class="qg-role-badge">P</span> preposition: at/by/with as context decides.</li><li class="qg-breakdown-row" data-role="proper_noun_stem"><span class="qg-seg qg-proper-noun">بَدْرٍ</span> <span class="qg-role-badge">PN</span> proper noun host: Badr.</li></ul></div>
+      <details class="qg-panel qg-identity-panel" data-panel="identity" open><summary>Token identity</summary><dl class="qg-kv"><div><dt>quran</dt><dd>quran:3:123:4</dd></div><div><dt>wbw</dt><dd>wbw:3:123:4</dd></div><div><dt>surface</dt><dd>بِبَدْرٍ</dd></div><div><dt>normalized key</dt><dd data-state="pending">pending</dd></div><div><dt>renderer fixture</dt><dd>rh_live_00_admin_preview_dom_fixture.sample.html</dd></div><div><dt>certification</dt><dd>certified_not_applied</dd></div><div><dt>preview</dt><dd>admin_preview_only</dd></div><div><dt>next gate</dt><dd>owner-authorized admin route smoke</dd></div><div><dt>owner/live</dt><dd>not authorized for live mutation</dd></div></dl></details>
+      <details class="qg-panel qg-sarf-panel" data-panel="sarf" open><summary>Sarf</summary><dl class="qg-kv"><div><dt>POS</dt><dd>ḥarf plus proper noun host</dd></div><div><dt>root</dt><dd>null for the preposition; pending/not needed for the proper name in preview</dd></div><div><dt>pattern</dt><dd>null</dd></div><div><dt>definiteness</dt><dd>proper noun</dd></div><div><dt>derivative type</dt><dd>proper noun</dd></div></dl></details>
+      <details class="qg-panel qg-nahw-panel" data-panel="nahw" open><summary>Nahw</summary><dl class="qg-kv"><div><dt>iʿrāb role</dt><dd>preposition plus governed proper noun</dd></div><div><dt>case</dt><dd>jarr relation signaled by the preposition</dd></div><div><dt>governor/governed-by</dt><dd>bāʾ governs the host noun</dd></div><div><dt>particle function</dt><dd>preposition bāʾ; context uses locative wording</dd></div><div><dt>PP attachment</dt><dd data-state="pending">attachment target pending in admin preview</dd></div><div><dt>grammar tags</dt><dd><span class="qg-preview-tag" data-tag="jar_majrur">jar-majrūr</span> <span class="qg-preview-tag" data-tag="pp_attachment">PP attachment</span></dd></div></dl></details>
+      <details class="qg-panel qg-segment-panel" data-panel="segments" open><summary>Segment contribution table</summary><table class="qg-segment-table"><tbody><tr class="qg-segment-row" data-role="prefix_preposition" data-display-class="qg-preposition" data-gloss="at / by / with" data-sarf="attached preposition" data-nahw="jarr/PP relation" data-kind="preposition" data-affects="case-attachment"><td><span class="qg-seg qg-preposition">بِ</span></td><td>prefix_preposition</td><td>qg-preposition</td><td>P</td><td>at / by / with</td><td>attached preposition</td><td>jarr/PP relation</td><td>preposition</td><td>case and attachment</td></tr><tr class="qg-segment-row" data-role="proper_noun_stem" data-display-class="qg-proper-noun" data-gloss="Badr" data-sarf="proper noun host" data-nahw="governed noun in PP" data-kind="host" data-affects="pp-object"><td><span class="qg-seg qg-proper-noun">بَدْرٍ</span></td><td>proper_noun_stem</td><td>qg-proper-noun</td><td>PN</td><td>Badr</td><td>proper noun host</td><td>governed noun in PP</td><td>host</td><td>PP object</td></tr></tbody></table></details>
+      <details class="qg-panel qg-learner-panel" data-panel="learner" open><summary>Learner explanation</summary><p class="qg-learner-explanation">The preposition is not decoration. “Badr” alone hides the bāʾ contribution; the preview teaches the learner that the token means a prepositional relation to Badr.</p></details>
+      <details class="qg-panel qg-gate-panel" data-panel="gates" open><summary>Gates and status</summary><ul class="qg-gates"><li class="qg-gate-row" data-gate="address" data-state="pass"><span class="qg-gate-name">address</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="public_boundary" data-state="pass"><span class="qg-gate-name">public boundary</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="sarf" data-state="preview"><span class="qg-gate-name">sarf</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="nahw" data-state="preview"><span class="qg-gate-name">nahw</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="source_two_vote" data-state="certified_not_applied"><span class="qg-gate-name">source/two-vote</span> <span class="qg-gate-state">certified-not-applied</span></li><li class="qg-gate-row" data-gate="renderer" data-state="fixture_only"><span class="qg-gate-name">renderer</span> <span class="qg-gate-state">fixture-only</span></li><li class="qg-gate-row" data-gate="owner" data-state="not_authorized"><span class="qg-gate-name">owner</span> <span class="qg-gate-state">not authorized</span></li><li class="qg-gate-row" data-gate="live_apply" data-state="blocked"><span class="qg-gate-name">live apply</span> <span class="qg-gate-state">blocked</span></li></ul><p>Preview metadata is not certification; exact-address two-vote is not public rollout; renderer support is not hover correctness; readable English is not enough.</p></details>
     </section>
+
     <section class="rh-live-preview-card" data-quran-loc="quran:2:213:37" data-wbw-loc="wbw:2:213:37" data-src="qamus" data-kind="authored" data-lang="en" data-public-exposable="false" data-may-apply-live="false" data-live-renderer-claim="false">
-      <div class="qg-gloss">for what / that which</div>
-      <span class="qg-word" dir="rtl" lang="ar" data-surface="لِمَا" data-parse-key="parse:ae6f25c79ca4888cd052cc03"><span class="qg-seg qg-particle" data-role="prefix_purpose_lam">لِ</span><span class="qg-seg qg-particle" data-role="particle">مَا</span></span>
-      <div class="qg-tooltip" role="tooltip">
-        <div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-particle" data-role="prefix_purpose_lam">لِ</span><span class="qg-seg qg-particle" data-role="particle">مَا</span></div>
-        <code class="qg-parse-key">parse:ae6f25c79ca4888cd052cc03</code>
-        <ul class="qg-breakdown">
-          <li class="qg-breakdown-row" data-role="prefix_purpose_lam"><span class="qg-seg qg-particle">لِ</span> LAM - to / for; relation reviewed</li>
-          <li class="qg-breakdown-row" data-role="particle"><span class="qg-seg qg-particle">مَا</span> PART - what / that which</li>
-        </ul>
-      </div>
+      <h2 class="qg-card-heading">2:213:37 admin preview</h2><div class="qg-gloss">for what / that which</div><span class="qg-word" dir="rtl" lang="ar" data-surface="لِمَا" data-parse-key="parse:ae6f25c79ca4888cd052cc03"><span class="qg-seg qg-lam" data-role="prefix_lam">لِ</span><span class="qg-seg qg-ma-particle" data-role="particle_ma">مَا</span></span>
+      <div class="qg-tooltip" role="tooltip"><div class="qg-tooltip-surface" dir="rtl" lang="ar"><span class="qg-seg qg-lam" data-role="prefix_lam">لِ</span><span class="qg-seg qg-ma-particle" data-role="particle_ma">مَا</span></div><code class="qg-parse-key">parse:ae6f25c79ca4888cd052cc03</code><ul class="qg-breakdown"><li class="qg-breakdown-row" data-role="prefix_lam"><span class="qg-seg qg-lam">لِ</span> <span class="qg-role-badge">LAM</span> for/to relation under review.</li><li class="qg-breakdown-row" data-role="particle_ma"><span class="qg-seg qg-ma-particle">مَا</span> <span class="qg-role-badge">MA</span> mā function must remain context-classified.</li></ul></div>
+      <details class="qg-panel qg-identity-panel" data-panel="identity" open><summary>Token identity</summary><dl class="qg-kv"><div><dt>quran</dt><dd>quran:2:213:37</dd></div><div><dt>wbw</dt><dd>wbw:2:213:37</dd></div><div><dt>surface</dt><dd>لِمَا</dd></div><div><dt>normalized key</dt><dd data-state="pending">pending</dd></div><div><dt>renderer fixture</dt><dd>rh_live_00_admin_preview_dom_fixture.sample.html</dd></div><div><dt>certification</dt><dd>certified_not_applied</dd></div><div><dt>preview</dt><dd>admin_preview_only</dd></div><div><dt>next gate</dt><dd>owner-authorized admin route smoke</dd></div><div><dt>owner/live</dt><dd>not authorized for live mutation</dd></div></dl></details>
+      <details class="qg-panel qg-sarf-panel" data-panel="sarf" open><summary>Sarf</summary><dl class="qg-kv"><div><dt>POS</dt><dd>ḥarf plus function token</dd></div><div><dt>root</dt><dd>null</dd></div><div><dt>pattern</dt><dd>null</dd></div><div><dt>mood</dt><dd>null on this token; relation may affect phrase analysis</dd></div><div><dt>derivative type</dt><dd>null</dd></div></dl></details>
+      <details class="qg-panel qg-nahw-panel" data-panel="nahw" open><summary>Nahw</summary><dl class="qg-kv"><div><dt>iʿrāb role</dt><dd>lām plus mā construction requiring context review</dd></div><div><dt>case/mood effect</dt><dd data-state="pending">pending in preview</dd></div><div><dt>governor/governed-by</dt><dd data-state="pending">attachment under review</dd></div><div><dt>particle function</dt><dd>lām relation plus mā function; not surface-only</dd></div><div><dt>relative/interrogative/conditional function</dt><dd data-state="pending">mā function recorded as context-sensitive</dd></div><div><dt>grammar tags</dt><dd><span class="qg-preview-tag" data-tag="relative_clause">relative or related clause review</span> <span class="qg-preview-tag" data-tag="subordinate_clause">subordinate relation review</span></dd></div></dl></details>
+      <details class="qg-panel qg-segment-panel" data-panel="segments" open><summary>Segment contribution table</summary><table class="qg-segment-table"><tbody><tr class="qg-segment-row" data-role="prefix_lam" data-display-class="qg-lam" data-gloss="for / to" data-sarf="prefixed lām" data-nahw="relation or government under review" data-kind="particle" data-affects="attachment-or-case"><td><span class="qg-seg qg-lam">لِ</span></td><td>prefix_lam</td><td>qg-lam</td><td>LAM</td><td>for / to</td><td>prefixed lām</td><td>relation or government under review</td><td>particle</td><td>attachment/case</td></tr><tr class="qg-segment-row" data-role="particle_ma" data-display-class="qg-ma-particle" data-gloss="what / that which" data-sarf="function token" data-nahw="mā function context-sensitive" data-kind="particle" data-affects="clause-function"><td><span class="qg-seg qg-ma-particle">مَا</span></td><td>particle_ma</td><td>qg-ma-particle</td><td>MA</td><td>what / that which</td><td>function token</td><td>mā function context-sensitive</td><td>particle</td><td>clause function</td></tr></tbody></table></details>
+      <details class="qg-panel qg-learner-panel" data-panel="learner" open><summary>Learner explanation</summary><p class="qg-learner-explanation">This written token must not be taught as a flat word. The lām contributes a relation, while mā requires context classification; public rollout must preserve both pieces or keep the row pending.</p></details>
+      <details class="qg-panel qg-gate-panel" data-panel="gates" open><summary>Gates and status</summary><ul class="qg-gates"><li class="qg-gate-row" data-gate="address" data-state="pass"><span class="qg-gate-name">address</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="public_boundary" data-state="pass"><span class="qg-gate-name">public boundary</span> <span class="qg-gate-state">pass</span></li><li class="qg-gate-row" data-gate="sarf" data-state="preview"><span class="qg-gate-name">sarf</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="nahw" data-state="preview"><span class="qg-gate-name">nahw</span> <span class="qg-gate-state">preview</span></li><li class="qg-gate-row" data-gate="source_two_vote" data-state="certified_not_applied"><span class="qg-gate-name">source/two-vote</span> <span class="qg-gate-state">certified-not-applied</span></li><li class="qg-gate-row" data-gate="renderer" data-state="fixture_only"><span class="qg-gate-name">renderer</span> <span class="qg-gate-state">fixture-only</span></li><li class="qg-gate-row" data-gate="owner" data-state="not_authorized"><span class="qg-gate-name">owner</span> <span class="qg-gate-state">not authorized</span></li><li class="qg-gate-row" data-gate="live_apply" data-state="blocked"><span class="qg-gate-name">live apply</span> <span class="qg-gate-state">blocked</span></li></ul><p>Preview metadata is not certification; exact-address two-vote is not public rollout; renderer support is not hover correctness; readable English is not enough.</p></details>
     </section>
   </main>
 </body>

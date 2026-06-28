@@ -18,6 +18,38 @@ not recur:
 - tooltip breakdown rows reuse the same role keys as the visible token;
 - source labels and private provenance remain absent from the fixture.
 
+## RH-LIVE-00.5 Enrichment
+
+The fixture now models a grammar-rich admin/learner preview rather than a color-only segment demo. Each card adds:
+
+- token identity panel: exact `quran:S:A:W`, `wbw:S:A:W`, surface, fixture source, certification/preview state, next
+  gate, and owner/live status;
+- sarf panel: POS, root/form/voice/aspect/person or explicit pending/null values where the current artifacts do not
+  certify a field;
+- nahw panel: role/function/attachment/pronoun notes and preview-only grammar tags inspired by the local sarfnahw review
+  packs;
+- segment contribution table: surface, role, display class, label, gloss contribution, sarf contribution, nahw
+  contribution, segment kind, and what the segment affects;
+- learner explanation panel: the mistake the row prevents and why a flat hover is insufficient;
+- gate/status panel: address, public-boundary, sarf, nahw, source/two-vote, renderer, owner, and live-apply states.
+
+Missing grammar fields are deliberately shown as `pending` or `null` in the preview instead of being fabricated. The
+fixture remains admin-only/read-only and does not claim live renderer support.
+
+## Role-Aware Color Guard
+
+The palette is now role-aware rather than broad-POS-only. For example:
+
+- `يَسْأَلُكَ` distinguishes `qg-verb-prefix`, `qg-verb-stem`, and `qg-object-pronoun`;
+- `فَأَهْلَكْنَاهُمْ` distinguishes `qg-result-fa`, `qg-verb-stem`, `qg-subject-pronoun`, and
+  `qg-object-pronoun`;
+- `وَٱلشَّمْسُ` distinguishes `qg-conjunction`, `qg-article`, and `qg-noun-stem`;
+- `بِبَدْرٍ` distinguishes `qg-preposition` and `qg-proper-noun`;
+- `لِمَا` distinguishes `qg-lam` and `qg-ma-particle`.
+
+The validator rejects a known segment role if it is assigned only a generic broad POS class where a specific role class
+is available.
+
 ## Scope
 
 The fixture covers the nine RH-LIVE-00 rows:
@@ -42,6 +74,8 @@ python tools/validate_rh_live_admin_preview_dom_fixture.py qamus/examples/rh_liv
 ```
 
 The bundle manifest validator now requires the DOM fixture as part of the RH-LIVE-00 admin preview packet.
+The DOM validator also checks the enriched identity/sarf/nahw/segment/learner/gate panels and role-specific color
+classes.
 
 ## Non-Goals
 
