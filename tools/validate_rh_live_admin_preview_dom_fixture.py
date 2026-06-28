@@ -88,7 +88,38 @@ FORBIDDEN_TOKEN_CSS = (
     "gap:",
     "margin-inline",
     "padding-inline",
+    "transform:",
 )
+REQUIRED_STATE_CHIPS = {
+    "admin_preview",
+    "certified_not_applied",
+    "not_live",
+    "owner_not_authorized",
+}
+REQUIRED_TABLE_LABELS = {
+    "surface",
+    "role",
+    "class",
+    "label",
+    "gloss",
+    "sarf",
+    "nahw",
+    "kind",
+    "affects",
+}
+
+
+def css_block(text, selector):
+    match = re.search(re.escape(selector) + r"\s*\{([^}]*)\}", text, flags=re.IGNORECASE)
+    return match.group(1) if match else ""
+
+
+def contains_forbidden_token_css(block):
+    compact = re.sub(r"\s+", "", block.lower())
+    return [
+        needle for needle in FORBIDDEN_TOKEN_CSS
+        if re.sub(r"\s+", "", needle.lower()) in compact
+    ]
 
 
 def has_class(attrs, name):
@@ -121,32 +152,68 @@ class FixtureParser(html.parser.HTMLParser):
                 "tooltip_rows": [],
                 "parse_keys": [],
                 "panels": set(),
+                "open_panels": set(),
                 "gates": {},
+                "gate_chips": set(),
                 "segment_rows": [],
+                "segment_chips": set(),
+                "state_chips": set(),
+                "header_count": 0,
+                "header_surface": "",
+                "primary_preview_count": 0,
+                "secondary_panels_count": 0,
+                "table_wraps": 0,
                 "learner_text": "",
                 "grammar_tags": set(),
             }
             self.cards.append(self.current_card)
+        if self.current_card and tag == "header" and has_class(attrs, "qg-card-header"):
+            self.current_card["header_count"] += 1
+        if self.current_card and tag == "div" and has_class(attrs, "qg-primary-preview"):
+            self.current_card["primary_preview_count"] += 1
+        if self.current_card and tag == "div" and has_class(attrs, "qg-secondary-panels"):
+            self.current_card["secondary_panels_count"] += 1
+        if self.current_card and tag == "div" and has_class(attrs, "qg-table-wrap"):
+            self.current_card["table_wraps"] += 1
         if self.current_card and tag == "details" and has_class(attrs, "qg-panel"):
             panel = attrs.get("data-panel")
             if panel:
                 self.current_card["panels"].add(panel)
+                if "open" in attrs:
+                    self.current_card["open_panels"].add(panel)
         if self.current_card and tag == "li" and has_class(attrs, "qg-gate-row"):
             gate = attrs.get("data-gate")
             if gate:
                 self.current_card["gates"][gate] = attrs.get("data-state")
+                if has_class(attrs, "qg-gate-chip"):
+                    self.current_card["gate_chips"].add(gate)
         if self.current_card and tag == "tr" and has_class(attrs, "qg-segment-row"):
             self.current_segment_row = {
                 "attrs": attrs,
                 "text": "",
+                "labels": set(),
             }
             self.current_card["segment_rows"].append(self.current_segment_row)
+        if self.current_segment_row is not None and tag == "td":
+            label = attrs.get("data-label")
+            if label:
+                self.current_segment_row["labels"].add(label)
+        if self.current_card and tag == "span" and has_class(attrs, "qg-state-chip"):
+            state_key = attrs.get("data-state-key")
+            if state_key:
+                self.current_card["state_chips"].add(state_key)
+        if self.current_card and tag == "span" and has_class(attrs, "qg-segment-chip"):
+            role = attrs.get("data-role")
+            if role:
+                self.current_card["segment_chips"].add(role)
         if self.current_card and tag == "p" and has_class(attrs, "qg-learner-explanation"):
             self.current_learner = ""
         if self.current_card and tag == "span" and has_class(attrs, "qg-preview-tag"):
             tag_name = attrs.get("data-tag")
             if tag_name:
                 self.current_card["grammar_tags"].add(tag_name)
+        if self.current_card and tag == "span" and has_class(attrs, "qg-header-surface"):
+            self.current_card["header_surface"] = ""
         if self.current_card and tag == "span" and has_class(attrs, "qg-word"):
             self.current_word = {
                 "attrs": attrs,
@@ -201,6 +268,10 @@ class FixtureParser(html.parser.HTMLParser):
             self.current_word["raw_text"] += data
             if self.current_word["segments"]:
                 self.current_word["segments"][-1]["text"] += data
+        if self.current_card and self.stack:
+            open_tag, open_attrs = self.stack[-1]
+            if open_tag == "span" and has_class(open_attrs, "qg-header-surface"):
+                self.current_card["header_surface"] += data
         if self.current_card and self.current_card["tooltip_rows"]:
             self.current_card["tooltip_rows"][-1]["text"] += data
         if self.current_segment_row is not None:
@@ -220,16 +291,27 @@ def visible_word_for(card):
 
 def validate_css(text, errors):
     lower = re.sub(r"\s+", "", text.lower())
-    for needle in FORBIDDEN_TOKEN_CSS:
-        compact = re.sub(r"\s+", "", needle.lower())
-        if compact in lower:
-            add(errors, "fixture CSS contains destructive token-layout CSS: %s" % needle)
+    qg_seg = css_block(text, ".qg-seg")
+    if not qg_seg:
+        add(errors, "fixture must define qg segment spans")
+    for needle in contains_forbidden_token_css(qg_seg):
+        add(errors, "qg segment CSS contains destructive token-layout CSS: %s" % needle)
+    qg_seg_compact = re.sub(r"\s+", "", qg_seg.lower())
+    for required in ("display:inline", "margin:0", "padding:0", "letter-spacing:0", "word-spacing:0"):
+        if required not in qg_seg_compact:
+            add(errors, "fixture qg segment CSS must include %s" % required)
     if ".qg-seg" not in text or "display: inline" not in text:
         add(errors, "fixture must define qg segment spans as display:inline")
     if "white-space: nowrap" not in text:
         add(errors, "fixture must require non-breaking Arabic token wrappers")
     if "line-height: 1.9" not in text and "line-height:1.9" not in lower:
         add(errors, "fixture must reserve vertical room for Arabic diacritics")
+    if ".qg-card-header" not in text or ".qg-primary-preview" not in text or ".qg-secondary-panels" not in text:
+        add(errors, "fixture CSS must define the RH-LIVE IA hierarchy containers")
+    if ".qg-gate-chip" not in text or ".qg-state-chip" not in text or ".qg-segment-chip" not in text:
+        add(errors, "fixture CSS must define compact chip treatments")
+    if "@media (max-width: 760px)" not in text or "content: attr(data-label)" not in text:
+        add(errors, "fixture CSS must define mobile stacked segment-table behavior")
     for css_class in sorted(set(ROLE_CLASS_REQUIREMENTS.values())):
         if "." + css_class not in text:
             add(errors, "fixture CSS must define role-aware class %s" % css_class)
@@ -277,9 +359,25 @@ def validate_fixture(path):
         missing_panels = REQUIRED_PANELS - card["panels"]
         if missing_panels:
             add(errors, "%s missing enriched preview panels: %s" % (wbw, sorted(missing_panels)))
+        if card["open_panels"]:
+            add(errors, "%s secondary panels must be collapsed by default: %s" % (wbw, sorted(card["open_panels"])))
+        if card["header_count"] != 1:
+            add(errors, "%s must have one header row" % wbw)
+        if card["primary_preview_count"] != 1:
+            add(errors, "%s must have one primary hover preview" % wbw)
+        if card["secondary_panels_count"] != 1:
+            add(errors, "%s must have one secondary panel wrapper" % wbw)
+        missing_state_chips = REQUIRED_STATE_CHIPS - card["state_chips"]
+        if missing_state_chips:
+            add(errors, "%s missing preview state chips: %s" % (wbw, sorted(missing_state_chips)))
+        if card["header_surface"].strip() != expected_surface:
+            add(errors, "%s header Arabic token must equal exact surface" % wbw)
         missing_gates = REQUIRED_GATES - set(card["gates"])
         if missing_gates:
             add(errors, "%s missing gate rows: %s" % (wbw, sorted(missing_gates)))
+        missing_gate_chips = REQUIRED_GATES - card["gate_chips"]
+        if missing_gate_chips:
+            add(errors, "%s gates must render as compact gate chips: %s" % (wbw, sorted(missing_gate_chips)))
         if card["gates"].get("owner") != "not_authorized":
             add(errors, "%s owner gate must stay not_authorized" % wbw)
         if card["gates"].get("live_apply") != "blocked":
@@ -311,6 +409,8 @@ def validate_fixture(path):
         if not word["segments"]:
             add(errors, "%s visible word must contain qg-seg spans" % wbw)
         visible_roles = {segment["attrs"].get("data-role") for segment in word["segments"]}
+        if visible_roles - card["segment_chips"]:
+            add(errors, "%s segment chips missing roles: %s" % (wbw, sorted(visible_roles - card["segment_chips"])))
         for segment in word["segments"]:
             classes = segment["attrs"].get("class", "").split()
             role = segment["attrs"].get("data-role")
@@ -332,6 +432,8 @@ def validate_fixture(path):
         segment_table_roles = {row["attrs"].get("data-role") for row in card["segment_rows"]}
         if visible_roles - segment_table_roles:
             add(errors, "%s segment contribution table missing roles: %s" % (wbw, sorted(visible_roles - segment_table_roles)))
+        if card["table_wraps"] < 1:
+            add(errors, "%s segment table must be wrapped for mobile/overflow handling" % wbw)
         for row in card["segment_rows"]:
             row_attrs = row["attrs"]
             role = row_attrs.get("data-role")
@@ -341,6 +443,9 @@ def validate_fixture(path):
             for field in ("data-gloss", "data-sarf", "data-nahw", "data-kind", "data-affects"):
                 if not row_attrs.get(field):
                     add(errors, "%s table role %s missing %s" % (wbw, role, field))
+            missing_labels = REQUIRED_TABLE_LABELS - row["labels"]
+            if missing_labels:
+                add(errors, "%s table role %s missing mobile data-labels: %s" % (wbw, role, sorted(missing_labels)))
     missing = set(EXPECTED_ROWS) - seen
     if missing:
         add(errors, "missing preview cards: %s" % sorted(missing))
@@ -372,6 +477,20 @@ def self_test():
         bad_errors = validate_fixture(bad_path)
         if not any("role verb_prefix must use class qg-verb-prefix" in error for error in bad_errors):
             raise SystemExit("self-test failed: broad POS role-color regression was not caught")
+    bad = text.replace('class="qg-primary-preview"', 'class="qg-primary-preview-removed"', 1)
+    with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
+        bad_path = os.path.join(tmp, "bad-ia.html")
+        write_text(bad_path, bad)
+        bad_errors = validate_fixture(bad_path)
+        if not any("must have one primary hover preview" in error for error in bad_errors):
+            raise SystemExit("self-test failed: missing primary preview hierarchy was not caught")
+    bad = text.replace('<details class="qg-panel qg-sarf-panel" data-panel="sarf">', '<details class="qg-panel qg-sarf-panel" data-panel="sarf" open>', 1)
+    with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
+        bad_path = os.path.join(tmp, "bad-open-panel.html")
+        write_text(bad_path, bad)
+        bad_errors = validate_fixture(bad_path)
+        if not any("secondary panels must be collapsed by default" in error for error in bad_errors):
+            raise SystemExit("self-test failed: expanded secondary panel regression was not caught")
     print("RH-LIVE admin-preview DOM fixture self-test OK")
 
 

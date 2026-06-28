@@ -857,9 +857,11 @@ try:
         ("rh-live-00-two-vote-response-reconciliation-20260627.md", "certified-not-applied rows | 9"),
         ("rh-live-00-renderer-admin-preview-plan-20260627.md", "ordinary public hover behavior"),
         ("rh-live-00-renderer-admin-preview-plan-20260627.md", "RH-LIVE-00.5 Role-Aware Palette"),
+        ("rh-live-00-renderer-admin-preview-plan-20260627.md", "RH-LIVE-00.6 Admin Preview IA"),
         ("rh-live-00-admin-preview-bundle-manifest-20260628.md", "machine-checkable bundle gate"),
         ("rh-live-00-admin-preview-dom-fixture-20260628.md", "visible Arabic tokens remain atomic"),
         ("rh-live-00-admin-preview-dom-fixture-20260628.md", "Role-Aware Color Guard"),
+        ("rh-live-00-admin-preview-dom-fixture-20260628.md", "RH-LIVE-00.6 IA/UX Hierarchy"),
     ):
         _text = io.open(os.path.join(_report_dir, _name), encoding="utf-8").read()
         check("RH-LIVE-00 report present: " + _name, _needle in _text)

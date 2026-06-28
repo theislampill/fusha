@@ -50,6 +50,26 @@ The palette is now role-aware rather than broad-POS-only. For example:
 The validator rejects a known segment role if it is assigned only a generic broad POS class where a specific role class
 is available.
 
+## RH-LIVE-00.6 IA/UX Hierarchy
+
+The fixture now models the admin preview as a readable inspection card rather than a flat debug dump:
+
+- header row: atomic Arabic token, authored gloss, exact `quran:S:A:W`/`wbw:S:A:W` chips, and explicit state chips
+  (`admin preview`, `certified-not-applied`, `not live`, `owner not authorized`);
+- primary hover preview: role-colored atomic Arabic token, compact segment chips, parse key, and a one-sentence learner
+  explanation;
+- secondary panels: token identity/readiness, sarf, nahw, segment contribution table, learner note, and gates are
+  collapsed by default so raw/debug details remain available without dominating the preview;
+- gate chips: address, public-boundary, sarf, nahw, source/two-vote, renderer, owner, and live-apply states render as
+  compact chips instead of a long bullet list;
+- mobile behavior: segment tables are wrapped and become stacked labeled rows on narrow screens, while the token/gloss
+  remains first.
+
+The DOM validator now rejects missing header/primary/secondary containers, missing state chips, expanded-by-default
+secondary panels, non-chip gate rows, missing segment chips, missing mobile table labels, and missing mobile table CSS.
+The Arabic integrity guard remains strict, but it is scoped to `.qg-word`/`.qg-seg` token internals so ordinary card
+layout can use flex/grid/gap without being confused for destructive Arabic segmentation.
+
 ## Scope
 
 The fixture covers the nine RH-LIVE-00 rows:

@@ -62,6 +62,26 @@ contribution, sarf contribution, nahw contribution, segment kind, and what the s
 field is absent from the current review artifact, the admin preview must show a pending/null value rather than inventing
 a fact.
 
+## RH-LIVE-00.6 Admin Preview IA
+
+The preview route should make the rich hover understandable before it exposes the full review payload:
+
+1. Header: atomic Arabic token, authored Qamus gloss, exact `quran:S:A:W` and `wbw:S:A:W`, and state chips for
+   `admin preview`, `certified-not-applied`, `not live`, and `owner not authorized`.
+2. Primary hover preview: role-colored atomic Arabic token, compact segment chips, parse key, and one learner-facing
+   sentence that explains why the flat hover is insufficient.
+3. Secondary panels: sarf, nahw, gates, segment contribution table, learner note, and evidence/readiness are available
+   through collapsed details panels. Raw review details should not visually compete with the token/gloss.
+4. Gates: render the gate states as compact chips:
+   `address pass`, `public boundary pass`, `sarf pass/preview`, `nahw preview`, `source/two-vote certified-not-applied`,
+   `renderer fixture-only`, `owner blocked/not authorized`, and `live apply blocked`.
+5. Mobile: the token and gloss come first; segment tables switch to stacked labeled rows; detail panels remain
+   touch-friendly; no horizontal overflow is allowed.
+
+The fixture validator guards this IA shape with required header/primary/secondary containers, collapsed secondary
+panels, state chips, gate chips, segment chips, and mobile table labels. These checks are renderer-planning guards only;
+they do not claim live support.
+
 ## Repo-Side Route Contract
 
 The static shadow-admin contract now reserves an admin-only/read-only `rich_hover_preview` view at
