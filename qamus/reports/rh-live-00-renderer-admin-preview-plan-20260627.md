@@ -45,6 +45,10 @@ The static shadow-admin contract now reserves an admin-only/read-only `rich_hove
 `wbw:S:A:W`/`quran:S:A:W` identity. It is not an apply route, does not permit public payloads, and must not infer a
 preview from raw Arabic surface text or from parse key alone.
 
+Preview candidate validation also requires the exact `quran:S:A:W`/`wbw:S:A:W` row to exist in its committed renderer
+fixture with a compact parse key, matching segments/display classes, `segments_concat_equals_surface`, and
+`live_renderer_claim=false`.
+
 ## Arabic Rendering Rules
 
 - The Qur'anic written token remains an atomic visual word.

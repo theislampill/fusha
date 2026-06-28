@@ -74,6 +74,85 @@ def leaks(row):
     return [label for label in FORBIDDEN_PUBLIC_LABELS if label in blob]
 
 
+def load_fixture_rows(source_fixture):
+    rows = []
+    fixture_path = os.path.join(ROOT, source_fixture)
+    with io.open(fixture_path, encoding="utf-8") as handle:
+        for fixture_lineno, line in enumerate(handle, 1):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rows.append((fixture_lineno, json.loads(line)))
+            except Exception as exc:
+                rows.append((fixture_lineno, {"__json_error__": str(exc)}))
+    return rows
+
+
+def validate_renderer_fixture_link(row, path, lineno, errors):
+    source_fixture = str(row.get("source_renderer_fixture") or "")
+    if not source_fixture.startswith("qamus/examples/rich_cert_") or not source_fixture.endswith(".jsonl"):
+        _err(errors, path, lineno, "source_renderer_fixture must be a committed rich_cert fixture path")
+        return
+    fixture_path = os.path.join(ROOT, source_fixture)
+    if not os.path.exists(fixture_path):
+        _err(errors, path, lineno, "source_renderer_fixture must exist")
+        return
+
+    fixture_rows = load_fixture_rows(source_fixture)
+    bad_json = [fixture_lineno for fixture_lineno, fixture_row in fixture_rows if "__json_error__" in fixture_row]
+    if bad_json:
+        _err(errors, path, lineno, "source_renderer_fixture has invalid JSON at lines " + ", ".join(str(n) for n in bad_json))
+        return
+    quran_loc = row.get("quran_loc")
+    wbw_loc = row.get("wbw_loc")
+    matches = [
+        fixture_row for _fixture_lineno, fixture_row in fixture_rows
+        if fixture_row.get("quran_loc") == quran_loc and fixture_row.get("wbw_loc") == wbw_loc
+    ]
+    if len(matches) != 1:
+        _err(errors, path, lineno, "source_renderer_fixture must contain exactly one matching quran/wbw row")
+        return
+
+    fixture = matches[0]
+    parse_key = fixture.get("parse_key")
+    if not isinstance(parse_key, str) or not parse_key.strip():
+        _err(errors, path, lineno, "matching renderer fixture row must expose parse_key for tooltip display")
+    elif not parse_key.isascii():
+        _err(errors, path, lineno, "matching renderer fixture parse_key must be compact ASCII")
+    if fixture.get("surface") != row.get("surface"):
+        _err(errors, path, lineno, "matching renderer fixture surface must equal preview surface")
+    if fixture.get("live_renderer_claim") is not False:
+        _err(errors, path, lineno, "matching renderer fixture must not claim live renderer support")
+    if fixture.get("renderer_status") != "fixture_not_live":
+        _err(errors, path, lineno, "matching renderer fixture status must be fixture_not_live")
+    if fixture.get("surface_text_invariant") != "segments_concat_equals_surface":
+        _err(errors, path, lineno, "matching renderer fixture must preserve segments_concat_equals_surface")
+
+    fixture_segments = fixture.get("segments") or []
+    preview_segments = row.get("segments") or []
+    if "".join(str(seg.get("surface") or "") for seg in fixture_segments) != row.get("surface"):
+        _err(errors, path, lineno, "matching renderer fixture segment surfaces must concatenate to preview surface")
+    if len(fixture_segments) != len(preview_segments):
+        _err(errors, path, lineno, "matching renderer fixture segment count must match preview segments")
+    else:
+        for index, (fixture_segment, preview_segment) in enumerate(zip(fixture_segments, preview_segments)):
+            if fixture_segment.get("surface") != preview_segment.get("surface"):
+                _err(errors, path, lineno, f"matching renderer fixture segment[{index}].surface must match preview")
+            if fixture_segment.get("role") != preview_segment.get("role"):
+                _err(errors, path, lineno, f"matching renderer fixture segment[{index}].role must match preview")
+
+    fixture_display = fixture.get("display") or {}
+    preview_display = row.get("display") or {}
+    if fixture_display.get("palette") != "qamus-grammar-v1":
+        _err(errors, path, lineno, "matching renderer fixture display.palette must be qamus-grammar-v1")
+    if fixture_display.get("segments") != preview_display.get("segments"):
+        _err(errors, path, lineno, "matching renderer fixture display.segments must match preview display.segments")
+    leaked = leaks(fixture)
+    if leaked:
+        _err(errors, path, lineno, "matching renderer fixture leaks forbidden label: " + ", ".join(leaked))
+
+
 def validate_row(row, path, lineno, errors):
     if row.get("preview_stage") != "RH-LIVE-00":
         _err(errors, path, lineno, "preview_stage must be RH-LIVE-00")
@@ -96,11 +175,7 @@ def validate_row(row, path, lineno, errors):
     if quran_loc and wbw_loc and wbw_loc != "wbw:" + quran_loc.split(":", 1)[1]:
         _err(errors, path, lineno, "wbw_loc must match quran_loc")
 
-    source_fixture = str(row.get("source_renderer_fixture") or "")
-    if not source_fixture.startswith("qamus/examples/rich_cert_") or not source_fixture.endswith(".jsonl"):
-        _err(errors, path, lineno, "source_renderer_fixture must be a committed rich_cert fixture path")
-    elif not os.path.exists(os.path.join(ROOT, source_fixture)):
-        _err(errors, path, lineno, "source_renderer_fixture must exist")
+    validate_renderer_fixture_link(row, path, lineno, errors)
 
     public_preview = row.get("public_preview") or {}
     if public_preview.get("src") != "qamus":
@@ -175,7 +250,8 @@ def self_test():
             "palette": "qamus-grammar-v1",
             "segments": [
                 {"class": "qg-particle", "label": "CONJ", "role": "prefix_conjunction", "segment_index": 0},
-                {"class": "qg-noun", "label": "STEM", "role": "stem", "segment_index": 1},
+                {"class": "qg-article", "label": "ART", "role": "definite_article", "segment_index": 1},
+                {"class": "qg-noun", "label": "STEM", "role": "stem", "segment_index": 2},
             ],
         },
         "hover_ledger_mutation_allowed": False,
@@ -196,11 +272,12 @@ def self_test():
         "required_dom_assertions": sorted(REQUIRED_DOM_ASSERTIONS),
         "segments": [
             {"gloss_contribution": "and", "role": "prefix_conjunction", "surface": "وَ"},
-            {"gloss_contribution": "host", "role": "stem", "surface": "شَّجَرُ"},
+            {"gloss_contribution": "the", "role": "definite_article", "surface": "ٱل"},
+            {"gloss_contribution": "trees", "role": "stem", "surface": "شَّجَرُ"},
         ],
         "service_restart_allowed": False,
         "source_renderer_fixture": "qamus/examples/rich_cert_vn_rich_cert_18_renderer_fixture.sample.jsonl",
-        "surface": "وَشَّجَرُ",
+        "surface": "وَٱلشَّجَرُ",
         "surface_text_invariant": "segments_concat_equals_surface",
         "wbw_loc": "wbw:22:18:17",
         "wbw_rebuild_allowed": False,
@@ -211,6 +288,13 @@ def self_test():
         count, errors = validate_file(path)
         if errors or count != 1:
             raise SystemExit("self-test failed: " + "; ".join(errors))
+        bad = dict(row)
+        bad["quran_loc"] = "quran:22:18:18"
+        bad["wbw_loc"] = "wbw:22:18:18"
+        dump_jsonl(path, [bad])
+        count, errors = validate_file(path)
+        if not any("source_renderer_fixture must contain exactly one matching quran/wbw row" in error for error in errors):
+            raise SystemExit("self-test failed: missing fixture-link failure")
     print("RH-LIVE preview candidate self-test OK")
 
 
