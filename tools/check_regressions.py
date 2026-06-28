@@ -765,6 +765,18 @@ try:
     _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_rh_live_source_triangulation_readiness.py"),
                    os.path.join(_R, "qamus", "examples", "rh_live_00_source_triangulation_readiness.sample.jsonl")])
     check("RH-LIVE-00 source-triangulation readiness sample validates", _v.returncode == 0)
+    if _v.returncode == 0:
+        _rows = [
+            json.loads(_line)
+            for _line in io.open(
+                os.path.join(_R, "qamus", "examples", "rh_live_00_source_triangulation_readiness.sample.jsonl"),
+                encoding="utf-8",
+            )
+            if _line.strip()
+        ]
+        _ready = sum(1 for _row in _rows if _row.get("next_state") == "exact_address_two_vote_ready_not_applyable")
+        _retry = sum(1 for _row in _rows if _row.get("next_state") == "source_retry_required_not_certified")
+        check("RH-LIVE-00 source readiness moved all nine rows to exact-address two-vote", _ready == 9 and _retry == 0)
     if _v.returncode != 0:
         _out = (_v.stdout or _v.stderr).strip().splitlines()
         if _out:
@@ -775,12 +787,80 @@ try:
     _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_phase4_two_vote_requests.py"),
                    os.path.join(_R, "qamus", "examples", "rh_live_00_two_vote_request_from_source_readiness.sample.jsonl")])
     check("RH-LIVE-00 source-derived two-vote request sample validates", _v.returncode == 0)
+    if _v.returncode == 0:
+        _request_rows = [
+            json.loads(_line)
+            for _line in io.open(
+                os.path.join(_R, "qamus", "examples", "rh_live_00_two_vote_request_from_source_readiness.sample.jsonl"),
+                encoding="utf-8",
+            )
+            if _line.strip()
+        ]
+        check("RH-LIVE-00 source-derived two-vote request sample has nine rows", len(_request_rows) == 9)
     if _v.returncode != 0:
         _out = (_v.stdout or _v.stderr).strip().splitlines()
         if _out:
             print("  ", _out[-1])
 except Exception:
     check("RH-LIVE-00 source-derived two-vote request sample runnable", False)
+
+try:
+    _requests = os.path.join(_R, "qamus", "examples", "rh_live_00_two_vote_request_from_source_readiness.sample.jsonl")
+    _responses = os.path.join(_R, "qamus", "examples", "rh_live_00_two_vote_response_from_source_readiness.sample.jsonl")
+    _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_phase4_two_vote_responses.py"),
+                   _responses, "--requests", _requests])
+    check("RH-LIVE-00 source-derived two-vote response sample validates", _v.returncode == 0)
+    if _v.returncode == 0:
+        _response_rows = [
+            json.loads(_line)
+            for _line in io.open(_responses, encoding="utf-8")
+            if _line.strip()
+        ]
+        check("RH-LIVE-00 source-derived two-vote response sample has eighteen rows", len(_response_rows) == 18)
+    if _v.returncode != 0:
+        _out = (_v.stdout or _v.stderr).strip().splitlines()
+        if _out:
+            print("  ", _out[-1])
+except Exception:
+    check("RH-LIVE-00 source-derived two-vote response sample runnable", False)
+
+try:
+    with tempfile.TemporaryDirectory(prefix="rh-live-reconcile-") as _td:
+        _cert = os.path.join(_td, "certified.jsonl")
+        _unresolved = os.path.join(_td, "unresolved.jsonl")
+        _v = run_text([
+            sys.executable,
+            os.path.join(_R, "tools", "reconcile_phase4_two_vote_responses.py"),
+            "--requests",
+            os.path.join(_R, "qamus", "examples", "rh_live_00_two_vote_request_from_source_readiness.sample.jsonl"),
+            "--responses",
+            os.path.join(_R, "qamus", "examples", "rh_live_00_two_vote_response_from_source_readiness.sample.jsonl"),
+            "--certified-out",
+            _cert,
+            "--unresolved-out",
+            _unresolved,
+        ])
+        _cert_rows = sum(1 for _line in io.open(_cert, encoding="utf-8") if _line.strip()) if os.path.exists(_cert) else 0
+        _unresolved_rows = sum(1 for _line in io.open(_unresolved, encoding="utf-8") if _line.strip()) if os.path.exists(_unresolved) else 0
+        check("RH-LIVE-00 source-derived two-vote reconciliation yields 9 certified/0 unresolved",
+              _v.returncode == 0 and _cert_rows == 9 and _unresolved_rows == 0)
+        if _v.returncode != 0:
+            _out = (_v.stdout or _v.stderr).strip().splitlines()
+            if _out:
+                print("  ", _out[-1])
+except Exception:
+    check("RH-LIVE-00 source-derived two-vote reconciliation runnable", False)
+
+try:
+    _report_dir = os.path.join(_R, "qamus", "reports")
+    for _name, _needle in (
+        ("rh-live-00-two-vote-response-reconciliation-20260627.md", "certified-not-applied rows | 9"),
+        ("rh-live-00-renderer-admin-preview-plan-20260627.md", "ordinary public hover behavior"),
+    ):
+        _text = io.open(os.path.join(_report_dir, _name), encoding="utf-8").read()
+        check("RH-LIVE-00 report present: " + _name, _needle in _text)
+except Exception:
+    check("RH-LIVE-00 report presence/readability", False)
 
 try:
     _v = run_text([sys.executable, os.path.join(_R, "tools", "audit_wbw_lookup_morphosyntax.py"), "--self-test"])

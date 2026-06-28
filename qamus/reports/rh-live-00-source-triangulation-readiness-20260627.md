@@ -7,7 +7,7 @@ mutate the hover ledger, or claim public rich-hover support.
 
 `qamus/examples/rh_live_00_preview_candidates.sample.jsonl` proves a tiny admin/renderer preview shape. This follow-up
 adds a bounded source-triangulation readiness layer for the same nine rows so the next owner-gated review can tell which
-rows have fresh internal grammar evidence and which rows still need source retry.
+rows have compact internal grammar support for exact-address two-vote review.
 
 The packet is not a public hover artifact. Public-facing fields remain limited to Qamus-authored preview text:
 `src=qamus`, `kind=authored`, `lang=en`.
@@ -24,23 +24,20 @@ The packet is not a public hover artifact. Public-facing fields remain limited t
 
 | class | rows | meaning |
 |---|---:|---|
-| `exact_address_two_vote_ready_not_applyable` | 3 | internal MCP analysis supports the segment roles; still requires exact-address two-vote before any apply |
-| `source_retry_required_not_certified` | 6 | MCP/session evidence was unavailable after token expiry; row remains not certified |
+| `exact_address_two_vote_ready_not_applyable` | 9 | internal MCP analysis supports the segment roles; still requires exact-address two-vote before any apply |
+| `source_retry_required_not_certified` | 0 | no rows remain in this retry lane in the current packet |
 
 Rows with fresh internal MCP support:
 
 - `33:63:1` `يَسْأَلُكَ` - finite imperfect verb plus attached object pronoun; dictionary-infinitive hover is unsafe.
 - `26:139:2` `فَأَهْلَكْنَاهُمْ` - fā' relation plus finite past verb, subject pronoun, and object pronoun.
 - `22:18:13` `وَٱلشَّمْسُ` - conjunction plus definite noun host; host-only or unsegmented hover remains incomplete.
-
-Rows requiring retry before certification:
-
-- `22:18:14` `وَٱلْقَمَرُ`
-- `22:18:15` `وَٱلنُّجُومُ`
-- `22:18:16` `وَٱلْجِبَالُ`
-- `22:18:17` `وَٱلشَّجَرُ`
-- `3:123:4` `بِبَدْرٍ`
-- `2:213:37` `لِمَا`
+- `22:18:14` `وَٱلْقَمَرُ` - conjunction plus definite noun host; conjoined nominative role needs reason agreement.
+- `22:18:15` `وَٱلنُّجُومُ` - conjunction plus article plus broken-plural noun host.
+- `22:18:16` `وَٱلْجِبَالُ` - conjunction plus article plus broken-plural noun host.
+- `22:18:17` `وَٱلشَّجَرُ` - conjunction plus article plus noun host; renderer must keep the written token atomic.
+- `3:123:4` `بِبَدْرٍ` - prefixed bā' plus proper-noun host; host-only place-name hover is incomplete.
+- `2:213:37` `لِمَا` - lām plus contextual `ما` function; flat surface treatment is unsafe.
 
 ## Boundary
 
@@ -49,8 +46,8 @@ Rows remain `may_apply_live=false`, `live_mutation_allowed=false`, and `public_e
 
 ## Next Gate
 
-The three supported rows can enter exact-address two-vote review. The six retry rows must first re-run source
-triangulation after MCP authentication/session recovery. No row is live-applyable from this packet.
+All nine rows can enter exact-address two-vote review. No row is live-applyable from this packet, and the compact support
+labels are internal evidence only.
 
 Run:
 

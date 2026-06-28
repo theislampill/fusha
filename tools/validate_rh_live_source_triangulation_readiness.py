@@ -166,8 +166,8 @@ def validate_file(path):
             retry += 1
     if count == 0:
         errors.append(f"{path}: no rows")
-    if count and (ready == 0 or retry == 0):
-        errors.append(f"{path}: expected both ready and retry rows")
+    if count and ready == 0:
+        errors.append(f"{path}: expected at least one exact-address two-vote-ready row")
     return count, ready, retry, errors
 
 
