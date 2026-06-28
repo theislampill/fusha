@@ -752,6 +752,27 @@ except Exception:
     check("RH-LIVE-00 preview candidate sample runnable", False)
 
 try:
+    _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_rh_live_source_triangulation_readiness.py"),
+                   "--self-test"])
+    check("RH-LIVE-00 source-triangulation readiness validator self-test", _v.returncode == 0)
+    if _v.returncode != 0:
+        _out = (_v.stdout or _v.stderr).strip().splitlines()
+        if _out:
+            print("  ", _out[-1])
+except Exception:
+    check("RH-LIVE-00 source-triangulation readiness validator runnable", False)
+try:
+    _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_rh_live_source_triangulation_readiness.py"),
+                   os.path.join(_R, "qamus", "examples", "rh_live_00_source_triangulation_readiness.sample.jsonl")])
+    check("RH-LIVE-00 source-triangulation readiness sample validates", _v.returncode == 0)
+    if _v.returncode != 0:
+        _out = (_v.stdout or _v.stderr).strip().splitlines()
+        if _out:
+            print("  ", _out[-1])
+except Exception:
+    check("RH-LIVE-00 source-triangulation readiness sample runnable", False)
+
+try:
     _v = run_text([sys.executable, os.path.join(_R, "tools", "audit_wbw_lookup_morphosyntax.py"), "--self-test"])
     check("wbw lookup morphosyntax audit self-test", _v.returncode == 0)
     if _v.returncode != 0:
