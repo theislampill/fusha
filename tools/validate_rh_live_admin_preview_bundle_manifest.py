@@ -114,6 +114,76 @@ def identity_pairs_from_certified(rows):
     return identity_pairs_from_request(rows)
 
 
+def first_identity_pair(row):
+    identity = row.get("identity") or {}
+    quran = identity.get("quran_locs") or []
+    wbw = identity.get("wbw_locs") or []
+    if not quran or not wbw:
+        return None
+    return (quran[0], wbw[0])
+
+
+def compact(value):
+    return " ".join(str(value or "").strip().split())
+
+
+def context_from_row(row):
+    context = row.get("gloss_context")
+    if isinstance(context, dict):
+        return {
+            "token_contribution_gloss": compact(context.get("token_contribution_gloss")),
+            "contextual_phrase_gloss": compact(context.get("contextual_phrase_gloss")),
+            "context_subject_source": compact(context.get("context_subject_source")),
+            "context_object_source": compact(context.get("context_object_source")),
+            "context_governor_source": compact(context.get("context_governor_source")),
+            "context_attachment_source": compact(context.get("context_attachment_source")),
+            "adjacent_context_required": context.get("adjacent_context_required"),
+            "adjacent_context_locs": tuple(context.get("adjacent_context_locs") or []),
+            "contextual_gloss_certification_state": compact(context.get("contextual_gloss_certification_state")),
+        }
+    return {
+        "token_contribution_gloss": compact(row.get("token_contribution_gloss")),
+        "contextual_phrase_gloss": compact(row.get("contextual_phrase_gloss") or (row.get("public_preview") or {}).get("gloss")),
+        "context_subject_source": compact(row.get("context_subject_source")),
+        "context_object_source": compact(row.get("context_object_source")),
+        "context_governor_source": compact(row.get("context_governor_source")),
+        "context_attachment_source": compact(row.get("context_attachment_source")),
+        "adjacent_context_required": row.get("adjacent_context_required"),
+        "adjacent_context_locs": tuple(row.get("adjacent_context_locs") or []),
+        "contextual_gloss_certification_state": compact(row.get("contextual_gloss_certification_state")),
+    }
+
+
+def context_map_from_loc_rows(rows):
+    return {
+        (row.get("quran_loc"), row.get("wbw_loc")): context_from_row(row)
+        for row in rows
+    }
+
+
+def context_map_from_identity_rows(rows):
+    out = {}
+    for row in rows:
+        pair = first_identity_pair(row)
+        if pair:
+            out[pair] = context_from_row(row)
+    return out
+
+
+def context_map_from_responses(rows):
+    grouped = collections.defaultdict(list)
+    for row in rows:
+        pair = first_identity_pair(row)
+        if pair:
+            grouped[pair].append(row)
+    out = {}
+    for pair, response_rows in grouped.items():
+        contexts = [context_from_row(row) for row in response_rows]
+        if contexts:
+            out[pair] = contexts[0]
+    return out
+
+
 def request_id_for(row):
     return row.get("id")
 
@@ -313,6 +383,48 @@ def validate_cross_artifact_identity(rows, errors):
             add(errors, "certified rows must remain token_only in this preview bundle")
 
 
+def validate_cross_artifact_gloss_context(rows, errors):
+    if rows is None:
+        return
+    preview_context = context_map_from_loc_rows(rows["preview"])
+    readiness_context = context_map_from_loc_rows(rows["readiness"])
+    request_context = context_map_from_identity_rows(rows["requests"])
+    response_context = context_map_from_responses(rows["responses"])
+    certified_context = context_map_from_identity_rows(rows["certified"])
+    expected_pairs = set(preview_context)
+    for name, mapping in (
+        ("source-readiness", readiness_context),
+        ("two-vote request", request_context),
+        ("two-vote response", response_context),
+        ("certified-not-applied", certified_context),
+    ):
+        if set(mapping) != expected_pairs:
+            add(errors, "%s gloss-context identities differ from preview candidates" % name)
+            continue
+        for pair in sorted(expected_pairs):
+            if mapping[pair] != preview_context[pair]:
+                add(errors, "%s gloss_context differs from preview candidates for %s/%s" % (name, pair[0], pair[1]))
+
+    for row in rows["certified"]:
+        pair = first_identity_pair(row)
+        if not pair or pair not in preview_context:
+            continue
+        context = preview_context[pair]
+        public_hover = row.get("public_hover") or {}
+        if compact(public_hover.get("gloss")) != context["contextual_phrase_gloss"]:
+            add(errors, "certified public_hover.gloss must equal contextual_phrase_gloss for %s/%s" % (pair[0], pair[1]))
+        if context["token_contribution_gloss"] != context["contextual_phrase_gloss"]:
+            if context["adjacent_context_required"] is not True or not context["adjacent_context_locs"]:
+                add(errors, "contextual gloss split lacks adjacent-context proof for %s/%s" % (pair[0], pair[1]))
+            if not (
+                context["context_subject_source"]
+                or context["context_object_source"]
+                or context["context_governor_source"]
+                or context["context_attachment_source"]
+            ):
+                add(errors, "contextual gloss split lacks context source for %s/%s" % (pair[0], pair[1]))
+
+
 def validate_reports(manifest, errors):
     artifacts = manifest.get("artifacts") or {}
     needles = {
@@ -340,6 +452,7 @@ def validate_manifest(path):
     validate_route(manifest, errors)
     rows = validate_artifact_files(manifest, errors)
     validate_cross_artifact_identity(rows, errors)
+    validate_cross_artifact_gloss_context(rows, errors)
     validate_reports(manifest, errors)
     return errors
 
@@ -357,6 +470,29 @@ def self_test():
         bad_errors = validate_manifest(bad_path)
         if not any("policy.live_mutation_allowed must be false" in error for error in bad_errors):
             raise SystemExit("self-test failed: live mutation policy regression was not caught")
+    manifest = load_json(SAMPLE)
+    bad = json.loads(json.dumps(manifest))
+    certified_artifact = bad["artifacts"]["certified_not_applied"]
+    out_dir = os.path.join(ROOT, "out")
+    os.makedirs(out_dir, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="rh-live-admin-preview-manifest-", dir=out_dir) as tmp:
+        copied = os.path.join(tmp, "certified.jsonl")
+        rows = read_rows(certified_artifact["path"])
+        for row in rows:
+            if first_identity_pair(row) == ("quran:33:63:1", "wbw:33:63:1"):
+                row["gloss_context"]["contextual_phrase_gloss"] = "ask you"
+                row["public_hover"]["gloss"] = "ask you"
+                break
+        with io.open(copied, "w", encoding="utf-8", newline="\n") as handle:
+            for row in rows:
+                handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+        certified_artifact["path"] = os.path.relpath(copied, ROOT).replace("\\", "/")
+        certified_artifact.pop("sha256", None)
+        bad_path = os.path.join(tmp, "bad.json")
+        write_json(bad_path, bad)
+        bad_errors = validate_manifest(bad_path)
+        if not any("certified-not-applied gloss_context differs" in error for error in bad_errors):
+            raise SystemExit("self-test failed: gloss context drift regression was not caught")
     print("RH-LIVE admin-preview bundle manifest self-test OK")
 
 

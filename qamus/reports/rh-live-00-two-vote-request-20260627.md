@@ -25,7 +25,7 @@ apply, or preview them publicly.
 
 | loc | surface | requested review |
 |---|---|---|
-| `33:63:1` | `يَسْأَلُكَ` | finite verb plus attached object pronoun; reject dictionary-infinitive reasoning |
+| `33:63:1` | `يَسْأَلُكَ` | finite verb plus attached object pronoun; distinguish token contribution `ask you` from contextual phrase gloss `the people ask you` supplied by following `النَّاسُ` |
 | `26:139:2` | `فَأَهْلَكْنَاهُمْ` | fā' relation plus finite verb, subject pronoun, and object pronoun |
 | `22:18:13` | `وَٱلشَّمْسُ` | conjunction plus article plus conjoined host noun |
 | `22:18:14` | `وَٱلْقَمَرُ` | conjunction plus article plus conjoined host noun |
@@ -49,6 +49,17 @@ Each request row keeps:
 
 The rows are exact-address review requests only. Review success may create certified-not-applied artifacts, but cannot
 mutate live Qamus or public hover behavior by itself.
+
+## Contextual Gloss Split
+
+The `33:63:1` request carries `gloss_context` so reviewers must certify two separate statements:
+
+- token contribution: `ask you`;
+- contextual phrase gloss: `the people ask you`;
+- adjacent subject source: `النَّاسُ` at `quran:33:63:2` / `wbw:33:63:2`.
+
+This prevents a reviewer from approving a readable phrase gloss while silently implying that `they/people` is contained
+inside `يَسْأَلُكَ`.
 
 ## Validation
 

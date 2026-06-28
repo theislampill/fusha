@@ -36,7 +36,7 @@ It is not live authorization.
 
 | loc | surface | agreed public preview | reason key |
 |---|---|---|---|
-| `33:63:1` | `يَسْأَلُكَ` | `ask you` | `finite-verb-object-pronoun-token` |
+| `33:63:1` | `يَسْأَلُكَ` | `the people ask you` | `finite-verb-object-pronoun-token` |
 | `26:139:2` | `فَأَهْلَكْنَاهُمْ` | `so We destroyed them` | `fa-finite-verb-subject-object-pronouns` |
 | `22:18:13` | `وَٱلشَّمْسُ` | `and + the sun` | `conj-definite-noun-coordinated-subject` |
 | `22:18:14` | `وَٱلْقَمَرُ` | `and + the moon` | `conj-definite-noun-coordinated-subject` |
@@ -54,6 +54,17 @@ It is not live authorization.
 - The identity is the exact `quran:S:A:W` plus `wbw:S:A:W`; `parse_key` is not primary identity.
 - Public preview fields remain `src=qamus`, `kind=authored`, `lang=en`.
 - No raw external text, source labels, or internal adapter names are present in public preview fields.
+
+## Contextual Gloss Split
+
+The reconciled `33:63:1` row preserves `gloss_context` from the request:
+
+- `token_contribution_gloss`: `ask you`;
+- `contextual_phrase_gloss`: `the people ask you`;
+- `context_subject_source`: `النَّاسُ` at `quran:33:63:2` / `wbw:33:63:2`.
+
+Both votes agree that the token contains the finite verb plus attached object pronoun, while the contextual subject comes
+from the following word. This certification remains `certified_not_applied` and does not authorize a live hover apply.
 
 ## Validation
 

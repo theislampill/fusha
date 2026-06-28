@@ -797,6 +797,23 @@ try:
             if _line.strip()
         ]
         check("RH-LIVE-00 source-derived two-vote request sample has nine rows", len(_request_rows) == 9)
+        _yasaluka_request = next(
+            (
+                _row for _row in _request_rows
+                if "quran:33:63:1" in ((_row.get("identity") or {}).get("quran_locs") or [])
+            ),
+            {},
+        )
+        _ctx = _yasaluka_request.get("gloss_context") or {}
+        check(
+            "RH-LIVE-00 two-vote request preserves يَسْأَلُكَ context gloss split",
+            _ctx.get("token_contribution_gloss") == "ask you"
+            and _ctx.get("contextual_phrase_gloss") == "the people ask you"
+            and _ctx.get("adjacent_context_required") is True
+            and "quran:33:63:2" in (_ctx.get("adjacent_context_locs") or [])
+            and "النَّاسُ" in str(_ctx.get("context_subject_source") or "")
+            and (_yasaluka_request.get("gloss_style_hint") or {}).get("preferred_concise_authored_gloss") == "the people ask you",
+        )
     if _v.returncode != 0:
         _out = (_v.stdout or _v.stderr).strip().splitlines()
         if _out:
@@ -817,6 +834,18 @@ try:
             if _line.strip()
         ]
         check("RH-LIVE-00 source-derived two-vote response sample has eighteen rows", len(_response_rows) == 18)
+        _yasaluka_responses = [
+            _row for _row in _response_rows
+            if "quran:33:63:1" in ((_row.get("identity") or {}).get("quran_locs") or [])
+        ]
+        check(
+            "RH-LIVE-00 two-vote responses agree on contextual يَسْأَلُكَ gloss",
+            len(_yasaluka_responses) == 2
+            and {(_row.get("lens")) for _row in _yasaluka_responses} == {"sarf-primary", "nahw-primary"}
+            and all(_row.get("concise_authored_gloss") == "the people ask you" for _row in _yasaluka_responses)
+            and all((_row.get("gloss_context") or {}).get("token_contribution_gloss") == "ask you" for _row in _yasaluka_responses)
+            and all("النَّاسُ" in str((_row.get("gloss_context") or {}).get("context_subject_source") or "") for _row in _yasaluka_responses),
+        )
     if _v.returncode != 0:
         _out = (_v.stdout or _v.stderr).strip().splitlines()
         if _out:
@@ -855,6 +884,10 @@ try:
     _report_dir = os.path.join(_R, "qamus", "reports")
     for _name, _needle in (
         ("rh-live-00-two-vote-response-reconciliation-20260627.md", "certified-not-applied rows | 9"),
+        ("rh-live-00-two-vote-response-reconciliation-20260627.md", "`the people ask you`"),
+        ("rh-live-00-two-vote-response-reconciliation-20260627.md", "`token_contribution_gloss`: `ask you`"),
+        ("rh-live-00-two-vote-request-20260627.md", "Contextual Gloss Split"),
+        ("rh-live-00-two-vote-request-20260627.md", "`النَّاسُ` at `quran:33:63:2`"),
         ("rh-live-00-renderer-admin-preview-plan-20260627.md", "ordinary public hover behavior"),
         ("rh-live-00-renderer-admin-preview-plan-20260627.md", "RH-LIVE-00.5 Role-Aware Palette"),
         ("rh-live-00-renderer-admin-preview-plan-20260627.md", "RH-LIVE-00.6 Admin Preview IA"),

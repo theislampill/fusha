@@ -89,7 +89,7 @@ def certified_row(request, responses):
     sarf = responses["sarf-primary"]
     nahw = responses["nahw-primary"]
     gloss = compact(sarf.get("concise_authored_gloss"))
-    return {
+    row = {
         "phase": "phase4_two_vote_reconciled",
         "source_request_id": request["id"],
         "parse_id": request["parse_id"],
@@ -108,6 +108,9 @@ def certified_row(request, responses):
         "component_candidates_used_as_certification": False,
         "status": "certified_not_applied",
     }
+    if request.get("gloss_context") is not None:
+        row["gloss_context"] = request["gloss_context"]
+    return row
 
 
 def disagreement_reason(sarf, nahw):

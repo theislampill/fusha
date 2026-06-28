@@ -49,6 +49,54 @@
     "concise_authored_gloss": {
       "type": "string"
     },
+    "gloss_context": {
+      "type": "object",
+      "required": [
+        "token_contribution_gloss",
+        "contextual_phrase_gloss",
+        "context_subject_source",
+        "context_object_source",
+        "context_governor_source",
+        "context_attachment_source",
+        "adjacent_context_required",
+        "adjacent_context_locs",
+        "contextual_gloss_certification_state"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "token_contribution_gloss": {
+          "type": "string"
+        },
+        "contextual_phrase_gloss": {
+          "type": "string"
+        },
+        "context_subject_source": {
+          "type": ["string", "null"]
+        },
+        "context_object_source": {
+          "type": ["string", "null"]
+        },
+        "context_governor_source": {
+          "type": ["string", "null"]
+        },
+        "context_attachment_source": {
+          "type": ["string", "null"]
+        },
+        "adjacent_context_required": {
+          "type": "boolean"
+        },
+        "adjacent_context_locs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(quran|wbw):\\d{1,3}:\\d{1,3}:\\d{1,3}$"
+          }
+        },
+        "contextual_gloss_certification_state": {
+          "type": "string"
+        }
+      }
+    },
     "sarf_reasoning": {
       "type": "string"
     },

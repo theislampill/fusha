@@ -32,6 +32,23 @@ FORBIDDEN_PUBLIC_LABELS = (
     "source_photo",
     "/srv/",
 )
+CONTEXT_SOURCE_FIELDS = (
+    "context_subject_source",
+    "context_object_source",
+    "context_governor_source",
+    "context_attachment_source",
+)
+GLOSS_CONTEXT_FIELDS = (
+    "token_contribution_gloss",
+    "contextual_phrase_gloss",
+    "context_subject_source",
+    "context_object_source",
+    "context_governor_source",
+    "context_attachment_source",
+    "adjacent_context_required",
+    "adjacent_context_locs",
+    "contextual_gloss_certification_state",
+)
 REQUIRED = [
     "id",
     "phase",
@@ -107,6 +124,48 @@ def public_text_leaks(value):
     return [label for label in FORBIDDEN_PUBLIC_LABELS if label in text]
 
 
+def validate_gloss_context(row, line_no, errors):
+    context = row.get("gloss_context")
+    if context is None:
+        return
+    if not isinstance(context, dict):
+        _err(errors, line_no, "gloss_context must be an object")
+        return
+    for field in GLOSS_CONTEXT_FIELDS:
+        if field not in context:
+            _err(errors, line_no, "gloss_context missing %s" % field)
+    token_gloss = compact(context.get("token_contribution_gloss"))
+    phrase_gloss = compact(context.get("contextual_phrase_gloss"))
+    if not token_gloss:
+        _err(errors, line_no, "gloss_context.token_contribution_gloss is required")
+    if not phrase_gloss:
+        _err(errors, line_no, "gloss_context.contextual_phrase_gloss is required")
+    for label in FORBIDDEN_PUBLIC_LABELS:
+        if label in token_gloss.lower() or label in phrase_gloss.lower():
+            _err(errors, line_no, "gloss_context gloss leaks forbidden label %r" % label)
+    differs = bool(token_gloss and phrase_gloss and token_gloss != phrase_gloss)
+    locs = context.get("adjacent_context_locs")
+    if locs is None:
+        locs = []
+    if not isinstance(locs, list):
+        _err(errors, line_no, "gloss_context.adjacent_context_locs must be a list")
+        locs = []
+    for loc in locs:
+        if not (QURAN.match(str(loc)) or WBW.match(str(loc))):
+            _err(errors, line_no, "bad gloss_context adjacent loc %r" % loc)
+    if differs:
+        if context.get("adjacent_context_required") is not True:
+            _err(errors, line_no, "contextual gloss that differs from token contribution requires adjacent_context_required=true")
+        if not locs:
+            _err(errors, line_no, "contextual gloss that differs from token contribution requires adjacent_context_locs")
+        if not compact(context.get("contextual_gloss_certification_state")):
+            _err(errors, line_no, "contextual gloss that differs from token contribution requires contextual_gloss_certification_state")
+        if not any(compact(context.get(field)) for field in CONTEXT_SOURCE_FIELDS):
+            _err(errors, line_no, "contextual gloss that differs from token contribution requires a context source field")
+    elif context.get("adjacent_context_required") is not False:
+        _err(errors, line_no, "matching token/context gloss must set adjacent_context_required=false")
+
+
 def validate_row(row, line_no, errors, requests=None):
     if "__json_error__" in row:
         _err(errors, line_no, "bad JSON (%s)" % row["__json_error__"])
@@ -176,6 +235,8 @@ def validate_row(row, line_no, errors, requests=None):
                 _err(errors, line_no, "identity does not match request")
             if row.get("public_boundary") != request.get("public_boundary"):
                 _err(errors, line_no, "public_boundary does not match request")
+            if request.get("gloss_context") is not None and row.get("gloss_context") != request.get("gloss_context"):
+                _err(errors, line_no, "gloss_context does not match request")
             hint = compact(request.get("agreement_key_hint"))
             if row.get("decision") == "approve" and hint and compact(row.get("reason_agreement_key")) != hint:
                 _err(errors, line_no, "reason_agreement_key must match request agreement_key_hint")
@@ -188,6 +249,12 @@ def validate_row(row, line_no, errors, requests=None):
                 and compact(row.get("concise_authored_gloss")) != preferred_gloss
             ):
                 _err(errors, line_no, "approved concise_authored_gloss must match request gloss_style_hint")
+            request_context = request.get("gloss_context") or {}
+            request_contextual = compact(request_context.get("contextual_phrase_gloss"))
+            if row.get("decision") == "approve" and request_contextual and compact(row.get("concise_authored_gloss")) != request_contextual:
+                _err(errors, line_no, "approved concise_authored_gloss must match request contextual_phrase_gloss")
+
+    validate_gloss_context(row, line_no, errors)
 
     gloss = compact(row.get("concise_authored_gloss"))
     sarf_reasoning = compact(row.get("sarf_reasoning"))
@@ -254,6 +321,17 @@ def sample_row():
             "surface_sample": "وَٱلشَّجَرُ",
         },
         "concise_authored_gloss": "and + the trees",
+        "gloss_context": {
+            "token_contribution_gloss": "and + the trees",
+            "contextual_phrase_gloss": "and + the trees",
+            "context_subject_source": None,
+            "context_object_source": None,
+            "context_governor_source": None,
+            "context_attachment_source": None,
+            "adjacent_context_required": False,
+            "adjacent_context_locs": [],
+            "contextual_gloss_certification_state": "word_level_or_token_internal",
+        },
         "sarf_reasoning": "Visible conjunction/article/host composition is preserved.",
         "nahw_reasoning": "The prefixed waw is a grammar-bearing function piece in context.",
         "reason_agreement_key": "conj-definite-noun-coordinated-list",
@@ -296,6 +374,7 @@ def self_test():
         request_path = os.path.join(td, "request.jsonl")
         req = request_validator.sample_row()
         req["public_boundary"] = row["public_boundary"]
+        req["gloss_context"] = row["gloss_context"]
         write_jsonl(request_path, [req])
         mismatch = dict(row)
         mismatch["reason_agreement_key"] = "wrong-key"
@@ -316,6 +395,17 @@ def self_test():
             return 1
         if not any("approved concise_authored_gloss must match request gloss_style_hint" in err for err in errors):
             print("SELF-TEST FAIL gloss hint mismatch:", errors)
+            return 1
+        context_mismatch = dict(row)
+        context_mismatch["gloss_context"] = dict(row["gloss_context"])
+        context_mismatch["gloss_context"]["token_contribution_gloss"] = "trees"
+        write_jsonl(bad, [context_mismatch])
+        count, errors = validate(bad, request_path=request_path)
+        if count != 1:
+            print("SELF-TEST FAIL context mismatch count:", count)
+            return 1
+        if not any("gloss_context does not match request" in err for err in errors):
+            print("SELF-TEST FAIL context mismatch:", errors)
             return 1
     print("PASS — Phase 4 two-vote response validator self-test")
     return 0
