@@ -44,16 +44,16 @@ broad family through the label, but the color class should identify the known ro
 
 | Role | Class | Visual treatment | Explanation | Example |
 |---|---|---|---|---|
-| `verb_prefix` | `qg-verb-prefix` | cyan with underline | inflectional or imperfect marker | `يَ` in `يَسْأَلُكَ` |
+| `verb_prefix` | `qg-verb-prefix` | cyan role color | inflectional or imperfect marker | `يَ` in `يَسْأَلُكَ` |
 | `verb_stem` | `qg-verb-stem` | bright cyan | lexical verb host | `سْأَلُ`, `أَهْلَكْ` |
-| `subject_pronoun` | `qg-subject-pronoun` | violet dotted underline | attached subject marker | `نَا` in `فَأَهْلَكْنَاهُمْ` |
-| `object_pronoun` | `qg-object-pronoun` | magenta underline | attached object/addressee | `كَ`, `هُمْ` |
+| `subject_pronoun` | `qg-subject-pronoun` | violet role color | attached subject marker | `نَا` in `فَأَهْلَكْنَاهُمْ` |
+| `object_pronoun` | `qg-object-pronoun` | magenta role color | attached object/addressee | `كَ`, `هُمْ` |
 | `prefix_conjunction` | `qg-conjunction` | blue | coordination/list relation | `وَ` |
-| `prefix_result_fa` | `qg-result-fa` | rose underline | result/resumption relation | `فَ` |
-| `prefix_preposition` | `qg-preposition` | teal underline | jarr / PP relation | `بِ` |
-| `prefix_lam` | `qg-lam` | amber underline | lām relation or governor under review | `لِ` in `لِمَا` |
+| `prefix_result_fa` | `qg-result-fa` | rose role color | result/resumption relation | `فَ` |
+| `prefix_preposition` | `qg-preposition` | teal role color | jarr / PP relation | `بِ` |
+| `prefix_lam` | `qg-lam` | amber role color | lām relation or governor under review | `لِ` in `لِمَا` |
 | `particle_ma` | `qg-ma-particle` | orange | context-sensitive mā function | `مَا` |
-| `definite_article` | `qg-article` | gold underline | definiteness | `ال`, `ٱل` |
+| `definite_article` | `qg-article` | gold role color | definiteness | `ال`, `ٱل` |
 | `noun_stem` | `qg-noun-stem` | light neutral | nominal host | `شَّمْسُ` |
 | `proper_noun_stem` | `qg-proper-noun` | warm gold | proper-name host | `بَدْرٍ` |
 
@@ -61,6 +61,11 @@ Color is never the only cue. Tooltip rows and segment tables must also show role
 contribution, sarf contribution, nahw contribution, segment kind, and what the segment affects. If the exact grammar
 field is absent from the current review artifact, the admin preview must show a pending/null value rather than inventing
 a fact.
+
+Underlines are not part of the default role-color treatment. They are reserved for explicit interaction or uncertainty:
+solid underline means a selected/current segment, and dotted underline means a pending or uncertain relation. Role
+classes themselves must not add default underline decoration because that makes the Arabic look like links and competes
+with diacritics.
 
 ## RH-LIVE-00.6 Admin Preview IA
 
@@ -81,6 +86,26 @@ The preview route should make the rich hover understandable before it exposes th
 The fixture validator guards this IA shape with required header/primary/secondary containers, collapsed secondary
 panels, state chips, gate chips, segment chips, and mobile table labels. These checks are renderer-planning guards only;
 they do not claim live support.
+
+## RH-LIVE-00.7 Split-Layer Route IA
+
+The admin route should clearly separate the compact hover from the inspector:
+
+1. Actual hover preview (`.qg-hover-preview`) appears first and contains only the atomic role-colored Arabic token,
+   authored gloss, compact parse key, learner-readable segment chips or short breakdown, one learner explanation
+   sentence, and tiny `admin preview` / `not live` markers.
+2. Admin inspector (`.qg-admin-inspector`) appears below and owns the debug surfaces: admin evidence, sarf details,
+   nahw details, segment contribution table, gate status, and readiness notes.
+3. Defaults: hover preview and learner explanation are open; identity/evidence, sarf, nahw, segment table, and gate
+   status are collapsed.
+4. Segment chips in the compact hover use learner labels such as `FA · result`, `STEM · lexical host`, `SUBJ · subject`,
+   and `OBJ · object`. Raw role names are reserved for the admin table.
+5. If chips are not wired to synchronized token/table highlighting, they should remain static and should not look like
+   buttons or links.
+
+The route `/admin/qamus/shadow/rich-hover-preview/:wbw_loc` remains admin-only/read-only. It is not a public hover
+rollout, does not mutate the hover ledger, and must keep normal public hover behavior unchanged when preview mode is
+disabled.
 
 ## Repo-Side Route Contract
 

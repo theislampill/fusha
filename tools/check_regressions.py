@@ -858,10 +858,14 @@ try:
         ("rh-live-00-renderer-admin-preview-plan-20260627.md", "ordinary public hover behavior"),
         ("rh-live-00-renderer-admin-preview-plan-20260627.md", "RH-LIVE-00.5 Role-Aware Palette"),
         ("rh-live-00-renderer-admin-preview-plan-20260627.md", "RH-LIVE-00.6 Admin Preview IA"),
+        ("rh-live-00-renderer-admin-preview-plan-20260627.md", "RH-LIVE-00.7 Split-Layer Route IA"),
+        ("rh-live-00-renderer-admin-preview-plan-20260627.md", "Underlines are not part of the default role-color treatment"),
         ("rh-live-00-admin-preview-bundle-manifest-20260628.md", "machine-checkable bundle gate"),
         ("rh-live-00-admin-preview-dom-fixture-20260628.md", "visible Arabic tokens remain atomic"),
         ("rh-live-00-admin-preview-dom-fixture-20260628.md", "Role-Aware Color Guard"),
         ("rh-live-00-admin-preview-dom-fixture-20260628.md", "RH-LIVE-00.6 IA/UX Hierarchy"),
+        ("rh-live-00-admin-preview-dom-fixture-20260628.md", "RH-LIVE-00.7 Split-Layer Hover/Inspector IA"),
+        ("rh-live-00-admin-preview-dom-fixture-20260628.md", "Underline policy is also explicit"),
     ):
         _text = io.open(os.path.join(_report_dir, _name), encoding="utf-8").read()
         check("RH-LIVE-00 report present: " + _name, _needle in _text)

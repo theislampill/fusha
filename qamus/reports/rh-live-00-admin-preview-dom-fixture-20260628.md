@@ -70,6 +70,35 @@ secondary panels, non-chip gate rows, missing segment chips, missing mobile tabl
 The Arabic integrity guard remains strict, but it is scoped to `.qg-word`/`.qg-seg` token internals so ordinary card
 layout can use flex/grid/gap without being confused for destructive Arabic segmentation.
 
+## RH-LIVE-00.7 Split-Layer Hover/Inspector IA
+
+The fixture now separates the eventual hover UI from the admin evidence surface:
+
+- actual hover preview: `.qg-hover-preview` contains only the atomic role-colored Arabic token, authored gloss, compact
+  parse key, learner-readable segment chips, short breakdown rows, one learner explanation sentence, and tiny
+  `admin preview` / `not live` status markers;
+- admin inspector: `.qg-admin-inspector` sits below the compact hover and contains the route/debug material, including
+  admin evidence, sarf details, nahw details, segment table, learner explanation, and gate status;
+- default disclosure: the admin hover preview and learner explanation are open, while admin evidence, sarf, nahw,
+  segment table, and gate status remain collapsed by default;
+- the compact hover preview is forbidden from containing the segment contribution table, gate list, sarf panel, nahw
+  panel, or full token identity/debug evidence.
+
+Segment chips are intentionally static learner labels such as `FA · result`, `STEM · lexical host`, `SUBJ · subject`,
+and `OBJ · object`. The raw role names remain available only in the admin segment table. Since the fixture has no
+scripted synchronized highlighting, the chips do not present themselves as clickable controls.
+
+Underline policy is also explicit:
+
+- default Arabic distinction is role color plus labels/chips, not underlines;
+- underline is reserved for an explicit selected/current segment state;
+- dotted underline is reserved for a pending or uncertain relation;
+- no role-aware class such as `qg-verb-prefix`, `qg-object-pronoun`, `qg-result-fa`, `qg-preposition`, `qg-lam`, or
+  `qg-article` may use default underline decoration.
+
+The DOM validator now checks the two-layer split, mini status markers, actual-hover parse key, learner-readable chip
+labels, absence of debug panels/tables inside `.qg-hover-preview`, and the no-default-underline role-color policy.
+
 ## Scope
 
 The fixture covers the nine RH-LIVE-00 rows:

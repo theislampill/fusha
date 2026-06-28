@@ -29,6 +29,7 @@ EXPECTED_ROWS = {
     "wbw:2:213:37": ("quran:2:213:37", "لِمَا", "parse:ae6f25c79ca4888cd052cc03"),
 }
 REQUIRED_PANELS = {
+    "hover",
     "identity",
     "sarf",
     "nahw",
@@ -36,6 +37,8 @@ REQUIRED_PANELS = {
     "learner",
     "gates",
 }
+REQUIRED_OPEN_PANELS = {"hover", "learner"}
+REQUIRED_COLLAPSED_PANELS = REQUIRED_PANELS - REQUIRED_OPEN_PANELS
 REQUIRED_GATES = {
     "address",
     "public_boundary",
@@ -107,10 +110,24 @@ REQUIRED_TABLE_LABELS = {
     "kind",
     "affects",
 }
+FORBIDDEN_LEARNER_CHIP_LABELS = {
+    "verb prefix",
+    "verb stem",
+    "subject pronoun",
+    "object pronoun",
+    "prefix result fa",
+    "prefix conjunction",
+    "prefix preposition",
+    "prefix lam",
+    "definite article",
+    "noun stem",
+    "proper noun stem",
+    "particle ma",
+}
 
 
 def css_block(text, selector):
-    match = re.search(re.escape(selector) + r"\s*\{([^}]*)\}", text, flags=re.IGNORECASE)
+    match = re.search(r"(?:^|[}\n])\s*" + re.escape(selector) + r"\s*\{([^}]*)\}", text, flags=re.IGNORECASE)
     return match.group(1) if match else ""
 
 
@@ -138,7 +155,13 @@ class FixtureParser(html.parser.HTMLParser):
         self.current_segment_row = None
         self.current_learner = None
         self.capture_parse_key = None
+        self.capture_parse_key_in_hover = False
+        self.current_hover_chip = None
+        self.current_mini_status = None
         self.body_attrs = {}
+
+    def in_class(self, name):
+        return any(has_class(attrs, name) for _, attrs in self.stack)
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
@@ -158,17 +181,35 @@ class FixtureParser(html.parser.HTMLParser):
                 "segment_rows": [],
                 "segment_chips": set(),
                 "state_chips": set(),
-                "header_count": 0,
+                "admin_header_count": 0,
                 "header_surface": "",
+                "hover_preview_count": 0,
+                "admin_inspector_count": 0,
                 "primary_preview_count": 0,
                 "secondary_panels_count": 0,
                 "table_wraps": 0,
+                "hover_preview_panel_leaks": 0,
+                "hover_preview_table_leaks": 0,
+                "hover_status_labels": set(),
+                "hover_gloss_count": 0,
+                "hover_parse_keys": [],
+                "hover_segment_chip_texts": [],
                 "learner_text": "",
                 "grammar_tags": set(),
             }
             self.cards.append(self.current_card)
-        if self.current_card and tag == "header" and has_class(attrs, "qg-card-header"):
-            self.current_card["header_count"] += 1
+        if self.current_card and tag == "article" and has_class(attrs, "qg-hover-preview"):
+            self.current_card["hover_preview_count"] += 1
+        if self.current_card and tag == "section" and has_class(attrs, "qg-admin-inspector"):
+            self.current_card["admin_inspector_count"] += 1
+        if self.current_card and tag == "header" and has_class(attrs, "qg-admin-header"):
+            self.current_card["admin_header_count"] += 1
+        if self.current_card and self.in_class("qg-hover-preview") and tag == "details" and has_class(attrs, "qg-panel"):
+            self.current_card["hover_preview_panel_leaks"] += 1
+        if self.current_card and self.in_class("qg-hover-preview") and tag == "table" and has_class(attrs, "qg-segment-table"):
+            self.current_card["hover_preview_table_leaks"] += 1
+        if self.current_card and self.in_class("qg-hover-preview") and tag == "div" and has_class(attrs, "qg-hover-gloss"):
+            self.current_card["hover_gloss_count"] += 1
         if self.current_card and tag == "div" and has_class(attrs, "qg-primary-preview"):
             self.current_card["primary_preview_count"] += 1
         if self.current_card and tag == "div" and has_class(attrs, "qg-secondary-panels"):
@@ -202,10 +243,14 @@ class FixtureParser(html.parser.HTMLParser):
             state_key = attrs.get("data-state-key")
             if state_key:
                 self.current_card["state_chips"].add(state_key)
+        if self.current_card and self.in_class("qg-hover-preview") and tag == "span" and has_class(attrs, "qg-mini-status"):
+            self.current_mini_status = ""
         if self.current_card and tag == "span" and has_class(attrs, "qg-segment-chip"):
             role = attrs.get("data-role")
             if role:
                 self.current_card["segment_chips"].add(role)
+            if self.in_class("qg-hover-preview"):
+                self.current_hover_chip = {"role": role, "text": ""}
         if self.current_card and tag == "p" and has_class(attrs, "qg-learner-explanation"):
             self.current_learner = ""
         if self.current_card and tag == "span" and has_class(attrs, "qg-preview-tag"):
@@ -223,10 +268,11 @@ class FixtureParser(html.parser.HTMLParser):
             self.current_card["words"].append(self.current_word)
         if self.current_card and tag == "div" and has_class(attrs, "qg-tooltip"):
             self.current_tooltip = {"rows": []}
-        if self.current_card and tag == "li" and has_class(attrs, "qg-breakdown-row"):
+        if self.current_card and tag == "li" and (has_class(attrs, "qg-breakdown-row") or has_class(attrs, "qg-hover-breakdown-row")):
             self.current_card["tooltip_rows"].append({"role": attrs.get("data-role"), "text": ""})
         if self.current_card and tag == "code" and has_class(attrs, "qg-parse-key"):
             self.capture_parse_key = ""
+            self.capture_parse_key_in_hover = self.in_class("qg-hover-preview")
         if self.current_word and tag == "span" and has_class(attrs, "qg-seg"):
             self.current_word["segments"].append({
                 "attrs": attrs,
@@ -237,7 +283,22 @@ class FixtureParser(html.parser.HTMLParser):
         if self.capture_parse_key is not None and tag == "code":
             if self.current_card is not None:
                 self.current_card["parse_keys"].append(self.capture_parse_key.strip())
+                if self.capture_parse_key_in_hover:
+                    self.current_card["hover_parse_keys"].append(self.capture_parse_key.strip())
             self.capture_parse_key = None
+            self.capture_parse_key_in_hover = False
+        if self.current_hover_chip is not None and tag == "span":
+            open_tag, open_attrs = self.stack[-1] if self.stack else (None, {})
+            if open_tag == "span" and has_class(open_attrs, "qg-segment-chip"):
+                if self.current_card is not None:
+                    self.current_card["hover_segment_chip_texts"].append(self.current_hover_chip)
+                self.current_hover_chip = None
+        if self.current_mini_status is not None and tag == "span":
+            open_tag, open_attrs = self.stack[-1] if self.stack else (None, {})
+            if open_tag == "span" and has_class(open_attrs, "qg-mini-status"):
+                if self.current_card is not None:
+                    self.current_card["hover_status_labels"].add(self.current_mini_status.strip().lower())
+                self.current_mini_status = None
         if self.current_word and tag == "span":
             open_tag, open_attrs = self.stack[-1] if self.stack else (None, {})
             if open_tag == "span" and has_class(open_attrs, "qg-word"):
@@ -278,6 +339,10 @@ class FixtureParser(html.parser.HTMLParser):
             self.current_segment_row["text"] += data
         if self.current_learner is not None:
             self.current_learner += data
+        if self.current_hover_chip is not None:
+            self.current_hover_chip["text"] += data
+        if self.current_mini_status is not None:
+            self.current_mini_status += data
 
 
 def add(errors, message):
@@ -306,7 +371,7 @@ def validate_css(text, errors):
         add(errors, "fixture must require non-breaking Arabic token wrappers")
     if "line-height: 1.9" not in text and "line-height:1.9" not in lower:
         add(errors, "fixture must reserve vertical room for Arabic diacritics")
-    if ".qg-card-header" not in text or ".qg-primary-preview" not in text or ".qg-secondary-panels" not in text:
+    if ".qg-hover-preview" not in text or ".qg-admin-inspector" not in text or ".qg-secondary-panels" not in text:
         add(errors, "fixture CSS must define the RH-LIVE IA hierarchy containers")
     if ".qg-gate-chip" not in text or ".qg-state-chip" not in text or ".qg-segment-chip" not in text:
         add(errors, "fixture CSS must define compact chip treatments")
@@ -315,6 +380,11 @@ def validate_css(text, errors):
     for css_class in sorted(set(ROLE_CLASS_REQUIREMENTS.values())):
         if "." + css_class not in text:
             add(errors, "fixture CSS must define role-aware class %s" % css_class)
+        block = css_block(text, "." + css_class)
+        if block and "text-decoration" in block.lower():
+            add(errors, "role-aware class %s must not use default underline decoration" % css_class)
+    if ".qg-seg.is-active" not in text or ".qg-seg[data-certainty=\"pending\"]" not in text:
+        add(errors, "fixture CSS must reserve underline only for active/selected or pending segment states")
 
 
 def validate_fixture(path):
@@ -329,8 +399,8 @@ def validate_fixture(path):
     parser = FixtureParser()
     parser.feed(text)
     body = parser.body_attrs
-    if body.get("data-rh-live-stage") != "RH-LIVE-00.5":
-        add(errors, "body must identify RH-LIVE-00.5 stage")
+    if body.get("data-rh-live-stage") != "RH-LIVE-00.7":
+        add(errors, "body must identify RH-LIVE-00.7 stage")
     if body.get("data-admin-only") != "true":
         add(errors, "body must be admin-only")
     if body.get("data-live-mutation-allowed") != "false":
@@ -359,19 +429,31 @@ def validate_fixture(path):
         missing_panels = REQUIRED_PANELS - card["panels"]
         if missing_panels:
             add(errors, "%s missing enriched preview panels: %s" % (wbw, sorted(missing_panels)))
-        if card["open_panels"]:
-            add(errors, "%s secondary panels must be collapsed by default: %s" % (wbw, sorted(card["open_panels"])))
-        if card["header_count"] != 1:
-            add(errors, "%s must have one header row" % wbw)
+        if card["open_panels"] != REQUIRED_OPEN_PANELS:
+            add(errors, "%s admin panels must open only hover+learner by default: %s" % (wbw, sorted(card["open_panels"])))
+        expanded_forbidden = card["open_panels"] & REQUIRED_COLLAPSED_PANELS
+        if expanded_forbidden:
+            add(errors, "%s debug panels must be collapsed by default: %s" % (wbw, sorted(expanded_forbidden)))
+        if card["hover_preview_count"] != 1:
+            add(errors, "%s must have one actual hover preview component" % wbw)
+        if card["admin_inspector_count"] != 1:
+            add(errors, "%s must have one secondary admin inspector" % wbw)
+        if card["hover_preview_panel_leaks"] or card["hover_preview_table_leaks"]:
+            add(errors, "%s actual hover preview must not contain debug panels or segment tables" % wbw)
+        if card["admin_header_count"] != 1:
+            add(errors, "%s must have one admin inspector header" % wbw)
         if card["primary_preview_count"] != 1:
-            add(errors, "%s must have one primary hover preview" % wbw)
+            add(errors, "%s must have one admin hover-preview panel" % wbw)
         if card["secondary_panels_count"] != 1:
             add(errors, "%s must have one secondary panel wrapper" % wbw)
+        if card["hover_gloss_count"] != 1:
+            add(errors, "%s actual hover preview must have one authored gloss" % wbw)
+        missing_mini_status = {"admin preview", "not live"} - card["hover_status_labels"]
+        if missing_mini_status:
+            add(errors, "%s actual hover preview missing mini status labels: %s" % (wbw, sorted(missing_mini_status)))
         missing_state_chips = REQUIRED_STATE_CHIPS - card["state_chips"]
         if missing_state_chips:
             add(errors, "%s missing preview state chips: %s" % (wbw, sorted(missing_state_chips)))
-        if card["header_surface"].strip() != expected_surface:
-            add(errors, "%s header Arabic token must equal exact surface" % wbw)
         missing_gates = REQUIRED_GATES - set(card["gates"])
         if missing_gates:
             add(errors, "%s missing gate rows: %s" % (wbw, sorted(missing_gates)))
@@ -426,9 +508,24 @@ def validate_fixture(path):
                 add(errors, "%s role %s has only broad POS classes" % (wbw, role))
         if expected_parse not in card["parse_keys"]:
             add(errors, "%s tooltip parse-key element missing expected key" % wbw)
+        if expected_parse not in card["hover_parse_keys"]:
+            add(errors, "%s actual hover preview parse-key element missing expected key" % wbw)
         tooltip_roles = {row["role"] for row in card["tooltip_rows"]}
         if visible_roles - tooltip_roles:
             add(errors, "%s tooltip breakdown missing roles: %s" % (wbw, sorted(visible_roles - tooltip_roles)))
+        hover_chip_roles = {chip["role"] for chip in card["hover_segment_chip_texts"]}
+        if visible_roles - hover_chip_roles:
+            add(errors, "%s actual hover segment chips missing roles: %s" % (wbw, sorted(visible_roles - hover_chip_roles)))
+        for chip in card["hover_segment_chip_texts"]:
+            label = " ".join(chip["text"].split())
+            label_lower = label.lower()
+            if "·" not in label:
+                add(errors, "%s actual hover segment chip must use learner-readable `LABEL · contribution`: %s" % (wbw, label))
+            if "_" in label:
+                add(errors, "%s actual hover segment chip must not expose raw role names: %s" % (wbw, label))
+            for forbidden in FORBIDDEN_LEARNER_CHIP_LABELS:
+                if forbidden in label_lower:
+                    add(errors, "%s actual hover segment chip uses raw/debug label `%s`: %s" % (wbw, forbidden, label))
         segment_table_roles = {row["attrs"].get("data-role") for row in card["segment_rows"]}
         if visible_roles - segment_table_roles:
             add(errors, "%s segment contribution table missing roles: %s" % (wbw, sorted(visible_roles - segment_table_roles)))
@@ -477,20 +574,34 @@ def self_test():
         bad_errors = validate_fixture(bad_path)
         if not any("role verb_prefix must use class qg-verb-prefix" in error for error in bad_errors):
             raise SystemExit("self-test failed: broad POS role-color regression was not caught")
-    bad = text.replace('class="qg-primary-preview"', 'class="qg-primary-preview-removed"', 1)
+    bad = text.replace('class="qg-hover-preview"', 'class="qg-hover-preview-removed"', 1)
     with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
         bad_path = os.path.join(tmp, "bad-ia.html")
         write_text(bad_path, bad)
         bad_errors = validate_fixture(bad_path)
-        if not any("must have one primary hover preview" in error for error in bad_errors):
-            raise SystemExit("self-test failed: missing primary preview hierarchy was not caught")
+        if not any("must have one actual hover preview component" in error for error in bad_errors):
+            raise SystemExit("self-test failed: missing actual hover preview hierarchy was not caught")
     bad = text.replace('<details class="qg-panel qg-sarf-panel" data-panel="sarf">', '<details class="qg-panel qg-sarf-panel" data-panel="sarf" open>', 1)
     with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
         bad_path = os.path.join(tmp, "bad-open-panel.html")
         write_text(bad_path, bad)
         bad_errors = validate_fixture(bad_path)
-        if not any("secondary panels must be collapsed by default" in error for error in bad_errors):
-            raise SystemExit("self-test failed: expanded secondary panel regression was not caught")
+        if not any("debug panels must be collapsed by default" in error for error in bad_errors):
+            raise SystemExit("self-test failed: expanded debug panel regression was not caught")
+    bad = text.replace("PFX · imperfect", "verb_prefix", 1)
+    with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
+        bad_path = os.path.join(tmp, "bad-chip-label.html")
+        write_text(bad_path, bad)
+        bad_errors = validate_fixture(bad_path)
+        if not any("segment chip must not expose raw role names" in error for error in bad_errors):
+            raise SystemExit("self-test failed: raw learner chip label regression was not caught")
+    bad = text.replace('<article aria-label="Actual hover preview" class="qg-hover-preview">', '<article aria-label="Actual hover preview" class="qg-hover-preview"><table class="qg-segment-table"></table>', 1)
+    with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
+        bad_path = os.path.join(tmp, "bad-hover-debug.html")
+        write_text(bad_path, bad)
+        bad_errors = validate_fixture(bad_path)
+        if not any("actual hover preview must not contain debug panels or segment tables" in error for error in bad_errors):
+            raise SystemExit("self-test failed: hover/debug layer separation regression was not caught")
     print("RH-LIVE admin-preview DOM fixture self-test OK")
 
 
