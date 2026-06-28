@@ -600,13 +600,21 @@ for _args, _label in (
          ],
          "VN-RICH-CERT-11 standard certification sample validates"),
         ([
-             os.path.join(_R, "qamus", "examples", "rich_cert_vn_rich_cert_12_standard.sample.jsonl"),
-             "--evidence-jsonl",
-             os.path.join(_R, "qamus", "examples", "rich_cert_vn_rich_cert_12_standard_evidence.sample.jsonl"),
-             "--renderer-jsonl",
-             os.path.join(_R, "qamus", "examples", "rich_cert_vn_rich_cert_12_renderer_fixture.sample.jsonl"),
-         ],
-         "VN-RICH-CERT-12 standard certification sample validates"),
+            os.path.join(_R, "qamus", "examples", "rich_cert_vn_rich_cert_12_standard.sample.jsonl"),
+            "--evidence-jsonl",
+            os.path.join(_R, "qamus", "examples", "rich_cert_vn_rich_cert_12_standard_evidence.sample.jsonl"),
+            "--renderer-jsonl",
+            os.path.join(_R, "qamus", "examples", "rich_cert_vn_rich_cert_12_renderer_fixture.sample.jsonl"),
+        ],
+        "VN-RICH-CERT-12 standard certification sample validates"),
+        ([
+            os.path.join(_R, "qamus", "examples", "rich_cert_vn_rich_cert_13_standard.sample.jsonl"),
+            "--evidence-jsonl",
+            os.path.join(_R, "qamus", "examples", "rich_cert_vn_rich_cert_13_standard_evidence.sample.jsonl"),
+            "--renderer-jsonl",
+            os.path.join(_R, "qamus", "examples", "rich_cert_vn_rich_cert_13_renderer_fixture.sample.jsonl"),
+        ],
+        "VN-RICH-CERT-13 standard certification sample validates"),
 ):
     try:
         _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_rich_hover_certification.py")] + _args)
