@@ -166,6 +166,28 @@
       "read_only": true,
       "route_id": "route:edit-intent-preview",
       "view": "edit_intent_preview"
+    },
+    {
+      "admin_only": true,
+      "auth_required": true,
+      "input_address_types": [
+        "wbw_loc",
+        "quran_loc",
+        "parse_id"
+      ],
+      "live_mutation_allowed": false,
+      "method": "GET",
+      "output_pack_fields": [
+        "hover_inspectors",
+        "parse_family_views"
+      ],
+      "path_template": "/admin/qamus/shadow/rich-hover-preview/:wbw_loc",
+      "private_debug_allowed": true,
+      "public_exposable": false,
+      "public_payload_allowed": false,
+      "read_only": true,
+      "route_id": "route:rich-hover-preview",
+      "view": "rich_hover_preview"
     }
   ],
   "source_pack_contract": {

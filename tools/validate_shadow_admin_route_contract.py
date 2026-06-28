@@ -25,6 +25,7 @@ REQUIRED_VIEWS = {
     "parse_family_view",
     "blocker_queue",
     "repair_preview",
+    "rich_hover_preview",
 }
 FORBIDDEN_ROUTE_WORDS = (
     "/apply",
@@ -201,6 +202,17 @@ def validate_route(route, index, errors):
     fields = route.get("output_pack_fields") or []
     if not isinstance(fields, list) or not fields:
         _err(errors, "%s.output_pack_fields must be a non-empty array" % prefix)
+    if route.get("view") == "rich_hover_preview":
+        if "wbw_loc" not in address_types:
+            _err(errors, "%s rich_hover_preview route must accept wbw_loc" % prefix)
+        if "quran_loc" not in address_types:
+            _err(errors, "%s rich_hover_preview route must accept quran_loc" % prefix)
+        required_fields = {"hover_inspectors", "parse_family_views"}
+        missing_fields = sorted(required_fields - set(fields))
+        if missing_fields:
+            _err(errors, "%s rich_hover_preview route missing output fields %s" % (prefix, missing_fields))
+        if "rich-hover-preview" not in path:
+            _err(errors, "%s rich_hover_preview path must contain rich-hover-preview" % prefix)
 
 
 def validate_contract(contract):

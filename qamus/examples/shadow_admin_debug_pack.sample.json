@@ -271,6 +271,7 @@
     "entry_backlinks",
     "hover_inspector",
     "parse_family_view",
-    "repair_preview"
+    "repair_preview",
+    "rich_hover_preview"
   ]
 }

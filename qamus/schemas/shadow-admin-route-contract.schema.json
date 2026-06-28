@@ -94,7 +94,8 @@
         "parse_family_view",
         "blocker_queue",
         "repair_preview",
-        "edit_intent_preview"
+        "edit_intent_preview",
+        "rich_hover_preview"
       ],
       "type": "string"
     }

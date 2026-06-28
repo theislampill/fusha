@@ -37,6 +37,14 @@ Initial preview rows:
 5. Use the `qamus-grammar-v1` palette and stable classes such as `qg-verb`, `qg-verb-prefix`, `qg-verb-stem`,
    `qg-pronoun`, `qg-particle`, `qg-conjunction`, `qg-preposition`, `qg-article`, and `qg-noun`.
 
+## Repo-Side Route Contract
+
+The static shadow-admin contract now reserves an admin-only/read-only `rich_hover_preview` view at
+`/admin/qamus/shadow/rich-hover-preview/:wbw_loc`. The route may read exact-addressed `hover_inspectors` and
+`parse_family_views` from a validated shadow admin pack, then join separately reviewed RH-LIVE preview rows by exact
+`wbw:S:A:W`/`quran:S:A:W` identity. It is not an apply route, does not permit public payloads, and must not infer a
+preview from raw Arabic surface text or from parse key alone.
+
 ## Arabic Rendering Rules
 
 - The Qur'anic written token remains an atomic visual word.

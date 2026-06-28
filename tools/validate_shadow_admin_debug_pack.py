@@ -25,6 +25,7 @@ REQUIRED_VIEWS = {
     "parse_family_view",
     "blocker_queue",
     "repair_preview",
+    "rich_hover_preview",
 }
 FORBIDDEN_PUBLIC_LABELS = (
     "informed_by",
