@@ -2768,6 +2768,66 @@ for _script, _args, _label in (
     except Exception:
         check(_label + " runnable", False)
 
+try:
+    _assessment_rows = [
+        json.loads(_line)
+        for _line in io.open(
+            os.path.join(_R, "curriculum", "assessment", "level-checkpoints.sample.jsonl"),
+            encoding="utf-8",
+        )
+        if _line.strip()
+    ]
+    _yasaluka_checkpoint = next(
+        (_row for _row in _assessment_rows if _row.get("id") == "L8-verb-suffix-yasaluka"),
+        {},
+    )
+    _checkpoint_blob = json.dumps(_yasaluka_checkpoint, ensure_ascii=False)
+    check(
+        "curriculum assessment teaches يَسْأَلُكَ token/context gloss split",
+        _yasaluka_checkpoint.get("two_vote_required") is True
+        and "ask you" in _checkpoint_blob
+        and "the people ask you" in _checkpoint_blob
+        and "النَّاسُ" in _checkpoint_blob
+        and "people is inside يَسْأَلُكَ" in _checkpoint_blob,
+    )
+    _hover_drill = io.open(
+        os.path.join(_R, "curriculum", "drills", "hover-composition-and-routing.md"),
+        encoding="utf-8",
+    ).read()
+    _nahw_drill = io.open(
+        os.path.join(_R, "nahw", "drills", "dogfood-nahw-remediation.md"),
+        encoding="utf-8",
+    ).read()
+    check(
+        "drills preserve adjacent subject source for يَسْأَلُكَ",
+        "token contribution is \"ask you\"" in _hover_drill
+        and "following `النَّاسُ`" in _hover_drill
+        and "Token Contribution vs Adjacent Context" in _nahw_drill
+        and "`النَّاسُ` supplies the subject" in _nahw_drill,
+    )
+    _bug_rows = [
+        json.loads(_line)
+        for _line in io.open(
+            os.path.join(_R, "qamus", "examples", "dogfood_production_bug_lesson.sample.jsonl"),
+            encoding="utf-8",
+        )
+        if _line.strip()
+    ]
+    _context_lesson = next(
+        (_row for _row in _bug_rows if _row.get("bug_class") == "contextual_subject_source_hidden"),
+        {},
+    )
+    check(
+        "production bug lesson records يَسْأَلُكَ contextual subject source",
+        _context_lesson.get("token_contribution_gloss") == "ask you"
+        and _context_lesson.get("contextual_phrase_gloss") == "the people ask you"
+        and "quran:33:63:2" in (_context_lesson.get("adjacent_context_locs") or [])
+        and "النَّاسُ" in str(_context_lesson.get("context_subject_source") or "")
+        and _context_lesson.get("gate") == "two_vote_required",
+    )
+except Exception:
+    check("curriculum adjacent-context regression readback runnable", False)
+
 for _script, _label in (("test_bulk_two_vote_requests.py", "bulk two-vote builder self-test"),
                         ("test_bulk_two_vote_request_validator.py", "bulk two-vote validator self-test"),
                         ("test_phase4_two_vote_requests.py", "Phase4 exact-addressed two-vote request self-test"),

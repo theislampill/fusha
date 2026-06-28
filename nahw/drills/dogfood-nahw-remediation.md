@@ -26,7 +26,20 @@ Explain the contribution of the attached preposition.
 | `بِبَدْرٍ` | bāʾ + place-name host; locative/prepositional contribution cannot disappear |
 | `لِتُضَيِّقُوا` | lām function plus governed verb/mood review |
 
-## C. Hard Function Frames
+## C. Token Contribution vs Adjacent Context
+
+For each prompt, distinguish what the written token itself contributes from what the surrounding phrase supplies.
+
+| item | required answer shape |
+|---|---|
+| `يَسْأَلُكَ النَّاسُ` | `يَسْأَلُكَ` contributes "ask you"; the following `النَّاسُ` supplies the subject "the people" |
+| contextual hover says "they ask you" | accepted only if the subject source is recorded; do not read "they" as an attached pronoun inside `يَسْأَلُكَ` |
+| rich preview row has phrase gloss and token gloss | both must be shown: contextual phrase gloss plus token contribution gloss |
+
+Reject any answer that gets fluent English by hiding the source of the English subject, object, governor,
+attachment, or pronoun referent.
+
+## D. Hard Function Frames
 
 For each, state why two independent checks may be required.
 
@@ -40,7 +53,7 @@ For each, state why two independent checks may be required.
 Pass only when the learner names the governor, governed item, or pending reason. Readable English without the
 grammar reason fails the drill.
 
-## D. RICH-CERT Nahw Gate
+## E. RICH-CERT Nahw Gate
 
 For each candidate, state the hidden function or relation that still blocks certification.
 

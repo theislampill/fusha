@@ -37,6 +37,7 @@ CLASS_PRIORITY = {
 
 DETECTOR_PRIORITY = {
     "suffix_omitted": 1,
+    "contextual_subject_source_hidden": 1,
     "vocative_collapse": 2,
     "preposition_oath_host_only_hover": 3,
     "conjunction_article_omitted": 4,
@@ -46,6 +47,24 @@ DETECTOR_PRIORITY = {
     "nominal_pos_leakage": 8,
     "article_duplication": 9,
     "surface_family_requires_token_only_override": 10,
+}
+
+DETECTOR_BUG_CLASS = {
+    "suffix_omitted": {"verb_object_suffix_omitted"},
+    "contextual_subject_source_hidden": {"contextual_subject_source_hidden"},
+    "finite_verb_dictionary_root_gloss_leakage": {
+        "finite_verb_dictionary_gloss_leakage",
+        "finite_verb_dictionary_root_gloss_leakage",
+        "finite_verb_dictionary_infinitive_leakage",
+    },
+    "vocative_collapse": {"vocative_collapse"},
+    "preposition_oath_host_only_hover": {"preposition_oath_host_only_hover"},
+    "function_preposition_flattening": {"function_preposition_flattening"},
+    "conjunction_article_omitted": {"conjunction_article_omitted"},
+    "clitic_host_collapse": {"clitic_host_collapse"},
+    "nominal_pos_leakage": {"nominal_pos_leakage"},
+    "article_duplication": {"article_duplication"},
+    "surface_family_requires_token_only_override": {"surface_family_requires_token_only_override"},
 }
 
 APPLY_POLICY = {
@@ -100,8 +119,24 @@ def lesson_index(lesson_rows):
     for row in lesson_rows or []:
         target = row.get("target_address")
         if target:
-            index[target] = row
+            index.setdefault(target, []).append(row)
     return index
+
+
+def choose_lesson(row, lessons):
+    lessons = list(lessons or [])
+    if not lessons:
+        return None
+    detectors = sorted(row.get("detectors") or [], key=lambda item: DETECTOR_PRIORITY.get(item, 999))
+    for detector in detectors:
+        allowed = DETECTOR_BUG_CLASS.get(detector) or set()
+        for lesson in lessons:
+            if lesson.get("bug_class") in allowed:
+                return lesson
+    for lesson in lessons:
+        if lesson.get("bug_class") == row.get("bug_class"):
+            return lesson
+    return lessons[0]
 
 
 def first_detector(detectors):
@@ -145,6 +180,8 @@ def required_evidence(row):
         evidence.append("exact blocker must be resolved or preserved")
     if "suffix_omitted" in detectors:
         evidence.append("sarf segmentation proves attached suffix/pronoun contribution")
+    if "contextual_subject_source_hidden" in detectors:
+        evidence.append("adjacent context source proves contextual subject/object/governor wording")
     if "finite_verb_dictionary_root_gloss_leakage" in detectors:
         evidence.append("finite verb form/aspect/voice/person is reflected before any hover repair")
     if "vocative_collapse" in detectors:
@@ -266,7 +303,7 @@ def build_pack(dogfood_rows, lesson_rows=None, include_classes=None, max_rows=No
         candidates = candidates[:max_rows]
     out = []
     for idx, row in enumerate(candidates, 1):
-        out.append(build_review_row(row, lesson=lessons.get(row.get("wbw_loc")), rank=idx))
+        out.append(build_review_row(row, lesson=choose_lesson(row, lessons.get(row.get("wbw_loc"))), rank=idx))
     return out
 
 
@@ -321,6 +358,17 @@ def run_self_test():
         return 1
     if rows[0]["production_bug_lesson"]["bug_class"] != "verb_object_suffix_omitted":
         print("SELF-TEST FAIL: dogfood lesson was not linked by exact hover address")
+        return 1
+    lesson_candidates = lesson_index(lessons).get("wbw:33:63:1") or []
+    if len(lesson_candidates) < 2:
+        print("SELF-TEST FAIL: multiple exact-address lessons were not preserved")
+        return 1
+    context_lesson = choose_lesson(
+        {"detectors": ["contextual_subject_source_hidden"], "dogfood_class": "known_defect"},
+        lesson_candidates,
+    )
+    if not context_lesson or context_lesson.get("bug_class") != "contextual_subject_source_hidden":
+        print("SELF-TEST FAIL: adjacent-context lesson was not selectable by detector class")
         return 1
     if "sarf segmentation proves attached suffix/pronoun contribution" not in rows[0]["required_evidence"]:
         print("SELF-TEST FAIL: suffix evidence requirement missing")

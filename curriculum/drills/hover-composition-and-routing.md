@@ -41,7 +41,7 @@ hover wording.
 | `وَهَٰذَا` | oath/coordinating `وَ` + demonstrative | demonstrative text may be right while the particle function remains gated |
 | `إِلَيْنَا` | preposition stem + pronoun `ـنا` | "to us"; hamza-seat/root guard prevents false `ل ي ن` |
 | `وَٱلشَّجَرُ` | `وَ` + `ٱل` + host noun | fallback "and + the trees" is not enough; breakdown and segment roles must be present |
-| `يَسْـَٔلُكَ` | imperfect prefix + verb stem + object suffix `كَ` | "ask you" must expose object suffix; lemma-only "to ask" fails |
+| `يَسْـَٔلُكَ` | imperfect prefix + verb stem + object suffix `كَ` | token contribution is "ask you"; in `يَسْأَلُكَ النَّاسُ`, phrase-level "the people ask you" comes from following `النَّاسُ`, not from a hidden pronoun inside this token |
 | `فَأَهْلَكْنَاهُمْ` | `فَ` + Form IV verb with 1pl subject + object `هم` | fluent phrase must still expose form, subject, object, and fā' role |
 | `ثَقِفْتُمُوهُمْ` | perfect verb + subject marker + object `هم` | "you all found/came upon them"; root-family text without "them" fails |
 | `تُخَالِطُوهُمْ` | imperfect verb + subject marker + object `هم` | "you mix/associate with them"; noun leakage such as "partners" fails |
@@ -85,6 +85,10 @@ minimal according to the closure lane.
   frames, and pronoun referents. If a function token lacks a standalone entry but its function
   is clear, it may be certifiable as a token contribution; if the frame is not clear, it stays
   `pending:`.
+- **Separate token contribution from phrase context:** a contextual English subject, object,
+  governor, or attachment may come from a neighboring word. Record the adjacent source address
+  before using it in the learner explanation. For `يَسْأَلُكَ النَّاسُ`, the token contributes
+  "ask you"; `النَّاسُ` supplies the phrase subject "the people."
 - **Concept map last:** use concept metadata only to flag named-entity/common-word collisions
   and curriculum families. It cannot override sarf, nahw, i'rab, or verse context.
 - **Public boundary always:** do not publish source labels, QAC labels, screenshot labels, or
