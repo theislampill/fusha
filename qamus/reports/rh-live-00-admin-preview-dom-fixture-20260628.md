@@ -75,14 +75,27 @@ layout can use flex/grid/gap without being confused for destructive Arabic segme
 The fixture now separates the eventual hover UI from the admin evidence surface:
 
 - actual hover preview: `.qg-hover-preview` contains only the atomic role-colored Arabic token, authored gloss, compact
-  parse key, learner-readable segment chips, short breakdown rows, one learner explanation sentence, and tiny
-  `admin preview` / `not live` status markers;
+  parse key, learner-readable segment chips, compact segment rows with sarf/nahw micro-facts, one Arabic-focused
+  learner explanation sentence, and tiny `admin preview` / `not live` status markers;
 - admin inspector: `.qg-admin-inspector` sits below the compact hover and contains the route/debug material, including
-  admin evidence, sarf details, nahw details, segment table, learner explanation, and gate status;
-- default disclosure: the admin hover preview and learner explanation are open, while admin evidence, sarf, nahw,
-  segment table, and gate status remain collapsed by default;
+  admin evidence, full sarf details, full nahw details, segment table, and gate status;
+- default disclosure: the compact hover preview is visible first, while all admin inspector panels remain collapsed by
+  default;
 - the compact hover preview is forbidden from containing the segment contribution table, gate list, sarf panel, nahw
-  panel, or full token identity/debug evidence.
+  panel, full token identity/debug evidence, or deployment/process language.
+
+Each actual-hover segment row now teaches the row directly in the hover-sized component:
+
+- the colored Arabic segment;
+- the learner-readable role label;
+- the English contribution;
+- a compact sarf note;
+- a compact nahw note.
+
+Examples include `يَسْأَلُكَ` as `PFX/STEM/OBJ`, `فَأَهْلَكْنَاهُمْ` as `FA/STEM/SUBJ/OBJ`,
+`وَٱلشَّمْسُ` as `CONJ/ART/N`, `بِبَدْرٍ` as `P/PN`, and `لِمَا` as `LAM/MA`.
+Learner-facing copy now teaches the Arabic token and avoids route, owner, live-mutation, public-rollout, fixture, or
+readback language; those process details remain only inside the admin inspector/gate surfaces.
 
 Segment chips are intentionally static learner labels such as `FA · result`, `STEM · lexical host`, `SUBJ · subject`,
 and `OBJ · object`. The raw role names remain available only in the admin segment table. Since the fixture has no
@@ -97,7 +110,30 @@ Underline policy is also explicit:
   `qg-article` may use default underline decoration.
 
 The DOM validator now checks the two-layer split, mini status markers, actual-hover parse key, learner-readable chip
-labels, absence of debug panels/tables inside `.qg-hover-preview`, and the no-default-underline role-color policy.
+labels, hover-level sarf/nahw micro-facts for every visible segment, absence of debug panels/tables or admin/process
+phrasing inside `.qg-hover-preview`, absence of a duplicate admin hover panel, and the no-default-underline role-color
+policy.
+
+## RH-LIVE-00.8 Hover Alignment And Context Gloss Guard
+
+The compact hover rows now use fixed shared columns for label, Arabic segment, and English contribution. This keeps
+rows such as `FA / فَ / so`, `STEM / أَهْلَكْ / destroyed`, `SUBJ / نَا / We`, and `OBJ / هُمْ / them`
+visually aligned in both desktop and mobile preview widths. The validator rejects auto-sized label/Arabic columns so
+mobile media rules cannot reintroduce drifting contribution text.
+
+The actual hover preview also includes a compact morphology/function line directly under the gloss. Verb rows surface
+root/form/aspect/voice and suffix summaries, while particle/preposition rows use function summaries instead of fake
+root data.
+
+For `يَسْأَلُكَ`, the fixture now distinguishes token contribution and contextual phrase gloss:
+
+- contextual phrase gloss: `the people ask you`;
+- token contribution: `ask you`;
+- subject supplied by following `النَّاسُ` at `quran:33:63:2` / `wbw:33:63:2`;
+- compact morphline: `root س أ ل · Form I imperfect active · +OBJ 2ms · subject supplied by following النَّاسُ`.
+
+The learner explanation must teach that the token contributes `ask you`, while the following subject supplies
+`the people / they`; it must not imply that `they` is morphologically attached inside `يَسْأَلُكَ`.
 
 ## Scope
 

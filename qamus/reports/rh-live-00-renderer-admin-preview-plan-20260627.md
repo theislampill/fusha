@@ -92,16 +92,37 @@ they do not claim live support.
 The admin route should clearly separate the compact hover from the inspector:
 
 1. Actual hover preview (`.qg-hover-preview`) appears first and contains only the atomic role-colored Arabic token,
-   authored gloss, compact parse key, learner-readable segment chips or short breakdown, one learner explanation
-   sentence, and tiny `admin preview` / `not live` markers.
+   authored gloss, compact parse key, learner-readable segment chips, compact segment rows with sarf/nahw micro-facts,
+   one Arabic-focused learner explanation sentence, and tiny `admin preview` / `not live` markers.
 2. Admin inspector (`.qg-admin-inspector`) appears below and owns the debug surfaces: admin evidence, sarf details,
-   nahw details, segment contribution table, gate status, and readiness notes.
-3. Defaults: hover preview and learner explanation are open; identity/evidence, sarf, nahw, segment table, and gate
-   status are collapsed.
+   nahw details, segment contribution table, gate status, and readiness notes. It should not repeat another open hover
+   preview.
+3. Defaults: the actual hover preview is visible first; all admin inspector panels are collapsed.
 4. Segment chips in the compact hover use learner labels such as `FA · result`, `STEM · lexical host`, `SUBJ · subject`,
    and `OBJ · object`. Raw role names are reserved for the admin table.
 5. If chips are not wired to synchronized token/table highlighting, they should remain static and should not look like
    buttons or links.
+6. Learner-facing hover copy teaches Arabic contribution only. Process phrases such as public rollout, owner
+   authorization, live mutation, route smoke, fixture-only, or live readback belong only in the admin inspector/gates.
+7. Each compact segment row includes the Arabic segment, role label, English contribution, sarf contribution, and nahw
+   contribution so the hover preview itself remains rich enough to teach.
+
+## RH-LIVE-00.8 Hover Preview Microcopy, Columns, And Context
+
+The compact hover preview should keep the learner-facing component aligned and context-aware:
+
+1. Breakdown rows use fixed shared columns for role label, RTL Arabic segment, and English contribution. The contribution
+   column must not auto-size per row or drift on mobile.
+2. A compact morphology/function line appears under the authored gloss or token-contribution line:
+   - verbs show root, form, tense/aspect/voice, and attached subject/object suffix summaries when known;
+   - particles/prepositions show a compact function summary instead of fabricated root data.
+3. When the contextual phrase gloss differs from the token contribution, the preview shows both. For example,
+   `يَسْأَلُكَ` at `quran:33:63:1` / `wbw:33:63:1` should show contextual gloss `the people ask you`, token
+   contribution `ask you`, and a note that the subject is supplied by following `النَّاسُ` at `quran:33:63:2` /
+   `wbw:33:63:2`.
+4. Source readiness must distinguish word-level evidence from phrase/context-level evidence before a contextual gloss is
+   treated as ready for exact-address two-vote review.
+5. Learner copy explains Arabic contribution only; owner/live/process language stays in the admin inspector and gates.
 
 The route `/admin/qamus/shadow/rich-hover-preview/:wbw_loc` remains admin-only/read-only. It is not a public hover
 rollout, does not mutate the hover ledger, and must keep normal public hover behavior unchanged when preview mode is

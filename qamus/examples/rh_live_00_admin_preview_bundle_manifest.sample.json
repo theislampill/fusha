@@ -7,7 +7,7 @@
   "artifacts": {
     "admin_preview_dom_fixture": {
       "path": "qamus/examples/rh_live_00_admin_preview_dom_fixture.sample.html",
-      "sha256": "6318bc481f3ae29baa11f317a21603e7649bd90bf56a3a975ed9214aa9a4cc59"
+      "sha256": "8d578a27b6860a102b39a1a443df0fde24ece647139eb615e2823f3c3b67686c"
     },
     "certified_not_applied": {
       "path": "qamus/examples/rh_live_00_two_vote_certified_not_applied.sample.jsonl",
@@ -17,11 +17,15 @@
     "preview_candidates": {
       "path": "qamus/examples/rh_live_00_preview_candidates.sample.jsonl",
       "rows": 9,
-      "sha256": "182a28418d8f652d62be22e5e87db9502a8e6c4b164eaf86d4c29d19aa181241"
+      "sha256": "69aa4bdf5f7079742d7a6b59a56ecf3134eb1ba524cd2937072e928e1c20741c"
+    },
+    "preview_readiness_report": {
+      "path": "qamus/reports/rh-live-00-preview-readiness-20260627.md",
+      "sha256": "0f2280512c995bb99846bc466f6e1358568eb52b8039f9f78442431bc9db09c6"
     },
     "renderer_admin_plan": {
       "path": "qamus/reports/rh-live-00-renderer-admin-preview-plan-20260627.md",
-      "sha256": "321824f40ce2d3b5b6163c6ec72978992369b4bdafc96d133e56f4b26c775f34"
+      "sha256": "f27336b032617f8cdab39f93510e415b8a5d62ff0a9d9459c8a4c775888beee0"
     },
     "route_contract": {
       "path": "qamus/examples/shadow_admin_route_contract.sample.json",
@@ -30,11 +34,11 @@
     "source_readiness": {
       "path": "qamus/examples/rh_live_00_source_triangulation_readiness.sample.jsonl",
       "rows": 9,
-      "sha256": "39c8f3b65b3cb6d2e4f6c8211109aba77b50b1c4919809c49aec46982f85f544"
+      "sha256": "f0eeaf62e45f60cf629695c8db8b1a6988c904d8098f8bdaa92251f8729eb848"
     },
     "source_readiness_report": {
       "path": "qamus/reports/rh-live-00-source-triangulation-readiness-20260627.md",
-      "sha256": "5d5c7f87fde94019bc164fe80c1d43f60c16ce7147190f2e9d3030b4f4dad2ae"
+      "sha256": "f135a7dd943e5f73861b09a6340aa5d6b5a52f564ece3cee1460302b81b92db6"
     },
     "two_vote_reconciliation_report": {
       "path": "qamus/reports/rh-live-00-two-vote-response-reconciliation-20260627.md",
@@ -54,20 +58,16 @@
       "path": "qamus/examples/rh_live_00_two_vote_unresolved.sample.jsonl",
       "rows": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    "preview_readiness_report": {
-      "path": "qamus/reports/rh-live-00-preview-readiness-20260627.md",
-      "sha256": "0f2280512c995bb99846bc466f6e1358568eb52b8039f9f78442431bc9db09c6"
     }
   },
   "expected": {
     "all_rows_exact_address_two_vote_ready": true,
     "certified_not_applied_rows": 9,
     "preview_candidate_rows": 9,
+    "request_rows": 9,
     "response_rows": 18,
     "source_readiness_rows": 9,
-    "unresolved_rows": 0,
-    "request_rows": 9
+    "unresolved_rows": 0
   },
   "policy": {
     "component_candidates_can_certify": false,

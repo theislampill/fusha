@@ -30,6 +30,9 @@ The packet is not a public hover artifact. Public-facing fields remain limited t
 Rows with fresh internal MCP support:
 
 - `33:63:1` `يَسْأَلُكَ` - finite imperfect verb plus attached object pronoun; dictionary-infinitive hover is unsafe.
+  This row also requires phrase-context support because the contextual gloss `the people ask you` depends on the
+  following explicit subject `النَّاسُ` at `quran:33:63:2` / `wbw:33:63:2`. The token contribution remains `ask you`;
+  `they/people` is not an attached pronoun inside the token.
 - `26:139:2` `فَأَهْلَكْنَاهُمْ` - fā' relation plus finite past verb, subject pronoun, and object pronoun.
 - `22:18:13` `وَٱلشَّمْسُ` - conjunction plus definite noun host; host-only or unsegmented hover remains incomplete.
 - `22:18:14` `وَٱلْقَمَرُ` - conjunction plus definite noun host; conjoined nominative role needs reason agreement.
@@ -43,6 +46,17 @@ Rows with fresh internal MCP support:
 
 The readiness packet may name internal evidence status, but it stores no raw MCP text and no copied external wording.
 Rows remain `may_apply_live=false`, `live_mutation_allowed=false`, and `public_exposable=false`.
+
+## Word-Level Versus Phrase-Context Evidence
+
+Every readiness row now records `token_contribution_gloss` and `contextual_phrase_gloss`. If those differ, the row must
+also record `adjacent_context_required=true`, exact adjacent context locs, a context source field, and
+`phrase_context_level` inside `source_triangulation.evidence_scopes`.
+
+For `يَسْأَلُكَ`, the source-readiness row records both `word_level` and `phrase_context_level` evidence scopes plus a
+`phrase_context_review` object. That object stores only source-clean support labels, not raw MCP text, and records that
+the following `النَّاسُ` supplies the phrase subject. Rows without phrase/context support must stay pending or route
+back to source retry rather than promoting a readable contextual English gloss from word-internal evidence alone.
 
 ## Next Gate
 

@@ -28,16 +28,25 @@ EXPECTED_ROWS = {
     "wbw:3:123:4": ("quran:3:123:4", "بِبَدْرٍ", "parse:04f29c83d06ef13407a750b1"),
     "wbw:2:213:37": ("quran:2:213:37", "لِمَا", "parse:ae6f25c79ca4888cd052cc03"),
 }
+EXPECTED_MORPHLINE_NEEDLES = {
+    "wbw:33:63:1": ("root س أ ل", "Form I", "imperfect active", "+OBJ 2ms"),
+    "wbw:26:139:2": ("root ه ل ك", "Form IV", "perfect active", "+SUBJ 1p", "+OBJ 3mp"),
+    "wbw:22:18:13": ("wāw + definite noun", "coordinated nominal"),
+    "wbw:22:18:14": ("wāw + definite noun", "coordinated nominal"),
+    "wbw:22:18:15": ("wāw + definite noun", "coordinated nominal"),
+    "wbw:22:18:16": ("wāw + definite noun", "coordinated nominal"),
+    "wbw:22:18:17": ("wāw + definite noun", "coordinated nominal"),
+    "wbw:3:123:4": ("ḥarf + proper noun", "bāʾ governs Badr"),
+    "wbw:2:213:37": ("lām + mā", "mā function context-sensitive"),
+}
 REQUIRED_PANELS = {
-    "hover",
     "identity",
     "sarf",
     "nahw",
     "segments",
-    "learner",
     "gates",
 }
-REQUIRED_OPEN_PANELS = {"hover", "learner"}
+REQUIRED_OPEN_PANELS = set()
 REQUIRED_COLLAPSED_PANELS = REQUIRED_PANELS - REQUIRED_OPEN_PANELS
 REQUIRED_GATES = {
     "address",
@@ -124,6 +133,22 @@ FORBIDDEN_LEARNER_CHIP_LABELS = {
     "proper noun stem",
     "particle ma",
 }
+FORBIDDEN_HOVER_PROCESS_PHRASES = {
+    "public rollout",
+    "owner authorization",
+    "owner-authorized",
+    "live mutation",
+    "live preview readback",
+    "route smoke",
+    "fixture-only",
+    "fixture_only",
+    "source/two-vote",
+    "source_two_vote",
+    "certified_not_applied",
+    "live_mutation_allowed",
+    "not authorized for live mutation",
+}
+CONTEXT_GLOSS_PRONOUN_HINTS = {"they", "people", "he", "it", "them"}
 
 
 def css_block(text, selector):
@@ -153,7 +178,11 @@ class FixtureParser(html.parser.HTMLParser):
         self.current_word = None
         self.current_tooltip = None
         self.current_segment_row = None
+        self.current_hover_breakdown_row = None
         self.current_learner = None
+        self.current_learner_in_hover = False
+        self.current_morphline = None
+        self.current_token_contribution = None
         self.capture_parse_key = None
         self.capture_parse_key_in_hover = False
         self.current_hover_chip = None
@@ -193,8 +222,14 @@ class FixtureParser(html.parser.HTMLParser):
                 "hover_status_labels": set(),
                 "hover_gloss_count": 0,
                 "hover_parse_keys": [],
+                "hover_morphlines": [],
+                "hover_context_gloss": "",
+                "hover_token_contribution": "",
                 "hover_segment_chip_texts": [],
+                "hover_breakdown_rows": [],
+                "hover_text": "",
                 "learner_text": "",
+                "hover_learner_text": "",
                 "grammar_tags": set(),
             }
             self.cards.append(self.current_card)
@@ -210,6 +245,11 @@ class FixtureParser(html.parser.HTMLParser):
             self.current_card["hover_preview_table_leaks"] += 1
         if self.current_card and self.in_class("qg-hover-preview") and tag == "div" and has_class(attrs, "qg-hover-gloss"):
             self.current_card["hover_gloss_count"] += 1
+            self.current_card["hover_context_gloss"] = ""
+        if self.current_card and self.in_class("qg-hover-preview") and tag == "div" and has_class(attrs, "qg-hover-token-contribution"):
+            self.current_token_contribution = ""
+        if self.current_card and self.in_class("qg-hover-preview") and tag == "div" and has_class(attrs, "qg-hover-morphline"):
+            self.current_morphline = ""
         if self.current_card and tag == "div" and has_class(attrs, "qg-primary-preview"):
             self.current_card["primary_preview_count"] += 1
         if self.current_card and tag == "div" and has_class(attrs, "qg-secondary-panels"):
@@ -253,6 +293,7 @@ class FixtureParser(html.parser.HTMLParser):
                 self.current_hover_chip = {"role": role, "text": ""}
         if self.current_card and tag == "p" and has_class(attrs, "qg-learner-explanation"):
             self.current_learner = ""
+            self.current_learner_in_hover = self.in_class("qg-hover-preview")
         if self.current_card and tag == "span" and has_class(attrs, "qg-preview-tag"):
             tag_name = attrs.get("data-tag")
             if tag_name:
@@ -270,6 +311,22 @@ class FixtureParser(html.parser.HTMLParser):
             self.current_tooltip = {"rows": []}
         if self.current_card and tag == "li" and (has_class(attrs, "qg-breakdown-row") or has_class(attrs, "qg-hover-breakdown-row")):
             self.current_card["tooltip_rows"].append({"role": attrs.get("data-role"), "text": ""})
+            if self.in_class("qg-hover-preview"):
+                self.current_hover_breakdown_row = {
+                    "role": attrs.get("data-role"),
+                    "text": "",
+                    "has_contribution": False,
+                    "has_sarf": False,
+                    "has_nahw": False,
+                }
+                self.current_card["hover_breakdown_rows"].append(self.current_hover_breakdown_row)
+        if self.current_hover_breakdown_row is not None:
+            if tag == "span" and has_class(attrs, "qg-hover-contribution"):
+                self.current_hover_breakdown_row["has_contribution"] = True
+            if tag == "span" and has_class(attrs, "qg-hover-sarf-note"):
+                self.current_hover_breakdown_row["has_sarf"] = True
+            if tag == "span" and has_class(attrs, "qg-hover-nahw-note"):
+                self.current_hover_breakdown_row["has_nahw"] = True
         if self.current_card and tag == "code" and has_class(attrs, "qg-parse-key"):
             self.capture_parse_key = ""
             self.capture_parse_key_in_hover = self.in_class("qg-hover-preview")
@@ -311,10 +368,29 @@ class FixtureParser(html.parser.HTMLParser):
             open_tag, open_attrs = self.stack[-1] if self.stack else (None, {})
             if open_tag == "tr" and has_class(open_attrs, "qg-segment-row"):
                 self.current_segment_row = None
+        if self.current_hover_breakdown_row is not None and tag == "li":
+            open_tag, open_attrs = self.stack[-1] if self.stack else (None, {})
+            if open_tag == "li" and has_class(open_attrs, "qg-hover-breakdown-row"):
+                self.current_hover_breakdown_row = None
         if self.current_learner is not None and tag == "p":
             if self.current_card is not None:
                 self.current_card["learner_text"] += self.current_learner.strip()
+                if self.current_learner_in_hover:
+                    self.current_card["hover_learner_text"] += self.current_learner.strip()
             self.current_learner = None
+            self.current_learner_in_hover = False
+        if self.current_morphline is not None and tag == "div":
+            open_tag, open_attrs = self.stack[-1] if self.stack else (None, {})
+            if open_tag == "div" and has_class(open_attrs, "qg-hover-morphline"):
+                if self.current_card is not None:
+                    self.current_card["hover_morphlines"].append(self.current_morphline.strip())
+                self.current_morphline = None
+        if self.current_token_contribution is not None and tag == "div":
+            open_tag, open_attrs = self.stack[-1] if self.stack else (None, {})
+            if open_tag == "div" and has_class(open_attrs, "qg-hover-token-contribution"):
+                if self.current_card is not None:
+                    self.current_card["hover_token_contribution"] += self.current_token_contribution.strip()
+                self.current_token_contribution = None
         if self.current_card and tag == "section":
             open_tag, open_attrs = self.stack[-1] if self.stack else (None, {})
             if open_tag == "section" and has_class(open_attrs, "rh-live-preview-card"):
@@ -333,12 +409,24 @@ class FixtureParser(html.parser.HTMLParser):
             open_tag, open_attrs = self.stack[-1]
             if open_tag == "span" and has_class(open_attrs, "qg-header-surface"):
                 self.current_card["header_surface"] += data
+        if self.current_card and self.in_class("qg-hover-preview"):
+            self.current_card["hover_text"] += data
+            if self.stack:
+                open_tag, open_attrs = self.stack[-1]
+                if open_tag == "div" and has_class(open_attrs, "qg-hover-gloss"):
+                    self.current_card["hover_context_gloss"] += data
         if self.current_card and self.current_card["tooltip_rows"]:
             self.current_card["tooltip_rows"][-1]["text"] += data
+        if self.current_hover_breakdown_row is not None:
+            self.current_hover_breakdown_row["text"] += data
         if self.current_segment_row is not None:
             self.current_segment_row["text"] += data
         if self.current_learner is not None:
             self.current_learner += data
+        if self.current_morphline is not None:
+            self.current_morphline += data
+        if self.current_token_contribution is not None:
+            self.current_token_contribution += data
         if self.current_hover_chip is not None:
             self.current_hover_chip["text"] += data
         if self.current_mini_status is not None:
@@ -373,6 +461,27 @@ def validate_css(text, errors):
         add(errors, "fixture must reserve vertical room for Arabic diacritics")
     if ".qg-hover-preview" not in text or ".qg-admin-inspector" not in text or ".qg-secondary-panels" not in text:
         add(errors, "fixture CSS must define the RH-LIVE IA hierarchy containers")
+    if ".qg-hover-morphline" not in text:
+        add(errors, "fixture CSS must define compact hover morphology line")
+    if ".qg-hover-token-contribution" not in text:
+        add(errors, "fixture CSS must define compact token-contribution line for contextual gloss splits")
+    morphline_block = css_block(text, ".qg-hover-morphline")
+    if morphline_block:
+        morphline_compact = re.sub(r"\s+", "", morphline_block.lower())
+        for required in ("font-size:.9rem", "line-height:1.4"):
+            if required not in morphline_compact:
+                add(errors, "qg hover morphline CSS must include %s" % required)
+    breakdown_block = css_block(text, ".qg-hover-breakdown-row")
+    breakdown_compact = re.sub(r"\s+", "", breakdown_block.lower())
+    if "grid-template-columns:4rem7remminmax(0,1fr)" not in breakdown_compact:
+        add(errors, "qg hover breakdown rows must use fixed shared columns: 4rem 7rem minmax(0, 1fr)")
+    if "grid-template-columns:autoautominmax(0,1fr)" in re.sub(r"\s+", "", text.lower()):
+        add(errors, "qg hover breakdown rows must not be overridden to auto-sized label/Arabic columns")
+    breakdown_seg_block = css_block(text, ".qg-hover-breakdown-row .qg-seg")
+    breakdown_seg_compact = re.sub(r"\s+", "", breakdown_seg_block.lower())
+    for required in ("grid-column:2", "direction:rtl", "unicode-bidi:isolate", "justify-self:end", "text-align:end", "min-width:5rem"):
+        if required not in breakdown_seg_compact:
+            add(errors, "qg hover breakdown segment CSS must include %s" % required)
     if ".qg-gate-chip" not in text or ".qg-state-chip" not in text or ".qg-segment-chip" not in text:
         add(errors, "fixture CSS must define compact chip treatments")
     if "@media (max-width: 760px)" not in text or "content: attr(data-label)" not in text:
@@ -430,7 +539,7 @@ def validate_fixture(path):
         if missing_panels:
             add(errors, "%s missing enriched preview panels: %s" % (wbw, sorted(missing_panels)))
         if card["open_panels"] != REQUIRED_OPEN_PANELS:
-            add(errors, "%s admin panels must open only hover+learner by default: %s" % (wbw, sorted(card["open_panels"])))
+            add(errors, "%s admin inspector panels must be collapsed by default: %s" % (wbw, sorted(card["open_panels"])))
         expanded_forbidden = card["open_panels"] & REQUIRED_COLLAPSED_PANELS
         if expanded_forbidden:
             add(errors, "%s debug panels must be collapsed by default: %s" % (wbw, sorted(expanded_forbidden)))
@@ -442,12 +551,47 @@ def validate_fixture(path):
             add(errors, "%s actual hover preview must not contain debug panels or segment tables" % wbw)
         if card["admin_header_count"] != 1:
             add(errors, "%s must have one admin inspector header" % wbw)
-        if card["primary_preview_count"] != 1:
-            add(errors, "%s must have one admin hover-preview panel" % wbw)
+        if card["primary_preview_count"] != 0 or "hover" in card["panels"]:
+            add(errors, "%s admin inspector must not duplicate the actual hover preview" % wbw)
         if card["secondary_panels_count"] != 1:
             add(errors, "%s must have one secondary panel wrapper" % wbw)
         if card["hover_gloss_count"] != 1:
             add(errors, "%s actual hover preview must have one authored gloss" % wbw)
+        context_gloss = " ".join(card["hover_context_gloss"].split())
+        token_gloss = " ".join(card["hover_token_contribution"].split())
+        if not context_gloss:
+            add(errors, "%s actual hover preview missing contextual gloss text" % wbw)
+        if len(card["hover_morphlines"]) != 1:
+            add(errors, "%s actual hover preview must have one compact morphology/function line" % wbw)
+        else:
+            morphline = " ".join(card["hover_morphlines"][0].split())
+            if not morphline:
+                add(errors, "%s compact morphology/function line must not be empty" % wbw)
+            for needle in EXPECTED_MORPHLINE_NEEDLES.get(wbw, ()):
+                if needle not in morphline:
+                    add(errors, "%s compact morphology/function line missing `%s`" % (wbw, needle))
+        if wbw == "wbw:33:63:1":
+            if context_gloss not in ("the people ask you", "they ask you"):
+                add(errors, "%s contextual gloss must distinguish the phrase reading from token contribution" % wbw)
+            if token_gloss != "token: ask you":
+                add(errors, "%s token contribution line must say `token: ask you`" % wbw)
+            if attrs.get("data-token-contribution-gloss") != "ask you":
+                add(errors, "%s data-token-contribution-gloss must be ask you" % wbw)
+            if attrs.get("data-contextual-phrase-gloss") not in ("the people ask you", "they ask you"):
+                add(errors, "%s data-contextual-phrase-gloss must record the contextual phrase reading" % wbw)
+            if attrs.get("data-adjacent-context-required") != "true":
+                add(errors, "%s adjacent context must be required for contextual phrase gloss" % wbw)
+            adjacent_locs = attrs.get("data-adjacent-context-locs", "")
+            if "quran:33:63:2" not in adjacent_locs or "wbw:33:63:2" not in adjacent_locs:
+                add(errors, "%s adjacent context locs must include following subject token" % wbw)
+            subject_source = attrs.get("data-context-subject-source", "")
+            if "النَّاسُ" not in subject_source or "quran:33:63:2" not in subject_source:
+                add(errors, "%s contextual subject source must record النَّاسُ at quran:33:63:2" % wbw)
+            if attrs.get("data-contextual-gloss-certification-state") != "certified_not_applied_context_supported":
+                add(errors, "%s contextual gloss certification state must remain certified-not-applied context-supported" % wbw)
+            hover_learner = card["hover_learner_text"]
+            if "النَّاسُ" not in hover_learner or "Do not read" not in hover_learner or "attached pronoun" not in hover_learner:
+                add(errors, "%s learner explanation must state where the subject comes from and avoid hiding it" % wbw)
         missing_mini_status = {"admin preview", "not live"} - card["hover_status_labels"]
         if missing_mini_status:
             add(errors, "%s actual hover preview missing mini status labels: %s" % (wbw, sorted(missing_mini_status)))
@@ -464,8 +608,12 @@ def validate_fixture(path):
             add(errors, "%s owner gate must stay not_authorized" % wbw)
         if card["gates"].get("live_apply") != "blocked":
             add(errors, "%s live apply gate must stay blocked" % wbw)
-        if not card["learner_text"]:
-            add(errors, "%s missing learner explanation text" % wbw)
+        if not card["hover_learner_text"]:
+            add(errors, "%s actual hover preview missing learner explanation text" % wbw)
+        hover_text = " ".join(card["hover_text"].lower().split())
+        for phrase in sorted(FORBIDDEN_HOVER_PROCESS_PHRASES):
+            if phrase in hover_text:
+                add(errors, "%s actual hover preview leaks admin/process phrase `%s`" % (wbw, phrase))
         if not card["grammar_tags"]:
             add(errors, "%s must expose preview-only grammar tags" % wbw)
 
@@ -513,6 +661,12 @@ def validate_fixture(path):
         tooltip_roles = {row["role"] for row in card["tooltip_rows"]}
         if visible_roles - tooltip_roles:
             add(errors, "%s tooltip breakdown missing roles: %s" % (wbw, sorted(visible_roles - tooltip_roles)))
+        hover_row_roles = {row["role"] for row in card["hover_breakdown_rows"]}
+        if visible_roles - hover_row_roles:
+            add(errors, "%s actual hover breakdown missing roles: %s" % (wbw, sorted(visible_roles - hover_row_roles)))
+        for row in card["hover_breakdown_rows"]:
+            if not row["has_contribution"] or not row["has_sarf"] or not row["has_nahw"]:
+                add(errors, "%s actual hover segment role %s must include contribution, sarf, and nahw micro-facts" % (wbw, row["role"]))
         hover_chip_roles = {chip["role"] for chip in card["hover_segment_chip_texts"]}
         if visible_roles - hover_chip_roles:
             add(errors, "%s actual hover segment chips missing roles: %s" % (wbw, sorted(visible_roles - hover_chip_roles)))
@@ -586,7 +740,7 @@ def self_test():
         bad_path = os.path.join(tmp, "bad-open-panel.html")
         write_text(bad_path, bad)
         bad_errors = validate_fixture(bad_path)
-        if not any("debug panels must be collapsed by default" in error for error in bad_errors):
+        if not any("debug panels must be collapsed by default" in error or "admin inspector panels must be collapsed by default" in error for error in bad_errors):
             raise SystemExit("self-test failed: expanded debug panel regression was not caught")
     bad = text.replace("PFX · imperfect", "verb_prefix", 1)
     with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
@@ -602,6 +756,55 @@ def self_test():
         bad_errors = validate_fixture(bad_path)
         if not any("actual hover preview must not contain debug panels or segment tables" in error for error in bad_errors):
             raise SystemExit("self-test failed: hover/debug layer separation regression was not caught")
+    bad = text.replace('<span class="qg-hover-sarf-note">', '<span class="qg-hover-sarf-note-removed">', 1)
+    with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
+        bad_path = os.path.join(tmp, "bad-hover-microfact.html")
+        write_text(bad_path, bad)
+        bad_errors = validate_fixture(bad_path)
+        if not any("must include contribution, sarf, and nahw micro-facts" in error for error in bad_errors):
+            raise SystemExit("self-test failed: missing hover micro-fact regression was not caught")
+    bad = text.replace('<div class="qg-hover-morphline">', '<div class="qg-hover-morphline-removed">', 1)
+    with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
+        bad_path = os.path.join(tmp, "bad-hover-morphline.html")
+        write_text(bad_path, bad)
+        bad_errors = validate_fixture(bad_path)
+        if not any("actual hover preview must have one compact morphology/function line" in error for error in bad_errors):
+            raise SystemExit("self-test failed: missing hover morphline regression was not caught")
+    bad = text.replace('data-context-subject-source="النَّاسُ at quran:33:63:2 / wbw:33:63:2"', 'data-context-subject-source=""', 1)
+    with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
+        bad_path = os.path.join(tmp, "bad-context-subject.html")
+        write_text(bad_path, bad)
+        bad_errors = validate_fixture(bad_path)
+        if not any("contextual subject source must record" in error for error in bad_errors):
+            raise SystemExit("self-test failed: missing contextual subject source regression was not caught")
+    bad = text.replace('<div class="qg-hover-gloss">the people ask you</div>', '<div class="qg-hover-gloss">ask you</div>', 1)
+    with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
+        bad_path = os.path.join(tmp, "bad-context-gloss.html")
+        write_text(bad_path, bad)
+        bad_errors = validate_fixture(bad_path)
+        if not any("contextual gloss must distinguish" in error for error in bad_errors):
+            raise SystemExit("self-test failed: missing contextual gloss regression was not caught")
+    bad = text.replace("grid-template-columns: 4rem 7rem minmax(0, 1fr);", "grid-template-columns: auto auto minmax(0, 1fr);", 1)
+    with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
+        bad_path = os.path.join(tmp, "bad-hover-alignment.html")
+        write_text(bad_path, bad)
+        bad_errors = validate_fixture(bad_path)
+        if not any("fixed shared columns" in error for error in bad_errors):
+            raise SystemExit("self-test failed: hover breakdown alignment regression was not caught")
+    bad = text.replace("This token contributes", "Public rollout still needs owner authorization. This token contributes", 1)
+    with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
+        bad_path = os.path.join(tmp, "bad-hover-process-language.html")
+        write_text(bad_path, bad)
+        bad_errors = validate_fixture(bad_path)
+        if not any("actual hover preview leaks admin/process phrase" in error for error in bad_errors):
+            raise SystemExit("self-test failed: learner/process language regression was not caught")
+    bad = text.replace('<details class="qg-panel qg-identity-panel" data-panel="identity">', '<details class="qg-panel qg-hover-panel" data-panel="hover"><div class="qg-primary-preview"></div></details><details class="qg-panel qg-identity-panel" data-panel="identity">', 1)
+    with tempfile.TemporaryDirectory(prefix="rh-live-dom-fixture-") as tmp:
+        bad_path = os.path.join(tmp, "bad-admin-duplicate-hover.html")
+        write_text(bad_path, bad)
+        bad_errors = validate_fixture(bad_path)
+        if not any("admin inspector must not duplicate the actual hover preview" in error for error in bad_errors):
+            raise SystemExit("self-test failed: duplicate admin hover preview regression was not caught")
     print("RH-LIVE admin-preview DOM fixture self-test OK")
 
 
