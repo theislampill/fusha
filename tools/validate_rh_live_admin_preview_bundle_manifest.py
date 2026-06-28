@@ -16,6 +16,7 @@ import tempfile
 
 import validate_phase4_two_vote_requests as two_vote_requests
 import validate_phase4_two_vote_responses as two_vote_responses
+import validate_rh_live_admin_preview_dom_fixture as dom_fixture
 import validate_rh_live_preview_candidates as preview_candidates
 import validate_rh_live_source_triangulation_readiness as source_readiness
 import validate_shadow_admin_route_contract as route_contract
@@ -200,6 +201,7 @@ def validate_route(manifest, errors):
 def validate_artifact_files(manifest, errors):
     artifacts = manifest.get("artifacts") or {}
     required = (
+        "admin_preview_dom_fixture",
         "preview_candidates",
         "source_readiness",
         "two_vote_requests",
@@ -211,6 +213,11 @@ def validate_artifact_files(manifest, errors):
     if missing:
         add(errors, "missing artifacts: " + ", ".join(missing))
         return None
+
+    dom_path = repo_path(artifacts["admin_preview_dom_fixture"]["path"])
+    dom_errors = dom_fixture.validate_fixture(dom_path)
+    for error in dom_errors:
+        add(errors, "admin_preview_dom_fixture: " + error)
 
     preview_path = repo_path(artifacts["preview_candidates"]["path"])
     count, preview_errors = preview_candidates.validate_file(preview_path)

@@ -5,6 +5,10 @@
     "route_view": "rich_hover_preview"
   },
   "artifacts": {
+    "admin_preview_dom_fixture": {
+      "path": "qamus/examples/rh_live_00_admin_preview_dom_fixture.sample.html",
+      "sha256": "ac281d6fd68a3c14826852891a41e5a53936b4ad7c0705ea6e430b44b9ae5d74"
+    },
     "certified_not_applied": {
       "path": "qamus/examples/rh_live_00_two_vote_certified_not_applied.sample.jsonl",
       "rows": 9,
