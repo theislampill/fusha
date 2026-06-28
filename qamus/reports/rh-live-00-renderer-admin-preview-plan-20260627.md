@@ -121,7 +121,9 @@ The compact hover preview should keep the learner-facing component aligned and c
    contribution `ask you`, and a note that the subject is supplied by following `النَّاسُ` at `quran:33:63:2` /
    `wbw:33:63:2`.
 4. Source readiness must distinguish word-level evidence from phrase/context-level evidence before a contextual gloss is
-   treated as ready for exact-address two-vote review.
+   treated as ready for exact-address two-vote review. The readiness row must carry
+   `source_triangulation.evidence_level` as `word_level_only`, `adjacent_context_phrase_level`, `verse_clause_level`,
+   or `pending_source_retry`.
 5. Learner copy explains Arabic contribution only; owner/live/process language stays in the admin inspector and gates.
 
 The route `/admin/qamus/shadow/rich-hover-preview/:wbw_loc` remains admin-only/read-only. It is not a public hover
@@ -135,6 +137,12 @@ The static shadow-admin contract now reserves an admin-only/read-only `rich_hove
 `parse_family_views` from a validated shadow admin pack, then join separately reviewed RH-LIVE preview rows by exact
 `wbw:S:A:W`/`quran:S:A:W` identity. It is not an apply route, does not permit public payloads, and must not infer a
 preview from raw Arabic surface text or from parse key alone.
+
+The route implementation must render from validated RH-LIVE preview/source-readiness/certified-not-applied rows, not
+from hardcoded HTML. If a requested `wbw_loc` has no validated preview row, the route should show the normal read-only
+inspector state and no rich-hover preview claim. If a contextual phrase gloss differs from token contribution, the route
+must expose the token contribution, contextual gloss, adjacent locs, and the recorded context source in the admin
+inspector while keeping the compact hover learner-facing and source-clean.
 
 Preview candidate validation also requires the exact `quran:S:A:W`/`wbw:S:A:W` row to exist in its committed renderer
 fixture with a compact parse key, matching segments/display classes, `segments_concat_equals_surface`, and

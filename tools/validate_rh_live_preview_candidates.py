@@ -48,6 +48,10 @@ REQUIRED_DOM_ASSERTIONS = {
     "tooltip_segment_rows_present",
     "no_public_provenance_leak",
 }
+CONTEXT_SUBJECT_HINTS = {"they", "people", "he", "she", "it", "we"}
+CONTEXT_OBJECT_HINTS = {"them", "you", "us", "me", "him", "her"}
+TOKEN_SUBJECT_ROLES = {"subject_pronoun"}
+TOKEN_OBJECT_ROLES = {"object_pronoun"}
 
 
 def iter_jsonl(path):
@@ -72,6 +76,28 @@ def _err(errors, path, lineno, msg):
 def leaks(row):
     blob = json.dumps(row, ensure_ascii=False).lower()
     return [label for label in FORBIDDEN_PUBLIC_LABELS if label in blob]
+
+
+def words(text):
+    return set(re.findall(r"[A-Za-z]+", str(text or "").lower()))
+
+
+def has_context_source(row):
+    return any((
+        row.get("context_subject_source"),
+        row.get("context_object_source"),
+        row.get("context_governor_source"),
+        row.get("context_attachment_source"),
+    ))
+
+
+def has_token_internal_source(row, hints):
+    roles = {str(segment.get("role") or "") for segment in row.get("segments") or []}
+    if hints & CONTEXT_SUBJECT_HINTS and not roles & TOKEN_SUBJECT_ROLES:
+        return False
+    if hints & CONTEXT_OBJECT_HINTS and not roles & TOKEN_OBJECT_ROLES:
+        return False
+    return bool(hints)
 
 
 def load_fixture_rows(source_fixture):
@@ -194,7 +220,8 @@ def validate_row(row, path, lineno, errors):
         _err(errors, path, lineno, "contextual_phrase_gloss is required")
     if contextual_gloss and public_preview.get("gloss") != contextual_gloss:
         _err(errors, path, lineno, "public_preview.gloss must equal contextual_phrase_gloss")
-    if token_contribution and contextual_gloss and token_contribution != contextual_gloss:
+    context_differs = bool(token_contribution and contextual_gloss and token_contribution != contextual_gloss)
+    if context_differs:
         if row.get("adjacent_context_required") is not True:
             _err(errors, path, lineno, "contextual gloss that differs from token contribution requires adjacent_context_required=true")
         locs = row.get("adjacent_context_locs")
@@ -210,6 +237,9 @@ def validate_row(row, path, lineno, errors):
         ]
         if not any(context_sources):
             _err(errors, path, lineno, "contextual gloss that differs from token contribution requires a context_*_source field")
+    context_hints = words(contextual_gloss) & (CONTEXT_SUBJECT_HINTS | CONTEXT_OBJECT_HINTS)
+    if context_hints and not has_context_source(row) and not has_token_internal_source(row, context_hints):
+        _err(errors, path, lineno, "contextual gloss adds subject/object wording without token-internal or adjacent context source")
 
     surface = row.get("surface")
     segments = row.get("segments") or []
@@ -365,6 +395,18 @@ def self_test():
         count, errors = validate_file(path)
         if not any("requires adjacent_context_locs" in error for error in errors):
             raise SystemExit("self-test failed: missing adjacent context locs regression was not caught")
+        hidden_context = dict(context_row)
+        hidden_context["token_contribution_gloss"] = "the people ask you"
+        hidden_context["contextual_phrase_gloss"] = "the people ask you"
+        hidden_context["public_preview"] = {"gloss": "the people ask you", "kind": "authored", "lang": "en", "src": "qamus"}
+        hidden_context["adjacent_context_required"] = False
+        hidden_context["adjacent_context_locs"] = []
+        hidden_context["context_subject_source"] = None
+        hidden_context["context_object_source"] = None
+        dump_jsonl(path, [hidden_context])
+        count, errors = validate_file(path)
+        if not any("without token-internal or adjacent context source" in error for error in errors):
+            raise SystemExit("self-test failed: unsupported contextual subject regression was not caught")
     print("RH-LIVE preview candidate self-test OK")
 
 

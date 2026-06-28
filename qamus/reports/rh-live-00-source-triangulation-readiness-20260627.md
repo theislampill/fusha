@@ -53,10 +53,19 @@ Every readiness row now records `token_contribution_gloss` and `contextual_phras
 also record `adjacent_context_required=true`, exact adjacent context locs, a context source field, and
 `phrase_context_level` inside `source_triangulation.evidence_scopes`.
 
+Every readiness row also records `source_triangulation.evidence_level` using one explicit lane:
+
+- `word_level_only` - word-internal sarf/nahw evidence only;
+- `adjacent_context_phrase_level` - adjacent token/phrase evidence is present and required;
+- `verse_clause_level` - wider verse or clause evidence is present and required;
+- `pending_source_retry` - source evidence has not been obtained and the row remains blocked.
+
 For `يَسْأَلُكَ`, the source-readiness row records both `word_level` and `phrase_context_level` evidence scopes plus a
-`phrase_context_review` object. That object stores only source-clean support labels, not raw MCP text, and records that
-the following `النَّاسُ` supplies the phrase subject. Rows without phrase/context support must stay pending or route
-back to source retry rather than promoting a readable contextual English gloss from word-internal evidence alone.
+`source_triangulation.evidence_level=adjacent_context_phrase_level` and a `phrase_context_review` object. That object
+stores only source-clean support labels, not raw MCP text, and records that the following `النَّاسُ` supplies the phrase
+subject. Rows without phrase/context support must stay pending or route back to source retry rather than promoting a
+readable contextual English gloss from word-internal evidence alone. The validator rejects context-looking subject or
+object wording unless the wording is either token-internal morphology or recorded adjacent context.
 
 ## Next Gate
 

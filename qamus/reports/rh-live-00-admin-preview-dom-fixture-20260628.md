@@ -135,6 +135,10 @@ For `يَسْأَلُكَ`, the fixture now distinguishes token contribution and
 The learner explanation must teach that the token contributes `ask you`, while the following subject supplies
 `the people / they`; it must not imply that `they` is morphologically attached inside `يَسْأَلُكَ`.
 
+The paired preview/source-readiness validators now reject context-looking subject or object wording unless it is either
+token-internal morphology or has recorded adjacent context. Source readiness also records an explicit evidence level:
+`word_level_only`, `adjacent_context_phrase_level`, `verse_clause_level`, or `pending_source_retry`.
+
 ## Scope
 
 The fixture covers the nine RH-LIVE-00 rows:

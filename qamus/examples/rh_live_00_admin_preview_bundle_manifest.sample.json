@@ -25,7 +25,7 @@
     },
     "renderer_admin_plan": {
       "path": "qamus/reports/rh-live-00-renderer-admin-preview-plan-20260627.md",
-      "sha256": "f27336b032617f8cdab39f93510e415b8a5d62ff0a9d9459c8a4c775888beee0"
+      "sha256": "d8bf3b0795c57e56071a8b711c4edb32daafea7cd1610cc3262bfdd1fb098bae"
     },
     "route_contract": {
       "path": "qamus/examples/shadow_admin_route_contract.sample.json",
@@ -34,11 +34,11 @@
     "source_readiness": {
       "path": "qamus/examples/rh_live_00_source_triangulation_readiness.sample.jsonl",
       "rows": 9,
-      "sha256": "f0eeaf62e45f60cf629695c8db8b1a6988c904d8098f8bdaa92251f8729eb848"
+      "sha256": "d5ff3e92f566348b95b81189534d0b54441663e018c6f5afb6e97cb17b2bb372"
     },
     "source_readiness_report": {
       "path": "qamus/reports/rh-live-00-source-triangulation-readiness-20260627.md",
-      "sha256": "f135a7dd943e5f73861b09a6340aa5d6b5a52f564ece3cee1460302b81b92db6"
+      "sha256": "aa0c28fd7dc72408c06209c25e705c32246ff2e49c5ade61ae30caa5fbda5cd6"
     },
     "two_vote_reconciliation_report": {
       "path": "qamus/reports/rh-live-00-two-vote-response-reconciliation-20260627.md",

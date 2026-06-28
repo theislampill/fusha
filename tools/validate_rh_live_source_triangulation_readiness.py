@@ -24,7 +24,16 @@ ALLOWED_MCP_STATUS = {
     "mcp_retry_required_token_expired",
 }
 ALLOWED_EVIDENCE_SCOPES = {"word_level", "phrase_context_level"}
-CONTEXT_GLOSS_HINTS = {"they", "people", "he", "it", "them"}
+ALLOWED_EVIDENCE_LEVELS = {
+    "word_level_only",
+    "adjacent_context_phrase_level",
+    "verse_clause_level",
+    "pending_source_retry",
+}
+CONTEXT_SUBJECT_HINTS = {"they", "people", "he", "she", "it", "we"}
+CONTEXT_OBJECT_HINTS = {"them", "you", "us", "me", "him", "her"}
+TOKEN_SUBJECT_SUPPORTS = {"subject_pronoun", "subject_pronoun_1p", "subject_marker"}
+TOKEN_OBJECT_SUPPORTS = {"object_pronoun", "attached_object_pronoun", "object_pronoun_2ms", "attached_object_pronoun_3mp"}
 FORBIDDEN_RAW_KEYS = {"irab", "sarf", "text", "raw", "raw_text", "source_text"}
 FORBIDDEN_PUBLIC_LABELS = (
     "informed_by",
@@ -77,6 +86,29 @@ def raw_key_leaks(value):
     return found
 
 
+def words(text):
+    return set(re.findall(r"[A-Za-z]+", str(text or "").lower()))
+
+
+def has_context_source(row):
+    return any((
+        row.get("context_subject_source"),
+        row.get("context_object_source"),
+        row.get("context_governor_source"),
+        row.get("context_attachment_source"),
+    ))
+
+
+def supports_token_internal_source(source, hints):
+    mcp = source.get("tafsir_mcp_analyze_word") or {}
+    supports = {str(support) for support in (mcp.get("supports") or [])}
+    if hints & CONTEXT_SUBJECT_HINTS and not any(marker in support for marker in TOKEN_SUBJECT_SUPPORTS for support in supports):
+        return False
+    if hints & CONTEXT_OBJECT_HINTS and not any(marker in support for marker in TOKEN_OBJECT_SUPPORTS for support in supports):
+        return False
+    return bool(hints)
+
+
 def validate_row(row, path, lineno, errors):
     quran_loc = str(row.get("quran_loc") or "")
     wbw_loc = str(row.get("wbw_loc") or "")
@@ -121,7 +153,7 @@ def validate_row(row, path, lineno, errors):
     if contextual_gloss and public_preview.get("gloss") != contextual_gloss:
         err(errors, path, lineno, "public_preview.gloss must equal contextual_phrase_gloss for preview rows")
     context_differs = bool(token_contribution and contextual_gloss and token_contribution != contextual_gloss)
-    hinted_context = bool(set(re.findall(r"[A-Za-z]+", contextual_gloss.lower())) & CONTEXT_GLOSS_HINTS)
+    context_hints = words(contextual_gloss) & (CONTEXT_SUBJECT_HINTS | CONTEXT_OBJECT_HINTS)
     if context_differs:
         if row.get("adjacent_context_required") is not True:
             err(errors, path, lineno, "contextual gloss that differs from token contribution requires adjacent_context_required=true")
@@ -151,8 +183,15 @@ def validate_row(row, path, lineno, errors):
     scopes = set(source.get("evidence_scopes") or [])
     if not scopes or not scopes <= ALLOWED_EVIDENCE_SCOPES:
         err(errors, path, lineno, "source_triangulation.evidence_scopes must use allowed word/context scopes")
+    evidence_level = source.get("evidence_level")
+    if evidence_level not in ALLOWED_EVIDENCE_LEVELS:
+        err(errors, path, lineno, "source_triangulation.evidence_level is not allowed")
     if context_differs and "phrase_context_level" not in scopes:
         err(errors, path, lineno, "contextual gloss requires phrase_context_level evidence scope")
+    if context_differs and evidence_level not in ("adjacent_context_phrase_level", "verse_clause_level"):
+        err(errors, path, lineno, "contextual gloss requires adjacent_context_phrase_level or verse_clause_level evidence")
+    if context_hints and not has_context_source(row) and not supports_token_internal_source(source, context_hints):
+        err(errors, path, lineno, "contextual gloss adds subject/object wording without token-internal or adjacent context source")
     mcp = source.get("tafsir_mcp_analyze_word") or {}
     if mcp.get("status") not in ALLOWED_MCP_STATUS:
         err(errors, path, lineno, "Tafsir MCP status is not allowed")
@@ -184,6 +223,8 @@ def validate_row(row, path, lineno, errors):
             if not phrase.get("supports"):
                 err(errors, path, lineno, "phrase_context_review.supports must be non-empty")
     if row.get("next_state") == "source_retry_required_not_certified":
+        if evidence_level != "pending_source_retry":
+            err(errors, path, lineno, "retry rows must use pending_source_retry evidence level")
         if mcp.get("status") != "mcp_retry_required_token_expired":
             err(errors, path, lineno, "retry rows must record mcp_retry_required_token_expired")
         if supports:
@@ -238,6 +279,7 @@ def self_test():
         "quran_loc": "quran:33:63:1",
         "readiness_id": "rh-live-00-source:wbw_33_63_1",
         "source_triangulation": {
+            "evidence_level": "word_level_only",
             "evidence_scopes": ["word_level"],
             "internal_evidence_only": True,
             "tafsir_mcp_analyze_word": {
@@ -254,9 +296,14 @@ def self_test():
     retry["quran_loc"] = "quran:22:18:14"
     retry["wbw_loc"] = "wbw:22:18:14"
     retry["readiness_id"] = "rh-live-00-source:wbw_22_18_14"
+    retry["public_preview"] = {"gloss": "and + the moon", "kind": "authored", "lang": "en", "src": "qamus"}
+    retry["token_contribution_gloss"] = "and + the moon"
+    retry["contextual_phrase_gloss"] = "and + the moon"
+    retry["surface"] = "وَٱلْقَمَرُ"
     retry["next_gate"] = "source_retry_then_exact_address_two_vote"
     retry["next_state"] = "source_retry_required_not_certified"
     retry["source_triangulation"] = {
+        "evidence_level": "pending_source_retry",
         "evidence_scopes": ["word_level"],
         "internal_evidence_only": True,
         "tafsir_mcp_analyze_word": {
@@ -275,6 +322,7 @@ def self_test():
     context_row["context_subject_source"] = "النَّاسُ at quran:33:63:2 / wbw:33:63:2"
     context_row["contextual_gloss_certification_state"] = "certified_not_applied_context_supported"
     context_row["source_triangulation"] = {
+        "evidence_level": "adjacent_context_phrase_level",
         "evidence_scopes": ["word_level", "phrase_context_level"],
         "internal_evidence_only": True,
         "phrase_context_review": {
@@ -298,6 +346,27 @@ def self_test():
         _, _, _, bad_errors = validate_file(path)
         if not any("requires adjacent_context_locs" in error for error in bad_errors):
             raise SystemExit("self-test failed: missing adjacent context locs regression was not caught")
+        hidden_context = dict(context_row)
+        hidden_context["token_contribution_gloss"] = "the people ask you"
+        hidden_context["contextual_phrase_gloss"] = "the people ask you"
+        hidden_context["public_preview"] = {"gloss": "the people ask you", "kind": "authored", "lang": "en", "src": "qamus"}
+        hidden_context["adjacent_context_required"] = False
+        hidden_context["adjacent_context_locs"] = []
+        hidden_context["context_subject_source"] = None
+        hidden_context["context_object_source"] = None
+        hidden_context["contextual_gloss_certification_state"] = "word_level_only"
+        hidden_context["source_triangulation"] = dict(row["source_triangulation"])
+        dump_jsonl(path, [hidden_context])
+        _, _, _, hidden_errors = validate_file(path)
+        if not any("without token-internal or adjacent context source" in error for error in hidden_errors):
+            raise SystemExit("self-test failed: unsupported contextual subject regression was not caught")
+        bad_retry = dict(retry)
+        bad_retry["source_triangulation"] = dict(retry["source_triangulation"])
+        bad_retry["source_triangulation"]["evidence_level"] = "word_level_only"
+        dump_jsonl(path, [bad_retry])
+        _, _, _, retry_errors = validate_file(path)
+        if not any("pending_source_retry evidence level" in error for error in retry_errors):
+            raise SystemExit("self-test failed: retry evidence-level regression was not caught")
     print("RH-LIVE source-triangulation readiness self-test OK")
 
 
