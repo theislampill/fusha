@@ -639,6 +639,14 @@ for _args, _label in (
             os.path.join(_R, "qamus", "examples", "rich_cert_vn_rich_cert_16_renderer_fixture.sample.jsonl"),
         ],
         "VN-RICH-CERT-16 standard certification sample validates"),
+        ([
+            os.path.join(_R, "qamus", "examples", "rich_cert_vn_rich_cert_17_standard.sample.jsonl"),
+            "--evidence-jsonl",
+            os.path.join(_R, "qamus", "examples", "rich_cert_vn_rich_cert_17_standard_evidence.sample.jsonl"),
+            "--renderer-jsonl",
+            os.path.join(_R, "qamus", "examples", "rich_cert_vn_rich_cert_17_renderer_fixture.sample.jsonl"),
+        ],
+        "VN-RICH-CERT-17 standard certification sample validates"),
 ):
     try:
         _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_rich_hover_certification.py")] + _args)
