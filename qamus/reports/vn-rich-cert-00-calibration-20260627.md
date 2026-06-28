@@ -108,6 +108,9 @@ assessment material as miniature lessons about visible pieces versus flat Englis
 Assessment/checkpoint updates: no new checkpoint. These rows reinforce the existing rule that readable English is not
 level-clearance evidence when the sarf/nahw reason is missing.
 
+Progress/missed-error categories: no new category. These rows map to existing finite-verb dictionary leakage, suffix
+omission, preposition-host omission, component-only trap, passive voice loss, and token-only override categories.
+
 Drills/evals/regressions: regression coverage is added by extending `tools/check_regressions.py` to validate this
 certification sample and its sidecars.
 
@@ -117,7 +120,7 @@ dictionary leakage, preposition-host omission, and readable-English/wrong-reason
 Renderer requirements: preview fixture added, with no live claim. Future RH-LIVE work can use these rows only behind
 owner-authorized preview/admin gates.
 
-Future routing: continue RICH-CERT in bounded tranches. The next likely lane is VN-RICH-CERT-01 unless RH-LIVE-00 is
+Future tranche-routing implications: continue RICH-CERT in bounded tranches. The next likely lane is VN-RICH-CERT-01 unless RH-LIVE-00 is
 explicitly owner-authorized.
 
 ## Validation

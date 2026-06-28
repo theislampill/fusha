@@ -102,6 +102,9 @@ between readable English and certified hidden state.
 Assessment/checkpoint updates: no new checkpoint. The rows reinforce current two-vote grading policy for particle
 function, negation, and condition/result relations.
 
+Progress/missed-error categories: no new category. These rows map to existing negation, temporal/conditional particle,
+function-token flattening, readable-English-only, and component-loss categories.
+
 Drills/evals/regressions: regression coverage is added by extending `tools/check_regressions.py` to validate this
 certification sample and its sidecars.
 
@@ -111,7 +114,7 @@ flattening, component loss, and readable-English/wrong-reasoning traps.
 Renderer requirements: preview fixture added, with no live claim. Future RH-LIVE work can use these rows only after
 owner authorization.
 
-Future routing: continue RICH-CERT in bounded tranches. The next likely lane is VN-RICH-CERT calibration from known
+Future tranche-routing implications: continue RICH-CERT in bounded tranches. The next likely lane is VN-RICH-CERT calibration from known
 verb/noun hard cases, unless another existing P-RICH source sample appears.
 
 ## Validation

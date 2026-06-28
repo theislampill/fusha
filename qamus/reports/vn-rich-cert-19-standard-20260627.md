@@ -97,7 +97,7 @@ Every row keeps public preview payloads source-clean as `src=qamus`, `kind=autho
 - Drills/evals/regressions: regression hook added via `tools/check_regressions.py`; no new grammar eval is required because no row advances to certification.
 - Production-bug lessons: no new lesson file required; VN-19 belongs to existing repeated classes rather than a new defect class.
 - Renderer requirements: VN-19 emits renderer fixtures for prefixed verbs/nouns, suffix-bearing rows, and nominal rows whose flat English cannot teach composition.
-- Future tranche routing: continue exact-address gating for component-only, finite verb, suffix-heavy nominal, relation-sensitive nominal, and renderer-only rows; do not promote family-wide before two-vote/source gates.
+- Future tranche-routing implications: continue exact-address gating for component-only, finite verb, suffix-heavy nominal, relation-sensitive nominal, and renderer-only rows; do not promote family-wide before two-vote/source gates.
 
 Repeated issue counts observed in source parse-key components:
 

@@ -113,6 +113,9 @@ Assessment/checkpoint updates: no new checkpoint. These rows reinforce current l
 agent cannot clear a row from readable English alone when suffixes, false clitics, body-part idiom, or exact role
 reasoning are pending.
 
+Progress/missed-error categories: no new category. These rows map to existing suffix omission, stacked-clitic review,
+body-part/relational noun referent, noun/POS leakage, false-clitic split, component-only trap, and token-only override categories.
+
 Drills/evals/regressions: regression coverage is added by extending `tools/check_regressions.py` to validate this
 certification sample and its sidecars.
 
@@ -122,7 +125,7 @@ dictionary leakage, false clitic split, body-part relational noun, and component
 Renderer requirements: preview fixture added, with no live claim. Future RH-LIVE work can use these rows only behind
 owner-authorized preview/admin gates.
 
-Future routing: continue RICH-CERT in bounded VN tranches. The next likely lane is `VN-RICH-CERT-06`, unless explicit
+Future tranche-routing implications: continue RICH-CERT in bounded VN tranches. The next likely lane is `VN-RICH-CERT-06`, unless explicit
 owner authorization starts RH-LIVE-00 preview scaffolding.
 
 ## Validation

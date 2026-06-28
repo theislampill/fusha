@@ -683,6 +683,54 @@ for _args, _label in (
         check(_label + " runnable", False)
 
 try:
+    _report_dir = os.path.join(_R, "qamus", "reports")
+    _rich_cert_reports = [
+        os.path.join(_report_dir, _name)
+        for _name in os.listdir(_report_dir)
+        if _name.endswith(".md")
+        and (_name.startswith("p-rich-cert-") or _name.startswith("vn-rich-cert-"))
+    ]
+    check("RICH-CERT report count through VN20", len(_rich_cert_reports) == 25)
+    _missing_flywheel = []
+    for _path in _rich_cert_reports:
+        _text = io.open(_path, encoding="utf-8").read()
+        if not all(_needle in _text for _needle in (
+            "## Flywheel Impact",
+            "Assessment/checkpoint",
+            "Progress/missed-error",
+            "Future tranche-routing implications",
+        )):
+            _missing_flywheel.append(os.path.basename(_path))
+    check("RICH-CERT reports carry flywheel impact fields", not _missing_flywheel)
+    if _missing_flywheel:
+        print("  missing:", ", ".join(_missing_flywheel[:5]))
+
+    _synthesis = io.open(
+        os.path.join(_report_dir, "rich-cert-flywheel-synthesis-20260627.md"),
+        encoding="utf-8",
+    ).read()
+    check("RICH-CERT flywheel synthesis report exists",
+          "RH-LIVE-00 Preview Shortlist" in _synthesis and "No row is live-applyable" in _synthesis)
+
+    _learner_surfaces = "\n".join(
+        io.open(os.path.join(_R, _path), encoding="utf-8").read()
+        for _path in (
+            "curriculum/drills/dogfood-error-remediation-index.md",
+            "curriculum/progress/missed-error-log.template.md",
+            "curriculum/assessment/grading-rubric.md",
+        )
+    )
+    for _category in (
+        "rich_cert_preview_overclaim",
+        "rich_cert_pending_gate",
+        "rh_live_preview_only",
+    ):
+        check("RICH-CERT learner category promoted: " + _category,
+              _category in _learner_surfaces)
+except Exception:
+    check("RICH-CERT flywheel synthesis/readiness guard runnable", False)
+
+try:
     _v = run_text([sys.executable, os.path.join(_R, "tools", "audit_wbw_lookup_morphosyntax.py"), "--self-test"])
     check("wbw lookup morphosyntax audit self-test", _v.returncode == 0)
     if _v.returncode != 0:

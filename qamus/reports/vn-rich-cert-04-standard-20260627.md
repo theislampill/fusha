@@ -111,6 +111,9 @@ segmentation, and readable-English versus grammar-safe explanation.
 Assessment/checkpoint updates: no new checkpoint. These rows reinforce the current grading rule: an English gloss that
 looks readable cannot clear a row when suffix contribution, passive voice, POS, or iʿrāb reasoning is pending.
 
+Progress/missed-error categories: no new category. These rows map to existing finite-verb dictionary leakage, object
+suffix omission, passive voice loss, article/host segmentation, component-only trap, and token-only override categories.
+
 Drills/evals/regressions: regression coverage is added by extending `tools/check_regressions.py` to validate this
 certification sample and its sidecars.
 
@@ -120,7 +123,7 @@ dictionary leakage, passive voice loss, and noun/verb/POS collision.
 Renderer requirements: preview fixture added, with no live claim. Future RH-LIVE work can use these rows only behind
 owner-authorized preview/admin gates.
 
-Future routing: continue RICH-CERT in bounded VN tranches. The next likely lane is `VN-RICH-CERT-05`, unless explicit
+Future tranche-routing implications: continue RICH-CERT in bounded VN tranches. The next likely lane is `VN-RICH-CERT-05`, unless explicit
 owner authorization starts RH-LIVE-00 preview scaffolding.
 
 ## Validation

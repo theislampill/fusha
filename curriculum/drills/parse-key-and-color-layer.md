@@ -86,6 +86,21 @@ For ten tokens:
 - source names and screenshot labels do not appear in best gloss, parse key, or display text;
 - any uncertain function becomes an exact pending blocker.
 
+## RICH-CERT State Drill
+
+For each reviewed token, write one of `pending`, `token_only_override`, `preview_only`, or
+`rich_certified`, then justify the state.
+
+| example | likely state before live apply | why |
+|---|---|---|
+| `يَسْأَلُكَ` | `token_only_override` | exact address has a verb stem plus visible `كَ`; family propagation is unsafe |
+| `فَأَهْلَكْنَاهُمْ` | `pending` | fāʾ, Form IV host, subject `نا`, and object `هم` need compatible two-vote reasoning |
+| `وَٱلشَّجَرُ` | `pending` | conjunction/article/host segment evidence exists, but component evidence cannot certify the whole token |
+| `بِبَدْرٍ` | `token_only_override` | bāʾ plus place-name host needs exact preposition/locative review |
+
+Reject any answer that says "the tooltip can show colors, therefore the hover is certified." Renderer preview data is a
+study aid until the sarf, nahw, source/two-vote, public-boundary, and owner gates all pass.
+
 Run the metadata validator against a JSONL version of the answers when converting this drill
 into fixtures:
 

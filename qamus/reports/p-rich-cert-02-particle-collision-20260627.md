@@ -97,6 +97,12 @@ already route these rows. P-RICH-CERT-02 preserves their blocker state rather th
 Curriculum updates: no new learner prose in this tranche. These rows instantiate the existing lesson that lookalike
 surfaces need hidden-state separation before certification.
 
+Assessment/checkpoint updates: no new checkpoint. Current assessment rules already require strict-surface reasoning and
+two independent checks when a surface collision or hidden function state could make the English gloss misleading.
+
+Progress/missed-error categories: no new category. These rows map to existing strict-surface collision, function-token
+flattening, readable-English-only, and source-agreement-with-wrong-reasoning categories.
+
 Drills/evals/regressions: regression coverage is added by extending `tools/check_regressions.py` to validate this
 certification sample and its sidecars.
 
@@ -106,7 +112,7 @@ VN dogfood lesson samples.
 Renderer requirements: preview fixture added, with no live claim. Future RH-LIVE work can use these rows only after
 owner authorization.
 
-Future routing: continue RICH-CERT in bounded tranches. Rows with `never_auto_resolve` should be routed to strict
+Future tranche-routing implications: continue RICH-CERT in bounded tranches. Rows with `never_auto_resolve` should be routed to strict
 surface collision review before any certification or apply-readiness planning.
 
 ## Validation

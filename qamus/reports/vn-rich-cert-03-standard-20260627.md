@@ -115,6 +115,9 @@ dīn concept leakage, and readable-English versus grammar-safe explanation.
 Assessment/checkpoint updates: no new checkpoint. The examples reinforce current grading policy: a readable hover
 cannot clear a row when suffix contribution, exact sense, or iʿrāb reasoning is pending.
 
+Progress/missed-error categories: no new category. These rows map to existing suffix omission, bāʾ/preposition-host
+omission, possessed-noun relation, proper/group noun collision, concept-gloss leakage, and component-only trap categories.
+
 Drills/evals/regressions: regression coverage is added by extending `tools/check_regressions.py` to validate this
 certification sample and its sidecars.
 
@@ -124,7 +127,7 @@ dictionary leakage, concept/proper collision, and preposition-host omission.
 Renderer requirements: preview fixture added, with no live claim. Future RH-LIVE work can use these rows only behind
 owner-authorized preview/admin gates.
 
-Future routing: continue RICH-CERT in bounded VN tranches. The next likely lane is `VN-RICH-CERT-04`, unless
+Future tranche-routing implications: continue RICH-CERT in bounded VN tranches. The next likely lane is `VN-RICH-CERT-04`, unless
 explicit owner authorization starts RH-LIVE-00 preview scaffolding.
 
 ## Validation

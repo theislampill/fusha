@@ -101,6 +101,12 @@ and `ما` decision procedures; the next movement requires two-vote review, not 
 Curriculum updates: no new lesson. The existing rich-hover curriculum already teaches that a readable English hover is
 not rich certification; this tranche supplies a validator-backed example of that rule.
 
+Assessment/checkpoint updates: no new checkpoint. Current assessment rules already require function-token reasoning,
+exact token address, public-safe output, and two-vote review for grammar-sensitive particle rows.
+
+Progress/missed-error categories: no new category. These rows map to existing particle-function flattening, component
+loss, readable-English-only, and source-agreement-with-wrong-reasoning categories.
+
 Drills/evals/regressions: regression coverage added through `tools/validate_rich_hover_certification.py` and
 `tools/check_regressions.py`.
 
@@ -110,7 +116,7 @@ dogfood lesson set.
 Renderer requirements: preview fixture added, with no live renderer claim. Future RH-LIVE work can consume the fixture
 only after owner authorization.
 
-Future routing: continue RICH-CERT in bounded tranches. Do not begin live renderer/admin scaffolding or apply planning
+Future tranche-routing implications: continue RICH-CERT in bounded tranches. Do not begin live renderer/admin scaffolding or apply planning
 from this artifact alone.
 
 ## Validation

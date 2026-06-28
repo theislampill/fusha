@@ -102,6 +102,12 @@ already route these rows. The certification queue preserves the unresolved gates
 Curriculum updates: no new learner prose. Existing particle and rich-hover curriculum already teaches the distinction
 between readable English and certified hidden state.
 
+Assessment/checkpoint updates: no new checkpoint. Current assessment rules already require exact particle function,
+clause relation, and two-vote review for `أَن`/`إِن`/`إِنَّ`-family rows before level clearance.
+
+Progress/missed-error categories: no new category. These rows map to existing particle-function flattening,
+subordinator/accusative-particle confusion, readable-English-only, and component-loss categories.
+
 Drills/evals/regressions: regression coverage is added by extending `tools/check_regressions.py` to validate this
 certification sample and its sidecars.
 
@@ -111,7 +117,7 @@ flattening, component loss, and readable-English/wrong-reasoning traps.
 Renderer requirements: preview fixture added, with no live claim. Future RH-LIVE work can use these rows only after
 owner authorization.
 
-Future routing: continue RICH-CERT in bounded tranches. The next likely tranche is P-RICH-CERT-04 for `لَا` and
+Future tranche-routing implications: continue RICH-CERT in bounded tranches. The next likely tranche is P-RICH-CERT-04 for `لَا` and
 temporal/negative function families.
 
 ## Validation

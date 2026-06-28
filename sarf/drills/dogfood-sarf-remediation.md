@@ -38,3 +38,16 @@ Recover the hidden radical and state why `norm()` is not enough.
 | `يَسْأَلُ` | hamza remains root evidence |
 
 Pass only when the learner can name the morphology evidence and route uncertainty to pending instead of guessing.
+
+## D. RICH-CERT Morphology Gate
+
+For each rich-cert row, decide whether the sarf state is proven or only previewed.
+
+| state | learner action | reject |
+|---|---|---|
+| `pending` | name the missing sarf evidence or component-only blocker | "the English looks fine" |
+| `preview_only` | use segment rows for study, but do not call it certified | "renderer metadata means live-ready" |
+| `token_only_override` | keep the exact address and require owner/two-vote gates | surface-family propagation |
+
+Examples: `يَسْأَلُكَ`, `فَأَهْلَكْنَاهُمْ`, `وَٱلشَّجَرُ`, and `بِبَدْرٍ` all teach useful
+pieces, but none becomes family-wide or live-applyable from rich metadata alone.

@@ -39,3 +39,18 @@ For each, state why two independent checks may be required.
 
 Pass only when the learner names the governor, governed item, or pending reason. Readable English without the
 grammar reason fails the drill.
+
+## D. RICH-CERT Nahw Gate
+
+For each candidate, state the hidden function or relation that still blocks certification.
+
+| example | nahw question | safe state |
+|---|---|---|
+| `وَمَا` | what does the wāw do, and which `ما` function applies? | pending until context is proven |
+| `لِمَا` | what does lām govern, and what is `ما` doing? | two-vote required |
+| `إِلَّا` | what is excepted, from what, and under which polarity/case frame? | two-vote required |
+| `وَٱلشَّجَرُ` | is the wāw just coordination in this list, and is the case/role certified? | component-only pending |
+| `بِبَدْرٍ` | what relation does bāʾ add to the place-name host? | exact-address token-only |
+
+Do not mark a row rich-certified when the English is readable but the particle function, governor, attachment,
+case/mood, or referent is still unresolved.

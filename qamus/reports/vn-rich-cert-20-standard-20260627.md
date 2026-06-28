@@ -97,7 +97,7 @@ Every row keeps public preview payloads source-clean as `src=qamus`, `kind=autho
 - Drills/evals/regressions: regression hook added via `tools/check_regressions.py`; no new grammar eval is required because no row advances to certification.
 - Production-bug lessons: no new lesson file required; VN-20 belongs to existing repeated classes rather than a new defect class.
 - Renderer requirements: VN-20 emits renderer fixtures for prefixed verbs, article-bearing nouns, suffix-bearing location nouns, preposition-host place names, and `بَيْنَ` relation rows whose flat English cannot teach composition.
-- Future tranche routing: VN-RICH-CERT standard tranches are now complete; the next step is the required RICH-CERT flywheel consolidation checkpoint before any RH-LIVE preview planning.
+- Future tranche-routing implications: VN-RICH-CERT standard tranches are now complete; the next step is the required RICH-CERT flywheel consolidation checkpoint before any RH-LIVE preview planning.
 
 Repeated issue counts observed in source parse-key components:
 

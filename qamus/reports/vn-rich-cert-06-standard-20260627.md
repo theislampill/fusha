@@ -102,13 +102,16 @@ Curriculum updates: no new learner prose in this certification tranche. These ro
 
 Assessment/checkpoint updates: no new checkpoint. These rows reinforce the current level-clearance policy: a learner or agent cannot clear a row from readable English alone when function, attachment, suffix referent, passive nominal role, or exact-address reasoning is pending.
 
+Progress/missed-error categories: no new category. These rows map to existing function-token collision, suffix omission,
+finite-verb dictionary leakage, maṣdar/participle distinction, passive nominal role, component-only trap, and token-only override categories.
+
 Drills/evals/regressions: regression coverage is added by extending `tools/check_regressions.py` to validate this certification sample and its sidecars.
 
 Production-bug lessons: no new lesson. The repeated classes are already represented as function-token flattening, finite verb dictionary leakage, suffix omission, nominal POS leakage, component-only evidence traps, and readable-English versus grammar-safe explanation.
 
 Renderer requirements: preview fixture added, with no live claim. Future RH-LIVE work can use these rows only behind owner-authorized preview/admin gates.
 
-Future routing: continue RICH-CERT in bounded VN tranches. The next likely lane is `VN-RICH-CERT-07`, unless explicit owner authorization starts RH-LIVE-00 preview scaffolding.
+Future tranche-routing implications: continue RICH-CERT in bounded VN tranches. The next likely lane is `VN-RICH-CERT-07`, unless explicit owner authorization starts RH-LIVE-00 preview scaffolding.
 
 ## Validation
 

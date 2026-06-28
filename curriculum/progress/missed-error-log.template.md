@@ -20,6 +20,9 @@ Copy this file outside the repo for a real learner. The repo keeps the template 
 - `component_only_overclaim`: component evidence used to certify a whole-token hover.
 - `renderer_only_gap`: answer is linguistically safe but needs rich segment/display support.
 - `token_only_override`: exact address differs from surface-family siblings.
+- `rich_cert_preview_overclaim`: preview-only rich metadata treated as certified hover output.
+- `rich_cert_pending_gate`: a pending/two-vote rich-cert row cleared from readable English alone.
+- `rh_live_preview_only`: admin/renderer preview candidate treated as public rollout approval.
 
 ## Review Standard
 

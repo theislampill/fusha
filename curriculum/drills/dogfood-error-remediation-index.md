@@ -14,6 +14,9 @@ the history; it is to route a miss to the procedure and drill that prevents the 
 | `component_only_overclaim` | segment evidence used as whole-token certification | `parse-key-and-color-layer.md` | `../../qamus/reports/morphosyntax-token-contract.md` |
 | `renderer_only_gap` | grammar is safe but not teachable as rich hover | `parse-key-and-color-layer.md` | `../qamus-hover-parse-key-and-color.md` |
 | `token_only_override` | surface-family propagation would change another location incorrectly | `hover-composition-and-routing.md` | `../../qamus/reports/source-address-model.md` |
+| `rich_cert_preview_overclaim` | preview metadata treated as certified/live hover support | `parse-key-and-color-layer.md` | `../../qamus/reports/rich-cert-flywheel-synthesis-20260627.md` |
+| `rich_cert_pending_gate` | pending/two-vote row cleared from readable English alone | `hover-composition-and-routing.md`, `parse-key-and-color-layer.md` | `../../qamus/reports/rich-cert-flywheel-synthesis-20260627.md` |
+| `rh_live_preview_only` | renderer/admin preview candidate mistaken for public rollout approval | `parse-key-and-color-layer.md` | `../../qamus/reports/rich-cert-flywheel-synthesis-20260627.md` |
 
 Checkpoint rule: a remediated item is not cleared until the learner can name what the visible Arabic piece
 contributes and why the old hover failure was unsafe.

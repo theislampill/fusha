@@ -33,6 +33,7 @@ Reject:
 - dictionary infinitive on a finite verb;
 - host-only answer when a visible preposition, particle, article, or suffix contributes meaning;
 - component evidence used as whole-token certification;
+- preview-only rich metadata used as if it were certified or live-rendered;
 - public source names or copied external wording.
 
 ## Open Grammar Item Rubric
@@ -51,6 +52,18 @@ Optional observations:
 - parse-key implication;
 - renderer/rich-hover implication;
 - related production-bug lesson.
+
+## Rich-Certification Item Rubric
+
+A rich-hover checkpoint is cleared only when the learner or reviewer can distinguish these states:
+
+- `pending`: an exact blocker remains; readable English does not clear it.
+- `token_only_override`: the address may be reviewed, but family propagation is unsafe.
+- `preview_only`: segment/display metadata may teach composition, but it is not certified and not live support.
+- `rich_certified`: all address, public-boundary, sarf, nahw, learner, two-vote/source, and renderer gates pass.
+
+Reject any answer that treats `preview_only` or `pending` as public certification. Route it to
+`rich_cert_preview_overclaim` or `rich_cert_pending_gate` in the missed-error log.
 
 Forbidden reasoning:
 

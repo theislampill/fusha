@@ -107,6 +107,9 @@ versus grammar-safe explanation.
 Assessment/checkpoint updates: no new checkpoint. The examples reinforce current grading policy: level advancement
 cannot rely on readable English when the hidden sarf/nahw state is not explained.
 
+Progress/missed-error categories: no new category. These rows map to existing finite-verb dictionary leakage, suffix
+omission, nominal/POS leakage, weak-root/POS collision, readable-English-only, and token-only override categories.
+
 Drills/evals/regressions: regression coverage is added by extending `tools/check_regressions.py` to validate this
 certification sample and its sidecars.
 
@@ -116,7 +119,7 @@ leakage, object suffix omission, nominal derivative leakage, and same-surface wr
 Renderer requirements: preview fixture added, with no live claim. Future RH-LIVE work can use these rows only behind
 owner-authorized preview/admin gates.
 
-Future routing: continue RICH-CERT in bounded VN tranches. The next likely lane is `VN-RICH-CERT-02`, unless
+Future tranche-routing implications: continue RICH-CERT in bounded VN tranches. The next likely lane is `VN-RICH-CERT-02`, unless
 explicit owner authorization starts RH-LIVE-00 preview scaffolding.
 
 ## Validation
