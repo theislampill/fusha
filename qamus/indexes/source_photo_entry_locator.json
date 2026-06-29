@@ -16193,64 +16193,88 @@
       "visual_note": "p034 min / مِنْ verified on photographed book page pg459.jpeg; Quranic usage examples continue on pg460.jpeg. Prior pg457 locator did not contain p034."
     },
     "p035": {
-      "candidate_page": 457,
+      "candidate_page": 460,
       "candidate_page_band": [
-        451,
-        463
+        460,
+        460
       ],
-      "candidate_page_image": "pg457.jpeg",
-      "confidence": "candidate",
+      "candidate_page_image": "pg460.jpeg",
+      "confidence": "photo_verified",
       "entry_id": "a1feead9300b",
       "headword": "فِي",
       "root": "",
       "section": "particle",
       "source_key": "p035",
-      "total_uses": 1701
+      "total_uses": 1701,
+      "page": 460,
+      "page_image": "pg460.jpeg",
+      "verified_page": 460,
+      "verified_page_image": "pg460.jpeg",
+      "verified_value": "فِي / total uses 1701 / Qurʾān usage examples on photographed book page",
+      "visual_note": "p035 fi / فِي verified on photographed book page pg460.jpeg. Prior candidate pg457 did not contain p035."
     },
     "p036": {
-      "candidate_page": 457,
+      "candidate_page": 460,
       "candidate_page_band": [
-        451,
-        463
+        460,
+        460
       ],
-      "candidate_page_image": "pg457.jpeg",
-      "confidence": "candidate",
+      "candidate_page_image": "pg460.jpeg",
+      "confidence": "photo_verified",
       "entry_id": "b7570549e851",
       "headword": "عَلَى",
       "root": "",
       "section": "particle",
       "source_key": "p036",
-      "total_uses": 1445
+      "total_uses": 1445,
+      "page": 460,
+      "page_image": "pg460.jpeg",
+      "verified_page": 460,
+      "verified_page_image": "pg460.jpeg",
+      "verified_value": "عَلَى / total uses 1445 / Qurʾān usage examples on photographed book page",
+      "visual_note": "p036 ala / عَلَى verified on photographed book page pg460.jpeg. Prior candidate pg457 did not contain p036."
     },
     "p037": {
-      "candidate_page": 457,
+      "candidate_page": 460,
       "candidate_page_band": [
-        451,
-        463
+        460,
+        460
       ],
-      "candidate_page_image": "pg457.jpeg",
-      "confidence": "candidate",
+      "candidate_page_image": "pg460.jpeg",
+      "confidence": "photo_verified",
       "entry_id": "1f50dcf7931c",
       "headword": "إِلَى",
       "root": "",
       "section": "particle",
       "source_key": "p037",
-      "total_uses": 742
+      "total_uses": 742,
+      "page": 460,
+      "page_image": "pg460.jpeg",
+      "verified_page": 460,
+      "verified_page_image": "pg460.jpeg",
+      "verified_value": "إِلَى / total uses 742 / Qurʾān usage examples on photographed book page",
+      "visual_note": "p037 ila / إِلَى verified on photographed book page pg460.jpeg. Prior candidate pg457 did not contain p037."
     },
     "p038": {
-      "candidate_page": 458,
+      "candidate_page": 460,
       "candidate_page_band": [
-        452,
-        464
+        460,
+        460
       ],
-      "candidate_page_image": "pg458.jpeg",
-      "confidence": "candidate",
+      "candidate_page_image": "pg460.jpeg",
+      "confidence": "photo_verified",
       "entry_id": "157442d7e625",
       "headword": "عَنْ",
       "root": "",
       "section": "particle",
       "source_key": "p038",
-      "total_uses": 464
+      "total_uses": 464,
+      "page": 460,
+      "page_image": "pg460.jpeg",
+      "verified_page": 460,
+      "verified_page_image": "pg460.jpeg",
+      "verified_value": "عَنْ / total uses 464 / Qurʾān usage examples on photographed book page",
+      "visual_note": "p038 an / عَنْ verified on photographed book page pg460.jpeg. Prior candidate pg458 did not contain p038."
     },
     "p039": {
       "candidate_page": 458,
@@ -16403,19 +16427,25 @@
       "total_uses": 19
     },
     "p049": {
-      "candidate_page": 460,
+      "candidate_page": 462,
       "candidate_page_band": [
-        454,
-        466
+        462,
+        462
       ],
-      "candidate_page_image": "pg460.jpeg",
-      "confidence": "candidate",
+      "candidate_page_image": "pg462.jpeg",
+      "confidence": "photo_verified",
       "entry_id": "5891b51869cc",
       "headword": "مَتَى",
       "root": "",
       "section": "particle",
       "source_key": "p049",
-      "total_uses": 9
+      "total_uses": 9,
+      "page": 462,
+      "page_image": "pg462.jpeg",
+      "verified_page": 462,
+      "verified_page_image": "pg462.jpeg",
+      "verified_value": "مَتَى / total uses 9 / Qurʾān usage example on photographed book page",
+      "visual_note": "p049 mata / مَتَى verified on photographed book page pg462.jpeg. Prior candidate pg460 contained p035-p038, not p049."
     },
     "p050": {
       "candidate_page": 460,
@@ -16568,19 +16598,25 @@
       "total_uses": 1
     },
     "p060": {
-      "candidate_page": 462,
+      "candidate_page": 464,
       "candidate_page_band": [
-        456,
-        468
+        464,
+        464
       ],
-      "candidate_page_image": "pg462.jpeg",
-      "confidence": "candidate",
+      "candidate_page_image": "pg464.jpeg",
+      "confidence": "photo_verified",
       "entry_id": "cee928fb679c",
       "headword": "لَوْ",
       "root": "",
       "section": "particle",
       "source_key": "p060",
-      "total_uses": 277
+      "total_uses": 277,
+      "page": 464,
+      "page_image": "pg464.jpeg",
+      "verified_page": 464,
+      "verified_page_image": "pg464.jpeg",
+      "verified_value": "لَوْ / total uses 277 / Qurʾān usage examples on photographed book page",
+      "visual_note": "p060 law / لَوْ verified on photographed book page pg464.jpeg. Prior candidate pg462.jpeg did not contain the full source entry/example evidence."
     },
     "p061": {
       "candidate_page": 463,
@@ -16628,49 +16664,67 @@
       "total_uses": 14
     },
     "p064": {
-      "candidate_page": 463,
+      "candidate_page": 465,
       "candidate_page_band": [
-        457,
-        469
+        465,
+        465
       ],
-      "candidate_page_image": "pg463.jpeg",
-      "confidence": "candidate",
+      "candidate_page_image": "pg465.jpeg",
+      "confidence": "photo_verified",
       "entry_id": "616dbd6dffcc",
       "headword": "هَذَا",
       "root": "",
       "section": "particle",
       "source_key": "p064",
-      "total_uses": 226
+      "total_uses": 226,
+      "page": 465,
+      "page_image": "pg465.jpeg",
+      "verified_page": 465,
+      "verified_page_image": "pg465.jpeg",
+      "verified_value": "هَذَا / total uses 226 / definitions and Qurʾān usage examples on photographed book page",
+      "visual_note": "p064 ha-dha / هَذَا verified on photographed book page pg465.jpeg. Prior candidate pg463.jpeg did not contain the full source entry/example evidence."
     },
     "p065": {
-      "candidate_page": 463,
+      "candidate_page": 465,
       "candidate_page_band": [
-        457,
-        469
+        465,
+        465
       ],
-      "candidate_page_image": "pg463.jpeg",
-      "confidence": "candidate",
+      "candidate_page_image": "pg465.jpeg",
+      "confidence": "photo_verified",
       "entry_id": "dfbc7a29f6fe",
       "headword": "هَذِهِ",
       "root": "",
       "section": "particle",
       "source_key": "p065",
-      "total_uses": 47
+      "total_uses": 47,
+      "page": 465,
+      "page_image": "pg465.jpeg",
+      "verified_page": 465,
+      "verified_page_image": "pg465.jpeg",
+      "verified_value": "هَذِهِ / total uses 47 / Qurʾān usage example on photographed book page",
+      "visual_note": "p065 ha-dhihi / هَذِهِ verified on photographed book page pg465.jpeg. Prior candidate pg463.jpeg did not contain the full source entry/example evidence."
     },
     "p066": {
-      "candidate_page": 464,
+      "candidate_page": 465,
       "candidate_page_band": [
-        458,
-        470
+        465,
+        465
       ],
-      "candidate_page_image": "pg464.jpeg",
-      "confidence": "candidate",
+      "candidate_page_image": "pg465.jpeg",
+      "confidence": "photo_verified",
       "entry_id": "07e9e2cce5df",
       "headword": "هَذَانِ",
       "root": "",
       "section": "particle",
       "source_key": "p066",
-      "total_uses": 2
+      "total_uses": 2,
+      "page": 465,
+      "page_image": "pg465.jpeg",
+      "verified_page": 465,
+      "verified_page_image": "pg465.jpeg",
+      "verified_value": "هَذَانِ / total uses 2 / Qurʾān usage example on photographed book page",
+      "visual_note": "p066 ha-dhani / هَذَانِ verified on photographed book page pg465.jpeg. Prior candidate pg464.jpeg did not contain the full source entry/example evidence."
     },
     "p067": {
       "candidate_page": 464,
@@ -16688,19 +16742,25 @@
       "total_uses": 1
     },
     "p068": {
-      "candidate_page": 464,
+      "candidate_page": 465,
       "candidate_page_band": [
-        458,
-        470
+        465,
+        465
       ],
-      "candidate_page_image": "pg464.jpeg",
-      "confidence": "candidate",
+      "candidate_page_image": "pg465.jpeg",
+      "confidence": "photo_verified",
       "entry_id": "bd3bb7a4c17f",
       "headword": "هَؤُلَاءِ",
       "root": "",
       "section": "particle",
       "source_key": "p068",
-      "total_uses": 46
+      "total_uses": 46,
+      "page": 465,
+      "page_image": "pg465.jpeg",
+      "verified_page": 465,
+      "verified_page_image": "pg465.jpeg",
+      "verified_value": "هَؤُلَاءِ / total uses 46 / Qurʾān usage example on photographed book page",
+      "visual_note": "p068 ha-ula-i / هَؤُلَاءِ verified on photographed book page pg465.jpeg. Prior candidate pg464.jpeg did not contain the full source entry/example evidence."
     },
     "p069": {
       "candidate_page": 464,
@@ -16718,19 +16778,25 @@
       "total_uses": 2
     },
     "p070": {
-      "candidate_page": 465,
+      "candidate_page": 466,
       "candidate_page_band": [
-        459,
-        471
+        466,
+        466
       ],
-      "candidate_page_image": "pg465.jpeg",
-      "confidence": "candidate",
+      "candidate_page_image": "pg466.jpeg",
+      "confidence": "photo_verified",
       "entry_id": "34baf82d4a6e",
       "headword": "أُولَئِكَ",
       "root": "",
       "section": "particle",
       "source_key": "p070",
-      "total_uses": 206
+      "total_uses": 206,
+      "page": 466,
+      "page_image": "pg466.jpeg",
+      "verified_page": 466,
+      "verified_page_image": "pg466.jpeg",
+      "verified_value": "أُولَئِكَ / total uses 206 / Qurʾān usage examples on photographed book page",
+      "visual_note": "p070 ola-ika / أُولَئِكَ verified on photographed book page pg466.jpeg. Prior candidate pg465.jpeg did not contain the full source entry/example evidence."
     },
     "p071": {
       "candidate_page": 465,
