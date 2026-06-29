@@ -724,9 +724,23 @@ try:
         "rich_cert_preview_overclaim",
         "rich_cert_pending_gate",
         "rh_live_preview_only",
+        "hidden_number_morphology",
+        "hidden_derivative_shape",
+        "hidden_imperfect_prefix",
+        "quran_display_text_mismatch",
+        "process_prose_in_hover",
+        "card_level_coverage_hidden",
     ):
         check("RICH-CERT learner category promoted: " + _category,
               _category in _learner_surfaces)
+    _rh_live_andon_report = io.open(
+        os.path.join(_R, "curriculum", "reports", "rh-live-andon-flywheel-backfill-20260629.md"),
+        encoding="utf-8",
+    ).read()
+    check("RH-LIVE ANDON flywheel report exists",
+          "Role color cannot collapse morphology" in _rh_live_andon_report
+          and "Learner explanations must teach Arabic" in _rh_live_andon_report
+          and "does not mutate live Qamus" in _rh_live_andon_report)
 except Exception:
     check("RICH-CERT flywheel synthesis/readiness guard runnable", False)
 

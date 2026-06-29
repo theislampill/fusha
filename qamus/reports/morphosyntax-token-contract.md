@@ -159,15 +159,24 @@ The parse payload should drive validators:
 The live renderer should be able to color both the Arabic token and the hover breakdown from this payload. Keep the
 public best gloss concise, but expose a scrubbed learner view with stable segment classes:
 
-- conjunction/resumption/result/cause particles (`qg-particle`, `qg-result`)
+- conjunction/resumption/result/cause particles (`qg-particle`, `qg-conjunction`, `qg-result`, `qg-result-fa`)
 - prepositions, oath wāw, and comitative wāw (`qg-preposition`, `qg-oath`, `qg-comitative`)
 - whole-token function particles such as negation, exception, interrogation, time adverb, accusative-particle,
-  subordinating, conditional, and purpose particles (`qg-negative`, `qg-exception`, `qg-particle`)
+  subordinating, conditional, lām, mā, and purpose particles (`qg-negative`, `qg-exception`, `qg-particle`,
+  `qg-lam`, `qg-ma-particle`)
 - definite article (`qg-article`)
-- verb stem and verb form (`qg-verb`)
-- nouns and proper-name hosts (`qg-noun`, `qg-proper-noun`)
-- subject, object, and possessive pronouns (`qg-pronoun`)
+- verb prefix, stem, and verb form (`qg-verb-prefix`, `qg-verb-stem`, legacy `qg-verb`)
+- nouns, adjective hosts, proper-name hosts, and visible number/derivative pieces
+  (`qg-noun-stem`, `qg-adjective`, `qg-proper-noun`, `qg-dual-suffix`, `qg-plural-suffix`,
+  `qg-derivative-prefix`, legacy `qg-noun`)
+- subject, object, and possessive pronouns (`qg-subject-pronoun`, `qg-object-pronoun`,
+  `qg-possessive-pronoun`, legacy `qg-pronoun`)
 - relative, vocative, exception, and case pieces (`qg-relative`, `qg-vocative`, `qg-exception`, `qg-case`)
+
+Legacy broad classes remain accepted for older repo fixtures, but new RH-LIVE/RICH-CERT payloads should use the
+specific role class whenever the segment role is certified. A row that hides a dual/plural ending, a derivative
+prefix, or an imperfect marker inside a single broad host color is not learner-rich even if the English gloss reads
+well.
 
 The color layer must be generated from scrubbed segment roles, not from external source names or copied source text.
 For Arabic shaping safety, `display.segments[]` does not require visible segment elements inside the word. A live

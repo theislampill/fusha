@@ -128,6 +128,14 @@ segment or phrase role. Use `qg-particle`, `qg-preposition`, `qg-oath`, `qg-comi
 `qg-relative`, `qg-vocative`, `qg-exception`, and `qg-relation` for syntactic functions. If the function, governor,
 attachment, clause role, or iʿrāb is not certified, rich-hover rendering is not ready; route to two-vote,
 scholar, owner, or precise pending.
+When the renderer has role-aware classes, prefer function-specific display roles such as `qg-conjunction`,
+`qg-result-fa`, `qg-lam`, `qg-ma-particle`, `qg-preposition`, and `qg-article` instead of collapsing every
+function piece into a generic particle color. The learner should be able to see why a wāw is coordination, an oath,
+or comitative; why a fāʾ is result/resumption; and what lām or mā is doing in context.
+
+Learner-facing tooltip prose must explain Arabic, not workflow. Do not put source-boundary, authoring-process,
+deployment, owner-authorization, or internal-evidence statements in a public hover explanation. Those statements
+belong in reports, admin gates, and validation logs.
 
 ## 10. Verb–subject–object context
 The object/construction can fix a polysemous verb: أَتَى = come/bring/give/commit by object; يَقْدِرُ in a rizq

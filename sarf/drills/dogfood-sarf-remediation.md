@@ -51,3 +51,32 @@ For each rich-cert row, decide whether the sarf state is proven or only previewe
 
 Examples: `يَسْأَلُكَ`, `فَأَهْلَكْنَاهُمْ`, `وَٱلشَّجَرُ`, and `بِبَدْرٍ` all teach useful
 pieces, but none becomes family-wide or live-applyable from rich metadata alone.
+
+## E. Visible Number And Derivative Shape
+
+For each token, name the host, the visible number/derivative marker, and the display class that should teach it.
+
+| token | required observations | reject |
+|---|---|---|
+| `بُرْهَٰنَانِ` | noun host plus visible dual ending; morphline says dual | one plain noun span with no dual note |
+| `قاعدون` | participial/adjectival host plus sound masculine plural ending | gloss "sit" or "sitting" with no plural proof |
+| `مُّطَاعٍۢ` | passive participle / ṣifa shape; derivative prefix belongs in the color layer | infinitive "to obey"; uncolored host-only span |
+| `يُحْيِي` | imperfect prefix `يُ` plus lexical Form IV stem | single verb span that hides the prefix |
+| `ٱلْغَٰلِبُونَ` | article + participial/adjectival host + plural ending | article or plural ending disappears |
+
+Answer standard: role-aware color is instruction, not decoration. If the learner cannot see the dual/plural ending,
+derivative prefix, or imperfect prefix in the hover breakdown, the row is still a rich-renderer backfill item.
+
+## F. Source Text Before Sarf
+
+Do not segment a Qurʾān example row until the displayed Arabic is deterministically sourced.
+
+| defect | sarf action |
+|---|---|
+| lost hamza seat or maddah | block as `quran_display_text_mismatch`; refresh canonical display before morphology |
+| missing diacritics on the cited word | block as `quran_display_text_mismatch`; do not infer morphology from a damaged display |
+| selected card text differs from the source-backed example | block as `source_card_alignment_mismatch`; do not certify a hover on the wrong span |
+| entry page groups display forms as separate senses without source support | block as `sense_alignment_mismatch`; repair the entry/sense graph before rich hover |
+
+This is a sarf gate because broken display text can erase the very evidence used for root, pattern, number, voice,
+or clitic decisions.

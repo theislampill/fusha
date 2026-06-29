@@ -26,16 +26,27 @@ display classes are scrubbed Qamus role classes, not screenshot/source labels.
 
 | Piece | Display class | Tag |
 |---|---|---|
-| verb stem | `qg-verb` | `V` |
-| noun/common host | `qg-noun` | `N` |
+| verb prefix / imperfect marker | `qg-verb-prefix` | `PFX` |
+| verb stem | `qg-verb` / `qg-verb-stem` | `V` / `STEM` |
+| subject marker or subject pronoun | `qg-subject-pronoun` | `SUBJ` |
+| object pronoun | `qg-object-pronoun` | `OBJ` |
+| possessive pronoun | `qg-possessive-pronoun` / `qg-pronoun` | `POSS` |
+| noun/common host | `qg-noun` / `qg-noun-stem` | `N` |
+| adjective / ṣifa host | `qg-adjective` | `ADJ` |
 | proper name host | `qg-proper-noun` | `N` |
-| pronoun | `qg-pronoun` | `PRON` |
+| generic pronoun | `qg-pronoun` | `PRON` |
 | preposition | `qg-preposition` | `P` |
+| conjunction wāw | `qg-conjunction` | `CONJ` |
 | oath waw | `qg-oath` | `OATH` |
 | comitative waw | `qg-comitative` | `COM` |
 | ordinary/function particle | `qg-particle` | `PART` |
-| cause/result fa | `qg-result` | `CAUS` / `RES` |
+| cause/result fa | `qg-result` / `qg-result-fa` | `CAUS` / `RES` |
+| lām segment | `qg-lam` | `LAM` |
+| mā segment | `qg-ma-particle` | `MA` |
 | definite article | `qg-article` | `ART` |
+| derivative prefix | `qg-derivative-prefix` | `DER` |
+| dual suffix | `qg-dual-suffix` | `DUAL` |
+| plural suffix | `qg-plural-suffix` | `PL` |
 | relative pronoun | `qg-relative` | `REL` |
 | vocative | `qg-vocative` | `VOC` |
 | exception | `qg-exception` | `EXC` |
@@ -55,6 +66,12 @@ display classes are scrubbed Qamus role classes, not screenshot/source labels.
 | `وَمَا` | one written token; waw plus function-specific `ما` | `qg-particle`, `qg-relative`/`qg-negative`/`qg-particle` |
 | `أَيُّهَا` | vocative support plus attention particle | `qg-vocative`, `qg-particle` |
 | `إِلَّا` | exception particle; type/case may require nahw/scholar lane | `qg-exception` |
+| `أُورِثْتُمُوهَا` | passive perfect host + 2mp subject/deputy-subject marker + object `ها` | `qg-verb-stem`, `qg-subject-pronoun`, `qg-object-pronoun` |
+| `بُرْهَٰنَانِ` | noun host plus visible dual ending; dual cannot hide inside a white host span | `qg-noun-stem`, `qg-dual-suffix` |
+| `قاعدون` | participial/adjectival host plus sound masculine plural ending | `qg-noun-stem` or `qg-adjective`, `qg-plural-suffix` |
+| `مُّطَاعٍۢ` | passive participle / ṣifa shape, not the infinitive "to obey" | `qg-derivative-prefix`, `qg-adjective` |
+| `يُحْيِي` | imperfect prefix plus Form IV lexical stem | `qg-verb-prefix`, `qg-verb-stem` |
+| `كُلُّ شَيْءٍ قَدِيرٌ` | quantifier/noun/adjective relation; each visible host needs its own role | `qg-noun-stem`, `qg-noun-stem`, `qg-adjective` |
 
 ## Worked Shape
 
@@ -100,6 +117,22 @@ For each reviewed token, write one of `pending`, `token_only_override`, `preview
 
 Reject any answer that says "the tooltip can show colors, therefore the hover is certified." Renderer preview data is a
 study aid until the sarf, nahw, source/two-vote, public-boundary, and owner gates all pass.
+
+## RH-LIVE Color Regression Items
+
+Use these as quick checks after any public or fixture renderer change:
+
+- `يُحْيِي`: the `يُ` prefix and `حْيِي` stem must begin as separate segment records. A single verb-colored span
+  hides the imperfect marker.
+- `بُرْهَٰنَانِ`: the dual ending must be visible in the breakdown and morphline. A gloss that says "two proofs"
+  while the token remains one unmarked host fails the lesson.
+- `قاعدون`: the plural ending must be visible; the hover should teach "sitting/staying ones" as a plural nominal
+  contribution, not only a root family.
+- `مُّطَاعٍۢ`: the row must show passive participle / adjective shape and avoid an infinitive such as "to obey".
+- `أُورِثْتُمُوهَا`: the passive host, 2mp marker, and object `ها` each need a contribution row.
+- `ٱل...` hosts: the article remains `qg-article`; do not let a definite article vanish into a plain noun/adjective span.
+- Learner explanations must explain Arabic pieces only. Phrases about authoring process, source-boundary policy,
+  deployment, or internal evidence are report/admin text, not hover text.
 
 Run the metadata validator against a JSONL version of the answers when converting this drill
 into fixtures:

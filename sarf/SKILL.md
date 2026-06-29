@@ -112,9 +112,18 @@ For any future rich hover, sarf must also emit the morphology side of the parse-
 `parse_key.key` (compact ASCII), `parse_key.summary`, and one `qamus-grammar-v1` display class per grammatical
 piece. These display classes may drive non-destructive color on an atomic visible Arabic word; they do not require
 splitting the word into DOM segment boxes.
-Use `qg-verb`, `qg-noun`, `qg-proper-noun`, `qg-pronoun`, `qg-preposition`, `qg-article`, or `qg-case` as
-appropriate. If sarf cannot account for a grammatical piece, the row is not ready for rich-hover rendering and should
-defer to nahw or pending with an exact blocker.
+Use broad classes such as `qg-verb`, `qg-noun`, `qg-proper-noun`, `qg-pronoun`, `qg-preposition`,
+`qg-article`, or `qg-case` when only the broad role is certified. Use the role-aware classes when the morphology
+is known and learner-relevant: `qg-verb-prefix`, `qg-verb-stem`, `qg-subject-pronoun`, `qg-object-pronoun`,
+`qg-possessive-pronoun`, `qg-noun-stem`, `qg-adjective`, `qg-dual-suffix`, `qg-plural-suffix`, and
+`qg-derivative-prefix`. A rich hover that teaches dual, plural, participle/adjective shape, or a finite verb prefix
+must make that visible in display metadata and the morphline. If sarf cannot account for a grammatical piece, the row
+is not ready for rich-hover rendering and should defer to nahw or pending with an exact blocker.
+
+Every certifiable noun/adjective/participle host should carry an appropriate root or base where the tradition and
+entry data support one. Proper names, pure particles, pronouns, and function-only cases must carry an explicit
+`no_root`, `proper_name_no_root`, or `function_only_no_root` reason rather than a guessed root. Do not fill root fields
+from resemblance alone.
 
 A broad root-family gloss is dictionary metadata, not a hover. Do not put an omnibus entry gloss such as
 "to know — also to teach and learn" on a concrete token. Pick the token's form-aware contribution ("knows",

@@ -260,3 +260,19 @@ present, and nahw role.
 Rule: VN-20 noun rows can be populated and still below rich certification. A
 learner-ready hover needs noun type, definiteness/article, case/state, number,
 suffix or relation where present, and the nahw role.
+
+## <a name="rh-live-visible-number-derivative"></a>23. RH-LIVE: visible number and derivative color
+
+Live particle-page dogfood exposed a stricter display lesson: a correct English gloss can still fail as instruction
+when number or derivative shape is invisible.
+
+| token | tempting shortcut | required review |
+|---|---|---|
+| `بُرْهَٰنَانِ` | "proofs" with one noun-colored span | noun host plus dual suffix; morphline names dual |
+| `قاعدون` | "sitting" without number | participial/adjectival host plus sound plural ending |
+| `مُّطَاعٍۢ` | "to obey" from the root family | passive participle / ṣifa contribution such as "obedient/obeyed" by context |
+| `كُلُّ شَيْءٍ قَدِيرٌ` | one phrase gloss with uncolored hosts | quantifier, noun, and adjective each get a role and relation |
+| `ٱلْغَٰلِبُونَ` | article and plural hidden inside host | article + participial/adjectival host + plural ending |
+
+Rule: every certifiable noun/adjective/participle host carries a root or base where applicable. Proper names and
+function-only rows carry an explicit no-root/no-op reason. Never invent a root just to fill a field.

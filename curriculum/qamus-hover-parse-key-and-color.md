@@ -117,8 +117,15 @@ Use stable role classes. Do not bind colors directly to source tags; bind them t
 
 | Role family | Class | Suggested visual treatment |
 |---|---|---|
-| stem verb | `qg-verb` | green accent |
-| noun/common host | `qg-noun` | blue accent |
+| verb prefix / imperfect marker | `qg-verb-prefix` | small inflection accent distinct from stem |
+| stem verb | `qg-verb` / `qg-verb-stem` | lexical-host accent distinct from prefix and suffix |
+| subject marker or subject pronoun | `qg-subject-pronoun` | subject-role pronoun accent |
+| object pronoun | `qg-object-pronoun` | object-role pronoun accent |
+| noun/common host | `qg-noun` / `qg-noun-stem` | visible host accent; never invisible "plain white" when morphology is being taught |
+| adjective / ṣifa host | `qg-adjective` | adjectival-host accent distinct from plain noun host when the row teaches quality |
+| dual suffix | `qg-dual-suffix` | number-ending accent |
+| plural suffix | `qg-plural-suffix` | number-ending accent distinct from lexical host |
+| derivative prefix | `qg-derivative-prefix` | nominal-derivative prefix accent |
 | proper name host | `qg-proper-noun` | blue plus name marker |
 | pronoun segment | `qg-pronoun` | slate/indigo accent |
 | preposition | `qg-preposition` | red accent |
@@ -137,6 +144,14 @@ Use stable role classes. Do not bind colors directly to source tags; bind them t
 Color is an aid, not the only signal. The hover must also show text labels such as `V`, `N`,
 `PRON`, `P`, `REL`, `VOC`, `OATH`, `COM`, `CAUS`, or `CASE`, so the UI remains usable for
 color-blind learners and for screenshots/printouts.
+
+RH-LIVE dogfood added a stricter learner rule: a grammatically correct payload can still be a poor rich hover if
+the visible color layer hides the exact thing being taught. For example, a dual noun such as `بُرْهَٰنَانِ` should
+not show only one undifferentiated noun-colored span when the learner needs to see the dual ending. A plural
+participle such as `قاعدون` should expose the plural tail. A passive participle/adjective such as `مُّطَاعٍۢ`
+should expose its derivative prefix or participial shape so it is not read as the infinitive "to obey". A finite
+verb such as `يُحْيِي` should color the imperfect prefix separately from the lexical stem. If the renderer cannot
+show these pieces, the row is not learner-rich even when the authored gloss itself is safe.
 
 ## Hover Layout Target
 
@@ -193,6 +208,10 @@ inside the visible word.
 - If `ما`, `و`, `ف`, `ل`, `أ`, `لا`, `إلا`, or a governing particle is present, nahw must name
   the function before the parse key can be final.
 - If a verb is finite, sarf must expose form, voice, person, number, and attached pronouns.
+- If a noun/adjective/participle teaches number or derivative shape, sarf must expose the number suffix or derivative
+  prefix where it is visible: dual `ـان/ـين`, sound plural `ـون/ـين/ـات`, and participial `مـ` are not decoration.
+- If a noun/adjective host is certifiable, carry its root/base where applicable. Proper names and function-only
+  particles get an explicit `no_root` or `function_only_no_root` reason rather than a fake root.
 - If a PP, idafa, relative clause, conditional, hal, purpose accusative, vocative, or exception
   decides the wording, the parse key must record the relation or leave the row pending.
 - If QAC concept metadata flags a person/place/people/plant/body-part/etc., use it for routing
@@ -202,6 +221,10 @@ inside the visible word.
   reason before `rich_certified`.
 - If the renderer cannot show the rich breakdown yet, emit a renderer requirement instead of pretending the row is
   live-rich.
+- Learner explanations must teach the Arabic. Do not put deployment, owner-authorization, source-boundary, or
+  provenance-process prose inside the public tooltip. Those facts belong in reports or admin gates, not in a hover.
+- A Qur'anic example row must use the deterministically sourced display text. If the display has lost hamza seats,
+  maddah, diacritics, or word boundaries, the row is a source-text repair blocker before rich-hover certification.
 
 ## Hidden-State Curriculum Frame
 

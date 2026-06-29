@@ -15,6 +15,9 @@ roadmap, assessment rubric, and explicit sarf/nahw procedure loading before a le
 | confused verb form / tense / voice (I vs II vs IV; active vs passive) | `sarf/procedures/verb-form.md` |
 | missed a weak/hamza/doubled radical | `sarf/procedures/weak-root.md` / `sarf/procedures/hamza-root.md` / `sarf/procedures/doubled-root.md` |
 | put a verb gloss on a noun / participle / maṣdar | `sarf/procedures/masdar-participle.md` + sarf principle 3 (POS mismatch is a blocker) |
+| hidden dual/plural ending in a rich hover or answer | `sarf/drills/dogfood-sarf-remediation.md` §Visible Number And Derivative Shape + `curriculum/drills/parse-key-and-color-layer.md` |
+| passive participle/adjective read as an infinitive | `sarf/procedures/masdar-participle.md` + `sarf/drills/nominal-derivatives.md` §RH-LIVE visible number and derivative color |
+| finite imperfect prefix hidden inside one verb-colored span | `sarf/procedures/verb-form.md` + `curriculum/drills/parse-key-and-color-layer.md` |
 | accepted a host-only gloss when a written token has `بِـ`/`لِـ`/`كَـ`/`وَ`/`فَـ`/suffix pronoun | `curriculum/drills/hover-composition-and-routing.md` + `sarf/procedures/clitic-and-host-morphology.md` |
 | split tanwīn fatḥ alif as pronoun `نا` | `curriculum/drills/alphabet-and-sounds.md` + `sarf/procedures/clitic-and-host-morphology.md` |
 | read a proper noun as a common verb | `sarf/procedures/proper-noun.md` |
@@ -29,6 +32,9 @@ roadmap, assessment rubric, and explicit sarf/nahw procedure loading before a le
 | missed governing-particle mood (lan/lam/lām/causal fā'/prohibition lā) | `nahw/procedures/governing-particle-mood-review.md` |
 | wrong iḍāfa / jar-majrūr wording | `nahw/procedures/idafa-jar-majrur.md` |
 | carried a referent across (divine Name vs attribute, Prophet vs adjective) | `nahw/procedures/referent-context.md` |
+| tooltip explanation contains source-boundary/deployment/process prose instead of Arabic reasoning | `nahw/drills/dogfood-nahw-remediation.md` §Learner Explanation Versus Process Prose + `curriculum/drills/hover-composition-and-routing.md` |
+| Qurʾān usage text lacks canonical hamza/maddah/diacritics or the selected target word | `provenance/source-boundaries.md` + `curriculum/drills/hover-composition-and-routing.md` source-text blocker rule |
+| report says row coverage is complete while a visible example card remains flat/blocked | `curriculum/drills/hover-composition-and-routing.md` card-level coverage rule + `curriculum/progress/missed-error-log.template.md` |
 | used QAC concept membership as a translation | `qamus/procedures/grammar-resource-usage.md` + `curriculum/drills/hover-composition-and-routing.md` |
 | confused named entity with common lexical meaning | concept-map flag internally, then `sarf/procedures/proper-noun.md` and verse-specific nahw/i'rab |
 

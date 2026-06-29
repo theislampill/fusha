@@ -71,6 +71,11 @@ attached piece's contribution. A hidden `pre` field is not enough for a learner.
 | `بِٱلْمَعْرُوفِ` | bā' + article + nominal host | preposition, definiteness, and host all appear in breakdown | generic phrase with no bā' component |
 | `يَابِسٍ` | one lexical adjective/noun host, not `يا` + host | yā is part of the stem; keep the token out of the vocative lane | false vocative split from `startswith("يا")` |
 | `يَابِسَٰتٍ` | one lexical feminine plural host | stem letters stay together before nahw routing | false vocative/addressee split |
+| `أُورِثْتُمُوهَا` | passive verb host + 2mp subject/deputy-subject marker + object `ها` | passive, addressee group, and object must all be visible | host-only "inherited" |
+| `بُرْهَٰنَانِ` | noun host + dual suffix | dual is visible morphology and belongs in the display contract | one plain noun span |
+| `قاعدون` | participial/adjectival host + sound plural ending | plural ending changes the learner-facing contribution | unmarked "sitting" |
+| `مُّطَاعٍۢ` | derivative/participial host shape | adjective/passive participle, not an infinitive | "to obey" |
+| `يُحْيِي` | imperfect prefix + verb stem | prefix and stem need distinct roles | one undifferentiated verb span |
 
 ## Parse-key extension
 
@@ -79,7 +84,9 @@ After each segmentation, produce the rich-hover handoff:
 - `parse_key.key`: compact ASCII, such as `P:BI+N:GEN`, `CONJ+P:BI+ART+N:GEN:DEF`,
   or `V:IV:PERF:ACT:1P+OBJ.3MS`.
 - `display classes`: one class per grammatical piece, such as `qg-preposition`,
-  `qg-article`, `qg-noun`, `qg-verb`, and `qg-pronoun`.
+  `qg-article`, `qg-noun`, `qg-verb`, and `qg-pronoun`. When exact morphology is known, prefer role-aware classes:
+  `qg-verb-prefix`, `qg-verb-stem`, `qg-subject-pronoun`, `qg-object-pronoun`, `qg-noun-stem`,
+  `qg-adjective`, `qg-dual-suffix`, `qg-plural-suffix`, and `qg-derivative-prefix`.
 
 If the class would depend on nahw (`و` as oath/comitative/conjunction, `ف` as cause/result,
 `ل` as purpose/imperative/genitive), write `pending: particle_function_uncertified` instead of

@@ -165,6 +165,10 @@ After a dogfood tranche, use
 [`vn-dogfood-to-curriculum-synthesis-20260627.md`](vn-dogfood-to-curriculum-synthesis-20260627.md)
 to decide whether the finding belongs in a sarf procedure, a nahw procedure, a drill, a
 regression fixture, a renderer requirement, or a documented no-op.
+For RH-LIVE public-rollout ANDONs, also check
+[`reports/rh-live-andon-flywheel-backfill-20260629.md`](reports/rh-live-andon-flywheel-backfill-20260629.md),
+which records the newer lessons about role-aware colors, deterministic Qurʾān display text, card-level
+coverage, and learner-facing hover prose.
 
 ## Assessment, Progress, And Tutoring Runtime
 

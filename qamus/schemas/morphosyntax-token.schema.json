@@ -187,7 +187,7 @@
               "role": { "type": "string" },
               "class": {
                 "type": "string",
-                "enum": ["qg-article", "qg-case", "qg-comitative", "qg-exception", "qg-negative", "qg-noun", "qg-oath", "qg-particle", "qg-preposition", "qg-pronoun", "qg-proper-noun", "qg-relation", "qg-relative", "qg-result", "qg-unknown", "qg-verb", "qg-vocative"]
+                "enum": ["qg-adjective", "qg-article", "qg-case", "qg-comitative", "qg-conjunction", "qg-derivative-prefix", "qg-dual-suffix", "qg-exception", "qg-lam", "qg-ma-particle", "qg-negative", "qg-noun", "qg-noun-stem", "qg-oath", "qg-object-pronoun", "qg-particle", "qg-plural-suffix", "qg-possessive-pronoun", "qg-preposition", "qg-pronoun", "qg-proper-noun", "qg-relation", "qg-relative", "qg-result", "qg-result-fa", "qg-subject-pronoun", "qg-unknown", "qg-verb", "qg-verb-prefix", "qg-verb-stem", "qg-vocative"]
               },
               "label": {
                 "type": "string",

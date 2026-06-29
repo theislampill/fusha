@@ -19,6 +19,13 @@ Copy this file outside the repo for a real learner. The repo keeps the template 
 - `idafa_reversed`: construct relationship or definiteness reversed.
 - `component_only_overclaim`: component evidence used to certify a whole-token hover.
 - `renderer_only_gap`: answer is linguistically safe but needs rich segment/display support.
+- `hidden_number_morphology`: dual/plural ending exists but the answer or hover hides it.
+- `hidden_derivative_shape`: participle/adjective/maṣdar shape exists but the answer collapses it to a root or infinitive.
+- `hidden_imperfect_prefix`: finite imperfect prefix exists but the answer or color layer treats it as part of one opaque verb span.
+- `coarse_white_host_span`: rich hover uses a plain/uncolored host where the learner needs role-aware color or a segment row.
+- `quran_display_text_mismatch`: cited Qurʾān text lost a hamza seat, maddah, diacritic, word boundary, or selected target word.
+- `process_prose_in_hover`: learner-facing explanation contains authoring/deployment/source-boundary prose instead of Arabic reasoning.
+- `card_level_coverage_hidden`: report counts live rows while a visible listed example card remains flat, blocked, or unreported.
 - `token_only_override`: exact address differs from surface-family siblings.
 - `rich_cert_preview_overclaim`: preview-only rich metadata treated as certified hover output.
 - `rich_cert_pending_gate`: a pending/two-vote rich-cert row cleared from readable English alone.

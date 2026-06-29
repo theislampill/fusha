@@ -48,7 +48,9 @@ FUNCTION_BEARING_SEGMENTS = {
     "prefix_particle",
     "prefix_purpose_lam",
     "prefix_imperative_lam",
+    "prefix_lam",
     "particle",
+    "particle_ma",
     "preposition",
     "conjunction_particle",
     "negative_particle",
@@ -76,25 +78,27 @@ FUNCTION_BEARING_SEGMENTS = {
 PRONOUN_SEGMENTS = {"subject_pronoun", "object_pronoun", "possessive_pronoun"}
 
 DISPLAY_CLASS_BY_ROLE = {
-    "stem": "qg-verb",  # nominal stems are permitted to override via pos-aware renderers; validator checks scrubbed role only.
-    "verb_prefix": "qg-verb",
-    "prefix_conjunction": "qg-particle",
+    "stem": "qg-verb-stem",  # pos-aware renderers refine nominal/adjectival/proper stems below.
+    "verb_prefix": "qg-verb-prefix",
+    "prefix_conjunction": "qg-conjunction",
     "prefix_preposition": "qg-preposition",
     "prefix_oath": "qg-oath",
     "prefix_comitative_waw": "qg-comitative",
-    "prefix_resumption_fa": "qg-particle",
-    "prefix_coordination_fa": "qg-particle",
-    "prefix_result_fa": "qg-result",
+    "prefix_resumption_fa": "qg-result-fa",
+    "prefix_coordination_fa": "qg-conjunction",
+    "prefix_result_fa": "qg-result-fa",
     "prefix_supplemental_fa": "qg-particle",
-    "prefix_cause_fa": "qg-result",
+    "prefix_cause_fa": "qg-result-fa",
     "prefix_interrogative_hamza": "qg-particle",
     "prefix_equalization_hamza": "qg-particle",
     "prefix_particle": "qg-particle",
-    "prefix_purpose_lam": "qg-particle",
-    "prefix_imperative_lam": "qg-particle",
+    "prefix_purpose_lam": "qg-lam",
+    "prefix_imperative_lam": "qg-lam",
+    "prefix_lam": "qg-lam",
     "particle": "qg-particle",
+    "particle_ma": "qg-ma-particle",
     "preposition": "qg-preposition",
-    "conjunction_particle": "qg-particle",
+    "conjunction_particle": "qg-conjunction",
     "negative_particle": "qg-negative",
     "exceptive_particle": "qg-exception",
     "conditional_particle": "qg-particle",
@@ -111,11 +115,14 @@ DISPLAY_CLASS_BY_ROLE = {
     "attention_particle": "qg-particle",
     "preventive_ma": "qg-particle",
     "definite_article": "qg-article",
-    "subject_pronoun": "qg-pronoun",
-    "object_pronoun": "qg-pronoun",
-    "possessive_pronoun": "qg-pronoun",
+    "subject_pronoun": "qg-subject-pronoun",
+    "object_pronoun": "qg-object-pronoun",
+    "possessive_pronoun": "qg-possessive-pronoun",
     "relative_pronoun": "qg-relative",
     "case_ending": "qg-case",
+    "dual_suffix": "qg-dual-suffix",
+    "plural_suffix": "qg-plural-suffix",
+    "derivative_prefix": "qg-derivative-prefix",
     "other": "qg-unknown",
 }
 
@@ -136,7 +143,9 @@ DISPLAY_LABEL_BY_ROLE = {
     "prefix_particle": "PART",
     "prefix_purpose_lam": "PURP",
     "prefix_imperative_lam": "IMPV",
+    "prefix_lam": "LAM",
     "particle": "PART",
+    "particle_ma": "MA",
     "preposition": "P",
     "conjunction_particle": "CONJ",
     "negative_particle": "NEG",
@@ -160,6 +169,9 @@ DISPLAY_LABEL_BY_ROLE = {
     "possessive_pronoun": "PRON",
     "relative_pronoun": "REL",
     "case_ending": "CASE",
+    "dual_suffix": "DUAL",
+    "plural_suffix": "PL",
+    "derivative_prefix": "DER",
     "other": "UNK",
 }
 
@@ -192,11 +204,34 @@ def _has_whitespace(value):
 
 
 def _display_class_for(role, pos=None):
-    if role == "stem" and pos in {"noun", "adjective", "participle", "masdar", "number"}:
-        return "qg-noun"
+    if role == "stem" and pos == "adjective":
+        return "qg-adjective"
+    if role == "stem" and pos in {"noun", "participle", "masdar", "number"}:
+        return "qg-noun-stem"
     if role == "stem" and pos == "proper_noun":
         return "qg-proper-noun"
     return DISPLAY_CLASS_BY_ROLE.get(role, "qg-unknown")
+
+
+def _accepted_display_classes_for(role, pos=None):
+    """Preferred role-aware class plus legacy broad classes accepted during fixture migration."""
+    preferred = _display_class_for(role, pos)
+    accepted = {preferred}
+    if preferred == "qg-verb-stem":
+        accepted.add("qg-verb")
+    if preferred in {"qg-noun-stem", "qg-adjective"}:
+        accepted.add("qg-noun")
+    if preferred in {"qg-subject-pronoun", "qg-object-pronoun", "qg-possessive-pronoun"}:
+        accepted.add("qg-pronoun")
+    if preferred == "qg-conjunction":
+        accepted.add("qg-particle")
+    if preferred == "qg-result-fa":
+        accepted.update({"qg-result", "qg-particle"})
+    if preferred == "qg-lam":
+        accepted.add("qg-particle")
+    if preferred == "qg-ma-particle":
+        accepted.add("qg-particle")
+    return accepted
 
 
 def _display_for(record):
@@ -381,12 +416,16 @@ def _validate_invariants(record, seen):
         if index < len(segments):
             role = segments[index].get("role") if isinstance(segments[index], dict) else None
             expected_class = _display_class_for(role, record.get("pos"))
+            accepted_classes = _accepted_display_classes_for(role, record.get("pos"))
             if display_segment.get("segment_index") != index:
                 errors.append("%s: display.segments[%d].segment_index must be %d" % (loc, index, index))
             if display_segment.get("role") != role:
                 errors.append("%s: display.segments[%d].role must match segment role %s" % (loc, index, role))
-            if display_segment.get("class") != expected_class:
-                errors.append("%s: display.segments[%d].class must be %s for role %s" % (loc, index, expected_class, role))
+            if display_segment.get("class") not in accepted_classes:
+                errors.append(
+                    "%s: display.segments[%d].class must be %s for role %s"
+                    % (loc, index, " or ".join(sorted(accepted_classes)), role)
+                )
             expected_label = DISPLAY_LABEL_BY_ROLE.get(role, "UNK")
             if display_segment.get("label") != expected_label:
                 errors.append("%s: display.segments[%d].label must be %s for role %s" % (loc, index, expected_label, role))
@@ -993,7 +1032,7 @@ def _self_test():
         bad_display_file = os.path.join(td, "bad-display.jsonl")
         _write_jsonl(bad_display_file, bad_display)
         _, errors = validate_file(bad_display_file)
-        assert any("display.segments[1].class must be qg-pronoun" in e for e in errors), errors
+        assert any("display.segments[1].class must be qg-object-pronoun or qg-pronoun" in e for e in errors), errors
 
         duplicate_article = _sample_records()
         duplicate_article[6]["segments"][1]["gloss_contribution"] = "the foolish ones"

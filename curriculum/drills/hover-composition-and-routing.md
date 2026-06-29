@@ -54,6 +54,13 @@ hover wording.
 | `ضَعِيفًۭا` | nominal/adjectival host + accusative indefinite ending | "weak" is not rich-certified until case/role and entry linkage are explicit |
 | `ٱلْمُفْلِحُونَ` | `ٱل` + nominal active-participle plural host | reject entry-root "to succeed"; token contributes "the successful ones" |
 | `بِنَآءً` | nominal result/object form | reject verb gloss "to build"; token contributes a noun such as "a structure/building/canopy" |
+| `إِنْ ... لَسَٰحِرَٰنِ` | particle frame plus following lām and dual predicate | do not certify `إِنْ` or the lām/dual noun without the full frame |
+| `أُورِثْتُمُوهَا` | passive verb host + 2mp marker + object `ها` | "you were made to inherit it" needs passive, subject/deputy-subject, and object evidence |
+| `بُرْهَٰنَانِ` | noun host + dual ending | the learner must see the dual ending; "proofs" with no dual morphology is under-explained |
+| `قاعدون` | participial/adjectival host + sound plural ending | the plural ending must be visible; a root-family hover is not enough |
+| `مُّطَاعٍۢ` | passive participle / adjective shape | token contribution is adjectival ("obedient/obeyed" by context), not infinitive "to obey" |
+| `يُحْيِي` | imperfect prefix + Form IV stem | the initial yāʾ is morphology and must not disappear into one verb-colored host |
+| `كُلُّ شَيْءٍ قَدِيرٌ` | quantifier + noun + adjective phrase | `كل`, `شيء`, and `قدير` each need visible role/color and phrase relation |
 
 ## Parse-key handoff
 
@@ -93,6 +100,15 @@ minimal according to the closure lane.
   and curriculum families. It cannot override sarf, nahw, i'rab, or verse context.
 - **Public boundary always:** do not publish source labels, QAC labels, screenshot labels, or
   external wording. A public hover is authored Qamus text or blank.
+- **Learner explanation is Arabic-only:** source-triangulation, authoring, deployment, live-readback,
+  and public-boundary process notes belong in reports or admin gates. A tooltip explanation should
+  say what the Arabic pieces contribute, not why the row is source-clean.
+- **Source text before grammar:** if a Qurʾān usage card loses a hamza seat, maddah, diacritic, word
+  boundary, or selected target word, stop as a display/source-text blocker. Do not build a rich
+  segmentation on a corrupted citation.
+- **Coverage is card-level as well as word-level:** a tranche report may not hide a visible flat
+  example card behind a denominator that counts only already-selected rows. Every listed example card
+  is either fully live, partially live with an explicit blocker, or blocked with a precise next action.
 
 ## Checklist
 

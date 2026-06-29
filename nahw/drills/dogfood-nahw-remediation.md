@@ -67,3 +67,29 @@ For each candidate, state the hidden function or relation that still blocks cert
 
 Do not mark a row rich-certified when the English is readable but the particle function, governor, attachment,
 case/mood, or referent is still unresolved.
+
+## F. Learner Explanation Versus Process Prose
+
+A public hover explanation should teach the Arabic pieces and their relation. It should not explain the deployment
+or evidence workflow.
+
+| bad explanation shape | why it fails | repair |
+|---|---|---|
+| "the hover is authored from Qamus data and keeps internal evidence out of the public payload" | process/source-boundary prose is not a grammar lesson | explain the token pieces and their nahw relation |
+| "public rollout still needs authorization" | admin gate, not learner-facing Arabic | keep gate text in reports/admin inspector only |
+| "renderer metadata says this is safe" | renderer support is not grammar reasoning | state the particle function, governor, attachment, or pending reason |
+
+Pass only when the final sentence says what the Arabic contributes: for example, "فَ links the clause", "بِ governs
+the following noun", or "the following explicit noun supplies the subject."
+
+## G. Source Text, Card Coverage, And Function Frames
+
+Some RH-LIVE misses were not new grammar rules but failed routing discipline.
+
+| issue | nahw consequence | safe state |
+|---|---|---|
+| display text lost hamza, maddah, diacritics, or word boundaries | case/mood/function evidence may be wrong | `quran_display_text_mismatch` before grammar certification |
+| entry page shows a visible example card but report denominator excludes it | coverage claim hides a learner-visible flat card | card-level `blocked` or `partially_live`, not tranche complete |
+| `إِنْ ... لَسَٰحِرَٰنِ` | particle function depends on the following lām/predicate frame | two-vote or pending until the frame is certified |
+| `كُلُّ شَيْءٍ قَدِيرٌ` | noun/adjective relation and agreement are the lesson | quantifier, noun, and adjective each need role/color and phrase relation |
+| `وَقَدْ` | wāw relation plus qad function | explain "while/already" from the frame; do not add process prose |
