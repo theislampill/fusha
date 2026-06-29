@@ -35,6 +35,9 @@ roadmap, assessment rubric, and explicit sarf/nahw procedure loading before a le
 | tooltip explanation contains source-boundary/deployment/process prose instead of Arabic reasoning | `nahw/drills/dogfood-nahw-remediation.md` §Learner Explanation Versus Process Prose + `curriculum/drills/hover-composition-and-routing.md` |
 | Qurʾān usage text lacks canonical hamza/maddah/diacritics or the selected target word | `provenance/source-boundaries.md` + `curriculum/drills/hover-composition-and-routing.md` source-text blocker rule |
 | report says row coverage is complete while a visible example card remains flat/blocked | `curriculum/drills/hover-composition-and-routing.md` card-level coverage rule + `curriculum/progress/missed-error-log.template.md` |
+| rollout or assessment manually rediscovers pages despite existing entry/card/word edges | build the graph edge join first; route missing pieces as `missing_entry_url_edge`, `missing_source_card_edge`, `missing_selected_word_edge`, or `missing_quran_wbw_edge` |
+| public color/tooltip fix is claimed but stale assets may still render | require cachebuster/DUV readback and affected CSS/JS URL proof before marking the learner-visible fix complete |
+| qamus restart causes immediate public readback noise | run health-wait plus source/runtime parity before judging the Arabic/content payload |
 | used QAC concept membership as a translation | `qamus/procedures/grammar-resource-usage.md` + `curriculum/drills/hover-composition-and-routing.md` |
 | confused named entity with common lexical meaning | concept-map flag internally, then `sarf/procedures/proper-noun.md` and verse-specific nahw/i'rab |
 

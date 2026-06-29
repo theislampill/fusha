@@ -218,6 +218,20 @@ the glyph run, not to padded segment boxes. Browser acceptance should assert tha
 token's `textContent` equals the original token and that no `.qg-seg` children were inserted
 inside the visible word.
 
+### Public Readback Gates
+
+Renderer correctness is not proven by a payload row alone. Before a color or tooltip repair is
+called learner-visible, the rollout report must show:
+
+- the graph-generated public target for the entry/card/selected word;
+- source/runtime payload parity after the append;
+- the current public asset version or cachebuster in HTML;
+- the affected CSS/JS fetched through that version when renderer behavior changed;
+- public DOM or hover readback for the role classes used by the row.
+
+If a service restart is needed, wait for health and parity first. An immediate transient public
+error after restart is an ops health signal, not proof that the Arabic grammar packet is wrong.
+
 ## Decision Rules
 
 - If a token has attached `بـ`, `لـ`, `كـ`, oath/comitative `وـ`, function `فـ`, article, or

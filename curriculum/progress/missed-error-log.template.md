@@ -26,6 +26,9 @@ Copy this file outside the repo for a real learner. The repo keeps the template 
 - `quran_display_text_mismatch`: cited Qurʾān text lost a hamza seat, maddah, diacritic, word boundary, or selected target word.
 - `process_prose_in_hover`: learner-facing explanation contains authoring/deployment/source-boundary prose instead of Arabic reasoning.
 - `card_level_coverage_hidden`: report counts live rows while a visible listed example card remains flat, blocked, or unreported.
+- `edge_join_missing_or_ignored`: rollout/tutoring claim skips the entry -> card -> selected word -> quran/wbw edge chain or manually rediscovers data that the graph already supplies.
+- `cachebuster_parity_unverified`: learner-visible color/tooltip fix is claimed without asset-version/cachebuster readback and source/runtime payload parity.
+- `health_wait_skipped`: service restart/readback result is judged before bounded health and parity checks finish.
 - `token_only_override`: exact address differs from surface-family siblings.
 - `rich_cert_preview_overclaim`: preview-only rich metadata treated as certified hover output.
 - `rich_cert_pending_gate`: a pending/two-vote rich-cert row cleared from readable English alone.

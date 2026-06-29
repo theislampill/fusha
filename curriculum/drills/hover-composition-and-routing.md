@@ -109,6 +109,19 @@ minimal according to the closure lane.
 - **Coverage is card-level as well as word-level:** a tranche report may not hide a visible flat
   example card behind a denominator that counts only already-selected rows. Every listed example card
   is either fully live, partially live with an explicit blocker, or blocked with a precise next action.
+- **Graph edges drive rollout:** build the edge join table before probing pages by hand. The route is
+  entry -> sense -> example card -> selected word -> quran/wbw loc -> payload -> rendered span. If that
+  edge chain exists, use it for URLs, smoke targets, and DOM selectors. If it is missing, record the
+  exact missing edge instead of widening to a full-occurrence sweep.
+- **Four denominators, not one:** report entries, listed example cards, visible selected word rows, and
+  rich-live rows separately. A page is not complete until every visible selected word is rich-live or the
+  visible card has an exact blocker.
+- **Renderer changes need cache proof:** if a role color, tooltip layout, or public JS/CSS behavior changes,
+  record the asset version/cachebuster, public HTML readback, and affected CSS/JS URL. A color fix that is
+  still hidden behind stale assets is not learner-visible.
+- **Restart health is a gate, not a guess:** after a qamus restart, wait for service health and source/runtime
+  payload parity before deciding whether content failed. Immediate transient public errors are an ops signal;
+  they do not prove the Arabic payload is wrong.
 
 ## Checklist
 

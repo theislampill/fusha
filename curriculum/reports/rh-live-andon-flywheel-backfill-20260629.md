@@ -70,11 +70,34 @@ ambiguous or even conflicting, while the phrase-level frame with the following e
 `إِنَّ` reading for this exact row. The flywheel update adds a `lightened_inna` eval row and tightens the nahw
 remediation drill: do not certify conditional or negative `إِنْ` from surface alone; require the surrounding frame.
 
+## Addendum: Graph-Driven Rollout Control Plane
+
+The 2026-06-29 NorthStar addendum made the control-plane lesson explicit: the edge graph is not after-the-fact
+evidence. It is the rollout spine. Future curriculum, tutor, and agent checks must require an edge join table before
+manual probing when the graph already supplies the route from entry to card to selected word to quran/wbw loc to
+rendered span.
+
+Backfilled teaching surfaces:
+
+- `curriculum/drills/hover-composition-and-routing.md` now teaches graph-first routing, four separate denominators,
+  cachebuster/DUV proof, and health-wait/source-runtime parity.
+- `curriculum/tutor-runtime-routing.md` routes graph-ignored rollout claims, stale-asset color claims, and premature
+  restart failures to concrete remediation checks.
+- `curriculum/assessment/level-checkpoints.sample.jsonl` adds graded rows for edge-join denominators and
+  cache/parity readback.
+- `curriculum/progress/missed-error-log.template.md` adds missed-error classes for ignored graph joins,
+  cache/parity gaps, and skipped health waits.
+
+This is repo-only. It does not assert that a live app route, whitelist append, service restart, or public coverage
+claim occurred.
+
 ## Future Work
 
 - Migrate older broad-class fixtures toward role-aware preferred classes in a dedicated fixture-only pass.
 - Add a repo-side validator for card-level rollout reports so visible blocked cards cannot be hidden by row-only
   denominators.
+- Add a graph-join fixture/validator for rollout reports so missing entry/card/selected-word edges cannot silently
+  fall into manual discovery.
 - Extend rich-hover fixture samples for noun/adjective number and derivative shapes after the live data packet is
   stable.
 - Continue the live RH-LIVE rollout in its own lane; feed any new repeated defect class back into this curriculum
