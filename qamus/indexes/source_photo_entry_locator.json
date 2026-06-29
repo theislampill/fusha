@@ -16173,19 +16173,24 @@
       "total_uses": 1
     },
     "p034": {
-      "candidate_page": 457,
+      "candidate_page": 459,
       "candidate_page_band": [
-        451,
-        463
+        459,
+        460
       ],
-      "candidate_page_image": "pg457.jpeg",
-      "confidence": "candidate",
+      "candidate_page_image": "pg459.jpeg",
+      "confidence": "photo_verified",
+      "continuation_page": 460,
+      "continuation_page_image": "pg460.jpeg",
       "entry_id": "5c405be976bd",
       "headword": "مِنْ",
       "root": "",
       "section": "particle",
       "source_key": "p034",
-      "total_uses": 3226
+      "total_uses": 3226,
+      "verified_page": 459,
+      "verified_page_image": "pg459.jpeg",
+      "visual_note": "p034 min / مِنْ verified on photographed book page pg459.jpeg; Quranic usage examples continue on pg460.jpeg. Prior pg457 locator did not contain p034."
     },
     "p035": {
       "candidate_page": 457,

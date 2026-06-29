@@ -10196,7 +10196,7 @@
 {"address": "qamus:5c1d32eee220#field=usage[sense=1].forms", "entry": "5c1d32eee220", "field": "forms", "type": "field"}
 {"address": "qamus:5c1d32eee220#source_key=n810", "entry": "5c1d32eee220", "source_key": "n810", "type": "source_key"}
 {"address": "qamus:5c1d32eee220#usage=5:114", "ayah": "5:114", "entry": "5c1d32eee220", "type": "usage"}
-{"address": "qamus:5c405be976bd", "headword": "مِنْ", "n_examples": 5, "root": "", "section": "particle", "source_keys": ["p034"], "source_photo_verified": false, "type": "entry"}
+{"address": "qamus:5c405be976bd", "headword": "مِنْ", "n_examples": 5, "root": "", "section": "particle", "source_keys": ["p034"], "source_photo_verified": true, "type": "entry"}
 {"address": "qamus:5c405be976bd#field=definition", "entry": "5c405be976bd", "field": "definition", "type": "field"}
 {"address": "qamus:5c405be976bd#field=headword", "entry": "5c405be976bd", "field": "headword", "type": "field"}
 {"address": "qamus:5c405be976bd#field=root", "entry": "5c405be976bd", "field": "root", "type": "field"}
@@ -26299,6 +26299,7 @@
 {"address": "qamus:ffc59ab7f365#source_key=v805", "entry": "ffc59ab7f365", "source_key": "v805", "type": "source_key"}
 {"address": "qamus:ffc59ab7f365#usage=12:10", "ayah": "12:10", "entry": "ffc59ab7f365", "type": "usage"}
 {"address": "qamus:ffc59ab7f365#usage=28:8", "ayah": "28:8", "entry": "ffc59ab7f365", "type": "usage"}
+{"address": "source-photo:459#entry=p034", "entry": "5c405be976bd", "page": 459, "source_key": "p034", "status": "verified", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=n001", "entry": "68e87fcb398a", "page": null, "source_key": "n001", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=n002", "entry": "d3559a102a61", "page": null, "source_key": "n002", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=n003", "entry": "4211cb1f5355", "page": null, "source_key": "n003", "status": "locator_only", "type": "source_photo"}
@@ -27377,7 +27378,6 @@
 {"address": "source-photo:unlocated#entry=p031", "entry": "df1fc22384e9", "page": null, "source_key": "p031", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p032", "entry": "3f58762b5232", "page": null, "source_key": "p032", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p033", "entry": "f76f4be5e5e7", "page": null, "source_key": "p033", "status": "locator_only", "type": "source_photo"}
-{"address": "source-photo:unlocated#entry=p034", "entry": "5c405be976bd", "page": null, "source_key": "p034", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p035", "entry": "a1feead9300b", "page": null, "source_key": "p035", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p036", "entry": "b7570549e851", "page": null, "source_key": "p036", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p037", "entry": "1f50dcf7931c", "page": null, "source_key": "p037", "status": "locator_only", "type": "source_photo"}
