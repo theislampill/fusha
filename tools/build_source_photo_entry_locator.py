@@ -15,6 +15,7 @@ import json, os, re
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "qamus", "data", "current", "entries.jsonl")
 OUT = os.path.join(ROOT, "qamus", "indexes", "source_photo_entry_locator.json")
+SAMPLES = os.path.join(ROOT, "qamus", "reports", "source-photo-verified-samples.jsonl")
 PAGE_MIN, PAGE_MAX = 19, 471
 
 # CONFIRMED from direct photo reads (see source-photo-verified-samples.jsonl)
@@ -22,6 +23,42 @@ CONFIRMED = {
     "v008": {"page_image": "intake_13/IMG_7784.jpeg", "headword": "بَيَّنَ", "total_uses": 523},
     "v027": {"page_image": "intake_13/IMG_7790.jpeg", "headword": "عَبَدَ", "total_uses": 275},
 }
+
+def load_confirmed():
+    confirmed = {k: dict(v) for k, v in CONFIRMED.items()}
+    if os.path.exists(OUT):
+        try:
+            prior = json.load(open(OUT, encoding="utf-8")).get("locator", {})
+        except Exception:
+            prior = {}
+        for sk, rec in prior.items():
+            if rec.get("confidence") in {"verified", "photo_verified"}:
+                confirmed.setdefault(sk, {}).update(rec)
+    if not os.path.exists(SAMPLES):
+        return confirmed
+    for line in open(SAMPLES, encoding="utf-8"):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            rec = json.loads(line)
+        except Exception:
+            continue
+        if rec.get("verdict") not in {"verified_correct", "verified"}:
+            continue
+        for sk in rec.get("source_keys") or []:
+            cur = confirmed.setdefault(sk, {})
+            if rec.get("page") is not None:
+                cur["page"] = rec.get("page")
+            if rec.get("page_image"):
+                cur["page_image"] = rec.get("page_image")
+            elif rec.get("source_ref") and ";" not in str(rec.get("source_ref")):
+                cur.setdefault("page_image", rec.get("source_ref"))
+            if rec.get("headword"):
+                cur["headword"] = rec.get("headword")
+            if rec.get("live_value") is not None:
+                cur.setdefault("verified_value", rec.get("live_value"))
+    return confirmed
 
 def rank(sk):
     m = re.match(r"([vnp])(\d+)", sk or "")
@@ -32,6 +69,7 @@ def rank(sk):
 
 def main():
     ents = [json.loads(l) for l in open(DATA, encoding="utf-8")]
+    confirmed = load_confirmed()
     total = 2092
     loc = {}
     for e in ents:
@@ -40,8 +78,8 @@ def main():
         rec = {"entry_id": e["id"], "source_key": sk, "section": e.get("section"),
                "headword": e.get("headword"), "root": e.get("root"),
                "total_uses": e.get("total_uses")}
-        if sk in CONFIRMED:
-            rec.update({"confidence": "verified", **CONFIRMED[sk]})
+        if sk in confirmed:
+            rec.update({"confidence": "verified", **confirmed[sk]})
         elif r:
             frac = (r - 1) / (total - 1)
             page = int(round(PAGE_MIN + frac * (PAGE_MAX - PAGE_MIN)))

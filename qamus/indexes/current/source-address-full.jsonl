@@ -11402,7 +11402,7 @@
 {"address": "qamus:677167be479e#field=usage[sense=1].forms", "entry": "677167be479e", "field": "forms", "type": "field"}
 {"address": "qamus:677167be479e#source_key=n564", "entry": "677167be479e", "source_key": "n564", "type": "source_key"}
 {"address": "qamus:677167be479e#usage=100:2", "ayah": "100:2", "entry": "677167be479e", "type": "usage"}
-{"address": "qamus:678d3700e770", "headword": "اللَّاتِي", "n_examples": 2, "root": "", "section": "particle", "source_keys": ["p098"], "source_photo_verified": false, "type": "entry"}
+{"address": "qamus:678d3700e770", "headword": "اللَّاتِي", "n_examples": 2, "root": "", "section": "particle", "source_keys": ["p098"], "source_photo_verified": true, "type": "entry"}
 {"address": "qamus:678d3700e770#field=definition", "entry": "678d3700e770", "field": "definition", "type": "field"}
 {"address": "qamus:678d3700e770#field=headword", "entry": "678d3700e770", "field": "headword", "type": "field"}
 {"address": "qamus:678d3700e770#field=root", "entry": "678d3700e770", "field": "root", "type": "field"}
@@ -14080,12 +14080,11 @@
 {"address": "qamus:833ac5812d30#field=usage[sense=1].forms", "entry": "833ac5812d30", "field": "forms", "type": "field"}
 {"address": "qamus:833ac5812d30#source_key=n978", "entry": "833ac5812d30", "source_key": "n978", "type": "source_key"}
 {"address": "qamus:833ac5812d30#usage=84:16", "ayah": "84:16", "entry": "833ac5812d30", "type": "usage"}
-{"address": "qamus:83653c56158f", "headword": "نَّ / نْ", "n_examples": 1, "root": "", "section": "particle", "source_keys": ["p008"], "source_photo_verified": false, "type": "entry"}
+{"address": "qamus:83653c56158f", "headword": "نَّ / نْ", "n_examples": 1, "root": "", "section": "particle", "source_keys": ["p008"], "source_photo_verified": true, "type": "entry"}
 {"address": "qamus:83653c56158f#field=definition", "entry": "83653c56158f", "field": "definition", "type": "field"}
 {"address": "qamus:83653c56158f#field=headword", "entry": "83653c56158f", "field": "headword", "type": "field"}
 {"address": "qamus:83653c56158f#field=root", "entry": "83653c56158f", "field": "root", "type": "field"}
 {"address": "qamus:83653c56158f#field=senses[0].gloss", "entry": "83653c56158f", "field": "senses[0].gloss", "type": "field"}
-{"address": "qamus:83653c56158f#field=senses[1].gloss", "entry": "83653c56158f", "field": "senses[1].gloss", "type": "field"}
 {"address": "qamus:83653c56158f#field=translit", "entry": "83653c56158f", "field": "translit", "type": "field"}
 {"address": "qamus:83653c56158f#field=usage[sense=1].forms", "entry": "83653c56158f", "field": "forms", "type": "field"}
 {"address": "qamus:83653c56158f#source_key=p008", "entry": "83653c56158f", "source_key": "p008", "type": "source_key"}
@@ -26299,7 +26298,9 @@
 {"address": "qamus:ffc59ab7f365#source_key=v805", "entry": "ffc59ab7f365", "source_key": "v805", "type": "source_key"}
 {"address": "qamus:ffc59ab7f365#usage=12:10", "ayah": "12:10", "entry": "ffc59ab7f365", "type": "usage"}
 {"address": "qamus:ffc59ab7f365#usage=28:8", "ayah": "28:8", "entry": "ffc59ab7f365", "type": "usage"}
+{"address": "source-photo:454#entry=p008", "entry": "83653c56158f", "page": 454, "source_key": "p008", "status": "verified", "type": "source_photo"}
 {"address": "source-photo:459#entry=p034", "entry": "5c405be976bd", "page": 459, "source_key": "p034", "status": "verified", "type": "source_photo"}
+{"address": "source-photo:470#entry=p098", "entry": "678d3700e770", "page": 470, "source_key": "p098", "status": "verified", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=n001", "entry": "68e87fcb398a", "page": null, "source_key": "n001", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=n002", "entry": "d3559a102a61", "page": null, "source_key": "n002", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=n003", "entry": "4211cb1f5355", "page": null, "source_key": "n003", "status": "locator_only", "type": "source_photo"}
@@ -27352,7 +27353,6 @@
 {"address": "source-photo:unlocated#entry=p005", "entry": "9fd16940c1ca", "page": null, "source_key": "p005", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p006", "entry": "967098527388", "page": null, "source_key": "p006", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p007", "entry": "b10a1ee04666", "page": null, "source_key": "p007", "status": "locator_only", "type": "source_photo"}
-{"address": "source-photo:unlocated#entry=p008", "entry": "83653c56158f", "page": null, "source_key": "p008", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p009", "entry": "a23a0c853dd8", "page": null, "source_key": "p009", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p010", "entry": "5935ecfb1ec5", "page": null, "source_key": "p010", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p011", "entry": "4318e2561011", "page": null, "source_key": "p011", "status": "locator_only", "type": "source_photo"}
@@ -27441,7 +27441,6 @@
 {"address": "source-photo:unlocated#entry=p095", "entry": "b6d22cb3df4e", "page": null, "source_key": "p095", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p096", "entry": "9e1478d4f36a", "page": null, "source_key": "p096", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p097", "entry": "91a3a5a825a1", "page": null, "source_key": "p097", "status": "locator_only", "type": "source_photo"}
-{"address": "source-photo:unlocated#entry=p098", "entry": "678d3700e770", "page": null, "source_key": "p098", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p099", "entry": "b8e480aebafe", "page": null, "source_key": "p099", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=p100", "entry": "e7c05664fd33", "page": null, "source_key": "p100", "status": "locator_only", "type": "source_photo"}
 {"address": "source-photo:unlocated#entry=v001", "entry": "430015446b77", "page": null, "source_key": "v001", "status": "locator_only", "type": "source_photo"}

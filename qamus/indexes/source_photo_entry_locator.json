@@ -15782,19 +15782,16 @@
       "total_uses": 3838
     },
     "p008": {
-      "candidate_page": 451,
-      "candidate_page_band": [
-        445,
-        457
-      ],
-      "candidate_page_image": "pg451.jpeg",
-      "confidence": "candidate",
+      "confidence": "verified",
       "entry_id": "83653c56158f",
       "headword": "نَّ / نْ",
+      "page": 454,
+      "page_image": "pg454.jpeg",
       "root": "",
       "section": "particle",
       "source_key": "p008",
-      "total_uses": 239
+      "total_uses": 239,
+      "verified_value": "one sense; total uses 239; one Qurʾān usage example"
     },
     "p009": {
       "candidate_page": 451,
@@ -16184,12 +16181,15 @@
       "continuation_page_image": "pg460.jpeg",
       "entry_id": "5c405be976bd",
       "headword": "مِنْ",
+      "page": 459,
+      "page_image": "pg459.jpeg",
       "root": "",
       "section": "particle",
       "source_key": "p034",
       "total_uses": 3226,
       "verified_page": 459,
       "verified_page_image": "pg459.jpeg",
+      "verified_value": "مِنْ / total uses 3226 / five Qurʾān usage examples",
       "visual_note": "p034 min / مِنْ verified on photographed book page pg459.jpeg; Quranic usage examples continue on pg460.jpeg. Prior pg457 locator did not contain p034."
     },
     "p035": {
@@ -17138,19 +17138,16 @@
       "total_uses": 1059
     },
     "p098": {
-      "candidate_page": 471,
-      "candidate_page_band": [
-        465,
-        471
-      ],
-      "candidate_page_image": "pg471.jpeg",
-      "confidence": "candidate",
+      "confidence": "verified",
       "entry_id": "678d3700e770",
       "headword": "اللَّاتِي",
+      "page": 470,
+      "page_image": "pg470.jpeg",
       "root": "",
       "section": "particle",
       "source_key": "p098",
-      "total_uses": 14
+      "total_uses": 14,
+      "verified_value": "p098 اللَّاتِي / total uses 14 / examples 12:50 and 58:2"
     },
     "p099": {
       "candidate_page": 471,
@@ -17295,7 +17292,8 @@
       "root": "ب ي ن",
       "section": "verb",
       "source_key": "v008",
-      "total_uses": 523
+      "total_uses": 523,
+      "verified_value": 523
     },
     "v009": {
       "candidate_page": 21,
@@ -17570,27 +17568,24 @@
     "v027": {
       "confidence": "verified",
       "entry_id": "b4144b892cc7",
-      "headword": "عَبَدَ",
+      "headword": "عَبَدَ / عَبْد",
       "page_image": "intake_13/IMG_7790.jpeg",
       "root": "ع ب د",
       "section": "verb",
       "source_key": "v027",
-      "total_uses": 275
+      "total_uses": 275,
+      "verified_value": 275
     },
     "v028": {
-      "candidate_page": 25,
-      "candidate_page_band": [
-        19,
-        31
-      ],
-      "candidate_page_image": "pg025.jpeg",
-      "confidence": "candidate",
+      "confidence": "verified",
       "entry_id": "ecfc082ac2c5",
-      "headword": "أَخَذَ / اِتَّخَذَ / يُؤَاخِذُ",
+      "headword": "أَخَذَ / اِتَّخَذَ / يُؤَاخِذُ",
+      "page_image": "intake_13/IMG_7790.jpeg",
       "root": "أ خ ذ",
       "section": "verb",
       "source_key": "v028",
-      "total_uses": 273
+      "total_uses": 273,
+      "verified_value": 273
     },
     "v029": {
       "candidate_page": 25,
@@ -31384,5 +31379,5 @@
     471
   ],
   "schema": "fusha/source-photo-entry-locator@1",
-  "verified": 2
+  "verified": 5
 }
