@@ -19,10 +19,10 @@ SAMPLES = os.path.join(ROOT, "qamus", "reports", "source-photo-verified-samples.
 
 # The source photos are dictionary page numbers, not a global interpolation
 # surface. The section starts are visible in the photographed corpus:
-# v001/v002 on pg002, n001 on pg224, and p001 on pg453.
+# v001/v002 on pg002, n001 on pg279, and p001 on pg453.
 SECTION_SPANS = {
-    "v": {"count": 947, "page_min": 2, "page_max": 223},
-    "n": {"count": 1045, "page_min": 224, "page_max": 452},
+    "v": {"count": 947, "page_min": 2, "page_max": 278},
+    "n": {"count": 1045, "page_min": 279, "page_max": 452},
     "p": {"count": 100, "page_min": 453, "page_max": 471},
 }
 PAGE_MIN = min(v["page_min"] for v in SECTION_SPANS.values())
@@ -118,7 +118,7 @@ def main():
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         json.dump({"schema": "fusha/source-photo-entry-locator@1",
                    "note": "candidate page band by source-key rank over photographed section spans: "
-                           "verbs pg002-223, nouns pg224-452, particles pg453-471; verified entries override. "
+                           "verbs pg002-278, nouns pg279-452, particles pg453-471; verified entries override. "
                            "NOT an exact index (draft JSONs not committed).",
                    "page_span": [PAGE_MIN, PAGE_MAX], "entry_count": len(loc),
                    "verified": sum(1 for v in loc.values() if v["confidence"] == "verified"),

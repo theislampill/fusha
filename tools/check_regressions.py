@@ -252,25 +252,29 @@ try:
     _sp_spec.loader.exec_module(_sp_mod)
     _spans_ok = (
         _sp_mod.section_page_candidate("v001") == 2
-        and _sp_mod.section_page_candidate("n001") == 224
+        and _sp_mod.section_page_candidate("n001") == 279
         and _sp_mod.section_page_candidate("p001") == 453
         and _sp_mod.section_page_candidate("p100") == 471
     )
 except Exception:
     _spans_ok = False
-check("source-photo locator uses section spans (v001 pg002, n001 pg224, p001 pg453)", _spans_ok)
+check("source-photo locator uses section spans (v001 pg002, n001 pg279, p001 pg453)", _spans_ok)
 try:
     _locator = json.load(io.open(os.path.join(ROOT, "qamus", "indexes", "source_photo_entry_locator.json"), encoding="utf-8"))
     _locs = _locator.get("locator", {})
+    _v001 = _locs.get("v001", {})
+    _n001 = _locs.get("n001", {})
+    _p001 = _locs.get("p001", {})
     _locator_ok = (
-        _locs.get("v001", {}).get("candidate_page_image") == "pg002.jpeg"
-        and _locs.get("v001", {}).get("candidate_page") == 2
-        and _locs.get("n001", {}).get("candidate_page") == 224
-        and _locs.get("p001", {}).get("candidate_page") == 453
+        (_v001.get("candidate_page") == 2 or _v001.get("page") == 2)
+        and (_v001.get("candidate_page_image") == "pg002.jpeg" or _v001.get("page_image") == "pg002.jpeg")
+        and (_n001.get("candidate_page") == 279 or _n001.get("page") == 279)
+        and (_n001.get("candidate_page_image") == "pg279.jpeg" or _n001.get("page_image") == "pg279.jpeg")
+        and (_p001.get("candidate_page") == 453 or _p001.get("page") == 453)
     )
 except Exception:
     _locator_ok = False
-check("source-photo locator artifact keeps early verbs/nouns/particles in their source sections", _locator_ok)
+check("source-photo locator artifact keeps early verbs/nouns/particles in their source sections or verified overrides", _locator_ok)
 try:
     _sample_pages = {}
     _samples_path = os.path.join(ROOT, "qamus", "reports", "source-photo-verified-samples.jsonl")

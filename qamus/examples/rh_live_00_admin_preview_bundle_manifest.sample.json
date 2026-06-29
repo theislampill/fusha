@@ -7,7 +7,7 @@
   "artifacts": {
     "admin_preview_dom_fixture": {
       "path": "qamus/examples/rh_live_00_admin_preview_dom_fixture.sample.html",
-      "sha256": "8d578a27b6860a102b39a1a443df0fde24ece647139eb615e2823f3c3b67686c"
+      "sha256": "0f3b5c330fe901c28164f8274825fea8f4ea5d48aebf4c5ad235add6c93f035a"
     },
     "certified_not_applied": {
       "path": "qamus/examples/rh_live_00_two_vote_certified_not_applied.sample.jsonl",
@@ -17,7 +17,7 @@
     "preview_candidates": {
       "path": "qamus/examples/rh_live_00_preview_candidates.sample.jsonl",
       "rows": 9,
-      "sha256": "69aa4bdf5f7079742d7a6b59a56ecf3134eb1ba524cd2937072e928e1c20741c"
+      "sha256": "2c261c687e1d33a7349958eb9b5d8752d76ecd748439b8cff1a7a2f461501c09"
     },
     "preview_readiness_report": {
       "path": "qamus/reports/rh-live-00-preview-readiness-20260627.md",
@@ -34,7 +34,7 @@
     "source_readiness": {
       "path": "qamus/examples/rh_live_00_source_triangulation_readiness.sample.jsonl",
       "rows": 9,
-      "sha256": "d5ff3e92f566348b95b81189534d0b54441663e018c6f5afb6e97cb17b2bb372"
+      "sha256": "f0044bf3897c136e2da7812dfcd585fa0542a11d2fb58121deb215c9df02dacb"
     },
     "source_readiness_report": {
       "path": "qamus/reports/rh-live-00-source-triangulation-readiness-20260627.md",
@@ -47,12 +47,12 @@
     "two_vote_requests": {
       "path": "qamus/examples/rh_live_00_two_vote_request_from_source_readiness.sample.jsonl",
       "rows": 9,
-      "sha256": "b30d6b9442feb30edc7e6f452bfbb499d51afbe32068725ac2dd41dc5681e6ed"
+      "sha256": "ac9dfa414c42e5d58347a8272b770593bef31d45f796a49dbe0f0e659e106478"
     },
     "two_vote_responses": {
       "path": "qamus/examples/rh_live_00_two_vote_response_from_source_readiness.sample.jsonl",
       "rows": 18,
-      "sha256": "fc3dbe04e3a4c82e2bd400709e523817ae2088bbb768ffc404f61d13b98eb8f8"
+      "sha256": "9b40c24b9bd821d28e9d0aaec2af2b22ffe6b3781a85e382b5e3e9688c4d8799"
     },
     "two_vote_unresolved": {
       "path": "qamus/examples/rh_live_00_two_vote_unresolved.sample.jsonl",
