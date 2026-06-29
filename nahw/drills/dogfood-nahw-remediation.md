@@ -90,6 +90,6 @@ Some RH-LIVE misses were not new grammar rules but failed routing discipline.
 |---|---|---|
 | display text lost hamza, maddah, diacritics, or word boundaries | case/mood/function evidence may be wrong | `quran_display_text_mismatch` before grammar certification |
 | entry page shows a visible example card but report denominator excludes it | coverage claim hides a learner-visible flat card | card-level `blocked` or `partially_live`, not tranche complete |
-| `إِنْ ... لَسَٰحِرَٰنِ` | particle function depends on the following lām/predicate frame | two-vote or pending until the frame is certified |
+| `إِنْ ... لَسَٰحِرَٰنِ` | particle function depends on the following lām/predicate frame | lightened `إِنَّ` only after phrase-level iʿrāb confirms the following emphatic lām; otherwise `pending`, not conditional/negation by surface alone |
 | `كُلُّ شَيْءٍ قَدِيرٌ` | noun/adjective relation and agreement are the lesson | quantifier, noun, and adjective each need role/color and phrase relation |
 | `وَقَدْ` | wāw relation plus qad function | explain "while/already" from the frame; do not add process prose |

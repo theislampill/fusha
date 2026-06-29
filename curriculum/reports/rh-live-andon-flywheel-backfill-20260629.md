@@ -63,6 +63,13 @@ classes outside the committed palette. The repaired rule is: keep active-partici
 fields, segment labels, morphlines, and learner explanations, but render them with supported classes unless a future
 change updates schema, CSS, DOM fixture, validators, and regression checks together.
 
+## Addendum: P-RH-LIVE-02 p066 Lightened `إِنْ`
+
+The p066 card `إِنْ هَٰذَٰنِ لَسَٰحِرَٰنِ` exposed a particle-function trap: word-level evidence may leave `إِنْ`
+ambiguous or even conflicting, while the phrase-level frame with the following emphatic lām settles the lightened
+`إِنَّ` reading for this exact row. The flywheel update adds a `lightened_inna` eval row and tightens the nahw
+remediation drill: do not certify conditional or negative `إِنْ` from surface alone; require the surrounding frame.
+
 ## Future Work
 
 - Migrate older broad-class fixtures toward role-aware preferred classes in a dedicated fixture-only pass.
