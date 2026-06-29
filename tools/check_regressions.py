@@ -242,6 +242,35 @@ try:
     check("QAC concept-map adapter stays internal-only and parser-tested", _qac.returncode == 0)
 except Exception:
     check("QAC concept-map adapter test runnable", False)
+try:
+    import importlib.util as _source_photo_importer
+    _sp_spec = _source_photo_importer.spec_from_file_location(
+        "_source_photo_locator",
+        os.path.join(ROOT, "tools", "build_source_photo_entry_locator.py"),
+    )
+    _sp_mod = _source_photo_importer.module_from_spec(_sp_spec)
+    _sp_spec.loader.exec_module(_sp_mod)
+    _spans_ok = (
+        _sp_mod.section_page_candidate("v001") == 2
+        and _sp_mod.section_page_candidate("n001") == 224
+        and _sp_mod.section_page_candidate("p001") == 453
+        and _sp_mod.section_page_candidate("p100") == 471
+    )
+except Exception:
+    _spans_ok = False
+check("source-photo locator uses section spans (v001 pg002, n001 pg224, p001 pg453)", _spans_ok)
+try:
+    _locator = json.load(io.open(os.path.join(ROOT, "qamus", "indexes", "source_photo_entry_locator.json"), encoding="utf-8"))
+    _locs = _locator.get("locator", {})
+    _locator_ok = (
+        _locs.get("v001", {}).get("candidate_page_image") == "pg002.jpeg"
+        and _locs.get("v001", {}).get("candidate_page") == 2
+        and _locs.get("n001", {}).get("candidate_page") == 224
+        and _locs.get("p001", {}).get("candidate_page") == 453
+    )
+except Exception:
+    _locator_ok = False
+check("source-photo locator artifact keeps early verbs/nouns/particles in their source sections", _locator_ok)
 # the MCP morphology extractor classifies the load-bearing cases (noun-not-verb on wazn name; Form IV active verb)
 try:
     import importlib.util as _ilu
