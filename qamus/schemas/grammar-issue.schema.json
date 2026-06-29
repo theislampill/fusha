@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/grammar-issue.schema.json",
+  "title": "Fusha parser/checker grammar issue",
+  "description": "A first-class, source-addressed, routable grammar diagnostic emitted by the Fusha parser/checker. It records WHAT is wrong (issue_class), WHERE (target_address + the exact token/card graph edge), HOW BAD (severity + GP0 gate), WHERE TO SEND IT (route_to), and a source-clean learner-facing explanation. Internal evidence labels never reach a public surface. See parserplans/008-grammar-issue-taxonomy.md.",
+  "type": "object",
+  "required": ["issue_id", "issue_class", "severity", "target_address", "token_or_card_edge", "gate", "route_to", "explanation", "public_boundary"],
+  "additionalProperties": false,
+  "properties": {
+    "issue_id": {
+      "type": "string",
+      "pattern": "^fusha\\.[a-z0-9_.]+$",
+      "description": "Stable, namespaced, never-recycled id (the regression-test anchor), e.g. fusha.nahw.host_only_preposition."
+    },
+    "issue_class": {
+      "type": "string",
+      "enum": [
+        "hidden_clitic_or_proclitic",
+        "host_only_preposition_hover",
+        "ma_function_unresolved_or_wrong",
+        "phrase_translation_used_as_token_hover",
+        "suffix_pronoun_missing",
+        "passive_voice_hidden",
+        "dual_or_plural_suffix_hidden",
+        "derivative_or_participle_prefix_hidden",
+        "weak_irab_reasoning",
+        "graph_edge_missing",
+        "display_local_canonical_crosswalk_missing",
+        "source_clean_boundary_violation",
+        "other"
+      ]
+    },
+    "severity": { "type": "string", "enum": ["info", "warn", "block"] },
+    "target_address": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(quran:\\d{1,3}:\\d{1,3}:\\d{1,3}(:\\d{1,3})?|wbw:\\d{1,3}:\\d{1,3}:\\d{1,3}|qamus:[0-9a-f]{6,}(#.+)?)$",
+      "description": "REQUIRED. The exact source address the issue is about. An issue without a source address is invalid (validator FAIL condition 1)."
+    },
+    "token_or_card_edge": {
+      "type": "string",
+      "minLength": 1,
+      "description": "REQUIRED. The exact graph edge the issue attaches to: a token loc (quran:S:A:W / wbw:S:A:W), an example-card usage address (qamus:<id>#usage=S:A), or a segment ref (loc:G). Validator FAIL condition 1."
+    },
+    "trigger_address": {
+      "type": ["string", "null"],
+      "description": "The governor/cause token, recorded SEPARATELY from the error token (e.g. the particle that forces naṣb). Lets the explanation point at the cause, not just the symptom."
+    },
+    "claim_id": { "type": ["string", "null"] },
+    "codes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional multi-tag codes (an error can be morphological AND syntactic at once)."
+    },
+    "gate": {
+      "type": "string",
+      "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"],
+      "description": "Canonical GP0 4-tier gate. A two-vote/iʿrāb-sensitive issue marked auto_safe is invalid (validator FAIL condition 3)."
+    },
+    "route_to": {
+      "type": "object",
+      "required": ["lane", "procedure"],
+      "additionalProperties": false,
+      "description": "REQUIRED. Where the diagnostic is sent. An issue that cannot route is invalid (validator FAIL condition 6).",
+      "properties": {
+        "lane": {
+          "type": "string",
+          "enum": ["sarf", "nahw", "curriculum", "validator", "owner_review", "scholar_irab_review"]
+        },
+        "procedure": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A repo-relative path to the resolving procedure/drill/report (must exist on disk)."
+        }
+      }
+    },
+    "explanation": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Source-clean, learner-facing 'because' explanation. Teaches the Arabic; never leaks source names/process prose (validator FAIL condition 2)."
+    },
+    "expected": { "type": ["string", "null"], "description": "The expected feature/value (authored)." },
+    "observed": { "type": ["string", "null"], "description": "The observed feature/value in the claim." },
+    "confidence": { "type": ["string", "null"], "enum": ["high", "medium", "low", null] },
+    "evidence_labels": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Internal-only evidence breadcrumbs. NEVER public."
+    },
+    "public_boundary": {
+      "type": "object",
+      "required": ["public_gloss_src", "public_gloss_kind", "public_gloss_lang", "external_source_names_public"],
+      "additionalProperties": false,
+      "properties": {
+        "public_gloss_src": { "const": "qamus" },
+        "public_gloss_kind": { "const": "authored" },
+        "public_gloss_lang": { "const": "en" },
+        "external_source_names_public": { "const": false }
+      }
+    }
+  }
+}

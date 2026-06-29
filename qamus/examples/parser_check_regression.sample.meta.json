@@ -1,0 +1,33 @@
+{
+  "count": 12,
+  "covers_issue_classes": [
+    "derivative_or_participle_prefix_hidden",
+    "display_local_canonical_crosswalk_missing",
+    "dual_or_plural_suffix_hidden",
+    "graph_edge_missing",
+    "hidden_clitic_or_proclitic",
+    "host_only_preposition_hover",
+    "ma_function_unresolved_or_wrong",
+    "passive_voice_hidden",
+    "phrase_translation_used_as_token_hover",
+    "source_clean_boundary_violation",
+    "suffix_pronoun_missing",
+    "weak_irab_reasoning"
+  ],
+  "generator": "tools/fusha_check.py --emit-fixture",
+  "note": "Regression fixture for the Fusha parser/checker. Qurʾānic surfaces verbatim; public output is {src:qamus,kind:authored,lang:en}; no external gloss text. See parserplans/009 + 015.",
+  "row_schema": [
+    "schema",
+    "unit_id",
+    "source_unit",
+    "segments",
+    "tokens",
+    "claims",
+    "issues",
+    "verdicts",
+    "public_boundary",
+    "evidence",
+    "summary"
+  ],
+  "schema": "fusha/parser-check-ir@1"
+}
