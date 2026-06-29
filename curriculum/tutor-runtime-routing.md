@@ -58,3 +58,31 @@ roadmap, assessment rubric, and explicit sarf/nahw procedure loading before a le
   with the exact blocker, then route to the procedure that resolves that blocker.
 - Production/speaking practice is outside this reading-first curriculum scope. Answer keys, grading rubrics,
   and state templates live under `curriculum/assessment/` and `curriculum/progress/`; this file only routes to them.
+
+## Parser/checker diagnostic → route
+
+The Fusha parser/checker (`tools/fusha_check.py`, contract `qamus/reports/parser-checker-substrate.md`) emits a
+source-addressed **grammar Issue** for each thing wrong with a proposed analysis. Every issue already carries its
+own `route_to {lane, procedure}`; this table is the human-readable mirror so a tutor knows where a diagnostic
+lands. The checker is the deterministic verifier — a `pending`/`out_of_scope` diagnostic is a PASS, a wrong gloss
+is not (blank beats wrong).
+
+| parser issue class | route to |
+|---|---|
+| `hidden_clitic_or_proclitic` | `sarf/procedures/clitic-and-host-morphology.md` |
+| `host_only_preposition_hover` | `sarf/procedures/clitic-and-host-morphology.md` (+ `nahw/procedures/preposition-pronoun.md`) |
+| `suffix_pronoun_missing` | `sarf/procedures/clitic-and-host-morphology.md` (+ `nahw/procedures/pronoun-attachment.md`) |
+| `passive_voice_hidden` | `sarf/procedures/verb-form.md` |
+| `dual_or_plural_suffix_hidden` | `sarf/procedures/masdar-participle.md` |
+| `derivative_or_participle_prefix_hidden` | `sarf/procedures/masdar-participle.md` |
+| `ma_function_unresolved_or_wrong` | `nahw/procedures/ma-function-decision.md` |
+| `phrase_translation_used_as_token_hover` | `curriculum/drills/hover-composition-and-routing.md` |
+| `weak_irab_reasoning` (right answer, wrong/no governor) | `nahw/procedures/irab-case-mood.md` — **scholar/iʿrāb (two-vote) review** |
+| `graph_edge_missing` / token out of source-addressed scope | `qamus/reports/source-address-model.md` (validator lane) |
+| `display_local_canonical_crosswalk_missing` | `curriculum/drills/hover-composition-and-routing.md` source-text blocker rule |
+| `source_clean_boundary_violation` | `provenance/source-boundaries.md` (validator lane) — never ships |
+
+`weak_irab_reasoning` is the executable form of the GrammarProblems gate (`nahw/SKILL.md` §grammar-safety): a
+correct ending without a justified governor is unsafe and routes to two-vote/scholar review, never to an
+auto-resolved hover. Deepening: the curriculum/learner-feedback lane is `parserplans/010` (KC Violation Records +
+Point→Teach→Bottom-out hints).

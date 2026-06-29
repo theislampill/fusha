@@ -2980,6 +2980,24 @@ except Exception:
     pass
 check("P9 grammar gate has >=8 wrong-reasoning trap cases (%d)" % _wr, _wr >= 8)
 
+# parser/checker substrate (parserplans P0 + smallest P1 slice): schemas, checker, validator, fixture, contract
+for _art in ("qamus/schemas/parser-check-ir.schema.json", "qamus/schemas/grammar-issue.schema.json",
+             "tools/fusha_check.py", "tools/validate_parser_check.py",
+             "qamus/examples/parser_check_regression.sample.jsonl",
+             "qamus/reports/parser-checker-substrate.md"):
+    check("parser-checker artifact exists: %s" % _art, os.path.exists(os.path.join(ROOT, _art)))
+try:
+    _pcv = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_parser_check.py"), "--self-test"])
+    check("parser-checker validator self-test (6 FAIL conditions reject; good units clean)", _pcv.returncode == 0)
+    _pcc = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_check.py"), "--self-test"])
+    check("parser-checker self-test (regression examples + 12 issue classes + out_of_scope boundary)", _pcc.returncode == 0)
+    _pcf = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_parser_check.py"),
+                     os.path.join(ROOT, "qamus", "examples", "parser_check_regression.sample.jsonl")])
+    check("parser-checker regression fixture validates (12 units, 0 violations)", _pcf.returncode == 0)
+except Exception as _e:
+    check("parser-checker substrate runnable", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)
