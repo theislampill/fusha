@@ -15992,19 +15992,20 @@
       "total_uses": 338
     },
     "p022": {
-      "candidate_page": 454,
+      "candidate_page": 457,
       "candidate_page_band": [
-        448,
-        460
+        451,
+        463
       ],
-      "candidate_page_image": "pg454.jpeg",
-      "confidence": "candidate",
+      "candidate_page_image": "pg457.jpeg",
+      "confidence": "photo_verified",
       "entry_id": "fd8d287473fa",
       "headword": "أَوْ",
       "root": "",
       "section": "particle",
       "source_key": "p022",
-      "total_uses": 325
+      "total_uses": 325,
+      "visual_note": "p022 aw / أَوْ verified on photographed book page pg457.jpeg; prior pg454 locator did not contain entry 22"
     },
     "p023": {
       "candidate_page": 454,
