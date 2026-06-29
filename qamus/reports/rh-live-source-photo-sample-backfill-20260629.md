@@ -40,31 +40,29 @@ promoted. Rows marked `needs_manual_zoom` were not promoted.
 
 ## Promoted Entries
 
-New sample rows were added for 48 particle entries:
+New sample rows were added for 53 particle entries:
 
 `p039`, `p041`, `p042`, `p043`, `p044`, `p045`, `p046`, `p047`, `p048`, `p050`,
 `p054`, `p055`, `p056`, `p057`, `p058`, `p059`, `p061`, `p062`, `p063`, `p067`,
 `p071`, `p072`, `p073`, `p074`, `p075`, `p076`, `p077`, `p078`, `p079`, `p080`,
 `p081`, `p082`, `p083`, `p084`, `p085`, `p086`, `p087`, `p088`, `p089`, `p091`,
-`p092`, `p093`, `p094`, `p095`, `p096`, `p097`, `p099`, and `p100`.
+`p092`, `p093`, `p094`, `p095`, `p096`, `p097`, `p099`, `p100`, `p040`, `p051`,
+`p052`, `p069`, and `p090`.
 
-The regenerated locator now reports 65 verified entries.
+The regenerated locator now reports 70 verified entries.
 
 ## Still Blocked
 
-The following entries remain source-photo pending because the current worker evidence
-requires manual zoom or a better crop before the entry/example card can be certified:
+The following entry remains source-photo pending because the available local photo
+sequence shows only a partial card and does not expose enough of the entry/example
+surface to certify the source-photo edge:
 
-- `p040`
-- `p051`
-- `p052`
 - `p053`
-- `p069`
-- `p090`
 
-These are not live-rollout blockers for already deployed rich hover rows, but they are
-not source-photo complete and must remain visible in tranche-level source-photo
-denominators.
+This is not a live-rollout blocker for already deployed rich hover rows, but it is not
+source-photo complete and must remain visible in tranche-level source-photo
+denominators as `source_photo_partial_card_only` until a better crop or source-photo
+edge is available.
 
 ## Flywheel Impact
 

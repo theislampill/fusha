@@ -16241,19 +16241,16 @@
       "verified_value": "حَتَّى / total uses 142"
     },
     "p040": {
-      "candidate_page": 460,
-      "candidate_page_band": [
-        454,
-        466
-      ],
-      "candidate_page_image": "pg460.jpeg",
-      "confidence": "candidate",
+      "confidence": "verified",
       "entry_id": "d8b8169ae3d3",
       "headword": "أَمْ",
+      "page": 461,
+      "page_image": "pg461.jpeg",
       "root": "",
       "section": "particle",
       "source_key": "p040",
-      "total_uses": 137
+      "total_uses": 137,
+      "verified_value": "أَمْ / total uses 137 / examples 52:35 and 27:60"
     },
     "p041": {
       "confidence": "verified",
@@ -16376,34 +16373,28 @@
       "verified_value": "أَيَّانَ / total uses 6"
     },
     "p051": {
-      "candidate_page": 462,
-      "candidate_page_band": [
-        456,
-        468
-      ],
-      "candidate_page_image": "pg462.jpeg",
-      "confidence": "candidate",
+      "confidence": "verified",
       "entry_id": "8ce3f76e3e4c",
       "headword": "بَلْ",
+      "page": 463,
+      "page_image": "pg463.jpeg",
       "root": "",
       "section": "particle",
       "source_key": "p051",
-      "total_uses": 127
+      "total_uses": 127,
+      "verified_value": "بَلْ / total uses 127 / example 21:5"
     },
     "p052": {
-      "candidate_page": 462,
-      "candidate_page_band": [
-        456,
-        468
-      ],
-      "candidate_page_image": "pg462.jpeg",
-      "confidence": "candidate",
+      "confidence": "verified",
       "entry_id": "98e0a4f33c1a",
       "headword": "كَلَّا",
+      "page": 463,
+      "page_image": "pg463.jpeg",
       "root": "",
       "section": "particle",
       "source_key": "p052",
-      "total_uses": 33
+      "total_uses": 33,
+      "verified_value": "كَلَّا / total uses 33 / examples 78:4 and 78:5"
     },
     "p053": {
       "candidate_page": 462,
@@ -16601,19 +16592,16 @@
       "verified_value": "هَؤُلَاءِ / total uses 46"
     },
     "p069": {
-      "candidate_page": 465,
-      "candidate_page_band": [
-        459,
-        471
-      ],
-      "candidate_page_image": "pg465.jpeg",
-      "confidence": "candidate",
+      "confidence": "verified",
       "entry_id": "56df186084e2",
       "headword": "أُولَاءِ",
+      "page": 466,
+      "page_image": "pg466.jpeg",
       "root": "",
       "section": "particle",
       "source_key": "p069",
-      "total_uses": 2
+      "total_uses": 2,
+      "verified_value": "أُولَاءِ / total uses 2 / example 20:84"
     },
     "p070": {
       "confidence": "verified",
@@ -16856,19 +16844,16 @@
       "verified_value": "إِيَّاهُمْ / total uses 1"
     },
     "p090": {
-      "candidate_page": 469,
-      "candidate_page_band": [
-        463,
-        471
-      ],
-      "candidate_page_image": "pg469.jpeg",
-      "confidence": "candidate",
+      "confidence": "verified",
       "entry_id": "affa6a9b1f6c",
       "headword": "إِيَّاكَ",
+      "page": 469,
+      "page_image": "pg469.jpeg",
       "root": "",
       "section": "particle",
       "source_key": "p090",
-      "total_uses": 2
+      "total_uses": 2,
+      "verified_value": "إِيَّاكَ / total uses 2 / example 1:5"
     },
     "p091": {
       "confidence": "verified",
@@ -31190,5 +31175,5 @@
     471
   ],
   "schema": "fusha/source-photo-entry-locator@1",
-  "verified": 65
+  "verified": 70
 }
