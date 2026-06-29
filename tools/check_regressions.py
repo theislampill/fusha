@@ -3047,10 +3047,10 @@ try:
     _pcv = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_parser_check.py"), "--self-test"])
     check("parser-checker validator self-test (6 FAIL conditions reject; good units clean)", _pcv.returncode == 0)
     _pcc = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_check.py"), "--self-test"])
-    check("parser-checker self-test (regression examples + 12 issue classes + out_of_scope boundary)", _pcc.returncode == 0)
+    check("parser-checker self-test (regression examples + 13 issue classes + out_of_scope boundary)", _pcc.returncode == 0)
     _pcf = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_parser_check.py"),
                      os.path.join(ROOT, "qamus", "examples", "parser_check_regression.sample.jsonl")])
-    check("parser-checker regression fixture validates (12 units, 0 violations)", _pcf.returncode == 0)
+    check("parser-checker regression fixture validates (13 units, 0 violations)", _pcf.returncode == 0)
 except Exception as _e:
     check("parser-checker substrate runnable", False)
     print("  ", _e)
