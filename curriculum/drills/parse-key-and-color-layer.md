@@ -73,6 +73,20 @@ display classes are scrubbed Qamus role classes, not screenshot/source labels.
 | `يُحْيِي` | imperfect prefix plus Form IV lexical stem | `qg-verb-prefix`, `qg-verb-stem` |
 | `كُلُّ شَيْءٍ قَدِيرٌ` | quantifier/noun/adjective relation; each visible host needs its own role | `qg-noun-stem`, `qg-noun-stem`, `qg-adjective` |
 
+## Renderer-Class Normalization Drill
+
+Some grammar facts are more precise than the current renderer class palette. Normalize the display class without
+hiding the grammar fact.
+
+| grammar fact | forbidden shortcut | safe display class | where the exact fact goes |
+|---|---|---|---|
+| active participle / ism fāʿil used adjectivally | invent `qg-active-participle` | `qg-adjective` plus `AP`/`ADJ` label | `sarf.derivative_type`, morphline, learner explanation |
+| passive participle / ism mafʿūl | invent `qg-passive-participle` | `qg-adjective` plus derivative prefix/suffix classes when visible | sarf note and segment rows |
+| adverbial function / ẓarf-like role | invent `qg-adverb` | supported role such as `qg-particle`, `qg-preposition`, or `qg-relation` | `nahw.function`, attachment note, parse key |
+
+Reject any answer that is linguistically right but uses a renderer class absent from the schema. The fix is either
+class normalization or a deliberate schema/CSS/fixture/test expansion, not a one-off live payload exception.
+
 ## Worked Shape
 
 ```text

@@ -145,6 +145,23 @@ Color is an aid, not the only signal. The hover must also show text labels such 
 `PRON`, `P`, `REL`, `VOC`, `OATH`, `COM`, `CAUS`, or `CASE`, so the UI remains usable for
 color-blind learners and for screenshots/printouts.
 
+## Class Contract vs Grammar Fact
+
+Display classes are a renderer contract, not the whole grammar analysis. Do not invent a new public class merely
+because the sarf/nahw fact is real. If a live renderer or schema does not support a class such as
+`qg-active-participle` or `qg-adverb`, keep the grammar fact in `sarf.derivative_type`, `nahw.function`,
+`parse_key.summary`, `morphline`, segment `role`, and learner explanation while mapping the display class to the
+nearest supported role.
+
+Examples:
+
+- An active participle or ṣifa may use `qg-adjective` plus a label such as `AP` or `ADJ`; the hover text and
+  morphline must still say active participle where that is the lesson.
+- A locative/adverbial function may use `qg-particle`, `qg-preposition`, `qg-relation`, or another supported class
+  according to the written piece; the nahw note must still name the adverbial role.
+- A new class is allowed only when the schema, renderer CSS, DOM fixture, validators, and regression tests are
+  updated together. Until then, unsupported class names are deployment blockers, not harmless decoration.
+
 RH-LIVE dogfood added a stricter learner rule: a grammatically correct payload can still be a poor rich hover if
 the visible color layer hides the exact thing being taught. For example, a dual noun such as `بُرْهَٰنَانِ` should
 not show only one undifferentiated noun-colored span when the learner needs to see the dual ending. A plural

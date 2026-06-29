@@ -120,6 +120,12 @@ is known and learner-relevant: `qg-verb-prefix`, `qg-verb-stem`, `qg-subject-pro
 must make that visible in display metadata and the morphline. If sarf cannot account for a grammatical piece, the row
 is not ready for rich-hover rendering and should defer to nahw or pending with an exact blocker.
 
+Do not mint unsupported renderer classes for real sarf facts. If a live schema does not accept `qg-active-participle`
+or a similar fine-grained class, keep the participle fact in `derivative_type`, the segment label, the morphline, and
+the learner explanation, and render with a supported class such as `qg-adjective` plus visible derivative/number
+pieces. A new visual class is safe only when the schema, renderer, fixture, validator, and regression checks are
+updated together.
+
 Every certifiable noun/adjective/participle host should carry an appropriate root or base where the tradition and
 entry data support one. Proper names, pure particles, pronouns, and function-only cases must carry an explicit
 `no_root`, `proper_name_no_root`, or `function_only_no_root` reason rather than a guessed root. Do not fill root fields

@@ -178,6 +178,14 @@ specific role class whenever the segment role is certified. A row that hides a d
 prefix, or an imperfect marker inside a single broad host color is not learner-rich even if the English gloss reads
 well.
 
+The reverse is also a gate: a true grammar fact does not authorize a new display class by itself. If the renderer
+contract does not include `qg-active-participle`, `qg-adverb`, or another tempting fine-grained class, the payload
+must use a supported class and carry the fine-grained fact in grammar fields and learner text. For example, an
+active participle can render with `qg-adjective` while `sarf.derivative_type`, the label, and the morphline teach
+that it is an ism fāʿil; an adverbial function can render with `qg-particle`, `qg-preposition`, or `qg-relation`
+while `nahw.function` names the adverbial role. Adding a new public class requires schema, CSS, fixture, validator,
+and regression support in the same change.
+
 The color layer must be generated from scrubbed segment roles, not from external source names or copied source text.
 For Arabic shaping safety, `display.segments[]` does not require visible segment elements inside the word. A live
 renderer may keep the visible Arabic token as one text run and project the segment roles through gradient stops,

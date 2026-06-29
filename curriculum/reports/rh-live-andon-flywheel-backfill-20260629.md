@@ -27,6 +27,7 @@ teaching prompts derived from observed defect classes.
 | Qur'an display text must be deterministic before segmentation | missing hamza/maddah/diacritics or selected target word | sarf/nahw dogfood drills, assessment row `L8-source-text-display-gate`, tutor routing | `quran_display_text_mismatch` |
 | Card-level rollout reporting cannot hide visible flat cards | p007-style "row denominator complete" with visible blocked card | `curriculum/drills/hover-composition-and-routing.md`, missed-error log, tutor routing | `card_level_coverage_hidden` |
 | Noun/adjective hosts need root/base where certifiable | common noun/adjective rows with blank root while proper/function rows need no-root reason | `sarf/SKILL.md`, parse-key/color contract | `root_family_vibes`, `renderer_only_gap` |
+| Fine-grained grammar facts must still use supported renderer classes | live validator rejected unsupported active-participle/adverb classes | `curriculum/qamus-hover-parse-key-and-color.md`, `qamus/reports/morphosyntax-token-contract.md`, `sarf/SKILL.md`, `nahw/SKILL.md`, parse/color drill | `unsupported_renderer_class`, `grammar_fact_hidden_by_class_mismatch` |
 
 ## Explicit No-Ops
 
@@ -54,6 +55,13 @@ teaching prompts derived from observed defect classes.
 - `qamus/schemas/morphosyntax-token.schema.json`
 - `qamus/reports/morphosyntax-token-contract.md`
 - `tools/validate_morphosyntax_token_metadata.py`
+
+## Addendum: VN-RH-LIVE-00 Renderer-Class Normalization
+
+During a later VN-RH-LIVE-00 append, the live renderer validator accepted the grammar analysis but rejected payload
+classes outside the committed palette. The repaired rule is: keep active-participle and adverbial facts in sarf/nahw
+fields, segment labels, morphlines, and learner explanations, but render them with supported classes unless a future
+change updates schema, CSS, DOM fixture, validators, and regression checks together.
 
 ## Future Work
 

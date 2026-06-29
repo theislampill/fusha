@@ -132,6 +132,9 @@ When the renderer has role-aware classes, prefer function-specific display roles
 `qg-result-fa`, `qg-lam`, `qg-ma-particle`, `qg-preposition`, and `qg-article` instead of collapsing every
 function piece into a generic particle color. The learner should be able to see why a wāw is coordination, an oath,
 or comitative; why a fāʾ is result/resumption; and what lām or mā is doing in context.
+If the function is adverbial or ẓarf-like, do not invent an unsupported `qg-adverb` class. Use the nearest supported
+class for the written piece (`qg-particle`, `qg-preposition`, or `qg-relation` as appropriate) and state the
+adverbial role in `nahw.function`, `parse_key.summary`, and the learner-facing explanation.
 
 Learner-facing tooltip prose must explain Arabic, not workflow. Do not put source-boundary, authoring-process,
 deployment, owner-authorization, or internal-evidence statements in a public hover explanation. Those statements
