@@ -71,6 +71,17 @@ fixture uses real `S:A:W` addresses verified present in `quran-usage-spine-full.
 translation text is stored. The substrate is **tooling**, not a live-coverage change — see
 `parserplans/017-boundary-do-not-touch-live-qamus.md`.
 
+## RH-LIVE candidate adapter rule
+When the checker scores a proposed RH-LIVE rich-hover row, the `hover_gloss` claim must represent the learner-visible
+public hover text that would actually ship, not a private reviewer summary and not only the main English title. The
+row must still preserve `token_contribution_gloss` separately from `contextual_phrase_gloss`. If those differ, the
+candidate must carry the adjacent-context fields (`adjacent_context_required`, `adjacent_context_locs`, and the
+appropriate `context_*_source`) so a phrase gloss such as “the people ask you” cannot hide that the token itself only
+contributes “ask you.” Segment rows, morphline facts, and learner explanation are part of the visible teaching surface
+and should be represented in the `Token`/`hover_contract` so clitics, suffixes, articles, roots, passive/active voice,
+dual/plural endings, and derivative shapes cannot be silently dropped. Any emitted issue or non-`grounded` verdict
+blocks live rollout; `live_writes` must remain `0`.
+
 ## Run it
 ```
 python3 tools/fusha_check.py --self-test            # 7 regression examples + 12 classes + out_of_scope + dry-run
