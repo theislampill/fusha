@@ -16397,19 +16397,16 @@
       "verified_value": "كَلَّا / total uses 33 / examples 78:4 and 78:5"
     },
     "p053": {
-      "candidate_page": 462,
-      "candidate_page_band": [
-        456,
-        468
-      ],
-      "candidate_page_image": "pg462.jpeg",
-      "confidence": "candidate",
+      "confidence": "verified",
       "entry_id": "056715c742d4",
       "headword": "بَلَى",
+      "page": 463,
+      "page_image": "pg463.jpeg",
       "root": "",
       "section": "particle",
       "source_key": "p053",
-      "total_uses": 22
+      "total_uses": 22,
+      "verified_value": "بَلَى / total uses 22 / example 2:260"
     },
     "p054": {
       "confidence": "verified",
@@ -31175,5 +31172,5 @@
     471
   ],
   "schema": "fusha/source-photo-entry-locator@1",
-  "verified": 70
+  "verified": 71
 }
