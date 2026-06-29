@@ -226,7 +226,7 @@ def _self_test():
     for f in failures:
         print("FAIL " + f)
     if not failures:
-        print("ok   validate_parser_check self-test: 12 good units clean; all 6 FAIL conditions reject")
+        print("ok   validate_parser_check self-test: 13 good units clean; all 6 FAIL conditions reject")
     return 0 if not failures else 1
 
 

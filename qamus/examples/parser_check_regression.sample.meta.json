@@ -1,7 +1,8 @@
 {
-  "count": 12,
+  "count": 13,
   "covers_issue_classes": [
     "derivative_or_participle_prefix_hidden",
+    "dictionary_infinitive_leakage",
     "display_local_canonical_crosswalk_missing",
     "dual_or_plural_suffix_hidden",
     "graph_edge_missing",

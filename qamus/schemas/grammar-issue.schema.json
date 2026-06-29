@@ -23,6 +23,7 @@
         "passive_voice_hidden",
         "dual_or_plural_suffix_hidden",
         "derivative_or_participle_prefix_hidden",
+        "dictionary_infinitive_leakage",
         "weak_irab_reasoning",
         "graph_edge_missing",
         "display_local_canonical_crosswalk_missing",

@@ -13,7 +13,7 @@ routing gate (every issue MUST route, else the checker self-fails). Dry-run: no 
 
 CLI:
   python3 tools/fusha_check.py --in <check_units.jsonl> --out <-|path>   # check a batch
-  python3 tools/fusha_check.py --self-test                              # the 7 regression examples + all 12 classes
+  python3 tools/fusha_check.py --self-test                              # the 7 regression examples + all 13 classes
   python3 tools/fusha_check.py --emit-fixture <path.jsonl>              # regenerate the committed regression fixture
 
 This module is the generator for qamus/examples/parser_check_regression.sample.jsonl.
@@ -77,6 +77,8 @@ _PREP_ROLES = {"prefix_preposition", "prefix_oath", "preposition"}
 _PRONOUN_ROLES = {"object_pronoun", "subject_pronoun", "possessive_pronoun"}
 _MA_POS = {"particle", "negative_particle", "relative", "interrogative", "preventive_particle", "subordinating_conjunction"}
 _PARTICIPLE_DERIV = {"ism_fail", "ism_mafool", "sifa_mushabbaha", "sighat_mubalaghah", "ism_tafdil"}
+_NOMINAL_POS = {"noun", "proper_noun", "adjective", "participle"}
+_MASDAR_DERIV = {"masdar", "maṣdar", "verbal_noun", "ism_masdar"}
 _IRAB_CLAIMS = {"irab_role", "case_mood", "governor", "pp_attachment", "particle_function", "suffix_referent"}
 _DEFAULT_TRIGGERS = {
     "case_mood": ["case_or_mood"], "irab_role": ["irab"], "governor": ["irab"],
@@ -94,6 +96,7 @@ ISSUE_ROUTE = {
     "passive_voice_hidden": ("sarf", "sarf/procedures/verb-form.md"),
     "dual_or_plural_suffix_hidden": ("sarf", "sarf/procedures/masdar-participle.md"),
     "derivative_or_participle_prefix_hidden": ("sarf", "sarf/procedures/masdar-participle.md"),
+    "dictionary_infinitive_leakage": ("sarf", "sarf/procedures/masdar-participle.md"),
     "weak_irab_reasoning": ("scholar_irab_review", "nahw/procedures/irab-case-mood.md"),
     "graph_edge_missing": ("validator", "qamus/reports/source-address-model.md"),
     "display_local_canonical_crosswalk_missing": ("curriculum", "curriculum/drills/hover-composition-and-routing.md"),
@@ -234,6 +237,7 @@ def _default_explanation(cls):
         "passive_voice_hidden": "The verb is passive (the pattern, not an explicit agent, marks it); the hover must reflect the passive, not read as active.",
         "dual_or_plural_suffix_hidden": "A visible dual/plural ending must be reflected; a singular host gloss hides it.",
         "derivative_or_participle_prefix_hidden": "A derived participle/derivative is not a finite verb; the hover must reflect its nominal shape, not an infinitive verb.",
+        "dictionary_infinitive_leakage": "A noun/adjective/proper-name hover must not inherit dictionary infinitive prose; use the token's nominal form or keep the row pending.",
         "weak_irab_reasoning": "A correct ending without a justified governor (ʿāmil) is unsafe: an iʿrāb-sensitive decision needs the case/mood AND its governor, and a two-vote gate — never auto_safe.",
         "graph_edge_missing": "The target does not resolve to a source-address graph node; it is out of the source-addressed checker's scope.",
         "display_local_canonical_crosswalk_missing": "The display-local position differs from the canonical S:A:W and no crosswalk is recorded, so the token cannot be safely anchored.",
@@ -286,6 +290,11 @@ def _detect_token_claim(token, claim):
         # (D) derivative/participle prefix hidden
         if sarf.get("derivative_type") in _PARTICIPLE_DERIV and re.search(r"\bto\s+\w+", _en(hover)):
             issues.append(_mk_issue("derivative_or_participle_prefix_hidden", loc, cid, observed=hover))
+        # (D2) dictionary infinitive leakage — a rooted noun/proper/adjective candidate with a "to VERB" hover is
+        # dictionary prose, not a token contribution. Maṣdar rows still need explicit nominal evidence.
+        deriv = str(sarf.get("derivative_type") or "").lower()
+        if token.get("pos") in _NOMINAL_POS and deriv not in (_MASDAR_DERIV | _PARTICIPLE_DERIV) and re.search(r"\bto\s+\w+", _en(hover)):
+            issues.append(_mk_issue("dictionary_infinitive_leakage", loc, cid, observed=hover, expected="nominal token gloss or pending"))
         # (E) mā function unresolved — match مَا as a STANDALONE token/segment (not the substring ما, which appears
         # inside كَلِمَات 'words' etc.), gated by a particle-ish POS.
         nahw_fn = (token.get("nahw") or {}).get("function")
@@ -452,7 +461,7 @@ def check_unit(unit):
 
 
 # ---------------------------------------------------------------------------
-# regression fixture (the 7 required examples + full 12-class coverage)
+# regression fixture (the 7 required examples + full class coverage)
 # ---------------------------------------------------------------------------
 def _tok(loc, surface, pos, segments, sarf=None, must_surface=None, must_not=None, nahw=None, gloss="(authored)"):
     sn, sv, sw = loc.split(":")
@@ -567,14 +576,23 @@ def regression_units():
     out.append((_unit("reg-participle", "quran:44:14", "quran_ayah", "مُعَلَّمٌ", t, [c]),
                 {"verdict": "contradicted", "classes": {"derivative_or_participle_prefix_hidden"}}))
 
-    # 9. out_of_scope / graph_edge_missing — surah 200 does not exist.
+    # 9. dictionary infinitive leakage — rooted noun-shaped candidate must not inherit a verb-entry gloss.
+    t = _tok("2:34:3", "قُلْنَا", "noun",
+             [{"role": "stem", "surface": "قُلْنَا", "gloss_contribution": "We said"}],
+             sarf={"root": "ق و ل"}, must_surface=["We said"])
+    c = {"claim_id": "c1", "target": "2:34:3", "claim_type": "hover_gloss", "claimed_value": "to say",
+         "claimed_reasoning": None, "proposer": "import"}
+    out.append((_unit("reg-dictionary-infinitive", "quran:2:34", "quran_ayah", "قُلْنَا", t, [c]),
+                {"verdict": "contradicted", "classes": {"dictionary_infinitive_leakage"}}))
+
+    # 10. out_of_scope / graph_edge_missing — surah 200 does not exist.
     t = _tok("200:1:1", "كلمة", "noun", [{"role": "stem", "surface": "كلمة", "gloss_contribution": "word"}])
     c = {"claim_id": "c1", "target": "200:1:1", "claim_type": "hover_gloss", "claimed_value": "word",
          "claimed_reasoning": None, "proposer": "model"}
     out.append((_unit("reg-oos", "quran:200:1", "quran_ayah", "كلمة", t, [c]),
                 {"verdict": "out_of_scope", "classes": {"graph_edge_missing"}}))
 
-    # 10. display_local_canonical_crosswalk_missing.
+    # 11. display_local_canonical_crosswalk_missing.
     t = _tok("2:255:1", "ٱللَّهُ", "proper_noun", [{"role": "stem", "surface": "ٱللَّهُ", "gloss_contribution": "Allah"}],
              must_surface=["Allah"])
     seg = [{"canonical_loc": "quran:2:255", "display_surface": "ٱللَّهُ", "display_local_loc": "wbw:2:255:99",
@@ -584,7 +602,7 @@ def regression_units():
     out.append((_unit("reg-crosswalk", "quran:2:255", "quran_ayah", "ٱللَّهُ", t, [c], segments=seg),
                 {"verdict": "grounded", "classes": {"display_local_canonical_crosswalk_missing"}}))
 
-    # 11. source_clean_boundary_violation — a claim hover that names an internal source.
+    # 12. source_clean_boundary_violation — a claim hover that names an internal source.
     t = _tok("1:1:1", "بِسْمِ", "noun",
              [{"role": "prefix_preposition", "surface": "بِ", "gloss_contribution": "in"},
               {"role": "stem", "surface": "سْمِ", "gloss_contribution": "the name of"}],
@@ -594,7 +612,7 @@ def regression_units():
     out.append((_unit("reg-leak", "quran:1:1", "quran_ayah", "بِسْمِ", t, [c]),
                 {"verdict": "contradicted", "classes": {"source_clean_boundary_violation"}}))
 
-    # 12. GROUNDED — a correct hover that surfaces every piece (no issue).
+    # 13. GROUNDED — a correct hover that surfaces every piece (no issue).
     t = _tok("16:16:2", "وَبِٱلنَّجْمِ", "noun",
              [{"role": "prefix_conjunction", "surface": "وَ", "gloss_contribution": "and"},
               {"role": "prefix_preposition", "surface": "بِ", "gloss_contribution": "by"},
@@ -624,13 +642,13 @@ def _self_test():
             failures.append("%s: missing issue classes %s (got %s)" % (uid, exp["classes"] - got_classes, got_classes))
         if got_verdict != exp["verdict"]:
             failures.append("%s: verdict %s != expected %s" % (uid, got_verdict, exp["verdict"]))
-    # every one of the 12 classes must be exercised by the fixture
+    # every registered class must be exercised by the fixture
     all_seen = set()
     for unit_in, _ in regression_units():
         all_seen |= {i["issue_class"] for i in check_unit(json.loads(json.dumps(unit_in)))["issues"]}
-    required12 = set(ISSUE_ROUTE)
-    if all_seen != required12:
-        failures.append("fixture does not exercise all 12 classes: missing %s" % (required12 - all_seen))
+    required_classes = set(ISSUE_ROUTE)
+    if all_seen != required_classes:
+        failures.append("fixture does not exercise all classes: missing %s" % (required_classes - all_seen))
     # the milestone boundary: an unaddressed token is out_of_scope
     if resolve_address("quran:200:1:1")["scope"] != "out_of_scope":
         failures.append("resolver: surah 200 should be out_of_scope")
@@ -668,7 +686,7 @@ def _self_test():
     for f in failures:
         print("FAIL " + f)
     if not failures:
-        print("ok   fusha_check self-test: 12 regression units, all 12 issue classes, out_of_scope boundary, dry-run")
+        print("ok   fusha_check self-test: 13 regression units, all 13 issue classes, out_of_scope boundary, dry-run")
     return 0 if not failures else 1
 
 
