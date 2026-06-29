@@ -271,6 +271,30 @@ try:
 except Exception:
     _locator_ok = False
 check("source-photo locator artifact keeps early verbs/nouns/particles in their source sections", _locator_ok)
+try:
+    _sample_pages = {}
+    _samples_path = os.path.join(ROOT, "qamus", "reports", "source-photo-verified-samples.jsonl")
+    for _line in io.open(_samples_path, encoding="utf-8"):
+        _line = _line.strip()
+        if not _line:
+            continue
+        _rec = json.loads(_line)
+        if _rec.get("field") != "entry_locator":
+            continue
+        if _rec.get("verdict") not in {"verified", "verified_correct"}:
+            continue
+        if not _rec.get("page_image"):
+            continue
+        for _sk in _rec.get("source_keys") or []:
+            _sample_pages[_sk] = _rec.get("page_image")
+    _particle_locator_ok = bool(_sample_pages) and all(
+        _locs.get(_sk, {}).get("confidence") in {"verified", "photo_verified"}
+        and _locs.get(_sk, {}).get("page_image") == _page
+        for _sk, _page in _sample_pages.items()
+    )
+except Exception:
+    _particle_locator_ok = False
+check("RH-LIVE source-photo entry-locator samples survive regeneration", _particle_locator_ok)
 # the MCP morphology extractor classifies the load-bearing cases (noun-not-verb on wazn name; Form IV active verb)
 try:
     import importlib.util as _ilu
