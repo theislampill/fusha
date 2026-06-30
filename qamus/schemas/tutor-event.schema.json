@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/tutor-event.schema.json",
+  "title": "Tutor event (offline Fusha runtime, event-sourced)",
+  "description": "One append-only event per graded attempt, emitted by tools/fusha_tutor_runtime.py. The event log is the replayable record of a tutoring session (event sourcing): replaying the events over the bank reconstructs the progress state. Grading is computed from the answer payload's CONTENT (matched/forbidden/required-reasoning), NEVER from a learner/model self-reported correctness flag. Deterministic. Source-clean (every text field is leak-scanned). Written only when --write is passed.",
+  "type": "object",
+  "required": ["schema", "seq", "now_day", "item_id", "level", "outcome", "grade", "box_before", "box_after"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "fusha/tutor-event@1" },
+    "seq": { "type": "integer", "minimum": 0, "description": "Monotonic event sequence within a session." },
+    "now_day": { "type": "integer", "minimum": 0 },
+    "item_id": { "type": "string" },
+    "level": { "type": "string" },
+    "outcome": { "type": "string", "enum": ["promote", "hold", "lapse"] },
+    "grade": {
+      "type": "object",
+      "description": "The computed grade — derived from content, not self-report.",
+      "required": ["passed", "reasoning_passed", "two_vote_status", "forbidden_hit", "cleared"],
+      "additionalProperties": false,
+      "properties": {
+        "passed": { "type": "boolean", "description": "Answer matched expected_answer or an accepted_variant (normalized)." },
+        "reasoning_passed": { "type": "boolean", "description": "Every required_reasoning observation was present." },
+        "two_vote_status": { "type": "string", "enum": ["n/a", "cleared", "pending"] },
+        "forbidden_hit": { "type": "boolean", "description": "A forbidden_answer appeared in the response." },
+        "cleared": { "type": "boolean", "description": "Full pass: passed AND reasoning_passed AND not forbidden AND two_vote not pending." },
+        "missing_reasoning": { "type": "array", "items": { "type": "string" }, "description": "required_reasoning observations not found." }
+      }
+    },
+    "box_before": { "type": "integer", "minimum": 0 },
+    "box_after": { "type": "integer", "minimum": 0 },
+    "remediation_route": { "type": ["string", "null"] },
+    "note": { "type": "string", "description": "Human-readable, source-clean summary." }
+  }
+}

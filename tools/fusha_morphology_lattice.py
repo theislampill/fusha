@@ -38,6 +38,8 @@ _KNOWN_PREPS = {"من", "إلى", "الى", "على", "في", "عن", "مع", "�
                 "دون", "خلال", "حول", "قبل", "بعد", "تحت", "فوق", "بين"}
 _FEATURE_KEYS = ("verb_form", "voice", "aspect", "mood", "person", "number", "gender", "case", "state",
                  "derivative_type", "particle_function")
+# POS classes for which a triliteral/quadriliteral ROOT is meaningful (particles/prepositions have no root).
+_ROOT_BEARING_POS = ("noun", "proper_noun", "adjective", "participle", "masdar", "verb")
 
 
 def _empty_features():
@@ -117,11 +119,19 @@ def _make_candidate(pos, seg_ref, *, voweled, source_addressed, n_pos, multi_pro
     return cand
 
 
-def build_morphology_lattice(token_ref, surface, segment_cands, voweled, source_addressed=False):
+def build_morphology_lattice(token_ref, surface, segment_cands, voweled, source_addressed=False,
+                             qac=None, ayah_ref=None):
     """Return the lattice container {token_ref, candidates[], top_rank, n_candidates, all_unvoweled_kept} for one token.
 
     `segment_cands` is the token's `segment_candidates` (consumed, never rebuilt); each candidate's `segment_candidate_ref`
     is the integer index into it. >1 candidate ⇒ the caller keeps the token `pending` / `surface_only|candidate`.
+
+    OPTIONAL real-data path (criticism 1): if the caller supplies a loaded `qac` adapter (a tools.qac_adapter.QacAdapter
+    built from the USER's own local QAC export) AND `source_addressed` is True AND an `ayah_ref` (surah:ayah) is given,
+    a confident QAC ROOT is attached as an occurrence-level FACT to the root-bearing candidates, with an internal
+    `informed_by:["qac"]` breadcrumb (source-boundaries §1.2/§2 — fact only, never QAC text, stripped before publication).
+    With no adapter (the default) every candidate keeps root=null and carries no breadcrumb — the output is
+    BYTE-IDENTICAL to before. QAC is GPL v3 and is never vendored; only the user's local file is consulted.
     """
     cands = []
     for i, seg_cand in enumerate(segment_cands or []):
@@ -152,6 +162,19 @@ def build_morphology_lattice(token_ref, surface, segment_cands, voweled, source_
     for r, j in enumerate(order, 1):
         cands[j]["rank"] = r
     cands = [cands[j] for j in order]
+    # OPTIONAL QAC fact consult (criticism 1). Purely additive + opt-in: with qac=None this block is skipped and the
+    # output is byte-identical to the no-qac path. The root is an occurrence-level FACT; informed_by is an internal
+    # breadcrumb (never QAC text). Only populated for a source-addressed token with a confident, leak-free root.
+    if qac is not None and source_addressed and ayah_ref:
+        try:
+            qroot = (qac.get_root(ayah_ref, surface) or "").strip()
+        except Exception:  # noqa: BLE001  a malformed adapter must never break the lattice
+            qroot = ""
+        if qroot and not leak_sot.is_leak(qroot):
+            for c in cands:
+                if c["pos"] in _ROOT_BEARING_POS:
+                    c["root"] = qroot
+                    c["informed_by"] = ["qac"]
     # leak scrub every public text field (ambiguity_reason); a hit forces never_auto_resolve + redaction.
     for c in cands:
         if c.get("ambiguity_reason") and leak_sot.is_leak(c["ambiguity_reason"]):
@@ -221,6 +244,45 @@ def _self_test():
     p = build_morphology_lattice("tok:0", "ما", [_seg("ما", ("stem", "ما"))], False, False)
     if p["candidates"][0]["pos"] != "particle":
         failures.append("particle: top candidate should be 'particle'")
+
+    # NON-VACUOUS auto_safe gate coverage: a voweled, article-bearing, non-homograph stem is the ONE shape whose
+    # required_gate is auto_safe — so it actually exercises the arbitrary->two_vote_required UPGRADE (_gate_for).
+    # The prior regression units all carry triggers, so none tested this. (a) ARBITRARY must be upgraded away from
+    # auto_safe; (b) SOURCE-ADDRESSED keeps the legitimate auto_safe. Removing the upgrade flips (a) and FAILs here.
+    asegs = [_seg("الْكِتَابُ", ("definite_article", "ال"), ("stem", "كِتَابُ"))]
+    arb_as = build_morphology_lattice("tok:0", "الْكِتَابُ", asegs, True, source_addressed=False)
+    if any(c["gate"] == "auto_safe" for c in arb_as["candidates"]):
+        failures.append("arbitrary voweled article noun must be UPGRADED off auto_safe (two_vote_required)")
+    if arb_as["candidates"][0]["gate"] != "two_vote_required":
+        failures.append("arbitrary auto_safe-eligible token must become two_vote_required, got %s"
+                        % arb_as["candidates"][0]["gate"])
+    sa_as = build_morphology_lattice("tok:0", "الْكِتَابُ", asegs, True, source_addressed=True)
+    if sa_as["candidates"][0]["gate"] != "auto_safe":
+        failures.append("source-addressed voweled article noun should keep the legitimate auto_safe, got %s"
+                        % sa_as["candidates"][0]["gate"])
+
+    # OPTIONAL QAC consult (criticism 1). Uses a hand-written, in-memory, NON-QAC fixture (no QAC data shipped or
+    # read from disk). Proves: default path stays null; wired path attaches the root FACT + informed_by; the
+    # arbitrary (non-source-addressed) path is never populated even if an adapter is passed.
+    from tools.qac_adapter import QacAdapter  # noqa: E402  (local import keeps the module import-light)
+    fixture = [{"location": "0:0:1", "form": "كِتَابٌ", "tag": "N", "features": "STEM|POS:N|ROOT:كتب"}]  # synthetic
+    qac = QacAdapter.from_rows(fixture)
+    ksegs = [_seg("كِتَابٌ", ("stem", "كِتَابٌ"))]
+    base = build_morphology_lattice("tok:0", "كِتَابٌ", ksegs, True, source_addressed=True)
+    if any(c.get("root") is not None or "informed_by" in c for c in base["candidates"]):
+        failures.append("QAC default path must keep root null and carry no informed_by")
+    wired = build_morphology_lattice("tok:0", "كِتَابٌ", ksegs, True, source_addressed=True, qac=qac, ayah_ref="0:0:1")
+    rb = [c for c in wired["candidates"] if c["pos"] in _ROOT_BEARING_POS]
+    if not rb or not all(c.get("root") == "ك ت ب" and c.get("informed_by") == ["qac"] for c in rb):
+        failures.append("QAC wired path must set root FACT + informed_by:['qac'] on root-bearing candidates")
+    if any(c.get("informed_by") not in (None, ["qac"]) for c in wired["candidates"]):
+        failures.append("QAC informed_by must be exactly ['qac'] when present")
+    if any(leak_sot.is_leak(c.get("root") or "") for c in wired["candidates"]):
+        failures.append("QAC root must be leak-free")
+    arb = build_morphology_lattice("tok:0", "كِتَابٌ", ksegs, True, source_addressed=False, qac=qac, ayah_ref="0:0:1")
+    if any(c.get("root") for c in arb["candidates"]):
+        failures.append("QAC must not populate root for a non-source-addressed (arbitrary) token")
+
     for f in failures:
         print("FAIL " + f)
     if not failures:

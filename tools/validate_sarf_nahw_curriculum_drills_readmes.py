@@ -42,8 +42,10 @@ _NEGATION = re.compile(r"\bnot\b|\bnever\b|\bno\s+live\b|isn['’]?t|\bwithout\b
 # a real local-path / secret leak (source NAMES like QAC/Tafsir are legitimately discussed as internal evidence)
 _PATH_LEAK = re.compile(r"[A-Za-z]:\\\\|/srv/|/home/|/Users/|root\.txt")
 
-# the current Fusha branch-stack tip this thread builds on (anti-stale check on the capability README)
-_CURRENT_STACK_TIP = "17e5419"
+# the latest CONCRETE committed Fusha branch-stack tip the capability README must still name (anti-stale check).
+# Bump this each time the stack advances; the data/runtime pass advanced it past 17e5419 to 8fcad75 (the
+# curriculum/drills/README back-prop commit, named in README as the last link before the current branch).
+_CURRENT_STACK_TIP = "8fcad75"
 
 # tool/schema/procedure paths the new curriculum/drills/READMEs cite — all must exist (a dangling citation = stale doc)
 _CITED_PATHS = [

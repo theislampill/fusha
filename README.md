@@ -37,11 +37,20 @@ has no source-address certainty and stays ambiguity-preserving. The contracts (e
 - **Learner hint ladder** — Point → Teach → Bottom-out, with Bottom-out withheld past the gate. [`tools/fusha_learner_feedback.py`](tools/fusha_learner_feedback.py).
 - **CEFR is scaffolding, not certification** — explanation depth is gated by a *caller-supplied* learner level; the engine never
   assesses or certifies a learner. [`tools/fusha_cefr_gate.py`](tools/fusha_cefr_gate.py).
+- **Offline learning runtime** — a deterministic tutor loop grades checkpoints against the answer key (never model self-report),
+  schedules reviews by Leitner box, holds hard grammar until two independent checks agree, and persists progress only with an
+  explicit `--write`. [`tools/fusha_tutor_runtime.py`](tools/fusha_tutor_runtime.py) ·
+  [`tools/fusha_review_scheduler.py`](tools/fusha_review_scheduler.py) · [`tools/fusha_checkpoint_coverage.py`](tools/fusha_checkpoint_coverage.py).
+- **Real morphology data, source-clean** — the lattice can confirm an occurrence's `root` as a FACT from *your own local* QAC export
+  (QAC is GPL v3 — consulted, never vendored) with an internal `informed_by:['qac']` breadcrumb; the field is null when absent. Which
+  public tools need the private WBW services is mapped honestly in [`provenance/public-runnability.md`](provenance/public-runnability.md)
+  via the public-safe seam [`tools/qamus_wbw_adapter.py`](tools/qamus_wbw_adapter.py).
 
 The sarf/nahw **skills**, **curriculum/**, and **drills/** teach these contracts; the **evals** + `tools/check_regressions.py` keep
 the docs aligned with the tools. This is **tooling** — not live Qamus coverage progress. Fusha-only branch stack (owner-gated, none
 merged to main): `a765cef` (P1 general checker + rich-hover flywheel) ← `8365bf7` (P2 governor / leak SoT / conflict) ← `b6a0b4c`
-(P2b learning + CEFR) ← `17e5419` (sarf/nahw skill back-prop) ← this branch (curriculum/drills/README back-prop).
+(P2b learning + CEFR) ← `17e5419` (sarf/nahw skill back-prop) ← `8fcad75` (curriculum/drills/README back-prop) ← this branch
+(data/runtime completion: tutor runtime, Leitner scheduler, checkpoint coverage, qamus_wbw public-safety, QAC morphology wiring).
 
 **The engine in five examples** (each a regression fixture): أَعْمَالُنَا → "our deeds" (noun stem + possessive,
 POS-gated); لَمْ vs لِمَ → "did not" vs "why" (particle state split); مِن vs مَن → "from" vs "who/whoever" (harakat

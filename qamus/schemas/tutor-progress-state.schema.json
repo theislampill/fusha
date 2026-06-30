@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/tutor-progress-state.schema.json",
+  "title": "Tutor progress state (offline Fusha runtime)",
+  "description": "Machine learner state for tools/fusha_tutor_runtime.py. Replaces the markdown progress template with a replayable JSON state. PRIVATE by nature: a real learner's file lives OUTSIDE the repo and is never committed; only the schema + the canonical empty template ship. Deterministic: now_day is an explicit integer day index, never a wall clock. The runtime writes this only when --write is passed.",
+  "type": "object",
+  "required": ["schema", "learner_label", "now_day", "items"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "fusha/tutor-progress-state@1" },
+    "learner_label": { "type": "string", "description": "An opaque session label; never PII." },
+    "now_day": { "type": "integer", "minimum": 0, "description": "Explicit day index (caller-supplied; no wall clock)." },
+    "items": {
+      "type": "object",
+      "description": "Per-checkpoint scheduling state, keyed by checkpoint id.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["box", "due_day", "reps", "lapses"],
+        "additionalProperties": false,
+        "properties": {
+          "box": { "type": "integer", "minimum": 0 },
+          "due_day": { "type": "integer", "minimum": 0 },
+          "reps": { "type": "integer", "minimum": 0 },
+          "lapses": { "type": "integer", "minimum": 0 },
+          "last_grade": { "type": ["string", "null"] },
+          "last_outcome": { "type": ["string", "null"], "enum": ["promote", "hold", "lapse", null] }
+        }
+      }
+    },
+    "cleared_item_ids": { "type": "array", "items": { "type": "string" }, "description": "Items that have reached a full pass at least once." },
+    "missed": {
+      "type": "array",
+      "description": "Open misses awaiting remediation (mirrors the missed-error log).",
+      "items": {
+        "type": "object",
+        "required": ["item_id", "remediation_route", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "item_id": { "type": "string" },
+          "error_reason": { "type": ["string", "null"], "description": "A pending-reason code (homograph_haraka, pos_mismatch, ...) or null." },
+          "remediation_route": { "type": ["string", "null"] },
+          "status": { "type": "string", "enum": ["open", "remediated", "pending_two_vote"] }
+        }
+      }
+    }
+  }
+}

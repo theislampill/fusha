@@ -29,8 +29,9 @@
       "additionalProperties": false,
       "properties": {
         "lemma": { "type": ["string", "null"], "description": "Authored, or null. Never paraphrase-laundered from an external lexicon." },
-        "root": { "type": ["string", "null"], "description": "Authored triliteral/quadriliteral, or null when not determinable without analysis." },
+        "root": { "type": ["string", "null"], "description": "Authored triliteral/quadriliteral, or null when not determinable without analysis. May be populated from a user-supplied local QAC export (an occurrence-level FACT) via tools/qac_adapter.py — see informed_by." },
         "pattern": { "type": ["string", "null"], "description": "Wazn / measure, or null." },
+        "informed_by": { "type": ["array", "null"], "items": { "type": "string", "enum": ["qac"] }, "description": "INTERNAL provenance breadcrumb only (source-boundaries §2): which corpus a FACT (e.g. root) was confirmed against. Carries no external text. Present only when an optional user-supplied QAC adapter confirmed a fact; absent/null otherwise. MUST be stripped before any public artifact." },
         "pos": {
           "type": "string",
           "description": "Coarse part-of-speech (a SUBSET of the morphosyntax-token pos enum; closed).",

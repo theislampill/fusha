@@ -3168,6 +3168,35 @@ except Exception as _e:
     check("sarf/nahw curriculum/drills/README back-prop slice runnable", False)
     print("  ", _e)
 
+# --- data/runtime completion pass: review scheduler, tutor runtime, checkpoint coverage, qamus_wbw public-safety, QAC morphology wiring ---
+try:
+    for _art in ("tools/fusha_review_scheduler.py", "tools/fusha_tutor_runtime.py",
+                 "tools/validate_tutor_runtime.py", "tools/fusha_checkpoint_coverage.py",
+                 "tools/qamus_wbw_adapter.py", "tools/validate_public_runnability.py",
+                 "qamus/schemas/tutor-progress-state.schema.json", "qamus/schemas/tutor-event.schema.json",
+                 "provenance/public-runnability.md"):
+        check("data/runtime artifact exists: %s" % _art, os.path.exists(os.path.join(ROOT, _art)))
+    _dr_a = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_review_scheduler.py"), "--self-test"])
+    check("review scheduler self-test (deterministic Leitner; full-pass-only promotion; wrong-reason/pending HOLD)", _dr_a.returncode == 0)
+    _dr_b = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_tutor_runtime.py"), "--self-test"])
+    check("tutor runtime self-test (schema-graded not self-report; two-vote gating; --write-gated; deterministic)", _dr_b.returncode == 0)
+    _dr_c = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_tutor_runtime.py"), "--self-test"])
+    check("tutor runtime contract validator self-test (no self-report; promotion gate; --write gate; schema-conformant)", _dr_c.returncode == 0)
+    _dr_d = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_checkpoint_coverage.py"), "--self-test"])
+    check("checkpoint coverage self-test (by level/hardness/route; empty bands; dangling-citation detection)", _dr_d.returncode == 0)
+    _dr_e = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_checkpoint_coverage.py"),
+                      os.path.join(ROOT, "curriculum", "assessment", "level-checkpoints.sample.jsonl")])
+    check("checkpoint sample has 0 dangling cited paths (referential integrity)", _dr_e.returncode == 0)
+    _dr_f = run_text([sys.executable, os.path.join(ROOT, "tools", "qamus_wbw_adapter.py"), "--self-test"])
+    check("qamus_wbw adapter self-test (imports on a clone; load_services raises actionable SystemExit)", _dr_f.returncode == 0)
+    _dr_g = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_public_runnability.py"), "--self-test"])
+    check("public-runnability matrix self-test (reconciles with live importers; new unguarded imports caught)", _dr_g.returncode == 0)
+    _dr_h = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_public_runnability.py")])
+    check("public-runnability matrix in sync with live qamus_wbw importers", _dr_h.returncode == 0)
+except Exception as _e:
+    check("data/runtime completion slice runnable", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)
