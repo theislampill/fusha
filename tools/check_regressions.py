@@ -3113,6 +3113,37 @@ except Exception as _e:
     check("p2 deepening slice runnable", False)
     print("  ", _e)
 
+# --- P2b: learning engine (morphology lattice, suggestion engine, hint ladder) + CEFR instruction/gating ---
+try:
+    for _art in ("qamus/reports/p2b-learning-cefr.md", "curriculum/cefr-fusha-instruction.md",
+                 "curriculum/cefr-fusha-levels.json", "curriculum/kc-catalog.json",
+                 "qamus/schemas/morphology-candidate-lattice.schema.json",
+                 "qamus/schemas/learner-feedback-event.schema.json", "qamus/schemas/cefr-fusha-level.schema.json"):
+        check("p2b artifact exists: %s" % _art, os.path.exists(os.path.join(ROOT, _art)))
+    _p2b_a = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_morphology_lattice.py"), "--self-test"])
+    check("p2b morphology candidate lattice self-test (ranked; ambiguity kept; never auto_safe)", _p2b_a.returncode == 0)
+    _p2b_b = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_suggest.py"), "--self-test"])
+    check("p2b suggestion engine self-test (abstain-first; retain/reject/abstain no replacement; NMS->C10)", _p2b_b.returncode == 0)
+    _p2b_c = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_fusha_text_check.py"), "--self-test"])
+    check("p2b text-check validator self-test (base 12 + M1-M8 morphology + 8b/8c/9b/10/11 suggestion)", _p2b_c.returncode == 0)
+    _p2b_d = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_learner_feedback.py"), "--self-test"])
+    check("p2b learner-feedback hint ladder self-test (bottom-out withheld past gate; cause-referencing)", _p2b_d.returncode == 0)
+    _p2b_e = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_learner_feedback.py"), "--self-test"])
+    check("p2b learner-feedback validator self-test (LF-1..10 reject)", _p2b_e.returncode == 0)
+    _p2b_f = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_cefr_fusha_instruction.py"), "--self-test"])
+    check("p2b CEFR instruction self-test (7 levels clean; no certification/copied prose; beginner-safe)", _p2b_f.returncode == 0)
+    _p2b_g = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_cefr_gate.py"), "--self-test"])
+    check("p2b CEFR gating self-test (subset-visible; monotonic gates; ambiguity preserved; no reveal)", _p2b_g.returncode == 0)
+    _p2b_h = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_learner_feedback.py"),
+                       os.path.join(ROOT, "qamus", "examples", "learner_feedback.sample.jsonl")])
+    check("p2b learner-feedback fixture validates (0 violations)", _p2b_h.returncode == 0)
+    _p2b_i = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_cefr_fusha_instruction.py"),
+                       os.path.join(ROOT, "curriculum", "cefr-fusha-levels.json")])
+    check("p2b CEFR levels fixture validates (7 levels, 0 violations)", _p2b_i.returncode == 0)
+except Exception as _e:
+    check("p2b learning + CEFR slice runnable", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

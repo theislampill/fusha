@@ -1,0 +1,12 @@
+{
+  "count": 5,
+  "generator": "tools/fusha_suggest.py --emit-fixture",
+  "note": "Edit-level suggestion fixtures (authored arbitrary inputs). Abstain-first; never auto_safe; retain/reject/abstain carry no replacement; NMS surfaces a C10 conflict. Source-clean; dry-run.",
+  "row_schema": [
+    "case",
+    "input_mode",
+    "suggestions",
+    "conflicts"
+  ],
+  "schema": "fusha/suggestion@1"
+}

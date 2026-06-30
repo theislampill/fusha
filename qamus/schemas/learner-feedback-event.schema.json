@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/learner-feedback-event.schema.json",
+  "title": "Learner-feedback event (P2b deliverable D)",
+  "description": "A typed Knowledge-Component Violation Record + an abstainable Point -> Teach -> Bottom-out hint ladder over one checker diagnostic. The Point->Teach->Bottom-out structure is a standard ITS/model-tracing scaffold (first-principles, NOT an external research citation). Bottom-out is WITHHELD (null) unless gate==auto_safe AND decision_status==resolved AND right_answer_wrong_reason_marker==false. Hints sit ON TOP of the gates: a ladder never downgrades a gate, resolves a pending diagnostic, or reveals a withheld answer. Hint TEXT is authored-original and source-clean (leak_sot). Deep validation in tools/validate_learner_feedback.py.",
+  "type": "object",
+  "required": ["knowledge_component", "diagnostic_class", "point_hint", "teach_hint", "bottom_out_hint", "when_not_to_give_answer", "decision_status", "right_answer_wrong_reason_marker", "examples", "public_boundary"],
+  "additionalProperties": false,
+  "properties": {
+    "knowledge_component": { "type": "string", "description": "kc_id into curriculum/kc-catalog.json." },
+    "diagnostic_class": { "type": "string", "description": "The originating issue_class (closed: the fusha-text-check diagnostic enum; the validator enforces membership)." },
+    "point_hint": { "$ref": "#/$defs/hint" },
+    "teach_hint": { "$ref": "#/$defs/hint" },
+    "bottom_out_hint": { "oneOf": [{ "$ref": "#/$defs/hint" }, { "type": "null" }], "description": "The worked form, COMPUTED from the engine — or null when withheld by the gate/marker rule." },
+    "drill_route": { "type": ["string", "null"], "description": "Repo path into curriculum/drills/* (existence-checked)." },
+    "sarf_route": { "type": ["string", "null"] },
+    "nahw_route": { "type": ["string", "null"] },
+    "examples": { "type": "array", "items": { "$ref": "#/$defs/example" } },
+    "when_not_to_give_answer": {
+      "type": "object",
+      "required": ["gate", "reason", "route_to"],
+      "additionalProperties": false,
+      "properties": {
+        "gate": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"] },
+        "reason": { "type": "string" },
+        "route_to": {
+          "type": "object",
+          "required": ["lane", "procedure"],
+          "additionalProperties": false,
+          "properties": {
+            "lane": { "type": "string", "enum": ["sarf", "nahw", "curriculum", "validator", "owner_review", "scholar_irab_review"] },
+            "procedure": { "type": "string" }
+          }
+        }
+      }
+    },
+    "decision_status": { "type": "string", "enum": ["pending", "resolved"] },
+    "right_answer_wrong_reason_marker": { "type": "boolean" },
+    "cefr_level_min": { "type": ["string", "null"], "enum": ["pre_A1", "A1", "A2", "B1", "B2", "C1", "C2", null], "description": "The lowest CEFR band at which the full Teach/Bottom-out surfaces (deliverable 005 gates depth)." },
+    "public_boundary": {
+      "type": "object",
+      "required": ["public_gloss_src", "public_gloss_kind", "public_gloss_lang", "external_source_names_public"],
+      "additionalProperties": false,
+      "properties": {
+        "public_gloss_src": { "const": "qamus" },
+        "public_gloss_kind": { "const": "authored" },
+        "public_gloss_lang": { "const": "en" },
+        "external_source_names_public": { "const": false }
+      }
+    }
+  },
+  "$defs": {
+    "hint": {
+      "type": "object",
+      "required": ["text", "references_cause", "source_clean"],
+      "additionalProperties": false,
+      "properties": {
+        "text": { "type": "string", "minLength": 1, "description": "Authored-original, source-clean learner copy." },
+        "references_cause": { "type": "boolean", "description": "Whether the hint points at the CAUSE (governor / trigger) rather than just the symptom token." },
+        "governor_address": { "type": ["string", "null"] },
+        "source_clean": { "const": true }
+      }
+    },
+    "example": {
+      "type": "object",
+      "required": ["en", "public_boundary"],
+      "additionalProperties": false,
+      "properties": {
+        "ar": { "type": ["string", "null"], "description": "Optional authored Arabic, or an S:A:W address (not a brand)." },
+        "en": { "type": "string", "description": "Authored-original English; never copied gloss." },
+        "public_boundary": {
+          "type": "object",
+          "required": ["public_gloss_src", "public_gloss_kind", "public_gloss_lang", "external_source_names_public"],
+          "additionalProperties": false,
+          "properties": {
+            "public_gloss_src": { "const": "qamus" },
+            "public_gloss_kind": { "const": "authored" },
+            "public_gloss_lang": { "const": "en" },
+            "external_source_names_public": { "const": false }
+          }
+        }
+      }
+    }
+  }
+}
