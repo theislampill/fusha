@@ -11,9 +11,27 @@ top safe surfaces. Read-only.
 Env: QAMUS_WBW_SERVICES, QAMUS_WBW_ARTIFACT, QAMUS_DATASET.
 """
 import argparse, json, os, re, sys, collections
-sys.path.insert(0, os.environ.get("QAMUS_WBW_SERVICES", "services"))
-from qamus_wbw import expand as X
-from qamus_wbw import normalize as N
+
+
+def load_qamus_wbw():
+    """Lazily load (expand, normalize) through the public-safe seam (tools/qamus_wbw_adapter).
+
+    Call inside main()/first use, never at module top level, so imports + --help still work on a public clone
+    (the private qamus_wbw package is not shipped). The guarded direct import below stays detectable by
+    validate_public_runnability.py; on a clone it raises the adapter's actionable SystemExit (naming
+    QAMUS_WBW_SERVICES) — never a bare ModuleNotFoundError."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # ensure tools/ on path for the adapter
+    import qamus_wbw_adapter
+    sd = qamus_wbw_adapter.services_dir()
+    if sd and sd not in sys.path:
+        sys.path.insert(0, sd)
+    try:
+        from qamus_wbw import expand as X  # noqa: E402  (intentional lazy, guarded import via the seam)
+        from qamus_wbw import normalize as N  # noqa: E402
+    except ModuleNotFoundError as exc:
+        raise SystemExit("ERROR: " + (qamus_wbw_adapter._GUIDANCE % qamus_wbw_adapter.DEFAULT_ENV)) from exc
+    return X, N
+
 
 FN = {"ما","وما","فما","ان","وان","فان","لم","لما","من","ومن","فمن","ام","او","لو","ولو","ال","بل","قد",
       "ها","ذا","اذ","اذا","لا","ولا","فلا","انا","انّ","لن","كل","كلا","الا","ألا","ثم","حتى","اذن"}
@@ -25,6 +43,7 @@ def main():
     ap.add_argument("--out", required=True); ap.add_argument("--cand", required=True)
     ap.add_argument("--target", type=int, default=3634)
     a = ap.parse_args()
+    X, N = load_qamus_wbw()
     d = json.load(open(a.artifact, encoding="utf-8"))
     verses, words, pending = d["verses"], d["words"], d.get("pending", {})
     X._load_qac_roots(); qroot = X._QAC_CACHE.get("root", {}); qpos = X._QAC_CACHE.get("pos", {})

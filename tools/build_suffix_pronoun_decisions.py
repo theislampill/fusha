@@ -22,8 +22,26 @@ import os
 import re
 import sys
 
-sys.path.insert(0, os.environ.get("QAMUS_WBW_SERVICES", "services"))
-from qamus_wbw import expand as X  # noqa: E402
+
+def load_qamus_wbw():
+    """Lazily load (expand, normalize) through the public-safe seam (tools/qamus_wbw_adapter).
+
+    Call inside main()/first use, never at module top level, so imports + --help still work on a public clone
+    (the private qamus_wbw package is not shipped). The guarded direct import below stays detectable by
+    validate_public_runnability.py; on a clone it raises the adapter's actionable SystemExit (naming
+    QAMUS_WBW_SERVICES) — never a bare ModuleNotFoundError."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # ensure tools/ on path for the adapter
+    import qamus_wbw_adapter
+    sd = qamus_wbw_adapter.services_dir()
+    if sd and sd not in sys.path:
+        sys.path.insert(0, sd)
+    try:
+        from qamus_wbw import expand as X  # noqa: E402  (intentional lazy, guarded import via the seam)
+        from qamus_wbw import normalize as N  # noqa: E402
+    except ModuleNotFoundError as exc:
+        raise SystemExit("ERROR: " + (qamus_wbw_adapter._GUIDANCE % qamus_wbw_adapter.DEFAULT_ENV)) from exc
+    return X, N
+
 
 NOMINAL_POS = ("N", "ADJ", "PN")  # possessive enclitic attaches to a NOUN; on a verb نا/كم/هم is subject/object
 
@@ -82,6 +100,7 @@ def main():
     ap.add_argument("--tsv", default=os.environ.get("QAMUS_HOVER_TSV"))
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
+    X, _N = load_qamus_wbw()
     d = json.load(open(a.artifact, encoding="utf-8"))
     verses, words = d["verses"], d["words"]
     X._load_qac_roots()

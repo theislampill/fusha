@@ -29,20 +29,21 @@ gate (none is executed by `check_regressions.py`), so the public CI stays green 
 | File | Status | Note |
 |---|---|---|
 | `tools/build_token_irab_decisions.py` | **maintainer_only (graceful)** | guarded `load_qamus_wbw()` → actionable `SystemExit`; `--from`/`--help` run with no services. The model pattern. |
-| `tools/build_content_hover_candidates.py` | maintainer_only (unguarded) | top-level `from qamus_wbw import …`; run only with services set. Should adopt `qamus_wbw_adapter.load_services()` (P1). |
-| `tools/build_coverage_yield_ledger.py` | maintainer_only (unguarded) | same; P1 conversion target. |
-| `tools/build_host_lexeme_candidates.py` | maintainer_only (unguarded) | same; P1. |
-| `tools/build_language_state_graph.py` | maintainer_only (unguarded) | same; in `check_regressions` only as an *existence* check. P1. |
-| `tools/build_suffix_pronoun_candidates.py` | maintainer_only (unguarded) | same; P1. |
-| `tools/build_suffix_pronoun_decisions.py` | maintainer_only (unguarded) | same; existence-check only in CI. P1. |
-| `tools/export_token_hover_decisions.py` | maintainer_only (unguarded) | same; existence-check only in CI. P1. |
-| `qamus/scripts/export_audit_state.py` | maintainer_only (unguarded) | same; P1. |
-| `qamus/scripts/export_hover_state.py` | maintainer_only (unguarded) | same; P1. |
+| `tools/build_content_hover_candidates.py` | maintainer_only (guarded) | lazy `load_qamus_wbw()` → `qamus_wbw_adapter.load_services()` in `main()`; imports + `--help` run with no services, run raises an actionable `SystemExit` (P1 done). |
+| `tools/build_coverage_yield_ledger.py` | maintainer_only (guarded) | same lazy `load_services()` seam in `main()`. |
+| `tools/build_host_lexeme_candidates.py` | maintainer_only (guarded) | same lazy `load_services()` seam in `main()`. |
+| `tools/build_language_state_graph.py` | maintainer_only (guarded) | same lazy seam; in `check_regressions` only as an *existence* check. |
+| `tools/build_suffix_pronoun_candidates.py` | maintainer_only (guarded) | same lazy `load_services()` seam in `main()`. |
+| `tools/build_suffix_pronoun_decisions.py` | maintainer_only (guarded) | same lazy seam; existence-check only in CI. |
+| `tools/export_token_hover_decisions.py` | maintainer_only (guarded) | same lazy seam (module global `X` bound in `main()`); existence-check only in CI. |
+| `qamus/scripts/export_audit_state.py` | maintainer_only (guarded) | same lazy seam (resolves repo `tools/` from `__file__`). |
+| `qamus/scripts/export_hover_state.py` | maintainer_only (guarded) | same lazy seam (resolves repo `tools/` from `__file__`). |
 
 The public-safe seam is `tools/qamus_wbw_adapter.py` (`available()` / `load_services()`): a SIGNPOST, never a stub
-that fakes data. The "unguarded" tools above still crash at *import* on a clone today; converting each to call
-`qamus_wbw_adapter.load_services()` lazily inside `main` is tracked as **P1** (S16). Until then this matrix + the
-validator keep the situation honest and prevent NEW unguarded importers from sneaking in unrecorded.
+that fakes data. All the importers above now call `qamus_wbw_adapter.load_services()` lazily inside `main` (the **P1**
+conversion, S16), so each one **imports cleanly and answers `--help` on a fresh clone**, and only raises the actionable
+`SystemExit` when actually *run* without services. This matrix + the validator keep the situation honest and prevent
+NEW unguarded (module-top-level) importers from sneaking in unrecorded.
 
 > `tools/test_token_irab_help.py` is the public-runnable proof that the maintainer-only `build_token_irab_decisions.py`
 > still answers `--help` with no services — it has no `qamus_wbw` import of its own.
@@ -52,14 +53,14 @@ validator keep the situation honest and prevent NEW unguarded importers from sne
 "public_runnable_proof": "tools/test_token_irab_help.py",
 "importers": {
   "tools/build_token_irab_decisions.py": "maintainer_only_guarded",
-  "tools/build_content_hover_candidates.py": "maintainer_only_unguarded",
-  "tools/build_coverage_yield_ledger.py": "maintainer_only_unguarded",
-  "tools/build_host_lexeme_candidates.py": "maintainer_only_unguarded",
-  "tools/build_language_state_graph.py": "maintainer_only_unguarded",
-  "tools/build_suffix_pronoun_candidates.py": "maintainer_only_unguarded",
-  "tools/build_suffix_pronoun_decisions.py": "maintainer_only_unguarded",
-  "tools/export_token_hover_decisions.py": "maintainer_only_unguarded",
-  "qamus/scripts/export_audit_state.py": "maintainer_only_unguarded",
-  "qamus/scripts/export_hover_state.py": "maintainer_only_unguarded"
+  "tools/build_content_hover_candidates.py": "maintainer_only_guarded",
+  "tools/build_coverage_yield_ledger.py": "maintainer_only_guarded",
+  "tools/build_host_lexeme_candidates.py": "maintainer_only_guarded",
+  "tools/build_language_state_graph.py": "maintainer_only_guarded",
+  "tools/build_suffix_pronoun_candidates.py": "maintainer_only_guarded",
+  "tools/build_suffix_pronoun_decisions.py": "maintainer_only_guarded",
+  "tools/export_token_hover_decisions.py": "maintainer_only_guarded",
+  "qamus/scripts/export_audit_state.py": "maintainer_only_guarded",
+  "qamus/scripts/export_hover_state.py": "maintainer_only_guarded"
 }
 } -->

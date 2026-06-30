@@ -3197,6 +3197,52 @@ except Exception as _e:
     check("data/runtime completion slice runnable", False)
     print("  ", _e)
 
+# --- P1/P2 closure: placement runner, drill keys, eval coverage, event replay, index integrity, dataset-integrity
+#     reporter (blocked item), claude.ai pack drift, CEFR monotonicity. (importer conversion + checkpoint rows +
+#     runtime grammar bridge + SM-2 scheduler variant are covered by the existing public-runnability / curriculum /
+#     runtime / scheduler gates above.) ---
+try:
+    for _art in ("tools/fusha_placement_test.py", "curriculum/assessment/placement-test.sample.jsonl",
+                 "tools/validate_drill_keys.py", "tools/fusha_eval_coverage.py",
+                 "tools/validate_tutor_event_replay.py", "tools/validate_index_integrity.py",
+                 "tools/report_dataset_integrity.py", "qamus/reports/dataset-integrity-blocker.md",
+                 "tools/validate_claude_ai_pack_drift.py", "tools/validate_cefr_monotonicity.py",
+                 "curriculum/drills/keys/quranic-function-words.keys.jsonl"):
+        check("P1/P2 artifact exists: %s" % _art, os.path.exists(os.path.join(ROOT, _art)))
+    _q1 = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_placement_test.py"), "--self-test"])
+    check("P1-3 placement-test runner self-test (deterministic; ASAG-graded not self-report; rung routing)", _q1.returncode == 0)
+    _q2 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_drill_keys.py"), "--self-test"])
+    check("P1-4 drill answer-key validator self-test (schema + leak + dangling-citation reject)", _q2.returncode == 0)
+    _q2b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_drill_keys.py"),
+                     os.path.join(ROOT, "curriculum", "drills", "keys", "quranic-function-words.keys.jsonl"),
+                     os.path.join(ROOT, "curriculum", "drills", "keys", "morphology-foundations.keys.jsonl"),
+                     os.path.join(ROOT, "curriculum", "drills", "keys", "root-pattern-practice.keys.jsonl"),
+                     os.path.join(ROOT, "curriculum", "drills", "keys", "sentence-foundations.keys.jsonl")])
+    check("P1-4 drill answer-key fixtures validate (0 violations)", _q2b.returncode == 0)
+    _q3 = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_eval_coverage.py"), "--self-test"])
+    check("P1-5 eval-bank coverage reporter self-test (per-bank counts; runner-gap; report-only)", _q3.returncode == 0)
+    _q3b = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_eval_coverage.py")])
+    check("P1-5 eval-bank coverage real report (report-only, exit 0)", _q3b.returncode == 0)
+    _q4 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_tutor_event_replay.py"), "--self-test"])
+    check("P1-6 tutor event-log replay validator self-test (event-sourced replay reconstructs state; tamper caught)", _q4.returncode == 0)
+    _q5 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_index_integrity.py"), "--self-test"])
+    check("P2-8 index referential-integrity validator self-test (orphan id caught)", _q5.returncode == 0)
+    _q5b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_index_integrity.py")])
+    check("P2-8 index referential-integrity real indexes (0 orphan ids)", _q5b.returncode == 0)
+    _q6 = run_text([sys.executable, os.path.join(ROOT, "tools", "report_dataset_integrity.py"), "--self-test"])
+    check("P2-9 dataset-integrity reporter self-test (synthetic match/mismatch; non-fatal vs --strict) [data mismatch BLOCKED, see blocker report]", _q6.returncode == 0)
+    _q7 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_claude_ai_pack_drift.py"), "--self-test"])
+    check("P2-10 claude.ai pack-drift validator self-test (read-only; drift caught)", _q7.returncode == 0)
+    _q7b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_claude_ai_pack_drift.py")])
+    check("P2-10 claude.ai pack manifest in sync (0 drift)", _q7b.returncode == 0)
+    _q8 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_cefr_monotonicity.py"), "--self-test"])
+    check("P2-11 CEFR monotonicity self-test (non-monotonic caught; no certification/forced-parse/reveal)", _q8.returncode == 0)
+    _q8b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_cefr_monotonicity.py")])
+    check("P2-11 CEFR real levels monotonic (scaffolding not certification)", _q8b.returncode == 0)
+except Exception as _e:
+    check("P1/P2 closure slice runnable", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

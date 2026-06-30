@@ -136,6 +136,56 @@ def grade(row, payload):
             "cleared": cleared, "missing_reasoning": missing}
 
 
+# --------------------------------------------------------------------------- grammar-reasoning bridge (DEFAULT-OFF)
+# OPTIONAL delegation to tools/grade_grammar_reasoning (the GrammarProblems eval grader). It is DEFAULT-OFF: the
+# grading path above (grade/step) is the runtime's SOURCE OF TRUTH and is never altered by this bridge. When the
+# caller opts in (bridge_grade=True / --grammar-bridge), the runtime additionally translates its OWN computed grade
+# into the eval grader's `judgment` shape and asserts the two graders AGREE on the shared reasoning gate. They are
+# two views of the same invariant: a grammar decision clears only when the final answer AND the reasoning hold and
+# any required two-vote is done. The bridge is an agreement CHECK, not a second opinion that can override the runtime
+# — a disagreement is surfaced (and, in --self-test, fails) rather than silently re-grading.
+#
+# Shared-gate mapping (runtime grade `g` for `row` -> grade_grammar_reasoning judgment):
+#   final_ok       <- g["passed"]                         (final answer matches the authored key)
+#   reasoning_ok   <- g["reasoning_passed"] and not g["forbidden_hit"]
+#                                                          (required reasoning present AND no forbidden path taken)
+#   two_vote_done  <- g["two_vote_status"] == "cleared"   (an agreeing second check, when the row requires one)
+#   evidence_cited / source_address  -> the runtime checkpoint schema carries NO evidence-rung/source-address field,
+#       so the bridge runs the eval grader with its EVIDENCE gate neutralized (case-driven, satisfied) and compares
+#       ONLY on the gates both graders actually compute. This keeps the comparison honest: we never claim the runtime
+#       checked an evidence rung it has no input for.
+def _grammar_bridge_case(row):
+    """Build the grade_grammar_reasoning `case` for a runtime row. `required_gate` is two_vote_required iff the row
+    is two-vote, else auto_safe (the runtime has no never_auto / human-review checkpoint kind)."""
+    return {"id": str(row.get("id", "")),
+            "required_gate": "two_vote_required" if row.get("two_vote_required") else "auto_safe"}
+
+
+def _grammar_bridge_judgment(g):
+    """Translate a runtime grade dict `g` (from grade()) into a grade_grammar_reasoning `judgment`. Evidence is
+    neutralized (the runtime checkpoint schema has no evidence rung/source-address) so the shared comparison is only
+    over the answer + reasoning + two-vote gates both graders compute."""
+    return {"final_ok": bool(g["passed"]),
+            "reasoning_ok": bool(g["reasoning_passed"]) and not bool(g["forbidden_hit"]),
+            "evidence_cited": True, "source_address": "n/a-runtime-checkpoint",
+            "two_vote_done": g["two_vote_status"] == "cleared"}
+
+
+def grammar_bridge_check(row, g):
+    """Run the OPTIONAL grammar-reasoning bridge over an already-computed runtime grade `g` for `row`.
+
+    Returns {agree: bool, runtime_cleared: bool, eval_pass: bool, eval_block_reason: str|None}. `agree` is True when
+    the runtime's `cleared` verdict matches the eval grader's `pass` verdict on the shared gates. This NEVER mutates
+    `g`; the runtime grade remains the source of truth. Import is lazy so the default-off path has zero coupling."""
+    from tools import grade_grammar_reasoning as GGR  # noqa: PLC0415 (lazy: keep default path decoupled)
+    case = _grammar_bridge_case(row)
+    judgment = _grammar_bridge_judgment(g)
+    ev = GGR.grade(case, judgment)
+    return {"agree": bool(ev["pass"]) == bool(g["cleared"]),
+            "runtime_cleared": bool(g["cleared"]), "eval_pass": bool(ev["pass"]),
+            "eval_block_reason": ev["block_reason"]}
+
+
 def new_progress(label="learner"):
     return {"schema": PROGRESS_SCHEMA, "learner_label": label, "now_day": 0, "items": {},
             "cleared_item_ids": [], "missed": []}
@@ -239,6 +289,8 @@ def main():
     ap.add_argument("--answer", default=None, help="answer payload: a JSON file path, '-' for stdin, or inline JSON")
     ap.add_argument("--event-log", default=None, help="JSONL event log to append to (only with --write)")
     ap.add_argument("--write", action="store_true", help="PERSIST progress + append the event (otherwise dry-run)")
+    ap.add_argument("--grammar-bridge", action="store_true",
+                    help="ADDITIVE: also report agreement with tools/grade_grammar_reasoning (does not change grading)")
     ap.add_argument("--self-test", action="store_true")
     a = ap.parse_args()
     if a.self_test:
@@ -274,6 +326,8 @@ def main():
 
     out = {"item_id": item_id, "outcome": result["outcome"], "grade": result["grade"], "event": ev,
            "wrote": False}
+    if a.grammar_bridge:  # additive only: the grade above is unchanged; this just reports cross-grader agreement.
+        out["grammar_bridge"] = grammar_bridge_check(row, result["grade"])
     if a.write:
         if a.progress:
             _atomic_write_json(a.progress, progress)
@@ -415,11 +469,35 @@ def _self_test():
         if leak_sot.is_leak(r_["event"]["note"]):
             failures.append("event note leaks")
 
+    # 11. grammar-reasoning BRIDGE (default-off, opt-in). (a) the default grading path is BYTE-IDENTICAL whether or
+    #     not the bridge is consulted: grade() never imports/calls the bridge, so a fresh grade equals r["grade"].
+    g_again = grade(idx["T1-objective"], p_full)
+    if json.dumps(g_again, sort_keys=True) != json.dumps(r["grade"], sort_keys=True):
+        failures.append("bridge presence changed the default grade() output (must be byte-identical)")
+    # (b) the bridge AGREES with the built-in grader on every shared case — cleared<->eval pass.
+    for tag, row_, g_ in (("full-pass", idx["T1-objective"], r["grade"]),
+                          ("no-reasoning", idx["T1-objective"], r2["grade"]),
+                          ("forbidden", idx["T1-objective"], r3["grade"]),
+                          ("two-vote-pending", idx["T2-hardgrammar"], r4["grade"]),
+                          ("two-vote-cleared", idx["T2-hardgrammar"], r5["grade"]),
+                          ("self-report-ignored", idx["T1-objective"], r6["grade"])):
+        b = grammar_bridge_check(row_, g_)
+        if not b["agree"]:
+            failures.append("grammar bridge DISAGREES on %s: runtime_cleared=%s eval_pass=%s (%s)"
+                            % (tag, b["runtime_cleared"], b["eval_pass"], b["eval_block_reason"]))
+    # (c) the bridge correctly mirrors the load-bearing GrammarProblems case: a right answer with WRONG reasoning
+    #     must NOT pass the eval grader (and the runtime did not clear it either) -> they agree on a HOLD.
+    g_wrong_reason = grade(idx["T1-objective"], p_noreason)
+    bb = grammar_bridge_check(idx["T1-objective"], g_wrong_reason)
+    if g_wrong_reason["cleared"] or bb["eval_pass"] or not bb["agree"]:
+        failures.append("bridge must agree-on-HOLD for right-answer-wrong-reason, got %s / %s" % (g_wrong_reason, bb))
+
     for f in failures:
         print("FAIL " + f)
     if not failures:
         print("ok   fusha_tutor_runtime self-test: schema-graded (no self-report); two-vote gating; "
-              "wrong-reason holds; --write-gated persistence; deterministic; source-clean")
+              "wrong-reason holds; --write-gated persistence; deterministic; source-clean; "
+              "grammar-bridge default-off (grade byte-identical) + agrees with built-in grader")
     return 0 if not failures else 1
 
 

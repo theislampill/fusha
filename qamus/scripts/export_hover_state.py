@@ -21,8 +21,28 @@ import json
 import os
 import sys
 
-sys.path.insert(0, os.environ.get("QAMUS_WBW_SERVICES", "services"))
-from qamus_wbw import expand as X, normalize as N
+
+def load_qamus_wbw():
+    """Lazily load (expand, normalize) through the public-safe seam (tools/qamus_wbw_adapter).
+
+    Call inside main()/first use, never at module top level, so imports + --help still work on a public clone
+    (the private qamus_wbw package is not shipped). The guarded direct import below stays detectable by
+    validate_public_runnability.py; on a clone it raises the adapter's actionable SystemExit (naming
+    QAMUS_WBW_SERVICES) — never a bare ModuleNotFoundError."""
+    _here = os.path.dirname(os.path.abspath(__file__))
+    _tools = os.path.join(os.path.dirname(os.path.dirname(_here)), "tools")  # qamus/scripts -> repo/tools
+    if _tools not in sys.path:
+        sys.path.insert(0, _tools)
+    import qamus_wbw_adapter
+    sd = qamus_wbw_adapter.services_dir()
+    if sd and sd not in sys.path:
+        sys.path.insert(0, sd)
+    try:
+        from qamus_wbw import expand as X  # noqa: E402  (intentional lazy, guarded import via the seam)
+        from qamus_wbw import normalize as N  # noqa: E402
+    except ModuleNotFoundError as exc:
+        raise SystemExit("ERROR: " + (qamus_wbw_adapter._GUIDANCE % qamus_wbw_adapter.DEFAULT_ENV)) from exc
+    return X, N
 
 
 def main():
@@ -33,6 +53,7 @@ def main():
     a = ap.parse_args()
     if not a.artifact:
         ap.error("--artifact or QAMUS_WBW_ARTIFACT is required (no path is hardcoded in this public repo)")
+    X, N = load_qamus_wbw()
     os.makedirs(a.out, exist_ok=True)
     d = json.load(open(a.artifact, encoding="utf-8"))
     verses, words = d.get("verses", {}), d["words"]
