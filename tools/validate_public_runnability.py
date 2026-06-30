@@ -37,7 +37,11 @@ def scan_importers(repo_root):
     """Return {rel_path: 'maintainer_only_unguarded'|'maintainer_only_guarded'} for every file that imports qamus_wbw."""
     out = {}
     for dirpath, dirs, files in os.walk(repo_root):
-        dirs[:] = [d for d in dirs if d not in (".git", "__pycache__", "_worktrees", "node_modules")]
+        # skip VCS, caches, sibling worktrees, AND generated/output/vendor dirs — `out/`, `dist/`, `build/` can hold a
+        # LOCAL COPY of the private qamus_wbw package (the maintainer's build output); those are not authored repo
+        # source and must never be flagged as unrecorded importers (the authored importers live in tools/ + qamus/scripts/).
+        dirs[:] = [d for d in dirs
+                   if d not in (".git", "__pycache__", "_worktrees", "node_modules", "out", "dist", "build", ".idea", ".venv")]
         for fn in files:
             if not fn.endswith(".py"):
                 continue

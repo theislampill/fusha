@@ -56,8 +56,16 @@ def parse_manifest(manifest_path):
     return rows
 
 
+def _norm_bytes(path):
+    """Line-ending-normalized UTF-8 bytes of a text file (\\r\\n and lone \\r -> \\n). Drift is checked on CONTENT, not
+    raw bytes, so a CRLF working-tree checkout (Windows core.autocrlf) does not false-positive against the LF-based
+    manifest. The manifest is generated from LF source, so a normalized read matches in BOTH LF and CRLF checkouts."""
+    txt = open(path, encoding="utf-8").read().replace("\r\n", "\n").replace("\r", "\n")
+    return txt.encode("utf-8")
+
+
 def _sha12(path):
-    return hashlib.sha256(open(path, "rb").read()).hexdigest()[:_SHA_LEN]
+    return hashlib.sha256(_norm_bytes(path)).hexdigest()[:_SHA_LEN]
 
 
 def check(manifest_path=_MANIFEST, repo_root=_REPO):
@@ -72,7 +80,7 @@ def check(manifest_path=_MANIFEST, repo_root=_REPO):
             drifts.append("missing source for manifest row: %s" % rel)
             continue
         got_sha = _sha12(src)
-        got_sz = os.path.getsize(src)
+        got_sz = len(_norm_bytes(src))   # line-ending-normalized size (matches the LF-based manifest in any checkout)
         if got_sha != want_sha:
             drifts.append("sha drift %s: manifest %s but source %s" % (rel, want_sha, got_sha))
         if got_sz != want_sz:
