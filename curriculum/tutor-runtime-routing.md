@@ -89,3 +89,29 @@ is not (blank beats wrong).
 correct ending without a justified governor is unsafe and routes to two-vote/scholar review, never to an
 auto-resolved hover. Deepening: the curriculum/learner-feedback lane is `parserplans/010` (KC Violation Records +
 Point→Teach→Bottom-out hints).
+
+## General (arbitrary-text) diagnostic → route
+
+The general Fusha text checker (`tools/fusha_text_check.py`) runs on arbitrary typed/unvoweled Arabic where there is
+**no** source address. It emits the 12 NEW general classes below; every one carries `severity` + `gate` + `route` and
+is **never** `auto_safe` (arbitrary text cannot reach source-addressed certainty). These are the arbitrary-text
+generalization of the 12 source-addressed classes above — a tutor uses the same procedures, but the diagnostic is a
+*candidate/ambiguity* notice, not a verified error. Blank/PENDING beats a guess.
+
+| general issue class | severity | route to |
+|---|---|---|
+| `possible_clitic_segmentation` | warn | `sarf/procedures/clitic-and-host-morphology.md` |
+| `possible_preposition_host` | warn | `nahw/procedures/preposition-pronoun.md` |
+| `possible_definite_article` | info | `sarf/procedures/clitic-and-host-morphology.md` |
+| `possible_attached_pronoun` | warn | `sarf/procedures/suffix-pronoun-state.md` (single-letter ه/ك/ي → two-vote or PENDING `context_sensitive_needs_nahw`) |
+| `ambiguous_unvoweled_token` | warn | `sarf/procedures/homograph-risk.md` (keep the candidate lattice; never force one parse) |
+| `possible_particle_function` | warn | `nahw/procedures/particle-decision.md` |
+| `possible_case_or_mood_requires_context` | warn | `nahw/procedures/irab-case-mood.md` |
+| `possible_governor_unresolved` | warn | `nahw/procedures/irab-case-mood.md` — arbitrary-mode equivalent of `weak_irab_reasoning` |
+| `orthography_normalization_warning` | info | `sarf/procedures/hamza-root.md` (original spelling preserved; key is match-only) |
+| `dialect_or_non_fusha_possible` | info | `nahw/procedures/grammar-risk-gate.md` |
+| `source_address_required_for_certainty` | info | `provenance/source-boundaries.md` (validator lane) — cite an address to raise confidence |
+| `rich_hover_candidate_available_when_source_addressed` | info | `qamus/reports/general-checker-rich-hover-flywheel.md` — bridge to the rich-hover candidate flywheel |
+
+Full design: `parserplans/general-fusha-grammar-checker/{004,011,014}`; flywheel bridge:
+`qamus/reports/general-checker-rich-hover-flywheel.md`.

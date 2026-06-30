@@ -3055,6 +3055,33 @@ except Exception as _e:
     check("parser-checker substrate runnable", False)
     print("  ", _e)
 
+# general Fusha grammar-checker + rich-hover candidate flywheel (parserplans/general-fusha-grammar-checker P0+P1 slice):
+# 2 schemas + general text-check (checker+validator+fixture) + rich-hover flywheel (emitter+validator+fixture) + bridge doc.
+for _art in ("qamus/schemas/fusha-text-check.schema.json", "qamus/schemas/rich-hover-candidate.schema.json",
+             "tools/fusha_text_check.py", "tools/validate_fusha_text_check.py",
+             "tools/rich_hover_flywheel.py", "tools/validate_rich_hover_candidate.py",
+             "qamus/examples/fusha_text_check.sample.jsonl", "qamus/examples/rich_hover_flywheel.sample.jsonl",
+             "qamus/reports/general-checker-rich-hover-flywheel.md"):
+    check("general-checker artifact exists: %s" % _art, os.path.exists(os.path.join(ROOT, _art)))
+try:
+    _gc1 = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_text_check.py"), "--self-test"])
+    check("general text-checker self-test (3 modes, ambiguity-preserving, never auto_safe, source-clean)", _gc1.returncode == 0)
+    _gc2 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_fusha_text_check.py"), "--self-test"])
+    check("general text-checker validator self-test (10 FAIL conditions reject; fixture rows clean)", _gc2.returncode == 0)
+    _gc3 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_fusha_text_check.py"),
+                     os.path.join(ROOT, "qamus", "examples", "fusha_text_check.sample.jsonl")])
+    check("general text-check fixture validates (10 records, 0 violations)", _gc3.returncode == 0)
+    _gc4 = run_text([sys.executable, os.path.join(ROOT, "tools", "rich_hover_flywheel.py"), "--self-test"])
+    check("rich-hover flywheel self-test (candidates round-trip into the certification validator)", _gc4.returncode == 0)
+    _gc5 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_rich_hover_candidate.py"), "--self-test"])
+    check("rich-hover candidate validator self-test (10 FAIL conditions reject; round-trip)", _gc5.returncode == 0)
+    _gc6 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_rich_hover_candidate.py"),
+                     os.path.join(ROOT, "qamus", "examples", "rich_hover_flywheel.sample.jsonl")])
+    check("rich-hover flywheel fixture validates (10 candidates, 0 violations)", _gc6.returncode == 0)
+except Exception as _e:
+    check("general-checker + flywheel runnable", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

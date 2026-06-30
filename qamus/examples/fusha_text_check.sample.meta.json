@@ -1,0 +1,24 @@
+{
+  "count": 10,
+  "generator": "tools/fusha_text_check.py --emit-fixture",
+  "modes": [
+    "arbitrary_typing",
+    "source_addressed"
+  ],
+  "note": "General Fusha text-check regression fixture (3 modes). Arbitrary examples authored; Qurʾānic surfaces verbatim; public output {src:qamus,kind:authored,lang:en}; no external gloss text. parserplans 004/016.",
+  "row_schema": [
+    "schema",
+    "input_mode",
+    "raw_input",
+    "normalized_input",
+    "normalization_ops",
+    "analysis_tokens",
+    "diagnostics",
+    "ambiguity",
+    "gates",
+    "public_boundary",
+    "source_boundary",
+    "checker_summary"
+  ],
+  "schema": "fusha/text-check@1"
+}
