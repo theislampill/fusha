@@ -1,0 +1,6 @@
+{
+  "count": 6,
+  "generator": "tools/fusha_governor.py --emit-fixture",
+  "note": "Governor/iʿrāb dependency CANDIDATE lattices. Conservative (layer-1-safe prep→genitive; PP-attachment unresolved; iḍāfa ambiguous; wāw headless; right-answer-wrong-reason flagged). Authored; Qurʾānic surfaces verbatim; source-clean {src:qamus,kind:authored,lang:en}; never auto_safe; live_writes==0. parserplans p2/002.",
+  "schema": "fusha/dependency-candidate-lattice@1"
+}

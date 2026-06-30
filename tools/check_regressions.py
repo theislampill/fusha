@@ -3082,6 +3082,37 @@ except Exception as _e:
     check("general-checker + flywheel runnable", False)
     print("  ", _e)
 
+# P2 deepening slice (parserplans/general-fusha-grammar-checker-p2): leak source-of-truth (E) + governor/iʿrāb/dependency
+# lattice (B) + cross-builder conflict resolution (F). Artifacts + self-tests + fixture validation.
+for _art in ("tools/leak_sot.py", "tools/validate_source_boundary.py",
+             "qamus/schemas/dependency-candidate-lattice.schema.json", "tools/fusha_governor.py",
+             "tools/validate_dependency_lattice.py", "qamus/examples/dependency_lattice.sample.jsonl",
+             "qamus/schemas/cross-builder-conflict.schema.json", "tools/fusha_conflicts.py",
+             "tools/validate_cross_builder_conflict.py", "qamus/examples/cross_builder_conflict.sample.jsonl"):
+    check("p2 artifact exists: %s" % _art, os.path.exists(os.path.join(ROOT, _art)))
+try:
+    _p2a = run_text([sys.executable, os.path.join(ROOT, "tools", "leak_sot.py"), "--self-test"])
+    check("p2 leak source-of-truth self-test (union catches 5 legacy detectors; cert tafsir/tanzil gap closed)", _p2a.returncode == 0)
+    _p2b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_source_boundary.py"), "--self-test"])
+    check("p2 leak-SoT drift gate (leak_sot is a verified SUPERSET of all legacy detectors)", _p2b.returncode == 0)
+    _p2c = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_governor.py"), "--self-test"])
+    check("p2 governor/dependency lattice self-test (layer-1-safe; PP unresolved; right-answer-wrong-reason; never auto_safe)", _p2c.returncode == 0)
+    _p2d = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_dependency_lattice.py"), "--self-test"])
+    check("p2 dependency-lattice validator self-test (9 FAIL conditions reject)", _p2d.returncode == 0)
+    _p2e = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_dependency_lattice.py"),
+                     os.path.join(ROOT, "qamus", "examples", "dependency_lattice.sample.jsonl")])
+    check("p2 dependency-lattice fixture validates (6 lattices, 0 violations)", _p2e.returncode == 0)
+    _p2f = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_conflicts.py"), "--self-test"])
+    check("p2 cross-builder conflict self-test (10 types; gate=max; precedence; surfaces never picks)", _p2f.returncode == 0)
+    _p2g = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_cross_builder_conflict.py"), "--self-test"])
+    check("p2 conflict validator self-test (FAIL conditions incl. precedence + gate=max reject)", _p2g.returncode == 0)
+    _p2h = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_cross_builder_conflict.py"),
+                     os.path.join(ROOT, "qamus", "examples", "cross_builder_conflict.sample.jsonl")])
+    check("p2 conflict fixture validates (10 records, 0 violations)", _p2h.returncode == 0)
+except Exception as _e:
+    check("p2 deepening slice runnable", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)
