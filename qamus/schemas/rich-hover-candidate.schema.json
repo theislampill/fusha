@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/rich-hover-candidate.schema.json",
+  "title": "Qamus rich-hover CANDIDATE (parser-backed, review-only, feeds the certification queue)",
+  "description": "A reviewable rich-hover candidate packet generated deterministically from a SOURCE-ADDRESSED token: a morphosyntax-token-shaped token (decision_state=rich_candidate) + the fusha_check verdict/issues + a gate + a blocker_status + a suggested_next_action that routes INTO the existing certification queue (validate_rich_hover_certification). It is NEVER live-applied and NEVER rich_certified — the renderer is not owner-authorized for this layer. Identity stays exact quran:S:A:W + wbw:S:A:W; parse_key is a grammar-family key, never identity, and is suppressed off-spine. Public fields are source-clean {src:qamus,kind:authored,lang:en}. Segment roles bind to the morphosyntax-token role enum; qg classes bind to the qamus-grammar-v1 palette enum — neither may be invented. See parserplans/general-fusha-grammar-checker/{021,014,022}.",
+  "type": "object",
+  "required": [
+    "schema",
+    "source_unit",
+    "card_address",
+    "token_address",
+    "quran_loc",
+    "wbw_loc",
+    "surface",
+    "displayed_surface",
+    "canonical_surface",
+    "decision_state",
+    "segments",
+    "qg_segment_classes",
+    "parse_key",
+    "hover_title",
+    "token_gloss",
+    "token_contribution_explanation",
+    "learner_route",
+    "parser_issues",
+    "verdict",
+    "gate",
+    "public_boundary",
+    "blocker_status",
+    "suggested_next_action"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "fusha/rich-hover-candidate@1" },
+    "source_unit": {
+      "type": "object",
+      "required": ["address", "kind", "scope"],
+      "additionalProperties": false,
+      "properties": {
+        "address": { "type": "string", "pattern": "^(quran:\\d{1,3}:\\d{1,3}(:\\d{1,3})?|qamus:.+|wbw:\\d{1,3}:\\d{1,3}:\\d{1,3})$" },
+        "kind": { "type": "string", "enum": ["quran_ayah", "qamus_entry", "example_card"] },
+        "scope": { "const": "in_scope_source_addressed", "description": "A candidate is generated ONLY for source-addressed tokens; arbitrary text gets diagnostics, not candidates." }
+      }
+    },
+    "card_address": { "type": "string", "description": "The example-card / entry edge the token was selected from (e.g. qamus:<id>#usage=S:A). Source-address graph edge." },
+    "token_address": { "type": "string", "pattern": "^(quran:)?\\d{1,3}:\\d{1,3}:\\d{1,3}$", "description": "The selected word's exact Qurʾān token address S:A:W." },
+    "surface": { "type": "string", "minLength": 1, "pattern": "^[^\\s]+$", "description": "The Arabic token surface (== displayed_surface). Carried for compatibility with the rich-hover ecosystem's segment-surface-exactness invariant: segments concatenate to surface exactly." },
+    "quran_loc": { "type": "string", "pattern": "^\\d{1,3}:\\d{1,3}:\\d{1,3}$", "description": "Cert-pairing key. Exact identity." },
+    "wbw_loc": { "type": "string", "pattern": "^wbw:\\d{1,3}:\\d{1,3}:\\d{1,3}$", "description": "Cert-pairing key. Rendered hover-slot identity." },
+    "displayed_surface": { "type": "string", "minLength": 1, "pattern": "^[^\\s]+$", "description": "The Arabic token as displayed, whitespace-free, byte-for-byte unaltered." },
+    "canonical_surface": { "type": "string", "minLength": 1, "pattern": "^[^\\s]+$", "description": "The canonical Qurʾān token surface." },
+    "display_local_to_canonical_crosswalk": {
+      "type": ["object", "null"],
+      "description": "Records a display-local hover slot vs canonical S:A:W mismatch + the crosswalk, or null when they agree.",
+      "additionalProperties": true
+    },
+    "decision_state": { "const": "rich_candidate", "description": "ALWAYS rich_candidate. This layer never sets rich_certified (D8) and never applies live." },
+    "segments": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Token-internal segments (proclitic* stem enclitic*). Surfaces concatenate to displayed_surface exactly; a clitic/preposition/pronoun is NEVER collapsed into the host.",
+      "items": {
+        "type": "object",
+        "required": ["role", "surface", "gloss_contribution"],
+        "additionalProperties": false,
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": ["stem", "verb_prefix", "prefix_conjunction", "prefix_preposition", "prefix_oath", "prefix_comitative_waw", "prefix_resumption_fa", "prefix_coordination_fa", "prefix_result_fa", "prefix_supplemental_fa", "prefix_cause_fa", "prefix_interrogative_hamza", "prefix_equalization_hamza", "prefix_particle", "prefix_purpose_lam", "prefix_imperative_lam", "particle", "preposition", "conjunction_particle", "negative_particle", "exceptive_particle", "conditional_particle", "subordinating_particle", "interrogative_particle", "time_adverb", "resumption_particle", "result_particle", "accusative_particle", "relative_particle", "purpose_particle", "vocative_particle", "vocative_support", "attention_particle", "preventive_ma", "definite_article", "subject_pronoun", "object_pronoun", "possessive_pronoun", "relative_pronoun", "case_ending", "other"]
+          },
+          "surface": { "type": "string", "minLength": 1, "pattern": "^[^\\s]+$" },
+          "gloss_contribution": { "type": ["string", "null"], "description": "What this segment contributes to the English. null for the stem when carried by token_gloss; a function segment must contribute or the row is pending." }
+        }
+      }
+    },
+    "qg_segment_classes": {
+      "type": "array",
+      "description": "Display color/role classes, one per segment, from the qamus-grammar-v1 palette ONLY. Never invent a class; map an unsupported fact to the nearest supported class and park the fact in parse_key.summary / segment role / learner_route.",
+      "items": {
+        "type": "string",
+        "enum": ["qg-adjective", "qg-article", "qg-case", "qg-comitative", "qg-conjunction", "qg-derivative-prefix", "qg-dual-suffix", "qg-exception", "qg-lam", "qg-ma-particle", "qg-negative", "qg-noun", "qg-noun-stem", "qg-oath", "qg-object-pronoun", "qg-particle", "qg-plural-suffix", "qg-possessive-pronoun", "qg-preposition", "qg-pronoun", "qg-proper-noun", "qg-relation", "qg-relative", "qg-result", "qg-result-fa", "qg-subject-pronoun", "qg-unknown", "qg-verb", "qg-verb-prefix", "qg-verb-stem", "qg-vocative"]
+      }
+    },
+    "qg_palette": { "const": "qamus-grammar-v1" },
+    "parse_key": {
+      "type": "object",
+      "required": ["key", "summary"],
+      "additionalProperties": false,
+      "properties": {
+        "key": { "type": "string", "description": "Compact ASCII grammar-family key (e.g. P:BI+N:GEN). Source-clean. NOT identity, and NOT a parse:hex family id (suppressed off owner-gated cert)." },
+        "summary": { "type": "string", "description": "Short authored parse summary for a tooltip." },
+        "components": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+      }
+    },
+    "hover_title": { "type": "string", "description": "Short authored title for the hover card. Source-clean." },
+    "token_gloss": { "type": "string", "minLength": 1, "description": "Concise authored English token contribution. Source-clean, authored from scratch. PENDING tokens carry an explicit blocker, never a guessed gloss." },
+    "token_contribution_explanation": { "type": "string", "description": "One sentence: what each Arabic piece contributes (so a phrase translation is never used as a token gloss). Source-clean." },
+    "learner_route": {
+      "type": "object",
+      "required": ["lane", "procedure"],
+      "additionalProperties": false,
+      "properties": {
+        "lane": { "type": "string", "enum": ["sarf", "nahw", "curriculum", "validator", "owner_review", "scholar_irab_review"] },
+        "procedure": { "type": "string" }
+      }
+    },
+    "parser_issues": {
+      "type": "array",
+      "description": "The grammar issues from fusha_check for this token (each MUST route). Empty when the candidate is clean/grounded.",
+      "items": { "type": "object", "additionalProperties": true }
+    },
+    "verdict": {
+      "type": "object",
+      "required": ["status", "gate"],
+      "additionalProperties": false,
+      "properties": {
+        "status": { "type": "string", "enum": ["grounded", "pending", "contradicted", "out_of_scope", "needs_two_vote", "needs_human_review", "unsafe_reasoning"] },
+        "gate": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"] },
+        "reasoning_checked": { "type": ["boolean", "null"] }
+      }
+    },
+    "gate": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"], "description": "The candidate's overall gate (canonical GP0 4-tier via GATE_ALIAS)." },
+    "public_boundary": {
+      "type": "object",
+      "required": ["public_gloss_src", "public_gloss_kind", "public_gloss_lang", "external_source_names_public"],
+      "additionalProperties": false,
+      "properties": {
+        "public_gloss_src": { "const": "qamus" },
+        "public_gloss_kind": { "const": "authored" },
+        "public_gloss_lang": { "const": "en" },
+        "external_source_names_public": { "const": false }
+      }
+    },
+    "blocker_status": {
+      "type": ["string", "null"],
+      "description": "Exact pending/blocked reason, or null when the candidate is clean. A non-clean verdict MUST carry a blocker_status.",
+      "enum": ["root_exists_form_unresolved", "pos_mismatch", "hamza_sensitive_homograph", "multi_sense_root", "derived_form_needs_review", "proper_noun", "source_evidence_needed", "qamus_entry_needs_repair", "context_sensitive_needs_nahw", "function_attachment_unresolved", "weak_irab_reasoning", "phrase_vs_token", "renderer_not_live", null]
+    },
+    "suggested_next_action": {
+      "type": "string",
+      "enum": ["route_to_two_vote", "route_to_human_source_review", "route_to_scholar_irab_review", "route_to_sarf_drill", "route_to_nahw_drill", "hold_pending_blocker", "ready_for_cert_review"],
+      "description": "Where the rollout/cert thread should take this candidate next. NEVER 'apply live'."
+    },
+    "live_writes": { "const": 0 }
+  },
+  "$comment": "Light structural gate (the repo mini-validator checks top-level + item type/enum/const/pattern/required/additionalProperties). The hard FAIL conditions live in tools/validate_rich_hover_candidate.py: source address present; exact token/card edge; correct const public_boundary; no public leak (FC.LEAK_RE); qg class in enum (enforced here too); no phrase-translation-as-token without token_contribution; no collapsed clitic/prep/pronoun; every parser issue routes; iʿrāb/governor-sensitive never auto_safe without evidence; routable to a lane; round-trips into validate_rich_hover_certification."
+}

@@ -1,0 +1,265 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/fusha-text-check.schema.json",
+  "title": "Fusha general text-check IR (the three-mode grammar-checker record)",
+  "description": "One checked text document. The general (Grammarly-like) front-end IR for Fusha/Classical/Qurʾānic Arabic. It preserves the original input verbatim, records the normalization op-trail (never overwriting the original), tokenizes, builds an ambiguity-preserving candidate lattice, and emits diagnostics + gates. It NEVER pretends arbitrary text is source-addressed: input_mode caps certainty (arbitrary_typing can never be auto_safe). Deep per-array validation is delegated to tools/validate_fusha_text_check.py (the repo's mini schema-validator does not resolve $ref/oneOf); this schema is the light structural gate + the field contract. Dry-run only: checker_summary.live_writes is const 0. See parserplans/general-fusha-grammar-checker/{001,004,019}.",
+  "type": "object",
+  "required": [
+    "schema",
+    "input_mode",
+    "raw_input",
+    "normalized_input",
+    "normalization_ops",
+    "analysis_tokens",
+    "diagnostics",
+    "public_boundary",
+    "source_boundary",
+    "checker_summary"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "fusha/text-check@1" },
+    "input_mode": {
+      "type": "string",
+      "enum": ["source_addressed", "corpus_backed", "arbitrary_typing"],
+      "description": "Caps certainty. source_addressed: tokens carry exact S:A:W, may hand off to fusha_check. corpus_backed: corpus IDs, gate floor two_vote_required. arbitrary_typing: NO source-address certainty; parse_confidence in {surface_only,candidate,unknown}; gate NEVER auto_safe."
+    },
+    "document_id": { "type": ["string", "null"], "description": "Stable id for a checked document, or null." },
+    "session_id": { "type": ["string", "null"], "description": "Editor-session id, or null." },
+    "raw_input": {
+      "type": "string",
+      "description": "The ORIGINAL text exactly as submitted. Never altered, never normalized in place. Qurʾānic text reproduced here is byte-for-byte unaltered."
+    },
+    "normalized_input": {
+      "type": "string",
+      "description": "A normalized analysis form computed ALONGSIDE raw_input (norm_strict-style). Match/analysis key only; never written back over raw_input/display."
+    },
+    "normalization_ops": {
+      "type": "array",
+      "description": "The explicit op-trail of the raw->normalized transform (gap: do not just apply normalization, record it). Each op names what changed so a homograph split or a dropped mark is auditable/explainable.",
+      "items": { "$ref": "#/$defs/normalizationOp" }
+    },
+    "paragraphs": { "type": "array", "items": { "$ref": "#/$defs/span" } },
+    "sentences": { "type": "array", "items": { "$ref": "#/$defs/span" } },
+    "whitespace_tokens": { "type": "array", "items": { "$ref": "#/$defs/whitespaceToken" } },
+    "analysis_tokens": {
+      "type": "array",
+      "description": "The analyzed tokens (clitic-aware). For arbitrary_typing these carry a candidate lattice and never a forced single parse.",
+      "items": { "$ref": "#/$defs/analysisToken" }
+    },
+    "segment_candidates": { "type": "array", "items": { "$ref": "#/$defs/segmentCandidate" } },
+    "morphology_candidates": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+    "syntax_candidates": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+    "diagnostics": {
+      "type": "array",
+      "description": "Grammar/orthography/morphology/syntax/ambiguity notices. Not all errors: many are info/warn/ambiguity/hints. Each carries severity + gate + route.",
+      "items": { "$ref": "#/$defs/diagnostic" }
+    },
+    "suggestions": { "type": "array", "items": { "$ref": "#/$defs/suggestion" } },
+    "ambiguity": {
+      "type": "array",
+      "description": "Explicit unresolved ambiguities (e.g. an unvoweled token with N competing readings). Ambiguity is preserved here, never silently collapsed.",
+      "items": { "type": "object", "additionalProperties": true }
+    },
+    "gates": {
+      "type": "array",
+      "description": "Gate decisions referenced by diagnostics/suggestions, on the canonical GP0 4-tier.",
+      "items": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"] }
+    },
+    "public_boundary": { "$ref": "#/$defs/publicBoundary" },
+    "source_boundary": {
+      "type": "object",
+      "description": "Records that the original was preserved and that no external source text was copied.",
+      "required": ["original_preserved", "external_text_copied", "quran_text_altered"],
+      "additionalProperties": false,
+      "properties": {
+        "original_preserved": { "const": true },
+        "external_text_copied": { "const": false },
+        "quran_text_altered": { "const": false }
+      }
+    },
+    "checker_summary": {
+      "type": "object",
+      "required": ["live_writes", "by_mode", "by_severity", "by_issue_class", "n_tokens", "n_ambiguous_tokens"],
+      "additionalProperties": false,
+      "properties": {
+        "live_writes": { "const": 0 },
+        "by_mode": { "type": "object", "additionalProperties": true },
+        "by_severity": { "type": "object", "additionalProperties": true },
+        "by_issue_class": { "type": "object", "additionalProperties": true },
+        "n_tokens": { "type": "integer", "minimum": 0 },
+        "n_ambiguous_tokens": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "$defs": {
+    "publicBoundary": {
+      "type": "object",
+      "required": ["public_gloss_src", "public_gloss_kind", "public_gloss_lang", "external_source_names_public"],
+      "additionalProperties": false,
+      "properties": {
+        "public_gloss_src": { "const": "qamus" },
+        "public_gloss_kind": { "const": "authored" },
+        "public_gloss_lang": { "const": "en" },
+        "external_source_names_public": { "const": false }
+      }
+    },
+    "normalizationOp": {
+      "type": "object",
+      "required": ["op", "from", "to"],
+      "additionalProperties": false,
+      "properties": {
+        "op": { "type": "string", "enum": ["strip_tashkil", "drop_hamza_seat", "fold_alif_maqsura", "fold_ta_marbuta", "dagger_alif_to_alif", "strip_tatweel", "fold_alif_wasla", "other"] },
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "note": { "type": ["string", "null"] }
+      }
+    },
+    "span": {
+      "type": "object",
+      "required": ["start", "end"],
+      "additionalProperties": false,
+      "properties": {
+        "start": { "type": "integer", "minimum": 0 },
+        "end": { "type": "integer", "minimum": 0 },
+        "text": { "type": ["string", "null"] }
+      }
+    },
+    "whitespaceToken": {
+      "type": "object",
+      "required": ["index", "surface"],
+      "additionalProperties": false,
+      "properties": {
+        "index": { "type": "integer", "minimum": 0 },
+        "surface": { "type": "string" },
+        "kind": { "type": "string", "enum": ["word", "punctuation", "number", "ayah_marker", "other"] },
+        "start": { "type": "integer", "minimum": 0, "description": "character offset into raw_input (for editor underline spans)" },
+        "end": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "analysisToken": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["index", "surface", "is_arabic", "parse_confidence", "decision_status"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 0 },
+        "surface": { "type": "string", "description": "The token EXACTLY as written. Whitespace-free Arabic word." },
+        "loc": { "type": ["string", "null"], "description": "S:A:W when source_addressed; null otherwise. NEVER fabricated for arbitrary text." },
+        "norm_strict_key": { "type": ["string", "null"] },
+        "bare_key": { "type": ["string", "null"] },
+        "is_arabic": { "type": "boolean" },
+        "parse_confidence": {
+          "type": "string",
+          "enum": ["certified", "two_vote", "candidate", "partial", "rich_metadata", "lexical_candidate", "surface_only", "unknown"],
+          "description": "Arbitrary mode is capped at surface_only/candidate/unknown."
+        },
+        "decision_status": { "type": "string", "enum": ["resolved", "pending", "blocked", "unknown"] },
+        "segment_candidates": { "type": "array", "items": { "$ref": "#/$defs/segmentCandidate" } },
+        "morphology_candidates": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+        "blocker": { "type": ["string", "null"] }
+      }
+    },
+    "segmentCandidate": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["segments", "rank"],
+      "properties": {
+        "segments": {
+          "type": "array",
+          "description": "One candidate segmentation (proclitic* stem enclitic*). Surfaces concatenate to the token surface exactly.",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": ["role", "surface"],
+            "properties": {
+              "role": { "type": "string" },
+              "surface": { "type": "string" },
+              "gloss_contribution": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "rank": { "type": "integer", "minimum": 0, "description": "Lower = higher-ranked. Advisory, deterministic (ordering-legality + length prior). NOT certifying." },
+        "score": { "type": ["number", "null"], "description": "Advisory score; never a certification." },
+        "legal": { "type": ["boolean", "null"], "description": "Whether this segmentation satisfies clitic ordering-legality (conj wa/fa < prep bi/li/ka < article al)." }
+      }
+    },
+    "diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue_class", "severity", "gate", "route", "target", "explanation"],
+      "properties": {
+        "issue_class": {
+          "type": "string",
+          "enum": [
+            "possible_clitic_segmentation",
+            "ambiguous_unvoweled_token",
+            "possible_attached_pronoun",
+            "possible_preposition_host",
+            "possible_definite_article",
+            "possible_particle_function",
+            "possible_case_or_mood_requires_context",
+            "possible_governor_unresolved",
+            "orthography_normalization_warning",
+            "dialect_or_non_fusha_possible",
+            "source_address_required_for_certainty",
+            "rich_hover_candidate_available_when_source_addressed",
+            "hidden_clitic_or_proclitic",
+            "host_only_preposition_hover",
+            "ma_function_unresolved_or_wrong",
+            "phrase_translation_used_as_token_hover",
+            "suffix_pronoun_missing",
+            "passive_voice_hidden",
+            "dual_or_plural_suffix_hidden",
+            "derivative_or_participle_prefix_hidden",
+            "weak_irab_reasoning",
+            "graph_edge_missing",
+            "display_local_canonical_crosswalk_missing",
+            "source_clean_boundary_violation",
+            "other"
+          ],
+          "description": "The 12 NEW general classes fire in arbitrary_typing; the 12 existing source-addressed classes fire only via fusha_check in source_addressed mode."
+        },
+        "severity": { "type": "string", "enum": ["info", "warn", "block"] },
+        "gate": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"] },
+        "route": {
+          "type": "object",
+          "required": ["lane", "procedure"],
+          "additionalProperties": false,
+          "properties": {
+            "lane": { "type": "string", "enum": ["sarf", "nahw", "curriculum", "validator", "owner_review", "scholar_irab_review"] },
+            "procedure": { "type": "string" }
+          }
+        },
+        "target": { "type": "string", "description": "token index ref (e.g. tok:3) or S:A:W in source_addressed mode." },
+        "explanation": { "type": "string", "description": "Source-clean learner-facing explanation. No source/provenance names, no copied external text." },
+        "observed": { "type": ["string", "null"] },
+        "expected": { "type": ["string", "null"] },
+        "confidence": { "type": ["string", "null"], "enum": ["low", "medium", "high", null] },
+        "evidence_labels": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "suggestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edit", "confidence", "gate", "safe_to_show_inline", "needs_review"],
+      "properties": {
+        "edit": {
+          "type": "object",
+          "required": ["op", "target", "replacement"],
+          "additionalProperties": false,
+          "properties": {
+            "op": { "type": "string", "enum": ["insert", "delete", "replace", "merge", "split", "none"] },
+            "target": { "type": "string" },
+            "replacement": { "type": ["string", "null"] }
+          }
+        },
+        "explanation": { "type": ["string", "null"] },
+        "confidence": { "type": "string", "enum": ["low", "medium", "high"] },
+        "gate": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"] },
+        "safe_to_show_inline": { "type": "boolean" },
+        "needs_review": { "type": "boolean" }
+      }
+    }
+  },
+  "$comment": "Light structural gate only (the repo mini-validator checks top-level type/enum/const/pattern/required/additionalProperties and does not resolve $ref). The hard semantic FAIL conditions live in tools/validate_fusha_text_check.py: arbitrary mode never auto_safe; original preserved; normalization ops tracked; ambiguity not dropped for unvoweled text; no public leak; diagnostics carry severity+gate+route; suggestions carry confidence+gate; iʿrāb-sensitive correction not auto_safe without governor reasoning; source_addressed mode requires an exact address."
+}

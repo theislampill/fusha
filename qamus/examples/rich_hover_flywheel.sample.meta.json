@@ -1,0 +1,27 @@
+{
+  "count": 10,
+  "generator": "tools/rich_hover_flywheel.py --emit-fixture",
+  "note": "Rich-hover CANDIDATE fixtures generated from source-addressed tokens. Authored gloss/explanation; Qurʾānic surfaces verbatim; public {src:qamus,kind:authored,lang:en}; no external gloss text. The rows FEED the certification queue (validate_rich_hover_certification) and are never live-applied. parserplans 014/021/022.",
+  "row_schema": [
+    "schema",
+    "token_address",
+    "quran_loc",
+    "wbw_loc",
+    "displayed_surface",
+    "segments",
+    "qg_segment_classes",
+    "parse_key",
+    "token_gloss",
+    "verdict",
+    "gate",
+    "blocker_status",
+    "suggested_next_action",
+    "public_boundary"
+  ],
+  "schema": "fusha/rich-hover-candidate@1",
+  "verdicts": [
+    "contradicted",
+    "grounded",
+    "unsafe_reasoning"
+  ]
+}
