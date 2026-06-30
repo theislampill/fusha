@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/dependency-candidate-lattice.schema.json",
+  "title": "Fusha dependency / governor (iʿrāb) candidate lattice",
+  "description": "A governor/iʿrāb dependency lattice over a unit: a set of dependency-edge CANDIDATES, each binding a governed token to AT MOST ONE candidate head (single-governor spine), with the case/mood it consequently takes and the RULE that justifies it. This is the engineering synthesis that lets the checker say 'genitive BECAUSE governed by the preposition' and detect 'right case, wrong/absent governor' (right_answer_wrong_reason). Traditional treebanks store head-pointer + relation label but NOT case-as-a-consequence-of-governor, so assigned_case_mood + governor_justification + justification_rule are built here, not imported. Ambiguity-preserving: an ambiguous head/role is kept in unresolved_alternatives and the edge stays decision_status=unresolved/pending — never a forced single governor. Conservative: only layer-1-safe heuristics resolve (preposition→genitive); PP-attachment (which head a PP attaches to) stays unresolved. Dry-run: summary.live_writes const 0; public fields source-clean {src:qamus,kind:authored,lang:en}; arbitrary/unvoweled never auto_safe (case ending not visible). See parserplans/general-fusha-grammar-checker-p2/002-governor-irab-dependency-lattice.md.",
+  "type": "object",
+  "required": ["schema", "input_mode", "source_unit", "tokens", "edges", "summary", "public_boundary", "source_boundary"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "fusha/dependency-candidate-lattice@1" },
+    "input_mode": { "type": "string", "enum": ["source_addressed", "corpus_backed", "arbitrary_typing"] },
+    "source_unit": {
+      "type": "object",
+      "required": ["address", "scope"],
+      "additionalProperties": false,
+      "properties": {
+        "address": { "type": "string" },
+        "scope": { "type": "string", "enum": ["in_scope_source_addressed", "out_of_scope", "arbitrary"] }
+      }
+    },
+    "tokens": {
+      "type": "array",
+      "description": "Light token references the edges point at (ref = tok:N for arbitrary, or S:A:W for source_addressed).",
+      "items": {
+        "type": "object",
+        "required": ["ref", "surface"],
+        "additionalProperties": true,
+        "properties": {
+          "ref": { "type": "string" },
+          "surface": { "type": "string" },
+          "pos": { "type": ["string", "null"] },
+          "case_visible": { "type": ["string", "null"], "description": "the confirmed case ending if voweled/source-addressed, else null" }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "description": "The dependency-edge candidates. Each governed token has AT MOST ONE candidate head (headless allowed for coordinating wāw / role-less particles).",
+      "items": { "$ref": "#/$defs/edge" }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["live_writes", "n_edges", "n_unresolved", "by_decision"],
+      "additionalProperties": false,
+      "properties": {
+        "live_writes": { "const": 0 },
+        "n_edges": { "type": "integer", "minimum": 0 },
+        "n_unresolved": { "type": "integer", "minimum": 0 },
+        "by_decision": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "public_boundary": {
+      "type": "object",
+      "required": ["public_gloss_src", "public_gloss_kind", "public_gloss_lang", "external_source_names_public"],
+      "additionalProperties": false,
+      "properties": {
+        "public_gloss_src": { "const": "qamus" },
+        "public_gloss_kind": { "const": "authored" },
+        "public_gloss_lang": { "const": "en" },
+        "external_source_names_public": { "const": false }
+      }
+    },
+    "source_boundary": {
+      "type": "object",
+      "required": ["heuristic_never_overrides_source", "quran_text_altered"],
+      "additionalProperties": false,
+      "properties": {
+        "heuristic_never_overrides_source": { "const": true },
+        "quran_text_altered": { "const": false }
+      }
+    }
+  },
+  "$defs": {
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edge_id", "dependent", "headless", "governor_type", "rel_label", "rel_label_ar",
+                   "assigned_case_mood", "governor_justification", "justification_rule", "justification_confidence",
+                   "evidence_class", "unresolved_alternatives", "contradiction_marker", "right_answer_wrong_reason_marker",
+                   "decision_status", "gate", "route_to"],
+      "properties": {
+        "edge_id": { "type": "string" },
+        "dependent": { "type": "string", "description": "ref of the governed (maʿmūl) token" },
+        "candidate_head": { "type": ["string", "null"], "description": "ref of the single candidate governor (ʿāmil), or null if headless/unresolved" },
+        "headless": { "type": "boolean", "description": "true when this token legitimately has NO head (coordinating wāw / role-less particle) — F6 'at most one head'" },
+        "governor_type": { "type": "string", "enum": ["verb", "noun", "particle", "none"] },
+        "rel_label": {
+          "type": "string",
+          "description": "English dependency role — a SUBSET of the morphosyntax-token syntax.dependency enum (the layer-1 roles this conservative lattice emits) plus the 'none'/'null' sentinels for a headless/unspecified edge.",
+          "enum": ["subject", "hidden_subject", "naib_fail", "object", "first_object", "second_object", "jar_majrur",
+                   "preposition_phrase", "pp_attachment", "pp_attached_to_verb", "pp_attached_to_nominal",
+                   "pp_attached_to_hidden_hal", "pp_attached_to_hidden_sifa", "oath_preposition", "idafa_head",
+                   "idafa_dependent", "sifa", "badal", "tamyiz", "coordination", "condition", "relative_clause",
+                   "subordinate_clause", "none", "null"]
+        },
+        "rel_label_ar": { "type": "string", "description": "traditional Arabic-grammar nomenclature (fāʿil/mafʿūl bihi/muḍāf ilayh/majrūr bi-ḥarf/...). Authored, source-clean." },
+        "assigned_case_mood": {
+          "type": ["string", "null"],
+          "description": "the case/mood the governor assigns (the CONSEQUENCE) — null when not determinable (e.g. unvoweled arbitrary).",
+          "enum": ["nominative", "accusative", "genitive", "jussive", "subjunctive", "indicative", "none", "unknown", null]
+        },
+        "governor_justification": { "type": "string", "description": "authored, source-clean sentence stating WHY the governor assigns this case/mood. Empty/absent on an iʿrāb claim → governor_not_justified." },
+        "justification_rule": {
+          "type": "string",
+          "enum": ["preposition_governs_genitive", "idafa_governs_genitive", "verb_governs_subject_nominative",
+                   "verb_governs_object_accusative", "mubtada_governs_khabar_nominative", "operating_particle_governs_mood",
+                   "coordination_no_governor", "pp_attachment_unresolved", "governor_not_justified", "not_determinable", "none"]
+        },
+        "justification_confidence": { "type": "string", "enum": ["low", "medium", "high"] },
+        "evidence_class": { "type": "string", "enum": ["source_addressed", "heuristic", "unknown"], "description": "source_addressed = confirmed against the graph/voweled text; heuristic = surface rule only (arbitrary)." },
+        "unresolved_alternatives": {
+          "type": "array",
+          "description": "other candidate heads/roles kept (ambiguity preserved — e.g. competing PP-attachment heads, iḍāfa-vs-ṣifa). Non-empty ⇒ decision_status must be unresolved or pending.",
+          "items": { "type": "object", "additionalProperties": true }
+        },
+        "contradiction_marker": { "type": "boolean", "description": "two source-grounded readings contradict (→ route to review)." },
+        "right_answer_wrong_reason_marker": { "type": "boolean", "description": "the case ending is correct but the stated/implied governor is absent or wrong (the GP-WR case) → governor_not_justified." },
+        "decision_status": { "type": "string", "enum": ["resolved", "pending", "unresolved"] },
+        "gate": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"] },
+        "route_to": {
+          "type": "object",
+          "required": ["lane", "procedure"],
+          "additionalProperties": false,
+          "properties": {
+            "lane": { "type": "string", "enum": ["sarf", "nahw", "curriculum", "validator", "owner_review", "scholar_irab_review"] },
+            "procedure": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "$comment": "Light structural gate (the repo mini-validator checks top-level + item type/enum/const/pattern/required/additionalProperties; $ref subtrees are delegated). The hard FAIL conditions live in tools/validate_dependency_lattice.py: an edge that asserts a case/mood without a governor_justification is governor_not_justified (never auto_safe); an ambiguous edge (unresolved_alternatives non-empty) must be unresolved/pending; arbitrary-mode edges never auto_safe and never carry a confirmed assigned_case_mood; a resolved edge needs a candidate_head OR headless=true; heuristic evidence never overrides source-addressed certainty."
+}

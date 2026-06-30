@@ -115,3 +115,30 @@ generalization of the 12 source-addressed classes above — a tutor uses the sam
 
 Full design: `parserplans/general-fusha-grammar-checker/{004,011,014}`; flywheel bridge:
 `qamus/reports/general-checker-rich-hover-flywheel.md`.
+
+## P2: governor / dependency-lattice diagnostic → route
+
+The governor/iʿrāb dependency lattice (`tools/fusha_governor.py`) emits dependency-edge candidates. A tutor routes by
+the edge's `route_to`; the lattice is **conservative** — only a standalone preposition→genitive resolves (and only when
+the ending is confirmed), PP-attachment stays unresolved, iḍāfa keeps ṣifa/badal alternatives, a coordinating wāw is
+headless. "Prefer phrase-aware pending over a wrong one-word gloss."
+
+| dependency edge / governor class | route to |
+|---|---|
+| `jar_majrur` (preposition governs the genitive) | `nahw/procedures/idafa-jar-majrur.md` |
+| `idafa_dependent` (muḍāf ilayh candidate — kept ambiguous) | `nahw/procedures/idafa-jar-majrur.md` |
+| `pp_attachment` (which head the PP attaches to — **unresolved**) | `nahw/procedures/pp-attachment-review.md` |
+| `coordination` (headless wāw) | `nahw/procedures/particle-decision.md` |
+| `governor_not_justified` (case asserted, governor absent/wrong — **right answer, wrong reason**) | `nahw/procedures/irab-case-mood.md` — **scholar/iʿrāb (two-vote+) review** |
+
+`governor_not_justified` is in `fusha_check.IRAB_SENSITIVE_ISSUE_CLASSES`; a correct ending without a justified governor
+is unsafe and never `auto_safe`. Learner feedback: show the segment, name the governing element (ʿāmil), explain the
+case it assigns, and — when the governor is not determinable — explain why the row stays pending.
+
+## P2: cross-builder conflict → route
+
+When two builders disagree (`tools/fusha_conflicts.py`), the conflict record carries its own `route_to`. P2 **surfaces**
+the conflict and routes it; it never silently picks a side. Precedence: source-addressed certainty > heuristic ;
+cert-validator gate > candidate gate ; deterministic verdict > suggestion ; qg-palette enum > segment-role ; source-clean
+public_boundary > internal evidence. `gate_required = max(both readings)`; a conflict is never `auto_safe`. Full design:
+`parserplans/general-fusha-grammar-checker-p2/{002,006}`; bridge: `qamus/reports/p2-deepening.md`.

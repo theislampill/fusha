@@ -32,28 +32,20 @@ _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, _REPO)
 from tools import normalize_ar as N  # noqa: E402
 from tools.validate_linguistic_decisions import required_gate, _GATE_RANK  # noqa: E402
+from tools.leak_sot import LEAK_RE  # noqa: E402,F401  (P2: the SINGLE leak source-of-truth; re-exported so every FC.LEAK_RE consumer gets it)
 
 SPINE_PATH = os.path.join(_REPO, "qamus", "indexes", "current", "quran-usage-spine-full.jsonl")
 ADDR_PATH = os.path.join(_REPO, "qamus", "indexes", "current", "source-address-full.jsonl")
 
-# Public-surface leak tripwire (super-set of the sibling validators). NOT proof of independence — a paste tripwire.
-# Covers internal-source NAMES, external-TRANSLATION brands (the actual licensing risk for a public repo), and paths.
-LEAK_RE = re.compile(
-    r"\b(qac|quran\.com|quran-com|corpus\.quran|quranic arabic corpus|quranic corpus|tanzil|mcp|informed_by"
-    r"|external_informed_by|photographed|ocr|source-photo"
-    r"|pickthall|arberry|shakir)\b"
-    # brand variants: suffixed/joined/spacing forms of the same forbidden source escape a bare \b…\b anchor
-    r"|\btafsir\w*|\bsaheeh\w*|\bsahih[\s_-]*international\b|\byusuf[\s_-]*ali\b"
-    # absolute / home / UNC paths (broadened beyond the old /srv,/static allow-list to /var,/tmp,/usr,/mnt,/media,~,\\host)
-    r"|/static/|[A-Za-z]:[\\/]|/(?:home|root|users|srv|opt|etc|var|tmp|usr|mnt|media)/|(?:^|[\s\"'(])~/|\\\\[A-Za-z0-9._-]+\\",
-    re.I,
-)
+# Public-surface leak tripwire is now the canonical SoT in tools/leak_sot.py (re-exported as LEAK_RE above). NOT proof
+# of independence — a paste tripwire. Covers internal-source NAMES, translation brands, provenance labels, and paths.
 
 # iʿrāb/governor-sensitive issue classes (both the source-addressed and the general/arbitrary vocabularies) that may
 # never be auto_safe without governor reasoning. SINGLE SOURCE OF TRUTH — both rich-hover/text-check validators import it.
 IRAB_SENSITIVE_ISSUE_CLASSES = frozenset({
     "weak_irab_reasoning", "ma_function_unresolved_or_wrong", "host_only_preposition_hover", "passive_voice_hidden",
     "possible_governor_unresolved", "possible_case_or_mood_requires_context", "possible_particle_function",
+    "governor_not_justified",  # P2: a case asserted without a justifying governor (right answer, wrong/absent reason)
 })
 # An ACTIVE reading = a subject pronoun immediately followed by a non-auxiliary verb ("he said", "they slew him").
 # Used to flag passive_voice_hidden WITHOUT false-positiving on bare past-participle glosses ("slain", "taken").

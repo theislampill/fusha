@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/cross-builder-conflict.schema.json",
+  "title": "Fusha cross-builder conflict record",
+  "description": "An explicit record of a DISAGREEMENT between two of the five builders (arbitrary-typing checker, source-addressed parser/checker, rich-hover flywheel, certification validator, curriculum/tutor route) over the same token. P2 SURFACES the conflict and routes it — it NEVER silently picks a side. The winning_source_of_truth is selected by a fixed precedence order (source-addressed certainty > heuristic; cert-validator gate > candidate gate; deterministic verdict > suggestion; qg-palette enum > segment-role; source-clean public_boundary > internal evidence), gate_required is the max of the two, and next_action routes to two-vote / human / scholar review (or, for a public-gloss-vs-internal-lattice conflict, the public gloss stands and the lattice merely flags an internal review). Dry-run: live_writes const 0; public fields source-clean. See parserplans/general-fusha-grammar-checker-p2/006-cross-builder-conflict-resolution.md.",
+  "type": "object",
+  "required": ["schema", "conflict_loc", "conflict_type", "involved_builders", "severity", "blocking_status",
+               "reason_for_disagreement", "winning_source_of_truth", "gate_required", "next_action", "route_to",
+               "resolution_path", "right_answer_wrong_reason_marker", "evidence_from_both_sides", "public_boundary", "live_writes"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "fusha/cross-builder-conflict@1" },
+    "conflict_loc": { "type": "string", "description": "token ref (tok:N) or S:A:W where the builders disagree." },
+    "conflict_type": {
+      "type": "string",
+      "enum": ["C1_sarf_pos_vs_nahw_irab", "C2_morphology_vs_governor", "C3_nahw_vote_a_vs_b",
+               "C4_candidate_gate_vs_cert_gate", "C5_verdict_vs_suggestion", "C6_segment_role_vs_qg_palette",
+               "C7_homograph_unresolved", "C8_idafa_vs_jar_majrur", "C9_public_gloss_vs_internal_lattice",
+               "C10_suggestion_vs_suggestion"]
+    },
+    "involved_builders": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "string", "enum": ["arbitrary_checker", "source_addressed_checker", "rich_hover_flywheel",
+                                            "cert_validator", "curriculum_route", "suggestion_engine", "sarf", "nahw",
+                                            "qg_palette", "morphology_lattice", "governor_lattice"] }
+    },
+    "severity": { "type": "string", "enum": ["info", "warn", "block"] },
+    "blocking_status": { "type": "string", "enum": ["blocking", "non_blocking"] },
+    "reason_for_disagreement": { "type": "string", "description": "authored, source-clean explanation of the disagreement." },
+    "winning_source_of_truth": {
+      "type": "string",
+      "description": "which side the precedence order selects to TRUST for the resolution (or 'neither' when both must yield to review). This is a source-of-truth CATEGORY, not necessarily an involved_builders value; use winner_evidence_index to dereference it to a reading.",
+      "enum": ["source_addressed_checker", "cert_validator", "deterministic_verdict", "qg_palette",
+               "public_gloss", "sarf_reanalysis", "neither"]
+    },
+    "winner_evidence_index": {
+      "type": ["integer", "null"],
+      "description": "index into evidence_from_both_sides of the reading the winner corresponds to, or null when no single reading wins (winning_source_of_truth='neither' or the winner is a process/third party, not one of the readings' builders)."
+    },
+    "gate_required": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"] },
+    "next_action": {
+      "type": "string",
+      "enum": ["route_to_two_vote", "route_to_human_source_review", "route_to_scholar_irab_review", "return_to_sarf",
+               "downgrade_gate_to_max", "suppress_unsafe_suggestion", "map_role_to_nearest_qg_class",
+               "hold_pending_both_readings", "public_gloss_stands_lattice_flags_internal_review"]
+    },
+    "route_to": {
+      "type": "object", "required": ["lane", "procedure"], "additionalProperties": false,
+      "properties": {
+        "lane": { "type": "string", "enum": ["sarf", "nahw", "curriculum", "validator", "owner_review", "scholar_irab_review"] },
+        "procedure": { "type": "string" }
+      }
+    },
+    "resolution_path": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "right_answer_wrong_reason_marker": { "type": "boolean" },
+    "evidence_from_both_sides": {
+      "type": "array", "minItems": 2,
+      "description": "the two (or more) readings, each source-clean: {builder, reading, gate}.",
+      "items": { "type": "object", "additionalProperties": true }
+    },
+    "public_boundary": {
+      "type": "object",
+      "required": ["public_gloss_src", "public_gloss_kind", "public_gloss_lang", "external_source_names_public"],
+      "additionalProperties": false,
+      "properties": {
+        "public_gloss_src": { "const": "qamus" },
+        "public_gloss_kind": { "const": "authored" },
+        "public_gloss_lang": { "const": "en" },
+        "external_source_names_public": { "const": false }
+      }
+    },
+    "live_writes": { "const": 0 }
+  },
+  "$comment": "Hard FAIL conditions in tools/validate_cross_builder_conflict.py: a conflict must carry a winning_source_of_truth AND a next_action AND a gate_required AND a route_to; gate_required must be the max of the two readings' gates; a C5 (verdict vs suggestion) must select deterministic_verdict; a C4 (candidate vs cert gate) must select cert_validator; a heuristic reading may never be the winner over a source_addressed reading; no public field leaks; evidence_from_both_sides has >=2 entries; never auto_safe for an iʿrāb-sensitive conflict."
+}

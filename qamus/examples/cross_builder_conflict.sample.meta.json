@@ -1,0 +1,18 @@
+{
+  "conflict_types": [
+    "C10_suggestion_vs_suggestion",
+    "C1_sarf_pos_vs_nahw_irab",
+    "C2_morphology_vs_governor",
+    "C3_nahw_vote_a_vs_b",
+    "C4_candidate_gate_vs_cert_gate",
+    "C5_verdict_vs_suggestion",
+    "C6_segment_role_vs_qg_palette",
+    "C7_homograph_unresolved",
+    "C8_idafa_vs_jar_majrur",
+    "C9_public_gloss_vs_internal_lattice"
+  ],
+  "count": 10,
+  "generator": "tools/fusha_conflicts.py --emit-fixture",
+  "note": "Cross-builder conflict records (C1-C10). P2 SURFACES conflicts and routes them; it never picks sides. Precedence: source-addressed>heuristic; cert-gate>candidate-gate; verdict>suggestion; qg-palette>role; source-clean>internal. gate_required=max. Authored; source-clean; live_writes==0. parserplans p2/006.",
+  "schema": "fusha/cross-builder-conflict@1"
+}
