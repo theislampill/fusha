@@ -202,6 +202,47 @@ particle:
 - Vocative particles and exceptive particles must preserve the governed noun structure; for exceptions record the
   mustathnā minhu, mustathnā, and whether the construction is muttaṣil, munqaṭiʿ, or mufarragh.
 
+## Governor / iʿrāb / dependency candidate lattice (the P2 grammar-checker engine)
+The checker now emits a **conservative governor/dependency candidate lattice** — the *executable* form of the grammar-safety gate
+above. A dependency edge points a dependent at a governor (ʿāmil) with a `governor_justification`. Use it whenever you assign or
+review a case/mood.
+
+- **Case/mood is a CONSEQUENCE of a stated governor.** Assert a case only together with the governing element that licenses it.
+  Naming the right ending with an absent or wrong governor is **`governor_not_justified` = right answer, wrong reason** — UNSAFE,
+  routed to scholar / two-vote, **never `auto_safe`**. This class is in `fusha_check.IRAB_SENSITIVE_ISSUE_CLASSES`.
+- **Resolve only the layer-1-safe rule, and only with evidence.** A standalone preposition governs the following noun in the genitive
+  — resolve this **only when the ending is confirmed** (voweled / source-addressed). For arbitrary/unvoweled input the ending is not
+  visible, so even this stays a **candidate** (gate ≥ two_vote), never resolved.
+- **PP-attachment stays UNRESOLVED unless justified.** Which head a prepositional phrase attaches to (verb / nominal / hidden hāl /
+  hidden ṣifa / clause) is not decidable from the surface — keep it unresolved; never pick a head without evidence.
+- **iḍāfa keeps its alternatives.** A bare noun+noun is ambiguous: muḍāf-ilayh (genitive) OR a nominal sentence (mubtadaʾ + khabar,
+  nominative) OR ṣifa / badal. Keep all readings; assert a case only when the ending is visible.
+- **Coordinating wāw is HEADLESS.** A coordinating wāw has no single governor; never invent one.
+- **Single-governor spine.** Each governed node has at most one head (headless allowed for the coordinating wāw); a resolved governed
+  token needs a head.
+- **iʿrāb suggestion-gating.** A correction that touches case/mood/governor is **never `auto_safe` without a stated governor
+  justification**. Prefer abstain/reject (`reject_reason='governor_not_justified'`) over a wrong fix; route to nahw / scholar review.
+- **CEFR is scaffolding, not certification.** Expose iʿrāb terminology and governor reasoning only at C1+; A1/A2 stay plain. The level
+  is caller-supplied; the skill never asserts or certifies a learner's level.
+- **The lattice feeds rich-hover + learner feedback.** A justified edge feeds the rich-hover parse key + `qg-*` coloring (§9); a
+  diagnostic becomes a Point→Teach→Bottom-out learner event whose Teach references the **cause** (the governor) and whose Bottom-out is
+  withheld past the gate.
+
+**Executable gates (the source of truth — consult, never restate):**
+[`tools/fusha_governor.py`](../tools/fusha_governor.py) (`build_dependency_lattice`) builds the lattice;
+[`tools/validate_dependency_lattice.py`](../tools/validate_dependency_lattice.py) enforces it;
+[`qamus/schemas/dependency-candidate-lattice.schema.json`](../qamus/schemas/dependency-candidate-lattice.schema.json) is the field
+contract; [`tools/fusha_conflicts.py`](../tools/fusha_conflicts.py) surfaces a morphology↔governor or verdict↔suggestion conflict
+(it never picks a side); [`tools/fusha_suggest.py`](../tools/fusha_suggest.py) gates iʿrāb corrections;
+[`tools/fusha_learner_feedback.py`](../tools/fusha_learner_feedback.py) is the hint ladder;
+[`tools/fusha_cefr_gate.py`](../tools/fusha_cefr_gate.py) gates explanation depth. Procedures:
+[`procedures/governor-dependency-lattice.md`](procedures/governor-dependency-lattice.md),
+[`procedures/irab-right-answer-wrong-reason.md`](procedures/irab-right-answer-wrong-reason.md),
+[`procedures/suggestion-gating-for-irab.md`](procedures/suggestion-gating-for-irab.md); fields:
+[`references/dependency-candidate-fields.md`](references/dependency-candidate-fields.md); evals:
+[`evals/governor-dependency-lattice.jsonl`](evals/governor-dependency-lattice.jsonl),
+[`evals/irab-right-answer-wrong-reason.jsonl`](evals/irab-right-answer-wrong-reason.jsonl).
+
 ---
 
 ## The six nahw principles (encode these)

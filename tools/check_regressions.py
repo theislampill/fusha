@@ -3144,6 +3144,20 @@ except Exception as _e:
     check("p2b learning + CEFR slice runnable", False)
     print("  ", _e)
 
+# --- sarf/nahw skill back-prop: the skills now absorb the P1/P2/P2b engine contracts; prove they stay aligned ---
+try:
+    _sn_a = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_sarf_nahw_skill_backprop.py"), "--self-test"])
+    check("sarf/nahw skill back-prop self-test (ambiguity / governor / right-answer-wrong-reason / CEFR-scaffold / leak / tool-paths)", _sn_a.returncode == 0)
+    _sn_b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_sarf_nahw_skill_backprop.py")])
+    check("sarf/nahw skill back-prop tree clean (skills cite live tools, preserve ambiguity, gate iʿrāb)", _sn_b.returncode == 0)
+    _sn_c = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_sarf_skill.py")])
+    check("sarf skill structural validator still green (additive edits)", _sn_c.returncode == 0)
+    _sn_d = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_nahw_skill.py")])
+    check("nahw skill structural validator still green (additive edits)", _sn_d.returncode == 0)
+except Exception as _e:
+    check("sarf/nahw skill back-prop slice runnable", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

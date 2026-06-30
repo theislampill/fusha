@@ -206,6 +206,42 @@ the same call is reused, never recomputed, across occurrences.
 For each catalogue token, run the same ladder to classify: already_in_qamus / new_surface_for_existing_lemma /
 new_lemma_existing_root / new_root_or_unknown_root / particle_or_construction / uncertain_needs_review.
 
+## 16. Morphology candidate lattice (the P2/P2b grammar-checker engine)
+The general checker now emits a **ranked morphology candidate lattice** for a token — every competing out-of-context reading
+KEPT, never one forced parse for unvoweled Arabic. This is the *executable* form of the discipline above. Use it whenever you
+analyse a typed/arbitrary token or stage a rich-hover candidate.
+
+- **Analyse-then-rank, never force one.** The analyser emits ALL readings; a SEPARATE step RANKS them (`score` AND `rank` — two
+  distinct fields, **never a boolean `correct`**). The chosen reading is `rank == 1`; the alternatives stay. A token with `>1`
+  candidate stays **pending** / `parse_confidence ∈ {surface_only, candidate}` with an exact blocker — blank beats a forced parse.
+- **Consume the clitic lattice; never rebuild it.** Each candidate's `segment_candidate_ref` points back at a real
+  `segment_candidates` row (the proclitic/enclitic peel). Never invent a segmentation the clitic lattice did not produce.
+- **Three distinct layers — keep them apart:** (1) a *segmentation candidate* (one clitic peel), (2) a *morphology candidate* (one
+  ranked reading over a segmentation), (3) the single *public hover segment* you ultimately render. Many candidates → one chosen
+  reading → one source-clean hover. Never collapse (1)/(2) into the hover before evidence confirms `rank == 1`.
+- **Blank beats wrong for root/pattern/lemma.** A `null` root/pattern/lemma is correct when you cannot certify one; never fabricate
+  one from resemblance. The lattice's value is the POS/segmentation COMPETITION + `evidence_class` + ranking, not a guessed analysis.
+- **Evidence class drives the gate** (closed set): `voweled_confirmable` / `source_addressed_confirmable` / `unvoweled_competing` /
+  `homograph_split` / `weak_root_gated` / `component_only`. An `unvoweled_competing`/`homograph_split` candidate is **never
+  `auto_safe`**; a lone clitic is `component_only` — a repair candidate, never a whole-token certification.
+- **CEFR is scaffolding, not certification.** How much morphology metalanguage you expose depends on a *caller-supplied* level:
+  root/pattern only at B1+, the full competing lattice at C1+. The skill never asserts or certifies a learner's level.
+- **How a sarf fault becomes a suggestion + learner hint.** An unvoweled morphology correction **abstains** (never overcorrects); a
+  clitic MERGE/SPLIT span comes only from `segment_candidates`. A diagnostic becomes a Point→Teach→Bottom-out learner event whose
+  **Bottom-out is withheld past the gate**. sarf routes to these tools; it does not re-implement them.
+
+**Executable gates (the source of truth — consult, never restate):**
+[`tools/fusha_morphology_lattice.py`](../tools/fusha_morphology_lattice.py) (`build_morphology_lattice`) builds the lattice;
+[`tools/fusha_text_check.py`](../tools/fusha_text_check.py) hosts `segment_candidates` + the arbitrary-typing path;
+[`qamus/schemas/morphology-candidate-lattice.schema.json`](../qamus/schemas/morphology-candidate-lattice.schema.json) is the field
+contract; [`tools/fusha_suggest.py`](../tools/fusha_suggest.py) is the abstain-first suggestion engine;
+[`tools/fusha_learner_feedback.py`](../tools/fusha_learner_feedback.py) is the hint ladder;
+[`tools/fusha_cefr_gate.py`](../tools/fusha_cefr_gate.py) gates explanation depth by level. Procedures:
+[`procedures/morphology-candidate-lattice.md`](procedures/morphology-candidate-lattice.md),
+[`procedures/clitic-segmentation-and-ambiguity.md`](procedures/clitic-segmentation-and-ambiguity.md); fields:
+[`references/morphology-candidate-fields.md`](references/morphology-candidate-fields.md); eval:
+[`evals/morphology-candidate-lattice.jsonl`](evals/morphology-candidate-lattice.jsonl).
+
 ---
 
 ## The five sarf principles (encode these)
