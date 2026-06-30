@@ -1,0 +1,13 @@
+{
+  "count": 5,
+  "generator": "tools/fusha_morphology_lattice.py --emit-fixture",
+  "note": "Morphology candidate lattices (authored arbitrary tokens; no Qurʾān copy). Ranking, not a forced single parse; root/lemma/pattern null (conservative — P3 fills deep features). Source-clean; dry-run.",
+  "row_schema": [
+    "token_ref",
+    "candidates",
+    "top_rank",
+    "n_candidates",
+    "all_unvoweled_kept"
+  ],
+  "schema": "fusha/morphology-candidate-lattice@1"
+}

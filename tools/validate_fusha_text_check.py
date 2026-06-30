@@ -56,6 +56,18 @@ _LOC_RE = re.compile(r"^\d{1,3}:\d{1,3}:\d{1,3}$")
 # rich-hover candidate validator (FC.IRAB_SENSITIVE_ISSUE_CLASSES), so the two validators cannot drift.
 _IRAB_SENSITIVE = FC.IRAB_SENSITIVE_ISSUE_CLASSES
 
+# P2b A: the morphology candidate lattice $defs (the slot is loose `additionalProperties:true`, so validate each
+# candidate/container explicitly — the mini schema-validator does not resolve $ref).
+_MORPH_SCHEMA = json.load(open(os.path.join(_REPO, "qamus", "schemas", "morphology-candidate-lattice.schema.json"), encoding="utf-8"))
+_MORPH_CAND = _MORPH_SCHEMA["$defs"]["candidate"]
+_MORPH_LAT = _MORPH_SCHEMA["$defs"]["lattice"]
+_MORPH_FEATURE_KEYS = set(_MORPH_CAND["properties"]["features"]["properties"].keys())
+# P2b C: the (extended) suggestion $def — behind a $ref, so validate each suggestion explicitly.
+_SUGG_SCHEMA = _SCHEMA["$defs"]["suggestion"]
+_TOK_RE = re.compile(r"^tok:\d+$")
+_STRUCTURAL_OPS = {"insert", "delete", "replace", "merge", "split"}
+_NONAPPLY_OPS = {"retain", "reject", "abstain", "none"}
+
 
 def _has_harakat(s):
     return any(0x064B <= ord(c) <= 0x0652 for c in (s or ""))
@@ -126,6 +138,50 @@ def validate_record(rec, schema):
         for c in t.get("segment_candidates") or []:
             if "".join(seg.get("surface", "") for seg in c.get("segments") or []) != surf:
                 errors.append(("12", "%s: a segment_candidate of token %r does not concatenate to the surface" % (rid, surf)))
+
+    # FAIL M1-M8: morphology candidate lattice (P2b A). Disambiguation is RANKING (score + rank, never a boolean);
+    # ambiguity is preserved (a >1-candidate token stays pending); never auto_safe for unvoweled/homograph; source-clean.
+    _morph_modes = mode in _NONCERT_MODES
+    n_seg_by_idx = {t.get("index"): len(t.get("segment_candidates") or []) for t in tokens}
+    for t in tokens:
+        surf = t.get("surface") or ""
+        mc = t.get("morphology_candidates") or []
+        n_seg = n_seg_by_idx.get(t.get("index"), 0)
+        # M8: an arbitrary/corpus Arabic token must carry a non-empty lattice
+        if _morph_modes and TC._is_arabic(surf) and not mc:
+            errors.append(("M8", "%s: Arabic token %r has an empty morphology lattice" % (rid, surf)))
+        for c in mc:
+            for e in validate_schema(c, _MORPH_CAND):
+                errors.append(("schema", "%s: morphology candidate of %r: %s" % (rid, surf, e)))
+            # M1: no boolean correctness flag (disambiguation is ranking, never a forced 'correct')
+            if "correct" in c or "is_correct" in c:
+                errors.append(("M1", "%s: morphology candidate carries a boolean correct flag" % rid))
+            # M2: score AND rank both present and numeric/int (two distinct fields)
+            if not (isinstance(c.get("score"), (int, float)) and not isinstance(c.get("score"), bool)
+                    and isinstance(c.get("rank"), int) and not isinstance(c.get("rank"), bool)):
+                errors.append(("M2", "%s: morphology candidate must carry a numeric score AND an integer rank" % rid))
+            # M4: gate on the 4-tier; unvoweled/homograph candidate never auto_safe
+            if c.get("gate") not in _GATES:
+                errors.append(("M4", "%s: morphology candidate gate %r off the 4-tier" % (rid, c.get("gate"))))
+            if c.get("evidence_class") in ("unvoweled_competing", "homograph_split") and c.get("gate") == "auto_safe":
+                errors.append(("M4", "%s: an unvoweled/homograph morphology candidate is auto_safe" % rid))
+            # M5: segment_candidate_ref must index a real segment_candidates row (the lattice never rebuilds a segmentation)
+            ref = c.get("segment_candidate_ref")
+            if not isinstance(ref, int) or isinstance(ref, bool) or ref < 0 or ref >= n_seg:
+                errors.append(("M5", "%s: morphology candidate segment_candidate_ref %r does not index a segment_candidates row" % (rid, ref)))
+            # M6: features keys closed
+            if set((c.get("features") or {}).keys()) - _MORPH_FEATURE_KEYS:
+                errors.append(("M6", "%s: morphology candidate features has an off-set key" % rid))
+            # M7: ambiguity_reason leak
+            if FC.LEAK_RE.search(c.get("ambiguity_reason") or ""):
+                errors.append(("M7", "%s: morphology candidate ambiguity_reason leaks an internal source name / path" % rid))
+        # M3: a token with >1 candidate must be pending + surface_only|candidate (ambiguity preserved, never collapsed)
+        if len(mc) > 1 and (t.get("decision_status") != "pending" or t.get("parse_confidence") not in ("surface_only", "candidate")):
+            errors.append(("M3", "%s: token %r has >1 morphology candidate but is not pending/surface_only|candidate" % (rid, surf)))
+    # doc-wide containers validate against the lattice $def
+    for lat in rec.get("morphology_candidates") or []:
+        for e in validate_schema(lat, _MORPH_LAT):
+            errors.append(("schema", "%s: morphology lattice container: %s" % (rid, e)))
 
     # FAIL 10 (all modes): any non-null loc must be an exact S:A:W — a fabricated address must never pass, regardless
     # of mode or decision_status (the schema's loc field carries no pattern because it is behind a $ref).
@@ -199,6 +255,38 @@ def validate_record(rec, schema):
         # FAIL 9 (suggestion side): an iʿrāb-sensitive correction may not be auto_safe
         if s.get("gate") == "auto_safe" and (s.get("edit") or {}).get("op") in ("replace", "merge", "split"):
             errors.append(("9", "%s: a structural correction is auto_safe (needs governor reasoning / review)" % rid))
+
+    # FAIL 8b/8c/9b/10/11 (P2b C): the extended suggestion contract. Validate each suggestion explicitly against the
+    # $def (behind a $ref, so the mini-validator does not), then the abstention/iʿrāb/NMS/orphan invariants.
+    diag_ids = {"%s@%s" % (d.get("issue_class"), d.get("target")) for d in diags}
+    applicable_targets = []
+    for s in rec.get("suggestions") or []:
+        for e in validate_schema(s, _SUGG_SCHEMA):
+            errors.append(("schema", "%s: suggestion: %s" % (rid, e)))
+        edit = s.get("edit") or {}
+        op = edit.get("op")
+        # FAIL 8b: reject / abstain / none must carry a reject_reason (unsafe/abstained ⇒ a stated reason)
+        if op in ("reject", "abstain", "none") and not s.get("reject_reason"):
+            errors.append(("8b", "%s: a %s suggestion lacks a reject_reason" % (rid, op)))
+        # FAIL 8c: retain / reject / abstain / none must NOT carry a replacement (no applied edit)
+        if op in _NONAPPLY_OPS and edit.get("replacement") is not None:
+            errors.append(("8c", "%s: a %s suggestion carries a replacement (must be null)" % (rid, op)))
+        # FAIL 9b: an iʿrāb-sensitive suggestion (by originating diagnostic) may never be auto_safe
+        did = s.get("diagnostic_id") or ""
+        issue_cls = did.split("@", 1)[0] if "@" in did else None
+        if issue_cls in _IRAB_SENSITIVE and s.get("gate") == "auto_safe":
+            errors.append(("9b", "%s: an iʿrāb-sensitive suggestion is auto_safe without governor reasoning" % rid))
+        # FAIL 10: edit.target must be tok:N
+        if not _TOK_RE.match(str(edit.get("target") or "")):
+            errors.append(("10", "%s: suggestion edit.target %r is not tok:N" % (rid, edit.get("target"))))
+        if op in _STRUCTURAL_OPS:
+            applicable_targets.append(edit.get("target"))
+        # FAIL 11: a non-retain suggestion needs a diagnostic_id resolving to an in-record diagnostic (no orphan corrections)
+        if op != "retain" and (not did or did not in diag_ids):
+            errors.append(("11", "%s: %s suggestion diagnostic_id %r does not resolve to an in-record diagnostic" % (rid, op, did)))
+    # FAIL 10: NMS invariant — at most one APPLICABLE (structural) suggestion per target (overlap must be NMS-suppressed)
+    if len(applicable_targets) != len(set(applicable_targets)):
+        errors.append(("10", "%s: two applicable suggestions share a target (NMS overlap not suppressed)" % rid))
 
     # dry-run invariant
     if (rec.get("checker_summary") or {}).get("live_writes") != 0:
@@ -277,6 +365,60 @@ def _bad_records():
     b = json.loads(json.dumps(base))
     b["analysis_tokens"][0]["segment_candidates"][0]["segments"][0]["surface"] = "XXX"
     out.append(("12", b))
+
+    # --- P2b A: morphology candidate lattice bad-records (base2 = 'علم نور' has >1 candidate per token) ---
+    base2 = TC.check_text({"input_mode": "arbitrary_typing", "raw_input": "علم نور"})
+    b = json.loads(json.dumps(base2)); b["analysis_tokens"][0]["morphology_candidates"][0]["correct"] = True
+    out.append(("M1", b))
+    b = json.loads(json.dumps(base2)); del b["analysis_tokens"][0]["morphology_candidates"][0]["score"]
+    out.append(("M2", b))
+    b = json.loads(json.dumps(base2)); b["analysis_tokens"][0]["decision_status"] = "resolved"
+    out.append(("M3", b))
+    b = json.loads(json.dumps(base2)); b["analysis_tokens"][0]["morphology_candidates"][0]["gate"] = "auto_safe"
+    out.append(("M4", b))
+    b = json.loads(json.dumps(base2)); b["analysis_tokens"][0]["morphology_candidates"][0]["segment_candidate_ref"] = 99
+    out.append(("M5", b))
+    b = json.loads(json.dumps(base2)); b["analysis_tokens"][0]["morphology_candidates"][0]["features"]["banana"] = "x"
+    out.append(("M6", b))
+    b = json.loads(json.dumps(base2)); b["analysis_tokens"][0]["morphology_candidates"][0]["ambiguity_reason"] = "see the QAC tagset"
+    out.append(("M7", b))
+    b = json.loads(json.dumps(base2)); b["analysis_tokens"][0]["morphology_candidates"] = []
+    out.append(("M8", b))
+
+    # --- P2b C: suggestion bad-records. base carries a real possible_clitic_segmentation@tok:0 diagnostic, so a split
+    # suggestion's diagnostic_id resolves; we replace suggestions[] with one canonical good suggestion and mutate it. ---
+    good_sugg = {"diagnostic_id": "possible_clitic_segmentation@tok:0",
+                 "edit": {"op": "split", "target": "tok:0", "replacement": "و بالكتاب",
+                          "target_span": {"start": 0, "end": 5, "unit": "char"}, "source_locus": None},
+                 "explanation": "A suggested split for review.", "confidence": "medium", "gate": "two_vote_required",
+                 "safe_to_show_inline": False, "needs_review": True, "reject_reason": None, "nms_group": None,
+                 "learner_level_min": None, "learner_level_max": None, "route_to": None}
+
+    def _with_sugg(*mutate):
+        bb = json.loads(json.dumps(base))
+        s = json.loads(json.dumps(good_sugg))
+        for m in mutate:
+            m(s)
+        bb["suggestions"] = [s]
+        return bb
+
+    # 8b: abstain with no reject_reason
+    out.append(("8b", _with_sugg(lambda s: s["edit"].update(op="abstain", replacement=None),
+                                 lambda s: s.update(reject_reason=None))))
+    # 8c: retain with a replacement
+    out.append(("8c", _with_sugg(lambda s: s["edit"].update(op="retain", replacement="x"),
+                                 lambda s: s.update(diagnostic_id=None))))
+    # 9b: an iʿrāb-sensitive suggestion that is auto_safe (non-structural reject, so the legacy FAIL 9 won't catch it)
+    out.append(("9b", _with_sugg(lambda s: s["edit"].update(op="reject", replacement=None),
+                                 lambda s: s.update(diagnostic_id="weak_irab_reasoning@tok:0", gate="auto_safe",
+                                                    reject_reason="governor_not_justified"))))
+    # 10: edit.target not tok:N
+    out.append(("10", _with_sugg(lambda s: s["edit"].update(target="3:1:1"))))
+    # 11: a non-retain suggestion whose diagnostic_id does not resolve
+    out.append(("11", _with_sugg(lambda s: s.update(diagnostic_id="possible_particle_function@tok:99"))))
+    # 10 (NMS): two applicable suggestions sharing a target
+    b = json.loads(json.dumps(base)); b["suggestions"] = [json.loads(json.dumps(good_sugg)), json.loads(json.dumps(good_sugg))]
+    out.append(("10", b))
     return out
 
 
@@ -297,7 +439,7 @@ def _self_test():
     for f in failures:
         print("FAIL " + f)
     if not failures:
-        print("ok   validate_fusha_text_check self-test: fixture rows clean; all 12 FAIL conditions reject")
+        print("ok   validate_fusha_text_check self-test: fixture rows clean; all base 12 + M1-M8 morphology + 8b/8c/9b/10/11 suggestion FAIL conditions reject")
     return 0 if not failures else 1
 
 

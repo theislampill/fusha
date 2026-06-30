@@ -242,22 +242,48 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["edit", "confidence", "gate", "safe_to_show_inline", "needs_review"],
+      "description": "An edit-level correction suggestion (P2b C). Abstain-first: retain/reject/abstain carry no replacement and (for reject/abstain) a closed reject_reason. iʿrāb-sensitive and structural edits are never auto_safe. Deep validation in tools/validate_fusha_text_check.py.",
       "properties": {
+        "diagnostic_id": { "type": ["string", "null"], "description": "The originating diagnostic's id/issue_class@target (no orphan corrections)." },
         "edit": {
           "type": "object",
           "required": ["op", "target", "replacement"],
           "additionalProperties": false,
           "properties": {
-            "op": { "type": "string", "enum": ["insert", "delete", "replace", "merge", "split", "none"] },
-            "target": { "type": "string" },
-            "replacement": { "type": ["string", "null"] }
+            "op": { "type": "string", "enum": ["insert", "delete", "replace", "merge", "split", "retain", "reject", "abstain", "none"], "description": "GEC edit op. retain=leave-unchanged-acceptable (keep); reject=tempting-but-unsafe; abstain=defer (ambiguous/needs-context); none=legacy alias of abstain. retain/reject/abstain/none carry replacement:null." },
+            "target": { "type": "string", "description": "tok:N (canonical primary key, always defined across modes)." },
+            "replacement": { "type": ["string", "null"] },
+            "target_span": {
+              "type": ["object", "null"],
+              "required": ["start", "end", "unit"],
+              "additionalProperties": false,
+              "properties": {
+                "start": { "type": "integer", "minimum": 0 },
+                "end": { "type": "integer", "minimum": 0 },
+                "unit": { "type": "string", "enum": ["char", "token"] }
+              }
+            },
+            "source_locus": { "type": ["string", "null"], "description": "Optional S:A:W back-reference, populated only in source_addressed mode." }
           }
         },
         "explanation": { "type": ["string", "null"] },
         "confidence": { "type": "string", "enum": ["low", "medium", "high"] },
         "gate": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"] },
         "safe_to_show_inline": { "type": "boolean" },
-        "needs_review": { "type": "boolean" }
+        "needs_review": { "type": "boolean" },
+        "reject_reason": { "type": ["string", "null"], "enum": ["ambiguous_unvoweled", "needs_context", "governor_not_justified", "nms_suppressed_conflict", "below_threshold", "verdict_blocks", "leak_tripwire", null] },
+        "nms_group": { "type": ["string", "null"], "description": "Shared id for an overlapping suggestion group resolved by NMS (the loser also points at a C10 conflict)." },
+        "learner_level_min": { "type": ["string", "null"], "enum": ["pre_A1", "A1", "A2", "B1", "B2", "C1", "C2", null] },
+        "learner_level_max": { "type": ["string", "null"], "enum": ["pre_A1", "A1", "A2", "B1", "B2", "C1", "C2", null] },
+        "route_to": {
+          "type": ["object", "null"],
+          "required": ["lane", "procedure"],
+          "additionalProperties": false,
+          "properties": {
+            "lane": { "type": "string", "enum": ["sarf", "nahw", "curriculum", "validator", "owner_review", "scholar_irab_review"] },
+            "procedure": { "type": "string" }
+          }
+        }
       }
     }
   },

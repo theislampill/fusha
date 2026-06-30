@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/cefr-fusha-level.schema.json",
+  "title": "CEFR-aligned Fusha instruction level (P2b)",
+  "description": "One CEFR/Fusha adaptation level. SCAFFOLDING, NEVER CERTIFICATION: it scaffolds checker output for a CALLER-supplied level; it never asserts or certifies a learner's level. All descriptors are AUTHORED Fusha/Arabic adaptations — Council of Europe CEFR descriptor PROSE is never reproduced (only the short level labels are used). Deep validation in tools/validate_cefr_fusha_instruction.py. Source-clean; dry-run.",
+  "type": "object",
+  "required": ["level", "arabic_adaptation_note", "descriptors", "learner_capabilities", "diagnostic_visibility", "metalanguage_exposure", "correction_aggressiveness", "hint_depth", "example_difficulty", "forbidden_overclaims", "public_boundary"],
+  "additionalProperties": false,
+  "properties": {
+    "level": { "type": "string", "enum": ["pre_A1", "A1", "A2", "B1", "B2", "C1", "C2"] },
+    "arabic_adaptation_note": { "type": "string", "minLength": 1, "description": "Authored note on how this CEFR band maps onto the Fusha/Classical-Arabic ladder. Not a CoE quote." },
+    "descriptors": {
+      "type": "object",
+      "required": ["reading", "writing", "grammar", "morphology", "syntax", "vocabulary", "discourse"],
+      "additionalProperties": false,
+      "properties": {
+        "reading": { "type": "string", "minLength": 1 },
+        "writing": { "type": "string", "minLength": 1 },
+        "grammar": { "type": "string", "minLength": 1 },
+        "morphology": { "type": "string", "minLength": 1 },
+        "syntax": { "type": "string", "minLength": 1 },
+        "vocabulary": { "type": "string", "minLength": 1 },
+        "discourse": { "type": "string", "minLength": 1 }
+      }
+    },
+    "learner_capabilities": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "diagnostic_visibility": {
+      "type": "array",
+      "description": "Allow-list of diagnostic issue_classes surfaced at this level. Beginner bands must NOT list an iʿrāb-sensitive class.",
+      "items": { "type": "string" }
+    },
+    "metalanguage_exposure": { "type": "string", "enum": ["none", "minimal", "moderate", "full"] },
+    "correction_aggressiveness": { "type": "string", "enum": ["hint_only", "gentle", "standard", "explicit"] },
+    "hint_depth": { "type": "string", "enum": ["point", "point_teach", "full_ladder"] },
+    "example_difficulty": { "type": "string", "enum": ["letters_words", "short_phrases", "simple_sentences", "complex_sentences", "classical_prose"] },
+    "forbidden_overclaims": { "type": "array", "items": { "type": "string" }, "minItems": 1, "description": "What this level must NOT claim (e.g. an official CEFR certification)." },
+    "public_boundary": {
+      "type": "object",
+      "required": ["public_gloss_src", "public_gloss_kind", "public_gloss_lang", "external_source_names_public"],
+      "additionalProperties": false,
+      "properties": {
+        "public_gloss_src": { "const": "qamus" },
+        "public_gloss_kind": { "const": "authored" },
+        "public_gloss_lang": { "const": "en" },
+        "external_source_names_public": { "const": false }
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/morphology-candidate-lattice.schema.json",
+  "title": "Morphology candidate lattice (P2b deliverable A)",
+  "description": "The per-token ranked morphology candidate lattice for the general Fusha checker. Disambiguation is RANKING over a kept candidate set (analyze-then-rank — CAMeL Tools / MADAMIRA / CALIMA-Star), NEVER a single forced parse for unvoweled Arabic. Each candidate carries TWO distinct ordering fields (score AND rank) and never a boolean 'correct'. The lattice CONSUMES the clitic segment_candidates (segment_candidate_ref points back at a row) and never rebuilds a segmentation. root/lemma/pattern are AUTHORED or null — never paraphrase-laundered. Deep per-candidate validation is delegated to tools/validate_fusha_text_check.py (the repo mini-validator does not resolve $ref); this schema is the structural contract + the closed enums. Dry-run; source-clean. parserplans/general-fusha-grammar-checker-p2b-learning-cefr/001.",
+  "type": "object",
+  "$ref": "#/$defs/lattice",
+  "$defs": {
+    "lattice": {
+      "type": "object",
+      "required": ["token_ref", "candidates", "top_rank", "n_candidates", "all_unvoweled_kept"],
+      "additionalProperties": false,
+      "properties": {
+        "token_ref": { "type": "string", "description": "tok:N index ref of the analyzed token." },
+        "candidates": {
+          "type": "array",
+          "minItems": 1,
+          "description": "All competing out-of-context morphological readings, kept (never collapsed). >=1 always.",
+          "items": { "$ref": "#/$defs/candidate" }
+        },
+        "top_rank": { "type": "integer", "minimum": 1, "description": "The rank value of the top candidate (1)." },
+        "n_candidates": { "type": "integer", "minimum": 1 },
+        "all_unvoweled_kept": { "const": true, "description": "Invariant: an unvoweled token's full reading set is kept, never pruned to one." }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "required": ["pos", "features", "confidence", "evidence_class", "gate", "rank", "score", "segment_candidate_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "lemma": { "type": ["string", "null"], "description": "Authored, or null. Never paraphrase-laundered from an external lexicon." },
+        "root": { "type": ["string", "null"], "description": "Authored triliteral/quadriliteral, or null when not determinable without analysis." },
+        "pattern": { "type": ["string", "null"], "description": "Wazn / measure, or null." },
+        "pos": {
+          "type": "string",
+          "description": "Coarse part-of-speech (a SUBSET of the morphosyntax-token pos enum; closed).",
+          "enum": ["noun", "proper_noun", "pronoun", "demonstrative", "adjective", "participle", "masdar", "verb", "particle", "preposition", "conjunction", "relative", "interrogative", "number", "unknown"]
+        },
+        "features": {
+          "type": "object",
+          "description": "Maps 1:1 onto morphosyntax-token sarf{}. KEYS are CLOSED (the validator FAILs an off-set key). Values are strings/null; an absent diacritic leaves a feature unset (ambiguity, never error).",
+          "additionalProperties": false,
+          "properties": {
+            "verb_form": { "type": ["string", "null"] },
+            "voice": { "type": ["string", "null"] },
+            "aspect": { "type": ["string", "null"] },
+            "mood": { "type": ["string", "null"] },
+            "person": { "type": ["string", "null"] },
+            "number": { "type": ["string", "null"] },
+            "gender": { "type": ["string", "null"] },
+            "case": { "type": ["string", "null"] },
+            "state": { "type": ["string", "null"] },
+            "derivative_type": { "type": ["string", "null"] },
+            "particle_function": { "type": ["string", "null"] }
+          }
+        },
+        "confidence": { "type": "string", "enum": ["low", "medium", "high"] },
+        "ambiguity_reason": { "type": ["string", "null"], "description": "WHY this stays a candidate (unvoweled, homograph, weak-root, component-only). Source-clean; scanned for leaks." },
+        "evidence_class": {
+          "type": "string",
+          "enum": ["voweled_confirmable", "source_addressed_confirmable", "unvoweled_competing", "homograph_split", "weak_root_gated", "component_only"]
+        },
+        "gate": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"] },
+        "rank": { "type": "integer", "minimum": 1, "description": "1 = top. STORED SEPARATELY from score; never a boolean 'correct'." },
+        "score": { "type": "number", "description": "Additive per-feature score; NOT a boolean. Two distinct fields (score + rank) required." },
+        "segment_candidate_ref": { "type": "integer", "minimum": 0, "description": "Integer index into the token's segment_candidates this reading assumes. Must index a real row." }
+      }
+    }
+  }
+}

@@ -1,0 +1,149 @@
+[
+  {
+    "level": "pre_A1",
+    "arabic_adaptation_note": "Earliest stage of the Fusha ladder: recognising letters, their joined shapes, and the short vowels. Mapped to the bottom of the zero-to-fluency roadmap.",
+    "descriptors": {
+      "reading": "Recognises Arabic letters and a few whole words by shape.",
+      "writing": "Copies letters and short words.",
+      "grammar": "No explicit grammar yet; whole words are learned as units.",
+      "morphology": "No segmentation awareness; a word is a single shape.",
+      "syntax": "No sentence structure yet.",
+      "vocabulary": "A small set of very common words.",
+      "discourse": "Single words, not connected text."
+    },
+    "learner_capabilities": ["recognise letters and letter joins", "read a few high-frequency whole words"],
+    "diagnostic_visibility": [],
+    "metalanguage_exposure": "none",
+    "correction_aggressiveness": "hint_only",
+    "hint_depth": "point",
+    "example_difficulty": "letters_words",
+    "forbidden_overclaims": ["this level is a teaching scaffold, not an official CEFR certification", "it does not assess or certify the learner"],
+    "public_boundary": {"public_gloss_src": "qamus", "public_gloss_kind": "authored", "public_gloss_lang": "en", "external_source_names_public": false}
+  },
+  {
+    "level": "A1",
+    "arabic_adaptation_note": "Beginner: simple words and a few set phrases; spelling variants noticed but not analysed.",
+    "descriptors": {
+      "reading": "Reads simple familiar words and short set phrases.",
+      "writing": "Writes familiar words and very short phrases.",
+      "grammar": "Implicit only; no grammatical terminology.",
+      "morphology": "No clitic/segmentation analysis is shown.",
+      "syntax": "Recognises that words combine, without naming roles.",
+      "vocabulary": "Everyday high-frequency vocabulary.",
+      "discourse": "Isolated words and short phrases."
+    },
+    "learner_capabilities": ["read simple familiar words", "recognise a few fixed phrases"],
+    "diagnostic_visibility": ["orthography_normalization_warning"],
+    "metalanguage_exposure": "none",
+    "correction_aggressiveness": "hint_only",
+    "hint_depth": "point",
+    "example_difficulty": "short_phrases",
+    "forbidden_overclaims": ["this level is a teaching scaffold, not an official CEFR certification", "it does not assess or certify the learner"],
+    "public_boundary": {"public_gloss_src": "qamus", "public_gloss_kind": "authored", "public_gloss_lang": "en", "external_source_names_public": false}
+  },
+  {
+    "level": "A2",
+    "arabic_adaptation_note": "Elementary: basic nominal and verbal sentences, common particles, simple attached pronouns and prepositions — named gently, without iʿrāb terminology.",
+    "descriptors": {
+      "reading": "Reads short simple sentences on familiar topics.",
+      "writing": "Writes simple connected phrases and short sentences.",
+      "grammar": "Recognises a basic nominal vs verbal sentence; common particles named plainly.",
+      "morphology": "Notices a prefixed particle or the article without formal analysis.",
+      "syntax": "Identifies subject and predicate informally.",
+      "vocabulary": "Common everyday and topic vocabulary.",
+      "discourse": "Short connected sentences."
+    },
+    "learner_capabilities": ["read simple sentences", "recognise common particles and the article", "spot a simple attached pronoun"],
+    "diagnostic_visibility": ["orthography_normalization_warning", "possible_clitic_segmentation", "possible_definite_article"],
+    "metalanguage_exposure": "minimal",
+    "correction_aggressiveness": "gentle",
+    "hint_depth": "point_teach",
+    "example_difficulty": "simple_sentences",
+    "forbidden_overclaims": ["this level is a teaching scaffold, not an official CEFR certification", "it does not assess or certify the learner"],
+    "public_boundary": {"public_gloss_src": "qamus", "public_gloss_kind": "authored", "public_gloss_lang": "en", "external_source_names_public": false}
+  },
+  {
+    "level": "B1",
+    "arabic_adaptation_note": "Intermediate: routine Fusha sentences; common case/mood named lightly; basic root/pattern awareness begins.",
+    "descriptors": {
+      "reading": "Reads routine Fusha texts on familiar matters.",
+      "writing": "Writes connected text on familiar topics.",
+      "grammar": "Common case/mood are named (not deeply analysed); basic agreement noticed.",
+      "morphology": "Beginning root and pattern awareness.",
+      "syntax": "Recognises common subordination and the basic sentence types.",
+      "vocabulary": "Broader topic vocabulary.",
+      "discourse": "Connected paragraphs on familiar topics."
+    },
+    "learner_capabilities": ["read routine Fusha sentences", "name common case/mood lightly", "notice a root or pattern"],
+    "diagnostic_visibility": ["orthography_normalization_warning", "possible_clitic_segmentation", "possible_definite_article", "ambiguous_unvoweled_token", "possible_attached_pronoun", "possible_particle_function", "possible_preposition_host"],
+    "metalanguage_exposure": "moderate",
+    "correction_aggressiveness": "standard",
+    "hint_depth": "point_teach",
+    "example_difficulty": "simple_sentences",
+    "forbidden_overclaims": ["this level is a teaching scaffold, not an official CEFR certification", "it does not assess or certify the learner"],
+    "public_boundary": {"public_gloss_src": "qamus", "public_gloss_kind": "authored", "public_gloss_lang": "en", "external_source_names_public": false}
+  },
+  {
+    "level": "B2",
+    "arabic_adaptation_note": "Upper-intermediate: longer sentences, common subordination, richer morphology; explicit grammar correction is appropriate.",
+    "descriptors": {
+      "reading": "Reads longer Fusha texts and follows argument.",
+      "writing": "Writes clear detailed text with subordination.",
+      "grammar": "Case/mood explained explicitly; governing particles recognised.",
+      "morphology": "Roots, patterns, and derivative shapes used actively.",
+      "syntax": "Handles common subordinate and relative clauses.",
+      "vocabulary": "Wide general and topic vocabulary.",
+      "discourse": "Coherent multi-paragraph text."
+    },
+    "learner_capabilities": ["read longer Fusha text", "explain common case/mood", "use roots and patterns actively"],
+    "diagnostic_visibility": ["orthography_normalization_warning", "possible_clitic_segmentation", "possible_definite_article", "ambiguous_unvoweled_token", "possible_attached_pronoun", "possible_particle_function", "possible_preposition_host", "dialect_or_non_fusha_possible", "source_address_required_for_certainty"],
+    "metalanguage_exposure": "moderate",
+    "correction_aggressiveness": "explicit",
+    "hint_depth": "full_ladder",
+    "example_difficulty": "complex_sentences",
+    "forbidden_overclaims": ["this level is a teaching scaffold, not an official CEFR certification", "it does not assess or certify the learner"],
+    "public_boundary": {"public_gloss_src": "qamus", "public_gloss_kind": "authored", "public_gloss_lang": "en", "external_source_names_public": false}
+  },
+  {
+    "level": "C1",
+    "arabic_adaptation_note": "Advanced: complex Classical/Fusha prose; nuanced particles; governor/dependency reasoning and detailed iʿrāb appear.",
+    "descriptors": {
+      "reading": "Reads complex Classical/Fusha prose with nuance.",
+      "writing": "Writes well-structured detailed text.",
+      "grammar": "Governor/dependency reasoning; iʿrāb discussed explicitly.",
+      "morphology": "Fine morphological detail, including derivative types.",
+      "syntax": "Resolves layered subordination and governing particles.",
+      "vocabulary": "Rich, including less common Classical vocabulary.",
+      "discourse": "Extended, well-organised argument."
+    },
+    "learner_capabilities": ["read complex Classical prose", "reason about governors and iʿrāb", "handle nuanced particles"],
+    "diagnostic_visibility": ["orthography_normalization_warning", "possible_clitic_segmentation", "possible_definite_article", "ambiguous_unvoweled_token", "possible_attached_pronoun", "possible_particle_function", "possible_preposition_host", "dialect_or_non_fusha_possible", "source_address_required_for_certainty", "possible_case_or_mood_requires_context", "possible_governor_unresolved", "weak_irab_reasoning", "governor_not_justified"],
+    "metalanguage_exposure": "full",
+    "correction_aggressiveness": "explicit",
+    "hint_depth": "full_ladder",
+    "example_difficulty": "complex_sentences",
+    "forbidden_overclaims": ["this level is a teaching scaffold, not an official CEFR certification", "it does not assess or certify the learner"],
+    "public_boundary": {"public_gloss_src": "qamus", "public_gloss_kind": "authored", "public_gloss_lang": "en", "external_source_names_public": false}
+  },
+  {
+    "level": "C2",
+    "arabic_adaptation_note": "Mastery: advanced rhetorical and Classical usage; fine-grained syntactic ambiguity and detailed iʿrāb discussion across all diagnostic classes.",
+    "descriptors": {
+      "reading": "Reads virtually any Fusha/Classical text with ease.",
+      "writing": "Writes precise, nuanced, well-structured text.",
+      "grammar": "Full iʿrāb and fine-grained ambiguity handled.",
+      "morphology": "Complete morphological analysis across forms.",
+      "syntax": "Resolves fine syntactic ambiguity and rhetorical structure.",
+      "vocabulary": "Comprehensive, including rare Classical usage.",
+      "discourse": "Sophisticated extended discourse."
+    },
+    "learner_capabilities": ["read any Fusha/Classical text", "discuss fine-grained iʿrāb and ambiguity", "analyse rhetorical structure"],
+    "diagnostic_visibility": ["orthography_normalization_warning", "possible_clitic_segmentation", "possible_definite_article", "ambiguous_unvoweled_token", "possible_attached_pronoun", "possible_particle_function", "possible_preposition_host", "dialect_or_non_fusha_possible", "source_address_required_for_certainty", "possible_case_or_mood_requires_context", "possible_governor_unresolved", "weak_irab_reasoning", "governor_not_justified", "ma_function_unresolved_or_wrong", "host_only_preposition_hover", "passive_voice_hidden", "rich_hover_candidate_available_when_source_addressed"],
+    "metalanguage_exposure": "full",
+    "correction_aggressiveness": "explicit",
+    "hint_depth": "full_ladder",
+    "example_difficulty": "classical_prose",
+    "forbidden_overclaims": ["this level is a teaching scaffold, not an official CEFR certification", "it does not assess or certify the learner"],
+    "public_boundary": {"public_gloss_src": "qamus", "public_gloss_kind": "authored", "public_gloss_lang": "en", "external_source_names_public": false}
+  }
+]

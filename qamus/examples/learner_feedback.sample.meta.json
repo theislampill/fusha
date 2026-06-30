@@ -1,0 +1,17 @@
+{
+  "count": 12,
+  "generator": "tools/fusha_learner_feedback.py --emit-fixture",
+  "note": "Learner-feedback hint-ladder events (authored arbitrary inputs). Bottom-out withheld past the gate; iʿrāb-sensitive teach references the cause; routes resolve; source-clean; dry-run.",
+  "row_schema": [
+    "knowledge_component",
+    "diagnostic_class",
+    "point_hint",
+    "teach_hint",
+    "bottom_out_hint",
+    "when_not_to_give_answer",
+    "decision_status",
+    "right_answer_wrong_reason_marker",
+    "cefr_level_min"
+  ],
+  "schema": "fusha/learner-feedback-event@1"
+}

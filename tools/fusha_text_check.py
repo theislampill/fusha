@@ -33,6 +33,8 @@ _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, _REPO)
 from tools import normalize_ar as N  # noqa: E402
 from tools import fusha_check as FC  # noqa: E402
+from tools import fusha_morphology_lattice as ML  # noqa: E402  (P2b A — populates morphology_candidates)
+from tools import fusha_suggest as SG  # noqa: E402  (P2b C — populates suggestions)
 from tools.validate_linguistic_decisions import required_gate, _GATE_RANK  # noqa: E402
 from tools.audit_all_hover_tokens import PROCLITICS, ENCLITICS  # noqa: E402
 
@@ -355,12 +357,14 @@ def _analyze_arbitrary_token(idx, surface, ops_for_tok, start=None, end=None, ws
         blocker = "context_sensitive_needs_nahw"
     elif diags:
         blocker = "source_evidence_needed"
+    # P2b A: ranked morphology candidate lattice (consumes `cands`, never rebuilds; ambiguity-preserving, never auto_safe).
+    morph = ML.build_morphology_lattice(target, surface, cands, voweled, source_addressed=False)
     tok = {
         "index": idx, "surface": surface, "loc": None,
         "ws_index": ws_index, "start": start, "end": end,
         "norm_strict_key": N.norm_strict(surface), "bare_key": bare,
         "is_arabic": True, "parse_confidence": parse_confidence, "decision_status": "pending",
-        "segment_candidates": cands, "morphology_candidates": [], "blocker": blocker,
+        "segment_candidates": cands, "morphology_candidates": morph["candidates"], "blocker": blocker,
     }
     return tok, diags, amb
 
@@ -481,14 +485,21 @@ def check_text(req):
     for d in diagnostics:
         by_sev[d["severity"]] = by_sev.get(d["severity"], 0) + 1
         by_cls[d["issue_class"]] = by_cls.get(d["issue_class"], 0) + 1
+    # P2b A: doc-wide morphology lattice containers, one per analyzed token that carries candidates (arbitrary path).
+    morphology_lattices = [
+        {"token_ref": "tok:%d" % t["index"], "candidates": t["morphology_candidates"],
+         "top_rank": 1, "n_candidates": len(t["morphology_candidates"]), "all_unvoweled_kept": True}
+        for t in analysis_tokens if t.get("morphology_candidates")
+    ]
     rec = {
         "schema": SCHEMA, "input_mode": mode,
         "document_id": req.get("document_id"), "session_id": req.get("session_id"),
         "raw_input": raw, "normalized_input": normalized, "normalization_ops": ops,
         "paragraphs": [], "sentences": sentence_spans(raw), "whitespace_tokens": wtokens,
         "analysis_tokens": analysis_tokens, "segment_candidates": [],
-        "morphology_candidates": [], "syntax_candidates": [],
-        "diagnostics": diagnostics, "suggestions": [], "ambiguity": ambiguity, "gates": gates,
+        "morphology_candidates": morphology_lattices, "syntax_candidates": [],
+        "diagnostics": diagnostics, "suggestions": SG.build_suggestions(analysis_tokens, diagnostics, mode),
+        "ambiguity": ambiguity, "gates": gates,
         "public_boundary": dict(_PUBLIC_BOUNDARY),
         "source_boundary": {"original_preserved": True, "external_text_copied": False, "quran_text_altered": False},
         "checker_summary": {"live_writes": 0, "by_mode": {mode: 1}, "by_severity": by_sev,
@@ -500,6 +511,7 @@ def check_text(req):
     if mode in ("arbitrary_typing", "corpus_backed"):
         assert all(d["gate"] != "auto_safe" for d in diagnostics), "ABORT: arbitrary/corpus diagnostic marked auto_safe"
         assert all(t.get("loc") is None for t in analysis_tokens), "ABORT: arbitrary/corpus token carries a fabricated loc"
+        assert all(s["gate"] != "auto_safe" for s in rec["suggestions"]), "ABORT: arbitrary/corpus suggestion marked auto_safe"
     # segments concat == surface for every kept candidate
     for t in analysis_tokens:
         for c in t.get("segment_candidates") or []:

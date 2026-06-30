@@ -142,3 +142,56 @@ the conflict and routes it; it never silently picks a side. Precedence: source-a
 cert-validator gate > candidate gate ; deterministic verdict > suggestion ; qg-palette enum > segment-role ; source-clean
 public_boundary > internal evidence. `gate_required = max(both readings)`; a conflict is never `auto_safe`. Full design:
 `parserplans/general-fusha-grammar-checker-p2/{002,006}`; bridge: `qamus/reports/p2-deepening.md`.
+
+## P2b: morphology candidate lattice → route
+
+The morphology candidate lattice (`tools/fusha_morphology_lattice.py`) populates `morphology_candidates[]` with the competing
+out-of-context readings of a token, RANKED (`score` + `rank`), never collapsed to one parse for unvoweled Arabic. A tutor uses
+the candidate's `evidence_class` to route; `>1` candidate keeps the token `pending`.
+
+| morphology evidence_class | route to |
+|---|---|
+| `unvoweled_competing` / `homograph_split` (≥2 readings kept) | `sarf/procedures/homograph-risk.md` + `curriculum/drills/root-pattern-practice.md` (keep all readings; never force one) |
+| `voweled_confirmable` / `source_addressed_confirmable` | the chosen reading may be taught; confirm against the source before asserting case/mood |
+| `weak_root_gated` | `sarf/procedures/weak-root.md` / `hamza-root.md` |
+| `component_only` (a lone clitic, not a whole-token reading) | `sarf/procedures/clitic-and-host-morphology.md` — a repair candidate, never a certification |
+
+## P2b: suggestion / correction → route
+
+The suggestion engine (`tools/fusha_suggest.py`) is **abstain-first** and never overcorrects. Edit ops: INSERT/DELETE/REPLACE/
+MERGE/SPLIT (applicable) and RETAIN/REJECT/ABSTAIN (no replacement; reject/abstain carry a closed `reject_reason`). Structural and
+iʿrāb-sensitive edits are never `auto_safe`; overlapping edits are NMS-resolved and surfaced as a C10 conflict.
+
+| suggestion outcome | route to |
+|---|---|
+| `abstain` (`ambiguous_unvoweled` / `needs_context`) | keep the input unchanged; route to the diagnostic's own procedure |
+| `reject` (`governor_not_justified`) | `nahw/procedures/irab-case-mood.md` — **scholar/iʿrāb review** (right answer, wrong reason) |
+| `reject` (`nms_suppressed_conflict`) | the C10 conflict record (`tools/fusha_conflicts.py`); the winner is shown, the loser surfaced |
+| `split` / `merge` (clitic spacing) | `sarf/procedures/clitic-and-host-morphology.md` — shown as a review hint, not applied |
+| `retain` | no change; the token reads acceptably |
+
+## P2b: learner-feedback hint ladder (by Knowledge Component)
+
+The hint ladder (`tools/fusha_learner_feedback.py` + `curriculum/kc-catalog.json`) maps a diagnostic to a Knowledge Component and
+a **Point → Teach → Bottom-out** ladder. **Bottom-out is WITHHELD** unless `gate==auto_safe ∧ decision_status==resolved ∧
+right_answer_wrong_reason_marker==false` — so in arbitrary mode it is always withheld and the event routes to review. Teach for an
+iʿrāb-sensitive class must reference the **cause** (the governor), not the symptom.
+
+| KC (`kc_id`) | covers diagnostic class(es) | sarf/nahw route | cefr_band |
+|---|---|---|---|
+| `kc-clitic-segmentation` | `possible_clitic_segmentation`, `possible_definite_article` | `sarf/procedures/clitic-and-host-morphology.md` | A2 |
+| `kc-attached-pronoun` | `possible_attached_pronoun` | `sarf/procedures/suffix-pronoun-state.md` | A2 |
+| `kc-unvoweled-homograph` | `ambiguous_unvoweled_token` | `sarf/procedures/homograph-risk.md` | B1 |
+| `kc-particle-function` | `possible_particle_function`, `ma_function_unresolved_or_wrong` | `nahw/procedures/particle-decision.md` | B1 |
+| `kc-preposition-host` | `possible_preposition_host`, `host_only_preposition_hover` | `nahw/procedures/preposition-pronoun.md` | B1 |
+| `kc-case-mood-context` | `possible_case_or_mood_requires_context` | `nahw/procedures/irab-case-mood.md` | C1 |
+| `kc-governor-justification` | `possible_governor_unresolved`, `governor_not_justified`, `weak_irab_reasoning` | `nahw/procedures/irab-case-mood.md` — **scholar/two-vote** | C1 |
+| `kc-orthography` | `orthography_normalization_warning` | `sarf/procedures/hamza-root.md` | A1 |
+
+## P2b: CEFR-aligned instruction level → display gating
+
+The CEFR layer (`curriculum/cefr-fusha-instruction.md` + `cefr-fusha-levels.json` + `tools/fusha_cefr_gate.py`) is **scaffolding,
+not certification.** For a **caller-supplied** level it gates *display* — diagnostic visibility, metalanguage exposure, correction
+aggressiveness, hint depth, example difficulty. It NEVER lowers a gate, forces a parse, reveals a withheld Bottom-out, or asserts a
+learner's level. Beginner bands (`pre_A1/A1/A2`) carry no iʿrāb-sensitive diagnostic and no heavy metalanguage. Full design:
+`parserplans/general-fusha-grammar-checker-p2b-learning-cefr/{004,005,009}`.

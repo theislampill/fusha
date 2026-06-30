@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/learner-kc-catalog.schema.json",
+  "title": "Learner Knowledge-Component catalog (P2b deliverable D)",
+  "description": "The KC rule catalog. Each KC maps one-or-more diagnostic classes to an AUTHORED-ORIGINAL grammar rule + Point/Teach/Bottom-out templates. plain_rule prose is authored from scratch (never copied from a grammar/textbook); if it cannot be authored cleanly the KC is left pending and only Point is emitted. Bottom-out forms are COMPUTED from the engine, never transcribed.",
+  "type": "array",
+  "items": { "$ref": "#/$defs/kc" },
+  "$defs": {
+    "kc": {
+      "type": "object",
+      "required": ["kc_id", "arabic_grammar_name", "plain_rule", "trigger_condition", "expected_feature", "typical_error_feature", "point_template", "teach_template", "bottom_out_template", "severity", "default_gate", "grammar_topic", "cefr_band", "diagnostic_classes", "drill_route", "sarf_route", "nahw_route"],
+      "additionalProperties": false,
+      "properties": {
+        "kc_id": { "type": "string", "pattern": "^kc-[a-z0-9-]+$" },
+        "arabic_grammar_name": { "type": "string", "minLength": 1 },
+        "plain_rule": { "type": ["string", "null"], "description": "Authored-original rule; null = pending (Point-only)." },
+        "trigger_condition": { "type": "string" },
+        "expected_feature": { "type": "string" },
+        "typical_error_feature": { "type": "string" },
+        "point_template": { "type": "string", "minLength": 1 },
+        "teach_template": { "type": ["string", "null"] },
+        "bottom_out_template": { "type": ["string", "null"] },
+        "severity": { "type": "string", "enum": ["info", "warn", "block"] },
+        "default_gate": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"] },
+        "grammar_topic": { "type": "string" },
+        "cefr_band": { "type": "string", "enum": ["pre_A1", "A1", "A2", "B1", "B2", "C1", "C2"] },
+        "diagnostic_classes": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "drill_route": { "type": ["string", "null"] },
+        "sarf_route": { "type": ["string", "null"] },
+        "nahw_route": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
