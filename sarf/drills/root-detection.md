@@ -181,3 +181,44 @@ norm_strict("إِيمَان") != norm_strict("أَيْمَان")  # True  → se
 - [ ] Public emit is `{src:'qamus', kind:'authored', lang:'en'}` or **nothing**. No external prose.
 
 When in doubt at any box: **PENDING beats wrong.**
+
+## Root candidate lattice (the engine's output)
+
+The worked examples above reason through these collisions in prose; the **grammar-checker engine emits them as a ranked
+candidate LATTICE** ([`tools/fusha_morphology_lattice.py`](../../tools/fusha_morphology_lattice.py) `build_morphology_lattice`).
+The contract is **analyse-then-rank, never force one**: keep every candidate, attach a `confidence` + the `rung` it was certified
+from + the `reason`, and resolve to one reading **only when the evidence (hamza seat / pattern / context) is present** — otherwise
+the decision is `pending`. A `score`/`rank` ordering is two distinct fields; there is never a boolean `correct`. Read these as the
+data the drill produces:
+
+```
+# إِلَيْنَا — a norm() collision the hamza seat resolves
+{ candidates: [
+    { reading: "preposition إلى + ـنا (no triliteral root)", confidence: "high", rung: "norm_strict", reason: "the hamza seat of إلى is kept; a prep+enclitic, not a stem" },
+    { reading: "root ل ي ن 'to be soft'",                     confidence: "low",  rung: "norm",        reason: "norm() drops the hamza and yields a لين-shaped key — a recall collision, REJECTED" } ],
+  ranked_by: ["hamza_seat", "segmentation"],
+  decision: "resolved_by:[hamza_seat,segmentation]"  }   # evidence present → reject ل ي ن
+
+# إِيمَان — the أ م ن / ي م ن brutal collision
+{ candidates: [
+    { root: "أ م ن", confidence: "high", rung: "norm_strict/QAC", reason: "إ hamza seat kept; Form IV maṣdar 'faith'" },
+    { root: "ي م ن", confidence: "low",  rung: "norm",             reason: "norm() drops the hamza → collides with أَيْمَان 'oaths'; REJECTED" } ],
+  ranked_by: ["hamza_seat", "qac_root"],
+  decision: "resolved_by:[hamza_seat,qac]"  }            # evidence present → root أ م ن
+
+# أَنْهَٰر — same consonants, sense undecided WITHOUT context
+{ candidates: [
+    { root: "ن ه ر", sense: "rivers (broken plural أَفْعَال of نَهْر)", confidence: "medium", rung: "pattern", reason: "أَفْعَال shape favours the plural-of-river reading" },
+    { root: "ن ه ر", sense: "daytime (نَهَار family)",                   confidence: "low",    rung: "pattern", reason: "shares the consonants; only context separates river from daytime" } ],
+  ranked_by: ["pattern", "context"],
+  decision: "pending"  }                                  # context ABSENT → stay pending (blank beats wrong)
+```
+
+**The standing rule:** a multi-candidate lattice resolves to one reading **only** with stated evidence (`decision: resolved_by:[…]`);
+when the evidence (the harakah / hamza seat / context) is genuinely absent, the answer is `decision: pending` — never force a winner.
+This is the executable form of "a `norm()` collision is a question, not an answer."
+
+## Production drill
+For any surface you bind: write its candidate lattice (≥1 candidate, each with `confidence`/`rung`/`reason`), name the field that
+resolves it, and if no field does — emit `decision: pending`. Then check your lattice against the engine:
+`python tools/fusha_morphology_lattice.py --self-test`.

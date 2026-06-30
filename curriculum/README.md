@@ -73,6 +73,13 @@ gates. When a hover is blank, the curriculum teaches the learner to name the blo
 unknown entry, clitic role, function particle, PP attachment, iʿrāb, proper-name collision, or
 source repair. A precise blank is part of the method.
 
+The grammar-checker engine also scaffolds explanation depth by a **CEFR-aligned learner level — but as scaffolding, not
+certification.** The morphology candidate lattice, governor dependencies, and abstention gates are unchanged at every level; CEFR
+decides only *how much metalanguage* a learner sees (root/pattern at B1+, iʿrāb/governor reasoning at C1+). A1 and C2 see the **same
+blank** when a token is uncertified — a blank is a precise blocker, never a level judgement. The engine never assesses or certifies a
+learner's CEFR level; the level is supplied by the caller. See [`../tools/fusha_cefr_gate.py`](../tools/fusha_cefr_gate.py) and
+[`cefr-fusha-instruction.md`](cefr-fusha-instruction.md).
+
 The next learner-facing layer is a **parse-key and color contract**: every rich hover should be
 able to show how the Arabic token is composed and why the best gloss is safe. That contract is
 documented in [`qamus-hover-parse-key-and-color.md`](qamus-hover-parse-key-and-color.md) and

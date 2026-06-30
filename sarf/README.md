@@ -132,6 +132,18 @@ sarf/
 > chart Arabic (a non-Unicode legacy font) was **not** extracted/copied — all Arabic patterns are
 > standard morphology authored for this repo.
 
+## Morphology candidate lattice (the P2/P2b grammar-checker engine)
+
+Beyond the per-token decision above, `sarf/SKILL.md` now drives a **ranked morphology candidate lattice** — analyse-then-rank: keep
+every competing reading of an unvoweled token with a `score` + `rank` (never a boolean `correct`), `>1` candidate ⇒ pending, and
+`root`/`pattern`/`lemma` left **null** rather than fabricated. Procedures
+[`procedures/morphology-candidate-lattice.md`](procedures/morphology-candidate-lattice.md) +
+[`procedures/clitic-segmentation-and-ambiguity.md`](procedures/clitic-segmentation-and-ambiguity.md); fields
+[`references/morphology-candidate-fields.md`](references/morphology-candidate-fields.md); eval
+[`evals/morphology-candidate-lattice.jsonl`](evals/morphology-candidate-lattice.jsonl); engine
+[`../tools/fusha_morphology_lattice.py`](../tools/fusha_morphology_lattice.py). Drilled in
+[`drills/root-detection.md`](drills/root-detection.md) under "Root candidate lattice".
+
 ## Hard rules (non‑negotiable)
 
 - **Qur'an text is never altered.** Ṣarf reads the surface; it does not normalize it for

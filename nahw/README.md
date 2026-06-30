@@ -115,6 +115,20 @@ of the qamus-highlight work — see the regression list in `references/quranic-n
 - `rules/*.json` — particle-context, preposition-pronoun, negation, context-sense, referent-guard
   decision tables (machine-readable; consumed with `tools/normalize_ar`).
 
+## Governor / dependency lattice (the P2 grammar-checker engine)
+
+Beyond the guard rails above, `nahw/SKILL.md` now drives a conservative **governor / iʿrāb dependency lattice** — the executable form
+of the case/mood **value vs governor justification** discipline: a correct ending with an absent/wrong governor is
+`governor_not_justified` (right answer, wrong reason) → scholar/two-vote, **never `auto_safe`**; PP-attachment stays unresolved unless
+justified; iḍāfa keeps its alternatives; a coordinating wāw is headless. Procedures
+[`procedures/governor-dependency-lattice.md`](procedures/governor-dependency-lattice.md),
+[`procedures/irab-right-answer-wrong-reason.md`](procedures/irab-right-answer-wrong-reason.md),
+[`procedures/suggestion-gating-for-irab.md`](procedures/suggestion-gating-for-irab.md); fields
+[`references/dependency-candidate-fields.md`](references/dependency-candidate-fields.md); evals
+[`evals/governor-dependency-lattice.jsonl`](evals/governor-dependency-lattice.jsonl) +
+[`evals/irab-right-answer-wrong-reason.jsonl`](evals/irab-right-answer-wrong-reason.jsonl); engine
+[`../tools/fusha_governor.py`](../tools/fusha_governor.py). Drilled in [`drills/irab-case-mood.md`](drills/irab-case-mood.md) §6.
+
 ## Hard rules honored here
 
 - Qurʾān text is never altered; it appears as evidence only.

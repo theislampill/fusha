@@ -3158,6 +3158,16 @@ except Exception as _e:
     check("sarf/nahw skill back-prop slice runnable", False)
     print("  ", _e)
 
+# --- sarf/nahw curriculum + drills + README back-prop: the learner/reader surfaces now reflect the engine; prove no neglect ---
+try:
+    _cd_a = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_sarf_nahw_curriculum_drills_readmes.py"), "--self-test"])
+    check("sarf/nahw curriculum/drills/README back-prop self-test (4 named dirs engine-aligned; READMEs no-overclaim / current-stack / leak-free)", _cd_a.returncode == 0)
+    _cd_b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_sarf_nahw_curriculum_drills_readmes.py")])
+    check("sarf/nahw curriculum/drills/README tree clean (no forced-parse drills; CEFR scaffolding not certification; cited tools exist)", _cd_b.returncode == 0)
+except Exception as _e:
+    check("sarf/nahw curriculum/drills/README back-prop slice runnable", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

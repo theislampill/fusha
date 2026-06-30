@@ -19,6 +19,30 @@ For rich learner hovers, the engine now also targets a source-clean parse-key/co
 `curriculum/qamus-hover-parse-key-and-color.md` explains how sarf/nahw decisions become a compact `parse_key`
 and scrubbed `qamus-grammar-v1` display classes without leaking QAC/Tafsir/screenshot provenance.
 
+### Engine contract (P2/P2b grammar-checker back-propagation)
+
+Beyond source-addressed hover authoring, the engine now also checks **arbitrary typed Fusha** and exposes its reasoning as data.
+Two certainty regimes, kept distinct: a **source-addressed** token (exact `S:A:W`) can reach confirmed readings; **arbitrary typing**
+has no source-address certainty and stays ambiguity-preserving. The contracts (each cites an executable tool as its source of truth):
+
+- **Morphology candidate lattice** — analyse-then-rank: keep every competing reading of an unvoweled token, with `score` + `rank`
+  (never a boolean `correct`); `>1` candidate ⇒ pending. [`tools/fusha_morphology_lattice.py`](tools/fusha_morphology_lattice.py).
+- **Clitic segmentation candidates** — proclitic/enclitic peels as candidates (a lone single-letter peel is low-confidence/likely a
+  radical; a tanwīn-alif is not the pronoun نا). [`tools/fusha_text_check.py`](tools/fusha_text_check.py).
+- **Governor / iʿrāb dependency lattice** — a case/mood **value** is paired with its **governor justification**; a correct ending
+  with an absent/wrong governor is `governor_not_justified` (right answer, wrong reason) → scholar/two-vote review, **never
+  `auto_safe`**; PP-attachment stays unresolved unless justified; iḍāfa keeps its alternatives. [`tools/fusha_governor.py`](tools/fusha_governor.py).
+- **Abstention-first suggestions** — corrections that retain/reject/abstain rather than overcorrect; iʿrāb edits are never `auto_safe`
+  without a governor. [`tools/fusha_suggest.py`](tools/fusha_suggest.py).
+- **Learner hint ladder** — Point → Teach → Bottom-out, with Bottom-out withheld past the gate. [`tools/fusha_learner_feedback.py`](tools/fusha_learner_feedback.py).
+- **CEFR is scaffolding, not certification** — explanation depth is gated by a *caller-supplied* learner level; the engine never
+  assesses or certifies a learner. [`tools/fusha_cefr_gate.py`](tools/fusha_cefr_gate.py).
+
+The sarf/nahw **skills**, **curriculum/**, and **drills/** teach these contracts; the **evals** + `tools/check_regressions.py` keep
+the docs aligned with the tools. This is **tooling** — not live Qamus coverage progress. Fusha-only branch stack (owner-gated, none
+merged to main): `a765cef` (P1 general checker + rich-hover flywheel) ← `8365bf7` (P2 governor / leak SoT / conflict) ← `b6a0b4c`
+(P2b learning + CEFR) ← `17e5419` (sarf/nahw skill back-prop) ← this branch (curriculum/drills/README back-prop).
+
 **The engine in five examples** (each a regression fixture): أَعْمَالُنَا → "our deeds" (noun stem + possessive,
 POS-gated); لَمْ vs لِمَ → "did not" vs "why" (particle state split); مِن vs مَن → "from" vs "who/whoever" (harakat
 split); كَظِيم → adjectival ṣifa, **not** the infinitive verb; نَزَّلَ vs نَزَلَ → form II vs I split.

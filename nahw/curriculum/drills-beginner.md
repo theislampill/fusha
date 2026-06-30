@@ -90,6 +90,26 @@ the correct beginner answer is `pending: homograph_haraka` — guessing is the f
 
 ---
 
+## §4 — The governor decides the case (the value is a consequence of the ʿāmil)
+
+A case ending is **assigned by a governing element (ʿāmil)** — it is never free-standing. Read the chain **governor → case →
+role**, never backwards. The grammar-checker engine builds this as a conservative dependency lattice
+([`tools/fusha_governor.py`](../../tools/fusha_governor.py)); a right ending with the wrong/absent governor is
+`governor_not_justified` (right answer, wrong reason) → review, **never auto-resolved**.
+
+**B16.** `لَبِٱلْمِرْصَادِ` (from B15) — why is `ٱلْمِرْصَادِ` in jarr? *(`quran:89:14:4`)*
+- **Answer:** **jarr by the preposition `بِـ`** — a preposition **always** governs the genitive. Name *that* governor; saying "jarr
+  because it is the muḍāf ilayh" here is the **right value with the wrong governor** (`governor_not_justified`) — unsafe.
+- **Guard:** if you cannot tell **which** preposition or head a genitive attaches to (PP-attachment), mark
+  `pending: prep_attachment_unclear` — do **not** guess. PP-attachment stays unresolved unless the evidence justifies it.
+
+**B17.** `إِنَّ رَبَّكَ` (from B15) — what does the naṣb on `رَبَّكَ` prove? *(`quran:89:14:2`)*
+- **Answer:** the governor `إِنَّ` assigns **naṣb**, which makes `رَبَّكَ` the **ism of inna** — **not** a verb's object. The case
+  (naṣb) is a **consequence** of the governor (`إِنَّ`); read it forwards. Asserting "naṣb because mafʿūl" with no verb present is the
+  right-ending-wrong-reason error.
+
+---
+
 ## Beginner drill rule
 
 1. **Strip proclitics** (`و`/`ف`/`بـ`/`لـ`) before reading the decisive harakah.
@@ -98,6 +118,8 @@ the correct beginner answer is `pending: homograph_haraka` — guessing is the f
    unless `إِنَّ`-family precedes, which puts the topic in naṣb but keeps it the subject.
 4. Undiacritized input that collapses a homograph (`مَن/مِن`, `لَمْ/لِمَ`) → `pending:
    homograph_haraka`. **A precise pending beats a guess.**
+5. **Name the governor before the case.** A value (rafʿ/naṣb/jarr) is unsafe without the ʿāmil that licenses it; a right ending with
+   the wrong or absent governor is `governor_not_justified` → review, never auto-resolved. If the governor is undeterminable → pending.
 
 Climb to [`drills-intermediate.md`](drills-intermediate.md) after clearing Checkpoints 1, 2,
 and 5 in [`zero-to-fluency-nahw.md`](zero-to-fluency-nahw.md).

@@ -122,6 +122,31 @@ gloss. (Class → gloss-vocabulary; see
 
 ---
 
+## Part C — keep the candidate set, then reject on evidence (the morphology lattice)
+
+Parts A/B asked for one answer; the **grammar-checker engine keeps a candidate SET and ranks it**, resolving to one reading **only on
+evidence** — the executable form of "`norm()` proposes, harakāt/QAC certify"
+([`tools/fusha_morphology_lattice.py`](../../tools/fusha_morphology_lattice.py)). A `score`/`rank` orders the set; there is never a
+boolean `correct`, and when the evidence is absent the answer is **pending**, not the more common reading.
+
+### C1 — `قَالَ` / `يَقُولُ`  ·  src `qamus:v…#root=ق و ل`
+
+- **Decide:** the `norm()` key `قال` admits which root candidates, and what rejects the wrong one?
+- **Answer:** two candidates — `{root: "ق و ل", confidence: medium}` (hollow; the `ا` is the weak middle radical `و`) and a phantom
+  `{root: "ق ا ل", confidence: low}` (reading the `ا` as a literal radical). The muḍāriʿ **`يَقُولُ`** returns the `و` and **rejects**
+  the `ق ا ل` reading. **Reasoning:** the lattice keeps **both** until the muḍāriʿ (or QAC/the entry) decides → `decision:
+  resolved_by:[mudari]`. **If only `قَالَ` is available** (no muḍāriʿ, no entry), the hollow `و`/`ي` is undecidable from the surface
+  alone → `decision: pending`, never a guess.
+
+### C2 — `قُرْءَانًا` is not stem + ـنا
+
+- **Decide:** does the final `ـًا` carry the pronoun `ـنَا` ("us")?
+- **Answer:** No. `قُرْءَانًا` ends in **tanwīn-alif** (accusative `ـًا` on a long-ā word), **not** stem + `نا`. **Reasoning:**
+  `ends_tanwin_alef("قُرْءَانًا")` is true; splitting off a `نا` pronoun is a false segmentation candidate the lattice must **reject** —
+  the clitic candidate is kept only when a real enclitic is present.
+
+---
+
 ## Checklist before you call a beginner drill "done"
 
 - [ ] Did I **strip clitics** (`وَ فَ الْ بِ كَ لِ` / `ـهُ ـهَا ـنَا ـكُمْ`) before counting
@@ -132,6 +157,8 @@ gloss. (Class → gloss-vocabulary; see
 - [ ] Where the surface couldn't certify the root (A5 hollow), did I **defer to the entry/QAC**
       rather than read it off?
 - [ ] Public emit would be `{src:'qamus', kind:'authored', lang:'en'}` or nothing — no external prose.
+- [ ] Did I keep the **candidate set** and resolve to one reading only on stated evidence (muḍāriʿ / QAC / harakāt) — or stay `pending`?
+- [ ] Is a final `ـًا` **tanwīn-alif**, not the pronoun `ـنا`? (`ends_tanwin_alef`)
 
 When the harakāt are the only distinguisher and you cannot read them: **PENDING beats wrong.**
 Advance to [`drills-intermediate.md`](drills-intermediate.md) only after Part A and Part B are
