@@ -1,0 +1,32 @@
+{
+  "schema": "fusha/parser-model-card@1",
+  "name": "largelexicon-candidate-engine",
+  "status": "candidate_engine",
+  "trained_model": false,
+  "source": "qamus_current_authored",
+  "claim": "Qamus-authored lexicon and parser candidate layer; not live Qamus and not arbitrary-text certification.",
+  "not_claimed": [
+    "CAMeL Tools equivalence",
+    "MADAMIRA equivalence",
+    "Stanza equivalence",
+    "trained statistical disambiguator",
+    "trained dependency parser",
+    "general-purpose Classical Arabic Grammarly"
+  ],
+  "public_boundary": {
+    "src": "qamus",
+    "kind": "authored",
+    "lang": "en"
+  },
+  "inputs": [
+    "qamus/data/current/entries.jsonl",
+    "fusha/lexicon/largelexicon/lemma-source.sample.jsonl",
+    "fusha/morphology/examples/largelexicon-stems.sample.jsonl"
+  ],
+  "validators": [
+    "tools/validate_largelexicon_source_ledger.py",
+    "tools/validate_largelexicon_morph_db.py",
+    "tools/validate_largelexicon_parser.py",
+    "tools/validate_largelexicon_qamus_mode_a.py"
+  ]
+}

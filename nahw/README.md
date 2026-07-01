@@ -129,6 +129,16 @@ justified; iḍāfa keeps its alternatives; a coordinating wāw is headless. Pro
 [`evals/irab-right-answer-wrong-reason.jsonl`](evals/irab-right-answer-wrong-reason.jsonl); engine
 [`../tools/fusha_governor.py`](../tools/fusha_governor.py). Drilled in [`drills/irab-case-mood.md`](drills/irab-case-mood.md) §6.
 
+## Largelexicon function-token routing
+
+Largelexicon rollout work must not promote grammar-sensitive rows merely because a surface
+or English gloss looks familiar. Use
+[`procedures/largelexicon-function-token-routing.md`](procedures/largelexicon-function-token-routing.md)
+to decide whether a qword is a source-clean hover candidate, a source-crosswalk packet, an
+owner packet, or a scholar/iʿrāb packet. This is where `ما`, `وما`, preposition + majrūr
+hosts, particle clusters, and right-answer/wrong-reason cases get routed before public
+projection.
+
 ## Hard rules honored here
 
 - Qurʾān text is never altered; it appears as evidence only.

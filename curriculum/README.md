@@ -97,6 +97,14 @@ the implementation boundary is
 [`../docs/parser/qamustyping4-implementation.md`](../docs/parser/qamustyping4-implementation.md).
 This is fixture evidence for future work, not live Qamus coverage.
 
+The largelexicon layer turns that rule into a larger learner/rollout flywheel. Its
+sample worklist, hover projection, and flywheel artifacts show how a visible qword
+becomes either a source-clean learner hover candidate or an exact packet for
+source-crosswalk, sarf, nahw, owner, scholar, validator, or curriculum follow-up.
+Use [`largelexicon-tutor-routing.md`](largelexicon-tutor-routing.md) and
+[`drills/largelexicon-morphology-and-hover.md`](drills/largelexicon-morphology-and-hover.md)
+when teaching why a colored segment is a grammar claim, not decoration.
+
 ## How the ladder links the rest of the repo
 
 The curriculum does **not** restate ṣarf or nahw — it *routes* to them. Each level names the
@@ -157,12 +165,14 @@ curriculum/
   tutor-session-protocol.md      ← tutoring startup and grading loop
   repo-state-and-mission-audit-20260625.md ← current GitHub/repo-state audit for curriculum updates
   qamus-hover-parse-key-and-color.md ← rich-hover parse-key + color-role guidance
+  largelexicon-tutor-routing.md ← largelexicon candidate/packet output → learner route
   vn-dogfood-to-curriculum-synthesis-20260627.md ← verb/noun dogfood defects mapped to learner units
   reports/dogfood-curriculum-crosswalk-20260627.md ← dogfood finding → curriculum/drill crosswalk
   drills/
     hover-composition-and-routing.md ← written token → pieces → sarf/nahw route → safe hover
     parse-key-and-color-layer.md     ← pieces → parse_key + display palette rows
     mode-a-thin-slice-regressions.md ← qamustyping3/4 all-qword visual-closure regressions
+    largelexicon-morphology-and-hover.md ← Qamus-scale morphology samples → hover/packet decisions
     dogfood-error-remediation-index.md ← repeated hover failure → remediation route
 ```
 

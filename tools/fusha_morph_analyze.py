@@ -25,7 +25,8 @@ def _candidate_from_stem(row: dict[str, Any], rank: int = 1) -> dict[str, Any]:
         "features": {k: row[k] for k in ["voice", "aspect", "person", "gender", "number"] if k in row},
         "risk_flags": row.get("risk_flags", []),
         "rank": rank,
-        "source": "repo_authored",
+        "source": row.get("source", "repo_authored"),
+        "entry_id": row.get("entry_id"),
     }
 
 
@@ -54,8 +55,8 @@ def _candidate_from_particle(row: dict[str, Any], rank: int = 1) -> dict[str, An
     }
 
 
-def analyze_surface(surface: str) -> list[dict[str, Any]]:
-    db = load_morph_db()
+def analyze_surface(surface: str, db_name: str = "smoke") -> list[dict[str, Any]]:
+    db = load_morph_db(db_name)
     candidates: list[dict[str, Any]] = []
     for row in db["stems"]:
         if row["surface"] == surface:
@@ -69,8 +70,9 @@ def analyze_surface(surface: str) -> list[dict[str, Any]]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Analyze one Arabic surface with the smoke morphology DB.")
     parser.add_argument("--surface", required=True)
+    parser.add_argument("--db", choices=["smoke", "largelexicon"], default="smoke")
     args = parser.parse_args()
-    print(json.dumps({"surface": args.surface, "candidates": analyze_surface(args.surface)}, ensure_ascii=False, indent=2, sort_keys=True))
+    print(json.dumps({"surface": args.surface, "db": args.db, "candidates": analyze_surface(args.surface, args.db)}, ensure_ascii=False, indent=2, sort_keys=True))
     return 0
 
 

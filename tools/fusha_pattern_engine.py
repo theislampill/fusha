@@ -20,6 +20,7 @@ sys.path.insert(0, _REPO)
 from tools import normalize_ar as N  # noqa: E402
 
 LEXICON_PATH = os.path.join(_REPO, "fusha", "lexicon", "fusha-lemmas.jsonl")
+LARGELEXICON_PATH = os.path.join(_REPO, "fusha", "lexicon", "largelexicon", "lemma-source.sample.jsonl")
 
 FUNCTION_WORDS = {
     "ما": ("particle", "function-sensitive mā"),
@@ -43,7 +44,7 @@ PINNED_FORMS = {
 INNER_PRONOUNS = ("هما", "هم", "كم", "كن", "ها", "نا", "ه", "ك", "ي")
 
 
-def _load_lexicon(path=LEXICON_PATH):
+def _load_lexicon(path=LEXICON_PATH, db="smoke"):
     rows = []
     if not os.path.exists(path):
         return rows
@@ -51,7 +52,30 @@ def _load_lexicon(path=LEXICON_PATH):
         for line in fh:
             line = line.strip()
             if line:
-                rows.append(json.loads(line))
+                row = json.loads(line)
+                row.setdefault("evidence_class", "seed_lexicon")
+                rows.append(row)
+    if db == "largelexicon" and os.path.exists(LARGELEXICON_PATH):
+        with open(LARGELEXICON_PATH, encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                row = json.loads(line)
+                rows.append(
+                    {
+                        "lemma": row.get("lemma"),
+                        "root": row.get("root"),
+                        "pos": row.get("pos"),
+                        "forms": row.get("forms") or [],
+                        "pattern": None,
+                        "features": {"entry_id": row.get("entry_id"), "source_status": row.get("source_status")},
+                        "gloss_hint": row.get("gloss_hint"),
+                        "qamus_entry_id": row.get("entry_id"),
+                        "source_status": row.get("source_status"),
+                        "evidence_class": "largelexicon_sample",
+                    }
+                )
     return rows
 
 
@@ -76,7 +100,7 @@ def _stem_segments(seg_candidate):
     return [s for s in seg_candidate.get("segments") or [] if s.get("role") == "stem"]
 
 
-def _candidate_from_row(row, seg_ref, score=6.0, evidence="seed_lexicon", extra=None):
+def _candidate_from_row(row, seg_ref, score=6.0, evidence=None, extra=None):
     feats = dict(row.get("features") or {})
     if extra:
         feats.update(extra)
@@ -87,7 +111,7 @@ def _candidate_from_row(row, seg_ref, score=6.0, evidence="seed_lexicon", extra=
         "pattern": row.get("pattern"),
         "features": feats,
         "gloss_hint": row.get("gloss_hint"),
-        "evidence_class": evidence,
+        "evidence_class": evidence or row.get("evidence_class") or "seed_lexicon",
         "confidence": "medium",
         "score": score,
         "rank": 0,
@@ -164,8 +188,8 @@ def _suffix_extra(surface):
     return extra
 
 
-def build_morphology(surface, segment_candidates, lexicon=None):
-    lexicon = lexicon if lexicon is not None else _load_lexicon()
+def build_morphology(surface, segment_candidates, lexicon=None, db="smoke"):
+    lexicon = lexicon if lexicon is not None else _load_lexicon(db=db)
     cands = []
     for i, seg_cand in enumerate(segment_candidates or []):
         stems = _stem_segments(seg_cand)

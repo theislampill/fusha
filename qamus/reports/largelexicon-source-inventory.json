@@ -1,0 +1,43 @@
+{
+  "claim_boundary": "Qamus-authored source inventory only; not a general Arabic parser, not live Qamus progress.",
+  "counts": {
+    "empty_root_entries": 994,
+    "entries": 2092,
+    "listed_forms": 8483,
+    "max_forms_per_entry": 59,
+    "rooted_entries": 1098
+  },
+  "full_counts": {
+    "lemma_source_rows": 2092,
+    "stem_source_rows": 8483
+  },
+  "generated_at": "2026-07-01T09:00:30Z",
+  "generated_by": "tools.largelexicon_common",
+  "pos_counts": {
+    "noun": 966,
+    "particle": 100,
+    "proper_noun": 56,
+    "verb": 970
+  },
+  "public_boundary": {
+    "kind": "authored",
+    "lang": "en",
+    "src": "qamus"
+  },
+  "sample_counts": {
+    "form_source_rows": 431,
+    "lemma_source_rows": 100,
+    "stem_source_rows": 400
+  },
+  "sample_size": 100,
+  "schema": "fusha/largelexicon/source-inventory@1",
+  "source_branch": "largelexicon",
+  "source_files": {
+    "entries": "qamus\\data\\current\\entries.jsonl",
+    "entries_min": "qamus\\data\\current\\entries.min.jsonl"
+  },
+  "source_head": "823cb7aac1f7007f2de1c4771a45279e68f1c4fc",
+  "stale_after": "qamus_data_or_source_schema_change",
+  "status": "active",
+  "supersedes": []
+}

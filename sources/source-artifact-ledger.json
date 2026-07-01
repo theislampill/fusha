@@ -1,9 +1,9 @@
 {
   "schema": "fusha/source-artifact-ledger@1",
-  "generated_at": "2026-07-01T00:00:00Z",
-  "generated_by": "Codex qamustyping3 safe implementation",
-  "source_head": "f8b90d8641ec90fa18ce04ee3d0a0b9d20bc358b",
-  "source_branch": "feature/fusha-standalone-parser-qamus-kernel",
+  "generated_at": "2026-07-01T08:48:06Z",
+  "generated_by": "Codex largelexicon implementation",
+  "source_head": "823cb7aac1f7007f2de1c4771a45279e68f1c4fc",
+  "source_branch": "largelexicon",
   "supersedes": [],
   "stale_after": "2026-07-08T00:00:00Z",
   "status": "active_fixture_only",
@@ -220,6 +220,83 @@
       "artifact_id": "qamustyping4-acceptance-validator",
       "path": "tools/validate_qamustyping4_acceptance.py",
       "kind": "validator",
+      "public_boundary": "not_public",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "largelexicon-claim-boundary",
+      "path": "docs/parser/largelexicon-claim-boundary.md",
+      "kind": "claim_boundary_doc",
+      "public_boundary": "not_public",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "largelexicon-source-ledger-doc",
+      "path": "docs/parser/largelexicon-source-ledger.md",
+      "kind": "source_policy_doc",
+      "public_boundary": "not_public",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "largelexicon-source-inventory",
+      "path": "qamus/reports/largelexicon-source-inventory.json",
+      "kind": "qamus_authored_source_inventory",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "largelexicon-lemma-source-sample",
+      "path": "fusha/lexicon/largelexicon/lemma-source.sample.jsonl",
+      "kind": "qamus_authored_lemma_sample",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "largelexicon-form-source-sample",
+      "path": "fusha/lexicon/largelexicon/form-source.sample.jsonl",
+      "kind": "qamus_authored_form_sample",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "largelexicon-stem-source-sample",
+      "path": "fusha/morphology/examples/largelexicon-stems.sample.jsonl",
+      "kind": "qamus_authored_morphology_candidate_sample",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "largelexicon-mode-a-worklist-sample",
+      "path": "qamus/examples/mode_a_all_qword/largelexicon-qamus-mode-a-worklist.sample.jsonl",
+      "kind": "all_visible_qword_worklist_sample",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "largelexicon-hover-candidate-sample",
+      "path": "qamus/examples/largelexicon/hover-candidates.sample.jsonl",
+      "kind": "candidate_or_packet_projection_sample",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "largelexicon-flywheel-artifact-sample",
+      "path": "qamus/examples/largelexicon/flywheel-artifacts.sample.jsonl",
+      "kind": "flywheel_backfill_sample",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "largelexicon-candidate-engine-model-card",
+      "path": "fusha/parser/model-cards/largelexicon-candidate-engine.model-card.json",
+      "kind": "model_card_without_trained_model",
+      "public_boundary": "not_public",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "largelexicon-implementation-ledger",
+      "path": "qamus/reports/largelexicon-implementation-ledger.json",
+      "kind": "truthful_acceptance_ledger",
       "public_boundary": "not_public",
       "mutation_scope": "repo_fixture_only"
     }

@@ -79,10 +79,10 @@ def _hover(surface, qg, morph, context, gate):
     }
 
 
-def _token(idx, wt):
+def _token(idx, wt, db="smoke"):
     surface = wt["surface"]
     segs = split_clitics(surface)
-    morph = build_morphology(surface, segs)
+    morph = build_morphology(surface, segs, db=db)
     selected_seg, selected_morph = _selected(segs, morph)
     qg = preview_segments(surface, selected_seg, selected_morph) if selected_seg and selected_morph else []
     tok = {
@@ -113,10 +113,10 @@ def _token(idx, wt):
     return tok
 
 
-def parse_text(text, document_id=None):
+def parse_text(text, document_id=None, db="smoke"):
     normalized, ops = TC.normalize_with_ops(text)
     wtokens = [wt for wt in TC.whitespace_tokens(text) if wt.get("kind") == "word"]
-    tokens = [_token(i, wt) for i, wt in enumerate(wtokens)]
+    tokens = [_token(i, wt, db=db) for i, wt in enumerate(wtokens)]
     ctx_by_idx = token_context_candidates(tokens)
     diagnostics = []
     for tok in tokens:
@@ -144,6 +144,7 @@ def parse_text(text, document_id=None):
     return {
         "schema": SCHEMA,
         "input_mode": "arbitrary_typing",
+        "db": db,
         "document_id": document_id,
         "raw_input": text,
         "normalized_input": normalized,
@@ -179,13 +180,14 @@ def main():
     ap.add_argument("--text")
     ap.add_argument("--out")
     ap.add_argument("--emit-fixtures")
+    ap.add_argument("--db", choices=["smoke", "largelexicon"], default="smoke")
     args = ap.parse_args()
     if args.emit_fixtures:
         emit_fixtures(args.emit_fixtures)
         return 0
     if args.text is None:
         ap.error("need --text or --emit-fixtures")
-    rec = parse_text(args.text)
+    rec = parse_text(args.text, db=args.db)
     data = json.dumps(rec, ensure_ascii=False, indent=2, sort_keys=True)
     if args.out:
         with open(args.out, "w", encoding="utf-8") as fh:

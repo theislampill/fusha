@@ -1,0 +1,34 @@
+{
+  "schema": "fusha/largelexicon/implementation-ledger@1",
+  "status": "active",
+  "claim": "Largelexicon adds Qamus-authored candidate tooling; not live Qamus and not arbitrary-text certification.",
+  "phases": {
+    "P0": "claim boundary, source ledger, artifact freshness, branch isolation",
+    "P1": "source inventory plus lemma/form/stem sample generation",
+    "P2": "opt-in largelexicon parser/analyzer path and parser validation",
+    "P3": "Mode A all visible qword worklist, skill/curriculum/tutor backfill"
+  },
+  "public_boundary": {
+    "src": "qamus",
+    "kind": "authored",
+    "lang": "en"
+  },
+  "executor_boundary": "Qamus live deployment, readback, health, rollback, and tranche closure remain executor-owned.",
+  "validators": [
+    "tools/validate_largelexicon_source_ledger.py --self-test",
+    "tools/validate_largelexicon_claim_boundary.py --self-test",
+    "tools/validate_largelexicon_morph_db.py --self-test",
+    "tools/validate_largelexicon_parser.py --self-test",
+    "tools/validate_largelexicon_qamus_mode_a.py --self-test",
+    "tools/validate_largelexicon_qg_projection.py --self-test",
+    "tools/validate_largelexicon_skill_curriculum_backfill.py --self-test"
+  ],
+  "samples": [
+    "fusha/lexicon/largelexicon/lemma-source.sample.jsonl",
+    "fusha/lexicon/largelexicon/form-source.sample.jsonl",
+    "fusha/morphology/examples/largelexicon-stems.sample.jsonl",
+    "qamus/examples/mode_a_all_qword/largelexicon-qamus-mode-a-worklist.sample.jsonl",
+    "qamus/examples/largelexicon/hover-candidates.sample.jsonl",
+    "qamus/examples/largelexicon/flywheel-artifacts.sample.jsonl"
+  ]
+}

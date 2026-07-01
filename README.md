@@ -48,6 +48,13 @@ has no source-address certainty and stays ambiguity-preserving. The contracts (e
   [`docs/parser/qamustyping4-implementation.md`](docs/parser/qamustyping4-implementation.md) ·
   [`tools/validate_qamustyping4_acceptance.py`](tools/validate_qamustyping4_acceptance.py) ·
   [`curriculum/drills/mode-a-thin-slice-regressions.md`](curriculum/drills/mode-a-thin-slice-regressions.md).
+- **Largelexicon candidate layer** — opt-in `--db largelexicon` morphology samples, source-ledger checks, Mode A
+  all-qword worklists, public/private hover projection, qg role validation, and flywheel artifacts for scaling Qamus
+  rollout work from smoke fixtures toward the 2,092-entry index. It produces candidate rows and exact packets only;
+  it is not live Qamus progress and not a certified arbitrary-text parser.
+  [`docs/parser/largelexicon-implementation.md`](docs/parser/largelexicon-implementation.md) ·
+  [`docs/parser/largelexicon-claim-boundary.md`](docs/parser/largelexicon-claim-boundary.md) ·
+  [`qamus/procedures/largelexicon-rollout-consumption.md`](qamus/procedures/largelexicon-rollout-consumption.md).
 - **Offline learning runtime** — a deterministic tutor loop grades checkpoints against the answer key (never model self-report),
   schedules reviews by Leitner box, holds hard grammar until two independent checks agree, and persists progress only with an
   explicit `--write`. [`tools/fusha_tutor_runtime.py`](tools/fusha_tutor_runtime.py) ·
@@ -62,6 +69,10 @@ the docs aligned with the tools. This is **tooling** — not live Qamus coverage
 P1 general checker + rich-hover flywheel, P2 governor/conflict gates, P2b learner feedback/CEFR scaffolding, sarf/nahw skill and
 curriculum back-prop, data/runtime completion, and qamustyping3/4 Mode A acceptance. Stronger claims remain gated by corpora,
 splits, metrics, and owner authorization.
+
+The largelexicon layer is the next scaling step: it preserves the smoke parser as the default path while letting rollout and
+curriculum workers opt into larger Qamus-derived samples with `--db largelexicon`. The committed samples prove the contracts;
+full generated outputs belong under `out/` until review, owner/scholar packets, and source-clean projection validators pass.
 
 **The engine in five examples** (each a regression fixture): أَعْمَالُنَا → "our deeds" (noun stem + possessive,
 POS-gated); لَمْ vs لِمَ → "did not" vs "why" (particle state split); مِن vs مَن → "from" vs "who/whoever" (harakat

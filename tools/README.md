@@ -92,6 +92,34 @@ QAC data) to show the parsing contract without needing the real corpus.
 
 ---
 
+## Largelexicon candidate tooling — opt-in Qamus-scale parser/hover samples
+
+The `largelexicon` tools are an offline bridge from the 2,092-entry Qamus index to
+source-clean parser, hover, and curriculum artifacts. They are deliberately opt-in:
+existing smoke fixtures remain the default parser path, while largelexicon callers pass
+`--db largelexicon` or consume the generated sample JSONL files.
+
+| Tool | Purpose |
+|---|---|
+| `build_largelexicon_source_inventory.py` | Summarize Qamus entries/forms and emit reviewable lemma/form samples. |
+| `build_largelexicon_morph_db.py` | Build the opt-in stem sample consumed by morphology analyzers. |
+| `validate_largelexicon_source_ledger.py` | Ensure generated artifacts are registered in the canonical source ledger. |
+| `validate_largelexicon_claim_boundary.py` | Block overclaims such as live progress or certified arbitrary parsing. |
+| `validate_largelexicon_morph_db.py` | Validate stem/lemma source shape, roots, POS, and public-boundary safety. |
+| `validate_largelexicon_parser.py` | Prove the opt-in parser path recognizes seeded largelexicon forms. |
+| `build_largelexicon_qamus_mode_a_worklist.py` | Emit fixture worklist rows for every visible qword denominator work. |
+| `project_largelexicon_qamus_hover_candidates.py` | Project source-clean hover candidates or exact source-crosswalk packets. |
+| `validate_largelexicon_qamus_mode_a.py` | Validate Mode A worklist shape, trace, and denominator accounting. |
+| `validate_largelexicon_qg_projection.py` | Validate public/private projection, qg classes, leaks, and packet exactness. |
+| `build_largelexicon_flywheel_artifacts.py` | Convert projected rows into sarf/nahw/curriculum/parser flywheel tasks. |
+| `validate_largelexicon_skill_curriculum_backfill.py` | Check that sarf, nahw, curriculum, and drills learned from the new layer. |
+
+These tools may use internal evidence fields and local source-address rows, but public
+hover output remains `src=qamus`, `kind=authored`, `lang=en`. They never SSH, deploy,
+append a whitelist, restart services, or copy external gloss text.
+
+---
+
 ## Adding a new tool here
 
 1. stdlib only; no live-app / network / deploy imports.

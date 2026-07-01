@@ -3243,6 +3243,55 @@ except Exception as _e:
     check("P1/P2 closure slice runnable", False)
     print("  ", _e)
 
+# --- largelexicon candidate layer: Qamus-scale morphology samples, Mode A qword projection,
+#     public/private hover boundary, qg validation, and flywheel backfill. This is opt-in
+#     tooling, not live Qamus progress and not arbitrary-text certification. ---
+try:
+    for _art in ("docs/parser/largelexicon-claim-boundary.md",
+                 "docs/parser/largelexicon-source-ledger.md",
+                 "docs/parser/largelexicon-implementation.md",
+                 "tools/build_largelexicon_source_inventory.py",
+                 "tools/build_largelexicon_morph_db.py",
+                 "tools/validate_largelexicon_source_ledger.py",
+                 "tools/validate_largelexicon_claim_boundary.py",
+                 "tools/validate_largelexicon_morph_db.py",
+                 "tools/validate_largelexicon_parser.py",
+                 "tools/build_largelexicon_qamus_mode_a_worklist.py",
+                 "tools/project_largelexicon_qamus_hover_candidates.py",
+                 "tools/validate_largelexicon_qamus_mode_a.py",
+                 "tools/validate_largelexicon_qg_projection.py",
+                 "tools/build_largelexicon_flywheel_artifacts.py",
+                 "tools/validate_largelexicon_skill_curriculum_backfill.py",
+                 "fusha/lexicon/largelexicon/lemma-source.sample.jsonl",
+                 "fusha/lexicon/largelexicon/form-source.sample.jsonl",
+                 "fusha/morphology/examples/largelexicon-stems.sample.jsonl",
+                 "qamus/examples/mode_a_all_qword/largelexicon-qamus-mode-a-worklist.sample.jsonl",
+                 "qamus/examples/largelexicon/hover-candidates.sample.jsonl",
+                 "qamus/examples/largelexicon/flywheel-artifacts.sample.jsonl",
+                 "qamus/procedures/largelexicon-rollout-consumption.md",
+                 "sarf/procedures/largelexicon-morphology-expansion.md",
+                 "nahw/procedures/largelexicon-function-token-routing.md",
+                 "curriculum/largelexicon-tutor-routing.md",
+                 "curriculum/drills/largelexicon-morphology-and-hover.md"):
+        check("largelexicon artifact exists: %s" % _art, os.path.exists(os.path.join(ROOT, _art)))
+    _ll1 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_source_ledger.py"), "--self-test"])
+    check("largelexicon source-ledger self-test (canonical ledger + freshness + samples)", _ll1.returncode == 0)
+    _ll2 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_claim_boundary.py"), "--self-test"])
+    check("largelexicon claim-boundary self-test (no live/arbitrary/CAMeL-class overclaim)", _ll2.returncode == 0)
+    _ll3 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_morph_db.py"), "--self-test"])
+    check("largelexicon morph DB self-test (source-clean Qamus-derived stem samples)", _ll3.returncode == 0)
+    _ll4 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_parser.py"), "--self-test"])
+    check("largelexicon parser self-test (opt-in --db largelexicon, smoke default preserved)", _ll4.returncode == 0)
+    _ll5 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_qamus_mode_a.py"), "--self-test"])
+    check("largelexicon Mode A self-test (visible qword denominator + trace)", _ll5.returncode == 0)
+    _ll6 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_qg_projection.py"), "--self-test"])
+    check("largelexicon qg projection self-test (source-clean hover candidates or exact packets)", _ll6.returncode == 0)
+    _ll7 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_skill_curriculum_backfill.py"), "--self-test"])
+    check("largelexicon sarf/nahw/curriculum flywheel self-test", _ll7.returncode == 0)
+except Exception as _e:
+    check("largelexicon candidate layer runnable", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

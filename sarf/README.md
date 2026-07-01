@@ -144,6 +144,15 @@ every competing reading of an unvoweled token with a `score` + `rank` (never a b
 [`../tools/fusha_morphology_lattice.py`](../tools/fusha_morphology_lattice.py). Drilled in
 [`drills/root-detection.md`](drills/root-detection.md) under "Root candidate lattice".
 
+## Largelexicon morphology expansion
+
+The largelexicon layer lets rollout and curriculum workers opt into Qamus-derived sample
+stems without weakening the default smoke parser. Use
+[`procedures/largelexicon-morphology-expansion.md`](procedures/largelexicon-morphology-expansion.md)
+when a recurring VN/P ANDON should become a reusable morphology fact, fixture, or packet.
+It requires source-address trace, POS/root/form agreement, visible clitic/suffix preservation,
+and public-boundary cleanliness before a sample can feed `--db largelexicon`.
+
 ## Hard rules (non‑negotiable)
 
 - **Qur'an text is never altered.** Ṣarf reads the surface; it does not normalize it for

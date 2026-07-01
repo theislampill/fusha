@@ -11,16 +11,18 @@ from fusha_morph_db import all_generation_rows
 
 def generate_surface(request: dict[str, Any]) -> dict[str, Any]:
     generation_key = request.get("generation_key")
+    db_name = request.get("db", "smoke")
     if not generation_key:
         return {"ok": False, "error": "generation_key required"}
-    for row in all_generation_rows():
+    for row in all_generation_rows(db_name):
         if row.get("generation_key") == generation_key:
             return {
                 "ok": True,
+                "db": db_name,
                 "generation_key": generation_key,
                 "surface": row["surface"],
-                "source": "repo_authored",
-                "claim": "smoke generator row only",
+                "source": row.get("source", "repo_authored"),
+                "claim": "candidate generator row only",
             }
     return {"ok": False, "generation_key": generation_key, "error": "unknown generation_key"}
 
@@ -28,8 +30,9 @@ def generate_surface(request: dict[str, Any]) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate one smoke surface from a generation key.")
     parser.add_argument("--generation-key", required=True)
+    parser.add_argument("--db", choices=["smoke", "largelexicon"], default="smoke")
     args = parser.parse_args()
-    print(json.dumps(generate_surface({"generation_key": args.generation_key}), ensure_ascii=False, indent=2, sort_keys=True))
+    print(json.dumps(generate_surface({"generation_key": args.generation_key, "db": args.db}), ensure_ascii=False, indent=2, sort_keys=True))
     return 0
 
 
