@@ -1,0 +1,32 @@
+{
+  "claim_boundary": {
+    "arbitrary_text_parser_claim": false,
+    "live_qamus_coverage_claim": false,
+    "live_qamus_payload": false,
+    "parser_oracle_claim": false,
+    "raw_executor_paths_vendored": false
+  },
+  "fusha_commit": "db0617f296457399e16ee013bf56862a2fe0d22b",
+  "generator": "tools/import_rh_live_plan15_flywheel.py",
+  "input_summary_sha256": "1893e32e3de238bdc16ff306e8c5c56e42bdb55e26acf45dbc08c8040f7885c3",
+  "output_jsonl": "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl",
+  "route_counts": {
+    "governor_irab_fixture_needed": 754,
+    "lexicon_entry_needed": 3403,
+    "parser_interface_ok": 910,
+    "particle_function_rule_needed": 2,
+    "pattern_rule_needed": 3,
+    "proper_name_no_root_needed": 3
+  },
+  "sample_counts": {
+    "governor_irab_fixture_needed": 3,
+    "lexicon_entry_needed": 3,
+    "parser_interface_ok": 3,
+    "particle_function_rule_needed": 2,
+    "pattern_rule_needed": 3,
+    "proper_name_no_root_needed": 3
+  },
+  "sample_mode": "sample",
+  "sample_rows": 17,
+  "schema": "qamus/rh-live-plan15-parser-flywheel-sample-meta@1"
+}

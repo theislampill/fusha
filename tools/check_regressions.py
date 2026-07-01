@@ -3082,6 +3082,55 @@ except Exception as _e:
     check("general-checker + flywheel runnable", False)
     print("  ", _e)
 
+# RH-LIVE Plan 15 parser boundary flywheel: parser output is a gate/factory
+# interface, not a live coverage claim or arbitrary-text oracle. Validate the
+# committed sample, and validate the ignored full queue when regenerated.
+try:
+    _plan15_full = os.path.join(ROOT, "out", "rh-live-plan15-parser-flywheel",
+                                "rh_live_plan15_parser_flywheel.full.jsonl")
+    for _art in ("tools/validate_rh_live_plan15_flywheel.py",
+                 "tools/import_rh_live_plan15_flywheel.py",
+                 "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl",
+                 "qamus/examples/rh_live_plan15_parser_flywheel.sample.meta.json",
+                 "qamus/reports/closure-2092/rh-live-plan15-parser-flywheel-20260701.md",
+                 "qamus/reports/closure-2092/rh-live-plan15-parser-flywheel-20260701.json"):
+        check("RH-LIVE Plan 15 parser flywheel artifact exists: %s" % _art,
+              os.path.exists(os.path.join(ROOT, _art)))
+    _p15a = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_rh_live_plan15_flywheel.py"),
+                      "--self-test"])
+    check("RH-LIVE Plan 15 flywheel validator self-test (claim-boundary + leak reject)", _p15a.returncode == 0)
+    _p15b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_rh_live_plan15_flywheel.py"),
+                      os.path.join(ROOT, "qamus", "examples", "rh_live_plan15_parser_flywheel.sample.jsonl")])
+    check("RH-LIVE Plan 15 flywheel sample validates (parser-known/partial routed, no live claim)",
+          _p15b.returncode == 0)
+    _p15_report = json.load(io.open(
+        os.path.join(ROOT, "qamus", "reports", "closure-2092",
+                     "rh-live-plan15-parser-flywheel-20260701.json"),
+        encoding="utf-8",
+    ))
+    _p15_meta = json.load(io.open(
+        os.path.join(ROOT, "qamus", "examples", "rh_live_plan15_parser_flywheel.sample.meta.json"),
+        encoding="utf-8",
+    ))
+    _p15_head = run_text(["git", "-C", ROOT, "rev-parse", "HEAD"])
+    if _p15_head.returncode == 0:
+        _p15_head_commit = _p15_head.stdout.strip()
+        check("RH-LIVE Plan 15 report uses current Fusha HEAD",
+              _p15_report.get("fusha_commit") == _p15_head_commit)
+        check("RH-LIVE Plan 15 sample meta uses current Fusha HEAD",
+              _p15_meta.get("fusha_commit") == _p15_head_commit)
+    else:
+        check("RH-LIVE Plan 15 report records a 40-hex Fusha commit",
+              isinstance(_p15_report.get("fusha_commit"), str)
+              and len(_p15_report.get("fusha_commit")) == 40)
+    if os.path.exists(_plan15_full):
+        _p15c = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_rh_live_plan15_flywheel.py"),
+                          _plan15_full])
+        check("RH-LIVE Plan 15 full ignored queue validates when present", _p15c.returncode == 0)
+except Exception as _e:
+    check("RH-LIVE Plan 15 parser flywheel runnable", False)
+    print("  ", _e)
+
 # P2 deepening slice (parserplans/general-fusha-grammar-checker-p2): leak source-of-truth (E) + governor/iʿrāb/dependency
 # lattice (B) + cross-builder conflict resolution (F). Artifacts + self-tests + fixture validation.
 for _art in ("tools/leak_sot.py", "tools/validate_source_boundary.py",

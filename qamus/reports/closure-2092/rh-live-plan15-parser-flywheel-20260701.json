@@ -1,0 +1,127 @@
+{
+  "candidate_rows_rejected_because_parser_evidence_incomplete": 0,
+  "candidate_rows_safely_accelerated_by_parser": 911,
+  "claim_boundary": {
+    "arbitrary_text_parser_completeness_claimed": false,
+    "live_qamus_progress_claimed": false,
+    "parser_used_as_oracle": false,
+    "raw_executor_packets_vendored": false
+  },
+  "controlling_plan": "15-fusha-parser-coverage-boundary-and-lexicon-flywheel.md",
+  "fusha_commit": "db0617f296457399e16ee013bf56862a2fe0d22b",
+  "lemma_null_rows": 4089,
+  "manifest_sha256": "f30721e16a756a692af6c28f55844105f9dde8284320d7a25af456215eaf2cb2",
+  "parser_known_rows": 911,
+  "parser_partial_rows": 4164,
+  "parser_unknown_rows": 0,
+  "report_date": "2026-07-01",
+  "root_null_rows": 5043,
+  "sample_import": {
+    "full_queue_jsonl": "out/rh-live-plan15-parser-flywheel/rh_live_plan15_parser_flywheel.full.jsonl",
+    "full_queue_meta_json": "out/rh-live-plan15-parser-flywheel/rh_live_plan15_parser_flywheel.full.meta.json",
+    "full_queue_rows": 5075,
+    "generator": "tools/import_rh_live_plan15_flywheel.py",
+    "sample_jsonl": "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl",
+    "sample_meta_json": "qamus/examples/rh_live_plan15_parser_flywheel.sample.meta.json",
+    "sample_rows": 17
+  },
+  "sample_validation": {
+    "full_queue_rows_validated": 5075,
+    "regression_spine": "tools/check_regressions.py",
+    "regression_spine_status": "pass",
+    "sample_rows_validated": 17,
+    "validator": "tools/validate_rh_live_plan15_flywheel.py",
+    "validator_self_test": "pass"
+  },
+  "route_packets": {
+    "governor_irab_fixture_needed": {
+      "rows": 754,
+      "sha256": "3add2fa1d0188ef2b2d0902b3b11c26e1ded77f06e87a367b1a8926cd8136013"
+    },
+    "lexicon_entry_needed": {
+      "rows": 3403,
+      "sha256": "8685c22b8dc2d2ece9ada4419bf7d692dca4e4127820d90eb8a2834baa5f8c10"
+    },
+    "parser_interface_ok": {
+      "rows": 910,
+      "sha256": "f7ec445f8a0b46dd643a2512cef4335edd4bddefddd7c2db2a7aa4cd2d26ed2d"
+    },
+    "particle_function_rule_needed": {
+      "rows": 2,
+      "sha256": "3adb80d58e261f1d94fd89d4f94c57294d0fdc489dd44cad00bc214c6f61e84a"
+    },
+    "pattern_rule_needed": {
+      "rows": 3,
+      "sha256": "1a39d5ae9c2ca0b462b03da4c748c574af7d71f17598178f316abbb225875a3a"
+    },
+    "proper_name_no_root_needed": {
+      "rows": 3,
+      "sha256": "682ff9601c0828f2267ca3b667f4f4f67b8a383b9bf8d09b22589d76421bd8df"
+    }
+  },
+  "rows_audited": 5075,
+  "rows_converted_to_owner_scholar_source_packets": 0,
+  "rows_converted_to_stem_entry_needed": 0,
+  "scope_counts": [
+    {
+      "fixture_level_governor_rows": 59,
+      "lemma_null_rows": 228,
+      "parser_accelerated_rows": 2,
+      "parser_known_rows": 2,
+      "parser_partial_rows": 229,
+      "root_null_rows": 229,
+      "rows": 231,
+      "scope": "VN-00 append"
+    },
+    {
+      "fixture_level_governor_rows": 208,
+      "lemma_null_rows": 792,
+      "parser_accelerated_rows": 41,
+      "parser_known_rows": 41,
+      "parser_partial_rows": 814,
+      "root_null_rows": 841,
+      "rows": 855,
+      "scope": "VN-00 replacement"
+    },
+    {
+      "fixture_level_governor_rows": 244,
+      "lemma_null_rows": 1552,
+      "parser_accelerated_rows": 473,
+      "parser_known_rows": 473,
+      "parser_partial_rows": 1574,
+      "root_null_rows": 2039,
+      "rows": 2047,
+      "scope": "VN-01 append"
+    },
+    {
+      "fixture_level_governor_rows": 21,
+      "lemma_null_rows": 164,
+      "parser_accelerated_rows": 3,
+      "parser_known_rows": 3,
+      "parser_partial_rows": 165,
+      "root_null_rows": 166,
+      "rows": 168,
+      "scope": "VN-01 replacement"
+    },
+    {
+      "fixture_level_governor_rows": 214,
+      "lemma_null_rows": 1257,
+      "parser_accelerated_rows": 391,
+      "parser_known_rows": 391,
+      "parser_partial_rows": 1286,
+      "root_null_rows": 1671,
+      "rows": 1677,
+      "scope": "VN-02 append"
+    },
+    {
+      "fixture_level_governor_rows": 8,
+      "lemma_null_rows": 96,
+      "parser_accelerated_rows": 1,
+      "parser_known_rows": 1,
+      "parser_partial_rows": 96,
+      "root_null_rows": 97,
+      "rows": 97,
+      "scope": "VN-02 replacement"
+    }
+  ]
+}
