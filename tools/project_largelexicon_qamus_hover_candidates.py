@@ -67,7 +67,11 @@ def project(input_path: Path, output_path: Path) -> dict:
     counts: dict[str, int] = {}
     for row in projected:
         counts[row["status"]] = counts.get(row["status"], 0) + 1
-    return {"rows": len(projected), "counts": counts, "out": str(output_path.relative_to(ROOT))}
+    try:
+        out = str(output_path.relative_to(ROOT))
+    except ValueError:
+        out = str(output_path)
+    return {"rows": len(projected), "counts": counts, "out": out}
 
 
 def main() -> int:

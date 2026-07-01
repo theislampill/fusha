@@ -1,5 +1,6 @@
 {
   "claim_boundary": "Qamus-authored source inventory only; not a general Arabic parser, not live Qamus progress.",
+  "commit_full_requested": true,
   "counts": {
     "empty_root_entries": 994,
     "entries": 2092,
@@ -8,10 +9,12 @@
     "rooted_entries": 1098
   },
   "full_counts": {
+    "form_source_rows": 8483,
     "lemma_source_rows": 2092,
+    "qword_denominator_rows": 117117,
     "stem_source_rows": 8483
   },
-  "generated_at": "2026-07-01T09:00:30Z",
+  "generated_at": "2026-07-01T10:18:02Z",
   "generated_by": "tools.largelexicon_common",
   "pos_counts": {
     "noun": 966,
@@ -25,18 +28,19 @@
     "src": "qamus"
   },
   "sample_counts": {
-    "form_source_rows": 431,
-    "lemma_source_rows": 100,
-    "stem_source_rows": 400
+    "form_source_rows": 512,
+    "lemma_source_rows": 120,
+    "stem_source_rows": 480
   },
-  "sample_size": 100,
+  "sample_size": 120,
   "schema": "fusha/largelexicon/source-inventory@1",
   "source_branch": "largelexicon",
+  "source_clean_table_allowlist": "fusha\\lexicon\\largelexicon\\source-clean-table-allowlist.json",
   "source_files": {
     "entries": "qamus\\data\\current\\entries.jsonl",
     "entries_min": "qamus\\data\\current\\entries.min.jsonl"
   },
-  "source_head": "823cb7aac1f7007f2de1c4771a45279e68f1c4fc",
+  "source_head": "e35b23bf3b90b01aa8ef44ce3d43f5f7c9c5db08",
   "stale_after": "qamus_data_or_source_schema_change",
   "status": "active",
   "supersedes": []

@@ -22,3 +22,8 @@ source-clean rather than a dictionary substitution.
 
 These drills use largelexicon candidate rows as teaching material. They do not
 claim live Qamus completion and do not expose external evidence labels.
+
+Use the committed full stem table to select practice items, but keep the drill
+question honest: "What pieces are visible in this token?" is usually answerable
+from sarf; "what function does this particle/preposition have here?" may require
+source address, nahw, or scholar/i'rab review.

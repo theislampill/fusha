@@ -1,20 +1,29 @@
 {
   "schema": "fusha/parser-eval-report@1",
   "name": "largelexicon-eval-matrix",
-  "status": "active_fixture_only",
-  "claim": "Layer-specific validation matrix for Qamus-authored candidate data; not arbitrary-text certification.",
+  "status": "active_qamus_full_table_candidate_gate",
+  "claim": "Layer-specific validation matrix for Qamus-authored sample and full-table candidate data; not arbitrary-text certification.",
   "metrics": {
     "source_inventory_entries": 2092,
     "source_inventory_forms": 8483,
-    "committed_lemma_sample_rows": 100,
-    "committed_stem_sample_rows": 400,
-    "mode_a_worklist_sample_rows": 160
+    "committed_lemma_sample_rows": 120,
+    "committed_stem_sample_rows": 480,
+    "committed_lemma_full_rows": 2092,
+    "committed_form_full_rows": 8483,
+    "committed_stem_full_rows": 8483,
+    "qamus_qword_denominator_full_rows": 117117,
+    "mode_a_worklist_sample_rows": 160,
+    "trained_disambiguator_accuracy": null,
+    "dependency_las": null,
+    "dependency_uas": null
   },
   "gates": [
     "source_ledger",
     "claim_boundary",
     "morph_db",
     "parser_sample_consumption",
+    "parser_full_table_consumption",
+    "local_cli_contract",
     "mode_a_worklist",
     "skill_curriculum_backfill"
   ]

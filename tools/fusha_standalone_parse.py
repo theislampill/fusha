@@ -31,10 +31,36 @@ def _selected(seg_cands, morph_cands):
     if not morph_cands:
         return None, None
     morph = morph_cands[0]
+    if morph.get("pos") == "particle":
+        for cand in seg_cands:
+            if cand.get("evidence_class") == "pinned_function_cluster":
+                return cand, morph
     ref = morph.get("segment_candidate_ref", 0)
     if ref >= len(seg_cands):
         ref = 0
-    return seg_cands[ref], morph
+    selected = seg_cands[ref]
+    selected_segments = selected.get("segments") or []
+    selected_surface = "".join(seg.get("surface", "") for seg in selected_segments)
+    selected_collapsed = len(selected_segments) == 1 and selected_segments[0].get("role") == "stem"
+    rich_roles = {
+        "prefix_preposition",
+        "definite_article",
+        "prefix_conjunction",
+        "prefix_particle",
+        "particle_inna",
+        "ma_particle",
+        "object_pronoun",
+    }
+    if selected_collapsed and morph.get("evidence_class") in {"largelexicon_sample", "largelexicon_full"}:
+        for cand in seg_cands:
+            segments = cand.get("segments") or []
+            if len(segments) <= 1:
+                continue
+            if "".join(seg.get("surface", "") for seg in segments) != selected_surface:
+                continue
+            if any(seg.get("role") in rich_roles for seg in segments):
+                return cand, morph
+    return selected, morph
 
 
 def _gate(surface, seg_cands, morph, context):
@@ -47,7 +73,7 @@ def _gate(surface, seg_cands, morph, context):
         return "pending_context"
     if len(seg_cands) > 1 and morph.get("evidence_class") not in {"seed_lexicon", "pinned_pattern"}:
         return "ambiguous"
-    if morph.get("evidence_class") in {"seed_lexicon", "pinned_pattern", "function_inventory"}:
+    if morph.get("evidence_class") in {"seed_lexicon", "pinned_pattern", "function_inventory", "largelexicon_sample", "largelexicon_full"}:
         return "likely_from_internal_pattern"
     return "ambiguous"
 

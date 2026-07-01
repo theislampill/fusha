@@ -1,0 +1,79 @@
+{
+  "schema": "fusha/largelexicon/claim-cards@1",
+  "status": "active",
+  "public_boundary": {
+    "src": "qamus",
+    "kind": "authored",
+    "lang": "en"
+  },
+  "cards": [
+    {
+      "claim_id": "mode_a_qamus_candidate_engine",
+      "claim": "Largelexicon can produce source-clean Qamus/Qur'an candidate facts and routing packets for Mode A authoring.",
+      "status": "supported",
+      "evidence": [
+        "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
+        "fusha/lexicon/largelexicon/form-source.full.jsonl",
+        "fusha/morphology/data/largelexicon-stems.full.jsonl",
+        "qamus/indexes/largelexicon/qamus-qword-denominator.full.jsonl"
+      ],
+      "validators": [
+        "tools/validate_largelexicon_source_ledger.py --self-test",
+        "tools/validate_largelexicon_qamus_mode_a.py --self-test",
+        "tools/validate_largelexicon_qg_projection.py --self-test"
+      ]
+    },
+    {
+      "claim_id": "mode_b_tutoring_candidate_support",
+      "claim": "Largelexicon can route Qamus-backed token candidates into learner-facing sarf/nahw drills and tutor hints.",
+      "status": "supported",
+      "evidence": [
+        "curriculum/largelexicon-tutor-routing.md",
+        "curriculum/drills/largelexicon-morphology-and-hover.md",
+        "sarf/procedures/largelexicon-morphology-expansion.md",
+        "nahw/procedures/largelexicon-function-token-routing.md"
+      ],
+      "validators": [
+        "tools/validate_largelexicon_skill_curriculum_backfill.py --self-test"
+      ]
+    },
+    {
+      "claim_id": "mode_c_standalone_candidate_parser",
+      "claim": "Largelexicon can run dependency-free standalone candidate parsing with source-clean JSON output.",
+      "status": "supported_candidate_only",
+      "evidence": [
+        "tools/fusha_standalone_parse.py",
+        "tools/fusha_largelexicon_cli.py",
+        "fusha/parser/model-cards/largelexicon-candidate-engine.model-card.json"
+      ],
+      "validators": [
+        "tools/validate_largelexicon_parser.py --self-test",
+        "tools/validate_largelexicon_cli_contract.py --self-test"
+      ]
+    },
+    {
+      "claim_id": "trained_statistical_disambiguator",
+      "claim": "Largelexicon has a trained statistical disambiguator comparable to established Arabic NLP systems.",
+      "status": "not_supported_yet",
+      "required_before_claim": [
+        "frozen legal training data",
+        "train/dev/test splits",
+        "model card",
+        "accuracy and abstention metrics",
+        "overfitting and source-leak checks"
+      ]
+    },
+    {
+      "claim_id": "certified_dependency_irab_parser",
+      "claim": "Largelexicon has a certified dependency/i'rab parser for arbitrary Classical Arabic text.",
+      "status": "not_supported_yet",
+      "required_before_claim": [
+        "dependency and i'rab gold/evidence sets",
+        "UAS/LAS-style metrics plus i'rab reason metrics",
+        "wrong-reason ceiling",
+        "scholar/i'rab review workflow",
+        "public claim-card update"
+      ]
+    }
+  ]
+}

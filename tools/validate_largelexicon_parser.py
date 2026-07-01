@@ -36,10 +36,17 @@ def validate() -> list[str]:
             errors.append(f"{surface}: expected one token parse")
             continue
         top = (tokens[0].get("morphology_candidates") or [{}])[0]
-        if top.get("evidence_class") not in {"seed_lexicon", "largelexicon_sample", "pinned_pattern"}:
+        if top.get("evidence_class") not in {"seed_lexicon", "largelexicon_sample", "largelexicon_full", "pinned_pattern"}:
             errors.append(f"{surface}: unexpected evidence_class {top.get('evidence_class')!r}")
         if parsed.get("summary", {}).get("live_writes") != 0:
             errors.append(f"{surface}: parser must report zero live_writes")
+        if parsed.get("db") != "largelexicon":
+            errors.append(f"{surface}: parser must preserve db=largelexicon")
+    cluster = parse_text("إنما", document_id="largelexicon:function-cluster", db="largelexicon")
+    qg = ((cluster.get("tokens") or [{}])[0].get("qg_segments") or [])
+    roles = [seg.get("role") for seg in qg]
+    if "particle_inna" not in roles or "ma_particle" not in roles:
+        errors.append("إنما must preserve particle_inna + ma_particle segments under largelexicon")
     return errors
 
 

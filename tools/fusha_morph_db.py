@@ -1,7 +1,8 @@
 """Load repo-authored Fusha morphology databases.
 
 The default DB remains the small smoke database. The opt-in ``largelexicon`` DB
-adds generated Qamus-authored sample stems; it is a candidate layer, not a
+adds generated Qamus-authored stems from the committed source-clean full table
+when present, falling back to the sample table. It is a candidate layer, not a
 general Classical Arabic parser certification.
 """
 
@@ -15,7 +16,8 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 MORPH_ROOT = ROOT / "fusha" / "morphology"
-LARGELEXICON_STEMS = MORPH_ROOT / "examples" / "largelexicon-stems.sample.jsonl"
+LARGELEXICON_STEMS_SAMPLE = MORPH_ROOT / "examples" / "largelexicon-stems.sample.jsonl"
+LARGELEXICON_STEMS_FULL = MORPH_ROOT / "data" / "largelexicon-stems.full.jsonl"
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -42,15 +44,20 @@ def load_morph_db(db: str = "smoke") -> dict[str, list[dict[str, Any]]]:
         "compat_stem_suffix": read_jsonl(data / "compatibility-stem-suffix.jsonl"),
         "compat_prefix_suffix": read_jsonl(data / "compatibility-prefix-suffix.jsonl"),
     }
-    if db == "largelexicon" and LARGELEXICON_STEMS.exists():
-        large_stems = read_jsonl(LARGELEXICON_STEMS)
+    if db == "largelexicon":
+        source_path = LARGELEXICON_STEMS_FULL if LARGELEXICON_STEMS_FULL.exists() else LARGELEXICON_STEMS_SAMPLE
+        large_stems = read_jsonl(source_path) if source_path.exists() else []
         for row in large_stems:
             row.setdefault("source", "qamus_current_authored")
-            row.setdefault("risk_flags", []).append("largelexicon_sample_candidate")
+            row.setdefault("risk_flags", []).append(
+                "largelexicon_full_candidate" if source_path == LARGELEXICON_STEMS_FULL else "largelexicon_sample_candidate"
+            )
         rows["stems"] = rows["stems"] + large_stems
         rows["largelexicon_stems"] = large_stems
+        rows["largelexicon_source"] = [{"path": str(source_path.relative_to(ROOT)), "rows": len(large_stems)}]
     else:
         rows["largelexicon_stems"] = []
+        rows["largelexicon_source"] = []
     rows["db"] = [{"name": db, "claim": "candidate morphology data; not arbitrary-text certification"}]
     return rows
 

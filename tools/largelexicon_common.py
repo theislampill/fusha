@@ -8,6 +8,7 @@ Qamus and does not import external corpus text.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import subprocess
@@ -25,9 +26,20 @@ QAMUS_ENTRIES = ROOT / "qamus" / "data" / "current" / "entries.jsonl"
 QAMUS_ENTRIES_MIN = ROOT / "qamus" / "data" / "current" / "entries.min.jsonl"
 LEXICON_DIR = ROOT / "fusha" / "lexicon" / "largelexicon"
 MORPH_EXAMPLE_DIR = ROOT / "fusha" / "morphology" / "examples"
+MORPH_DATA_DIR = ROOT / "fusha" / "morphology" / "data"
 PARSER_EVAL_DIR = ROOT / "fusha" / "parser" / "eval"
 PARSER_MODEL_CARD_DIR = ROOT / "fusha" / "parser" / "model-cards"
 REPORT_DIR = ROOT / "qamus" / "reports"
+QAMUS_LARGELX_DIR = ROOT / "qamus" / "indexes" / "largelexicon"
+ALLOWLIST = LEXICON_DIR / "source-clean-table-allowlist.json"
+LEMMA_SAMPLE = LEXICON_DIR / "lemma-source.sample.jsonl"
+FORM_SAMPLE = LEXICON_DIR / "form-source.sample.jsonl"
+LEMMA_FULL = LEXICON_DIR / "lemma-source.full.jsonl"
+FORM_FULL = LEXICON_DIR / "form-source.full.jsonl"
+STEM_SAMPLE = MORPH_EXAMPLE_DIR / "largelexicon-stems.sample.jsonl"
+STEM_FULL = MORPH_DATA_DIR / "largelexicon-stems.full.jsonl"
+QWORD_DENOMINATOR_FULL = QAMUS_LARGELX_DIR / "qamus-qword-denominator.full.jsonl"
+FULL_TABLE_META = QAMUS_LARGELX_DIR / "source-clean-fact-tables.meta.json"
 
 PUBLIC_BOUNDARY = {"src": "qamus", "kind": "authored", "lang": "en"}
 SOURCE_STATUS = "qamus_current_authored"
@@ -93,6 +105,10 @@ def write_json(path: Path, obj: dict[str, Any]) -> None:
     with path.open("w", encoding="utf-8", newline="\n") as handle:
         json.dump(obj, handle, ensure_ascii=False, indent=2, sort_keys=True)
         handle.write("\n")
+
+
+def sha256_text(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
 def unique_keep_order(values: Iterable[str]) -> list[str]:
@@ -182,6 +198,31 @@ def entry_to_lemma(entry: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def form_rows_for_lemmas(lemmas: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for lemma in lemmas:
+        for index, form in enumerate(lemma.get("forms") or []):
+            rows.append(
+                {
+                    "schema": f"{SCHEMA_PREFIX}/form-source@1",
+                    "form_id": f"llx_form_{lemma['entry_id']}_{index:03d}",
+                    "entry_id": lemma["entry_id"],
+                    "source_keys": lemma["source_keys"],
+                    "surface": form,
+                    "surface_norm_strict": N.norm_strict(form),
+                    "surface_bare": N.bare(form),
+                    "lemma": lemma["lemma"],
+                    "root": lemma["root"],
+                    "no_root_reason": lemma["no_root_reason"],
+                    "pos": lemma["pos"],
+                    "source_status": lemma["source_status"],
+                    "public_boundary": lemma["public_boundary"],
+                    "risk_flags": lemma.get("risk_flags") or [],
+                }
+            )
+    return rows
+
+
 def risk_flags(entry: dict[str, Any], pos: str, forms: list[str]) -> list[str]:
     flags: list[str] = []
     if not entry.get("root"):
@@ -208,6 +249,7 @@ def stem_rows_for_entry(entry: dict[str, Any]) -> list[dict[str, Any]]:
             {
                 "schema": f"{SCHEMA_PREFIX}/stem-source@1",
                 "stem_id": f"llx_{entry['id']}_{index:03d}",
+                "generation_key": f"qamus:{entry['id']}:{index:03d}",
                 "entry_id": entry["id"],
                 "source_keys": entry.get("source_keys") or [],
                 "surface": surface,
@@ -232,11 +274,107 @@ def stem_rows_for_entry(entry: dict[str, Any]) -> list[dict[str, Any]]:
                 "features": {},
                 "qamus_entry_refs": entry.get("source_keys") or [],
                 "source": "qamus_current_authored",
+                "source_status": "qamus_current_authored",
                 "risk_flags": lemma["risk_flags"],
                 "public_boundary": dict(PUBLIC_BOUNDARY),
             }
         )
     return rows
+
+
+def qword_denominator_rows(entries: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Compact all-visible-qword denominator rows for Qamus-owned example cards.
+
+    The row preserves bidirectional handles without repeating full translation
+    prose or importing any external source payload. It is a denominator and
+    routing table, not a deployable hover table.
+    """
+    rows: list[dict[str, Any]] = []
+    for entry in entries:
+        for usage_index, usage in enumerate(entry.get("usage") or [], start=1):
+            for example_index, example in enumerate(usage.get("examples") or [], start=1):
+                card_id = f"{entry['id']}:u{usage_index}:e{example_index}"
+                card_text = example.get("ar") or ""
+                words = [word for word in card_text.split() if word]
+                for qword_index, surface in enumerate(words, start=1):
+                    rows.append(
+                        {
+                            "schema": "qamus/largelexicon-qword-denominator@1",
+                            "row_id": f"llx-qword-{entry['id']}-{usage_index:02d}-{example_index:02d}-{qword_index:03d}",
+                            "entry_id": entry["id"],
+                            "source_keys": entry.get("source_keys") or [],
+                            "card_id": card_id,
+                            "usage_index": usage_index,
+                            "example_index": example_index,
+                            "qword_index": qword_index,
+                            "visible_surface": surface,
+                            "visible_surface_norm_strict": N.norm_strict(surface),
+                            "card_text_sha256": sha256_text(card_text),
+                            "quran_ref": example.get("ref"),
+                            "canonical_quran_loc": None,
+                            "canonical_wbw_loc": None,
+                            "route": "qamus_executor_source_crosswalk",
+                            "status": "denominator_needs_source_address_crosswalk",
+                            "source_status": SOURCE_STATUS,
+                            "public_boundary": dict(PUBLIC_BOUNDARY),
+                            "live_mutation_allowed": False,
+                        }
+                    )
+    return rows
+
+
+def full_table_allowlist() -> dict[str, Any]:
+    return {
+        "schema": f"{SCHEMA_PREFIX}/source-clean-table-allowlist@1",
+        **freshness(status="active", stale_after="qamus_entries_or_largelexicon_schema_change"),
+        "claim_boundary": (
+            "Only source-clean Qamus-authored generated fact tables are committed. "
+            "Raw QAC/MCP/Quran.com/Tafsir payloads remain private evidence/cache data."
+        ),
+        "runtime_dependency_policy": "dependency_free; no external package or live API required at parse time",
+        "public_boundary": dict(PUBLIC_BOUNDARY),
+        "tables": [
+            {
+                "path": str(LEMMA_FULL.relative_to(ROOT)),
+                "schema": f"{SCHEMA_PREFIX}/lemma-source@1",
+                "commit_allowed": True,
+                "raw_external_allowed": False,
+                "minimum_rows": 2092,
+                "source": "qamus_current_authored",
+            },
+            {
+                "path": str(FORM_FULL.relative_to(ROOT)),
+                "schema": f"{SCHEMA_PREFIX}/form-source@1",
+                "commit_allowed": True,
+                "raw_external_allowed": False,
+                "minimum_rows": 7000,
+                "source": "qamus_current_authored",
+            },
+            {
+                "path": str(STEM_FULL.relative_to(ROOT)),
+                "schema": f"{SCHEMA_PREFIX}/stem-source@1",
+                "commit_allowed": True,
+                "raw_external_allowed": False,
+                "minimum_rows": 7000,
+                "source": "qamus_current_authored",
+            },
+            {
+                "path": str(QWORD_DENOMINATOR_FULL.relative_to(ROOT)),
+                "schema": "qamus/largelexicon-qword-denominator@1",
+                "commit_allowed": True,
+                "raw_external_allowed": False,
+                "minimum_rows": 100000,
+                "source": "qamus_current_authored",
+            },
+        ],
+        "private_only_sources": [
+            "qac_raw_tsv",
+            "mcp_raw_response",
+            "quran_foundation_raw_response",
+            "quran_com_raw_response",
+            "source_photo_or_ocr_dump",
+        ],
+    }
 
 
 def role_for_pos(pos: str) -> str:

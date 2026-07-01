@@ -4,7 +4,7 @@
   "status": "candidate_engine",
   "trained_model": false,
   "source": "qamus_current_authored",
-  "claim": "Qamus-authored lexicon and parser candidate layer; not live Qamus and not arbitrary-text certification.",
+  "claim": "Qamus-authored source-clean full-table lexicon and parser candidate layer; not live Qamus and not arbitrary-text certification.",
   "not_claimed": [
     "CAMeL Tools equivalence",
     "MADAMIRA equivalence",
@@ -21,12 +21,24 @@
   "inputs": [
     "qamus/data/current/entries.jsonl",
     "fusha/lexicon/largelexicon/lemma-source.sample.jsonl",
-    "fusha/morphology/examples/largelexicon-stems.sample.jsonl"
+    "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
+    "fusha/lexicon/largelexicon/form-source.full.jsonl",
+    "fusha/morphology/examples/largelexicon-stems.sample.jsonl",
+    "fusha/morphology/data/largelexicon-stems.full.jsonl",
+    "qamus/indexes/largelexicon/qamus-qword-denominator.full.jsonl"
   ],
+  "measured_denominators": {
+    "qamus_entries": 2092,
+    "lemma_rows": 2092,
+    "form_rows": 8483,
+    "stem_rows": 8483,
+    "qword_denominator_rows": 117117
+  },
   "validators": [
     "tools/validate_largelexicon_source_ledger.py",
     "tools/validate_largelexicon_morph_db.py",
     "tools/validate_largelexicon_parser.py",
-    "tools/validate_largelexicon_qamus_mode_a.py"
+    "tools/validate_largelexicon_qamus_mode_a.py",
+    "tools/validate_largelexicon_cli_contract.py"
   ]
 }

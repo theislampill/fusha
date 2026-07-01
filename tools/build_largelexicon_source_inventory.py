@@ -8,40 +8,36 @@ import json
 from pathlib import Path
 
 from largelexicon_common import (
-    LEXICON_DIR,
-    MORPH_EXAMPLE_DIR,
+    ALLOWLIST,
+    FORM_FULL,
+    FORM_SAMPLE,
+    FULL_TABLE_META,
+    LEMMA_FULL,
+    LEMMA_SAMPLE,
+    STEM_FULL,
+    STEM_SAMPLE,
     REPORT_DIR,
     entry_to_lemma,
+    form_rows_for_lemmas,
+    full_table_allowlist,
     inventory,
     iter_entries,
+    qword_denominator_rows,
     stem_rows_for_entry,
+    QWORD_DENOMINATOR_FULL,
     write_json,
     write_jsonl,
 )
 
 
-def build(sample_size: int, out_dir: Path | None = None) -> dict:
+def build(sample_size: int, out_dir: Path | None = None, commit_full: bool = False) -> dict:
     entries = iter_entries()
     lemmas = [entry_to_lemma(entry) for entry in entries]
     stems = [stem for entry in entries for stem in stem_rows_for_entry(entry)]
     sample_lemmas = lemmas[:sample_size]
-    sample_forms = []
-    for lemma in sample_lemmas:
-        for form in lemma.get("forms", []):
-            sample_forms.append(
-                {
-                    "schema": "fusha/largelexicon/form-source@1",
-                    "entry_id": lemma["entry_id"],
-                    "source_keys": lemma["source_keys"],
-                    "surface": form,
-                    "lemma": lemma["lemma"],
-                    "root": lemma["root"],
-                    "no_root_reason": lemma["no_root_reason"],
-                    "pos": lemma["pos"],
-                    "source_status": lemma["source_status"],
-                    "public_boundary": lemma["public_boundary"],
-                }
-            )
+    sample_forms = form_rows_for_lemmas(sample_lemmas)
+    full_forms = form_rows_for_lemmas(lemmas)
+    qword_rows = qword_denominator_rows(entries)
 
     inv = inventory(entries)
     inv["sample_size"] = sample_size
@@ -52,19 +48,44 @@ def build(sample_size: int, out_dir: Path | None = None) -> dict:
     }
     inv["full_counts"] = {
         "lemma_source_rows": len(lemmas),
+        "form_source_rows": len(full_forms),
         "stem_source_rows": len(stems),
+        "qword_denominator_rows": len(qword_rows),
     }
+    inv["commit_full_requested"] = commit_full
+    inv["source_clean_table_allowlist"] = str(ALLOWLIST.relative_to(Path(__file__).resolve().parents[1]))
 
     write_json(REPORT_DIR / "largelexicon-source-inventory.json", inv)
-    write_jsonl(LEXICON_DIR / "lemma-source.sample.jsonl", sample_lemmas)
-    write_jsonl(LEXICON_DIR / "form-source.sample.jsonl", sample_forms)
-    write_jsonl(MORPH_EXAMPLE_DIR / "largelexicon-stems.sample.jsonl", stems[: sample_size * 4])
+    write_jsonl(LEMMA_SAMPLE, sample_lemmas)
+    write_jsonl(FORM_SAMPLE, sample_forms)
+    write_jsonl(STEM_SAMPLE, stems[: sample_size * 4])
 
     if out_dir:
         out_dir.mkdir(parents=True, exist_ok=True)
         write_jsonl(out_dir / "largelexicon-lemma-source.full.jsonl", lemmas)
+        write_jsonl(out_dir / "largelexicon-form-source.full.jsonl", full_forms)
         write_jsonl(out_dir / "largelexicon-stems.full.jsonl", stems)
+        write_jsonl(out_dir / "largelexicon-qword-denominator.full.jsonl", qword_rows)
         write_json(out_dir / "largelexicon-source-inventory.full.json", inv)
+    if commit_full:
+        allowlist = full_table_allowlist()
+        write_json(ALLOWLIST, allowlist)
+        write_jsonl(LEMMA_FULL, lemmas)
+        write_jsonl(FORM_FULL, full_forms)
+        write_jsonl(STEM_FULL, stems)
+        write_jsonl(QWORD_DENOMINATOR_FULL, qword_rows)
+        write_json(
+            FULL_TABLE_META,
+            {
+                "schema": "fusha/largelexicon/source-clean-fact-tables-meta@1",
+                "allowlist": str(ALLOWLIST.relative_to(Path(__file__).resolve().parents[1])),
+                "tables": allowlist["tables"],
+                "counts": inv["full_counts"],
+                "claim": "committed Qamus-authored source-clean facts; no raw external payloads; no live Qamus progress",
+                "public_boundary": inv["public_boundary"],
+                "freshness": {key: inv[key] for key in ["generated_at", "generated_by", "source_head", "source_branch", "supersedes", "stale_after", "status"]},
+            },
+        )
 
     return inv
 
@@ -73,8 +94,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Build largelexicon source inventory from Qamus data.")
     parser.add_argument("--sample-size", type=int, default=80)
     parser.add_argument("--out-dir")
+    parser.add_argument("--commit-full", action="store_true", help="Write allowlisted source-clean full fact tables into git paths.")
     args = parser.parse_args()
-    result = build(args.sample_size, Path(args.out_dir) if args.out_dir else None)
+    result = build(args.sample_size, Path(args.out_dir) if args.out_dir else None, args.commit_full)
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0
 

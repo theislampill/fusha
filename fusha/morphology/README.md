@@ -1,10 +1,13 @@
 # Fusha Morphology Core
 
-Status: dependency-free smoke morphology substrate.
+Status: dependency-free smoke morphology substrate plus opt-in Qamus-derived
+largelexicon candidate table.
 
 This directory is the P1 implementation for the qamustyping2 plan. It is small by design: it proves the morphology families needed by the Mode A smoke fixtures before broad lexicon/generator expansion.
 
-It does not vendor external morphology databases, train a model, or claim broad arbitrary-text coverage.
+It does not vendor external morphology databases, train a model, or claim broad arbitrary-text coverage. The full
+largelexicon table is generated from Qamus-authored repo data and remains a candidate/fact table, not a certified
+paradigm database.
 
 ## Data
 
@@ -15,6 +18,8 @@ It does not vendor external morphology databases, train a model, or claim broad 
 - `data/compatibility-stem-suffix.jsonl`: allowed stem/suffix pairings for the smoke substrate.
 - `data/patterns.jsonl`: small pattern labels.
 - `data/particles.jsonl`: function-token rows.
+- `data/largelexicon-stems.full.jsonl`: generated Qamus-authored full stem/form
+  candidate table, allowed by `fusha/lexicon/largelexicon/source-clean-table-allowlist.json`.
 
 ## Tools
 
@@ -23,6 +28,9 @@ python tools\validate_fusha_morph_db.py --self-test
 python tools\eval_fusha_morphology.py --self-test
 python tools\fusha_morph_analyze.py --surface "ٱلْمُبْطِلُونَ"
 python tools\fusha_morph_generate.py --generation-key participle-btl-def-mp
+python tools\fusha_morph_analyze.py --db largelexicon --surface "خَاضُوا"
+python tools\fusha_morph_generate.py --db largelexicon --generation-key "qamus:00107b99a50e:000"
+python tools\validate_largelexicon_morph_db.py --self-test
 ```
 
 The analyzer emits candidate rows with visible segment surfaces. A candidate is invalid if the segment surfaces do not concatenate back to the displayed token.

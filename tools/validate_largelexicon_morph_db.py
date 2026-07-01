@@ -7,20 +7,16 @@ import argparse
 import json
 from pathlib import Path
 
-from largelexicon_common import MORPH_EXAMPLE_DIR, public_boundary_errors, read_jsonl
+from largelexicon_common import STEM_FULL, STEM_SAMPLE, public_boundary_errors, read_jsonl
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SAMPLE = MORPH_EXAMPLE_DIR / "largelexicon-stems.sample.jsonl"
+SAMPLE = STEM_SAMPLE
 
 
-def validate(path: Path = SAMPLE) -> list[str]:
-    errors: list[str] = []
-    if not path.exists():
-        return [f"missing stem sample: {path.relative_to(ROOT)}"]
-    rows = read_jsonl(path)
-    if len(rows) < 100:
-        errors.append("largelexicon stem sample must contain at least 100 rows")
+def _validate_stem_rows(path: Path, rows: list[dict], errors: list[str], *, minimum: int) -> None:
+    if len(rows) < minimum:
+        errors.append(f"{path.relative_to(ROOT)} must contain at least {minimum} rows")
     seen: set[str] = set()
     pos_seen: set[str] = set()
     for i, row in enumerate(rows, start=1):
@@ -31,6 +27,8 @@ def validate(path: Path = SAMPLE) -> list[str]:
         elif stem_id in seen:
             errors.append(f"{label}: duplicate stem_id {stem_id}")
         seen.add(stem_id)
+        if not row.get("generation_key"):
+            errors.append(f"{label}: missing generation_key")
         pos_seen.add(row.get("pos") or "")
         surface = row.get("surface") or ""
         segment_surface = "".join(seg.get("surface", "") for seg in row.get("visible_segments", []))
@@ -44,7 +42,19 @@ def validate(path: Path = SAMPLE) -> list[str]:
             errors.append(f"{label}: source must be qamus_current_authored")
         errors.extend(public_boundary_errors(row, label))
     if not {"verb", "noun"} <= pos_seen:
-        errors.append(f"sample needs at least verb and noun rows, saw {sorted(pos_seen)}")
+        errors.append(f"{path.relative_to(ROOT)} needs at least verb and noun rows, saw {sorted(pos_seen)}")
+
+
+def validate(path: Path = SAMPLE) -> list[str]:
+    errors: list[str] = []
+    if not path.exists():
+        return [f"missing stem sample: {path.relative_to(ROOT)}"]
+    _validate_stem_rows(path, read_jsonl(path), errors, minimum=100)
+    if path == SAMPLE:
+        if not STEM_FULL.exists():
+            errors.append(f"missing full committed stem table: {STEM_FULL.relative_to(ROOT)}")
+        else:
+            _validate_stem_rows(STEM_FULL, read_jsonl(STEM_FULL), errors, minimum=7000)
     return errors
 
 

@@ -20,7 +20,8 @@ sys.path.insert(0, _REPO)
 from tools import normalize_ar as N  # noqa: E402
 
 LEXICON_PATH = os.path.join(_REPO, "fusha", "lexicon", "fusha-lemmas.jsonl")
-LARGELEXICON_PATH = os.path.join(_REPO, "fusha", "lexicon", "largelexicon", "lemma-source.sample.jsonl")
+LARGELEXICON_SAMPLE_PATH = os.path.join(_REPO, "fusha", "lexicon", "largelexicon", "lemma-source.sample.jsonl")
+LARGELEXICON_FULL_PATH = os.path.join(_REPO, "fusha", "lexicon", "largelexicon", "lemma-source.full.jsonl")
 
 FUNCTION_WORDS = {
     "ما": ("particle", "function-sensitive mā"),
@@ -55,8 +56,10 @@ def _load_lexicon(path=LEXICON_PATH, db="smoke"):
                 row = json.loads(line)
                 row.setdefault("evidence_class", "seed_lexicon")
                 rows.append(row)
-    if db == "largelexicon" and os.path.exists(LARGELEXICON_PATH):
-        with open(LARGELEXICON_PATH, encoding="utf-8") as fh:
+    if db == "largelexicon":
+        large_path = LARGELEXICON_FULL_PATH if os.path.exists(LARGELEXICON_FULL_PATH) else LARGELEXICON_SAMPLE_PATH
+        evidence_class = "largelexicon_full" if large_path == LARGELEXICON_FULL_PATH else "largelexicon_sample"
+        with open(large_path, encoding="utf-8") as fh:
             for line in fh:
                 line = line.strip()
                 if not line:
@@ -73,7 +76,7 @@ def _load_lexicon(path=LEXICON_PATH, db="smoke"):
                         "gloss_hint": row.get("gloss_hint"),
                         "qamus_entry_id": row.get("entry_id"),
                         "source_status": row.get("source_status"),
-                        "evidence_class": "largelexicon_sample",
+                        "evidence_class": evidence_class,
                     }
                 )
     return rows

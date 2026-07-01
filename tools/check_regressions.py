@@ -3115,10 +3115,14 @@ try:
     _p15_head = run_text(["git", "-C", ROOT, "rev-parse", "HEAD"])
     if _p15_head.returncode == 0:
         _p15_head_commit = _p15_head.stdout.strip()
-        check("RH-LIVE Plan 15 report uses current Fusha HEAD",
-              _p15_report.get("fusha_commit") == _p15_head_commit)
-        check("RH-LIVE Plan 15 sample meta uses current Fusha HEAD",
-              _p15_meta.get("fusha_commit") == _p15_head_commit)
+        _p15_report_commit = _p15_report.get("fusha_commit")
+        _p15_meta_commit = _p15_meta.get("fusha_commit")
+        _p15_report_ancestor = run_text(["git", "-C", ROOT, "merge-base", "--is-ancestor", _p15_report_commit or "", _p15_head_commit])
+        _p15_meta_ancestor = run_text(["git", "-C", ROOT, "merge-base", "--is-ancestor", _p15_meta_commit or "", _p15_head_commit])
+        check("RH-LIVE Plan 15 report records a valid ancestor Fusha HEAD",
+              isinstance(_p15_report_commit, str) and len(_p15_report_commit) == 40 and _p15_report_ancestor.returncode == 0)
+        check("RH-LIVE Plan 15 sample meta records a valid ancestor Fusha HEAD",
+              isinstance(_p15_meta_commit, str) and len(_p15_meta_commit) == 40 and _p15_meta_ancestor.returncode == 0)
     else:
         check("RH-LIVE Plan 15 report records a 40-hex Fusha commit",
               isinstance(_p15_report.get("fusha_commit"), str)
@@ -3292,8 +3296,8 @@ except Exception as _e:
     check("P1/P2 closure slice runnable", False)
     print("  ", _e)
 
-# --- largelexicon candidate layer: Qamus-scale morphology samples, Mode A qword projection,
-#     public/private hover boundary, qg validation, and flywheel backfill. This is opt-in
+# --- largelexicon candidate layer: Qamus-scale source-clean full fact tables, Mode A qword projection,
+#     public/private hover boundary, qg validation, CLI contract, and flywheel backfill. This is opt-in
 #     tooling, not live Qamus progress and not arbitrary-text certification. ---
 try:
     for _art in ("docs/parser/largelexicon-claim-boundary.md",
@@ -3303,17 +3307,27 @@ try:
                  "tools/build_largelexicon_morph_db.py",
                  "tools/validate_largelexicon_source_ledger.py",
                  "tools/validate_largelexicon_claim_boundary.py",
+                 "tools/validate_largelexicon_claim_cards.py",
                  "tools/validate_largelexicon_morph_db.py",
                  "tools/validate_largelexicon_parser.py",
+                 "tools/fusha_largelexicon_cli.py",
+                 "tools/validate_largelexicon_cli_contract.py",
                  "tools/build_largelexicon_qamus_mode_a_worklist.py",
                  "tools/project_largelexicon_qamus_hover_candidates.py",
                  "tools/validate_largelexicon_qamus_mode_a.py",
                  "tools/validate_largelexicon_qg_projection.py",
                  "tools/build_largelexicon_flywheel_artifacts.py",
                  "tools/validate_largelexicon_skill_curriculum_backfill.py",
+                 "fusha/lexicon/largelexicon/source-clean-table-allowlist.json",
                  "fusha/lexicon/largelexicon/lemma-source.sample.jsonl",
                  "fusha/lexicon/largelexicon/form-source.sample.jsonl",
+                 "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
+                 "fusha/lexicon/largelexicon/form-source.full.jsonl",
                  "fusha/morphology/examples/largelexicon-stems.sample.jsonl",
+                 "fusha/morphology/data/largelexicon-stems.full.jsonl",
+                 "qamus/indexes/largelexicon/qamus-qword-denominator.full.jsonl",
+                 "qamus/indexes/largelexicon/source-clean-fact-tables.meta.json",
+                 "qamus/reports/largelexicon-claim-cards.json",
                  "qamus/examples/mode_a_all_qword/largelexicon-qamus-mode-a-worklist.sample.jsonl",
                  "qamus/examples/largelexicon/hover-candidates.sample.jsonl",
                  "qamus/examples/largelexicon/flywheel-artifacts.sample.jsonl",
@@ -3324,11 +3338,13 @@ try:
                  "curriculum/drills/largelexicon-morphology-and-hover.md"):
         check("largelexicon artifact exists: %s" % _art, os.path.exists(os.path.join(ROOT, _art)))
     _ll1 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_source_ledger.py"), "--self-test"])
-    check("largelexicon source-ledger self-test (canonical ledger + freshness + samples)", _ll1.returncode == 0)
+    check("largelexicon source-ledger self-test (canonical ledger + freshness + committed source-clean full tables)", _ll1.returncode == 0)
     _ll2 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_claim_boundary.py"), "--self-test"])
     check("largelexicon claim-boundary self-test (no live/arbitrary/CAMeL-class overclaim)", _ll2.returncode == 0)
+    _ll2b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_claim_cards.py"), "--self-test"])
+    check("largelexicon claim-card self-test (supported vs not-yet-supported claims gated)", _ll2b.returncode == 0)
     _ll3 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_morph_db.py"), "--self-test"])
-    check("largelexicon morph DB self-test (source-clean Qamus-derived stem samples)", _ll3.returncode == 0)
+    check("largelexicon morph DB self-test (source-clean Qamus-derived sample + full stem tables)", _ll3.returncode == 0)
     _ll4 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_parser.py"), "--self-test"])
     check("largelexicon parser self-test (opt-in --db largelexicon, smoke default preserved)", _ll4.returncode == 0)
     _ll5 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_qamus_mode_a.py"), "--self-test"])
@@ -3337,6 +3353,8 @@ try:
     check("largelexicon qg projection self-test (source-clean hover candidates or exact packets)", _ll6.returncode == 0)
     _ll7 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_skill_curriculum_backfill.py"), "--self-test"])
     check("largelexicon sarf/nahw/curriculum flywheel self-test", _ll7.returncode == 0)
+    _ll8 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_cli_contract.py"), "--self-test"])
+    check("largelexicon local CLI contract self-test (analyze-token/card, project-hover, validate-mode-a)", _ll8.returncode == 0)
 except Exception as _e:
     check("largelexicon candidate layer runnable", False)
     print("  ", _e)

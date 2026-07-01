@@ -7,10 +7,14 @@ completed CAMeL/MADAMIRA/Stanza-style Classical Arabic NLP stack.
 What this branch may claim after validation:
 
 - it can inventory the 2,092 Qamus entries and their listed forms;
-- it can generate reviewable lemma/form/stem samples from Qamus-owned data;
-- it can run an opt-in `largelexicon` parser preview over those samples;
+- it can generate reviewable lemma/form/stem samples and allowlisted
+  source-clean full tables from Qamus-owned data;
+- it can run an opt-in `largelexicon` parser preview over those Qamus-derived
+  tables;
 - it can produce Qamus Mode A worklist rows for all visible qword-style
   planning;
+- it can expose a local JSON/JSONL CLI contract for `analyze-token`,
+  `analyze-card`, `project-hover`, and `validate-mode-a`;
 - it preserves public hover boundaries: `src=qamus`, `kind=authored`,
   `lang=en`;
 - it routes uncertain rows to candidate/packet states instead of pretending
@@ -29,3 +33,7 @@ What it must not claim:
 Stronger language requires measured analyzer coverage, OOV/error rates,
 disambiguation accuracy, dependency/i'rab evaluation, source-license review,
 model/rule cards, and Qamus public readback owned by the rollout executor.
+
+The long-horizon target is a dependency-free Classical Arabic NLP stack across
+Mode A authoring, Mode B tutoring, and Mode C standalone parsing. That is a
+target-state claim, not a present-tense equivalence claim.

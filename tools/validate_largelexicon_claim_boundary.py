@@ -34,6 +34,9 @@ REQUIRED = {
     "not arbitrary-text certification",
     "source-clean",
     "candidate",
+    "full fact tables",
+    "local json/jsonl cli contract",
+    "target-state claim",
 }
 
 
