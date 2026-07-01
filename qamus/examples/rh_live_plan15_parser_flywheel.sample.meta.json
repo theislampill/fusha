@@ -6,9 +6,9 @@
     "parser_oracle_claim": false,
     "raw_executor_paths_vendored": false
   },
-  "fusha_commit": "73466aaa143c90358182278952c6f19311a511f3",
+  "fusha_commit": "7d0928e71caf6f2f1e748465c047f94f1620f329",
   "generator": "tools/import_rh_live_plan15_flywheel.py",
-  "input_summary_sha256": "8cb5e1765cbc2df4492f0daad29476a2801fb6ecb61a19869ddac23086a1f906",
+  "input_summary_sha256": "ba4497bbc482b046a73fa0f0b6d86aadedf201c34e3b60fd3dfd668e8bec8fbc",
   "output_jsonl": "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl",
   "route_counts": {
     "governor_irab_fixture_needed": 744,
