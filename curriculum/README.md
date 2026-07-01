@@ -87,6 +87,16 @@ drilled in [`drills/parse-key-and-color-layer.md`](drills/parse-key-and-color-la
 uses scrubbed Qamus role classes such as `qg-verb`, `qg-noun`, `qg-preposition`, and
 `qg-pronoun`; it does not expose QAC/Tafsir/screenshot labels as public provenance.
 
+The qamustyping4 backfill adds one stricter learner rule: **all visible qwords
+on a cited card are the denominator**. A selected-word packet, preview row, or
+`draft glosses: N of N` counter is not visual closure unless every rendered
+Arabic word is source-addressed, vocalized as cited, color/hover accounted, and
+reverse-traceable. The regression drill is
+[`drills/mode-a-thin-slice-regressions.md`](drills/mode-a-thin-slice-regressions.md);
+the implementation boundary is
+[`../docs/parser/qamustyping4-implementation.md`](../docs/parser/qamustyping4-implementation.md).
+This is fixture evidence for future work, not live Qamus coverage.
+
 ## How the ladder links the rest of the repo
 
 The curriculum does **not** restate ṣarf or nahw — it *routes* to them. Each level names the
@@ -152,6 +162,7 @@ curriculum/
   drills/
     hover-composition-and-routing.md ← written token → pieces → sarf/nahw route → safe hover
     parse-key-and-color-layer.md     ← pieces → parse_key + display palette rows
+    mode-a-thin-slice-regressions.md ← qamustyping3/4 all-qword visual-closure regressions
     dogfood-error-remediation-index.md ← repeated hover failure → remediation route
 ```
 

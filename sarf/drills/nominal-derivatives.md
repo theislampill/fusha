@@ -276,3 +276,18 @@ when number or derivative shape is invisible.
 
 Rule: every certifiable noun/adjective/participle host carries a root or base where applicable. Proper names and
 function-only rows carry an explicit no-root/no-op reason. Never invent a root just to fill a field.
+
+## <a name="qamustyping4-visible-derivatives"></a>24. Qamustyping4: visible derivative pieces are the lesson
+
+Qamustyping4 turned the particle-page screenshots into a reusable nominal
+derivative check:
+
+| token | required morphology | reject |
+|---|---|---|
+| `ٱلْمُبْطِلُونَ` | article + `مُ` derivative prefix + active participle host + masculine plural suffix | one host-only "falsifiers" span |
+| `نَذِيرٌ` | one nominal/adjectival host unless source evidence proves otherwise | invented bā' or hidden prefix from a visual hunch |
+| `ءَادَمَ` / `عِمْرَٰنَ` | proper-name/no-root row | fake root or verb-family gloss |
+
+Rule: a derivative row is not rich-hover complete until the parse key and qg
+classes show the piece that taught the learner something. If the only safe
+analysis is "proper name, no public root", that is a valid terminal state.

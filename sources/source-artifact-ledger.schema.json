@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/sources/source-artifact-ledger.schema.json",
+  "title": "Canonical source/artifact ledger",
+  "allOf": [
+    { "$ref": "../qamus/schemas/artifact-freshness.schema.json" },
+    {
+      "type": "object",
+      "required": ["schema", "artifacts", "retirement_policy"],
+      "additionalProperties": true,
+      "properties": {
+        "schema": { "const": "fusha/source-artifact-ledger@1" },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["artifact_id", "path", "kind", "public_boundary", "mutation_scope"],
+            "additionalProperties": true,
+            "properties": {
+              "artifact_id": { "type": "string", "minLength": 1 },
+              "path": { "type": "string", "minLength": 1 },
+              "kind": { "type": "string", "minLength": 1 },
+              "public_boundary": { "type": "string", "enum": ["source_clean", "internal_only", "not_public"] },
+              "mutation_scope": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "retirement_policy": { "type": "string", "minLength": 1 }
+      }
+    }
+  ]
+}

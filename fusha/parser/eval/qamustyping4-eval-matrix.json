@@ -1,0 +1,98 @@
+{
+  "schema": "fusha/qamustyping4-eval-matrix@1",
+  "generated_at": "2026-07-01T07:30:00Z",
+  "generated_by": "Codex qamustyping4 implementaudit run",
+  "source_head": "f8b90d8641ec90fa18ce04ee3d0a0b9d20bc358b",
+  "source_branch": "feature/fusha-standalone-parser-qamus-kernel",
+  "supersedes": [
+    "fusha/parser/eval/qamustyping3-eval-matrix.json"
+  ],
+  "stale_after": "2026-07-08T07:30:00Z",
+  "status": "active_qamustyping4_acceptance_gate",
+  "claim_boundary": "Measured fixture and rule-baseline evidence only; not live Qamus, not arbitrary-text certification, not CAMeL/MADAMIRA/Stanza equivalence.",
+  "stage_evidence": [
+    {
+      "stage": "P0",
+      "metric": "claim_boundary_and_freshness",
+      "status": "done",
+      "validator": "tools/validate_qamustyping4_acceptance.py --self-test"
+    },
+    {
+      "stage": "P1",
+      "metric": "source_ledger_and_corpus_split_policy",
+      "status": "changed",
+      "validator": "tools/validate_source_artifact_ledger.py --self-test"
+    },
+    {
+      "stage": "P2",
+      "metric": "morphology_smoke_generator",
+      "status": "changed",
+      "validator": "tools/validate_fusha_morph_db.py --self-test"
+    },
+    {
+      "stage": "P3",
+      "metric": "rule_ranked_disambiguator",
+      "status": "changed",
+      "validator": "tools/validate_fusha_parser_baseline.py --self-test"
+    },
+    {
+      "stage": "P4",
+      "metric": "dependency_irab_smoke_baseline",
+      "status": "changed",
+      "validator": "tools/validate_fusha_parser_baseline.py --self-test"
+    },
+    {
+      "stage": "P5",
+      "metric": "arbitrary_text_preview_boundary",
+      "status": "deferred",
+      "validator": "tools/validate_fusha_standalone_parse.py --self-test"
+    },
+    {
+      "stage": "P6",
+      "metric": "qamus_all_qword_regression_fixture",
+      "status": "changed",
+      "validator": "tools/validate_qamustyping4_acceptance.py --self-test"
+    },
+    {
+      "stage": "P7",
+      "metric": "release_install_handoff_and_claim_gate",
+      "status": "changed",
+      "validator": "tools/validate_parser_claims.py --self-test"
+    }
+  ],
+  "blocked_stronger_claims": [
+    {
+      "claim": "broad morphology database",
+      "blocked_by": "license-reviewed corpus and lexicon coverage metrics are not yet present",
+      "next_action": "build source-ledgered corpus packets and report token coverage by domain"
+    },
+    {
+      "claim": "statistical disambiguator",
+      "blocked_by": "no reviewed train/dev/test corpus or model card for a trained model",
+      "next_action": "create split manifests, baseline metrics, model card, then train/evaluate if authorized"
+    },
+    {
+      "claim": "dependency parser",
+      "blocked_by": "dependency/i'rab gold rows and UAS/LAS or governor metrics are not broad enough",
+      "next_action": "expand gold fixture set and evaluate rule parser before any trained-parser claim"
+    },
+    {
+      "claim": "arbitrary-text Grammarly equivalence",
+      "blocked_by": "Mode C text lacks source-address oracles and overcorrection metrics",
+      "next_action": "evaluate arbitrary-text diagnostics with precision, recall, abstention, and overcorrection"
+    }
+  ],
+  "all_qword_regression_families": [
+    "p011",
+    "p014",
+    "p016",
+    "p018",
+    "p050",
+    "n0005",
+    "n0100",
+    "v033",
+    "v100"
+  ],
+  "live_qamus_progress_claimed": false,
+  "aggregate_claim": "no aggregate NLP-stack score"
+}

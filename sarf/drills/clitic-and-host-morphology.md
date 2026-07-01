@@ -117,3 +117,22 @@ Dogfood batch check: for the 2026-06-27 known-defect rows, write a
 `skill_impact` note for each repeated class. If sarf already has the rule, say
 which procedure/eval enforces it; if not, add the rule before routing the row
 back to Qamus data repair.
+
+## Qamustyping4 visual morphology check
+
+These rows are the final all-qword regression samples. They are not new live
+claims; they are the fixture-backed minimum that prevents a future agent from
+calling a card complete while visible morphology is still hidden.
+
+| token | required visible pieces | unsafe shortcut |
+|---|---|---|
+| `تَعْبُدُوا۟` | `تَ` imperfect prefix + `عْبُدُ` stem + `وا۟` plural subject marker | one verb-colored span with only "worship" |
+| `تَكُونَ` | imperfect prefix + stem, then nahw governor/mood if relevant | bare "there be" with no governed-verb proof |
+| `يَهْتَدُوا۟` | `يَ` prefix + Form VIII stem + plural subject marker | "they were guided" with no prefix/subject display |
+| `جَاهَدَاكَ` | finite verb host + attached `كَ` object | "strive" without "you" |
+| `وَمَلَـٰٓئِكَتِهِۦ` | wāw + plural noun host + possessive suffix | host-only "angels" |
+| `ءَادَمَ` / `عِمْرَٰنَ` / `جِبْرِيلَ` | proper-name/no-root terminal state | inventing a root to satisfy a field |
+
+Rule: qamustyping4 rows fail sarf readiness when a visible prefix, suffix,
+object, subject marker, article, or no-root status is absent from the teaching
+layer, even if the English hover sounds acceptable.

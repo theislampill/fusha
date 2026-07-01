@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/fusha/parser/schemas/disambiguation-result.schema.json",
+  "title": "Fusha rule-ranked disambiguation result",
+  "type": "object",
+  "required": ["schema", "token_results", "summary", "claim"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": { "const": "fusha/disambiguation-result@1" },
+    "token_results": { "type": "array", "items": { "type": "object" } },
+    "summary": {
+      "type": "object",
+      "required": ["tokens", "resolved", "abstained"],
+      "properties": {
+        "tokens": { "type": "integer", "minimum": 0 },
+        "resolved": { "type": "integer", "minimum": 0 },
+        "abstained": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "claim": { "const": "rule-ranked smoke baseline only" }
+  }
+}

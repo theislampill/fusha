@@ -17,6 +17,12 @@ the history; it is to route a miss to the procedure and drill that prevents the 
 | `rich_cert_preview_overclaim` | preview metadata treated as certified/live hover support | `parse-key-and-color-layer.md` | `../../qamus/reports/rich-cert-flywheel-synthesis-20260627.md` |
 | `rich_cert_pending_gate` | pending/two-vote row cleared from readable English alone | `hover-composition-and-routing.md`, `parse-key-and-color-layer.md` | `../../qamus/reports/rich-cert-flywheel-synthesis-20260627.md` |
 | `rh_live_preview_only` | renderer/admin preview candidate mistaken for public rollout approval | `parse-key-and-color-layer.md` | `../../qamus/reports/rich-cert-flywheel-synthesis-20260627.md` |
+| `all_visible_qword_not_accounted` | selected word or draft counter looks complete while other qwords on the same card stay flat | `mode-a-thin-slice-regressions.md` | `../../docs/parser/qamustyping4-implementation.md` |
+| `vocalized_card_readback_drift` | cited Qur'an usage text loses required harakat, hamza, maddah, or selected surface | `mode-a-thin-slice-regressions.md` | `../../provenance/source-boundaries.md` |
+| `hidden_finite_verb_piece` | finite verb hover hides prefix, stem, subject marker, or object pronoun | `../../sarf/drills/clitic-and-host-morphology.md` | `../../sarf/procedures/verb-form.md` |
+| `hidden_derivative_plural_piece` | participle/noun hover hides article, derivative prefix, or plural suffix | `../../sarf/drills/nominal-derivatives.md` | `../../sarf/procedures/noun-plural-gender.md` |
+| `proper_name_fake_root` | a proper name is forced into a root just to fill morphology fields | `mode-a-thin-slice-regressions.md` | `../../sarf/procedures/proper-noun.md` |
+| `function_cluster_phrase_only` | particle cluster is translated as a phrase while individual functions stay uncolored | `../../nahw/drills/particle-disambiguation.md` | `../../nahw/procedures/function-token-hover-review.md` |
 
 Checkpoint rule: a remediated item is not cleared until the learner can name what the visible Arabic piece
 contributes and why the old hover failure was unsafe.

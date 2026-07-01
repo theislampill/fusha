@@ -1,0 +1,14 @@
+{
+  "bundle": "qamus\\examples\\mode_a_thin_slice\\mode-a-bundle.json",
+  "claim": "fixture-proven Mode A thin slice only; not live coverage and not arbitrary-text parser certification",
+  "errors": [],
+  "ok": true,
+  "smoke_cases": {
+    "n0005_all_qword_card": 12,
+    "p011_verb_prefix_stem_subject": 1,
+    "p018_participle_prefix_plural_suffix": 1,
+    "p050_vocalized_interrogative_particle": 1,
+    "v100_am_lahum_particle_cluster": 2
+  },
+  "source_rows": 17
+}

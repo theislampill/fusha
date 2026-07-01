@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/fusha/morphology/schemas/morph-prefix.schema.json",
+  "title": "Fusha morphology prefix row",
+  "type": "object",
+  "required": ["prefix_id", "surface", "kind", "role_candidates", "qg_default_class", "compat_tags", "source"],
+  "additionalProperties": true,
+  "properties": {
+    "prefix_id": { "type": "string", "minLength": 1 },
+    "surface": { "type": "string", "minLength": 1 },
+    "kind": { "type": "string", "enum": ["orthographic_proclitic", "inflectional_prefix", "derivational_prefix"] },
+    "role_candidates": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "qg_default_class": { "type": "string", "minLength": 1 },
+    "requires_nahw_function": { "type": "boolean" },
+    "compat_tags": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "source": { "const": "repo_authored" }
+  }
+}

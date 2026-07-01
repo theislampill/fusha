@@ -1,0 +1,144 @@
+{
+  "schema": "qamus/mode-a-implementation-ledger@1",
+  "generated_at": "2026-07-01T00:00:00Z",
+  "generated_by": "Codex qamustyping2 Mode A implementation",
+  "source_head": "f8b90d8641ec90fa18ce04ee3d0a0b9d20bc358b",
+  "source_branch": "feature/fusha-standalone-parser-qamus-kernel",
+  "supersedes": [],
+  "stale_after": "2026-07-08T00:00:00Z",
+  "status": "active_fixture_only",
+  "claim_boundary": {
+    "implemented_claim": "fixture-level Qamus Mode A plus dependency-free smoke morphology, parser, and eval gates",
+    "not_claimed": [
+      "live Qamus coverage progress",
+      "VN tranche closure",
+      "general-purpose Classical Arabic parser",
+      "statistical disambiguator",
+      "trained dependency parser",
+      "broad morphological generator",
+      "HTTP API endpoint"
+    ]
+  },
+  "stages": [
+    {
+      "stage": "P0",
+      "name": "Truth reconciliation and source spine",
+      "status": "implemented_minimal_contract",
+      "artifacts": [
+        "sources/source-artifact-ledger.json",
+        "sources/source-artifact-ledger.schema.json",
+        "qamus/schemas/artifact-freshness.schema.json",
+        "qamus/schemas/qamus-mode-a-source-row.schema.json"
+      ],
+      "validator": "tools/validate_source_artifact_ledger.py --self-test"
+    },
+    {
+      "stage": "P0.5",
+      "name": "Thin end-to-end Mode A slice",
+      "status": "implemented_and_validated",
+      "artifacts": [
+        "qamus/examples/mode_a_thin_slice/source-address-rows.jsonl",
+        "qamus/examples/mode_a_thin_slice/analysis.jsonl",
+        "qamus/examples/mode_a_thin_slice/public-hover-projection.jsonl",
+        "qamus/examples/mode_a_thin_slice/private-trace.jsonl",
+        "qamus/examples/mode_a_thin_slice/source-edge-manifest.jsonl",
+        "qamus/examples/mode_a_thin_slice/rendered-readback.fixture.jsonl",
+        "qamus/examples/mode_a_thin_slice/flywheel-artifacts.jsonl",
+        "qamus/examples/mode_a_thin_slice/claim-validation-report.json"
+      ],
+      "validator": "tools/validate_qamus_mode_a_adoption.py --self-test"
+    },
+    {
+      "stage": "P1",
+      "name": "Morphological database and generator",
+      "status": "implemented_smoke_morphology",
+      "artifacts": [
+        "fusha/morphology/data/prefixes.jsonl",
+        "fusha/morphology/data/stems.sample.jsonl",
+        "fusha/morphology/data/suffixes.jsonl",
+        "fusha/morphology/examples/morphology-smoke.jsonl",
+        "tools/fusha_morph_analyze.py",
+        "tools/fusha_morph_generate.py",
+        "tools/fusha_morph_reinflect.py"
+      ],
+      "validators": [
+        "tools/validate_fusha_morph_db.py --self-test",
+        "tools/eval_fusha_morphology.py --self-test"
+      ],
+      "minimum_viable_cutoff": [
+        "attached preposition plus host/pronoun",
+        "verb prefix plus stem plus subject/object suffix",
+        "derivative or participle prefix plus plural/dual suffix",
+        "function-token rows",
+        "all-qword card denominator"
+      ],
+      "blocked_by": [
+        "broad external lexicon/data review before large morphology expansion",
+        "keep P0.5/P1 validators green after each family"
+      ]
+    },
+    {
+      "stage": "P2",
+      "name": "Disambiguator, dependency, and i'rab parser",
+      "status": "implemented_rule_ranked_smoke_baseline",
+      "artifacts": [
+        "fusha/parser/examples/parser-smoke.jsonl",
+        "tools/fusha_disambiguate.py",
+        "tools/fusha_dependency_parse.py",
+        "tools/fusha_irab_governor.py"
+      ],
+      "validator": "tools/validate_fusha_parser_baseline.py --self-test",
+      "blocked_by": [
+        "trained/statistical disambiguator requires reviewed source ledger, split manifests, and model card",
+        "broad dependency/i'rab parser requires eval corpus and metrics"
+      ]
+    },
+    {
+      "stage": "P3",
+      "name": "Qamus rollout and bidirectional flywheel",
+      "status": "implemented_fixture_validator_only",
+      "artifacts": [
+        "qamus/procedures/qamus-mode-a-parser-adoption.md",
+        "curriculum/drills/mode-a-thin-slice-regressions.md"
+      ],
+      "blocked_by": [
+        "rollout executor adoption",
+        "live DOM/readback validators outside this repo-only branch"
+      ]
+    },
+    {
+      "stage": "P4",
+      "name": "Evaluation, corpora, release, and installation",
+      "status": "implemented_smoke_eval_claim_gates",
+      "artifacts": [
+        "fusha/parser/splits/qamus-mode-a-dev.jsonl",
+        "fusha/parser/splits/qamus-mode-a-test.jsonl",
+        "fusha/parser/splits/quranic-function-token-test.jsonl",
+        "fusha/parser/model-cards/rule-ranked-baseline.model-card.json",
+        "fusha/parser/eval/parser-stack-smoke-report.json",
+        "tools/validate_fusha_evaluation.py",
+        "tools/validate_parser_claims.py"
+      ],
+      "validators": [
+        "tools/validate_fusha_evaluation.py --self-test",
+        "tools/validate_parser_claims.py --self-test"
+      ],
+      "blocked_by": [
+        "commit/push/merge require explicit owner authorization",
+        "installed skill refresh requires explicit owner authorization and Codex restart/reload",
+        "live Qamus deployment remains executor-owned"
+      ]
+    }
+  ],
+  "local_cli_contract": [
+    "python tools/fusha_analyze_token.py --input token.json",
+    "python tools/fusha_analyze_card.py --input rows.jsonl --out analysis.jsonl",
+    "python tools/fusha_project_hover.py --source-rows rows.jsonl --analysis analysis.jsonl --out public-hover-projection.jsonl",
+    "python tools/validate_qamus_mode_a_adoption.py --self-test",
+    "python tools/validate_fusha_morph_db.py --self-test",
+    "python tools/eval_fusha_morphology.py --self-test",
+    "python tools/validate_fusha_parser_baseline.py --self-test",
+    "python tools/validate_fusha_evaluation.py --self-test",
+    "python tools/validate_parser_claims.py --self-test"
+  ]
+}

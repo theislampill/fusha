@@ -1,0 +1,56 @@
+{
+  "schema": "fusha/qamustyping3-eval-matrix@1",
+  "generated_at": "2026-07-01T00:00:00Z",
+  "generated_by": "Codex qamustyping3 safe implementation",
+  "source_head": "f8b90d8641ec90fa18ce04ee3d0a0b9d20bc358b",
+  "source_branch": "feature/fusha-standalone-parser-qamus-kernel",
+  "supersedes": [],
+  "stale_after": "2026-07-08T00:00:00Z",
+  "status": "active_fixture_eval_gate",
+  "claim_boundary": "This matrix is not live Qamus, not arbitrary-text, and not a trained dependency parser evaluation.",
+  "layers": [
+    {
+      "layer": "P0_source_ledger",
+      "status": "validated_fixture_policy",
+      "minimum_gate": "source ledger exists, freshness fields exist, external-source policy is source-clean"
+    },
+    {
+      "layer": "P0_5_mode_a_thin_slice",
+      "status": "validated_fixture",
+      "minimum_gate": "source row to public projection to reverse trace to rendered fixture is validated"
+    },
+    {
+      "layer": "P1_morphology",
+      "status": "smoke_only",
+      "minimum_gate": "known ANDON morphology families pass smoke analysis/generation"
+    },
+    {
+      "layer": "P2_disambiguation",
+      "status": "rule_ranked_smoke_only",
+      "minimum_gate": "rule-ranked candidates exist with abstention/blocked status for unsafe rows"
+    },
+    {
+      "layer": "P2_dependency_irab",
+      "status": "candidate_smoke_only",
+      "minimum_gate": "governor/i'rab facts are represented as candidates, not broad parser claims"
+    },
+    {
+      "layer": "P3_qamus_all_qword",
+      "status": "fixture_worklist_only",
+      "minimum_gate": "all visible qwords on smoke cards are accountably represented"
+    },
+    {
+      "layer": "P4_release_claims",
+      "status": "claim_gated",
+      "minimum_gate": "claim validator rejects broad NLP-stack wording until evidence exists"
+    }
+  ],
+  "future_numeric_gates": {
+    "public_leak_count": 0,
+    "reverse_trace_required": true,
+    "source_surface_uniqueness_required": true,
+    "wrong_resolve_ceiling": "unset_until_gold_eval_exists",
+    "abstention_quality": "unset_until_gold_eval_exists",
+    "all_qword_closure_rate": "fixture_only_until_live_executor_adopts"
+  }
+}

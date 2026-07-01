@@ -17,6 +17,12 @@ classes. See
 For a dogfood-derived map of repeated morphology failures and where to remediate them, use
 [`dogfood-sarf-map.md`](dogfood-sarf-map.md) with
 [`../drills/dogfood-sarf-remediation.md`](../drills/dogfood-sarf-remediation.md).
+Qamustyping4 adds the final visual-closure morphology gate: a learner-ready
+card must account for every visible qword, and every rich hover must expose
+visible morphology such as verb prefixes, subject/object suffixes, derivative
+prefixes, articles, plural endings, and proper-name/no-root status. The
+regression set lives in
+[`../../curriculum/drills/mode-a-thin-slice-regressions.md`](../../curriculum/drills/mode-a-thin-slice-regressions.md).
 
 > One discipline runs through every stage: **`norm()` proposes, it never certifies.** It drops
 > the hamza seat and all harakāt, so it can widen recall but can never decide a root, a form, or
@@ -188,6 +194,9 @@ the **ism mafʿūl** (passive participle — the *done-to*: `مَكْتُوب` "
 **The cardinal rule:** a maṣdar/participle is a **noun** — it takes a noun gloss, never
 "to …". `رَسُولًا` is "a messenger", not "to send". Derived مُـ participles split active/passive
 by the **penult vowel**: `مُعَلِّم` "teacher" (kasra) vs `مُعَلَّم` "taught one" (fatḥa).
+For qamustyping4 visual closure, also ask whether the display teaches the
+visible pieces: `ٱلْمُبْطِلُونَ` is not done until `ٱلْ`, `مُ`, the participial
+host, and `ونَ` are all represented in the parse key/color layer.
 
 - **Procedure:** [`../procedures/noun-plural-gender.md`](../procedures/noun-plural-gender.md),
   reference [`../references/masdar-participle-notes.md`](../references/masdar-participle-notes.md),

@@ -1,0 +1,200 @@
+{
+  "schema": "fusha/qamustyping4-implementation-ledger@1",
+  "generated_at": "2026-07-01T07:30:00Z",
+  "generated_by": "Codex qamustyping4 implementaudit run",
+  "source_head": "f8b90d8641ec90fa18ce04ee3d0a0b9d20bc358b",
+  "source_branch": "feature/fusha-standalone-parser-qamus-kernel",
+  "supersedes": [
+    "qamus/reports/qamustyping3-implementation-ledger.json"
+  ],
+  "stale_after": "2026-07-08T07:30:00Z",
+  "status": "active_qamustyping4_acceptance_gate",
+  "claim_boundary": {
+    "implemented_claim": "Qamustyping4 acceptance layer over source-addressed Mode A fixtures, smoke morphology, rule-ranked disambiguation, dependency/i'rab baseline, all-qword regression fixtures, and claim validators.",
+    "is_full_classical_arabic_nlp_stack": false,
+    "not_live_qamus": true,
+    "not_arbitrary_text_certification": true,
+    "not_claimed": [
+      "live Qamus coverage progress",
+      "all VN or p pages filled",
+      "CAMeL Tools equivalence",
+      "MADAMIRA equivalence",
+      "Stanza equivalence",
+      "trained statistical disambiguator",
+      "trained dependency parser",
+      "broad morphology database",
+      "general-purpose Classical Arabic Grammarly"
+    ],
+    "stronger_claim_gate": "Stronger claims require source-ledgered corpora, splits, metrics, rule/model cards, and owner authorization."
+  },
+  "stages": [
+    {
+      "stage": "P0",
+      "name": "truth reconciliation and claim gate",
+      "terminal_state": "done",
+      "status": "implemented_acceptance_gate",
+      "artifacts": [
+        "docs/parser/qamustyping4-implementation.md",
+        "qamus/reports/qamustyping4-implementation-ledger.json",
+        "tools/validate_qamustyping4_acceptance.py"
+      ],
+      "validators": [
+        "python tools/validate_qamustyping4_acceptance.py --self-test",
+        "python tools/validate_parser_claims.py --self-test"
+      ]
+    },
+    {
+      "stage": "P1",
+      "name": "source ledger, corpora, adapters, and splits",
+      "terminal_state": "changed",
+      "status": "ledger_and_split_policy_extended",
+      "artifacts": [
+        "sources/source-artifact-ledger.json",
+        "sources/source-artifact-ledger.schema.json",
+        "docs/parser/source-ledger-and-split-policy.md"
+      ],
+      "validators": [
+        "python tools/validate_source_artifact_ledger.py --self-test"
+      ]
+    },
+    {
+      "stage": "P2",
+      "name": "morphology lexicon, analyzer, generator, reinflector",
+      "terminal_state": "changed",
+      "status": "smoke_morphology_substrate_validated",
+      "artifacts": [
+        "fusha/morphology/data/prefixes.jsonl",
+        "fusha/morphology/data/stems.sample.jsonl",
+        "fusha/morphology/data/suffixes.jsonl",
+        "fusha/morphology/data/particles.jsonl",
+        "tools/fusha_morph_analyze.py",
+        "tools/fusha_morph_generate.py",
+        "tools/fusha_morph_reinflect.py"
+      ],
+      "validators": [
+        "python tools/validate_fusha_morph_db.py --self-test",
+        "python tools/eval_fusha_morphology.py --self-test"
+      ]
+    },
+    {
+      "stage": "P3",
+      "name": "disambiguator, ranking, confidence, and abstention",
+      "terminal_state": "changed",
+      "status": "rule_ranked_smoke_baseline_validated",
+      "artifacts": [
+        "tools/fusha_disambiguate.py",
+        "fusha/parser/model-cards/rule-ranked-baseline.model-card.json",
+        "fusha/parser/eval/parser-stack-smoke-report.json"
+      ],
+      "validators": [
+        "python tools/validate_fusha_parser_baseline.py --self-test"
+      ]
+    },
+    {
+      "stage": "P4",
+      "name": "dependency and i'rab parser",
+      "terminal_state": "changed",
+      "status": "dependency_irab_smoke_baseline_validated",
+      "artifacts": [
+        "tools/fusha_dependency_parse.py",
+        "tools/fusha_irab_governor.py",
+        "fusha/parser/schemas/dependency-parse-result.schema.json"
+      ],
+      "validators": [
+        "python tools/validate_fusha_parser_baseline.py --self-test"
+      ]
+    },
+    {
+      "stage": "P5",
+      "name": "arbitrary-text checker and learner feedback",
+      "terminal_state": "deferred",
+      "status": "preview_only_stronger_claim_blocked",
+      "artifacts": [
+        "tools/fusha_standalone_parse.py",
+        "tools/validate_fusha_standalone_parse.py",
+        "qamus/reports/standalone-fusha-parser-mvp.md"
+      ],
+      "validators": [
+        "python tools/validate_fusha_standalone_parse.py --self-test"
+      ],
+      "blocked_by": "No broad arbitrary-text corpus with precision, recall, abstention, and overcorrection metrics is present."
+    },
+    {
+      "stage": "P6",
+      "name": "Qamus all-qword Project Xanadu accelerator",
+      "terminal_state": "changed",
+      "status": "all_qword_regression_fixture_added",
+      "artifacts": [
+        "qamus/examples/mode_a_all_qword/qamustyping4-regression-worklist.sample.jsonl",
+        "qamus/examples/mode_a_all_qword/qamustyping4-visual-readback.fixture.jsonl",
+        "qamus/procedures/qamus-mode-a-parser-adoption.md"
+      ],
+      "validators": [
+        "python tools/validate_qamustyping4_acceptance.py --self-test"
+      ]
+    },
+    {
+      "stage": "P7",
+      "name": "evaluation, benchmarking, release, installation, and ops gates",
+      "terminal_state": "changed",
+      "status": "evaluation_and_handoff_gates_added",
+      "artifacts": [
+        "fusha/parser/eval/qamustyping4-eval-matrix.json",
+        "docs/parser/qamustyping4-implementation.md",
+        "tools/validate_parser_claims.py"
+      ],
+      "validators": [
+        "python tools/validate_fusha_evaluation.py --self-test",
+        "python tools/validate_parser_claims.py --self-test"
+      ]
+    }
+  ],
+  "all_qword_regression_families": [
+    "p011",
+    "p014",
+    "p016",
+    "p018",
+    "p050",
+    "n0005",
+    "n0100",
+    "v033",
+    "v100"
+  ],
+  "andons": [
+    {
+      "id": "full_classical_arabic_stack_claim",
+      "terminal_state": "blocked",
+      "class": "impossible-criterion-without-corpus-evidence",
+      "five_whys": [
+        "The branch has smoke fixtures, not a broad corpus-backed stack.",
+        "A broad stack needs source-ledgered corpora and license decisions.",
+        "Training or importing systems without those decisions would violate source-boundary policy.",
+        "Arbitrary text lacks the source-address oracles used by Qamus Mode A.",
+        "Therefore the safe closure is a gated acceptance layer plus exact future work, not an overclaim."
+      ],
+      "next_concrete_action": "Build reviewed corpus packets, split manifests, metrics, and rule/model cards before advancing the claim tier."
+    },
+    {
+      "id": "live_qamus_visual_closure",
+      "terminal_state": "deferred",
+      "class": "owner-executor-boundary",
+      "five_whys": [
+        "The Fusha repo is not the live app.",
+        "Live append/readback belongs to the Qamus executor.",
+        "Local fixtures cannot prove public DOM state.",
+        "Visual closure needs current live page readback.",
+        "Therefore Fusha can provide validators and packets but not claim live closure."
+      ],
+      "next_concrete_action": "Qamus executor pulls Fusha, runs qamustyping4 validators locally, then deploys/readbacks through the live rollout gate."
+    }
+  ],
+  "local_cli_contract": [
+    "python tools/fusha_analyze_token.py --input token.json",
+    "python tools/fusha_analyze_card.py --input rows.jsonl --out analysis.jsonl",
+    "python tools/fusha_project_hover.py --source-rows rows.jsonl --analysis analysis.jsonl --out public-hover-projection.jsonl",
+    "python tools/fusha_standalone_parse.py --text \"...\"",
+    "python tools/validate_qamustyping4_acceptance.py --self-test"
+  ],
+  "live_qamus_progress_claimed": false,
+  "commit_push_release_performed": false
+}

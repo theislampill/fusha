@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/human-review-packet.schema.json",
+  "title": "Qamus owner/scholar review packet",
+  "type": "object",
+  "required": ["schema", "packet_id", "reviewer_role", "max_packet_size", "rows"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": { "const": "qamus/human-review-packet@1" },
+    "packet_id": { "type": "string", "minLength": 1 },
+    "reviewer_role": { "type": "string", "enum": ["owner", "scholar_irab"] },
+    "max_packet_size": { "type": "integer", "minimum": 1, "maximum": 50 },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["row_id", "entry_id", "card_id", "surface", "exact_question", "required_evidence", "allowed_decisions", "on_accept", "on_reject"],
+        "additionalProperties": true,
+        "properties": {
+          "row_id": { "type": "string", "minLength": 1 },
+          "entry_id": { "type": "string", "minLength": 1 },
+          "card_id": { "type": "string", "minLength": 1 },
+          "surface": { "type": "string", "minLength": 1 },
+          "exact_question": { "type": "string", "minLength": 1 },
+          "required_evidence": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "allowed_decisions": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["accept", "reject", "revise", "defer_with_reason"] },
+            "minItems": 1
+          },
+          "on_accept": { "type": "string", "minLength": 1 },
+          "on_reject": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

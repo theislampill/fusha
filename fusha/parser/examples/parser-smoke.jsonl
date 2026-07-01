@@ -1,0 +1,5 @@
+{"surface":"أَمْ","loc":"21:43:1","context_surface":"أَمْ لَهُمْ ءَالِهَةٌ","expected_abstention":false,"expected_gate":"function_token_context_fixture","requires_governor":false}
+{"surface":"لَهُمْ","loc":"21:43:2","context_surface":"أَمْ لَهُمْ ءَالِهَةٌ","expected_abstention":false,"expected_gate":"preposition_attachment_fixture","requires_governor":true}
+{"surface":"تَعْبُدُوا۟","loc":"17:23:4","context_surface":"أَلَّا تَعْبُدُوا۟ إِلَّآ إِيَّاهُ","expected_abstention":false,"expected_gate":"governed_verb_fixture","requires_governor":true}
+{"surface":"ٱلْمُبْطِلُونَ","loc":"29:48:13","context_surface":"إِذًا لَّٱرْتَابَ ٱلْمُبْطِلُونَ","expected_abstention":false,"expected_gate":"nominal_participle_fixture","requires_governor":false}
+{"surface":"أَيَّانَ","loc":"75:6:2","context_surface":"يَسْـَٔلُ أَيَّانَ يَوْمُ ٱلْقِيَامَةِ","expected_abstention":false,"expected_gate":"function_token_context_fixture","requires_governor":false}

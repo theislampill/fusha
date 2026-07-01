@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/fusha/parser/schemas/parser-eval-report.schema.json",
+  "title": "Fusha parser stack smoke eval report",
+  "type": "object",
+  "required": ["schema", "live_qamus_progress_claimed", "aggregate_claim", "layers", "claim"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": { "const": "fusha/parser-stack-smoke-report@1" },
+    "live_qamus_progress_claimed": { "const": false },
+    "aggregate_claim": { "const": "no aggregate NLP-stack score" },
+    "layers": { "type": "object" },
+    "claim": { "type": "string", "minLength": 1 }
+  }
+}

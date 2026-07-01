@@ -22,10 +22,10 @@ _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 
 # Per named dir: every marker (lower-case substring) must appear somewhere in the dir's concatenated .md content.
 _DIR_MARKERS = {
-    "sarf/curriculum": ["candidate", "pending", "fusha_morphology_lattice"],
-    "sarf/drills": ["candidate lattice", "pending", "fusha_morphology_lattice"],
-    "nahw/curriculum": ["governor", "governor_not_justified", "fusha_governor", "pending"],
-    "nahw/drills": ["governor", "governor_not_justified", "fusha_governor"],
+    "sarf/curriculum": ["candidate", "pending", "fusha_morphology_lattice", "qamustyping4"],
+    "sarf/drills": ["candidate lattice", "pending", "fusha_morphology_lattice", "qamustyping4"],
+    "nahw/curriculum": ["governor", "governor_not_justified", "fusha_governor", "pending", "qamustyping4"],
+    "nahw/drills": ["governor", "governor_not_justified", "fusha_governor", "qamustyping4"],
 }
 # also require an explicit ambiguity/right-answer-wrong-reason phrasing somewhere in each side
 _SARF_AMBIGUITY = ("never force one", "blank beats", "decision: pending", "keep every", "keep both", "candidate set")
@@ -42,10 +42,10 @@ _NEGATION = re.compile(r"\bnot\b|\bnever\b|\bno\s+live\b|isn['’]?t|\bwithout\b
 # a real local-path / secret leak (source NAMES like QAC/Tafsir are legitimately discussed as internal evidence)
 _PATH_LEAK = re.compile(r"[A-Za-z]:\\\\|/srv/|/home/|/Users/|root\.txt")
 
-# the latest CONCRETE committed Fusha branch-stack tip the capability README must still name (anti-stale check).
-# Bump this each time the stack advances; the data/runtime pass advanced it past 17e5419 to 8fcad75 (the
-# curriculum/drills/README back-prop commit, named in README as the last link before the current branch).
-_CURRENT_STACK_TIP = "8fcad75"
+# the latest capability marker the root README must name (anti-stale check).
+# Earlier versions pinned an old branch-stack commit; after qamustyping4 the durable
+# contract is the capability marker, not a stale branch-tip list.
+_CURRENT_STACK_MARKER = "qamustyping4"
 
 # tool/schema/procedure paths the new curriculum/drills/READMEs cite — all must exist (a dangling citation = stale doc)
 _CITED_PATHS = [
@@ -68,6 +68,15 @@ _TOUCHED = [  # files this thread edited — leak/overclaim checks focus here
     "README.md", "curriculum/README.md", "sarf/README.md", "nahw/README.md",
     "sarf/curriculum/drills-beginner.md", "sarf/drills/root-detection.md",
     "nahw/curriculum/drills-beginner.md", "nahw/drills/irab-case-mood.md",
+    "curriculum/drills/mode-a-thin-slice-regressions.md",
+    "curriculum/drills/dogfood-error-remediation-index.md",
+    "curriculum/tutor-runtime-routing.md",
+    "sarf/curriculum/zero-to-fluency-sarf.md",
+    "sarf/drills/clitic-and-host-morphology.md",
+    "sarf/drills/nominal-derivatives.md",
+    "nahw/curriculum/zero-to-fluency-nahw.md",
+    "nahw/drills/particle-disambiguation.md",
+    "nahw/drills/grammar-routing-hard-cases.md",
 ]
 
 
@@ -109,9 +118,9 @@ def check_readmes():
         for ln in txt.splitlines():
             if _COVERAGE_CLAIM.search(ln) and not _NEGATION.search(ln):
                 e.append("%s overclaims live coverage progress from tooling (%r)" % (rel, ln.strip()[:70]))
-    # the capability README must name the current branch-stack tip (anti-stale)
-    if _CURRENT_STACK_TIP not in _read("README.md"):
-        e.append("root README.md does not name the current branch-stack tip %s (stale stack)" % _CURRENT_STACK_TIP)
+    # the capability README must name the current parser/curriculum capability marker (anti-stale)
+    if _CURRENT_STACK_MARKER not in _read("README.md").lower():
+        e.append("root README.md does not name the current stack marker %s (stale stack)" % _CURRENT_STACK_MARKER)
     return e
 
 
@@ -158,7 +167,7 @@ def _self_test():
     for f in failures:
         print("FAIL " + f)
     if not failures:
-        print("ok   validate_sarf_nahw_curriculum_drills_readmes self-test: 4 named dirs engine-aligned; READMEs no-cert / no-coverage-overclaim / current-stack / leak-free; cited paths exist")
+        print("ok   validate_sarf_nahw_curriculum_drills_readmes self-test: 4 named dirs engine-aligned; READMEs no-cert / no-coverage-overclaim / current-stack-marker / leak-free; cited paths exist")
     return 0 if not failures else 1
 
 

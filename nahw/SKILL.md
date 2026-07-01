@@ -135,6 +135,12 @@ or comitative; why a fāʾ is result/resumption; and what lām or mā is doing i
 If the function is adverbial or ẓarf-like, do not invent an unsupported `qg-adverb` class. Use the nearest supported
 class for the written piece (`qg-particle`, `qg-preposition`, or `qg-relation` as appropriate) and state the
 adverbial role in `nahw.function`, `parse_key.summary`, and the learner-facing explanation.
+The standalone parser (`tools/fusha_standalone_parse.py`) is allowed to pre-route syntax-sensitive tokens, but it
+does not certify function. Treat `context_candidates` as an exact nahw question: `وما` remains wāw plus
+function-specific mā pending context; `بالكتاب` shows bāʾ + article + host but still needs a jar-majrūr/context
+decision for RH-LIVE; `إنما` and `لمّا` are particle clusters whose function cannot be flattened into one English
+gloss. If parser preview and hover disagree, produce a nahw repair/test packet or scholar/iʿrāb packet; do not call
+the page complete merely because some color exists.
 
 Learner-facing tooltip prose must explain Arabic, not workflow. Do not put source-boundary, authoring-process,
 deployment, owner-authorization, or internal-evidence statements in a public hover explanation. Those statements

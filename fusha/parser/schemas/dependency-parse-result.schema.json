@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/fusha/parser/schemas/dependency-parse-result.schema.json",
+  "title": "Fusha dependency and i'rab smoke result",
+  "type": "object",
+  "required": ["schema", "dependency_candidates", "claim"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": { "const": "fusha/dependency-parse-result@1" },
+    "dependency_candidates": { "type": "array", "items": { "type": "object" } },
+    "claim": { "const": "smoke dependency/i'rab candidates only" }
+  }
+}

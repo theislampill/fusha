@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/artifact-freshness.schema.json",
+  "title": "Artifact freshness and retirement metadata",
+  "type": "object",
+  "required": ["generated_at", "generated_by", "source_head", "source_branch", "supersedes", "stale_after", "status"],
+  "properties": {
+    "generated_at": { "type": "string", "minLength": 1 },
+    "generated_by": { "type": "string", "minLength": 1 },
+    "source_head": { "type": "string", "minLength": 7 },
+    "source_branch": { "type": "string", "minLength": 1 },
+    "supersedes": { "type": "array", "items": { "type": "string" } },
+    "stale_after": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["active", "active_fixture_only", "superseded", "stale", "retired", "draft"]
+    }
+  },
+  "additionalProperties": true
+}

@@ -32,6 +32,12 @@ and [`../../curriculum/drills/parse-key-and-color-layer.md`](../../curriculum/dr
 For a dogfood-derived map of repeated function/syntax failures and where to remediate them, use
 [`dogfood-nahw-map.md`](dogfood-nahw-map.md) with
 [`../drills/dogfood-nahw-remediation.md`](../drills/dogfood-nahw-remediation.md).
+Qamustyping4 adds the final visual-closure syntax gate: a cited card is not
+learner-complete until every visible qword has a function/attachment route or
+an exact blocker. Function-token clusters such as `أَمْ لَهُمْ`, vocalized
+particles such as `أَيَّانَ`, and preposition/pronoun rows such as `مَعَكُمْ`
+must remain grammar-bearing, not phrase-only decoration. See
+[`../../curriculum/drills/mode-a-thin-slice-regressions.md`](../../curriculum/drills/mode-a-thin-slice-regressions.md).
 
 ---
 

@@ -17,6 +17,11 @@ MAX_FILES = 40
 BANNED = ("entries.jsonl", "entries.min.jsonl", "indexes/current/", "candidates/", ".provenance.",
           "out/", "source_photo", "hover-token-audit-full.jsonl", "qamus-2092-entry-matrix.jsonl")
 
+def norm_bytes(path):
+    """Match the drift validator: compare text content, not checkout line endings."""
+    text = open(path, encoding="utf-8").read().replace("\r\n", "\n").replace("\r", "\n")
+    return text.encode("utf-8")
+
 def main():
     paths = [l.strip() for l in open(INCLUDE, encoding="utf-8")
              if l.strip() and not l.lstrip().startswith("#")]
@@ -30,14 +35,15 @@ def main():
             errors.append("banned path in allowlist: %s" % rel); continue
         if not os.path.exists(src):
             errors.append("missing source: %s" % rel); continue
-        sz = os.path.getsize(src)
+        normalized = norm_bytes(src)
+        sz = len(normalized)
         if sz > MAX_FILE:
             errors.append("file > 500KB: %s (%d)" % (rel, sz)); continue
         total += sz
         dst = os.path.join(PACK, rel)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         shutil.copy2(src, dst)
-        sha = hashlib.sha256(open(src, "rb").read()).hexdigest()[:12]
+        sha = hashlib.sha256(normalized).hexdigest()[:12]
         manifest.append((rel, sz, sha))
     if len(manifest) > MAX_FILES:
         errors.append("too many files: %d > %d" % (len(manifest), MAX_FILES))

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/fusha/morphology/schemas/morph-generation-result.schema.json",
+  "title": "Fusha smoke generation result",
+  "type": "object",
+  "required": ["ok"],
+  "additionalProperties": true,
+  "properties": {
+    "ok": { "type": "boolean" },
+    "generation_key": { "type": "string" },
+    "surface": { "type": "string" },
+    "claim": { "type": "string" }
+  }
+}

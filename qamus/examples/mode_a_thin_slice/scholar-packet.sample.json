@@ -1,0 +1,19 @@
+{
+  "schema": "qamus/human-review-packet@1",
+  "packet_id": "mode-a-thin-slice-scholar-sample",
+  "reviewer_role": "scholar_irab",
+  "max_packet_size": 10,
+  "rows": [
+    {
+      "row_id": "thin-v100-21-43-1",
+      "entry_id": "v100",
+      "card_id": "thin-v100-card-21-43",
+      "surface": "أَمْ",
+      "exact_question": "Confirm the contextual function of أَمْ in 21:43 before generalizing the hover beyond this fixture.",
+      "required_evidence": ["source-address row", "Arabic surface match", "i'rab/function rationale", "token contribution"],
+      "allowed_decisions": ["accept", "reject", "revise", "defer_with_reason"],
+      "on_accept": "Convert the decision into a nahw fixture and Mode A fast-path rule.",
+      "on_reject": "Keep the row out of auto-safe lanes and update the blocker with the rejected rationale."
+    }
+  ]
+}

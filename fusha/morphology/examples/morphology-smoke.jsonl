@@ -1,0 +1,5 @@
+{"surface":"لَهُمْ","expected_roles":["preposition","attached_pronoun"],"expected_root":null,"generate_from":{"generation_key":"prep-lam-3mp"}}
+{"surface":"تَعْبُدُوا۟","expected_roles":["imperfect_prefix","verb_stem","subject_marker"],"expected_root":"ع ب د","generate_from":{"generation_key":"verb-abada-imperf-2mp"}}
+{"surface":"ٱلْمُبْطِلُونَ","expected_roles":["definite_article","derivative_prefix","participle_host","plural_suffix"],"expected_root":"ب ط ل","generate_from":{"generation_key":"participle-btl-def-mp"}}
+{"surface":"أَيَّانَ","expected_roles":["interrogative_time_particle"],"expected_root":null,"generate_from":{"generation_key":"particle-ayyana"}}
+{"surface":"وَجِبْرِيلَ","expected_roles":["conjunction","proper_name_host"],"expected_root":null,"generate_from":{"generation_key":"proper-jibril-conj"}}

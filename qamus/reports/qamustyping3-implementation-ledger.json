@@ -1,0 +1,306 @@
+{
+  "schema": "fusha/qamustyping3-implementation-ledger@1",
+  "generated_at": "2026-07-01T00:00:00Z",
+  "generated_by": "Codex qamustyping3 safe implementation",
+  "source_head": "f8b90d8641ec90fa18ce04ee3d0a0b9d20bc358b",
+  "source_branch": "feature/fusha-standalone-parser-qamus-kernel",
+  "supersedes": [
+    "qamus/reports/qamus-mode-a-implementation-ledger.json"
+  ],
+  "stale_after": "2026-07-08T00:00:00Z",
+  "status": "active_truthful_acceptance_gate",
+  "claim_boundary": {
+    "implemented_claim": "Source-clean Mode A fixture stack plus qamustyping3 acceptance gates for parser/checker development.",
+    "is_full_classical_arabic_nlp_stack": false,
+    "not_live_qamus": true,
+    "not_arbitrary_text": true,
+    "not_claimed": [
+      "live Qamus coverage progress",
+      "VN tranche closure",
+      "general-purpose Classical Arabic parser",
+      "CAMeL Tools, MADAMIRA, or Stanza equivalence",
+      "trained statistical disambiguator",
+      "trained dependency parser",
+      "broad morphology database",
+      "broad morphological generator",
+      "HTTP API endpoint"
+    ],
+    "stronger_claim_gate": "Any stronger claim requires reviewed corpora, split manifests, metrics, model cards, source-ledger approval, and owner authorization."
+  },
+  "capabilities": {
+    "source_artifact_ledger": {
+      "status": "implemented_fixture_policy",
+      "artifacts": [
+        "sources/source-artifact-ledger.json",
+        "sources/source-artifact-ledger.schema.json",
+        "docs/parser/source-ledger-and-split-policy.md"
+      ]
+    },
+    "local_cli_contract": {
+      "status": "documented_and_smoke_backed",
+      "artifacts": [
+        "docs/parser/fusha-cli-contract.md",
+        "tools/fusha_analyze_token.py",
+        "tools/fusha_analyze_card.py",
+        "tools/fusha_project_hover.py"
+      ]
+    },
+    "mode_a_thin_slice": {
+      "status": "implemented_fixture",
+      "source_rows": 17,
+      "artifacts": [
+        "qamus/examples/mode_a_thin_slice/source-address-rows.jsonl",
+        "qamus/examples/mode_a_thin_slice/mode-a-bundle.json",
+        "qamus/examples/mode_a_thin_slice/rendered-readback.fixture.jsonl"
+      ]
+    },
+    "morphology_database": {
+      "status": "smoke_database_only",
+      "minimum_viable_cutoff": [
+        "attached preposition plus host/pronoun",
+        "verb prefix plus stem plus subject/object suffix",
+        "derivative or participle prefix plus plural suffix",
+        "function-token rows",
+        "proper-name/no-root rows",
+        "all-qword card denominator"
+      ],
+      "artifacts": [
+        "fusha/morphology/data/prefixes.jsonl",
+        "fusha/morphology/data/stems.sample.jsonl",
+        "fusha/morphology/data/suffixes.jsonl",
+        "fusha/morphology/data/particles.jsonl"
+      ]
+    },
+    "morphology_generator": {
+      "status": "smoke_generator_only_broad_generation_gated",
+      "artifacts": [
+        "tools/fusha_morph_generate.py",
+        "tools/fusha_morph_reinflect.py"
+      ],
+      "gate": "Do not expand beyond smoke families until P0.5/P1 validators stay green and a reviewed morphology source ledger exists."
+    },
+    "statistical_disambiguator": {
+      "status": "gated_by_corpus_eval_training",
+      "artifacts": [
+        "fusha/parser/splits/qamus-mode-a-dev.jsonl",
+        "fusha/parser/splits/qamus-mode-a-test.jsonl",
+        "fusha/parser/model-cards/rule-ranked-baseline.model-card.json"
+      ],
+      "gate": "Requires reviewed training/eval corpus, train/dev/test split, metrics, and model card before any statistical claim."
+    },
+    "dependency_parser": {
+      "status": "rule_ranked_smoke_only",
+      "artifacts": [
+        "tools/fusha_dependency_parse.py",
+        "tools/fusha_irab_governor.py",
+        "fusha/parser/examples/parser-smoke.jsonl"
+      ],
+      "gate": "Current output is a dependency/i'rab candidate baseline only, not a trained parser."
+    },
+    "qamus_all_qword_mode_a": {
+      "status": "fixture_only_no_live_progress",
+      "artifacts": [
+        "qamus/examples/mode_a_all_qword/qamustyping3-all-qword-worklist.sample.jsonl",
+        "qamus/examples/mode_a_all_qword/qamustyping3-visual-readback.fixture.jsonl"
+      ],
+      "gate": "Live adoption remains executor-owned and requires current live readback."
+    },
+    "arbitrary_text_checker": {
+      "status": "candidate_preview_only",
+      "gate": "Must not be described as arbitrary-text certification until broad corpus tests and abstention metrics pass."
+    }
+  },
+  "stages": [
+    {
+      "stage": "P0",
+      "name": "Truth reconciliation, source ledger, and governance",
+      "status": "implemented_acceptance_gate",
+      "artifacts": [
+        "sources/source-artifact-ledger.json",
+        "sources/source-artifact-ledger.schema.json",
+        "qamus/schemas/artifact-freshness.schema.json",
+        "docs/parser/source-ledger-and-split-policy.md"
+      ],
+      "validators": [
+        "python tools/validate_source_artifact_ledger.py --self-test",
+        "python tools/validate_qamustyping3_acceptance.py --self-test"
+      ],
+      "done_when": "Canonical ledger, freshness fields, external-source policy, and public/private boundary are all machine-checkable."
+    },
+    {
+      "stage": "P0.5",
+      "name": "Thin end-to-end Mode A proof slice",
+      "status": "implemented_and_validated",
+      "artifacts": [
+        "qamus/examples/mode_a_thin_slice/source-address-rows.jsonl",
+        "qamus/examples/mode_a_thin_slice/analysis.jsonl",
+        "qamus/examples/mode_a_thin_slice/public-hover-projection.jsonl",
+        "qamus/examples/mode_a_thin_slice/private-trace.jsonl",
+        "qamus/examples/mode_a_thin_slice/source-edge-manifest.jsonl",
+        "qamus/examples/mode_a_thin_slice/rendered-readback.fixture.jsonl",
+        "qamus/examples/mode_a_thin_slice/flywheel-artifacts.jsonl",
+        "qamus/examples/mode_a_thin_slice/claim-validation-report.json"
+      ],
+      "validators": [
+        "python tools/validate_qamus_mode_a_adoption.py --self-test"
+      ],
+      "smoke_families": [
+        "n0005 all-qword card",
+        "v100 particle cluster",
+        "p011 verb prefix/stem/subject marker",
+        "p018 participle prefix plus plural suffix",
+        "p050 vocalized interrogative particle"
+      ],
+      "done_when": "A visible Arabic qword can travel to public-safe hover, private trace, reverse edge, rendered fixture, flywheel artifact, and claim validator."
+    },
+    {
+      "stage": "P1",
+      "name": "Morphology lexicon and generator substrate",
+      "status": "implemented_smoke_plus_cutoff",
+      "artifacts": [
+        "fusha/morphology/data/prefixes.jsonl",
+        "fusha/morphology/data/stems.sample.jsonl",
+        "fusha/morphology/data/suffixes.jsonl",
+        "fusha/morphology/data/particles.jsonl",
+        "fusha/morphology/examples/morphology-smoke.jsonl",
+        "tools/fusha_morph_analyze.py",
+        "tools/fusha_morph_generate.py",
+        "tools/fusha_morph_reinflect.py"
+      ],
+      "validators": [
+        "python tools/validate_fusha_morph_db.py --self-test",
+        "python tools/eval_fusha_morphology.py --self-test"
+      ],
+      "done_when": "Known ANDON morphology families are represented in the smoke database without broad generator claims."
+    },
+    {
+      "stage": "P2",
+      "name": "Disambiguation, dependency, and i'rab parser baseline",
+      "status": "implemented_rule_ranked_smoke_baseline",
+      "artifacts": [
+        "fusha/parser/examples/parser-smoke.jsonl",
+        "tools/fusha_disambiguate.py",
+        "tools/fusha_dependency_parse.py",
+        "tools/fusha_irab_governor.py",
+        "fusha/parser/model-cards/rule-ranked-baseline.model-card.json"
+      ],
+      "validators": [
+        "python tools/validate_fusha_parser_baseline.py --self-test"
+      ],
+      "done_when": "Smoke rows produce rule-ranked morphology/syntax candidates and i'rab gates without statistical or trained-parser claims."
+    },
+    {
+      "stage": "P3",
+      "name": "Qamus all-qword rollout support and bidirectional flywheel",
+      "status": "implemented_fixture_worklist_and_packets",
+      "artifacts": [
+        "qamus/procedures/qamus-mode-a-parser-adoption.md",
+        "qamus/examples/mode_a_all_qword/qamustyping3-all-qword-worklist.sample.jsonl",
+        "qamus/examples/mode_a_all_qword/qamustyping3-visual-readback.fixture.jsonl",
+        "curriculum/drills/mode-a-thin-slice-regressions.md"
+      ],
+      "validators": [
+        "python tools/validate_qamus_mode_a_adoption.py --self-test",
+        "python tools/validate_qamustyping3_acceptance.py --self-test"
+      ],
+      "done_when": "Mode A can represent all visible qwords as fixture rows and route each to deploy-ready, no-op, owner, scholar, source, or tool packet."
+    },
+    {
+      "stage": "P4",
+      "name": "Evaluation, release, installation, and ops gates",
+      "status": "implemented_claim_and_eval_gates",
+      "artifacts": [
+        "fusha/parser/splits/qamus-mode-a-dev.jsonl",
+        "fusha/parser/splits/qamus-mode-a-test.jsonl",
+        "fusha/parser/splits/quranic-function-token-test.jsonl",
+        "fusha/parser/eval/parser-stack-smoke-report.json",
+        "fusha/parser/eval/qamustyping3-eval-matrix.json",
+        "tools/validate_fusha_evaluation.py",
+        "tools/validate_parser_claims.py",
+        "tools/validate_qamustyping3_acceptance.py"
+      ],
+      "validators": [
+        "python tools/validate_fusha_evaluation.py --self-test",
+        "python tools/validate_parser_claims.py --self-test",
+        "python tools/validate_qamustyping3_acceptance.py --self-test"
+      ],
+      "done_when": "Every capability claim is tied to a current artifact, validator, and explicit gate for stronger claims."
+    }
+  ],
+  "external_sources": [
+    "camel_morph_msa",
+    "camel_tools",
+    "camelparser2",
+    "madamira",
+    "qac",
+    "quran_foundation_api",
+    "quran_wbw",
+    "stanza",
+    "tafsir_mcp",
+    "tanzil",
+    "ud_arabic_nyuad",
+    "ud_arabic_padt"
+  ],
+  "external_source_policy": {
+    "use": "Internal evidence, comparison, error taxonomy, and future corpus planning only.",
+    "public_payload_rule": "Public Qamus fields remain source-clean with src=qamus, kind=authored, lang=en; no external source labels, paths, tool names, or copied wording.",
+    "location_rule": "Match Arabic surface inside the verse and require uniqueness or a source-address crosswalk; do not blindly trust external word-number locs."
+  },
+  "local_cli_contract": [
+    "python tools/fusha_analyze_token.py --input token.json",
+    "python tools/fusha_analyze_card.py --input rows.jsonl --out analysis.jsonl",
+    "python tools/fusha_project_hover.py --source-rows rows.jsonl --analysis analysis.jsonl --out public-hover-projection.jsonl",
+    "python tools/validate_qamus_mode_a_adoption.py --self-test",
+    "python tools/validate_fusha_morph_db.py --self-test",
+    "python tools/eval_fusha_morphology.py --self-test",
+    "python tools/validate_fusha_parser_baseline.py --self-test",
+    "python tools/validate_fusha_evaluation.py --self-test",
+    "python tools/validate_parser_claims.py --self-test",
+    "python tools/validate_qamustyping3_acceptance.py --self-test"
+  ],
+  "human_review_workflow": {
+    "packet_roles": [
+      "owner",
+      "scholar_irab",
+      "source_crosswalk",
+      "compiler_template",
+      "renderer_qg",
+      "validator_schema"
+    ],
+    "required_packet_fields": [
+      "packet_id",
+      "role",
+      "row_or_card_address",
+      "visible_surface",
+      "source_edge_status",
+      "question",
+      "internal_evidence_refs",
+      "allowed_decisions",
+      "acceptance_validator",
+      "flywheel_target"
+    ],
+    "decision_rule": "Accepted decisions must become fixtures or validator cases; rejected decisions must update blocker reason and next action."
+  },
+  "andons": [
+    {
+      "id": "broad_morphology_db",
+      "status": "deferred_with_gate",
+      "next_action": "Expand only after each source family has ledger review, compatibility rules, and eval rows."
+    },
+    {
+      "id": "statistical_disambiguator",
+      "status": "deferred_with_gate",
+      "next_action": "Build reviewed train/dev/test split and model card before training or claiming statistical behavior."
+    },
+    {
+      "id": "dependency_parser",
+      "status": "rule_ranked_smoke_only",
+      "next_action": "Promote only after gold dependencies/i'rab decisions and metrics exist."
+    },
+    {
+      "id": "live_qamus_mode_a_rollout",
+      "status": "executor_owned",
+      "next_action": "Use the local fixtures and validators as inputs; live append/readback remains outside this branch."
+    }
+  ]
+}

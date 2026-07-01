@@ -37,6 +37,17 @@ has no source-address certainty and stays ambiguity-preserving. The contracts (e
 - **Learner hint ladder** — Point → Teach → Bottom-out, with Bottom-out withheld past the gate. [`tools/fusha_learner_feedback.py`](tools/fusha_learner_feedback.py).
 - **CEFR is scaffolding, not certification** — explanation depth is gated by a *caller-supplied* learner level; the engine never
   assesses or certifies a learner. [`tools/fusha_cefr_gate.py`](tools/fusha_cefr_gate.py).
+- **Standalone parser preview** — source-clean `fusha/standalone-parse@1` output for Mode A/B/C planning:
+  clitic splits, seed/pinned morphology, context candidates, qg segments, and hover-preview text without source-address
+  certainty. [`tools/fusha_standalone_parse.py`](tools/fusha_standalone_parse.py) ·
+  [`tools/validate_fusha_standalone_parse.py`](tools/validate_fusha_standalone_parse.py) ·
+  [`qamus/reports/standalone-fusha-parser-mvp.md`](qamus/reports/standalone-fusha-parser-mvp.md).
+- **Qamustyping4 all-qword acceptance** — fixture-backed page/card sanity checks for the observed RH-LIVE sparse-page
+  regressions: every visible qword must be source-addressed or exactly packeted, vocalization/readback drift is a blocker,
+  and sarf/nahw pieces must remain visible in the parse-key/color layer. This is local tooling, not live coverage.
+  [`docs/parser/qamustyping4-implementation.md`](docs/parser/qamustyping4-implementation.md) ·
+  [`tools/validate_qamustyping4_acceptance.py`](tools/validate_qamustyping4_acceptance.py) ·
+  [`curriculum/drills/mode-a-thin-slice-regressions.md`](curriculum/drills/mode-a-thin-slice-regressions.md).
 - **Offline learning runtime** — a deterministic tutor loop grades checkpoints against the answer key (never model self-report),
   schedules reviews by Leitner box, holds hard grammar until two independent checks agree, and persists progress only with an
   explicit `--write`. [`tools/fusha_tutor_runtime.py`](tools/fusha_tutor_runtime.py) ·
@@ -47,10 +58,10 @@ has no source-address certainty and stays ambiguity-preserving. The contracts (e
   via the public-safe seam [`tools/qamus_wbw_adapter.py`](tools/qamus_wbw_adapter.py).
 
 The sarf/nahw **skills**, **curriculum/**, and **drills/** teach these contracts; the **evals** + `tools/check_regressions.py` keep
-the docs aligned with the tools. This is **tooling** — not live Qamus coverage progress. Fusha-only branch stack (owner-gated, none
-merged to main): `a765cef` (P1 general checker + rich-hover flywheel) ← `8365bf7` (P2 governor / leak SoT / conflict) ← `b6a0b4c`
-(P2b learning + CEFR) ← `17e5419` (sarf/nahw skill back-prop) ← `8fcad75` (curriculum/drills/README back-prop) ← this branch
-(data/runtime completion: tutor runtime, Leitner scheduler, checkpoint coverage, qamus_wbw public-safety, QAC morphology wiring).
+the docs aligned with the tools. This is **tooling** — not live Qamus coverage progress. The recent Fusha-only stack now includes
+P1 general checker + rich-hover flywheel, P2 governor/conflict gates, P2b learner feedback/CEFR scaffolding, sarf/nahw skill and
+curriculum back-prop, data/runtime completion, and qamustyping3/4 Mode A acceptance. Stronger claims remain gated by corpora,
+splits, metrics, and owner authorization.
 
 **The engine in five examples** (each a regression fixture): أَعْمَالُنَا → "our deeds" (noun stem + possessive,
 POS-gated); لَمْ vs لِمَ → "did not" vs "why" (particle state split); مِن vs مَن → "from" vs "who/whoever" (harakat

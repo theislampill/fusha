@@ -138,6 +138,12 @@ Verb suffix pronouns are also visible morphology, not metadata. A token like `ج
 plural subject marker, and a second-person masculine singular object suffix; the hover must not collapse it to
 "to argue; dispute". Use a subject/object-aware gloss such as "they argue/dispute with you (masc. sg.)" when
 certified, or keep the row pending with the exact suffix blocker.
+The standalone parser (`tools/fusha_standalone_parse.py`) may be used as a sarf preview/flywheel, not as final
+certification. Treat its `qg_segments`, `morphology_candidates`, and `hover_preview` as candidate evidence for
+visible morphology: `فسيكفيكهم` must preserve fāʾ, future sīn, imperfect prefix, verb stem, and stacked object
+pronouns; `يسألك` must preserve imperfect prefix plus object pronoun; `مستغفرين` must preserve derivative prefix,
+host, and plural suffix. If the parser preview exposes a piece the current hover hides, route the row to a sarf
+repair/test packet instead of hand-waving it as complete.
 Verb form is a semantic gate, not decoration. Record triliteral form I-X or quadriliteral form I-IV before
 authoring: II can be causative/intensive, III can be mutual, VI reciprocal, VII/VIII reflexive or agentless,
 IX stative/color, X seeking/reflexive-causative. A hover that ignores the form, voice, person, number, or suffix

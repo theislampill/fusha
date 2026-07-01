@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/fusha/parser/schemas/parser-model-card.schema.json",
+  "title": "Fusha parser model card",
+  "type": "object",
+  "required": ["schema", "model_id", "claim", "trained_model", "intended_use", "not_for", "source_ledger_refs"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": { "const": "fusha/parser-model-card@1" },
+    "model_id": { "type": "string", "minLength": 1 },
+    "claim": { "type": "string", "minLength": 1 },
+    "trained_model": { "type": "boolean" },
+    "intended_use": { "type": "array", "items": { "type": "string" } },
+    "not_for": { "type": "array", "items": { "type": "string" } },
+    "source_ledger_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+  }
+}

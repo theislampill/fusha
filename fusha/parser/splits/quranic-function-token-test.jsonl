@@ -1,0 +1,1 @@
+{"split_id":"quranic-function-token-test","unit_id":"qamus:p050#75:6","group_key":"quran:75:6","domain":"qamus_quranic","allowed_tasks":["function_token","vocalization_integrity","hover_projection"],"source_ledger_refs":["qamus-mode-a-thin-slice-source-rows","quran-source-boundary"],"leakage_guards":["same_card","same_quran_ref","same_entry","same_particle_family"]}

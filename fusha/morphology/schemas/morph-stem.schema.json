@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/fusha/morphology/schemas/morph-stem.schema.json",
+  "title": "Fusha morphology stem row",
+  "type": "object",
+  "required": ["stem_id", "surface", "pos", "gloss_shape", "visible_segments", "source"],
+  "additionalProperties": true,
+  "properties": {
+    "stem_id": { "type": "string", "minLength": 1 },
+    "surface": { "type": "string", "minLength": 1 },
+    "lemma": { "type": ["string", "null"] },
+    "root": { "type": ["string", "null"] },
+    "pos": { "type": "string", "minLength": 1 },
+    "pattern": { "type": ["string", "null"] },
+    "form": { "type": ["string", "null"] },
+    "gloss_shape": { "type": "string", "minLength": 1 },
+    "generation_key": { "type": ["string", "null"] },
+    "visible_segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["surface", "role", "qg_class", "gloss"],
+        "properties": {
+          "surface": { "type": "string", "minLength": 1 },
+          "role": { "type": "string", "minLength": 1 },
+          "qg_class": { "type": "string", "minLength": 1 },
+          "gloss": { "type": "string", "minLength": 1 }
+        }
+      },
+      "minItems": 1
+    },
+    "source": { "const": "repo_authored" }
+  }
+}

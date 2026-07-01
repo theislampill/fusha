@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/fusha/morphology/schemas/morph-suffix.schema.json",
+  "title": "Fusha morphology suffix row",
+  "type": "object",
+  "required": ["suffix_id", "surface", "kind", "qg_default_class", "compat_tags", "source"],
+  "additionalProperties": true,
+  "properties": {
+    "suffix_id": { "type": "string", "minLength": 1 },
+    "surface": { "type": "string", "minLength": 1 },
+    "kind": { "type": "string", "minLength": 1 },
+    "features": { "type": "object" },
+    "qg_default_class": { "type": "string", "minLength": 1 },
+    "gloss_contribution": { "type": "string", "minLength": 1 },
+    "compat_tags": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "source": { "const": "repo_authored" }
+  }
+}

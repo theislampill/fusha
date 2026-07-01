@@ -1,0 +1,21 @@
+{
+  "schema": "fusha/parser-stack-smoke-report@1",
+  "generated_at": "2026-07-01T00:00:00Z",
+  "generated_by": "Codex qamustyping2 remaining-plan implementation",
+  "source_head": "f8b90d8641ec90fa18ce04ee3d0a0b9d20bc358b",
+  "source_branch": "feature/fusha-standalone-parser-qamus-kernel",
+  "supersedes": [],
+  "stale_after": "2026-07-08T00:00:00Z",
+  "status": "active_fixture_only",
+  "live_qamus_progress_claimed": false,
+  "aggregate_claim": "no aggregate NLP-stack score",
+  "layers": {
+    "mode_a_thin_slice": {"rows": 17, "status": "validated_fixture"},
+    "morphology": {"rows": 5, "status": "validated_smoke"},
+    "disambiguation": {"rows": 5, "status": "rule_ranked_smoke"},
+    "dependency_irab": {"rows": 5, "status": "candidate_smoke"},
+    "statistical_model": {"status": "deferred_no_training"},
+    "arbitrary_text": {"status": "not_certified"}
+  },
+  "claim": "not live Qamus, not arbitrary-text, fixture smoke evidence only"
+}

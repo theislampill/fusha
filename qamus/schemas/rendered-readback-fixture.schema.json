@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/rendered-readback-fixture.schema.json",
+  "title": "Rendered/readback fixture for Mode A",
+  "type": "object",
+  "required": ["schema", "row_id", "entry_id", "card_id", "rendered_span_target", "text_content", "expected_surface", "hover_present", "qg_classes", "live_readback", "fixture_readback_pass"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": { "const": "qamus/rendered-readback-fixture@1" },
+    "row_id": { "type": "string", "minLength": 1 },
+    "entry_id": { "type": "string", "minLength": 1 },
+    "card_id": { "type": "string", "minLength": 1 },
+    "rendered_span_target": { "type": "string", "minLength": 1 },
+    "text_content": { "type": "string", "minLength": 1 },
+    "expected_surface": { "type": "string", "minLength": 1 },
+    "hover_present": { "const": true },
+    "qg_classes": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "live_readback": { "const": false },
+    "fixture_readback_pass": { "const": true }
+  }
+}

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fusha Parser Preview</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #111820;
+      --panel: #18232d;
+      --text: #eef7ff;
+      --muted: #a9bdca;
+      --line: #2b3e4c;
+      --accent: #68c3ff;
+      --verb: #68c3ff;
+      --noun: #9ed3ff;
+      --part: #b68cff;
+      --prep: #ff7f7f;
+      --pron: #9aa6ff;
+      --art: #d1d8df;
+      --num: #ffc857;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+    }
+    h1 { margin: 0; font-size: 22px; }
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--panel);
+      color: var(--text);
+      font: 13px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+    button {
+      width: fit-content;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 12px;
+      background: #203241;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .token {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--panel);
+    }
+    .surface {
+      direction: rtl;
+      font-family: "Amiri", "Scheherazade New", serif;
+      font-size: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 2px;
+      margin-bottom: 8px;
+    }
+    .seg { border-bottom: 2px solid currentColor; }
+    .qg-verb-prefix { color: var(--accent); }
+    .qg-verb, .qg-verb-stem { color: var(--verb); }
+    .qg-noun, .qg-noun-stem, .qg-proper-noun, .qg-adjective { color: var(--noun); }
+    .qg-particle, .qg-conjunction, .qg-result, .qg-result-fa, .qg-lam, .qg-ma-particle { color: var(--part); }
+    .qg-preposition { color: var(--prep); }
+    .qg-pronoun, .qg-object-pronoun, .qg-subject-pronoun, .qg-possessive-pronoun { color: var(--pron); }
+    .qg-article { color: var(--art); }
+    .qg-dual-suffix, .qg-plural-suffix, .qg-case { color: var(--num); }
+    .meta { color: var(--muted); font-size: 12px; }
+    .rows { display: grid; gap: 6px; margin-top: 10px; }
+    .row { display: grid; grid-template-columns: 58px 1fr; gap: 8px; align-items: baseline; }
+    .pill { color: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Fusha Parser Preview</h1>
+    <textarea id="json" spellcheck="false"></textarea>
+    <button id="render">Render</button>
+    <section id="out" class="grid"></section>
+  </main>
+  <script>
+    const sample = {
+      schema: "fusha/standalone-parse@1",
+      tokens: [{
+        surface: "فسيكفيكهم",
+        confidence_gate: "likely_from_internal_pattern",
+        qg_segments: [
+          {surface: "ف", role: "prefix_resumption_fa", class: "qg-result", label: "FA", gloss_contribution: "so/then"},
+          {surface: "س", role: "future_particle", class: "qg-particle", label: "FUT", gloss_contribution: "will"},
+          {surface: "ي", role: "verb_prefix", class: "qg-verb-prefix", label: "PFX", gloss_contribution: "imperfect marker"},
+          {surface: "كفي", role: "verb_stem", class: "qg-verb-stem", label: "STEM", gloss_contribution: "suffice"},
+          {surface: "ك", role: "object_pronoun", class: "qg-object-pronoun", label: "OBJ", gloss_contribution: "you"},
+          {surface: "هم", role: "object_pronoun", class: "qg-object-pronoun", label: "OBJ", gloss_contribution: "them"}
+        ],
+        hover_preview: {token_contribution_gloss: "so/then + will + imperfect marker + suffice + you + them"}
+      }]
+    };
+    const input = document.getElementById("json");
+    const out = document.getElementById("out");
+    input.value = JSON.stringify(sample, null, 2);
+    function esc(s) {
+      return String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    function render() {
+      let rec;
+      try { rec = JSON.parse(input.value); } catch (e) { out.innerHTML = `<p>${esc(e.message)}</p>`; return; }
+      out.innerHTML = (rec.tokens || []).map(tok => {
+        const segs = (tok.qg_segments || [{surface: tok.surface, class: "qg-noun-stem", label: "TOK"}]);
+        const surface = segs.map(s => `<span class="seg ${esc(s.class)}" title="${esc(s.role)}">${esc(s.surface)}</span>`).join("");
+        const rows = segs.map(s => `<div class="row"><span class="pill">${esc(s.label || s.role)}</span><span>${esc(s.gloss_contribution || s.role)}</span></div>`).join("");
+        return `<article class="token"><div class="surface">${surface}</div><div><strong>${esc(tok.hover_preview?.token_contribution_gloss || "candidate")}</strong></div><div class="meta">${esc(tok.confidence_gate || "")}</div><div class="rows">${rows}</div></article>`;
+      }).join("");
+    }
+    document.getElementById("render").addEventListener("click", render);
+    render();
+  </script>
+</body>
+</html>

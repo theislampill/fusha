@@ -61,3 +61,22 @@ For each row, choose the route and explain why it is not automatically safe:
 
 If the row is already covered by an eval or procedure, write the no-op reason.
 Do not invent a new skill rule merely to show activity.
+
+## 10. Qamustyping4 function-cluster readback
+
+These are fixture-backed visual-closure checks. They do not claim live page
+completion; they make the nahw route explicit before a future executor does
+public readback.
+
+| token | classify first | unsafe shortcut |
+|---|---|---|
+| `أَمْ` in `أَمْ لَهُمْ` | alternative/interrogative particle in this clause | leaving it plain because the phrase translation reads well |
+| `لَهُمْ` | lām relation + attached `هُمْ` pronoun and clause role | one undivided "for, belongs to; certainly" hover |
+| `أَيَّانَ` | vocalized interrogative time particle | accepting an unvocalized card as complete |
+| `بِٱللَّهِ` | bā' relation + proper-name host + PP attachment/frame | host-only "Allah" |
+| `مَعَكُمْ` | preposition/relational host + second-person plural pronoun | host-only "with" or dropped `كُمْ` |
+
+Graduation check: explain each qamustyping4 row with the smallest token-level
+contribution, then say what would make the row stay pending: missing
+vocalization, missing reverse span, uncertified PP attachment, or function
+uncertainty.

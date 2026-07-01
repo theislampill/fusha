@@ -1,0 +1,19 @@
+{
+  "schema": "qamus/human-review-packet@1",
+  "packet_id": "mode-a-thin-slice-owner-sample",
+  "reviewer_role": "owner",
+  "max_packet_size": 10,
+  "rows": [
+    {
+      "row_id": "thin-p050-75-6-2",
+      "entry_id": "p050",
+      "card_id": "thin-p050-card-75-6",
+      "surface": "أَيَّانَ",
+      "exact_question": "Approve treating missing example-card vocalization as a hard visual-closure defect before any page is marked complete.",
+      "required_evidence": ["rendered card text", "canonical vocalized source text", "readback target", "repair diff"],
+      "allowed_decisions": ["accept", "reject", "revise", "defer_with_reason"],
+      "on_accept": "Add the vocalization repair to the all-qword closure queue and regression fixture.",
+      "on_reject": "Leave the card unclosed and record the owner reason."
+    }
+  ]
+}

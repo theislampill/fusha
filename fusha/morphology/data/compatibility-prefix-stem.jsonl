@@ -1,0 +1,5 @@
+{"prefix_id":"pfx_lam_prep","stem_id":"stem_lahum_lam_pronoun","compat_reason":"lam governs attached pronoun host","source":"repo_authored"}
+{"prefix_id":"pfx_ta_imperfect","stem_id":"stem_abada_imperfect_2mp","compat_reason":"imperfect prefix belongs to finite verb host","source":"repo_authored"}
+{"prefix_id":"pfx_al_article","stem_id":"stem_mubtilun_def_ap_mp","compat_reason":"article makes participle definite","source":"repo_authored"}
+{"prefix_id":"pfx_mu_derivative","stem_id":"stem_mubtilun_def_ap_mp","compat_reason":"derivational prefix is part of participle pattern","source":"repo_authored"}
+{"prefix_id":"pfx_waw_conj","stem_id":"stem_wajibril_proper","compat_reason":"waw conjoins proper name","source":"repo_authored"}

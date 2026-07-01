@@ -474,3 +474,21 @@ component-only evidence boundaries.
 VN-20 keeps every final-tranche candidate read-only. Prepositions, relational
 nouns, suffixes, and component-only rows need exact-address sarf/nahw proof
 before any live apply plan.
+
+## 4w. Qamustyping4 all-qword visual closure
+
+Qamustyping4 is the final guard against confusing "some payload exists" with
+"the card teaches the Arabic." It is fixture-only in this repo and live-proof is
+owned by the Qamus executor.
+
+| symptom | route before completion claim | unsafe shortcut |
+|---|---|---|
+| visible qwords remain uncolored or hoverless on `n0005`, `n0100`, `v033`, or `v100` | all-qword denominator and rendered-span reverse trace | selected-word packet or draft-gloss counter |
+| `p050` function token/card text loses harakat, hamza, or maddah | source-text/readback blocker | treating a complete count as canonical text proof |
+| `أَمْ لَهُمْ` has only a phrase-level translation | classify `أَمْ`, lām, pronoun, and clause role | one English phrase as token hovers |
+| `بِٱللَّهِ` / `مَعَكُمْ` drops the relation or pronoun | preposition/pronoun + PP attachment/referent route | host-only hover |
+| a grammar-safe row has no qg/readback span | renderer/qg/edge packet, not scholar/i'rab | inventing a syntax problem to explain a display gap |
+
+Rule: nahw closes only the grammar. If the remaining issue is rendered-span,
+source-text, qg class, or reverse-trace failure, route it exactly. Do not call
+it rich-hover complete and do not hide it under `pending_two_vote`.

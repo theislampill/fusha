@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/private-trace.schema.json",
+  "title": "Qamus private analysis trace",
+  "type": "object",
+  "required": ["schema", "row_id", "source_row_id", "entry_id", "card_id", "internal_evidence", "decision_backlink", "public_boundary", "review_state"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": { "const": "qamus/private-trace@1" },
+    "row_id": { "type": "string", "minLength": 1 },
+    "source_row_id": { "type": "string", "minLength": 1 },
+    "entry_id": { "type": "string", "minLength": 1 },
+    "card_id": { "type": "string", "minLength": 1 },
+    "internal_evidence": { "type": "object" },
+    "decision_backlink": { "type": "string", "minLength": 1 },
+    "public_boundary": { "$ref": "public-private-boundary.schema.json" },
+    "review_state": { "type": "string", "minLength": 1 }
+  }
+}

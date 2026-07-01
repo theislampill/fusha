@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/source-edge-manifest.schema.json",
+  "title": "Bidirectional source edge manifest",
+  "type": "object",
+  "required": ["schema", "row_id", "entry_id", "card_id", "forward_trace", "reverse_trace", "rendered_span_target", "orphan_payload", "orphan_rendered_span"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": { "const": "qamus/source-edge-manifest@1" },
+    "row_id": { "type": "string", "minLength": 1 },
+    "entry_id": { "type": "string", "minLength": 1 },
+    "card_id": { "type": "string", "minLength": 1 },
+    "forward_trace": { "type": "array", "items": { "type": "string" }, "minItems": 2 },
+    "reverse_trace": { "type": "array", "items": { "type": "string" }, "minItems": 2 },
+    "rendered_span_target": { "type": "string", "minLength": 1 },
+    "source_photo_trace_status": { "type": "string" },
+    "source_address_crosswalk": { "type": ["object", "null"] },
+    "orphan_payload": { "const": false },
+    "orphan_rendered_span": { "const": false }
+  }
+}

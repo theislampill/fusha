@@ -40,6 +40,9 @@ roadmap, assessment rubric, and explicit sarf/nahw procedure loading before a le
 | qamus restart causes immediate public readback noise | run health-wait plus source/runtime parity before judging the Arabic/content payload |
 | used QAC concept membership as a translation | `qamus/procedures/grammar-resource-usage.md` + `curriculum/drills/hover-composition-and-routing.md` |
 | confused named entity with common lexical meaning | concept-map flag internally, then `sarf/procedures/proper-noun.md` and verse-specific nahw/i'rab |
+| qamustyping4 all-qword regression: a cited card has uncolored or hoverless visible words | `curriculum/drills/mode-a-thin-slice-regressions.md` + `curriculum/drills/dogfood-error-remediation-index.md` |
+| qamustyping4 visual regression: cited Arabic loses harakat/hamza/maddah | source-text/readback blocker in `curriculum/drills/mode-a-thin-slice-regressions.md`; do not teach from the corrupted display |
+| qamustyping4 function cluster: `أَمْ لَهُمْ`, `أَيَّانَ`, or similar rows are phrase-only | `nahw/drills/particle-disambiguation.md` + `nahw/procedures/function-token-hover-review.md` |
 
 ## Situation → curriculum
 
@@ -49,6 +52,7 @@ roadmap, assessment rubric, and explicit sarf/nahw procedure loading before a le
 | wants the path end-to-end | `curriculum/zero-to-fluency-roadmap.md` (12-level ladder) |
 | wants practice from real Qurʾān | `curriculum/qamus-driven-fluency-engine.md` (Qamus examples → drills) |
 | keeps losing attached pieces inside one written token | `curriculum/drills/hover-composition-and-routing.md` |
+| auditing whether a Qamus card is actually rich-hover/color complete | `curriculum/drills/mode-a-thin-slice-regressions.md` |
 | checking mastery before advancing | `curriculum/mastery-checkpoints.md` |
 | running a live tutoring session | `curriculum/tutor-session-protocol.md` + `curriculum/assessment/grading-rubric.md` |
 | tracking learner state | `curriculum/progress/learner-progress.template.md` |

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/flywheel-artifact.schema.json",
+  "title": "Qamus/Fusha flywheel artifact",
+  "type": "object",
+  "required": ["schema", "row_id", "entry_id", "card_id", "routes", "reusable_lesson", "future_unlock"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": { "const": "qamus/flywheel-artifact@1" },
+    "row_id": { "type": "string", "minLength": 1 },
+    "entry_id": { "type": "string", "minLength": 1 },
+    "card_id": { "type": "string", "minLength": 1 },
+    "routes": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["sarf", "nahw", "curriculum", "qamus_mode_a_validator", "parser", "assessment"] },
+      "minItems": 1
+    },
+    "reusable_lesson": { "type": "string", "minLength": 1 },
+    "future_unlock": { "type": "string", "minLength": 1 }
+  }
+}

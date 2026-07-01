@@ -1,0 +1,227 @@
+{
+  "schema": "fusha/source-artifact-ledger@1",
+  "generated_at": "2026-07-01T00:00:00Z",
+  "generated_by": "Codex qamustyping3 safe implementation",
+  "source_head": "f8b90d8641ec90fa18ce04ee3d0a0b9d20bc358b",
+  "source_branch": "feature/fusha-standalone-parser-qamus-kernel",
+  "supersedes": [],
+  "stale_after": "2026-07-08T00:00:00Z",
+  "status": "active_fixture_only",
+  "retirement_policy": "Any generated worklist, bundle, review packet, or parser report is stale if source_head/source_branch do not match the active Fusha checkout, if live Qamus has changed since the artifact was generated, or after stale_after. Superseded artifacts must remain readable but cannot be used as current evidence.",
+  "external_source_policy": {
+    "use": "Internal evidence, comparison, and future evaluation planning only.",
+    "public_payload_rule": "Public Qamus payloads remain source-clean with src=qamus, kind=authored, lang=en; no external source labels, paths, MCP labels, or copied wording.",
+    "location_rule": "Match Arabic surface inside the verse and require uniqueness or a source-address crosswalk; do not blindly trust external word-number locs."
+  },
+  "external_sources": [
+    {
+      "source_id": "quran_wbw",
+      "role": "internal_word_address_evidence",
+      "public_provenance_allowed": false
+    },
+    {
+      "source_id": "quran_foundation_api",
+      "role": "internal_quran_text_and_word_data_comparison",
+      "public_provenance_allowed": false
+    },
+    {
+      "source_id": "tanzil",
+      "role": "internal_quran_text_comparison",
+      "public_provenance_allowed": false
+    },
+    {
+      "source_id": "qac",
+      "role": "internal_morphology_dependency_comparison",
+      "public_provenance_allowed": false
+    },
+    {
+      "source_id": "tafsir_mcp",
+      "role": "internal_tafsir_center_irab_evidence_when_available",
+      "public_provenance_allowed": false
+    },
+    {
+      "source_id": "ud_arabic_padt",
+      "role": "future_dependency_eval_reference",
+      "public_provenance_allowed": false
+    },
+    {
+      "source_id": "ud_arabic_nyuad",
+      "role": "future_dependency_eval_reference",
+      "public_provenance_allowed": false
+    },
+    {
+      "source_id": "camel_tools",
+      "role": "future_morphology_disambiguation_comparison",
+      "public_provenance_allowed": false
+    },
+    {
+      "source_id": "camel_morph_msa",
+      "role": "future_morphology_lexicon_comparison",
+      "public_provenance_allowed": false
+    },
+    {
+      "source_id": "madamira",
+      "role": "historical_system_comparison",
+      "public_provenance_allowed": false
+    },
+    {
+      "source_id": "camelparser2",
+      "role": "future_dependency_parser_comparison",
+      "public_provenance_allowed": false
+    },
+    {
+      "source_id": "stanza",
+      "role": "future_pipeline_comparison",
+      "public_provenance_allowed": false
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "mode-a-thin-slice-source-rows",
+      "path": "qamus/examples/mode_a_thin_slice/source-address-rows.jsonl",
+      "kind": "fixture_source_rows",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "mode-a-thin-slice-bundle",
+      "path": "qamus/examples/mode_a_thin_slice/mode-a-bundle.json",
+      "kind": "fixture_bundle",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "mode-a-human-review-samples",
+      "path": "qamus/examples/mode_a_thin_slice/scholar-packet.sample.json",
+      "kind": "review_packet_sample",
+      "public_boundary": "internal_only",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "qamus-authored",
+      "path": "qamus/examples/mode_a_thin_slice/public-hover-projection.jsonl",
+      "kind": "repo_authored_public_projection_fixture",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "quran-source-boundary",
+      "path": "qamus/examples/mode_a_thin_slice/source-address-rows.jsonl",
+      "kind": "source_address_reference_fixture",
+      "public_boundary": "not_public",
+      "mutation_scope": "internal_evidence_only"
+    },
+    {
+      "artifact_id": "morphology-smoke-db",
+      "path": "fusha/morphology/data",
+      "kind": "repo_authored_morphology_smoke_database",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "parser-smoke-baseline",
+      "path": "fusha/parser/examples/parser-smoke.jsonl",
+      "kind": "rule_ranked_parser_smoke_fixture",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "parser-smoke-eval",
+      "path": "fusha/parser/eval/parser-stack-smoke-report.json",
+      "kind": "fixture_eval_report",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "rule-ranked-baseline-model-card",
+      "path": "fusha/parser/model-cards/rule-ranked-baseline.model-card.json",
+      "kind": "model_card_without_trained_model",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "qamustyping3-implementation-ledger",
+      "path": "qamus/reports/qamustyping3-implementation-ledger.json",
+      "kind": "truthful_acceptance_ledger",
+      "public_boundary": "not_public",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "qamustyping3-all-qword-worklist",
+      "path": "qamus/examples/mode_a_all_qword/qamustyping3-all-qword-worklist.sample.jsonl",
+      "kind": "all_qword_fixture_worklist",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "qamustyping3-visual-readback-fixture",
+      "path": "qamus/examples/mode_a_all_qword/qamustyping3-visual-readback.fixture.jsonl",
+      "kind": "visual_readback_fixture_not_live",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "qamustyping3-eval-matrix",
+      "path": "fusha/parser/eval/qamustyping3-eval-matrix.json",
+      "kind": "fixture_eval_matrix",
+      "public_boundary": "not_public",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "fusha-cli-contract",
+      "path": "docs/parser/fusha-cli-contract.md",
+      "kind": "local_cli_contract",
+      "public_boundary": "not_public",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "source-ledger-policy",
+      "path": "docs/parser/source-ledger-and-split-policy.md",
+      "kind": "source_policy_doc",
+      "public_boundary": "not_public",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "qamustyping4-implementation-doc",
+      "path": "docs/parser/qamustyping4-implementation.md",
+      "kind": "claim_boundary_and_executor_handoff",
+      "public_boundary": "not_public",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "qamustyping4-implementation-ledger",
+      "path": "qamus/reports/qamustyping4-implementation-ledger.json",
+      "kind": "truthful_acceptance_ledger",
+      "public_boundary": "not_public",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "qamustyping4-all-qword-regression-worklist",
+      "path": "qamus/examples/mode_a_all_qword/qamustyping4-regression-worklist.sample.jsonl",
+      "kind": "all_qword_regression_fixture",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "qamustyping4-visual-readback-fixture",
+      "path": "qamus/examples/mode_a_all_qword/qamustyping4-visual-readback.fixture.jsonl",
+      "kind": "visual_readback_fixture_not_live",
+      "public_boundary": "source_clean",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "qamustyping4-eval-matrix",
+      "path": "fusha/parser/eval/qamustyping4-eval-matrix.json",
+      "kind": "fixture_eval_matrix",
+      "public_boundary": "not_public",
+      "mutation_scope": "repo_fixture_only"
+    },
+    {
+      "artifact_id": "qamustyping4-acceptance-validator",
+      "path": "tools/validate_qamustyping4_acceptance.py",
+      "kind": "validator",
+      "public_boundary": "not_public",
+      "mutation_scope": "repo_fixture_only"
+    }
+  ]
+}
