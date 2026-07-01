@@ -4,7 +4,8 @@ Status: public-safe Fusha flywheel handoff. This is not live Qamus coverage
 progress and it does not mutate any live Qamus state.
 
 Controlling plan: `15-fusha-parser-coverage-boundary-and-lexicon-flywheel.md`.
-Fusha commit used by the executor: `db0617f296457399e16ee013bf56862a2fe0d22b`.
+Current Fusha commit used by this handoff:
+`73466aaa143c90358182278952c6f19311a511f3`.
 
 ## Boundary
 

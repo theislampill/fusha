@@ -3092,8 +3092,12 @@ try:
                  "tools/import_rh_live_plan15_flywheel.py",
                  "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl",
                  "qamus/examples/rh_live_plan15_parser_flywheel.sample.meta.json",
+                 "qamus/examples/rh_live_plan15_vn01_vn02_subword_graph.sample.jsonl",
+                 "qamus/examples/rh_live_plan15_vn01_vn02_subword_graph.sample.meta.json",
                  "qamus/reports/closure-2092/rh-live-plan15-parser-flywheel-20260701.md",
-                 "qamus/reports/closure-2092/rh-live-plan15-parser-flywheel-20260701.json"):
+                 "qamus/reports/closure-2092/rh-live-plan15-parser-flywheel-20260701.json",
+                 "qamus/reports/closure-2092/rh-live-plan15-vn01-vn02-subword-graph-20260701.md",
+                 "qamus/reports/closure-2092/rh-live-plan15-vn01-vn02-subword-graph-20260701.json"):
         check("RH-LIVE Plan 15 parser flywheel artifact exists: %s" % _art,
               os.path.exists(os.path.join(ROOT, _art)))
     _p15a = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_rh_live_plan15_flywheel.py"),
@@ -3103,6 +3107,11 @@ try:
                       os.path.join(ROOT, "qamus", "examples", "rh_live_plan15_parser_flywheel.sample.jsonl")])
     check("RH-LIVE Plan 15 flywheel sample validates (parser-known/partial routed, no live claim)",
           _p15b.returncode == 0)
+    _p15b2 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_rh_live_plan15_flywheel.py"),
+                       os.path.join(ROOT, "qamus", "examples",
+                                    "rh_live_plan15_vn01_vn02_subword_graph.sample.jsonl")])
+    check("RH-LIVE Plan 15 VN-01/VN-02 subword graph sample validates (stem route included)",
+          _p15b2.returncode == 0)
     _p15_report = json.load(io.open(
         os.path.join(ROOT, "qamus", "reports", "closure-2092",
                      "rh-live-plan15-parser-flywheel-20260701.json"),
@@ -3112,17 +3121,30 @@ try:
         os.path.join(ROOT, "qamus", "examples", "rh_live_plan15_parser_flywheel.sample.meta.json"),
         encoding="utf-8",
     ))
+    _p15_meta2 = json.load(io.open(
+        os.path.join(ROOT, "qamus", "examples", "rh_live_plan15_vn01_vn02_subword_graph.sample.meta.json"),
+        encoding="utf-8",
+    ))
+    _p15_report2 = json.load(io.open(
+        os.path.join(ROOT, "qamus", "reports", "closure-2092",
+                     "rh-live-plan15-vn01-vn02-subword-graph-20260701.json"),
+        encoding="utf-8",
+    ))
     _p15_head = run_text(["git", "-C", ROOT, "rev-parse", "HEAD"])
     if _p15_head.returncode == 0:
         _p15_head_commit = _p15_head.stdout.strip()
-        _p15_report_commit = _p15_report.get("fusha_commit")
-        _p15_meta_commit = _p15_meta.get("fusha_commit")
-        _p15_report_ancestor = run_text(["git", "-C", ROOT, "merge-base", "--is-ancestor", _p15_report_commit or "", _p15_head_commit])
-        _p15_meta_ancestor = run_text(["git", "-C", ROOT, "merge-base", "--is-ancestor", _p15_meta_commit or "", _p15_head_commit])
-        check("RH-LIVE Plan 15 report records a valid ancestor Fusha HEAD",
-              isinstance(_p15_report_commit, str) and len(_p15_report_commit) == 40 and _p15_report_ancestor.returncode == 0)
-        check("RH-LIVE Plan 15 sample meta records a valid ancestor Fusha HEAD",
-              isinstance(_p15_meta_commit, str) and len(_p15_meta_commit) == 40 and _p15_meta_ancestor.returncode == 0)
+        def _plan15_ancestor_check(label, artifact):
+            artifact_commit = artifact.get("fusha_commit")
+            ancestor = run_text(["git", "-C", ROOT, "merge-base", "--is-ancestor", artifact_commit or "", _p15_head_commit])
+            check(label,
+                  isinstance(artifact_commit, str)
+                  and len(artifact_commit) == 40
+                  and ancestor.returncode == 0)
+
+        _plan15_ancestor_check("RH-LIVE Plan 15 report records a valid ancestor Fusha HEAD", _p15_report)
+        _plan15_ancestor_check("RH-LIVE Plan 15 sample meta records a valid ancestor Fusha HEAD", _p15_meta)
+        _plan15_ancestor_check("RH-LIVE Plan 15 VN-01/VN-02 supplement records a valid ancestor Fusha HEAD", _p15_report2)
+        _plan15_ancestor_check("RH-LIVE Plan 15 VN-01/VN-02 sample meta records a valid ancestor Fusha HEAD", _p15_meta2)
     else:
         check("RH-LIVE Plan 15 report records a 40-hex Fusha commit",
               isinstance(_p15_report.get("fusha_commit"), str)

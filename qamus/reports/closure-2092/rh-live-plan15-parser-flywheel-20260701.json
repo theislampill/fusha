@@ -8,7 +8,7 @@
     "raw_executor_packets_vendored": false
   },
   "controlling_plan": "15-fusha-parser-coverage-boundary-and-lexicon-flywheel.md",
-  "fusha_commit": "db0617f296457399e16ee013bf56862a2fe0d22b",
+  "fusha_commit": "73466aaa143c90358182278952c6f19311a511f3",
   "lemma_null_rows": 4089,
   "manifest_sha256": "f30721e16a756a692af6c28f55844105f9dde8284320d7a25af456215eaf2cb2",
   "parser_known_rows": 911,
@@ -16,23 +16,6 @@
   "parser_unknown_rows": 0,
   "report_date": "2026-07-01",
   "root_null_rows": 5043,
-  "sample_import": {
-    "full_queue_jsonl": "out/rh-live-plan15-parser-flywheel/rh_live_plan15_parser_flywheel.full.jsonl",
-    "full_queue_meta_json": "out/rh-live-plan15-parser-flywheel/rh_live_plan15_parser_flywheel.full.meta.json",
-    "full_queue_rows": 5075,
-    "generator": "tools/import_rh_live_plan15_flywheel.py",
-    "sample_jsonl": "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl",
-    "sample_meta_json": "qamus/examples/rh_live_plan15_parser_flywheel.sample.meta.json",
-    "sample_rows": 17
-  },
-  "sample_validation": {
-    "full_queue_rows_validated": 5075,
-    "regression_spine": "tools/check_regressions.py",
-    "regression_spine_status": "pass",
-    "sample_rows_validated": 17,
-    "validator": "tools/validate_rh_live_plan15_flywheel.py",
-    "validator_self_test": "pass"
-  },
   "route_packets": {
     "governor_irab_fixture_needed": {
       "rows": 754,
@@ -62,6 +45,23 @@
   "rows_audited": 5075,
   "rows_converted_to_owner_scholar_source_packets": 0,
   "rows_converted_to_stem_entry_needed": 0,
+  "sample_import": {
+    "full_queue_jsonl": "out/rh-live-plan15-parser-flywheel/rh_live_plan15_parser_flywheel.full.jsonl",
+    "full_queue_meta_json": "out/rh-live-plan15-parser-flywheel/rh_live_plan15_parser_flywheel.full.meta.json",
+    "full_queue_rows": 5075,
+    "generator": "tools/import_rh_live_plan15_flywheel.py",
+    "sample_jsonl": "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl",
+    "sample_meta_json": "qamus/examples/rh_live_plan15_parser_flywheel.sample.meta.json",
+    "sample_rows": 17
+  },
+  "sample_validation": {
+    "full_queue_rows_validated": 5075,
+    "regression_spine": "tools/check_regressions.py",
+    "regression_spine_status": "pass",
+    "sample_rows_validated": 17,
+    "validator": "tools/validate_rh_live_plan15_flywheel.py",
+    "validator_self_test": "pass"
+  },
   "scope_counts": [
     {
       "fixture_level_governor_rows": 59,

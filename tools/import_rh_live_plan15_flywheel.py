@@ -34,6 +34,11 @@ ROUTE_MAP: dict[str, dict[str, Any]] = {
         "lesson": "Parser produced only partial structure for {surface}; queue a Qamus-derived lexicon or stem fact instead of guessing a root.",
         "unlock": "populate reusable lemma/root/stem evidence for repeated RH-LIVE qwords with the same source-addressed pattern",
     },
+    "stem_entry_needed": {
+        "routes": ["parser", "sarf", "qamus_mode_a_validator"],
+        "lesson": "Parser did not have a certified stem entry for {surface}; queue the exact visible stem and inflection pieces instead of collapsing the token to a broad gloss.",
+        "unlock": "populate reusable stem entries and morphology compatibility facts for repeated RH-LIVE qwords with the same segment signature",
+    },
     "governor_irab_fixture_needed": {
         "routes": ["parser", "nahw", "qamus_mode_a_validator"],
         "lesson": "{surface} needs source-addressed governor/i'rab reasoning before the hover can be certified.",
@@ -111,14 +116,14 @@ def safe_id(value: Any, fallback: str) -> str:
 
 
 def card_id(row: dict[str, Any]) -> str:
-    source_key = safe_id(row.get("source_key"), "unknown-entry")
+    source_key = safe_id(row.get("source_key") or row.get("entry_id"), "unknown-entry")
     ref = safe_id(row.get("card_ref"), "unknown-ref")
     index = safe_id(row.get("card_index"), "x")
     return f"{source_key}-card-{index}-{ref}"
 
 
 def row_id(row: dict[str, Any], route: str, index: int) -> str:
-    source_key = safe_id(row.get("source_key"), "unknown-entry")
+    source_key = safe_id(row.get("source_key") or row.get("entry_id"), "unknown-entry")
     loc = safe_id(row.get("loc"), f"row-{index}")
     return f"plan15-{route}-{source_key}-{loc}-{index}"
 
@@ -132,13 +137,35 @@ def sanitize_segment(segment: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def sanitize_segments_needed(raw: Any) -> list[str]:
+    if not isinstance(raw, list):
+        return []
+    needed: list[str] = []
+    for item in raw:
+        if isinstance(item, str):
+            needed.append(item)
+            continue
+        if isinstance(item, dict):
+            parts = []
+            for key in ("role", "class", "surface"):
+                value = item.get(key)
+                if value:
+                    parts.append(f"{key}={value}")
+            if parts:
+                needed.append(";".join(parts))
+            continue
+        if item is not None:
+            needed.append(str(item))
+    return needed
+
+
 def make_artifact(row: dict[str, Any], route: str, index: int) -> dict[str, Any]:
     mapping = ROUTE_MAP[route]
     surface = str(row.get("surface") or row.get("loc") or "this qword")
     artifact = {
         "schema": SCHEMA,
         "row_id": row_id(row, route, index),
-        "entry_id": safe_id(row.get("source_key"), "unknown-entry"),
+        "entry_id": safe_id(row.get("source_key") or row.get("entry_id"), "unknown-entry"),
         "card_id": card_id(row),
         "routes": mapping["routes"],
         "reusable_lesson": mapping["lesson"].format(surface=surface),
@@ -152,7 +179,7 @@ def make_artifact(row: dict[str, Any], route: str, index: int) -> dict[str, Any]
         "lemma_null": row.get("lemma_null"),
         "confidence_gate": row.get("confidence_gate"),
         "segments_found": [sanitize_segment(s) for s in row.get("segments_found", [])],
-        "segments_needed": row.get("segments_needed", []),
+        "segments_needed": sanitize_segments_needed(row.get("segments_needed", [])),
         "qg_classes": row.get("row_qg_classes", []),
         "claim_boundary": {
             "live_qamus_payload": False,
@@ -183,6 +210,17 @@ def resolve_under_root(path: Path) -> Path:
     return ROOT / path
 
 
+def resolve_route_file(route_summary: Path, raw_path: str) -> Path:
+    route_path = Path(raw_path)
+    if route_path.is_absolute():
+        return route_path
+    for base in (route_summary.parent, *route_summary.parent.parents, ROOT, Path.cwd()):
+        candidate = base / route_path
+        if candidate.exists():
+            return candidate
+    return route_summary.parent / route_path
+
+
 def import_samples(
     route_summary: Path,
     output_jsonl: Path,
@@ -202,7 +240,7 @@ def import_samples(
         file_info = route_files.get(route)
         if not file_info:
             continue
-        route_path = Path(file_info["path"])
+        route_path = resolve_route_file(route_summary, file_info["path"])
         if not route_path.exists():
             raise SystemExit(f"route file missing for {route}: {route_path}")
         for index, row in enumerate(iter_jsonl(route_path), 1):
