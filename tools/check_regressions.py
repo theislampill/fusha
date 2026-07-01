@@ -3343,6 +3343,7 @@ try:
                  "tools/validate_largelexicon_qg_projection.py",
                  "tools/build_largelexicon_flywheel_artifacts.py",
                  "tools/validate_largelexicon_skill_curriculum_backfill.py",
+                 "tools/validate_backfillfull_sarf_nahw_largelexicon.py",
                  "fusha/lexicon/largelexicon/source-clean-table-allowlist.json",
                  "fusha/lexicon/largelexicon/lemma-source.sample.jsonl",
                  "fusha/lexicon/largelexicon/form-source.sample.jsonl",
@@ -3388,6 +3389,8 @@ try:
     check("largelexicon qg projection self-test (source-clean hover candidates or exact packets)", _ll6.returncode == 0)
     _ll7 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_skill_curriculum_backfill.py"), "--self-test"])
     check("largelexicon sarf/nahw/curriculum flywheel self-test", _ll7.returncode == 0)
+    _ll7b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_backfillfull_sarf_nahw_largelexicon.py"), "--self-test"])
+    check("backfillfull sarf/nahw largelexicon route/transclusion self-test", _ll7b.returncode == 0)
     _ll8 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_cli_contract.py"), "--self-test"])
     check("largelexicon local CLI contract self-test (analyze-token/card, project-hover, validate-mode-a)", _ll8.returncode == 0)
 except Exception as _e:

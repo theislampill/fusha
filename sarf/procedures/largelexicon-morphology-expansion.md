@@ -3,6 +3,30 @@
 Use this procedure when turning Qamus-authored entries into parser morphology
 candidates.
 
+## Pre-sarf source gates
+
+Before certifying morphology for Qamus rollout, verify that the row is not merely a qword
+denominator, source-card repair, or source-crosswalk packet. Required gates:
+
+- accepted source-card/displayed-text identity;
+- qword denominator row;
+- accepted canonical source address, or an exact source-crosswalk packet such as
+  `source_crosswalk_packet_ready`;
+- public/private projection boundary;
+- forward trace and reverse trace.
+
+Sarf may analyze a visible surface internally before those gates pass, but the terminal state is
+packet-only, not `deploy_ready`, and it is not learner-visible as a finished hover.
+
+## Plan 15 sarf route families
+
+Use exact route names:
+
+- `lexicon_entry_needed` — lemma/root/POS/form entry is missing or insufficient.
+- `stem_entry_needed` — stem surface or feature bundle is missing.
+- `pattern_rule_needed` — wazn/form/derivative pattern is missing or untrusted.
+- `proper_name_no_root_needed` — proper-name/no-root token needs an explicit no-root route.
+
 1. Start from `qamus/data/current/entries.jsonl`; do not infer from live Qamus.
 2. Preserve every listed form as a candidate form, not a certified paradigm.
 3. Route by sarf:

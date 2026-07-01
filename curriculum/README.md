@@ -173,6 +173,11 @@ curriculum/
     parse-key-and-color-layer.md     ← pieces → parse_key + display palette rows
     mode-a-thin-slice-regressions.md ← qamustyping3/4 all-qword visual-closure regressions
     largelexicon-morphology-and-hover.md ← Qamus-scale morphology samples → hover/packet decisions
+    plan15-route-families.md         ← Plan 15 flywheel route family classification
+    qword-denominator-and-crosswalk.md ← denominator vs accepted crosswalk vs hover candidate
+    source-card-repair-and-transclusion.md ← source-card repair as a transclusion invalidation lane
+    packet-vs-hover-projection.md    ← packet-only rows versus learner-visible public hovers
+    transclusion-hover-capstone.md   ← one qword from source to rendered span and back
     dogfood-error-remediation-index.md ← repeated hover failure → remediation route
 ```
 

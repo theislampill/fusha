@@ -113,6 +113,7 @@ existing smoke fixtures remain the default parser path, while largelexicon calle
 | `validate_largelexicon_qg_projection.py` | Validate public/private projection, qg classes, leaks, and packet exactness. |
 | `build_largelexicon_flywheel_artifacts.py` | Convert projected rows into sarf/nahw/curriculum/parser flywheel tasks. |
 | `validate_largelexicon_skill_curriculum_backfill.py` | Check that sarf, nahw, curriculum, and drills learned from the new layer. |
+| `validate_backfillfull_sarf_nahw_largelexicon.py` | Strict gate for Plan 15 route families, packet-vs-hover visibility, qword/crosswalk/source-card boundaries, qg class map, and transclusion surfaces. |
 
 These tools may use internal evidence fields and local source-address rows, but public
 hover output remains `src=qamus`, `kind=authored`, `lang=en`. They never SSH, deploy,

@@ -47,11 +47,18 @@ python tools/validate_largelexicon_executor_adoption.py --self-test
 
 The crosswalk manifest is not a deployment queue. It is an all-visible-qword
 status surface. Rows with missing canonical Qur'an/WBW locs are exact
-`source_address_crosswalk_packet` rows until Arabic-surface matching and
-uniqueness checks accept them. The first source-card/example repair smoke case is
+`source_crosswalk_packet_ready` rows until Arabic-surface matching and
+uniqueness checks produce an accepted crosswalk. The first source-card/example repair smoke case is
 `n993 / 2a071cd0b50e / مَلْجَأ / pg443.jpeg / 42:47`; it must be source-card
 repaired or exact-owner-packeted before any claim that all 2,092 entries have
 qword rows.
+
+Every executor-consumed row must preserve bidirectional transclusion:
+
+- forward trace: entry/card/qword -> source-card/crosswalk -> sarf/nahw route -> public projection -> rendered span;
+- reverse trace: rendered span -> public projection -> sarf/nahw route -> source-card/crosswalk -> qword/card/entry.
+
+Rows without forward trace or reverse trace are repair packets, not closure evidence.
 
 This is not live qamus progress; it is repo-side source-clean preparation for
 later executor-controlled deployment and public readback.

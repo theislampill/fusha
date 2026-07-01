@@ -23,6 +23,12 @@ reports. Nothing here writes to a live site, talks to a server, or ships a runti
 | `procedures/` | procedure docs | Review routing for closure batches, source triangulation/public-boundary checks, and grammar-resource use. Start with [`procedures/grammar-resource-usage.md`](procedures/grammar-resource-usage.md), [`procedures/closure-lane-routing.md`](procedures/closure-lane-routing.md), and [`procedures/source-triangulation-and-public-boundary.md`](procedures/source-triangulation-and-public-boundary.md). |
 | `candidates/` | data (authored, gitignored draft area) | Proposed new/repaired entries awaiting human review. Each is a self-contained payload (see the bridge report). Not present until candidate runs land. |
 
+Largelexicon/Qamus rollout surfaces:
+
+- [`procedures/largelexicon-rollout-consumption.md`](procedures/largelexicon-rollout-consumption.md) — executor contract for all-visible-qword worklists, accepted crosswalks, source-clean projection, and forward/reverse trace.
+- [`procedures/source-card-repair-decision-application.md`](procedures/source-card-repair-decision-application.md) — machine-readable source-card decisions and downstream invalidation.
+- [`schemas/source-card-example-repair-decision.schema.json`](schemas/source-card-example-repair-decision.schema.json) — source-card repair decision schema.
+
 Sibling research areas referenced by these docs:
 
 - `../sarf/` — morphology (wazn/pattern, root extraction, derivation tables).

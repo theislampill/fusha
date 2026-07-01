@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "decision_id": {
+      "type": "string"
+    },
+    "decision_status": {
+      "enum": [
+        "accepted_exact",
+        "accepted_with_display_edit",
+        "accepted_with_crosswalk",
+        "rejected_wrong_source",
+        "rejected_ambiguous_surface",
+        "needs_owner",
+        "needs_scholar_irab",
+        "needs_source_photo_review",
+        "superseded"
+      ]
+    },
+    "downstream_invalidates": {
+      "items": {
+        "enum": [
+          "qword_denominator",
+          "qword_crosswalk",
+          "hover_candidates",
+          "plan15_flywheel",
+          "curriculum_samples",
+          "executor_worklists"
+        ]
+      },
+      "type": "array"
+    },
+    "entry_id": {
+      "type": "string"
+    },
+    "public_boundary": {
+      "enum": [
+        "private_evidence_only",
+        "source_clean_projection_required"
+      ]
+    },
+    "qword_row_id": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "source_card_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "decision_id",
+    "decision_status",
+    "entry_id",
+    "source_card_id",
+    "qword_row_id",
+    "downstream_invalidates",
+    "public_boundary",
+    "reason"
+  ],
+  "title": "Source card example repair decision",
+  "type": "object"
+}

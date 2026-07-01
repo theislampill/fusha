@@ -7,6 +7,8 @@ import argparse
 import json
 from pathlib import Path
 
+import validate_backfillfull_sarf_nahw_largelexicon as backfillfull
+
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_PATHS = [
@@ -41,6 +43,7 @@ def validate() -> list[str]:
     for phrase in REQUIRED_PHRASES:
         if phrase not in all_text:
             errors.append(f"required backfill phrase absent: {phrase!r}")
+    errors.extend(f"backfillfull: {error}" for error in backfillfull.validate())
     return errors
 
 

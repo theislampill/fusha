@@ -153,6 +153,21 @@ when a recurring VN/P ANDON should become a reusable morphology fact, fixture, o
 It requires source-address trace, POS/root/form agreement, visible clitic/suffix preservation,
 and public-boundary cleanliness before a sample can feed `--db largelexicon`.
 
+### Plan 15 / all-qword source gates
+
+For Qamus rollout, sarf starts after the graph spine is stable: qword denominator row,
+source-card repair status, source-crosswalk status, and rendered/readback trace decide whether
+morphology can become a hover. If the row is only `source_crosswalk_packet_ready`, it is a
+packet, not a morphology-certified hover. Use:
+
+- `procedures/plan15-sarf-route-families.md` for `lexicon_entry_needed`, `stem_entry_needed`,
+  `pattern_rule_needed`, and `proper_name_no_root_needed`.
+- `procedures/qword-crosswalk-before-morphology.md` when the surface can be analyzed but the
+  canonical source address is not accepted.
+
+Transclusion is bidirectional: a sarf fact quoted into many hovers must remain traceable back
+to the entry/card/qword/source decision that produced it.
+
 ## Hard rules (non‑negotiable)
 
 - **Qur'an text is never altered.** Ṣarf reads the surface; it does not normalize it for

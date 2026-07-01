@@ -42,6 +42,21 @@ This SKILL is the fast context gate + contract; each step is a short procedure. 
 - [`procedures/bulk-source-triangulation.md`](procedures/bulk-source-triangulation.md) — route bulk pending-table rows by context risk before any hover decision.
 - [`procedures/qamus-entry-authoring.md`](procedures/qamus-entry-authoring.md) — nahw evidence → function-word/construction entry candidate.
 - [`procedures/corpus-to-qamus.md`](procedures/corpus-to-qamus.md) — the nahw half of the corpus→Qamus pipeline.
+- [`procedures/largelexicon-function-token-routing.md`](procedures/largelexicon-function-token-routing.md) — largelexicon function-token, source-crosswalk, source-card repair, and packet-only routing.
+- [`procedures/plan15-nahw-route-families.md`](procedures/plan15-nahw-route-families.md) — Plan 15 nahw-owned routes: `governor_irab_fixture_needed`, `particle_function_rule_needed`.
+
+## Largelexicon / Plan 15 Routing
+
+When a task mentions largelexicon, Plan 15, qword denominator, all-qword closure, source-card repair,
+source-crosswalk, rich hover coloring, or Qamus rollout, decide syntax/function only after source identity is stable.
+A qword denominator row or source-crosswalk packet is packet-only until accepted; it is not learner-visible as a
+finished hover.
+
+Nahw-owned Plan 15 routes are `governor_irab_fixture_needed` and `particle_function_rule_needed`. Use them for
+function tokens and grammar-sensitive rows such as `أَمْ`, `لَهُمْ`, `وَمَا`, bāʾ/lām relations, particle clusters,
+preposition + majrūr host, and right-gloss/wrong-iʿrāb evidence. Sarf can segment pieces, but nahw certifies the
+function, governor, attachment, and phrase-vs-token contribution. Source-card repair and source-crosswalk repair
+outrank a syntax guess.
 
 **Rules** (`rules/`): particle-context, preposition-pronoun, negation, irab-safety-gates, grammar-problems-gates,
 **grammar-problems-issue-clusters**,

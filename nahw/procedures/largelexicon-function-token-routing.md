@@ -3,6 +3,20 @@
 Use this procedure when largelexicon encounters particles, prepositions,
 pronouns, particle clusters, or no-entry function tokens.
 
+## Source identity before function certification
+
+Before certifying a function token for Qamus rollout, verify that the row is not merely a qword
+denominator, source-card repair, or source-crosswalk packet. A `source_crosswalk_packet_ready`
+row can carry internal nahw evidence, but it is packet-only until accepted and must not be
+learner-visible as a finished hover.
+
+## Plan 15 nahw route families
+
+Use exact route names:
+
+- `governor_irab_fixture_needed` — the row needs a governor/case/mood/attachment fixture before certification.
+- `particle_function_rule_needed` — the row needs a reusable function-token or particle-cluster rule.
+
 Largelexicon may segment and queue the token, but nahw decides function:
 
 - `ما` / `وما`: negative, relative, interrogative, conditional, masdariyya,

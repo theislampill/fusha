@@ -139,6 +139,21 @@ owner packet, or a scholar/iʿrāb packet. This is where `ما`, `وما`, prepo
 hosts, particle clusters, and right-answer/wrong-reason cases get routed before public
 projection.
 
+### Plan 15 / all-qword source gates
+
+For Qamus rollout, nahw starts after the graph spine is stable: qword denominator row,
+source-card repair status, source-crosswalk status, and rendered/readback trace decide whether
+function analysis can become a hover. If the row is only `source_crosswalk_packet_ready`, it is
+a packet, not a function-token certification.
+
+Use `procedures/plan15-nahw-route-families.md` for `governor_irab_fixture_needed` and
+`particle_function_rule_needed`. These route `أَمْ`, `لَهُمْ`, `وَمَا`, preposition+host,
+particle clusters, and right-gloss/wrong-iʿrāb cases into exact packets instead of generic
+pending states.
+
+Transclusion is bidirectional: a nahw decision quoted into many hovers must remain traceable
+back to the entry/card/qword/source decision that produced it and forward to the rendered span.
+
 ## Hard rules honored here
 
 - Qurʾān text is never altered; it appears as evidence only.

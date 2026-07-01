@@ -43,6 +43,11 @@ roadmap, assessment rubric, and explicit sarf/nahw procedure loading before a le
 | qamustyping4 all-qword regression: a cited card has uncolored or hoverless visible words | `curriculum/drills/mode-a-thin-slice-regressions.md` + `curriculum/drills/dogfood-error-remediation-index.md` |
 | qamustyping4 visual regression: cited Arabic loses harakat/hamza/maddah | source-text/readback blocker in `curriculum/drills/mode-a-thin-slice-regressions.md`; do not teach from the corrupted display |
 | qamustyping4 function cluster: `أَمْ لَهُمْ`, `أَيَّانَ`, or similar rows are phrase-only | `nahw/drills/particle-disambiguation.md` + `nahw/procedures/function-token-hover-review.md` |
+| Plan 15 route family is unknown or collapsed to "blocked" | `teach_plan15_route_family` → `curriculum/drills/plan15-route-families.md` |
+| all visible qword denominator is confused with hover completion | `teach_qword_denominator` → `curriculum/drills/qword-denominator-and-crosswalk.md` |
+| source-crosswalk packet is treated as deployable | `teach_source_crosswalk` → `curriculum/drills/qword-denominator-and-crosswalk.md` |
+| packet row is taught as a public hover answer | `teach_packet_vs_hover` → `curriculum/drills/packet-vs-hover-projection.md` |
+| rendered hover cannot trace back to source/card/qword | `teach_transclusion_trace` → `curriculum/drills/transclusion-hover-capstone.md` |
 
 ## Situation → curriculum
 

@@ -29,6 +29,29 @@ output · forbidden · test). **Open only the one the task needs.**
 - [`procedures/bulk-source-triangulation.md`](procedures/bulk-source-triangulation.md) — classify bulk pending-table rows into auto-safe, two-vote, owner-gated, or pending.
 - [`procedures/qamus-entry-authoring.md`](procedures/qamus-entry-authoring.md) — sarf evidence → reviewable entry candidate.
 - [`procedures/corpus-to-qamus.md`](procedures/corpus-to-qamus.md) — the sarf half of the corpus→Qamus pipeline.
+- [`procedures/largelexicon-morphology-expansion.md`](procedures/largelexicon-morphology-expansion.md) — Qamus-derived largelexicon rows through source gates, visible morphology, qg classes, and packet boundaries.
+- [`procedures/plan15-sarf-route-families.md`](procedures/plan15-sarf-route-families.md) — Plan 15 sarf-owned route families: `lexicon_entry_needed`, `stem_entry_needed`, `pattern_rule_needed`, `proper_name_no_root_needed`.
+- [`procedures/qword-crosswalk-before-morphology.md`](procedures/qword-crosswalk-before-morphology.md) — qword denominator/source-crosswalk/source-card repair gates before morphology certification.
+
+## Largelexicon / Plan 15 Routing
+
+When a task mentions largelexicon, Plan 15, qword denominator, all-qword closure, source-card repair,
+source-crosswalk, rich hover coloring, or Qamus rollout, do not author from morphology alone. First confirm the row
+is not merely a denominator or repair packet:
+
+1. accepted source-card/displayed-text identity;
+2. qword denominator row;
+3. accepted canonical source address or exact source-crosswalk packet;
+4. Plan 15 route family;
+5. sarf morphology lattice;
+6. public/private hover projection;
+7. qg class validation;
+8. forward trace and reverse trace.
+
+Sarf-owned Plan 15 routes are `lexicon_entry_needed`, `stem_entry_needed`, `pattern_rule_needed`, and
+`proper_name_no_root_needed`. A row with unstable source identity remains packet-only and not learner-visible as a
+finished hover. Morphology may be true while the row is still not deployable; source-card repair and source-crosswalk
+repair outrank sarf certification.
 
 **Rules** (`rules/`): root-decision, verb-measure-gates, weak-root-gates, hamza-gates, plural-gender-rules,
 masdar-participle-gates, homograph-quarantines, **surface-state-transition-rules** (the morphology side of the
