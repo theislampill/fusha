@@ -28,6 +28,20 @@ python tools/fusha_largelexicon_cli.py validate-mode-a --input worklist.jsonl
 python tools/validate_largelexicon_table_reader.py --self-test
 ```
 
+Do not consume `morphology_candidates[0]` directly. The stable top-level fields
+from `analyze-token` / `analyze-card` are the safety contract:
+
+- `analysis_status`;
+- `safety_gate`;
+- `safe_for_public_hover`;
+- `safe_for_qamus_executor_autopromote`;
+- `routes`.
+
+Rows with `lexical_collision_requires_context`, `pending_context`, `ambiguous`,
+or `safe_for_qamus_executor_autopromote=false` are worklist/packet inputs, not
+deployment rows. Collision packets are useful because they name the missing
+sarf/nahw/source proof, but they do not close a qword visually.
+
 For qword denominator reads, prefer `tools/largelexicon_table_reader.py`.
 The table is a single logical Project-Xanadu-style graph surface even though it
 is physically sharded. A row must remain traceable forward

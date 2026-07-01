@@ -1,0 +1,3 @@
+{"id":"sarf-llx-collision-001","surface":"الله","expected":"whole proper-name candidate outranks splitter artifact","forbidden":"ال + له public hover"}
+{"id":"sarf-llx-collision-002","surface":"بالله","expected":"prefix preposition plus proper-name host","forbidden":"bā' plus article plus lām/pronoun host"}
+{"id":"sarf-llx-collision-003","surface":"إله","expected":"packet or source/context proof before hover","forbidden":"object-pronoun segmentation as public preview"}

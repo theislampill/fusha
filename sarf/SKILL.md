@@ -167,6 +167,13 @@ visible morphology: `فسيكفيكهم` must preserve fāʾ, future sīn, imper
 pronouns; `يسألك` must preserve imperfect prefix plus object pronoun; `مستغفرين` must preserve derivative prefix,
 host, and plural suffix. If the parser preview exposes a piece the current hover hides, route the row to a sarf
 repair/test packet instead of hand-waving it as complete.
+The largelexicon parser also increases short-token collision risk. Do not consume
+`morphology_candidates[0]` as truth: `الله`/`بالله` must not lose to `ال + له`,
+`إله` must not become a host plus object pronoun, and unvoweled `من` must not
+become the verb `مَنَّ` without source/context evidence. Check
+`confidence_gate`, `collision`, and CLI fields such as
+`safe_for_qamus_executor_autopromote`; route collision rows to sarf/nahw packets
+instead of hover projection.
 Verb form is a semantic gate, not decoration. Record triliteral form I-X or quadriliteral form I-IV before
 authoring: II can be causative/intensive, III can be mutual, VI reciprocal, VII/VIII reflexive or agentless,
 IX stative/color, X seeking/reflexive-causative. A hover that ignores the form, voice, person, number, or suffix

@@ -28,6 +28,9 @@ FUNCTION_WORDS = {
     "وما": ("particle", "wāw plus function-sensitive mā"),
     "إنما": ("particle", "restriction particle cluster"),
     "انما": ("particle", "restriction particle cluster"),
+    "لا": ("particle", "negation/prohibition particle; context decides"),
+    "إلا": ("particle", "exceptive particle; context decides"),
+    "الا": ("particle", "exceptive particle; context decides"),
     "لم": ("particle", "jussive negator"),
     "لما": ("particle", "context-sensitive lammā/limā"),
     "من": ("particle", "from/who/whom/conditional by voweling and context"),
@@ -86,25 +89,46 @@ def _keys(s):
     return {s, N.norm_strict(s), N.bare(s)}
 
 
+def _match_basis(surface, form):
+    if not surface or not form:
+        return None
+    if surface == form:
+        return "surface_exact_match"
+    if N.norm_strict(surface) == N.norm_strict(form):
+        return "norm_strict_match"
+    if N.bare(surface) == N.bare(form):
+        return "bare_match"
+    return None
+
+
 def _lexicon_match(surface, lexicon):
-    keys = _keys(surface)
+    best = None
+    best_order = 999
+    order = {"surface_exact_match": 0, "norm_strict_match": 1, "bare_match": 2}
     for row in lexicon:
         forms = set(row.get("forms") or [])
         forms.add(row.get("lemma", ""))
-        form_keys = set()
         for f in forms:
-            form_keys.update(_keys(f))
-        if keys & form_keys:
-            return row
-    return None
+            basis = _match_basis(surface, f)
+            if not basis:
+                continue
+            basis_order = order[basis]
+            if basis_order < best_order:
+                best = (row, basis)
+                best_order = basis_order
+                if basis_order == 0 and row.get("evidence_class") == "seed_lexicon":
+                    return best
+    return best or (None, None)
 
 
 def _stem_segments(seg_candidate):
     return [s for s in seg_candidate.get("segments") or [] if s.get("role") == "stem"]
 
 
-def _candidate_from_row(row, seg_ref, score=6.0, evidence=None, extra=None):
+def _candidate_from_row(row, seg_ref, score=6.0, evidence=None, extra=None, match_basis=None):
     feats = dict(row.get("features") or {})
+    if match_basis:
+        feats["match_basis"] = match_basis
     if extra:
         feats.update(extra)
     return {
@@ -162,21 +186,39 @@ def _analysis_host(surface):
 def _function_candidate(surface, seg_ref):
     for key in _keys(surface):
         if key in FUNCTION_WORDS:
+            if key == "من" and N.shadda_on(surface, "ن"):
+                continue
+            if key in {"إلا", "الا"} and _has_tanwin(surface):
+                continue
             pos, gloss = FUNCTION_WORDS[key]
             return {
                 "lemma": surface,
                 "root": None,
                 "pos": pos,
                 "pattern": None,
-                "features": {"particle_function": "pending_context"},
+                "features": {"particle_function": "pending_context", "match_basis": "function_inventory_exact"},
                 "gloss_hint": gloss,
                 "evidence_class": "function_inventory",
                 "confidence": "medium",
-                "score": 4.0,
+                "score": 6.5,
                 "rank": 0,
                 "segment_candidate_ref": seg_ref,
             }
     return None
+
+
+def _has_tanwin(surface):
+    return any(0x064B <= ord(ch) <= 0x064D for ch in surface or "")
+
+
+def _row_score(row, basis):
+    if (row.get("features") or {}).get("proper_name"):
+        return 7.0
+    return {
+        "surface_exact_match": 6.0,
+        "norm_strict_match": 5.5,
+        "bare_match": 5.0,
+    }.get(basis, 6.0)
 
 
 def _suffix_extra(surface):
@@ -201,20 +243,23 @@ def build_morphology(surface, segment_candidates, lexicon=None, db="smoke"):
         stem_surface = stems[-1].get("surface", "")
         segs = seg_cand.get("segments") or []
         whole_token_candidate = len(segs) == 1 and stem_surface == surface
-        row = _lexicon_match(stem_surface, lexicon)
-        if row is None and whole_token_candidate:
-            row = _lexicon_match(surface, lexicon)
-        extra = _suffix_extra(stem_surface)
-        if row:
-            cands.append(_candidate_from_row(row, i, extra=extra))
-            continue
-        pinned = _pinned_candidate(stem_surface, i, extra=extra)
-        if pinned:
-            cands.append(pinned)
-            continue
+        added = False
         f = _function_candidate(stem_surface, i) or _function_candidate(surface, i)
         if f:
             cands.append(f)
+            added = True
+        row, basis = _lexicon_match(stem_surface, lexicon)
+        if row is None and whole_token_candidate:
+            row, basis = _lexicon_match(surface, lexicon)
+        extra = _suffix_extra(stem_surface)
+        if row:
+            cands.append(_candidate_from_row(row, i, score=_row_score(row, basis), extra=extra, match_basis=basis))
+            added = True
+        pinned = _pinned_candidate(stem_surface, i, extra=extra)
+        if pinned:
+            cands.append(pinned)
+            added = True
+        if added:
             continue
         pos = "unknown"
         if any(s.get("role") == "definite_article" for s in seg_cand.get("segments") or []):

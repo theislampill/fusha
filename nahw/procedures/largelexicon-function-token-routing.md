@@ -46,3 +46,19 @@ Largelexicon-specific routing:
 
 Use `python tools/fusha_largelexicon_cli.py analyze-card --input ...` to inspect
 clusters through the same local contract used by rollout workers.
+
+## Collision safety
+
+When the larger Qamus-derived table introduces a valid content homograph for a
+function surface, keep the function lane explicit:
+
+- `من` / `مِن` / `مَن` routes to function/context review before any content-verb
+  hover.
+- `إلا` routes to exception-particle review unless the noun reading is proven
+  by source/context.
+- `لا` routes to negation/prohibition context before public projection.
+- `وما` keeps wāw plus function-sensitive mā visible, but remains
+  `pending_context`.
+
+Use the parser/CLI safety fields; do not consume `morphology_candidates[0]`
+directly.

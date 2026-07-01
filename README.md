@@ -55,6 +55,7 @@ has no source-address certainty and stays ambiguity-preserving. The contracts (e
   not live Qamus progress and not a certified arbitrary-text parser.
   [`docs/parser/largelexicon-implementation.md`](docs/parser/largelexicon-implementation.md) ·
   [`docs/parser/largelexicon-claim-boundary.md`](docs/parser/largelexicon-claim-boundary.md) ·
+  [`docs/parser/largelexicon-collision-safety.md`](docs/parser/largelexicon-collision-safety.md) ·
   [`qamus/procedures/largelexicon-rollout-consumption.md`](qamus/procedures/largelexicon-rollout-consumption.md).
   The largerollout3 extension adds source-card repair worklists, a qword
   crosswalk status table, transclusion validation, private acquisition

@@ -19,6 +19,10 @@ dataset into Fusha parser/checker tooling.
 - P2/P9/P10: opt-in `--db largelexicon` parser/analyzer path while preserving
   `smoke` as the default; the large table is a candidate/ranking substrate, not
   a trained statistical/dependency claim.
+- P0/P1 collision safety: match-basis tagging, high-risk function/proper-name
+  routing, and validator fixtures prevent `morphology_candidates[0]` from being
+  projected as a hover when larger tables create short-token collisions. See
+  `docs/parser/largelexicon-collision-safety.md`.
 - P11: compact all-visible-qword denominator rows for Qamus rollout support,
   preserving entry/card/qword handles without live mutation.
 - P6/P12: sarf, nahw, curriculum, drill, claim-card, and tutor-routing backfill
@@ -59,6 +63,8 @@ Stop the affected row or artifact, not the whole branch, when:
 - public fields leak external source labels or local/server paths;
 - visible segments do not concatenate to the Arabic surface;
 - the parser certifies arbitrary text rather than emitting a candidate;
+- a collision-gated token emits a public hover from a forbidden selected
+  candidate;
 - a Qamus Mode A worklist row lacks source-address/crosswalk routing;
 - a sarf or nahw lesson remains only in chat instead of a file, fixture, or
   packet.

@@ -53,6 +53,24 @@ Output states are candidate states. A largelexicon row can accelerate Qamus
 rollout and tutoring, but it is not live Qamus progress and not arbitrary-text
 certification.
 
+## Collision safety
+
+Largelexicon rows expand recall and therefore expand false-positive risk. Before
+using a selected candidate, inspect:
+
+- `features.match_basis`;
+- `confidence_gate`;
+- `collision`;
+- `safe_for_public_hover`;
+- `safe_for_qamus_executor_autopromote`.
+
+Short-token regressions are executable in
+`fusha/parser/eval/largelexicon-collision-regressions.jsonl`. In particular,
+`الله` and `بالله` must preserve the proper-name host, `إله` must not be
+projected as host + pronoun, and `من` must not become the verb `مَنَّ` without
+source/context evidence. A collision-gated row is useful candidate evidence,
+but its terminal sarf state is a packet, not a hover.
+
 Required validator loop:
 
 ```powershell

@@ -20,11 +20,13 @@ sys.path.insert(0, _REPO)
 from tools import normalize_ar as N  # noqa: E402
 from tools import fusha_text_check as TC  # noqa: E402
 from tools.fusha_clitic_splitter import split_clitics  # noqa: E402
-from tools.fusha_pattern_engine import build_morphology, preview_segments  # noqa: E402
+from tools.fusha_pattern_engine import FUNCTION_WORDS, build_morphology, preview_segments  # noqa: E402
 from tools.fusha_context_parser import token_context_candidates  # noqa: E402
 
 SCHEMA = "fusha/standalone-parse@1"
 PUBLIC_BOUNDARY = {"src": "qamus", "kind": "authored", "lang": "en"}
+CONTEXT_REQUIRED_FUNCTION_KEYS = {"ما", "وما", "لما", "انما", "إنما", "من", "لا", "إلا", "الا"}
+HIGH_RISK_BARE_MATCH_SURFACES = {"إله", "اله"}
 
 
 def _selected(seg_cands, morph_cands):
@@ -49,7 +51,6 @@ def _selected(seg_cands, morph_cands):
         "prefix_particle",
         "particle_inna",
         "ma_particle",
-        "object_pronoun",
     }
     if selected_collapsed and morph.get("evidence_class") in {"largelexicon_sample", "largelexicon_full"}:
         for cand in seg_cands:
@@ -63,19 +64,65 @@ def _selected(seg_cands, morph_cands):
     return selected, morph
 
 
-def _gate(surface, seg_cands, morph, context):
+def _candidate_collision(surface, seg_cands, morph_cands, morph):
+    if not morph:
+        return None
+    features = morph.get("features") or {}
+    if features.get("match_basis") == "bare_match" and N.bare(surface) in HIGH_RISK_BARE_MATCH_SURFACES:
+        return {
+            "kind": "unsafe_bare_match",
+            "surface": surface,
+            "route": ["sarf", "nahw"],
+            "basis": features.get("match_basis"),
+            "reason": "bare-match largelexicon evidence is useful internally but not a public hover selection for this high-risk surface",
+        }
+    tops = []
+    if morph_cands:
+        best = max(float(c.get("score") or 0.0) for c in morph_cands)
+        tops = [c for c in morph_cands if float(c.get("score") or 0.0) == best]
+    if len(tops) < 2:
+        return None
+    if all(c.get("evidence_class") == "function_inventory" and c.get("pos") == "particle" for c in tops):
+        return None
+    pos_values = {c.get("pos") for c in tops}
+    lemmas = {c.get("lemma") for c in tops}
+    roots = {c.get("root") for c in tops}
+    refs = {c.get("segment_candidate_ref") for c in tops}
+    if len(pos_values) > 1 or len(lemmas) > 1 or len(roots) > 1:
+        return {
+            "kind": "segmentation_or_pos_collision",
+            "surface": surface,
+            "candidate_count_at_top_score": len(tops),
+            "candidate_refs": sorted(int(ref) for ref in refs if ref is not None),
+            "pos_values": sorted(str(v) for v in pos_values),
+            "route": ["sarf", "nahw"],
+        }
+    return None
+
+
+def _function_needs_context(surface, morph):
+    if not morph or morph.get("evidence_class") != "function_inventory":
+        return False
+    keys = {surface, N.norm_strict(surface), N.bare(surface)}
+    return bool(keys & CONTEXT_REQUIRED_FUNCTION_KEYS & set(FUNCTION_WORDS))
+
+
+def _gate(surface, seg_cands, morph, context, morph_cands=None):
     bare = N.bare(surface)
     if not morph:
-        return "blocked"
-    if bare in {"ما", "وما", "لما", "انما", "إنما"}:
-        return "pending_context"
+        return "blocked", None
+    collision = _candidate_collision(surface, seg_cands, morph_cands or [], morph)
+    if collision:
+        return "lexical_collision_requires_context", collision
+    if _function_needs_context(surface, morph) or bare in {"ما", "وما", "لما", "انما", "إنما"}:
+        return "pending_context", None
     if any(c.get("status") == "pending_context" for c in context):
-        return "pending_context"
+        return "pending_context", None
     if len(seg_cands) > 1 and morph.get("evidence_class") not in {"seed_lexicon", "pinned_pattern"}:
-        return "ambiguous"
+        return "ambiguous", None
     if morph.get("evidence_class") in {"seed_lexicon", "pinned_pattern", "function_inventory", "largelexicon_sample", "largelexicon_full"}:
-        return "likely_from_internal_pattern"
-    return "ambiguous"
+        return "likely_from_internal_pattern", None
+    return "ambiguous", None
 
 
 def _parse_key(qg, morph):
@@ -88,6 +135,15 @@ def _parse_key(qg, morph):
 
 
 def _hover(surface, qg, morph, context, gate):
+    if gate == "lexical_collision_requires_context":
+        return {
+            "public_boundary": dict(PUBLIC_BOUNDARY),
+            "token_contribution_gloss": "candidate analysis pending",
+            "morphline": "lexical collision requires context",
+            "segments": [],
+            "context_notes": [c.get("explanation") for c in context],
+            "learner_explanation": "Multiple analyses compete here; keep the token pending until source/context evidence selects one.",
+        }
     segment_bits = [seg.get("gloss_contribution") for seg in qg if seg.get("gloss_contribution")]
     gloss = " + ".join(segment_bits) if segment_bits else (morph or {}).get("gloss_hint")
     if not gloss:
@@ -149,15 +205,28 @@ def parse_text(text, document_id=None, db="smoke"):
         ctx = ctx_by_idx.get(tok["index"], [])
         tok["context_candidates"] = ctx
         seg, morph = _selected(tok.get("segment_candidates") or [], tok.get("morphology_candidates") or [])
-        gate = _gate(tok["surface"], tok.get("segment_candidates") or [], morph, ctx)
+        gate, collision = _gate(tok["surface"], tok.get("segment_candidates") or [], morph, ctx, tok.get("morphology_candidates") or [])
         tok["confidence_gate"] = gate
-        if gate in {"pending_context", "ambiguous", "blocked"}:
+        if collision:
+            tok["collision"] = collision
+            for cand in tok.get("morphology_candidates") or []:
+                if cand.get("rank") == 1:
+                    cand["selection_status"] = "candidate_only"
+                    cand["selection_blocker"] = gate
+            tok["qg_segments"] = []
+            tok["selected_preview"] = None
+        if gate in {"pending_context", "ambiguous", "blocked", "lexical_collision_requires_context"}:
             tok["blocker_class"] = {
                 "pending_context": "context_sensitive",
                 "ambiguous": "ambiguous_surface",
                 "blocked": "no_parse_candidate",
+                "lexical_collision_requires_context": "lexical_collision",
             }[gate]
-            tok["blocker_reason"] = "standalone parser preview is not source-address certification"
+            tok["blocker_reason"] = (
+                "multiple high-risk analyses compete; no public hover projection selected"
+                if gate == "lexical_collision_requires_context"
+                else "standalone parser preview is not source-address certification"
+            )
         tok["hover_preview"] = _hover(tok["surface"], tok.get("qg_segments") or [], morph, ctx, gate)
         for c in ctx:
             diagnostics.append({
@@ -188,6 +257,7 @@ def parse_text(text, document_id=None, db="smoke"):
             "n_tokens": len(tokens),
             "n_pending_context": sum(1 for t in tokens if t["confidence_gate"] == "pending_context"),
             "n_ambiguous": sum(1 for t in tokens if t["confidence_gate"] == "ambiguous"),
+            "n_lexical_collision": sum(1 for t in tokens if t["confidence_gate"] == "lexical_collision_requires_context"),
         },
     }
 

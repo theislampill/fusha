@@ -19,6 +19,10 @@ What this branch may claim after validation:
   `lang=en`;
 - it routes uncertain rows to candidate/packet states instead of pretending
   they are deploy-ready.
+- it detects high-risk short-token collisions and prevents the first
+  largelexicon candidate from becoming a public hover preview when context or
+  source-address proof is missing (see
+  `docs/parser/largelexicon-collision-safety.md`).
 
 What it must not claim:
 
@@ -37,3 +41,11 @@ model/rule cards, and Qamus public readback owned by the rollout executor.
 The long-horizon target is a dependency-free Classical Arabic NLP stack across
 Mode A authoring, Mode B tutoring, and Mode C standalone parsing. That is a
 target-state claim, not a present-tense equivalence claim.
+
+Largelexicon coverage is not disambiguation. If a larger table creates a
+homographic, function-token, or segmentation collision, parser output must route
+to `lexical_collision_requires_context`, `pending_context`, `ambiguous`, or a
+two-vote/scholar packet rather than projecting `morphology_candidates[0]` as a
+public hover. CLI fields such as `safe_for_public_hover` and
+`safe_for_qamus_executor_autopromote` are the consumer contract; downstream
+workers must not infer safety from candidate order.

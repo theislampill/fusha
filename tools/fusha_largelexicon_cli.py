@@ -40,6 +40,37 @@ def _dump(obj: dict) -> None:
     print(json.dumps(obj, ensure_ascii=False, indent=2, sort_keys=True))
 
 
+def _token_safety(parsed: dict) -> dict:
+    tokens = parsed.get("tokens") or []
+    gates = {tok.get("confidence_gate") for tok in tokens}
+    if not tokens:
+        gate = "blocked"
+    elif len(tokens) == 1:
+        gate = tokens[0].get("confidence_gate") or "blocked"
+    elif "lexical_collision_requires_context" in gates:
+        gate = "lexical_collision_requires_context"
+    elif "pending_context" in gates:
+        gate = "pending_context"
+    elif "ambiguous" in gates:
+        gate = "ambiguous"
+    else:
+        gate = "preview_candidate"
+    route_map = {
+        "lexical_collision_requires_context": ["sarf_collision_review", "nahw_function_review"],
+        "pending_context": ["nahw_function_review"],
+        "ambiguous": ["sarf_collision_review"],
+        "blocked": ["validator_packet"],
+    }
+    preview_candidate = gate in {"preview_candidate", "likely_from_internal_pattern"} and bool(tokens)
+    return {
+        "analysis_status": "preview_candidate" if preview_candidate else "candidate_only",
+        "safety_gate": gate,
+        "safe_for_public_hover": False,
+        "safe_for_qamus_executor_autopromote": False,
+        "routes": route_map.get(gate, ["executor_validation_required"]),
+    }
+
+
 def analyze_token(args: argparse.Namespace) -> int:
     parsed = parse_text(args.surface, document_id=args.document_id or f"largelexicon-token:{args.surface}", db="largelexicon")
     morph = analyze_surface(args.surface, db_name="largelexicon")
@@ -48,6 +79,7 @@ def analyze_token(args: argparse.Namespace) -> int:
             "schema": "fusha/largelexicon-cli/analyze-token@1",
             "mode": args.mode,
             "surface": args.surface,
+            **_token_safety(parsed),
             "parse": parsed,
             "morphology": morph,
             "claim": "source-clean candidate analysis; not live Qamus progress or arbitrary-text certification",
@@ -70,6 +102,7 @@ def analyze_card(args: argparse.Namespace) -> int:
                 "claim": "card analysis candidate; source-address certification remains a Mode A gate",
             }
         )
+        out[-1].update(_token_safety(out[-1]["parse"]))
     _dump({"schema": "fusha/largelexicon-cli/analyze-card@1", "rows": out})
     return 0
 

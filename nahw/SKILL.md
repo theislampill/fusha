@@ -156,6 +156,12 @@ function-specific mā pending context; `بالكتاب` shows bāʾ + article + 
 decision for RH-LIVE; `إنما` and `لمّا` are particle clusters whose function cannot be flattened into one English
 gloss. If parser preview and hover disagree, produce a nahw repair/test packet or scholar/iʿrāb packet; do not call
 the page complete merely because some color exists.
+Largelexicon collision safety is a nahw gate as well as a sarf gate. Short
+function-like surfaces such as `من`, `لا`, `إلا`, `أم`, `لهم`, and clusters such
+as `وما` must route by function/context, not by first lexicon row. A larger
+Qamus table may surface a valid homograph (`مَنَّ`, `إِلًّا`, lām + pronoun),
+but arbitrary text remains `pending_context` or `lexical_collision_requires_context`
+until nahw supplies the function, governor, and phrase-vs-token contribution.
 
 Learner-facing tooltip prose must explain Arabic, not workflow. Do not put source-boundary, authoring-process,
 deployment, owner-authorization, or internal-evidence statements in a public hover explanation. Those statements
