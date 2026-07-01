@@ -4,7 +4,7 @@
 
 **Goal:** Replace the oversized committed qword denominator monolith with a manifest-backed, bidirectional, shard-addressable table that remains easy for Qamus rollout and future lexicon workers to extend.
 
-**Architecture:** Keep one logical Project-Xanadu-style table, but store it as small JSONL shards with a manifest, SHA-256/count checks, an entry-shard reverse index, and a source-card repair packet for entries that exist in the 2,092-entry Qamus target but lack tokenizable examples in the current export. Consumers use `tools/largelexicon_table_reader.py` instead of hard-coding file paths.
+**Architecture:** Keep one logical Project-Xanadu-style table, but store it as small JSONL shards with a manifest, SHA-256/count checks, an entry-shard reverse index, and a source-card repair packet for entries that exist in the 2,092-entry Qamus target but lack tokenizable examples in the current export. The companion qword crosswalk is also sharded and hash/size-guarded so reverse traversal stays reviewable. Consumers use `tools/largelexicon_table_reader.py` instead of hard-coding file paths.
 
 **Tech Stack:** Python stdlib, JSON/JSONL, existing `tools/largelexicon_common.py` builders and largelexicon validators.
 
@@ -29,6 +29,7 @@
 
 - [x] Add constants for `qamus-qword-denominator.manifest.json`, `qamus-qword-denominator.entry-shard-index.json`, `qamus-qword-denominator.source-card-repair.json`, and `qword-denominator/*.jsonl`.
 - [x] Generate qword denominator shards by Qamus source-key ranges so the table remains tranche-friendly and reviewable.
+- [x] Generate qword crosswalk shards by smaller Qamus source-key ranges and fail validation if any crosswalk shard exceeds the 10 MB ergonomics cap.
 - [x] Remove the committed monolithic qword denominator from the source-clean full-table path.
 - [x] Record `qamus_entry_count`, `entries_with_qword_rows`, and `entries_without_qword_rows` so the 2,092-entry target is not confused with rows currently tokenizable from `entries.jsonl`.
 

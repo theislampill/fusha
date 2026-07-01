@@ -8,21 +8,33 @@ import json
 from pathlib import Path
 from typing import Any
 
-from largelexicon_common import PUBLIC_BOUNDARY, QWORD_CROSSWALK_MANIFEST, QWORD_DENOMINATOR_MANIFEST
+from largelexicon_common import PUBLIC_BOUNDARY, QWORD_CROSSWALK_MANIFEST, QWORD_DENOMINATOR_MANIFEST, sha256_file
 from largelexicon_table_reader import LargelexiconQwordTable
 
 
 ROOT = Path(__file__).resolve().parents[1]
+MAX_SHARD_BYTES = 10 * 1024 * 1024
 
 
-def _iter_rows(manifest: dict[str, Any]) -> list[dict[str, Any]]:
+def _iter_rows(manifest: dict[str, Any], errors: list[str]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for shard in manifest.get("shards") or []:
-        path = ROOT / shard["path"]
+        rel = shard.get("path")
+        if not rel:
+            errors.append("crosswalk shard missing path")
+            continue
+        path = ROOT / rel
+        if not path.exists():
+            errors.append(f"{rel}: shard file missing")
+            continue
+        if path.stat().st_size > MAX_SHARD_BYTES:
+            errors.append(f"{rel}: shard exceeds {MAX_SHARD_BYTES} bytes")
+        if shard.get("sha256") != sha256_file(path):
+            errors.append(f"{rel}: sha256 mismatch")
         with path.open("r", encoding="utf-8") as handle:
             shard_rows = [json.loads(line) for line in handle if line.strip()]
         if len(shard_rows) != shard.get("row_count"):
-            raise ValueError(f"shard row_count mismatch: {shard['path']}")
+            errors.append(f"shard row_count mismatch: {rel}")
         rows.extend(shard_rows)
     return rows
 
@@ -37,7 +49,7 @@ def validate() -> list[str]:
         errors.append("crosswalk row_count must equal qword denominator row_count")
     if manifest.get("public_boundary") != PUBLIC_BOUNDARY:
         errors.append("crosswalk manifest public_boundary must stay source-clean")
-    rows = _iter_rows(manifest)
+    rows = _iter_rows(manifest, errors)
     if len(rows) != manifest.get("row_count"):
         errors.append("crosswalk materialized rows do not match manifest row_count")
     qword_ids: set[str] = set()

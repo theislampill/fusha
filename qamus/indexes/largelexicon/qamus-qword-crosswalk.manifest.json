@@ -2,7 +2,7 @@
   "claim_boundary": "Crosswalk status table only; null-loc rows are packets, not deployable hovers.",
   "denominator_manifest_path": "qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json",
   "denominator_row_count": 117117,
-  "generated_at": "2026-07-01T12:05:30Z",
+  "generated_at": "2026-07-01T12:43:04Z",
   "generated_by": "tools.largelexicon_common",
   "public_boundary": {
     "kind": "authored",
@@ -11,695 +11,2724 @@
   },
   "row_count": 117117,
   "schema": "qamus/largelexicon-qword-crosswalk-manifest@1",
-  "shard_count": 54,
+  "shard_count": 210,
+  "shard_strategy": "qamus_source_key_prefix_ordinal_ranges_10",
   "shards": [
     {
       "first_row_id": "llx-crosswalk-llx-qword-0528e564b97f-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-d8b8169ae3d3-02-01-004",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/p001-p040.jsonl",
-      "row_count": 439,
+      "last_row_id": "llx-crosswalk-llx-qword-5935ecfb1ec5-02-02-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/p001-p010.jsonl",
+      "row_count": 87,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "b6905485cc5e7bffcbe28250a3747b0aa56c690913312bf988e7e2590fffcc60",
+      "sha256": "554c3d16ada59cd69f0be6ee5d49d979bc243afc4f30b9b6690b06fab00345f4",
+      "source_key_range": {
+        "end": 10,
+        "prefix": "p",
+        "start": 1
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-4318e2561011-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-d04ce63e31af-02-05-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/p011-p020.jsonl",
+      "row_count": 126,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "3f8e7c8e702ea8c38eca203cb93e0620acbe33790c5febdd52302611b1e003a3",
+      "source_key_range": {
+        "end": 20,
+        "prefix": "p",
+        "start": 11
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-a6cc21000bae-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-d93bddaa1e1e-02-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/p021-p030.jsonl",
+      "row_count": 80,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "cd3279206a124d8297713f7bf1943dcd726469b40f987861ee6d21ad2667feb3",
+      "source_key_range": {
+        "end": 30,
+        "prefix": "p",
+        "start": 21
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-df1fc22384e9-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-d8b8169ae3d3-02-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/p031-p040.jsonl",
+      "row_count": 146,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "b53b312fcdec4e61a80018ea84c515b96dae0662ef9f58c66551efd8e8a62941",
       "source_key_range": {
         "end": 40,
         "prefix": "p",
-        "start": 1
+        "start": 31
       }
     },
     {
       "first_row_id": "llx-crosswalk-llx-qword-90f56fb15ef5-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-7f25d6c3e392-01-02-004",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/p041-p080.jsonl",
-      "row_count": 333,
+      "last_row_id": "llx-crosswalk-llx-qword-90b371e02b8e-01-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/p041-p050.jsonl",
+      "row_count": 86,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "c8e5bf302d4e05a5f45e7d5c952e993001a3a75e1208a991ec24a49d7ef5b235",
+      "sha256": "996cbb8b9b1bb9106e34f717215081ee82637ca656f3643d1cb2d17e55259cae",
+      "source_key_range": {
+        "end": 50,
+        "prefix": "p",
+        "start": 41
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-8ce3f76e3e4c-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-cee928fb679c-03-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/p051-p060.jsonl",
+      "row_count": 100,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "c4f5c5aa8728c2bdfbf8097c891b0500fb31cd8a35aaae5afe52fc7303d3105c",
+      "source_key_range": {
+        "end": 60,
+        "prefix": "p",
+        "start": 51
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-7bb317131add-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-34baf82d4a6e-02-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/p061-p070.jsonl",
+      "row_count": 53,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "54576473280529080b306eb28d4aaf6704e60874a606817034beb781359f4a61",
+      "source_key_range": {
+        "end": 70,
+        "prefix": "p",
+        "start": 61
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-ca5dd7eb89ec-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-7f25d6c3e392-01-02-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/p071-p080.jsonl",
+      "row_count": 94,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "18f96ce6c8cfc8d8494c6199ecf33f3752beed3af74a169f39497f6a1530055a",
       "source_key_range": {
         "end": 80,
         "prefix": "p",
-        "start": 41
+        "start": 71
       }
     },
     {
       "first_row_id": "llx-crosswalk-llx-qword-b851675d8484-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-e7c05664fd33-01-02-006",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/p081-p100.jsonl",
-      "row_count": 178,
+      "last_row_id": "llx-crosswalk-llx-qword-affa6a9b1f6c-01-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/p081-p090.jsonl",
+      "row_count": 59,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "e14458fdc57a39c6e334aed3c650212ba3fed5ba7d70bbad527321b17ea0bdcb",
+      "sha256": "452324cf41074d41afd89ebe11fe76b7a386388046442846af8fb7b1b32aff08",
       "source_key_range": {
-        "end": 100,
+        "end": 90,
         "prefix": "p",
         "start": 81
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-430015446b77-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-388bbd38acf6-02-10-003",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v001-v040.jsonl",
-      "row_count": 9178,
+      "first_row_id": "llx-crosswalk-llx-qword-f78fe97adcff-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-e7c05664fd33-01-02-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/p091-p100.jsonl",
+      "row_count": 119,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "91586cb0fa11a86f265b19c67cf81f01b1582622a26a3b4681f6fe5502b5e2bb",
+      "sha256": "63305c02ac791871f4b11f0accdd769db3591e5d5cd5053583834abb71f6dd0d",
+      "source_key_range": {
+        "end": 100,
+        "prefix": "p",
+        "start": 91
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-430015446b77-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-5bddb8a95c8f-01-12-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v001-v010.jsonl",
+      "row_count": 932,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "40369f1405e9616cd960fa59327ce96ab5a2ff88816a11f0905bb30bd3cd9154",
+      "source_key_range": {
+        "end": 10,
+        "prefix": "v",
+        "start": 1
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-50634b339290-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-1c5f7c9c8e05-03-12-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v011-v020.jsonl",
+      "row_count": 1469,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "4d9930c7fef74a992e441e74caf79ba02a6191b093262f2094fc80e0f94b0554",
+      "source_key_range": {
+        "end": 20,
+        "prefix": "v",
+        "start": 11
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-7947580aed3e-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-55dd18892bf9-02-17-022",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v021-v030.jsonl",
+      "row_count": 2584,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "d2982e47261592d759cb3e7f50b73a44030b9e2c132b8af212b0b97dee37dd29",
+      "source_key_range": {
+        "end": 30,
+        "prefix": "v",
+        "start": 21
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-543da5bcc248-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-388bbd38acf6-02-10-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v031-v040.jsonl",
+      "row_count": 4193,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "d1c772c0d2918f7515cac3b0cca2443275d6ef74b98d9b86f8176efd6070a4bd",
       "source_key_range": {
         "end": 40,
         "prefix": "v",
-        "start": 1
+        "start": 31
       }
     },
     {
       "first_row_id": "llx-crosswalk-llx-qword-0f79975eb71d-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-0e2b435dcece-01-10-023",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v041-v080.jsonl",
-      "row_count": 13956,
+      "last_row_id": "llx-crosswalk-llx-qword-22faf72d13ce-01-12-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v041-v050.jsonl",
+      "row_count": 3836,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "09dc1f815ca6f14e85b028a577c55d656f2dfdb183ac75b7bc9ba7a0e2257db6",
+      "sha256": "65b36956b18bb790d6fe19464755ed0824a6f513e5576d1e3480d1b66af7ff05",
       "source_key_range": {
-        "end": 80,
+        "end": 50,
         "prefix": "v",
         "start": 41
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-3d82e28ccae0-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-8ea65de7280d-02-01-031",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v081-v120.jsonl",
-      "row_count": 9860,
+      "first_row_id": "llx-crosswalk-llx-qword-a6123cbca2ff-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-321b0c4aed31-02-07-009",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v051-v060.jsonl",
+      "row_count": 3661,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "bbd4f3439f024895440c1554d8e234927cc12014be98a46d54197de9aee76be6",
+      "sha256": "5ca5937d9f8fd740545554cd7f1dcf8cf1f23392967bf2435774820a68feaa51",
       "source_key_range": {
-        "end": 120,
+        "end": 60,
+        "prefix": "v",
+        "start": 51
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-c1e7d213be6b-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-6197ee2c0b2a-02-13-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v061-v070.jsonl",
+      "row_count": 3257,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "9282844e8d25e7f23343a8ccf269739e8c803bb51c069049621a59d811f33a69",
+      "source_key_range": {
+        "end": 70,
+        "prefix": "v",
+        "start": 61
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-2189b86e056e-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-0e2b435dcece-01-10-023",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v071-v080.jsonl",
+      "row_count": 3202,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "fd4c9cf5359571e2afb5e426c69062ff4eba39e137f1ebb1fac9bb2c917f1458",
+      "source_key_range": {
+        "end": 80,
+        "prefix": "v",
+        "start": 71
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-3d82e28ccae0-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-79cb36de6246-02-01-036",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v081-v090.jsonl",
+      "row_count": 2280,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "ad4361883396b19a3f4b30259d93a241e96e9e07217e6ec8519f0551b4606de2",
+      "source_key_range": {
+        "end": 90,
         "prefix": "v",
         "start": 81
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-3a414827f027-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-55c548d602e9-03-03-014",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v121-v160.jsonl",
-      "row_count": 10401,
+      "first_row_id": "llx-crosswalk-llx-qword-9e4222baccd2-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-54f8ff4c5829-02-01-015",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v091-v100.jsonl",
+      "row_count": 2725,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "1a518cb80bdc0d5e3b040c023ef580decee2ed9718c8d549efee5cfd84e154ea",
+      "sha256": "30de428241770b8465f175f97128f9944b6c953f568d126f2508bbd1ca5bb2af",
       "source_key_range": {
-        "end": 160,
+        "end": 100,
+        "prefix": "v",
+        "start": 91
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-622a3d627d4d-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-9e51dc1d48ba-01-11-035",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v101-v110.jsonl",
+      "row_count": 2087,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "6d7e6c7c29cbb6482ce0f8f8e1044e2aaeceece249bc1f136a27b85d3547646b",
+      "source_key_range": {
+        "end": 110,
+        "prefix": "v",
+        "start": 101
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-4f666d15bb7e-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-8ea65de7280d-02-01-031",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v111-v120.jsonl",
+      "row_count": 2768,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "8d9cf53095257bb0e1a85c0c5028b768589f21f4ac5c515cb16a46c146489fde",
+      "source_key_range": {
+        "end": 120,
+        "prefix": "v",
+        "start": 111
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-3a414827f027-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-2cbcf128be78-01-07-144",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v121-v130.jsonl",
+      "row_count": 2944,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "b1c26d314461e6357745b3e0721664436a7ea2ad66a56c6d030642552b6d7024",
+      "source_key_range": {
+        "end": 130,
         "prefix": "v",
         "start": 121
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-5af78b50e696-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-af75174c26a6-05-01-013",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v161-v200.jsonl",
-      "row_count": 7106,
+      "first_row_id": "llx-crosswalk-llx-qword-06ea2a36ef4d-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-0131159a9456-01-07-032",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v131-v140.jsonl",
+      "row_count": 2588,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "8ded78d081f22a92a8e361bea643bb334bad9255dd2a7d261972287803fa7305",
+      "sha256": "f46e3da794cd9cad2cbab6b332107081bf58ca147420cda1061d059f19f6becf",
       "source_key_range": {
-        "end": 200,
+        "end": 140,
+        "prefix": "v",
+        "start": 131
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-0bf59423714b-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-044c699bb45b-03-03-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v141-v150.jsonl",
+      "row_count": 2099,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "54a22b46a795e51945e945685a76b8770a99bdcab5c002c6863db38e5f807190",
+      "source_key_range": {
+        "end": 150,
+        "prefix": "v",
+        "start": 141
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-e11ae777e759-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-55c548d602e9-03-03-014",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v151-v160.jsonl",
+      "row_count": 2770,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "f22f6c5dcb75bbf30438efd4d5b17f98c9b323dc735cd3770909f04c98a9e433",
+      "source_key_range": {
+        "end": 160,
+        "prefix": "v",
+        "start": 151
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-5af78b50e696-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-7034f8b4a1f9-04-03-016",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v161-v170.jsonl",
+      "row_count": 2411,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "9eece3887fd75e1746d12cac05af627b8612afff3c5e1a410bb450b1b10bd481",
+      "source_key_range": {
+        "end": 170,
         "prefix": "v",
         "start": 161
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-f12ae52e78f7-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-cdf5e736aff4-01-07-006",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v201-v240.jsonl",
-      "row_count": 6829,
+      "first_row_id": "llx-crosswalk-llx-qword-bbfb049e4563-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-00da6306f662-02-01-021",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v171-v180.jsonl",
+      "row_count": 1528,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "8ee88c34356c62879d0aa41064b9546bba91ce8e2eea56451f8047bd7c92a258",
+      "sha256": "707b742c8895f0ee08bc965bc60d8613f229d9abe641d665bce3a81bce3a275d",
       "source_key_range": {
-        "end": 240,
+        "end": 180,
+        "prefix": "v",
+        "start": 171
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-47d747ff370a-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-1cf05c1e5d9c-04-01-030",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v181-v190.jsonl",
+      "row_count": 1639,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "93e0c01dddb4aad6361eafaa79594c5086ed90adb7ddc41e20767b1acded47db",
+      "source_key_range": {
+        "end": 190,
+        "prefix": "v",
+        "start": 181
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-23b124a7024e-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-af75174c26a6-05-01-013",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v191-v200.jsonl",
+      "row_count": 1528,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "d857cc43ce8c8ed2a7cd71a5dca2cdb08dd9adfe12cb77c7e7e3031eba5d5eae",
+      "source_key_range": {
+        "end": 200,
+        "prefix": "v",
+        "start": 191
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-f12ae52e78f7-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-cc9148479eae-02-01-023",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v201-v210.jsonl",
+      "row_count": 1565,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "b0e8d02f39387eb0f790cccb0fec9dd1255567d50fa22bfea6f91d9d42a3e751",
+      "source_key_range": {
+        "end": 210,
         "prefix": "v",
         "start": 201
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-7486acc96141-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-0a854e0855f6-01-06-009",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v241-v280.jsonl",
-      "row_count": 6839,
+      "first_row_id": "llx-crosswalk-llx-qword-e919504a83fa-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-e319c7d90f6d-01-08-032",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v211-v220.jsonl",
+      "row_count": 1911,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "15ce919eed016301ebe8de058f25c532d7910758e89f0365c61a1fad33d0a5ad",
+      "sha256": "315e8c62cbe655cb7e243c48b5f98fbda0bf0c0244fcbdbe4d20b7e42c9e97a4",
       "source_key_range": {
-        "end": 280,
+        "end": 220,
+        "prefix": "v",
+        "start": 211
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-763dbd0471de-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-21dd8c76ae19-02-06-025",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v221-v230.jsonl",
+      "row_count": 1606,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "789a7e6a38194a82904658523048df99c07acecbad61fceee3c150996b1f7b1f",
+      "source_key_range": {
+        "end": 230,
+        "prefix": "v",
+        "start": 221
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-30fad52d1929-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-cdf5e736aff4-01-07-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v231-v240.jsonl",
+      "row_count": 1747,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "09189618fc29f3959480cdc823a5653094ce1287913bcc97bb7079ef23343aeb",
+      "source_key_range": {
+        "end": 240,
+        "prefix": "v",
+        "start": 231
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-7486acc96141-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-ad9af170d670-01-10-026",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v241-v250.jsonl",
+      "row_count": 2377,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "79dd5ef5135104292ad1c762d33fef862fe35c0950c11e9cf31c1c2b81a0406d",
+      "source_key_range": {
+        "end": 250,
         "prefix": "v",
         "start": 241
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-ddcdcc8b5d9e-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-7f673c8b767f-02-01-006",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v281-v320.jsonl",
-      "row_count": 5858,
+      "first_row_id": "llx-crosswalk-llx-qword-0c1097a796fe-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-df392acc2f17-03-03-020",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v251-v260.jsonl",
+      "row_count": 1695,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "5fec51b5004fcaae809e8eeb4f00439effbb5f2ea117401ced2741806c317cad",
+      "sha256": "0106d9fa36d0c376861f79183610ee98ea7c56067df3e784914ccc345eaf96dc",
       "source_key_range": {
-        "end": 320,
+        "end": 260,
+        "prefix": "v",
+        "start": 251
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-92286b4362c9-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-16e05c2ec837-02-01-029",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v261-v270.jsonl",
+      "row_count": 1195,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "eba5daf9e6465cf9b8234ecd0d404f12e2bbf301ac609a94959e0936ca918b3f",
+      "source_key_range": {
+        "end": 270,
+        "prefix": "v",
+        "start": 261
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-69c9dd80a73e-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-0a854e0855f6-01-06-009",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v271-v280.jsonl",
+      "row_count": 1572,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "8119cb80bb002053695775b5a4826fe960afb1a69f4840fd6ad1d9c495cc0d2c",
+      "source_key_range": {
+        "end": 280,
+        "prefix": "v",
+        "start": 271
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-ddcdcc8b5d9e-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-b8e9a3a37453-03-01-018",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v281-v290.jsonl",
+      "row_count": 1590,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "739f0ae30ee4c47eef9cc4e77dc7ef44e35cd9e7d247e2c7d894efff60c85f48",
+      "source_key_range": {
+        "end": 290,
         "prefix": "v",
         "start": 281
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-90d6ab43d466-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-aa1e635cbb3d-01-07-013",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v321-v360.jsonl",
-      "row_count": 5141,
+      "first_row_id": "llx-crosswalk-llx-qword-da817d56cc16-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-cb28a4b2e211-01-03-016",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v291-v300.jsonl",
+      "row_count": 1453,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "752a9cc811b6d67899f13752990e35664dc4e3d12638724cf8d343a496e14307",
+      "sha256": "18fda10d6d41e5fd0451ce5e6aefcbb3c3363d70a737ac0d9e5e2f7557ddf767",
       "source_key_range": {
-        "end": 360,
+        "end": 300,
+        "prefix": "v",
+        "start": 291
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-4bba2359dc9c-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-9cabebe3f9b8-02-05-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v301-v310.jsonl",
+      "row_count": 1551,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "444bdd412cc33ea2ed7a0cd3b79dce184cd4b3d03ab3bed9c55619a546c376db",
+      "source_key_range": {
+        "end": 310,
+        "prefix": "v",
+        "start": 301
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-4ad302f84579-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-7f673c8b767f-02-01-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v311-v320.jsonl",
+      "row_count": 1264,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "b25f2425e4b0cd08e1ce0605edefe1460213924d800daa933cee6e3112fd3f1a",
+      "source_key_range": {
+        "end": 320,
+        "prefix": "v",
+        "start": 311
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-90d6ab43d466-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-9c5b82ab4c22-02-01-012",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v321-v330.jsonl",
+      "row_count": 1539,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "b502d92aa9f8962d1be3b258e4d188e501058301841caef1eeb1bce64c429a65",
+      "source_key_range": {
+        "end": 330,
         "prefix": "v",
         "start": 321
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-6708891659a2-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-3b9a771008c1-01-07-004",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v361-v400.jsonl",
-      "row_count": 4065,
+      "first_row_id": "llx-crosswalk-llx-qword-bb789f4cfd10-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-4fa13413ff7f-02-03-009",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v331-v340.jsonl",
+      "row_count": 1245,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "121a661760d85178164e84b3d57afceccf7b58c026e89d18ec0aeeae5afb098b",
+      "sha256": "79cc99578cfe554da42527287a46be60dd2a69434e4ee05ac33b59a5a22971b0",
       "source_key_range": {
-        "end": 400,
+        "end": 340,
+        "prefix": "v",
+        "start": 331
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-dd43f26c75af-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-c49a5ba69760-02-01-012",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v341-v350.jsonl",
+      "row_count": 1022,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "93d67509b02e1ef5aebc94128ab5c64e3c339fd81ebced6aedb7d9d4d83f2d2d",
+      "source_key_range": {
+        "end": 350,
+        "prefix": "v",
+        "start": 341
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-c9a3e27a0469-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-aa1e635cbb3d-01-07-013",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v351-v360.jsonl",
+      "row_count": 1335,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "20108baaa0be508ac08f9cc16dcd387928c899668995bc3ee8c3b2c5a281a94f",
+      "source_key_range": {
+        "end": 360,
+        "prefix": "v",
+        "start": 351
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-6708891659a2-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-27b75a559611-02-03-044",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v361-v370.jsonl",
+      "row_count": 1157,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "5326ef6a6df9bce14e0025ff923d8023d9c8f537cd8fb8d37970dd42296ba559",
+      "source_key_range": {
+        "end": 370,
         "prefix": "v",
         "start": 361
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-b2bd7c33380a-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-2cd8905c46fc-02-01-006",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v401-v440.jsonl",
-      "row_count": 4073,
+      "first_row_id": "llx-crosswalk-llx-qword-ce7ac13d620a-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-cfaf17de125f-03-01-008",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v371-v380.jsonl",
+      "row_count": 870,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "47c648494c9779def324819479a7d504d119cc919638f0bd5b49a981ab730087",
+      "sha256": "5a6ffa3ce2dd38163d8b886e2b79fc343935ea6ce802edea164ded49d4206727",
       "source_key_range": {
-        "end": 440,
+        "end": 380,
+        "prefix": "v",
+        "start": 371
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-108315a0be83-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-a95c6ac018da-02-01-020",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v381-v390.jsonl",
+      "row_count": 1268,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "c7eb7eb554ba2487ebe4c652fe8eb1fb081d11b7ee1feeca7425526b26566abe",
+      "source_key_range": {
+        "end": 390,
+        "prefix": "v",
+        "start": 381
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-69d6313f08df-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-3b9a771008c1-01-07-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v391-v400.jsonl",
+      "row_count": 770,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "643a257f022cbb03a101c95003eccb719e8fb0acb61d18416b63a4391e27034a",
+      "source_key_range": {
+        "end": 400,
+        "prefix": "v",
+        "start": 391
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-b2bd7c33380a-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-7d017e557dd4-01-04-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v401-v410.jsonl",
+      "row_count": 986,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "0a08c450459a31d88ee07871d9c4c82ed4ac150adaca02b845b6e481130c6331",
+      "source_key_range": {
+        "end": 410,
         "prefix": "v",
         "start": 401
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-2dc72fd49600-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-c006611a2f5e-01-04-018",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v441-v480.jsonl",
-      "row_count": 3550,
+      "first_row_id": "llx-crosswalk-llx-qword-07c919b3a9f2-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-1773d3fc1e63-03-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v411-v420.jsonl",
+      "row_count": 1288,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "b9e1607d7d49aedbb1e2e9fc00203430c09ec31f25c0876a39e55ebe9430c1e2",
+      "sha256": "913134ce4f269f1b11c2a709e2cbb9ac546eff1ceaddc69331fc6052e16276aa",
       "source_key_range": {
-        "end": 480,
+        "end": 420,
+        "prefix": "v",
+        "start": 411
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-62f4ee8ac1ae-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-2639545324b4-03-02-020",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v421-v430.jsonl",
+      "row_count": 1018,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "ce01458bc7865430594b85b04089016fd1ab7816a74ee3d08dbf8acc64f6fbba",
+      "source_key_range": {
+        "end": 430,
+        "prefix": "v",
+        "start": 421
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-fb62f4b5e63e-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-2cd8905c46fc-02-01-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v431-v440.jsonl",
+      "row_count": 781,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "01f53efc39c82581c53cffff4de4a2c4a6f756d46c4b057ee01a9b07dc7d3250",
+      "source_key_range": {
+        "end": 440,
+        "prefix": "v",
+        "start": 431
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-2dc72fd49600-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-1ffcc554ec44-01-05-024",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v441-v450.jsonl",
+      "row_count": 1095,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "8785b0064d20a0161f2f6113d1964a154bb477fc6264acf7fb34a070d201d6fa",
+      "source_key_range": {
+        "end": 450,
         "prefix": "v",
         "start": 441
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-7d6e5b852be1-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-3ef24b0633e1-01-03-004",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v481-v520.jsonl",
-      "row_count": 3196,
+      "first_row_id": "llx-crosswalk-llx-qword-e5c07f859038-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-0c0e1edc8c65-02-02-014",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v451-v460.jsonl",
+      "row_count": 865,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "4d1ae03d246031837569d5d29f378e572127ddbe6a6d07285bff2f2b753e03cf",
+      "sha256": "a37a4a132849d300e3e0bcbd12b305b475d9261f11ee4f7af36be1a5a78e39e4",
       "source_key_range": {
-        "end": 520,
+        "end": 460,
+        "prefix": "v",
+        "start": 451
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-d82582d4c8e6-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-532d72ea4bc6-02-01-008",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v461-v470.jsonl",
+      "row_count": 637,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "5be2d9064a18092660fb04b490b66f2cc9cfb3c4195270cbb2c54426ec5be638",
+      "source_key_range": {
+        "end": 470,
+        "prefix": "v",
+        "start": 461
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-3fe10eef5951-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-c006611a2f5e-01-04-018",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v471-v480.jsonl",
+      "row_count": 953,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "4b16da0c887c5385674fe3c8cc670e10f91f0e5aee3e7c420a2ab5c9bd0da569",
+      "source_key_range": {
+        "end": 480,
+        "prefix": "v",
+        "start": 471
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-7d6e5b852be1-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-737cc7d8eca8-02-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v481-v490.jsonl",
+      "row_count": 552,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "359718a26cc190a65292287b747ef9c74a36cc66e19f692c60cd99f45a0b2565",
+      "source_key_range": {
+        "end": 490,
         "prefix": "v",
         "start": 481
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-2cbf84907e01-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-534543cc84f7-01-03-014",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v521-v560.jsonl",
-      "row_count": 3134,
+      "first_row_id": "llx-crosswalk-llx-qword-4be29342bd93-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-3b927026b88a-02-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v491-v500.jsonl",
+      "row_count": 978,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "90f32b5816746ef8b7f3d23741fbb5d7994ad917eeaffeefacf00d3fdfed8d22",
+      "sha256": "fac45934810b44392457b78f34d29277cbd287f26cbd8d74ff9b04972f89eeac",
       "source_key_range": {
-        "end": 560,
+        "end": 500,
+        "prefix": "v",
+        "start": 491
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-7b23a694a9b4-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-9264e145b045-01-06-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v501-v510.jsonl",
+      "row_count": 881,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "20ead53eab2bd7df75e00cd08dafecec7844fe3bbeeaf213e0ee045d15264343",
+      "source_key_range": {
+        "end": 510,
+        "prefix": "v",
+        "start": 501
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-31e79b908386-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-3ef24b0633e1-01-03-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v511-v520.jsonl",
+      "row_count": 785,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "93caac31f881316698d16d638e9e7849134fd4ac9c3456bce5a181d6035ece84",
+      "source_key_range": {
+        "end": 520,
+        "prefix": "v",
+        "start": 511
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-2cbf84907e01-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-f33a3c703ac5-01-04-009",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v521-v530.jsonl",
+      "row_count": 758,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "da165c2b7bae01d9e6a34324c4e57a6f4b437d2cd30f327afeed9ae567559e46",
+      "source_key_range": {
+        "end": 530,
         "prefix": "v",
         "start": 521
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-4f0191523aa9-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-b8c56ed44263-01-02-008",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v561-v600.jsonl",
-      "row_count": 2379,
+      "first_row_id": "llx-crosswalk-llx-qword-15ff7cb94ab4-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-aa6f12a8f41e-02-02-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v531-v540.jsonl",
+      "row_count": 722,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "972e95bb3169c3f17f7d31b80cdbda89f74b5837d1954bae3c7dc494d3083767",
+      "sha256": "235e525533ec4518e37e152c5b6aeb8e1f142b1ae9817b3ace6c4ecd14d4e7aa",
       "source_key_range": {
-        "end": 600,
+        "end": 540,
+        "prefix": "v",
+        "start": 531
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-b3d910cb22e7-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-830ba56d078c-02-01-028",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v541-v550.jsonl",
+      "row_count": 764,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "1fb6ef37ce6ea2b6d2b8f96fe21596a016a595c4bd9172d4b74cf1c05612b0a0",
+      "source_key_range": {
+        "end": 550,
+        "prefix": "v",
+        "start": 541
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-506be512630a-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-534543cc84f7-01-03-014",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v551-v560.jsonl",
+      "row_count": 890,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "af1d5fbb3f286ad10e42d93011f7ed51fa808232ee1c661169f0208e3ac16e54",
+      "source_key_range": {
+        "end": 560,
+        "prefix": "v",
+        "start": 551
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-4f0191523aa9-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-5193302d50eb-02-01-025",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v561-v570.jsonl",
+      "row_count": 562,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "f8d72cb88643459f7e873ec0251b5f9ae16171c9bd0b49eeaa42d5cd4ecc837a",
+      "source_key_range": {
+        "end": 570,
         "prefix": "v",
         "start": 561
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-fc62ecc87065-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-9d550cb9c295-01-01-005",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v601-v640.jsonl",
-      "row_count": 2662,
+      "first_row_id": "llx-crosswalk-llx-qword-f9ec9625dd58-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-cd8d7c16fff0-01-05-010",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v571-v580.jsonl",
+      "row_count": 736,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "92472485ac5f9d208e0783144ebe75a120a775962af3c4ec6977002a044f7799",
+      "sha256": "94023e518fbdc7a77d269107dcc721029099ae0b6ee0f1b617cdcb43275c777f",
       "source_key_range": {
-        "end": 640,
+        "end": 580,
+        "prefix": "v",
+        "start": 571
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-9cb9f6f53207-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-cde99b977805-02-01-029",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v581-v590.jsonl",
+      "row_count": 612,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "e48dfbd15e4ae5b7381e45b8c7ffbcd664f54abff8c649462665f099b55bfe37",
+      "source_key_range": {
+        "end": 590,
+        "prefix": "v",
+        "start": 581
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-459807509aa3-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-b8c56ed44263-01-02-008",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v591-v600.jsonl",
+      "row_count": 469,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "75950e0dc0ef5c4f8e80977276d40a30f0f3527af7c29b964d6897e26bf93b98",
+      "source_key_range": {
+        "end": 600,
+        "prefix": "v",
+        "start": 591
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-fc62ecc87065-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-ea0df9d53638-04-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v601-v610.jsonl",
+      "row_count": 533,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "62c9fe446972f7d49d201d04bcf0d6fc072626a2fcf8ba0a39d980b8d4f15002",
+      "source_key_range": {
+        "end": 610,
         "prefix": "v",
         "start": 601
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-ce23d033cd88-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-d9b2fc79fc53-01-01-002",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v641-v680.jsonl",
-      "row_count": 584,
+      "first_row_id": "llx-crosswalk-llx-qword-16273913c1dd-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-e6536bf2ffd3-03-02-027",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v611-v620.jsonl",
+      "row_count": 969,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "b56e9b0714ed50514e8c61fe7d6f17e357e73ffecd451ef14e03b286fce939ad",
+      "sha256": "4075d2d258acf41208b8bb00a20cc949caac759b29e2a08087ec979597027703",
       "source_key_range": {
-        "end": 680,
+        "end": 620,
+        "prefix": "v",
+        "start": 611
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-cb4234c4878b-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-98259aa98c96-02-01-032",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v621-v630.jsonl",
+      "row_count": 866,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "b6a83aa5c51f32ebe8d4e76eda63e2e655200e765e944362237df7ea120a9160",
+      "source_key_range": {
+        "end": 630,
+        "prefix": "v",
+        "start": 621
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-3b300a693995-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-9d550cb9c295-01-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v631-v640.jsonl",
+      "row_count": 294,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "93b0b95e0628f90ddf6c0b441194920e1a467f0af1ec91e07701778f466291b6",
+      "source_key_range": {
+        "end": 640,
+        "prefix": "v",
+        "start": 631
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-ce23d033cd88-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-be07ec0d0baa-01-02-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v641-v650.jsonl",
+      "row_count": 121,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "2d95592bb14c714f85a13be3aa4df4407807f9177eeb0fa062abd6e9e9a06ecd",
+      "source_key_range": {
+        "end": 650,
         "prefix": "v",
         "start": 641
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-f0b32acc7882-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-62c550168299-01-01-010",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v681-v720.jsonl",
-      "row_count": 395,
+      "first_row_id": "llx-crosswalk-llx-qword-22be25652dce-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-3681072a840d-02-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v651-v660.jsonl",
+      "row_count": 174,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "7ee405c8d90deee032342789465cdebd8e1a1f91743036ba2d82cc853f792011",
+      "sha256": "afba2c0b88293545c87d8b7d4fd7a7be725346ea38507f02665c7353e66bb922",
       "source_key_range": {
-        "end": 720,
+        "end": 660,
+        "prefix": "v",
+        "start": 651
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-184873a7e6df-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-1f702ef366a8-02-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v661-v670.jsonl",
+      "row_count": 178,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "4e5ce93c6bfe500fe699d12b0ba3d8fe3c3bd42deaa8c55ea18a189c1ee0f487",
+      "source_key_range": {
+        "end": 670,
+        "prefix": "v",
+        "start": 661
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-7c29b9b527ba-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-d9b2fc79fc53-01-01-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v671-v680.jsonl",
+      "row_count": 111,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "c4a2ad8fcba9f4a62ba9df667fc631237a005efa953e32186e8b21326109fc84",
+      "source_key_range": {
+        "end": 680,
+        "prefix": "v",
+        "start": 671
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-f0b32acc7882-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-a9d49eb4606b-01-03-009",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v681-v690.jsonl",
+      "row_count": 132,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "b19c4ceaa4fd8194399ef3ce72aa325a99bbff2ce7911729cdfb282d2ac67538",
+      "source_key_range": {
+        "end": 690,
         "prefix": "v",
         "start": 681
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-e9dd6c4a6a4f-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-057171447478-01-02-002",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v721-v760.jsonl",
-      "row_count": 316,
+      "first_row_id": "llx-crosswalk-llx-qword-0451bd0c1350-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-4150015e7211-02-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v691-v700.jsonl",
+      "row_count": 74,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "6b01cd5abd35e3bbff9bf1557f7b6f854eb2f91c08b1ae3186f9db82a10e5a1f",
+      "sha256": "59704ea97ede4cf1a3150250f1843fd65aaad13d7e6b8f389cf0f17fd6e45eb5",
       "source_key_range": {
-        "end": 760,
+        "end": 700,
+        "prefix": "v",
+        "start": 691
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-432765162b10-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-285d790cd18a-01-02-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v701-v710.jsonl",
+      "row_count": 100,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "52e6452fe14a59d8f345c23147ae4c0848cbc1c33a75c7caf3220bf64a3a4f9b",
+      "source_key_range": {
+        "end": 710,
+        "prefix": "v",
+        "start": 701
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-5f2e55239171-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-62c550168299-01-01-010",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v711-v720.jsonl",
+      "row_count": 89,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "40a84e523c46c16a6d8145d19b7b081401d3721f70583782d8f93f33ceb7ddad",
+      "source_key_range": {
+        "end": 720,
+        "prefix": "v",
+        "start": 711
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-e9dd6c4a6a4f-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-b1dc9e039758-01-01-007",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v721-v730.jsonl",
+      "row_count": 93,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "4d89c76afb1f3744f8b9d6e4e521279e6c42fdb76406b8329f6800d470a31695",
+      "source_key_range": {
+        "end": 730,
         "prefix": "v",
         "start": 721
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-2957e1d2939f-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-850727efbab1-01-02-004",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v761-v800.jsonl",
-      "row_count": 251,
+      "first_row_id": "llx-crosswalk-llx-qword-fc7bfd5a3f97-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-2f6506be29c9-01-02-007",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v731-v740.jsonl",
+      "row_count": 81,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "e09c2c0a4637a5b18922379ceda62052296f1bc7499b5236d60cd80486fe28f9",
+      "sha256": "094a555d64820913c43b5ddf1c45f6852ba109ceddefa181186784730a68f3e3",
       "source_key_range": {
-        "end": 800,
+        "end": 740,
+        "prefix": "v",
+        "start": 731
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-d7adc166c90e-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-85edb3a467a4-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v741-v750.jsonl",
+      "row_count": 65,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "e0ce40813a4c5c7225fa16faf9f59ce3da2bcaf7edba4458da04872fd78e0466",
+      "source_key_range": {
+        "end": 750,
+        "prefix": "v",
+        "start": 741
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-eda77e007077-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-057171447478-01-02-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v751-v760.jsonl",
+      "row_count": 77,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "b5100e786daf16ee48d29933c3237ea1cda0716d8afcba9568a1885c76bb7a87",
+      "source_key_range": {
+        "end": 760,
+        "prefix": "v",
+        "start": 751
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-2957e1d2939f-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-588b093309e9-01-02-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v761-v770.jsonl",
+      "row_count": 72,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "77eaf350486e820d06aecb3dd1d29f2f877d97f2f7ecf42289261efe0f2f8314",
+      "source_key_range": {
+        "end": 770,
         "prefix": "v",
         "start": 761
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-b425d1731055-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-f8c9bf191b9c-01-01-011",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v801-v840.jsonl",
-      "row_count": 442,
+      "first_row_id": "llx-crosswalk-llx-qword-db4395f10479-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-057c698b5fa2-02-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v771-v780.jsonl",
+      "row_count": 55,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "c53094541e4a787576ff4fce92d3be7d1f895aab3141485e0de23586b1b263a9",
+      "sha256": "b485f56b0f76ca37572eb8ab41b506669b35c83f945c569c0e07e2780a33d1cd",
       "source_key_range": {
-        "end": 840,
+        "end": 780,
+        "prefix": "v",
+        "start": 771
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-b43b625f30d7-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-66c17fefc438-01-01-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v781-v790.jsonl",
+      "row_count": 68,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "4e40e995b33bbfbef02ae6186ca19b87d01dc706b0702b5ca6252b46b6c9cd2b",
+      "source_key_range": {
+        "end": 790,
+        "prefix": "v",
+        "start": 781
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-9e529ac6c713-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-850727efbab1-01-02-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v791-v800.jsonl",
+      "row_count": 56,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "acb2ac0bea3e2e8d32014dbc7eb75944e4778c7038af02c22c90ff126ea433e8",
+      "source_key_range": {
+        "end": 800,
+        "prefix": "v",
+        "start": 791
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-b425d1731055-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-7d41f96d61e8-01-02-007",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v801-v810.jsonl",
+      "row_count": 62,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "57a0a48c85b4d323540734e05dc0c2f855d2b35105a34391847918232bca3dbd",
+      "source_key_range": {
+        "end": 810,
         "prefix": "v",
         "start": 801
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-4cc74b0f231e-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-03ca74904e38-01-01-043",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v841-v880.jsonl",
-      "row_count": 809,
+      "first_row_id": "llx-crosswalk-llx-qword-62fdcc6429f1-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-3be33b51d633-01-01-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v811-v820.jsonl",
+      "row_count": 67,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "802215b0349d8d7f7e210a589e03c7333025803f985cfa0b986bd9070d369c9d",
+      "sha256": "0a1e6d9476fb1373874c0c934b9dc0dcc8cbb42bef921e3478b00adceaf9fd70",
       "source_key_range": {
-        "end": 880,
+        "end": 820,
+        "prefix": "v",
+        "start": 811
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-1bb11305509a-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-437990cb79a2-01-01-012",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v821-v830.jsonl",
+      "row_count": 118,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "6d0d5a39ff5f48d4e28087bc5eea11a510cc6d87c1d49fda4629f4a787e27179",
+      "source_key_range": {
+        "end": 830,
+        "prefix": "v",
+        "start": 821
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-83ffae980029-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-f8c9bf191b9c-01-01-011",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v831-v840.jsonl",
+      "row_count": 195,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "0079a311c79bf5c1be414657fe2e2c164dfe6235cda5cc24ce5d384f98b8c0ab",
+      "source_key_range": {
+        "end": 840,
+        "prefix": "v",
+        "start": 831
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-4cc74b0f231e-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-8ea56e8ba9b4-01-01-031",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v841-v850.jsonl",
+      "row_count": 193,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "fa92faa19b8ec88cd563accda91b01038b90191cc5cfe2cdad39a45707c0d2c2",
+      "source_key_range": {
+        "end": 850,
         "prefix": "v",
         "start": 841
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-2bde50b249e8-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-9433401704d3-01-01-003",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v881-v920.jsonl",
-      "row_count": 347,
+      "first_row_id": "llx-crosswalk-llx-qword-a3c416fc122b-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-5cc6e7e832fd-01-01-032",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v851-v860.jsonl",
+      "row_count": 248,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "40198a6050db89406b8c5423b40b74d342cf9ec8b670592aec5bba2fdd7dac0f",
+      "sha256": "ece0b9b5e3c2124823d35a0ce68e42e71c3f8e5a6886ecb0eacf28e11d597ada",
       "source_key_range": {
-        "end": 920,
+        "end": 860,
+        "prefix": "v",
+        "start": 851
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-7a9ba89a6198-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-bb49110446f7-01-01-016",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v861-v870.jsonl",
+      "row_count": 127,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "d937bf0ba6031ecded30984b536ccecb92d9aeda0aef2f1dc1549f1c56b13644",
+      "source_key_range": {
+        "end": 870,
+        "prefix": "v",
+        "start": 861
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-d146954fa61a-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-03ca74904e38-01-01-043",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v871-v880.jsonl",
+      "row_count": 241,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "39f41eda3b3285e017920a44906a008080659bf3522c34b32985e35fac6c792c",
+      "source_key_range": {
+        "end": 880,
+        "prefix": "v",
+        "start": 871
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-2bde50b249e8-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-0e8559862037-01-01-017",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v881-v890.jsonl",
+      "row_count": 144,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "3c3d6f6e7bdb4202fbcd6664477d9d75c84bc8768d715cb5ed49bb1b5a3cb70d",
+      "source_key_range": {
+        "end": 890,
         "prefix": "v",
         "start": 881
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-8476404e1fbc-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-83c485be45ad-01-01-003",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/v921-v947.jsonl",
-      "row_count": 115,
+      "first_row_id": "llx-crosswalk-llx-qword-91a990ebf980-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-caf2deb2c39d-01-01-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v891-v900.jsonl",
+      "row_count": 119,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "6a7500ea8c55a1c698fb5aa0ba966768330af74b07d5ec46d6a2ba634929a655",
+      "sha256": "a454b1165f6a7958a426289590abbf56648821379fc42d6dfda7474846ed7a1d",
       "source_key_range": {
-        "end": 947,
+        "end": 900,
+        "prefix": "v",
+        "start": 891
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-cfab6122c62f-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-0a4065024804-01-01-007",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v901-v910.jsonl",
+      "row_count": 44,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "c656654b8a9d6b8b4b4e70413bb32c4c09199725464e27e6dbb261db90d97ef3",
+      "source_key_range": {
+        "end": 910,
+        "prefix": "v",
+        "start": 901
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-34bd58ce0861-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-9433401704d3-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v911-v920.jsonl",
+      "row_count": 40,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "49b1fa6f3e07086ad7bb0379a2716d2f1cc22310a6249b9e746cd4e8e63ef704",
+      "source_key_range": {
+        "end": 920,
+        "prefix": "v",
+        "start": 911
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-8476404e1fbc-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-1671a0dd8551-01-01-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v921-v930.jsonl",
+      "row_count": 49,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "784fdf89991276b7270fbb9444cd4548b1bf9f3eef902ecfc6fcab55b406c842",
+      "source_key_range": {
+        "end": 930,
         "prefix": "v",
         "start": 921
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-68e87fcb398a-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-4842b8b6892b-01-02-008",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n001-n040.jsonl",
-      "row_count": 1649,
+      "first_row_id": "llx-crosswalk-llx-qword-1be8f5faaa8a-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-bb18399b52c3-01-01-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v931-v940.jsonl",
+      "row_count": 42,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "282995138dfbca9e313bb4c3386864987025f8fb56a4e4fbefe35eedfd58fec9",
+      "sha256": "2674f76aa95f316abe7d0079ff4d5b9db1cd35d70572aa7957404479fde11249",
       "source_key_range": {
-        "end": 40,
+        "end": 940,
+        "prefix": "v",
+        "start": 931
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-17515e1dc9d3-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-83c485be45ad-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/v941-v947.jsonl",
+      "row_count": 24,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "954acda9029a71e7502e8eff248f9f5ae76cb680ee2e97ffb7b467a838039fa7",
+      "source_key_range": {
+        "end": 947,
+        "prefix": "v",
+        "start": 941
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-68e87fcb398a-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-9a5697f988a8-01-01-082",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n001-n010.jsonl",
+      "row_count": 890,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "a91663fcf854b32485b8596f1f913eb691855b60b7abbe82743632fbf6debc16",
+      "source_key_range": {
+        "end": 10,
         "prefix": "n",
         "start": 1
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-37ecb412b9e6-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-91c52f8f0c9a-01-01-003",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n041-n080.jsonl",
-      "row_count": 510,
+      "first_row_id": "llx-crosswalk-llx-qword-f7345eda41d2-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-2a3995a72aca-01-01-013",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n011-n020.jsonl",
+      "row_count": 188,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "71788ac9491cfe85c60821a81b5ba36e0baae36efa004da7877f92d4393a204b",
+      "sha256": "ae223d718fbf7874857621408e8e71130a78f4dbf03288700dea199b5be1125d",
       "source_key_range": {
-        "end": 80,
+        "end": 20,
+        "prefix": "n",
+        "start": 11
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-9dc32ec87331-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-605fbc3b8307-02-02-027",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n021-n030.jsonl",
+      "row_count": 398,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "9fd4184c8e02acd322c373ded1096a37aec1c20d58bb644b806c6fba7bc6fb8f",
+      "source_key_range": {
+        "end": 30,
+        "prefix": "n",
+        "start": 21
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-2f4151b667e5-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-4842b8b6892b-01-02-008",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n031-n040.jsonl",
+      "row_count": 173,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "3342993e4179d82d6f5d31d0c529d4c0a4f03a44b41470d60736c5825edf192b",
+      "source_key_range": {
+        "end": 40,
+        "prefix": "n",
+        "start": 31
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-37ecb412b9e6-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-470a480fc404-01-01-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n041-n050.jsonl",
+      "row_count": 80,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "05191ab9c3bbd900f60bfd4dcb244dffb9f7596101e1843f2be4ac50fef913d4",
+      "source_key_range": {
+        "end": 50,
         "prefix": "n",
         "start": 41
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-841a1ef5c1bd-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-ae00d80a671e-01-01-014",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n081-n120.jsonl",
-      "row_count": 757,
+      "first_row_id": "llx-crosswalk-llx-qword-49f83a5e3b9a-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-534046f2e526-01-01-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n051-n060.jsonl",
+      "row_count": 100,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "7c5f611f54250bf7de343961ad2d1c163561c3af4d128d32b4f8943300aa01bd",
+      "sha256": "bef780ffc45698dd7bcab6044ed5e39d3c4b67e1b469b9c8d23158a9f5152673",
       "source_key_range": {
-        "end": 120,
+        "end": 60,
+        "prefix": "n",
+        "start": 51
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-31355fee39a3-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-9907a8b1669e-02-01-011",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n061-n070.jsonl",
+      "row_count": 226,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "04e245f58f3c51b7ddd1df0b5dae15ee26f1fa2b41c2b61a2d58207e0b5fcc6f",
+      "source_key_range": {
+        "end": 70,
+        "prefix": "n",
+        "start": 61
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-fc992d2e44c6-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-91c52f8f0c9a-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n071-n080.jsonl",
+      "row_count": 104,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "218182d61dcf71934657208ebfe4eb061830d4aba35dfd08c82aacee203053f6",
+      "source_key_range": {
+        "end": 80,
+        "prefix": "n",
+        "start": 71
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-841a1ef5c1bd-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-a3fb60d3223d-01-01-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n081-n090.jsonl",
+      "row_count": 126,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "aed20b4de73a39372c1ea7a4bd9b0ffa23958274c508658cc4bf15b0ee768e77",
+      "source_key_range": {
+        "end": 90,
         "prefix": "n",
         "start": 81
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-28becf853ea8-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-6454a937fe14-01-01-024",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n121-n160.jsonl",
-      "row_count": 1125,
+      "first_row_id": "llx-crosswalk-llx-qword-da6a128fef2d-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-0b925dfe0b84-01-01-012",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n091-n100.jsonl",
+      "row_count": 112,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "707d9be3830211c5de2909c49b0ad069aab0a27f7338e50912761b69facb7b52",
+      "sha256": "b7d70f6237fba7704f8b0be4ecd107559857ff41cf97cd87cc8711505500862e",
       "source_key_range": {
-        "end": 160,
+        "end": 100,
+        "prefix": "n",
+        "start": 91
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-13a337868c50-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-be1270d76fd3-01-01-008",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n101-n110.jsonl",
+      "row_count": 293,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "f8541a60d9efd22bf29addfa43433438dac82ff04ec56b0d70925598b7748421",
+      "source_key_range": {
+        "end": 110,
+        "prefix": "n",
+        "start": 101
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-ac594aad2a3e-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-ae00d80a671e-01-01-014",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n111-n120.jsonl",
+      "row_count": 226,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "85786b7eaf19c0f302389a69a1cae5b66e4229a4174cf52218999ec9fa075773",
+      "source_key_range": {
+        "end": 120,
+        "prefix": "n",
+        "start": 111
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-28becf853ea8-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-39a47f9c6e52-01-01-016",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n121-n130.jsonl",
+      "row_count": 253,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "e2b9f2eb0f69e092b7d39fa31f0095266d314dd6e3d53cb806a1059c8b5b0dbf",
+      "source_key_range": {
+        "end": 130,
         "prefix": "n",
         "start": 121
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-5319740434d2-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-e476b88c0e09-01-01-005",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n161-n200.jsonl",
-      "row_count": 1111,
+      "first_row_id": "llx-crosswalk-llx-qword-d73fc44bc3d3-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-107c6b63f769-01-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n131-n140.jsonl",
+      "row_count": 257,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "6eeaa1e2f9d414bba73f1e1b4cfd2ae137f0ecd0bfc832448f8d39eb1f61b57f",
+      "sha256": "6c076b4b3fb5fef4bed98ee52bc3c889a1c6e73640ed8e1de9575ad6a547ac73",
       "source_key_range": {
-        "end": 200,
+        "end": 140,
+        "prefix": "n",
+        "start": 131
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-15963278a29f-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-d5ead44a4e30-01-01-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n141-n150.jsonl",
+      "row_count": 92,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "d1b2384a6ece9570912f946b049d82c8aeda994f6ee91d7bad33fdcf47b41694",
+      "source_key_range": {
+        "end": 150,
+        "prefix": "n",
+        "start": 141
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-57f5749e976b-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-6454a937fe14-01-01-024",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n151-n160.jsonl",
+      "row_count": 523,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "d5a95e721f42990e01d7c875a129ac510fd9a28e10ed04a16197357a99c61ae5",
+      "source_key_range": {
+        "end": 160,
+        "prefix": "n",
+        "start": 151
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-5319740434d2-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-201e59136f5c-02-01-013",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n161-n170.jsonl",
+      "row_count": 453,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "dd1b280c1fb98f13ea07d9eb016359802e7ee7f67ebceef79b6239ba3f99b569",
+      "source_key_range": {
+        "end": 170,
         "prefix": "n",
         "start": 161
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-411de1e1d978-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-7e2283ef4b60-01-01-003",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n201-n240.jsonl",
-      "row_count": 2194,
+      "first_row_id": "llx-crosswalk-llx-qword-48f59ee6bbf7-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-126144e4feb8-01-03-016",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n171-n180.jsonl",
+      "row_count": 372,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "e4360e6578d0139d36c815f74d564580eeac2b13734f0d58172e1d945412f6c9",
+      "sha256": "d6ebb155fbbc03556e44772ef8a21b9893fa697808d219787ccba5a5b454e583",
       "source_key_range": {
-        "end": 240,
+        "end": 180,
+        "prefix": "n",
+        "start": 171
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-fc533bf4e586-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-dc84599be98d-01-01-013",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n181-n190.jsonl",
+      "row_count": 203,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "ec376e010d4778caf730cb6fb30d704a7091b8770836896166e7abbf85f8a8fd",
+      "source_key_range": {
+        "end": 190,
+        "prefix": "n",
+        "start": 181
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-d224911ed8ee-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-e476b88c0e09-01-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n191-n200.jsonl",
+      "row_count": 83,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "26e3aeadf506e615e7768d2cb7dccb0b94a3e3ec237bce430c9116e932d2860d",
+      "source_key_range": {
+        "end": 200,
+        "prefix": "n",
+        "start": 191
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-411de1e1d978-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-f24ad098879a-01-03-029",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n201-n210.jsonl",
+      "row_count": 507,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "d6896510fed88cdd09f78909497decadbdad300d6f720368abd2d317eac75579",
+      "source_key_range": {
+        "end": 210,
         "prefix": "n",
         "start": 201
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-72ad6514d536-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-f2adca16c84e-02-01-003",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n241-n280.jsonl",
-      "row_count": 510,
+      "first_row_id": "llx-crosswalk-llx-qword-fec9493022a0-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-0d4a1b71419d-01-01-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n211-n220.jsonl",
+      "row_count": 265,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "344da1fa5c954157295c15d9017dce668697f773527422b7af81eb3ac421d9ca",
+      "sha256": "9e13fa7fd0d30e1271d969cc84436eed9758510544da76d0b7089a78459d0d07",
       "source_key_range": {
-        "end": 280,
+        "end": 220,
+        "prefix": "n",
+        "start": 211
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-d3e8b9b7c4fc-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-816f5800da92-01-04-017",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n221-n230.jsonl",
+      "row_count": 1352,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "7fc7559552b6aeca705f858f5cb1e8aedaa5067dfaae0354f3957d0ec30157e8",
+      "source_key_range": {
+        "end": 230,
+        "prefix": "n",
+        "start": 221
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-eade5d4df22b-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-7e2283ef4b60-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n231-n240.jsonl",
+      "row_count": 70,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "ab41a02e4c812c14f8896629b129d639f90ea052abd9bf14ba9cbf8c69b51bc4",
+      "source_key_range": {
+        "end": 240,
+        "prefix": "n",
+        "start": 231
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-72ad6514d536-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-034b2da96e4c-01-01-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n241-n250.jsonl",
+      "row_count": 100,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "9d939ab0bea2597208bfb4e67549608953ab621fd29260c88240ba465afc44e3",
+      "source_key_range": {
+        "end": 250,
         "prefix": "n",
         "start": 241
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-51236deccd28-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-8765af4c5809-01-01-003",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n281-n320.jsonl",
-      "row_count": 224,
+      "first_row_id": "llx-crosswalk-llx-qword-a96d64a202e9-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-855156f634ea-01-07-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n251-n260.jsonl",
+      "row_count": 162,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "09748ebe6d56a288bde7b4438d352f5aa3ced92266c6bebfea81ec3404e0ed1a",
+      "sha256": "f0a2eebf919cd229acec97622264a17534ffb46ccc1a325c98d1ab7be09fa660",
       "source_key_range": {
-        "end": 320,
+        "end": 260,
+        "prefix": "n",
+        "start": 251
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-80d2a171a103-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-a985e4c22be3-01-02-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n261-n270.jsonl",
+      "row_count": 145,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "e853b08d212ac5b50abd639659d58dd802065a7c03c987e2e1bf163d990e127a",
+      "source_key_range": {
+        "end": 270,
+        "prefix": "n",
+        "start": 261
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-82a0fe298d4d-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-f2adca16c84e-02-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n271-n280.jsonl",
+      "row_count": 103,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "bcd8463b3f4a0563de87bf08d0b5886c85eb7550209136c265e0dbc856263707",
+      "source_key_range": {
+        "end": 280,
+        "prefix": "n",
+        "start": 271
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-51236deccd28-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-bdd83dc06aac-01-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n281-n290.jsonl",
+      "row_count": 60,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "0f566b60caf68caf77b322e1f1b577ccb942614bad8411c14ff6628e5d899a4e",
+      "source_key_range": {
+        "end": 290,
         "prefix": "n",
         "start": 281
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-8f01bef9ca1d-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-ccf5aba720a3-01-02-005",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n321-n360.jsonl",
-      "row_count": 439,
+      "first_row_id": "llx-crosswalk-llx-qword-59595d19789b-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-1c9f8474c4b4-01-01-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n291-n300.jsonl",
+      "row_count": 44,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "39d04fed0bafe5492119f621224e8ebb8a41f86c84c6eafe1c2311be95fe5682",
+      "sha256": "32ebd5b5d71bfa665022217ce376e7110c3f64006faa5cab2655512a235b7a45",
       "source_key_range": {
-        "end": 360,
+        "end": 300,
+        "prefix": "n",
+        "start": 291
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-98a2464a27dc-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-6a85fc46cf83-01-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n301-n310.jsonl",
+      "row_count": 36,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "b1dcf1b4e8ec5570134dd49b2b92c56753ee6cccba925bbece86eb5c55a8df38",
+      "source_key_range": {
+        "end": 310,
+        "prefix": "n",
+        "start": 301
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-adf0304b8ea4-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-8765af4c5809-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n311-n320.jsonl",
+      "row_count": 84,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "dae48a1a15aa039eb07fdee7cd1e421fcff63addddfbb456001143ab6af50ea9",
+      "source_key_range": {
+        "end": 320,
+        "prefix": "n",
+        "start": 311
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-8f01bef9ca1d-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-59f24254988d-02-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n321-n330.jsonl",
+      "row_count": 69,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "c0cdeba15b76745fc2d809d929dc5a4569bcad3a7c4129261fd65332516bd1cd",
+      "source_key_range": {
+        "end": 330,
         "prefix": "n",
         "start": 321
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-5f530117d6bb-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-4ae0d7b24275-01-02-002",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n361-n400.jsonl",
-      "row_count": 370,
+      "first_row_id": "llx-crosswalk-llx-qword-e786d0387204-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-e5040e06a079-02-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n331-n340.jsonl",
+      "row_count": 159,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "c4c3576bdff60ec4350a2f23b242ff5b52c269cdf913ac349bfc0d0b37bf2897",
+      "sha256": "dcc7ef3d23ca800260a64e760d74b4200847d1eb11e3afb98ef4dbe0c2500676",
       "source_key_range": {
-        "end": 400,
+        "end": 340,
+        "prefix": "n",
+        "start": 331
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-d71e6107a2de-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-f6c115011ede-02-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n341-n350.jsonl",
+      "row_count": 115,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "3ece831fe0548274e3b9e9372e28fed12f4f53daff2eb761fbda604dc8fc5a92",
+      "source_key_range": {
+        "end": 350,
+        "prefix": "n",
+        "start": 341
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-7134be84a5f4-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-ccf5aba720a3-01-02-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n351-n360.jsonl",
+      "row_count": 96,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "299ebe4d7a0f8a6800137f46cc710314facac54124e0f169ad60dd02a8ab65f7",
+      "source_key_range": {
+        "end": 360,
+        "prefix": "n",
+        "start": 351
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-5f530117d6bb-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-d4165f3ec9e6-01-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n361-n370.jsonl",
+      "row_count": 113,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "f1ae678800bcb33d9b77f9e3cccd7394c90cc1604e000df3504d7e545f1669e3",
+      "source_key_range": {
+        "end": 370,
         "prefix": "n",
         "start": 361
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-fda92aa2e301-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-d00d6dad1204-01-02-005",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n401-n440.jsonl",
-      "row_count": 228,
+      "first_row_id": "llx-crosswalk-llx-qword-0363f1b02d58-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-5e8b2fe6875c-01-02-001",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n371-n380.jsonl",
+      "row_count": 98,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "60992565d7ca13cab70f9cafdb014c77b671ab554dd91f83212cac5c0937f2a6",
+      "sha256": "4c8eafdaa85c7e3bc0f6d9c7918d468ffcb8b2df5562722a5e00d4558bb9f016",
       "source_key_range": {
-        "end": 440,
+        "end": 380,
+        "prefix": "n",
+        "start": 371
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-5953936d7bec-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-a876730a53ae-01-02-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n381-n390.jsonl",
+      "row_count": 88,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "896c73ba697ed615690ebdbb32b033b3095eb869c502337052569a810f2a60dd",
+      "source_key_range": {
+        "end": 390,
+        "prefix": "n",
+        "start": 381
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-0ed00ca08b87-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-4ae0d7b24275-01-02-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n391-n400.jsonl",
+      "row_count": 71,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "b057825cc79c739c4f17a0272400ccbccc5c73d856b7c8219c3fbb27c8e92548",
+      "source_key_range": {
+        "end": 400,
+        "prefix": "n",
+        "start": 391
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-fda92aa2e301-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-25991423398f-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n401-n410.jsonl",
+      "row_count": 62,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "487acdc0e5fcfd37279e821dc286db14f0a41beacf3ec8a6c89e6c41039f536a",
+      "source_key_range": {
+        "end": 410,
         "prefix": "n",
         "start": 401
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-d249ba3477f2-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-41394113354e-01-01-003",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n441-n480.jsonl",
-      "row_count": 207,
+      "first_row_id": "llx-crosswalk-llx-qword-6b7ff091e6b3-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-6402a4739ba0-01-01-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n411-n420.jsonl",
+      "row_count": 70,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "a4ed3bece71b55ef7d25b059094f0f33edae6d25d79b3b90a9502de28d7bbf33",
+      "sha256": "f36c4325bb7cbdf13cfbe1de1f74cc70a8795ba8cc56a76964e6dbde4a1d4919",
       "source_key_range": {
-        "end": 480,
+        "end": 420,
+        "prefix": "n",
+        "start": 411
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-0135b6be178e-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-50c673a03370-01-02-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n421-n430.jsonl",
+      "row_count": 44,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "72b8b8b2dfbac78fbae14fbc9c8cd5265b68b58aba5d5397271b6f09bcfc403d",
+      "source_key_range": {
+        "end": 430,
+        "prefix": "n",
+        "start": 421
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-66aa57881e6a-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-d00d6dad1204-01-02-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n431-n440.jsonl",
+      "row_count": 52,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "57f97628ab368d205caf20127a49e45923a8fd8d2dc53cc74f33d1a21621b6b7",
+      "source_key_range": {
+        "end": 440,
+        "prefix": "n",
+        "start": 431
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-d249ba3477f2-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-eef665ccd2dc-02-01-009",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n441-n450.jsonl",
+      "row_count": 48,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "e93af701ff07410d1847b225d3be4aaca64049377ee187e110763c942333292c",
+      "source_key_range": {
+        "end": 450,
         "prefix": "n",
         "start": 441
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-3ed21daa1310-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-4be3d0d80d0b-01-01-005",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n481-n520.jsonl",
-      "row_count": 173,
+      "first_row_id": "llx-crosswalk-llx-qword-349b6c66ca3e-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-b62b915fcd1f-02-01-007",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n451-n460.jsonl",
+      "row_count": 67,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "aac287626ab54ba2d2a5162e8af392ab88d861f9db4fa459b21515c323165c11",
+      "sha256": "08671b5df9d4292bfcf7ba4cd948645e88d7cd8f2e36b005d53d68a415a7548b",
       "source_key_range": {
-        "end": 520,
+        "end": 460,
+        "prefix": "n",
+        "start": 451
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-5b5eefaac9f7-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-391c5e9eb5b1-01-01-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n461-n470.jsonl",
+      "row_count": 47,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "f10a6d3630309ec224dda4099d6e7b3eb44b5bf8f3dcf08706755d0f1515604e",
+      "source_key_range": {
+        "end": 470,
+        "prefix": "n",
+        "start": 461
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-ab009aea619c-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-41394113354e-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n471-n480.jsonl",
+      "row_count": 45,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "a57c547f3e2ae503fddc1672d1cd9c6ea5daf334224996316d1f121f6b752b8c",
+      "source_key_range": {
+        "end": 480,
+        "prefix": "n",
+        "start": 471
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-3ed21daa1310-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-1eb427fb6ebb-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n481-n490.jsonl",
+      "row_count": 38,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "8b5cc20580bbf9f11801968721de0b9b531abd5aa7fedd9ec75c91ce3c403da4",
+      "source_key_range": {
+        "end": 490,
         "prefix": "n",
         "start": 481
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-4fd6f53274c7-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-ed216bf78fc7-01-01-003",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n521-n560.jsonl",
-      "row_count": 144,
+      "first_row_id": "llx-crosswalk-llx-qword-e786f87489bf-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-c525edb21986-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n491-n500.jsonl",
+      "row_count": 47,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "822186293272fd1dfe8d98dfcc1e6d252ba03e1b15267935b0f1a4bf39caae9b",
+      "sha256": "689085dc82addd2976adec67dd368796dbfb04080652b75e6f54caec3b83652c",
       "source_key_range": {
-        "end": 560,
+        "end": 500,
+        "prefix": "n",
+        "start": 491
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-55de6345c432-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-4d0d3186b472-01-01-007",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n501-n510.jsonl",
+      "row_count": 46,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "bb47b1c339b0d8166bdc3eff229ffeee3913b1f4b00019a29ea02cca1e20dc60",
+      "source_key_range": {
+        "end": 510,
+        "prefix": "n",
+        "start": 501
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-89d05424b4b5-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-4be3d0d80d0b-01-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n511-n520.jsonl",
+      "row_count": 42,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "743e6292991e927f08c39adb7d7d7b16f30d5c9530e386584846e33f11c1b097",
+      "source_key_range": {
+        "end": 520,
+        "prefix": "n",
+        "start": 511
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-4fd6f53274c7-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-e5ac86702c67-01-01-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n521-n530.jsonl",
+      "row_count": 40,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "378628537e0ccfcd002aeacce1501db08d34e8ead1c25c9acd6c77feb7c93c0f",
+      "source_key_range": {
+        "end": 530,
         "prefix": "n",
         "start": 521
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-d9567c74b0a5-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-e88b2fde460d-01-01-003",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n561-n600.jsonl",
-      "row_count": 145,
+      "first_row_id": "llx-crosswalk-llx-qword-7c15c93cdd9f-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-a8acc236738a-01-01-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n531-n540.jsonl",
+      "row_count": 31,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "fa22e70a51f5deab5ac8ca5375ebedde0ddc57bd0dd5a48b598e355d2146a4bc",
+      "sha256": "267557104d4c1e5799158d094c8beb9a6c21e443a5b65b3a386becdf19f1d3b0",
       "source_key_range": {
-        "end": 600,
+        "end": 540,
+        "prefix": "n",
+        "start": 531
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-0f8e06868e38-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-4a4195e01d9e-01-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n541-n550.jsonl",
+      "row_count": 36,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "7ef82ce7c69a3a6763a049cd4250b54a1feed7c2501ad3ed9bd58aff55d220f3",
+      "source_key_range": {
+        "end": 550,
+        "prefix": "n",
+        "start": 541
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-18a920196b5c-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-ed216bf78fc7-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n551-n560.jsonl",
+      "row_count": 37,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "821b4d2c6bfb4f53c287c2469836190ceaf9eff6e575235ac9e58d0a7d868e2f",
+      "source_key_range": {
+        "end": 560,
+        "prefix": "n",
+        "start": 551
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-d9567c74b0a5-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-b5c6fe226901-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n561-n570.jsonl",
+      "row_count": 38,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "3415590aacf3e6b560b7af6dd13afba094b66901449e3aa01be1067f90fbc4dd",
+      "source_key_range": {
+        "end": 570,
         "prefix": "n",
         "start": 561
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-fd2899ac9978-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-cd4e3174206c-01-01-003",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n601-n640.jsonl",
-      "row_count": 308,
+      "first_row_id": "llx-crosswalk-llx-qword-c73c8763a942-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-df8fb29326fc-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n571-n580.jsonl",
+      "row_count": 36,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "97d4c898f7117d14f5b34aee37f42ef94af713195a7af107b59c13d24cb238bb",
+      "sha256": "72a91516f420813cef3c28114388f0acdc77a96d5a7f943f92081f0016ba915d",
       "source_key_range": {
-        "end": 640,
+        "end": 580,
+        "prefix": "n",
+        "start": 571
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-6f30d3bc37b1-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-199fc369abd5-01-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n581-n590.jsonl",
+      "row_count": 34,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "377a37b6b6619224584a3e55d36fad0ab204b6ee14e9d614b62ca24c3c33c5da",
+      "source_key_range": {
+        "end": 590,
+        "prefix": "n",
+        "start": 581
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-22c896ce6ded-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-e88b2fde460d-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n591-n600.jsonl",
+      "row_count": 37,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "192daca6342f599649576e1a48473326104c6e71d387ff31cdfc862977e7880c",
+      "source_key_range": {
+        "end": 600,
+        "prefix": "n",
+        "start": 591
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-fd2899ac9978-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-c2eb8c4d9f23-01-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n601-n610.jsonl",
+      "row_count": 44,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "1e4971c782c52040dee91757c990bf4098ba91e65121c825ab94207d40453615",
+      "source_key_range": {
+        "end": 610,
         "prefix": "n",
         "start": 601
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-a31cd4305451-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-292fb71a98c2-01-01-003",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n641-n680.jsonl",
-      "row_count": 225,
+      "first_row_id": "llx-crosswalk-llx-qword-ef061d85a3cc-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-81dd0d2077f7-01-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n611-n620.jsonl",
+      "row_count": 146,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "836c084854b7fbb0bd0bdd7b0cc38f996d8ca3b3a1bef1ef4fa8382f1b89485c",
+      "sha256": "e2e634d13f4ea1f98c6e08d5964d334ccd7c3f906f4631c39278b13a343c9c32",
       "source_key_range": {
-        "end": 680,
+        "end": 620,
+        "prefix": "n",
+        "start": 611
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-140f4f35f161-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-4a7d63a1fbf6-01-02-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n621-n630.jsonl",
+      "row_count": 60,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "c37681c3db692aff1cbaadbe71509b92d6445f8acb2bcfc34b5cf047b01379e7",
+      "source_key_range": {
+        "end": 630,
+        "prefix": "n",
+        "start": 621
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-dd51807a7f23-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-cd4e3174206c-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n631-n640.jsonl",
+      "row_count": 58,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "246e34da6fa679e45f9ad1afc4e8361917827d5a4d7e768c9b68ce833648d7c2",
+      "source_key_range": {
+        "end": 640,
+        "prefix": "n",
+        "start": 631
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-a31cd4305451-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-64a2c744c4c6-01-01-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n641-n650.jsonl",
+      "row_count": 39,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "a9f8d7a39ce9f9e49981b38b647498ac0e3a47ae9becc206766fa6578a60694a",
+      "source_key_range": {
+        "end": 650,
         "prefix": "n",
         "start": 641
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-013966ac19a7-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-9eb86f860545-01-01-005",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n681-n720.jsonl",
-      "row_count": 202,
+      "first_row_id": "llx-crosswalk-llx-qword-849795b14e27-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-f07a32bc4a4b-01-02-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n651-n660.jsonl",
+      "row_count": 80,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "b7f9125902a0ed3fceea128223aa49764c16845e12596b51d1912659dceb407f",
+      "sha256": "89b569765b05163933e0100126399d6de06765948ae50859d2e2faf7c66baffe",
       "source_key_range": {
-        "end": 720,
+        "end": 660,
+        "prefix": "n",
+        "start": 651
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-479ca4183506-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-9368f1cc21ec-01-01-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n661-n670.jsonl",
+      "row_count": 58,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "db0a6fd83656684342677a2eb32afd4e504a72543a2c8d901a05e0a2dffda330",
+      "source_key_range": {
+        "end": 670,
+        "prefix": "n",
+        "start": 661
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-a22e313b17b6-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-292fb71a98c2-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n671-n680.jsonl",
+      "row_count": 48,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "f2547300a2b827480f0b1374aaa352d7babc943201d06299ed99ffaa92d07640",
+      "source_key_range": {
+        "end": 680,
+        "prefix": "n",
+        "start": 671
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-013966ac19a7-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-a463fb8be775-01-02-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n681-n690.jsonl",
+      "row_count": 78,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "52a003281d1eb7487799d4119d877470993ba0bf1d054bd7a6be702b60a92033",
+      "source_key_range": {
+        "end": 690,
         "prefix": "n",
         "start": 681
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-3f611b55bfd8-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-285624244a3a-01-01-022",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n721-n760.jsonl",
-      "row_count": 750,
+      "first_row_id": "llx-crosswalk-llx-qword-2fa45cdb09ef-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-294d0ba883c9-01-01-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n691-n700.jsonl",
+      "row_count": 43,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "814202cb80996ea76f88909d4fda47324163bd0f73f97a1bebf4d15a12943c92",
+      "sha256": "017e0f71b8c96786ea5c2307a73a7669d612508a6fa4795d8db9f302d0b8e230",
       "source_key_range": {
-        "end": 760,
+        "end": 700,
+        "prefix": "n",
+        "start": 691
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-0ac93d182557-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-fe429340f7a0-01-01-006",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n701-n710.jsonl",
+      "row_count": 44,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "8994d790433c095bd45d197bcb021143c353f7a4ccd91a396f29cb659258ee55",
+      "source_key_range": {
+        "end": 710,
+        "prefix": "n",
+        "start": 701
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-1c17c00ffc56-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-9eb86f860545-01-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n711-n720.jsonl",
+      "row_count": 37,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "e3916426ed08c9894fc5e20f781ce589036b4e864733187ed35af17aa1e7c7fb",
+      "source_key_range": {
+        "end": 720,
+        "prefix": "n",
+        "start": 711
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-3f611b55bfd8-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-948bcecf730a-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n721-n730.jsonl",
+      "row_count": 26,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "a1ccbb6a8c9bc01834c8d107466247abd4269e3bbeac096635b586426f9dc792",
+      "source_key_range": {
+        "end": 730,
         "prefix": "n",
         "start": 721
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-722c6c18d2fe-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-28c8238ab7c7-01-01-030",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n761-n800.jsonl",
-      "row_count": 1221,
+      "first_row_id": "llx-crosswalk-llx-qword-edcbaddb29cd-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-6adae1ce2f2b-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n731-n740.jsonl",
+      "row_count": 125,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "d2914290441197033a122621e2bb04f772caa245b263078a15d591cdc0dc0a4b",
+      "sha256": "67dadff6d4705449910691c27801d478c100941b1a3065b56122eef0f7c2fb5d",
       "source_key_range": {
-        "end": 800,
+        "end": 740,
+        "prefix": "n",
+        "start": 731
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-91b88d81e170-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-e26f0d26b403-01-02-016",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n741-n750.jsonl",
+      "row_count": 332,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "a885f7d889ae87b2c34f24a60a5dd01665fe1df7369458ddfcf9b1082c4d8cb6",
+      "source_key_range": {
+        "end": 750,
+        "prefix": "n",
+        "start": 741
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-b39567132b2c-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-285624244a3a-01-01-022",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n751-n760.jsonl",
+      "row_count": 267,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "fe10cee1d69c85723dadf74b21ac3f62e8ae1987d08090960b84e070d6b6fb51",
+      "source_key_range": {
+        "end": 760,
+        "prefix": "n",
+        "start": 751
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-722c6c18d2fe-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-3fff82f8b3a7-01-01-064",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n761-n770.jsonl",
+      "row_count": 353,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "c6580772384590d29093d0778b1b13c5e51301d647961b4692bc2c155f5bd69f",
+      "source_key_range": {
+        "end": 770,
         "prefix": "n",
         "start": 761
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-c850b4926812-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-ace902fe7e64-01-01-005",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n801-n840.jsonl",
-      "row_count": 476,
+      "first_row_id": "llx-crosswalk-llx-qword-03a1e641ea0b-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-f969634b2fff-01-01-046",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n771-n780.jsonl",
+      "row_count": 209,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "8358d751bfb71964788df1ee0dcb370472741a7a278ec0fabfe812fc9323388e",
+      "sha256": "d0cc0eaf6e81ebf3c5d9353a1d1339a0e03d53ae686242f51a11e05ba5593ac2",
       "source_key_range": {
-        "end": 840,
+        "end": 780,
+        "prefix": "n",
+        "start": 771
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-83c7f7d2830f-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-ee0929a089a6-01-01-023",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n781-n790.jsonl",
+      "row_count": 485,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "f6d6d53230cb0c96b2d82493af17a379bad3da91088ddf561df762ed754ae108",
+      "source_key_range": {
+        "end": 790,
+        "prefix": "n",
+        "start": 781
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-ba7a39b12bcf-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-28c8238ab7c7-01-01-030",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n791-n800.jsonl",
+      "row_count": 174,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "ce0398f90b0a57d624bb1b0f8400d6a9d311f71bedef40ba1f5ac0a7f92b125d",
+      "source_key_range": {
+        "end": 800,
+        "prefix": "n",
+        "start": 791
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-c850b4926812-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-5c1d32eee220-01-01-023",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n801-n810.jsonl",
+      "row_count": 228,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "33068be60b60d2515b7c27a1c3f61e726f198b1666c2635e53a6978c4dcdedd5",
+      "source_key_range": {
+        "end": 810,
         "prefix": "n",
         "start": 801
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-24bf5e29906c-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-8a2631c5a7d1-01-01-004",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n841-n880.jsonl",
-      "row_count": 197,
+      "first_row_id": "llx-crosswalk-llx-qword-1c46a4c8e626-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-fdb24f34bb32-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n811-n820.jsonl",
+      "row_count": 97,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "9e5d5ab8cd4391c98aa5db175fea5b80c49d4f3be5c908ae4adc2c54de3e97d1",
+      "sha256": "c4bd9550943afd31d083e5311d0d6e61e431c71a3056e73b8dd444f0d7271115",
       "source_key_range": {
-        "end": 880,
+        "end": 820,
+        "prefix": "n",
+        "start": 811
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-42acf420426b-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-3b7c824e73a4-01-02-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n821-n830.jsonl",
+      "row_count": 68,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "18c8b093f12d711a280d2b8e3b2fa6615069399bf94bfb956fd5b7f98d3574d6",
+      "source_key_range": {
+        "end": 830,
+        "prefix": "n",
+        "start": 821
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-397070cfa3ef-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-ace902fe7e64-01-01-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n831-n840.jsonl",
+      "row_count": 83,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "3f147934a478a8752186993d219cc575fa7a785962c25ab36029be6cbb0cbf3d",
+      "source_key_range": {
+        "end": 840,
+        "prefix": "n",
+        "start": 831
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-24bf5e29906c-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-df3e6c65b3bc-01-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n841-n850.jsonl",
+      "row_count": 68,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "c5d557de4d62ef83768c56982221745e30db42d463be560dded67f5b69413d55",
+      "source_key_range": {
+        "end": 850,
         "prefix": "n",
         "start": 841
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-22b72c026d04-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-6751c0e4d0fd-01-01-004",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n881-n920.jsonl",
-      "row_count": 486,
+      "first_row_id": "llx-crosswalk-llx-qword-abd3269b28ad-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-b3d484a1a90d-01-02-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n851-n860.jsonl",
+      "row_count": 52,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "130268897eedcb2ca19ce958f71b0a2950d0273bd38d12838e69e5029386dadf",
+      "sha256": "2f9e47c7f920bb83e746d1d83f349170c135e0d897fa284f354acd4107727162",
       "source_key_range": {
-        "end": 920,
+        "end": 860,
+        "prefix": "n",
+        "start": 851
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-b160e6570849-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-5da3342bf614-01-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n861-n870.jsonl",
+      "row_count": 43,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "f001671ec64e0a7424d7ca01b92d96edacb4c88a7892ddfc979df15a73acb8b7",
+      "source_key_range": {
+        "end": 870,
+        "prefix": "n",
+        "start": 861
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-6c0912492098-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-8a2631c5a7d1-01-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n871-n880.jsonl",
+      "row_count": 34,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "28c2f533e25d63b5c69b0a3b237da881e5748338788cca5126f0229a9615510f",
+      "source_key_range": {
+        "end": 880,
+        "prefix": "n",
+        "start": 871
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-22b72c026d04-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-b223873444db-01-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n881-n890.jsonl",
+      "row_count": 38,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "5c7c7fc0f7e2bc3aac2d6bcc35419b59eb6d41c0f8613fb5d5302e83865e6972",
+      "source_key_range": {
+        "end": 890,
         "prefix": "n",
         "start": 881
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-b2b53da6259d-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-4a4f8ecf8bf0-01-02-009",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n921-n960.jsonl",
-      "row_count": 368,
+      "first_row_id": "llx-crosswalk-llx-qword-515a04ed74c4-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-eccba8b4d3f3-01-06-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n891-n900.jsonl",
+      "row_count": 133,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "967e85b3809288d5059bde45ff956941f439fca1e1bd822a9b8ec49f5c672637",
+      "sha256": "22c9867c311fe7d86b480448cbf7c0a2966522260b8cf13b81c29fade51f29f2",
       "source_key_range": {
-        "end": 960,
+        "end": 900,
+        "prefix": "n",
+        "start": 891
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-7ea2cfcc722e-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-602b10b52f7e-01-01-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n901-n910.jsonl",
+      "row_count": 133,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "0439c72d4077a9e01fcdd2f5e916af8905b7e3310383ea509431c52651119d04",
+      "source_key_range": {
+        "end": 910,
+        "prefix": "n",
+        "start": 901
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-bac4f985c17c-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-6751c0e4d0fd-01-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n911-n920.jsonl",
+      "row_count": 182,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "38cc0d8d8433473243a15e281dba3569d552b22c93d642df98c9b84d39d463fe",
+      "source_key_range": {
+        "end": 920,
+        "prefix": "n",
+        "start": 911
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-b2b53da6259d-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-489eccdc66c3-01-02-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n921-n930.jsonl",
+      "row_count": 111,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "23e3bf74da4846df2852bc6fdd16fbc8522d5bd2640d156ebf3cc08f5791c43b",
+      "source_key_range": {
+        "end": 930,
         "prefix": "n",
         "start": 921
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-8f708cea3287-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-7b47af29daae-01-01-004",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n961-n1000.jsonl",
-      "row_count": 258,
+      "first_row_id": "llx-crosswalk-llx-qword-2a23164b4f76-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-a668534b93d0-01-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n931-n940.jsonl",
+      "row_count": 48,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "6142618b6240a8992f240130cfe9e0a8436fa02b8de8b21e443c1b0a04239fd8",
+      "sha256": "e7ca0f23077299390c7c6f7e42ee642a3f69d97e4cfc71fbb19cbcbe6cf65917",
       "source_key_range": {
-        "end": 1000,
+        "end": 940,
+        "prefix": "n",
+        "start": 931
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-116fa9c53064-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-6f7aeda971ca-01-04-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n941-n950.jsonl",
+      "row_count": 85,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "ce6e52ddd0c8df77290033e593a7c1ec7d3631bf779cbb1cb7db0328457e041a",
+      "source_key_range": {
+        "end": 950,
+        "prefix": "n",
+        "start": 941
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-862861ac8387-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-4a4f8ecf8bf0-01-02-009",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n951-n960.jsonl",
+      "row_count": 124,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "c4d557baa25018ab7c702a20b24d8ddf14220707d392fd370b646f776338d5f1",
+      "source_key_range": {
+        "end": 960,
+        "prefix": "n",
+        "start": 951
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-8f708cea3287-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-554c1c782996-01-02-002",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n961-n970.jsonl",
+      "row_count": 44,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "b756fe8f9582d99dc66c6720a8e5cecb1c2e274d8b6603a9ce9e701ce7c60c9c",
+      "source_key_range": {
+        "end": 970,
         "prefix": "n",
         "start": 961
       }
     },
     {
-      "first_row_id": "llx-crosswalk-llx-qword-b9c7f56480eb-01-01-001",
-      "last_row_id": "llx-crosswalk-llx-qword-091ddcebac61-01-02-005",
-      "path": "qamus/indexes/largelexicon/qword-crosswalk/n1001-n1040.jsonl",
-      "row_count": 367,
+      "first_row_id": "llx-crosswalk-llx-qword-9b4903a8880b-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-a15edbe7e166-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n971-n980.jsonl",
+      "row_count": 38,
       "schema": "qamus/largelexicon-qword-crosswalk@1",
-      "sha256": "48a0b51286983feabba39b5d8c8fdfa1dd2a8db073e4d17e5a09c911869eee88",
+      "sha256": "1b0490f60a3f28c6e66bf5cb87ab75dd15f95c4375bd06526929442b1b256130",
+      "source_key_range": {
+        "end": 980,
+        "prefix": "n",
+        "start": 971
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-b57eeb09ca28-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-bf9416418d0c-01-02-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n981-n990.jsonl",
+      "row_count": 130,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "964e4e798147db85c1b801622858ba4a292c3abf5413f4c8629b638f93db88ea",
+      "source_key_range": {
+        "end": 990,
+        "prefix": "n",
+        "start": 981
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-18f50563b0f6-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-7b47af29daae-01-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n991-n1000.jsonl",
+      "row_count": 46,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "e993be58a573230a246b4e96e29f5edb14ea3c9c05e1ffba7bc23ee356bd4480",
+      "source_key_range": {
+        "end": 1000,
+        "prefix": "n",
+        "start": 991
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-b9c7f56480eb-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-34b9aacb8aa7-01-01-003",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n1001-n1010.jsonl",
+      "row_count": 37,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "849aa454f9d7ff929184c92b8a2dc9ca834714917db7d4de2e225cdbfe94986a",
+      "source_key_range": {
+        "end": 1010,
+        "prefix": "n",
+        "start": 1001
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-e412b23ffc52-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-82b42c08404f-01-01-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n1011-n1020.jsonl",
+      "row_count": 38,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "a4e33312d9c92172b75efa5b3593ac2f772281c1203de80c030059d12ab4d84f",
+      "source_key_range": {
+        "end": 1020,
+        "prefix": "n",
+        "start": 1011
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-d27a8c1a2ae2-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-32f46ebf3e1d-01-02-004",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n1021-n1030.jsonl",
+      "row_count": 153,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "6f567759b955a048698f23eb03a8b0354ec200e52e59cdb346a54cb43caa7f2f",
+      "source_key_range": {
+        "end": 1030,
+        "prefix": "n",
+        "start": 1021
+      }
+    },
+    {
+      "first_row_id": "llx-crosswalk-llx-qword-ae8f60a22761-01-01-001",
+      "last_row_id": "llx-crosswalk-llx-qword-091ddcebac61-01-02-005",
+      "path": "qamus/indexes/largelexicon/qword-crosswalk/n1031-n1040.jsonl",
+      "row_count": 139,
+      "schema": "qamus/largelexicon-qword-crosswalk@1",
+      "sha256": "2c9f5e55c544bd49b0af51b6ab93556284414b49b2905da632a2d6258a7ab488",
       "source_key_range": {
         "end": 1040,
         "prefix": "n",
-        "start": 1001
+        "start": 1031
       }
     },
     {
@@ -717,7 +2746,7 @@
     }
   ],
   "source_branch": "largelexicon",
-  "source_head": "9568f4ad2e0cebaeb5e30b1c482d4f851c7338b3",
+  "source_head": "b7621ed92d2ad8f9e07d2ff23e72d70760ff2b20",
   "stale_after": "qamus_qword_denominator_or_canonical_source_change",
   "status": "active",
   "status_counts": {

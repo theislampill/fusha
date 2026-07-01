@@ -26,6 +26,7 @@ from largelexicon_table_reader import LargelexiconQwordTable
 
 
 ROOT = Path(__file__).resolve().parents[1]
+CROSSWALK_SHARD_SIZE = 10
 
 
 def _shard_sort_key(label: str) -> tuple[int, int, str]:
@@ -97,7 +98,7 @@ def build(root: Path = ROOT) -> dict[str, Any]:
     status_counts: Counter[str] = Counter()
     for row in table.iter_rows():
         cw = crosswalk_row(row, denominator_manifest)
-        label, range_info = qword_shard_label(row)
+        label, range_info = qword_shard_label(row, shard_size=CROSSWALK_SHARD_SIZE)
         grouped[label].append(cw)
         ranges[label] = range_info
         status_counts[cw["status"]] += 1
@@ -134,6 +135,7 @@ def build(root: Path = ROOT) -> dict[str, Any]:
         "row_count": total,
         "shard_count": len(shards),
         "status_counts": dict(sorted(status_counts.items())),
+        "shard_strategy": f"qamus_source_key_prefix_ordinal_ranges_{CROSSWALK_SHARD_SIZE}",
         "public_boundary": dict(PUBLIC_BOUNDARY),
         "claim_boundary": "Crosswalk status table only; null-loc rows are packets, not deployable hovers.",
         "transclusion_contract": {
