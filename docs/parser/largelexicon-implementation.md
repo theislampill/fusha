@@ -11,8 +11,9 @@ dataset into Fusha parser/checker tooling.
   visible qword can carry source/private trace, public projection, rendered
   readback fixture, and flywheel artifact before broad expansion.
 - P4/P5: explicit full-table allowlist plus committed Qamus-authored
-  source-clean lemma/form/stem/qword denominator tables. Raw QAC/MCP/API/source
-  evidence remains private adapter/cache data.
+  source-clean lemma/form/stem tables and a manifest-backed sharded qword
+  denominator table. Raw QAC/MCP/API/source evidence remains private
+  adapter/cache data.
 - P1/P8: Qamus-authored lemma/form/stem sample and full-table generation plus
   morphology validators and generation keys.
 - P2/P9/P10: opt-in `--db largelexicon` parser/analyzer path while preserving
@@ -39,6 +40,8 @@ python tools/build_largelexicon_qamus_mode_a_worklist.py --limit 160
 python tools/project_largelexicon_qamus_hover_candidates.py
 python tools/build_largelexicon_flywheel_artifacts.py
 python tools/validate_largelexicon_source_ledger.py --self-test
+python tools/validate_largelexicon_table_manifest.py --self-test
+python tools/validate_largelexicon_table_reader.py --self-test
 python tools/validate_largelexicon_morph_db.py --self-test
 python tools/validate_largelexicon_parser.py --self-test
 python tools/validate_largelexicon_qamus_mode_a.py --self-test
@@ -71,7 +74,11 @@ tranche closure claims.
 
 - Qamus lemma rows: 2,092.
 - Qamus form/stem rows: 8,483.
-- Qamus all-visible-qword denominator rows: 117,117.
+- Qamus all-visible-qword denominator rows: 117,117, stored as one logical
+  manifest-backed table under `qamus/indexes/largelexicon/qword-denominator/`.
+- Qamus entries acknowledged by the qword manifest: 2,092; entries with qword
+  rows in the current export: 2,091; current source-card repair packet: `n993`
+  / `مَلْجَأ` (`pg443.jpeg`, candidate ref `42:47`).
 - Current largelexicon parser scope: dependency-free candidate analysis over
   committed Qamus-derived tables, plus smoke arbitrary input. It is not yet a
   CAMeL/MADAMIRA/Stanza-equivalent analyzer, trained statistical disambiguator,

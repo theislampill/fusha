@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qamus/largelexicon-table-manifest.schema.json",
+  "title": "Largelexicon sharded table manifest",
+  "type": "object",
+  "required": [
+    "schema",
+    "table_id",
+    "table_schema",
+    "storage",
+    "primary_key",
+    "row_count",
+    "shard_count",
+    "shard_strategy",
+    "entry_index_path",
+    "source_card_repair_path",
+    "public_boundary",
+    "bidirectional_contract",
+    "shards"
+  ],
+  "properties": {
+    "schema": {
+      "const": "qamus/largelexicon-qword-denominator-manifest@1"
+    },
+    "table_id": {
+      "const": "qamus-qword-denominator"
+    },
+    "table_schema": {
+      "const": "qamus/largelexicon-qword-denominator@1"
+    },
+    "storage": {
+      "const": "sharded_jsonl_manifest"
+    },
+    "primary_key": {
+      "const": "row_id"
+    },
+    "row_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "shard_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "qamus_entry_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "entries_with_qword_rows": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "entries_without_qword_rows": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "shard_strategy": {
+      "type": "string"
+    },
+    "entry_index_path": {
+      "type": "string"
+    },
+    "source_card_repair_path": {
+      "type": "string"
+    },
+    "public_boundary": {
+      "type": "object",
+      "required": [
+        "src",
+        "kind",
+        "lang"
+      ],
+      "properties": {
+        "src": {
+          "const": "qamus"
+        },
+        "kind": {
+          "const": "authored"
+        },
+        "lang": {
+          "const": "en"
+        }
+      },
+      "additionalProperties": false
+    },
+    "bidirectional_contract": {
+      "type": "object",
+      "required": [
+        "forward_keys",
+        "reverse_keys",
+        "crosswalk_keys"
+      ],
+      "properties": {
+        "forward_keys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reverse_keys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "crosswalk_keys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "shards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "schema",
+          "row_count",
+          "sha256",
+          "first_row_id",
+          "last_row_id",
+          "source_key_range",
+          "entry_count"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "schema": {
+            "const": "qamus/largelexicon-qword-denominator@1"
+          },
+          "row_count": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "first_row_id": {
+            "type": "string"
+          },
+          "last_row_id": {
+            "type": "string"
+          },
+          "source_key_range": {
+            "type": "object"
+          },
+          "entry_count": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

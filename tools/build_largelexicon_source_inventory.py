@@ -24,9 +24,9 @@ from largelexicon_common import (
     iter_entries,
     qword_denominator_rows,
     stem_rows_for_entry,
-    QWORD_DENOMINATOR_FULL,
     write_json,
     write_jsonl,
+    write_qword_denominator_shards,
 )
 
 
@@ -73,7 +73,7 @@ def build(sample_size: int, out_dir: Path | None = None, commit_full: bool = Fal
         write_jsonl(LEMMA_FULL, lemmas)
         write_jsonl(FORM_FULL, full_forms)
         write_jsonl(STEM_FULL, stems)
-        write_jsonl(QWORD_DENOMINATOR_FULL, qword_rows)
+        qword_manifest = write_qword_denominator_shards(qword_rows, all_entries=entries)
         write_json(
             FULL_TABLE_META,
             {
@@ -81,6 +81,7 @@ def build(sample_size: int, out_dir: Path | None = None, commit_full: bool = Fal
                 "allowlist": str(ALLOWLIST.relative_to(Path(__file__).resolve().parents[1])),
                 "tables": allowlist["tables"],
                 "counts": inv["full_counts"],
+                "qword_denominator_manifest": qword_manifest,
                 "claim": "committed Qamus-authored source-clean facts; no raw external payloads; no live Qamus progress",
                 "public_boundary": inv["public_boundary"],
                 "freshness": {key: inv[key] for key in ["generated_at", "generated_by", "source_head", "source_branch", "supersedes", "stale_after", "status"]},

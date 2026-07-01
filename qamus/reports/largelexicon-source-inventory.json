@@ -14,7 +14,7 @@
     "qword_denominator_rows": 117117,
     "stem_source_rows": 8483
   },
-  "generated_at": "2026-07-01T10:18:02Z",
+  "generated_at": "2026-07-01T10:58:42Z",
   "generated_by": "tools.largelexicon_common",
   "pos_counts": {
     "noun": 966,
@@ -40,7 +40,7 @@
     "entries": "qamus\\data\\current\\entries.jsonl",
     "entries_min": "qamus\\data\\current\\entries.min.jsonl"
   },
-  "source_head": "e35b23bf3b90b01aa8ef44ce3d43f5f7c9c5db08",
+  "source_head": "a107eecc40afbe28d0b3576d691320bf37ae0e89",
   "stale_after": "qamus_data_or_source_schema_change",
   "status": "active",
   "supersedes": []

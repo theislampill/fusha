@@ -14,17 +14,27 @@ from largelexicon_common import (
     FULL_TABLE_META,
     LEMMA_FULL,
     LEMMA_SAMPLE,
+    QWORD_DENOMINATOR_ENTRY_INDEX,
     QWORD_DENOMINATOR_FULL,
+    QWORD_DENOMINATOR_MANIFEST,
+    QWORD_DENOMINATOR_SOURCE_REPAIR,
     REPORT_DIR,
     STEM_FULL,
     public_boundary_errors,
     read_jsonl,
 )
+from validate_largelexicon_table_manifest import validate as validate_qword_manifest
 
 
 ROOT = Path(__file__).resolve().parents[1]
 INVENTORY = REPORT_DIR / "largelexicon-source-inventory.json"
-FULL_TABLES = [LEMMA_FULL, FORM_FULL, STEM_FULL, QWORD_DENOMINATOR_FULL]
+FULL_JSONL_TABLES = [LEMMA_FULL, FORM_FULL, STEM_FULL]
+FULL_TABLE_ARTIFACTS = [
+    *FULL_JSONL_TABLES,
+    QWORD_DENOMINATOR_MANIFEST,
+    QWORD_DENOMINATOR_ENTRY_INDEX,
+    QWORD_DENOMINATOR_SOURCE_REPAIR,
+]
 
 
 def _validate_rows(path: Path, rows: list[dict], minimum_rows: int, schema: str, errors: list[str]) -> None:
@@ -51,9 +61,11 @@ def _validate_rows(path: Path, rows: list[dict], minimum_rows: int, schema: str,
 
 def validate() -> list[str]:
     errors: list[str] = []
-    for path in [INVENTORY, LEMMA_SAMPLE, FORM_SAMPLE, ALLOWLIST, FULL_TABLE_META, *FULL_TABLES]:
+    for path in [INVENTORY, LEMMA_SAMPLE, FORM_SAMPLE, ALLOWLIST, FULL_TABLE_META, *FULL_TABLE_ARTIFACTS]:
         if not path.exists():
             errors.append(f"missing required largelexicon artifact: {path.relative_to(ROOT)}")
+    if QWORD_DENOMINATOR_FULL.exists():
+        errors.append(f"{QWORD_DENOMINATOR_FULL.relative_to(ROOT)} must not be committed; use the sharded manifest")
     if errors:
         return errors
     inv = json.loads(INVENTORY.read_text(encoding="utf-8"))
@@ -81,8 +93,8 @@ def validate() -> list[str]:
             errors.append(f"{label}: missing entry_id")
     allowlist = json.loads(ALLOWLIST.read_text(encoding="utf-8"))
     allowed = {table["path"]: table for table in allowlist.get("tables") or []}
-    for path in FULL_TABLES:
-        rel = str(path.relative_to(ROOT))
+    for path in FULL_JSONL_TABLES:
+        rel = path.relative_to(ROOT).as_posix()
         table = allowed.get(rel)
         if not table:
             errors.append(f"{rel}: not present in source-clean table allowlist")
@@ -92,6 +104,20 @@ def validate() -> list[str]:
         if table.get("raw_external_allowed") is not False:
             errors.append(f"{rel}: allowlist must explicitly set raw_external_allowed=false")
         _validate_rows(path, read_jsonl(path), table.get("minimum_rows", 1), table["schema"], errors)
+    qword_rel = QWORD_DENOMINATOR_MANIFEST.relative_to(ROOT).as_posix()
+    qword_table = allowed.get(qword_rel)
+    if not qword_table:
+        errors.append(f"{qword_rel}: not present in source-clean table allowlist")
+    else:
+        if qword_table.get("storage") != "sharded_jsonl_manifest":
+            errors.append(f"{qword_rel}: allowlist storage must be sharded_jsonl_manifest")
+        if qword_table.get("entry_index_path") != QWORD_DENOMINATOR_ENTRY_INDEX.relative_to(ROOT).as_posix():
+            errors.append(f"{qword_rel}: allowlist entry_index_path mismatch")
+        if qword_table.get("commit_allowed") is not True:
+            errors.append(f"{qword_rel}: allowlist must explicitly set commit_allowed=true")
+        if qword_table.get("raw_external_allowed") is not False:
+            errors.append(f"{qword_rel}: allowlist must explicitly set raw_external_allowed=false")
+    errors.extend(validate_qword_manifest(QWORD_DENOMINATOR_MANIFEST))
     meta = json.loads(FULL_TABLE_META.read_text(encoding="utf-8"))
     counts = meta.get("counts") or {}
     if counts.get("lemma_source_rows") != 2092:

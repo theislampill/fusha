@@ -25,7 +25,10 @@
     "fusha/lexicon/largelexicon/form-source.full.jsonl",
     "fusha/morphology/examples/largelexicon-stems.sample.jsonl",
     "fusha/morphology/data/largelexicon-stems.full.jsonl",
-    "qamus/indexes/largelexicon/qamus-qword-denominator.full.jsonl"
+    "qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json",
+    "qamus/indexes/largelexicon/qamus-qword-denominator.entry-shard-index.json",
+    "qamus/indexes/largelexicon/qamus-qword-denominator.source-card-repair.json",
+    "qamus/indexes/largelexicon/qword-denominator/*.jsonl"
   ],
   "measured_denominators": {
     "qamus_entries": 2092,
@@ -36,6 +39,8 @@
   },
   "validators": [
     "tools/validate_largelexicon_source_ledger.py",
+    "tools/validate_largelexicon_table_manifest.py",
+    "tools/validate_largelexicon_table_reader.py",
     "tools/validate_largelexicon_morph_db.py",
     "tools/validate_largelexicon_parser.py",
     "tools/validate_largelexicon_qamus_mode_a.py",

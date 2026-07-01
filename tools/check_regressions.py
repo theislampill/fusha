@@ -3305,7 +3305,10 @@ try:
                  "docs/parser/largelexicon-implementation.md",
                  "tools/build_largelexicon_source_inventory.py",
                  "tools/build_largelexicon_morph_db.py",
+                 "tools/largelexicon_table_reader.py",
                  "tools/validate_largelexicon_source_ledger.py",
+                 "tools/validate_largelexicon_table_manifest.py",
+                 "tools/validate_largelexicon_table_reader.py",
                  "tools/validate_largelexicon_claim_boundary.py",
                  "tools/validate_largelexicon_claim_cards.py",
                  "tools/validate_largelexicon_morph_db.py",
@@ -3325,7 +3328,13 @@ try:
                  "fusha/lexicon/largelexicon/form-source.full.jsonl",
                  "fusha/morphology/examples/largelexicon-stems.sample.jsonl",
                  "fusha/morphology/data/largelexicon-stems.full.jsonl",
-                 "qamus/indexes/largelexicon/qamus-qword-denominator.full.jsonl",
+                 "qamus/schemas/largelexicon-table-manifest.schema.json",
+                 "qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json",
+                 "qamus/indexes/largelexicon/qamus-qword-denominator.entry-shard-index.json",
+                 "qamus/indexes/largelexicon/qamus-qword-denominator.source-card-repair.json",
+                 "qamus/indexes/largelexicon/qword-denominator/v001-v040.jsonl",
+                 "qamus/indexes/largelexicon/qword-denominator/n1041-n1045.jsonl",
+                 "qamus/indexes/largelexicon/qword-denominator/p001-p040.jsonl",
                  "qamus/indexes/largelexicon/source-clean-fact-tables.meta.json",
                  "qamus/reports/largelexicon-claim-cards.json",
                  "qamus/examples/mode_a_all_qword/largelexicon-qamus-mode-a-worklist.sample.jsonl",
@@ -3339,6 +3348,10 @@ try:
         check("largelexicon artifact exists: %s" % _art, os.path.exists(os.path.join(ROOT, _art)))
     _ll1 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_source_ledger.py"), "--self-test"])
     check("largelexicon source-ledger self-test (canonical ledger + freshness + committed source-clean full tables)", _ll1.returncode == 0)
+    _ll1b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_table_manifest.py"), "--self-test"])
+    check("largelexicon qword table manifest self-test (shards + entry reverse index + source-card repair packet)", _ll1b.returncode == 0)
+    _ll1c = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_table_reader.py"), "--self-test"])
+    check("largelexicon qword table reader self-test (manifest-backed iteration, entry lookup, row lookup)", _ll1c.returncode == 0)
     _ll2 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_claim_boundary.py"), "--self-test"])
     check("largelexicon claim-boundary self-test (no live/arbitrary/CAMeL-class overclaim)", _ll2.returncode == 0)
     _ll2b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_claim_cards.py"), "--self-test"])

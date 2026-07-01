@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-07-01T10:58:45Z",
+  "generated_by": "tools.largelexicon_common",
+  "public_boundary": {
+    "kind": "authored",
+    "lang": "en",
+    "src": "qamus"
+  },
+  "repairs": [
+    {
+      "entry_id": "2a071cd0b50e",
+      "forms": [
+        "مَلْجَأ",
+        "مَلْجَأً",
+        "مُلْجَأً"
+      ],
+      "headword": "مَلْجَأ",
+      "live_mutation_allowed": false,
+      "next_action": "repair source-card/example edge from source photo or canonical source, then regenerate qword denominator shards",
+      "public_boundary": {
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "reason": "qamus_current_entry_has_no_usage_example_rows_for_qword_denominator",
+      "repair_hint": {
+        "candidate_quran_ref": "42:47",
+        "note": "Owner-supplied source card shows Qur'anic usage absent from qamus/data/current/entries.jsonl.",
+        "source_photo_page_image": "pg443.jpeg"
+      },
+      "schema": "qamus/largelexicon-qword-source-card-repair@1",
+      "section": "noun",
+      "source_keys": [
+        "n993"
+      ],
+      "source_status": "qamus_current_authored",
+      "total_uses": 3
+    }
+  ],
+  "row_count": 1,
+  "schema": "qamus/largelexicon-qword-source-card-repair-list@1",
+  "source_branch": "largelexicon",
+  "source_head": "a107eecc40afbe28d0b3576d691320bf37ae0e89",
+  "stale_after": "qamus_entries_or_largelexicon_schema_change",
+  "status": "active",
+  "supersedes": [],
+  "table_id": "qamus-qword-denominator"
+}

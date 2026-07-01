@@ -10,7 +10,10 @@ Allowed inputs:
   `fusha/lexicon/largelexicon/lemma-source.full.jsonl`,
   `fusha/lexicon/largelexicon/form-source.full.jsonl`,
   `fusha/morphology/data/largelexicon-stems.full.jsonl`, and
-  `qamus/indexes/largelexicon/qamus-qword-denominator.full.jsonl`;
+  `qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json`
+  with its shard directory and entry-shard index;
+- qword denominator source-card repair packets such as
+  `qamus/indexes/largelexicon/qamus-qword-denominator.source-card-repair.json`;
 - all visible qword Mode A worklist rows;
 - parser candidate outputs;
 - flywheel/curriculum packets.
@@ -22,7 +25,14 @@ python tools/fusha_largelexicon_cli.py analyze-token --surface "..."
 python tools/fusha_largelexicon_cli.py analyze-card --input card.jsonl
 python tools/fusha_largelexicon_cli.py project-hover --input worklist.jsonl --out candidates.jsonl
 python tools/fusha_largelexicon_cli.py validate-mode-a --input worklist.jsonl
+python tools/validate_largelexicon_table_reader.py --self-test
 ```
+
+For qword denominator reads, prefer `tools/largelexicon_table_reader.py`.
+The table is a single logical Project-Xanadu-style graph surface even though it
+is physically sharded. A row must remain traceable forward
+entry/card/qword -> shard/payload/crosswalk and reverse row_id/entry -> shard
+-> entry/card/source. Do not recreate a second qword denominator database.
 
 Executor-owned gates:
 
@@ -41,6 +51,7 @@ Largelexicon rows must resolve to one of:
 - no-op/already-covered;
 - replacement-needed packet;
 - source-address/crosswalk repair packet;
+- source-card/example repair packet;
 - owner packet;
 - scholar/i'rab packet;
 - validator/schema/tool patch packet;

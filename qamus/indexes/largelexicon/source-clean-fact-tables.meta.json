@@ -8,10 +8,10 @@
     "stem_source_rows": 8483
   },
   "freshness": {
-    "generated_at": "2026-07-01T10:18:02Z",
+    "generated_at": "2026-07-01T10:58:42Z",
     "generated_by": "tools.largelexicon_common",
     "source_branch": "largelexicon",
-    "source_head": "e35b23bf3b90b01aa8ef44ce3d43f5f7c9c5db08",
+    "source_head": "a107eecc40afbe28d0b3576d691320bf37ae0e89",
     "stale_after": "qamus_data_or_source_schema_change",
     "status": "active",
     "supersedes": []
@@ -21,12 +21,933 @@
     "lang": "en",
     "src": "qamus"
   },
+  "qword_denominator_manifest": {
+    "bidirectional_contract": {
+      "crosswalk_keys": [
+        "canonical_quran_loc",
+        "canonical_wbw_loc",
+        "route",
+        "status"
+      ],
+      "forward_keys": [
+        "entry_id",
+        "source_keys",
+        "card_id",
+        "usage_index",
+        "example_index",
+        "qword_index",
+        "visible_surface",
+        "quran_ref"
+      ],
+      "reverse_keys": [
+        "row_id",
+        "entry_id",
+        "card_id",
+        "card_text_sha256"
+      ]
+    },
+    "claim_boundary": "Source-clean Qamus qword denominator only; not live Qamus progress.",
+    "entries_with_qword_rows": 2091,
+    "entries_without_qword_rows": [
+      "2a071cd0b50e"
+    ],
+    "entry_index_path": "qamus/indexes/largelexicon/qamus-qword-denominator.entry-shard-index.json",
+    "generated_at": "2026-07-01T10:58:45Z",
+    "generated_by": "tools.largelexicon_common",
+    "legacy_monolith_replaced": "qamus/indexes/largelexicon/qamus-qword-denominator.full.jsonl",
+    "primary_key": "row_id",
+    "public_boundary": {
+      "kind": "authored",
+      "lang": "en",
+      "src": "qamus"
+    },
+    "qamus_entry_count": 2092,
+    "row_count": 117117,
+    "schema": "qamus/largelexicon-qword-denominator-manifest@1",
+    "shard_count": 54,
+    "shard_strategy": "qamus_source_key_prefix_ordinal_ranges_40",
+    "shards": [
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-0528e564b97f-01-01-001",
+        "first_source_key": "p001",
+        "last_row_id": "llx-qword-d8b8169ae3d3-02-01-004",
+        "last_source_key": "p040",
+        "path": "qamus/indexes/largelexicon/qword-denominator/p001-p040.jsonl",
+        "row_count": 439,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "cc36031bf0ccfd4539c8a23dd98fb67253bce43f6acc8fc20f607017bdcc8e7d",
+        "source_key_range": {
+          "end": 40,
+          "prefix": "p",
+          "start": 1
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-90f56fb15ef5-01-01-001",
+        "first_source_key": "p041",
+        "last_row_id": "llx-qword-7f25d6c3e392-01-02-004",
+        "last_source_key": "p080",
+        "path": "qamus/indexes/largelexicon/qword-denominator/p041-p080.jsonl",
+        "row_count": 333,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "3ae60e93209bfd36eaf4aa3b175e3bc3d95d95fee5bae259a6be880f58ad31da",
+        "source_key_range": {
+          "end": 80,
+          "prefix": "p",
+          "start": 41
+        }
+      },
+      {
+        "entry_count": 20,
+        "first_row_id": "llx-qword-b851675d8484-01-01-001",
+        "first_source_key": "p081",
+        "last_row_id": "llx-qword-e7c05664fd33-01-02-006",
+        "last_source_key": "p100",
+        "path": "qamus/indexes/largelexicon/qword-denominator/p081-p100.jsonl",
+        "row_count": 178,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "b1eaeeb78f9a1ef7f86d49496f2488163977e3104e68de7c8f7587ea40129c16",
+        "source_key_range": {
+          "end": 100,
+          "prefix": "p",
+          "start": 81
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-430015446b77-01-01-001",
+        "first_source_key": "v001",
+        "last_row_id": "llx-qword-388bbd38acf6-02-10-003",
+        "last_source_key": "v040",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v001-v040.jsonl",
+        "row_count": 9178,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "66b111a8bc82843e963ea2755c251fa6d93e7d94b44bcf6890b616c4710490b2",
+        "source_key_range": {
+          "end": 40,
+          "prefix": "v",
+          "start": 1
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-0f79975eb71d-01-01-001",
+        "first_source_key": "v041",
+        "last_row_id": "llx-qword-0e2b435dcece-01-10-023",
+        "last_source_key": "v080",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v041-v080.jsonl",
+        "row_count": 13956,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "952a526b963a3d1aa10365c54730a3b162508aeb16ab137d8dbdcb6e1f1f2650",
+        "source_key_range": {
+          "end": 80,
+          "prefix": "v",
+          "start": 41
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-3d82e28ccae0-01-01-001",
+        "first_source_key": "v081",
+        "last_row_id": "llx-qword-8ea65de7280d-02-01-031",
+        "last_source_key": "v120",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v081-v120.jsonl",
+        "row_count": 9860,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "35a8548a8cc12381a533ff4c9718359273f05e071ca8ed768d90e7ca34804895",
+        "source_key_range": {
+          "end": 120,
+          "prefix": "v",
+          "start": 81
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-3a414827f027-01-01-001",
+        "first_source_key": "v121",
+        "last_row_id": "llx-qword-55c548d602e9-03-03-014",
+        "last_source_key": "v160",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v121-v160.jsonl",
+        "row_count": 10401,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "ce251df2281b658a47fe81c3f5a33340694028d1467579a1365201a350a57422",
+        "source_key_range": {
+          "end": 160,
+          "prefix": "v",
+          "start": 121
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-5af78b50e696-01-01-001",
+        "first_source_key": "v161",
+        "last_row_id": "llx-qword-af75174c26a6-05-01-013",
+        "last_source_key": "v200",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v161-v200.jsonl",
+        "row_count": 7106,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "122ab15af94999ccaa87df73d8dbc1b190a52672b288324309ad762a7a0a5e7c",
+        "source_key_range": {
+          "end": 200,
+          "prefix": "v",
+          "start": 161
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-f12ae52e78f7-01-01-001",
+        "first_source_key": "v201",
+        "last_row_id": "llx-qword-cdf5e736aff4-01-07-006",
+        "last_source_key": "v240",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v201-v240.jsonl",
+        "row_count": 6829,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "828ae40be67d69c777aed3ceda2a0cd40341d097e9a149f18b1ba276896a159d",
+        "source_key_range": {
+          "end": 240,
+          "prefix": "v",
+          "start": 201
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-7486acc96141-01-01-001",
+        "first_source_key": "v241",
+        "last_row_id": "llx-qword-0a854e0855f6-01-06-009",
+        "last_source_key": "v280",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v241-v280.jsonl",
+        "row_count": 6839,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "225249d3b5a3464f4d6bc46ec45e826d74d7ca804f2bb03e6f44c76236dc0021",
+        "source_key_range": {
+          "end": 280,
+          "prefix": "v",
+          "start": 241
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-ddcdcc8b5d9e-01-01-001",
+        "first_source_key": "v281",
+        "last_row_id": "llx-qword-7f673c8b767f-02-01-006",
+        "last_source_key": "v320",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v281-v320.jsonl",
+        "row_count": 5858,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "a0c309e52cef7bb257985553c4d3fc785efd933ed33a61d14479a7decf67db34",
+        "source_key_range": {
+          "end": 320,
+          "prefix": "v",
+          "start": 281
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-90d6ab43d466-01-01-001",
+        "first_source_key": "v321",
+        "last_row_id": "llx-qword-aa1e635cbb3d-01-07-013",
+        "last_source_key": "v360",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v321-v360.jsonl",
+        "row_count": 5141,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "65780c961c9ce38b1972fd44bb0aa1e193e681109297294cb2d9b756c90f7adc",
+        "source_key_range": {
+          "end": 360,
+          "prefix": "v",
+          "start": 321
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-6708891659a2-01-01-001",
+        "first_source_key": "v361",
+        "last_row_id": "llx-qword-3b9a771008c1-01-07-004",
+        "last_source_key": "v400",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v361-v400.jsonl",
+        "row_count": 4065,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "e649c9ddb16a1531ab7754dc2518f768a3ac46756b424f6fd21ab27f887eb06e",
+        "source_key_range": {
+          "end": 400,
+          "prefix": "v",
+          "start": 361
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-b2bd7c33380a-01-01-001",
+        "first_source_key": "v401",
+        "last_row_id": "llx-qword-2cd8905c46fc-02-01-006",
+        "last_source_key": "v440",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v401-v440.jsonl",
+        "row_count": 4073,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "1828ac1cefd0a2b4d2395290ea4d2d0be316e5eba6be2ff32274830c29d59435",
+        "source_key_range": {
+          "end": 440,
+          "prefix": "v",
+          "start": 401
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-2dc72fd49600-01-01-001",
+        "first_source_key": "v441",
+        "last_row_id": "llx-qword-c006611a2f5e-01-04-018",
+        "last_source_key": "v480",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v441-v480.jsonl",
+        "row_count": 3550,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "6b4c9d84f283e6733da49d3e6832bd63fefb253c84b9bb9a1e5e4aa61e900fd7",
+        "source_key_range": {
+          "end": 480,
+          "prefix": "v",
+          "start": 441
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-7d6e5b852be1-01-01-001",
+        "first_source_key": "v481",
+        "last_row_id": "llx-qword-3ef24b0633e1-01-03-004",
+        "last_source_key": "v520",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v481-v520.jsonl",
+        "row_count": 3196,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "8c96633b5d856e51cc149af76ecdf574bb0501092e7aa555e7506b7e1e058bad",
+        "source_key_range": {
+          "end": 520,
+          "prefix": "v",
+          "start": 481
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-2cbf84907e01-01-01-001",
+        "first_source_key": "v521",
+        "last_row_id": "llx-qword-534543cc84f7-01-03-014",
+        "last_source_key": "v560",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v521-v560.jsonl",
+        "row_count": 3134,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "2ebe98917c9630747b9899c47fe68850d2daa6961ca5775c4efe534ec68b47b0",
+        "source_key_range": {
+          "end": 560,
+          "prefix": "v",
+          "start": 521
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-4f0191523aa9-01-01-001",
+        "first_source_key": "v561",
+        "last_row_id": "llx-qword-b8c56ed44263-01-02-008",
+        "last_source_key": "v600",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v561-v600.jsonl",
+        "row_count": 2379,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "544a6edb53cc10b771368783859e764253ffac3aca638bcdade7ea8febf9412b",
+        "source_key_range": {
+          "end": 600,
+          "prefix": "v",
+          "start": 561
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-fc62ecc87065-01-01-001",
+        "first_source_key": "v601",
+        "last_row_id": "llx-qword-9d550cb9c295-01-01-005",
+        "last_source_key": "v640",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v601-v640.jsonl",
+        "row_count": 2662,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "a35036198b9eb5d3aa3ba5dd6f8537078e88b69c7f3d41e2f5c2ee82fec0f7be",
+        "source_key_range": {
+          "end": 640,
+          "prefix": "v",
+          "start": 601
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-ce23d033cd88-01-01-001",
+        "first_source_key": "v641",
+        "last_row_id": "llx-qword-d9b2fc79fc53-01-01-002",
+        "last_source_key": "v680",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v641-v680.jsonl",
+        "row_count": 584,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "d2cb42ad1d763070e82e832b301cc87cae0841ee52902b1796f59e4e09730e3d",
+        "source_key_range": {
+          "end": 680,
+          "prefix": "v",
+          "start": 641
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-f0b32acc7882-01-01-001",
+        "first_source_key": "v681",
+        "last_row_id": "llx-qword-62c550168299-01-01-010",
+        "last_source_key": "v720",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v681-v720.jsonl",
+        "row_count": 395,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "b8380f4583166682fdeb59c0dbc6d2a509f10b116e6d564dc330071eb63a37ac",
+        "source_key_range": {
+          "end": 720,
+          "prefix": "v",
+          "start": 681
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-e9dd6c4a6a4f-01-01-001",
+        "first_source_key": "v721",
+        "last_row_id": "llx-qword-057171447478-01-02-002",
+        "last_source_key": "v760",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v721-v760.jsonl",
+        "row_count": 316,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "6281716065821e5b1da0aa7983ecf03e43bb8f1b7921b5874d70eecd11078fd2",
+        "source_key_range": {
+          "end": 760,
+          "prefix": "v",
+          "start": 721
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-2957e1d2939f-01-01-001",
+        "first_source_key": "v761",
+        "last_row_id": "llx-qword-850727efbab1-01-02-004",
+        "last_source_key": "v800",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v761-v800.jsonl",
+        "row_count": 251,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "d8ba23af3ba4e6b16152a8aef4f85305f4326c228a13c1c2fa6a9eaa84c0933e",
+        "source_key_range": {
+          "end": 800,
+          "prefix": "v",
+          "start": 761
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-b425d1731055-01-01-001",
+        "first_source_key": "v801",
+        "last_row_id": "llx-qword-f8c9bf191b9c-01-01-011",
+        "last_source_key": "v840",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v801-v840.jsonl",
+        "row_count": 442,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "c17cb107b3273c88d0ce151646dc5c280b7d1522a62a3fb6a5a49ce087e2fb19",
+        "source_key_range": {
+          "end": 840,
+          "prefix": "v",
+          "start": 801
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-4cc74b0f231e-01-01-001",
+        "first_source_key": "v841",
+        "last_row_id": "llx-qword-03ca74904e38-01-01-043",
+        "last_source_key": "v880",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v841-v880.jsonl",
+        "row_count": 809,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "70a01d23dd00b18fdad4bf0ffb39e237acdee2be44661f39ee665f23f445ff34",
+        "source_key_range": {
+          "end": 880,
+          "prefix": "v",
+          "start": 841
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-2bde50b249e8-01-01-001",
+        "first_source_key": "v881",
+        "last_row_id": "llx-qword-9433401704d3-01-01-003",
+        "last_source_key": "v920",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v881-v920.jsonl",
+        "row_count": 347,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "2f00dad41d619857f59a21caec3d77d2313a74c9525b2c6424d96b9abb453db3",
+        "source_key_range": {
+          "end": 920,
+          "prefix": "v",
+          "start": 881
+        }
+      },
+      {
+        "entry_count": 27,
+        "first_row_id": "llx-qword-8476404e1fbc-01-01-001",
+        "first_source_key": "v921",
+        "last_row_id": "llx-qword-83c485be45ad-01-01-003",
+        "last_source_key": "v947",
+        "path": "qamus/indexes/largelexicon/qword-denominator/v921-v947.jsonl",
+        "row_count": 115,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "0c71f359034464a06f3c6289a6cb9743b0ce79b47a54ed398f0447ef949c09ba",
+        "source_key_range": {
+          "end": 947,
+          "prefix": "v",
+          "start": 921
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-68e87fcb398a-01-01-001",
+        "first_source_key": "n001",
+        "last_row_id": "llx-qword-4842b8b6892b-01-02-008",
+        "last_source_key": "n040",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n001-n040.jsonl",
+        "row_count": 1649,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "a058b7f4a6f18aa730f89387c84d910383c3289e94726c177cdbfa5a16c8c14d",
+        "source_key_range": {
+          "end": 40,
+          "prefix": "n",
+          "start": 1
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-37ecb412b9e6-01-01-001",
+        "first_source_key": "n041",
+        "last_row_id": "llx-qword-91c52f8f0c9a-01-01-003",
+        "last_source_key": "n080",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n041-n080.jsonl",
+        "row_count": 510,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "c6a8ace80a3f80cc2cd2578325e6d3bc71c167140f2cb6b36ab6a17eb2ab1f36",
+        "source_key_range": {
+          "end": 80,
+          "prefix": "n",
+          "start": 41
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-841a1ef5c1bd-01-01-001",
+        "first_source_key": "n081",
+        "last_row_id": "llx-qword-ae00d80a671e-01-01-014",
+        "last_source_key": "n120",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n081-n120.jsonl",
+        "row_count": 757,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "64b8878875cbd638a0c86808464bb17fe648fd5797e969458899ba3c76ea1699",
+        "source_key_range": {
+          "end": 120,
+          "prefix": "n",
+          "start": 81
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-28becf853ea8-01-01-001",
+        "first_source_key": "n121",
+        "last_row_id": "llx-qword-6454a937fe14-01-01-024",
+        "last_source_key": "n160",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n121-n160.jsonl",
+        "row_count": 1125,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "b7160477d04397b0d045459460ed224c050e053316f9ad480c322ff23951c719",
+        "source_key_range": {
+          "end": 160,
+          "prefix": "n",
+          "start": 121
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-5319740434d2-01-01-001",
+        "first_source_key": "n161",
+        "last_row_id": "llx-qword-e476b88c0e09-01-01-005",
+        "last_source_key": "n200",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n161-n200.jsonl",
+        "row_count": 1111,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "20d11078d186b3e27bba46fc68a5a4547e727bc6e9bf77b77f3a0e2e7302aa8f",
+        "source_key_range": {
+          "end": 200,
+          "prefix": "n",
+          "start": 161
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-411de1e1d978-01-01-001",
+        "first_source_key": "n201",
+        "last_row_id": "llx-qword-7e2283ef4b60-01-01-003",
+        "last_source_key": "n240",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n201-n240.jsonl",
+        "row_count": 2194,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "4364da19fdb111e19c6820471980ac4cad2c488a05481c5f8cf65ec7994f2bc1",
+        "source_key_range": {
+          "end": 240,
+          "prefix": "n",
+          "start": 201
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-72ad6514d536-01-01-001",
+        "first_source_key": "n241",
+        "last_row_id": "llx-qword-f2adca16c84e-02-01-003",
+        "last_source_key": "n280",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n241-n280.jsonl",
+        "row_count": 510,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "e6f39f54b260d2ee67c1a08503f84543b2a5968dffbfae7d1352c06336886397",
+        "source_key_range": {
+          "end": 280,
+          "prefix": "n",
+          "start": 241
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-51236deccd28-01-01-001",
+        "first_source_key": "n281",
+        "last_row_id": "llx-qword-8765af4c5809-01-01-003",
+        "last_source_key": "n320",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n281-n320.jsonl",
+        "row_count": 224,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "865a1e718b8d268d6268488466eddbe41abf0600a9795de474ac93a6e63643d2",
+        "source_key_range": {
+          "end": 320,
+          "prefix": "n",
+          "start": 281
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-8f01bef9ca1d-01-01-001",
+        "first_source_key": "n321",
+        "last_row_id": "llx-qword-ccf5aba720a3-01-02-005",
+        "last_source_key": "n360",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n321-n360.jsonl",
+        "row_count": 439,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "d50ab3d97fec5e7c6c9fa6ee53a38db45f2b2b49bed60eb20ca2a8f0081d1cfb",
+        "source_key_range": {
+          "end": 360,
+          "prefix": "n",
+          "start": 321
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-5f530117d6bb-01-01-001",
+        "first_source_key": "n361",
+        "last_row_id": "llx-qword-4ae0d7b24275-01-02-002",
+        "last_source_key": "n400",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n361-n400.jsonl",
+        "row_count": 370,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "e5d63c2e6c292633edf3346cbda59f9832d88b8d01371a903c830f2e8d89aaf2",
+        "source_key_range": {
+          "end": 400,
+          "prefix": "n",
+          "start": 361
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-fda92aa2e301-01-01-001",
+        "first_source_key": "n401",
+        "last_row_id": "llx-qword-d00d6dad1204-01-02-005",
+        "last_source_key": "n440",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n401-n440.jsonl",
+        "row_count": 228,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "118be36e52a3e042b150ab53ceb097554d03688770dfc031f6e1a3f89ec1922b",
+        "source_key_range": {
+          "end": 440,
+          "prefix": "n",
+          "start": 401
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-d249ba3477f2-01-01-001",
+        "first_source_key": "n441",
+        "last_row_id": "llx-qword-41394113354e-01-01-003",
+        "last_source_key": "n480",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n441-n480.jsonl",
+        "row_count": 207,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "ee03e810e320c9a5f4ad320941b40f8a6c10e99182595a4d35b8b2fc09cec196",
+        "source_key_range": {
+          "end": 480,
+          "prefix": "n",
+          "start": 441
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-3ed21daa1310-01-01-001",
+        "first_source_key": "n481",
+        "last_row_id": "llx-qword-4be3d0d80d0b-01-01-005",
+        "last_source_key": "n520",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n481-n520.jsonl",
+        "row_count": 173,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "64f41cd8aaf1ce256d83ac22bdfc93f6fde188428ffbab4c62d688dd2f10e160",
+        "source_key_range": {
+          "end": 520,
+          "prefix": "n",
+          "start": 481
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-4fd6f53274c7-01-01-001",
+        "first_source_key": "n521",
+        "last_row_id": "llx-qword-ed216bf78fc7-01-01-003",
+        "last_source_key": "n560",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n521-n560.jsonl",
+        "row_count": 144,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "98513ab322fccdcab6289936539ad43677047d7fb788e6d65089edcf06f13d42",
+        "source_key_range": {
+          "end": 560,
+          "prefix": "n",
+          "start": 521
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-d9567c74b0a5-01-01-001",
+        "first_source_key": "n561",
+        "last_row_id": "llx-qword-e88b2fde460d-01-01-003",
+        "last_source_key": "n600",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n561-n600.jsonl",
+        "row_count": 145,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "4b91c41117573f160b7ee7f4cf8cee48605a2d958053a0b2709a46c8e55dd060",
+        "source_key_range": {
+          "end": 600,
+          "prefix": "n",
+          "start": 561
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-fd2899ac9978-01-01-001",
+        "first_source_key": "n601",
+        "last_row_id": "llx-qword-cd4e3174206c-01-01-003",
+        "last_source_key": "n640",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n601-n640.jsonl",
+        "row_count": 308,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "c012ad6cc944074dc1d8d522acb07d6fe4b9d39eabf8c31439b97f4934e4ceb1",
+        "source_key_range": {
+          "end": 640,
+          "prefix": "n",
+          "start": 601
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-a31cd4305451-01-01-001",
+        "first_source_key": "n641",
+        "last_row_id": "llx-qword-292fb71a98c2-01-01-003",
+        "last_source_key": "n680",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n641-n680.jsonl",
+        "row_count": 225,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "b9896412fdb2b7bb704b8cddf522d9260b39919017102bde9feb335b7fe73b43",
+        "source_key_range": {
+          "end": 680,
+          "prefix": "n",
+          "start": 641
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-013966ac19a7-01-01-001",
+        "first_source_key": "n681",
+        "last_row_id": "llx-qword-9eb86f860545-01-01-005",
+        "last_source_key": "n720",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n681-n720.jsonl",
+        "row_count": 202,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "8e75fba4a4e405e89f9f5d2cbf626202535e4d9f508cdc21ff790e25bd08bfc7",
+        "source_key_range": {
+          "end": 720,
+          "prefix": "n",
+          "start": 681
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-3f611b55bfd8-01-01-001",
+        "first_source_key": "n721",
+        "last_row_id": "llx-qword-285624244a3a-01-01-022",
+        "last_source_key": "n760",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n721-n760.jsonl",
+        "row_count": 750,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "a24df44b4cef4f1babd87b621fb3a42413652a6d9004324fca97eaa30428c232",
+        "source_key_range": {
+          "end": 760,
+          "prefix": "n",
+          "start": 721
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-722c6c18d2fe-01-01-001",
+        "first_source_key": "n761",
+        "last_row_id": "llx-qword-28c8238ab7c7-01-01-030",
+        "last_source_key": "n800",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n761-n800.jsonl",
+        "row_count": 1221,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "0859a3e45934c7fdb05bce8e6e965411f18ccc94a8253a1d97869d50b72f34c8",
+        "source_key_range": {
+          "end": 800,
+          "prefix": "n",
+          "start": 761
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-c850b4926812-01-01-001",
+        "first_source_key": "n801",
+        "last_row_id": "llx-qword-ace902fe7e64-01-01-005",
+        "last_source_key": "n840",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n801-n840.jsonl",
+        "row_count": 476,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "0f4dce4dc6a17086eeb4db4e90786441b0fddf54e1a6cf41912a78480776ed75",
+        "source_key_range": {
+          "end": 840,
+          "prefix": "n",
+          "start": 801
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-24bf5e29906c-01-01-001",
+        "first_source_key": "n841",
+        "last_row_id": "llx-qword-8a2631c5a7d1-01-01-004",
+        "last_source_key": "n880",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n841-n880.jsonl",
+        "row_count": 197,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "69147099f375e3598dc2db4cd8f94733c09a5776ef7a1de9ab17cdd02fa5c349",
+        "source_key_range": {
+          "end": 880,
+          "prefix": "n",
+          "start": 841
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-22b72c026d04-01-01-001",
+        "first_source_key": "n881",
+        "last_row_id": "llx-qword-6751c0e4d0fd-01-01-004",
+        "last_source_key": "n920",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n881-n920.jsonl",
+        "row_count": 486,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "8cc99b70f3f218d9e06c3f96cfe36e973a504ae61e7f96175c6bd2f437c43b4a",
+        "source_key_range": {
+          "end": 920,
+          "prefix": "n",
+          "start": 881
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-b2b53da6259d-01-01-001",
+        "first_source_key": "n921",
+        "last_row_id": "llx-qword-4a4f8ecf8bf0-01-02-009",
+        "last_source_key": "n960",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n921-n960.jsonl",
+        "row_count": 368,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "3a2772609e0a94faf703c90b815afb276dfaa446f0e6fd177f06d383bcc9e791",
+        "source_key_range": {
+          "end": 960,
+          "prefix": "n",
+          "start": 921
+        }
+      },
+      {
+        "entry_count": 39,
+        "first_row_id": "llx-qword-8f708cea3287-01-01-001",
+        "first_source_key": "n961",
+        "last_row_id": "llx-qword-7b47af29daae-01-01-004",
+        "last_source_key": "n1000",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n961-n1000.jsonl",
+        "row_count": 258,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "4d73a76f1ae2ff60963d7612f3e550b83bf4a2d8431aa0b848f6905008e31e6a",
+        "source_key_range": {
+          "end": 1000,
+          "prefix": "n",
+          "start": 961
+        }
+      },
+      {
+        "entry_count": 40,
+        "first_row_id": "llx-qword-b9c7f56480eb-01-01-001",
+        "first_source_key": "n1001",
+        "last_row_id": "llx-qword-091ddcebac61-01-02-005",
+        "last_source_key": "n1040",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n1001-n1040.jsonl",
+        "row_count": 367,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "9371296dc9e2dc3bc4127ad1346b83d99adc20a82e40f75168bd67af24fb6d05",
+        "source_key_range": {
+          "end": 1040,
+          "prefix": "n",
+          "start": 1001
+        }
+      },
+      {
+        "entry_count": 5,
+        "first_row_id": "llx-qword-8cfd48ae3b53-01-01-001",
+        "first_source_key": "n1041",
+        "last_row_id": "llx-qword-d216fd1245a3-01-01-005",
+        "last_source_key": "n1045",
+        "path": "qamus/indexes/largelexicon/qword-denominator/n1041-n1045.jsonl",
+        "row_count": 37,
+        "schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "2c65f46205ab9c5680697e80d691f0cab65f27de2c6084894056ce0c0c4e4e12",
+        "source_key_range": {
+          "end": 1045,
+          "prefix": "n",
+          "start": 1041
+        }
+      }
+    ],
+    "source_branch": "largelexicon",
+    "source_card_repair_path": "qamus/indexes/largelexicon/qamus-qword-denominator.source-card-repair.json",
+    "source_head": "a107eecc40afbe28d0b3576d691320bf37ae0e89",
+    "stale_after": "qamus_entries_or_largelexicon_schema_change",
+    "status": "active",
+    "storage": "sharded_jsonl_manifest",
+    "supersedes": [],
+    "table_id": "qamus-qword-denominator",
+    "table_schema": "qamus/largelexicon-qword-denominator@1"
+  },
   "schema": "fusha/largelexicon/source-clean-fact-tables-meta@1",
   "tables": [
     {
       "commit_allowed": true,
       "minimum_rows": 2092,
-      "path": "fusha\\lexicon\\largelexicon\\lemma-source.full.jsonl",
+      "path": "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
       "raw_external_allowed": false,
       "schema": "fusha/largelexicon/lemma-source@1",
       "source": "qamus_current_authored"
@@ -34,7 +955,7 @@
     {
       "commit_allowed": true,
       "minimum_rows": 7000,
-      "path": "fusha\\lexicon\\largelexicon\\form-source.full.jsonl",
+      "path": "fusha/lexicon/largelexicon/form-source.full.jsonl",
       "raw_external_allowed": false,
       "schema": "fusha/largelexicon/form-source@1",
       "source": "qamus_current_authored"
@@ -42,18 +963,20 @@
     {
       "commit_allowed": true,
       "minimum_rows": 7000,
-      "path": "fusha\\morphology\\data\\largelexicon-stems.full.jsonl",
+      "path": "fusha/morphology/data/largelexicon-stems.full.jsonl",
       "raw_external_allowed": false,
       "schema": "fusha/largelexicon/stem-source@1",
       "source": "qamus_current_authored"
     },
     {
       "commit_allowed": true,
+      "entry_index_path": "qamus/indexes/largelexicon/qamus-qword-denominator.entry-shard-index.json",
       "minimum_rows": 100000,
-      "path": "qamus\\indexes\\largelexicon\\qamus-qword-denominator.full.jsonl",
+      "path": "qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json",
       "raw_external_allowed": false,
-      "schema": "qamus/largelexicon-qword-denominator@1",
-      "source": "qamus_current_authored"
+      "schema": "qamus/largelexicon-qword-denominator-manifest@1",
+      "source": "qamus_current_authored",
+      "storage": "sharded_jsonl_manifest"
     }
   ]
 }

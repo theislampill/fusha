@@ -1,6 +1,6 @@
 {
   "claim_boundary": "Only source-clean Qamus-authored generated fact tables are committed. Raw QAC/MCP/Quran.com/Tafsir payloads remain private evidence/cache data.",
-  "generated_at": "2026-07-01T10:18:02Z",
+  "generated_at": "2026-07-01T10:58:43Z",
   "generated_by": "tools.largelexicon_common",
   "private_only_sources": [
     "qac_raw_tsv",
@@ -17,7 +17,7 @@
   "runtime_dependency_policy": "dependency_free; no external package or live API required at parse time",
   "schema": "fusha/largelexicon/source-clean-table-allowlist@1",
   "source_branch": "largelexicon",
-  "source_head": "e35b23bf3b90b01aa8ef44ce3d43f5f7c9c5db08",
+  "source_head": "a107eecc40afbe28d0b3576d691320bf37ae0e89",
   "stale_after": "qamus_entries_or_largelexicon_schema_change",
   "status": "active",
   "supersedes": [],
@@ -25,7 +25,7 @@
     {
       "commit_allowed": true,
       "minimum_rows": 2092,
-      "path": "fusha\\lexicon\\largelexicon\\lemma-source.full.jsonl",
+      "path": "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
       "raw_external_allowed": false,
       "schema": "fusha/largelexicon/lemma-source@1",
       "source": "qamus_current_authored"
@@ -33,7 +33,7 @@
     {
       "commit_allowed": true,
       "minimum_rows": 7000,
-      "path": "fusha\\lexicon\\largelexicon\\form-source.full.jsonl",
+      "path": "fusha/lexicon/largelexicon/form-source.full.jsonl",
       "raw_external_allowed": false,
       "schema": "fusha/largelexicon/form-source@1",
       "source": "qamus_current_authored"
@@ -41,18 +41,20 @@
     {
       "commit_allowed": true,
       "minimum_rows": 7000,
-      "path": "fusha\\morphology\\data\\largelexicon-stems.full.jsonl",
+      "path": "fusha/morphology/data/largelexicon-stems.full.jsonl",
       "raw_external_allowed": false,
       "schema": "fusha/largelexicon/stem-source@1",
       "source": "qamus_current_authored"
     },
     {
       "commit_allowed": true,
+      "entry_index_path": "qamus/indexes/largelexicon/qamus-qword-denominator.entry-shard-index.json",
       "minimum_rows": 100000,
-      "path": "qamus\\indexes\\largelexicon\\qamus-qword-denominator.full.jsonl",
+      "path": "qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json",
       "raw_external_allowed": false,
-      "schema": "qamus/largelexicon-qword-denominator@1",
-      "source": "qamus_current_authored"
+      "schema": "qamus/largelexicon-qword-denominator-manifest@1",
+      "source": "qamus_current_authored",
+      "storage": "sharded_jsonl_manifest"
     }
   ]
 }

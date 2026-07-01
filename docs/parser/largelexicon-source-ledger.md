@@ -27,7 +27,10 @@ listed in `fusha/lexicon/largelexicon/source-clean-table-allowlist.json` and
 - `fusha/lexicon/largelexicon/form-source.full.jsonl`
 - `fusha/morphology/examples/largelexicon-stems.sample.jsonl`
 - `fusha/morphology/data/largelexicon-stems.full.jsonl`
-- `qamus/indexes/largelexicon/qamus-qword-denominator.full.jsonl`
+- `qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json`
+- `qamus/indexes/largelexicon/qamus-qword-denominator.entry-shard-index.json`
+- `qamus/indexes/largelexicon/qamus-qword-denominator.source-card-repair.json`
+- `qamus/indexes/largelexicon/qword-denominator/*.jsonl`
 - `qamus/indexes/largelexicon/source-clean-fact-tables.meta.json`
 - `qamus/reports/largelexicon-source-inventory.json`
 - `qamus/examples/mode_a_all_qword/largelexicon-qamus-mode-a-worklist.sample.jsonl`
@@ -38,6 +41,24 @@ Every row is source-clean and candidate-scoped. Empty-root entries must carry an
 explicit no-root reason. Function tokens route through nahw. Form/root/POS rows
 route through sarf. All visible qword rollout rows are support artifacts for the
 Qamus executor; they are not live deployment claims.
+
+## Sharded Qword Denominator
+
+The all-visible-qword denominator is one logical table, stored as addressable
+JSONL shards behind `qamus-qword-denominator.manifest.json`. Consumers should
+use `tools/largelexicon_table_reader.py` or the manifest, not hard-code shard
+filenames. The manifest preserves forward edges from entry/card/qword to source
+handles and reverse edges from `row_id`/entry back to the shard. Each shard has
+a SHA-256 and row count; the entry-shard index lets an executor jump directly to
+one entry without scanning 117,117 rows.
+
+The manifest distinguishes the 2,092-entry Qamus target from entries that have
+tokenizable example rows in `qamus/data/current/entries.jsonl`. If an entry is
+present in Qamus but has no usage examples to tokenize, it appears in
+`qamus-qword-denominator.source-card-repair.json`. Current known repair:
+`n993` / `مَلْجَأ` has a source-card hint for `pg443.jpeg` and `42:47`, because
+the source card shows Qur'anic usage while the current entry export has
+`examples: []`.
 
 ## Private Source Reuse Boundary
 

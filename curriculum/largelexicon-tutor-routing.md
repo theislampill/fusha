@@ -26,8 +26,13 @@ without network access:
 - `form-source.full.jsonl` gives listed forms and normalized keys.
 - `largelexicon-stems.full.jsonl` gives segmentable morphology candidates and
   `generation_key` handles.
-- `qamus-qword-denominator.full.jsonl` gives all visible Qamus example qwords
-  as teaching targets, but source-address crosswalks may still be pending.
+- `qamus-qword-denominator.manifest.json` plus its shard directory gives all
+  visible Qamus example qwords as teaching targets, but source-address
+  crosswalks may still be pending.
+- `qamus-qword-denominator.source-card-repair.json` identifies entries that are
+  in the 2,092-entry Qamus target but whose current export lacks tokenizable
+  example rows. Treat these as source-card repair gaps, not learner grammar
+  failures.
 
 The tutor should phrase this as "Qamus has a candidate analysis" unless the
 Mode A source-address and nahw/sarf gates have passed. For Mode C arbitrary

@@ -13,7 +13,7 @@ import json
 import re
 import subprocess
 import sys
-from collections import Counter
+from collections import Counter, defaultdict
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Iterable
@@ -39,6 +39,10 @@ FORM_FULL = LEXICON_DIR / "form-source.full.jsonl"
 STEM_SAMPLE = MORPH_EXAMPLE_DIR / "largelexicon-stems.sample.jsonl"
 STEM_FULL = MORPH_DATA_DIR / "largelexicon-stems.full.jsonl"
 QWORD_DENOMINATOR_FULL = QAMUS_LARGELX_DIR / "qamus-qword-denominator.full.jsonl"
+QWORD_DENOMINATOR_MANIFEST = QAMUS_LARGELX_DIR / "qamus-qword-denominator.manifest.json"
+QWORD_DENOMINATOR_ENTRY_INDEX = QAMUS_LARGELX_DIR / "qamus-qword-denominator.entry-shard-index.json"
+QWORD_DENOMINATOR_SOURCE_REPAIR = QAMUS_LARGELX_DIR / "qamus-qword-denominator.source-card-repair.json"
+QWORD_DENOMINATOR_SHARD_DIR = QAMUS_LARGELX_DIR / "qword-denominator"
 FULL_TABLE_META = QAMUS_LARGELX_DIR / "source-clean-fact-tables.meta.json"
 
 PUBLIC_BOUNDARY = {"src": "qamus", "kind": "authored", "lang": "en"}
@@ -56,6 +60,14 @@ FORBIDDEN_PUBLIC_SUBSTRINGS = {
     "source photo",
     "source-photo",
     "ocr",
+}
+
+KNOWN_QWORD_SOURCE_CARD_REPAIR_HINTS = {
+    "n993": {
+        "source_photo_page_image": "pg443.jpeg",
+        "candidate_quran_ref": "42:47",
+        "note": "Owner-supplied source card shows Qur'anic usage absent from qamus/data/current/entries.jsonl.",
+    }
 }
 
 
@@ -107,8 +119,20 @@ def write_json(path: Path, obj: dict[str, Any]) -> None:
         handle.write("\n")
 
 
+def repo_rel(path: Path) -> str:
+    return path.relative_to(ROOT).as_posix()
+
+
 def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def unique_keep_order(values: Iterable[str]) -> list[str]:
@@ -323,6 +347,218 @@ def qword_denominator_rows(entries: Iterable[dict[str, Any]]) -> list[dict[str, 
     return rows
 
 
+def _source_key_parts(source_key: str) -> tuple[str, int]:
+    match = re.match(r"^([pvn])(\d+)$", source_key or "")
+    if not match:
+        return ("z", 0)
+    return (match.group(1), int(match.group(2)))
+
+
+def _source_key_sort_key(source_key: str) -> tuple[int, int, str]:
+    prefix, number = _source_key_parts(source_key)
+    prefix_order = {"p": 0, "v": 1, "n": 2}.get(prefix, 9)
+    return (prefix_order, number, source_key or "")
+
+
+def _format_source_key(prefix: str, number: int) -> str:
+    width = 3 if number < 1000 else 4
+    return f"{prefix}{number:0{width}d}"
+
+
+def _primary_source_key(row: dict[str, Any]) -> str:
+    keys = row.get("source_keys") or []
+    if not keys:
+        return "z000"
+    return sorted(keys, key=_source_key_sort_key)[0]
+
+
+def qword_shard_label(row: dict[str, Any], shard_size: int = 40) -> tuple[str, dict[str, Any]]:
+    source_key = _primary_source_key(row)
+    prefix, number = _source_key_parts(source_key)
+    if prefix == "z" or number <= 0:
+        return "misc", {"prefix": "misc", "start": None, "end": None}
+    start = ((number - 1) // shard_size) * shard_size + 1
+    end = start + shard_size - 1
+    if prefix == "p":
+        end = min(end, 100)
+    elif prefix == "v":
+        end = min(end, 947)
+    elif prefix == "n":
+        end = min(end, 1045)
+    label = f"{_format_source_key(prefix, start)}-{_format_source_key(prefix, end)}"
+    return label, {"prefix": prefix, "start": start, "end": end}
+
+
+def _qword_row_sort_key(row: dict[str, Any]) -> tuple[Any, ...]:
+    return (
+        _source_key_sort_key(_primary_source_key(row)),
+        row.get("entry_id") or "",
+        row.get("usage_index") or 0,
+        row.get("example_index") or 0,
+        row.get("qword_index") or 0,
+        row.get("row_id") or "",
+    )
+
+
+def write_qword_denominator_shards(
+    rows: Iterable[dict[str, Any]], *, shard_size: int = 40, all_entries: Iterable[dict[str, Any]] | None = None
+) -> dict[str, Any]:
+    """Write qword denominator shards plus manifest and entry reverse index.
+
+    This preserves Project-Xanadu-style bidirectionality: the logical table is
+    still one addressable denominator, but each entry can jump directly to its
+    shard and every shard is hash/count guarded.
+    """
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    ranges: dict[str, dict[str, Any]] = {}
+    for row in sorted(rows, key=_qword_row_sort_key):
+        label, range_info = qword_shard_label(row, shard_size=shard_size)
+        grouped[label].append(row)
+        ranges[label] = range_info
+    all_entry_lookup = {entry["id"]: entry for entry in (all_entries or [])}
+    all_entry_id_set = set(all_entry_lookup)
+
+    if QWORD_DENOMINATOR_FULL.exists():
+        QWORD_DENOMINATOR_FULL.unlink()
+    QWORD_DENOMINATOR_SHARD_DIR.mkdir(parents=True, exist_ok=True)
+    for stale in QWORD_DENOMINATOR_SHARD_DIR.glob("*.jsonl"):
+        stale.unlink()
+
+    shards: list[dict[str, Any]] = []
+    entry_index: dict[str, dict[str, Any]] = {}
+    total_rows = 0
+    for label in sorted(grouped, key=lambda value: _source_key_sort_key(value.split("-")[0] if "-" in value else value)):
+        shard_rows = grouped[label]
+        shard_path = QWORD_DENOMINATOR_SHARD_DIR / f"{label}.jsonl"
+        write_jsonl(shard_path, shard_rows)
+        total_rows += len(shard_rows)
+        entry_ids = sorted({row["entry_id"] for row in shard_rows})
+        source_keys = sorted({_primary_source_key(row) for row in shard_rows}, key=_source_key_sort_key)
+        for entry_id in entry_ids:
+            rows_for_entry = [row for row in shard_rows if row["entry_id"] == entry_id]
+            entry_index[entry_id] = {
+                "path": repo_rel(shard_path),
+                "row_count": len(rows_for_entry),
+                "source_keys": rows_for_entry[0].get("source_keys") or [],
+                "first_row_id": rows_for_entry[0].get("row_id"),
+                "last_row_id": rows_for_entry[-1].get("row_id"),
+            }
+        shards.append(
+            {
+                "path": repo_rel(shard_path),
+                "schema": "qamus/largelexicon-qword-denominator@1",
+                "row_count": len(shard_rows),
+                "sha256": sha256_file(shard_path),
+                "first_row_id": shard_rows[0].get("row_id"),
+                "last_row_id": shard_rows[-1].get("row_id"),
+                "source_key_range": ranges[label],
+                "first_source_key": source_keys[0] if source_keys else None,
+                "last_source_key": source_keys[-1] if source_keys else None,
+                "entry_count": len(entry_ids),
+            }
+        )
+
+    common_freshness = freshness(status="active", stale_after="qamus_entries_or_largelexicon_schema_change")
+    entries_with_rows = set(entry_index)
+    entries_without_rows = sorted(all_entry_id_set - entries_with_rows)
+    source_card_repairs = []
+    for entry_id in entries_without_rows:
+        entry = all_entry_lookup.get(entry_id) or {}
+        source_card_repairs.append(
+            {
+                "schema": "qamus/largelexicon-qword-source-card-repair@1",
+                "entry_id": entry_id,
+                "source_keys": entry.get("source_keys") or [],
+                "headword": entry.get("headword"),
+                "section": entry.get("section"),
+                "forms": forms_for_entry(entry) if entry else [],
+                "total_uses": entry.get("total_uses"),
+                "repair_hint": next(
+                    (
+                        KNOWN_QWORD_SOURCE_CARD_REPAIR_HINTS[source_key]
+                        for source_key in (entry.get("source_keys") or [])
+                        if source_key in KNOWN_QWORD_SOURCE_CARD_REPAIR_HINTS
+                    ),
+                    None,
+                ),
+                "reason": "qamus_current_entry_has_no_usage_example_rows_for_qword_denominator",
+                "source_status": SOURCE_STATUS,
+                "public_boundary": dict(PUBLIC_BOUNDARY),
+                "live_mutation_allowed": False,
+                "next_action": "repair source-card/example edge from source photo or canonical source, then regenerate qword denominator shards",
+            }
+        )
+    source_card_repair_obj = {
+        "schema": "qamus/largelexicon-qword-source-card-repair-list@1",
+        **common_freshness,
+        "table_id": "qamus-qword-denominator",
+        "row_count": len(source_card_repairs),
+        "public_boundary": dict(PUBLIC_BOUNDARY),
+        "repairs": source_card_repairs,
+    }
+    write_json(QWORD_DENOMINATOR_SOURCE_REPAIR, source_card_repair_obj)
+    manifest = {
+        "schema": "qamus/largelexicon-qword-denominator-manifest@1",
+        **common_freshness,
+        "table_id": "qamus-qword-denominator",
+        "table_schema": "qamus/largelexicon-qword-denominator@1",
+        "storage": "sharded_jsonl_manifest",
+        "primary_key": "row_id",
+        "row_count": total_rows,
+        "shard_count": len(shards),
+        "qamus_entry_count": len(all_entry_id_set) if all_entry_id_set else len(entries_with_rows),
+        "entries_with_qword_rows": len(entries_with_rows),
+        "entries_without_qword_rows": entries_without_rows,
+        "shard_strategy": f"qamus_source_key_prefix_ordinal_ranges_{shard_size}",
+        "entry_index_path": repo_rel(QWORD_DENOMINATOR_ENTRY_INDEX),
+        "source_card_repair_path": repo_rel(QWORD_DENOMINATOR_SOURCE_REPAIR),
+        "legacy_monolith_replaced": repo_rel(QWORD_DENOMINATOR_FULL),
+        "public_boundary": dict(PUBLIC_BOUNDARY),
+        "claim_boundary": "Source-clean Qamus qword denominator only; not live Qamus progress.",
+        "bidirectional_contract": {
+            "forward_keys": [
+                "entry_id",
+                "source_keys",
+                "card_id",
+                "usage_index",
+                "example_index",
+                "qword_index",
+                "visible_surface",
+                "quran_ref",
+            ],
+            "reverse_keys": [
+                "row_id",
+                "entry_id",
+                "card_id",
+                "card_text_sha256",
+            ],
+            "crosswalk_keys": [
+                "canonical_quran_loc",
+                "canonical_wbw_loc",
+                "route",
+                "status",
+            ],
+        },
+        "shards": shards,
+    }
+    entry_index_obj = {
+        "schema": "qamus/largelexicon-qword-entry-shard-index@1",
+        **common_freshness,
+        "table_id": "qamus-qword-denominator",
+        "manifest_path": repo_rel(QWORD_DENOMINATOR_MANIFEST),
+        "entry_count": len(entry_index),
+        "qamus_entry_count": len(all_entry_id_set) if all_entry_id_set else len(entries_with_rows),
+        "entries_with_qword_rows": len(entries_with_rows),
+        "entries_without_qword_rows": entries_without_rows,
+        "row_count": total_rows,
+        "public_boundary": dict(PUBLIC_BOUNDARY),
+        "entries": dict(sorted(entry_index.items())),
+    }
+    write_json(QWORD_DENOMINATOR_MANIFEST, manifest)
+    write_json(QWORD_DENOMINATOR_ENTRY_INDEX, entry_index_obj)
+    return manifest
+
+
 def full_table_allowlist() -> dict[str, Any]:
     return {
         "schema": f"{SCHEMA_PREFIX}/source-clean-table-allowlist@1",
@@ -335,7 +571,7 @@ def full_table_allowlist() -> dict[str, Any]:
         "public_boundary": dict(PUBLIC_BOUNDARY),
         "tables": [
             {
-                "path": str(LEMMA_FULL.relative_to(ROOT)),
+                "path": repo_rel(LEMMA_FULL),
                 "schema": f"{SCHEMA_PREFIX}/lemma-source@1",
                 "commit_allowed": True,
                 "raw_external_allowed": False,
@@ -343,7 +579,7 @@ def full_table_allowlist() -> dict[str, Any]:
                 "source": "qamus_current_authored",
             },
             {
-                "path": str(FORM_FULL.relative_to(ROOT)),
+                "path": repo_rel(FORM_FULL),
                 "schema": f"{SCHEMA_PREFIX}/form-source@1",
                 "commit_allowed": True,
                 "raw_external_allowed": False,
@@ -351,7 +587,7 @@ def full_table_allowlist() -> dict[str, Any]:
                 "source": "qamus_current_authored",
             },
             {
-                "path": str(STEM_FULL.relative_to(ROOT)),
+                "path": repo_rel(STEM_FULL),
                 "schema": f"{SCHEMA_PREFIX}/stem-source@1",
                 "commit_allowed": True,
                 "raw_external_allowed": False,
@@ -359,12 +595,14 @@ def full_table_allowlist() -> dict[str, Any]:
                 "source": "qamus_current_authored",
             },
             {
-                "path": str(QWORD_DENOMINATOR_FULL.relative_to(ROOT)),
-                "schema": "qamus/largelexicon-qword-denominator@1",
+                "path": repo_rel(QWORD_DENOMINATOR_MANIFEST),
+                "schema": "qamus/largelexicon-qword-denominator-manifest@1",
                 "commit_allowed": True,
                 "raw_external_allowed": False,
                 "minimum_rows": 100000,
                 "source": "qamus_current_authored",
+                "storage": "sharded_jsonl_manifest",
+                "entry_index_path": repo_rel(QWORD_DENOMINATOR_ENTRY_INDEX),
             },
         ],
         "private_only_sources": [

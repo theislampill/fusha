@@ -19,6 +19,8 @@
   "executor_boundary": "Qamus live deployment, readback, health, rollback, and tranche closure remain executor-owned.",
   "validators": [
     "tools/validate_largelexicon_source_ledger.py --self-test",
+    "tools/validate_largelexicon_table_manifest.py --self-test",
+    "tools/validate_largelexicon_table_reader.py --self-test",
     "tools/validate_largelexicon_claim_boundary.py --self-test",
     "tools/validate_largelexicon_claim_cards.py --self-test",
     "tools/validate_largelexicon_morph_db.py --self-test",
@@ -41,7 +43,10 @@
     "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
     "fusha/lexicon/largelexicon/form-source.full.jsonl",
     "fusha/morphology/data/largelexicon-stems.full.jsonl",
-    "qamus/indexes/largelexicon/qamus-qword-denominator.full.jsonl",
+    "qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json",
+    "qamus/indexes/largelexicon/qamus-qword-denominator.entry-shard-index.json",
+    "qamus/indexes/largelexicon/qamus-qword-denominator.source-card-repair.json",
+    "qamus/indexes/largelexicon/qword-denominator/*.jsonl",
     "qamus/indexes/largelexicon/source-clean-fact-tables.meta.json",
     "qamus/reports/largelexicon-claim-cards.json"
   ],
