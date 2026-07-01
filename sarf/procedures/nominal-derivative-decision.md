@@ -58,6 +58,29 @@ When a token is nominal but the only evidence is a verb/root family, route to
 `token_only_review` or `component_only_blocker`. Do not let component
 candidates become whole-token certification.
 
+## Dogfood finding: VN-00 derivative prefix is not enough by itself
+
+VN-00 found `ٱلْمُؤْمِنُ` at 59:23:11 with a visible `مُـ` derivative prefix,
+but the post-prefix host still rendered as a generic `NOUN`. That is not
+instructionally complete for a derived nominal token.
+
+For definite active-participle rows such as `ٱلْمُؤْمِنُ`:
+
+- keep the article visible as article metadata;
+- keep `مُـ` visible as the derivative-prefix signal, not as a root letter;
+- label the remaining host as the active-participle stem/host, not a generic
+  noun when richer role metadata is available;
+- keep the supported renderer class (`qg-noun-stem` or `qg-adjective`) while
+  recording the active-participle fact in the role, label, morphline, and
+  learner explanation;
+- expose the certified root/base such as `أ م ن` where the evidence supports
+  it.
+
+If the renderer/schema cannot display the derivative prefix plus stem/host
+without minting a new unsupported class, route to `renderer_and_nominal_review`
+or a renderer fixture packet. Do not call the row rich-certified merely because
+the prefix is colored.
+
 ## Dogfood finding: VN-04 ذ ك ر shape collisions
 
 The VN-04 tranche exposed a compact POS/voice collision in the `ذ ك ر` family:
