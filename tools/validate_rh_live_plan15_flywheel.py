@@ -28,6 +28,7 @@ ALLOWED_ROUTES = {
     "particle_function_rule_needed": {"parser", "nahw", "qamus_mode_a_validator"},
     "pattern_rule_needed": {"parser", "sarf", "qamus_mode_a_validator"},
     "proper_name_no_root_needed": {"parser", "sarf", "qamus_mode_a_validator"},
+    "stem_entry_needed": {"parser", "sarf", "qamus_mode_a_validator"},
 }
 
 ALLOWED_QG_CLASSES = {

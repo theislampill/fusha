@@ -8,23 +8,23 @@
   },
   "fusha_commit": "e35b23bf3b90b01aa8ef44ce3d43f5f7c9c5db08",
   "generator": "tools/import_rh_live_plan15_flywheel.py",
-  "input_summary_sha256": "1893e32e3de238bdc16ff306e8c5c56e42bdb55e26acf45dbc08c8040f7885c3",
-  "output_jsonl": "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl",
+  "input_summary_sha256": "dcc91f90476f93ca785160008669ffc31f8837b2f4566f034a2de8c61d579bd9",
+  "output_jsonl": "qamus/examples/rh_live_plan15_vn01_vn02_subword_graph.sample.jsonl",
   "route_counts": {
-    "governor_irab_fixture_needed": 754,
-    "lexicon_entry_needed": 3403,
-    "parser_interface_ok": 910,
-    "particle_function_rule_needed": 2,
-    "pattern_rule_needed": 3,
-    "proper_name_no_root_needed": 3
+    "governor_irab_fixture_needed": 9,
+    "lexicon_entry_needed": 161,
+    "parser_interface_ok": 2,
+    "particle_function_rule_needed": 12,
+    "pattern_rule_needed": 24,
+    "stem_entry_needed": 161
   },
   "sample_counts": {
     "governor_irab_fixture_needed": 3,
     "lexicon_entry_needed": 3,
-    "parser_interface_ok": 3,
-    "particle_function_rule_needed": 2,
+    "parser_interface_ok": 2,
+    "particle_function_rule_needed": 3,
     "pattern_rule_needed": 3,
-    "proper_name_no_root_needed": 3
+    "stem_entry_needed": 3
   },
   "sample_mode": "sample",
   "sample_rows": 17,

@@ -8,7 +8,7 @@
     "raw_executor_packets_vendored": false
   },
   "controlling_plan": "15-fusha-parser-coverage-boundary-and-lexicon-flywheel.md",
-  "fusha_commit": "db0617f296457399e16ee013bf56862a2fe0d22b",
+  "fusha_commit": "e35b23bf3b90b01aa8ef44ce3d43f5f7c9c5db08",
   "lemma_null_rows": 4089,
   "manifest_sha256": "f30721e16a756a692af6c28f55844105f9dde8284320d7a25af456215eaf2cb2",
   "parser_known_rows": 911,

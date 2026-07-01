@@ -3092,8 +3092,12 @@ try:
                  "tools/import_rh_live_plan15_flywheel.py",
                  "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl",
                  "qamus/examples/rh_live_plan15_parser_flywheel.sample.meta.json",
+                 "qamus/examples/rh_live_plan15_vn01_vn02_subword_graph.sample.jsonl",
+                 "qamus/examples/rh_live_plan15_vn01_vn02_subword_graph.sample.meta.json",
                  "qamus/reports/closure-2092/rh-live-plan15-parser-flywheel-20260701.md",
-                 "qamus/reports/closure-2092/rh-live-plan15-parser-flywheel-20260701.json"):
+                 "qamus/reports/closure-2092/rh-live-plan15-parser-flywheel-20260701.json",
+                 "qamus/reports/closure-2092/rh-live-plan15-vn01-vn02-subword-graph-20260701.md",
+                 "qamus/reports/closure-2092/rh-live-plan15-vn01-vn02-subword-graph-20260701.json"):
         check("RH-LIVE Plan 15 parser flywheel artifact exists: %s" % _art,
               os.path.exists(os.path.join(ROOT, _art)))
     _p15a = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_rh_live_plan15_flywheel.py"),
@@ -3103,6 +3107,11 @@ try:
                       os.path.join(ROOT, "qamus", "examples", "rh_live_plan15_parser_flywheel.sample.jsonl")])
     check("RH-LIVE Plan 15 flywheel sample validates (parser-known/partial routed, no live claim)",
           _p15b.returncode == 0)
+    _p15b2 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_rh_live_plan15_flywheel.py"),
+                       os.path.join(ROOT, "qamus", "examples",
+                                    "rh_live_plan15_vn01_vn02_subword_graph.sample.jsonl")])
+    check("RH-LIVE Plan 15 VN-01/VN-02 subword graph sample validates (stem route included)",
+          _p15b2.returncode == 0)
     _p15_report = json.load(io.open(
         os.path.join(ROOT, "qamus", "reports", "closure-2092",
                      "rh-live-plan15-parser-flywheel-20260701.json"),
@@ -3112,6 +3121,15 @@ try:
         os.path.join(ROOT, "qamus", "examples", "rh_live_plan15_parser_flywheel.sample.meta.json"),
         encoding="utf-8",
     ))
+    _p15_meta2 = json.load(io.open(
+        os.path.join(ROOT, "qamus", "examples", "rh_live_plan15_vn01_vn02_subword_graph.sample.meta.json"),
+        encoding="utf-8",
+    ))
+    _p15_report2 = json.load(io.open(
+        os.path.join(ROOT, "qamus", "reports", "closure-2092",
+                     "rh-live-plan15-vn01-vn02-subword-graph-20260701.json"),
+        encoding="utf-8",
+    ))
     _p15_head = run_text(["git", "-C", ROOT, "rev-parse", "HEAD"])
     if _p15_head.returncode == 0:
         _p15_head_commit = _p15_head.stdout.strip()
@@ -3119,6 +3137,10 @@ try:
               _p15_report.get("fusha_commit") == _p15_head_commit)
         check("RH-LIVE Plan 15 sample meta uses current Fusha HEAD",
               _p15_meta.get("fusha_commit") == _p15_head_commit)
+        check("RH-LIVE Plan 15 VN-01/VN-02 supplement uses current Fusha HEAD",
+              _p15_report2.get("fusha_commit") == _p15_head_commit)
+        check("RH-LIVE Plan 15 VN-01/VN-02 sample meta uses current Fusha HEAD",
+              _p15_meta2.get("fusha_commit") == _p15_head_commit)
     else:
         check("RH-LIVE Plan 15 report records a 40-hex Fusha commit",
               isinstance(_p15_report.get("fusha_commit"), str)

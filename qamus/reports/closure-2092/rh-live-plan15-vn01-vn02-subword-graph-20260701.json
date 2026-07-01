@@ -1,0 +1,75 @@
+{
+  "candidate_rows_rejected_because_parser_evidence_incomplete": 0,
+  "candidate_rows_safely_accelerated_by_parser": 2,
+  "claim_boundary": {
+    "arbitrary_text_parser_completeness_claimed": false,
+    "live_qamus_progress_claimed": false,
+    "parser_used_as_oracle": false,
+    "raw_executor_packets_vendored": false
+  },
+  "controlling_plan": "15-fusha-parser-coverage-boundary-and-lexicon-flywheel.md",
+  "fixture_level_governor_rows": 9,
+  "fusha_commit": "e35b23bf3b90b01aa8ef44ce3d43f5f7c9c5db08",
+  "input_summary_sha256": "dcc91f90476f93ca785160008669ffc31f8837b2f4566f034a2de8c61d579bd9",
+  "lemma_null_rows": 171,
+  "parser_known_rows": 2,
+  "parser_partial_rows": 52,
+  "parser_unknown_rows": 123,
+  "root_null_rows": 172,
+  "route_counts": {
+    "governor_irab_fixture_needed": 9,
+    "lexicon_entry_needed": 161,
+    "parser_interface_ok": 2,
+    "particle_function_rule_needed": 12,
+    "pattern_rule_needed": 24,
+    "stem_entry_needed": 161
+  },
+  "route_packet_sha256": {
+    "governor_irab_fixture_needed": "4ef17bb55b4ef94930346dd107884a010395d3524a4c9877087cd27081cf3830",
+    "lexicon_entry_needed": "107d4a6d6be3718d2cefd6e025698cec74f297ac5dc9b0e637c19651e65838de",
+    "parser_interface_ok": "8f233344612b82df5c349a7802f2c72edded52f23c3f1aa4d8b25942cde33381",
+    "particle_function_rule_needed": "b9dd1f99412b7c79ede2c976005333aae31dbe2a28f1fa42efc581256fbec7b9",
+    "pattern_rule_needed": "9299c378d7435b240cb9d62845c2772d27d3048812fcbeed237250b7c0ebf438",
+    "stem_entry_needed": "a03deb2fa0d084ee0c94eb9d9cdd983f86b8816517f997d810df9a62e4a118e0"
+  },
+  "rows_audited": 177,
+  "rows_converted_to_lexicon_entry_needed": 161,
+  "rows_converted_to_owner_scholar_source_packets": 0,
+  "rows_converted_to_pattern_rule_needed": 24,
+  "rows_converted_to_stem_entry_needed": 161,
+  "sample_import": {
+    "generator": "tools/import_rh_live_plan15_flywheel.py",
+    "sample_jsonl": "qamus/examples/rh_live_plan15_vn01_vn02_subword_graph.sample.jsonl",
+    "sample_jsonl_sha256": "fe0176a388941a31b9f781c3b4f30f701102b3546a5dc8679ca5268b46196bb6",
+    "sample_meta_json": "qamus/examples/rh_live_plan15_vn01_vn02_subword_graph.sample.meta.json",
+    "sample_meta_json_sha256": "25f26bc371d86cf09af9b49236bb22b54e0a1ed922e233f5aee34b9d8971d085",
+    "sample_rows": 17
+  },
+  "sample_validation": {
+    "regression_spine": "tools/check_regressions.py",
+    "validator": "tools/validate_rh_live_plan15_flywheel.py"
+  },
+  "schema": "qamus/rh-live-plan15-subword-graph-supplement@1",
+  "scope_counts": [
+    {
+      "fixture_level_governor_rows": 4,
+      "lemma_null_rows": 98,
+      "parser_known_rows": 2,
+      "parser_partial_rows": 35,
+      "parser_unknown_rows": 67,
+      "root_null_rows": 99,
+      "rows": 104,
+      "scope": "VN-01 subword-upgrade graph-accepted"
+    },
+    {
+      "fixture_level_governor_rows": 5,
+      "lemma_null_rows": 73,
+      "parser_known_rows": 0,
+      "parser_partial_rows": 17,
+      "parser_unknown_rows": 56,
+      "root_null_rows": 73,
+      "rows": 73,
+      "scope": "VN-02 subword-upgrade graph-accepted"
+    }
+  ]
+}
