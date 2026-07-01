@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 from fusha_morph_analyze import analyze_surface  # noqa: E402
 from fusha_standalone_parse import parse_text  # noqa: E402
 from project_largelexicon_qamus_hover_candidates import project as project_hover_file  # noqa: E402
+from validate_rh_live_source_addressed_candidates import gate_file as gate_rh_live_candidates_file  # noqa: E402
 from validate_largelexicon_qamus_mode_a import validate as validate_mode_a_file  # noqa: E402
 
 
@@ -119,6 +120,17 @@ def validate_mode_a(args: argparse.Namespace) -> int:
     return 1 if errors else 0
 
 
+def gate_rh_live_candidates(args: argparse.Namespace) -> int:
+    report = gate_rh_live_candidates_file(
+        Path(args.input),
+        Path(args.accepted_out) if args.accepted_out else None,
+        Path(args.held_out) if args.held_out else None,
+        Path(args.report_out) if args.report_out else None,
+    )
+    _dump({**report, "schema": "fusha/largelexicon-cli/gate-rh-live-candidates@1"})
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Largelexicon local CLI contract.")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -143,6 +155,13 @@ def build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("validate-mode-a")
     p.add_argument("--input", required=True)
     p.set_defaults(func=validate_mode_a)
+
+    p = sub.add_parser("gate-rh-live-candidates")
+    p.add_argument("--input", required=True)
+    p.add_argument("--accepted-out")
+    p.add_argument("--held-out")
+    p.add_argument("--report-out")
+    p.set_defaults(func=gate_rh_live_candidates)
     return parser
 
 

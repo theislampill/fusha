@@ -79,6 +79,57 @@ def validate() -> list[str]:
             errors.append("project-hover did not return the expected schema")
         if not out.exists() or out.stat().st_size == 0:
             errors.append("project-hover did not write a candidate JSONL file")
+
+        source_row = {
+            "adjacent_context_locs": [],
+            "adjacent_context_required": False,
+            "card_ref": "2:1",
+            "contextual_phrase_gloss": "with mercy",
+            "entry_id": "entry-demo",
+            "learner_explanation": "The ba' gives the relation \"with,\" and the host contributes \"mercy.\"",
+            "loc": "2:1:1",
+            "morphline": "ba' preposition + noun host",
+            "parse_key": {"key": "P+N", "summary": "preposition plus governed noun"},
+            "public_preview": {"kind": "authored", "lang": "en", "src": "qamus"},
+            "quran_loc": "quran:2:1:1",
+            "qword_index": 1,
+            "root": "ر ح م",
+            "schema": "rh_live_01_beta.v1",
+            "segments": [
+                {"class": "qg-preposition", "label": "P", "role": "prefix_preposition", "segment_index": 0, "surface": "بِ"},
+                {"class": "qg-noun-stem", "label": "N", "role": "noun_stem", "segment_index": 1, "surface": "رَحْمَةٍ"},
+            ],
+            "source_key": "v-test",
+            "surface": "بِرَحْمَةٍ",
+            "terminal_state": "deploy_ready",
+            "token_contribution_gloss": "with mercy",
+            "wbw_loc": "wbw:2:1:1",
+        }
+        source_path = Path(tmp) / "source-addressed.jsonl"
+        source_path.write_text(json.dumps(source_row, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
+        accepted = Path(tmp) / "accepted.jsonl"
+        held = Path(tmp) / "held.jsonl"
+        report = Path(tmp) / "gate-report.json"
+        code, data = _run(
+            [
+                "gate-rh-live-candidates",
+                "--input",
+                str(source_path),
+                "--accepted-out",
+                str(accepted),
+                "--held-out",
+                str(held),
+                "--report-out",
+                str(report),
+            ]
+        )
+        if code != 0 or data.get("schema") != "fusha/largelexicon-cli/gate-rh-live-candidates@1":
+            errors.append("gate-rh-live-candidates did not return the expected schema")
+        if data.get("accepted") != 1 or data.get("held") != 0:
+            errors.append("gate-rh-live-candidates must accept a source-addressed qamus-authored row")
+        accepted_row = json.loads(accepted.read_text(encoding="utf-8").splitlines()[0]) if accepted.exists() and accepted.stat().st_size else {}
+        if accepted_row.get("safe_for_qamus_executor_autopromote") is not True:
+            errors.append("accepted source-addressed row must expose safe_for_qamus_executor_autopromote=true")
     return errors
 
 

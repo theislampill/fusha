@@ -25,6 +25,7 @@ python tools/fusha_largelexicon_cli.py analyze-token --surface "..."
 python tools/fusha_largelexicon_cli.py analyze-card --input card.jsonl
 python tools/fusha_largelexicon_cli.py project-hover --input worklist.jsonl --out candidates.jsonl
 python tools/fusha_largelexicon_cli.py validate-mode-a --input worklist.jsonl
+python tools/fusha_largelexicon_cli.py gate-rh-live-candidates --input candidates.jsonl --accepted-out accepted.jsonl --held-out held.jsonl --report-out gate-report.json
 python tools/validate_largelexicon_table_reader.py --self-test
 ```
 
@@ -41,6 +42,20 @@ Rows with `lexical_collision_requires_context`, `pending_context`, `ambiguous`,
 or `safe_for_qamus_executor_autopromote=false` are worklist/packet inputs, not
 deployment rows. Collision packets are useful because they name the missing
 sarf/nahw/source proof, but they do not close a qword visually.
+
+For already-authored RH-LIVE candidate JSONL, do not reuse the arbitrary-token
+`analyze-token` / `analyze-card` autopromote flag as the executor decision. Run
+the source-addressed gate instead:
+
+```powershell
+python tools/validate_rh_live_source_addressed_candidates.py candidates.jsonl --accepted-out accepted.jsonl --held-out held.jsonl --report-out gate-report.json
+```
+
+That gate may set `safe_for_qamus_executor_autopromote=true` only for rows that
+already carry Qamus source-address trace, exact quran/wbw locs, source-clean
+`public_preview`, segment-concat exactness, supported qamus-grammar-v1 classes,
+and no unresolved context/source-crosswalk flags. It must not alter the rule
+that arbitrary parser CLI output is non-autopromotable.
 
 For qword denominator reads, prefer `tools/largelexicon_table_reader.py`.
 The table is a single logical Project-Xanadu-style graph surface even though it
