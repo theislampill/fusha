@@ -9,7 +9,7 @@
   },
   "controlling_plan": "15-fusha-parser-coverage-boundary-and-lexicon-flywheel.md",
   "fixture_level_governor_rows": 9,
-  "fusha_commit": "e35b23bf3b90b01aa8ef44ce3d43f5f7c9c5db08",
+  "fusha_commit": "6a475e62addb17172b05054e6e08713974b14848",
   "input_summary_sha256": "dcc91f90476f93ca785160008669ffc31f8837b2f4566f034a2de8c61d579bd9",
   "lemma_null_rows": 171,
   "parser_known_rows": 2,

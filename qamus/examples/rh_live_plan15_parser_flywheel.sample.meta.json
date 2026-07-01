@@ -6,27 +6,29 @@
     "parser_oracle_claim": false,
     "raw_executor_paths_vendored": false
   },
-  "fusha_commit": "e35b23bf3b90b01aa8ef44ce3d43f5f7c9c5db08",
+  "fusha_commit": "6a475e62addb17172b05054e6e08713974b14848",
   "generator": "tools/import_rh_live_plan15_flywheel.py",
-  "input_summary_sha256": "1893e32e3de238bdc16ff306e8c5c56e42bdb55e26acf45dbc08c8040f7885c3",
+  "input_summary_sha256": "8cb5e1765cbc2df4492f0daad29476a2801fb6ecb61a19869ddac23086a1f906",
   "output_jsonl": "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl",
   "route_counts": {
-    "governor_irab_fixture_needed": 754,
-    "lexicon_entry_needed": 3403,
-    "parser_interface_ok": 910,
-    "particle_function_rule_needed": 2,
-    "pattern_rule_needed": 3,
-    "proper_name_no_root_needed": 3
+    "governor_irab_fixture_needed": 744,
+    "lexicon_entry_needed": 4081,
+    "parser_interface_ok": 911,
+    "particle_function_rule_needed": 58,
+    "pattern_rule_needed": 3804,
+    "proper_name_no_root_needed": 12,
+    "stem_entry_needed": 4081
   },
   "sample_counts": {
     "governor_irab_fixture_needed": 3,
     "lexicon_entry_needed": 3,
     "parser_interface_ok": 3,
-    "particle_function_rule_needed": 2,
+    "particle_function_rule_needed": 3,
     "pattern_rule_needed": 3,
-    "proper_name_no_root_needed": 3
+    "proper_name_no_root_needed": 3,
+    "stem_entry_needed": 3
   },
   "sample_mode": "sample",
-  "sample_rows": 17,
+  "sample_rows": 21,
   "schema": "qamus/rh-live-plan15-parser-flywheel-sample-meta@1"
 }

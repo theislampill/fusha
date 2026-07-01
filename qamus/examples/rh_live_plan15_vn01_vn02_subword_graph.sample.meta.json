@@ -6,7 +6,7 @@
     "parser_oracle_claim": false,
     "raw_executor_paths_vendored": false
   },
-  "fusha_commit": "e35b23bf3b90b01aa8ef44ce3d43f5f7c9c5db08",
+  "fusha_commit": "6a475e62addb17172b05054e6e08713974b14848",
   "generator": "tools/import_rh_live_plan15_flywheel.py",
   "input_summary_sha256": "dcc91f90476f93ca785160008669ffc31f8837b2f4566f034a2de8c61d579bd9",
   "output_jsonl": "qamus/examples/rh_live_plan15_vn01_vn02_subword_graph.sample.jsonl",

@@ -102,6 +102,14 @@ REQUIRED_FIELDS = {
 }
 
 
+def flywheel_routes(value: Any) -> tuple[list[str], list[str]]:
+    if isinstance(value, str):
+        return [value], []
+    if isinstance(value, list) and value and all(isinstance(item, str) for item in value):
+        return value, []
+    return [], [f"flywheel_route must be a string or non-empty array of strings, got {value!r}"]
+
+
 def resolve_path(raw: str) -> Path:
     path = Path(raw)
     if path.is_absolute():
@@ -150,16 +158,20 @@ def validate_row(row: dict[str, Any], path: Path, line_no: int) -> list[str]:
     if row.get("schema") != SCHEMA:
         errors.append(f"{row_id}: schema must be {SCHEMA!r}")
 
-    route = row.get("flywheel_route")
-    if route not in ALLOWED_ROUTES:
-        errors.append(f"{row_id}: unsupported flywheel_route {route!r}")
+    route_values, route_errors = flywheel_routes(row.get("flywheel_route"))
+    errors.extend(f"{row_id}: {error}" for error in route_errors)
+    routes = row.get("routes")
+    if not isinstance(routes, list) or not all(isinstance(item, str) for item in routes):
+        errors.append(f"{row_id}: routes must be an array of strings")
     else:
-        routes = row.get("routes")
-        if not isinstance(routes, list) or not all(isinstance(item, str) for item in routes):
-            errors.append(f"{row_id}: routes must be an array of strings")
-        elif not ALLOWED_ROUTES[route].issubset(set(routes)):
-            expected = sorted(ALLOWED_ROUTES[route])
-            errors.append(f"{row_id}: {route} routes must include {expected}")
+        route_set = set(routes)
+        for route in route_values:
+            if route not in ALLOWED_ROUTES:
+                errors.append(f"{row_id}: unsupported flywheel_route {route!r}")
+                continue
+            if not ALLOWED_ROUTES[route].issubset(route_set):
+                expected = sorted(ALLOWED_ROUTES[route])
+                errors.append(f"{row_id}: {route} routes must include {expected}")
 
     parser_status = row.get("parser_status")
     if parser_status not in {"known", "partial", "unknown"}:
@@ -223,7 +235,8 @@ def validate_jsonl(path: Path) -> dict[str, Any]:
     for line_no, row in iter_jsonl(path):
         rows += 1
         if isinstance(row, dict):
-            route_counts.update([str(row.get("flywheel_route"))])
+            route_values, _ = flywheel_routes(row.get("flywheel_route"))
+            route_counts.update(route_values or [str(row.get("flywheel_route"))])
             parser_status_counts.update([str(row.get("parser_status"))])
             row_id = row.get("row_id")
             if row_id in seen_row_ids:
@@ -274,6 +287,17 @@ def self_test() -> int:
         good_result = validate_jsonl(path)
         if not good_result["ok"]:
             print(json.dumps(good_result, ensure_ascii=False, indent=2, sort_keys=True))
+            return 1
+
+        multi = dict(good)
+        multi["row_id"] = "plan15-multi-route"
+        multi["routes"] = ["parser", "sarf", "qamus_mode_a_validator"]
+        multi["flywheel_route"] = ["lexicon_entry_needed", "stem_entry_needed", "pattern_rule_needed"]
+        multi_path = Path(td) / "multi.jsonl"
+        multi_path.write_text(json.dumps(multi, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
+        multi_result = validate_jsonl(multi_path)
+        if not multi_result["ok"] or multi_result["route_counts"].get("stem_entry_needed") != 1:
+            print(json.dumps(multi_result, ensure_ascii=False, indent=2, sort_keys=True))
             return 1
 
         bad = dict(good)

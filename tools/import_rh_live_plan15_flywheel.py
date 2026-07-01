@@ -210,6 +210,17 @@ def resolve_under_root(path: Path) -> Path:
     return ROOT / path
 
 
+def resolve_route_file(route_summary: Path, raw_path: str) -> Path:
+    route_path = Path(raw_path)
+    if route_path.is_absolute():
+        return route_path
+    for base in (route_summary.parent, *route_summary.parent.parents, ROOT, Path.cwd()):
+        candidate = base / route_path
+        if candidate.exists():
+            return candidate
+    return route_summary.parent / route_path
+
+
 def import_samples(
     route_summary: Path,
     output_jsonl: Path,
@@ -229,7 +240,7 @@ def import_samples(
         file_info = route_files.get(route)
         if not file_info:
             continue
-        route_path = Path(file_info["path"])
+        route_path = resolve_route_file(route_summary, file_info["path"])
         if not route_path.exists():
             raise SystemExit(f"route file missing for {route}: {route_path}")
         for index, row in enumerate(iter_jsonl(route_path), 1):

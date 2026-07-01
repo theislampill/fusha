@@ -5,7 +5,7 @@ coverage progress and it does not mutate any live Qamus state.
 
 Controlling plan: `15-fusha-parser-coverage-boundary-and-lexicon-flywheel.md`.
 Current Fusha commit used by this supplement:
-`e35b23bf3b90b01aa8ef44ce3d43f5f7c9c5db08`.
+`6a475e62addb17172b05054e6e08713974b14848`.
 
 ## Boundary
 
