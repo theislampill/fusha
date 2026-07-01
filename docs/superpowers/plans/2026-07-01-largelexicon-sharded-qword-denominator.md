@@ -78,4 +78,4 @@
 - [x] Run focused validators.
 - [x] Run broader regression checks and `git diff --check`.
 - [x] Commit the scoped change.
-- [ ] Push `largelexicon`.
+- [x] Push `largelexicon`.
