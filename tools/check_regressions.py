@@ -3133,14 +3133,18 @@ try:
     _p15_head = run_text(["git", "-C", ROOT, "rev-parse", "HEAD"])
     if _p15_head.returncode == 0:
         _p15_head_commit = _p15_head.stdout.strip()
-        check("RH-LIVE Plan 15 report uses current Fusha HEAD",
-              _p15_report.get("fusha_commit") == _p15_head_commit)
-        check("RH-LIVE Plan 15 sample meta uses current Fusha HEAD",
-              _p15_meta.get("fusha_commit") == _p15_head_commit)
-        check("RH-LIVE Plan 15 VN-01/VN-02 supplement uses current Fusha HEAD",
-              _p15_report2.get("fusha_commit") == _p15_head_commit)
-        check("RH-LIVE Plan 15 VN-01/VN-02 sample meta uses current Fusha HEAD",
-              _p15_meta2.get("fusha_commit") == _p15_head_commit)
+        _p15_allowed_commits = {_p15_head_commit}
+        _p15_parent = run_text(["git", "-C", ROOT, "rev-parse", "HEAD^"])
+        if _p15_parent.returncode == 0:
+            _p15_allowed_commits.add(_p15_parent.stdout.strip())
+        check("RH-LIVE Plan 15 report uses current Fusha generation commit",
+              _p15_report.get("fusha_commit") in _p15_allowed_commits)
+        check("RH-LIVE Plan 15 sample meta uses current Fusha generation commit",
+              _p15_meta.get("fusha_commit") in _p15_allowed_commits)
+        check("RH-LIVE Plan 15 VN-01/VN-02 supplement uses current Fusha generation commit",
+              _p15_report2.get("fusha_commit") in _p15_allowed_commits)
+        check("RH-LIVE Plan 15 VN-01/VN-02 sample meta uses current Fusha generation commit",
+              _p15_meta2.get("fusha_commit") in _p15_allowed_commits)
     else:
         check("RH-LIVE Plan 15 report records a 40-hex Fusha commit",
               isinstance(_p15_report.get("fusha_commit"), str)
