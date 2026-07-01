@@ -34,6 +34,33 @@ is physically sharded. A row must remain traceable forward
 entry/card/qword -> shard/payload/crosswalk and reverse row_id/entry -> shard
 -> entry/card/source. Do not recreate a second qword denominator database.
 
+Largerollout3 adds two required executor-adoption surfaces:
+
+```powershell
+python tools/build_qamus_source_card_repair_worklist.py
+python tools/validate_qamus_source_card_repairs.py --self-test
+python tools/build_largelexicon_qword_crosswalk.py
+python tools/validate_largelexicon_qword_crosswalk.py --self-test
+python tools/validate_largelexicon_transclusion.py --self-test
+python tools/validate_largelexicon_executor_adoption.py --self-test
+```
+
+The crosswalk manifest is not a deployment queue. It is an all-visible-qword
+status surface. Rows with missing canonical Qur'an/WBW locs are exact
+`source_address_crosswalk_packet` rows until Arabic-surface matching and
+uniqueness checks accept them. The first source-card/example repair smoke case is
+`n993 / 2a071cd0b50e / مَلْجَأ / pg443.jpeg / 42:47`; it must be source-card
+repaired or exact-owner-packeted before any claim that all 2,092 entries have
+qword rows.
+
+This is not live qamus progress; it is repo-side source-clean preparation for
+later executor-controlled deployment and public readback.
+
+All-visible-qword closure is stricter than selected-word closure. A selected
+word may be complete while the page remains visually sparse. Existing
+undersegmented hovers require a replacement lane with backup/readback; append
+only cannot close them.
+
 Executor-owned gates:
 
 - live whitelist backup;

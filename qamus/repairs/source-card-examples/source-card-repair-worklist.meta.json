@@ -1,0 +1,20 @@
+{
+  "claim_boundary": "source-card repair worklist only; not live Qamus mutation or hover deployment",
+  "first_required_repair": "n993",
+  "generated_at": "2026-07-01T12:05:30Z",
+  "generated_by": "tools.largelexicon_common",
+  "public_boundary": {
+    "kind": "authored",
+    "lang": "en",
+    "src": "qamus"
+  },
+  "row_count": 1,
+  "schema": "qamus/source-card-example-repair-worklist-meta@1",
+  "source_branch": "largelexicon",
+  "source_head": "9568f4ad2e0cebaeb5e30b1c482d4f851c7338b3",
+  "stale_after": "qamus_qword_denominator_source_repair_change",
+  "status": "active",
+  "supersedes": [],
+  "worklist_path": "qamus/repairs/source-card-examples/source-card-repair-worklist.jsonl",
+  "worklist_sha256": "4efe0e877fbe18b20305b1b82952471a19b5d049e500c9cbef7767ae9953e809"
+}

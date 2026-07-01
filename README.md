@@ -56,6 +56,10 @@ has no source-address certainty and stays ambiguity-preserving. The contracts (e
   [`docs/parser/largelexicon-implementation.md`](docs/parser/largelexicon-implementation.md) ·
   [`docs/parser/largelexicon-claim-boundary.md`](docs/parser/largelexicon-claim-boundary.md) ·
   [`qamus/procedures/largelexicon-rollout-consumption.md`](qamus/procedures/largelexicon-rollout-consumption.md).
+  The largerollout3 extension adds source-card repair worklists, a qword
+  crosswalk status table, transclusion validation, private acquisition
+  projection checks, affix compatibility rules, and an executor adoption gate:
+  [`docs/parser/largelexicon-largerollout3-implementation.md`](docs/parser/largelexicon-largerollout3-implementation.md).
 - **Offline learning runtime** — a deterministic tutor loop grades checkpoints against the answer key (never model self-report),
   schedules reviews by Leitner box, holds hard grammar until two independent checks agree, and persists progress only with an
   explicit `--write`. [`tools/fusha_tutor_runtime.py`](tools/fusha_tutor_runtime.py) ·

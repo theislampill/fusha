@@ -43,6 +43,11 @@ QWORD_DENOMINATOR_MANIFEST = QAMUS_LARGELX_DIR / "qamus-qword-denominator.manife
 QWORD_DENOMINATOR_ENTRY_INDEX = QAMUS_LARGELX_DIR / "qamus-qword-denominator.entry-shard-index.json"
 QWORD_DENOMINATOR_SOURCE_REPAIR = QAMUS_LARGELX_DIR / "qamus-qword-denominator.source-card-repair.json"
 QWORD_DENOMINATOR_SHARD_DIR = QAMUS_LARGELX_DIR / "qword-denominator"
+QWORD_CROSSWALK_MANIFEST = QAMUS_LARGELX_DIR / "qamus-qword-crosswalk.manifest.json"
+QWORD_CROSSWALK_SHARD_DIR = QAMUS_LARGELX_DIR / "qword-crosswalk"
+SOURCE_CARD_REPAIR_DIR = ROOT / "qamus" / "repairs" / "source-card-examples"
+SOURCE_CARD_REPAIR_WORKLIST = SOURCE_CARD_REPAIR_DIR / "source-card-repair-worklist.jsonl"
+SOURCE_CARD_REPAIR_META = SOURCE_CARD_REPAIR_DIR / "source-card-repair-worklist.meta.json"
 FULL_TABLE_META = QAMUS_LARGELX_DIR / "source-clean-fact-tables.meta.json"
 
 PUBLIC_BOUNDARY = {"src": "qamus", "kind": "authored", "lang": "en"}
@@ -603,6 +608,16 @@ def full_table_allowlist() -> dict[str, Any]:
                 "source": "qamus_current_authored",
                 "storage": "sharded_jsonl_manifest",
                 "entry_index_path": repo_rel(QWORD_DENOMINATOR_ENTRY_INDEX),
+            },
+            {
+                "path": repo_rel(QWORD_CROSSWALK_MANIFEST),
+                "schema": "qamus/largelexicon-qword-crosswalk-manifest@1",
+                "commit_allowed": True,
+                "raw_external_allowed": False,
+                "minimum_rows": 100000,
+                "source": "qamus_current_authored",
+                "storage": "sharded_jsonl_manifest",
+                "denominator_manifest_path": repo_rel(QWORD_DENOMINATOR_MANIFEST),
             },
         ],
         "private_only_sources": [

@@ -29,7 +29,7 @@
     "2a071cd0b50e"
   ],
   "entry_index_path": "qamus/indexes/largelexicon/qamus-qword-denominator.entry-shard-index.json",
-  "generated_at": "2026-07-01T10:58:45Z",
+  "generated_at": "2026-07-01T12:05:24Z",
   "generated_by": "tools.largelexicon_common",
   "legacy_monolith_replaced": "qamus/indexes/largelexicon/qamus-qword-denominator.full.jsonl",
   "primary_key": "row_id",
@@ -911,7 +911,7 @@
   ],
   "source_branch": "largelexicon",
   "source_card_repair_path": "qamus/indexes/largelexicon/qamus-qword-denominator.source-card-repair.json",
-  "source_head": "a107eecc40afbe28d0b3576d691320bf37ae0e89",
+  "source_head": "9568f4ad2e0cebaeb5e30b1c482d4f851c7338b3",
   "stale_after": "qamus_entries_or_largelexicon_schema_change",
   "status": "active",
   "storage": "sharded_jsonl_manifest",

@@ -14,6 +14,7 @@ from largelexicon_common import (
     FULL_TABLE_META,
     LEMMA_FULL,
     LEMMA_SAMPLE,
+    QWORD_CROSSWALK_MANIFEST,
     QWORD_DENOMINATOR_ENTRY_INDEX,
     QWORD_DENOMINATOR_FULL,
     QWORD_DENOMINATOR_MANIFEST,
@@ -23,6 +24,7 @@ from largelexicon_common import (
     public_boundary_errors,
     read_jsonl,
 )
+from validate_largelexicon_qword_crosswalk import validate as validate_qword_crosswalk
 from validate_largelexicon_table_manifest import validate as validate_qword_manifest
 
 
@@ -34,6 +36,7 @@ FULL_TABLE_ARTIFACTS = [
     QWORD_DENOMINATOR_MANIFEST,
     QWORD_DENOMINATOR_ENTRY_INDEX,
     QWORD_DENOMINATOR_SOURCE_REPAIR,
+    QWORD_CROSSWALK_MANIFEST,
 ]
 
 
@@ -118,12 +121,29 @@ def validate() -> list[str]:
         if qword_table.get("raw_external_allowed") is not False:
             errors.append(f"{qword_rel}: allowlist must explicitly set raw_external_allowed=false")
     errors.extend(validate_qword_manifest(QWORD_DENOMINATOR_MANIFEST))
+    crosswalk_rel = QWORD_CROSSWALK_MANIFEST.relative_to(ROOT).as_posix()
+    crosswalk_table = allowed.get(crosswalk_rel)
+    if not crosswalk_table:
+        errors.append(f"{crosswalk_rel}: not present in source-clean table allowlist")
+    else:
+        if crosswalk_table.get("storage") != "sharded_jsonl_manifest":
+            errors.append(f"{crosswalk_rel}: allowlist storage must be sharded_jsonl_manifest")
+        if crosswalk_table.get("denominator_manifest_path") != QWORD_DENOMINATOR_MANIFEST.relative_to(ROOT).as_posix():
+            errors.append(f"{crosswalk_rel}: allowlist denominator_manifest_path mismatch")
+        if crosswalk_table.get("commit_allowed") is not True:
+            errors.append(f"{crosswalk_rel}: allowlist must explicitly set commit_allowed=true")
+        if crosswalk_table.get("raw_external_allowed") is not False:
+            errors.append(f"{crosswalk_rel}: allowlist must explicitly set raw_external_allowed=false")
+    errors.extend(validate_qword_crosswalk())
     meta = json.loads(FULL_TABLE_META.read_text(encoding="utf-8"))
     counts = meta.get("counts") or {}
     if counts.get("lemma_source_rows") != 2092:
         errors.append("full table meta must record 2092 lemma rows")
     if counts.get("qword_denominator_rows", 0) < 100000:
         errors.append("full table meta qword denominator count unexpectedly low")
+    crosswalk_meta = meta.get("qword_crosswalk_manifest") or {}
+    if crosswalk_meta.get("row_count") != counts.get("qword_denominator_rows"):
+        errors.append("full table meta qword_crosswalk_manifest row count must match qword denominator count")
     return errors
 
 

@@ -31,6 +31,10 @@ listed in `fusha/lexicon/largelexicon/source-clean-table-allowlist.json` and
 - `qamus/indexes/largelexicon/qamus-qword-denominator.entry-shard-index.json`
 - `qamus/indexes/largelexicon/qamus-qword-denominator.source-card-repair.json`
 - `qamus/indexes/largelexicon/qword-denominator/*.jsonl`
+- `qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json`
+- `qamus/indexes/largelexicon/qword-crosswalk/*.jsonl`
+- `qamus/repairs/source-card-examples/source-card-repair-worklist.jsonl`
+- `qamus/repairs/source-card-examples/source-card-repair-worklist.meta.json`
 - `qamus/indexes/largelexicon/source-clean-fact-tables.meta.json`
 - `qamus/reports/largelexicon-source-inventory.json`
 - `qamus/examples/mode_a_all_qword/largelexicon-qamus-mode-a-worklist.sample.jsonl`
@@ -59,6 +63,26 @@ present in Qamus but has no usage examples to tokenize, it appears in
 `n993` / `مَلْجَأ` has a source-card hint for `pg443.jpeg` and `42:47`, because
 the source card shows Qur'anic usage while the current entry export has
 `examples: []`.
+
+## Source-Card Repair And Crosswalk Tables
+
+`tools/build_qamus_source_card_repair_worklist.py` projects source-card repair
+rows into `qamus/repairs/source-card-examples/` for owner/source confirmation.
+The worklist is not a hover payload and not live progress; it preserves the
+entry/source-card edge that must be repaired before the affected entry can join
+the all-visible-qword denominator.
+
+`tools/build_largelexicon_qword_crosswalk.py` turns every denominator qword into
+a crosswalk-status row. Rows with both canonical Qur'an and WBW addresses may
+eventually become accepted crosswalks. Rows without those addresses remain
+`source_crosswalk_packet_ready`; they are explicit work packets, not deployable
+rich-hover rows. This preserves the bidirectional path:
+
+`entry/card/qword -> crosswalk status -> repair packet/candidate`
+
+and the reverse path:
+
+`crosswalk row -> qword_row_id -> entry/card/source dependencies`.
 
 ## Private Source Reuse Boundary
 

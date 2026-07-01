@@ -83,3 +83,48 @@ class LargelexiconQwordTable:
             if row.get("row_id") == row_id:
                 return row
         return None
+
+    def crosswalk_manifest_path(self) -> Path:
+        return self.root / "qamus" / "indexes" / "largelexicon" / "qamus-qword-crosswalk.manifest.json"
+
+    def crosswalk_manifest(self) -> dict[str, Any] | None:
+        path = self.crosswalk_manifest_path()
+        if not path.exists():
+            return None
+        return _read_json(path)
+
+    def crosswalk_summary(self) -> dict[str, Any]:
+        manifest = self.crosswalk_manifest()
+        if not manifest:
+            return {
+                "schema": "qamus/largelexicon-qword-crosswalk-summary@1",
+                "available": False,
+                "manifest_path": self.crosswalk_manifest_path().relative_to(self.root).as_posix(),
+            }
+        return {
+            "schema": "qamus/largelexicon-qword-crosswalk-summary@1",
+            "available": True,
+            "manifest_path": self.crosswalk_manifest_path().relative_to(self.root).as_posix(),
+            "row_count": manifest.get("row_count"),
+            "shard_count": manifest.get("shard_count"),
+            "status_counts": manifest.get("status_counts") or {},
+            "public_boundary": manifest.get("public_boundary"),
+        }
+
+    def iter_crosswalk_rows(self, *, limit: int | None = None) -> Iterator[dict[str, Any]]:
+        manifest = self.crosswalk_manifest()
+        if not manifest:
+            return
+        yielded = 0
+        for shard in manifest.get("shards") or []:
+            for row in _iter_jsonl(self._shard_path(shard["path"])):
+                yield row
+                yielded += 1
+                if limit is not None and yielded >= limit:
+                    return
+
+    def crosswalk_for_qword(self, qword_row_id: str) -> dict[str, Any] | None:
+        for row in self.iter_crosswalk_rows():
+            if row.get("qword_row_id") == qword_row_id:
+                return row
+        return None

@@ -1,0 +1,107 @@
+{
+  "claim_boundary": "Source-clean affix compatibility rules for candidate morphology; not public hover certification by itself.",
+  "generated_by": "largerollout3 planning implementation",
+  "public_boundary": {
+    "kind": "authored",
+    "lang": "en",
+    "src": "qamus"
+  },
+  "rules": [
+    {
+      "features_added": {
+        "case_governor": "preposition",
+        "requires_nahw": true
+      },
+      "id": "attached_preposition_ba",
+      "proclitic": "ب",
+      "qg_class": "qg-preposition",
+      "role": "prefix_preposition",
+      "safe_projection": "candidate_only_until_host_and_function_certified"
+    },
+    {
+      "features_added": {
+        "case_governor": "preposition_or_purpose_lam",
+        "requires_nahw": true
+      },
+      "id": "attached_preposition_lam",
+      "proclitic": "ل",
+      "qg_class": "qg-lam",
+      "role": "prefix_lam",
+      "safe_projection": "candidate_only_until_function_certified"
+    },
+    {
+      "features_added": {
+        "requires_nahw": true
+      },
+      "id": "conjunction_waw",
+      "proclitic": "و",
+      "qg_class": "qg-conjunction",
+      "role": "prefix_conjunction_or_oath_or_comitative",
+      "safe_projection": "candidate_only_until_function_certified"
+    },
+    {
+      "features_added": {
+        "requires_nahw": true
+      },
+      "id": "result_or_resumption_fa",
+      "proclitic": "ف",
+      "qg_class": "qg-result-fa",
+      "role": "prefix_result_or_resumption",
+      "safe_projection": "candidate_only_until_function_certified"
+    },
+    {
+      "features_added": {
+        "object_or_possessive": true,
+        "requires_context": true
+      },
+      "id": "suffix_pronoun_object_or_possessive",
+      "qg_class": "qg-object-pronoun",
+      "role": "suffix_pronoun",
+      "suffix_set": [
+        "ه",
+        "ها",
+        "هم",
+        "كم",
+        "نا"
+      ],
+      "safe_projection": "candidate_only_until_host_role_certified"
+    },
+    {
+      "features_added": {
+        "number": "plural"
+      },
+      "id": "sound_plural_suffix",
+      "qg_class": "qg-plural-suffix",
+      "role": "plural_suffix",
+      "suffix_set": [
+        "ون",
+        "ين",
+        "ات"
+      ],
+      "safe_projection": "candidate_when_host_pos_certified"
+    },
+    {
+      "features_added": {
+        "derivative_candidate": true
+      },
+      "id": "derivative_prefix_mim",
+      "prefix": "م",
+      "qg_class": "qg-derivative-prefix",
+      "role": "derivative_prefix",
+      "safe_projection": "candidate_until_pattern_and_voice_certified"
+    },
+    {
+      "features_added": {
+        "false_suffix_guard": true
+      },
+      "id": "tanwin_alif_not_na",
+      "role": "false_pronoun_guard",
+      "suffix_set": [
+        "ًا"
+      ],
+      "safe_projection": "guard_only"
+    }
+  ],
+  "schema": "fusha/largelexicon-affix-compatibility@1",
+  "status": "active"
+}

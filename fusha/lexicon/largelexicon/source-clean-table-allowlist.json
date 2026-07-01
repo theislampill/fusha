@@ -1,6 +1,6 @@
 {
   "claim_boundary": "Only source-clean Qamus-authored generated fact tables are committed. Raw QAC/MCP/Quran.com/Tafsir payloads remain private evidence/cache data.",
-  "generated_at": "2026-07-01T10:58:43Z",
+  "generated_at": "2026-07-01T12:05:22Z",
   "generated_by": "tools.largelexicon_common",
   "private_only_sources": [
     "qac_raw_tsv",
@@ -17,7 +17,7 @@
   "runtime_dependency_policy": "dependency_free; no external package or live API required at parse time",
   "schema": "fusha/largelexicon/source-clean-table-allowlist@1",
   "source_branch": "largelexicon",
-  "source_head": "a107eecc40afbe28d0b3576d691320bf37ae0e89",
+  "source_head": "9568f4ad2e0cebaeb5e30b1c482d4f851c7338b3",
   "stale_after": "qamus_entries_or_largelexicon_schema_change",
   "status": "active",
   "supersedes": [],
@@ -53,6 +53,16 @@
       "path": "qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json",
       "raw_external_allowed": false,
       "schema": "qamus/largelexicon-qword-denominator-manifest@1",
+      "source": "qamus_current_authored",
+      "storage": "sharded_jsonl_manifest"
+    },
+    {
+      "commit_allowed": true,
+      "denominator_manifest_path": "qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json",
+      "minimum_rows": 100000,
+      "path": "qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json",
+      "raw_external_allowed": false,
+      "schema": "qamus/largelexicon-qword-crosswalk-manifest@1",
       "source": "qamus_current_authored",
       "storage": "sharded_jsonl_manifest"
     }
