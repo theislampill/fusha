@@ -34,3 +34,4 @@
 {"expected_public_feature":"lām relation, definite article, and plural noun host root all visible","failure_family":"preposition_article_host_undersegmented","loc":"41:46:11","page":"v046","surface":"لِّلْعَبِيدِ"}
 {"expected_public_feature":"same-ayah context source attached before contextual verb/particle appends deploy","failure_family":"context_source_required_for_distinct_gloss","loc":"4:34:11","page":"v046","surface":"وَبِمَآ"}
 {"expected_public_feature":"rich-live public row still blocked if Plan17 root/form/pronoun facts remain hidden","failure_family":"rich_live_not_plan17_complete","loc":"41:46:7","page":"v046","surface":"فَعَلَيْهَا"}
+{"expected_public_feature":"adjectival/participle stem from root د ن و plus visible final ending mark separately accounted without public case-jargon","failure_family":"suffix_or_inflection_hidden","loc":"69:23:2","page":"n0044","surface":"دَانِيَةٌۭ"}

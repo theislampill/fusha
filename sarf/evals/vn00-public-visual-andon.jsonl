@@ -37,3 +37,4 @@
 {"case_id":"vn00_burst05_v046_lil_abid_lam_article_host","expected_segments":["lam_preposition","definite_article","plural_noun_host_root_ayn_b_d"],"failure_family":"preposition_article_host_undersegmented","loc":"41:46:11","surface":"لِّلْعَبِيدِ"}
 {"case_id":"vn00_burst05_v046_nushuzahunna_suffix","expected_segments":["noun_stem_root_n_sh_z","attached_possessive_pronoun_3fp"],"failure_family":"suffix_or_inflection_hidden","loc":"4:34:24","surface":"نُشُوزَهُنَّ"}
 {"case_id":"vn00_burst05_v046_laaannatakum_lam_verb_object","expected_segments":["lam_or_emphasis_function","verb_stem_root_ayn_n_t","object_pronoun_2mp"],"failure_family":"suffix_or_inflection_hidden","loc":"2:220:22","surface":"لَأَعْنَتَكُمْ"}
+{"case_id":"vn00_n0044_daniyatun_final_ending","expected_segments":["adjectival_participle_stem_root_d_n_w","visible_final_ending_mark"],"failure_family":"suffix_or_inflection_hidden","loc":"69:23:2","surface":"دَانِيَةٌۭ"}
