@@ -66,6 +66,20 @@ Vocative guard:
 - surfaces such as `يَابِسٍ` are not vocatives merely because their first
   letters resemble `يا`; require sarf segmentation evidence first.
 
+Lexical false-clitic guard:
+
+- `لِبَاسٌۭ` starts with lexical lām from the noun/root `ل ب س`; it is not a
+  lām-preposition row and should not be forced into qg-lām relation wording
+  unless the written token is actually segmented as a function lām.
+- `أَنتُمْ` and `وَأَنتُمْ` are independent pronouns, not verbs carrying the
+  attached subject suffix `تُمْ`. Teach second-person plural pronounhood without
+  creating a fake suffix split.
+- `أُو۟لَٰٓئِكَ` / `وَأُو۟لَٰٓئِكَ` are demonstratives, and `وَحِينَ` is a time
+  noun with a wāw. Their final shapes must not be treated as hidden suffixes.
+- `يَٰٓأَيُّهَا` is a vocative formula (`يَا` + `أَيُّ` + `هَا` attention), not
+  an object-pronoun suffix row. A weaker same-surface peer should be repaired by
+  transclusion or explicitly excepted, not counted as complete by suffix logic.
+
 ## Dogfood finding: readable text is not rich certification
 
 The 2026-06-27 full-corpus dogfood batch exposed rows whose fallback text was

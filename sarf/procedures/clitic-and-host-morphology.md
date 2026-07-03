@@ -74,12 +74,32 @@ Regression examples:
   prefix, form/root stem, subject marker when present, and object pronoun.
   A row can pass public readback for the changed loc and still leave the page
   not complete if other same-family rows remain flat or undersegmented.
+- v030 also exposed validator false positives: `يُتِمُّ` must not be read as
+  hiding a `تُمْ` suffix, and independent-pronoun or function formula rows such
+  as `أَنتُمْ`, `وَأَنتُمْ`, `يَٰٓأَيُّهَا`, `أُو۟لَٰٓئِكَ`,
+  `وَأُو۟لَٰٓئِكَ`, and `وَحِينَ` are not suffix failures merely because their
+  final letters resemble a learner-visible suffix. Require exact visible suffix
+  spelling before raising a suffix gate.
+- v030 derivative-proof scoping: `بِمَعْرُوفٍ` has a function prefix plus a
+  rooted nominal/participle host. A `no lexical root` note on the prefix must
+  not negate the host's root or derivative proof. `مَخْرَجًۭا` needs the
+  nominal-derivative/place pattern from root `خ ر ج`, not a host-only noun
+  shell.
 
 Rule: every finite verb or derivative candidate used by Qamus must make
 visible prefixes, stems, roots/forms, subject/object suffixes, feminine
 markers, plural endings, and tanwin/case endings either learner-visible or an
 exact blocker. Same-surface rich peers create a transclusion repair candidate
 or an explicit exception; they do not merely advise the executor.
+
+Plan17 scanner guard: suffix gates are exact-surface gates, not substring
+hunts. Match final suffix spellings such as `تُمْ`, `كُمْ`, `هُمْ`, `نِي`,
+`ونَ`, and `ينَ` only at the visible end of the relevant segment. Do not fire
+those gates on lexical stems, independent pronouns, demonstratives, vocative
+formulae, or time nouns. If a segment role explicitly says ending, case,
+tanwin, or inflection and the segment text concatenates back to the token, it
+counts for the ending gate; if the host remains rootless or generic, create a
+separate root/source finding instead.
 
 ## Production finding: tanwin/case display must not color base letters
 
