@@ -1,0 +1,178 @@
+{
+  "applied_state": "fusha_validator_fixture_drill_and_v003_addendum_applied",
+  "generated_from": "VN-00 aggressive public false-closure crawl, summarized into source-clean Fusha fixtures",
+  "schema": "qamus/vn00-aggressive-false-closure-family-board@1",
+  "terminal_rule": "Queue is not closure: each family must be applied to sarf, nahw, validator, parser, drill, curriculum, meta_lattice, or explicitly blocked.",
+  "batch05a_postdeploy_gate": {
+    "applied_state": "fixture_and_queue_representatives_added",
+    "source": "batch05a postdeploy Plan17 and Plan18 audit",
+    "representatives": [
+      "كَفَرَ",
+      "مُؤْمِنٌ",
+      "سَيِّـَٔاتِهِۦ",
+      "كُفَّارٌ",
+      "لَكَفَّرْنَا",
+      "بِكُفْرِهِمْ",
+      "لَعَنَهُمُ",
+      "شَكَرْتُمْ",
+      "عَمَلًا",
+      "مَلِكِ",
+      "كَوْكَبًۭا",
+      "ءَايَةٍۢ"
+    ],
+    "terminal_artifacts": [
+      "sarf/evals/vn00-public-visual-andon.jsonl",
+      "nahw/evals/vn00-public-visual-andon.jsonl",
+      "qamus/reports/vn00-public-andon-20260703/plan18-meta-lattice-projection-queue.jsonl",
+      "qamus/reports/vn00-public-andon-20260703/plan18-typed-edge-transclusion-queue.jsonl",
+      "fusha/parser/eval/vn00-aggressive-false-closure-parser-fixtures.jsonl",
+      "curriculum/drills/vn00-aggressive-hover-closure.md",
+      "tools/validate_vn00_aggressive_false_closure.py"
+    ],
+    "vn01_unlock": "page workers must reject changed-row readback success when root/stem/prefix/pronoun/final-mark/source-clean facts remain unprojected"
+  },
+  "batch05d_merge09_merge10_gate": {
+    "applied_state": "fixture_queue_validator_and_drill_representatives_added",
+    "source": "batch05d merge09/merge10 postdeploy Plan17 and Plan18 audits",
+    "representatives": [
+      "وَٱتَّبَعُوا۟",
+      "يُفَرِّقُونَ",
+      "مَّٰكِثُونَ",
+      "فَإِذَا"
+    ],
+    "terminal_artifacts": [
+      "sarf/evals/vn00-aggressive-false-closure.jsonl",
+      "nahw/evals/vn00-aggressive-false-closure.jsonl",
+      "sarf/evals/vn00-public-visual-andon.jsonl",
+      "nahw/evals/vn00-public-visual-andon.jsonl",
+      "qamus/reports/vn00-public-andon-20260703/plan18-meta-lattice-projection-queue.jsonl",
+      "qamus/reports/vn00-public-andon-20260703/plan18-typed-edge-transclusion-queue.jsonl",
+      "fusha/parser/eval/vn00-aggressive-false-closure-parser-fixtures.jsonl",
+      "curriculum/drills/vn00-aggressive-hover-closure.md",
+      "tools/validate_vn00_aggressive_false_closure.py"
+    ],
+    "vn01_unlock": "page workers must reject exact-token transclusion when suffix, imperfect prefix, participle prefix, sound plural, or function-token source facts fail to project"
+  },
+  "families": [
+    {
+      "class": "missing_root_in_hover",
+      "owner": "sarf",
+      "terminal_artifacts": [
+        "sarf/evals/vn00-aggressive-false-closure.jsonl",
+        "tools/validate_vn00_aggressive_false_closure.py",
+        "curriculum/drills/vn00-aggressive-hover-closure.md"
+      ],
+      "vn01_unlock": "root/stem projection failures become deterministic blockers before page-worker reuse"
+    },
+    {
+      "class": "stem_only_hover_or_root_not_asserted",
+      "owner": "sarf",
+      "terminal_artifacts": [
+        "sarf/evals/vn00-aggressive-false-closure.jsonl",
+        "tools/validate_vn00_aggressive_false_closure.py"
+      ],
+      "vn01_unlock": "entry-page root facts must project into same-page and sibling-page hovers"
+    },
+    {
+      "class": "hidden_suffix_or_plural",
+      "owner": "sarf",
+      "terminal_artifacts": [
+        "sarf/evals/vn00-aggressive-false-closure.jsonl",
+        "curriculum/drills/vn00-aggressive-hover-closure.md"
+      ],
+      "vn01_unlock": "plural, dual, person, gender, and case endings cannot be hidden by a host-only hover"
+    },
+    {
+      "class": "hidden_suffix_or_pronoun",
+      "owner": "sarf_nahw",
+      "terminal_artifacts": [
+        "sarf/evals/vn00-aggressive-false-closure.jsonl",
+        "nahw/evals/vn00-aggressive-false-closure.jsonl"
+      ],
+      "vn01_unlock": "attached object and possessive pronouns must be visible in token contribution"
+    },
+    {
+      "class": "hidden_prefix_or_derivative",
+      "owner": "sarf",
+      "terminal_artifacts": [
+        "sarf/evals/vn00-aggressive-false-closure.jsonl"
+      ],
+      "vn01_unlock": "finite prefixes and derivative prefixes are required hover segments"
+    },
+    {
+      "class": "root_present_but_pattern_or_derivative_not_segmented",
+      "owner": "sarf",
+      "terminal_artifacts": [
+        "sarf/evals/vn00-aggressive-false-closure.jsonl",
+        "tools/validate_vn00_aggressive_false_closure.py",
+        "curriculum/drills/vn00-aggressive-hover-closure.md"
+      ],
+      "vn01_unlock": "root prose is insufficient when visible derivative, participle, or place-noun morphology is hidden"
+    },
+    {
+      "class": "root_present_but_nominal_pattern_not_segmented",
+      "owner": "sarf",
+      "terminal_artifacts": [
+        "sarf/evals/vn00-aggressive-false-closure.jsonl",
+        "tools/validate_vn00_aggressive_false_closure.py",
+        "curriculum/drills/vn00-aggressive-hover-closure.md"
+      ],
+      "vn01_unlock": "nominal patterns must be projected as learner-visible morphology when the root family is known"
+    },
+    {
+      "class": "nominal_ta_morphology_hidden",
+      "owner": "sarf",
+      "terminal_artifacts": [
+        "sarf/evals/vn00-aggressive-false-closure.jsonl",
+        "tools/validate_vn00_aggressive_false_closure.py",
+        "curriculum/drills/vn00-aggressive-hover-closure.md"
+      ],
+      "vn01_unlock": "nominal tāʾ cannot be swallowed by a host-plus-pronoun hover"
+    },
+    {
+      "class": "broken_plural_underexplained",
+      "owner": "sarf",
+      "terminal_artifacts": [
+        "sarf/evals/vn00-aggressive-false-closure.jsonl",
+        "tools/validate_vn00_aggressive_false_closure.py",
+        "curriculum/drills/vn00-aggressive-hover-closure.md"
+      ],
+      "vn01_unlock": "broken-plural nouns are not complete as bare host glosses"
+    },
+    {
+      "class": "article_or_proclitic_not_explained",
+      "owner": "nahw_sarf",
+      "terminal_artifacts": [
+        "nahw/evals/vn00-aggressive-false-closure.jsonl",
+        "curriculum/drills/vn00-aggressive-hover-closure.md"
+      ],
+      "vn01_unlock": "waw/fa/lam/ba and article pieces must survive transclusion"
+    },
+    {
+      "class": "common_particle_role_underexplained",
+      "owner": "nahw",
+      "terminal_artifacts": [
+        "nahw/evals/vn00-aggressive-false-closure.jsonl"
+      ],
+      "vn01_unlock": "common particles cannot be flat shells when their function is visible"
+    },
+    {
+      "class": "common_particle_transclusion_miss",
+      "owner": "nahw_meta_lattice",
+      "terminal_artifacts": [
+        "nahw/evals/vn00-aggressive-false-closure.jsonl",
+        "tools/validate_vn00_aggressive_false_closure.py"
+      ],
+      "vn01_unlock": "same-surface particle reuse is gated by function/context, not by token text alone"
+    },
+    {
+      "class": "token_gloss_wrong_or_phrase_only",
+      "owner": "qamus_validator",
+      "terminal_artifacts": [
+        "nahw/evals/vn00-aggressive-false-closure.jsonl",
+        "curriculum/drills/vn00-aggressive-hover-closure.md"
+      ],
+      "vn01_unlock": "phrase-readable English cannot substitute for token-level Arabic pieces"
+    }
+  ]
+}

@@ -264,6 +264,23 @@ QAC-conflict). **A surface-key gloss is auto_safe only if its `norm_strict` key 
   traps for suffix validators: final `انَ` in `رُّمَّانَ` is lexical stem material, not a dual suffix, and `ونِ`
   in `بُطُونِ` is a broken-plural noun host, not a sound-plural ending. Do not satisfy Plan17 by adding fake
   dual/plural suffix classes; add a lexical-final/broken-plural guard or leave an exact validator packet.
+- **v003 addendum: root prose and phrase glosses are not segmentation.** `لِمُؤْمِنٍ`, `أَوْلِيَآءُ`,
+  `يُرِيدُونَ`, `يَأْمَنُوكُمْ`, `وَيَأْمَنُوا۟`, `قَوْمَهُمْ`, `مَأْمَنَهُۥ`, and `أَمَٰنَتَهُۥ` are
+  regression representatives. A future hover must expose visible suffix/pronoun/plural pieces, derivative or
+  place-noun `مَـ`, nominal tāʾ, broken-plural morphology, and known root/pattern facts in learner-visible
+  segments or explanation. If the evidence is not enough to assert the pattern, route to
+  `lexicon_entry_needed`, `stem_entry_needed`, `pattern_rule_needed`, or exact scholar/irab review; do not call
+  the row complete because the root appears elsewhere in prose.
+- **Batch05a postdeploy lesson: changed-row success is not projection closure.** `كَفَرَ`, `مُؤْمِنٌ`,
+  `سَيِّـَٔاتِهِۦ`, `كُفَّارٌ`, `عَمَلًا`, `مَلِكِ`, `كَوْكَبًۭا`, and `ءَايَةٍۢ` are regression representatives for
+  generic-placeholder replacement, derivative-prefix projection, root/base projection, source-clean fact
+  projection, suffix/plural/final-mark projection, and plain final-mark accounting. A public row with qg color and
+  a hover still fails if Plan18 says the root/stem/pattern/final mark exists in the lattice but is not projected in
+  the visible hover.
+- **Batch05d merge09/merge10 lesson: exact-token readback is still not morphology projection.** `وَٱتَّبَعُوا۟`,
+  `يُفَرِّقُونَ`, and `مَّٰكِثُونَ` are regression representatives for perfect-verb subject suffixes, imperfect
+  prefixes, derived stems, participle mīm, and sound plural endings. Do not reuse a fluent hover unless those
+  visible pieces survive in segments or learner-facing explanation.
 
 ## 14. Integration with qamus-highlight
 A sarf `decision` maps directly: `resolved`→author the gloss (src=qamus); `pending`→set the pending reason;

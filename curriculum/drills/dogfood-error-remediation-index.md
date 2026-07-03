@@ -23,6 +23,8 @@ the history; it is to route a miss to the procedure and drill that prevents the 
 | `hidden_derivative_plural_piece` | participle/noun hover hides article, derivative prefix, or plural suffix | `../../sarf/drills/nominal-derivatives.md` | `../../sarf/procedures/noun-plural-gender.md` |
 | `proper_name_fake_root` | a proper name is forced into a root just to fill morphology fields | `mode-a-thin-slice-regressions.md` | `../../sarf/procedures/proper-noun.md` |
 | `function_cluster_phrase_only` | particle cluster is translated as a phrase while individual functions stay uncolored | `../../nahw/drills/particle-disambiguation.md` | `../../nahw/procedures/function-token-hover-review.md` |
+| `vn00_aggressive_false_closure` | public qword has hover/color or packet status but hides root, prefix, suffix, article, particle role, or token-vs-phrase contribution | `vn00-aggressive-hover-closure.md` | `../../tools/validate_vn00_aggressive_false_closure.py` |
+| `vn00_v003_false_closure_addendum` | v003-style rows hide suffix/pronoun/plural, derivative/place prefix, nominal tāʾ, broken plural, common-particle role, or token pieces behind phrase-only hovers | `vn00-aggressive-hover-closure.md` | `../../tools/validate_vn00_aggressive_false_closure.py` |
 
 Checkpoint rule: a remediated item is not cleared until the learner can name what the visible Arabic piece
 contributes and why the old hover failure was unsafe.

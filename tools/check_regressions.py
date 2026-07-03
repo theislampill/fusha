@@ -3229,6 +3229,10 @@ try:
     check("sarf skill structural validator still green (additive edits)", _sn_c.returncode == 0)
     _sn_d = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_nahw_skill.py")])
     check("nahw skill structural validator still green (additive edits)", _sn_d.returncode == 0)
+    _sn_e = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_vn00_aggressive_false_closure.py"), "--self-test"])
+    check("VN-00 aggressive false-closure validator self-test (class coverage / flywheel targets / leak checks)", _sn_e.returncode == 0)
+    _sn_f = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_vn00_aggressive_false_closure.py")])
+    check("VN-00 aggressive false-closure fixtures tree clean (sarf/nahw/drill terminal flywheel gate)", _sn_f.returncode == 0)
 except Exception as _e:
     check("sarf/nahw skill back-prop slice runnable", False)
     print("  ", _e)

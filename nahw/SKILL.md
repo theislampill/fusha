@@ -255,6 +255,19 @@ These are false closure, not acceptable page completion:
   a fake fāʾ+noun stem; `لَّدُنكَ` needs a supported relation/preposition class plus attached `كَ`; `بُطُونِ`
   may be definite in English only by context, not by a hidden article; and `وَٱلرُّمَّانَ` needs visible wāw +
   article + lexical host without mislabeling final `انَ` as dual.
+- v003 added the common-particle/proclitic addendum: `لِمُؤْمِنٍ`, `أَن`, and `وَيَأْمَنُوا۟` are not closed if
+  they only display a phrase-like translation. The lām, wāw, subordinating `أَن`, governed host, and attached
+  pronoun or plural role must be visible where the public hover claims pedagogical completeness. Same-surface
+  particle peers are reuse candidates only after context/function checks; if the context is uncertain, route the
+  row to `particle_function_rule_needed`, `governor_irab_fixture_needed`, or scholar review instead of shipping a
+  generic function-token gloss.
+- Batch05a added a postdeploy projection gate: `لَكَفَّرْنَا` is not closed when its opening lām/function and
+  attached subject role are unclear, and `بِكُفْرِهِمْ` is not closed when bāʾ, host, and attached possessive
+  pronoun are not learner-visible. A source-addressed row may still fail nahw if the public layer hides the
+  function role, pronoun contribution, or phrase-vs-token relation.
+- Batch05d merge09/merge10 added a function-token projection gate: `فَإِذَا` is not closed merely because it
+  has an exact occurrence payload. The fāʾ prefix, `إِذَا` particle role, and following-clause trigger must project
+  through the public hover or the row routes to a nahw/source-edge blocker before reuse.
 
 Same-surface or equivalent-function rich peers are transclusion obligations. If a page has a weaker public payload,
 emit a replacement/append candidate or an exact nahw blocker before any `visual_complete` claim.
