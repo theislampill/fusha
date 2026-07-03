@@ -233,6 +233,29 @@ QAC-conflict). **A surface-key gloss is auto_safe only if its `norm_strict` key 
 - **كَظِيم (صفة مشبهة) carried a "to suppress anger" verb gloss** → entry-repair candidate (P14): reshape to
   adjectival; the source fix propagates, so prefer it over a partial hover override.
 
+## 13d. Production findings (VN-00 public visual ANDON)
+- **Rich shell is not morphology closure.** VN-00 public readback found rows such as `أَقْسَمْتُمْ`,
+  `وَٱجْعَلْنِى`, and `مُّطَهَّرَةٌۭ` with color/hover present but `تُمْ`, `نِي`, or `ةٌۭ` hidden inside a host
+  segment. Treat these as false closure until the suffix/ending has its own learner-visible role or an exact
+  blocker.
+- **Feminine endings, temporal compounds, and derivative prefixes are closure gates.** Rows such as `كَانَتْ`,
+  `رَوْضَةٍۢ`, `يَوْمَئِذٍۢ`, `نَّاضِرَةٌ`, `نَضْرَةَ`, `مُتَّكِـِٔينَ`, and `مَّصْفُوفَةٍۢ` are false closure if
+  `تْ`, `ةٍ/ةٌ/ةَ`, `ئِذٍۢ`, `مُتَّـ/مَّـ`, or sound-plural endings are hidden inside one host segment.
+- **Draft/flat finite verbs with solved peers are transclusion failures.** `تَجْرِى`, `يُؤْمِنۢ`,
+  `يُخْلِفُ`, `وَقَعَتِ`, `ءَامَنُوٓا۟`, `يَقُولَآ`, and `يَتَذَكَّرُونَ` must expose root, form, prefix/stem,
+  person/number, and subject/object suffixes when present. Same-surface rich peers must become repair candidates
+  or exact exceptions.
+- **Root-entry pages are transclusion gates, not exceptions.** On v016 the entry page itself knows `ر أ ى`, so
+  `أَرَىٰنِىٓ`, `أَرِنِىٓ`, `يَرَوْنَهُم`, `وَتَرَى`, `رَأْىَ`, and `رَءَا` must expose the same root family plus
+  visible person prefixes, weak-root stem, plural marker, and object suffixes. A root known by the page cannot be
+  hidden by a generic host hover on that page.
+- **Derivative adjectives need endings too.** `ٱلْمُتَّقُونَ` needs article, derivative prefix, root/stem, and
+  plural suffix; `مُّطَهَّرَةٌۭ` needs passive-participle/feminine/tanwin accounting. A root-only or stem-only
+  hover is not enough.
+- **Tanwin/case endings are not plural suffixes and not learner jargon.** A diacritic-only ending such as `ٍ` or
+  `ٌۭ` must not be colored with `qg-plural-suffix`, and public wording like `indefinite genitive/case ending`
+  is a false closure unless rewritten as a plain ending-mark explanation with a certified governor/context.
+
 ## 14. Integration with qamus-highlight
 A sarf `decision` maps directly: `resolved`→author the gloss (src=qamus); `pending`→set the pending reason;
 `quarantine`→demote/deny the wrong sense. Record the decision at `quran:S:A:W` in the source-address graph so

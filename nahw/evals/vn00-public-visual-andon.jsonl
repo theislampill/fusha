@@ -1,0 +1,11 @@
+{"case_id":"vn00_n0012_innakum_particle_pronoun","expected_segments":["particle_inna","attached_pronoun_2mp"],"failure_family":"function_token_or_particle_flat","loc":"43:77:7","surface":"إِنَّكُم"}
+{"case_id":"vn00_n0026_hal_question_particle","expected_segments":["question_particle"],"failure_family":"function_token_or_particle_flat","loc":"88:1:5","surface":"هَلْ"}
+{"case_id":"vn00_n0014_wama_context_function","expected_segments":["prefix_conjunction","ma_contextual_function"],"failure_family":"function_token_or_particle_flat","loc":"6:112:22","surface":"وَمَا"}
+{"case_id":"vn00_n0025_fiha_preposition_pronoun","expected_segments":["preposition_fi","attached_pronoun_3fs"],"failure_family":"preposition_pronoun_undersegmented","loc":"64:9:23","surface":"فِيهَآ"}
+{"case_id":"vn00_n0041_yawmaidh_temporal_idh","expected_segments":["temporal_noun_stem","temporal_idh"],"failure_family":"rich_shell_temporal_idh_hidden","loc":"75:22:2","surface":"يَوْمَئِذٍۢ"}
+{"case_id":"vn00_v016_innii_particle_pronoun","expected_segments":["particle_inna","attached_pronoun_1s"],"failure_family":"function_token_or_particle_flat","loc":"12:36:7","surface":"إِنِّىٓ"}
+{"case_id":"vn00_v016_ahaduhuma_dual_pronoun","expected_segments":["noun_host","attached_dual_pronoun_3du"],"failure_family":"suffix_or_inflection_hidden","loc":"12:36:6","surface":"أَحَدُهُمَآ"}
+{"case_id":"vn00_v016_wa_article_shams","expected_segments":["prefix_conjunction","definite_article","noun_host"],"failure_family":"contextual_definiteness_hidden","loc":"12:4:11","surface":"وَٱلشَّمْسَ"}
+{"case_id":"vn00_v016_wa_article_qamar","expected_segments":["prefix_conjunction","definite_article","noun_host"],"failure_family":"contextual_definiteness_hidden","loc":"12:4:12","surface":"وَٱلْقَمَرَ"}
+{"case_id":"vn00_v016_article_ayah","expected_segments":["definite_article","noun_host"],"failure_family":"contextual_definiteness_hidden","loc":"79:20:2","surface":"ٱلْءَايَةَ"}
+{"case_id":"vn00_v016_article_ayn","expected_segments":["definite_article","noun_host"],"failure_family":"contextual_definiteness_hidden","loc":"3:13:18","surface":"ٱلْعَيْنِ"}

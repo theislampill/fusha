@@ -1,0 +1,260 @@
+{
+  "done_when": [
+    "Every reported surface has a source-clean candidate, exact blocker, or accepted public readback.",
+    "The Fusha fixtures fail if a finite verb hides prefix, root, form, person, number, or object suffix.",
+    "The Fusha fixtures fail if a preposition, function particle, host, or attached pronoun is hidden inside a stem segment.",
+    "The Fusha fixtures fail if a common particle such as هَلْ, مَا, وَمَا, or إِنَّكُم remains draft-only while solved peers exist.",
+    "The Qamus executor treats same-surface rich peers as transclusion candidates, not optional hints.",
+    "A page cannot be called visually complete while Plan 17 false-closure findings or Fusha flywheel rows remain unaccounted."
+  ],
+  "false_closure_output": {
+    "audit_rows": 12775,
+    "dawahwiki_run": "C:\\workspace\\ai\\dawahwiki\\.IMPLEMENTAUDIT\\runs\\qamus-vn00-public-closure-20260703T024600Z",
+    "finding_rows": 5754,
+    "generated_at_utc": "2026-07-03T05:58:01Z",
+    "page_status_counts": {
+      "reopened_not_complete": 86,
+      "visual_complete": 6
+    },
+    "required_outputs": [
+      "false-closure-audit.jsonl",
+      "false-closure-findings.jsonl",
+      "false-closure-page-status.json",
+      "false-closure-family-board.json",
+      "false-closure-candidate-replacements.jsonl",
+      "fusha-flywheel-family-board.json",
+      "fusha-sarf-backfill-queue.jsonl",
+      "fusha-nahw-backfill-queue.jsonl",
+      "fusha-validator-fixture-queue.jsonl",
+      "fusha-drill-curriculum-queue.jsonl",
+      "fusha-parser-fixture-queue.jsonl"
+    ]
+  },
+  "five_whys": [
+    "Visible public qwords were counted as handled while they remained draft-only, flat, or undersegmented.",
+    "Packet/accounting outputs were not enough; every visible cited-card qword needs public DOM readback.",
+    "The audit did not make same-surface rich peers, known finite-verb morphology, and attached suffix/pronoun morphology mandatory enough.",
+    "Transclusion evidence was advisory instead of a repair-or-exception gate.",
+    "Reusable sarf/nahw lessons needed exact fixtures, procedures, validator queues, drills, and installed-skill reminders."
+  ],
+  "generated_at_utc": "2026-07-03T07:48:35Z",
+  "live_mutation": "not_performed_from_fusha_repo",
+  "reported_examples": [
+    {
+      "expected": "host دُونِ plus attached 3mp pronoun هِمْ learner-visible",
+      "failure_family": "preposition_pronoun_undersegmented",
+      "loc": "19:17:3",
+      "page": "n0004",
+      "surface": "دُونِهِمْ"
+    },
+    {
+      "expected": "noun host plus attached 3ms possessive pronoun visible",
+      "failure_family": "suffix_or_inflection_hidden",
+      "loc": "6:61:4",
+      "page": "n0007",
+      "surface": "عِبَادِهِۦ"
+    },
+    {
+      "expected": "waw plus Form IV imperfect verb with root ر س ل and finite prefix/stem visible",
+      "failure_family": "known_root_not_asserted",
+      "loc": "6:61:5",
+      "page": "n0007",
+      "surface": "وَيُرْسِلُ"
+    },
+    {
+      "expected": "Form I imperfect dual verb with root ق و ل, prefix يَ, stem, and dual subject suffix visible",
+      "failure_family": "known_root_not_asserted",
+      "loc": "2:102:29",
+      "page": "n0009",
+      "surface": "يَقُولَآ"
+    },
+    {
+      "expected": "إِنَّ particle/function role plus attached 2mp pronoun كُمْ both learner-visible",
+      "failure_family": "function_token_or_particle_flat",
+      "loc": "43:77:7",
+      "page": "n0012",
+      "surface": "إِنَّكُم"
+    },
+    {
+      "expected": "contextual mā function, qg color, and rich hover",
+      "failure_family": "function_token_or_particle_flat",
+      "loc": "6:112:19",
+      "page": "n0014",
+      "surface": "مَا"
+    },
+    {
+      "expected": "waw plus contextual mā function colored and rich-hovered",
+      "failure_family": "function_token_or_particle_flat",
+      "loc": "6:112:22",
+      "page": "n0014",
+      "surface": "وَمَا"
+    },
+    {
+      "expected": "root أ م ن, Form IV perfect active, and وا۟ plural subject suffix visible",
+      "failure_family": "known_root_not_asserted",
+      "loc": "13:31:22",
+      "page": "n0021",
+      "surface": "ءَامَنُوٓا۟"
+    },
+    {
+      "expected": "root خ ل ف, Form IV imperfect active, ي prefix and stem visible",
+      "failure_family": "known_root_not_asserted",
+      "loc": "13:31:50",
+      "page": "n0021",
+      "surface": "يُخْلِفُ"
+    },
+    {
+      "expected": "root أ م ن, Form IV, imperfect prefix/stem visible",
+      "failure_family": "known_root_not_asserted",
+      "loc": "64:9:9",
+      "page": "n0025",
+      "surface": "يُؤْمِنۢ"
+    },
+    {
+      "expected": "root ج ر ي, Form I, imperfect prefix/stem visible",
+      "failure_family": "known_root_not_asserted",
+      "loc": "64:9:18",
+      "page": "n0025",
+      "surface": "تَجْرِى"
+    },
+    {
+      "expected": "preposition فِي plus attached 3fs pronoun هَا visible",
+      "failure_family": "preposition_pronoun_undersegmented",
+      "loc": "64:9:23",
+      "page": "n0025",
+      "surface": "فِيهَآ"
+    },
+    {
+      "expected": "هَلْ question particle colored and rich-hovered with context-safe nahw role",
+      "failure_family": "function_token_or_particle_flat",
+      "loc": "88:1:5",
+      "page": "n0026",
+      "surface": "هَلْ"
+    },
+    {
+      "expected": "waw plus Form I perfect verb with root و ق ع and تْ/تِ feminine marker visible",
+      "failure_family": "known_root_not_asserted",
+      "loc": "56:1:6",
+      "page": "n0027",
+      "surface": "وَقَعَتِ"
+    },
+    {
+      "expected": "Form IV perfect verb with تُمْ second-person plural subject suffix separately colored and explained",
+      "failure_family": "suffix_or_inflection_hidden",
+      "loc": "7:49:3",
+      "page": "n0029",
+      "surface": "أَقْسَمْتُمْ"
+    },
+    {
+      "expected": "article, derivative prefix, root و ق ي, and ونَ plural suffix visible",
+      "failure_family": "derivative_prefix_hidden",
+      "loc": "25:15:9",
+      "page": "n0029",
+      "surface": "ٱلْمُتَّقُونَ"
+    },
+    {
+      "expected": "wāw, imperative stem, root ج ع ل, and نِي first-person object pronoun separately colored and explained",
+      "failure_family": "suffix_or_inflection_hidden",
+      "loc": "26:85:1",
+      "page": "n0029",
+      "surface": "وَٱجْعَلْنِى"
+    },
+    {
+      "expected": "finite Form I imperfect with root ه د ي and هِمْ object pronoun visible",
+      "failure_family": "suffix_or_inflection_hidden",
+      "loc": "10:9:6",
+      "page": "n0029",
+      "surface": "يَهْدِيهِمْ"
+    },
+    {
+      "expected": "Form II passive participle/adjective with derivative prefix, root ط ه ر, feminine ة, and tanwin/case ending visible",
+      "failure_family": "suffix_or_inflection_hidden",
+      "loc": "2:25:31",
+      "page": "n0029",
+      "surface": "مُّطَهَّرَةٌۭ"
+    },
+    {
+      "expected": "root ر أ ى, weak-root stem, and first-person object suffix نِى visible",
+      "failure_family": "suffix_or_inflection_hidden",
+      "loc": "12:36:8",
+      "page": "v016",
+      "surface": "أَرَىٰنِىٓ"
+    },
+    {
+      "expected": "same-page root ر أ ى transclusion exposes person prefix, stem, plural marker, and هُم object pronoun",
+      "failure_family": "known_root_not_asserted",
+      "loc": "3:13:15",
+      "page": "v016",
+      "surface": "يَرَوْنَهُم"
+    },
+    {
+      "expected": "wāw plus تَ imperfect prefix and root ر أ ى stem visible",
+      "failure_family": "content_root_hidden",
+      "loc": "22:5:56",
+      "page": "v016",
+      "surface": "وَتَرَى"
+    },
+    {
+      "expected": "noun/masdar from root ر أ ى is colored and rich-hovered instead of flat beside solved رَءَا peers",
+      "failure_family": "transclusion_peer_richer_than_claimed_page",
+      "loc": "3:13:17",
+      "page": "v016",
+      "surface": "رَأْىَ"
+    },
+    {
+      "expected": "إِنِّ particle plus first-person attached pronoun visible",
+      "failure_family": "function_token_or_particle_flat",
+      "loc": "12:36:7",
+      "page": "v016",
+      "surface": "إِنِّىٓ"
+    },
+    {
+      "expected": "wāw, definite article, noun host, and source-clean root/base visible",
+      "failure_family": "contextual_definiteness_hidden",
+      "loc": "12:4:11",
+      "page": "v016",
+      "surface": "وَٱلشَّمْسَ"
+    },
+    {
+      "expected": "definite article and noun host/root visible",
+      "failure_family": "contextual_definiteness_hidden",
+      "loc": "79:20:2",
+      "page": "v016",
+      "surface": "ٱلْءَايَةَ"
+    }
+  ],
+  "schema": "fusha.qamus.public_visual_andon_summary.v3",
+  "scope": "VN-00 public visual closure regression lessons",
+  "source_run": "C:\\workspace\\ai\\dawahwiki\\.IMPLEMENTAUDIT\\runs\\qamus-vn00-public-closure-20260703T024600Z",
+  "summary": {
+    "affected_pages": [
+      "n0004",
+      "n0007",
+      "n0009",
+      "n0012",
+      "n0014",
+      "n0021",
+      "n0025",
+      "n0026",
+      "n0027",
+      "n0029",
+      "v016",
+      "v023",
+      "v036"
+    ],
+    "failure_families": [
+      "draft_only_visible_qword",
+      "flat_visible_qword",
+      "finite_verb_prefix_root_form_hidden",
+      "function_token_transclusion_missing",
+      "preposition_pronoun_undersegmented",
+      "contextual_definiteness_hidden",
+      "root_entry_transclusion_hidden",
+      "host_possessive_pronoun_undersegmented",
+      "subject_or_object_suffix_hidden",
+      "tanwin_or_inflection_hidden",
+      "same_surface_rich_peer_not_transcluded",
+      "rich_shell_missing_suffix_or_form"
+    ]
+  }
+}

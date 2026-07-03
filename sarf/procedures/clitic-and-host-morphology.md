@@ -20,6 +20,83 @@ Examples:
 - `جَادَلُوكَ` cannot be only `to argue/dispute`;
 - `وَلْيَعْفُوا` cannot be only `pardon`.
 
+## Production finding: VN-00 public visual ANDON suffixes
+
+The 2026-07-03 VN-00 public readback found rich-looking Qamus rows that still
+hid learner-visible morphology inside a single host segment. These rows are
+not complete, even when the public page has color and a hover shell.
+
+Regression examples:
+
+- `أَقْسَمْتُمْ` must expose the Form IV verb host and the `تُمْ`
+  second-person plural subject suffix. A single `قْسَمْتُمْ` stem segment is
+  undersegmented.
+- `وَٱجْعَلْنِى` must expose `وَ`, the imperative host, root `ج ع ل`, and
+  the `نِي` first-person object suffix. A hover that only says "make" is
+  host-only.
+- `يَهْدِيهِمْ` must expose the imperfect prefix, host/root `ه د ي`, and
+  the `هِمْ` object pronoun.
+- `مُّطَهَّرَةٌۭ` must expose the derivative/passive-participle structure,
+  root `ط ه ر`, feminine `ة`, and tanwin/case ending. Do not hide `ةٌۭ`
+  inside the adjective host.
+- `ءَامَنُوٓا۟`, `تَجْرِى`, `يُؤْمِنۢ`, `يُخْلِفُ`, `وَقَعَتِ`,
+  `يَقُولَآ`, and `يَتَذَكَّرُونَ` must not ship as draft/flat rows or
+  as hovers that omit root/form/person/number.
+- `كَانَتْ` must expose `كَانَ` as the verb stem from root `ك و ن` and
+  `تْ` as the visible 3fs/feminine subject-agreement ending. A single
+  `qg-noun-stem` segment for the whole token is a false closure.
+- `رَوْضَةٍۢ`, `نَّاضِرَةٌ`, `نَضْرَةَ`, `وُجُوهٌۭ`, and similar nominals
+  must expose the lexical host/root and the visible tā marbūṭa, case, or
+  tanwin ending when that ending is learner-visible on the public page.
+- `يَوْمَئِذٍۢ` must not be treated as an undivided noun host when a solved
+  peer exposes `يَوْمَ` plus the attached temporal `ئِذٍۢ` element.
+- `مُتَّكِـِٔينَ` and `مَّصْفُوفَةٍۢ` must expose the derivative/participle
+  prefix (`مُتَّـ` / `مَّـ`), the rooted stem, and the plural/feminine/case
+  ending. Do not hide the prefix or ending inside a single adjective host.
+- v016 exposed an entry-page transclusion failure: the page itself is for
+  root `ر أ ى`, so examples such as `أَرَىٰنِىٓ`, `أَرِنِىٓ`, `يَرَوْنَهُم`,
+  `وَتَرَى`, `رَأْىَ`, and `رَءَا` must not hide the same root, weak-root stem,
+  person prefix, plural marker, or object suffix. A root-family page that knows
+  the root creates a stronger same-page transclusion obligation, not a weaker
+  optional hint.
+- Article-plus-host rows on v016 such as `وَٱلشَّمْسَ`, `وَٱلْقَمَرَ`,
+  `ٱلْءَايَةَ`, and `ٱلْعَيْنِ` must expose `وَ` where present, the definite
+  article, and the noun host/root. Do not count "the X" English wording as a
+  substitute for article segmentation.
+
+Rule: every finite verb or derivative candidate used by Qamus must make
+visible prefixes, stems, roots/forms, subject/object suffixes, feminine
+markers, plural endings, and tanwin/case endings either learner-visible or an
+exact blocker. Same-surface rich peers create a transclusion repair candidate
+or an explicit exception; they do not merely advise the executor.
+
+## Production finding: tanwin/case display must not color base letters
+
+The VN-00 public screenshot audit found a second false-closure mode: a
+tanwin/case segment existed, but the renderer colored part of the base letter
+and the hover label said opaque things like `indefinite genitive/case ending`.
+That is not learner closure.
+
+Rules:
+
+- A diacritic-only tanwin/case mark such as `ٌ`, `ٍ`, `ً`, `ٌۭ`, or `ٍۢ`
+  must not use `qg-plural-suffix`. Use a neutral ending/case segment class
+  accepted by the renderer, or keep the explanation inside the host until a
+  dedicated display class exists.
+- If the ending is split as a separate segment, its display must be
+  renderer-safe: it may appear in the rich hover breakdown, but it must not
+  paint the underlying base letter merely because CSS gradients cannot target
+  combining marks.
+- Public gloss wording should start from a learner phrase such as `ending mark`
+  or `small final mark`; mention that it is the expected noun/adjective ending
+  in context only in the explanation. Do not make `indefinite genitive/case
+  ending` the visible gloss contribution.
+- `qg-plural-suffix` is reserved for real sound-plural endings such as `ونَ`,
+  `ينَ`, and `ات`, not for tanwin, kasra, damma, fatḥa, or Qur'anic pause marks.
+
+Flywheel action: any recurrence of this family must create a validator fixture
+and a parser/backfill queue item, not only a Qamus replacement row.
+
 ## Dogfood finding: plus-sign hovers are not learner explanations
 
 The 2026-06-27 full-corpus dogfood batch found populated hovers that were

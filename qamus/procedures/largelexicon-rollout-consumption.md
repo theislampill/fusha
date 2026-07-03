@@ -124,3 +124,30 @@ Do not treat selected-word closure as all visible qword closure. Do not treat
 parser candidate output as live rich-hover deployment. Do not use raw QAC/MCP/API
 payloads as public hover provenance; external source evidence remains private
 and must project into source-clean Qamus-authored fields.
+
+## VN-00 Public False-Closure Gate
+
+The VN-00 public visual closure run on 2026-07-03 promoted Plan 17 from an
+audit report into an executor gate. A Qamus row is not complete merely because
+it has a hover shell or a qg class. It must pass public readback for every
+visible cited-card qword.
+
+The executor must fail page completion when any visible qword is:
+
+- draft-only, flat, uncolored, or missing rich hover;
+- weaker than a solved same-surface or equivalent-function peer;
+- hiding root/form/person/number on a finite verb, especially when the page
+  entry itself supplies the root family, as v016 does for `ر أ ى`;
+- hiding subject/object/possessive suffixes such as `تُمْ`, `نِي`, `هِمْ`,
+  `كُمْ`, `هُۥ`, or `هَا`;
+- hiding derivative prefixes, feminine markers, plural suffixes, or
+  tanwin/case endings;
+- using a generic token/host shell for particles such as `هَلْ`, `مَا`,
+  `وَمَا`, `إِنَّكُم`, or `لَعَلَّهُمْ`;
+- hiding article-plus-host structure in rows such as `وَٱلشَّمْسَ`,
+  `وَٱلْقَمَرَ`, `ٱلْءَايَةَ`, and `ٱلْعَيْنِ`.
+
+Transclusion is no longer optional acceleration for these families. A richer
+same-surface peer must produce a replacement/append candidate or an exact
+exception row. Packet/accounting rows, terminal rows, and selected-word
+coverage are not public visual closure.

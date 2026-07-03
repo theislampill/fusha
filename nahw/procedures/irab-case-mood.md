@@ -31,6 +31,14 @@ Public record stays exactly `{src:"qamus",kind:"authored",lang:"en"}` — the ma
 ambiguous ending pick the commoner reading; reading a fixed pronoun/particle vowel as a case marker; shipping a
 case/mood decision on the answer alone — a correct gloss with wrong iʿrāb reasoning is unsafe and must be rejected.
 
+**Public-hover wording guard:** a case/tanwin ending may be visible in a rich
+hover, but the public contribution should not be the technical phrase
+`indefinite genitive/case ending`. Use plain wording such as `ending mark` and
+then explain the governor/context: for example, after bāʾ, the small final mark
+shows the noun is in the expected form after the preposition. If the renderer
+cannot color only the diacritic, the mark must be hover-accounted without
+painting the base letter as though it were a separate lexical piece.
+
 ## Dogfood handoff: iʿrāb cannot rescue POS leakage
 
 If sarf identifies a token as a noun, adjective, maṣdar, active participle, passive participle, or ṣifa but the

@@ -18,6 +18,39 @@ Review:
 If function controls meaning and evidence is insufficient, route to two-vote or
 scholar review. Do not use a default one-gloss particle policy.
 
+## Production finding: VN-00 public visual ANDON particles
+
+The 2026-07-03 VN-00 public readback found common function tokens that remained
+draft-only or generic despite solved peers. These rows block page completion
+until the public hover exposes the function role and any attached pronoun.
+
+Regression examples:
+
+- `هَلْ` must be a question particle row with a question-particle qg role,
+  not a draft row and not a generic `qg-segment` token shell.
+- `إِنَّكُم` must expose `إِنَّ` as the particle/function host and `كُمْ` as
+  an attached second-person plural pronoun.
+- `وَمَا` must preserve the wāw plus the contextual function of `مَا`; do not
+  carry a default "what/that/not" gloss without context.
+- `فِيهَآ` must expose preposition `فِي` plus attached `هَا`; the relation
+  cannot be hidden in a host-only hover.
+- `لَعَلَّهُمْ` must expose the particle and the attached plural pronoun.
+- v016 added the same rule for `إِنِّىٓ`, `أَحَدُهُمَآ`, and similar attached
+  pronoun clusters: the particle/host and the pronoun must each be visible, and
+  person/number must not disappear behind a generic "me/them" gloss.
+- `وَٱلشَّمْسَ`, `وَٱلْقَمَرَ`, `ٱلْءَايَةَ`, and `ٱلْعَيْنِ` must expose the
+  definite article as a grammar piece. If a richer article-plus-host peer
+  exists, a flat noun hover is a transclusion failure.
+- `يَوْمَئِذٍۢ` is not just a bare noun gloss. In context it is a temporal
+  expression: `يَوْمَ` supplies the time noun and `ئِذٍۢ` supplies the
+  attached "then/that time" element. A hover that hides `ئِذٍۢ` fails nahw
+  review even if the page is colored.
+
+Rule: common solved function-token peers are transclusion obligations. If a
+visible VN page has a flat/draft/generic function token while a richer same
+surface or equivalent-function peer exists, emit a repair candidate or exact
+nahw blocker before any page-complete claim.
+
 Vocative guard:
 
 - `يَا` contributes the call "O" when it is a real vocative particle.
@@ -51,6 +84,25 @@ If the function role is known enough for a fallback phrase but not enough for a
 rich row, classify the row as `string_correct_but_not_rich`,
 `needs_renderer_segments`, or `needs_nahw_review`; do not mark it
 `rich_certified`.
+
+## Production finding: case/tanwin wording must teach the contribution
+
+When a noun or adjective ending is shown in a Qamus rich hover, nahw must keep
+the governor/context contribution understandable. A public segment gloss like
+`indefinite genitive/case ending` is too opaque for ordinary learners and can
+look like a new word meaning.
+
+For bāʾ, lām, min, ʿalā, and similar preposition phrases, prefer plain wording:
+
+- segment gloss: `ending mark` or `small final mark`;
+- note: `after the preposition, this is the expected noun ending here`;
+- explanation: the mark shows how the word fits the phrase; it does not add a
+  new lexical meaning.
+
+Do not use a case/tanwin segment to compensate for an uncertified governor.
+If the governor or phrase role is not known, route the row to
+`governor_irab_fixture_needed` or `pp_attachment_uncertified` instead of
+shipping case jargon in public.
 
 Rich-hover readiness:
 

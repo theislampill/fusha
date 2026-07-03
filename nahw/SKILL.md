@@ -229,6 +229,27 @@ particle:
 - Vocative particles and exceptive particles must preserve the governed noun structure; for exceptions record the
   mustathnā minhu, mustathnā, and whether the construction is muttaṣil, munqaṭiʿ, or mufarragh.
 
+## Production finding (VN-00 public visual ANDON)
+VN-00 public readback found common grammar tokens that were draft-only, flat, or generic despite solved peers.
+These are false closure, not acceptable page completion:
+
+- `هَلْ` must be a question particle with a function-specific qg role, not a generic token shell.
+- `إِنَّكُم` and `لَعَلَّهُمْ` must expose the particle/function host plus attached plural pronoun.
+- `مَا` and `وَمَا` require contextual mā classification before transclusion; a default table gloss is not enough.
+- `فِيهَآ`, `دُونِهِمْ`, and similar preposition/host plus pronoun rows must expose both the relation and the
+  attached pronoun.
+- v016 added `إِنِّىٓ`, `أَحَدُهُمَآ`, and article-plus-host rows such as `وَٱلشَّمْسَ`, `وَٱلْقَمَرَ`,
+  `ٱلْءَايَةَ`, and `ٱلْعَيْنِ`: attached pronouns, waw, and the definite article are learner-visible grammar
+  pieces, not optional metadata.
+- `يَوْمَئِذٍۢ` requires temporal-expression review: `يَوْمَ` is the time noun and `ئِذٍۢ` is the attached
+  "then/that time" element. Do not accept a bare "day" hover as rich closure.
+- Tanwin/case endings must not be used as opaque public grammar labels. Explain
+  them as small ending marks tied to the certified governor/context, and do not
+  let the renderer color a base letter when only the diacritic is being taught.
+
+Same-surface or equivalent-function rich peers are transclusion obligations. If a page has a weaker public payload,
+emit a replacement/append candidate or an exact nahw blocker before any `visual_complete` claim.
+
 ## Governor / iʿrāb / dependency candidate lattice (the P2 grammar-checker engine)
 The checker now emits a **conservative governor/dependency candidate lattice** — the *executable* form of the grammar-safety gate
 above. A dependency edge points a dependent at a governor (ʿāmil) with a `governor_justification`. Use it whenever you assign or
