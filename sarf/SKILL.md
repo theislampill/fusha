@@ -260,6 +260,10 @@ QAC-conflict). **A surface-key gloss is auto_safe only if its `norm_strict` key 
 - **Tanwin/case endings are not plural suffixes and not learner jargon.** A diacritic-only ending such as `ٍ` or
   `ٌۭ` must not be colored with `qg-plural-suffix`, and public wording like `indefinite genitive/case ending`
   is a false closure unless rewritten as a plain ending-mark explanation with a certified governor/context.
+- **Lexical final letters can look like suffixes.** Rows such as `وَٱلرُّمَّانَ` and `بُطُونِ` are false-positive
+  traps for suffix validators: final `انَ` in `رُّمَّانَ` is lexical stem material, not a dual suffix, and `ونِ`
+  in `بُطُونِ` is a broken-plural noun host, not a sound-plural ending. Do not satisfy Plan17 by adding fake
+  dual/plural suffix classes; add a lexical-final/broken-plural guard or leave an exact validator packet.
 
 ## 14. Integration with qamus-highlight
 A sarf `decision` maps directly: `resolved`→author the gloss (src=qamus); `pending`→set the pending reason;

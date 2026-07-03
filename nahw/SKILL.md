@@ -251,6 +251,10 @@ These are false closure, not acceptable page completion:
 - Tanwin/case endings must not be used as opaque public grammar labels. Explain
   them as small ending marks tied to the certified governor/context, and do not
   let the renderer color a base letter when only the diacritic is being taught.
+- v045 added validator-sensitive context traps: `فِيهَا`/`فِيهِ` must surface as `فِي` plus attached pronoun, not
+  a fake fāʾ+noun stem; `لَّدُنكَ` needs a supported relation/preposition class plus attached `كَ`; `بُطُونِ`
+  may be definite in English only by context, not by a hidden article; and `وَٱلرُّمَّانَ` needs visible wāw +
+  article + lexical host without mislabeling final `انَ` as dual.
 
 Same-surface or equivalent-function rich peers are transclusion obligations. If a page has a weaker public payload,
 emit a replacement/append candidate or an exact nahw blocker before any `visual_complete` claim.
