@@ -19,3 +19,14 @@
 {"expected_public_feature":"wāw, definite article, and noun host/root separately visible","failure_family":"contextual_definiteness_hidden","loc":"12:4:12","page":"v016","surface":"وَٱلْقَمَرَ"}
 {"expected_public_feature":"definite article and noun host/root separately visible","failure_family":"contextual_definiteness_hidden","loc":"79:20:2","page":"v016","surface":"ٱلْءَايَةَ"}
 {"expected_public_feature":"definite article and noun host/root separately visible","failure_family":"contextual_definiteness_hidden","loc":"3:13:18","page":"v016","surface":"ٱلْعَيْنِ"}
+{"expected_public_feature":"derivative/place prefix, rooted host, and attached 2ms pronoun separately visible","failure_family":"derivative_prefix_hidden","loc":"27:39:12","page":"n0018","surface":"مَّقَامِكَ"}
+{"expected_public_feature":"lām/context, adjective root ق و ي, and final ending separately accounted","failure_family":"known_root_not_asserted","loc":"27:39:15","page":"n0018","surface":"لَقَوِىٌّ"}
+{"expected_public_feature":"lām relation plus attached 3mp pronoun visible","failure_family":"preposition_pronoun_undersegmented","loc":"2:25:7","page":"n0030","surface":"لَهُمْ"}
+{"expected_public_feature":"bāʾ/prepositional relation plus attached 3ms pronoun visible","failure_family":"preposition_pronoun_undersegmented","loc":"2:25:26","page":"n0030","surface":"بِهِۦ"}
+{"expected_public_feature":"wāw plus lām relation plus attached 3mp pronoun visible","failure_family":"preposition_pronoun_undersegmented","loc":"2:25:28","page":"n0030","surface":"وَلَهُمْ"}
+{"expected_public_feature":"article, derivative prefix, rooted participle host, and plural suffix visible instead of draft-only row","failure_family":"draft_or_flat_qword_on_closed_page","loc":"54:54:2","page":"n0030","surface":"ٱلْمُتَّقِينَ"}
+{"expected_public_feature":"imperfect prefix, weak-root stem و ق ي, and كُمُ object pronoun visible","failure_family":"suffix_or_inflection_hidden","loc":"16:81:15","page":"v030","surface":"تَقِيكُمُ"}
+{"expected_public_feature":"Form IV imperfect prefix/stem and ونَ second-person plural subject marker visible","failure_family":"suffix_or_inflection_hidden","loc":"16:81:25","page":"v030","surface":"تُسْلِمُونَ"}
+{"expected_public_feature":"verb prefix, root ن ق ص stem, plural subject marker, and كُمْ object pronoun visible","failure_family":"suffix_or_inflection_hidden","loc":"9:4:8","page":"v030","surface":"يَنقُصُوكُمْ"}
+{"expected_public_feature":"visible lām/particle host plus attached 2mp pronoun visible","failure_family":"function_token_or_particle_flat","loc":"16:81:24","page":"v030","surface":"لَعَلَّكُمْ"}
+{"expected_public_feature":"flat participle/adjective row gets root/form and visible final ending or exact blocker","failure_family":"draft_or_flat_qword_on_closed_page","loc":"3:120:21","page":"v030","surface":"مُحِيطٌۭ"}

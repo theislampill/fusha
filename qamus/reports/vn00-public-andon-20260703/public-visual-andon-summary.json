@@ -221,6 +221,41 @@
       "loc": "79:20:2",
       "page": "v016",
       "surface": "ٱلْءَايَةَ"
+    },
+    {
+      "expected": "derivative/place prefix, rooted host, and attached 2ms pronoun visible",
+      "failure_family": "derivative_prefix_hidden",
+      "loc": "27:39:12",
+      "page": "n0018",
+      "surface": "مَّقَامِكَ"
+    },
+    {
+      "expected": "lām relation plus attached pronoun visible rather than generic placeholder",
+      "failure_family": "preposition_pronoun_undersegmented",
+      "loc": "2:25:7",
+      "page": "n0030",
+      "surface": "لَهُمْ"
+    },
+    {
+      "expected": "article, derivative prefix, rooted participle host, and plural suffix visible",
+      "failure_family": "draft_or_flat_qword_on_closed_page",
+      "loc": "54:54:2",
+      "page": "n0030",
+      "surface": "ٱلْمُتَّقِينَ"
+    },
+    {
+      "expected": "weak-root finite verb plus 2mp object suffix visible",
+      "failure_family": "suffix_or_inflection_hidden",
+      "loc": "16:81:15",
+      "page": "v030",
+      "surface": "تَقِيكُمُ"
+    },
+    {
+      "expected": "visible lām/particle host plus attached 2mp pronoun visible",
+      "failure_family": "function_token_or_particle_flat",
+      "loc": "16:81:24",
+      "page": "v030",
+      "surface": "لَعَلَّكُمْ"
     }
   ],
   "schema": "fusha.qamus.public_visual_andon_summary.v3",
@@ -233,12 +268,15 @@
       "n0009",
       "n0012",
       "n0014",
+      "n0018",
       "n0021",
       "n0025",
       "n0026",
       "n0027",
       "n0029",
+      "n0030",
       "v016",
+      "v030",
       "v023",
       "v036"
     ],
@@ -249,6 +287,7 @@
       "function_token_transclusion_missing",
       "preposition_pronoun_undersegmented",
       "contextual_definiteness_hidden",
+      "derivative_prefix_hidden",
       "root_entry_transclusion_hidden",
       "host_possessive_pronoun_undersegmented",
       "subject_or_object_suffix_hidden",

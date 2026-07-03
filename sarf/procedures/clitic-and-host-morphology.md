@@ -63,6 +63,17 @@ Regression examples:
   `ٱلْءَايَةَ`, and `ٱلْعَيْنِ` must expose `وَ` where present, the definite
   article, and the noun host/root. Do not count "the X" English wording as a
   substitute for article segmentation.
+- n0018/n0030 add derivative and ending recurrence checks: `مَّقَامِكَ`
+  needs the derivative/place prefix, rooted host, and `كَ` suffix;
+  `لَقَوِىٌّ` needs lām/context plus adjective root and final ending;
+  `ٱلْمُتَّقِينَ`, `مُتَشَٰبِهًۭا`, and `مُّطَهَّرَةٌۭ` must expose article or
+  derivative prefix, rooted participle/adjective host, and plural/feminine or
+  tanwin/case endings.
+- v030 adds a finite-verb pronoun wave: `تَقِيكُمُ`, `تُسْلِمُونَ`,
+  `يَنقُصُوكُمْ`, `تَمْسَسْكُمْ`, and `وَيُحَذِّرُكُمُ` must expose the
+  prefix, form/root stem, subject marker when present, and object pronoun.
+  A row can pass public readback for the changed loc and still leave the page
+  not complete if other same-family rows remain flat or undersegmented.
 
 Rule: every finite verb or derivative candidate used by Qamus must make
 visible prefixes, stems, roots/forms, subject/object suffixes, feminine

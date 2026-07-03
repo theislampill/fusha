@@ -9,3 +9,12 @@
 {"case_id":"vn00_v016_wa_article_qamar","expected_segments":["prefix_conjunction","definite_article","noun_host"],"failure_family":"contextual_definiteness_hidden","loc":"12:4:12","surface":"وَٱلْقَمَرَ"}
 {"case_id":"vn00_v016_article_ayah","expected_segments":["definite_article","noun_host"],"failure_family":"contextual_definiteness_hidden","loc":"79:20:2","surface":"ٱلْءَايَةَ"}
 {"case_id":"vn00_v016_article_ayn","expected_segments":["definite_article","noun_host"],"failure_family":"contextual_definiteness_hidden","loc":"3:13:18","surface":"ٱلْعَيْنِ"}
+{"case_id":"vn00_n0030_lahum_lam_pronoun","expected_segments":["lam_relation","attached_pronoun_3mp"],"failure_family":"preposition_pronoun_undersegmented","loc":"2:25:7","surface":"لَهُمْ"}
+{"case_id":"vn00_n0030_bihi_ba_pronoun","expected_segments":["preposition_ba","attached_pronoun_3ms"],"failure_family":"preposition_pronoun_undersegmented","loc":"2:25:26","surface":"بِهِۦ"}
+{"case_id":"vn00_n0030_walahum_waw_lam_pronoun","expected_segments":["prefix_conjunction","lam_relation","attached_pronoun_3mp"],"failure_family":"preposition_pronoun_undersegmented","loc":"2:25:28","surface":"وَلَهُمْ"}
+{"case_id":"vn00_n0030_fiha_preposition_pronoun","expected_segments":["preposition_fi","attached_pronoun_3fs"],"failure_family":"preposition_pronoun_undersegmented","loc":"2:25:29","surface":"فِيهَآ"}
+{"case_id":"vn00_v030_lakum_lam_pronoun","expected_segments":["lam_benefactive_relation","attached_pronoun_2mp"],"failure_family":"preposition_pronoun_undersegmented","loc":"16:81:13","surface":"لَكُمْ"}
+{"case_id":"vn00_v030_alaykum_relation_pronoun","expected_segments":["preposition_ala_relation","attached_pronoun_2mp"],"failure_family":"preposition_pronoun_undersegmented","loc":"16:81:23","surface":"عَلَيْكُمْ"}
+{"case_id":"vn00_v030_laallakum_lam_particle_pronoun","expected_segments":["visible_lam_opening","particle_lalla_host","attached_pronoun_2mp"],"failure_family":"function_token_or_particle_flat","loc":"16:81:24","surface":"لَعَلَّكُمْ"}
+{"case_id":"vn00_v030_wa_in_context_particle","expected_segments":["prefix_conjunction","conditional_or_contextual_in"],"failure_family":"function_token_or_particle_flat","loc":"3:120:5","surface":"وَإِن"}
+{"case_id":"vn00_v030_annakum_particle_pronoun","expected_segments":["particle_anna","attached_pronoun_2mp"],"failure_family":"function_token_or_particle_flat","loc":"2:187:16","surface":"أَنَّكُمْ"}

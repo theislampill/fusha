@@ -241,6 +241,11 @@ These are false closure, not acceptable page completion:
 - v016 added `إِنِّىٓ`, `أَحَدُهُمَآ`, and article-plus-host rows such as `وَٱلشَّمْسَ`, `وَٱلْقَمَرَ`,
   `ٱلْءَايَةَ`, and `ٱلْعَيْنِ`: attached pronouns, waw, and the definite article are learner-visible grammar
   pieces, not optional metadata.
+- n0030/v030 repeated the relation-plus-pronoun and particle-cluster problem:
+  `لَهُمْ`, `بِهِۦ`, `وَلَهُمْ`, `فِيهَآ`, `لَكُمْ`, `عَلَيْكُمْ`, and
+  `لَعَلَّكُمْ` must expose the relation or particle role plus attached
+  pronoun. `وَإِن` and `أَنَّكُمْ` must be context-classified instead of left
+  as a generic function-token shell.
 - `يَوْمَئِذٍۢ` requires temporal-expression review: `يَوْمَ` is the time noun and `ئِذٍۢ` is the attached
   "then/that time" element. Do not accept a bare "day" hover as rich closure.
 - Tanwin/case endings must not be used as opaque public grammar labels. Explain

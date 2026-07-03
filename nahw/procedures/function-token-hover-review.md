@@ -45,6 +45,12 @@ Regression examples:
   expression: `يَوْمَ` supplies the time noun and `ئِذٍۢ` supplies the
   attached "then/that time" element. A hover that hides `ئِذٍۢ` fails nahw
   review even if the page is colored.
+- n0030 and v030 repeated the preposition/function-token transclusion failure:
+  `لَهُمْ`, `بِهِۦ`, `وَلَهُمْ`, `فِيهَآ`, `لَكُمْ`, and `عَلَيْكُمْ` must
+  expose the relation plus the attached pronoun. `لَعَلَّكُمْ` must expose the
+  visible lām/particle host and plural pronoun, while rows such as `وَإِن` and
+  `أَنَّكُمْ` require context-safe particle classification before color or
+  hover completion can be claimed.
 
 Rule: common solved function-token peers are transclusion obligations. If a
 visible VN page has a flat/draft/generic function token while a richer same

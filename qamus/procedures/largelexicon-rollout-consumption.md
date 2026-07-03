@@ -146,6 +146,11 @@ The executor must fail page completion when any visible qword is:
   `وَمَا`, `إِنَّكُم`, or `لَعَلَّهُمْ`;
 - hiding article-plus-host structure in rows such as `وَٱلشَّمْسَ`,
   `وَٱلْقَمَرَ`, `ٱلْءَايَةَ`, and `ٱلْعَيْنِ`.
+- recurring n0018/n0030/v030 families such as `مَّقَامِكَ`, `لَهُمْ`,
+  `بِهِۦ`, `وَلَهُمْ`, `فِيهَآ`, `لَكُمْ`, `لَعَلَّكُمْ`, `تَقِيكُمُ`,
+  `تُسْلِمُونَ`, `يَنقُصُوكُمْ`, `تَمْسَسْكُمْ`, and `وَيُحَذِّرُكُمُ`,
+  unless they have a source-clean repair row, exact exception, or owner/scholar
+  packet plus public readback.
 
 Transclusion is no longer optional acceleration for these families. A richer
 same-surface peer must produce a replacement/append candidate or an exact

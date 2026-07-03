@@ -249,6 +249,11 @@ QAC-conflict). **A surface-key gloss is auto_safe only if its `norm_strict` key 
   `أَرَىٰنِىٓ`, `أَرِنِىٓ`, `يَرَوْنَهُم`, `وَتَرَى`, `رَأْىَ`, and `رَءَا` must expose the same root family plus
   visible person prefixes, weak-root stem, plural marker, and object suffixes. A root known by the page cannot be
   hidden by a generic host hover on that page.
+- **n0018/n0030/v030 repeated the same families after repair waves.** `مَّقَامِكَ`, `ٱلْمُتَّقِينَ`,
+  `مُتَشَٰبِهًۭا`, `تَقِيكُمُ`, `تُسْلِمُونَ`, `يَنقُصُوكُمْ`, `تَمْسَسْكُمْ`, and `وَيُحَذِّرُكُمُ` are regression
+  fixtures for derivative prefixes, weak/geminate roots, finite prefixes, subject markers, object pronouns, and
+  visible endings. A changed-row public readback pass is not page closure if same-family page rows remain flat or
+  undersegmented.
 - **Derivative adjectives need endings too.** `ٱلْمُتَّقُونَ` needs article, derivative prefix, root/stem, and
   plural suffix; `مُّطَهَّرَةٌۭ` needs passive-participle/feminine/tanwin accounting. A root-only or stem-only
   hover is not enough.
