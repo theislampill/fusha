@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -14,6 +15,7 @@ from largelexicon_table_reader import LargelexiconQwordTable
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_SHARD_BYTES = 10 * 1024 * 1024
+ACCEPTED = "canonical_crosswalk_accepted"
 
 
 def _iter_rows(manifest: dict[str, Any], errors: list[str]) -> list[dict[str, Any]]:
@@ -39,6 +41,26 @@ def _iter_rows(manifest: dict[str, Any], errors: list[str]) -> list[dict[str, An
     return rows
 
 
+def _sha256_row(row: dict[str, Any]) -> str:
+    return hashlib.sha256(json.dumps(row, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+
+
+def _quran_ref_matches_loc(quran_ref: str | None, loc: str | None) -> bool:
+    if not quran_ref or not loc:
+        return True
+    parts = loc.split(":")
+    if len(parts) < 2:
+        return False
+    return quran_ref == f"{parts[0]}:{parts[1]}"
+
+
+def _dependency_sha(row: dict[str, Any], kind: str, dep_id: str | None) -> str | None:
+    for dep in row.get("source_dependencies") or []:
+        if dep.get("kind") == kind and (dep_id is None or dep.get("id") == dep_id):
+            return dep.get("sha256")
+    return None
+
+
 def validate() -> list[str]:
     errors: list[str] = []
     if not QWORD_CROSSWALK_MANIFEST.exists():
@@ -52,6 +74,8 @@ def validate() -> list[str]:
     rows = _iter_rows(manifest, errors)
     if len(rows) != manifest.get("row_count"):
         errors.append("crosswalk materialized rows do not match manifest row_count")
+    table = LargelexiconQwordTable.from_repo(ROOT)
+    denominator_rows = {row["row_id"]: row for row in table.iter_rows()}
     qword_ids: set[str] = set()
     for row in rows:
         label = row.get("row_id") or "<unknown>"
@@ -66,13 +90,33 @@ def validate() -> list[str]:
             errors.append(f"{label}: public_boundary must stay source-clean")
         if not row.get("source_dependencies"):
             errors.append(f"{label}: missing source_dependencies")
-        if row.get("status") == "canonical_crosswalk_accepted" and (
-            not row.get("canonical_quran_loc") or not row.get("canonical_wbw_loc")
-        ):
-            errors.append(f"{label}: accepted crosswalk cannot have null canonical loc")
-        if row.get("status") != "canonical_crosswalk_accepted" and not row.get("packet_class"):
+        denominator_row = denominator_rows.get(qword_id)
+        if not denominator_row:
+            errors.append(f"{label}: qword_row_id missing from denominator table")
+        else:
+            if row.get("entry_id") != denominator_row.get("entry_id"):
+                errors.append(f"{label}: entry_id does not match denominator row")
+            dep_sha = _dependency_sha(row, "qword_denominator_row", qword_id)
+            if dep_sha and dep_sha != _sha256_row(denominator_row):
+                errors.append(f"{label}: qword_denominator_row dependency sha mismatch")
+        has_canonical_loc = bool(row.get("canonical_quran_loc") or row.get("canonical_wbw_loc"))
+        if row.get("status") == ACCEPTED:
+            if not row.get("canonical_quran_loc") or not row.get("canonical_wbw_loc"):
+                errors.append(f"{label}: accepted crosswalk cannot have null canonical loc")
+            if row.get("packet_class") is not None:
+                errors.append(f"{label}: accepted crosswalk must not keep packet_class")
+            if row.get("terminal_gate_code") is not None:
+                errors.append(f"{label}: accepted crosswalk must not keep terminal_gate_code")
+            if row.get("next_action") is not None:
+                errors.append(f"{label}: accepted crosswalk must not keep next_action")
+            if not _quran_ref_matches_loc(row.get("quran_ref"), row.get("canonical_quran_loc")):
+                errors.append(f"{label}: canonical_quran_loc does not match quran_ref")
+            if not _quran_ref_matches_loc(row.get("quran_ref"), row.get("canonical_wbw_loc")):
+                errors.append(f"{label}: canonical_wbw_loc does not match quran_ref")
+        elif has_canonical_loc:
+            errors.append(f"{label}: rows with canonical locs must be {ACCEPTED}")
+        if row.get("status") != ACCEPTED and not row.get("packet_class"):
             errors.append(f"{label}: unresolved crosswalk rows need exact packet_class")
-    table = LargelexiconQwordTable.from_repo(ROOT)
     summary = table.crosswalk_summary()
     if not summary.get("available"):
         errors.append("table reader crosswalk_summary must report available")

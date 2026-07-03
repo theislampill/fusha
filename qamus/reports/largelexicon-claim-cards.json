@@ -18,12 +18,17 @@
         "qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json",
         "qamus/indexes/largelexicon/qamus-qword-denominator.entry-shard-index.json",
         "qamus/indexes/largelexicon/qamus-qword-denominator.source-card-repair.json",
-        "qamus/indexes/largelexicon/qword-denominator/*.jsonl"
+        "qamus/indexes/largelexicon/qword-denominator/*.jsonl",
+        "qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json",
+        "qamus/indexes/largelexicon/qword-crosswalk/*.jsonl",
+        "qamus/reports/largelexicon-crosswalk-adoption-20260703.json"
       ],
       "validators": [
         "tools/validate_largelexicon_source_ledger.py --self-test",
         "tools/validate_largelexicon_table_manifest.py --self-test",
         "tools/validate_largelexicon_table_reader.py --self-test",
+        "tools/validate_largelexicon_qword_crosswalk.py",
+        "tools/validate_largelexicon_transclusion.py",
         "tools/validate_largelexicon_qamus_mode_a.py --self-test",
         "tools/validate_largelexicon_qg_projection.py --self-test"
       ]

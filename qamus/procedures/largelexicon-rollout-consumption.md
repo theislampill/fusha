@@ -14,6 +14,8 @@ Allowed inputs:
   with its shard directory and entry-shard index;
 - qword denominator source-card repair packets such as
   `qamus/indexes/largelexicon/qamus-qword-denominator.source-card-repair.json`;
+- accepted qword crosswalk support and exact source-crosswalk packets from
+  `qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json`;
 - all visible qword Mode A worklist rows;
 - parser candidate outputs;
 - flywheel/curriculum packets.
@@ -27,6 +29,8 @@ python tools/fusha_largelexicon_cli.py project-hover --input worklist.jsonl --ou
 python tools/fusha_largelexicon_cli.py validate-mode-a --input worklist.jsonl
 python tools/fusha_largelexicon_cli.py gate-rh-live-candidates --input candidates.jsonl --accepted-out accepted.jsonl --held-out held.jsonl --report-out gate-report.json
 python tools/validate_largelexicon_table_reader.py --self-test
+python tools/validate_largelexicon_qword_crosswalk.py
+python tools/validate_meta_transclusion_projection.py --queue qamus\reports\vn00-public-andon-20260703\plan18-meta-lattice-projection-queue.jsonl --typed-edge-queue qamus\reports\vn00-public-andon-20260703\plan18-typed-edge-transclusion-queue.jsonl
 ```
 
 Do not consume `morphology_candidates[0]` directly. The stable top-level fields
@@ -42,6 +46,12 @@ Rows with `lexical_collision_requires_context`, `pending_context`, `ambiguous`,
 or `safe_for_qamus_executor_autopromote=false` are worklist/packet inputs, not
 deployment rows. Collision packets are useful because they name the missing
 sarf/nahw/source proof, but they do not close a qword visually.
+
+The accepted crosswalk table is also support evidence, not closure. It lets the
+executor bind qwords loc-first and avoid surface-only fanout, but it does not
+author a public hover by itself. A row with `canonical_crosswalk_accepted` still
+needs public hover payload, qg color/class projection, sarf/nahw validation,
+source/runtime deployment, and public readback.
 
 For already-authored RH-LIVE candidate JSONL, do not reuse the arbitrary-token
 `analyze-token` / `analyze-card` autopromote flag as the executor decision. Run
@@ -88,6 +98,11 @@ Every executor-consumed row must preserve bidirectional transclusion:
 - reverse trace: rendered span -> public projection -> sarf/nahw route -> source-card/crosswalk -> qword/card/entry.
 
 Rows without forward trace or reverse trace are repair packets, not closure evidence.
+
+Do not treat Plan18 family-summary rows as row-level packets. Family summaries
+name recurring classes such as `function_token_flat`, `root_known_but_hidden`,
+or `peer_payload_richer_than_current`; exact rows must still carry
+`qword_row_id`, `exact_transclusion_group_key`, or `public_payload_hash`.
 
 This is not live qamus progress; it is repo-side source-clean preparation for
 later executor-controlled deployment and public readback.
@@ -156,3 +171,8 @@ Transclusion is no longer optional acceleration for these families. A richer
 same-surface peer must produce a replacement/append candidate or an exact
 exception row. Packet/accounting rows, terminal rows, and selected-word
 coverage are not public visual closure.
+
+Meta-transclusive lattice projection is the closure gate above ordinary
+transclusion: if sarf/nahw/source-edge/typed-edge facts already exist, they must
+project into the public hover/color or remain as exact queued work. See
+`docs/parser/meta-transclusive-lattice-projection.md`.

@@ -33,6 +33,7 @@ listed in `fusha/lexicon/largelexicon/source-clean-table-allowlist.json` and
 - `qamus/indexes/largelexicon/qword-denominator/*.jsonl`
 - `qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json`
 - `qamus/indexes/largelexicon/qword-crosswalk/*.jsonl`
+- `qamus/reports/largelexicon-crosswalk-adoption-20260703.json`
 - `qamus/repairs/source-card-examples/source-card-repair-worklist.jsonl`
 - `qamus/repairs/source-card-examples/source-card-repair-worklist.meta.json`
 - `qamus/indexes/largelexicon/source-clean-fact-tables.meta.json`
@@ -73,10 +74,18 @@ entry/source-card edge that must be repaired before the affected entry can join
 the all-visible-qword denominator.
 
 `tools/build_largelexicon_qword_crosswalk.py` turns every denominator qword into
-a crosswalk-status row. Rows with both canonical Qur'an and WBW addresses may
-eventually become accepted crosswalks. Rows without those addresses remain
-`source_crosswalk_packet_ready`; they are explicit work packets, not deployable
-rich-hover rows. This preserves the bidirectional path:
+a crosswalk-status row. The 2026-07-03 adoption pass projected the resolved
+local evidence into source-clean shards: accepted rows are marked
+`canonical_crosswalk_accepted` and carry canonical Qur'an/WBW locs, while
+unresolved rows remain `source_crosswalk_packet_ready` with exact packet
+classes. The adopted counts are recorded in
+`qamus/reports/largelexicon-crosswalk-adoption-20260703.json`.
+
+Accepted crosswalk rows are support evidence, not hover closure. They may be
+used to bind a visible qword to a canonical loc before sarf/nahw authoring, but
+they do not authorize a public hover by themselves. Unresolved packet rows are
+explicit work packets, not deployable rich-hover rows. This preserves the
+bidirectional path:
 
 `entry/card/qword -> crosswalk status -> repair packet/candidate`
 

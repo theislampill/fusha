@@ -3233,6 +3233,17 @@ try:
     check("VN-00 aggressive false-closure validator self-test (class coverage / flywheel targets / leak checks)", _sn_e.returncode == 0)
     _sn_f = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_vn00_aggressive_false_closure.py")])
     check("VN-00 aggressive false-closure fixtures tree clean (sarf/nahw/drill terminal flywheel gate)", _sn_f.returncode == 0)
+    _sn_g = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_meta_transclusion_projection.py"), "--self-test"])
+    check("VN-00 meta-transclusion projection validator self-test", _sn_g.returncode == 0)
+    _sn_h = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_meta_transclusion_projection.py"),
+        "--queue",
+        os.path.join(ROOT, "qamus", "reports", "vn00-public-andon-20260703", "plan18-meta-lattice-projection-queue.jsonl"),
+        "--typed-edge-queue",
+        os.path.join(ROOT, "qamus", "reports", "vn00-public-andon-20260703", "plan18-typed-edge-transclusion-queue.jsonl"),
+    ])
+    check("VN-00 Plan18 meta-transclusion projection queues remain exact or explicit family-summary packets", _sn_h.returncode == 0)
 except Exception as _e:
     check("sarf/nahw skill back-prop slice runnable", False)
     print("  ", _e)
@@ -3329,6 +3340,7 @@ try:
     for _art in ("docs/parser/largelexicon-claim-boundary.md",
                  "docs/parser/largelexicon-source-ledger.md",
                  "docs/parser/largelexicon-implementation.md",
+                 "docs/parser/meta-transclusive-lattice-projection.md",
                  "tools/build_largelexicon_source_inventory.py",
                  "tools/build_largelexicon_morph_db.py",
                  "tools/largelexicon_table_reader.py",
@@ -3345,6 +3357,10 @@ try:
                  "tools/project_largelexicon_qamus_hover_candidates.py",
                  "tools/validate_largelexicon_qamus_mode_a.py",
                  "tools/validate_largelexicon_qg_projection.py",
+                 "tools/adopt_largelexicon_qword_crosswalk.py",
+                 "tools/validate_largelexicon_qword_crosswalk.py",
+                 "tools/validate_largelexicon_transclusion.py",
+                 "tools/validate_meta_transclusion_projection.py",
                  "tools/build_largelexicon_flywheel_artifacts.py",
                  "tools/validate_largelexicon_skill_curriculum_backfill.py",
                  "tools/validate_backfillfull_sarf_nahw_largelexicon.py",
@@ -3359,10 +3375,13 @@ try:
                  "qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json",
                  "qamus/indexes/largelexicon/qamus-qword-denominator.entry-shard-index.json",
                  "qamus/indexes/largelexicon/qamus-qword-denominator.source-card-repair.json",
+                 "qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json",
                  "qamus/indexes/largelexicon/qword-denominator/v001-v040.jsonl",
+                 "qamus/indexes/largelexicon/qword-crosswalk/v001-v010.jsonl",
                  "qamus/indexes/largelexicon/qword-denominator/n1041-n1045.jsonl",
                  "qamus/indexes/largelexicon/qword-denominator/p001-p040.jsonl",
                  "qamus/indexes/largelexicon/source-clean-fact-tables.meta.json",
+                 "qamus/reports/largelexicon-crosswalk-adoption-20260703.json",
                  "qamus/reports/largelexicon-claim-cards.json",
                  "qamus/examples/mode_a_all_qword/largelexicon-qamus-mode-a-worklist.sample.jsonl",
                  "qamus/examples/largelexicon/hover-candidates.sample.jsonl",
@@ -3391,6 +3410,14 @@ try:
     check("largelexicon Mode A self-test (visible qword denominator + trace)", _ll5.returncode == 0)
     _ll6 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_qg_projection.py"), "--self-test"])
     check("largelexicon qg projection self-test (source-clean hover candidates or exact packets)", _ll6.returncode == 0)
+    _ll6b = run_text([sys.executable, os.path.join(ROOT, "tools", "adopt_largelexicon_qword_crosswalk.py"), "--self-test"])
+    check("largelexicon qword crosswalk adoption self-test (source-clean packet projection)", _ll6b.returncode == 0)
+    _ll6c = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_qword_crosswalk.py")])
+    check("largelexicon qword crosswalk materialized table validates", _ll6c.returncode == 0)
+    _ll6d = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_transclusion.py")])
+    check("largelexicon qword crosswalk transclusion dependencies validate", _ll6d.returncode == 0)
+    _ll6e = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_meta_transclusion_projection.py"), "--self-test"])
+    check("largelexicon meta-transclusive projection self-test (false visual closure families)", _ll6e.returncode == 0)
     _ll7 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_skill_curriculum_backfill.py"), "--self-test"])
     check("largelexicon sarf/nahw/curriculum flywheel self-test", _ll7.returncode == 0)
     _ll7b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_backfillfull_sarf_nahw_largelexicon.py"), "--self-test"])

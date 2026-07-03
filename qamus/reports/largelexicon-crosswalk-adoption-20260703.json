@@ -1,0 +1,25 @@
+{
+  "claim_boundary": "Source-clean crosswalk projection only; accepted locs are internal support evidence, not live Qamus hover closure.",
+  "dry_run": false,
+  "generated_at": "2026-07-03T20:58:56Z",
+  "manifest_path": "qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json",
+  "ok": true,
+  "public_boundary": {
+    "kind": "authored",
+    "lang": "en",
+    "src": "qamus"
+  },
+  "resolution_method_counts": {
+    "None": 31240,
+    "card_exact_subsequence": 20135,
+    "row_unique_surface_fallback": 65742
+  },
+  "resolved_rows_adopted": 85877,
+  "schema": "qamus/largelexicon-crosswalk-adoption-report@1",
+  "status_counts": {
+    "canonical_crosswalk_accepted": 85877,
+    "source_crosswalk_packet_ready": 31240
+  },
+  "unchanged_rows": 0,
+  "unresolved_rows_recorded": 31240
+}

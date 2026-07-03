@@ -25,6 +25,12 @@ dataset into Fusha parser/checker tooling.
   `docs/parser/largelexicon-collision-safety.md`.
 - P11: compact all-visible-qword denominator rows for Qamus rollout support,
   preserving entry/card/qword handles without live mutation.
+- Fablehardening 2026-07-03: adopted resolved Qamus qword crosswalk evidence
+  into source-clean manifest shards, preserving accepted canonical loc rows
+  separately from exact source-crosswalk packets. Added the meta-transclusive
+  lattice projection gate for false-closure families such as flat function
+  tokens, hidden suffixes, hidden roots, weak stems, peer-richer payloads, and
+  source-clean facts that have not reached the public hover projection.
 - P6/P12: sarf, nahw, curriculum, drill, claim-card, and tutor-routing backfill
   surfaces.
 - P3: all visible qword-style Mode A worklist sample for Qamus rollout support,
@@ -51,6 +57,9 @@ python tools/validate_largelexicon_parser.py --self-test
 python tools/validate_largelexicon_qamus_mode_a.py --self-test
 python tools/validate_largelexicon_qg_projection.py --self-test
 python tools/validate_largelexicon_cli_contract.py --self-test
+python tools/validate_largelexicon_qword_crosswalk.py
+python tools/validate_largelexicon_transclusion.py
+python tools/validate_meta_transclusion_projection.py --self-test
 ```
 
 ## ANDON Rules
@@ -82,6 +91,10 @@ tranche closure claims.
 - Qamus form/stem rows: 8,483.
 - Qamus all-visible-qword denominator rows: 117,117, stored as one logical
   manifest-backed table under `qamus/indexes/largelexicon/qword-denominator/`.
+- Qamus qword crosswalk rows: 117,117, stored as one logical manifest-backed
+  table under `qamus/indexes/largelexicon/qword-crosswalk/`.
+- Current accepted qword crosswalk rows: 85,877. Current source-crosswalk
+  packet rows: 31,240.
 - Qamus entries acknowledged by the qword manifest: 2,092; entries with qword
   rows in the current export: 2,091; current source-card repair packet: `n993`
   / `مَلْجَأ` (`pg443.jpeg`, candidate ref `42:47`).
