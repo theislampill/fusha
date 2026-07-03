@@ -30,3 +30,7 @@
 {"expected_public_feature":"verb prefix, root ن ق ص stem, plural subject marker, and كُمْ object pronoun visible","failure_family":"suffix_or_inflection_hidden","loc":"9:4:8","page":"v030","surface":"يَنقُصُوكُمْ"}
 {"expected_public_feature":"visible lām/particle host plus attached 2mp pronoun visible","failure_family":"function_token_or_particle_flat","loc":"16:81:24","page":"v030","surface":"لَعَلَّكُمْ"}
 {"expected_public_feature":"flat participle/adjective row gets root/form and visible final ending or exact blocker","failure_family":"draft_or_flat_qword_on_closed_page","loc":"3:120:21","page":"v030","surface":"مُحِيطٌۭ"}
+{"expected_public_feature":"single contrast particle remains whole and is not forced into lām-preposition color","failure_family":"function_particle_initial_lam_false_clitic_guard","loc":"19:38:6","page":"v044","surface":"لَٰكِنِ"}
+{"expected_public_feature":"lām relation, definite article, and plural noun host root all visible","failure_family":"preposition_article_host_undersegmented","loc":"41:46:11","page":"v046","surface":"لِّلْعَبِيدِ"}
+{"expected_public_feature":"same-ayah context source attached before contextual verb/particle appends deploy","failure_family":"context_source_required_for_distinct_gloss","loc":"4:34:11","page":"v046","surface":"وَبِمَآ"}
+{"expected_public_feature":"rich-live public row still blocked if Plan17 root/form/pronoun facts remain hidden","failure_family":"rich_live_not_plan17_complete","loc":"41:46:7","page":"v046","surface":"فَعَلَيْهَا"}

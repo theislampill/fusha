@@ -71,6 +71,9 @@ Lexical false-clitic guard:
 - `لِبَاسٌۭ` starts with lexical lām from the noun/root `ل ب س`; it is not a
   lām-preposition row and should not be forced into qg-lām relation wording
   unless the written token is actually segmented as a function lām.
+- Built particles such as `لَٰكِنِ` can begin with a visible lām-like shape
+  while remaining a single contrast particle. Treat the whole token as the
+  particle unless sarf/nahw evidence proves a detachable lām relation.
 - `أَنتُمْ` and `وَأَنتُمْ` are independent pronouns, not verbs carrying the
   attached subject suffix `تُمْ`. Teach second-person plural pronounhood without
   creating a fake suffix split.
@@ -104,6 +107,17 @@ If the function role is known enough for a fallback phrase but not enough for a
 rich row, classify the row as `string_correct_but_not_rich`,
 `needs_renderer_segments`, or `needs_nahw_review`; do not mark it
 `rich_certified`.
+
+## Dogfood finding: rich-live is not Plan17 closure
+
+The VN-00 retry for `v046` produced a public page where every visible cited-card
+qword was `rich_live`, but Plan17 still found unresolved suffix, tanwin,
+preposition/pronoun, contextual definiteness, and known-root families.
+
+Rule: qg color plus rich hover is necessary but not sufficient. A page remains
+open while Plan17 false-closure findings remain, and page-worker states such as
+`needs_false_closure_repair` are ANDON states, not merge conflicts and not
+completion evidence.
 
 ## Production finding: case/tanwin wording must teach the contribution
 
