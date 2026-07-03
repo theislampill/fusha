@@ -30,3 +30,4 @@
 {"case_id":"vn00_burst05_v044_waman_relative","expected_segments":["prefix_conjunction","relative_pronoun_man"],"failure_family":"function_token_or_particle_flat","loc":"5:41:41","surface":"وَمَن"}
 {"case_id":"vn00_burst05_v046_wabima_contextual_ma","expected_segments":["prefix_conjunction","ba_preposition","contextual_ma_particle"],"failure_family":"function_token_or_particle_flat","loc":"4:34:11","surface":"وَبِمَآ"}
 {"case_id":"vn00_burst05_v046_kana_context_required","expected_segments":["kana_verb_host","contextual_clause_role_required"],"failure_family":"context_source_required_for_distinct_gloss","loc":"4:34:38","surface":"كَانَ"}
+{"case_id":"vn00_burst05_v046_khabiran_definiteness_context","expected_segments":["definite_english_gloss_justified_by_context","divine_name_or_attribute_context_note","visible_final_ending_mark"],"failure_family":"contextual_definiteness_hidden","loc":"4:128:29","surface":"خَبِيرًۭا"}
