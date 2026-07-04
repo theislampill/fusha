@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/canonical-hover-exception.schema.json",
+  "title": "Canonical hover exception (compiler Task 1)",
+  "description": "A page-local override of a binding: when an occurrence must NOT inherit the canonical payload (page-local context, source-card mismatch, scholarly iʿrāb override, owner style, or an unsafe homograph). Names the binding it overrides and, optionally, a replacement canonical payload. Review-gated. Dry-run; source-clean. See CANONICAL_HOVER_PAYLOAD_COMPILER_PLAN (fablehardening).",
+  "type": "object",
+  "required": ["schema", "exception_id", "binding_id", "exception_reason", "review_status"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "qamus.canonical_hover_exception.v1" },
+    "exception_id": { "type": "string", "pattern": "^che:[0-9a-f]{16}$" },
+    "binding_id": { "type": "string", "pattern": "^chb:[0-9a-f]{16}$" },
+    "exception_reason": { "type": "string", "enum": ["page_local_context", "source_card_mismatch", "scholar_irab_override", "owner_style_override", "unsafe_homograph"] },
+    "replacement_canonical_payload_id": { "type": ["string", "null"], "pattern": "^(chp:[0-9a-f]{16})?$" },
+    "review_status": { "type": "string", "enum": ["candidate", "owner_accepted", "scholar_accepted", "blocked"] },
+    "notes_private": { "type": ["string", "null"] }
+  }
+}

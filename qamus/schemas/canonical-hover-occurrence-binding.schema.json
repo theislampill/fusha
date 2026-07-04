@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/canonical-hover-occurrence-binding.schema.json",
+  "title": "Canonical hover occurrence binding (compiler Task 1)",
+  "description": "One edge from a source-addressed Qur'anic occurrence to a canonical payload identity. binding_status=accepted requires a canonical Quran + WBW loc and an exact entry/card trace. binding_gate=certified_lemma requires lemma_status=certified; binding_gate=function_context requires nahw/function certification; surface-only fanout is never accepted; homograph groups require a loc+lemma/context gate, never strict-surface alone. A non-accepted binding MUST carry a `reason` (the terminal-packet taxonomy). exact_transclusion_group_key + canonical_payload_id are the two node types of the source-address graph (typed-edge compatible). Dry-run; source-clean. See CANONICAL_HOVER_PAYLOAD_COMPILER_PLAN (fablehardening) + its two addenda.",
+  "type": "object",
+  "required": ["schema", "binding_id", "canonical_payload_id", "entry_id", "source_key", "visible_surface", "exact_transclusion_group_key", "binding_status", "binding_gate"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "qamus.canonical_hover_occurrence_binding.v1" },
+    "binding_id": { "type": "string", "pattern": "^chb:[0-9a-f]{16}$" },
+    "canonical_payload_id": { "type": "string", "pattern": "^chp:[0-9a-f]{16}$" },
+    "entry_id": { "type": "string", "minLength": 1 },
+    "entry_url": { "type": ["string", "null"] },
+    "source_key": { "const": "qamus" },
+    "sense_index": { "type": ["integer", "null"] },
+    "card_index": { "type": ["integer", "null"] },
+    "qword_row_id": { "type": ["string", "null"] },
+    "visible_surface": { "type": "string", "minLength": 1 },
+    "canonical_quran_loc": { "type": ["string", "null"], "pattern": "^[0-9]+:[0-9]+:[0-9]+$" },
+    "canonical_wbw_loc": { "type": ["string", "null"], "pattern": "^[0-9]+:[0-9]+:[0-9]+$" },
+    "exact_transclusion_group_key": { "type": "string", "minLength": 1 },
+    "binding_status": { "type": "string", "enum": ["candidate", "accepted", "blocked", "exception"] },
+    "binding_gate": { "type": "string", "enum": ["source_address_exact", "certified_lemma", "certified_pattern", "function_context"] },
+    "reason": { "type": ["string", "null"], "enum": ["source_address_exact_ok", "source-crosswalk", "certified-lemma-needed", "pattern-rule-needed", "nahw-function-needed", "validator/schema", "renderer/qg", "owner-decision", "scholar-irab", null] },
+    "exception_id": { "type": ["string", "null"] }
+  }
+}

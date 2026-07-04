@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/canonical-hover-payload.schema.json",
+  "title": "Canonical hover payload (compiler Task 1)",
+  "description": "The reusable source-of-truth for a rich hover: one canonical payload identity, transcluded to many occurrences via bindings, instead of copy-per-occurrence whitelist rows. canonical_payload_id is content-addressed over (payload_family, surface_norm, root, lemma_id, lemma_status, pos, pattern, sarf_certification, nahw_certification, public_payload) - created_at/updated_at/private_trace are EXCLUDED from identity. public_payload is source-clean (src=qamus, kind=authored, lang=en; no external label); segment surfaces concatenate to the visible qword. Formalizes docs/parser/canonical-hover-payload-table.md. Dry-run; deterministic; source-clean. See CANONICAL_HOVER_PAYLOAD_COMPILER_PLAN (fablehardening) + its two addenda.",
+  "type": "object",
+  "required": ["schema", "canonical_payload_id", "payload_family", "surface_norm", "lemma_status", "pos", "sarf_certification", "nahw_certification", "public_payload"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "qamus.canonical_hover_payload.v1" },
+    "canonical_payload_id": { "type": "string", "pattern": "^chp:[0-9a-f]{16}$" },
+    "payload_family": { "type": "string", "enum": ["source_address_exact", "certified_lemma", "certified_pattern", "function_context"] },
+    "surface_norm": { "type": "string", "minLength": 1 },
+    "root": { "type": ["string", "null"] },
+    "lemma_id": { "type": ["string", "null"] },
+    "lemma_status": { "type": "string", "enum": ["missing", "candidate", "inferred", "certified", "conflict", "blocked"] },
+    "pos": { "type": "string", "minLength": 1 },
+    "pattern": { "type": ["string", "null"] },
+    "sarf_certification": { "type": "string", "enum": ["missing", "candidate", "certified", "blocked"] },
+    "nahw_certification": { "type": "string", "enum": ["missing", "candidate", "certified", "blocked"] },
+    "public_payload": {
+      "type": "object",
+      "required": ["src", "kind", "lang", "token_contribution_gloss", "morphline", "segments", "learner_explanation"],
+      "additionalProperties": false,
+      "properties": {
+        "src": { "const": "qamus" },
+        "kind": { "const": "authored" },
+        "lang": { "const": "en" },
+        "token_contribution_gloss": { "type": "string", "minLength": 1 },
+        "contextual_phrase_gloss": { "type": ["string", "null"] },
+        "morphline": { "type": "string" },
+        "segments": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["role", "surface", "qg_class", "gloss"],
+            "additionalProperties": false,
+            "properties": {
+              "role": { "type": "string", "enum": ["ART", "PFX", "STEM", "SUFF", "POSS", "OBJ", "PART", "N", "V", "FUNC"] },
+              "surface": { "type": "string" },
+              "qg_class": { "type": "string" },
+              "gloss": { "type": "string" },
+              "sarf_note": { "type": ["string", "null"] },
+              "nahw_note": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "learner_explanation": { "type": "string" }
+      }
+    },
+    "private_trace": { "type": ["object", "null"], "description": "Internal evidence; EXCLUDED from canonical_payload_id and stripped before publication." },
+    "created_at": { "type": ["string", "null"] },
+    "updated_at": { "type": ["string", "null"] }
+  }
+}

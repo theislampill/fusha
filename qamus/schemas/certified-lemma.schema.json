@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/certified-lemma.schema.json",
+  "title": "Certified lemma (certified-lemma-gated fanout, steps 1-2)",
+  "description": "A lemma-certification row that gates whether a solved sarf/nahw fact may fan out across Qamus occurrences. Fanout is a lattice projection from certified source facts, NEVER a surface-string replacement. A row may authorize fanout only when certification_status=certified AND the fanout_gate is one of the three orthogonal gate types; surface-only fanout is impossible by construction (there is no surface-only gate value). Particles are function/context-sensitive and may fan out only via source_address_exact or function_context, never lemma_pattern_pos alone. Public fields (lemma_ar, root, pos, pattern, fanout_gate) MUST be source-clean; QAC/MCP/external evidence lives only in evidence_private and is stripped before publication. lemma_id is content-addressed (lemma:sha256[:16] over lemma_ar+root+pos+pattern) so two distinct-meaning homographs cannot collide on one identity. Dry-run; source-clean; deterministic. See CERTIFIED_LEMMA_GATED_FANOUT_PLAN (fablehardening) + its second-pass addendum.",
+  "type": "object",
+  "required": ["schema", "lemma_id", "lemma_ar", "pos", "certification_status", "source_scope", "public_safe", "fanout_allowed", "fanout_gate"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "qamus.certified_lemma.v1" },
+    "lemma_id": { "type": "string", "pattern": "^lemma:[0-9a-f]{16}$", "description": "Content-addressed: 'lemma:' + first 16 hex of sha256(canonical(lemma_ar,root,pos,pattern)). The validator recomputes and FAILs on mismatch." },
+    "lemma_ar": { "type": "string", "minLength": 1, "description": "The Arabic lemma surface (authored)." },
+    "root": { "type": ["string", "null"], "description": "Authored triliteral/quadriliteral root, or null when not determinable. Never paraphrase-laundered from an external lexicon." },
+    "pos": { "type": "string", "enum": ["noun", "verb", "particle", "proper_name", "adjective", "participle", "other"] },
+    "pattern": { "type": ["string", "null"], "description": "Wazn / measure, or null." },
+    "certification_status": { "type": "string", "enum": ["missing", "candidate", "certified", "conflict", "blocked"] },
+    "source_scope": { "type": "string", "enum": ["qamus_entry", "quran_qword", "private_qac_cache", "mcp_evidence", "owner_review", "scholar_review"], "description": "Where the certifying evidence came from. private_qac_cache / mcp_evidence are INTERNAL only; they may support certification but never leak into a public field." },
+    "public_safe": { "type": "boolean", "description": "True only when every public field is authored Qamus output with no external label." },
+    "evidence_private": { "type": "array", "items": { "type": "string" }, "description": "Internal-only evidence breadcrumbs (may name qac/mcp). Stripped before any public artifact. Never echoed into a public field." },
+    "fanout_allowed": { "type": "boolean", "description": "Impossible to be true unless certification_status=certified. Enforced by the validator, not just the schema." },
+    "fanout_gate": { "type": "string", "enum": ["source_address_exact", "lemma_pattern_pos", "function_context"], "description": "Orthogonal gate type. There is deliberately NO surface-only value: 'surface-only is never a gate' is enforced as a validator rule, and any legacy never_surface_only value FAILs the enum." }
+  }
+}

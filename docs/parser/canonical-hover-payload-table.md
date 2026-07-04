@@ -98,6 +98,25 @@ Minimum gates before adopting this as a live compiler:
 - duplicate same-loc conflict check.
 - public DOM readback after any live deployment.
 
+## Machine-checkable schemas (added 2026-07-04, compiler Task 1-2)
+
+The row types above are now formalized as JSON schemas and enforced by a validator
+wired into the regression gate (validator-BEFORE-builder — the safety property):
+
+- `qamus/schemas/canonical-hover-payload.schema.json`
+- `qamus/schemas/canonical-hover-occurrence-binding.schema.json`
+- `qamus/schemas/canonical-hover-exception.schema.json`
+- `tools/validate_canonical_hover_payload_table.py` (`--self-test` + sample) — enforces
+  content-addressed `canonical_payload_id`/`binding_id`/`exception_id`, the source-clean
+  leak scan, exact segment-surface concat, the accepted-binding loc requirement, the
+  `certified_lemma` gate, and referential integrity. Samples:
+  `qamus/examples/canonical_hover_payload.sample.jsonl`.
+
+The builder (`build_canonical_hover_payload_table.py`) and compiler
+(`compile_canonical_hover_whitelist_packet.py`) — Tasks 3-4 — are NOT yet implemented;
+this substrate is what they will validate against. See CANONICAL_HOVER_PAYLOAD_COMPILER_PLAN
+(fablehardening) for the remaining tasks and the Qamus-executor canary (Task 6).
+
 ## Claim Boundary
 
 This document defines a contract and compile target. It does not claim that live
