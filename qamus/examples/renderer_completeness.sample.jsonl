@@ -1,0 +1,1 @@
+{"public_payload": {"kind": "authored", "lang": "en", "learner_explanation": "definite article + noun", "morphline": "ART+STEM", "segments": [{"gloss": "the", "qg_class": "definite_article", "role": "ART", "surface": "ال"}, {"gloss": "book", "qg_class": "noun", "role": "STEM", "surface": "كتاب"}], "src": "qamus", "token_contribution_gloss": "the book"}, "surface": "الكتاب"}
