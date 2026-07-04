@@ -3437,6 +3437,10 @@ try:
     check("canonical hover payload table self-test (id-determinism/leak/segment-concat/binding-gate reject)", _chp.returncode == 0)
     _chp2 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_canonical_hover_payload_table.py"), os.path.join(ROOT, "qamus", "examples", "canonical_hover_payload.sample.jsonl")])
     check("canonical hover payload sample validates (payload+binding+exception referentially sound)", _chp2.returncode == 0)
+    _chp3 = run_text([sys.executable, os.path.join(ROOT, "tools", "build_canonical_hover_payload_table.py"), "--self-test"])
+    check("canonical hover payload builder self-test (dedup/conflict-separate/richer-peer/missing-required)", _chp3.returncode == 0)
+    _chp4 = run_text([sys.executable, os.path.join(ROOT, "tools", "compile_canonical_hover_whitelist_packet.py"), "--self-test"])
+    check("canonical hover whitelist compiler self-test (append/no-op/conflict/exception; source-clean)", _chp4.returncode == 0)
 except Exception as _e:
     check("largelexicon candidate layer runnable", False)
     print("  ", _e)
