@@ -38,8 +38,14 @@ def _selected(seg_cands, morph_cands):
             if cand.get("evidence_class") == "pinned_function_cluster":
                 return cand, morph
     ref = morph.get("segment_candidate_ref", 0)
-    if ref >= len(seg_cands):
-        ref = 0
+    if not isinstance(ref, int) or ref < 0 or ref >= len(seg_cands):
+        morph["selection_status"] = "blocked"
+        morph["selection_blocker"] = "dangling_segment_ref"
+        morph["selection_blocker_detail"] = {
+            "segment_candidate_ref": ref,
+            "segment_candidate_count": len(seg_cands),
+        }
+        return None, morph
     selected = seg_cands[ref]
     selected_segments = selected.get("segments") or []
     selected_surface = "".join(seg.get("surface", "") for seg in selected_segments)
@@ -111,6 +117,14 @@ def _gate(surface, seg_cands, morph, context, morph_cands=None):
     bare = N.bare(surface)
     if not morph:
         return "blocked", None
+    if morph.get("selection_blocker") == "dangling_segment_ref":
+        return "blocked", {
+            "kind": "dangling_segment_ref",
+            "surface": surface,
+            **(morph.get("selection_blocker_detail") or {}),
+            "route": ["validator", "sarf"],
+            "reason": "morphology candidate references a segment candidate that does not exist",
+        }
     collision = _candidate_collision(surface, seg_cands, morph_cands or [], morph)
     if collision:
         return "lexical_collision_requires_context", collision
@@ -216,15 +230,20 @@ def parse_text(text, document_id=None, db="smoke"):
             tok["qg_segments"] = []
             tok["selected_preview"] = None
         if gate in {"pending_context", "ambiguous", "blocked", "lexical_collision_requires_context"}:
+            blocked_class = "no_parse_candidate"
+            if collision and collision.get("kind") == "dangling_segment_ref":
+                blocked_class = "dangling_segment_ref"
             tok["blocker_class"] = {
                 "pending_context": "context_sensitive",
                 "ambiguous": "ambiguous_surface",
-                "blocked": "no_parse_candidate",
+                "blocked": blocked_class,
                 "lexical_collision_requires_context": "lexical_collision",
             }[gate]
             tok["blocker_reason"] = (
                 "multiple high-risk analyses compete; no public hover projection selected"
                 if gate == "lexical_collision_requires_context"
+                else "morphology candidate references a missing segment candidate"
+                if blocked_class == "dangling_segment_ref"
                 else "standalone parser preview is not source-address certification"
             )
         tok["hover_preview"] = _hover(tok["surface"], tok.get("qg_segments") or [], morph, ctx, gate)

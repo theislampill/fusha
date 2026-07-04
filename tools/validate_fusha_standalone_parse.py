@@ -197,6 +197,12 @@ def _self_test():
         missing = expected - roles
         if missing:
             failures.append("%s qg roles missing %s; got %s" % (surface, sorted(missing), sorted(roles)))
+    segs = [{"rank": 1, "segments": [{"role": "stem", "surface": "كتاب"}]}]
+    morphs = [{"rank": 1, "pos": "noun", "evidence_class": "seed_lexicon", "segment_candidate_ref": 99}]
+    selected, morph = parser._selected(segs, morphs)
+    gate, collision = parser._gate("كتاب", segs, morph, [], morphs)
+    if selected is not None or gate != "blocked" or not collision or collision.get("kind") != "dangling_segment_ref":
+        failures.append("dangling segment_candidate_ref must block instead of selecting candidate 0")
     for f in failures:
         print("FAIL " + f)
     if not failures:

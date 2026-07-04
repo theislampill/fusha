@@ -3357,10 +3357,11 @@ try:
                  "tools/project_largelexicon_qamus_hover_candidates.py",
                  "tools/validate_largelexicon_qamus_mode_a.py",
                  "tools/validate_largelexicon_qg_projection.py",
-                 "tools/adopt_largelexicon_qword_crosswalk.py",
-                 "tools/validate_largelexicon_qword_crosswalk.py",
-                 "tools/validate_largelexicon_transclusion.py",
-                 "tools/validate_meta_transclusion_projection.py",
+                  "tools/adopt_largelexicon_qword_crosswalk.py",
+                  "tools/validate_largelexicon_qword_crosswalk.py",
+                  "tools/validate_largelexicon_denominator_join.py",
+                  "tools/validate_largelexicon_transclusion.py",
+                  "tools/validate_meta_transclusion_projection.py",
                  "tools/build_largelexicon_flywheel_artifacts.py",
                  "tools/validate_largelexicon_skill_curriculum_backfill.py",
                  "tools/validate_backfillfull_sarf_nahw_largelexicon.py",
@@ -3414,6 +3415,10 @@ try:
     check("largelexicon qword crosswalk adoption self-test (source-clean packet projection)", _ll6b.returncode == 0)
     _ll6c = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_qword_crosswalk.py")])
     check("largelexicon qword crosswalk materialized table validates", _ll6c.returncode == 0)
+    _ll6c2 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_denominator_join.py"), "--self-test"])
+    check("largelexicon denominator join self-test (loc-first join; qword_index false join rejected)", _ll6c2.returncode == 0)
+    _ll6c3 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_denominator_join.py")])
+    check("largelexicon denominator/crosswalk materialized loc-first join validates", _ll6c3.returncode == 0)
     _ll6d = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_largelexicon_transclusion.py")])
     check("largelexicon qword crosswalk transclusion dependencies validate", _ll6d.returncode == 0)
     _ll6e = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_meta_transclusion_projection.py"), "--self-test"])

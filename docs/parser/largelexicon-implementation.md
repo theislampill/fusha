@@ -31,6 +31,11 @@ dataset into Fusha parser/checker tooling.
   lattice projection gate for false-closure families such as flat function
   tokens, hidden suffixes, hidden roots, weak stems, peer-richer payloads, and
   source-clean facts that have not reached the public hover projection.
+- Fablehardening continuation: added the denominator-join validator and the
+  canonical hover payload table contract. The validator enforces loc-first
+  joins and rejects raw `qword_index` identity; the contract defines how a
+  future whitelist compiler should transclude shared hover payloads without
+  erasing page-local exceptions.
 - P6/P12: sarf, nahw, curriculum, drill, claim-card, and tutor-routing backfill
   surfaces.
 - P3: all visible qword-style Mode A worklist sample for Qamus rollout support,
@@ -58,6 +63,7 @@ python tools/validate_largelexicon_qamus_mode_a.py --self-test
 python tools/validate_largelexicon_qg_projection.py --self-test
 python tools/validate_largelexicon_cli_contract.py --self-test
 python tools/validate_largelexicon_qword_crosswalk.py
+python tools/validate_largelexicon_denominator_join.py
 python tools/validate_largelexicon_transclusion.py
 python tools/validate_meta_transclusion_projection.py --self-test
 ```
@@ -102,3 +108,9 @@ tranche closure claims.
   committed Qamus-derived tables, plus smoke arbitrary input. It is not yet a
   CAMeL/MADAMIRA/Stanza-equivalent analyzer, trained statistical disambiguator,
   or certified dependency/i'rab parser.
+
+## Next Compile Target
+
+See `docs/parser/canonical-hover-payload-table.md`. Live Qamus still uses
+copy-per-occurrence whitelist rows; the canonical payload table is the next
+transclusive compiler target, not a current live claim.
