@@ -50,7 +50,9 @@ with io.open(SCHEMA_PATH, encoding="utf-8") as _h:
     _SCHEMA = json.load(_h)
 REQUIRED = _SCHEMA["required"]
 _PROPS = _SCHEMA["properties"]
-ENUMS = {k: _PROPS[k]["enum"] for k in ("pos", "certification_status", "source_scope", "fanout_gate")}
+ENUMS = {k: _PROPS[k]["enum"] for k in ("pos", "certification_status", "source_scope", "fanout_gate",
+                                         "evidence_scope", "reason_agreement")}
+_LEMMA_PATTERN_POS_ALLOWED = ("noun", "verb", "adjective", "participle")  # content words only
 
 
 def compute_lemma_id(row):
@@ -121,6 +123,35 @@ def validate_row(row):
             "not lemma_pattern_pos (particles are function/context-sensitive)"
         )
 
+    # (POS allow-list) lemma_pattern_pos fanout is only for content words with a stable lemma.
+    if (
+        row.get("fanout_gate") == "lemma_pattern_pos"
+        and row.get("fanout_allowed") is True
+        and row.get("pos") not in _LEMMA_PATTERN_POS_ALLOWED
+    ):
+        errors.append(
+            "lemma_pattern_pos fanout allowed only for content POS %s, not %r"
+            % (list(_LEMMA_PATTERN_POS_ALLOWED), row.get("pos"))
+        )
+
+    # (g) block fanout when sarf/nahw reasoning disagrees.
+    if row.get("fanout_allowed") is True and row.get("reason_agreement") == "disagree":
+        errors.append("fanout blocked: sarf/nahw reasoning disagrees (reason_agreement=disagree)")
+
+    # (h) component-only evidence cannot certify a whole token.
+    if row.get("fanout_allowed") is True and row.get("evidence_scope") == "component":
+        errors.append("component-only evidence cannot certify a whole token (evidence_scope=component)")
+
+    # (review gate) grammar-affecting tiers require review; source_address_exact does not.
+    if row.get("fanout_allowed") is True:
+        votes = row.get("review_votes")
+        two_vote = isinstance(votes, int) and votes >= 2
+        gate = row.get("fanout_gate")
+        if gate == "lemma_pattern_pos" and not two_vote:
+            errors.append("lemma_pattern_pos fanout requires two-vote review (review_votes>=2)")
+        if gate == "function_context" and not (two_vote or row.get("source_scope") in ("owner_review", "scholar_review")):
+            errors.append("function_context fanout requires review_votes>=2 or owner/scholar review")
+
     public_blob = json.dumps(
         {k: row.get(k) for k in PUBLIC_FIELDS}, ensure_ascii=False
     ).lower()
@@ -163,6 +194,8 @@ def _good_noun():
         "evidence_private": [],
         "fanout_allowed": True,
         "fanout_gate": "lemma_pattern_pos",
+        "review_votes": 2,
+        "reason_agreement": "agree",
     }
     row["lemma_id"] = compute_lemma_id(row)
     return row
@@ -244,6 +277,8 @@ def self_test():
         "evidence_private": [],
         "fanout_allowed": True,
         "fanout_gate": "function_context",
+        "review_votes": 2,
+        "reason_agreement": "agree",
     }
     man["lemma_id"] = compute_lemma_id(man)
     if good_prep["lemma_id"] == man["lemma_id"]:
@@ -258,6 +293,29 @@ def self_test():
     if not any("collides on two distinct meanings" in e for e in validate_rows([good_prep, collide])):
         print("SELF-TEST FAIL homograph collision not caught")
         return 1
+
+    # (g) sarf/nahw disagreement blocks fanout
+    bad = _good_noun(); bad["reason_agreement"] = "disagree"
+    if not any("reasoning disagrees" in e for e in validate_row(bad)):
+        print("SELF-TEST FAIL (g) sarf/nahw-disagree not caught"); return 1
+    # (h) component-only evidence cannot certify a whole token
+    bad = _good_noun(); bad["evidence_scope"] = "component"
+    if not any("component-only evidence" in e for e in validate_row(bad)):
+        print("SELF-TEST FAIL (h) component-only not caught"); return 1
+    # (review gate) lemma_pattern_pos fanout without two votes is rejected
+    bad = _good_noun(); bad["review_votes"] = 1
+    if not any("two-vote review" in e for e in validate_row(bad)):
+        print("SELF-TEST FAIL review-gate (lemma_pattern_pos) not caught"); return 1
+    # (POS allow-list) a proper_name may not take lemma_pattern_pos fanout
+    bad = _good_noun(); bad["pos"] = "proper_name"; bad["lemma_id"] = compute_lemma_id(bad)
+    if not any("content POS" in e for e in validate_row(bad)):
+        print("SELF-TEST FAIL POS-allow-list not caught"); return 1
+    # file-backed reject fixtures: every row in the reject sample MUST fail
+    reject_path = os.path.join(ROOT, "qamus", "examples", "certified_lemma.reject.sample.jsonl")
+    if os.path.exists(reject_path):
+        for i, r in enumerate(read_jsonl(reject_path)):
+            if not validate_row(r):
+                print("SELF-TEST FAIL reject fixture row %d unexpectedly passed" % i); return 1
 
     print("PASS - certified-lemma fanout validator self-test")
     return 0
