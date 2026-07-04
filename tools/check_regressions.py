@@ -2541,6 +2541,17 @@ for _script, _args, _label in (
         ("validate_production_bug_lessons.py",
          [os.path.join(_R, "qamus", "examples", "production_bug_lesson.sample.jsonl")],
          "Phase2 production bug lesson sample validates"),
+        # source-selection (L15 canary lesson): majority/canonical class-signature, not most-segmented
+        ("validate_source_selection.py", ["--self-test"], "source-selection majority/canonical class-signature self-test"),
+        ("validate_source_selection.py",
+         [os.path.join(_R, "qamus", "examples", "source_selection.sample.jsonl")],
+         "source-selection accept fixture validates"),
+        ("validate_production_bug_lessons.py",
+         [os.path.join(_R, "qamus", "examples", "dogfood_source_selection_production_bug_lesson.sample.jsonl")],
+         "Source-selection dogfood production bug lesson sample validates"),
+        # public entry-count guard (L21): 2092 = 1045 noun + 947 verb + 100 particle, manifest-consistent
+        ("validate_public_entry_count.py", ["--self-test"], "public entry-count guard self-test"),
+        ("validate_public_entry_count.py", [], "public entry count == 2092 (section split + manifest consistency)"),
         ("validate_production_bug_lessons.py",
          [os.path.join(_R, "qamus", "examples", "production_bug_lesson_from_intent.sample.jsonl")],
          "Phase3.5 production bug lesson from edit intent sample validates"),
