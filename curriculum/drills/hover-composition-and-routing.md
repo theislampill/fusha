@@ -163,6 +163,30 @@ own live page.** Verify before you append, never after:
   when the English gloss is correct. (This is the exact miss one RH-LIVE critic caught and the
   other did not — the address is part of what two independent checks must agree on.)
 
+### `data-loc` is MIXED-BY-CARD (the four card types)
+
+A later crosswalk pass established the exact rule (do not assume): the rendered `data-loc` always
+equals the word's position in the **per-ref word list the renderer aligns the card against**, and
+that list is one of four things — so whether `data-loc` is canonical depends on the *card*, not the
+page:
+
+1. **override with canonical range** (curator range, word numbers < 100) → `data-loc == canonical`
+   → **RESOLVED**, author directly (`quran_loc == "quran:"+loc`).
+2. **non-override full āyah** (the aligned list is the whole āyah) → `data-loc == canonical` →
+   **RESOLVED**.
+3. **override synthetic placeholder** (curator word numbers ≥ 100, e.g. `2:136:101`) → canonical is
+   **not derivable offline** → **BLOCKER** (needs the curator's source-card map).
+4. **non-override mid-āyah excerpt** (the aligned list is a fragment) → excerpt-local re-indexed →
+   canonical **not derivable offline** → **BLOCKER** (needs a fragment→verse anchor).
+
+Two consequences: (a) a stale/narrow sweep window makes rows look "orphaned" when they actually
+render on a *different* live page — always sweep the **full live entry set**, not a fixed page range
+(the live entry pages grow over time). (b) Encode a **no-orphan validator** as a hard gate: before
+accepting an RH-LIVE row, require a live span at `data-loc == row.loc`, and if
+`quran_loc != "quran:"+row.loc` then a `source_address_crosswalk` with `displayed_qword_loc == row.loc`
+and `status == "resolved"`. Types 3–4 stay `pending:` with the exact missing anchor — never authored
+at a guessed canonical loc.
+
 ### Safest authoring pattern — mirror a certified-live row
 
 When you must author a new row for an inflected surface, do **not** hand-build the parse from the
