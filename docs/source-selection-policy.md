@@ -58,6 +58,13 @@ And it **blocks** (does not fan out — author instead) when:
 - two fallback-free signatures tie with no majority (`ambiguous_no_majority`);
 - a required closed-class canonical is absent (`relative_canonical_absent`).
 
+**Raw-surface disambiguation (norm-collision homographs).** Some distinct words *collide under
+normalization* — e.g. أَمْ ("or", interrogative particle) and أُمّ ("mother", noun) both fold to `ام`,
+while أَوْ ("or", disjunction → `qg-alternative`) stays distinct as `او`. For these, source selection
+and homograph detection must key on the **raw written surface**, never the normalized form: the
+normalized key manufactures a particle-vs-noun homograph that the raw surfaces already keep apart.
+Locked by `tools/check_regressions.py` (أُمّ/أَمْ norm_strict collision → pending, never one key-gloss).
+
 ## 3. Forbidden (each is a validator FAIL, not a guideline)
 
 - **Over-segmented minority beats the majority** — `majority_class_signature` where the chosen

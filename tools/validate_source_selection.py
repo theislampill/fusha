@@ -93,6 +93,9 @@ _FAMILY = {
     "qg-conjunction": "particle", "qg-ma-particle": "particle", "qg-particle": "particle",
     "qg-oath": "particle", "qg-vocative": "particle", "qg-exception": "particle",
     "qg-result": "particle", "qg-relation": "particle", "qg-comitative": "particle",
+    "qg-alternative": "particle", "qg-conditional": "particle", "qg-emphasis": "particle",
+    "qg-future-particle": "particle", "qg-interrogative": "particle", "qg-question": "particle",
+    "qg-referential-pronoun": "pronoun",
 }
 FUNCTION_FAMILIES = {"relative", "pronoun", "particle"}
 

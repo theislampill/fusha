@@ -40,6 +40,7 @@ display classes are scrubbed Qamus role classes, not screenshot/source labels.
 | oath waw | `qg-oath` | `OATH` |
 | comitative waw | `qg-comitative` | `COM` |
 | ordinary/function particle | `qg-particle` | `PART` |
+| disjunctive particle (أَوْ "or") | `qg-alternative` | `ALT` |
 | cause/result fa | `qg-result` / `qg-result-fa` | `CAUS` / `RES` |
 | lām segment | `qg-lam` | `LAM` |
 | mā segment | `qg-ma-particle` | `MA` |
@@ -62,6 +63,10 @@ When deriving the compact learner grammar key for a token, pick the **head** seg
 
 This keeps the key honest: a token whose content stem is still a `qg-segment` fallback shows no key (rather than a misleading prefix POS), and the key improves automatically as fallback stems get a real class. A demonstrative like `هَٰذَا` is a lone function word → `DemPro` (rule 2); it must NOT be downgraded to `qg-noun-stem`/`N`.
 
+### Bare (standalone) ḥarf jarr
+
+A lone preposition token (عَلَىٰ, عَنْ, فِى, مِنْ with no attached host) has **no host stem** — it *is* the whole token. Its `parse_key.summary` must NOT say "host stem" / "preposition + host": there is no host. Write the summary blank or as `bare preposition` (head rule 2 → `Prep`), and its segment gloss is the **row's own gloss** (the relation), not a borrowed host gloss. This is the inverse of the `بِسَلَامٍ` attached-preposition case above: there the bā must not be dropped; here there is no host to drop.
+
 ## Items
 
 | token | required parse-key decision | display classes |
@@ -74,6 +79,7 @@ This keeps the key honest: a token whose content stem is still a `qg-segment` fa
 | `وَٱلْعَصْرِ` | decide oath waw versus conjunction before glossing | `qg-oath` or `qg-particle`, `qg-article`, `qg-noun` |
 | `فَتَنفَعَهُ` | decide fa function; preserve verb and object suffix | `qg-result` or `qg-particle`, `qg-verb`, `qg-pronoun` |
 | `وَمَا` | one written token; waw plus function-specific `ما` | `qg-particle`, `qg-relative`/`qg-negative`/`qg-particle` |
+| `أَوْ` | disjunctive "or"; raw surface (`او`) distinguishes it from أَمْ/أُمّ (`ام`) | `qg-alternative` |
 | `أَيُّهَا` | vocative support plus attention particle | `qg-vocative`, `qg-particle` |
 | `إِلَّا` | exception particle; type/case may require nahw/scholar lane | `qg-exception` |
 | `أُورِثْتُمُوهَا` | passive perfect host + 2mp subject/deputy-subject marker + object `ها` | `qg-verb-stem`, `qg-subject-pronoun`, `qg-object-pronoun` |
