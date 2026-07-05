@@ -98,7 +98,7 @@ hiding the grammar fact.
 |---|---|---|---|
 | active participle / ism fāʿil used adjectivally | invent `qg-active-participle` | `qg-adjective` plus `AP`/`ADJ` label | `sarf.derivative_type`, morphline, learner explanation |
 | passive participle / ism mafʿūl | invent `qg-passive-participle` | `qg-adjective` plus derivative prefix/suffix classes when visible | sarf note and segment rows |
-| adverbial function / ẓarf-like role | invent `qg-adverb` | supported role such as `qg-particle`, `qg-preposition`, or `qg-relation` | `nahw.function`, attachment note, parse key |
+| adverbial function / ẓarf-like role (بَعْد, قَبْل, حَيْثُ) | invent `qg-adverb`, or mislabel as `qg-preposition` | `qg-noun-stem` interim — these are **declinable/built nouns in the adverbial accusative/genitive** (اسم ظرفي, muḍāf; mabnī ʿalā al-ḍamm when cut from iḍāfa). NOT `qg-preposition` (they are not ḥarf jarr — that misleads the iʿrāb), NOT `qg-verb-stem`/`qg-particle`. | `nahw.function` (ẓarf zamān/makān), attachment note, parse key |
 
 Reject any answer that is linguistically right but uses a renderer class absent from the schema. The fix is either
 class normalization or a deliberate schema/CSS/fixture/test expansion, not a one-off live payload exception.
