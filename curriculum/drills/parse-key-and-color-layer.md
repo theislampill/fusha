@@ -48,9 +48,19 @@ display classes are scrubbed Qamus role classes, not screenshot/source labels.
 | dual suffix | `qg-dual-suffix` | `DUAL` |
 | plural suffix | `qg-plural-suffix` | `PL` |
 | relative pronoun | `qg-relative` | `REL` |
+| demonstrative (هذا/ذلك/أولئك) | `qg-demonstrative` | `DEM` |
 | vocative | `qg-vocative` | `VOC` |
 | exception | `qg-exception` | `EXC` |
 | case ending | `qg-case` | `CASE` |
+
+### Head selection for the grammar key
+
+When deriving the compact learner grammar key for a token, pick the **head** segment in this order:
+1. the **LEX host** segment if present — `qg-verb-stem` / `qg-verb` / `qg-noun-stem` / `qg-noun` / `qg-adjective` / `qg-proper-noun` (the lexical content of the token);
+2. else, if the token is a **lone function word** (a single classed segment), that segment — `qg-relative` → `RelPro`, `qg-demonstrative` → `DemPro`, `qg-preposition` → `Prep`, `qg-*-pronoun` → `PPro`, `qg-particle`/`qg-negation` → `Part`;
+3. else **omit** the head (a pure affix/proclitic cluster over a fallback stem has no honest single POS — do not guess a proclitic POS like `art.`/`Conj`).
+
+This keeps the key honest: a token whose content stem is still a `qg-segment` fallback shows no key (rather than a misleading prefix POS), and the key improves automatically as fallback stems get a real class. A demonstrative like `هَٰذَا` is a lone function word → `DemPro` (rule 2); it must NOT be downgraded to `qg-noun-stem`/`N`.
 
 ## Items
 

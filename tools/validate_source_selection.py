@@ -86,6 +86,7 @@ _FAMILY = {
     "qg-proper-noun": "nominal", "qg-noun": "nominal", "qg-noun-stem": "nominal", "qg-adjective": "nominal",
     "qg-verb": "verbal", "qg-verb-stem": "verbal",
     "qg-relative": "relative",
+    "qg-demonstrative": "pronoun",
     "qg-pronoun": "pronoun", "qg-possessive-pronoun": "pronoun",
     "qg-object-pronoun": "pronoun", "qg-subject-pronoun": "pronoun",
     "qg-negative": "particle", "qg-negation": "particle", "qg-preposition": "particle",
