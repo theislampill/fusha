@@ -140,6 +140,49 @@ Use this drill before [`ayah-reading-drills.md`](ayah-reading-drills.md), after 
 Then run [`parse-key-and-color-layer.md`](parse-key-and-color-layer.md) to turn the composition
 into a renderer-ready parse-key/color contract.
 
+## Authoring-append gate (loc must render as a qword before you append)
+
+Lesson from an RH-LIVE authoring pass: the whitelist/renderer loc scheme is **mixed**. Some card
+words are numbered with a **canonical** `surah:ayah:word` address; others are numbered with a
+**card-local / example-scoped** index that only looks canonical (e.g. `17:15:102` and `17:15:104`,
+even though canonical 17:15 has 21 words). A loc that reads like `S:A:W` is therefore **not**
+proof that a hover keyed to it will attach to anything.
+
+Rule: **an authored-append row is orphan-safe only if its loc renders as a qword span on the row's
+own live page.** Verify before you append, never after:
+
+- Read back the **real** route. The live entry page is `/vNNN` (verb) / `/nNNN` (noun) /
+  `/pNNN` (particle); `?e=vNNN` is **inert** and must not be used for readback. For preview
+  overlays use the real page with `?wbw_preview=1`.
+- Confirm the exact loc is present as a rendered qword before append:
+  `curl <base>/vNNN?wbw_preview=1 | grep 'data-loc="LOC"'`. No matching `data-loc` span means the
+  loc is card-local/orphan — do **not** append; route to the crosswalk/source-card repair lane
+  (`qword-denominator-and-crosswalk.md`) to obtain the address that actually renders.
+- A two-vote reviewer must check the address contract itself, not only the gloss: a card-local
+  index such as `17:15:102`/`104` is an **invalid canonical `S:A:W`** and fails the contract even
+  when the English gloss is correct. (This is the exact miss one RH-LIVE critic caught and the
+  other did not — the address is part of what two independent checks must agree on.)
+
+### Safest authoring pattern — mirror a certified-live row
+
+When you must author a new row for an inflected surface, do **not** hand-build the parse from the
+dictionary entry. Mirror a row that is **already certified-live for the identical raw surface**:
+
+1. Find a CERTIFIED-LIVE row whose raw surface (diacritics and all) matches the target token, and
+   whose gloss is context-independent for that surface (e.g. passive `يُقَالُ` -> "is said").
+2. Copy it, then **re-key** `loc` / `quran_loc` / `wbw_loc` to the target address — after passing
+   the loc-attachment gate above.
+3. **Blank `parse_key`** on the copy (a mirrored surface reuse is not a certified grammar-family
+   propagation; leaving a stale parse key falsely asserts family safety).
+4. Never substitute the dictionary **infinitive** when the inflected form differs in voice,
+   person, or number. `يُقَالُ` is passive "is said", not the entry infinitive "to say"; a mirrored
+   row inherits the *surface's* certified gloss, not the lemma headword. (Same trap as
+   `ٱلْمُفْلِحُونَ` -> reject "to succeed"; see the Items table and
+   `sarf/examples/qamus-regressions.jsonl`.)
+
+Blank beats wrong: if no certified-live row exists for the exact surface and the loc will not
+render, keep the row `pending:` with the exact blocker rather than appending an orphan.
+
 ## Dogfood controller prompt
 
 For every production hover defect batch, add a `skill_impact` row:

@@ -27,6 +27,8 @@ Copy this file outside the repo for a real learner. The repo keeps the template 
 - `process_prose_in_hover`: learner-facing explanation contains authoring/deployment/source-boundary prose instead of Arabic reasoning.
 - `card_level_coverage_hidden`: report counts live rows while a visible listed example card remains flat, blocked, or unreported.
 - `edge_join_missing_or_ignored`: rollout/tutoring claim skips the entry -> card -> selected word -> quran/wbw edge chain or manually rediscovers data that the graph already supplies.
+- `orphan_loc_append`: an authored hover was keyed to a loc that does not render as a qword on its own live page (card-local/example-scoped index mistaken for a canonical `S:A:W` address); append was not gated on a `data-loc` readback.
+- `mirror_row_infinitive_substitution`: a mirrored-surface authoring row replaced the certified inflected gloss with the dictionary infinitive, dropping voice/person/number (e.g. passive "is said" flattened to "to say").
 - `cachebuster_parity_unverified`: learner-visible color/tooltip fix is claimed without asset-version/cachebuster readback and source/runtime payload parity.
 - `health_wait_skipped`: service restart/readback result is judged before bounded health and parity checks finish.
 - `token_only_override`: exact address differs from surface-family siblings.
