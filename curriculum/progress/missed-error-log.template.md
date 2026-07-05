@@ -35,6 +35,10 @@ Copy this file outside the repo for a real learner. The repo keeps the template 
 - `rich_cert_preview_overclaim`: preview-only rich metadata treated as certified hover output.
 - `rich_cert_pending_gate`: a pending/two-vote rich-cert row cleared from readable English alone.
 - `rh_live_preview_only`: admin/renderer preview candidate treated as public rollout approval.
+- `nafiya_false_govern`: named a non-governing particle (لا النافية, coordinating wāw, vocative) as the case/mood governor; right ending, wrong reason.
+- `matuf_subjunctive_missed`: a verb conjoined onto a منصوب/مجزوم verb was read as indicative; the ʿaṭf-propagated mood was dropped.
+- `estimated_ending_missed`: a defective/maqṣūr token's mood/case is muqaddar (estimated), not written; "no visible mark" was misread as "no mood/case".
+- `loc_surface_mislabel`: an authored hover was keyed to a loc whose live span renders a different surface than the row's target token (data-loc existed but the word did not match).
 
 ## Review Standard
 

@@ -158,6 +158,12 @@ own live page.** Verify before you append, never after:
   `curl <base>/vNNN?wbw_preview=1 | grep 'data-loc="LOC"'`. No matching `data-loc` span means the
   loc is card-local/orphan — do **not** append; route to the crosswalk/source-card repair lane
   (`qword-denominator-and-crosswalk.md`) to obtain the address that actually renders.
+- **`data-loc` presence is necessary but not sufficient — check the rendered SURFACE too.** A span at
+  `data-loc="LOC"` can render a *different word* than the row targets (VN-00: an authored row keyed to
+  `17:92:2` for `تَأْتِيَ`, but `17:92:2` renders `تُسْقِطَ` on the live page). Require both:
+  `data-loc == row.loc` AND the rendered span's normalized surface == the row's target surface. A
+  loc↔surface mismatch is a `loc_surface_mislabel` — do not append; re-key to the address where the
+  target surface actually renders, or route to the crosswalk lane.
 - A two-vote reviewer must check the address contract itself, not only the gloss: a card-local
   index such as `17:15:102`/`104` is an **invalid canonical `S:A:W`** and fails the contract even
   when the English gloss is correct. (This is the exact miss one RH-LIVE critic caught and the

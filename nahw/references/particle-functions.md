@@ -10,7 +10,7 @@ fixture: [`../evals/particle-function-eval.jsonl`](../evals/particle-function-ev
 | **مَن / مِن** | مَن: relative/interrogative/conditional · مِن: preposition | content-letter: **fatḥa** مَن (who) vs **kasra** مِن (from), even under و (وَمِنَ) | مَن يَعْمَلْ / مِنَ ٱلنَّاسِ |
 | **إِنْ** | conditional · negation · lightened إِنَّ | jawāb present? paired with إلا (neg)? | إِن كُنتُم (cond) / إِنِ ٱلكافرون إلا (neg) |
 | **أَنْ / أَنَّ / إِنَّ** | أَنْ maṣdariyya-nāṣiba/mukhaffafa/tafsīriyya · أَنَّ & إِنَّ emphasis (sisters) | subjunctive after أَنْ; naṣb of ism after إنّ/أنّ | أَن تَعْبُدُوا / إِنَّ ٱللَّهَ |
-| **لَا** | simple negation · prohibition (nāhiya) · lā of genus | jussive after? mabnī ism after? | لَا رَيْبَ (genus) / لَا تَقْرَبُوا (prohib) |
+| **لَا** | simple negation (nāfiya, **no ʿamal**) · prohibition (nāhiya, jussive) · lā of genus (naṣb on the mabnī ism) | jussive after? mabnī ism after? | لَا رَيْبَ (genus) / لَا تَقْرَبُوا (prohib) / لَا يَعْلَمُونَ (nāfiya) |
 | **لَمْ / لَنْ / لَمَّا** | لَمْ jussive→**past** neg · لَنْ future neg · لَمَّا 'when'/'not yet' | mood of the governed verb; temporal vs jussive | لَمْ يَلِدْ / لَن تَنَالُوا / فَلَمَّا جَآءَ |
 | **أَلَا / أَلَّا** | أَلَا istiftāḥ 'behold' · أَلَّا = أَنْ+لَا 'that not' | subjunctive verb after أَلَّا; sentence-opener أَلَا | أَلَآ إِنَّهُمْ / أَلَّا تَعْبُدُوا |
 | **فَمَا / وَمَا** | proclitic فـ/وـ + مَا (any مَا function) | resolve the فـ/وـ (rābiṭa/ʿāṭifa/istiʾnāf) then مَا | فَمَا كَانَ لَكُم (neg) |
@@ -31,4 +31,13 @@ fixture: [`../evals/particle-function-eval.jsonl`](../evals/particle-function-ev
 | **أَنَا / أَنَّا** | أَنَا independent pronoun · أَنَّا subordinator plus pronoun/clause | shadda and clause role | أَنَا / أَنَّا |
 
 **The rule:** read the content-letter harakah first (مَن/مِن، لِمَ/لَمْ، أَمْ/أُمّ), then the clause role.
-A surface key alone can never separate these — only iʿrāb + context can.
+A surface key alone can never separate these — only iʿrāb + context can. **Decide every occurrence on
+its own clause — never majority-vote a homograph's function across occurrences.** A same-surface peer is
+a *candidate* to re-check, not a decision to copy.
+
+**لا نافية governs nothing.** لَا النافية *negates* the following clause but is **ʿāmil-free**: the
+verb after it keeps whatever mood its own governor (or default rafʿ) assigns — لَا يَعْلَمُونَ is
+marfūʿ by default, not "manṣūb/majzūm by لا". Only لَا الناهية (jussive) and لَا النافية للجنس (naṣb
+on the ism) have ʿamal. Writing "governed by لَا" for a nāfiya is a `governor_not_justified` error
+even when the gloss ("do not know" / "they do not know") is right — see
+`../procedures/irab-case-mood.md` and fixture `../evals/irab-right-answer-wrong-reason.jsonl` (RWR-005).

@@ -10,6 +10,12 @@
    ـنا of إِلَيْنَا and the ـكُمْ of عَلَيْكُمْ are pronouns, never case markers or root letters. If mabnī, the
    ending decides nothing → resolve by function, not by vowel.
 2. **Mood on a present verb (tense-flipping):** read the governing particle, not the surface form.
+   On a **defective (nāqiṣ) imperfect** the mood mark is often **estimated (muqaddar)**, not written:
+   تَهْدِي / يَدْعُو / يَرْمِي in the indicative are **marfūʿ bi-ḍamma muqaddara** (the ḍamma is not
+   surfaced on the weak final letter); under أَن/لن they are manṣūb bi-fatḥa muqaddara, and under
+   لم majzūm by **deletion of the weak letter** (لَمْ يَدْعُ). Do not read "no ending mark" as "no
+   mood": name the estimated mark and its governor. أُصِيبُ (hollow, Form IV) keeps its hollow
+   morphology under mood — recover the root before assigning voice/mood.
    لَمْ + jazm → PAST negation (لَمْ يَلِدْ = "did not beget"); لَنْ + naṣb → categorical FUTURE ("will never");
    أَنْ/كَيْ/حَتَّى + naṣb → "(that) he do". The mood overrides the present surface
    ([`../rules/negation-rules.json`](../rules/negation-rules.json), [`negation.md`](negation.md)).
@@ -30,6 +36,9 @@ Public record stays exactly `{src:"qamus",kind:"authored",lang:"en"}` — the ma
 **Forbidden shortcuts:** asserting a case/mood from the surface vowel without naming the governor; letting an
 ambiguous ending pick the commoner reading; reading a fixed pronoun/particle vowel as a case marker; shipping a
 case/mood decision on the answer alone — a correct gloss with wrong iʿrāb reasoning is unsafe and must be rejected.
+- naming a **non-governing** particle as the governor: لَا النافية, the coordinating wāw, and a bare
+  vocative particle assign no case/mood. "manṣūb/majzūm by لَا النافية" is `governor_not_justified`
+  (right answer, wrong reason) — the mood comes from the verb's own governor or its default rafʿ.
 
 **Public-hover wording guard:** a case/tanwin ending may be visible in a rich
 hover, but the public contribution should not be the technical phrase
