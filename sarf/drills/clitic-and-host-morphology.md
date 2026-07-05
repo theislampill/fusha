@@ -136,3 +136,18 @@ calling a card complete while visible morphology is still hidden.
 Rule: qamustyping4 rows fail sarf readiness when a visible prefix, suffix,
 object, subject marker, article, or no-root status is absent from the teaching
 layer, even if the English hover sounds acceptable.
+
+
+## VN-00 r29 production lesson: combining-mark ORDER at a clitic boundary
+
+When you split a host from its proclitic/pronoun, the segment surfaces must concatenate
+**byte-exact** to the rendered Uthmani token. The live failure was combining-mark REORDER:
+the Uthmani text writes a doubled letter as `letter + shadda(U+0651) + vowel`, but a
+re-typed split often emerges as `letter + vowel + shadda` (canonical-combining-class order).
+Same code points, different order ⇒ `concat != surface` ⇒ the row is (correctly) refused.
+
+Rule: **never re-type Arabic to segment it** — carve the split out of the exact surface by
+BASE-LETTER count (a base letter = `unicodedata.combining(c)==0`; every following mark rides
+with its base). The article + sun-letter case (`ٱلسَّارِق` = `ٱل` + `سَّارِق`, the shadda on
+the stem's first letter) and the small-waw pronoun (`هُۥ`) both fall out correctly from a
+base-letter carve. This is a segmentation-hygiene invariant, not a grammar choice.
