@@ -291,3 +291,23 @@ derivative check:
 Rule: a derivative row is not rich-hover complete until the parse key and qg
 classes show the piece that taught the learner something. If the only safe
 analysis is "proper name, no public root", that is a valid terminal state.
+
+## <a name="rh-live-source-lookup-not-truth"></a>25. RH-LIVE: a source lookup's root + gloss are HINTS, not truth
+
+When a per-token source lookup already carries a `root` and a `gloss`, those are
+*hints* to check, never facts to ship. The VN-00 rich-hover pass found the lookup
+gloss is frequently the **root's dictionary infinitive** ("to X") pasted onto a
+token that is actually a derived **noun/adjective/participle**, and sometimes the
+lookup's **root itself is wrong**. Verify POS and root by sarf before authoring.
+
+| token | source lookup said | sarf truth | author as | fixture |
+|---|---|---|---|---|
+| `طُوبَىٰ` | root **أ و ب**, gloss "to return" | فُعْلَى jāmid maṣdar from **ط ي ب** | noun "blessedness" | ND-VN00-01 |
+| `نَصَبٌ` | "to be fatigued" | فَعَل maṣdar, root ن ص ب | noun "fatigue" | ND-VN00-02 |
+| `مُدْخَلَ` | "to enter" | مُفْعَل ism makān from Form IV أَدْخَلَ | noun "an entrance" | ND-VN00-03 |
+| `أَحْيَآءٍ` | "to live" | أَفْعَال broken plural of حَيّ | noun "living ones" | ND-VN00-04 |
+
+Rule: **infinitive_leak_on_noun** (and its partner **source_root_wrong**) is a
+`dictionary_infinitive_leakage` error even when the hover is otherwise populated —
+a derived noun must be glossed by its own POS meaning, on its own verified root.
+A populated source row does not certify a hover; the sarf does.
