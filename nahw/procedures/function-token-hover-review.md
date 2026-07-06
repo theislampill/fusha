@@ -175,3 +175,21 @@ they are segmentation granularity (qg-verb vs qg-verb-stem+subject-pronoun — s
 editorial synonymy, or a bad gloss hint the authoritative parse overturns (e.g. مُلْك 'dominion'
 mis-hinted as مَلَك 'angels' — قراءة: لا خلاف). Only where the authoritative irab and meaning
 fields THEMSELVES diverge (genuine khilāf) is a scholar packet the correct terminal.
+
+
+## VN-00 FINAL lesson: converging-meaning deploy rule + source-clean boundary
+
+When multiple grammatical analyses of a function token CONVERGE in learner meaning, do NOT block
+indefinitely — deploy a conservative hover with a FORMAL/CONTEXTUAL split:
+- **بِمَا** — 2:59 causal مصدرية ('because'); 2:164 relative موصولة ('with what' → contextually 'for
+  what benefits people'). Deploy the formal token gloss; carry the contextual phrase in the learner note.
+- **مَنْ in parables** — relative / described-indefinite ('one whom'), not a live conditional 'whoever',
+  when the passage describes a specific figure (e.g. the provided believer at 16:75).
+- **فَأَوْلَىٰ** — form is the elative أَفْعَل from و ل ي in every occurrence; the OCCURRENCE sense is
+  read per-ayah: 75:34 the threat/waʿīd idiom ('woe to you'), 47:20 the elative 'more fitting' with
+  warning force. Gloss the occurrence sense; name the elative form in the learner note.
+
+**SOURCE-CLEAN boundary (hard):** external evidence — web corpora, translation sets, classical iʿrāb/
+tafsir/lexical works, or an analyzer — belongs in the packet SIDECAR only. The public payload
+(token gloss, contextual gloss, learner explanation, segments, morphline) must never name or quote a
+source, path, or process. The deploy-time leak scan enforces this; keep the learner note plain.
