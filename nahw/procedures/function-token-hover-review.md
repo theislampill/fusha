@@ -149,3 +149,29 @@ Rich-hover readiness:
 - if the function cannot be certified, do not choose a color or parse key as if
   it were resolved. Route to `particle_function_uncertified`,
   `ma_function_uncertified`, `waw_function_uncertified`, or a more exact blocker.
+
+
+## VN-00 r29 lesson: a contested-token packet must PRESERVE both parses (decision-ready)
+
+When two independent parses disagree on a contested function token (ما مصدرية/موصولة, مَن
+موصولة/شرطية, لا نافية/ناهية, a homograph sense), the hold is only useful if the packet
+**preserves the two actual parses**. A packet that says "two independent parses disagree" but
+stores `reading_A: null / reading_B: null` is NOT decision-ready — the reviewer cannot rule
+without re-deriving the parses. This was a live Run #29 failure: the final report claimed
+"exact A/B packets" while the packet JSON had null readings.
+
+Decision-ready packet contract (mechanically checkable — see `vn00_check_packets.py`):
+- **scholar packet:** both readings (class-sequence + gloss + verdict + hold-reason), the exact
+  grammar question, BOTH proposed public payloads (deploy-if-A / deploy-if-B), and the exact
+  reason it cannot be deployed (which authoritative field disagrees with which).
+- **owner packet:** ≥2 real sense options, each with a gloss AND a proposed payload; the exact
+  grammar question; why owner authority is required; a recommendation.
+- **crosswalk packet:** the EXACT missing edge — or, if the display loc renders (no orphan) and
+  only entry-provenance metadata differs, reclassify (it is not a real edge gap).
+
+Resolution rule (Run #29b): before escrowing a disagreement to a packet, re-check the
+**authoritative parse** (analyzer irab + meaning + qeraat). Many "disagreements" are NOT genuine:
+they are segmentation granularity (qg-verb vs qg-verb-stem+subject-pronoun — same lexical unit),
+editorial synonymy, or a bad gloss hint the authoritative parse overturns (e.g. مُلْك 'dominion'
+mis-hinted as مَلَك 'angels' — قراءة: لا خلاف). Only where the authoritative irab and meaning
+fields THEMSELVES diverge (genuine khilāf) is a scholar packet the correct terminal.
