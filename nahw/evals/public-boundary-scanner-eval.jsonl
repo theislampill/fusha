@@ -1,0 +1,10 @@
+{"id":"PBS-01","gloss":"and the hypocrites","should_leak":false,"why":"'hypocrites' contains the substring 'ocr' — must NOT trip the leak scanner (word-boundary match)"}
+{"id":"PBS-02","gloss":"a reciprocal advocate","should_leak":false,"why":"'reciprocal'/'advocate' contain 'ocr'"}
+{"id":"PBS-03","gloss":"the mediocre grocer","should_leak":false,"why":"'mediocre'/'grocer' contain 'ocr'"}
+{"id":"PBS-04","gloss":"they see the punishment","should_leak":false,"why":"ordinary teaching gloss"}
+{"id":"PBS-05","gloss":"ocr","should_leak":true,"why":"standalone acronym label"}
+{"id":"PBS-06","gloss":"see OCR scan output","should_leak":true,"why":"OCR as a whole word"}
+{"id":"PBS-07","gloss":"from mcp analyze_word","should_leak":true,"why":"mcp whole word + tool name"}
+{"id":"PBS-08","gloss":"per qac corpus","should_leak":true,"why":"qac + corpus label"}
+{"id":"PBS-09","gloss":"see tafsir al-...","should_leak":true,"why":"tafsir source label (substring match retained)"}
+{"id":"PBS-10","gloss":"quran.com word 3","should_leak":true,"why":"external source URL label"}
