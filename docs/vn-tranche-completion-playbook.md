@@ -65,6 +65,17 @@ leak scan → commit whitelist (explicit path) → restart timer. Rollback = `.b
 | Wave F matched 0 rows | `norm()` didn't strip Qurʾānic annotation marks (U+06D6..06ED, e.g. ۟) so قالوا۟ ≠ قالوا | extend the diacritic-strip range to U+06D6..06ED in every normalizer |
 | Garbage token gloss on multi-seg verbs | template `gloss_contribution` on affixes is a **morphology note**, not a gloss | for flat→rich, keep the existing flat gloss as token; use segment glosses only for the breakdown |
 | Duplicate-loc merge refusal | worklist is per (loc,page); a shared āyah word appears on >1 page | dedup analysis by `loc` before assemble |
+| 1,627 "source_crosswalk" = false gate | the `loc_attaches` heuristic (ayah ∈ entry examples) ≠ "is display loc canonical" | test the canonical question directly (loc ∈ wbw-lookup w/ matching surface); most "crosswalk" rows are deployable |
+| Two 200-agent Workflows concurrently → API throttle/session-limit | shared 16-cap × 2 = overload | run heavy Workflows SEQUENTIALLY; resume-until-converged (cached agents skip) |
+| Throttling killed the critic/vote-B stage, not the authors | author StructuredOutput was saved in transcripts | **harvest author/vote rows from the workflow transcripts** (`harvest_author_rows.py` / `harvest_scholar_2vote.py`) and deploy through the deterministic gates — throttling never wastes completed work |
+
+## 8. MCP-grounded per-occurrence authoring (the content/scholar engine)
+Because every VN row's display loc **is canonical**, MCP `analyze_word(surah,ayah,word_no)` works directly:
+- **content (non-homograph):** author→critic Workflow; author uses `irab`+`sarf` to pick qg class + fix the
+  inflection (dictionary-infinitive → inflected gloss; passive vs active). Deterministic gates
+  (COLORED_QG/concat/`_validate_row`/leak-scan) + a critic (or spot-check) gate the deploy.
+- **homograph (scholar):** two INDEPENDENT MCP-verified parses; deploy only where the segment
+  class-sequence agrees; disagreement → row-level packet preserving both readings. Never majority-vote.
 
 ## 7. Regression freeze
 `smoke-vn00-regression.sh` asserts the completed tranche stays 100% (rebuilds the window map + matrix,
