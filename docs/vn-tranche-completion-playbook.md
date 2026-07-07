@@ -69,6 +69,16 @@ leak scan → commit whitelist (explicit path) → restart timer. Rollback = `.b
 | Two 200-agent Workflows concurrently → API throttle/session-limit | shared 16-cap × 2 = overload | run heavy Workflows SEQUENTIALLY; resume-until-converged (cached agents skip) |
 | Throttling killed the critic/vote-B stage, not the authors | author StructuredOutput was saved in transcripts | **harvest author/vote rows from the workflow transcripts** (`harvest_author_rows.py` / `harvest_scholar_2vote.py`) and deploy through the deterministic gates — throttling never wastes completed work |
 
+## 7b. Run #32 ANDON lessons (deploy-mechanics that were mistaken for hard gates)
+| symptom | root cause | fix |
+|---|---|---|
+| owner/impossible rows refuse assembly (`no surface in wbw-lookup`) | the loc is **absent from wbw-lookup** (canonical Tanzil map) even though it renders on the page | build a `loc → rendered-surface` **surfacemap** from the live worklist and pass `--surfacemap` to resplit+assemble |
+| authored/agreed rows fail byte-exact concat and never deploy | agent single-segment surface differs byte-wise from wbw | **drop the agent surface on single-segment rows** → assemble fills it byte-exact from wbw/surfacemap |
+| "impossible" bucket | classifier said "no Qamus sense" | almost never truly impossible — MCP `analyze_word` + āyah context author a conservative gloss (وكأسا/زمهريرا/سبعون/سلاسلا…); leave impossible only if the exact evidence is still missing |
+| "owner sense selection" with placeholder options | packet lacked concrete senses | owner supplies the sense once; **seed it as ground truth** in the author prompt (`owner_gloss_hint` used verbatim) |
+| 2-vote "disagreement" floor | granularity/label difference, not khilāf | **Tier-1**: identical token_gloss → deploy A; **Tier-2**: POS-family normalize; **Tier-3**: MCP tie-break; **Tier-4**: true packet only |
+| "content not in harvest" / "engine exhausted" | rows fell out on concat/filter, not authoring | re-harvest transcripts + re-deploy the *covered-but-stuck* set with the surfacemap + single-seg fixes before declaring residual |
+
 ## 8. MCP-grounded per-occurrence authoring (the content/scholar engine)
 Because every VN row's display loc **is canonical**, MCP `analyze_word(surah,ayah,word_no)` works directly:
 - **content (non-homograph):** author→critic Workflow; author uses `irab`+`sarf` to pick qg class + fix the
