@@ -87,6 +87,33 @@ Because every VN row's display loc **is canonical**, MCP `analyze_word(surah,aya
 - **homograph (scholar):** two INDEPENDENT MCP-verified parses; deploy only where the segment
   class-sequence agrees; disagreement → row-level packet preserving both readings. Never majority-vote.
 
+## 10. VN-02 scaled-authoring method (2026-07-07 flywheel)
+VN-02 (`v095–v141 + n0091–n0135`, 12,185 spans) started at 62.17% and used a scaled version of the method.
+Reusable lessons:
+- **`vn02_assemble.py` (durable analysis→live-row assembler).** VN-01's resplit/assemble lived in `/tmp`
+  and were wiped. The committed applier is `merge_rh_live_packet.py` (validates every row via the live
+  `_validate_row`, fail-closed). Keep a durable assembler that turns transcluder/authoring `analysis`
+  (`{loc, segments:[{class,surface,gloss,role}], token_gloss, contextual_gloss, morphline, learner}`) into a
+  live row: byte-exact segment concat == worklist surface (drop on mismatch), source-clean pre-filter,
+  `public_preview={src:qamus,kind:authored,lang:en}`, `quran_loc/wbw_loc` from loc. Never hand-roll rows.
+- **Single-segment content authoring (scaled single-seg surface-drop).** For content rows, the MCP author
+  picks ONE qg class + an inflected token gloss for the whole token; the **surface comes from the worklist**
+  (byte-exact), so there is no multi-seg combining-mark risk. Robust at scale; a critic rejects
+  infinitive-leak / active-on-passive / POS-mismatch before deploy.
+- **Contextual-collapse recovery.** If an author proposes `contextual_gloss ≠ token_gloss` without carrying
+  adjacent-context evidence (`adjacent_context_required` + locs + a context source), the row would fail
+  `_validate_row`. Don't drop it — **collapse `contextual_gloss → token_gloss`** (the token gloss is correct;
+  only the phrase annotation is lost) and deploy.
+- **Harvest-then-stop.** Author/vote StructuredOutput is complete in each agent transcript before the
+  critic/aggregation stage. Harvest authors from transcripts, `TaskStop` the workflow once authors are done,
+  deploy from the harvest — throttling on the tail stage never blocks banked rows. Run heavy workflows
+  SEQUENTIALLY (content, then scholar), never two at once.
+- **`source_crosswalk` is usually not blocked.** VN-02's 905 crosswalk rows were ALL `loc_attaches` (display
+  loc canonical) with no exact twin → they are **content authoring**, not a hard gate (905 → 245 after the
+  content lane). Test the canonical question directly before packeting a crosswalk row.
+- **Idempotent incremental deploy.** Re-merging a growing harvest is safe: already-live locs no-op, only new
+  locs append. Deploy in banked batches; commit the whitelist per batch (git mirror stays ≤1 batch behind).
+
 ## 7. Regression freeze
 `smoke-vn00-regression.sh` asserts the completed tranche stays 100% (rebuilds the window map + matrix,
 asserts rich==denominator/flat 0/pending 0, final-approved spans render rich with exact glosses,
