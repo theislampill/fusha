@@ -3464,6 +3464,21 @@ except Exception as _e:
     check("largelexicon candidate layer runnable", False)
     print("  ", _e)
 
+# VN-01 hardening flywheel fixtures (2026-07-07): D7 dark-mode + run#32 deploy-mechanics
+for _p, _req in (
+    ("sarf/evals/surfacemap-wbw-absent-eval.jsonl", ("id", "surface", "decision", "reason")),
+    ("sarf/evals/combining-mark-byte-exact-eval.jsonl", ("id", "surface", "decision", "reason")),
+    ("qamus/examples/dogfood_d7_darkmode_contrast_lesson.sample.jsonl",
+     ("bug_class", "what_failed", "learner_explanation", "validator_link")),
+):
+    try:
+        _rows = [json.loads(_l) for _l in io.open(os.path.join(ROOT, _p), encoding="utf-8") if _l.strip()]
+        check("flywheel fixture well-formed + keyed: %s" % _p,
+              len(_rows) >= 1 and all(all(_k in _r for _k in _req) for _r in _rows))
+    except Exception as _e:
+        check("flywheel fixture well-formed + keyed: %s" % _p, False)
+        print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

@@ -90,4 +90,20 @@ Because every VN row's display loc **is canonical**, MCP `analyze_word(surah,aya
 ## 7. Regression freeze
 `smoke-vn00-regression.sh` asserts the completed tranche stays 100% (rebuilds the window map + matrix,
 asserts rich==denominator/flat 0/pending 0, final-approved spans render rich with exact glosses,
-source-clean). Run it before claiming any later tranche done — never let a new worklist regress a frozen one.
+source-clean). A twin `smoke-vn01-regression.sh` freezes VN-01 (14,052/14,052, every disposition 0,
+92-route source-clean + parse-hash scan). Run both before claiming any later tranche done — never let a
+new worklist regress a frozen one.
+
+## 9. Public UX / readability ANDON (D7 colour-key, 2026-07-07)
+The rich-hover reader teaches grammar through **colour + readable gloss**; a learner-facing surface that
+is unreadable in the user's theme is a **non-functional teaching aid**, not a cosmetic nit. The D7 colour
+legend rendered a white panel with near-white text in dark mode (measured **1.22 : 1**; AA needs ≥ 4.5).
+| symptom | root cause | fix / poka-yoke |
+|---|---|---|
+| legend unreadable in dark | panel styled with token names that don't exist (`--du-surface`/`--du-border`) → hardcoded-white fallback in **both** modes while the text token was theme-aware (near-white in dark) | use the **real** theme tokens (surface/text/border/shadow); grep the live token file — never author from a remembered generic-kit name |
+| colour swatches blank | grammar-colour vars were **out of scope** for the legend subtree | scope the legend into the same qg palette (incl. the light-mode override) so chips match running text per mode |
+| "dark inspected" false pass | the screenshot was **not contrast-measured**; "renders" read as "readable" | a **computed-contrast smoke** (`smoke-d7-legend-contrast.js`) asserts title+label ≥ 4.5, panel≠page, swatch distinguishable, in light **and** dark, before any legend/colour deploy |
+Rules: theme-aware tokens only; never a pale role-colour as **label text** (colour goes on a swatch/border/marker);
+verify light+dark × desktop+mobile on every colour change; measure, don't eyeball; keep it source-clean (no
+source/tool/process label, no parse-hash/debug id). Pedagogy: `curriculum/dark-mode-accessibility-pedagogy.md`,
+`curriculum/visual-grammar-legend.md`.

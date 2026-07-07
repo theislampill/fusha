@@ -329,6 +329,31 @@ contract; [`tools/fusha_suggest.py`](../tools/fusha_suggest.py) is the abstain-f
 
 ---
 
+## 17. Deploy-mechanics the sarf author owns (VN-01 run #32 flywheel)
+A correct morphological decision still fails to ship if the **surface bytes** or the **retry** are
+wrong. These are not linguistics but they gate every rich-hover deploy — keep them with sarf so an
+author never mis-diagnoses a mechanics failure as a content hard-gate. (Playbook: `docs/vn-tranche-completion-playbook.md` §5–§8.)
+
+- **Byte-exact base-letter carve/resplit.** Every candidate segmentation's surfaces must concatenate
+  **byte-exact** to the token surface. Resplit by **base-letter count** (each base letter carries its
+  own trailing combining marks) — never by raw codepoint offset. Eval: `evals/combining-mark-byte-exact-eval.jsonl`.
+- **Combining-mark order at clitic boundaries.** A diacritic-only tanwīn/case mark (ً ٍ ٌ, incl.
+  U+06D6–06ED annotation marks) must **ride its base letter** and never take a colour class of its own;
+  matching-normalization strips U+064B–0652 **and** U+06D6–06ED but must not mutate the public bytes
+  (قَالُوا۟ matches قَالُوا, still renders قَالُوا۟).
+- **Single-segment surface-drop.** When an authored single-segment surface differs byte-wise from the
+  rendered/WBW surface, **drop the agent surface** — supply only class + gloss and let assemble fill the
+  surface byte-exact. The rendered surface is authoritative.
+- **Surfacemap when WBW lookup is absent.** A display loc can render on the page yet be **absent from the
+  canonical WBW/Tanzil lookup**. That is a deploy-mechanics fact, not "no sense": build a
+  `loc → rendered-surface` surfacemap from the live worklist and pass `--surfacemap` to resplit+assemble.
+  Eval: `evals/surfacemap-wbw-absent-eval.jsonl`.
+- **Source-backed retry before "impossible".** A row is *almost never* truly impossible. Before
+  emitting an impossible/blocked disposition, retry with a source-backed per-occurrence reading (the
+  internal source-adapter analyzer at `S:A:W`) + āyah context to author a conservative inflected gloss;
+  leave impossible **only** if the exact missing evidence is named. That analyzer is INTERNAL evidence
+  only — the public record stays `{"src":"qamus","kind":"authored"}`.
+
 ## The five sarf principles (encode these)
 1. **Never infer a root from `norm()` alone.** It drops hamza + harakāt for recall. `إِلَيْنَا` is **not** ل ي ن;
    `إيمان`≠`أيمان`; `يَأْمُرُونَ`≠`يَمُرُّونَ`; `قُرْءَانًا` is not stem+نا; `مَالِكِ` is not مَا لَكَ.
