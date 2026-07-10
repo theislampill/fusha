@@ -56,6 +56,7 @@ BINDING_SCHEMA_V1 = "qamus.canonical_hover_occurrence_binding.v1"
 BINDING_SCHEMA_V2 = "qamus.canonical_hover_occurrence_binding.v2"
 EXCEPTION_SCHEMA_V1 = "qamus.canonical_hover_exception.v1"
 EXCEPTION_SCHEMA_V2 = "qamus.canonical_hover_exception.v2"
+COMPILER_INPUT_SCHEMA = "qamus.canonical_hover_compiler_input.v1"
 
 # @2 identities contain content or stable logical coordinates only. In particular,
 # mutable certification/review status, confidence, reason, and deployment fields are
@@ -109,6 +110,64 @@ def read_jsonl(path):
     return rows
 
 
+def _canonical_sha256(value):
+    blob = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def validate_compiler_input(row, dependency_artifacts=None):
+    """Validate one accepted pre-build row at the compiler boundary."""
+    if row.get("schema") != COMPILER_INPUT_SCHEMA:
+        return ["input_schema_version: accepted schema is %s" % COMPILER_INPUT_SCHEMA]
+    missing_provenance = [field for field in (
+        "source_key", "source_row_id", "source_artifact_sha256") if not row.get(field)]
+    if missing_provenance:
+        return ["provenance_missing: missing fields %r" % missing_provenance]
+    if row.get("source_key") != "qamus" or not re.fullmatch(
+            r"[0-9a-f]{64}", str(row.get("source_artifact_sha256") or "")):
+        return ["provenance_missing: source_key=qamus and a lowercase source artifact sha are required"]
+    carrier_fields = ("canonical_wbw_loc", "entry_id", "card_id", "qword_row_id")
+    missing_carrier = [field for field in carrier_fields if not row.get(field)]
+    if missing_carrier:
+        return ["carrier_incomplete_waiver: missing fields %r; null/unresolved qword_row_id "
+                "remains fail-closed" % missing_carrier]
+    dependencies = row.get("source_dependencies")
+    if not isinstance(dependencies, list) or not dependencies:
+        return ["source_dependency_missing: nonempty source_dependencies are required"]
+    for dependency in dependencies:
+        if (not isinstance(dependency, dict) or not dependency.get("id")
+                or not re.fullmatch(r"[0-9a-f]{64}", str(dependency.get("sha256") or ""))):
+            return ["source_dependency_missing: every dependency requires id and lowercase sha256"]
+    expected_aggregate = _canonical_sha256(dependencies)
+    if row.get("source_dependency_sha256") != expected_aggregate:
+        return ["source_dependency_missing: aggregate dependency sha mismatch"]
+    for dependency in dependencies:
+        identity = dependency["id"]
+        if dependency_artifacts is None or identity not in dependency_artifacts:
+            continue
+        artifact = dependency_artifacts[identity]
+        if isinstance(artifact, str):
+            with io.open(artifact, "rb") as handle:
+                artifact = handle.read()
+        actual = hashlib.sha256(artifact).hexdigest()
+        if actual != dependency["sha256"]:
+            return ["source_dependency_index_drift: %s recorded %s actual %s" % (
+                identity, dependency["sha256"], actual)]
+    return []
+
+
+def compiler_input_conflict(row, dependency_artifacts=None):
+    errors = validate_compiler_input(row, dependency_artifacts=dependency_artifacts)
+    if not errors:
+        return None
+    reason = errors[0].split(":", 1)[0]
+    result = {"reason": reason, "errors": errors, "row": row}
+    if reason == "carrier_incomplete_waiver":
+        result["missing_fields"] = [field for field in (
+            "canonical_wbw_loc", "entry_id", "card_id", "qword_row_id") if not row.get(field)]
+    return result
+
+
 def _leak_scan(obj, where):
     blob = json.dumps(obj, ensure_ascii=False).lower()
     return ["%s leaks forbidden label %r" % (where, label)
@@ -149,10 +208,14 @@ def validate_binding(row, payload_ids):
         carrier_fields = ("canonical_wbw_loc", "entry_id", "card_id", "qword_row_id")
         missing = [field for field in carrier_fields if not row.get(field)]
         if missing:
-            e.append("@2 binding requires full carrier fields %r" % missing)
+            e.append("carrier_incomplete_waiver: @2 binding requires full carrier fields %r; "
+                     "null/unresolved qword_row_id remains fail-closed" % missing)
+        if row.get("source_key") != "qamus":
+            e.append("provenance_missing: @2 binding requires source_key=qamus")
         dep_hash = row.get("source_dependency_sha256")
         if not isinstance(dep_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", dep_hash):
-            e.append("@2 binding requires source_dependency_sha256 as 64 lowercase hex chars")
+            e.append("source_dependency_missing: @2 binding requires "
+                     "source_dependency_sha256 as 64 lowercase hex chars")
     if row.get("binding_status") == "accepted":
         if not (row.get("canonical_quran_loc") and row.get("canonical_wbw_loc")):
             e.append("binding_status=accepted requires canonical_quran_loc and canonical_wbw_loc")
@@ -195,7 +258,9 @@ def validate_rows(rows):
     exception_id_counts = {}
     for r in rows:
         s = r.get("schema")
-        if s in (PAYLOAD_SCHEMA_V1, PAYLOAD_SCHEMA_V2):
+        if s == COMPILER_INPUT_SCHEMA:
+            errs = validate_compiler_input(r)
+        elif s in (PAYLOAD_SCHEMA_V1, PAYLOAD_SCHEMA_V2):
             rid = r.get("canonical_payload_id")
             payload_lemma[rid] = r.get("lemma_status")
             payload_id_counts[rid] = payload_id_counts.get(rid, 0) + 1

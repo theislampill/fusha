@@ -20,6 +20,7 @@ import hashlib
 import io
 import json
 import os
+import subprocess
 import sys
 
 try:
@@ -29,6 +30,20 @@ except Exception:
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
+from tools.validate_canonical_hover_payload_table import (  # noqa: E402
+    BINDING_SCHEMA_V2, PAYLOAD_SCHEMA_V2, validate_binding, validate_payload,
+)
+
+COMPILER_VERSION = "2.0.0"
+PUBLIC_CONTENT_FIELDS = (
+    "surface", "src", "kind", "lang", "public_gloss", "contextual_phrase_gloss",
+    "morphline", "segments", "learner_explanation",
+)
+SCHEMAS_CONSUMED = (
+    PAYLOAD_SCHEMA_V2, BINDING_SCHEMA_V2, "qamus.canonical_hover_exception.v2",
+    "qamus.rh_live_whitelist_row.legacy-or-v1",
+)
+SCHEMAS_PRODUCED = ("qamus.rh_live_whitelist_row.v1", "qamus.compile_report.v2")
 
 
 def read_jsonl(path):
@@ -47,6 +62,57 @@ def write_jsonl(path, rows):
     with io.open(path, "w", encoding="utf-8", newline="\n") as h:
         for r in rows:
             h.write(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n")
+
+
+def _canonical_bytes(value):
+    return json.dumps(value, ensure_ascii=False, sort_keys=True,
+                      separators=(",", ":")).encode("utf-8")
+
+
+def _rows_sha256(rows):
+    return hashlib.sha256(_canonical_bytes(rows)).hexdigest()
+
+
+def _source_head():
+    try:
+        proc = subprocess.run(
+            ["git", "rev-parse", "HEAD"], cwd=ROOT, stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE, text=True, check=False)
+    except OSError as exc:
+        return "unknown+git-unavailable-%s" % exc.__class__.__name__
+    value = proc.stdout.strip()
+    if proc.returncode == 0 and value:
+        return value
+    reason = (proc.stderr.strip().splitlines() or ["not-a-git-tree"])[0]
+    reason = "-".join(reason.lower().split())[:96]
+    return "unknown+%s" % (reason or "not-a-git-tree")
+
+
+def canonical_public_loc(row):
+    return row.get("canonical_wbw_loc") or row.get("wbw_loc") or row.get("loc")
+
+
+def public_content(row):
+    """Project compiled and legacy rows onto renderer-consumed public meaning."""
+    preview = row.get("public_preview") or {}
+    return {
+        "surface": row.get("surface", row.get("visible_surface")),
+        "src": row.get("src", preview.get("src")),
+        "kind": row.get("kind", preview.get("kind")),
+        "lang": row.get("lang", preview.get("lang")),
+        "public_gloss": row.get(
+            "public_gloss", row.get("token_contribution_gloss", row.get("gloss"))),
+        "contextual_phrase_gloss": row.get(
+            "contextual_phrase_gloss", row.get("contextual_gloss")),
+        "morphline": row.get("morphline"),
+        "segments": row.get("segments"),
+        "learner_explanation": row.get(
+            "learner_explanation", row.get("learner")),
+    }
+
+
+def public_content_bytes(row):
+    return _canonical_bytes(public_content(row))
 
 
 def _whitelist_row_id(canonical_wbw_loc):
@@ -74,21 +140,54 @@ def _public_row(binding, payload):
     return row
 
 
-def compile_packet(payloads, bindings, exceptions, baseline):
+def compile_packet(payloads, bindings, exceptions, baseline, source_head=None,
+                   input_artifacts=None):
     by_id = {p["canonical_payload_id"]: p for p in payloads}
+    invalid_payload_ids = set()
+    input_conflicts = []
+    for payload in payloads:
+        errors = (["accepted payload schema is %s" % PAYLOAD_SCHEMA_V2]
+                  if payload.get("schema") != PAYLOAD_SCHEMA_V2 else validate_payload(payload))
+        if errors:
+            invalid_payload_ids.add(payload.get("canonical_payload_id"))
+            input_conflicts.append({"canonical_payload_id": payload.get("canonical_payload_id"),
+                                    "reason": "compiler-input-validation", "errors": errors})
     exc_by_binding = {}
     for exc in exceptions:
         exc_by_binding.setdefault(exc.get("binding_id"), []).append(exc)
     for binding_exceptions in exc_by_binding.values():
         binding_exceptions.sort(key=lambda row: json.dumps(
             row, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
-    base_by_rowid = {b.get("row_id"): b for b in baseline}
+    base_by_loc = {}
+    for base in baseline:
+        loc = canonical_public_loc(base)
+        if not loc:
+            input_conflicts.append({"reason": "baseline-join-missing-loc", "row": base})
+            continue
+        if loc in base_by_loc:
+            input_conflicts.append({"canonical_wbw_loc": loc,
+                                    "reason": "baseline-join-duplicate-loc"})
+            continue
+        base_by_loc[loc] = base
 
-    append_replace, no_ops, conflicts = [], [], []
+    append_replace, no_ops, conflicts = [], [], list(input_conflicts)
     resolved_by_loc = {}
     conflicted_locs = set()
     for b in sorted(bindings, key=lambda row: row.get("binding_id") or ""):
         loc = b.get("canonical_wbw_loc")
+        boundary_errors = (["accepted binding schema is %s" % BINDING_SCHEMA_V2]
+                           if b.get("schema") != BINDING_SCHEMA_V2
+                           else validate_binding(
+                               b, {key: value.get("lemma_status") for key, value in by_id.items()}))
+        if b.get("source_key") != "qamus":
+            boundary_errors.append("binding source_key must be qamus")
+        if b.get("canonical_payload_id") in invalid_payload_ids:
+            boundary_errors.append("binding references payload rejected at compiler boundary")
+        if boundary_errors:
+            conflicts.append({"binding_id": b.get("binding_id"), "canonical_wbw_loc": loc,
+                              "reason": "compiler-input-validation", "errors": boundary_errors})
+            conflicted_locs.add(loc)
+            continue
         binding_exceptions = exc_by_binding.get(b.get("binding_id"), [])
         if len(binding_exceptions) > 1:
             conflicts.append({"binding_id": b.get("binding_id"),
@@ -148,12 +247,12 @@ def compile_packet(payloads, bindings, exceptions, baseline):
             continue
         b, payload = min(resolved, key=lambda pair: pair[0]["binding_id"])
         row = _public_row(b, payload)
-        prev = base_by_rowid.get(row["row_id"])
-        if prev == row:
+        prev = base_by_loc.get(loc)
+        if prev is not None and public_content_bytes(prev) == public_content_bytes(row):
             no_ops.append(row["row_id"])
         else:
             if prev is not None:
-                row["prior_payload_hash"] = prev.get("canonical_payload_id")
+                row["prior_payload_hash"] = hashlib.sha256(public_content_bytes(prev)).hexdigest()
                 row["expected_movement"] = "replace"
             else:
                 row["expected_movement"] = "append"
@@ -164,13 +263,36 @@ def compile_packet(payloads, bindings, exceptions, baseline):
     conflicts.sort(key=lambda row: json.dumps(
         row, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
 
+    packet_body = {"append_replace": append_replace, "no_ops": no_ops, "conflicts": conflicts}
+    if input_artifacts is None:
+        input_artifacts = [
+            {"identity": "canonical_payloads", "path": None, "sha256": _rows_sha256(payloads)},
+            {"identity": "occurrence_bindings", "path": None, "sha256": _rows_sha256(bindings)},
+            {"identity": "exceptions", "path": None, "sha256": _rows_sha256(exceptions)},
+            {"identity": "deployed_baseline", "path": None, "sha256": _rows_sha256(baseline)},
+        ]
     report = {
+        "source_head": source_head if source_head is not None else _source_head(),
+        "input_artifacts": input_artifacts,
+        "schemas_consumed": list(SCHEMAS_CONSUMED),
+        "schemas_produced": list(SCHEMAS_PRODUCED),
+        "compiler_version": COMPILER_VERSION,
+        "packet_sha256": hashlib.sha256(_canonical_bytes(packet_body)).hexdigest(),
         "append_replace": len(append_replace),
         "no_ops": len(no_ops),
         "conflicts": len(conflicts),
         "input_payloads": len(payloads),
         "input_bindings": len(bindings),
         "whitelist_locations": len(append_replace) + len(no_ops),
+        "row_denominators": {
+            "input_payloads": len(payloads), "input_bindings": len(bindings),
+            "input_exceptions": len(exceptions), "baseline_locations": len(base_by_loc),
+            "modeled_locations": len(append_replace) + len(no_ops),
+        },
+        "conflict_denominators": {
+            "conflicts": len(conflicts), "input_bindings": len(bindings),
+            "modeled_locations": len(append_replace) + len(no_ops) + len(conflicted_locs),
+        },
     }
     return append_replace, no_ops, conflicts, report
 
@@ -183,9 +305,14 @@ def self_test():
     pp = {"src": "qamus", "kind": "authored", "lang": "en",
           "token_contribution_gloss": "the book", "contextual_phrase_gloss": None,
           "morphline": "ART+STEM", "segments": seg, "learner_explanation": "article + noun"}
-    base = {"surface_norm": "الكتاب", "root": "كتب", "pos": "noun", "pattern": "فِعال",
+    dependency = [{"id": "self-test-index", "sha256": "a" * 64}]
+    dependency_sha = hashlib.sha256(_canonical_bytes(dependency)).hexdigest()
+    base = {"schema": "qamus.canonical_hover_compiler_input.v1",
+            "source_key": "qamus", "source_row_id": "compiler-self-test",
+            "source_artifact_sha256": "a" * 64, "source_dependencies": dependency,
+            "surface_norm": "الكتاب", "root": "كتب", "pos": "noun", "pattern": "فِعال",
             "lemma_status": "missing", "entry_id": "n1", "card_id": "n1:u1:e1",
-            "source_dependency_sha256": "a" * 64, "public_payload": pp,
+            "source_dependency_sha256": dependency_sha, "public_payload": pp,
             "visible_surface": "الكتاب"}
     rows = [dict(base, canonical_quran_loc="2:2:2", canonical_wbw_loc="2:2:2", qword_row_id="q1"),
             dict(base, canonical_quran_loc="3:7:5", canonical_wbw_loc="3:7:5", qword_row_id="q2")]
@@ -210,6 +337,17 @@ def self_test():
     ar2, no2, conf2, rep2 = compile_packet(payloads, bindings, [], baseline)
     if not (rep2["no_ops"] == 2 and rep2["append_replace"] == 0):
         print("SELF-TEST FAIL no-op recompile:", rep2); return 1
+
+    # A real deployed-shape row has no row_id or canonical lineage ids. Public
+    # meaning still joins by canonical loc and classifies no-op.
+    binding_loc = bindings[0]["canonical_wbw_loc"]
+    compiled_at_binding = next(row for row in baseline
+                               if row["canonical_wbw_loc"] == binding_loc)
+    legacy = dict(public_content(compiled_at_binding), loc=binding_loc)
+    ar_legacy, no_legacy, conf_legacy, rep_legacy = compile_packet(
+        payloads, [bindings[0]], [], [legacy])
+    if not (not ar_legacy and len(no_legacy) == 1 and not conf_legacy):
+        print("SELF-TEST FAIL legacy-public-no-op:", rep_legacy); return 1
 
     # a blocked binding -> conflict
     blocked = dict(bindings[0]); blocked["binding_status"] = "blocked"; blocked["reason"] = "source-crosswalk"
@@ -257,10 +395,31 @@ def main():
         raise SystemExit(self_test())
     if not (args.payloads and args.bindings and args.outdir):
         ap.error("--payloads, --bindings, --outdir required unless --self-test")
+    payloads = read_jsonl(args.payloads)
+    bindings = read_jsonl(args.bindings)
+    exceptions = read_jsonl(args.exceptions)
+    baseline = read_jsonl(args.baseline)
+
+    def artifact_record(identity, path, rows):
+        if path and os.path.exists(path):
+            with io.open(path, "rb") as handle:
+                digest = hashlib.sha256(handle.read()).hexdigest()
+        else:
+            digest = _rows_sha256(rows)
+        return {"identity": identity, "path": path, "sha256": digest}
+
+    input_artifacts = [
+        artifact_record("canonical_payloads", args.payloads, payloads),
+        artifact_record("occurrence_bindings", args.bindings, bindings),
+        artifact_record("exceptions", args.exceptions, exceptions),
+        artifact_record("deployed_baseline", args.baseline, baseline),
+    ]
     ar, no, conf, report = compile_packet(
-        read_jsonl(args.payloads), read_jsonl(args.bindings),
-        read_jsonl(args.exceptions), read_jsonl(args.baseline))
+        payloads, bindings, exceptions, baseline, input_artifacts=input_artifacts)
+    full_packet, _full_noops, _full_conflicts, _full_report = compile_packet(
+        payloads, bindings, exceptions, [], source_head=report["source_head"])
     os.makedirs(args.outdir, exist_ok=True)
+    write_jsonl(os.path.join(args.outdir, "whitelist_packet.jsonl"), full_packet)
     write_jsonl(os.path.join(args.outdir, "whitelist_append_replace.jsonl"), ar)
     write_jsonl(os.path.join(args.outdir, "whitelist_conflicts.jsonl"), conf)
     with io.open(os.path.join(args.outdir, "whitelist_noops.json"), "w", encoding="utf-8", newline="\n") as h:

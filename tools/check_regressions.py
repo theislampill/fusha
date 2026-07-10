@@ -4078,6 +4078,19 @@ try:
         for edge in fixture["input"]["edges"]:
             row = json.loads(json.dumps(base, ensure_ascii=False))
             row.update(json.loads(json.dumps(edge, ensure_ascii=False)))
+            dependency_hash = row.get("source_dependency_sha256")
+            dependencies = [{"id": "t5-fixture:%s" % row.get("qword_row_id"),
+                             "sha256": dependency_hash}]
+            row.update({
+                "schema": "qamus.canonical_hover_compiler_input.v1",
+                "source_key": "qamus",
+                "source_row_id": row.get("qword_row_id"),
+                "source_artifact_sha256": dependency_hash,
+                "source_dependencies": dependencies,
+                "source_dependency_sha256": hashlib.sha256(json.dumps(
+                    dependencies, ensure_ascii=False, sort_keys=True,
+                    separators=(",", ":")).encode("utf-8")).hexdigest(),
+            })
             materialized.append(row)
         return materialized
 
@@ -4241,7 +4254,16 @@ try:
                 _dependency_blob = json.dumps(
                     _source.get("source_dependencies") or [], ensure_ascii=False,
                     sort_keys=True, separators=(",", ":"))
+                _source_dep_digest = hashlib.sha256(
+                    _dependency_blob.encode("utf-8")).hexdigest()
+                _compiler_dependencies = [{
+                    "id": _source["row_id"], "sha256": _source_dep_digest}]
                 _t5_full_rows.append({
+                    "schema": "qamus.canonical_hover_compiler_input.v1",
+                    "source_key": "qamus",
+                    "source_row_id": _source["row_id"],
+                    "source_artifact_sha256": _source["resolution_wbw_lookup_sha256"],
+                    "source_dependencies": _compiler_dependencies,
                     "surface_norm": _surface,
                     "root": None,
                     "pos": "unknown",
@@ -4264,8 +4286,9 @@ try:
                     "card_id": _source["card_id"],
                     "qword_row_id": _source["qword_row_id"],
                     "visible_surface": _source["visible_surface"],
-                    "source_dependency_sha256": hashlib.sha256(
-                        _dependency_blob.encode("utf-8")).hexdigest(),
+                    "source_dependency_sha256": hashlib.sha256(json.dumps(
+                        _compiler_dependencies, ensure_ascii=False, sort_keys=True,
+                        separators=(",", ":")).encode("utf-8")).hexdigest(),
                 })
     _t5_full_started = _t5_time.perf_counter()
     _t5_full_p, _t5_full_b, _t5_full_r, _t5_full_c, _t5_full_report = _t5_build(
@@ -4300,6 +4323,108 @@ try:
     )
 except Exception as _e:
     check("T5 canonical-carrier gates (ADR-003 G1-G4) harness error", False)
+    print("  ", _e)
+
+# --- T6 adoption gates (ADR-003 G6/G7) ---
+try:
+    import ast as _t6_ast
+    import re as _t6_re
+    import tempfile as _t6_tempfile
+
+    from tools.build_canonical_hover_payload_table import build as _t6_build
+    from tools.compile_canonical_hover_whitelist_packet import compile_packet as _t6_compile
+    from tools.report_g8_adoption_packet import build_adoption_report as _t6_adoption
+
+    _t6_fixture_path = os.path.join(
+        ROOT, "fusha", "parser", "eval", "t6-provenance-baseline-fixtures.jsonl")
+    with io.open(_t6_fixture_path, encoding="utf-8") as _t6_handle:
+        _t6_fixtures = [json.loads(_line) for _line in _t6_handle if _line.strip()]
+    _t6_by_probe = {_row["probe"]: _row for _row in _t6_fixtures}
+    _t6_valid_fixture = _t6_by_probe["G7-valid-boundary-row"]
+    _t6_artifacts = {
+        _t6_valid_fixture["artifact_id"]: _t6_valid_fixture["artifact_bytes"].encode("utf-8")}
+
+    def _t6_row(probe):
+        fixture = _t6_by_probe[probe]
+        row = json.loads(json.dumps(_t6_valid_fixture["row"], ensure_ascii=False))
+        for field in fixture.get("delete", []):
+            row.pop(field, None)
+        row.update(fixture.get("set", {}))
+        return row
+
+    _t6_p, _t6_b, _t6_r, _t6_c, _t6_br = _t6_build(
+        [_t6_row("G7-valid-boundary-row")], dependency_artifacts=_t6_artifacts)
+    check("T6 G7 valid boundary row accepted", len(_t6_b) == 1 and not _t6_c)
+    for _probe in (
+        "G7-dependency-hash-missing", "G7-carrier-incomplete",
+        "G7-provenance-missing", "G7-schema-version-wrong",
+        "G7-index-drift-red-first",
+    ):
+        _bp, _bb, _br, _bc, _brep = _t6_build(
+            [_t6_row(_probe)], dependency_artifacts=_t6_artifacts)
+        _reason = _t6_by_probe[_probe]["expect"]["reason"]
+        check("T6 %s rejects with %s" % (_probe, _reason),
+              not _bb and any(row.get("reason") == _reason for row in _bc))
+
+    _t6_first = _t6_compile(_t6_p, _t6_b, [], [], source_head="fixture-head")
+    _t6_second = _t6_compile(_t6_p, _t6_b, [], [], source_head="fixture-head")
+    _t6_changed_payload = json.loads(json.dumps(_t6_p, ensure_ascii=False))
+    _t6_changed_payload[0]["public_payload"]["token_contribution_gloss"] = "written volume"
+    _t6_changed_payload[0]["public_payload"]["segments"][0]["gloss"] = "written volume"
+    from tools.validate_canonical_hover_payload_table import payload_id as _t6_payload_id
+    _t6_changed_payload[0]["canonical_payload_id"] = _t6_payload_id(_t6_changed_payload[0])
+    _t6_changed_binding = [dict(_t6_b[0], canonical_payload_id=_t6_changed_payload[0]["canonical_payload_id"])]
+    from tools.validate_canonical_hover_payload_table import binding_id as _t6_binding_id
+    _t6_changed_binding[0]["binding_id"] = _t6_binding_id(_t6_changed_binding[0])
+    _t6_changed_a = _t6_compile(
+        _t6_changed_payload, _t6_changed_binding, [], [], source_head="fixture-head")
+    _t6_changed_b = _t6_compile(
+        _t6_changed_payload, _t6_changed_binding, [], [], source_head="fixture-head")
+    _required_report = {
+        "source_head", "input_artifacts", "schemas_consumed", "schemas_produced",
+        "compiler_version", "packet_sha256", "row_denominators", "conflict_denominators"}
+    check("T6 G6a compile report provenance fields present",
+          _required_report <= set(_t6_first[3]))
+    check("T6 G6a identical inputs reproduce packet sha byte-identically",
+          _t6_first[3]["packet_sha256"] == _t6_second[3]["packet_sha256"])
+    check("T6 G6a changed input changes packet sha in stable direction",
+          _t6_first[3]["packet_sha256"] != _t6_changed_a[3]["packet_sha256"]
+          and _t6_changed_a[3]["packet_sha256"] == _t6_changed_b[3]["packet_sha256"])
+
+    _t6_g8 = run_text([
+        sys.executable, os.path.join(ROOT, "tools", "report_g8_adoption_packet.py"),
+        "--self-test"])
+    check("T6 G6b/G8 adoption reporter self-test (six classes + legacy no-op + lineage)",
+          _t6_g8.returncode == 0)
+
+    _t6_lane_paths = [os.path.join(ROOT, "tools", name) for name in (
+        "build_canonical_hover_payload_table.py",
+        "compile_canonical_hover_whitelist_packet.py",
+        "validate_canonical_hover_payload_table.py",
+        "report_g8_adoption_packet.py",
+    )]
+    _t6_sha_re = _t6_re.compile(
+        r'''(?im)\b(?:[A-Za-z_]\w*(?:_sha|_sha256)|source_head)\s*=\s*["'][0-9a-f]{12,64}["']'''
+        r'''|["'][0-9a-f]{40}(?:[0-9a-f]{24})?["']''')
+
+    def _t6_sha_lint(path):
+        with io.open(path, encoding="utf-8") as handle:
+            return _t6_sha_re.findall(handle.read())
+
+    _t6_ast_ok = True
+    for _path in _t6_lane_paths:
+        with io.open(_path, encoding="utf-8") as _handle:
+            _t6_ast.parse(_handle.read(), filename=_path)
+        _t6_ast_ok = _t6_ast_ok and not _t6_sha_lint(_path)
+    check("T6 G6c lane AST parses and hardcoded-sha lint green at HEAD", _t6_ast_ok)
+    with _t6_tempfile.TemporaryDirectory() as _td:
+        _seeded = os.path.join(_td, "seeded.py")
+        with io.open(_seeded, "w", encoding="utf-8") as _handle:
+            _handle.write('SOURCE_HEAD = "1234567890abcdef1234567890abcdef12345678"\n')
+        check("T6 G6c seeded temp copy makes hardcoded-sha lint red",
+              bool(_t6_sha_lint(_seeded)))
+except Exception as _e:
+    check("T6 adoption gates (ADR-003 G6/G7) harness error", False)
     print("  ", _e)
 
 if fails:

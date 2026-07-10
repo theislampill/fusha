@@ -39,10 +39,12 @@ except Exception:
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from tools.validate_canonical_hover_payload_table import (  # noqa: E402
-    payload_id, binding_id, PAYLOAD_ID_FIELDS,
+    payload_id, binding_id, PAYLOAD_ID_FIELDS, COMPILER_INPUT_SCHEMA,
+    compiler_input_conflict,
 )
 
 IDENTITY_FIELDS = ("surface_norm", "root", "pos", "pattern", "lemma_status")
+INPUT_SCHEMA = COMPILER_INPUT_SCHEMA
 
 
 def read_jsonl(path):
@@ -99,19 +101,9 @@ def _loc(row):
     return row.get("canonical_wbw_loc") or row.get("canonical_quran_loc") or row.get("loc")
 
 
-def _source_dependency_sha256(row):
-    supplied = row.get("source_dependency_sha256")
-    if isinstance(supplied, str) and len(supplied) == 64:
-        return supplied
-    dependencies = row.get("source_dependencies")
-    if dependencies:
-        blob = json.dumps(dependencies, ensure_ascii=False, sort_keys=True,
-                          separators=(",", ":"))
-        return hashlib.sha256(blob.encode("utf-8")).hexdigest()
-    lookup_hash = row.get("resolution_wbw_lookup_sha256")
-    if isinstance(lookup_hash, str) and len(lookup_hash) == 64:
-        return lookup_hash
-    return None
+def _canonical_sha256(value):
+    blob = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
 
 def _sort_rows(rows):
@@ -119,7 +111,7 @@ def _sort_rows(rows):
                                                    separators=(",", ":")))
 
 
-def build(rows):
+def build(rows, dependency_artifacts=None):
     payloads = {}      # chp id -> deterministic payload row
     bindings = []
     repair_candidates = []
@@ -130,6 +122,10 @@ def build(rows):
     # payload. Diagnostics are conflicts; repair_candidates has the deliberately
     # narrow ADR-003 vocabulary only.
     for row in rows:
+        gate_error = compiler_input_conflict(row, dependency_artifacts=dependency_artifacts)
+        if gate_error:
+            conflicts.append(gate_error)
+            continue
         loc = _loc(row)
         missing_carrier = [field for field, value in (
             ("canonical_wbw_loc", loc),
@@ -144,13 +140,8 @@ def build(rows):
         if not _has_required(row):
             conflicts.append({"reason": "validator/schema", "row": row})
             continue
-        dependency_hash = _source_dependency_sha256(row)
-        if dependency_hash is None:
-            conflicts.append({"reason": "source_dependency_missing", "row": row})
-            continue
         prepared = dict(row)
         prepared["canonical_wbw_loc"] = loc
-        prepared["source_dependency_sha256"] = dependency_hash
         rows_by_loc.setdefault(loc, []).append(prepared)
 
     # Second pass: select one canonical content identity per location, then bind
@@ -231,9 +222,12 @@ def self_test():
     pp_rich = {"src": "qamus", "kind": "authored", "lang": "en",
                "token_contribution_gloss": "the book", "contextual_phrase_gloss": None,
                "morphline": "ART+STEM", "segments": seg2, "learner_explanation": "article + noun"}
-    base = {"surface_norm": "الكتاب", "root": "كتب", "pos": "noun", "pattern": "فِعال",
+    dependency = [{"id": "self-test-index", "sha256": "a" * 64}]
+    base = {"schema": INPUT_SCHEMA, "source_key": "qamus", "source_row_id": "self-test-row",
+            "source_artifact_sha256": "a" * 64, "source_dependencies": dependency,
+            "surface_norm": "الكتاب", "root": "كتب", "pos": "noun", "pattern": "فِعال",
             "lemma_status": "missing", "entry_id": "n1", "card_id": "n1:u1:e1",
-            "source_dependency_sha256": "a" * 64, "public_payload": pp_rich}
+            "source_dependency_sha256": _canonical_sha256(dependency), "public_payload": pp_rich}
 
     # two identical payloads at DIFFERENT locs -> 1 payload, 2 bindings
     r1 = dict(base, canonical_quran_loc="2:2:2", canonical_wbw_loc="2:2:2",
@@ -307,14 +301,23 @@ def main():
     ap = argparse.ArgumentParser(description="Build canonical hover payload table from public rows.")
     ap.add_argument("--input", help="JSONL of public hover rows")
     ap.add_argument("--outdir", help="output directory for payloads/bindings/exceptions + report")
+    ap.add_argument("--dependency-artifact", action="append", default=[], metavar="ID=PATH",
+                    help="verify a recorded source dependency against artifact bytes")
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
     if args.self_test:
         raise SystemExit(self_test())
     if not (args.input and args.outdir):
         ap.error("--input and --outdir are required unless --self-test")
+    artifacts = {}
+    for spec in args.dependency_artifact:
+        if "=" not in spec:
+            ap.error("--dependency-artifact must be ID=PATH")
+        identity, path = spec.split("=", 1)
+        artifacts[identity] = path
     os.makedirs(args.outdir, exist_ok=True)
-    payloads, bindings, repairs, conflicts, report = build(read_jsonl(args.input))
+    payloads, bindings, repairs, conflicts, report = build(
+        read_jsonl(args.input), dependency_artifacts=artifacts)
     write_jsonl(os.path.join(args.outdir, "canonical_payloads.jsonl"), payloads)
     write_jsonl(os.path.join(args.outdir, "occurrence_bindings.jsonl"), bindings)
     write_jsonl(os.path.join(args.outdir, "repair_candidates.jsonl"), repairs)
