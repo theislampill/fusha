@@ -49,7 +49,7 @@ fork or unpushed divergence.
 - **live-verified** source: live artifact `_meta.coverage` =
   `{glossed: 43005, word_locs: 49900, pct: 86.18, pending_marked: 4867}`, `built_at`
   `2026-06-25T03:48:30Z`, `source_sha 65797d7d5599fadd`, `entry_count 2092`. Artifact:
-  `/srv/dawah-ops/hermes-workspace/qamus-app/qamus_wbw/build/wbw-lookup.json` (8,242,823 B,
+  `<prod>/hermes-workspace/qamus-app/qamus_wbw/build/wbw-lookup.json` (8,242,823 B,
   sha16 `8d3c077abac42890`). Live-served copy == git-mirror copy (identical sha) → two-copy rule holds.
   Rollback `wbw-lookup.prev.json` (sha16 `afd8e613…`) present → cycle-002's +156 live apply confirmed.
 

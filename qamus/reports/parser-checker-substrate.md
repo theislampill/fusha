@@ -4,7 +4,7 @@ The first source-addressed Classical/Qurʾānic Arabic **parser/checker** layer 
 sarf/nahw + morphosyntax-token + source-address-graph assets into a deterministic **verifier**: given a *proposed
 analysis* (a claim from an untrusted model/tutor), it returns grammar **issues** + a per-claim **verdict** + a
 machine **route**. It never writes live data, never copies external gloss text, and never guesses about
-unaddressed text. Full design + roadmap: the Phase-0 plan packet at `C:\workspace\ai\in\parserplans\` (start with
+unaddressed text. Full design + roadmap: the Phase-0 plan packet at `<operator-workspace>/parserplans/` (start with
 `000-parser-northstar.md`).
 
 ## What shipped (P0 + the smallest coherent P1 slice)

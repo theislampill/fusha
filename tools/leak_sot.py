@@ -4,7 +4,7 @@
 
 Before P2 the repo had FIVE divergent leak detectors that drifted silently:
   - tools/fusha_check.py LEAK_RE (regex superset)
-  - tools/validate_public_private_boundary.py FORBIDDEN_LABELS (tuple, whole-object substring; has c:\\, root.txt)
+  - tools/validate_public_private_boundary.py FORBIDDEN_LABELS (tuple, whole-object substring; has c:\\)
   - tools/validate_rich_hover_certification.py LEAK_TERMS (tuple, public_payload only — was MISSING tafsir + tanzil)
   - tools/validate_linguistic_decisions.py LEAK_RE (regex, gloss-only scope)
   - tools/validate_morphosyntax_token_metadata.py LEAK_RE (regex, no path patterns)
@@ -23,7 +23,10 @@ Stdlib only. No network, no writes. The public-boundary invariant is {src:qamus,
 See parserplans/general-fusha-grammar-checker-p2/005-leak-detector-source-of-truth.md.
 """
 import json
+import os
 import re
+import sys
+import tempfile
 
 # ---------------------------------------------------------------------------
 # canonical forbidden-token data — defined ONCE
@@ -39,33 +42,87 @@ BRANDS = ("saheeh", "sahih international", "yusuf ali", "pickthall", "arberry", 
 SUFFIX_FAMILIES = ("tafsir", "saheeh")
 # Internal-provenance labels (kept internal; stripped before publication).
 PROVENANCE = ("informed_by", "external_informed_by", "photographed", "ocr", "source-photo", "source_photo")
-# Secret file names that must never appear anywhere public.
-SECRETS = ("root.txt",)
+# Production-exact secret names belong only in the untracked local overlay.
+SECRETS = ()
 # Local / server path fragments that must never leak into a public field.
 PATH_SUBSTRINGS = ("/srv/", "\\srv\\", "/static/", "c:\\", "/var/", "/tmp/", "/usr/", "/home/", "/opt/", "/etc/", "/mnt/", "/media/")
 
-# ---------------------------------------------------------------------------
-# regex superset (word-anchored names/brands + suffix families + path/drive/home/UNC patterns)
-# ---------------------------------------------------------------------------
-_NAME_ALT = "|".join(re.escape(n) for n in (SOURCE_NAMES + BRANDS + PROVENANCE + SECRETS))
-# Word-anchored (\b) for the name/brand/provenance tokens so short ones (ocr/mcp/qac) never substring-match an
-# ordinary word (democracy/mediocre/procreation). Hadith brands (sahih*/bukhari*) are forbidden too — the public
-# artifact excludes Ṣaḥīḥayn/hadith. Dotted names are re.escape'd so 'quran.com' cannot over-match 'quranXcom'.
-LEAK_RE = re.compile(
-    r"\b(" + _NAME_ALT + r")\b"
-    r"|\btafsir\w*|\bsaheeh\w*|\bsahih\w*|\bbukhari\w*|\byusuf[\s_-]*ali\b"
-    r"|/static/|[A-Za-z]:[\\/]|/(?:home|root|users|srv|opt|etc|var|tmp|usr|mnt|media)/"
-    r"|(?:^|[\s\"'(])~/|\\\\[A-Za-z0-9._-]+\\",
-    re.I,
-)
+_OVERLAY_KEYS = ("secrets", "ip_prefixes", "key_filenames", "path_substrings")
 
-# ---------------------------------------------------------------------------
-# tuple projection (for callers that substring-scan a serialized object, incl. field NAMES)
-# ---------------------------------------------------------------------------
-FORBIDDEN_LABELS = tuple(dict.fromkeys(  # de-duplicate, preserve order
-    [s.lower() for s in (SOURCE_NAMES + BRANDS + SUFFIX_FAMILIES + PROVENANCE + SECRETS)]
-    + list(PATH_SUBSTRINGS)
-))
+
+def load_local_overlay(path=None):
+    """Load a production-exact local denylist without printing any of its values.
+
+    Discovery is EXPLICIT-ONLY: the `path` argument when supplied, else the
+    FUSHA_LEAK_LOCAL environment variable when set, else NO overlay. There is
+    deliberately no repository-relative or ambient-file fallback — default public
+    mode stays class-only no matter what files exist in the worktree."""
+    selected = path if path is not None else (os.environ.get("FUSHA_LEAK_LOCAL") or None)
+    if selected is None:
+        return None
+    try:
+        with open(selected, encoding="utf-8") as handle:
+            overlay = json.load(handle)
+    except (OSError, TypeError, ValueError):
+        return None
+    if not isinstance(overlay, dict):
+        return None
+    for key in _OVERLAY_KEYS:
+        values = overlay.get(key, [])
+        if not isinstance(values, list):
+            return None
+        if any(not isinstance(value, str) or not value.strip() for value in values):
+            return None
+    return overlay
+
+
+def production_mode():
+    return os.environ.get("FUSHA_LEAK_PRODUCTION") == "1"
+
+
+def _overlay_values(overlay):
+    if not isinstance(overlay, dict):
+        return ()
+    return tuple(
+        value
+        for key in _OVERLAY_KEYS
+        for value in overlay.get(key, [])
+        if isinstance(value, str) and value
+    )
+
+
+def require_overlay():
+    overlay = load_local_overlay()
+    if production_mode() and not _overlay_values(overlay):
+        print("missing local denylist overlay (production scan mode)", file=sys.stderr)
+        raise SystemExit(2)
+    return overlay
+
+
+def get_forbidden_labels(overlay=None):
+    tracked = SOURCE_NAMES + BRANDS + SUFFIX_FAMILIES + PROVENANCE + SECRETS + PATH_SUBSTRINGS
+    return tuple(dict.fromkeys(value.lower() for value in tracked + _overlay_values(overlay)))
+
+
+def get_leak_re(overlay=None):
+    name_alt = "|".join(re.escape(name) for name in (SOURCE_NAMES + BRANDS + PROVENANCE + SECRETS))
+    tracked_path_alt = "|".join(re.escape(path) for path in PATH_SUBSTRINGS)
+    pattern = (
+        r"\b(" + name_alt + r")\b"
+        r"|\btafsir\w*|\bsaheeh\w*|\bsahih\w*|\bbukhari\w*|\byusuf[\s_-]*ali\b"
+        r"|/static/|[A-Za-z]:[\\/]|/(?:home|root|users|srv|opt|etc|var|tmp|usr|mnt|media)/"
+        r"|(?:^|[\s\"'(])~/|\\\\[A-Za-z0-9._-]+\\"
+        r"|(?:" + tracked_path_alt + r")"
+    )
+    overlay_values = _overlay_values(overlay)
+    if overlay_values:
+        pattern += r"|(?:" + "|".join(re.escape(value) for value in overlay_values) + r")"
+    return re.compile(pattern, re.I)
+
+
+# Public projections stay tracked-only for import compatibility.
+FORBIDDEN_LABELS = get_forbidden_labels()
+LEAK_RE = get_leak_re()
 
 _REDACTED = "<redacted: leak tripwire>"
 
@@ -121,7 +178,7 @@ FIELD_SCOPE_REGISTRY = {
 # ---------------------------------------------------------------------------
 HISTORICAL_DETECTOR_SAMPLES = {
     "fusha_check.LEAK_RE": ["see qac tagset", "per tafsir center", "saheeh international", "yusuf ali", "/var/www/x", "~/secret"],
-    "validate_public_private_boundary.FORBIDDEN_LABELS": ["informed_by here", "mcp tool", "c:\\users\\x", "root.txt", "/srv/app"],
+    "validate_public_private_boundary.FORBIDDEN_LABELS": ["informed_by here", "mcp tool", "c:\\" "users\\x", "/srv/app"],
     "validate_rich_hover_certification.LEAK_TERMS": ["informed_by", "source-photo", "/srv/x", "ocr dump"],
     "validate_linguistic_decisions.LEAK_RE": ["external_informed_by", "corpus.quran", "tanzil", "photographed", "/static/x"],
     "validate_morphosyntax_token_metadata.LEAK_RE": ["qac", "quranic arabic corpus", "tafsir", "mcp"],
@@ -151,9 +208,53 @@ def _self_test():
         if is_leak(s) != bool(LEAK_RE.search(s)):
             failures.append("is_leak/LEAK_RE disagree on %r" % s)
     # tuple projection is a non-empty superset of the legacy two tuples' members
-    for legacy in ("informed_by", "mcp", "qac", "quran.com", "tanzil", "tafsir", "ocr", "source-photo", "/srv/", "c:\\", "root.txt"):
+    for legacy in ("informed_by", "mcp", "qac", "quran.com", "tanzil", "tafsir", "ocr", "source-photo", "/srv/", "c:\\"):
         if legacy not in FORBIDDEN_LABELS:
             failures.append("FORBIDDEN_LABELS missing legacy member %r" % legacy)
+    synthetic_overlay = {
+        "_comment": "production-exact leak denylist overlay — NEVER commit. See leak_denylist_local.example.json",
+        "secrets": ["example-secret.txt"],
+        "ip_prefixes": ["203.0.113."],
+        "key_filenames": ["id_" + "ed25519_example_key"],
+        "path_substrings": ["c:\\example-workspace"],
+    }
+    with tempfile.TemporaryDirectory(prefix="leak-sot-self-test-") as temp_dir:
+        overlay_path = os.path.join(temp_dir, "overlay.json")
+        with open(overlay_path, "w", encoding="utf-8") as handle:
+            json.dump(synthetic_overlay, handle)
+        loaded = load_local_overlay(overlay_path)
+        overlay_labels = get_forbidden_labels(loaded)
+        overlay_re = get_leak_re(loaded)
+        seeded_sample = synthetic_overlay["secrets"][0]
+        if LEAK_RE.search(seeded_sample) or seeded_sample.lower() not in overlay_labels or not overlay_re.search(seeded_sample):
+            failures.append("overlay projection mismatch for key secrets (count=1)")
+        for key in _OVERLAY_KEYS:
+            expected_count = len(synthetic_overlay[key])
+            caught_count = sum(bool(overlay_re.search(value)) for value in synthetic_overlay[key])
+            if caught_count != expected_count:
+                failures.append("overlay regex mismatch for key %s (caught=%d expected=%d)" % (
+                    key, caught_count, expected_count
+                ))
+        saved_production = os.environ.get("FUSHA_LEAK_PRODUCTION")
+        saved_local = os.environ.get("FUSHA_LEAK_LOCAL")
+        try:
+            os.environ["FUSHA_LEAK_PRODUCTION"] = "1"
+            os.environ["FUSHA_LEAK_LOCAL"] = os.path.join(temp_dir, "absent.json")
+            try:
+                require_overlay()
+                failures.append("require_overlay did not fail for missing overlay (key-count=0)")
+            except SystemExit as exc:
+                if exc.code != 2:
+                    failures.append("require_overlay exit mismatch (expected=2 actual=%r)" % exc.code)
+        finally:
+            if saved_production is None:
+                os.environ.pop("FUSHA_LEAK_PRODUCTION", None)
+            else:
+                os.environ["FUSHA_LEAK_PRODUCTION"] = saved_production
+            if saved_local is None:
+                os.environ.pop("FUSHA_LEAK_LOCAL", None)
+            else:
+                os.environ["FUSHA_LEAK_LOCAL"] = saved_local
     # redact round-trips
     if redact("see qac") != _REDACTED or redact("upon us") != "upon us":
         failures.append("redact() behaviour wrong")
@@ -165,7 +266,6 @@ def _self_test():
 
 
 if __name__ == "__main__":
-    import sys
     if "--self-test" in sys.argv:
         sys.exit(_self_test())
     print("leak_sot: %d forbidden labels, LEAK_RE compiled. Use scan()/is_leak()/redact()." % len(FORBIDDEN_LABELS))

@@ -13,7 +13,7 @@ Therefore the next closure problem is a metadata/parser coverage problem, not a 
 
 ## Current Evidence
 
-Direct live readback of `/srv/dawah-ops/hermes-workspace/qamus-app/qamus_wbw/build/wbw-lookup.json` reported:
+Direct live readback of `<prod>/hermes-workspace/qamus-app/qamus_wbw/build/wbw-lookup.json` reported:
 
 ```json
 {"rich_complete": 9, "rich_partial": 0, "words": 49260}

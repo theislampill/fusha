@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Inventory the existing photographed Qamus corpus and map page coverage. READ-ONLY. No image bytes committed.
 
-The corpus is a local, owner-provided photo set (env QAMUS_SOURCE_PHOTOS, e.g. C:\\workspace\\ai\\in\\qamus). This
+The corpus is a local, owner-provided photo set (env QAMUS_SOURCE_PHOTOS, e.g. /path/to/source-photos). This
 indexes every image + parses the frontmatter page manifests to record which dictionary pages are covered, so the
 rescue pipeline can decide per entry: photo PRESENT (visual-review) vs ABSENT (needs new photo) — instead of
 blindly demanding 240 retakes. Writes qamus/indexes/source_photo_index.json (counts + page coverage; NO raw paths

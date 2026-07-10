@@ -15,11 +15,16 @@ import sys
 import tempfile
 import urllib.request
 
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
+from tools import leak_sot  # noqa: E402
 
-LEAK_RE = re.compile(
-    r"\b(informed_by|mcp|qac|quran\.com|quran-com|corpus\.quran|quranic arabic corpus|"
-    r"tanzil|tafsir|ocr|source-photo|source_photo|/srv/|c:\\\\|root\.txt)\b",
-    re.I,
+_LOCAL_OVERLAY = leak_sot.load_local_overlay()
+LEAK_RE = leak_sot.get_leak_re(_LOCAL_OVERLAY)
+_PUBLIC_FORBIDDEN = set(leak_sot.get_forbidden_labels())
+_OVERLAY_FORBIDDEN = tuple(
+    label for label in leak_sot.get_forbidden_labels(_LOCAL_OVERLAY)
+    if label not in _PUBLIC_FORBIDDEN
 )
 
 
@@ -97,7 +102,7 @@ def scan_targets(public_targets=None, internal_targets=None, shadow_dir=None):
     for bucket in ("public", "internal", "shadow"):
         for item in results[bucket]:
             joined = " ".join(item.get("leaks") or []).lower()
-            if "/srv/" in joined or "c:\\\\" in joined or "root.txt" in joined:
+            if "/srv/" in joined or "c:\\\\" in joined or any(label in joined for label in _OVERLAY_FORBIDDEN):
                 results["classification"]["private_path_leak_count"] += 1
             if any(label in joined for label in ("mcp", "qac", "quran.com", "tafsir", "tanzil")):
                 results["classification"]["adapter_label_leak_count"] += 1
@@ -130,6 +135,8 @@ def self_test():
 
 
 def main():
+    if leak_sot.production_mode():
+        leak_sot.require_overlay()
     parser = argparse.ArgumentParser()
     parser.add_argument("--public", action="append", default=[], help="public URL/file to scan")
     parser.add_argument("--internal", action="append", default=[], help="internal file to classify")

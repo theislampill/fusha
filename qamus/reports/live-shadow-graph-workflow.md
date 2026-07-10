@@ -645,11 +645,11 @@ Head separation:
 Server-side shadow artifacts:
 
 - fresh tools checkout:
-  `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-tools-e04e368-20260627-002844/repo`
+  `<prod>/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-tools-e04e368-20260627-002844/repo`
 - shadow output:
-  `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-e04e368-20260627-002844`
+  `<prod>/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-e04e368-20260627-002844`
 - closeout summary:
-  `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-e04e368-20260627-002844/phase2p9-closeout-summary.json`
+  `<prod>/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-e04e368-20260627-002844/phase2p9-closeout-summary.json`
 
 Single-run counts from the sealed live-readonly shadow build:
 
@@ -896,7 +896,7 @@ Run identity:
 - validated code head: `e04e36821f8a21a35bd9e09fa364fa8af1cc6343`
 - report head: `82c63ddb0640368b02fbce1c87a150c89a8e39af`
 - remote output:
-  `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/full-corpus-dogfood-82c63dd-20260627-004825`
+  `<prod>/hermes-workspace/qamus-shadow-graph/full-corpus-dogfood-82c63dd-20260627-004825`
 - local copied output:
   `out/full-corpus-dogfood-82c63dd-20260627-004825`
 
@@ -1171,13 +1171,13 @@ no hover coverage claim.
 
 Server-side latest checkout and input/output paths:
 
-- tools clone: `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase3-tools-40a98fa-20260626-195928`
-- input shadow graph: `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-fcffc79-20260626-194628`
+- tools clone: `<prod>/hermes-workspace/qamus-shadow-graph/phase3-tools-40a98fa-20260626-195928`
+- input shadow graph: `<prod>/hermes-workspace/qamus-shadow-graph/phase2p9-fcffc79-20260626-194628`
 - static admin/debug pack: `/tmp/qamus-phase3-admin-debug-40a98fa-20260626-195928/admin-debug-pack.json`
 
 Output-root guard evidence:
 
-- first attempted output under `/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/...` was rejected:
+- first attempted output under `<prod>/hermes-workspace/qamus-shadow-graph/...` was rejected:
   `refusing likely live/runtime output path`
 - final output used `/tmp/qamus-phase3-admin-debug-40a98fa-20260626-195928`, leaving live/app/service paths untouched
 

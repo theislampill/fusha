@@ -9,7 +9,7 @@
   ],
   "false_closure_output": {
     "audit_rows": 12775,
-    "dawahwiki_run": "C:\\workspace\\ai\\dawahwiki\\.IMPLEMENTAUDIT\\runs\\qamus-vn00-public-closure-20260703T024600Z",
+    "dawahwiki_run": "<operator-workspace>/.IMPLEMENTAUDIT/runs/qamus-vn00-public-closure-20260703T024600Z",
     "finding_rows": 5754,
     "generated_at_utc": "2026-07-03T05:58:01Z",
     "page_status_counts": {
@@ -260,7 +260,7 @@
   ],
   "schema": "fusha.qamus.public_visual_andon_summary.v3",
   "scope": "VN-00 public visual closure regression lessons",
-  "source_run": "C:\\workspace\\ai\\dawahwiki\\.IMPLEMENTAUDIT\\runs\\qamus-vn00-public-closure-20260703T024600Z",
+  "source_run": "<operator-workspace>/.IMPLEMENTAUDIT/runs/qamus-vn00-public-closure-20260703T024600Z",
   "summary": {
     "affected_pages": [
       "n0004",
