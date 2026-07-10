@@ -1,5 +1,8 @@
 # Fusha → production bridge status
 
+> **HISTORICAL (banner added 2026-07-10).** Figures below reflect the state at this report's
+> date and are superseded; current coverage lives ONLY in [`docs/STATUS.md`](../../docs/STATUS.md).
+
 How the Fusha intelligence layer is driving live Qamus / qamus-highlight, and where each lane stands.
 
 ## ⭐ CURRENT STATE — closure-2092 tranche 2026-06-24d (live 85.87%)

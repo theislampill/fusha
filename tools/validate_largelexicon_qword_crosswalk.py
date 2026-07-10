@@ -61,21 +61,8 @@ def _dependency_sha(row: dict[str, Any], kind: str, dep_id: str | None) -> str |
     return None
 
 
-def validate() -> list[str]:
+def _validate_rows(rows: list[dict[str, Any]], denominator_rows: dict[str, dict[str, Any]]) -> list[str]:
     errors: list[str] = []
-    if not QWORD_CROSSWALK_MANIFEST.exists():
-        return [f"missing crosswalk manifest: {QWORD_CROSSWALK_MANIFEST}"]
-    manifest = json.loads(QWORD_CROSSWALK_MANIFEST.read_text(encoding="utf-8"))
-    denominator = json.loads(QWORD_DENOMINATOR_MANIFEST.read_text(encoding="utf-8"))
-    if manifest.get("row_count") != denominator.get("row_count"):
-        errors.append("crosswalk row_count must equal qword denominator row_count")
-    if manifest.get("public_boundary") != PUBLIC_BOUNDARY:
-        errors.append("crosswalk manifest public_boundary must stay source-clean")
-    rows = _iter_rows(manifest, errors)
-    if len(rows) != manifest.get("row_count"):
-        errors.append("crosswalk materialized rows do not match manifest row_count")
-    table = LargelexiconQwordTable.from_repo(ROOT)
-    denominator_rows = {row["row_id"]: row for row in table.iter_rows()}
     qword_ids: set[str] = set()
     for row in rows:
         label = row.get("row_id") or "<unknown>"
@@ -117,6 +104,25 @@ def validate() -> list[str]:
             errors.append(f"{label}: rows with canonical locs must be {ACCEPTED}")
         if row.get("status") != ACCEPTED and not row.get("packet_class"):
             errors.append(f"{label}: unresolved crosswalk rows need exact packet_class")
+    return errors
+
+
+def validate() -> list[str]:
+    errors: list[str] = []
+    if not QWORD_CROSSWALK_MANIFEST.exists():
+        return [f"missing crosswalk manifest: {QWORD_CROSSWALK_MANIFEST}"]
+    manifest = json.loads(QWORD_CROSSWALK_MANIFEST.read_text(encoding="utf-8"))
+    denominator = json.loads(QWORD_DENOMINATOR_MANIFEST.read_text(encoding="utf-8"))
+    if manifest.get("row_count") != denominator.get("row_count"):
+        errors.append("crosswalk row_count must equal qword denominator row_count")
+    if manifest.get("public_boundary") != PUBLIC_BOUNDARY:
+        errors.append("crosswalk manifest public_boundary must stay source-clean")
+    rows = _iter_rows(manifest, errors)
+    if len(rows) != manifest.get("row_count"):
+        errors.append("crosswalk materialized rows do not match manifest row_count")
+    table = LargelexiconQwordTable.from_repo(ROOT)
+    denominator_rows = {row["row_id"]: row for row in table.iter_rows()}
+    errors.extend(_validate_rows(rows, denominator_rows))
     summary = table.crosswalk_summary()
     if not summary.get("available"):
         errors.append("table reader crosswalk_summary must report available")
@@ -128,10 +134,76 @@ def validate() -> list[str]:
     return errors
 
 
+def self_test() -> int:
+    """Exercise crosswalk row validation with isolated in-memory fixtures."""
+    qword_id = "llx-qword-0123456789ab-01-01-001"
+    denominator_row = {"row_id": qword_id, "entry_id": "0123456789ab"}
+    denominator_rows = {qword_id: denominator_row}
+    clean_row = {
+        "row_id": f"llx-crosswalk-{qword_id}",
+        "qword_row_id": qword_id,
+        "entry_id": denominator_row["entry_id"],
+        "public_boundary": PUBLIC_BOUNDARY,
+        "source_dependencies": [{
+            "kind": "qword_denominator_row",
+            "id": qword_id,
+            "sha256": _sha256_row(denominator_row),
+        }],
+        "status": ACCEPTED,
+        "canonical_quran_loc": "1:1:1",
+        "canonical_wbw_loc": "1:1:1",
+        "quran_ref": "1:1",
+        "packet_class": None,
+        "terminal_gate_code": None,
+        "next_action": None,
+    }
+
+    failures: list[str] = []
+    clean_errors = _validate_rows([clean_row], denominator_rows)
+    if clean_errors:
+        failures.append(f"clean fixture should pass, got {clean_errors}")
+
+    cases = [
+        (
+            "missing denominator target",
+            [{**clean_row, "qword_row_id": "llx-qword-0123456789ab-01-01-999"}],
+            "qword_row_id missing from denominator table",
+        ),
+        (
+            "mismatched denominator target",
+            [{**clean_row, "entry_id": "deadbeef0000"}],
+            "entry_id does not match denominator row",
+        ),
+        (
+            "duplicate qword target",
+            [clean_row, {**clean_row, "row_id": "duplicate-row"}],
+            "duplicate qword_row_id",
+        ),
+        (
+            "accepted-row shape violation",
+            [{**clean_row, "canonical_wbw_loc": None}],
+            "accepted crosswalk cannot have null canonical loc",
+        ),
+    ]
+    for label, rows, needle in cases:
+        errors = _validate_rows(rows, denominator_rows)
+        if not any(needle in error for error in errors):
+            failures.append(f"{label} not caught: expected {needle!r}, got {errors}")
+
+    if failures:
+        for failure in failures:
+            print(f"self-test failed: {failure}")
+        return 1
+    print("self-test ok")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--self-test", action="store_true")
-    parser.parse_args()
+    parser.add_argument("--self-test", action="store_true", help="run isolated in-memory fixture checks")
+    args = parser.parse_args()
+    if args.self_test:
+        return self_test()
     errors = validate()
     print(json.dumps({"ok": not errors, "errors": errors}, ensure_ascii=False, indent=2, sort_keys=True))
     return 1 if errors else 0

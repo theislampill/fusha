@@ -4,6 +4,9 @@
 
 # Hover-token completion matrix (P12)
 
+> **HISTORICAL (banner added 2026-07-10).** Figures below reflect the state at this report's
+> date and are superseded; current coverage lives ONLY in [`docs/STATUS.md`](../../docs/STATUS.md).
+
 Every rendered token in Qamus usage āyāt has a terminal state — **0 silent/unknown**. Totals reconcile to the live artifact. Generator: `qamus/scripts/build_audit_completion.py`.
 
 | metric | value |

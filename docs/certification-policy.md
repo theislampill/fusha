@@ -6,9 +6,12 @@ This doc is the human statement of the policy those files enforce.
 
 ## 0. Two distinct certification layers — do not conflate
 - **Token-level two-vote certification** — per-occurrence hover-decision rows (`decision_state:
-  bulk_two_vote_certified`, keyed by `loc`, carrying a `gloss`). **Well-populated** (thousands of rows
-  across `qamus/candidates/qamus_2092/bulk_twovote_certified_batch_*.jsonl`). Certifies *this
-  occurrence's* gloss; it does **not** authorize reuse elsewhere.
+  bulk_two_vote_certified`, keyed by `loc`, carrying a `gloss`). **Well-populated.** The committed
+  evidence trail is `qamus/reports/closure-2092/bulk-two-vote-*` (97 arbitration/reconciliation
+  files) plus the 18 `qamus/reports/closure-2092/bulk-certified-apply-batch-20260625-*.json` apply
+  receipts; the certified row *store* itself lives live-side in the deployed whitelist, not as a
+  committed table in this repo (live-side placement is inferred from the apply receipts). Certifies
+  *this occurrence's* gloss; it does **not** authorize reuse elsewhere.
 - **Certified-lemma fanout** (this policy) — `qamus.certified_lemma.v1` rows that authorize a solved
   sarf/nahw fact to **fan out** (be reused) across occurrences via a typed gate. **Near-zero real
   coverage today** (only illustrative sample + reject fixtures). When a claim says "certified coverage

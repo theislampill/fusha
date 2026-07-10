@@ -5,9 +5,11 @@
 Confirms (via tools/normalize_ar.py) that the exact qamus-highlight bug classes cannot recur, and that the
 regression fixtures are well-formed JSONL. Exit non-zero on any failure. No network, no live writes.
 """
+import hashlib
 import io
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -3331,7 +3333,9 @@ try:
     _q5b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_index_integrity.py")])
     check("P2-8 index referential-integrity real indexes (0 orphan ids)", _q5b.returncode == 0)
     _q6 = run_text([sys.executable, os.path.join(ROOT, "tools", "report_dataset_integrity.py"), "--self-test"])
-    check("P2-9 dataset-integrity reporter self-test (synthetic match/mismatch; non-fatal vs --strict) [data mismatch BLOCKED, see blocker report]", _q6.returncode == 0)
+    check("P2-9 dataset-integrity reporter self-test (synthetic match/mismatch; non-fatal vs --strict)", _q6.returncode == 0)
+    _q6b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_current_qamus_dataset.py")])
+    check("RM-01 strict dataset gate: validate_current_qamus_dataset exit 0 (armed 2026-07-10, owner D-09)", _q6b.returncode == 0)
     _q7 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_claude_ai_pack_drift.py"), "--self-test"])
     check("P2-10 claude.ai pack-drift validator self-test (read-only; drift caught)", _q7.returncode == 0)
     _q7b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_claude_ai_pack_drift.py")])
@@ -3478,6 +3482,157 @@ for _p, _req in (
     except Exception as _e:
         check("flywheel fixture well-formed + keyed: %s" % _p, False)
         print("  ", _e)
+
+# --- T1 claim-safety gates (RM-08 import scan, RM-06 coverage lint, RM-07 docs lint, NF-T0-1 manifest hashes) ---
+try:
+    _network_import_re = re.compile(
+        r"^\s*(?:import|from)\s+(?:urllib\b|socket\b|http\.client\b|http\b)"
+    )
+    _network_connector_allowlist = {
+        "tools/tafsir_mcp_client.py",
+        "tools/tafsir_mcp_probe.py",
+        "tools/fetch_tafsir_mcp_ayah.py",
+        "tools/analyze_tafsir_mcp_word.py",
+        "tools/build_tafsir_mcp_cache.py",
+        "tools/crawl_qamus_public_entries.py",
+        "tools/build_source_triangulated_votes.py",
+        "tools/scan_public_boundary.py",
+    }
+    _network_import_offenders = set()
+    for _scan_dir in ("tools", "scripts"):
+        for _dirpath, _dirnames, _filenames in os.walk(os.path.join(ROOT, _scan_dir)):
+            for _filename in _filenames:
+                if not _filename.endswith(".py"):
+                    continue
+                _path = os.path.join(_dirpath, _filename)
+                _rel = os.path.relpath(_path, ROOT).replace(os.sep, "/")
+                if _rel in _network_connector_allowlist:
+                    continue
+                with io.open(_path, encoding="utf-8", errors="replace") as _f:
+                    for _line in _f:
+                        if _line.lstrip().startswith("#"):
+                            continue
+                        if _network_import_re.match(_line):
+                            _network_import_offenders.add(_rel)
+                            break
+    check("RM-08 import-scan lint: urllib/http.client/socket only in the 8 enumerated connectors",
+          not _network_import_offenders)
+    for _rel in sorted(_network_import_offenders):
+        print("  ", _rel)
+except Exception as _e:
+    check("RM-08 import-scan lint: urllib/http.client/socket only in the 8 enumerated connectors", False)
+    print("  ", _e)
+
+try:
+    _manifest_hash_verified = 0
+    _manifest_hash_skipped = 0
+    _manifest_hash_mismatches = []
+    _examples_dir = os.path.join(ROOT, "qamus", "examples")
+    for _filename in sorted(os.listdir(_examples_dir)):
+        if not _filename.endswith(".json"):
+            continue
+        _manifest_path = os.path.join(_examples_dir, _filename)
+        try:
+            with io.open(_manifest_path, encoding="utf-8") as _f:
+                _manifest = json.load(_f)
+        except (OSError, ValueError):
+            continue
+        _nodes = [_manifest]
+        while _nodes:
+            _node = _nodes.pop()
+            if isinstance(_node, dict):
+                _artifact_rel = _node.get("path")
+                _declared_sha256 = _node.get("sha256")
+                if isinstance(_artifact_rel, str) and isinstance(_declared_sha256, str):
+                    _artifact_path = os.path.join(ROOT, _artifact_rel)
+                    if not os.path.exists(_artifact_path):
+                        _manifest_hash_skipped += 1
+                    else:
+                        _hasher = hashlib.sha256()
+                        with io.open(_artifact_path, "rb") as _f:
+                            for _chunk in iter(lambda: _f.read(1024 * 1024), b""):
+                                _hasher.update(_chunk)
+                        _actual_sha256 = _hasher.hexdigest()
+                        _manifest_hash_verified += 1
+                        if _actual_sha256.lower() != _declared_sha256.lower():
+                            _manifest_hash_mismatches.append(
+                                (_filename, _artifact_rel, _declared_sha256, _actual_sha256[:16])
+                            )
+                _nodes.extend(_node.values())
+            elif isinstance(_node, list):
+                _nodes.extend(_node)
+    _manifest_hash_label = (
+        "NF-T0-1 sample-manifest artifact hashes match tracked bytes "
+        "(%d verified, %d live-side skipped)"
+        % (_manifest_hash_verified, _manifest_hash_skipped)
+    )
+    check(_manifest_hash_label, not _manifest_hash_mismatches)
+    for _mismatch in _manifest_hash_mismatches:
+        print("  ", _mismatch)
+except Exception as _e:
+    check("NF-T0-1 sample-manifest artifact hashes match tracked bytes (scan error)", False)
+    print("  ", _e)
+
+try:
+    _coverage_evidence_prefixes = (
+        "qamus/reports/closure-2092/",
+        "qamus/reports/verbs/",
+        "qamus/reports/nouns/",
+        "qamus/reports/particles/",
+        "qamus/reports/qamus-completion-manifest-summary-20260624.md",
+    )
+    _coverage_exempt_count = 0
+    _coverage_offenders = []
+    for _dirpath, _dirnames, _filenames in os.walk(ROOT):
+        _dirnames[:] = [_d for _d in _dirnames if _d != ".git"]
+        for _filename in _filenames:
+            if not _filename.endswith(".md"):
+                continue
+            _path = os.path.join(_dirpath, _filename)
+            with io.open(_path, encoding="utf-8", errors="replace") as _f:
+                _lines = _f.readlines()
+            if not any(_figure in _line for _line in _lines for _figure in ("85.87%", "87.35%")):
+                continue
+            _rel = os.path.relpath(_path, ROOT).replace(os.sep, "/")
+            _is_exempt = (
+                _rel == "docs/STATUS.md"
+                or any("HISTORICAL" in _line for _line in _lines[:15])
+                or _rel.startswith(_coverage_evidence_prefixes)
+            )
+            if _is_exempt:
+                _coverage_exempt_count += 1
+            else:
+                _coverage_offenders.append(_rel)
+    _coverage_label = (
+        "RM-06 coverage-%% lint: stale coverage figures only in "
+        "STATUS.md/HISTORICAL/dated evidence (%d historical/evidence files exempt)"
+        % _coverage_exempt_count
+    )
+    check(_coverage_label, not _coverage_offenders)
+    for _rel in sorted(_coverage_offenders):
+        print("  ", _rel)
+except Exception as _e:
+    check("RM-06 coverage-%% lint: stale coverage figures only in STATUS.md/HISTORICAL/dated evidence (scan error)", False)
+    print("  ", _e)
+
+try:
+    _phantom_citation_hits = []
+    _docs_dir = os.path.join(ROOT, "docs")
+    for _dirpath, _dirnames, _filenames in os.walk(_docs_dir):
+        for _filename in _filenames:
+            _path = os.path.join(_dirpath, _filename)
+            with io.open(_path, "rb") as _f:
+                if b"bulk_twovote_certified_batch" in _f.read():
+                    _phantom_citation_hits.append(
+                        os.path.relpath(_path, ROOT).replace(os.sep, "/")
+                    )
+    check("RM-07 docs cite no phantom evidence glob (bulk_twovote_certified_batch: 0 hits in docs/)",
+          not _phantom_citation_hits)
+    for _rel in sorted(_phantom_citation_hits):
+        print("  ", _rel)
+except Exception as _e:
+    check("RM-07 docs cite no phantom evidence glob (bulk_twovote_certified_batch: 0 hits in docs/)", False)
+    print("  ", _e)
 
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))

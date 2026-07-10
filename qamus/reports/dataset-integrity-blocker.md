@@ -72,3 +72,19 @@ PYTHONUTF8=1 python tools/report_dataset_integrity.py            # observe (alwa
 PYTHONUTF8=1 python tools/report_dataset_integrity.py --strict   # would exit 1 today (the real mismatch)
 PYTHONUTF8=1 python tools/report_dataset_integrity.py --self-test
 ```
+
+
+## Close-out — 2026-07-10 (owner decision D-09: APPROVED)
+
+The owner reviewed the exact byte-level diff of the one drifted file and **accepted the
+`03a495a` content as canonical** (2026-07-10): entry `83653c56158f` (نَّ / نْ), two sense rows
+merged into one (counts 237+2 → 239) with the two-use orthographic form preserved as a note;
+−8 bytes; no other line differs; the `03a495a` bytes are byte-identical to HEAD.
+
+Actions taken in the same change (T1, claim-safety tranche):
+- `checksums.json` `data/entries.jsonl` entry surgically re-anchored: `61a53671e62e…` /
+  4,830,763 B → `a68245e93ce1…` / 4,830,755 B (declared checksum only; **data bytes untouched**).
+- The strict validator (`tools/validate_current_qamus_dataset.py`) now runs for real inside
+  `tools/check_regressions.py`; the observe-only "data mismatch BLOCKED" shadow label is retired.
+
+This report stays as the historical record of the blocked period (2026-06-29 → 2026-07-10).

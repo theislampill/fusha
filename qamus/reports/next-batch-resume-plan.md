@@ -1,5 +1,8 @@
 # Next-batch resume plan — exact, no vague "standing by"
 
+> **HISTORICAL (banner added 2026-07-10).** Figures below reflect the state at this report's
+> date and are superseded; current coverage lives ONLY in [`docs/STATUS.md`](../../docs/STATUS.md).
+
 ## Where we are (live-verified, 2026-06-25, FINALIZATION/coverage-to-90 tranche)
 
 - **Live coverage 87.35%** · 43,589 / 49,900 · 6,311 pending (cycle 003 form-variant +510 + host-lexeme

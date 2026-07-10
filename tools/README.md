@@ -6,11 +6,36 @@ here is:
 - **stdlib only** — no `pip install`, no third-party packages;
 - **no live-app dependency** — nothing imports a server, a service, or a deploy
   path; these run anywhere Python 3 runs;
-- **read-only / offline** — they read files *you* provide and compute keys or facts;
-  they never write to a live system and never reach the network;
+- **read-only / offline by default** — they read files *you* provide and compute keys
+  or facts; they never write to a live system. **Offline is the default contract, not a
+  blanket fact:** a small, enumerated *connector class* (below) reaches the network
+  read-only. Every tool outside that list must stay fully offline;
 - **provenance-aware** — they help you *confirm* your own authored content against
   internal evidence; they never produce publishable gloss text. See
   [`../provenance/source-boundaries.md`](../provenance/source-boundaries.md).
+
+## Network carve-out — the enumerated connector class
+
+Exactly these tools may open network connections (stdlib `urllib` only, read-only
+GETs/POSTs to reference services; no deploys, no writes to any live system):
+
+| Connector tool | Reaches |
+|---|---|
+| `tafsir_mcp_client.py` | the Tafsir-MCP reference oracle (shared backbone) |
+| `tafsir_mcp_probe.py` | Tafsir-MCP (health/latency probe) |
+| `fetch_tafsir_mcp_ayah.py` | Tafsir-MCP (single-ayah fetch) |
+| `analyze_tafsir_mcp_word.py` | Tafsir-MCP (per-word analysis fetch) |
+| `build_tafsir_mcp_cache.py` | Tafsir-MCP (local evidence-cache builder) |
+| `crawl_qamus_public_entries.py` | the public Qamus site (read-only crawl) |
+| `build_source_triangulated_votes.py` | reference services for vote triangulation |
+| `scan_public_boundary.py` | public URLs (URL mode only; file mode is offline) |
+
+Rules for the connector class: network use must be obvious from the tool's name or
+docstring; fetched external text is **evidence only** (cached under paths the leak
+gates watch) and never becomes publishable gloss text; a tool must degrade to a clear
+error — never a silent fallback — when offline. Adding a connector means adding it to
+this table **and** to the import-scan lint allowlist in `tools/check_regressions.py`;
+any `urllib`/`http.client`/`socket` import outside this list is a regression FAIL.
 
 ## Import convention
 
@@ -123,7 +148,8 @@ append a whitelist, restart services, or copy external gloss text.
 
 ## Adding a new tool here
 
-1. stdlib only; no live-app / network / deploy imports.
+1. stdlib only; no live-app / deploy imports. No network — unless the tool is added
+   to the connector table above (and its lint allowlist) as a documented connector.
 2. Read-only on data the user supplies; never bundle external corpus data.
 3. If it touches Arabic, reuse `normalize_ar.py` — don't re-implement keys.
 4. Facts may be `informed_by` an internal source; published expression must be
