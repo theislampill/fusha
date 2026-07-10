@@ -3764,6 +3764,58 @@ except Exception as _e:
     check("T2 overlay mechanism checks (subprocess error)", False)
     print("  ", _e)
 
+# --- T2.1 ambient-overlay isolation (permanent regression) ---
+# The presence of a file at the FORMER default worktree path must not alter default-public-mode
+# behavior (no path arg, no FUSHA_LEAK_LOCAL). Synthetic values only — the tracked example file
+# is copied to the former path, consumers are probed in FRESH subprocesses (so import caches
+# cannot conceal differences), and the file is removed in a guaranteed cleanup block.
+try:
+    _amb_path = os.path.join(ROOT, "tools", "leak_denylist_local.json")
+    _amb_example = os.path.join(ROOT, "tools", "leak_denylist_local.example.json")
+    _amb_env = os.environ.copy()
+    _amb_env.pop("FUSHA_LEAK_LOCAL", None)
+    _amb_env.pop("FUSHA_LEAK_PRODUCTION", None)
+    _amb_snippet = (
+        "import sys; sys.path.insert(0, '.');"
+        "from tools import leak_sot;"
+        "import tools.validate_vn00_aggressive_false_closure as _vn;"
+        "import tools.scan_public_boundary as _spb;"
+        "print(leak_sot.load_local_overlay() is None, len(_vn.LEAK_TERMS), len(_spb._OVERLAY_FORBIDDEN))"
+    )
+    # Park any preexisting file first (this check tests ISOLATION, not file hygiene) and
+    # restore the worktree to its exact original state afterwards.
+    _amb_parked = None
+    if os.path.exists(_amb_path):
+        _amb_parked = _amb_path + ".t21-parked"
+        os.replace(_amb_path, _amb_parked)
+    try:
+        _amb_absent = run_text([sys.executable, "-c", _amb_snippet], cwd=ROOT, env=_amb_env)
+        with io.open(_amb_example, "rb") as _src, io.open(_amb_path, "wb") as _dst:
+            _dst.write(_src.read())
+        _amb_present = run_text([sys.executable, "-c", _amb_snippet], cwd=ROOT, env=_amb_env)
+    finally:
+        if os.path.exists(_amb_path):
+            os.remove(_amb_path)
+        if _amb_parked is not None:
+            os.replace(_amb_parked, _amb_path)
+    _amb_absent_out = _amb_absent.stdout.strip()
+    _amb_present_out = _amb_present.stdout.strip()
+    _amb_ok = (
+        _amb_absent.returncode == 0 and _amb_present.returncode == 0
+        and _amb_absent_out == _amb_present_out   # ambient presence changes NOTHING
+        and _amb_absent_out.startswith("True ")   # loader returns None in default public mode
+        and _amb_absent_out.endswith(" 0")        # zero overlay-augmented labels
+        and os.path.exists(_amb_path) == (_amb_parked is not None)  # worktree back to original state
+    )
+    check("T2.1 ambient-overlay isolation: former-default file cannot alter public mode (fresh subprocesses; synthetic; original state restored)", _amb_ok)
+    if not _amb_ok:
+        print("   parked=%s absent=%r present=%r restored=%s" % (
+            _amb_parked is not None, _amb_absent_out, _amb_present_out,
+            os.path.exists(_amb_path) == (_amb_parked is not None)))
+except Exception as _e:
+    check("T2.1 ambient-overlay isolation (subprocess error)", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

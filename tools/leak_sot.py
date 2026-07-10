@@ -48,13 +48,18 @@ SECRETS = ()
 PATH_SUBSTRINGS = ("/srv/", "\\srv\\", "/static/", "c:\\", "/var/", "/tmp/", "/usr/", "/home/", "/opt/", "/etc/", "/mnt/", "/media/")
 
 _OVERLAY_KEYS = ("secrets", "ip_prefixes", "key_filenames", "path_substrings")
-_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-_DEFAULT_LOCAL_OVERLAY = os.path.join(_REPO_ROOT, "tools", "leak_denylist_local.json")
 
 
 def load_local_overlay(path=None):
-    """Load a production-exact local denylist without printing any of its values."""
-    selected = path if path is not None else os.environ.get("FUSHA_LEAK_LOCAL", _DEFAULT_LOCAL_OVERLAY)
+    """Load a production-exact local denylist without printing any of its values.
+
+    Discovery is EXPLICIT-ONLY: the `path` argument when supplied, else the
+    FUSHA_LEAK_LOCAL environment variable when set, else NO overlay. There is
+    deliberately no repository-relative or ambient-file fallback — default public
+    mode stays class-only no matter what files exist in the worktree."""
+    selected = path if path is not None else (os.environ.get("FUSHA_LEAK_LOCAL") or None)
+    if selected is None:
+        return None
     try:
         with open(selected, encoding="utf-8") as handle:
             overlay = json.load(handle)
