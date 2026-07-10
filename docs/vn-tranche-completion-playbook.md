@@ -1,6 +1,6 @@
 # VN-00 → VN-20 tranche completion playbook
 
-The reusable, tested method that took Qamus **VN-00 to 100%** rich-hover and is now driving VN-01.
+The reusable, tested method that took Qamus **VN-00, VN-01, and VN-02 to 100%** rich-hover, with all three frozen by regression gates; it is the template for any future VN tranche.
 Port it forward for every VN tranche; do not rediscover it. (Companion to `nahw/procedures/hover-application.md`
 and `function-token-hover-review.md`.)
 

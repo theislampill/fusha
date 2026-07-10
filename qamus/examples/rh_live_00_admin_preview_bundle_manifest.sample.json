@@ -7,7 +7,7 @@
   "artifacts": {
     "admin_preview_dom_fixture": {
       "path": "qamus/examples/rh_live_00_admin_preview_dom_fixture.sample.html",
-      "sha256": "0f3b5c330fe901c28164f8274825fea8f4ea5d48aebf4c5ad235add6c93f035a"
+      "sha256": "3e9c722e7908232b8570a5054c1c14e548e551a4e7b39774ecf97a56eaeef619"
     },
     "certified_not_applied": {
       "path": "qamus/examples/rh_live_00_two_vote_certified_not_applied.sample.jsonl",

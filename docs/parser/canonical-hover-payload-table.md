@@ -112,9 +112,14 @@ wired into the regression gate (validator-BEFORE-builder — the safety property
   `certified_lemma` gate, and referential integrity. Samples:
   `qamus/examples/canonical_hover_payload.sample.jsonl`.
 
-The builder (`build_canonical_hover_payload_table.py`) and compiler
-(`compile_canonical_hover_whitelist_packet.py`) — Tasks 3-4 — are NOT yet implemented;
-this substrate is what they will validate against. See CANONICAL_HOVER_PAYLOAD_COMPILER_PLAN
+The builder (`tools/build_canonical_hover_payload_table.py`) and compiler
+(`tools/compile_canonical_hover_whitelist_packet.py`) — Tasks 3-4 — landed 2026-07-04
+(commit 572f7cb) with `--self-test`s wired into the regression gate. They are
+**implemented but dry-run only — not adopted for any live compile**: no canonical
+payload table is committed, coverage to date is the certified-lemma sample, and known
+pre-adoption defects are tracked (per-occurrence binding drop, order-dependent ties,
+id-field gaps, leak-scan word-boundary — audit findings TR-01/02/04/05/06; adoption is
+gated on the ADR-003 criteria). See CANONICAL_HOVER_PAYLOAD_COMPILER_PLAN
 (fablehardening) for the remaining tasks and the Qamus-executor canary (Task 6).
 
 ## Claim Boundary

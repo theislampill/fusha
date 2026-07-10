@@ -70,8 +70,11 @@ has no source-address certainty and stays ambiguity-preserving. The contracts (e
   public tools need the private WBW services is mapped honestly in [`provenance/public-runnability.md`](provenance/public-runnability.md)
   via the public-safe seam [`tools/qamus_wbw_adapter.py`](tools/qamus_wbw_adapter.py).
 
-The sarf/nahw **skills**, **curriculum/**, and **drills/** teach these contracts; the **evals** + `tools/check_regressions.py` keep
-the docs aligned with the tools. This is **tooling** — not live Qamus coverage progress. The recent Fusha-only stack now includes
+The sarf/nahw **skills**, **curriculum/**, and **drills/** teach these contracts. `tools/check_regressions.py` gates
+**artifacts and behaviours** — normalization/homograph invariants, fixture well-formedness, validator `--self-test` runs, and the
+existence of files the skills cite. It does **not** parse documentation prose; a stale sentence in a doc can outlive the code it
+describes. Treat executable tools and JSON schemas as the contract of record; current coverage lives only in
+[`docs/STATUS.md`](docs/STATUS.md). This is **tooling** — not live Qamus coverage progress. The recent Fusha-only stack now includes
 P1 general checker + rich-hover flywheel, P2 governor/conflict gates, P2b learner feedback/CEFR scaffolding, sarf/nahw skill and
 curriculum back-prop, data/runtime completion, and qamustyping3/4 Mode A acceptance. Stronger claims remain gated by corpora,
 splits, metrics, and owner authorization.

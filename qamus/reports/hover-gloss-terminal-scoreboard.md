@@ -1,5 +1,8 @@
 # Hover-gloss terminal scoreboard
 
+> **HISTORICAL (banner added 2026-07-10).** Figures below reflect the state at this report's
+> date and are superseded; current coverage lives ONLY in [`docs/STATUS.md`](../../docs/STATUS.md).
+
 Source artifact `source_sha=65797d7d5599fadd`. Every one of the **49,900** hover tokens has a terminal state (no generic pending).
 
 | state | count | pct |
