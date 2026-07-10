@@ -2,12 +2,13 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/theIslampill/fusha/qamus/schemas/canonical-hover-occurrence-binding.schema.json",
   "title": "Canonical hover occurrence binding (compiler Task 1)",
-  "description": "One edge from a source-addressed Qur'anic occurrence to a canonical payload identity. binding_status=accepted requires a canonical Quran + WBW loc and an exact entry/card trace. binding_gate=certified_lemma requires lemma_status=certified; binding_gate=function_context requires nahw/function certification; surface-only fanout is never accepted; homograph groups require a loc+lemma/context gate, never strict-surface alone. A non-accepted binding MUST carry a `reason` (the terminal-packet taxonomy). exact_transclusion_group_key + canonical_payload_id are the two node types of the source-address graph (typed-edge compatible). Dry-run; source-clean. See CANONICAL_HOVER_PAYLOAD_COMPILER_PLAN (fablehardening) + its two addenda.",
+  "description": "One full citation-carrier edge from a source-addressed Qur'anic occurrence to a canonical payload identity. Accepted bindings carry canonical_wbw_loc, entry_id, card_id, and qword_row_id plus a required dependency hash. binding_id is content-addressed over (canonical_payload_id, canonical_wbw_loc, entry_id, card_id, qword_row_id); mutable review, confidence, reason, and deployment fields are excluded. Finer-than-location bindings are legal and expected. Dry-run; source-clean.",
+  "migration": "@2 adds card_id, required source_dependency_sha256, accepted-carrier requirements, and optional supersedes. Binding ids churn once because they are content-addressed over the new full-carrier field set; canonical_wbw_loc remains load-bearing and a corrected location therefore migrates the id. Existing @1 sample fixtures remain valid history and are not rewritten.",
   "type": "object",
-  "required": ["schema", "binding_id", "canonical_payload_id", "entry_id", "source_key", "visible_surface", "exact_transclusion_group_key", "binding_status", "binding_gate"],
+  "required": ["schema", "binding_id", "canonical_payload_id", "entry_id", "source_key", "source_dependency_sha256", "visible_surface", "exact_transclusion_group_key", "binding_status", "binding_gate"],
   "additionalProperties": false,
   "properties": {
-    "schema": { "const": "qamus.canonical_hover_occurrence_binding.v1" },
+    "schema": { "const": "qamus.canonical_hover_occurrence_binding.v2" },
     "binding_id": { "type": "string", "pattern": "^chb:[0-9a-f]{16}$" },
     "canonical_payload_id": { "type": "string", "pattern": "^chp:[0-9a-f]{16}$" },
     "entry_id": { "type": "string", "minLength": 1 },
@@ -15,7 +16,9 @@
     "source_key": { "const": "qamus" },
     "sense_index": { "type": ["integer", "null"] },
     "card_index": { "type": ["integer", "null"] },
+    "card_id": { "type": ["string", "null"], "minLength": 1 },
     "qword_row_id": { "type": ["string", "null"] },
+    "source_dependency_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
     "visible_surface": { "type": "string", "minLength": 1 },
     "canonical_quran_loc": { "type": ["string", "null"], "pattern": "^[0-9]+:[0-9]+:[0-9]+$" },
     "canonical_wbw_loc": { "type": ["string", "null"], "pattern": "^[0-9]+:[0-9]+:[0-9]+$" },
@@ -23,6 +26,21 @@
     "binding_status": { "type": "string", "enum": ["candidate", "accepted", "blocked", "exception"] },
     "binding_gate": { "type": "string", "enum": ["source_address_exact", "certified_lemma", "certified_pattern", "function_context"] },
     "reason": { "type": ["string", "null"], "enum": ["source_address_exact_ok", "source-crosswalk", "certified-lemma-needed", "pattern-rule-needed", "nahw-function-needed", "validator/schema", "renderer/qg", "owner-decision", "scholar-irab", null] },
-    "exception_id": { "type": ["string", "null"] }
-  }
+    "exception_id": { "type": ["string", "null"] },
+    "supersedes": { "type": ["string", "null"], "pattern": "^chb:[0-9a-f]{16}$" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "binding_status": { "const": "accepted" } }, "required": ["binding_status"] },
+      "then": {
+        "required": ["canonical_quran_loc", "canonical_wbw_loc", "card_id", "qword_row_id"],
+        "properties": {
+          "canonical_quran_loc": { "type": "string", "pattern": "^[0-9]+:[0-9]+:[0-9]+$" },
+          "canonical_wbw_loc": { "type": "string", "pattern": "^[0-9]+:[0-9]+:[0-9]+$" },
+          "card_id": { "type": "string", "minLength": 1 },
+          "qword_row_id": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  ]
 }

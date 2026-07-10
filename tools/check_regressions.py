@@ -3454,7 +3454,7 @@ try:
     _chp2 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_canonical_hover_payload_table.py"), os.path.join(ROOT, "qamus", "examples", "canonical_hover_payload.sample.jsonl")])
     check("canonical hover payload sample validates (payload+binding+exception referentially sound)", _chp2.returncode == 0)
     _chp3 = run_text([sys.executable, os.path.join(ROOT, "tools", "build_canonical_hover_payload_table.py"), "--self-test"])
-    check("canonical hover payload builder self-test (dedup/conflict-separate/richer-peer/missing-required)", _chp3.returncode == 0)
+    check("canonical hover payload builder self-test (dedup/full-carrier/weaker-peer/tie/incomplete)", _chp3.returncode == 0)
     _chp4 = run_text([sys.executable, os.path.join(ROOT, "tools", "compile_canonical_hover_whitelist_packet.py"), "--self-test"])
     check("canonical hover whitelist compiler self-test (append/no-op/conflict/exception; source-clean)", _chp4.returncode == 0)
     _pid = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_projection_row_id_stability.py"), "--self-test"])
@@ -4045,6 +4045,261 @@ try:
         check("T3B-2 tm-port: %s" % _tm_row["id"], _tm_ok)
 except Exception as _e:
     check("T3B-2 tm-port fixtures (harness error)", False)
+    print("  ", _e)
+
+# --- T5 canonical-carrier gates (ADR-003 G1-G4) ---
+# One full in-memory corpus build proves the fixed carrier/location cardinalities.
+# G2 uses a deterministic 4,096-row real-corpus subset rather than a second full
+# build, in addition to the adversarial T2 fixture permutations. No packet is
+# written; every artifact below exists only in process memory.
+try:
+    import glob as _t5_glob
+    import random as _t5_random
+    import time as _t5_time
+
+    from tools.build_canonical_hover_payload_table import build as _t5_build
+    from tools.compile_canonical_hover_whitelist_packet import compile_packet as _t5_compile
+    from tools.validate_canonical_hover_payload_table import (
+        binding_id as _t5_binding_id,
+        exception_id as _t5_exception_id,
+        payload_id as _t5_payload_id,
+        validate_rows as _t5_validate_rows,
+    )
+
+    _t5_fixture_path = os.path.join(
+        ROOT, "fusha", "parser", "eval", "t5-canonical-carrier-fixtures.jsonl")
+    with io.open(_t5_fixture_path, encoding="utf-8") as _t5_handle:
+        _t5_fixtures = [json.loads(_line) for _line in _t5_handle if _line.strip()]
+    _t5_by_probe = {_row["probe"]: _row for _row in _t5_fixtures}
+
+    def _t5_materialize(fixture):
+        base = fixture["input"]["base"]
+        materialized = []
+        for edge in fixture["input"]["edges"]:
+            row = json.loads(json.dumps(base, ensure_ascii=False))
+            row.update(json.loads(json.dumps(edge, ensure_ascii=False)))
+            materialized.append(row)
+        return materialized
+
+    def _t5_bytes(rows):
+        return ("\n".join(json.dumps(row, ensure_ascii=False, sort_keys=True,
+                                     separators=(",", ":")) for row in rows) + "\n").encode("utf-8")
+
+    check("T5 fixture JSONL has 9 self-contained probe rows", len(_t5_fixtures) == 9)
+
+    # T1 / G1: co-citations at one loc retain every qword carrier edge.
+    _t5_t1 = _t5_by_probe["T1-full-carrier-identical-content"]
+    _t5_p1, _t5_b1, _t5_r1, _t5_c1, _t5_rep1 = _t5_build(_t5_materialize(_t5_t1))
+    _t5_w1, _t5_n1, _t5_wc1, _t5_wrep1 = _t5_compile(_t5_p1, _t5_b1, [], [])
+    _t5_e1 = _t5_t1["expect"]
+    check(
+        "T5 T1 full carrier: payloads=%d bindings=%d whitelist=%d repairs=%d conflicts=%d" % (
+            len(_t5_p1), len(_t5_b1), len(_t5_w1), len(_t5_r1), len(_t5_c1)),
+        (len(_t5_p1), len(_t5_b1), len(_t5_w1), len(_t5_r1), len(_t5_c1)) ==
+        (_t5_e1["payloads"], _t5_e1["bindings"], _t5_e1["whitelist_rows"],
+         _t5_e1["repairs"], _t5_e1["conflicts"]),
+    )
+
+    # T2 / G2: equal-richness conflict selection and every output set are order-independent.
+    _t5_t2 = _t5_by_probe["T2-permutation-property"]
+    _t5_t2_rows = _t5_materialize(_t5_t2)
+    _t5_t2_runs = []
+    for _order in _t5_t2["input"]["orders"]:
+        _out = _t5_build([_t5_t2_rows[_i] for _i in _order])
+        _t5_t2_runs.append(tuple(_t5_bytes(_part) for _part in _out[:4]))
+    check(
+        "T5 T2 permutation: payload+binding+repair+conflict bytes identical; tie_unresolved=1",
+        _t5_t2_runs[0] == _t5_t2_runs[1]
+        and sum(c.get("reason") == "tie_unresolved"
+                for c in _t5_build(_t5_t2_rows)[3]) ==
+        _t5_t2["expect"]["tie_unresolved_conflicts"],
+    )
+
+    # T5: qword_row_id is load-bearing within the otherwise-identical carrier.
+    _t5_t5 = _t5_by_probe["T5-qword-coordinate-distinguishes-binding"]
+    _t5_p5, _t5_b5, _t5_r5, _t5_c5, _t5_rep5 = _t5_build(_t5_materialize(_t5_t5))
+    check(
+        "T5 T5 qword coordinate: bindings=%d distinct_ids=%d" % (
+            len(_t5_b5), len({b["binding_id"] for b in _t5_b5})),
+        len(_t5_b5) == _t5_t5["expect"]["bindings"]
+        and len({b["binding_id"] for b in _t5_b5}) ==
+        _t5_t5["expect"]["distinct_binding_ids"],
+    )
+
+    # T6/T13 / G3: each injected uniqueness defect demonstrably makes validation red.
+    _t5_payload_collision_errors = _t5_validate_rows([_t5_p1[0], dict(_t5_p1[0])])
+    _t5_binding_collision_errors = _t5_validate_rows(
+        _t5_p1 + [_t5_b1[0], dict(_t5_b1[0])])
+    _t5_p_alt = json.loads(json.dumps(_t5_p1[0], ensure_ascii=False))
+    _t5_p_alt["public_payload"]["token_contribution_gloss"] = "tome"
+    _t5_p_alt["public_payload"]["segments"][0]["gloss"] = "tome"
+    _t5_p_alt["canonical_payload_id"] = _t5_payload_id(_t5_p_alt)
+    _t5_b_alt = dict(_t5_b1[1], canonical_payload_id=_t5_p_alt["canonical_payload_id"])
+    _t5_b_alt["binding_id"] = _t5_binding_id(_t5_b_alt)
+    _t5_loc_collision_errors = _t5_validate_rows(
+        [_t5_p1[0], _t5_p_alt, _t5_b1[0], _t5_b_alt])
+    _t5_t6_payload = _t5_by_probe["T6-forced-payload-id-collision"]
+    _t5_t6_binding = _t5_by_probe["T6-forced-binding-id-collision"]
+    _t5_t13 = _t5_by_probe["T13-payload-collision-at-loc"]
+    check(
+        "T5 T6 forced payload-id collision fails validator",
+        any(_t5_t6_payload["expect"]["contains"] in e
+            for e in _t5_payload_collision_errors),
+    )
+    check(
+        "T5 T6 forced binding-id collision fails validator",
+        any(_t5_t6_binding["expect"]["contains"] in e
+            for e in _t5_binding_collision_errors),
+    )
+    check(
+        "T5 T13 two payload ids at one accepted loc fail validator",
+        any(_t5_t13["expect"]["contains"] in e for e in _t5_loc_collision_errors),
+    )
+
+    # T7: mutable status never participates in any id; carrier coordinates do.
+    _t5_t7 = _t5_by_probe["T7-id-stability-review-flip"]
+    _t5_payload_status_flip = dict(
+        _t5_p1[0], lemma_status="certified", sarf_certification="certified",
+        nahw_certification="certified")
+    _t5_binding_status_flip = dict(
+        _t5_b1[0], binding_status="candidate", reason="owner-decision")
+    _t5_binding_carrier_flip = dict(_t5_b1[0], qword_row_id="qword-coordinate-flipped")
+    _t5_exc = {
+        "schema": "qamus.canonical_hover_exception.v2",
+        "binding_id": _t5_b1[0]["binding_id"],
+        "exception_reason": "page_local_context",
+        "replacement_canonical_payload_id": _t5_p1[0]["canonical_payload_id"],
+        "reviewed_against_canonical_payload_id": _t5_p1[0]["canonical_payload_id"],
+        "review_status": "candidate",
+        "notes_private": None,
+    }
+    _t5_exc["exception_id"] = _t5_exception_id(_t5_exc)
+    _t5_exc_status_flip = dict(_t5_exc, review_status="owner_accepted")
+    check(
+        "T5 T7 review/status flips preserve ids; carrier flip changes binding id",
+        _t5_payload_id(_t5_payload_status_flip) == _t5_p1[0]["canonical_payload_id"]
+        and _t5_binding_id(_t5_binding_status_flip) == _t5_b1[0]["binding_id"]
+        and _t5_exception_id(_t5_exc_status_flip) == _t5_exc["exception_id"]
+        and _t5_binding_id(_t5_binding_carrier_flip) != _t5_b1[0]["binding_id"]
+        and _t5_t7["expect"]["mutable_review_fields_preserve_ids"]
+        and _t5_t7["expect"]["carrier_coordinate_changes_binding_id"],
+    )
+
+    # T10 / G4: multiplicity conflict is independent of exception order.
+    _t5_t10 = _t5_by_probe["T10-two-exception-order-independence"]
+    _t5_exc_a = dict(_t5_exc, review_status="owner_accepted")
+    _t5_exc_b = dict(_t5_exc_a, exception_reason="owner_style_override")
+    _t5_exc_b["exception_id"] = _t5_exception_id(_t5_exc_b)
+    _t5_two_a = _t5_compile(_t5_p1, [_t5_b1[0]], [_t5_exc_a, _t5_exc_b], [])
+    _t5_two_b = _t5_compile(_t5_p1, [_t5_b1[0]], [_t5_exc_b, _t5_exc_a], [])
+    check(
+        "T5 T10 two-exception orders: conflicts=1 emits=0 byte-identical",
+        not _t5_two_a[0] and not _t5_two_b[0]
+        and _t5_two_a[2] == _t5_two_b[2]
+        and len(_t5_two_a[2]) == _t5_t10["expect"]["conflicts"]
+        and len(_t5_two_a[0]) == _t5_t10["expect"]["emits"]
+        and _t5_two_a[2][0]["reason"] == _t5_t10["expect"]["reason"],
+    )
+
+    # LAT-05 / G4: accepted null replacement is never original-payload fallback.
+    _t5_lat05 = _t5_by_probe["LAT-05-accepted-exception-null-replacement"]
+    _t5_null_exc = dict(
+        _t5_exc_a,
+        review_status=_t5_lat05["input"]["review_status"],
+        replacement_canonical_payload_id=_t5_lat05["input"]["replacement_canonical_payload_id"],
+        exception_id="che:0000000000000000")
+    _t5_null = _t5_compile(_t5_p1, [_t5_b1[0]], [_t5_null_exc], [])
+    check(
+        "T5 LAT-05 accepted null replacement: conflicts=1 emits=0",
+        len(_t5_null[0]) == _t5_lat05["expect"]["emits"]
+        and len(_t5_null[2]) == _t5_lat05["expect"]["conflicts"]
+        and _t5_null[2][0]["reason"] == _t5_lat05["expect"]["reason"],
+    )
+
+    # The T5 block independently runs all three CLI self-tests.
+    for _script, _label in (
+        ("validate_canonical_hover_payload_table.py", "validator"),
+        ("build_canonical_hover_payload_table.py", "builder"),
+        ("compile_canonical_hover_whitelist_packet.py", "compiler"),
+    ):
+        _run = run_text([sys.executable, os.path.join(ROOT, "tools", _script), "--self-test"])
+        check("T5 %s self-test" % _label, _run.returncode == 0)
+
+    # Full real accepted-crosswalk dry-run. The public payload is a deliberately
+    # synthetic in-memory carrier preview; only the committed source coordinates,
+    # surfaces, and dependency hashes drive the cardinality proof.
+    _t5_crosswalk_paths = sorted(_t5_glob.glob(os.path.join(
+        ROOT, "qamus", "indexes", "largelexicon", "qword-crosswalk", "*.jsonl")))
+    _t5_full_rows = []
+    for _path in _t5_crosswalk_paths:
+        with io.open(_path, encoding="utf-8") as _handle:
+            for _line in _handle:
+                _source = json.loads(_line)
+                if _source.get("status") != "canonical_crosswalk_accepted":
+                    continue
+                _surface = _source["visible_surface_norm_strict"]
+                _dependency_blob = json.dumps(
+                    _source.get("source_dependencies") or [], ensure_ascii=False,
+                    sort_keys=True, separators=(",", ":"))
+                _t5_full_rows.append({
+                    "surface_norm": _surface,
+                    "root": None,
+                    "pos": "unknown",
+                    "pattern": None,
+                    "lemma_status": "missing",
+                    "sarf_certification": "missing",
+                    "nahw_certification": "missing",
+                    "public_payload": {
+                        "src": "qamus", "kind": "authored", "lang": "en",
+                        "token_contribution_gloss": "dry-run carrier preview",
+                        "contextual_phrase_gloss": None,
+                        "morphline": "STEM",
+                        "segments": [{"role": "STEM", "surface": _surface,
+                                      "qg_class": "unknown", "gloss": "dry-run"}],
+                        "learner_explanation": "dry-run carrier preview",
+                    },
+                    "canonical_quran_loc": _source["canonical_quran_loc"],
+                    "canonical_wbw_loc": _source["canonical_wbw_loc"],
+                    "entry_id": _source["entry_id"],
+                    "card_id": _source["card_id"],
+                    "qword_row_id": _source["qword_row_id"],
+                    "visible_surface": _source["visible_surface"],
+                    "source_dependency_sha256": hashlib.sha256(
+                        _dependency_blob.encode("utf-8")).hexdigest(),
+                })
+    _t5_full_started = _t5_time.perf_counter()
+    _t5_full_p, _t5_full_b, _t5_full_r, _t5_full_c, _t5_full_report = _t5_build(
+        _t5_full_rows)
+    _t5_full_build_seconds = _t5_time.perf_counter() - _t5_full_started
+    _t5_full_w, _t5_full_n, _t5_full_wc, _t5_full_wreport = _t5_compile(
+        _t5_full_p, _t5_full_b, [], [])
+    _t5_full_whitelist_count = len(_t5_full_w) + len(_t5_full_n)
+    check(
+        "T5 G1 full dry-run: bindings=%d whitelist=%d build=%.3fs" % (
+            len(_t5_full_b), _t5_full_whitelist_count, _t5_full_build_seconds),
+        len(_t5_full_rows) == 85877
+        and len(_t5_full_b) == 85877
+        and _t5_full_whitelist_count == 40972
+        and not _t5_full_c and not _t5_full_wc,
+    )
+    check(
+        "T5 G1 diagnostics: co_occurrence_not_bound=0 richer-peer=0",
+        not any(r.get("reason") == "co_occurrence_not_bound" for r in _t5_full_r)
+        and not any(r.get("reason") == "richer-peer" for r in _t5_full_r),
+    )
+
+    _t5_subset = list(_t5_full_rows[:4096])
+    _t5_shuffled = list(_t5_subset)
+    _t5_random.Random(5).shuffle(_t5_shuffled)
+    _t5_subset_a = _t5_build(_t5_subset)
+    _t5_subset_b = _t5_build(_t5_shuffled)
+    check(
+        "T5 G2 real-corpus permutation subset=4096 byte-identical",
+        all(_t5_bytes(_t5_subset_a[_i]) == _t5_bytes(_t5_subset_b[_i])
+            for _i in range(4)),
+    )
+except Exception as _e:
+    check("T5 canonical-carrier gates (ADR-003 G1-G4) harness error", False)
     print("  ", _e)
 
 if fails:
