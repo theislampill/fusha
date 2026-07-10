@@ -3674,7 +3674,8 @@ try:
             _text = _handle.read()
         _t2_text[_rel] = _text
         _folded = _text.casefold().replace(chr(92)*2, chr(92))  # collapse escaped backslashes so JSON/docstring forms cannot evade the needles
-        if any(_needle.casefold() in _folded for _, _needle in _t2_public_needles):
+        _folded_sep = _folded.replace("/", chr(92))  # separator-insensitive view (NF-T3-1: forward-slash operator paths)
+        if any(_needle.casefold() in _folded or _needle.casefold() in _folded_sep for _, _needle in _t2_public_needles):
             _t2_public_offenders.add(_rel)
     check(
         "RM-09 tree-wide recurrence lint (public classes; %d tracked text files scanned)" % len(_t2_paths),
@@ -3688,9 +3689,10 @@ try:
         _t2_production_offenders = set()
         for _rel, _text in _t2_text.items():
             _folded = _text.casefold().replace(chr(92)*2, chr(92))  # collapse escaped backslashes so JSON/docstring forms cannot evade the needles
+            _folded_sep = _folded.replace("/", chr(92))  # separator-insensitive view (NF-T3-1)
             for _key in leak_sot._OVERLAY_KEYS:
                 for _value in _t2_overlay.get(_key, []):
-                    if _value.casefold() in _folded:
+                    if _value.casefold() in _folded or _value.casefold() in _folded_sep:
                         _t2_production_offenders.add((_rel, _key))
         check("RM-09 production-augmented lint", not _t2_production_offenders)
         for _rel, _key in sorted(_t2_production_offenders):
@@ -3814,6 +3816,235 @@ try:
             os.path.exists(_amb_path) == (_amb_parked is not None)))
 except Exception as _e:
     check("T2.1 ambient-overlay isolation (subprocess error)", False)
+    print("  ", _e)
+
+# --- T3A RM-04 matcher gates ---
+# Exercise the shared forbidden-label matcher and the real meta-transclusion
+# completion predicate against the committed audit fixtures and LAT-01 cases.
+try:
+    from tools.largelexicon_common import match_forbidden_labels as _rm04_match_labels
+    from tools.validate_meta_transclusion_projection import completion_wording_violation as _rm04_completion_violation
+    from tools.validate_public_private_boundary import FORBIDDEN_LABELS as _rm04_forbidden_labels
+
+    _rm04_fixture_path = os.path.join(ROOT, "fusha", "parser", "eval", "rm04-matcher-fixtures.jsonl")
+    with io.open(_rm04_fixture_path, encoding="utf-8") as _rm04_handle:
+        _rm04_rows = [json.loads(_line) for _line in _rm04_handle if _line.strip()]
+    _rm04_results = []
+    for _rm04_row in _rm04_rows:
+        _rm04_payload = _rm04_row.get("payload") or {}
+        if _rm04_row.get("kind") == "forbidden_labels":
+            _rm04_actual_fail = bool(_rm04_match_labels(
+                json.dumps(_rm04_payload, ensure_ascii=False).lower(),
+                _rm04_forbidden_labels,
+            ))
+        elif _rm04_row.get("kind") == "completion_wording":
+            _rm04_actual_fail = _rm04_completion_violation(_rm04_payload)
+        else:
+            _rm04_actual_fail = None
+        _rm04_results.append(
+            _rm04_actual_fail is not None
+            and _rm04_actual_fail == (_rm04_row.get("expect") == "fail")
+        )
+    check(
+        "T3A RM-04 matcher fixtures (4 rows: boundary-aware labels + negation-aware completion)",
+        len(_rm04_rows) == 4 and all(_rm04_results),
+    )
+
+    _lat01_honest_open = [
+        {"projection_state": "reopened_not_complete", "projection_failures": ["x"]},
+        {"projection_state": "unhandled", "projection_failures": ["x"]},
+        {"projection_state": "needs_work", "projection_failures": ["x"], "note": "page NOT complete"},
+    ]
+    _lat01_intended_positive = {
+        "projection_state": "visual_complete",
+        "projection_failures": ["x"],
+    }
+    check(
+        "T3A LAT-01 honest-open rows pass; intended-positive still fails",
+        sum(_rm04_completion_violation(_row) for _row in _lat01_honest_open) == 0
+        and sum(_rm04_completion_violation(_row) for _row in [_lat01_intended_positive]) == 1,
+    )
+except Exception as _e:
+    check("T3A RM-04 matcher gates (harness error)", False)
+    print("  ", _e)
+
+# --- T3B-1 gates (RM-11/RM-13/SF-09) ---
+# Gate aliases fail closed, the visible مَنْ reading never enters the مِنْ
+# preposition rule, and Arabic-emitting CLIs override inherited CP-1252 stdout.
+try:
+    from tools.fusha_check import resolve_gate as _rm11_resolve_gate
+    from tools.grade_grammar_reasoning import grade as _rm11_grade
+
+    check(
+        "RM-11 missing/empty/unknown gate aliases fail closed",
+        all(_rm11_resolve_gate(_gate) == "two_vote_required" for _gate in (None, "", "UNKNOWN_GATE")),
+    )
+    _rm11_judgment = {
+        "final_ok": True,
+        "reasoning_ok": True,
+        "evidence_cited": True,
+        "source_address": "quran:1:1:1",
+        "two_vote_done": True,
+    }
+    check(
+        "RM-11 never_auto alias is equivalent to canonical never_auto_resolve",
+        not _rm11_grade({"required_gate": "never_auto"}, _rm11_judgment)["pass"]
+        and not _rm11_grade({"required_gate": "never_auto_resolve"}, _rm11_judgment)["pass"],
+    )
+except Exception as _e:
+    check("RM-11 fail-closed gate aliases (harness error)", False)
+    print("  ", _e)
+
+try:
+    from tools.fusha_governor import build_dependency_lattice as _rm13_build_lattice
+
+    def _rm13_edges(surface, following_pos, case_visible=None):
+        _tokens = [
+            {"ref": "tok:0", "surface": surface, "pos": ""},
+            {"ref": "tok:1", "surface": "عَالِمٌ" if following_pos == "noun" else "صَبَرَ", "pos": following_pos},
+        ]
+        if case_visible:
+            _tokens[1]["case_visible"] = case_visible
+        return _rm13_build_lattice({
+            "input_mode": "source_addressed" if case_visible else "arbitrary_typing",
+            "source_unit": {"address": "probe:rm13", "scope": "test"},
+            "tokens": _tokens,
+        })["edges"]
+
+    _rm13_man_verb = _rm13_edges("مَنْ", "verb")
+    _rm13_man_nom = _rm13_edges("مَنْ", "noun", "nominative")
+    _rm13_min = _rm13_edges("مِنْ", "noun")
+    _rm13_bare = _rm13_edges("من", "noun")
+    check(
+        "RM-13 مَنْ + verb has no jar-majrur edge or contradiction",
+        not any(_e["rel_label"] == "jar_majrur" or _e["contradiction_marker"] for _e in _rm13_man_verb),
+    )
+    check(
+        "RM-13 مَنْ + nominative noun has no fabricated contradiction",
+        not any(_e["contradiction_marker"] for _e in _rm13_man_nom),
+    )
+    check(
+        "RM-13 مِنْ + noun keeps preposition behavior",
+        any(_e["rel_label"] == "jar_majrur" for _e in _rm13_min),
+    )
+    check(
+        "RM-13 unvoweled من keeps existing preposition behavior",
+        any(_e["rel_label"] == "jar_majrur" for _e in _rm13_bare),
+    )
+except Exception as _e:
+    check("RM-13 governor probes (harness error)", False)
+    print("  ", _e)
+
+_sf09_cases = [
+    ("fusha_morph_analyze.py", ["--surface", "يَكْتُبُ"], "يَكْتُبُ"),
+    ("fusha_morph_generate.py", ["--generation-key", "prep-lam-3mp"], "لَهُمْ"),
+    ("eval_fusha_morphology.py", ["--self-test"], "صَرْف"),
+    ("validate_fusha_morph_db.py", ["--self-test"], "صَرْف"),
+    ("fusha_largelexicon_cli.py", ["analyze-token", "--surface", "مَنْ"], "مَنْ"),
+]
+for _sf09_tool, _sf09_args, _sf09_marker in _sf09_cases:
+    try:
+        with io.open(os.path.join(ROOT, "tools", _sf09_tool), encoding="utf-8") as _sf09_source_handle:
+            _sf09_source = _sf09_source_handle.read()
+        _sf09_direct_guard = (
+            'if hasattr(sys.stdout, "reconfigure"):\n'
+            '    sys.stdout.reconfigure(encoding="utf-8")'
+        ) in _sf09_source
+        _sf09_env = {**os.environ, "PYTHONIOENCODING": "cp1252"}
+        _sf09_run = subprocess.run(
+            [sys.executable, os.path.join(ROOT, "tools", _sf09_tool), *_sf09_args],
+            cwd=ROOT,
+            env=_sf09_env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        try:
+            _sf09_stdout = _sf09_run.stdout.decode("utf-8")
+            _sf09_utf8 = True
+        except UnicodeDecodeError:
+            _sf09_stdout = ""
+            _sf09_utf8 = False
+        check(
+            "SF-09 cp1252 guard: %s" % _sf09_tool,
+            _sf09_direct_guard
+            and _sf09_run.returncode == 0
+            and _sf09_utf8
+            and _sf09_marker in _sf09_stdout,
+        )
+    except Exception as _e:
+        check("SF-09 cp1252 guard: %s" % _sf09_tool, False)
+        print("  ", _e)
+
+# --- T3B-2 gates (RM-10/RM-12 + tm ports) ---
+try:
+    from tools.fusha_standalone_parse import parse_text as _t3b2_parse_text
+
+    _rm12_path = os.path.join(ROOT, "fusha", "parser", "eval", "rm12-harakah-conflict-regressions.jsonl")
+    with io.open(_rm12_path, encoding="utf-8") as _rm12_handle:
+        _rm12_rows = [json.loads(_line) for _line in _rm12_handle if _line.strip()]
+    for _rm12_row in _rm12_rows:
+        _rm12_token = _t3b2_parse_text(_rm12_row["query"], db=_rm12_row["db"])["tokens"][0]
+        _rm12_top = (_rm12_token.get("morphology_candidates") or [{}])[0]
+        _rm12_expect = _rm12_row["expectations"]
+        _rm12_risk = (_rm12_top.get("features") or {}).get("match_risk")
+        _rm12_ok = True
+        if _rm12_expect.get("forbid_confidence_gate"):
+            _rm12_ok = _rm12_ok and _rm12_token.get("confidence_gate") not in _rm12_expect["forbid_confidence_gate"]
+        if _rm12_expect.get("confidence_gate"):
+            _rm12_ok = _rm12_ok and _rm12_token.get("confidence_gate") == _rm12_expect["confidence_gate"]
+        if _rm12_expect.get("require_risk"):
+            _rm12_ok = _rm12_ok and _rm12_risk == _rm12_expect["require_risk"]
+        if _rm12_expect.get("forbid_risk"):
+            _rm12_ok = _rm12_ok and _rm12_risk != _rm12_expect["forbid_risk"]
+        check("T3B-2 RM-12: %s" % _rm12_row["id"], _rm12_ok)
+except Exception as _e:
+    check("T3B-2 RM-12 fixture gates (harness error)", False)
+    print("  ", _e)
+
+try:
+    from tools.fusha_text_check import check_text as _t3b2_check_text
+
+    _tm_path = os.path.join(ROOT, "fusha", "parser", "eval", "tm-probe-regressions.jsonl")
+    with io.open(_tm_path, encoding="utf-8") as _tm_handle:
+        _tm_rows = [json.loads(_line) for _line in _tm_handle if _line.strip()]
+    for _tm_row in _tm_rows:
+        _tm_inputs = _tm_row["input"] if isinstance(_tm_row["input"], list) else [_tm_row["input"]]
+        _tm_ok = True
+        for _tm_input in _tm_inputs:
+            _tm_rec = _t3b2_check_text({"input_mode": _tm_row["mode"], "raw_input": _tm_input})
+            _tm_suggestions = _tm_rec.get("suggestions") or []
+            _tm_expect = _tm_row["expectations"]
+            _tm_ops = [s.get("edit", {}).get("op") for s in _tm_suggestions]
+            if _tm_expect.get("forbid_ops"):
+                _tm_ok = _tm_ok and not (set(_tm_expect["forbid_ops"]) & set(_tm_ops))
+            if _tm_expect.get("require_reject_reason"):
+                _tm_ok = _tm_ok and any(
+                    s.get("edit", {}).get("op") == "abstain"
+                    and s.get("reject_reason") == _tm_expect["require_reject_reason"]
+                    for s in _tm_suggestions
+                )
+            if _tm_expect.get("forbid_retain_confidence"):
+                _tm_ok = _tm_ok and not any(
+                    s.get("edit", {}).get("op") == "retain"
+                    and s.get("confidence") == _tm_expect["forbid_retain_confidence"]
+                    for s in _tm_suggestions
+                )
+            if _tm_expect.get("require_copy"):
+                _tm_ok = _tm_ok and any(
+                    _tm_expect["require_copy"] in (s.get("explanation") or "") for s in _tm_suggestions
+                )
+            if _tm_expect.get("require_diagnostic"):
+                _tm_ok = _tm_ok and any(
+                    d.get("issue_class") == _tm_expect["require_diagnostic"] for d in _tm_rec.get("diagnostics") or []
+                )
+            if _tm_expect.get("require_suggestion_gate"):
+                _tm_ok = _tm_ok and any(
+                    s.get("gate") == _tm_expect["require_suggestion_gate"] for s in _tm_suggestions
+                )
+        check("T3B-2 tm-port: %s" % _tm_row["id"], _tm_ok)
+except Exception as _e:
+    check("T3B-2 tm-port fixtures (harness error)", False)
     print("  ", _e)
 
 if fails:

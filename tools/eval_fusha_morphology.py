@@ -4,7 +4,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 from fusha_morph_analyze import analyze_surface
 from fusha_morph_generate import generate_surface
@@ -54,6 +58,8 @@ def main() -> int:
         "errors": errors,
         "claim": "smoke morphology only; not broad analyzer/generator certification",
     }
+    if args.self_test:
+        result["self_test_marker"] = "صَرْف"
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 1 if errors else 0
 

@@ -7,7 +7,7 @@ coverage claim. Every tool asserts `live_writes == 0`; every candidate is `decis
 controlled Qurʾān/Qamus gold data drives an open-world checker without ever leaking false certainty.
 
 Built as the P0 + smallest-coherent-P1 slice of the plan packet at
-`C:/workspace/ai/in/parserplans/general-fusha-grammar-checker/` (see `020-implementation-order-and-stop-conditions.md`).
+`<operator-workspace>/parserplans/general-fusha-grammar-checker/` (see `020-implementation-order-and-stop-conditions.md`).
 
 ## The flywheel (five turns; the engine only ever drives the first three)
 

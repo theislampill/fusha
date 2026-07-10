@@ -15,6 +15,7 @@ import subprocess
 import sys
 from collections import Counter, defaultdict
 from datetime import UTC, datetime
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -66,6 +67,32 @@ FORBIDDEN_PUBLIC_SUBSTRINGS = {
     "source-photo",
     "ocr",
 }
+
+
+@lru_cache(maxsize=None)
+def _forbidden_label_pattern(label: str) -> re.Pattern[str]:
+    return re.compile(rf"\b{re.escape(label)}\b", re.IGNORECASE)
+
+
+def match_forbidden_labels(text_lower: str, labels: Iterable[str]) -> list[str]:
+    """Boundary-aware forbidden-label matching.
+
+    Labels containing '/', '\\', '.', or a space retain substring semantics.
+    Other labels match only as regex word-bounded tokens. The caller supplies
+    lowercased text; regex matching remains case-insensitive for safety.
+    """
+    matches: list[str] = []
+    for label in labels:
+        label_lower = str(label).lower()
+        if not label_lower:
+            continue
+        if any(marker in label_lower for marker in ("/", "\\", ".", " ")):
+            matched = label_lower in text_lower
+        else:
+            matched = bool(_forbidden_label_pattern(label_lower).search(text_lower))
+        if matched:
+            matches.append(label)
+    return matches
 
 KNOWN_QWORD_SOURCE_CARD_REPAIR_HINTS = {
     "n993": {
@@ -683,7 +710,6 @@ def public_boundary_errors(row: dict[str, Any], label: str) -> list[str]:
         if boundary.get(key) != value:
             errors.append(f"{label}: public_boundary.{key} must be {value!r}")
     text = json.dumps(row, ensure_ascii=False).lower()
-    for forbidden in FORBIDDEN_PUBLIC_SUBSTRINGS:
-        if forbidden in text:
-            errors.append(f"{label}: forbidden public/source leak substring {forbidden!r}")
+    for forbidden in match_forbidden_labels(text, FORBIDDEN_PUBLIC_SUBSTRINGS):
+        errors.append(f"{label}: forbidden public/source leak substring {forbidden!r}")
     return errors

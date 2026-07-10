@@ -67,8 +67,14 @@ GATE_ALIAS = {
     "owner_review_required": "human_source_review_required",
     "human_source_review_required": "human_source_review_required",
     "never_auto": "never_auto_resolve", "never_auto_resolve": "never_auto_resolve",
-    "unknown": "two_vote_required", None: "auto_safe", "": "auto_safe",
+    "unknown": "two_vote_required", None: "two_vote_required", "": "two_vote_required",
 }
+
+
+def resolve_gate(value):
+    """Resolve gate aliases canonically; absent or unrecognized values fail closed."""
+    key = value.strip().lower() if isinstance(value, str) else value
+    return GATE_ALIAS.get(key, "two_vote_required")
 
 # segment role -> issue class
 _CLITIC_ROLES = {
@@ -318,7 +324,7 @@ def _detect_token_claim(token, claim):
     if claim and claim.get("claim_type") in _IRAB_CLAIMS:
         triggers = claim.get("grammar_triggers") or _DEFAULT_TRIGGERS.get(claim["claim_type"], ["irab"])
         req = required_gate(triggers)
-        claimed = GATE_ALIAS.get(claim.get("claimed_gate"), "auto_safe")
+        claimed = resolve_gate(claim.get("claimed_gate"))
         if _GATE_RANK[claimed] < _GATE_RANK[req]:
             issues.append(_mk_issue("weak_irab_reasoning", claim.get("target", loc), cid,
                                     trigger=(claim.get("governor") or None), gate=req,

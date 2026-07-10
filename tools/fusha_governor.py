@@ -84,8 +84,11 @@ def _mk_edge(edge_id, dependent, rel_label, rel_label_ar, justification, justifi
 
 
 def _is_prep(tok):
+    surface = tok.get("surface", "")
+    if N.bare(surface) == "من" and N.haraka_on(surface, "م") == N.FATHA and N.is_man_who(surface):
+        return False
     pos = (tok.get("pos") or "").lower()
-    return pos in {"preposition"} or N.bare(tok.get("surface", "")) in KNOWN_PREPS
+    return pos in {"preposition"} or N.bare(surface) in KNOWN_PREPS
 
 
 def _is_noun(tok):

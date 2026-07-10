@@ -36,10 +36,44 @@ NONAPPLY_OPS = {"retain", "reject", "abstain", "none"}
 _CONF_RANK = {"high": 3, "medium": 2, "low": 1}
 _PROCLITIC_LETTERS = {"و", "ف", "ب", "ك", "ل"}
 _IRAB_ROUTE = {"lane": "scholar_irab_review", "procedure": "nahw/procedures/irab-case-mood.md"}
+_COLLISION_BANK_PATH = os.path.join(
+    _REPO, "fusha", "parser", "eval", "largelexicon-collision-regressions.jsonl"
+)
+_NORMALIZATION_VARIANT_CHARS = (
+    set("ٰٱآىةـ")
+    | {chr(c) for c in range(0x064B, 0x0656)}
+    | {chr(c) for c in range(0x06D6, 0x06EE)}
+)
+_UTHMANI_VARIANT_CHARS = (
+    set("ٰٱ")
+    | {chr(c) for c in range(0x064B, 0x0656)}
+    | {chr(c) for c in range(0x06D6, 0x06EE)}
+)
+
+
+def _load_collision_surfaces():
+    with open(_COLLISION_BANK_PATH, encoding="utf-8") as fh:
+        return frozenset(json.loads(line)["surface"] for line in fh if line.strip())
+
+
+_COLLISION_SURFACES = _load_collision_surfaces()
 
 
 def _has_harakat(s):
     return any(0x064B <= ord(c) <= 0x0652 for c in (s or ""))
+
+
+def is_uthmani_orthography_variant(surface):
+    """True when every normalization-changing character is a preserved Uthmani mark/form."""
+    changed = [ch for ch in (surface or "") if ch in _NORMALIZATION_VARIANT_CHARS]
+    return bool(changed) and all(ch in _UTHMANI_VARIANT_CHARS for ch in changed)
+
+
+def _has_legal_multi_segmentation(t):
+    return any(
+        len(c.get("segments") or []) >= 2 and c.get("legal", True)
+        for c in (t.get("segment_candidates") or [])
+    )
 
 
 def _gate(g, op):
@@ -80,10 +114,21 @@ def _token_suggestions(t, td, mode):
     voweled = _has_harakat(surface)
     span = _span(t)
     out = []
+    collision_suppressed = surface in _COLLISION_SURFACES and _has_legal_multi_segmentation(t)
+    collision_reported = False
     for d in td:
         cls = d.get("issue_class")
         did = "%s@%s" % (cls, ref)
         seg_split = _split_replacement(t)
+        if collision_suppressed and cls in ("possible_clitic_segmentation", "possible_attached_pronoun"):
+            if not collision_reported:
+                out.append(_mk(
+                    "abstain", ref, None, diagnostic_id=did, confidence="low", gate="two_vote_required",
+                    reject_reason="lexical_collision_requires_context", span=span,
+                    explanation="A lexical collision makes this split unsafe without sentence context; no split is offered.",
+                ))
+                collision_reported = True
+            continue
         if cls in IRAB_SENSITIVE_ISSUE_CLASSES:
             out.append(_mk("reject", ref, None, diagnostic_id=did, confidence="medium",
                            gate="human_source_review_required", reject_reason="governor_not_justified", route=_IRAB_ROUTE,
@@ -112,24 +157,39 @@ def _token_suggestions(t, td, mode):
                 out.append(_mk("split", ref, seg_split, diagnostic_id=did, confidence="medium", gate="two_vote_required",
                                span=span, explanation="An attached pronoun may be present; a suggested split is shown for review."))
         elif cls == "orthography_normalization_warning":
-            norm = N.norm_strict(surface)
-            if norm and norm != surface:
+            if is_uthmani_orthography_variant(surface):
+                out.append(_mk(
+                    "abstain", ref, None, diagnostic_id=did, confidence="low", gate="two_vote_required",
+                    reject_reason="below_threshold", span=span,
+                    explanation="Spelling variant preserved; no replacement is offered.",
+                ))
+            else:
+                norm = N.norm_strict(surface)
+                if not norm or norm == surface:
+                    continue
                 out.append(_mk("replace", ref, norm, diagnostic_id=did, confidence="medium", gate="two_vote_required",
                                span=span, explanation="An orthographic variant could be normalized; shown as a review hint, "
                                "the original spelling is preserved."))
-    # RETAIN: a voweled token with no token-specific diagnostics reads acceptably as written.
+    # RETAIN: word-level absence of diagnostics is not positive sentence-level evidence.
     if not td and voweled:
-        out.append(_mk("retain", ref, None, diagnostic_id=None, confidence="high", gate="two_vote_required", span=span,
-                       explanation="The token reads acceptably as written; no change suggested."))
+        out.append(_mk("retain", ref, None, diagnostic_id=None, confidence="low", gate="two_vote_required", span=span,
+                       explanation="No issues detected at the word level — sentence-level grammar was not checked."))
     return out
 
 
 def _split_replacement(t):
-    """The suggested whitespace-separated split for the first legal multi-piece segmentation, or None."""
-    for c in t.get("segment_candidates") or []:
-        segs = c.get("segments") or []
-        if len(segs) >= 2 and not c.get("single_letter_clitic") and c.get("legal", True):
-            return " ".join(s.get("surface", "") for s in segs)
+    """Return a split only when its segmentation backs the lattice's top-ranked reading."""
+    if t.get("surface") in _COLLISION_SURFACES:
+        return None
+    top = next((c for c in (t.get("morphology_candidates") or []) if c.get("rank") == 1), None)
+    ref = top.get("segment_candidate_ref") if top else None
+    cands = t.get("segment_candidates") or []
+    if not isinstance(ref, int) or ref < 0 or ref >= len(cands):
+        return None
+    candidate = cands[ref]
+    segs = candidate.get("segments") or []
+    if len(segs) >= 2 and not candidate.get("single_letter_clitic") and candidate.get("legal", True):
+        return " ".join(s.get("surface", "") for s in segs)
     return None
 
 
@@ -223,7 +283,7 @@ def _records():
         "abstain-unvoweled": TC.check_text({"input_mode": "arbitrary_typing", "raw_input": "علم نور"}),
         "split-proclitic": TC.check_text({"input_mode": "arbitrary_typing", "raw_input": "وبالكتابِ"}),
         "merge-lone-proclitic": TC.check_text({"input_mode": "arbitrary_typing", "raw_input": "و الكتابُ"}),
-        # tok:1 (مفيدٌ) is voweled with no token-specific diagnostic → a RETAIN (reads acceptably as written)
+        # tok:1 (مفيدٌ) is voweled with no token-specific diagnostic → a low-confidence word-level RETAIN
         "retain-clean": TC.check_text({"input_mode": "arbitrary_typing", "raw_input": "الكتابُ مفيدٌ"}),
         # both a proclitic (و+ال → split) and an orthographic variant (آ/ة → replace) on one token → NMS surfaces a C10
         "nms-pair": TC.check_text({"input_mode": "arbitrary_typing", "raw_input": "والآخرة"}),

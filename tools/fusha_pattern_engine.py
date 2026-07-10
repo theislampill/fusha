@@ -101,24 +101,63 @@ def _match_basis(surface, form):
     return None
 
 
+def _haraka_clusters(surface):
+    """Return visible harakah signatures per base-letter cluster, reusing haraka_on for short vowels."""
+    clusters = []
+    for ch in surface or "":
+        if 0x064B <= ord(ch) <= 0x0652 and clusters:
+            clusters[-1] += ch
+        elif not (ord(ch) == 0x0640 or ord(ch) == 0x0670 or 0x06D6 <= ord(ch) <= 0x06ED):
+            clusters.append(ch)
+    out = []
+    for cluster in clusters:
+        short = N.haraka_on(cluster, cluster[0])
+        marks = {ch for ch in cluster[1:] if 0x064B <= ord(ch) <= 0x0652}
+        if short:
+            marks.add(short)
+        out.append(frozenset(marks))
+    return out
+
+
+def _visible_haraka_conflict(surface, form):
+    """Same strict skeleton, but at least one mutually visible harakah cluster disagrees."""
+    if N.norm_strict(surface) != N.norm_strict(form):
+        return False
+    query_marks = _haraka_clusters(surface)
+    form_marks = _haraka_clusters(form)
+    if len(query_marks) != len(form_marks):
+        return False
+    return any(q and f and q != f for q, f in zip(query_marks, form_marks))
+
+
 def _lexicon_match(surface, lexicon):
-    best = None
-    best_order = 999
     order = {"surface_exact_match": 0, "norm_strict_match": 1, "bare_match": 2}
-    for row in lexicon:
+    matches = []
+    strict_key_rows = set()
+    surface_key = N.norm_strict(surface)
+    for row_index, row in enumerate(lexicon):
         forms = set(row.get("forms") or [])
         forms.add(row.get("lemma", ""))
-        for f in forms:
+        for f in sorted(forms):
+            if f and N.norm_strict(f) == surface_key:
+                strict_key_rows.add(row_index)
             basis = _match_basis(surface, f)
-            if not basis:
-                continue
-            basis_order = order[basis]
-            if basis_order < best_order:
-                best = (row, basis)
-                best_order = basis_order
-                if basis_order == 0 and row.get("evidence_class") == "seed_lexicon":
-                    return best
-    return best or (None, None)
+            if basis:
+                matches.append((order[basis], row_index, row, basis, f))
+    if not matches:
+        return None, None
+    _basis_order, _row_index, selected, basis, matched_form = min(matches, key=lambda item: (item[0], item[1]))
+    harakah_conflict = _visible_haraka_conflict(surface, matched_form)
+    shared_key = len(strict_key_rows) > 1
+    if harakah_conflict or shared_key:
+        selected = dict(selected)
+        selected["_match_risk"] = {
+            "kind": "homograph_risk",
+            "harakah_conflict": harakah_conflict,
+            "shared_key_lemma_count": len(strict_key_rows),
+            "matched_form": matched_form,
+        }
+    return selected, basis
 
 
 def _stem_segments(seg_candidate):
@@ -129,6 +168,11 @@ def _candidate_from_row(row, seg_ref, score=6.0, evidence=None, extra=None, matc
     feats = dict(row.get("features") or {})
     if match_basis:
         feats["match_basis"] = match_basis
+    match_risk = row.get("_match_risk")
+    if match_risk:
+        feats["match_risk"] = match_risk["kind"]
+        feats["harakah_conflict"] = match_risk["harakah_conflict"]
+        feats["shared_key_lemma_count"] = match_risk["shared_key_lemma_count"]
     if extra:
         feats.update(extra)
     return {
@@ -138,7 +182,7 @@ def _candidate_from_row(row, seg_ref, score=6.0, evidence=None, extra=None, matc
         "pattern": row.get("pattern"),
         "features": feats,
         "gloss_hint": row.get("gloss_hint"),
-        "evidence_class": evidence or row.get("evidence_class") or "seed_lexicon",
+        "evidence_class": "homograph_risk" if match_risk else (evidence or row.get("evidence_class") or "seed_lexicon"),
         "confidence": "medium",
         "score": score,
         "rank": 0,
@@ -377,10 +421,41 @@ def preview_segments(surface, seg_candidate, morph):
     return out
 
 
+def _self_test():
+    from tools.fusha_clitic_splitter import split_clitics
+
+    conflict = build_morphology("يَعِدُ", split_clitics("يَعِدُ"), db="largelexicon")[0]
+    control = build_morphology("يَعْدُ", split_clitics("يَعْدُ"), db="largelexicon")[0]
+    shared_key_lexicon = [
+        {"lemma": "كَتَبَ", "forms": ["كَتَبَ"], "pos": "verb"},
+        {"lemma": "كُتُب", "forms": ["كُتُب"], "pos": "noun"},
+    ]
+    shared = build_morphology("كتب", split_clitics("كتب"), lexicon=shared_key_lexicon)[0]
+    failures = []
+    if (conflict.get("features") or {}).get("match_risk") != "homograph_risk":
+        failures.append("P04 visible-harakah conflict was not quarantined")
+    if conflict.get("evidence_class") != "homograph_risk":
+        failures.append("P04 conflict retained a confident evidence class")
+    if (control.get("features") or {}).get("match_risk") == "homograph_risk":
+        failures.append("harakah-agreeing control was over-quarantined")
+    if (shared.get("features") or {}).get("match_risk") != "homograph_risk":
+        failures.append("same-key multiple-lemma rows were not quarantined")
+    for failure in failures:
+        print("FAIL " + failure)
+    if not failures:
+        print("ok   fusha_pattern_engine self-test: harakah conflicts and shared-key lemmas quarantine; agreeing control matches")
+    return 0 if not failures else 1
+
+
 def main():
     ap = argparse.ArgumentParser(description="Emit morphology candidates for one token.")
-    ap.add_argument("surface")
+    ap.add_argument("surface", nargs="?")
+    ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
+    if args.self_test:
+        return _self_test()
+    if not args.surface:
+        ap.error("need surface or --self-test")
     from tools.fusha_clitic_splitter import split_clitics  # noqa: E402
     segs = split_clitics(args.surface)
     print(json.dumps(build_morphology(args.surface, segs), ensure_ascii=False, indent=2))
