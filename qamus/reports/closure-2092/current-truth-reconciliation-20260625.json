@@ -16,7 +16,7 @@
     "repo_verified": {"resolved": 43005, "word_locs": 49900, "pct": 86.18, "pending": 6895},
     "live_verified": {"glossed": 43005, "word_locs": 49900, "pct": 86.18, "pending_marked": 4867,
       "built_at": "2026-06-25T03:48:30Z", "source_sha": "65797d7d5599fadd", "entry_count": 2092,
-      "artifact": "/srv/dawah-ops/hermes-workspace/qamus-app/qamus_wbw/build/wbw-lookup.json",
+      "artifact": "<prod>/hermes-workspace/qamus-app/qamus_wbw/build/wbw-lookup.json",
       "artifact_bytes": 8242823, "artifact_sha16": "8d3c077abac42890",
       "served_equals_mirror": true, "rollback_prev_present": true},
     "pending_reconciliation": "live pending_marked 4867 is the explicitly-emitted subset; 6895-4867=2028 are silent-pending word_locs; coverage numerator 43005 and pct 86.18 identical live vs repo"

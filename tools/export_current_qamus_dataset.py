@@ -17,7 +17,7 @@ This script NEVER writes to the live site. It only reads entry JSON. Run it serv
 (where the store lives) and pull the sanitized output dir into the Fusha repo.
 
 Usage:
-  QAMUS_ENTRIES_DIR=/srv/dawah-ops/hermes-workspace/qamus-service/entries \
+  QAMUS_ENTRIES_DIR=/path/to/private/qamus-entries \
   python3 export_current_qamus_dataset.py --out /tmp/qamus_export
 
 Reproducible: same store -> byte-identical output (sorted keys, fixed separators).
@@ -158,10 +158,11 @@ def build_surface_index(entries):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--entries", default=os.environ.get("QAMUS_ENTRIES_DIR",
-                    "/srv/dawah-ops/hermes-workspace/qamus-service/entries"))
+    ap.add_argument("--entries", default=os.environ.get("QAMUS_ENTRIES_DIR"))
     ap.add_argument("--out", default=os.environ.get("QAMUS_EXPORT_OUT", "/tmp/qamus_export"))
     args = ap.parse_args()
+    if not args.entries:
+        ap.error("--entries (or QAMUS_ENTRIES_DIR) is required; the private entries directory has no default in the public repo")
 
     data_dir = os.path.join(args.out, "data")
     idx_dir = os.path.join(args.out, "indexes")

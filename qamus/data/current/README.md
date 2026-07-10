@@ -77,7 +77,7 @@ python3 tools/validate_current_qamus_dataset.py            # acceptance gate (fa
 ## Regeneration
 
 ```bash
-QAMUS_ENTRIES_DIR=/srv/dawah-ops/hermes-workspace/qamus-service/entries \
+QAMUS_ENTRIES_DIR=/path/to/private/qamus-entries \
 QAMUS_EXPORT_OUT=/tmp/qamus_export \
 python3 tools/export_current_qamus_dataset.py
 # then sync /tmp/qamus_export/{data,indexes} -> qamus/{data,indexes}/current and re-validate.

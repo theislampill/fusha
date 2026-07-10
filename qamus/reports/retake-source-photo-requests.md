@@ -2,7 +2,7 @@
 
 **0 retakes requested.**
 
-The photographed corpus (`C:\workspace\ai\in\qamus\`, 1,205 images, pages 2–471) is **complete**:
+The photographed corpus (`<operator-workspace>/qamus/`, 1,205 images, pages 2–471) is **complete**:
 the indexer reports 0 missing pages, and `pages.md` confirms all page ranges (002–471) are present
 and live-imported. Per the owner-mandated rule, `needs_retake` is used ONLY after the image-recovery
 pipeline fails on the existing corpus — and it has not failed: every queried entry's page is present.

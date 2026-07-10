@@ -47,12 +47,14 @@ def _self_test():
     if leak_sot._self_test() != 0:
         failures.append("leak_sot internal self-test failed")
     # 2. SUBSET: every member of each legacy TUPLE detector must be caught by the SoT (so consolidation lost nothing)
-    sot_labels = set(leak_sot.FORBIDDEN_LABELS)
+    local_overlay = leak_sot.load_local_overlay()
+    sot_labels = set(leak_sot.get_forbidden_labels(local_overlay))
+    sot_re = leak_sot.get_leak_re(local_overlay)
     for name, members in _legacy_tuples().items():
         for m in members:
             ml = m.lower()
             # the SoT must catch the legacy token either as a tuple member or via the regex
-            if ml not in sot_labels and not leak_sot.is_leak(m):
+            if ml not in sot_labels and not sot_re.search(m):
                 failures.append("%s member %r is NOT covered by leak_sot (drift/regression)" % (name, m))
     # 3. the cert gap is CLOSED: tafsir + tanzil (absent from the legacy LEAK_TERMS) are caught now
     for gap in ("tafsir", "tanzil", "see the tafsir center", "from tanzil dump"):

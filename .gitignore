@@ -34,6 +34,7 @@ qac-*.tsv
 *.weights
 .scan*.json
 *.local.json
+tools/leak_denylist_local.json
 
 # local scratch (agent slices, enriched inputs)
 .p4*

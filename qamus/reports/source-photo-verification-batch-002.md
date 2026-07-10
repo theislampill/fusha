@@ -1,7 +1,7 @@
 # Source-photo verification — batch 002 (entry→page locator + verified)
 
 Scaling the source-photo lane with a **locator**, against the existing complete corpus
-(`C:\workspace\ai\in\qamus\`, 1,205 images, pages 2–471, **0 missing, 0 retakes**).
+(`<operator-workspace>/qamus/`, 1,205 images, pages 2–471, **0 missing, 0 retakes**).
 
 ## Entry→page locator (every entry processed into a real bucket)
 

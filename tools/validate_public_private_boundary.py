@@ -18,24 +18,10 @@ SAMPLE_PATH = os.path.join(ROOT, "qamus", "examples", "public_private_boundary.s
 
 import sys
 sys.path.insert(0, ROOT)
+from tools import leak_sot  # noqa: E402
 from tools.validate_linguistic_decisions import validate_schema  # noqa: E402
 
-FORBIDDEN_LABELS = (
-    "informed_by",
-    "mcp",
-    "qac",
-    "quran.com",
-    "quran_com",
-    "corpus.quran",
-    "tanzil",
-    "tafsir",
-    "ocr",
-    "source-photo",
-    "source_photo",
-    "/srv/",
-    "c:\\",
-    "root.txt",
-)
+FORBIDDEN_LABELS = leak_sot.get_forbidden_labels(leak_sot.load_local_overlay())
 EXPECTED = {
     "src": "qamus",
     "kind": "authored",
@@ -122,6 +108,8 @@ def self_test():
 
 
 def main():
+    if leak_sot.production_mode():
+        leak_sot.require_overlay()
     parser = argparse.ArgumentParser(description="Validate Qamus public/private boundary JSON.")
     parser.add_argument("path", nargs="?")
     parser.add_argument("--self-test", action="store_true")

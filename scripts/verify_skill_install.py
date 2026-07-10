@@ -9,10 +9,27 @@ Usage:
 """
 import argparse
 import os
+import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LEAK = ("/srv/", "157.245.", "id_ed25519", "root.txt", "C:\\\\workspace")
+sys.path.insert(0, ROOT)
+from tools import leak_sot  # noqa: E402
+
+
+def _build_leak_patterns(overlay):
+    public_labels = set(leak_sot.get_forbidden_labels())
+    overlay_labels = (
+        label for label in leak_sot.get_forbidden_labels(overlay)
+        if label not in public_labels
+    )
+    return (
+        re.compile(re.escape("/srv/"), re.I),
+        re.compile(r"[A-Za-z]:[\\/]", re.I),
+    ) + tuple(re.compile(re.escape(label), re.I) for label in overlay_labels)
+
+
+LEAK = _build_leak_patterns(leak_sot.load_local_overlay())
 
 
 def check(label, cond, fails):
@@ -45,7 +62,7 @@ def verify_repo(fails):
                         c = open(os.path.join(dp, f), encoding="utf-8").read()
                     except Exception:
                         continue
-                    if any(x in c for x in LEAK):
+                    if any(pattern.search(c) for pattern in LEAK):
                         leaked.append(os.path.join(dp, f))
     check("no raw-source/secret leak in skill trees", not leaked, fails)
     if leaked:
@@ -62,6 +79,9 @@ def verify_installed(d, fails):
 
 
 def main():
+    global LEAK
+    if leak_sot.production_mode():
+        LEAK = _build_leak_patterns(leak_sot.require_overlay())
     ap = argparse.ArgumentParser()
     ap.add_argument("--dir")
     a = ap.parse_args()

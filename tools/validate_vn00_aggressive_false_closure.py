@@ -22,6 +22,8 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools import leak_sot  # noqa: E402
 
 SARF_FIXTURE = ROOT / "sarf" / "evals" / "vn00-aggressive-false-closure.jsonl"
 NAHW_FIXTURE = ROOT / "nahw" / "evals" / "vn00-aggressive-false-closure.jsonl"
@@ -168,18 +170,7 @@ REQUIRED_ROW_FIELDS = {
     "unlocks_vn01",
 }
 
-LEAK_TERMS = (
-    "informed_by",
-    "qac",
-    "quran.com",
-    "mcp",
-    "ocr",
-    "source-photo",
-    "source_photo",
-    "/srv/",
-    "\\srv\\",
-    "root.txt",
-)
+LEAK_TERMS = leak_sot.get_forbidden_labels(leak_sot.load_local_overlay())
 
 
 def load_jsonl(path: Path) -> list[dict]:
@@ -442,6 +433,8 @@ def self_test() -> int:
 
 
 def main() -> int:
+    if leak_sot.production_mode():
+        leak_sot.require_overlay()
     parser = argparse.ArgumentParser(description="Validate VN-00 aggressive false-closure flywheel fixtures.")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()

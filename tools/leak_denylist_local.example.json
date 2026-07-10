@@ -1,0 +1,7 @@
+{
+  "_comment": "production-exact leak denylist overlay — NEVER commit. See leak_denylist_local.example.json",
+  "secrets": ["example-secret.txt"],
+  "ip_prefixes": ["203.0.113."],
+  "key_filenames": ["id_ed25519_example_key"],
+  "path_substrings": ["c:\\example-workspace"]
+}

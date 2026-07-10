@@ -19,6 +19,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from tools import normalize_ar as N
+from tools import leak_sot
 
 fails = []
 
@@ -3632,6 +3633,135 @@ try:
         print("  ", _rel)
 except Exception as _e:
     check("RM-07 docs cite no phantom evidence glob (bulk_twovote_certified_batch: 0 hits in docs/)", False)
+    print("  ", _e)
+
+# --- T2 redaction-boundary gates (RM-09 public recurrence + local production overlay) ---
+_t2_text_extensions = {
+    ".py", ".md", ".json", ".jsonl", ".txt", ".sh",
+    ".yml", ".yaml", ".toml", ".cfg", ".csv",
+}
+_t2_exempt_paths = {"tools/leak_denylist_local.example.json"}
+
+
+def _t2_tracked_text_paths():
+    result = run_text(["git", "ls-files", "-z"], cwd=ROOT)
+    if result.returncode != 0:
+        raise RuntimeError("git ls-files failed for RM-09 tracked-tree scan")
+    paths = []
+    for relative in result.stdout.split("\0"):
+        relative = relative.replace("\\", "/")
+        if not relative or relative in _t2_exempt_paths:
+            continue
+        if os.path.splitext(relative)[1].lower() not in _t2_text_extensions:
+            continue
+        path = os.path.join(ROOT, *relative.split("/"))
+        if os.path.isfile(path):
+            paths.append((relative, path))
+    return paths
+
+
+try:
+    _t2_paths = _t2_tracked_text_paths()
+    _t2_text = {}
+    _t2_public_needles = (
+        ("production-dir", "srv/" + "dawah"),
+        ("operator-path", "C:" + "\\workspace"),
+        ("operator-path", "C:" + "\\Users"),
+    )
+    _t2_public_offenders = set()
+    for _rel, _path in _t2_paths:
+        with io.open(_path, encoding="utf-8", errors="replace") as _handle:
+            _text = _handle.read()
+        _t2_text[_rel] = _text
+        _folded = _text.casefold().replace(chr(92)*2, chr(92))  # collapse escaped backslashes so JSON/docstring forms cannot evade the needles
+        if any(_needle.casefold() in _folded for _, _needle in _t2_public_needles):
+            _t2_public_offenders.add(_rel)
+    check(
+        "RM-09 tree-wide recurrence lint (public classes; %d tracked text files scanned)" % len(_t2_paths),
+        not _t2_public_offenders,
+    )
+    for _rel in sorted(_t2_public_offenders):
+        print("  ", _rel)
+
+    if leak_sot.production_mode():
+        _t2_overlay = leak_sot.require_overlay()
+        _t2_production_offenders = set()
+        for _rel, _text in _t2_text.items():
+            _folded = _text.casefold().replace(chr(92)*2, chr(92))  # collapse escaped backslashes so JSON/docstring forms cannot evade the needles
+            for _key in leak_sot._OVERLAY_KEYS:
+                for _value in _t2_overlay.get(_key, []):
+                    if _value.casefold() in _folded:
+                        _t2_production_offenders.add((_rel, _key))
+        check("RM-09 production-augmented lint", not _t2_production_offenders)
+        for _rel, _key in sorted(_t2_production_offenders):
+            print("  %s [%s]" % (_rel, _key))
+    else:
+        check("RM-09 production-augmented lint (public mode — overlay lint skipped)", True)
+except SystemExit:
+    raise
+except Exception as _e:
+    check("RM-09 tree-wide recurrence lint (scan error)", False)
+    print("  ", _e)
+
+try:
+    _t2_public_env = os.environ.copy()
+    _t2_public_env.pop("FUSHA_LEAK_LOCAL", None)
+    _t2_public_env.pop("FUSHA_LEAK_PRODUCTION", None)
+    _t2_public_clone = run_text(
+        [sys.executable, os.path.join(ROOT, "tools", "leak_sot.py"), "--self-test"],
+        cwd=ROOT,
+        env=_t2_public_env,
+    )
+    check("T2 overlay mechanism: public clone self-test passes without an overlay", _t2_public_clone.returncode == 0)
+
+    with tempfile.TemporaryDirectory(prefix="t2-overlay-check-") as _temp_dir:
+        _t2_missing_env = os.environ.copy()
+        _t2_missing_env["FUSHA_LEAK_PRODUCTION"] = "1"
+        _t2_missing_env["FUSHA_LEAK_LOCAL"] = os.path.join(_temp_dir, "absent.json")
+        _t2_fail_closed = run_text(
+            [sys.executable, "-c", "from tools import leak_sot; leak_sot.require_overlay()"],
+            cwd=ROOT,
+            env=_t2_missing_env,
+        )
+        check("T2 overlay mechanism: production mode fails closed with exit 2", _t2_fail_closed.returncode == 2)
+
+        _t2_synthetic = {
+            "_comment": "production-exact leak denylist overlay — NEVER commit. See leak_denylist_local.example.json",
+            "secrets": ["example-secret.txt"],
+            "ip_prefixes": ["203.0.113."],
+            "key_filenames": ["id_" + "ed25519_example_key"],
+            "path_substrings": ["c:\\example-workspace"],
+        }
+        _t2_overlay_path = os.path.join(_temp_dir, "overlay.json")
+        with io.open(_t2_overlay_path, "w", encoding="utf-8", newline="\n") as _handle:
+            json.dump(_t2_synthetic, _handle, ensure_ascii=False, sort_keys=True, indent=2)
+            _handle.write("\n")
+        _t2_synthetic_env = os.environ.copy()
+        _t2_synthetic_env["FUSHA_LEAK_LOCAL"] = _t2_overlay_path
+        _t2_synthetic_env.pop("FUSHA_LEAK_PRODUCTION", None)
+        _t2_synthetic_load = run_text(
+            [
+                sys.executable,
+                "-c",
+                "from tools import leak_sot; o=leak_sot.load_local_overlay(); "
+                "s=o['secrets'][0]; assert not leak_sot.LEAK_RE.search(s); "
+                "assert leak_sot.get_leak_re(o).search(s)",
+            ],
+            cwd=ROOT,
+            env=_t2_synthetic_env,
+        )
+        _t2_synthetic_values = [
+            value
+            for key in leak_sot._OVERLAY_KEYS
+            for value in _t2_synthetic[key]
+        ]
+        check("T2 overlay mechanism: synthetic overlay loads and augments matching", _t2_synthetic_load.returncode == 0)
+        check(
+            "T2 overlay mechanism: synthetic loader stdout contains no overlay values",
+            all(value not in _t2_synthetic_load.stdout for value in _t2_synthetic_values),
+        )
+except Exception as _e:
+    check("T2 overlay mechanism checks (subprocess error)", False)
     print("  ", _e)
 
 if fails:

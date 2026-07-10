@@ -1,7 +1,7 @@
 # Source-photo verification — batch 001 (from the EXISTING corpus)
 
 Verification is done against the **existing** photographed corpus at the local intake
-(`C:\workspace\ai\in\qamus\`, 1,205 images, pages 2–471). **No retakes were requested** — the
+(`<operator-workspace>/qamus/`, 1,205 images, pages 2–471). **No retakes were requested** — the
 corpus is complete (0 missing pages per the indexer), so `source_photo_status` is never
 `needs_retake` by default.
 
