@@ -15,7 +15,13 @@ grade() is deterministic over supplied judgments (the model/verifier supplies fi
 module enforces the AND-gate). The CLI runs a self-test proving the load-bearing case — right answer + wrong
 reasoning => FAIL — and exits non-zero if that property ever breaks.
 """
+import os
 import sys
+
+_REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+sys.path.insert(0, _REPO)
+
+from tools.fusha_check import resolve_gate
 
 
 def grade(case, judgment):
@@ -24,9 +30,10 @@ def grade(case, judgment):
     final_ok = bool(judgment.get("final_ok"))
     reasoning_ok = bool(judgment.get("reasoning_ok"))
     evidence_ok = bool(judgment.get("evidence_cited")) and bool(judgment.get("source_address"))
-    needs_two_vote = case.get("required_gate") in ("two_vote_required", "human_source_review_required")
+    required_gate = resolve_gate(case.get("required_gate"))
+    needs_two_vote = required_gate in ("two_vote_required", "human_source_review_required")
     gate_ok = (not needs_two_vote) or bool(judgment.get("two_vote_done"))
-    never_auto = case.get("required_gate") == "never_auto"
+    never_auto = required_gate == "never_auto_resolve"
     ok = final_ok and reasoning_ok and evidence_ok and gate_ok and not never_auto
     reason = None
     if not ok:

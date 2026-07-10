@@ -45,6 +45,7 @@ SCHEMA_DIR = os.path.join(ROOT, "qamus", "schemas")
 SAMPLE_PATH = os.path.join(ROOT, "qamus", "examples", "canonical_hover_payload.sample.jsonl")
 
 sys.path.insert(0, ROOT)
+from tools.largelexicon_common import match_forbidden_labels  # noqa: E402
 from tools.validate_public_private_boundary import FORBIDDEN_LABELS  # noqa: E402
 
 PAYLOAD_ID_FIELDS = ("payload_family", "surface_norm", "root", "lemma_id", "lemma_status",
@@ -88,7 +89,7 @@ def read_jsonl(path):
 def _leak_scan(obj, where):
     blob = json.dumps(obj, ensure_ascii=False).lower()
     return ["%s leaks forbidden label %r" % (where, label)
-            for label in FORBIDDEN_LABELS if label in blob]
+            for label in match_forbidden_labels(blob, FORBIDDEN_LABELS)]
 
 
 def validate_payload(row):
@@ -227,6 +228,12 @@ def self_test():
     bad["canonical_payload_id"] = payload_id(bad)
     if not any("forbidden label" in x for x in validate_payload(bad)):
         print("SELF-TEST FAIL public-leak"); return 1
+    for clean_text in ("the hypocrites", "democracy and epocrypha"):
+        if _leak_scan({"gloss": clean_text}, "public_payload"):
+            print("SELF-TEST FAIL short-token boundary non-hit", clean_text); return 1
+    for forbidden_text in ("raw ocr dump", "prefix /srv/x suffix", "a source-photo dump"):
+        if not _leak_scan({"gloss": forbidden_text}, "public_payload"):
+            print("SELF-TEST FAIL forbidden boundary hit", forbidden_text); return 1
     # FAIL: segment concat mismatch (suffix hidden)
     bad = _good_payload(); bad["surface_norm"] = "الكتابون"
     bad["canonical_payload_id"] = payload_id(bad)

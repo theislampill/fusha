@@ -1,0 +1,4 @@
+{"id":"rm04-1","kind":"forbidden_labels","payload":{"text":"the hypocrites are in the lowest depths"},"expect":"pass","note":"ordinary English containing ocr as an embedded substring stays clean"}
+{"id":"rm04-2","kind":"forbidden_labels","payload":{"text":"raw ocr dump from the scanner"},"expect":"fail","note":"standalone ocr remains a forbidden-label hit"}
+{"id":"rm04-3","kind":"completion_wording","payload":{"projection_state":"reopened_not_complete","projection_failures":["x"],"note":"page NOT complete"},"expect":"pass","note":"honest-open state and negated prose do not claim completion"}
+{"id":"rm04-4","kind":"completion_wording","payload":{"projection_state":"visual_complete","projection_failures":["x"]},"expect":"fail","note":"visual completion wording conflicts with remaining failures"}

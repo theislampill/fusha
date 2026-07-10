@@ -4,8 +4,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Any
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -123,7 +127,10 @@ def main() -> int:
     if errors:
         print(json.dumps({"ok": False, "errors": errors}, ensure_ascii=False, indent=2))
         return 1
-    print(json.dumps({"ok": True, "root": args.root}, ensure_ascii=False, sort_keys=True))
+    result = {"ok": True, "root": args.root}
+    if args.self_test:
+        result["self_test_marker"] = "صَرْف"
+    print(json.dumps(result, ensure_ascii=False, sort_keys=True))
     return 0
 
 

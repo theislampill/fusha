@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import tempfile
 from collections import Counter
@@ -21,6 +22,10 @@ ROOT = Path(__file__).resolve().parents[1]
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 COMPLETE_WORDS = ("complete", "handled", "already_clean", "visual_close_ready", "visual_complete")
+COMPLETE_WORD_PATTERNS = tuple(
+    re.compile(rf"\b{re.escape(word)}\b", re.IGNORECASE)
+    for word in COMPLETE_WORDS
+)
 REQUIRED_FAMILIES = {
     "source_clean_fact_available_but_not_projected",
     "function_token_flat",
@@ -67,6 +72,20 @@ def _label(row: dict[str, Any]) -> str:
     return f"{where}{row.get('source_key') or row.get('example_page') or row.get('surface') or '<row>'}"
 
 
+def completion_wording_violation(row: dict[str, Any]) -> bool:
+    """Return whether a row claims completion while projection failures remain."""
+    if not row.get("projection_failures"):
+        return False
+    text = json.dumps(row, ensure_ascii=False).lower()
+    for pattern in COMPLETE_WORD_PATTERNS:
+        for match in pattern.finditer(text):
+            prefix = text[:match.start()]
+            if re.search(r"\b(?:not|un)[\s_-]*$", prefix):
+                continue
+            return True
+    return False
+
+
 def validate_board(board_path: Path | None, page_status_paths: Iterable[Path]) -> tuple[list[str], dict[str, Any]]:
     errors: list[str] = []
     if not board_path:
@@ -75,8 +94,7 @@ def validate_board(board_path: Path | None, page_status_paths: Iterable[Path]) -
     rows: list[dict[str, Any]] = board.get("rows") or []
     open_rows = [row for row in rows if row.get("projection_state") != "projection_clean" or row.get("projection_failures")]
     for row in rows:
-        text = json.dumps(row, ensure_ascii=False).lower()
-        if any(word in text for word in COMPLETE_WORDS) and row.get("projection_failures"):
+        if completion_wording_violation(row):
             errors.append(f"{_label(row)}: completion wording with projection failures")
         if row.get("projection_state") == "projection_clean" and row.get("projection_failures"):
             errors.append(f"{_label(row)}: projection_clean with failures")
@@ -226,6 +244,9 @@ def self_test() -> int:
                     "rows": [
                         {"source_key": "v001", "projection_state": "visual_complete", "projection_failures": ["root_known_but_hidden"]},
                         {"source_key": "v002", "projection_state": "projection_clean", "projection_failures": ["function_token_flat"]},
+                        {"source_key": "v003", "projection_state": "reopened_not_complete", "projection_failures": ["x"]},
+                        {"source_key": "v004", "projection_state": "unhandled", "projection_failures": ["x"]},
+                        {"source_key": "v005", "projection_state": "needs_work", "projection_failures": ["x"], "note": "page NOT complete"},
                     ]
                 },
                 ensure_ascii=False,
@@ -263,7 +284,13 @@ def self_test() -> int:
         clean_board.write_text(json.dumps({"rows": [{"source_key": "v003", "projection_state": "projection_clean", "projection_failures": []}]}, ensure_ascii=False), encoding="utf-8")
         clean_status.write_text(json.dumps({"source_key": "v003", "page_status": "needs_work"}, ensure_ascii=False) + "\n", encoding="utf-8")
         passing = run_validation(board=clean_board, page_status=[clean_status], queue=queue, typed_edge_queue=typed, allow_open=False)
-        ok = (not failing["ok"]) and passing["ok"] and any("completion wording" in err for err in failing["errors"])
+        wording_errors = [err for err in failing["errors"] if "completion wording" in err]
+        ok = (
+            (not failing["ok"])
+            and passing["ok"]
+            and len(wording_errors) == 1
+            and wording_errors[0].startswith("v001:")
+        )
         print(json.dumps({"ok": ok, "failing_errors": failing["errors"], "passing": passing}, ensure_ascii=False, indent=2, sort_keys=True))
         return 0 if ok else 1
 

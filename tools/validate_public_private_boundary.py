@@ -19,6 +19,7 @@ SAMPLE_PATH = os.path.join(ROOT, "qamus", "examples", "public_private_boundary.s
 import sys
 sys.path.insert(0, ROOT)
 from tools import leak_sot  # noqa: E402
+from tools.largelexicon_common import match_forbidden_labels  # noqa: E402
 from tools.validate_linguistic_decisions import validate_schema  # noqa: E402
 
 FORBIDDEN_LABELS = leak_sot.get_forbidden_labels(leak_sot.load_local_overlay())
@@ -67,9 +68,8 @@ def validate_boundary(row):
         "external_source_names_public": row.get("external_source_names_public"),
         "internal_provenance_public": row.get("internal_provenance_public"),
     }, ensure_ascii=False).lower()
-    for label in FORBIDDEN_LABELS:
-        if label in public_blob:
-            errors.append("public boundary leaks forbidden label %r" % label)
+    for label in match_forbidden_labels(public_blob, FORBIDDEN_LABELS):
+        errors.append("public boundary leaks forbidden label %r" % label)
     return errors
 
 
@@ -103,6 +103,29 @@ def self_test():
         if not any("internal_provenance_public" in err for err in errors):
             print("SELF-TEST FAIL private flag:", errors)
             return 1
+
+        def forbidden_errors(text):
+            candidate = dict(good)
+            candidate["public_fields"] = list(good["public_fields"]) + [text]
+            return [err for err in validate_boundary(candidate) if "forbidden label" in err]
+
+        for clean_text in (
+            "the hypocrites",
+            "democracy and epocrypha",
+        ):
+            errors = forbidden_errors(clean_text)
+            if errors:
+                print("SELF-TEST FAIL short-token boundary non-hit:", clean_text, errors)
+                return 1
+        for forbidden_text in (
+            "raw ocr dump",
+            "prefix /srv/x suffix",
+            "a source-photo dump",
+        ):
+            errors = forbidden_errors(forbidden_text)
+            if not errors:
+                print("SELF-TEST FAIL forbidden boundary hit:", forbidden_text, errors)
+                return 1
     print("PASS — public/private boundary validator self-test")
     return 0
 

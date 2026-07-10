@@ -345,10 +345,15 @@ def _analyze_arbitrary_token(idx, surface, ops_for_tok, start=None, end=None, ws
 
     # fire ONLY for genuine orthographic-variant letters (not routine tashkil stripping): hamza seats, tāʾ marbūṭa,
     # alif maqṣūra, alif waṣla, dagger alif — the variants that can mask a homograph in the match key.
-    if any(ch in surface for ch in "ةىأإآئؤءٱٰ"):
+    if any(ch in surface for ch in "ةىأإآئؤءٱٰ") or any(0x06D6 <= ord(ch) <= 0x06ED for ch in surface):
+        orthography_explanation = (
+            "Spelling variant preserved; Uthmani marks/forms are retained for display and used only through an analysis key."
+            if SG.is_uthmani_orthography_variant(surface)
+            else "An orthographic variant (hamza seat / alif form / tāʾ marbūṭa / alif maqṣūra) was normalized "
+                 "for matching only; the original spelling is preserved and may itself be significant."
+        )
         diags.append(_mk_diag("orthography_normalization_warning", target,
-                              "An orthographic variant (hamza seat / alif form / tāʾ marbūṭa / alif maqṣūra) was normalized "
-                              "for matching only; the original spelling is preserved and may itself be significant.",
+                              orthography_explanation,
                               observed=surface, confidence="medium"))
 
     parse_confidence = "surface_only" if (not voweled and len(bare) >= 2) else "candidate"
@@ -604,6 +609,17 @@ def _self_test():
     # the source-addressed handoff should surface the host_only_preposition_hover from fusha_check (claim 'Badr' drops بِ)
     if not any(d["issue_class"] == "host_only_preposition_hover" for d in rec_src["diagnostics"]):
         failures.append("source-addressed-handoff: fusha_check host_only_preposition_hover not surfaced")
+
+    # RM-10: every collision-bank surface is suggestion-quarantined. The
+    # segmentation lattice remains available for analysis, but never becomes a
+    # whitespace SPLIT edit without context.
+    collision_path = os.path.join(_REPO, "fusha", "parser", "eval", "largelexicon-collision-regressions.jsonl")
+    with open(collision_path, encoding="utf-8") as fh:
+        collision_surfaces = [json.loads(line)["surface"] for line in fh if line.strip()]
+    for surface in collision_surfaces:
+        collision_rec = check_text({"input_mode": "arbitrary_typing", "raw_input": surface})
+        if any(s["edit"]["op"] == "split" for s in collision_rec["suggestions"]):
+            failures.append("collision-bank %s: split suggestion escaped quarantine" % surface)
 
     # at least the core general classes are exercised
     need = {"possible_clitic_segmentation", "ambiguous_unvoweled_token", "possible_attached_pronoun",
