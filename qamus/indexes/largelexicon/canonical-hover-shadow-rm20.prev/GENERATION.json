@@ -1,0 +1,29 @@
+{
+  "promoted_at": "2026-07-11T21:00:00Z",
+  "row_count": 35,
+  "schema": "fusha/largelexicon-shard-generation@1",
+  "shard_count": 4,
+  "shards": [
+    {
+      "path": "binding_tombstone_conflicts.jsonl",
+      "row_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "canonical_payloads.jsonl",
+      "row_count": 9,
+      "sha256": "bd81f08e3bd28105c7b46c929a7806a0fc2e7021603713098bf6e5ce3b174811"
+    },
+    {
+      "path": "occurrence_bindings.jsonl",
+      "row_count": 26,
+      "sha256": "7bb9fd427b93dc9ba192134fa967c703c2bca62c994fcf6dc5551a32c6c48628"
+    },
+    {
+      "path": "payload_tombstones.jsonl",
+      "row_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "writer_id": "rm20-morphline-owner-decision-d-baseline-seed"
+}

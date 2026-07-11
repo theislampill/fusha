@@ -1,0 +1,2111 @@
+[
+  {
+    "binding_rebinds": [
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:48ca4d42c0bdc01d",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a1569b8bec4791be",
+          "canonical_quran_loc": "12:42:2",
+          "canonical_wbw_loc": "12:42:2",
+          "card_id": "5b382a023db8:u1:e8",
+          "card_index": 8,
+          "entry_id": "5b382a023db8",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:12:42:2|لِلَّذِى",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-5b382a023db8-01-08-002",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "a8bbfa3abf5c4546f28411c70c318125768e08a74615a9a1add68a84853256d9",
+          "source_key": "qamus",
+          "supersedes": "chb:0ac66cdccbe95852",
+          "visible_surface": "لِلَّذِى"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:0ac66cdccbe95852",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:97e6c1ab1ec04b6e",
+          "canonical_quran_loc": "12:42:2",
+          "canonical_wbw_loc": "12:42:2",
+          "card_id": "5b382a023db8:u1:e8",
+          "card_index": 8,
+          "entry_id": "5b382a023db8",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:12:42:2|لِلَّذِى",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-5b382a023db8-01-08-002",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "a8bbfa3abf5c4546f28411c70c318125768e08a74615a9a1add68a84853256d9",
+          "source_key": "qamus",
+          "visible_surface": "لِلَّذِى"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:2f5b75bf3f3189b3",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a1569b8bec4791be",
+          "canonical_quran_loc": "12:42:2",
+          "canonical_wbw_loc": "12:42:2",
+          "card_id": "58d16ee708f4:u1:e1",
+          "card_index": 1,
+          "entry_id": "58d16ee708f4",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:12:42:2|لِلَّذِى",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-58d16ee708f4-01-01-002",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "d57aebbab388871ceb9f9910519e8adbc1ef49b77e61c875bb31de6e7f72debe",
+          "source_key": "qamus",
+          "supersedes": "chb:61c891dc75e6f15e",
+          "visible_surface": "لِلَّذِى"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:61c891dc75e6f15e",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:97e6c1ab1ec04b6e",
+          "canonical_quran_loc": "12:42:2",
+          "canonical_wbw_loc": "12:42:2",
+          "card_id": "58d16ee708f4:u1:e1",
+          "card_index": 1,
+          "entry_id": "58d16ee708f4",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:12:42:2|لِلَّذِى",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-58d16ee708f4-01-01-002",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "d57aebbab388871ceb9f9910519e8adbc1ef49b77e61c875bb31de6e7f72debe",
+          "source_key": "qamus",
+          "visible_surface": "لِلَّذِى"
+        }
+      }
+    ],
+    "conflicts": [
+      {
+        "binding_id": "chb:0ac66cdccbe95852",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:48ca4d42c0bdc01d",
+        "tombstone_payload_id": "chp:97e6c1ab1ec04b6e"
+      },
+      {
+        "binding_id": "chb:61c891dc75e6f15e",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:2f5b75bf3f3189b3",
+        "tombstone_payload_id": "chp:97e6c1ab1ec04b6e"
+      }
+    ],
+    "input_fingerprints": {
+      "bindings_sha256": "64894a0a0ade447bebdcb3da1c6c866d990aa7f06c957f0377d82193e2ac0400",
+      "payloads_sha256": "2cbce2750b9a2e4b0d205e4c9f15990e70fe150629845a78b57fabac08911f98"
+    },
+    "mode": "dry_run",
+    "new_payload": {
+      "canonical_payload_id": "chp:a1569b8bec4791be",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "to the one who",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'to the one who' — a prepositional phrase.",
+        "morphline": "Preposition lām (li-) · no lexical root · prefixed to and governing the relative pronoun ٱلَّذِى ('the one who', masc. sing.); a genitive prepositional phrase, 'to the one who'.",
+        "morphline_repair_wave": "RM-20",
+        "segments": [
+          {
+            "gloss": "to the one who",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "لِلَّذِى"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "to the one who"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِلَّذِى"
+    },
+    "old_payload": {
+      "canonical_payload_id": "chp:97e6c1ab1ec04b6e",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "to the one who",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'to the one who' — a prepositional phrase.",
+        "morphline": "",
+        "segments": [
+          {
+            "gloss": "to the one who",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "لِلَّذِى"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "to the one who"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِلَّذِى"
+    },
+    "payload_edge": {
+      "canonical_payload_id": "chp:a1569b8bec4791be",
+      "supersedes": "chp:97e6c1ab1ec04b6e"
+    },
+    "schema": "qamus.canonical_hover_rebind_report.v1",
+    "summary": {
+      "conflicts": 2,
+      "dependent_bindings": 2,
+      "replacement_bindings": 2
+    },
+    "tombstone": {
+      "canonical_payload_id": "chp:97e6c1ab1ec04b6e",
+      "reason": "payload_repaired_pending_binding_rebind",
+      "replacement_canonical_payload_id": "chp:a1569b8bec4791be"
+    }
+  },
+  {
+    "binding_rebinds": [
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:ad10e853840ce577",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a7351d01770c5ca2",
+          "canonical_quran_loc": "6:79:4",
+          "canonical_wbw_loc": "6:79:4",
+          "card_id": "367b8d3d8988:u1:e2",
+          "card_index": 2,
+          "entry_id": "367b8d3d8988",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:6:79:4|لِلَّذِى",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-367b8d3d8988-01-02-004",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "01276e416fe777e5be6e46a43a8d4eb1770bad6734102083e27d595419ed1953",
+          "source_key": "qamus",
+          "supersedes": "chb:817e8b07097de831",
+          "visible_surface": "لِلَّذِى"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:817e8b07097de831",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a9ef13bf2fc79238",
+          "canonical_quran_loc": "6:79:4",
+          "canonical_wbw_loc": "6:79:4",
+          "card_id": "367b8d3d8988:u1:e2",
+          "card_index": 2,
+          "entry_id": "367b8d3d8988",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:6:79:4|لِلَّذِى",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-367b8d3d8988-01-02-004",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "01276e416fe777e5be6e46a43a8d4eb1770bad6734102083e27d595419ed1953",
+          "source_key": "qamus",
+          "visible_surface": "لِلَّذِى"
+        }
+      }
+    ],
+    "conflicts": [
+      {
+        "binding_id": "chb:817e8b07097de831",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:ad10e853840ce577",
+        "tombstone_payload_id": "chp:a9ef13bf2fc79238"
+      }
+    ],
+    "input_fingerprints": {
+      "bindings_sha256": "833e59e892ccc5291ef8e37f6de4aa2c420550dc2cc581f5737550c61d5310b6",
+      "payloads_sha256": "590f9651a81cad132408e244c2d1b1b8964af715ef7b7fd861a72689d855876a"
+    },
+    "mode": "dry_run",
+    "new_payload": {
+      "canonical_payload_id": "chp:a7351d01770c5ca2",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "to the One Who",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'to the One Who' — a prepositional phrase.",
+        "morphline": "Preposition lām (li-) · no lexical root · prefixed to and governing the relative pronoun ٱلَّذِى ('the One Who', masc. sing.); a genitive prepositional phrase, 'to the One Who' (referent: the Creator).",
+        "morphline_repair_wave": "RM-20",
+        "segments": [
+          {
+            "gloss": "to the One Who",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "لِلَّذِى"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "to the One Who"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِلَّذِى"
+    },
+    "old_payload": {
+      "canonical_payload_id": "chp:a9ef13bf2fc79238",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "to the One Who",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'to the One Who' — a prepositional phrase.",
+        "morphline": "",
+        "segments": [
+          {
+            "gloss": "to the One Who",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "لِلَّذِى"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "to the One Who"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِلَّذِى"
+    },
+    "payload_edge": {
+      "canonical_payload_id": "chp:a7351d01770c5ca2",
+      "supersedes": "chp:a9ef13bf2fc79238"
+    },
+    "schema": "qamus.canonical_hover_rebind_report.v1",
+    "summary": {
+      "conflicts": 1,
+      "dependent_bindings": 1,
+      "replacement_bindings": 1
+    },
+    "tombstone": {
+      "canonical_payload_id": "chp:a9ef13bf2fc79238",
+      "reason": "payload_repaired_pending_binding_rebind",
+      "replacement_canonical_payload_id": "chp:a7351d01770c5ca2"
+    }
+  },
+  {
+    "binding_rebinds": [
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:ca72eebf19a73362",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:926bad4e26ed0dcc",
+          "canonical_quran_loc": "31:12:7",
+          "canonical_wbw_loc": "31:12:7",
+          "card_id": "3907e535f2fb:u1:e1",
+          "card_index": 1,
+          "entry_id": "3907e535f2fb",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:12:7|لِلَّهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-3907e535f2fb-01-01-007",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "8ed8eb7555048585060f69843b32625edd71ecf978f3275f9b87be7899be167d",
+          "source_key": "qamus",
+          "supersedes": "chb:4854c0a777af2243",
+          "visible_surface": "لِلَّهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:4854c0a777af2243",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:bc83d1f1e105b273",
+          "canonical_quran_loc": "31:12:7",
+          "canonical_wbw_loc": "31:12:7",
+          "card_id": "3907e535f2fb:u1:e1",
+          "card_index": 1,
+          "entry_id": "3907e535f2fb",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:12:7|لِلَّهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-3907e535f2fb-01-01-007",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "8ed8eb7555048585060f69843b32625edd71ecf978f3275f9b87be7899be167d",
+          "source_key": "qamus",
+          "visible_surface": "لِلَّهِ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:d4b06dc57caaaaac",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:926bad4e26ed0dcc",
+          "canonical_quran_loc": "7:128:9",
+          "canonical_wbw_loc": "7:128:9",
+          "card_id": "6269f8851346:u1:e2",
+          "card_index": 2,
+          "entry_id": "6269f8851346",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:7:128:9|لِلَّهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-6269f8851346-01-02-010",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "d5271e323d54967d467dee2209a873463c4cbc1f6bea817a6cfcaff6c81b893d",
+          "source_key": "qamus",
+          "supersedes": "chb:4a6f20a65825084f",
+          "visible_surface": "لِلَّهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:4a6f20a65825084f",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:bc83d1f1e105b273",
+          "canonical_quran_loc": "7:128:9",
+          "canonical_wbw_loc": "7:128:9",
+          "card_id": "6269f8851346:u1:e2",
+          "card_index": 2,
+          "entry_id": "6269f8851346",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:7:128:9|لِلَّهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-6269f8851346-01-02-010",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "d5271e323d54967d467dee2209a873463c4cbc1f6bea817a6cfcaff6c81b893d",
+          "source_key": "qamus",
+          "visible_surface": "لِلَّهِ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:d30fcb64d89f7356",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:926bad4e26ed0dcc",
+          "canonical_quran_loc": "31:12:7",
+          "canonical_wbw_loc": "31:12:7",
+          "card_id": "bac8f1ac793e:u1:e1",
+          "card_index": 1,
+          "entry_id": "bac8f1ac793e",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:12:7|لِلَّهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-bac8f1ac793e-01-01-007",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "1a1593c113a8692a5b9f0cbfb8cffb34fef89d2fdd290cfd9d266b72503c9097",
+          "source_key": "qamus",
+          "supersedes": "chb:898dd845f584ba70",
+          "visible_surface": "لِلَّهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:898dd845f584ba70",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:bc83d1f1e105b273",
+          "canonical_quran_loc": "31:12:7",
+          "canonical_wbw_loc": "31:12:7",
+          "card_id": "bac8f1ac793e:u1:e1",
+          "card_index": 1,
+          "entry_id": "bac8f1ac793e",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:12:7|لِلَّهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-bac8f1ac793e-01-01-007",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "1a1593c113a8692a5b9f0cbfb8cffb34fef89d2fdd290cfd9d266b72503c9097",
+          "source_key": "qamus",
+          "visible_surface": "لِلَّهِ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:edc2cb5aa6a7ec31",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:926bad4e26ed0dcc",
+          "canonical_quran_loc": "7:128:9",
+          "canonical_wbw_loc": "7:128:9",
+          "card_id": "79f031f1c0cb:u2:e5",
+          "card_index": 5,
+          "entry_id": "79f031f1c0cb",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:7:128:9|لِلَّهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-79f031f1c0cb-02-05-010",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 2,
+          "source_dependency_sha256": "66f94b67083b82034155832eb4b911caf79f4e715ef62cf1af075e6b9ba04461",
+          "source_key": "qamus",
+          "supersedes": "chb:998cd1424341c98a",
+          "visible_surface": "لِلَّهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:998cd1424341c98a",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:bc83d1f1e105b273",
+          "canonical_quran_loc": "7:128:9",
+          "canonical_wbw_loc": "7:128:9",
+          "card_id": "79f031f1c0cb:u2:e5",
+          "card_index": 5,
+          "entry_id": "79f031f1c0cb",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:7:128:9|لِلَّهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-79f031f1c0cb-02-05-010",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 2,
+          "source_dependency_sha256": "66f94b67083b82034155832eb4b911caf79f4e715ef62cf1af075e6b9ba04461",
+          "source_key": "qamus",
+          "visible_surface": "لِلَّهِ"
+        }
+      }
+    ],
+    "conflicts": [
+      {
+        "binding_id": "chb:4854c0a777af2243",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:ca72eebf19a73362",
+        "tombstone_payload_id": "chp:bc83d1f1e105b273"
+      },
+      {
+        "binding_id": "chb:4a6f20a65825084f",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:d4b06dc57caaaaac",
+        "tombstone_payload_id": "chp:bc83d1f1e105b273"
+      },
+      {
+        "binding_id": "chb:898dd845f584ba70",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:d30fcb64d89f7356",
+        "tombstone_payload_id": "chp:bc83d1f1e105b273"
+      },
+      {
+        "binding_id": "chb:998cd1424341c98a",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:edc2cb5aa6a7ec31",
+        "tombstone_payload_id": "chp:bc83d1f1e105b273"
+      }
+    ],
+    "input_fingerprints": {
+      "bindings_sha256": "916c8d79b75967a350a9353fcd8612f9e527c7bf28e278a01cff1b41d15fd8a9",
+      "payloads_sha256": "322355bc1de851bbd3de89e1599196623ea4b834c4e0d526882f40a776250e42"
+    },
+    "mode": "dry_run",
+    "new_payload": {
+      "canonical_payload_id": "chp:926bad4e26ed0dcc",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "to/for Allah",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'to/for Allah' — a prepositional phrase.",
+        "morphline": "Preposition lām (li-) · no lexical root · prefixed to the divine name ٱللَّه (Allāh) in the genitive (ٱللَّهِ); a genitive prepositional phrase, 'to/for Allah'.",
+        "morphline_repair_wave": "RM-20",
+        "segments": [
+          {
+            "gloss": "to/for Allah",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "لِلَّهِ"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "to/for Allah"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِلَّهِ"
+    },
+    "old_payload": {
+      "canonical_payload_id": "chp:bc83d1f1e105b273",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "to/for Allah",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'to/for Allah' — a prepositional phrase.",
+        "morphline": "",
+        "segments": [
+          {
+            "gloss": "to/for Allah",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "لِلَّهِ"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "to/for Allah"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِلَّهِ"
+    },
+    "payload_edge": {
+      "canonical_payload_id": "chp:926bad4e26ed0dcc",
+      "supersedes": "chp:bc83d1f1e105b273"
+    },
+    "schema": "qamus.canonical_hover_rebind_report.v1",
+    "summary": {
+      "conflicts": 4,
+      "dependent_bindings": 4,
+      "replacement_bindings": 4
+    },
+    "tombstone": {
+      "canonical_payload_id": "chp:bc83d1f1e105b273",
+      "reason": "payload_repaired_pending_binding_rebind",
+      "replacement_canonical_payload_id": "chp:926bad4e26ed0dcc"
+    }
+  },
+  {
+    "binding_rebinds": [
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:bc7f728a16535b04",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:6c8fedefb186acb2",
+          "canonical_quran_loc": "22:26:3",
+          "canonical_wbw_loc": "22:26:3",
+          "card_id": "4c40b7dda389:u1:e5",
+          "card_index": 5,
+          "entry_id": "4c40b7dda389",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:22:26:3|لِإِبْرَٰهِيمَ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-4c40b7dda389-01-05-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "25e0467da551986af9b6045209c07abb6630717ef6cb90f2f37cff5c5631e50b",
+          "source_key": "qamus",
+          "supersedes": "chb:16d7e94a52b28fc4",
+          "visible_surface": "لِإِبْرَٰهِيمَ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:16d7e94a52b28fc4",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:7bb8430940ad0fdf",
+          "canonical_quran_loc": "22:26:3",
+          "canonical_wbw_loc": "22:26:3",
+          "card_id": "4c40b7dda389:u1:e5",
+          "card_index": 5,
+          "entry_id": "4c40b7dda389",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:22:26:3|لِإِبْرَٰهِيمَ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-4c40b7dda389-01-05-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "25e0467da551986af9b6045209c07abb6630717ef6cb90f2f37cff5c5631e50b",
+          "source_key": "qamus",
+          "visible_surface": "لِإِبْرَٰهِيمَ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:c02feacfcb8957c9",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:6c8fedefb186acb2",
+          "canonical_quran_loc": "22:26:3",
+          "canonical_wbw_loc": "22:26:3",
+          "card_id": "f12ae52e78f7:u2:e2",
+          "card_index": 2,
+          "entry_id": "f12ae52e78f7",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:22:26:3|لِإِبْرَٰهِيمَ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-f12ae52e78f7-02-02-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 2,
+          "source_dependency_sha256": "77ad5c2b6c8de0316a599750af614581121832f52de192ca39123890db335abe",
+          "source_key": "qamus",
+          "supersedes": "chb:8ccf040b26cbd308",
+          "visible_surface": "لِإِبْرَٰهِيمَ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:8ccf040b26cbd308",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:7bb8430940ad0fdf",
+          "canonical_quran_loc": "22:26:3",
+          "canonical_wbw_loc": "22:26:3",
+          "card_id": "f12ae52e78f7:u2:e2",
+          "card_index": 2,
+          "entry_id": "f12ae52e78f7",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:22:26:3|لِإِبْرَٰهِيمَ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-f12ae52e78f7-02-02-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 2,
+          "source_dependency_sha256": "77ad5c2b6c8de0316a599750af614581121832f52de192ca39123890db335abe",
+          "source_key": "qamus",
+          "visible_surface": "لِإِبْرَٰهِيمَ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:0868951f5a96b843",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:6c8fedefb186acb2",
+          "canonical_quran_loc": "22:26:3",
+          "canonical_wbw_loc": "22:26:3",
+          "card_id": "ad9af170d670:u1:e4",
+          "card_index": 4,
+          "entry_id": "ad9af170d670",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:22:26:3|لِإِبْرَٰهِيمَ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-ad9af170d670-01-04-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "ab12b7dc7452688b2733b77d1dededd7c86277bf230221e023a55e4b6fc9e236",
+          "source_key": "qamus",
+          "supersedes": "chb:e12325c347506f2d",
+          "visible_surface": "لِإِبْرَٰهِيمَ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:e12325c347506f2d",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:7bb8430940ad0fdf",
+          "canonical_quran_loc": "22:26:3",
+          "canonical_wbw_loc": "22:26:3",
+          "card_id": "ad9af170d670:u1:e4",
+          "card_index": 4,
+          "entry_id": "ad9af170d670",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:22:26:3|لِإِبْرَٰهِيمَ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-ad9af170d670-01-04-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "ab12b7dc7452688b2733b77d1dededd7c86277bf230221e023a55e4b6fc9e236",
+          "source_key": "qamus",
+          "visible_surface": "لِإِبْرَٰهِيمَ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:d037df516abae159",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:6c8fedefb186acb2",
+          "canonical_quran_loc": "22:26:3",
+          "canonical_wbw_loc": "22:26:3",
+          "card_id": "d2eddd3dbdad:u4:e7",
+          "card_index": 7,
+          "entry_id": "d2eddd3dbdad",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:22:26:3|لِإِبْرَٰهِيمَ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-d2eddd3dbdad-04-07-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 4,
+          "source_dependency_sha256": "e75da8bfd0a674ca4620e3e36d73229391531caac859a76a99f8916a591f11f8",
+          "source_key": "qamus",
+          "supersedes": "chb:e1aefe499f840639",
+          "visible_surface": "لِإِبْرَٰهِيمَ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:e1aefe499f840639",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:7bb8430940ad0fdf",
+          "canonical_quran_loc": "22:26:3",
+          "canonical_wbw_loc": "22:26:3",
+          "card_id": "d2eddd3dbdad:u4:e7",
+          "card_index": 7,
+          "entry_id": "d2eddd3dbdad",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:22:26:3|لِإِبْرَٰهِيمَ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-d2eddd3dbdad-04-07-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 4,
+          "source_dependency_sha256": "e75da8bfd0a674ca4620e3e36d73229391531caac859a76a99f8916a591f11f8",
+          "source_key": "qamus",
+          "visible_surface": "لِإِبْرَٰهِيمَ"
+        }
+      }
+    ],
+    "conflicts": [
+      {
+        "binding_id": "chb:16d7e94a52b28fc4",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:bc7f728a16535b04",
+        "tombstone_payload_id": "chp:7bb8430940ad0fdf"
+      },
+      {
+        "binding_id": "chb:8ccf040b26cbd308",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:c02feacfcb8957c9",
+        "tombstone_payload_id": "chp:7bb8430940ad0fdf"
+      },
+      {
+        "binding_id": "chb:e12325c347506f2d",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:0868951f5a96b843",
+        "tombstone_payload_id": "chp:7bb8430940ad0fdf"
+      },
+      {
+        "binding_id": "chb:e1aefe499f840639",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:d037df516abae159",
+        "tombstone_payload_id": "chp:7bb8430940ad0fdf"
+      }
+    ],
+    "input_fingerprints": {
+      "bindings_sha256": "8c644572f83a5e7958298f0aa43ab5e3cc188bb1eb632eb7d8008945bee78e07",
+      "payloads_sha256": "4f744c98c9899263c720669a089c03d665d7e00bcd240802bbae42226042248f"
+    },
+    "mode": "dry_run",
+    "new_payload": {
+      "canonical_payload_id": "chp:6c8fedefb186acb2",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "Abraham.",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'Abraham.' — a prepositional phrase.",
+        "morphline": "Preposition lām (li-) · no lexical root · prefixed to the proper name إِبْرَٰهِيم (Abraham), a diptote (mamnūʿ min al-ṣarf) in the genitive without tanwīn; 'to/for Abraham'.",
+        "morphline_repair_wave": "RM-20",
+        "segments": [
+          {
+            "gloss": "Abraham.",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "لِإِبْرَٰهِيمَ"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "Abraham."
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِإِبْرَٰهِيمَ"
+    },
+    "old_payload": {
+      "canonical_payload_id": "chp:7bb8430940ad0fdf",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "Abraham.",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'Abraham.' — a prepositional phrase.",
+        "morphline": "",
+        "segments": [
+          {
+            "gloss": "Abraham.",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "لِإِبْرَٰهِيمَ"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "Abraham."
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِإِبْرَٰهِيمَ"
+    },
+    "payload_edge": {
+      "canonical_payload_id": "chp:6c8fedefb186acb2",
+      "supersedes": "chp:7bb8430940ad0fdf"
+    },
+    "schema": "qamus.canonical_hover_rebind_report.v1",
+    "summary": {
+      "conflicts": 4,
+      "dependent_bindings": 4,
+      "replacement_bindings": 4
+    },
+    "tombstone": {
+      "canonical_payload_id": "chp:7bb8430940ad0fdf",
+      "reason": "payload_repaired_pending_binding_rebind",
+      "replacement_canonical_payload_id": "chp:6c8fedefb186acb2"
+    }
+  },
+  {
+    "binding_rebinds": [
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:aea286abb6f1fef4",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a9b93af17acfff49",
+          "canonical_quran_loc": "7:11:7",
+          "canonical_wbw_loc": "7:11:7",
+          "card_id": "4c40b7dda389:u1:e1",
+          "card_index": 1,
+          "entry_id": "4c40b7dda389",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:7:11:7|لِلْمَلَٰٓئِكَةِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-4c40b7dda389-01-01-007",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "79f1239c692e086303fc237c61767c2acc723991997f0feb86b010a027c31537",
+          "source_key": "qamus",
+          "supersedes": "chb:d4f16dcfa23702e6",
+          "visible_surface": "لِلْمَلَٰٓئِكَةِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:d4f16dcfa23702e6",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:856ed8c6da758e72",
+          "canonical_quran_loc": "7:11:7",
+          "canonical_wbw_loc": "7:11:7",
+          "card_id": "4c40b7dda389:u1:e1",
+          "card_index": 1,
+          "entry_id": "4c40b7dda389",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:7:11:7|لِلْمَلَٰٓئِكَةِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-4c40b7dda389-01-01-007",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "79f1239c692e086303fc237c61767c2acc723991997f0feb86b010a027c31537",
+          "source_key": "qamus",
+          "visible_surface": "لِلْمَلَٰٓئِكَةِ"
+        }
+      }
+    ],
+    "conflicts": [
+      {
+        "binding_id": "chb:d4f16dcfa23702e6",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:aea286abb6f1fef4",
+        "tombstone_payload_id": "chp:856ed8c6da758e72"
+      }
+    ],
+    "input_fingerprints": {
+      "bindings_sha256": "689b69037f20120453b5984c61eda12976617327f061368182324b97909d520b",
+      "payloads_sha256": "58930543215c2002a5b03758b9a58ac46610106f138d53713d3b9c3bd02d4ab0"
+    },
+    "mode": "dry_run",
+    "new_payload": {
+      "canonical_payload_id": "chp:a9b93af17acfff49",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "angels / angelkind",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'angels / angelkind' — a prepositional phrase.",
+        "morphline": "Preposition lām (li-) · no lexical root · prefixed to the definite noun ٱلْمَلَٰٓئِكَة ('the angels', collective/plural) in the genitive; a genitive prepositional phrase, 'to the angels'.",
+        "morphline_repair_wave": "RM-20",
+        "segments": [
+          {
+            "gloss": "angels / angelkind",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "لِلْمَلَٰٓئِكَةِ"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "angels / angelkind"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِلْمَلَٰٓئِكَةِ"
+    },
+    "old_payload": {
+      "canonical_payload_id": "chp:856ed8c6da758e72",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "angels / angelkind",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'angels / angelkind' — a prepositional phrase.",
+        "morphline": "",
+        "segments": [
+          {
+            "gloss": "angels / angelkind",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "لِلْمَلَٰٓئِكَةِ"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "angels / angelkind"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِلْمَلَٰٓئِكَةِ"
+    },
+    "payload_edge": {
+      "canonical_payload_id": "chp:a9b93af17acfff49",
+      "supersedes": "chp:856ed8c6da758e72"
+    },
+    "schema": "qamus.canonical_hover_rebind_report.v1",
+    "summary": {
+      "conflicts": 1,
+      "dependent_bindings": 1,
+      "replacement_bindings": 1
+    },
+    "tombstone": {
+      "canonical_payload_id": "chp:856ed8c6da758e72",
+      "reason": "payload_repaired_pending_binding_rebind",
+      "replacement_canonical_payload_id": "chp:a9b93af17acfff49"
+    }
+  },
+  {
+    "binding_rebinds": [
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:d620aa1d1f31c3f5",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a982b01796857636",
+          "canonical_quran_loc": "31:14:3",
+          "canonical_wbw_loc": "31:14:3",
+          "card_id": "d6a4f976cb61:u1:e7",
+          "card_index": 7,
+          "entry_id": "d6a4f976cb61",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:14:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-d6a4f976cb61-01-07-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "d3ca4101399f49e6956062a182f126355a87d36ae813befb8f302bc075d8f0b6",
+          "source_key": "qamus",
+          "supersedes": "chb:0336ef5572c56e23",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:0336ef5572c56e23",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:c7f7edff8ad4a9f5",
+          "canonical_quran_loc": "31:14:3",
+          "canonical_wbw_loc": "31:14:3",
+          "card_id": "d6a4f976cb61:u1:e7",
+          "card_index": 7,
+          "entry_id": "d6a4f976cb61",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:14:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-d6a4f976cb61-01-07-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "d3ca4101399f49e6956062a182f126355a87d36ae813befb8f302bc075d8f0b6",
+          "source_key": "qamus",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:10f1b12c80e3fd70",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a982b01796857636",
+          "canonical_quran_loc": "31:14:3",
+          "canonical_wbw_loc": "31:14:3",
+          "card_id": "445f9e047a5b:u1:e3",
+          "card_index": 3,
+          "entry_id": "445f9e047a5b",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:14:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-445f9e047a5b-01-03-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "e38df1e3b608804b1ae0cf307621b7d6a9b96063581fe3160a7bab42a4272f98",
+          "source_key": "qamus",
+          "supersedes": "chb:28579ac090539cfc",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:28579ac090539cfc",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:c7f7edff8ad4a9f5",
+          "canonical_quran_loc": "31:14:3",
+          "canonical_wbw_loc": "31:14:3",
+          "card_id": "445f9e047a5b:u1:e3",
+          "card_index": 3,
+          "entry_id": "445f9e047a5b",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:14:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-445f9e047a5b-01-03-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "e38df1e3b608804b1ae0cf307621b7d6a9b96063581fe3160a7bab42a4272f98",
+          "source_key": "qamus",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:99af377e6b7f7dfa",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a982b01796857636",
+          "canonical_quran_loc": "46:15:3",
+          "canonical_wbw_loc": "46:15:3",
+          "card_id": "191e9b80dfcd:u1:e1",
+          "card_index": 1,
+          "entry_id": "191e9b80dfcd",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:46:15:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-191e9b80dfcd-01-01-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "e9e3424dae3ca7c2a444aebad1a737894d4c5d27de847882979e881058f3606c",
+          "source_key": "qamus",
+          "supersedes": "chb:48d6b3f6a549b8b2",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:48d6b3f6a549b8b2",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:c7f7edff8ad4a9f5",
+          "canonical_quran_loc": "46:15:3",
+          "canonical_wbw_loc": "46:15:3",
+          "card_id": "191e9b80dfcd:u1:e1",
+          "card_index": 1,
+          "entry_id": "191e9b80dfcd",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:46:15:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-191e9b80dfcd-01-01-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "e9e3424dae3ca7c2a444aebad1a737894d4c5d27de847882979e881058f3606c",
+          "source_key": "qamus",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:a71134746b683cfd",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a982b01796857636",
+          "canonical_quran_loc": "31:14:3",
+          "canonical_wbw_loc": "31:14:3",
+          "card_id": "9264e145b045:u1:e4",
+          "card_index": 4,
+          "entry_id": "9264e145b045",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:14:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-9264e145b045-01-04-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "ca9f7af9aaad5022b76730060a6ffc57aa976b537c3cf37c0ec0abdd05eace19",
+          "source_key": "qamus",
+          "supersedes": "chb:70032ac76176985f",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:70032ac76176985f",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:c7f7edff8ad4a9f5",
+          "canonical_quran_loc": "31:14:3",
+          "canonical_wbw_loc": "31:14:3",
+          "card_id": "9264e145b045:u1:e4",
+          "card_index": 4,
+          "entry_id": "9264e145b045",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:14:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-9264e145b045-01-04-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "ca9f7af9aaad5022b76730060a6ffc57aa976b537c3cf37c0ec0abdd05eace19",
+          "source_key": "qamus",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:47d4615933a1b12a",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a982b01796857636",
+          "canonical_quran_loc": "31:14:3",
+          "canonical_wbw_loc": "31:14:3",
+          "card_id": "b669e4468463:u1:e2",
+          "card_index": 2,
+          "entry_id": "b669e4468463",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:14:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-b669e4468463-01-02-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "eba1f8976b678d7dac480a21cfea0982fb257ef18250e1473ab6ef16da112ae7",
+          "source_key": "qamus",
+          "supersedes": "chb:a05f7393a83db097",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:a05f7393a83db097",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:c7f7edff8ad4a9f5",
+          "canonical_quran_loc": "31:14:3",
+          "canonical_wbw_loc": "31:14:3",
+          "card_id": "b669e4468463:u1:e2",
+          "card_index": 2,
+          "entry_id": "b669e4468463",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:14:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-b669e4468463-01-02-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "eba1f8976b678d7dac480a21cfea0982fb257ef18250e1473ab6ef16da112ae7",
+          "source_key": "qamus",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:e2ee2f95b1e4a513",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a982b01796857636",
+          "canonical_quran_loc": "46:15:3",
+          "canonical_wbw_loc": "46:15:3",
+          "card_id": "97657fc0cb1c:u1:e10",
+          "card_index": 10,
+          "entry_id": "97657fc0cb1c",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:46:15:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-97657fc0cb1c-01-10-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "8df3dae0f00b9ae118d1501b112db5081236e849fe095274f9ec405e561e99de",
+          "source_key": "qamus",
+          "supersedes": "chb:aaacc4356528831a",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:aaacc4356528831a",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:c7f7edff8ad4a9f5",
+          "canonical_quran_loc": "46:15:3",
+          "canonical_wbw_loc": "46:15:3",
+          "card_id": "97657fc0cb1c:u1:e10",
+          "card_index": 10,
+          "entry_id": "97657fc0cb1c",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:46:15:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-97657fc0cb1c-01-10-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "8df3dae0f00b9ae118d1501b112db5081236e849fe095274f9ec405e561e99de",
+          "source_key": "qamus",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:404b2f644a6a100b",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a982b01796857636",
+          "canonical_quran_loc": "31:14:3",
+          "canonical_wbw_loc": "31:14:3",
+          "card_id": "361a2ebe2ad4:u2:e1",
+          "card_index": 1,
+          "entry_id": "361a2ebe2ad4",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:14:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-361a2ebe2ad4-02-01-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 2,
+          "source_dependency_sha256": "402dd21f02e3f235a7ac1a2bd0941807221c7462fa695947599d86847f323e25",
+          "source_key": "qamus",
+          "supersedes": "chb:af00055f42eb1c15",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:af00055f42eb1c15",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:c7f7edff8ad4a9f5",
+          "canonical_quran_loc": "31:14:3",
+          "canonical_wbw_loc": "31:14:3",
+          "card_id": "361a2ebe2ad4:u2:e1",
+          "card_index": 1,
+          "entry_id": "361a2ebe2ad4",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:31:14:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-361a2ebe2ad4-02-01-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 2,
+          "source_dependency_sha256": "402dd21f02e3f235a7ac1a2bd0941807221c7462fa695947599d86847f323e25",
+          "source_key": "qamus",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:c761cfe656bb3719",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a982b01796857636",
+          "canonical_quran_loc": "46:15:3",
+          "canonical_wbw_loc": "46:15:3",
+          "card_id": "a36aed085027:u1:e5",
+          "card_index": 5,
+          "entry_id": "a36aed085027",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:46:15:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-a36aed085027-01-05-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "b19770daa07615452132c86bc32e51179d1b9c08bd2987c14d094f07c6e811f2",
+          "source_key": "qamus",
+          "supersedes": "chb:daf2476586afa75a",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:daf2476586afa75a",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:c7f7edff8ad4a9f5",
+          "canonical_quran_loc": "46:15:3",
+          "canonical_wbw_loc": "46:15:3",
+          "card_id": "a36aed085027:u1:e5",
+          "card_index": 5,
+          "entry_id": "a36aed085027",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:46:15:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-a36aed085027-01-05-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "b19770daa07615452132c86bc32e51179d1b9c08bd2987c14d094f07c6e811f2",
+          "source_key": "qamus",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:b3dd8148ada50d00",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:a982b01796857636",
+          "canonical_quran_loc": "46:15:3",
+          "canonical_wbw_loc": "46:15:3",
+          "card_id": "5970b19734fd:u2:e2",
+          "card_index": 2,
+          "entry_id": "5970b19734fd",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:46:15:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-5970b19734fd-02-02-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 2,
+          "source_dependency_sha256": "849144cbef5e67ee81530ad1cd1a819cca481a38447d3f639d9a1178976f5871",
+          "source_key": "qamus",
+          "supersedes": "chb:dd6283699b12a25a",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:dd6283699b12a25a",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:c7f7edff8ad4a9f5",
+          "canonical_quran_loc": "46:15:3",
+          "canonical_wbw_loc": "46:15:3",
+          "card_id": "5970b19734fd:u2:e2",
+          "card_index": 2,
+          "entry_id": "5970b19734fd",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:46:15:3|بِوَٰلِدَيْهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-5970b19734fd-02-02-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 2,
+          "source_dependency_sha256": "849144cbef5e67ee81530ad1cd1a819cca481a38447d3f639d9a1178976f5871",
+          "source_key": "qamus",
+          "visible_surface": "بِوَٰلِدَيْهِ"
+        }
+      }
+    ],
+    "conflicts": [
+      {
+        "binding_id": "chb:0336ef5572c56e23",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:d620aa1d1f31c3f5",
+        "tombstone_payload_id": "chp:c7f7edff8ad4a9f5"
+      },
+      {
+        "binding_id": "chb:28579ac090539cfc",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:10f1b12c80e3fd70",
+        "tombstone_payload_id": "chp:c7f7edff8ad4a9f5"
+      },
+      {
+        "binding_id": "chb:48d6b3f6a549b8b2",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:99af377e6b7f7dfa",
+        "tombstone_payload_id": "chp:c7f7edff8ad4a9f5"
+      },
+      {
+        "binding_id": "chb:70032ac76176985f",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:a71134746b683cfd",
+        "tombstone_payload_id": "chp:c7f7edff8ad4a9f5"
+      },
+      {
+        "binding_id": "chb:a05f7393a83db097",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:47d4615933a1b12a",
+        "tombstone_payload_id": "chp:c7f7edff8ad4a9f5"
+      },
+      {
+        "binding_id": "chb:aaacc4356528831a",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:e2ee2f95b1e4a513",
+        "tombstone_payload_id": "chp:c7f7edff8ad4a9f5"
+      },
+      {
+        "binding_id": "chb:af00055f42eb1c15",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:404b2f644a6a100b",
+        "tombstone_payload_id": "chp:c7f7edff8ad4a9f5"
+      },
+      {
+        "binding_id": "chb:daf2476586afa75a",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:c761cfe656bb3719",
+        "tombstone_payload_id": "chp:c7f7edff8ad4a9f5"
+      },
+      {
+        "binding_id": "chb:dd6283699b12a25a",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:b3dd8148ada50d00",
+        "tombstone_payload_id": "chp:c7f7edff8ad4a9f5"
+      }
+    ],
+    "input_fingerprints": {
+      "bindings_sha256": "5f2200f4de48a5714305ef25dd31d2c40dddc4d84ffd522a98b1c9cee12b7f8d",
+      "payloads_sha256": "db8ad8b77d8de4ed4a21ae69b4e34549668d2855676e56e4c503833ae349f121"
+    },
+    "mode": "dry_run",
+    "new_payload": {
+      "canonical_payload_id": "chp:a982b01796857636",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "to his parents",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'to his parents' — a prepositional phrase.",
+        "morphline": "Preposition bā (bi-) · no lexical root · prefixed to the dual noun وَالِدَيْ ('two parents', oblique/genitive dual) with attached 3rd-person-masculine-singular possessive pronoun ـهِ ('his'); a genitive prepositional phrase, 'to his parents'.",
+        "morphline_repair_wave": "RM-20",
+        "segments": [
+          {
+            "gloss": "to his parents",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "بِوَٰلِدَيْهِ"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "to his parents"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "بِوَٰلِدَيْهِ"
+    },
+    "old_payload": {
+      "canonical_payload_id": "chp:c7f7edff8ad4a9f5",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "to his parents",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'to his parents' — a prepositional phrase.",
+        "morphline": "",
+        "segments": [
+          {
+            "gloss": "to his parents",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "بِوَٰلِدَيْهِ"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "to his parents"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "بِوَٰلِدَيْهِ"
+    },
+    "payload_edge": {
+      "canonical_payload_id": "chp:a982b01796857636",
+      "supersedes": "chp:c7f7edff8ad4a9f5"
+    },
+    "schema": "qamus.canonical_hover_rebind_report.v1",
+    "summary": {
+      "conflicts": 9,
+      "dependent_bindings": 9,
+      "replacement_bindings": 9
+    },
+    "tombstone": {
+      "canonical_payload_id": "chp:c7f7edff8ad4a9f5",
+      "reason": "payload_repaired_pending_binding_rebind",
+      "replacement_canonical_payload_id": "chp:a982b01796857636"
+    }
+  },
+  {
+    "binding_rebinds": [
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:9c4299774227ccc2",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:0b6f244faf7a6516",
+          "canonical_quran_loc": "7:128:3",
+          "canonical_wbw_loc": "7:128:3",
+          "card_id": "6269f8851346:u1:e2",
+          "card_index": 2,
+          "entry_id": "6269f8851346",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:7:128:3|لِقَوْمِهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-6269f8851346-01-02-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "02cb4d16bde7e9741870cdb220cc61e285f0615272bbb43758534765fca4498b",
+          "source_key": "qamus",
+          "supersedes": "chb:2d5be627ca6fbbdd",
+          "visible_surface": "لِقَوْمِهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:2d5be627ca6fbbdd",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:081e78afe8ba4372",
+          "canonical_quran_loc": "7:128:3",
+          "canonical_wbw_loc": "7:128:3",
+          "card_id": "6269f8851346:u1:e2",
+          "card_index": 2,
+          "entry_id": "6269f8851346",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:7:128:3|لِقَوْمِهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-6269f8851346-01-02-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "02cb4d16bde7e9741870cdb220cc61e285f0615272bbb43758534765fca4498b",
+          "source_key": "qamus",
+          "visible_surface": "لِقَوْمِهِ"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:87a3fd84ce9b87c7",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:0b6f244faf7a6516",
+          "canonical_quran_loc": "7:128:3",
+          "canonical_wbw_loc": "7:128:3",
+          "card_id": "79f031f1c0cb:u2:e5",
+          "card_index": 5,
+          "entry_id": "79f031f1c0cb",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:7:128:3|لِقَوْمِهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-79f031f1c0cb-02-05-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 2,
+          "source_dependency_sha256": "27c3347c7d5c0b5929a6703658d1ebb80c39e9aa204383d7b4d1f886c8e663e0",
+          "source_key": "qamus",
+          "supersedes": "chb:351ad129b902bd45",
+          "visible_surface": "لِقَوْمِهِ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:351ad129b902bd45",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:081e78afe8ba4372",
+          "canonical_quran_loc": "7:128:3",
+          "canonical_wbw_loc": "7:128:3",
+          "card_id": "79f031f1c0cb:u2:e5",
+          "card_index": 5,
+          "entry_id": "79f031f1c0cb",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:7:128:3|لِقَوْمِهِ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-79f031f1c0cb-02-05-003",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 2,
+          "source_dependency_sha256": "27c3347c7d5c0b5929a6703658d1ebb80c39e9aa204383d7b4d1f886c8e663e0",
+          "source_key": "qamus",
+          "visible_surface": "لِقَوْمِهِ"
+        }
+      }
+    ],
+    "conflicts": [
+      {
+        "binding_id": "chb:2d5be627ca6fbbdd",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:9c4299774227ccc2",
+        "tombstone_payload_id": "chp:081e78afe8ba4372"
+      },
+      {
+        "binding_id": "chb:351ad129b902bd45",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:87a3fd84ce9b87c7",
+        "tombstone_payload_id": "chp:081e78afe8ba4372"
+      }
+    ],
+    "input_fingerprints": {
+      "bindings_sha256": "756494069c590eee1d79ddbad98964e1d2a78855d8db0959c974db0a91e63951",
+      "payloads_sha256": "0024d3916f46c4da435931539928ec89f1acd018cf182edf4838b79cf6993a10"
+    },
+    "mode": "dry_run",
+    "new_payload": {
+      "canonical_payload_id": "chp:0b6f244faf7a6516",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "people",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'people' — a prepositional phrase.",
+        "morphline": "Preposition lām (li-) · no lexical root · prefixed to the noun قَوْم ('people') with attached 3rd-person-masculine-singular possessive pronoun ـهِ ('his') in the genitive; a genitive prepositional phrase, 'to/for his people'.",
+        "morphline_repair_wave": "RM-20",
+        "segments": [
+          {
+            "gloss": "people",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "لِقَوْمِهِ"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "people"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِقَوْمِهِ"
+    },
+    "old_payload": {
+      "canonical_payload_id": "chp:081e78afe8ba4372",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "people",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'people' — a prepositional phrase.",
+        "morphline": "",
+        "segments": [
+          {
+            "gloss": "people",
+            "qg_class": "qg-preposition",
+            "role": "",
+            "surface": "لِقَوْمِهِ"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "people"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِقَوْمِهِ"
+    },
+    "payload_edge": {
+      "canonical_payload_id": "chp:0b6f244faf7a6516",
+      "supersedes": "chp:081e78afe8ba4372"
+    },
+    "schema": "qamus.canonical_hover_rebind_report.v1",
+    "summary": {
+      "conflicts": 2,
+      "dependent_bindings": 2,
+      "replacement_bindings": 2
+    },
+    "tombstone": {
+      "canonical_payload_id": "chp:081e78afe8ba4372",
+      "reason": "payload_repaired_pending_binding_rebind",
+      "replacement_canonical_payload_id": "chp:0b6f244faf7a6516"
+    }
+  },
+  {
+    "binding_rebinds": [
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:276f01433f4642f5",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:b1547524ab0f1357",
+          "canonical_quran_loc": "18:100:4",
+          "canonical_wbw_loc": "18:100:4",
+          "card_id": "0cc78289b69d:u1:e1",
+          "card_index": 1,
+          "entry_id": "0cc78289b69d",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:18:100:4|لِّلْكَٰفِرِينَ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-0cc78289b69d-01-01-004",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "07dcbb44e9ca7d3145c9b7cb28bc4d7cdc0a4c2bb10a864cc4fc08e992c7211b",
+          "source_key": "qamus",
+          "supersedes": "chb:86cef9d25cfa4efe",
+          "visible_surface": "لِّلْكَٰفِرِينَ"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:86cef9d25cfa4efe",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:482193d587ab57ec",
+          "canonical_quran_loc": "18:100:4",
+          "canonical_wbw_loc": "18:100:4",
+          "card_id": "0cc78289b69d:u1:e1",
+          "card_index": 1,
+          "entry_id": "0cc78289b69d",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:18:100:4|لِّلْكَٰفِرِينَ",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-0cc78289b69d-01-01-004",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "07dcbb44e9ca7d3145c9b7cb28bc4d7cdc0a4c2bb10a864cc4fc08e992c7211b",
+          "source_key": "qamus",
+          "visible_surface": "لِّلْكَٰفِرِينَ"
+        }
+      }
+    ],
+    "conflicts": [
+      {
+        "binding_id": "chb:86cef9d25cfa4efe",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:276f01433f4642f5",
+        "tombstone_payload_id": "chp:482193d587ab57ec"
+      }
+    ],
+    "input_fingerprints": {
+      "bindings_sha256": "d1d74e0058c61e588ba814e288a4ff28aa56ecb1851f0b95ea8bd1867d97e317",
+      "payloads_sha256": "7e9b821989804e428edc6a5b0f5fb4f6087892c5e691afa6c87e2546672ec67e"
+    },
+    "mode": "dry_run",
+    "new_payload": {
+      "canonical_payload_id": "chp:b1547524ab0f1357",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "for the disbelievers",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'for the disbelievers' — a noun.",
+        "morphline": "Definite noun ٱلْكَٰفِرِين ('the disbelievers', masc. sound plural) in the genitive (oblique ـِينَ), governed by the prefixed preposition lām (li-); 'for the disbelievers'.",
+        "morphline_repair_wave": "RM-20",
+        "segments": [
+          {
+            "gloss": "for the disbelievers",
+            "qg_class": "qg-noun",
+            "role": "",
+            "surface": "لِّلْكَٰفِرِينَ"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "for the disbelievers"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِّلْكَٰفِرِينَ"
+    },
+    "old_payload": {
+      "canonical_payload_id": "chp:482193d587ab57ec",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "for the disbelievers",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'for the disbelievers' — a noun.",
+        "morphline": "",
+        "segments": [
+          {
+            "gloss": "for the disbelievers",
+            "qg_class": "qg-noun",
+            "role": "",
+            "surface": "لِّلْكَٰفِرِينَ"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "for the disbelievers"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "لِّلْكَٰفِرِينَ"
+    },
+    "payload_edge": {
+      "canonical_payload_id": "chp:b1547524ab0f1357",
+      "supersedes": "chp:482193d587ab57ec"
+    },
+    "schema": "qamus.canonical_hover_rebind_report.v1",
+    "summary": {
+      "conflicts": 1,
+      "dependent_bindings": 1,
+      "replacement_bindings": 1
+    },
+    "tombstone": {
+      "canonical_payload_id": "chp:482193d587ab57ec",
+      "reason": "payload_repaired_pending_binding_rebind",
+      "replacement_canonical_payload_id": "chp:b1547524ab0f1357"
+    }
+  },
+  {
+    "binding_rebinds": [
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:c800c4041e9b3f33",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:199fe78d7f4a282f",
+          "canonical_quran_loc": "9:107:4",
+          "canonical_wbw_loc": "9:107:4",
+          "card_id": "2cb4015f1b2f:u3:e5",
+          "card_index": 5,
+          "entry_id": "2cb4015f1b2f",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:9:107:4|ضِرَارًۭا",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-2cb4015f1b2f-03-05-004",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 3,
+          "source_dependency_sha256": "1dd4cba973a4e23ca81d581b218b7887a042cb716d2fb1b4c49df51b3b097598",
+          "source_key": "qamus",
+          "supersedes": "chb:8e49b7c91b56f466",
+          "visible_surface": "ضِرَارًۭا"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:8e49b7c91b56f466",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:fffc4175204a8176",
+          "canonical_quran_loc": "9:107:4",
+          "canonical_wbw_loc": "9:107:4",
+          "card_id": "2cb4015f1b2f:u3:e5",
+          "card_index": 5,
+          "entry_id": "2cb4015f1b2f",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:9:107:4|ضِرَارًۭا",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-2cb4015f1b2f-03-05-004",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 3,
+          "source_dependency_sha256": "1dd4cba973a4e23ca81d581b218b7887a042cb716d2fb1b4c49df51b3b097598",
+          "source_key": "qamus",
+          "visible_surface": "ضِرَارًۭا"
+        }
+      },
+      {
+        "new_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:65cb71d16fbd6013",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:199fe78d7f4a282f",
+          "canonical_quran_loc": "9:107:4",
+          "canonical_wbw_loc": "9:107:4",
+          "card_id": "ba21a135a54c:u1:e1",
+          "card_index": 1,
+          "entry_id": "ba21a135a54c",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:9:107:4|ضِرَارًۭا",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-ba21a135a54c-01-01-004",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "149d1c0b97c7240a0980c7275e32e61586a1a1b8fbe66cc78a26892d4300a00c",
+          "source_key": "qamus",
+          "supersedes": "chb:cefb94dc0fc35a18",
+          "visible_surface": "ضِرَارًۭا"
+        },
+        "old_binding": {
+          "binding_gate": "source_address_exact",
+          "binding_id": "chb:cefb94dc0fc35a18",
+          "binding_status": "accepted",
+          "canonical_payload_id": "chp:fffc4175204a8176",
+          "canonical_quran_loc": "9:107:4",
+          "canonical_wbw_loc": "9:107:4",
+          "card_id": "ba21a135a54c:u1:e1",
+          "card_index": 1,
+          "entry_id": "ba21a135a54c",
+          "entry_url": null,
+          "exact_transclusion_group_key": "quran:9:107:4|ضِرَارًۭا",
+          "exception_id": null,
+          "qword_row_id": "llx-qword-ba21a135a54c-01-01-004",
+          "reason": "source_address_exact_ok",
+          "schema": "qamus.canonical_hover_occurrence_binding.v2",
+          "sense_index": 1,
+          "source_dependency_sha256": "149d1c0b97c7240a0980c7275e32e61586a1a1b8fbe66cc78a26892d4300a00c",
+          "source_key": "qamus",
+          "visible_surface": "ضِرَارًۭا"
+        }
+      }
+    ],
+    "conflicts": [
+      {
+        "binding_id": "chb:8e49b7c91b56f466",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:c800c4041e9b3f33",
+        "tombstone_payload_id": "chp:fffc4175204a8176"
+      },
+      {
+        "binding_id": "chb:cefb94dc0fc35a18",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_binding_id": "chb:65cb71d16fbd6013",
+        "tombstone_payload_id": "chp:fffc4175204a8176"
+      }
+    ],
+    "input_fingerprints": {
+      "bindings_sha256": "84374efe1ed9e1fed93951b67468987c4f35be1217e8dd4f4edc5f1012c71860",
+      "payloads_sha256": "fd2e6b56f77de59352acdcaa9505dc793f08f0e1c695c6289227cbf549d47de4"
+    },
+    "mode": "dry_run",
+    "new_payload": {
+      "canonical_payload_id": "chp:199fe78d7f4a282f",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "to cause harm",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'to cause harm' — a noun.",
+        "morphline": "Indefinite verbal noun (maṣdar) ضِرَار in the accusative with tanwīn (ـًا), functioning as a cause/purpose complement; 'to cause harm'.",
+        "morphline_repair_wave": "RM-20",
+        "segments": [
+          {
+            "gloss": "to cause harm",
+            "qg_class": "qg-noun",
+            "role": "",
+            "surface": "ضِرَارًۭا"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "to cause harm"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "ضِرَارًۭا"
+    },
+    "old_payload": {
+      "canonical_payload_id": "chp:fffc4175204a8176",
+      "lemma_id": null,
+      "lemma_status": "missing",
+      "nahw_certification": "missing",
+      "pattern": null,
+      "payload_family": "source_address_exact",
+      "pos": null,
+      "public_payload": {
+        "contextual_phrase_gloss": "to cause harm",
+        "kind": "authored",
+        "lang": "en",
+        "learner_explanation": "'to cause harm' — a noun.",
+        "morphline": "",
+        "segments": [
+          {
+            "gloss": "to cause harm",
+            "qg_class": "qg-noun",
+            "role": "",
+            "surface": "ضِرَارًۭا"
+          }
+        ],
+        "src": "qamus",
+        "token_contribution_gloss": "to cause harm"
+      },
+      "root": null,
+      "sarf_certification": "missing",
+      "schema": "qamus.canonical_hover_payload.v2",
+      "surface_norm": "ضِرَارًۭا"
+    },
+    "payload_edge": {
+      "canonical_payload_id": "chp:199fe78d7f4a282f",
+      "supersedes": "chp:fffc4175204a8176"
+    },
+    "schema": "qamus.canonical_hover_rebind_report.v1",
+    "summary": {
+      "conflicts": 2,
+      "dependent_bindings": 2,
+      "replacement_bindings": 2
+    },
+    "tombstone": {
+      "canonical_payload_id": "chp:fffc4175204a8176",
+      "reason": "payload_repaired_pending_binding_rebind",
+      "replacement_canonical_payload_id": "chp:199fe78d7f4a282f"
+    }
+  }
+]

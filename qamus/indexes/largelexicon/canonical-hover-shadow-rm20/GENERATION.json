@@ -1,0 +1,29 @@
+{
+  "promoted_at": "2026-07-11T21:00:00Z",
+  "row_count": 70,
+  "schema": "fusha/largelexicon-shard-generation@1",
+  "shard_count": 4,
+  "shards": [
+    {
+      "path": "binding_tombstone_conflicts.jsonl",
+      "row_count": 26,
+      "sha256": "e276e5a26578bbefdafd4c32a024f7ca8c7390fb3e281cd243ec7517b333fe4a"
+    },
+    {
+      "path": "canonical_payloads.jsonl",
+      "row_count": 9,
+      "sha256": "1097bb8655545e390907188480f9c6761eb10fa852bb264fb5455ba5324ba749"
+    },
+    {
+      "path": "occurrence_bindings.jsonl",
+      "row_count": 26,
+      "sha256": "d51486c96b06da9fb8650f9eb4f20e351123503a49692a966ab16b8782576da3"
+    },
+    {
+      "path": "payload_tombstones.jsonl",
+      "row_count": 9,
+      "sha256": "8ae1a215abb30cef35bf8f956bfd3133c9c06277af43cee4acaaa446f7ab940a"
+    }
+  ],
+  "writer_id": "rm20-morphline-owner-decision-d"
+}
