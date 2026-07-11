@@ -4566,6 +4566,49 @@ except Exception as _e:
     check("T12 fact projector tests (harness error)", False)
     print("  ", _e)
 
+# --- T14 D-11 clean wire candidates (bounded, offline, read-only probes) ---
+for _script, _args, _marker, _label in (
+    ("grade_grammar_reasoning.py", [], "PASS — grade() AND-gate holds", "D-11 grammar-reasoning grader self-test"),
+    ("query_language_state.py", ["--graph", os.path.join(ROOT, "qamus", "indexes", "language_state_graph.sample.json"), "--stats"],
+     '"counts"', "D-11 language-state sample query"),
+    ("source_photo_verify_entry.py", ["--self-test"], "PASS — verify_field", "D-11 source-photo field verifier self-test"),
+    ("validate_tafsir_mcp_cache.py", [], "PASS — schema + source-hash integrity + no-public-leak invariant OK",
+     "D-11 Tafsir MCP committed cache validator"),
+):
+    try:
+        _d11 = run_text([sys.executable, os.path.join(ROOT, "tools", _script)] + _args, timeout=60)
+        check(_label, _d11.returncode == 0 and _marker in (_d11.stdout or ""))
+    except Exception as _e:
+        check(_label + " (harness error)", False)
+        print("  ", _e)
+
+# --- T14 RM-28 runner-less sarf/nahw eval fixture replays ---
+for _group, _rows in (("morphology", 7), ("deploy-mechanics", 4), ("governor", 7), ("wrong-reasoning", 6)):
+    try:
+        _rm28 = run_text([sys.executable, os.path.join(ROOT, "tools", "replay_sarfnahw_evals.py"),
+                          "--group", _group], timeout=60)
+        _marker = "RM-28 EVAL REPLAY PASS — groups=%s rows=%d" % (_group, _rows)
+        check("RM-28 eval replay: %s" % _group, _rm28.returncode == 0 and _marker in (_rm28.stdout or ""))
+    except Exception as _e:
+        check("RM-28 eval replay: %s (harness error)" % _group, False)
+        print("  ", _e)
+
+# --- T14 RM-28 keep-classified dormant tests ---
+for _script, _marker, _label in (
+    ("test_bulk_deterministic_hover_decisions.py", "bulk deterministic hover decision self-test OK",
+     "RM-28 dormant bulk deterministic hover-decision test"),
+    ("test_largerollout3_acceptance.py", '"ok": true', "RM-28 dormant largerollout3 acceptance test"),
+    ("test_pending_source_triangulation_validator.py", "pending-source-triangulation validator self-test OK",
+     "RM-28 dormant pending-source triangulation test"),
+    ("test_token_irab_help.py", "token irab help self-test OK", "RM-28 dormant token i'rab help test"),
+):
+    try:
+        _rm28_test = run_text([sys.executable, os.path.join(ROOT, "tools", _script)], timeout=60)
+        check(_label, _rm28_test.returncode == 0 and _marker in (_rm28_test.stdout or ""))
+    except Exception as _e:
+        check(_label + " (harness error)", False)
+        print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)
