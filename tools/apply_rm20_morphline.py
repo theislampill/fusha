@@ -521,6 +521,12 @@ def execute_pipeline(promotion_target: Path, workdir: Path) -> dict[str, Any]:
     }
 
 
+def copy_ledger_for_commit(source: Path, target: Path) -> None:
+    """Persist append-only history while omitting the rebuildable index cache."""
+    target.mkdir(parents=True, exist_ok=False)
+    shutil.copy2(source / fact_ledger.LEDGER_NAME, target / fact_ledger.LEDGER_NAME)
+
+
 def apply_to_repo() -> dict[str, Any]:
     forbidden_existing = [path for path in (LEDGER_DIR, FINAL_REPORTS_PATH, RECEIPT_PATH) if path.exists()]
     if forbidden_existing:
@@ -530,7 +536,7 @@ def apply_to_repo() -> dict[str, Any]:
         workdir = Path(temporary)
         try:
             result = execute_pipeline(SHADOW_DIR, workdir)
-            shutil.copytree(result["ledger_dir"], LEDGER_DIR)
+            copy_ledger_for_commit(result["ledger_dir"], LEDGER_DIR)
             write_pretty_atomic(FINAL_REPORTS_PATH, result["reports"])
             receipt = {
                 "schema": "qamus.rm20_morphline_apply_receipt.v1",

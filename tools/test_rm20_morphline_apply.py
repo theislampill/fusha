@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -30,6 +31,22 @@ class Rm20RefusalGateTests(unittest.TestCase):
 
 
 class Rm20PositivePathTests(unittest.TestCase):
+    def test_committed_ledger_copy_omits_disposable_index_cache(self) -> None:
+        sys.path.insert(0, str(ROOT))
+        from tools import apply_rm20_morphline as apply_mod
+
+        self.assertTrue(hasattr(apply_mod, "copy_ledger_for_commit"))
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            source = base / "source"
+            target = base / "target"
+            source.mkdir()
+            (source / "ledger.jsonl").write_text("{}\n", encoding="utf-8")
+            (source / "index.json").write_text("{}\n", encoding="utf-8")
+            apply_mod.copy_ledger_for_commit(source, target)
+            self.assertTrue((target / "ledger.jsonl").is_file())
+            self.assertFalse((target / "index.json").exists())
+
     def test_real_frozen_inputs_pass_all_precommit_gates_in_tempdir(self) -> None:
         result = subprocess.run(
             [sys.executable, str(APPLY), "--self-test-positive"],
