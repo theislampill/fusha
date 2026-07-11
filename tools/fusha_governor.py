@@ -23,6 +23,7 @@ See parserplans/general-fusha-grammar-checker-p2/002-governor-irab-dependency-la
 import argparse
 import json
 import os
+import re
 import sys
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -43,14 +44,47 @@ _PUBLIC_BOUNDARY = {"public_gloss_src": "qamus", "public_gloss_kind": "authored"
 KNOWN_PREPS = {"من", "إلى", "الى", "على", "في", "عن", "مع", "حتى", "منذ", "مذ", "عند", "لدى", "لدن", "نحو",
                "دون", "خلال", "حول", "قبل", "بعد", "تحت", "فوق", "أمام", "وراء", "خلف", "بين"}
 _NOUN_POS = {"noun", "proper_noun", "adjective", "participle", "masdar", "pronoun", "demonstrative"}
-# signals that the NAMED governor is a preposition (which can only ever assign the genitive)
-_PREP_SIGNALS = ("preposition", "ḥarf jarr", "harf jarr", "حرف جر", "by the preposition", "jarr particle")
-# governor/role terms (English + transliteration + Arabic) that count as NAMING a governing element / iʿrāb basis
-_GOVERNOR_TERMS = ("govern", "governed by", "governing", "ʿāmil", "amil", "عامل", "because of the",
-                   "by the preposition", "by the verb", "muḍāf", "idafa", "iḍāfa",
-                   "fāʿil", "faail", "fail", "mafʿūl", "mafool", "mubtadaʾ", "mubtada", "khabar",
-                   "majrūr", "majrur", "marfūʿ", "marfu", "manṣūb", "mansub",
-                   "فاعل", "مفعول", "مبتدأ", "خبر", "مجرور", "مرفوع", "منصوب")
+_NUMBER_POS = {"number", "numeral"}
+_NUMBER_WORDS = {"ثلاثة", "أربعة", "خمسة", "ستة", "سبعة", "ثمانية", "تسعة", "عشرة", "عشرون", "ثلاثون",
+                 "أربعون", "خمسون", "ستون", "سبعون", "ثمانون", "تسعون", "مائة", "مئه", "ألف"}
+_KANA_FAMILY = {"كان", "ليس", "صار", "أصبح", "أمسى", "أضحى", "ظل", "بات"}
+_TRIGGER_FAMILIES = {
+    "لم": "jussive", "إن": "inna_family", "أن": "inna_family", "كأن": "inna_family",
+    "لكن": "inna_family", "ليت": "inna_family", "لعل": "inna_family", "لا": "la_jins",
+    "إلا": "istithna", "هل": "hal", "يا": "vocative",
+}
+
+# Claim lint is type-driven: a named governor kind must license the claimed case/mood. Text is only a compatibility
+# adapter for older rows, and negated mentions do not count as naming a governor.
+GOVERNOR_TYPE_LICENSED_CASES = {
+    "preposition": {"genitive"},
+    "idafa": {"genitive"},
+    "verb": {"nominative", "accusative"},
+    "verb_subject": {"nominative"},
+    "verb_object": {"accusative"},
+    "mubtada_khabar": {"nominative"},
+    "jussive_particle": {"jussive"},
+    "subjunctive_particle": {"subjunctive"},
+    "inna_family_ism": {"accusative"},
+    "inna_family_khabar": {"nominative"},
+    "kana_family_ism": {"nominative"},
+    "kana_family_khabar": {"accusative"},
+    "la_jins_ism": {"accusative"},
+}
+_GOVERNOR_TYPE_PATTERNS = {
+    "preposition": (r"\bpreposition\b", r"ḥarf jarr", r"harf jarr", r"حرف جر", r"jarr particle"),
+    "idafa": (r"muḍāf", r"mudaf", r"iḍāfa", r"idafa", r"مضاف"),
+    "verb_subject": (r"fāʿil", r"faail", r"\bفاعل\b"),
+    "verb_object": (r"mafʿūl", r"mafool", r"\bمفعول\b"),
+    "mubtada_khabar": (r"mubtada", r"khabar", r"مبتدأ", r"خبر"),
+    "jussive_particle": (r"jussive particle", r"jussive governor", r"حرف جزم"),
+    "subjunctive_particle": (r"subjunctive particle", r"subjunctive governor", r"حرف نصب"),
+}
+_NEGATED_MENTION = re.compile(
+    r"(?:\bnot\b|\bno\b|\bwithout\b|\bdoes\s+not\b|\bdid\s+not\b|ليس|غير|بدون|لا)"
+    r"(?:\s+\S+){0,5}\s*$",
+    re.I,
+)
 
 _ROUTE = {
     "jar_majrur": ("nahw", "nahw/procedures/idafa-jar-majrur.md"),
@@ -68,11 +102,13 @@ def _clean(s):
 def _mk_edge(edge_id, dependent, rel_label, rel_label_ar, justification, justification_rule, *,
              candidate_head=None, headless=False, governor_type="none", assigned_case_mood=None,
              confidence="medium", evidence_class="heuristic", unresolved=None, contradiction=False,
-             raww=False, decision_status="pending", triggers=None):
+             raww=False, decision_status="pending", triggers=None, claim_id=None, trigger_particle=None,
+             trigger_family=None, abstention_reason=None, suppressed_rule=None, mabni=None, mabni_on=None,
+             fi_mahall_case_mood=None):
     lane, proc = _ROUTE.get(justification_rule if justification_rule == "governor_not_justified" else rel_label,
                             ("nahw", "nahw/procedures/irab-case-mood.md"))
     gate = required_gate(triggers or ["irab"])  # iʿrāb-sensitive → never auto_safe (two_vote+)
-    return {
+    edge = {
         "edge_id": edge_id, "dependent": dependent, "candidate_head": candidate_head, "headless": headless,
         "governor_type": governor_type, "rel_label": rel_label, "rel_label_ar": _clean(rel_label_ar),
         "assigned_case_mood": assigned_case_mood, "governor_justification": _clean(justification),
@@ -81,6 +117,13 @@ def _mk_edge(edge_id, dependent, rel_label, rel_label_ar, justification, justifi
         "contradiction_marker": contradiction, "right_answer_wrong_reason_marker": raww,
         "decision_status": decision_status, "gate": gate, "route_to": {"lane": lane, "procedure": proc},
     }
+    optional = {
+        "claim_id": claim_id, "trigger_particle": trigger_particle, "trigger_family": trigger_family,
+        "abstention_reason": abstention_reason, "suppressed_rule": suppressed_rule, "mabni": mabni,
+        "mabni_on": mabni_on, "fi_mahall_case_mood": fi_mahall_case_mood,
+    }
+    edge.update({key: value for key, value in optional.items() if value is not None})
+    return edge
 
 
 def _is_prep(tok):
@@ -92,7 +135,39 @@ def _is_prep(tok):
 
 
 def _is_noun(tok):
-    return (tok.get("pos") or "").lower() in _NOUN_POS
+    return (tok.get("pos") or "").lower() in _NOUN_POS | _NUMBER_POS
+
+
+def _is_number_word(tok):
+    return (tok.get("pos") or "").lower() in _NUMBER_POS or N.bare(tok.get("surface", "")) in _NUMBER_WORDS
+
+
+def _trigger_family(tok):
+    pos = (tok.get("pos") or "").lower()
+    if pos not in {"particle", "conjunction", ""}:
+        return None
+    function = (tok.get("function") or tok.get("particle_function") or "").lower()
+    if "jussive" in function or function in {"prohibition", "conditional"}:
+        return "jussive"
+    return _TRIGGER_FAMILIES.get(N.bare(tok.get("surface", "")))
+
+
+def _affirmed_pattern(text, pattern):
+    for match in re.finditer(pattern, text, re.I):
+        if not _NEGATED_MENTION.search(text[max(0, match.start() - 60):match.start()]):
+            return True
+    return False
+
+
+def _claim_governor_type(claim):
+    explicit = (claim.get("claimed_governor_type") or "").strip().lower()
+    if explicit:
+        return explicit if explicit in GOVERNOR_TYPE_LICENSED_CASES else None
+    text = "%s %s" % (claim.get("claimed_governor") or "", claim.get("claimed_reasoning") or "")
+    for governor_type, patterns in _GOVERNOR_TYPE_PATTERNS.items():
+        if any(_affirmed_pattern(text, pattern) for pattern in patterns):
+            return governor_type
+    return None
 
 
 def build_dependency_lattice(unit):
@@ -107,6 +182,31 @@ def build_dependency_lattice(unit):
         nonlocal eid
         eid += 1
         return "e%d" % eid
+
+    kana_suppressed_pairs = set()
+    for i, tok in enumerate(toks):
+        ref = tok.get("ref", "tok:%d" % i)
+        bare_surface = N.bare(tok.get("surface", ""))
+        if bare_surface in _KANA_FAMILY and (tok.get("pos") or "").lower() == "verb":
+            if i + 2 < len(toks):
+                kana_suppressed_pairs.add((i + 1, i + 2))
+            edges.append(_mk_edge(
+                nxt(), ref, "abstained_unmodeled_construction", "tarkīb min akhawāt kāna ghayr mumaththal",
+                "The kāna-family construction is recognized, but its ism/khabar dependency is not modeled; a nearby noun pair is not treated as iḍāfa.",
+                "unmodeled_construction_abstention", governor_type="verb", decision_status="pending",
+                triggers=["ambiguous_grammar"], trigger_particle=ref, trigger_family="kana_family",
+                abstention_reason="recognized trigger with no licensed construction rule", suppressed_rule="idafa",
+            ))
+            continue
+        family = _trigger_family(tok)
+        if family:
+            edges.append(_mk_edge(
+                nxt(), ref, "abstained_unmodeled_construction", "tarkīb naḥwī ghayr mumaththal",
+                "The trigger particle is recognized, but this governor construction is not modeled; the lattice abstains instead of emitting an empty parse.",
+                "unmodeled_construction_abstention", governor_type="particle", decision_status="pending",
+                triggers=["ambiguous_grammar"], trigger_particle=ref, trigger_family=family,
+                abstention_reason="recognized trigger particle with no licensed construction rule",
+            ))
 
     for i, t in enumerate(toks):
         ref = t.get("ref", "tok:%d" % i)
@@ -141,22 +241,34 @@ def build_dependency_lattice(unit):
                                               {"candidate_head_kind": "hidden_hal_or_sifa"}],
                                   decision_status="unresolved", triggers=["ambiguous_grammar"]))
         # (3) iḍāfa CANDIDATE: noun + noun (not a prep+noun already handled) -> muḍāf ilayh, but kept ambiguous
-        elif _is_noun(t) and i + 1 < len(toks) and _is_noun(toks[i + 1]) and not _is_prep(t):
+        elif (_is_noun(t) and i + 1 < len(toks) and _is_noun(toks[i + 1]) and not _is_prep(t)
+              and (i, i + 1) not in kana_suppressed_pairs):
             dep = toks[i + 1]
             dep_ref = dep.get("ref", "tok:%d" % (i + 1))
             # A bare noun+noun is genuinely AMBIGUOUS: iḍāfa (2nd genitive) OR a nominal sentence mubtadaʾ+khabar
             # (2nd NOMINATIVE) OR ṣifa/badal. Do NOT assert a case in arbitrary mode (the ending is not visible and the
             # construction is undetermined); only a source-addressed visible ending confirms it. Keep ALL readings.
+            alternatives = [{"reading": "iḍāfa: muḍāf ilayh (genitive)", "rel_label": "idafa_dependent", "case": "genitive"},
+                            {"reading": "nominal sentence: mubtadaʾ + khabar (predicate nominative)", "rel_label": "subject", "case": "nominative"},
+                            {"reading": "ṣifa (adjective, agrees in case)", "rel_label": "sifa"},
+                            {"reading": "badal (apposition, agrees in case)", "rel_label": "badal"}]
+            if _is_number_word(t):
+                alternatives.append({"reading": "number specification: tamyīz", "rel_label": "tamyiz",
+                                     "case": dep.get("case_visible") or "depends_on_number_class"})
+            case_visible = dep.get("case_visible")
+            case_conflict = bool(source_addressed and case_visible and case_visible != "genitive")
+            justification = (
+                "The visible %s ending conflicts with an iḍāfa-dependent reading, which requires the genitive; the rule refuses to certify iḍāfa and keeps alternatives for review." % case_visible
+                if case_conflict else
+                "The second noun MAY be the muḍāf ilayh (genitive by the iḍāfa construct), but the pair could equally be a nominal sentence (mubtadaʾ + khabar, the second nominative), a ṣifa/badal, or a licensed number-tamyīz reading; all applicable readings are kept."
+            )
             edges.append(_mk_edge(nxt(), dep_ref, "idafa_dependent", "muḍāf ilayh (candidate)",
-                                  "The second noun MAY be the muḍāf ilayh (genitive by the iḍāfa construct), but the pair could equally be a nominal sentence (mubtadaʾ + khabar, the second nominative) or a ṣifa/badal; all readings kept, none asserted.",
+                                  justification,
                                   "idafa_governs_genitive", candidate_head=ref, governor_type="noun",
-                                  assigned_case_mood=(dep.get("case_visible") if source_addressed else None),
-                                  confidence="low", evidence_class=("source_addressed" if source_addressed and dep.get("case_visible") else "heuristic"),
-                                  unresolved=[{"reading": "iḍāfa: muḍāf ilayh (genitive)", "rel_label": "idafa_dependent", "case": "genitive"},
-                                              {"reading": "nominal sentence: mubtadaʾ + khabar (predicate nominative)", "rel_label": "subject", "case": "nominative"},
-                                              {"reading": "ṣifa (adjective, agrees in case)", "rel_label": "sifa"},
-                                              {"reading": "badal (apposition, agrees in case)", "rel_label": "badal"}],
-                                  decision_status="pending", triggers=["idafa_ambiguous"]))
+                                  assigned_case_mood=(case_visible if source_addressed and not case_conflict else None),
+                                  confidence="low", evidence_class=("source_addressed" if source_addressed and case_visible else "heuristic"),
+                                  unresolved=alternatives, contradiction=case_conflict,
+                                  decision_status="pending", triggers=["idafa_ambiguous", "case_or_mood"] if case_conflict else ["idafa_ambiguous"]))
         # (4) coordinating wāw is correctly HEADLESS (F6: at most one head; some segments have none)
         elif N.bare(t.get("surface", "")) == "و" and (t.get("pos") or "").lower() in {"conjunction", "particle", ""}:
             edges.append(_mk_edge(nxt(), ref, "coordination", "wāw al-ʿaṭf",
@@ -168,29 +280,26 @@ def build_dependency_lattice(unit):
     # (5) governor_not_justified: a proposed iʿrāb claim that asserts a case with NO justifying governor
     for c in unit.get("claims") or []:
         if c.get("claim_type") in {"case_mood", "governor", "irab_role"} and c.get("claimed_value"):
-            gov = (c.get("claimed_governor") or "").strip()
-            reason = (c.get("claimed_reasoning") or "")
             cv = c.get("claimed_value")
-            blob = (gov + " " + reason).lower()
             ev = "source_addressed" if source_addressed else "heuristic"
-            # (D) a stated PREPOSITION governor paired with a NON-genitive case is a CONTRADICTION — a preposition only
-            # ever assigns the genitive, so the named governor is WRONG for the asserted case (right answer, wrong reason).
-            if any(p in blob for p in _PREP_SIGNALS) and cv not in ("genitive", "none", None):
+            governor_type = _claim_governor_type(c)
+            licensed = GOVERNOR_TYPE_LICENSED_CASES.get(governor_type, set())
+            if governor_type and cv not in licensed and cv not in ("none", None):
                 edges.append(_mk_edge(nxt(), c.get("target", "tok:0"), "none", "ʿāmil mukhālif li-l-iʿrāb",
-                                      "A preposition governs the genitive, not the %s; the named governing element contradicts the asserted case." % cv,
+                                      "The named governor type “%s” does not license %s; it licenses %s." %
+                                      (governor_type, cv, ", ".join(sorted(licensed)) or "no case/mood"),
                                       "governor_not_justified", candidate_head=None, governor_type="none",
                                       assigned_case_mood=cv, confidence="high", evidence_class=ev,
-                                      raww=True, decision_status="pending", triggers=["irab", "case_or_mood"]))
+                                      raww=True, decision_status="pending", triggers=["irab", "case_or_mood"],
+                                      claim_id=c.get("claim_id")))
                 continue
-            # (M) justified only if a governor token is NAMED or the reasoning uses a recognized governor/role term
-            # (English, transliteration, OR Arabic); otherwise the case is asserted with no ʿāmil → flag (absent governor).
-            mentions_governor = bool(gov) or any(w in reason.lower() for w in _GOVERNOR_TERMS)
-            if not mentions_governor:
+            if not governor_type:
                 edges.append(_mk_edge(nxt(), c.get("target", "tok:0"), "none", "ʿāmil ghayr mubayyan",
                                       "The case “%s” is asserted without naming the governing element (ʿāmil); a correct ending with no justified governor is unsafe." % cv,
                                       "governor_not_justified", candidate_head=None, governor_type="none",
                                       assigned_case_mood=cv, confidence="high", evidence_class=ev,
-                                      raww=True, decision_status="pending", triggers=["irab", "case_or_mood"]))
+                                      raww=True, decision_status="pending", triggers=["irab", "case_or_mood"],
+                                      claim_id=c.get("claim_id")))
 
     n_unresolved = sum(1 for e in edges if e["decision_status"] in ("unresolved", "pending"))
     by_dec = {}

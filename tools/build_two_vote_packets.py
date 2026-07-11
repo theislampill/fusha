@@ -34,9 +34,11 @@ from tools.compile_canonical_hover_whitelist_packet import (  # noqa: E402
 
 AUTHORITATIVE_BASELINE_SHA = "3f23dd4adab3222d1e8277bc5a1097186dc08f6d"
 WAVE_02_AUTHORITATIVE_BASELINE_SHA = "c0c4ea7c0fba5457177b70a97655e204165ed083"
+WAVE_03_AUTHORITATIVE_BASELINE_SHA = "2defdc9eb65656fc93f0cd9ff5a73c6b68da1b61"
 EXPECTED_BASELINE_SHA256 = "972263b5472478b8805c39e107ecf5d6f8096acace8756d15a08967cddf90515"
 EXPECTED_LOC_SURFACES_SHA256 = "f2e079dcdce01148074a238e3937314cf02222298f91f83ed66dcbb599697ca7"
 EXPECTED_V1_PACKET_SHA256 = "95788fabc0ba7b65558d03b2d0854f361e507dfaeaa6ec3d43732a1b7985b311"
+EXPECTED_WAVE_02_PACKET_SHA256 = "9bd56a11af30b6c0bf3181a960da4cf1ece8ea15ec66d62ed2b6759b0d58dc65"
 TARGET_CLASSES = {"competing_lexical_senses", "unresolved_occurrence_ambiguity"}
 NF_T10_1_AYAHS = {"2:274", "4:64", "12:37", "48:15"}
 DEFAULT_CLASSIFICATION = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/laneb-classification.jsonl"
@@ -52,6 +54,9 @@ DEFAULT_OUT = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/packets-
 DEFAULT_MANIFEST = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/calibration-batch-v2.manifest.json"
 DEFAULT_WAVE_OUT = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/packets-wave-02.jsonl"
 DEFAULT_WAVE_MANIFEST = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/wave-02-batch.manifest.json"
+DEFAULT_WAVE_02_PACKETS = DEFAULT_WAVE_OUT
+DEFAULT_WAVE_03_OUT = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/packets-wave-03.jsonl"
+DEFAULT_WAVE_03_MANIFEST = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/wave-03-batch.manifest.json"
 
 LOC_RE = re.compile(r"^(\d+):(\d+):(\d+)$")
 CARD_RE = re.compile(r"^([^:]+):u(\d+):e(\d+)$")
@@ -307,6 +312,52 @@ def select_wave_rows(
         )
     selected = lexical[:lexical_count] + occurrence[:occurrence_count]
     return [(row["laneb_classification"], row) for row in selected]
+
+
+def select_proportional_lexicographic_rows(
+    classifications: Iterable[dict[str, Any]],
+    *,
+    excluded_locations: set[str],
+    batch_size: int = 500,
+) -> list[tuple[str, dict[str, Any]]]:
+    """Allocate exact class quotas by largest remainder, then select lexicographically."""
+    eligible = [
+        row for row in classifications
+        if row.get("laneb_classification") in TARGET_CLASSES
+        and row["canonical_location"] not in excluded_locations
+        and ayah_of(row["canonical_location"]) not in NF_T10_1_AYAHS
+    ]
+    if len(eligible) < batch_size:
+        raise ValueError(
+            f"STOP: wave underfill: eligible rows={len(eligible)}/{batch_size}"
+        )
+    by_class: dict[str, list[dict[str, Any]]] = {
+        classification: [] for classification in sorted(TARGET_CLASSES)
+    }
+    for row in eligible:
+        by_class[row["laneb_classification"]].append(row)
+    total = len(eligible)
+    quotas = {
+        classification: len(rows) * batch_size // total
+        for classification, rows in by_class.items()
+    }
+    unallocated = batch_size - sum(quotas.values())
+    remainder_order = sorted(
+        by_class,
+        key=lambda classification: (
+            -(len(by_class[classification]) * batch_size % total),
+            classification,
+        ),
+    )
+    for classification in remainder_order[:unallocated]:
+        quotas[classification] += 1
+    selected: list[tuple[str, dict[str, Any]]] = []
+    for classification, rows in by_class.items():
+        rows.sort(key=lambda row: row["canonical_location"])
+        selected.extend((classification, row) for row in rows[:quotas[classification]])
+    if len(selected) != batch_size:
+        raise ValueError("STOP: proportional wave selection did not fill the batch")
+    return selected
 
 
 def load_gate_ssot(gate_path: Path, fact_schema_path: Path) -> dict[str, Any]:
@@ -940,18 +991,25 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
         "grammar_gate_ssot": Path(args.gates),
         "fact_ledger_schema": Path(args.fact_schema),
     }
+    if args.batch == "wave-03":
+        paths["wave_02_packets"] = Path(args.wave_02_packets)
     for label, path in paths.items():
         if not path.is_file():
             raise ValueError(f"missing input {label}: {path}")
-    verify_repository_baseline(
-        WAVE_02_AUTHORITATIVE_BASELINE_SHA if args.batch == "wave-02" else AUTHORITATIVE_BASELINE_SHA
-    )
+    baseline_by_batch = {
+        "calibration": AUTHORITATIVE_BASELINE_SHA,
+        "wave-02": WAVE_02_AUTHORITATIVE_BASELINE_SHA,
+        "wave-03": WAVE_03_AUTHORITATIVE_BASELINE_SHA,
+    }
+    verify_repository_baseline(baseline_by_batch[args.batch])
     if sha256_file(paths["baseline_whitelist"]) != EXPECTED_BASELINE_SHA256:
         raise ValueError("deployed baseline SHA-256 differs from the pinned queue input")
     if sha256_file(paths["loc_surfaces"]) != EXPECTED_LOC_SURFACES_SHA256:
         raise ValueError("loc-surfaces SHA-256 differs from f2e079dc pin")
     if sha256_file(paths["v1_packets"]) != EXPECTED_V1_PACKET_SHA256:
         raise ValueError("v1 packet SHA-256 differs from 95788fab lineage pin")
+    if args.batch == "wave-03" and sha256_file(paths["wave_02_packets"]) != EXPECTED_WAVE_02_PACKET_SHA256:
+        raise ValueError("wave-02 packet SHA-256 differs from 9bd56a11 lineage pin")
 
     classifications = load_jsonl(paths["classification"])
     queue_rows = load_jsonl(paths["queue"])
@@ -960,6 +1018,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
     loc_rows = load_jsonl(paths["loc_surfaces"])
     homograph_doc = load_json(paths["homograph_keys"])
     v1_packets = load_jsonl(paths["v1_packets"])
+    wave_02_packets = load_jsonl(paths["wave_02_packets"]) if args.batch == "wave-03" else []
     classifications_by_loc = index_unique(classifications, "canonical_location", "classification")
     queue_by_loc = index_unique(queue_rows, "canonical_location", "queue")
     entries = index_unique(entry_rows, "id", "entry")
@@ -1000,11 +1059,13 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             f"STOP: candidate entry lookup miss rate {miss_rate:.4%} exceeds 1%"
         )
     gate_ssot = load_gate_ssot(paths["grammar_gate_ssot"], paths["fact_ledger_schema"])
-    wave_mode = args.batch == "wave-02"
+    wave_mode = args.batch in {"wave-02", "wave-03"}
+    wave_three_mode = args.batch == "wave-03"
     occurrence_mapping_quality: dict[str, bool] = {}
     lexical_mapping_quality: dict[str, tuple[int, int]] = {}
     if wave_mode:
         excluded_locations = set(v1_by_loc)
+        excluded_locations.update(packet["canonical_location"] for packet in wave_02_packets)
         for row in population:
             loc = row["canonical_location"]
             if loc in excluded_locations or ayah_of(loc) in NF_T10_1_AYAHS:
@@ -1036,12 +1097,18 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
                     uniquely_maps_target = True
                     break
             occurrence_mapping_quality[loc] = uniquely_maps_target
-        selected = select_wave_rows(
-            classifications,
-            excluded_locations=excluded_locations,
-            lexical_mapping_quality=lexical_mapping_quality,
-            occurrence_mapping_quality=occurrence_mapping_quality,
-        )
+        if wave_three_mode:
+            selected = select_proportional_lexicographic_rows(
+                classifications,
+                excluded_locations=excluded_locations,
+            )
+        else:
+            selected = select_wave_rows(
+                classifications,
+                excluded_locations=excluded_locations,
+                lexical_mapping_quality=lexical_mapping_quality,
+                occurrence_mapping_quality=occurrence_mapping_quality,
+            )
     else:
         selected = select_calibration_rows(classifications)
         selected_identity = [
@@ -1091,7 +1158,9 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             homograph_index=homograph_index,
             gate_path=paths["grammar_gate_ssot"],
             gate_ssot=gate_ssot,
-            packet_id_prefix="laneb-wave-02" if wave_mode else "laneb-cal-002",
+            packet_id_prefix=(
+                f"laneb-{args.batch}" if wave_mode else "laneb-cal-002"
+            ),
         )
         packets.append(packet)
 
@@ -1167,6 +1236,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
                 "baseline_whitelist": baseline_rows,
                 "loc_surfaces": loc_rows,
                 "v1_packets": v1_packets,
+                "wave_02_packets": wave_02_packets,
             }.get(label))
             for label, path in paths.items()
         },
@@ -1207,7 +1277,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
         residual_occurrence = [
             row["canonical_location"] for row in population
             if row["laneb_classification"] == "unresolved_occurrence_ambiguity"
-            and row["canonical_location"] not in set(v1_by_loc)
+            and row["canonical_location"] not in excluded_locations
             and ayah_of(row["canonical_location"]) not in NF_T10_1_AYAHS
             and row["canonical_location"] not in set(selected_occurrence)
         ]
@@ -1215,13 +1285,53 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             return sum(occurrence_mapping_quality.get(loc, False) for loc in locations) / len(locations) if locations else 0.0
         manifest.update({
             "schema": "qamus.laneb_two_vote_wave_manifest.v1",
-            "authoritative_baseline_sha": WAVE_02_AUTHORITATIVE_BASELINE_SHA,
-            "lineage": {
+            "authoritative_baseline_sha": baseline_by_batch[args.batch],
+        })
+        if wave_three_mode:
+            eligible_counts = dict(sorted(collections.Counter(
+                row["laneb_classification"] for row in population
+                if row["canonical_location"] not in excluded_locations
+                and ayah_of(row["canonical_location"]) not in NF_T10_1_AYAHS
+            ).items()))
+            manifest["lineage"] = {
+                "excluded_by": "canonical_location",
+                "excluded_calibration": {
+                    "path": logical_path(paths["v1_packets"]),
+                    "rows": len(v1_packets),
+                    "sha256": EXPECTED_V1_PACKET_SHA256,
+                },
+                "excluded_wave_02": {
+                    "path": logical_path(paths["wave_02_packets"]),
+                    "rows": len(wave_02_packets),
+                    "sha256": EXPECTED_WAVE_02_PACKET_SHA256,
+                },
+                "excluded_unique_locations": len(excluded_locations),
+            }
+            manifest["population"].update({
+                "eligible_after_exclusions": sum(eligible_counts.values()),
+                "eligible_after_exclusions_class_counts": eligible_counts,
+            })
+            manifest["selection_rule"] = {
+                "purpose": "membership_selection_only_never_semantic_adjudication",
+                "pure_function": True,
+                "randomness": "none",
+                "wall_clock_inputs": "none",
+                "batch_size": 500,
+                "excluded_ayahs": sorted(NF_T10_1_AYAHS, key=lambda value: tuple(map(int, value.split(":")))),
+                "excluded_previously_packeted_locations": len(excluded_locations),
+                "allocation": "Largest-remainder proportional allocation over the two remaining class populations; ties break by class name ascending.",
+                "competing_lexical_senses": "Take the first 179 eligible canonical_location strings in ascending lexicographic order.",
+                "unresolved_occurrence_ambiguity": "Take the first 321 eligible canonical_location strings in ascending lexicographic order.",
+                "underfill": "STOP if fewer than 500 eligible rows remain.",
+                "output_order": "competing_lexical_senses then unresolved_occurrence_ambiguity; lexicographic canonical_location order within each stratum; selection_rank 1..500.",
+            }
+        else:
+            manifest["lineage"] = {
                 "excluded_calibration_path": logical_path(paths["v1_packets"]),
                 "excluded_calibration_sha256": EXPECTED_V1_PACKET_SHA256,
                 "excluded_by": "canonical_location",
-            },
-            "selection_rule": {
+            }
+            manifest["selection_rule"] = {
                 "purpose": "membership_selection_only_never_semantic_adjudication",
                 "pure_function": True,
                 "randomness": "none",
@@ -1232,8 +1342,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
                 "unresolved_occurrence_ambiguity": "Run the existing fingerprint mapper for every eligible row; unique target-addressing carrier first, then canonical location numeric ascending; take exactly 160.",
                 "underfill": "STOP if either exact stratum cannot be filled.",
                 "output_order": "90 competing_lexical_senses then 160 unresolved_occurrence_ambiguity; intrinsic score order; selection_rank 1..250.",
-            },
-        })
+            }
         manifest["output"].update({
             "selected_occurrence_unique_mapping_rate": unique_rate(selected_occurrence),
             "selected_occurrence_unique_mapping_rows": sum(occurrence_mapping_quality.get(loc, False) for loc in selected_occurrence),
@@ -1241,8 +1350,12 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             "residual_occurrence_unique_mapping_rate": unique_rate(residual_occurrence),
             "residual_occurrence_unique_mapping_rows": sum(occurrence_mapping_quality.get(loc, False) for loc in residual_occurrence),
         })
-        manifest["validation"]["rebuild"] = "python tools/build_two_vote_packets.py --batch wave-02"
-        manifest["validation"]["stop_conditions"].append("fewer than 90 lexical or 160 occurrence rows remain eligible")
+        manifest["validation"]["rebuild"] = f"python tools/build_two_vote_packets.py --batch {args.batch}"
+        manifest["validation"]["stop_conditions"].append(
+            "fewer than 500 eligible rows remain"
+            if wave_three_mode
+            else "fewer than 90 lexical or 160 occurrence rows remain eligible"
+        )
     return manifest, packets
 
 
@@ -1438,6 +1551,37 @@ def self_test() -> int:
         ("unresolved_occurrence_ambiguity", "6:1:1"),
     ]:
         failures.append("wave selection did not honor exclusions and mapping preference")
+    proportional_fixture = [
+        _synthetic_classification(loc, classification, 2, ("a", "b"), None)
+        for classification, locations in (
+            ("competing_lexical_senses", ["9:1:1", "10:1:1", "2:1:1", "3:1:1"]),
+            (
+                "unresolved_occurrence_ambiguity",
+                ["8:1:1", "11:1:1", "4:1:1", "5:1:1", "6:1:1", "7:1:1"],
+            ),
+        )
+        for loc in locations
+    ]
+    wave_three_forward = select_proportional_lexicographic_rows(
+        proportional_fixture,
+        excluded_locations={"2:1:1"},
+        batch_size=5,
+    )
+    wave_three_reverse = select_proportional_lexicographic_rows(
+        reversed(proportional_fixture),
+        excluded_locations={"2:1:1"},
+        batch_size=5,
+    )
+    if projection(wave_three_forward) != projection(wave_three_reverse):
+        failures.append("proportional lexicographic selection changed under input reordering")
+    if projection(wave_three_forward) != [
+        ("competing_lexical_senses", "10:1:1"),
+        ("competing_lexical_senses", "3:1:1"),
+        ("unresolved_occurrence_ambiguity", "11:1:1"),
+        ("unresolved_occurrence_ambiguity", "4:1:1"),
+        ("unresolved_occurrence_ambiguity", "5:1:1"),
+    ]:
+        failures.append("wave-3 selection did not preserve exact proportional strata and lexicographic order")
     try:
         select_wave_rows(
             synthetic,
@@ -1475,7 +1619,7 @@ def self_test() -> int:
         failures.append("live row selection changed under duplicate input reordering")
     if failures:
         raise AssertionError("; ".join(failures))
-    print("SELFTESTS=15 FAILURES=0")
+    print("SELFTESTS=17 FAILURES=0")
     return 0
 
 
@@ -1488,12 +1632,13 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--loc-surfaces", default=DEFAULT_LOC_SURFACES)
     result.add_argument("--homograph-keys", default=DEFAULT_HOMOGRAPH_KEYS)
     result.add_argument("--v1-packets", default=DEFAULT_V1_PACKETS)
+    result.add_argument("--wave-02-packets", default=DEFAULT_WAVE_02_PACKETS)
     result.add_argument("--gates", default=DEFAULT_GATES)
     result.add_argument("--fact-schema", default=DEFAULT_FACT_SCHEMA)
     result.add_argument("--out", default=DEFAULT_OUT)
     result.add_argument("--manifest", default=DEFAULT_MANIFEST)
     result.add_argument("--self-test", action="store_true")
-    result.add_argument("--batch", choices=("calibration", "wave-02"), default="calibration")
+    result.add_argument("--batch", choices=("calibration", "wave-02", "wave-03"), default="calibration")
     return result
 
 
@@ -1505,6 +1650,10 @@ def main() -> int:
         args.out = DEFAULT_WAVE_OUT
     if args.batch == "wave-02" and Path(args.manifest) == DEFAULT_MANIFEST:
         args.manifest = DEFAULT_WAVE_MANIFEST
+    if args.batch == "wave-03" and Path(args.out) == DEFAULT_OUT:
+        args.out = DEFAULT_WAVE_03_OUT
+    if args.batch == "wave-03" and Path(args.manifest) == DEFAULT_MANIFEST:
+        args.manifest = DEFAULT_WAVE_03_MANIFEST
     manifest, packets = build(args)
     write_outputs(manifest, packets, Path(args.out), Path(args.manifest))
     print(json.dumps(manifest["output"], ensure_ascii=False, indent=2, sort_keys=True))
