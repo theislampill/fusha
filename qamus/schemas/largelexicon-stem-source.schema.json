@@ -1,0 +1,264 @@
+{
+  "$id": "qamus/schemas/largelexicon-stem-source.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "x-defect-family": "root_shape_or_reason",
+      "anyOf": [
+        {
+          "properties": {
+            "root": {
+              "pattern": "^[ء-ي]( [ء-ي]){1,4}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "root"
+          ]
+        },
+        {
+          "properties": {
+            "no_root_reason": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "no_root_reason"
+          ]
+        }
+      ]
+    },
+    {
+      "x-defect-family": "surface_shape",
+      "anyOf": [
+        {
+          "properties": {
+            "surface": {
+              "pattern": "^\\S+$"
+            }
+          }
+        },
+        {
+          "properties": {
+            "multiword_reason": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "surface_is_multiword": {
+              "const": true
+            }
+          },
+          "required": [
+            "surface_is_multiword",
+            "multiword_reason"
+          ]
+        }
+      ]
+    },
+    {
+      "x-defect-family": "stem_annotation_completeness",
+      "anyOf": [
+        {
+          "properties": {
+            "features": {
+              "minProperties": 1,
+              "type": "object"
+            },
+            "form": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "pattern": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "pattern",
+            "form",
+            "features"
+          ]
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "pattern"
+                ]
+              },
+              {
+                "required": [
+                  "form"
+                ]
+              },
+              {
+                "required": [
+                  "features"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "entry_id": {
+      "pattern": "^[0-9a-f]{12}$",
+      "type": "string"
+    },
+    "features": {
+      "type": "object"
+    },
+    "form": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "generation_key": {
+      "pattern": "^qamus:[0-9a-f]{12}:[0-9]{3}$",
+      "type": "string"
+    },
+    "gloss_hint": {
+      "type": "string"
+    },
+    "gloss_shape": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "lemma": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "multiword_reason": {
+      "type": "string"
+    },
+    "no_root_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pattern": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pos": {
+      "enum": [
+        "noun",
+        "particle",
+        "proper_noun",
+        "verb"
+      ]
+    },
+    "qamus_entry_refs": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "risk_flags": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 0,
+      "type": "array"
+    },
+    "root": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schema": {
+      "const": "fusha/largelexicon/stem-source@2"
+    },
+    "source_keys": {
+      "items": {
+        "pattern": "^[nvp][0-9]{3,4}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "stem_id": {
+      "pattern": "^llx_[0-9a-f]{12}_[0-9]{3}$",
+      "type": "string"
+    },
+    "surface": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "surface_bare": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "surface_is_multiword": {
+      "type": "boolean"
+    },
+    "surface_norm_strict": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "visible_segments": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "gloss": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "qg_class": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "role": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "surface": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "surface",
+          "role",
+          "qg_class",
+          "gloss"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "stem_id",
+    "generation_key",
+    "entry_id",
+    "source_keys",
+    "surface",
+    "surface_norm_strict",
+    "surface_bare",
+    "lemma",
+    "root",
+    "no_root_reason",
+    "pos",
+    "gloss_shape",
+    "gloss_hint",
+    "visible_segments",
+    "qamus_entry_refs",
+    "risk_flags"
+  ],
+  "title": "Largelexicon stem-source row @2",
+  "type": "object"
+}

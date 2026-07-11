@@ -1,0 +1,147 @@
+{
+  "$id": "qamus/schemas/largelexicon-form-source.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "x-defect-family": "root_shape_or_reason",
+      "anyOf": [
+        {
+          "properties": {
+            "root": {
+              "pattern": "^[ء-ي]( [ء-ي]){1,4}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "root"
+          ]
+        },
+        {
+          "properties": {
+            "no_root_reason": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "no_root_reason"
+          ]
+        }
+      ]
+    },
+    {
+      "x-defect-family": "surface_shape",
+      "anyOf": [
+        {
+          "properties": {
+            "surface": {
+              "pattern": "^\\S+$"
+            }
+          }
+        },
+        {
+          "properties": {
+            "multiword_reason": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "surface_is_multiword": {
+              "const": true
+            }
+          },
+          "required": [
+            "surface_is_multiword",
+            "multiword_reason"
+          ]
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "entry_id": {
+      "pattern": "^[0-9a-f]{12}$",
+      "type": "string"
+    },
+    "form_id": {
+      "pattern": "^llx_form_[0-9a-f]{12}_[0-9]{3}$",
+      "type": "string"
+    },
+    "lemma": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "multiword_reason": {
+      "type": "string"
+    },
+    "no_root_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pos": {
+      "enum": [
+        "noun",
+        "particle",
+        "proper_noun",
+        "verb"
+      ]
+    },
+    "risk_flags": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 0,
+      "type": "array"
+    },
+    "root": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schema": {
+      "const": "fusha/largelexicon/form-source@2"
+    },
+    "source_keys": {
+      "items": {
+        "pattern": "^[nvp][0-9]{3,4}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "surface": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "surface_bare": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "surface_is_multiword": {
+      "type": "boolean"
+    },
+    "surface_norm_strict": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "form_id",
+    "entry_id",
+    "source_keys",
+    "surface",
+    "surface_norm_strict",
+    "surface_bare",
+    "lemma",
+    "root",
+    "no_root_reason",
+    "pos",
+    "risk_flags"
+  ],
+  "title": "Largelexicon form-source row @2",
+  "type": "object"
+}

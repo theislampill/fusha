@@ -1,0 +1,141 @@
+{
+  "$id": "qamus/schemas/largelexicon-qword-denominator.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "x-defect-family": "surface_shape",
+      "anyOf": [
+        {
+          "properties": {
+            "visible_surface": {
+              "pattern": "^\\S+$"
+            }
+          }
+        },
+        {
+          "properties": {
+            "multiword_reason": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "surface_is_multiword": {
+              "const": true
+            }
+          },
+          "required": [
+            "surface_is_multiword",
+            "multiword_reason"
+          ]
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "canonical_quran_loc": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "canonical_wbw_loc": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "card_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "card_text_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "entry_id": {
+      "pattern": "^[0-9a-f]{12}$",
+      "type": "string"
+    },
+    "example_index": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "multiword_reason": {
+      "type": "string"
+    },
+    "quran_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "qword_index": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "risk_flags": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 0,
+      "type": "array"
+    },
+    "route": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "row_id": {
+      "pattern": "^llx-qword-[0-9a-f]{12}-[0-9]{2}-[0-9]{2}-[0-9]{3}$",
+      "type": "string"
+    },
+    "schema": {
+      "const": "qamus/largelexicon-qword-denominator@2"
+    },
+    "source_keys": {
+      "items": {
+        "pattern": "^[nvp][0-9]{3,4}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "status": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "surface_is_multiword": {
+      "type": "boolean"
+    },
+    "usage_index": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "visible_surface": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "visible_surface_norm_strict": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "row_id",
+    "entry_id",
+    "source_keys",
+    "card_id",
+    "usage_index",
+    "example_index",
+    "qword_index",
+    "visible_surface",
+    "visible_surface_norm_strict",
+    "card_text_sha256",
+    "quran_ref",
+    "canonical_quran_loc",
+    "canonical_wbw_loc",
+    "route",
+    "status"
+  ],
+  "title": "Largelexicon qword-denominator row @2",
+  "type": "object"
+}

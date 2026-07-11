@@ -1,0 +1,212 @@
+{
+  "$id": "qamus/schemas/largelexicon-qword-crosswalk.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "x-defect-family": "surface_shape",
+      "anyOf": [
+        {
+          "properties": {
+            "visible_surface": {
+              "pattern": "^\\S+$"
+            }
+          }
+        },
+        {
+          "properties": {
+            "multiword_reason": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "surface_is_multiword": {
+              "const": true
+            }
+          },
+          "required": [
+            "surface_is_multiword",
+            "multiword_reason"
+          ]
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "candidate_word_indices": {
+      "items": {
+        "minimum": 1,
+        "type": "integer"
+      },
+      "type": "array"
+    },
+    "canonical_quran_loc": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "canonical_wbw_loc": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "card_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "entry_id": {
+      "pattern": "^[0-9a-f]{12}$",
+      "type": "string"
+    },
+    "example_index": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "match_status": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "multiword_reason": {
+      "type": "string"
+    },
+    "next_action": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "packet_class": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "quran_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "qword_index": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "qword_row_id": {
+      "pattern": "^llx-qword-[0-9a-f]{12}-[0-9]{2}-[0-9]{2}-[0-9]{3}$",
+      "type": "string"
+    },
+    "resolution_confidence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "resolution_method": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "resolved_surface": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "resolved_surface_norm_strict": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "resolved_word_index": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "risk_flags": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 0,
+      "type": "array"
+    },
+    "row_id": {
+      "pattern": "^llx-crosswalk-llx-qword-[0-9a-f]{12}-[0-9]{2}-[0-9]{2}-[0-9]{3}$",
+      "type": "string"
+    },
+    "schema": {
+      "const": "qamus/largelexicon-qword-crosswalk@2"
+    },
+    "source_dependencies": {
+      "items": {
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "source_keys": {
+      "items": {
+        "pattern": "^[nvp][0-9]{3,4}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "status": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "surface_is_multiword": {
+      "type": "boolean"
+    },
+    "terminal_gate_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "transclusion_route": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "usage_index": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "visible_surface": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "visible_surface_norm_strict": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "row_id",
+    "qword_row_id",
+    "entry_id",
+    "source_keys",
+    "card_id",
+    "usage_index",
+    "example_index",
+    "qword_index",
+    "visible_surface",
+    "visible_surface_norm_strict",
+    "quran_ref",
+    "canonical_quran_loc",
+    "canonical_wbw_loc",
+    "match_status",
+    "status",
+    "next_action",
+    "packet_class",
+    "terminal_gate_code",
+    "transclusion_route",
+    "source_dependencies"
+  ],
+  "title": "Largelexicon qword-crosswalk row @2",
+  "type": "object"
+}
