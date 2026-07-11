@@ -262,6 +262,7 @@ def write_outputs(outdir, manifest, queue):
     mpath = os.path.join(outdir, "crosswalk-gap-queue.manifest.json")
     with io.open(mpath, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(manifest, fh, ensure_ascii=False, sort_keys=True, indent=1)
+        fh.write("\n")  # repo artifact-ergonomics gate: trailing newline required
     return qpath, mpath, manifest
 
 
