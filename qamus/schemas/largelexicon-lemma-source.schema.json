@@ -1,0 +1,139 @@
+{
+  "$id": "qamus/schemas/largelexicon-lemma-source.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "x-defect-family": "root_shape_or_reason",
+      "anyOf": [
+        {
+          "properties": {
+            "root": {
+              "pattern": "^[ء-ي]( [ء-ي]){1,4}$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "root"
+          ]
+        },
+        {
+          "properties": {
+            "no_root_reason": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "no_root_reason"
+          ]
+        }
+      ]
+    },
+    {
+      "x-defect-family": "surface_shape",
+      "anyOf": [
+        {
+          "properties": {
+            "lemma": {
+              "pattern": "^\\S+$"
+            }
+          }
+        },
+        {
+          "properties": {
+            "lemma_is_multiword": {
+              "const": true
+            },
+            "multiword_reason": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "lemma_is_multiword",
+            "multiword_reason"
+          ]
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "entry_id": {
+      "pattern": "^[0-9a-f]{12}$",
+      "type": "string"
+    },
+    "forms": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "gloss_hint": {
+      "type": "string"
+    },
+    "lemma": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "lemma_is_multiword": {
+      "type": "boolean"
+    },
+    "multiword_reason": {
+      "type": "string"
+    },
+    "no_root_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pos": {
+      "enum": [
+        "noun",
+        "particle",
+        "proper_noun",
+        "verb"
+      ]
+    },
+    "risk_flags": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 0,
+      "type": "array"
+    },
+    "root": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schema": {
+      "const": "fusha/largelexicon/lemma-source@2"
+    },
+    "source_keys": {
+      "items": {
+        "pattern": "^[nvp][0-9]{3,4}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "entry_id",
+    "source_keys",
+    "lemma",
+    "root",
+    "no_root_reason",
+    "pos",
+    "forms",
+    "gloss_hint",
+    "risk_flags"
+  ],
+  "title": "Largelexicon lemma-source row @2",
+  "type": "object"
+}
