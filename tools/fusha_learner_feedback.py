@@ -20,13 +20,32 @@ if hasattr(sys.stdout, "reconfigure"):
 _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, _REPO)
 from tools import leak_sot  # noqa: E402
-from tools.fusha_check import IRAB_SENSITIVE_ISSUE_CLASSES, GATE_ALIAS  # noqa: E402
+from tools.fusha_check import IRAB_SENSITIVE_ISSUE_CLASSES, GATE_ALIAS, ISSUE_ROUTE  # noqa: E402
 
 SCHEMA = "fusha/learner-feedback-event@1"
 KC_CATALOG_PATH = os.path.join(_REPO, "curriculum", "kc-catalog.json")
 _PUBLIC_BOUNDARY = {"public_gloss_src": "qamus", "public_gloss_kind": "authored",
                     "public_gloss_lang": "en", "external_source_names_public": False}
 _RAWW_CLASSES = {"governor_not_justified", "weak_irab_reasoning"}
+
+# KC-COVERAGE CONTRACT (RM-45): every checker ISSUE_ROUTE class must map to a Knowledge Component (via a KC's
+# `diagnostic_classes`) OR carry an explicit, documented no-KC reason here. The escape hatch exists so a purely
+# infrastructural class can be recorded as "intentionally not a learner KC" instead of silently uncovered — it is
+# NOT a place to park a teachable grammar class. Keep it empty unless a class genuinely has no learner competency.
+# The self-test below asserts full coverage; `curriculum/kc-catalog.json` is the single source of truth for the KCs.
+NO_KC_REASON = {}
+
+
+def issue_route_kc_coverage(by_class):
+    """Return (covered, uncovered) ISSUE_ROUTE classes. A class is covered when some KC lists it in
+    `diagnostic_classes` OR it has an explicit NO_KC_REASON entry. Pure; used by the self-test and callers."""
+    covered, uncovered = [], []
+    for cls in sorted(ISSUE_ROUTE):
+        if cls in by_class or cls in NO_KC_REASON:
+            covered.append(cls)
+        else:
+            uncovered.append(cls)
+    return covered, uncovered
 
 
 def load_kc_catalog(path=KC_CATALOG_PATH):
@@ -102,6 +121,10 @@ def _self_test():
     from tools import fusha_text_check as TC  # lazy
     _kcs, by_class = load_kc_catalog()
     failures = []
+    # KC-COVERAGE ASSERTION (RM-45): every ISSUE_ROUTE class -> a KC or an explicit no_kc_reason.
+    _covered, _uncovered = issue_route_kc_coverage(by_class)
+    for cls in _uncovered:
+        failures.append("ISSUE_ROUTE class %r has neither a KC (diagnostic_classes) nor an explicit no_kc_reason" % cls)
     inputs = ["وبالكتابِ", "علم نور", "كتابُهم جديدٌ", "من يقرأ", "العِلمُ نور"]
     seen_classes = set()
     for raw in inputs:

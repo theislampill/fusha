@@ -33,7 +33,7 @@ The **source-address + state graphs are the transmission** that connects engine 
 
 ## Learner path (cart pulled by engine)
 A learner picks a root → reads the Qamus entry → studies the forms (sarf) → reads example āyāt with hover (engine
-resolves each token) → drills (generated from the entry + hover state) → errors map back to the exact sarf/nahw
+resolves each token) → drills (authored from the entry + hover state, following the answer-key rows — never machine-generated; see PD-8) → errors map back to the exact sarf/nahw
 procedure. `curriculum/zero-to-fluency-roadmap.md` sequences this from script to independent Fusha reading.
 
 The engine is MCP-free and portable: install it (`INSTALL.md`) and point it at any Qamus or corpus.

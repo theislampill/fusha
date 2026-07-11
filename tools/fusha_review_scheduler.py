@@ -184,12 +184,41 @@ def is_due(state, now_day):
     return int(now_day) >= int(state.get("due_day", 0))
 
 
-def select_due(states, now_day):
+def _interleave(ids, group_key):
+    """Round-robin a priority-ordered id list across its groups, preserving each group's internal priority order.
+    Buckets are keyed by first appearance so the output is fully deterministic. Pure."""
+    buckets = {}
+    order = []
+    for i in ids:
+        g = group_key(i)
+        if g not in buckets:
+            buckets[g] = []
+            order.append(g)
+        buckets[g].append(i)
+    queues = [buckets[g] for g in order]
+    out = []
+    while any(queues):
+        for q in queues:
+            if q:
+                out.append(q.pop(0))
+    return out
+
+
+def select_due(states, now_day, interleave=False, group_key=None):
     """Return the keys of due items, ordered deterministically: most-overdue first, then lowest box, then key.
-    `states` is {item_id: state}. Pure."""
+    `states` is {item_id: state}. Pure.
+
+    interleave=False (DEFAULT) is byte-identical to the original single-priority order. interleave=True WITH a
+    `group_key` (item_id -> group, e.g. its level/topic) round-robins the due items across their groups so one topic
+    does not dominate a whole review session — an interleaving/spacing benefit, and the natural order for a
+    cumulative-review session. interleave=True with no `group_key` has no grouping signal and falls back to the base
+    order. The interleaved result is always a permutation of the same due set; nothing is dropped or added."""
     due = [(k, v) for k, v in states.items() if is_due(v, now_day)]
     due.sort(key=lambda kv: (-(now_day - int(kv[1].get("due_day", 0))), int(kv[1].get("box", 0)), kv[0]))
-    return [k for k, _ in due]
+    ordered = [k for k, _ in due]
+    if interleave and group_key is not None:
+        return _interleave(ordered, group_key)
+    return ordered
 
 
 def _self_test():
@@ -338,6 +367,26 @@ def _self_test():
     mig = schedule(leit, gr(True), 50, mode="sm2")
     if mig["interval"] < 1 or mig["due_day"] <= 50 or mig["reps"] != 1:
         failures.append("sm2 migration of a Leitner state must start fresh (interval>=1, reps=1), got %s" % mig)
+
+    # 18. INTERLEAVED select_due (ADDITIVE, DEFAULT-OFF): with interleave=True + a group_key, the due items are
+    #     round-robined across their groups so one topic does not block a whole session (interleaving/spacing benefit).
+    #     interleave=False stays byte-identical to the un-interleaved order; the result is always a permutation of the
+    #     same due set. Deterministic (buckets keyed by first appearance; priority order preserved inside each bucket).
+    clustered = {"a1": {"box": 1, "due_day": 0, "reps": 2, "lapses": 0},
+                 "a2": {"box": 1, "due_day": 0, "reps": 2, "lapses": 0},
+                 "b1": {"box": 1, "due_day": 0, "reps": 2, "lapses": 0},
+                 "b2": {"box": 1, "due_day": 0, "reps": 2, "lapses": 0}}
+    base = select_due(clustered, 5)
+    if select_due(clustered, 5, interleave=False) != base:
+        failures.append("interleave=False must be byte-identical to the default select_due order")
+    inter = select_due(clustered, 5, interleave=True, group_key=lambda k: k[0])
+    if sorted(inter) != sorted(base):
+        failures.append("interleave must be a permutation of the same due set, got %s vs %s" % (inter, base))
+    if any(inter[i][0] == inter[i + 1][0] for i in range(len(inter) - 1)):
+        failures.append("interleave=True must not place two same-group items adjacent, got %s" % inter)
+    # interleave without a group_key is a no-op (no grouping information) -> base order
+    if select_due(clustered, 5, interleave=True) != base:
+        failures.append("interleave=True with no group_key must fall back to the base order")
 
     for f in failures:
         print("FAIL " + f)

@@ -3355,7 +3355,12 @@ try:
                      os.path.join(ROOT, "curriculum", "drills", "keys", "quranic-function-words.keys.jsonl"),
                      os.path.join(ROOT, "curriculum", "drills", "keys", "morphology-foundations.keys.jsonl"),
                      os.path.join(ROOT, "curriculum", "drills", "keys", "root-pattern-practice.keys.jsonl"),
-                     os.path.join(ROOT, "curriculum", "drills", "keys", "sentence-foundations.keys.jsonl")])
+                     os.path.join(ROOT, "curriculum", "drills", "keys", "sentence-foundations.keys.jsonl"),
+                     # RM-45: the highest-traffic composition/closure/routing drills, now keyed (>=8/20 drills keyed).
+                     os.path.join(ROOT, "curriculum", "drills", "keys", "hover-composition-and-routing.keys.jsonl"),
+                     os.path.join(ROOT, "curriculum", "drills", "keys", "parse-key-and-color-layer.keys.jsonl"),
+                     os.path.join(ROOT, "curriculum", "drills", "keys", "vn00-aggressive-hover-closure.keys.jsonl"),
+                     os.path.join(ROOT, "curriculum", "drills", "keys", "plan15-route-families.keys.jsonl")])
     check("P1-4 drill answer-key fixtures validate (0 violations)", _q2b.returncode == 0)
     _q3 = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_eval_coverage.py"), "--self-test"])
     check("P1-5 eval-bank coverage reporter self-test (per-bank counts; runner-gap; report-only)", _q3.returncode == 0)

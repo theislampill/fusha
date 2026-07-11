@@ -102,6 +102,27 @@ def _form_matches(form, answer, thresh=MATCH_COVERAGE):
     return hit / len(toks) >= thresh
 
 
+def _ordered_slots_ok(slots, answer):
+    """RELATION-DIRECTION guard: every slot substring must appear in the answer AND in the given order. Token-coverage
+    matching (_form_matches) is order-blind, so an answer that reverses a relation ("the noun governs the preposition"
+    vs "the preposition governs the noun") shares the same bag of words and would falsely match. Requiring the slots in
+    sequence makes the direction load-bearing. A row with no `ordered_slots` is unconstrained (returns True) — the guard
+    is purely additive. Deterministic; normalizes with the same recall normalizer used for answer matching."""
+    if not slots:
+        return True
+    ans = _norm(answer)
+    pos = -1
+    for s in slots:
+        ns = _norm(s)
+        if not ns:
+            continue
+        idx = ans.find(ns, pos + 1)
+        if idx < 0:
+            return False
+        pos = idx
+    return True
+
+
 # --------------------------------------------------------------------------- grading (content-only, no self-report)
 # The closed set of payload keys the grader reads. A self-reported correctness flag is deliberately NOT here.
 GRADE_INPUT_KEYS = ("answer", "reasoning", "second_check")
@@ -117,7 +138,10 @@ def grade(row, payload):
     second = payload.get("second_check") if isinstance(payload, dict) else None
 
     expected_set = [row.get("expected_answer", "")] + list(row.get("accepted_variants", []) or [])
-    passed = any(_form_matches(v, answer) for v in expected_set)
+    # Content coverage of the authored key AND (when the row declares them) the relational slots in order — so an
+    # answer that inverts the relation cannot clear on the shared bag of words alone. Ordered-slot matching is additive:
+    # a row without `ordered_slots` is graded exactly as before.
+    passed = any(_form_matches(v, answer) for v in expected_set) and _ordered_slots_ok(row.get("ordered_slots"), answer)
     forbidden_hit = _contains_any(answer, row.get("forbidden_answers", []))
     joined_reasoning = " \n ".join(reasoning or []) if isinstance(reasoning, list) else str(reasoning or "")
     missing = [req for req in (row.get("required_reasoning", []) or [])
@@ -195,13 +219,20 @@ def _bank_index(bank):
     return {r["id"]: r for r in bank}
 
 
-def select_next(bank, progress, now_day):
+def select_next(bank, progress, now_day, interleave=False):
     """Pick the next checkpoint id deterministically: a due REVIEW (already-seen, due) first, else the next NEW item
-    in bank order, else the soonest-due seen item. Returns (item_id, reason) or (None, 'bank empty')."""
+    in bank order, else the soonest-due seen item. Returns (item_id, reason) or (None, 'bank empty').
+
+    interleave=True round-robins the due reviews across their roadmap levels (via the scheduler's interleave option),
+    so a cumulative-review session does not replay one level in a block. Default (False) keeps the single-priority
+    order. The chosen item is unchanged in kind; only the ORDER of equally-due reviews differs."""
     states = progress.get("items", {})
     seen = set(states)
+    level_of = {r["id"]: str(r.get("level", "")) for r in bank}
     # due reviews among already-seen items (reps>0)
-    due_reviews = [i for i in SCHED.select_due(states, now_day) if int(states.get(i, {}).get("reps", 0)) > 0]
+    due_reviews = [i for i in SCHED.select_due(states, now_day, interleave=interleave,
+                                               group_key=(lambda i: level_of.get(i, "")) if interleave else None)
+                   if int(states.get(i, {}).get("reps", 0)) > 0]
     if due_reviews:
         return due_reviews[0], "due_review"
     for r in bank:                                   # first unseen item, in bank order
@@ -291,6 +322,8 @@ def main():
     ap.add_argument("--write", action="store_true", help="PERSIST progress + append the event (otherwise dry-run)")
     ap.add_argument("--grammar-bridge", action="store_true",
                     help="ADDITIVE: also report agreement with tools/grade_grammar_reasoning (does not change grading)")
+    ap.add_argument("--interleave", action="store_true",
+                    help="round-robin due reviews across roadmap levels (a cumulative-review session; default off)")
     ap.add_argument("--self-test", action="store_true")
     a = ap.parse_args()
     if a.self_test:
@@ -305,16 +338,17 @@ def main():
     progress["now_day"] = a.now
 
     if a.select or not a.answer:
-        item_id, reason = select_next(bank, progress, a.now)
+        item_id, reason = select_next(bank, progress, a.now, interleave=a.interleave)
         if not item_id:
             print(json.dumps({"next": None, "reason": reason}, ensure_ascii=False)); return 0
         row = idx[item_id]
         print(json.dumps({"next": item_id, "reason": reason, "level": row.get("level"),
+                          "row_type": row.get("row_type", "checkpoint"),
                           "prompt": row.get("prompt"), "two_vote_required": bool(row.get("two_vote_required"))},
                          ensure_ascii=False))
         return 0
 
-    item_id = a.item or select_next(bank, progress, a.now)[0]
+    item_id = a.item or select_next(bank, progress, a.now, interleave=a.interleave)[0]
     if item_id not in idx:
         print("ERROR: unknown checkpoint id %r" % item_id); return 2
     row = idx[item_id]
@@ -381,6 +415,19 @@ def _authored_bank():
          "required_reasoning": ["content-letter harakah read"], "sarf_procedure": None,
          "nahw_procedure": "nahw/procedures/particle-decision.md",
          "remediation_route": "nahw/drills/dogfood-nahw-remediation.md", "two_vote_required": True},
+        # Adversarial RELATION-INVERSION row: a right/governed pair whose DIRECTION is the whole point. Its
+        # `ordered_slots` pin the relational order ("preposition ... governs ... noun") so an inverted answer with the
+        # same bag of words cannot clear on token coverage alone; `forbidden_answers` also names the flipped phrasing.
+        {"id": "T3-relation-inversion", "level": "6", "concept": "governor direction (which word governs which)",
+         "prompt": "State which word is the governor and which is governed, in that order.",
+         "quran_example": None,
+         "expected_answer": "the preposition governs the noun, so the noun is the governed word",
+         "accepted_variants": ["the preposition is the governor and governs the noun"],
+         "forbidden_answers": ["the noun governs the preposition", "the noun is the governor and the preposition is governed"],
+         "required_reasoning": ["governor named", "governed word named"],
+         "ordered_slots": ["preposition", "governs", "noun"],
+         "sarf_procedure": None, "nahw_procedure": "nahw/procedures/irab-case-mood.md",
+         "remediation_route": "nahw/drills/dogfood-nahw-remediation.md", "two_vote_required": False},
     ]
 
 
@@ -433,6 +480,25 @@ def _self_test():
     b = step(idx["T1-objective"], None, p_full, 3)["event"]
     if json.dumps(a, sort_keys=True) != json.dumps(b, sort_keys=True):
         failures.append("non-deterministic event output")
+
+    # 7b. RELATION-INVERSION guard (ASAG): an answer with the right bag of words but the relation REVERSED must not
+    #     clear. The correct-direction answer clears; a forbidden-listed inversion is caught; and a PARAPHRASED
+    #     inversion not in forbidden_answers is still caught by ordered-slot matching (order, not just membership).
+    ok_dir = step(idx["T3-relation-inversion"], None,
+                  {"answer": "the preposition governs the noun, so the noun is the governed word",
+                   "reasoning": ["governor named", "governed word named"]}, now_day=0)
+    if not ok_dir["grade"]["cleared"]:
+        failures.append("correct-direction relation answer should clear, got %s" % ok_dir["grade"])
+    inv_forbidden = step(idx["T3-relation-inversion"], None,
+                         {"answer": "the noun governs the preposition and the preposition is governed",
+                          "reasoning": ["governor named", "governed word named"]}, now_day=0)
+    if inv_forbidden["grade"]["cleared"]:
+        failures.append("relation-inverted answer (forbidden-listed) must NOT clear, got %s" % inv_forbidden["grade"])
+    inv_paraphrase = step(idx["T3-relation-inversion"], None,
+                          {"answer": "here the noun governs, and the preposition is the word governed by it",
+                           "reasoning": ["governor named", "governed word named"]}, now_day=0)
+    if inv_paraphrase["grade"]["passed"] or inv_paraphrase["grade"]["cleared"]:
+        failures.append("ordered-slot guard must fail a paraphrased relation inversion, got %s" % inv_paraphrase["grade"])
 
     # 8. NO write without --write: simulate a dry run by calling main() over a temp dir and asserting no file appears
     with tempfile.TemporaryDirectory() as td:
@@ -491,6 +557,30 @@ def _self_test():
     bb = grammar_bridge_check(idx["T1-objective"], g_wrong_reason)
     if g_wrong_reason["cleared"] or bb["eval_pass"] or not bb["agree"]:
         failures.append("bridge must agree-on-HOLD for right-answer-wrong-reason, got %s / %s" % (g_wrong_reason, bb))
+
+    # 12. CUMULATIVE-REVIEW row type + interleaved selection: a row carrying row_type="cumulative_review" is graded by
+    #     CONTENT exactly like any checkpoint (row_type is descriptive, never a grading input); and select_next accepts
+    #     interleave=True (a cumulative-review session round-robins due reviews across roadmap levels via the scheduler).
+    cum_row = {"id": "CUM-1", "level": "8", "row_type": "cumulative_review",
+               "concept": "cumulative review across prior levels",
+               "prompt": "recall the article, the passive, and mā's function together",
+               "expected_answer": "the article marks definiteness, the passive keeps its voice, and ma is decided by context",
+               "accepted_variants": ["definiteness from the article; passive voice kept; ma function from context"],
+               "forbidden_answers": ["these never interact"], "required_reasoning": ["three prior concepts recalled"],
+               "two_vote_required": False}
+    rc = step(cum_row, None, {"answer": "the article marks definiteness, the passive keeps its voice, and ma is decided by context",
+                              "reasoning": ["three prior concepts recalled"]}, now_day=0)
+    if not rc["grade"]["cleared"]:
+        failures.append("cumulative_review row must grade by content like any row, got %s" % rc["grade"])
+    cum_bank = [{"id": "L3a", "level": "3"}, {"id": "L3b", "level": "3"},
+                {"id": "L5a", "level": "5"}, {"id": "L5b", "level": "5"}]
+    prog_cum = {"items": {r["id"]: {"box": 1, "due_day": 0, "reps": 2, "lapses": 0} for r in cum_bank}}
+    nid, why = select_next(cum_bank, prog_cum, 5, interleave=True)
+    if nid is None or why != "due_review":
+        failures.append("interleaved select_next should pick a due review, got %s/%s" % (nid, why))
+    # interleave must not change the SET of reachable items — same next-pick invariants as the default path
+    if select_next(cum_bank, prog_cum, 5, interleave=False)[1] != "due_review":
+        failures.append("default select_next should also pick a due review for the cumulative bank")
 
     for f in failures:
         print("FAIL " + f)

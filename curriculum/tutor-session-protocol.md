@@ -39,6 +39,41 @@ log and tell me what to review next.
 8. Update the progress file with pass/fail, remediation, and next step.
 9. Prefer `pending / not yet certified` over confident guessing.
 
+## Runtime commands (the deterministic loop)
+
+The prose loop above is executable through `tools/fusha_tutor_runtime.py` (offline, deterministic, schema-graded —
+never self-report). "Now" is an explicit integer day index; nothing is persisted without `--write`.
+
+1. **Pick the next item** (a due review, else the next new item):
+
+   ```text
+   python tools/fusha_tutor_runtime.py --select --now <day>
+   ```
+
+   Add `--interleave` to round-robin due reviews across roadmap levels (a cumulative-review session). The output
+   names the item, its `level`, and its `row_type` (`checkpoint` or `cumulative_review`).
+
+2. **Grade a cold answer** against the answer key/rubric (content only, not confidence):
+
+   ```text
+   python tools/fusha_tutor_runtime.py --item <id> --answer <answer.json|-|'{"answer":...}'> --now <day>
+   ```
+
+   The answer payload is `{answer, reasoning:[...], second_check:{conclusion_agrees, reason_agrees}|null}`. A
+   `two_vote_required` row stays `pending` (held, never cleared) until an agreeing `second_check` is supplied — this
+   is the executable form of the Hard-Grammar Escalation below. A relation-inverted answer is caught by the row's
+   `ordered_slots` / `forbidden_answers`, so it cannot clear on word overlap alone.
+
+3. **Persist progress + append the event** only when you pass `--write`:
+
+   ```text
+   python tools/fusha_tutor_runtime.py --item <id> --answer <...> --now <day> \
+     --progress <progress.json> --event-log <events.jsonl> --write
+   ```
+
+   Without `--write` the run is a dry run and mutates no file. The scheduler (Leitner by default) promotes only on a
+   full pass; a right-answer-wrong-reason or a pending two-vote is held and re-queued soon.
+
 ## Hard Grammar Escalation
 
 Require two independent checks when an item depends on:
