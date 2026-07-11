@@ -199,4 +199,11 @@ def main():
     print("INVARIANT OK: 2092 rows, sections reconcile to public")
 
 if __name__=="__main__":
+    _argv = __import__("sys").argv
+    _d11_read_only = any(flag in _argv[1:] for flag in ("--self-test", "--fixture"))
+    if "--write" in _argv[1:]:
+        _argv.remove("--write")
+    elif not _d11_read_only:
+        print("DRY RUN: would write matrix; os.path.join(REPORTS, 'qamus-2092-audit-completion.md'); os.path.join(REPORTS, 'qamus-2092-terminal-scoreboard.md'); pass --write to apply")
+        raise SystemExit(0)
     main()

@@ -145,4 +145,11 @@ def main():
           % (summ["root_derivable_pct"], summ["pos_derivable_pct"], summ["particles"], summ["particles_with_function_decision"]))
 
 if __name__ == "__main__":
+    _argv = __import__("sys").argv
+    _d11_read_only = any(flag in _argv[1:] for flag in ("--self-test", "--fixture"))
+    if "--write" in _argv[1:]:
+        _argv.remove("--write")
+    elif not _d11_read_only:
+        print("DRY RUN: would write os.path.join(OUTDIR, f'hover-grammar-metadata-audit-{DATE}.json'); os.path.join(OUTDIR, f'hover-grammar-metadata-audit-{DATE}.jsonl'); os.path.join(OUTDIR, f'hover-grammar-metadata-audit-{DATE}.md'); os.path.join(OUTDIR, filename); pass --write to apply")
+        raise SystemExit(0)
     main()

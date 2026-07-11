@@ -1,3 +1,4 @@
+# ATTIC (D-11): unreferenced at 446a536a; preserved for history; do not run in production paths
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Regenerate qamus/reports/retake-source-photo-requests.md from the entry audit dump (read-only).

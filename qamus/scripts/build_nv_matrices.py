@@ -80,4 +80,11 @@ def build():
 
 
 if __name__ == "__main__":
+    _argv = __import__("sys").argv
+    _d11_read_only = any(flag in _argv[1:] for flag in ("--self-test", "--fixture"))
+    if "--write" in _argv[1:]:
+        _argv.remove("--write")
+    elif not _d11_read_only:
+        print("DRY RUN: would write os.path.join(repdir, '%s-hover-audit.md' % name[:-1]); os.path.join(repdir, '%s-proofing-matrix.json' % name[:-1]); os.path.join(repdir, '%s-proofing-matrix.md' % name[:-1]); pass --write to apply")
+        raise SystemExit(0)
     build()

@@ -193,4 +193,11 @@ def main():
     return 0
 
 if __name__ == "__main__":
+    _argv = __import__("sys").argv
+    _d11_read_only = any(flag in _argv[1:] for flag in ("--self-test", "--fixture"))
+    if "--write" in _argv[1:]:
+        _argv.remove("--write")
+    elif not _d11_read_only:
+        print("DRY RUN: would write hover_jsonl; os.path.join(OUT, f'live-hover-vs-repo-reconciliation-{DATE}.md'); os.path.join(OUT, f'live-public-entry-crawl-summary-{DATE}.json'); os.path.join(OUT, f'live-vs-repo-entry-reconciliation-{DATE}.md'); pass --write to apply")
+        raise SystemExit(0)
     sys.exit(main())

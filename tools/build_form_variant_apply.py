@@ -72,4 +72,11 @@ def main():
     print("families:", ", ".join("%s=%s" % (k, v) for k, v in list(approved.items())[:12]))
 
 if __name__ == "__main__":
+    _argv = __import__("sys").argv
+    _d11_read_only = any(flag in _argv[1:] for flag in ("--self-test", "--fixture"))
+    if "--write" in _argv[1:]:
+        _argv.remove("--write")
+    elif not _d11_read_only:
+        print("DRY RUN: would write base + '.jsonl'; base + '.provenance.jsonl'; pass --write to apply")
+        raise SystemExit(0)
     main()

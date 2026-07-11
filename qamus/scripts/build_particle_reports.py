@@ -108,4 +108,11 @@ def build():
 
 
 if __name__ == "__main__":
+    _argv = __import__("sys").argv
+    _d11_read_only = any(flag in _argv[1:] for flag in ("--self-test", "--fixture"))
+    if "--write" in _argv[1:]:
+        _argv.remove("--write")
+    elif not _d11_read_only:
+        print("DRY RUN: would write os.path.join(IDX, 'quran_usage_spine.json'); os.path.join(REP, 'particle-hover-audit.md'); os.path.join(REP, 'particle-proofing-matrix.json'); os.path.join(REP, 'particle-proofing-matrix.md'); os.path.join(ROOT, 'qamus', 'reports', 'quran-usage-spine-report.md'); pass --write to apply")
+        raise SystemExit(0)
     build()

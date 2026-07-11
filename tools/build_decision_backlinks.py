@@ -191,4 +191,11 @@ def main():
 
 
 if __name__ == "__main__":
+    _argv = __import__("sys").argv
+    _d11_read_only = any(flag in _argv[1:] for flag in ("--self-test", "--fixture"))
+    if "--write" in _argv[1:]:
+        _argv.remove("--write")
+    elif not _d11_read_only:
+        print("DRY RUN: would write os.path.join(IDXDIR, 'decision_backlinks.json'); os.path.join(REP, 'duplicate-avoidance-report.md'); os.path.join(REP, 'source-address-usage-report.md'); os.path.join(REP, 'xanadu-source-graph-completion.md'); pass --write to apply")
+        raise SystemExit(0)
     main()

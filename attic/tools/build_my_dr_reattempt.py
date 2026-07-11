@@ -1,3 +1,4 @@
+# ATTIC (D-11): unreferenced at 446a536a; preserved for history; do not run in production paths
 #!/usr/bin/env python3
 """Phase 1 — MY re-attempt of the five deep-research approaches against the CURRENT tree.
 

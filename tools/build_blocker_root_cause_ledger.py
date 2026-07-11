@@ -369,4 +369,11 @@ def main():
     print("family-unlock tokens=%d families=%d" % (sum(t for _,_,t in fam_rows), len(fam_rows)))
 
 if __name__ == "__main__":
+    _argv = __import__("sys").argv
+    _d11_read_only = any(flag in _argv[1:] for flag in ("--self-test", "--fixture"))
+    if "--write" in _argv[1:]:
+        _argv.remove("--write")
+    elif not _d11_read_only:
+        print("DRY RUN: would write os.path.join(OUTDIR, 'blocker-root-cause-ledger.jsonl'); os.path.join(OUTDIR, 'blocker-root-cause-ledger.md'); os.path.join(OUTDIR, 'blocker-root-cause-summary.json'); pass --write to apply")
+        raise SystemExit(0)
     main()

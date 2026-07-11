@@ -1,3 +1,4 @@
+# ATTIC (D-11): unreferenced at 446a536a; preserved for history; do not run in production paths
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Phase 1/4 — emit the five deep-research approach reattempt reports + the three Phase-4 lane-readiness
