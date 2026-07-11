@@ -4643,6 +4643,20 @@ for _script, _marker, _label in (
         check(_label + " (harness error)", False)
         print("  ", _e)
 
+# --- RM-21 schema-coherence unification gate ---
+# Single gate block: gate-enum unification (fanout_gate<->binding_gate alias table),
+# qg class-map 3-way drift, source_key semantic-fork disambiguation, surface_norm
+# normalizer pinning, and the cross-schema disjoint same-name enum-field lint. The
+# --self-test proves each lint red-first via in-memory mutations.
+try:
+    _rm21_sc = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_schema_coherence.py"),
+                         "--self-test"], timeout=120)
+    check("RM-21 schema-coherence self-test (gate-enum/qg-drift/source_key/surface_norm/cross-field; red-first)",
+          _rm21_sc.returncode == 0 and "schema coherence self-test OK" in (_rm21_sc.stdout or ""))
+except Exception as _rm21_e:
+    check("RM-21 schema-coherence self-test (harness error)", False)
+    print("  ", _rm21_e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

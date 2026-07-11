@@ -100,7 +100,7 @@
         "lemma_pattern_pos",
         "function_context"
       ],
-      "description": "Orthogonal gate type. There is deliberately NO surface-only value: 'surface-only is never a gate' is enforced as a validator rule, and any legacy never_surface_only value FAILs the enum."
+      "description": "Orthogonal authorization gate type (RM-21 unified authorization enum). The canonical authorization vocabulary is source_address_exact | certified_lemma | certified_pattern | function_context (the binding_gate / payload_family spelling). This schema keeps the fused legacy spelling lemma_pattern_pos, an ALIAS equivalent to certified_lemma + certified_pattern combined (it certifies lemma+pattern+pos in one gate); source_address_exact and function_context are shared canonically. Migration: NO data regeneration -- committed rows keep lemma_pattern_pos; the alias table (tools/validate_schema_coherence.py CANONICAL_GATE + GATE_ALIASES) declares the equivalence and the coherence lint pins both spellings so neither drifts. There is deliberately NO surface-only value: 'surface-only is never a gate' is enforced as a validator rule, and any legacy never_surface_only value FAILs the enum."
     },
     "evidence_scope": {
       "type": [
