@@ -1,0 +1,758 @@
+{
+  "baseline_head": "446a536a432cc819ddfcfcf1bd61dd7601996c94",
+  "counts": {
+    "co_citation_bindings_promoted": 47,
+    "co_citation_locations_promoted": 19,
+    "normalization_rows_promoted": 0,
+    "normalization_rows_routed_to_review": 3,
+    "unique_residue_rows_dispositioned": 51
+  },
+  "decision_sha256": "42a53cad1a2ce8c4467af0054d88e8647b4060e921c252e153879228e8397127",
+  "disposition_counts": {
+    "morphline_missing": 2,
+    "normalization_mismatch": 45,
+    "quarantined_nf_t10_1": 4
+  },
+  "generated_at": "2026-07-11T14:01:24Z",
+  "generated_by": "tools/resolve_gap_residue_wave.py",
+  "normalization_decisions": [
+    {
+      "canonical_location": "4:171:35",
+      "evidence": {
+        "bare_equal": false,
+        "indexed_location_surface": null,
+        "live_surface": "إِنَّمَا",
+        "norm_strict_equal": false,
+        "source_location_present": false
+      },
+      "failure_family": "normalization_equivalence_unproved",
+      "next_action": "normalization_review",
+      "status": "routed_to_review"
+    },
+    {
+      "canonical_location": "4:171:37",
+      "evidence": {
+        "bare_equal": false,
+        "indexed_location_surface": null,
+        "live_surface": "إِلَٰهٌ",
+        "norm_strict_equal": false,
+        "source_location_present": false
+      },
+      "failure_family": "normalization_equivalence_unproved",
+      "next_action": "normalization_review",
+      "status": "routed_to_review"
+    },
+    {
+      "canonical_location": "4:171:38",
+      "evidence": {
+        "bare_equal": false,
+        "indexed_location_surface": null,
+        "live_surface": "وَاحِدٌ",
+        "norm_strict_equal": false,
+        "source_location_present": false
+      },
+      "failure_family": "normalization_equivalence_unproved",
+      "next_action": "normalization_review",
+      "status": "routed_to_review"
+    }
+  ],
+  "promotions": [
+    {
+      "binding_count": 2,
+      "canonical_location": "2:98:8",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-30f45f08fa14-01-01-008",
+        "llx-qword-f7345eda41d2-01-01-008"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "5:73:8",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-68e87fcb398a-02-02-008",
+        "llx-qword-85d4f8dee30f-01-04-004"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 8,
+      "canonical_location": "6:84:17",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-057e65ab8afe-01-01-020",
+        "llx-qword-2e7215edde83-01-01-020",
+        "llx-qword-441ece421c97-01-01-020",
+        "llx-qword-7dc7f5ba6312-01-01-020",
+        "llx-qword-87095fd7b90e-01-01-020",
+        "llx-qword-a97d723c462a-01-01-020",
+        "llx-qword-c943c7b91ee4-01-01-020",
+        "llx-qword-e33ad128388e-01-01-020"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 3,
+      "canonical_location": "6:85:2",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-28bbf28ac7c5-01-01-002",
+        "llx-qword-be1270d76fd3-01-01-002",
+        "llx-qword-f9d7017c7409-01-01-002"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 3,
+      "canonical_location": "6:85:3",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-28bbf28ac7c5-01-01-003",
+        "llx-qword-be1270d76fd3-01-01-003",
+        "llx-qword-f9d7017c7409-01-01-003"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "9:72:13",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-2f4151b667e5-01-01-013",
+        "llx-qword-76ae70642fdb-01-06-013"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "18:94:14",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-46f84d2119ca-01-01-014",
+        "llx-qword-8c16a3931901-01-01-014"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "20:124:3",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-b4629374212c-01-01-003",
+        "llx-qword-d385fc22377a-01-02-003"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "30:55:3",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-4a4f8ecf8bf0-01-02-003",
+        "llx-qword-9355ada290e6-01-01-003"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "30:55:9",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-4a4f8ecf8bf0-01-02-009",
+        "llx-qword-9355ada290e6-01-01-009"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "37:62:5",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-574e9aa7d485-01-01-005",
+        "llx-qword-91b88d81e170-01-02-001"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "54:13:2",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-15bf9952d336-02-01-002",
+        "llx-qword-5d641a99a8e2-01-01-002"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "55:48:1",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-2c61963db8b2-02-02-001",
+        "llx-qword-ed096258aa69-01-01-001"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "55:76:2",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-470a480fc404-01-01-002",
+        "llx-qword-df63a7b7f509-01-01-002"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "58:9:14",
+      "classification": "same_entry_multi_card",
+      "qword_row_ids": [
+        "llx-qword-5b382a023db8-02-02-014",
+        "llx-qword-5b382a023db8-02-03-014"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "69:32:3",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-49c483230e4a-01-01-003",
+        "llx-qword-f2adca16c84e-01-01-003"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "74:30:2",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-99b49971385c-01-04-002",
+        "llx-qword-ce12698e1d42-01-03-002"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 2,
+      "canonical_location": "78:32:1",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-0df50aa355f4-01-02-001",
+        "llx-qword-9265abb99ebf-01-01-001"
+      ],
+      "status": "promoted"
+    },
+    {
+      "binding_count": 3,
+      "canonical_location": "106:2:1",
+      "classification": "same_occurrence_multi_entry_co_citation",
+      "qword_row_ids": [
+        "llx-qword-541ad3d59891-01-01-001",
+        "llx-qword-a15edbe7e166-01-01-001",
+        "llx-qword-f7559baa981e-01-01-001"
+      ],
+      "status": "promoted"
+    }
+  ],
+  "quarantine_ayah_refs": [
+    "12:37",
+    "19:67",
+    "2:214",
+    "2:274",
+    "3:152",
+    "48:15",
+    "4:64",
+    "92:3",
+    "93:3",
+    "98:1"
+  ],
+  "queue_after": {
+    "family_counts": {
+      "in_crosswalk_morphline_repair": 13,
+      "multiple_qword_candidates": 5428,
+      "no_qword_candidate": 10,
+      "unique_qword_candidate": 51
+    },
+    "rows": 5502,
+    "sha256": "d6808796c06a5375d75f04fc832360ed2269bfa1d206ded1550dd82d32bf8c70"
+  },
+  "schema": "qamus/t10-residue-wave-report@1",
+  "state": "finalized",
+  "verification": {
+    "artifact_ergonomics": "pass",
+    "crosswalk_validator": "pass",
+    "diff_check": "pass",
+    "full_harness": {
+      "command": "python tools/check_regressions.py",
+      "failure_count": 0,
+      "final_marker": "ALL REGRESSION CHECKS PASS",
+      "ok_count": 1070,
+      "result": "pass"
+    },
+    "resolver_self_test": "pass"
+  },
+  "unique_residue_dispositions": [
+    {
+      "canonical_location": "2:136:101",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-430015446b77-01-08-001"
+      ],
+      "visible_surface": "قُولُوا"
+    },
+    {
+      "canonical_location": "2:136:102",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-430015446b77-01-08-002"
+      ],
+      "visible_surface": "آمَنَّا"
+    },
+    {
+      "canonical_location": "2:136:103",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-430015446b77-01-08-003"
+      ],
+      "visible_surface": "بِاللَّهِ"
+    },
+    {
+      "canonical_location": "2:152:101",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-ca43414f9b01-01-09-001"
+      ],
+      "visible_surface": "فَٱذْكُرُونِىٓ"
+    },
+    {
+      "canonical_location": "2:152:102",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-ca43414f9b01-01-09-002"
+      ],
+      "visible_surface": "أَذْكُرْكُمْ"
+    },
+    {
+      "canonical_location": "2:170:15",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-cee928fb679c-01-02-001"
+      ],
+      "visible_surface": "أولو"
+    },
+    {
+      "canonical_location": "2:170:16",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-cee928fb679c-01-02-002"
+      ],
+      "visible_surface": "كان"
+    },
+    {
+      "canonical_location": "2:170:17",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-cee928fb679c-01-02-003"
+      ],
+      "visible_surface": "آباؤهم"
+    },
+    {
+      "canonical_location": "2:170:18",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-cee928fb679c-01-02-004"
+      ],
+      "visible_surface": "لا"
+    },
+    {
+      "canonical_location": "2:170:19",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-cee928fb679c-01-02-005"
+      ],
+      "visible_surface": "يعقلون"
+    },
+    {
+      "canonical_location": "2:170:20",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-cee928fb679c-01-02-006"
+      ],
+      "visible_surface": "شيئا"
+    },
+    {
+      "canonical_location": "2:214:1",
+      "failure_family": "quarantined_nf_t10_1",
+      "next_action": "NF-T10-1",
+      "qword_row_ids": [
+        "llx-qword-19de33871698-03-02-001"
+      ],
+      "visible_surface": "أَلَآ"
+    },
+    {
+      "canonical_location": "3:13:15",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-1fd424ee1e74-01-10-001"
+      ],
+      "visible_surface": "يَرَوْنَهُم"
+    },
+    {
+      "canonical_location": "3:13:16",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-1fd424ee1e74-01-10-002"
+      ],
+      "visible_surface": "مِّثْلَيْهِمْ"
+    },
+    {
+      "canonical_location": "3:13:17",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-1fd424ee1e74-01-10-003"
+      ],
+      "visible_surface": "رَأْىَ"
+    },
+    {
+      "canonical_location": "3:13:18",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-1fd424ee1e74-01-10-004"
+      ],
+      "visible_surface": "ٱلْعَيْنِ"
+    },
+    {
+      "canonical_location": "3:86:8",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-049756ecbbf9-07-03-001"
+      ],
+      "visible_surface": "وَشَهِدُوٓا۟"
+    },
+    {
+      "canonical_location": "3:86:9",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-049756ecbbf9-07-03-002"
+      ],
+      "visible_surface": "أَنَّ"
+    },
+    {
+      "canonical_location": "3:86:10",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-049756ecbbf9-07-03-003"
+      ],
+      "visible_surface": "ٱلرَّسُولَ"
+    },
+    {
+      "canonical_location": "3:86:11",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-049756ecbbf9-07-03-004"
+      ],
+      "visible_surface": "حَقٌّۭ"
+    },
+    {
+      "canonical_location": "3:152:8",
+      "failure_family": "quarantined_nf_t10_1",
+      "next_action": "NF-T10-1",
+      "qword_row_ids": [
+        "llx-qword-fcc8279b4b96-02-01-009"
+      ],
+      "visible_surface": "حَتَّىٰٓ"
+    },
+    {
+      "canonical_location": "3:152:28",
+      "failure_family": "quarantined_nf_t10_1",
+      "next_action": "NF-T10-1",
+      "qword_row_ids": [
+        "llx-qword-5c405be976bd-02-03-008"
+      ],
+      "visible_surface": "ٱلْـَٔاخِرَةَ"
+    },
+    {
+      "canonical_location": "4:2:15",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-55de6345c432-01-01-003"
+      ],
+      "visible_surface": "حُوبًۭا"
+    },
+    {
+      "canonical_location": "4:91:102",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-c59a0161fac8-02-03-002"
+      ],
+      "visible_surface": "أَن"
+    },
+    {
+      "canonical_location": "4:91:103",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-c59a0161fac8-02-03-003"
+      ],
+      "visible_surface": "يَأْمَنُوكُمْ"
+    },
+    {
+      "canonical_location": "4:91:104",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-c59a0161fac8-02-03-004"
+      ],
+      "visible_surface": "وَيَأْمَنُوا۟"
+    },
+    {
+      "canonical_location": "4:91:105",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-c59a0161fac8-02-03-005"
+      ],
+      "visible_surface": "قَوْمَهُمْ"
+    },
+    {
+      "canonical_location": "7:11:7",
+      "failure_family": "morphline_missing",
+      "next_action": "lane_d_authoring",
+      "qword_row_ids": [
+        "llx-qword-4c40b7dda389-01-01-007"
+      ],
+      "visible_surface": "لِلْمَلَٰٓئِكَةِ"
+    },
+    {
+      "canonical_location": "7:39:3",
+      "failure_family": "morphline_missing",
+      "next_action": "lane_d_authoring",
+      "qword_row_ids": [
+        "llx-qword-0131159a9456-01-06-003"
+      ],
+      "visible_surface": "لِأُخْرَىٰهُمْ"
+    },
+    {
+      "canonical_location": "17:15:101",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-60fa5302aa68-01-05-001"
+      ],
+      "visible_surface": "مَّنِ"
+    },
+    {
+      "canonical_location": "17:15:102",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-60fa5302aa68-01-05-002"
+      ],
+      "visible_surface": "ٱهْتَدَىٰ"
+    },
+    {
+      "canonical_location": "17:15:103",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-60fa5302aa68-01-05-003"
+      ],
+      "visible_surface": "فَإِنَّمَا"
+    },
+    {
+      "canonical_location": "17:15:104",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-60fa5302aa68-01-05-004"
+      ],
+      "visible_surface": "يَهْتَدِى"
+    },
+    {
+      "canonical_location": "17:15:105",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-60fa5302aa68-01-05-005"
+      ],
+      "visible_surface": "لِنَفْسِهِۦ"
+    },
+    {
+      "canonical_location": "20:14:9",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-ca43414f9b01-01-17-001"
+      ],
+      "visible_surface": "وَأَقِمِ"
+    },
+    {
+      "canonical_location": "20:14:11",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-ca43414f9b01-01-17-003"
+      ],
+      "visible_surface": "لِذِكْرِىٓ"
+    },
+    {
+      "canonical_location": "21:60:5",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-430015446b77-02-01-001"
+      ],
+      "visible_surface": "يُقَالُ"
+    },
+    {
+      "canonical_location": "21:60:6",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-430015446b77-02-01-002"
+      ],
+      "visible_surface": "لَهُۥٓ"
+    },
+    {
+      "canonical_location": "21:60:7",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-430015446b77-02-01-003"
+      ],
+      "visible_surface": "إِبْرَٰهِيمُ"
+    },
+    {
+      "canonical_location": "28:31:17",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-c59a0161fac8-02-15-001"
+      ],
+      "visible_surface": "إِنَّكَ"
+    },
+    {
+      "canonical_location": "28:31:18",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-c59a0161fac8-02-15-002"
+      ],
+      "visible_surface": "مِنَ"
+    },
+    {
+      "canonical_location": "28:34:9",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-55d245c29997-01-01-003"
+      ],
+      "visible_surface": "رِدْءًۭا"
+    },
+    {
+      "canonical_location": "33:13:101",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-3041d6f44a27-08-01-001"
+      ],
+      "visible_surface": "لَا"
+    },
+    {
+      "canonical_location": "33:13:102",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-3041d6f44a27-08-01-002"
+      ],
+      "visible_surface": "مُقَامَ"
+    },
+    {
+      "canonical_location": "33:13:103",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-3041d6f44a27-08-01-003"
+      ],
+      "visible_surface": "لَكُمْ"
+    },
+    {
+      "canonical_location": "39:71:31",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-049756ecbbf9-01-02-002"
+      ],
+      "visible_surface": "كَلِمَةُ"
+    },
+    {
+      "canonical_location": "39:71:32",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-049756ecbbf9-01-02-003"
+      ],
+      "visible_surface": "ٱلْعَذَابِ"
+    },
+    {
+      "canonical_location": "57:25:9",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-3041d6f44a27-07-01-001"
+      ],
+      "visible_surface": "لِيَقُومَ"
+    },
+    {
+      "canonical_location": "57:25:10",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-3041d6f44a27-07-01-002"
+      ],
+      "visible_surface": "ٱلنَّاسُ"
+    },
+    {
+      "canonical_location": "57:25:11",
+      "failure_family": "normalization_mismatch",
+      "next_action": "normalization_review",
+      "qword_row_ids": [
+        "llx-qword-3041d6f44a27-07-01-003"
+      ],
+      "visible_surface": "بِٱلْقِسْطِ"
+    },
+    {
+      "canonical_location": "92:3:4",
+      "failure_family": "quarantined_nf_t10_1",
+      "next_action": "NF-T10-1",
+      "qword_row_ids": [
+        "llx-qword-b8e480aebafe-01-02-004"
+      ],
+      "visible_surface": "وَٱلْأُنثَىٰٓ"
+    }
+  ]
+}
