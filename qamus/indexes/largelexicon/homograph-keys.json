@@ -1,5 +1,5 @@
 {
-  "authoritative_baseline_sha": "446a536a432cc819ddfcfcf1bd61dd7601996c94",
+  "authoritative_baseline_sha": "576627cb8be1eadffe5e38f43f11e5df736f160e",
   "generated_by": "python tools/validate_largelexicon_hygiene.py --write",
   "key_count": 53,
   "keys": [
@@ -1538,5 +1538,5 @@
   "risk_flag": "norm_homograph",
   "schema": "qamus/largelexicon-homograph-keys@1",
   "source": "qamus/data/current/entries.jsonl",
-  "source_sha256": "a68245e93ce1a8b76858b672a449ff94475abf010e8102575e7c0285c540a78f"
+  "source_sha256": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d"
 }
