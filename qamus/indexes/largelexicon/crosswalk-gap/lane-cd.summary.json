@@ -1,0 +1,467 @@
+{
+  "authoritative_baseline_sha": "bf6d7fc9c9ae40704ad6d82be5becbd946267f1c",
+  "generator": "python tools/investigate_gap_residue.py --baseline <hash-pinned-whitelist.jsonl> --loc-surfaces <hash-pinned-loc-surfaces.jsonl>",
+  "input_counts": {
+    "crosswalk_gap_queue_rows": 5521,
+    "lane_c_queue_rows": 10,
+    "lane_d_bindings": 32,
+    "lane_d_locations": 15
+  },
+  "input_sha256": {
+    "baseline_whitelist": "972263b5472478b8805c39e107ecf5d6f8096acace8756d15a08967cddf90515",
+    "by_entry_id_index": "b2e065f82849112727751313a0c664ddf36d45314c1d9fcc3982f135d91ad510",
+    "crosswalk_gap_queue": "bde1d5f84d20ba0f4e2bc7099acf5c35f9c44882257e1ce239c489111905fbc7",
+    "entries_jsonl": "a68245e93ce1a8b76858b672a449ff94475abf010e8102575e7c0285c540a78f",
+    "loc_surfaces": "f2e079dcdce01148074a238e3937314cf02222298f91f83ed66dcbb599697ca7",
+    "qword_denominator_manifest": "e120051e4f51adeae3fe3abd42e132ba5acbb0df47d2318779c0184a2ab82634",
+    "qword_denominator_shards": {
+      "n001-n040.jsonl": "a058b7f4a6f18aa730f89387c84d910383c3289e94726c177cdbfa5a16c8c14d",
+      "n041-n080.jsonl": "c6a8ace80a3f80cc2cd2578325e6d3bc71c167140f2cb6b36ab6a17eb2ab1f36",
+      "n081-n120.jsonl": "64b8878875cbd638a0c86808464bb17fe648fd5797e969458899ba3c76ea1699",
+      "n1001-n1040.jsonl": "9371296dc9e2dc3bc4127ad1346b83d99adc20a82e40f75168bd67af24fb6d05",
+      "n1041-n1045.jsonl": "2c65f46205ab9c5680697e80d691f0cab65f27de2c6084894056ce0c0c4e4e12",
+      "n121-n160.jsonl": "b7160477d04397b0d045459460ed224c050e053316f9ad480c322ff23951c719",
+      "n161-n200.jsonl": "20d11078d186b3e27bba46fc68a5a4547e727bc6e9bf77b77f3a0e2e7302aa8f",
+      "n201-n240.jsonl": "4364da19fdb111e19c6820471980ac4cad2c488a05481c5f8cf65ec7994f2bc1",
+      "n241-n280.jsonl": "e6f39f54b260d2ee67c1a08503f84543b2a5968dffbfae7d1352c06336886397",
+      "n281-n320.jsonl": "865a1e718b8d268d6268488466eddbe41abf0600a9795de474ac93a6e63643d2",
+      "n321-n360.jsonl": "d50ab3d97fec5e7c6c9fa6ee53a38db45f2b2b49bed60eb20ca2a8f0081d1cfb",
+      "n361-n400.jsonl": "e5d63c2e6c292633edf3346cbda59f9832d88b8d01371a903c830f2e8d89aaf2",
+      "n401-n440.jsonl": "118be36e52a3e042b150ab53ceb097554d03688770dfc031f6e1a3f89ec1922b",
+      "n441-n480.jsonl": "ee03e810e320c9a5f4ad320941b40f8a6c10e99182595a4d35b8b2fc09cec196",
+      "n481-n520.jsonl": "64f41cd8aaf1ce256d83ac22bdfc93f6fde188428ffbab4c62d688dd2f10e160",
+      "n521-n560.jsonl": "98513ab322fccdcab6289936539ad43677047d7fb788e6d65089edcf06f13d42",
+      "n561-n600.jsonl": "4b91c41117573f160b7ee7f4cf8cee48605a2d958053a0b2709a46c8e55dd060",
+      "n601-n640.jsonl": "c012ad6cc944074dc1d8d522acb07d6fe4b9d39eabf8c31439b97f4934e4ceb1",
+      "n641-n680.jsonl": "b9896412fdb2b7bb704b8cddf522d9260b39919017102bde9feb335b7fe73b43",
+      "n681-n720.jsonl": "8e75fba4a4e405e89f9f5d2cbf626202535e4d9f508cdc21ff790e25bd08bfc7",
+      "n721-n760.jsonl": "a24df44b4cef4f1babd87b621fb3a42413652a6d9004324fca97eaa30428c232",
+      "n761-n800.jsonl": "0859a3e45934c7fdb05bce8e6e965411f18ccc94a8253a1d97869d50b72f34c8",
+      "n801-n840.jsonl": "0f4dce4dc6a17086eeb4db4e90786441b0fddf54e1a6cf41912a78480776ed75",
+      "n841-n880.jsonl": "69147099f375e3598dc2db4cd8f94733c09a5776ef7a1de9ab17cdd02fa5c349",
+      "n881-n920.jsonl": "8cc99b70f3f218d9e06c3f96cfe36e973a504ae61e7f96175c6bd2f437c43b4a",
+      "n921-n960.jsonl": "3a2772609e0a94faf703c90b815afb276dfaa446f0e6fd177f06d383bcc9e791",
+      "n961-n1000.jsonl": "4d73a76f1ae2ff60963d7612f3e550b83bf4a2d8431aa0b848f6905008e31e6a",
+      "p001-p040.jsonl": "cc36031bf0ccfd4539c8a23dd98fb67253bce43f6acc8fc20f607017bdcc8e7d",
+      "p041-p080.jsonl": "3ae60e93209bfd36eaf4aa3b175e3bc3d95d95fee5bae259a6be880f58ad31da",
+      "p081-p100.jsonl": "b1eaeeb78f9a1ef7f86d49496f2488163977e3104e68de7c8f7587ea40129c16",
+      "v001-v040.jsonl": "66b111a8bc82843e963ea2755c251fa6d93e7d94b44bcf6890b616c4710490b2",
+      "v041-v080.jsonl": "952a526b963a3d1aa10365c54730a3b162508aeb16ab137d8dbdcb6e1f1f2650",
+      "v081-v120.jsonl": "35a8548a8cc12381a533ff4c9718359273f05e071ca8ed768d90e7ca34804895",
+      "v121-v160.jsonl": "ce251df2281b658a47fe81c3f5a33340694028d1467579a1365201a350a57422",
+      "v161-v200.jsonl": "122ab15af94999ccaa87df73d8dbc1b190a52672b288324309ad762a7a0a5e7c",
+      "v201-v240.jsonl": "828ae40be67d69c777aed3ceda2a0cd40341d097e9a149f18b1ba276896a159d",
+      "v241-v280.jsonl": "225249d3b5a3464f4d6bc46ec45e826d74d7ca804f2bb03e6f44c76236dc0021",
+      "v281-v320.jsonl": "a0c309e52cef7bb257985553c4d3fc785efd933ed33a61d14479a7decf67db34",
+      "v321-v360.jsonl": "65780c961c9ce38b1972fd44bb0aa1e193e681109297294cb2d9b756c90f7adc",
+      "v361-v400.jsonl": "e649c9ddb16a1531ab7754dc2518f768a3ac46756b424f6fd21ab27f887eb06e",
+      "v401-v440.jsonl": "1828ac1cefd0a2b4d2395290ea4d2d0be316e5eba6be2ff32274830c29d59435",
+      "v441-v480.jsonl": "6b4c9d84f283e6733da49d3e6832bd63fefb253c84b9bb9a1e5e4aa61e900fd7",
+      "v481-v520.jsonl": "8c96633b5d856e51cc149af76ecdf574bb0501092e7aa555e7506b7e1e058bad",
+      "v521-v560.jsonl": "2ebe98917c9630747b9899c47fe68850d2daa6961ca5775c4efe534ec68b47b0",
+      "v561-v600.jsonl": "544a6edb53cc10b771368783859e764253ffac3aca638bcdade7ea8febf9412b",
+      "v601-v640.jsonl": "a35036198b9eb5d3aa3ba5dd6f8537078e88b69c7f3d41e2f5c2ee82fec0f7be",
+      "v641-v680.jsonl": "d2cb42ad1d763070e82e832b301cc87cae0841ee52902b1796f59e4e09730e3d",
+      "v681-v720.jsonl": "b8380f4583166682fdeb59c0dbc6d2a509f10b116e6d564dc330071eb63a37ac",
+      "v721-v760.jsonl": "6281716065821e5b1da0aa7983ecf03e43bb8f1b7921b5874d70eecd11078fd2",
+      "v761-v800.jsonl": "d8ba23af3ba4e6b16152a8aef4f85305f4326c228a13c1c2fa6a9eaa84c0933e",
+      "v801-v840.jsonl": "c17cb107b3273c88d0ce151646dc5c280b7d1522a62a3fb6a5a49ce087e2fb19",
+      "v841-v880.jsonl": "70a01d23dd00b18fdad4bf0ffb39e237acdee2be44661f39ee665f23f445ff34",
+      "v881-v920.jsonl": "2f00dad41d619857f59a21caec3d77d2313a74c9525b2c6424d96b9abb453db3",
+      "v921-v947.jsonl": "0c71f359034464a06f3c6289a6cb9743b0ce79b47a54ed398f0447ef949c09ba"
+    }
+  },
+  "lane_c": {
+    "outside_enum_count": 0,
+    "per_disposition_counts": {
+      "blocked_on_owner_dataset_correction": 5,
+      "missing_card_or_qword_source": 3,
+      "normalization_failure": 2
+    }
+  },
+  "lane_d": {
+    "candidate_only_rows": 32,
+    "per_verdict_counts": {
+      "requires_authoring": 32
+    }
+  },
+  "morphline_convention_study": {
+    "concrete_examples": [
+      {
+        "loc": "1:1:1",
+        "morphline": "bāʾ + noun اسم · root س م و",
+        "ordered_segments": [
+          {
+            "class": "qg-preposition",
+            "label": "BĀ",
+            "role": "prefix_preposition"
+          },
+          {
+            "class": "qg-noun-stem",
+            "label": "N",
+            "role": "noun_stem"
+          }
+        ],
+        "surface": "بِسْمِ"
+      },
+      {
+        "loc": "1:1:2",
+        "morphline": "proper Divine name · no public root",
+        "ordered_segments": [
+          {
+            "class": "qg-proper-noun",
+            "label": "PN",
+            "role": "proper_divine_name"
+          }
+        ],
+        "surface": "اللَّهِ"
+      },
+      {
+        "loc": "1:1:3",
+        "morphline": "root ر ح م · definite adjective/name",
+        "ordered_segments": [
+          {
+            "class": "qg-article",
+            "label": "ART",
+            "role": "definite_article"
+          },
+          {
+            "class": "qg-adjective",
+            "label": "ADJ",
+            "role": "adjective_or_name"
+          }
+        ],
+        "surface": "الرَّحْمَٰنِ"
+      },
+      {
+        "loc": "1:1:4",
+        "morphline": "root ر ح م · definite adjective/name",
+        "ordered_segments": [
+          {
+            "class": "qg-article",
+            "label": "ART",
+            "role": "definite_article"
+          },
+          {
+            "class": "qg-adjective",
+            "label": "ADJ",
+            "role": "adjective_or_name"
+          }
+        ],
+        "surface": "الرَّحِيمِ"
+      },
+      {
+        "loc": "1:2:1",
+        "morphline": "definite article + noun/base حَمْد from root ح م د",
+        "ordered_segments": [
+          {
+            "class": "qg-article",
+            "label": "ART",
+            "role": "definite_article"
+          },
+          {
+            "class": "qg-noun-stem",
+            "label": "N",
+            "role": "noun_base"
+          }
+        ],
+        "surface": "ٱلْحَمْدُ"
+      },
+      {
+        "loc": "1:2:2",
+        "morphline": "lām preposition + divine proper name · no public lexical root for the proper name",
+        "ordered_segments": [
+          {
+            "class": "qg-lam",
+            "label": "LAM",
+            "role": "lam_preposition"
+          },
+          {
+            "class": "qg-proper-noun",
+            "label": "PN",
+            "role": "divine_proper_name"
+          }
+        ],
+        "surface": "لِلَّهِ"
+      },
+      {
+        "loc": "1:2:3",
+        "morphline": "root ر ب ب · base رَبّ · vocative construct with omitted 1cs possessive",
+        "ordered_segments": [
+          {
+            "class": "qg-noun-stem",
+            "label": "N",
+            "role": "construct_noun"
+          }
+        ],
+        "surface": "رَبِّ"
+      },
+      {
+        "loc": "1:2:4",
+        "morphline": "definite noun · root ع ل م",
+        "ordered_segments": [
+          {
+            "class": "qg-article",
+            "label": "ART",
+            "role": "definite_article"
+          },
+          {
+            "class": "qg-noun-stem",
+            "label": "N",
+            "role": "noun_stem"
+          },
+          {
+            "class": "qg-plural-suffix",
+            "label": "PL",
+            "role": "plural_suffix"
+          }
+        ],
+        "surface": "ٱلْعَٰلَمِينَ"
+      },
+      {
+        "loc": "1:4:1",
+        "morphline": "noun (ism fāʿil) · role: نعت مجرور، مضاف · single token",
+        "ordered_segments": [
+          {
+            "class": "qg-noun-stem",
+            "label": "active participle",
+            "role": "نعت مجرور، مضاف"
+          }
+        ],
+        "surface": "مَٰلِكِ"
+      },
+      {
+        "loc": "1:4:2",
+        "morphline": "Arabic token.",
+        "ordered_segments": [
+          {
+            "class": "qg-segment",
+            "label": "TOKEN",
+            "role": "token"
+          }
+        ],
+        "surface": "يَوْمِ"
+      },
+      {
+        "loc": "1:4:3",
+        "morphline": "definite article + nominal host + plural suffix",
+        "ordered_segments": [
+          {
+            "class": "qg-article",
+            "label": "ART",
+            "role": "definite_article"
+          },
+          {
+            "class": "qg-noun-stem",
+            "label": "N",
+            "role": "nominal_host"
+          },
+          {
+            "class": "qg-plural-suffix",
+            "label": "PL",
+            "role": "plural_suffix"
+          }
+        ],
+        "surface": "ٱلدِّينِ"
+      },
+      {
+        "loc": "1:5:1",
+        "morphline": "detached object pronoun إِيَّاكَ · no lexical root",
+        "ordered_segments": [
+          {
+            "class": "qg-object-pronoun",
+            "label": "OBJ",
+            "role": "detached_object_pronoun"
+          }
+        ],
+        "surface": "إِيَّاكَ"
+      }
+    ],
+    "derivation_limit": "Identical segment-class shapes map to many morphline strings, so class alone cannot select exact text. The target rows also have blank role and label fields; their coarse qg class does not certify the missing morphology/function details.",
+    "distinct_nonempty_morphlines": 14457,
+    "empty_rows": 17,
+    "nonempty_rows": 34305,
+    "relationship_observed": "Non-empty morphlines describe the whole token's grammatical composition and elaborate facts represented by ordered segment classes/roles. They are narrative descriptions, not a canonical role-token serialization.",
+    "result": "consistent_semantic_relationship_without_deterministic_text_projection",
+    "stop_condition_reason": "A consistent semantic relationship is observed, so the no-relationship stop does not trigger. Exact candidates remain non-derivable and route to requires_authoring.",
+    "stop_condition_triggered": false,
+    "target_shape_distribution": [
+      {
+        "distinct_morphlines": 200,
+        "row_count": 2656,
+        "segment_class_shape": [
+          "qg-preposition"
+        ],
+        "top_morphlines": [
+          {
+            "count": 1335,
+            "morphline": "preposition · no lexical root"
+          },
+          {
+            "count": 236,
+            "morphline": "preposition · source/partitive relation · no lexical root"
+          },
+          {
+            "count": 185,
+            "morphline": "preposition · function token; no lexical root"
+          },
+          {
+            "count": 103,
+            "morphline": "preposition · locative/containment relation · no lexical root"
+          },
+          {
+            "count": 76,
+            "morphline": "built preposition; no lexical root"
+          },
+          {
+            "count": 55,
+            "morphline": "preposition fī · no lexical root: function token"
+          },
+          {
+            "count": 49,
+            "morphline": "preposition عَنْ · no root · governs ٱلسَّاعَةِ"
+          },
+          {
+            "count": 41,
+            "morphline": "root not asserted · exact qword surface · preposition"
+          },
+          {
+            "count": 40,
+            "morphline": "built preposition/locative ʿinda · no lexical root asserted"
+          },
+          {
+            "count": 31,
+            "morphline": "preposition/function piece preserved · no lexical root asserted"
+          }
+        ]
+      },
+      {
+        "distinct_morphlines": 851,
+        "row_count": 922,
+        "segment_class_shape": [
+          "qg-noun"
+        ],
+        "top_morphlines": [
+          {
+            "count": 19,
+            "morphline": "Arabic token."
+          },
+          {
+            "count": 4,
+            "morphline": "definite noun, accusative as object"
+          },
+          {
+            "count": 4,
+            "morphline": "noun; genitive with the article"
+          },
+          {
+            "count": 3,
+            "morphline": "predicate noun/adjective · root س و ي · equivalence frame"
+          },
+          {
+            "count": 3,
+            "morphline": "accusative noun · root ش ه د · role/complement in sufficiency formula"
+          },
+          {
+            "count": 3,
+            "morphline": "indefinite noun in the accusative, direct object of 'forgot'"
+          },
+          {
+            "count": 3,
+            "morphline": "noun of totality, nominative as subject (mubtadaʾ)"
+          },
+          {
+            "count": 3,
+            "morphline": "noun, genitive, possessed term + possessive 'your'"
+          },
+          {
+            "count": 3,
+            "morphline": "definite noun, genitive after preposition"
+          },
+          {
+            "count": 3,
+            "morphline": "masc sing noun, genitive as second term of iḍāfa"
+          }
+        ]
+      },
+      {
+        "distinct_morphlines": 2,
+        "row_count": 2,
+        "segment_class_shape": [
+          "qg-lam"
+        ],
+        "top_morphlines": [
+          {
+            "count": 1,
+            "morphline": "Purpose lām li- + subjunctive verb yajʿala (3rd-masc-sing); 'in order that He make.'"
+          },
+          {
+            "count": 1,
+            "morphline": "Emphatic lām + Form II present-tense verb, 3rd-person masculine plural, with subject-'they'."
+          }
+        ]
+      }
+    ]
+  },
+  "mutation_boundary": "No crosswalk, denominator, entries, whitelist, or production data was written. All Lane D rows are candidate_only.",
+  "repair_wave_design": {
+    "compiler_step": {
+      "builder": "tools/build_canonical_hover_payload_table.py",
+      "builder_outputs": [
+        "canonical_payloads.jsonl",
+        "occurrence_bindings.jsonl"
+      ],
+      "compiler": "tools/compile_canonical_hover_whitelist_packet.py",
+      "compiler_output": "whitelist_append_replace.jsonl",
+      "rule": "Project the certified fact into a canonical payload and full-carrier binding, then compile a replacement packet against the hash-pinned baseline. Never hand-edit the live whitelist.",
+      "validators": [
+        "tools/validate_canonical_hover_payload_table.py",
+        "tools/validate_renderer_completeness_gate.py"
+      ]
+    },
+    "fact_ledger_step": {
+      "candidate_value": "the reviewed non-empty morphline string",
+      "evidence_types": [
+        "deterministic_derivation",
+        "two_vote"
+      ],
+      "materialization_target": "canonical hover public_payload.morphline",
+      "required_carrier": [
+        "loc",
+        "entry_id",
+        "card_id",
+        "qword_row_id"
+      ],
+      "schema": "qamus/schemas/fact-ledger-row.schema.json",
+      "subject_type": "surface_occurrence",
+      "tool": "tools/fact_ledger.py"
+    },
+    "fact_type_recommendation": "Add morphline_rendering as a new open-registry fact type in qamus/schemas/fact-ledger-row.schema.json. Do not overload gloss_contribution: a morphline is structured morphology/function rendering, not English gloss text.",
+    "gate_step": {
+      "current_lane_result": "all 32 bindings require authoring; none qualifies for deterministic projection",
+      "deterministic_gate": "Allowed only when a versioned projection rule consumes certified, non-empty ordered segment roles plus required sarf/nahw facts and reproduces an observed convention.",
+      "gate_ssot": [
+        "nahw/rules/two-vote-required-rules.json",
+        "nahw/rules/grammar-problems-gates.json",
+        "sarf/rules/verb-measure-gates.json",
+        "tools/fact_ledger.py"
+      ],
+      "two_vote_gate": "Required for authored narrative morphlines or any function, case/mood, referent, derivative, attachment, or other grammar-sensitive claim; both votes must agree on value and reason."
+    },
+    "recommended_fact_type": "morphline_rendering",
+    "supersedes_step": {
+      "binding_edge": "qamus/schemas/canonical-hover-occurrence-binding.schema.json supersedes points to the prior binding id when the RM-20 replacement binding is created",
+      "fact_edge": "fact-ledger revision.supersedes points to the prior fact_id",
+      "wave_lineage": "Record RM-20 as the repair-wave lineage on the review/compile report and retain prior_payload_hash in the compiler replacement packet."
+    },
+    "wave_id": "RM-20"
+  },
+  "schema": "qamus.lane_cd_summary.v1",
+  "source_lineage": "generated from inputs frozen at the authoritative baseline",
+  "status": "investigation_complete_design_only",
+  "stop_conditions": {
+    "lane_c_disposition_outside_enum": false,
+    "no_consistent_segment_morphline_relationship": false,
+    "triggered": false
+  }
+}
