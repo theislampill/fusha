@@ -63,6 +63,7 @@ counted as content-pending. Duplication with tools/check_regressions.py G1 is
 deliberate: the harness stays self-contained; this tool is the operational path.
 """
 import argparse
+import copy
 import glob
 import hashlib
 import io
@@ -93,6 +94,13 @@ ACCEPTED_SCHEMAS_PRODUCED = [
 
 RECORD_SCHEMA = "fusha.shadow_run_record.v1"
 CONFIG_SCHEMA = "fusha.shadow_run_config.v1"
+REPAIR_REGISTRY_SCHEMA = "qamus.canonical_repair_registry.v1"
+REPAIR_REGISTRY_RELATIVE = os.path.join(
+    "qamus", "indexes", "largelexicon", "canonical-repairs.json")
+
+
+class CanonicalRepairError(RuntimeError):
+    """An active canonical repair registry or generation is invalid."""
 
 
 def sha256_file(path):
@@ -165,6 +173,185 @@ def contract_segments(live_segments):
             "gloss": seg.get("gloss", seg.get("gloss_contribution")),
         })
     return segs
+
+
+def _canonical_sha256(value):
+    blob = json.dumps(value, ensure_ascii=False, sort_keys=True,
+                      separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def _compiler_input_from_source(src, payload, *, loc=None, surface=None):
+    """Build the existing G1 carrier shape, optionally with repair content."""
+    dep_blob = json.dumps(src.get("source_dependencies") or [],
+                          ensure_ascii=False, sort_keys=True,
+                          separators=(",", ":"))
+    deps = [{"id": src["row_id"],
+             "sha256": hashlib.sha256(dep_blob.encode("utf-8")).hexdigest()}]
+    canonical_loc = loc or src["canonical_wbw_loc"]
+    visible_surface = surface or src["visible_surface"]
+    return {
+        "schema": "qamus.canonical_hover_compiler_input.v1",
+        "source_key": "qamus", "source_row_id": src["row_id"],
+        "source_artifact_sha256": src["resolution_wbw_lookup_sha256"],
+        "source_dependencies": deps,
+        "surface_norm": surface or src["visible_surface_norm_strict"],
+        "root": None, "pos": "unknown", "pattern": None,
+        "lemma_status": "missing", "sarf_certification": "missing",
+        "nahw_certification": "missing", "public_payload": payload,
+        "canonical_quran_loc": loc or src["canonical_quran_loc"],
+        "canonical_wbw_loc": canonical_loc,
+        "entry_id": src["entry_id"], "card_id": src["card_id"],
+        "qword_row_id": src["qword_row_id"],
+        "visible_surface": visible_surface,
+        "source_dependency_sha256": _canonical_sha256(deps),
+    }
+
+
+def load_canonical_repair_overlay(repo_root, registry_path=None):
+    """Load and pin active promoted repair generations in registry order."""
+    from tools.largelexicon_common import verify_generation
+    from tools.validate_canonical_hover_payload_table import validate_rows
+
+    registry_path = registry_path or os.path.join(repo_root, REPAIR_REGISTRY_RELATIVE)
+    if not os.path.exists(registry_path):
+        return {"repo_root": repo_root, "registry_sha256": None,
+                "generations": [], "bindings": []}
+    try:
+        with io.open(registry_path, encoding="utf-8") as handle:
+            registry = json.load(handle)
+    except Exception as exc:  # noqa: BLE001 - fail-closed data boundary
+        raise CanonicalRepairError("invalid canonical repair registry: %s" % exc) from exc
+    if registry.get("schema") != REPAIR_REGISTRY_SCHEMA:
+        raise CanonicalRepairError("canonical repair registry schema mismatch")
+    entries = registry.get("active_repairs")
+    if not isinstance(entries, list):
+        raise CanonicalRepairError("canonical repair registry active_repairs must be a list")
+
+    repo_real = os.path.realpath(repo_root)
+    generations, ordered_bindings = [], []
+    for ordinal, entry in enumerate(entries, 1):
+        if not isinstance(entry, dict) or set(entry) != {"table", "generation_id"}:
+            raise CanonicalRepairError("repair registry entry %d has invalid fields" % ordinal)
+        table = entry.get("table")
+        expected_id = entry.get("generation_id")
+        if not isinstance(table, str) or not table or os.path.isabs(table):
+            raise CanonicalRepairError("repair registry entry %d table is invalid" % ordinal)
+        generation_dir = os.path.realpath(os.path.join(repo_real, table.replace("/", os.sep)))
+        try:
+            inside_repo = os.path.commonpath([repo_real, generation_dir]) == repo_real
+        except ValueError:
+            inside_repo = False
+        if not inside_repo or not os.path.isdir(generation_dir):
+            raise CanonicalRepairError("active repair generation missing: %s" % table)
+        verification = verify_generation(generation_dir, allow_legacy=False)
+        if not verification["ok"]:
+            raise CanonicalRepairError(
+                "active repair generation invalid for %s: %s"
+                % (table, "; ".join(verification["errors"])))
+        generation_path = os.path.join(generation_dir, "GENERATION.json")
+        actual_id = "sha256:" + sha256_file(generation_path)
+        if expected_id != actual_id:
+            raise CanonicalRepairError(
+                "active repair generation id mismatch for %s: expected %s, got %s"
+                % (table, expected_id, actual_id))
+        payloads = {
+            row["canonical_payload_id"]: row
+            for row in read_jsonl(os.path.join(generation_dir, "canonical_payloads.jsonl"))
+        }
+        bindings = read_jsonl(os.path.join(generation_dir, "occurrence_bindings.jsonl"))
+        validation_errors = validate_rows(list(payloads.values()) + bindings)
+        if validation_errors:
+            raise CanonicalRepairError(
+                "active repair table validation failed for %s: %s"
+                % (table, "; ".join(validation_errors)))
+        seen = set()
+        for binding in bindings:
+            key = (binding.get("canonical_wbw_loc"), binding.get("qword_row_id"))
+            payload = payloads.get(binding.get("canonical_payload_id"))
+            if not all(key) or key in seen or payload is None:
+                raise CanonicalRepairError(
+                    "active repair generation has invalid/duplicate binding in %s" % table)
+            seen.add(key)
+            ordered_bindings.append({
+                "table": table,
+                "generation_id": actual_id,
+                "binding": binding,
+                "payload": payload,
+            })
+        generations.append({
+            "table": table,
+            "generation_id": actual_id,
+            "binding_count": len(bindings),
+        })
+    return {
+        "repo_root": repo_root,
+        "registry_sha256": sha256_file(registry_path),
+        "generations": generations,
+        "bindings": ordered_bindings,
+    }
+
+
+def apply_canonical_repair_overlay(rows, overlay, canonical_public_loc,
+                                   crosswalk_glob=None):
+    """Overlay repaired public payloads at exact (loc, qword_row_id) carriers."""
+    if not overlay["bindings"]:
+        return list(rows), {"overlaid_bindings": 0, "added_bindings": 0}
+    result = list(rows)
+    by_key = {}
+    for index, row in enumerate(result):
+        loc = canonical_public_loc(row) or row.get("canonical_wbw_loc")
+        by_key.setdefault((loc, row.get("qword_row_id")), []).append(index)
+
+    missing_qids = {
+        item["binding"]["qword_row_id"]
+        for item in overlay["bindings"]
+        if (item["binding"]["canonical_wbw_loc"], item["binding"]["qword_row_id"])
+        not in by_key
+    }
+    sources = {}
+    if missing_qids:
+        pattern = crosswalk_glob or os.path.join(
+            overlay["repo_root"], "qamus", "indexes", "largelexicon",
+            "qword-crosswalk", "*.jsonl")
+        for path in sorted(glob.glob(pattern)):
+            for source in read_jsonl(path):
+                qid = source.get("qword_row_id")
+                if qid in missing_qids:
+                    if qid in sources:
+                        raise CanonicalRepairError("duplicate crosswalk source for %s" % qid)
+                    sources[qid] = source
+
+    added = 0
+    for item in overlay["bindings"]:
+        binding, payload_row = item["binding"], item["payload"]
+        key = (binding["canonical_wbw_loc"], binding["qword_row_id"])
+        public_payload = copy.deepcopy(payload_row["public_payload"])
+        indices = by_key.get(key, [])
+        if indices:
+            for index in indices:
+                updated = copy.deepcopy(result[index])
+                updated["public_payload"] = copy.deepcopy(public_payload)
+                result[index] = updated
+            continue
+        source = sources.get(binding["qword_row_id"])
+        if source is None:
+            raise CanonicalRepairError(
+                "active repair binding has no row-id-matched crosswalk carrier: %s"
+                % binding["qword_row_id"])
+        surface = "".join(
+            segment.get("surface") or ""
+            for segment in public_payload.get("segments") or [])
+        repaired = _compiler_input_from_source(
+            source, public_payload, loc=binding["canonical_wbw_loc"],
+            surface=surface or binding.get("visible_surface"))
+        result.append(repaired)
+        by_key[key] = [len(result) - 1]
+        added += 1
+    return result, {
+        "overlaid_bindings": len(overlay["bindings"]),
+        "added_bindings": added,
+    }
 
 
 def construct_input_rows(repo_root, live_by_loc, public_content, canonical_public_loc,
@@ -276,8 +463,9 @@ def run_pipeline(repo_root, rows, live_whitelist, workdir, sample_size, env_extr
              "--bindings", os.path.join(bdir, "occurrence_bindings.jsonl"),
              "--exceptions", empty_exceptions,
              "--baseline", live_whitelist, "--outdir", cdir], attempt)
-        report = json.load(io.open(os.path.join(cdir, "compile_report.json"),
-                                   encoding="utf-8"))
+        with io.open(os.path.join(cdir, "compile_report.json"),
+                     encoding="utf-8") as handle:
+            report = json.load(handle)
         packet_shas.append(report["packet_sha256"])
         cdirs.append(cdir)
 
@@ -291,10 +479,12 @@ def run_pipeline(repo_root, rows, live_whitelist, workdir, sample_size, env_extr
          "--compile-dir", cdir, "--baseline", live_whitelist,
          "--outdir", workdir, "--sample-size", str(sample_size)], "g8-report")
 
-    compile_report = json.load(io.open(os.path.join(cdir, "compile_report.json"),
-                                       encoding="utf-8"))
-    g8_summary = json.load(io.open(os.path.join(workdir, "g8-summary.json"),
-                                   encoding="utf-8"))
+    with io.open(os.path.join(cdir, "compile_report.json"),
+                 encoding="utf-8") as handle:
+        compile_report = json.load(handle)
+    with io.open(os.path.join(workdir, "g8-summary.json"),
+                 encoding="utf-8") as handle:
+        g8_summary = json.load(handle)
     build_conflicts = os.path.join(bdir, "build_conflicts.jsonl")
     n_build_conflicts = len(read_jsonl(build_conflicts)) \
         if os.path.exists(build_conflicts) else 0
@@ -439,6 +629,14 @@ def shadow_run(cfg):
     rows, shared, pending = construct_input_rows(
         repo_root, live_by_loc, compile_mod.public_content,
         compile_mod.canonical_public_loc, cfg.get("crosswalk_glob"))
+    try:
+        repair_overlay = load_canonical_repair_overlay(repo_root)
+        rows, repair_stats = apply_canonical_repair_overlay(
+            rows, repair_overlay, compile_mod.canonical_public_loc,
+            crosswalk_glob=cfg.get("crosswalk_glob"))
+    except CanonicalRepairError as exc:
+        print("PIPELINE ERROR: canonical repair overlay: %s" % exc)
+        raise SystemExit(2)
     if not rows:
         print("PIPELINE ERROR: zero accepted crosswalk rows constructed")
         raise SystemExit(2)
@@ -465,6 +663,8 @@ def shadow_run(cfg):
         "schemas_consumed": compile_report.get("schemas_consumed"),
         "schemas_produced": compile_report.get("schemas_produced"),
         "live_whitelist_sha256": live_sha,
+        "canonical_repair_registry_sha256": repair_overlay["registry_sha256"],
+        "canonical_repair_generations": repair_overlay["generations"],
         "live_rows": len(live_rows),
         "input_rows_sha256": input_rows_sha,
         "input_bindings": len(rows),
@@ -483,7 +683,8 @@ def shadow_run(cfg):
             "build_carrier_conflicts": paths["build_conflicts"],
         },
         "content_method": {"shared_live_parity": shared,
-                           "pending_placeholder": pending},
+                           "pending_placeholder": pending,
+                           "canonical_repair_overlay": repair_stats},
         "prev_record_sha256": (prev or {}).get("record_sha256"),
     }
     alerts, explained = evaluate_alerts(record, prev, load_expected_changes(records_dir))
@@ -499,7 +700,8 @@ def shadow_run(cfg):
 
     ledger_row = {k: record[k] for k in (
         "schema", "started_utc", "ended_utc", "fusha_commit", "compiler_version",
-        "live_whitelist_sha256", "input_rows_sha256", "binding_count",
+        "live_whitelist_sha256", "canonical_repair_registry_sha256",
+        "canonical_repair_generations", "input_rows_sha256", "binding_count",
         "packet_sha256_run1", "counts", "prev_record_sha256")}
     ledger_row["record_sha256"] = record_sha
     ledger_row["run_dir"] = os.path.basename(run_dir)

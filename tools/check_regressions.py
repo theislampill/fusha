@@ -4547,7 +4547,21 @@ try:
           _t9b.returncode == 0 and "SHADOW RUNNER SELF-TEST PASS" in (_t9b.stdout or ""))
 except Exception as _e:
     check("T9B shadow runner self-test (harness error)", False)
-    print("  ", _e)
+
+try:
+    _rm20_shadow_overlay = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "test_shadow_canonical_repair_overlay.py"),
+    ])
+    check(
+        "RM-20 shadow runner canonical-repair overlay tests",
+        _rm20_shadow_overlay.returncode == 0,
+    )
+    if _rm20_shadow_overlay.returncode != 0:
+        print((_rm20_shadow_overlay.stdout + _rm20_shadow_overlay.stderr)[-4000:])
+except Exception as exc:
+    check("RM-20 shadow runner canonical-repair overlay tests (harness error)", False)
+    print("  ", exc)
 
 # --- T10 Lane B classifier (Shadow Flywheel Activation Program) ---
 try:
