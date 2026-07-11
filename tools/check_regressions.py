@@ -20,6 +20,7 @@ if hasattr(sys.stdout, "reconfigure"):
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from tools import normalize_ar as N
 from tools import leak_sot
+from tools import validate_linguistic_decisions as VLD
 
 fails = []
 
@@ -72,19 +73,33 @@ check("الملك key catches both مُلْك 'dominion' and مَلِك 'king' (
 # 11. (GP0) GrammarProblems eval gate — grammar-affecting triggers must escalate the gate
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 
+# Ordered verified copy of nahw/evals/grammar-decision-gates.json.
+# tools/test_gate_ssot.py mutation-proves that all four homes stay identical.
+GRAMMAR_GATE_TRIGGERS = {
+    "two_vote_required": (
+        "advanced_nahw", "irab", "case_or_mood", "istithna", "nafy_lil_jins", "idafa_ambiguous",
+        "jar_majrur_ambiguous", "multi_sense_root", "referent_sensitive_gloss", "depth_deep",
+        "format_essay", "bloom_analysis_or_higher",
+    ),
+    "human_source_review_required": (
+        "ambiguous_grammar", "source_corpus_conflict", "suspected_qamus_entry_error",
+        "proper_vs_common_noun", "quran_ref_uncertain",
+    ),
+    "never_auto_resolve": (
+        "norm_only_match", "ocr_only_evidence", "external_gloss_copied", "reasoning_path_wrong",
+        "qac_pos_conflict",
+    ),
+}
+
 
 def grammar_gate(triggers):
-    """Return the strictest required gate for a set of triggers (mirrors grammar-decision-gates.json)."""
+    """Return the strictest required gate for a set of triggers."""
     triggers = set(triggers)
-    never = {"norm_only_match", "ocr_only_evidence", "external_gloss_copied", "reasoning_path_wrong", "qac_pos_conflict"}
-    human = {"ambiguous_grammar", "source_corpus_conflict", "suspected_qamus_entry_error", "proper_vs_common_noun", "quran_ref_uncertain"}
-    twovote = {"irab", "case_or_mood", "istithna", "nafy_lil_jins", "idafa_ambiguous", "jar_majrur_ambiguous",
-               "multi_sense_root", "referent_sensitive_gloss", "advanced_nahw", "depth_deep", "format_essay", "bloom_analysis_or_higher"}
-    if triggers & never:
+    if triggers & set(GRAMMAR_GATE_TRIGGERS["never_auto_resolve"]):
         return "never_auto_resolve"
-    if triggers & human:
+    if triggers & set(GRAMMAR_GATE_TRIGGERS["human_source_review_required"]):
         return "human_source_review_required"
-    if triggers & twovote:
+    if triggers & set(GRAMMAR_GATE_TRIGGERS["two_vote_required"]):
         return "two_vote_required"
     return "auto_safe"
 
@@ -112,11 +127,30 @@ check("لا النافية للجنس + istithnāʾ require two-vote",
 check("a clean lexical decision with no grammar triggers is auto_safe", grammar_gate([]) == "auto_safe")
 try:
     gd = json.load(io.open(os.path.join(ROOT, "nahw/evals/grammar-decision-gates.json"), encoding="utf-8"))
-    check("grammar-decision-gates.json has the 4 tiers",
-          set(gd.get("gates", {})) == {"auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"})
+    tvr = json.load(io.open(os.path.join(ROOT, "nahw/rules/two-vote-required-rules.json"), encoding="utf-8"))
+    _ssot_triggers = {
+        tier: gd["gates"][tier]["trigger_when_ANY"]
+        for tier in GRAMMAR_GATE_TRIGGERS
+    }
+    _rule_keys = {
+        "two_vote_required": "two_vote_triggers",
+        "human_source_review_required": "human_review_triggers",
+        "never_auto_resolve": "never_auto_triggers",
+    }
+    _rules_triggers = {tier: tvr[key] for tier, key in _rule_keys.items()}
+    _validator_triggers = {tier: list(values) for tier, values in VLD.GRAMMAR_GATE_TRIGGERS.items()}
+    _harness_triggers = {tier: list(values) for tier, values in GRAMMAR_GATE_TRIGGERS.items()}
+    check("grammar trigger lists match SSOT across all 4 homes",
+          _ssot_triggers == _rules_triggers == _validator_triggers == _harness_triggers)
 except Exception as e:
-    check("grammar-decision-gates.json loads", False)
+    check("grammar trigger lists load for 4-way equality", False)
     print("  ", e)
+
+_gate_ssot_test = run_text([sys.executable, os.path.join(ROOT, "tools", "test_gate_ssot.py")])
+check("grammar trigger SSOT mutation harness passes", _gate_ssot_test.returncode == 0)
+if _gate_ssot_test.returncode:
+    print(_gate_ssot_test.stdout)
+    print(_gate_ssot_test.stderr)
 
 # 11b. (PP1G) progressive-disclosure procedure files exist (skills are operational, not just docs)
 for proc in ("sarf/procedures/root-decision.md", "sarf/procedures/verb-form.md",

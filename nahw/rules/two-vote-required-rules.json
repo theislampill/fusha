@@ -1,6 +1,7 @@
 {
   "schema": "fusha/two-vote-required-rules@1",
-  "purpose": "The canonical trigger list that forces TWO independent checks (agreeing on conclusion AND reason) before a decision may author/apply. Consumed by validate_linguistic_decisions.required_gate(). A decision carrying any of these in grammar_triggers must declare gate>=two_vote_required (or stricter if a never_auto/human trigger is also present).",
+  "purpose": "A consumer-compatible verified copy of the SSOT trigger lists that force TWO independent checks (agreeing on conclusion AND reason) before a decision may author/apply. A decision carrying any of these in grammar_triggers must declare gate>=two_vote_required (or stricter if a never_auto/human trigger is also present).",
+  "trigger_source": "../evals/grammar-decision-gates.json",
   "two_vote_triggers": [
     "advanced_nahw",
     "irab",
