@@ -35,6 +35,8 @@ Records (all under records_dir, mode 0o400 after write):
     snapshots/…                every snapshot_every-th record copied, kept forever
     expected-changes.jsonl     operator-appended explanations: rows
                                {"live_whitelist_sha256": "…", "reason": "…", "utc": "…"}
+                               or {"expected": {"modify_locations": ["…"],
+                               "registry_sha256": "…"}, "reason": "…", "utc": "…"}
                                a baseline-hash change is EXPLAINED iff a row names the
                                new hash; crosswalk-input changes are explained by the
                                repo commit itself (source_head changes are recorded).
@@ -518,6 +520,12 @@ def load_expected_changes(records_dir):
     return read_jsonl(path)
 
 
+def modify_locations_from_rowdiff(rowdiff):
+    """Return the sorted set of locations G8 classified as public modifies."""
+    return sorted({row["canonical_wbw_loc"] for row in rowdiff
+                   if row.get("classification") == "modify"})
+
+
 def evaluate_alerts(record, prev, expected_changes):
     """Owner-mandated alert classes. Returns (alerts, explained)."""
     alerts, explained = [], []
@@ -526,8 +534,62 @@ def evaluate_alerts(record, prev, expected_changes):
     if record["packet_sha256_run1"] != record["packet_sha256_run2"]:
         alerts.append({"class": "reproducibility_failure",
                        "detail": "in-run double compile disagreed"})
-    if counts["modify"] > 0:
-        alerts.append({"class": "unexpected_modify", "count": counts["modify"]})
+    actual_modify_locations = set(record.get("modify_locations") or [])
+    declared_modify_locations = set()
+    declaration_errors = []
+    registry_mismatches = set()
+    for row_index, row in enumerate(expected_changes):
+        expected = row.get("expected")
+        if not isinstance(expected, dict) or "modify_locations" not in expected:
+            continue
+        locations = expected.get("modify_locations")
+        if (not isinstance(locations, list)
+                or any(not isinstance(loc, str) or not loc for loc in locations)
+                or locations != sorted(set(locations))):
+            declaration_errors.append(
+                "expected-changes row %d has invalid or unsorted modify_locations"
+                % (row_index + 1))
+        else:
+            declared_modify_locations.update(locations)
+        if "registry_sha256" in expected:
+            declared_sha = expected.get("registry_sha256")
+            recorded_sha = record.get("canonical_repair_registry_sha256")
+            if declared_sha != recorded_sha:
+                registry_mismatches.add((declared_sha, recorded_sha))
+
+    uncovered_locations = sorted(actual_modify_locations
+                                 - declared_modify_locations)
+    missing_locations = sorted(declared_modify_locations
+                               - actual_modify_locations)
+    modify_count_mismatch = counts["modify"] != len(actual_modify_locations)
+    modify_declaration_present = bool(
+        declared_modify_locations or declaration_errors or registry_mismatches)
+    modify_is_explained = (
+        counts["modify"] > 0
+        and modify_declaration_present
+        and not uncovered_locations
+        and not missing_locations
+        and not declaration_errors
+        and not registry_mismatches
+        and not modify_count_mismatch)
+    if modify_is_explained:
+        explained.append({"class": "declared_modify", "count": counts["modify"],
+                          "explained_by": "expected-changes declaration"})
+    elif counts["modify"] > 0 or modify_declaration_present:
+        alert = {"class": "unexpected_modify", "count": counts["modify"],
+                 "uncovered_locations": uncovered_locations,
+                 "missing_locations": missing_locations}
+        if registry_mismatches:
+            alert["registry_sha256_mismatches"] = [
+                {"declared": declared, "recorded": recorded}
+                for declared, recorded in sorted(
+                    registry_mismatches,
+                    key=lambda pair: (str(pair[0]), str(pair[1])))]
+        if declaration_errors:
+            alert["declaration_errors"] = declaration_errors
+        if modify_count_mismatch:
+            alert["location_count"] = len(actual_modify_locations)
+        alerts.append(alert)
     if counts["conflict"] > 0 or counts["blocked"] > 0:
         alerts.append({"class": "unexpected_conflict_blocked",
                        "conflict": counts["conflict"], "blocked": counts["blocked"]})
@@ -650,6 +712,8 @@ def shadow_run(cfg):
         env_extra)
 
     cls = g8_summary["classifications"]
+    modify_locations = modify_locations_from_rowdiff(
+        read_jsonl(os.path.join(run_dir, "g8-rowdiff.jsonl")))
     input_rows_sha = sha256_file(os.path.join(run_dir, "compiler_input_rows.jsonl"))
     prev = load_previous(records_dir)
     record = {
@@ -665,6 +729,7 @@ def shadow_run(cfg):
         "live_whitelist_sha256": live_sha,
         "canonical_repair_registry_sha256": repair_overlay["registry_sha256"],
         "canonical_repair_generations": repair_overlay["generations"],
+        "modify_locations": modify_locations,
         "live_rows": len(live_rows),
         "input_rows_sha256": input_rows_sha,
         "input_bindings": len(rows),
@@ -758,6 +823,8 @@ def _self_test():
         "expected_source_head": None, "fusha_commit": "headsha",
         "live_whitelist_sha256": "live1", "input_rows_sha256": "in1",
         "binding_count": 100,
+        "canonical_repair_registry_sha256": "registry-good",
+        "modify_locations": [],
         "counts": {"no_op": 50, "append": 10, "remove_or_unrepresented": 5,
                    "modify": 0, "conflict": 0, "blocked": 0,
                    "leak_false_block": 0, "build_carrier_conflicts": 2},
@@ -781,10 +848,62 @@ def _self_test():
     check("identical inputs + different packet hash -> packet_hash_drift",
           any(a["class"] == "packet_hash_drift" for a in alerts))
 
-    rec = json.loads(json.dumps(base_record)); rec["counts"]["modify"] = 3
+    rec = json.loads(json.dumps(base_record)); rec["counts"]["modify"] = 1
+    rec["modify_locations"] = ["1:1:1"]
     alerts, _ = evaluate_alerts(rec, dict(prev), [])
-    check("public modify>0 -> unexpected_modify",
+    check("modify present without declaration -> unexpected_modify",
           any(a["class"] == "unexpected_modify" for a in alerts))
+
+    declared_locs = sorted("1:1:%d" % index for index in range(1, 12))
+    declaration = {"expected": {"modify_locations": declared_locs,
+                                "registry_sha256": "registry-good"},
+                   "reason": "owner decision D", "utc": "2026-07-11T00:00:00Z"}
+    rec = json.loads(json.dumps(base_record))
+    rec["counts"]["modify"] = len(declared_locs)
+    rec["modify_locations"] = list(declared_locs)
+    alerts, explained = evaluate_alerts(rec, dict(prev), [declaration])
+    check("exact declared modify set + registry match -> explained only",
+          not any(a["class"] == "unexpected_modify" for a in alerts)
+          and explained == [{"class": "declared_modify", "count": 11,
+                             "explained_by": "expected-changes declaration"}])
+
+    rec = json.loads(json.dumps(base_record))
+    rec["modify_locations"] = declared_locs + ["2:2:2"]
+    rec["counts"]["modify"] = len(rec["modify_locations"])
+    alerts, _ = evaluate_alerts(rec, dict(prev), [declaration])
+    modify_alert = next((a for a in alerts
+                         if a["class"] == "unexpected_modify"), {})
+    check("declared 11 but actual 12 -> alert lists uncovered location",
+          modify_alert.get("uncovered_locations") == ["2:2:2"])
+
+    rec = json.loads(json.dumps(base_record))
+    rec["modify_locations"] = declared_locs[:-1]
+    rec["counts"]["modify"] = len(rec["modify_locations"])
+    alerts, _ = evaluate_alerts(rec, dict(prev), [declaration])
+    modify_alert = next((a for a in alerts
+                         if a["class"] == "unexpected_modify"), {})
+    check("declared location absent from actual -> alert lists missing location",
+          modify_alert.get("missing_locations") == [declared_locs[-1]])
+
+    bad_registry_declaration = json.loads(json.dumps(declaration))
+    bad_registry_declaration["expected"]["registry_sha256"] = "registry-other"
+    rec = json.loads(json.dumps(base_record))
+    rec["modify_locations"] = list(declared_locs)
+    rec["counts"]["modify"] = len(declared_locs)
+    alerts, _ = evaluate_alerts(rec, dict(prev), [bad_registry_declaration])
+    modify_alert = next((a for a in alerts
+                         if a["class"] == "unexpected_modify"), {})
+    check("declared registry sha mismatch -> unexpected_modify",
+          modify_alert.get("registry_sha256_mismatches") == [{
+              "declared": "registry-other", "recorded": "registry-good"}])
+
+    rowdiff_fixture = [
+        {"canonical_wbw_loc": "2:2:2", "classification": "modify"},
+        {"canonical_wbw_loc": "1:1:1", "classification": "no_op"},
+        {"canonical_wbw_loc": "1:1:2", "classification": "modify"},
+    ]
+    check("modify locations derive from G8 rowdiff in sorted order",
+          modify_locations_from_rowdiff(rowdiff_fixture) == ["1:1:2", "2:2:2"])
 
     rec = json.loads(json.dumps(base_record)); rec["counts"]["blocked"] = 1
     alerts, _ = evaluate_alerts(rec, dict(prev), [])
