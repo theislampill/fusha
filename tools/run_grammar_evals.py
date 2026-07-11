@@ -31,13 +31,28 @@ DEPTH = {"direct", "deep"}
 GATES = {"auto_safe", "two_vote_required", "human_source_review_required", "never_auto"}
 REQUIRED = {"id", "level", "bloom", "format", "depth", "topic", "question_ar", "question_en",
             "expected_answer", "expected_reasoning", "hover_safety", "required_gate"}
-# grammar-affecting topics: a wrong call here changes a gloss/iʿrāb -> may NEVER be auto_safe
-GRAMMAR_AFFECTING = {
-    "building_present_verb", "signs_of_irab", "mubtada_khabar", "zanna_and_sisters", "maful_li_ajlih",
-    "maful_mutlaq", "la_nafiyah_lil_jins", "kana_and_sisters", "istithna", "passive_agent_transformation",
-    "mamnu_min_al_sarf", "hal", "badal", "tamyiz", "idafa", "jar_majrur", "tanazu", "ism_fail_maful_operation",
-    "nima_bisa", "ikhtisas",
-}
+# This is a grammar-only bank. Keep the exception explicit so a future
+# non-grammar topic must be deliberately classified instead of silently omitted.
+NON_GRAMMAR_TOPICS = set()
+
+
+def grammar_affecting_topics(cases):
+    """Derive governed topics from the bank minus explicit non-grammar exceptions."""
+    return {case.get("topic") for case in cases if case.get("topic")} - NON_GRAMMAR_TOPICS
+
+
+def topic_gate_errors(cases):
+    """Return fail-closed routing errors for strict grammar-affecting cases."""
+    grammar_affecting = grammar_affecting_topics(cases)
+    errors = []
+    for case in cases:
+        strict = (case.get("bloom") in {"analysis", "evaluation", "generation"}
+                  or case.get("depth") == "deep" or case.get("format") == "essay")
+        if (case.get("topic") in grammar_affecting and strict
+                and case.get("required_gate") == "auto_safe"):
+            errors.append("%s: grammar-affecting topic %s at %s/%s/%s requires >= two_vote (got auto_safe)"
+                          % (case["id"], case["topic"], case["bloom"], case["depth"], case["format"]))
+    return errors
 
 
 def main():
@@ -64,14 +79,6 @@ def main():
         if c["required_gate"] not in GATES: errors.append("%s: bad gate %s" % (c["id"], c["required_gate"]))
         if c["hover_safety"] not in {"auto_safe", "two_vote_required", "never_auto"}:
             errors.append("%s: bad hover_safety %s" % (c["id"], c["hover_safety"]))
-        # the core principle (aligned with nahw/rules/two-vote-required-rules.json): a grammar-affecting decision
-        # at analysis+ / deep / essay forces two-vote and may NEVER be auto_safe. Recall/understanding/application
-        # direct-objective knowledge facts may be auto_safe.
-        strict = (c.get("bloom") in {"analysis", "evaluation", "generation"}
-                  or c.get("depth") == "deep" or c.get("format") == "essay")
-        if c.get("topic") in GRAMMAR_AFFECTING and strict and c.get("required_gate") == "auto_safe":
-            errors.append("%s: grammar-affecting topic %s at %s/%s/%s requires >= two_vote (got auto_safe)"
-                          % (c["id"], c["topic"], c["bloom"], c["depth"], c["format"]))
         if c.get("hover_safety") == "auto_safe" and c.get("required_gate") != "auto_safe":
             errors.append("%s: hover_safety auto_safe but required_gate=%s (disagree)"
                           % (c["id"], c["required_gate"]))
@@ -80,6 +87,7 @@ def main():
     if len(set(ids)) != len(ids):
         dup = [i for i, n in collections.Counter(ids).items() if n > 1]
         errors.append("duplicate ids: %s" % dup)
+    errors.extend(topic_gate_errors(cases))
 
     # GrammarProblems load-bearing property, exercised on REAL content: every case carrying a
     # wrong_reasoning_trap (a plausible path that lands on the right final answer for the wrong reason)
@@ -103,6 +111,7 @@ def main():
     by_level = collections.Counter(c.get("level") for c in cases)
     by_bloom = collections.Counter(c.get("bloom") for c in cases)
     by_topic = collections.Counter(c.get("topic") for c in cases)
+    grammar_affecting = grammar_affecting_topics(cases)
     by_gate = collections.Counter(c.get("required_gate") for c in cases)
     by_depth = collections.Counter(c.get("depth") for c in cases)
     L = ["# GrammarProblems-derived eval — scoreboard", "",
@@ -121,10 +130,10 @@ def main():
     for k in sorted(by_gate): L.append("| gate:%s | %d |" % (k, by_gate[k]))
     L += ["", "## Topic coverage", "", "| topic | n | grammar-affecting |", "|---|---:|:--:|"]
     for k in sorted(by_topic):
-        L.append("| %s | %d | %s |" % (k, by_topic[k], "yes" if k in GRAMMAR_AFFECTING else ""))
-    missing_topics = sorted(GRAMMAR_AFFECTING - set(by_topic))
+        L.append("| %s | %d | %s |" % (k, by_topic[k], "yes" if k in grammar_affecting else ""))
+    missing_topics = sorted(grammar_affecting - set(by_topic))
     L += ["", "## Uncovered grammar-affecting topics", "",
-          ("none — all %d covered" % len(GRAMMAR_AFFECTING)) if not missing_topics else ", ".join(missing_topics)]
+          ("none — all %d covered" % len(grammar_affecting)) if not missing_topics else ", ".join(missing_topics)]
     os.makedirs(os.path.dirname(SCORE), exist_ok=True)
     open(SCORE, "w", encoding="utf-8").write("\n".join(L) + "\n")
 

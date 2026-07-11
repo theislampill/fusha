@@ -42,22 +42,33 @@ LEAK_RE = re.compile(r"informed_by|external_informed_by|quran\.com|corpus\.quran
 WHO_GLOSS = re.compile(r"\bwho\b|\bwhoever\b|\bwhomever\b|he who", re.I)
 FROM_GLOSS = re.compile(r"\bfrom\b|\bamong\b", re.I)
 
-# GP0 gate tiers (must mirror nahw/evals/grammar-decision-gates.json), ranked
+# GP0 gate tiers, ranked. GRAMMAR_GATE_TRIGGERS is an ordered verified copy of
+# nahw/evals/grammar-decision-gates.json; tools/test_gate_ssot.py rejects drift.
 _GATE_RANK = {"auto_safe": 0, "two_vote_required": 1, "human_source_review_required": 2, "never_auto_resolve": 3}
-_NEVER = {"norm_only_match", "ocr_only_evidence", "external_gloss_copied", "reasoning_path_wrong", "qac_pos_conflict"}
-_HUMAN = {"ambiguous_grammar", "source_corpus_conflict", "suspected_qamus_entry_error", "proper_vs_common_noun", "quran_ref_uncertain"}
-_TWOVOTE = {"irab", "case_or_mood", "istithna", "nafy_lil_jins", "idafa_ambiguous", "jar_majrur_ambiguous",
-            "multi_sense_root", "referent_sensitive_gloss", "advanced_nahw", "depth_deep", "format_essay",
-            "bloom_analysis_or_higher"}
+GRAMMAR_GATE_TRIGGERS = {
+    "two_vote_required": (
+        "advanced_nahw", "irab", "case_or_mood", "istithna", "nafy_lil_jins", "idafa_ambiguous",
+        "jar_majrur_ambiguous", "multi_sense_root", "referent_sensitive_gloss", "depth_deep",
+        "format_essay", "bloom_analysis_or_higher",
+    ),
+    "human_source_review_required": (
+        "ambiguous_grammar", "source_corpus_conflict", "suspected_qamus_entry_error",
+        "proper_vs_common_noun", "quran_ref_uncertain",
+    ),
+    "never_auto_resolve": (
+        "norm_only_match", "ocr_only_evidence", "external_gloss_copied", "reasoning_path_wrong",
+        "qac_pos_conflict",
+    ),
+}
 
 
 def required_gate(triggers):
     triggers = set(triggers or [])
-    if triggers & _NEVER:
+    if triggers & set(GRAMMAR_GATE_TRIGGERS["never_auto_resolve"]):
         return "never_auto_resolve"
-    if triggers & _HUMAN:
+    if triggers & set(GRAMMAR_GATE_TRIGGERS["human_source_review_required"]):
         return "human_source_review_required"
-    if triggers & _TWOVOTE:
+    if triggers & set(GRAMMAR_GATE_TRIGGERS["two_vote_required"]):
         return "two_vote_required"
     return "auto_safe"
 
