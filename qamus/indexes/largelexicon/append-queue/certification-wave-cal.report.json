@@ -1,0 +1,76 @@
+{
+  "artifact_scope": "append_candidate_queue_only",
+  "baseline_sha": "446a536a432cc819ddfcfcf1bd61dd7601996c94",
+  "baseline_source_verification": {
+    "paths": [
+      "qamus/data/current/entries.jsonl",
+      "qamus/indexes/largelexicon/qword-denominator",
+      "qamus/indexes/largelexicon/qword-crosswalk"
+    ],
+    "unchanged_from_baseline": true
+  },
+  "determinism": {
+    "byte_identical_under_reordered_inputs": true,
+    "queue_output_sha256": "339ed820b4f5b8af4a8dff26c14de0921b9d447bf2689370067c73a98ef598b0",
+    "reordered_queue_output_sha256": "339ed820b4f5b8af4a8dff26c14de0921b9d447bf2689370067c73a98ef598b0"
+  },
+  "failure_code_counts": {
+    "P8_EDITORIAL_REPRODUCTION_FLAG": 74
+  },
+  "generator": "python tools/certify_append_transclusion.py",
+  "proof_counts": {
+    "1": {
+      "failed": 0,
+      "passed": 200
+    },
+    "2": {
+      "failed": 0,
+      "passed": 200
+    },
+    "3": {
+      "failed": 0,
+      "passed": 200
+    },
+    "4": {
+      "failed": 0,
+      "passed": 200
+    },
+    "5": {
+      "failed": 0,
+      "passed": 200
+    },
+    "6": {
+      "failed": 0,
+      "passed": 200
+    },
+    "7": {
+      "failed": 0,
+      "passed": 200
+    },
+    "8": {
+      "failed": 74,
+      "passed": 126
+    }
+  },
+  "resolution_method_counts": {
+    "blocked": 74,
+    "direct_transclusion": 126
+  },
+  "schema": "qamus.append_queue_certification_wave_report.v1",
+  "selection": {
+    "binding_count": 1,
+    "class": "exact_certified_transclusion",
+    "first_location": "2:2:3",
+    "last_location": "2:134:12",
+    "limit": 200,
+    "ordering": "numeric canonical_location S:A:W",
+    "selected_count": 200
+  },
+  "stop_condition": {
+    "proof_1_failures": 0,
+    "rule": "proof 1 failures > 20% of requested calibration limit",
+    "threshold_rows": 40,
+    "triggered": false
+  },
+  "wave_sha256": "4daba6a1991b7809b513375a78481312886fd961fe334873ae9063180c2ea49d"
+}
