@@ -89,7 +89,13 @@ def _source_head():
 
 
 def canonical_public_loc(row):
-    return row.get("canonical_wbw_loc") or row.get("wbw_loc") or row.get("loc")
+    """Canonical public join key: bare S:A:W. Legacy deployed rows carry the wbw: prefix
+    (wbw:S:A:W) while crosswalk/compiled rows carry bare coordinates - normalize both
+    (NF-T6-1: without this, the real-baseline join misses every legacy deployed row)."""
+    loc = row.get("canonical_wbw_loc") or row.get("wbw_loc") or row.get("loc")
+    if isinstance(loc, str) and loc.startswith("wbw:"):
+        loc = loc[4:]
+    return loc
 
 
 def public_content(row):
