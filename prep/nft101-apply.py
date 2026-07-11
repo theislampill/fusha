@@ -29,6 +29,17 @@ TARGET_QWORD_IDS = (
     "llx-qword-1c5f7c9c8e05-03-12-002",
 )
 TARGET_LOCS = ("4:64:9", "4:64:10")
+SOURCE_GRAPH_FILES = (
+    "qamus/indexes/current/source-address-full.jsonl",
+    "qamus/indexes/current/source-address-full.meta.json",
+    "qamus/indexes/current/quran-usage-spine-full.jsonl",
+    "qamus/indexes/current/quran-usage-spine-full.meta.json",
+    "qamus/indexes/current/qamus-entry-field-addresses.jsonl",
+    "qamus/indexes/current/qamus-entry-field-addresses.meta.json",
+    "qamus/indexes/current/decision-backlinks-full.json",
+    "qamus/reports/xanadu-completion-report.md",
+    "qamus/reports/source-address-usage-report.md",
+)
 
 
 class BaselineError(RuntimeError):
@@ -37,6 +48,31 @@ class BaselineError(RuntimeError):
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def source_graph_hashes(root: Path, files: list[str] | tuple[str, ...] = SOURCE_GRAPH_FILES) -> dict[str, str]:
+    missing = [rel for rel in files if not (root / rel).is_file()]
+    if missing:
+        raise BaselineError(f"source-address graph outputs missing: {missing}")
+    return {rel: sha256(root / rel) for rel in files}
+
+
+def assert_source_graph_hashes(root: Path, expected: dict[str, str]) -> None:
+    actual = source_graph_hashes(root, tuple(expected))
+    changed = [rel for rel in expected if actual[rel] != expected[rel]]
+    if changed:
+        raise BaselineError(f"source-address graph changed while regeneration was skipped: {changed}")
+
+
+def validate_source_graph_mode(hover_stage: Path | None, skip_source_graph: bool) -> None:
+    if skip_source_graph:
+        return
+    if hover_stage is None:
+        raise BaselineError("apply requires --hover-stage unless --skip-source-graph is set")
+    required_stage = [hover_stage / "wbw-lookup.json", hover_stage / "fusha-hover-token-decisions.jsonl"]
+    missing_stage = [str(path) for path in required_stage if not path.is_file()]
+    if missing_stage:
+        raise BaselineError(f"pinned full hover stage is incomplete: {missing_stage}")
 
 
 def read_json(path: Path) -> Any:
@@ -312,12 +348,10 @@ def rollback(root: Path) -> None:
     print("NF-T10-1 rollback restored the pre-apply snapshot")
 
 
-def apply(root: Path, hover_stage: Path, built_at: str) -> None:
+def apply(root: Path, hover_stage: Path | None, built_at: str, *, skip_source_graph: bool = False) -> None:
     entries = root / "qamus/data/current/entries.jsonl"
-    required_stage = [hover_stage / "wbw-lookup.json", hover_stage / "fusha-hover-token-decisions.jsonl"]
-    missing_stage = [str(path) for path in required_stage if not path.is_file()]
-    if missing_stage:
-        raise BaselineError(f"pinned full hover stage is incomplete: {missing_stage}")
+    validate_source_graph_mode(hover_stage, skip_source_graph)
+    graph_before = source_graph_hashes(root) if skip_source_graph else None
     snapshot(root)
     try:
         apply_entry_edit(entries, EXPECTED_ENTRIES_SHA256)
@@ -328,11 +362,15 @@ def apply(root: Path, hover_stage: Path, built_at: str) -> None:
         update_queue(root, denominator)
         update_embedded_manifests(root)
         run([sys.executable, "tools/build_existing_qamus_index.py", "--write"], root)
-        env = dict(os.environ)
-        env["QAMUS_HOVER_STAGE"] = str(hover_stage.resolve())
-        run([sys.executable, "tools/build_full_source_address_graph.py", "--write"], root, env)
+        if not skip_source_graph:
+            assert hover_stage is not None
+            env = dict(os.environ)
+            env["QAMUS_HOVER_STAGE"] = str(hover_stage.resolve())
+            run([sys.executable, "tools/build_full_source_address_graph.py", "--write"], root, env)
         run([sys.executable, "tools/validate_largelexicon_rows.py", "--write-release", "--built-at", built_at], root)
         verify(root)
+        if graph_before is not None:
+            assert_source_graph_hashes(root, graph_before)
     except Exception:
         print("APPLY FAILED; run: python prep/nft101-apply.py --rollback", file=sys.stderr)
         raise
@@ -343,6 +381,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--hover-stage", type=Path, help="pinned full hover-stage directory for source-graph regeneration")
+    parser.add_argument(
+        "--skip-source-graph",
+        action="store_true",
+        help="omit only source-address graph regeneration and require every graph output to remain byte-identical",
+    )
     parser.add_argument("--built-at", help="deterministic RELEASE.json timestamp; use the owner-approved apply timestamp")
     parser.add_argument("--rollback", action="store_true")
     args = parser.parse_args()
@@ -350,9 +393,11 @@ def main() -> int:
     if args.rollback:
         rollback(root)
         return 0
-    if args.hover_stage is None or args.built_at is None:
-        parser.error("apply requires --hover-stage and --built-at")
-    apply(root, args.hover_stage, args.built_at)
+    if args.built_at is None:
+        parser.error("apply requires --built-at")
+    if args.hover_stage is None and not args.skip_source_graph:
+        parser.error("apply requires --hover-stage unless --skip-source-graph is set")
+    apply(root, args.hover_stage, args.built_at, skip_source_graph=args.skip_source_graph)
     return 0
 
 

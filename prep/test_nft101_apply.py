@@ -86,6 +86,21 @@ class BaselineGuardTests(unittest.TestCase):
         self.assertEqual(snapshot_path, snapshot_path.resolve())
         self.assertNotEqual(snapshot_path, worktree / ".git" / "nft101-rollback")
 
+    def test_skip_source_graph_requires_no_hover_stage_and_preserves_graph_bytes(self) -> None:
+        module = load_apply_module()
+        graph_root = Path(self.tempdir.name) / "graph-root"
+        graph_path = graph_root / "qamus/indexes/current/source-address-full.jsonl"
+        graph_path.parent.mkdir(parents=True)
+        graph_path.write_bytes(b"graph baseline\n")
+
+        before = module.source_graph_hashes(graph_root, [graph_path.relative_to(graph_root).as_posix()])
+        module.validate_source_graph_mode(hover_stage=None, skip_source_graph=True)
+        module.assert_source_graph_hashes(graph_root, before)
+
+        graph_path.write_bytes(b"graph drift\n")
+        with self.assertRaisesRegex(module.BaselineError, "source-address graph changed"):
+            module.assert_source_graph_hashes(graph_root, before)
+
 
 if __name__ == "__main__":
     unittest.main()

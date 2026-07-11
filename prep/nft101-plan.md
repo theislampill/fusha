@@ -45,6 +45,16 @@ The apply command performs, in order:
 
 The surgical queue/crosswalk update is intentional. Running the generic builders would reset accepted/reviewed wave overlays; running the historical Lane-C investigator would fail its hard-coded `10`-row baseline after these two rows narrow.
 
+## Step-9 exception
+
+The orchestrator adjudicated source-address graph regeneration out of this tranche. Its verified findings are:
+
+1. The pinned hover-stage SHA `b2863636845795a2c96609eacfc96826857ff6832c277c91343548123acb1eb7` exists nowhere byte-identically across the server hover-stage directories, dated build backups, deploy backups, or local checkouts; the nearest candidates differ in size.
+2. The graph consumes the hover stage, which this correction does not modify; `entries.jsonl` is not a graph input.
+3. Zero rows in `decision_backlinks.json` or `quran_usage_spine.json` reference entry `1c5f7c9c8e05` or a `4:46` join. The one dependent index that does, `existing_qamus_index.min.json`, is already rebuilt by step 4.
+
+Accordingly, this apply runs with `--skip-source-graph`, omits only step 9, and asserts every source-address graph output is byte-identical before and after. The graph refresh is already 16 days stale versus live; that pre-existing refresh is deferred to its own future pinned tranche.
+
 ## One-command rollback
 
 ```powershell
