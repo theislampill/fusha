@@ -98,9 +98,26 @@ def canonical_public_loc(row):
     return loc
 
 
+def _canonical_segment(segment):
+    """Semantic projection of one public segment (NF-T6-3). Deployed rows carry the CSS
+    palette form (class: "qg-verb-prefix", gloss_contribution: ...); compiled payload rows
+    carry the contract form (qg_class: "verb_prefix", gloss: ...). The public join compares
+    MEANING, so both project onto one canonical shape."""
+    qg = segment.get("qg_class") or segment.get("class") or segment.get("qg") or ""  # qg: idempotent re-projection
+    if qg.startswith("qg-"):
+        qg = qg[3:]
+    return {
+        "role": segment.get("role"),
+        "surface": segment.get("surface"),
+        "qg": qg.replace("-", "_"),
+        "gloss": segment.get("gloss", segment.get("gloss_contribution")),
+    }
+
+
 def public_content(row):
     """Project compiled and legacy rows onto renderer-consumed public meaning."""
     preview = row.get("public_preview") or {}
+    segments = row.get("segments")
     return {
         "surface": row.get("surface", row.get("visible_surface")),
         "src": row.get("src", preview.get("src")),
@@ -111,7 +128,8 @@ def public_content(row):
         "contextual_phrase_gloss": row.get(
             "contextual_phrase_gloss", row.get("contextual_gloss")),
         "morphline": row.get("morphline"),
-        "segments": row.get("segments"),
+        "segments": ([_canonical_segment(s) for s in segments]
+                     if isinstance(segments, list) else segments),
         "learner_explanation": row.get(
             "learner_explanation", row.get("learner")),
     }
