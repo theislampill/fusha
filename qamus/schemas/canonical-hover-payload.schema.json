@@ -10,8 +10,8 @@
   "properties": {
     "schema": { "const": "qamus.canonical_hover_payload.v2" },
     "canonical_payload_id": { "type": "string", "pattern": "^chp:[0-9a-f]{16}$" },
-    "payload_family": { "type": "string", "enum": ["source_address_exact", "certified_lemma", "certified_pattern", "function_context"] },
-    "surface_norm": { "type": "string", "minLength": 1 },
+    "payload_family": { "type": "string", "enum": ["source_address_exact", "certified_lemma", "certified_pattern", "function_context"], "description": "RM-21 unified authorization enum -- CANONICAL (split) spelling, identical vocabulary to binding_gate. The certified-lemma fanout_gate's fused lemma_pattern_pos aliases certified_lemma + certified_pattern. See tools/validate_schema_coherence.py." },
+    "surface_norm": { "type": "string", "minLength": 1, "description": "Normalized visible surface, PINNED to the `_join_surface_key` normalizer in tools/validate_largelexicon_denominator_join.py (NFC; drops whitespace, tatweel U+0640, and Qur'anic annotation marks U+06D6..U+06ED; folds ٱ->ا; KEEPS harakat and hamza seats so function-token homographs like مِن/مَن do not collapse on a loc join). surface_norm MUST be a fixed point of that normalizer (round-trip stable); the schema-coherence lint enforces `_join_surface_key(surface_norm) == surface_norm`." },
     "root": { "type": ["string", "null"] },
     "lemma_id": { "type": ["string", "null"] },
     "lemma_status": { "type": "string", "enum": ["missing", "candidate", "inferred", "certified", "conflict", "blocked"] },
