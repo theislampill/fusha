@@ -4299,9 +4299,9 @@ try:
     check(
         "T5 G1 full dry-run: bindings=%d whitelist=%d build=%.3fs" % (
             len(_t5_full_b), _t5_full_whitelist_count, _t5_full_build_seconds),
-        len(_t5_full_rows) == 85877
-        and len(_t5_full_b) == 85877
-        and _t5_full_whitelist_count == 40972
+        len(_t5_full_rows) == 86970
+        and len(_t5_full_b) == 86970
+        and _t5_full_whitelist_count == 42065
         and not _t5_full_c and not _t5_full_wc,
     )
     check(
@@ -4482,6 +4482,35 @@ try:
           _t9b.returncode == 0 and "SHADOW RUNNER SELF-TEST PASS" in (_t9b.stdout or ""))
 except Exception as _e:
     check("T9B shadow runner self-test (harness error)", False)
+    print("  ", _e)
+
+# --- T10 Lane B classifier (Shadow Flywheel Activation Program) ---
+try:
+    _t10_lane_b = run_text([
+        sys.executable, os.path.join(ROOT, "tools", "classify_gap_multi_candidates.py"),
+        "--self-test"])
+    check("T10 Lane B classifier self-test", _t10_lane_b.returncode == 0)
+except Exception as _e:
+    check("T10 Lane B classifier self-test (harness error)", False)
+    print("  ", _e)
+
+# --- T11 append-queue builder (Shadow Flywheel Activation Program) ---
+try:
+    _t11_append = run_text([
+        sys.executable, os.path.join(ROOT, "tools", "build_append_queue.py"),
+        "--self-test"])
+    check("T11 append-queue builder self-test", _t11_append.returncode == 0)
+except Exception as _e:
+    check("T11 append-queue builder self-test (harness error)", False)
+    print("  ", _e)
+
+# --- T12 typed fact ledger ---
+try:
+    _t12_ledger = run_text([
+        sys.executable, os.path.join(ROOT, "tools", "test_fact_ledger.py")])
+    check("T12 fact ledger tests", _t12_ledger.returncode == 0)
+except Exception as _e:
+    check("T12 fact ledger tests (harness error)", False)
     print("  ", _e)
 
 # --- T10 crosswalk-gap queue (Shadow Flywheel Activation Program) ---
