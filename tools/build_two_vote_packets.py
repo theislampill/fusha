@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import collections
 import copy
+import dataclasses
 import hashlib
 import json
 import re
@@ -76,6 +77,12 @@ RESPONSE_FIELDS = [
     "confidence",
     "evidence_hashes",
 ]
+
+
+@dataclasses.dataclass(frozen=True)
+class Wave4Exclusions:
+    locations: set[str]
+    review_fact_ids: set[str]
 
 
 def canonical_bytes(value: Any) -> bytes:
@@ -148,6 +155,44 @@ def load_excluded_locations(paths: Iterable[Path]) -> set[str]:
                 raise ValueError(f"STOP: exclusion row lacks a canonical location in {path}: {row!r}")
             excluded.add(loc)
     return excluded
+
+
+def _row_review_fact_ids(row: dict[str, Any]) -> set[str]:
+    rebind_provenance = row.get("rebind_provenance")
+    values = {
+        row.get("review_fact_id"),
+        row.get("ledger_fact_id"),
+        rebind_provenance.get("review_fact_id")
+        if isinstance(rebind_provenance, dict)
+        else None,
+    }
+    return {value for value in values if isinstance(value, str) and value}
+
+
+def load_wave_4_exclusions(paths: Iterable[Path]) -> Wave4Exclusions:
+    """Load prior selections by both location and stable review-fact identity."""
+    locations: set[str] = set()
+    review_fact_ids: set[str] = set()
+    for path in paths:
+        document: Any = load_jsonl(path) if path.suffix == ".jsonl" else load_json(path)
+        if isinstance(document, dict):
+            rows = document.get("locations", document.get("rows"))
+        else:
+            rows = document
+        if not isinstance(rows, list):
+            raise ValueError(f"STOP: exclusion list must be a JSON array or JSONL rows: {path}")
+        for row in rows:
+            if isinstance(row, str):
+                loc = row
+            elif isinstance(row, dict):
+                loc = row.get("canonical_location", row.get("loc"))
+                review_fact_ids.update(_row_review_fact_ids(row))
+            else:
+                loc = None
+            if not isinstance(loc, str) or not LOC_RE.fullmatch(loc):
+                raise ValueError(f"STOP: exclusion row lacks a canonical location in {path}: {row!r}")
+            locations.add(loc)
+    return Wave4Exclusions(locations=locations, review_fact_ids=review_fact_ids)
 
 
 def loc_key(loc: str) -> tuple[int, int, int]:
@@ -417,7 +462,9 @@ def select_proportional_lexicographic_rows(
 def select_wave_4_rows(
     classifications: Iterable[dict[str, Any]],
     *,
+    queue_by_loc: dict[str, dict[str, Any]],
     excluded_locations: set[str],
+    excluded_review_fact_ids: set[str],
     strata: dict[str, int],
 ) -> list[tuple[str, dict[str, Any]]]:
     """Select a 250-row mixed Wave 4 from caller-supplied residual strata.
@@ -431,9 +478,20 @@ def select_wave_4_rows(
     by_class = {classification: [] for classification in sorted(TARGET_CLASSES)}
     for row in classifications:
         classification = row.get("laneb_classification")
+        loc = row["canonical_location"]
+        queue_row = queue_by_loc.get(loc)
+        review_fact_ids = _row_review_fact_ids(row)
+        if queue_row is not None:
+            review_fact_ids.update(_row_review_fact_ids(queue_row))
         if (
             classification in by_class
-            and row["canonical_location"] not in excluded_locations
+            and loc not in excluded_locations
+            and not review_fact_ids.intersection(excluded_review_fact_ids)
+            and queue_row is not None
+            and queue_row.get("primary_resolution_family") == "multiple_qword_candidates"
+            and queue_row.get("provenance_state") == "unresolved_candidate"
+            and queue_row.get("review_state") == "pending"
+            and queue_row.get("data_quality_quarantine") is not True
         ):
             by_class[classification].append(row)
     selected: list[tuple[str, dict[str, Any]]] = []
@@ -447,6 +505,23 @@ def select_wave_4_rows(
             )
         selected.extend((classification, row) for row in rows[:required])
     return selected
+
+
+def render_wave_4_selection_artifact(
+    selected: Iterable[tuple[str, dict[str, Any]]],
+) -> bytes:
+    """Project membership only; never carry source-row semantic fields."""
+    records = [
+        {
+            "schema": "qamus.wave_4_ordering_selection.v1",
+            "selection_basis": "ordering_only",
+            "selection_rank": rank,
+            "stratum": stratum,
+            "canonical_location": row["canonical_location"],
+        }
+        for rank, (stratum, row) in enumerate(selected, 1)
+    ]
+    return render_jsonl(records)
 
 
 def load_gate_ssot(gate_path: Path, fact_schema_path: Path) -> dict[str, Any]:
@@ -1166,9 +1241,11 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
     lexical_mapping_quality: dict[str, tuple[int, int]] = {}
     if wave_mode:
         if wave_four_mode:
-            excluded_locations = load_excluded_locations(
+            wave_4_exclusions = load_wave_4_exclusions(
                 paths[label] for label in paths if label.startswith("exclude_locations_")
             )
+            excluded_locations = wave_4_exclusions.locations
+            excluded_review_fact_ids = wave_4_exclusions.review_fact_ids
         else:
             excluded_locations = set(v1_by_loc)
             excluded_locations.update(packet["canonical_location"] for packet in wave_02_packets)
@@ -1208,7 +1285,9 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
         if wave_four_mode:
             selected = select_wave_4_rows(
                 classifications,
+                queue_by_loc=queue_by_loc,
                 excluded_locations=excluded_locations,
+                excluded_review_fact_ids=excluded_review_fact_ids,
                 strata=load_wave_4_strata(paths["strata"]),
             )
         elif wave_three_mode:
@@ -1417,6 +1496,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
                     for label in paths if label.startswith("exclude_locations_")
                 ],
                 "excluded_unique_locations": len(excluded_locations),
+                "excluded_promoted_review_fact_ids": len(excluded_review_fact_ids),
             }
             manifest["selection_rule"] = {
                 "purpose": "membership_selection_only_never_semantic_adjudication",
