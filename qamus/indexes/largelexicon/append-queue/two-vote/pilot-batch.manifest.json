@@ -1,0 +1,157 @@
+{
+  "authoritative_baseline_sha": "69830258bf463cff185ba621a13189093857bddc",
+  "decision_object": "which_bound_entry_analysis_governs_OR_retain_both_as_alternatives_OR_abstention",
+  "gate_loading": {
+    "loader": "tools.fact_ledger._two_vote_fact_types",
+    "stratum_triggers": {
+      "noun_vs_particle": [
+        "advanced_nahw"
+      ],
+      "other_section_conflict": [
+        "advanced_nahw"
+      ],
+      "same_section_different_root": [
+        "multi_sense_root"
+      ],
+      "verb_vs_noun": [
+        "advanced_nahw"
+      ]
+    },
+    "two_vote_fact_types": [
+      "case_mood_governor",
+      "irab_rendering"
+    ]
+  },
+  "generator": "tools/build_competing_analysis_packets.py",
+  "input_sha_pins": {
+    "append_queue": "339ed820b4f5b8af4a8dff26c14de0921b9d447bf2689370067c73a98ef598b0",
+    "entries": "a68245e93ce1a8b76858b672a449ff94475abf010e8102575e7c0285c540a78f",
+    "loc_surfaces": "f2e079dcdce01148074a238e3937314cf02222298f91f83ed66dcbb599697ca7"
+  },
+  "inputs": {
+    "append_queue": {
+      "canonical_rows_sha256": "6b3074b4beb0343cff906baacead449ac44906fbfd3780d5044957b00666a63f",
+      "path": "qamus/indexes/largelexicon/append-queue/append-queue.jsonl",
+      "row_count": 13251,
+      "sha256": "339ed820b4f5b8af4a8dff26c14de0921b9d447bf2689370067c73a98ef598b0"
+    },
+    "entries": {
+      "canonical_rows_sha256": "bd37b6fe0dd16b3f6673f0ea3446d37066a007ffcb0735fba85fa38d8f6500d9",
+      "path": "qamus/data/current/entries.jsonl",
+      "row_count": 2092,
+      "sha256": "a68245e93ce1a8b76858b672a449ff94475abf010e8102575e7c0285c540a78f"
+    },
+    "fact_ledger_schema": {
+      "path": "qamus/schemas/fact-ledger-row.schema.json",
+      "sha256": "bdf5bbeab70aac450b7f30fed58010b86d459e1cd1475278ce8b6a234af8c087"
+    },
+    "grammar_gate_ssot": {
+      "path": "nahw/evals/grammar-decision-gates.json",
+      "sha256": "ccc18bed9af049013cc7aa69b9eb1b27b4639f06c5afd90070a6bc406dd20c5f"
+    },
+    "homograph_keys": {
+      "path": "qamus/indexes/largelexicon/homograph-keys.json",
+      "sha256": "442696b2e7624b06619e52533b6759bfbdb4a955ccdae3c7614bcedc78a5f32f"
+    },
+    "loc_surfaces": {
+      "canonical_rows_sha256": "648d85cbafdb788e9cf67fcc860b1c135874197b400616fe23d620ed2f4332ae",
+      "path": "loc-surfaces-f2e079dc.jsonl",
+      "row_count": 49902,
+      "sha256": "f2e079dcdce01148074a238e3937314cf02222298f91f83ed66dcbb599697ca7"
+    }
+  },
+  "no_live_payload": true,
+  "output": {
+    "all_carriers_placeholder_clear": true,
+    "carrier_mapping_status_counts": {
+      "ambiguous": 25,
+      "unique": 210
+    },
+    "carriers_per_packet_max": 6,
+    "carriers_per_packet_min": 2,
+    "carriers_total": 235,
+    "gate_distribution": {
+      "two_vote_required": 100
+    },
+    "packet_mapping_status_counts": {
+      "unique": 100
+    },
+    "packet_sha256_rule": "SHA-256 of canonical compact JSON for the packet before adding packet_sha256.",
+    "path": "qamus/indexes/largelexicon/append-queue/two-vote/packets-pilot-001.jsonl",
+    "rows": 100,
+    "sha256": "bbd6f1b728bd50116a1d5c9eedb9b61aa349a7e02656b3b013233ff8164a14d1",
+    "stratum_counts": {
+      "same_section_different_root": 78,
+      "verb_vs_noun": 22
+    }
+  },
+  "population": {
+    "empty_named_strata": [
+      "noun_vs_particle"
+    ],
+    "primary_class": "competing_analyses",
+    "row_count": 3868,
+    "same_section_subtypes": {
+      "noun_only": 9,
+      "verb_only": 3018
+    },
+    "stratum_counts": {
+      "noun_vs_particle": 0,
+      "other_section_conflict": 0,
+      "same_section_different_root": 3027,
+      "verb_vs_noun": 841
+    }
+  },
+  "required_response_fields": [
+    "decision",
+    "governing_entry_id",
+    "retained_alternatives",
+    "sarf_evidence",
+    "nahw_evidence",
+    "rationale",
+    "gate",
+    "abstention_or_blocker",
+    "confidence",
+    "evidence_hashes"
+  ],
+  "response_decisions": [
+    "governing_entry",
+    "retain_both_as_alternatives",
+    "abstention"
+  ],
+  "retain_both_is_first_class_outcome": true,
+  "schema": "qamus.t11_competing_analysis_pilot_manifest.v1",
+  "scope": "packets_only_no_votes_no_conclusions_no_ledger_writes_no_crosswalk_writes",
+  "selection_rule": {
+    "allocation": {
+      "noun_vs_particle": 0,
+      "same_section_different_root": 78,
+      "verb_vs_noun": 22
+    },
+    "allocation_method": "largest_remainder_proportional_to_population_over_nonempty_named_strata",
+    "note": "noun_vs_particle is empty in this population (no particle sections); the 100 rows are split across the two non-empty named strata.",
+    "pure_function": true,
+    "randomness": "none",
+    "strata": [
+      "verb_vs_noun",
+      "noun_vs_particle",
+      "same_section_different_root"
+    ],
+    "stratify_by": "section_conflict_type",
+    "total": 100,
+    "wall_clock_inputs": "none",
+    "within_stratum_order": "numeric_surah_round_robin_then_numeric_canonical_location"
+  },
+  "validation": {
+    "rebuild": "python tools/build_competing_analysis_packets.py",
+    "rollback": "git revert <commit>",
+    "self_test": "python tools/build_competing_analysis_packets.py --self-test",
+    "stop_conditions": [
+      "append rows lack the fields to build self-contained packets",
+      "append-queue / entries / loc-surfaces SHA-256 differs from the pinned inputs",
+      "gate SSOT lacks a tier for a stratum trigger",
+      "a carrier presents placeholder or empty content as evidence",
+      "pilot selection produces the wrong count or duplicate locations"
+    ]
+  }
+}

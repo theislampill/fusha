@@ -4342,12 +4342,14 @@ try:
         # T10 residue/RM-36 arithmetic: 86970 + 47 promotions - 37 demotions
         # = 86980 bindings; 42065 + 19 promoted locs - 0 fully lost locs
         # = 42084 modeled whitelist locations.
-        # T10 Lane B wave-1 (EQ-17): 86980 + 77 two-vote-certified promotions
-        # = 87057 bindings; 42084 + 77 newly-modeled locs - 0 lost
-        # = 42161 modeled whitelist locations.
-        len(_t5_full_rows) == 87057
-        and len(_t5_full_b) == 87057
-        and _t5_full_whitelist_count == 42161
+        # T10 Lane B waves 1-2 (EQ-17): wave 2 certifies 537 carrier facts,
+        # comprising 522 new bindings + 15 corrected fallback rebindings.
+        # Bindings = 86980 + 77 + 522 = 87579; modeled locations remain
+        # 42084 + 77 + 194 newly-modeled locs - 0 old locations lost
+        # = 42355 modeled whitelist locations.
+        len(_t5_full_rows) == 87579
+        and len(_t5_full_b) == 87579
+        and _t5_full_whitelist_count == 42355
         and not _t5_full_c and not _t5_full_wc,
     )
     check(
@@ -4585,11 +4587,10 @@ except Exception as _e:
     check("T10 gap-queue builder self-test (harness error)", False)
     print("  ", _e)
 
-# --- T10 Lane B wave-1: two-vote-certified promotion through the ledger (EQ-17) ---
-# The committed fact-ledger store carries the review lifecycle (77 certified,
-# 1 disagreement review_required, 22 abstention candidates); the accepted crosswalk
-# and gap queue reconcile to the promoted-loc count; the tool's red-first fixtures
-# (ledger-gate refusal, missing carrier, quarantine, determinism) hold.
+# --- T10 Lane B waves 1-2: two-vote-certified promotion through the ledger (EQ-17) ---
+# Wave 2 retains every selected full carrier: 194 shared review decisions produce
+# 537 certified carrier facts/bindings. The queue reconciles by locations, while
+# accepted-crosswalk arithmetic reconciles by bindings.
 try:
     import collections as _lb_collections
     _lb_self = run_text([sys.executable, os.path.join(ROOT, "tools", "promote_two_vote_wave.py"),
@@ -4606,14 +4607,14 @@ try:
                 _lb_current[_lb_row["fact_id"]] = _lb_row  # last revision wins
     _lb_states = _lb_collections.Counter(
         _row["certification_state"] for _row in _lb_current.values())
-    check("T10 Lane B ledger states: certified=77 review_required=1 candidate=22 (conflicted=0)",
-          _lb_states.get("certified") == 77 and _lb_states.get("review_required") == 1
-          and _lb_states.get("candidate") == 22 and _lb_states.get("conflicted", 0) == 0)
+    check("T10 Lane B ledger states after wave 2: certified=614 review_required=10 candidate=69",
+          _lb_states.get("certified") == 614 and _lb_states.get("review_required") == 10
+          and _lb_states.get("candidate") == 69 and _lb_states.get("conflicted", 0) == 0)
     _lb_carriers = {
         (_row["subject_identity"]["loc"], _row["subject_identity"]["qword_row_id"])
         for _row in _lb_current.values() if _row["certification_state"] == "certified"}
-    check("T10 Lane B certified facts are occurrence-scoped with full D-13 carriers (77 unique)",
-          len(_lb_carriers) == 77 and all(
+    check("T10 Lane B certified facts are occurrence-scoped with full D-13 carriers (614 unique)",
+          len(_lb_carriers) == 614 and all(
               _row.get("scope") == "occurrence"
               and {"loc", "entry_id", "card_id", "qword_row_id"} <= set(_row["subject_identity"])
               for _row in _lb_current.values() if _row["certification_state"] == "certified"))
@@ -4626,12 +4627,90 @@ try:
           and _lb_report["counts"]["queue_after"] == 5425
           and _lb_report["resolution_method"] == "two_vote_certified_v1"
           and len(_lb_report["rows"]) == 77)
+    _lb_report2 = json.loads(io.open(os.path.join(
+        ROOT, "qamus", "indexes", "largelexicon", "crosswalk-gap", "laneb-wave-02.report.json"),
+        encoding="utf-8").read())
+    _lb_decisions = {}
+    for _row in _lb_report2["rows"]:
+        _lb_decisions.setdefault(_row["canonical_location"], set()).add(_row["review_decision_id"])
+    check("T10 Lane B wave 2 report: 194 locations / 537 carrier facts / queue 5425 -> 5231",
+          _lb_report2["counts"]["qualifying_locations"] == 194
+          and _lb_report2["counts"]["promoted_bindings"] == 537
+          and _lb_report2["counts"]["queue_before"] == 5425
+          and _lb_report2["counts"]["queue_after"] == 5231
+          and len(_lb_report2["rows"]) == 537
+          and len(_lb_decisions) == 194
+          and all(len(_ids) == 1 for _ids in _lb_decisions.values()))
+    _lb_rebinding = _lb_report2["rebinding_accounting"]
+    check("T10 Lane B wave 2 truthful accounting: 522 new + 15 rebound = 537 promoted",
+          _lb_rebinding["new_bindings"] == 522
+          and _lb_rebinding["rebound_bindings"] == 15
+          and _lb_rebinding["certified_promoted_bindings"] == 537
+          and _lb_rebinding["accepted_bindings_before"] == 87057
+          and _lb_rebinding["accepted_bindings_after"] == 87579
+          and _lb_rebinding["accepted_bindings_delta"] == 522)
+    check("T10 Lane B wave 2 old-location occupancy proof: none of 15 lost its last binding",
+          len(_lb_rebinding["rebindings"]) == 15
+          and not _lb_rebinding["locations_losing_last_binding"]
+          and all(not _row["old_location_lost_last_binding"]
+                  and _row["old_location_bindings_after"] > 0
+                  for _row in _lb_rebinding["rebindings"])
+          and _lb_rebinding["modeled_locations_before"] == 42161
+          and _lb_rebinding["modeled_locations_after"] == 42355)
     _lb_manifest = json.loads(io.open(os.path.join(
         ROOT, "qamus", "indexes", "largelexicon", "qamus-qword-crosswalk.manifest.json"),
         encoding="utf-8").read())
-    check("T10 Lane B accepted crosswalk reconciles: 87057 accepted (86980 + 77)",
-          _lb_manifest["status_counts"].get("canonical_crosswalk_accepted") == 87057
-          and _lb_manifest.get("two_vote_promotion", {}).get("accepted_rows") == 77)
+    _lb_wave2_facts = {
+        _fid: _row for _fid, _row in _lb_current.items()
+        if _row["certification_state"] == "certified" and _row.get("created_from")
+    }
+    _lb_crosswalk_rows = []
+    for _path in _t5_crosswalk_paths:
+        with io.open(_path, encoding="utf-8") as _handle:
+            _lb_crosswalk_rows.extend(
+                _row for _row in (json.loads(_line) for _line in _handle)
+                if _row.get("status") == "canonical_crosswalk_accepted")
+    _lb_wave2_bindings = [
+        _row for _row in _lb_crosswalk_rows
+        if _row.get("review_fact_id") in _lb_wave2_facts
+    ]
+    check("T10 Lane B wave 2 retains 537 binding-scoped provenance edges",
+          len(_lb_wave2_facts) == 537 and len(_lb_wave2_bindings) == 537
+          and all(
+              _lb_wave2_facts[_row["review_fact_id"]]["subject_identity"]["qword_row_id"]
+                  == _row["qword_row_id"]
+               and _lb_wave2_facts[_row["review_fact_id"]]["subject_identity"]["loc"]
+                   == _row["canonical_quran_loc"]
+               for _row in _lb_wave2_bindings))
+    _lb_rebound_rows = [_row for _row in _lb_wave2_bindings if _row.get("rebind_provenance")]
+    _lb_reported_pairs = {
+        (_row["qword_row_id"], _row["old_loc"], _row["new_loc"])
+        for _row in _lb_rebinding["rebindings"]}
+    _lb_materialized_pairs = {
+        (_row["qword_row_id"], _row["rebind_provenance"]["prior_loc"],
+         _row["canonical_quran_loc"])
+        for _row in _lb_rebound_rows}
+    check("T10 Lane B wave 2 rebind lineage: 15 explicit old->new pairs match report",
+          len(_lb_rebound_rows) == 15
+          and _lb_reported_pairs == _lb_materialized_pairs
+          and all(
+              _row["rebind_provenance"] == {
+                  "prior_loc": _row["rebind_provenance"]["prior_loc"],
+                  "prior_resolution_method": "row_unique_surface_fallback",
+                  "reason": "two_vote_review_relocated",
+                  "review_fact_id": _row["review_fact_id"],
+                  "rebound_at_head": "69830258bf463cff185ba621a13189093857bddc",
+              }
+              for _row in _lb_rebound_rows))
+    check("T10 Lane B accepted crosswalk reconciles: 87579 accepted (87057 + 522 new)",
+          _lb_manifest["status_counts"].get("canonical_crosswalk_accepted") == 87579
+          and _lb_manifest.get("two_vote_promotion", {}).get("wave") == 2
+          and _lb_manifest.get("two_vote_promotion", {}).get("accepted_rows") == 537)
+    _lb_queue_manifest = json.loads(io.open(os.path.join(
+        ROOT, "qamus", "indexes", "largelexicon", "crosswalk-gap",
+        "crosswalk-gap-queue.manifest.json"), encoding="utf-8").read())
+    check("T10 Lane B wave 2 queue reconciles by 194 locations: 5425 -> 5231",
+          _lb_queue_manifest.get("queue_rows") == 5231)
 except Exception as _e:
     check("T10 Lane B wave promotion gate (harness error)", False)
     print("  ", _e)

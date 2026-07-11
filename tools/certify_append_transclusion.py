@@ -23,12 +23,12 @@ from collections import Counter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
-BASELINE_SHA = "446a536a432cc819ddfcfcf1bd61dd7601996c94"
+BASELINE_SHA = "69830258bf463cff185ba621a13189093857bddc"
 QUEUE_PATH = os.path.join(
     REPO, "qamus", "indexes", "largelexicon", "append-queue", "append-queue.jsonl")
 REPORT_PATH = os.path.join(
     REPO, "qamus", "indexes", "largelexicon", "append-queue",
-    "certification-wave-cal.report.json")
+    "certification-wave-02.report.json")
 ENTRIES_PATH = os.path.join(REPO, "qamus", "data", "current", "entries.jsonl")
 DENOMINATOR_GLOB = os.path.join(
     REPO, "qamus", "indexes", "largelexicon", "qword-denominator", "*.jsonl")
@@ -322,11 +322,39 @@ def certify_row(row, entries, denominators, crosswalks):
     return updated
 
 
-def eligible_rows(queue):
-    return sorted((row for row in queue
-                   if row.get("primary_class") == "exact_certified_transclusion"
-                   and row.get("binding_count") == 1),
-                  key=lambda row: location_key(row.get("canonical_location")))
+def agreeing_multi_entry(row, entries):
+    """Mirror proof 7's frozen agreeing-multi-entry arm for wave selection."""
+    if row.get("competing_analyses"):
+        return False
+    entry_ids = sorted({
+        carrier.get("entry_id") for carrier in row.get("bound_carriers") or []
+        if carrier.get("entry_id")
+    })
+    if len(entry_ids) <= 1:
+        return False
+    resolved = [resolve_address(source.get("address"), entries)
+                for source in row.get("content_sources") or []]
+    if any(value is None for value in resolved) or len(resolved) != len(entry_ids):
+        return False
+    root_sections = {
+        ((entries.get(entry_id) or {}).get("root"),
+         (entries.get(entry_id) or {}).get("section")) for entry_id in entry_ids
+    }
+    example_texts = {(value[1].get("ar"), value[1].get("en")) for value in resolved}
+    return len(root_sections) == 1 and len(example_texts) == 1
+
+
+def eligible_rows(queue, entries):
+    base = [row for row in queue
+            if row.get("primary_class") == "exact_certified_transclusion"
+            and not row.get("certification_evidence")]
+    singles = sorted((row for row in base if row.get("binding_count") == 1),
+                     key=lambda row: location_key(row.get("canonical_location")))
+    agreeing_multi = sorted((row for row in base
+                              if row.get("binding_count") != 1
+                              and agreeing_multi_entry(row, entries)),
+                             key=lambda row: location_key(row.get("canonical_location")))
+    return singles + agreeing_multi
 
 
 def render_queue(rows):
@@ -334,8 +362,10 @@ def render_queue(rows):
     return "".join(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in ordered).encode("utf-8")
 
 
-def calibrate(queue, entries, denominators, crosswalks, limit=200):
-    selected = eligible_rows(queue)[:limit]
+def calibrate(queue, entries, denominators, crosswalks, limit=None):
+    selected = eligible_rows(queue, entries)
+    if limit is not None:
+        selected = selected[:limit]
     selected_locations = {row["canonical_location"] for row in selected}
     updated_by_location = {
         row["canonical_location"]: certify_row(row, entries, denominators, crosswalks)
@@ -355,7 +385,7 @@ def calibrate(queue, entries, denominators, crosswalks, limit=200):
             counts["passed" if item["passed"] else "failed"] += 1
 
     proof1_failures = proof_counts.get("1", {}).get("failed", 0)
-    threshold = int(limit * 0.20)
+    threshold = int(len(selected) * 0.20)
     stop_triggered = proof1_failures > threshold
     wave_bytes = "".join(
         json.dumps(updated_by_location[loc], ensure_ascii=False, sort_keys=True) + "\n"
@@ -367,9 +397,14 @@ def calibrate(queue, entries, denominators, crosswalks, limit=200):
         "generator": "python tools/certify_append_transclusion.py",
         "selection": {
             "class": "exact_certified_transclusion",
-            "binding_count": 1,
+            "phases": [
+                {"phase": 1, "name": "remaining_single_entry",
+                 "selected_count": sum(row.get("binding_count") == 1 for row in selected)},
+                {"phase": 2, "name": "agreeing_multi_entry",
+                 "selected_count": sum(row.get("binding_count") != 1 for row in selected)},
+            ],
             "limit": limit,
-            "ordering": "numeric canonical_location S:A:W",
+            "ordering": "phase, then numeric canonical_location S:A:W",
             "selected_count": len(selected),
             "first_location": selected[0]["canonical_location"] if selected else None,
             "last_location": selected[-1]["canonical_location"] if selected else None,
@@ -377,8 +412,14 @@ def calibrate(queue, entries, denominators, crosswalks, limit=200):
         "proof_counts": proof_counts,
         "failure_code_counts": dict(sorted(failure_counts.items())),
         "resolution_method_counts": dict(sorted(method_counts.items())),
+        "d01_flag_rate": {
+            "flagged_rows": proof_counts.get("8", {}).get("failed", 0),
+            "population_rows": len(selected),
+            "rate": (proof_counts.get("8", {}).get("failed", 0) / len(selected)
+                     if selected else 0.0),
+        },
         "stop_condition": {
-            "rule": "proof 1 failures > 20% of requested calibration limit",
+            "rule": "proof 1 failures > 20% of full selected population",
             "proof_1_failures": proof1_failures,
             "threshold_rows": threshold,
             "triggered": stop_triggered,
@@ -480,6 +521,26 @@ def _self_test():
     row2["dependency_hashes"].update({"binding:cw2": stable_hash(cross2["cw2"]),
                                       "source:q2": denominator_row_hash(denom2["q2"])})
     cases.append(("proof 7 multi-entry disagreement", row2, entries2, denom2, cross2, 7))
+
+    calibrated = copy.deepcopy(row)
+    calibrated["review_state"] = "certified"
+    calibrated["certified"] = True
+    calibrated["certification_evidence"] = {"baseline_sha": "calibration"}
+    pending_single = dict(copy.deepcopy(row), canonical_location="1:1:2")
+    agreeing_multi = copy.deepcopy(row2)
+    agreeing_multi["canonical_location"] = "1:1:3"
+    agreeing_entries = copy.deepcopy(entries2)
+    agreeing_entries["e2"].update({"root": "ع ط و", "section": "verb"})
+    agreeing_entries["e2"]["usage"][0]["examples"].append(
+        {"ar": "مختلف", "en": "different", "ref": "1:1"})
+    disagreeing_multi = dict(copy.deepcopy(row2), canonical_location="1:1:4")
+    disagreeing_multi["content_sources"][1]["address"] = "entry:e2/usage/1/examples/2"
+    selected = eligible_rows([
+        disagreeing_multi, agreeing_multi, pending_single, calibrated
+    ], agreeing_entries)
+    check("selection excludes calibration and uses single then agreeing-multi phases",
+          [item["canonical_location"] for item in selected] == ["1:1:2", "1:1:3"])
+
     bad_entries = copy.deepcopy(entries)
     bad_entries["e1"]["usage"][0]["examples"][0]["en"] = "[They] received [the gift]."
     cases.append(("proof 8 bracket editorial trap", row, bad_entries, denominators, crosswalks, 8))
@@ -500,44 +561,36 @@ def _self_test():
     if failures:
         raise SystemExit("FAIL - %d certification self-test(s): %s" %
                          (len(failures), ", ".join(failures)))
-    print("PASS - certification self-test (%d checks)" % 12)
+    print("PASS - certification self-test (%d checks)" % 13)
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Certify a deterministic calibration wave of append candidates")
+        description="Certify the deterministic second wave of append candidates")
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--queue", default=QUEUE_PATH)
     parser.add_argument("--entries", default=ENTRIES_PATH)
     parser.add_argument("--denominator-glob", default=DENOMINATOR_GLOB)
     parser.add_argument("--crosswalk-glob", default=CROSSWALK_GLOB)
     parser.add_argument("--report", default=REPORT_PATH)
-    parser.add_argument("--limit", type=int, default=200)
     args = parser.parse_args()
     if args.self_test:
         _self_test()
         return
-    if not 1 <= args.limit <= 200:
-        raise SystemExit("limit must be between 1 and 200")
-
     queue = read_jsonl(args.queue)
     baseline_source_paths = verify_baseline_sources()
     entries = index_rows(read_jsonl(args.entries), "id")
     denominators = load_sharded_map(args.denominator_glob, "row_id")
     crosswalks = load_sharded_map(args.crosswalk_glob, "row_id")
     updated, report, stop_triggered = calibrate(
-        queue, entries, denominators, crosswalks, limit=args.limit)
-    if report["selection"]["selected_count"] != args.limit:
-        raise SystemExit("STOP: requested %d rows, selected %d" %
-                         (args.limit, report["selection"]["selected_count"]))
+        queue, entries, denominators, crosswalks)
     if stop_triggered:
         raise SystemExit("STOP: proof 1 failures exceed 20%%; no artifacts written")
 
     queue_bytes = render_queue(updated)
     reordered_bytes = render_queue(calibrate(
         list(reversed(queue)), dict(reversed(list(entries.items()))),
-        dict(reversed(list(denominators.items()))), dict(reversed(list(crosswalks.items()))),
-        limit=args.limit)[0])
+        dict(reversed(list(denominators.items()))), dict(reversed(list(crosswalks.items()))))[0])
     if queue_bytes != reordered_bytes:
         raise SystemExit("STOP: order-independence proof failed; no artifacts written")
     report["determinism"] = {
@@ -554,8 +607,9 @@ def main():
         handle.write(queue_bytes)
     with io.open(args.report, "w", encoding="utf-8", newline="\n") as handle:
         handle.write(stable_json(report, pretty=True))
-    print("PASS - calibrated %d append candidates (%d direct, %d blocked)" % (
-        args.limit, report["resolution_method_counts"].get("direct_transclusion", 0),
+    print("PASS - certified wave 02 for %d append candidates (%d direct, %d blocked)" % (
+        report["selection"]["selected_count"],
+        report["resolution_method_counts"].get("direct_transclusion", 0),
         report["resolution_method_counts"].get("blocked", 0)))
 
 

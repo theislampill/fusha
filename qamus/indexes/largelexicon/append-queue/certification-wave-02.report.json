@@ -1,0 +1,92 @@
+{
+  "artifact_scope": "append_candidate_queue_only",
+  "baseline_sha": "69830258bf463cff185ba621a13189093857bddc",
+  "baseline_source_verification": {
+    "paths": [
+      "qamus/data/current/entries.jsonl",
+      "qamus/indexes/largelexicon/qword-denominator",
+      "qamus/indexes/largelexicon/qword-crosswalk"
+    ],
+    "unchanged_from_baseline": true
+  },
+  "d01_flag_rate": {
+    "flagged_rows": 1858,
+    "population_rows": 9134,
+    "rate": 0.20341580906503176
+  },
+  "determinism": {
+    "byte_identical_under_reordered_inputs": true,
+    "queue_output_sha256": "d726cfeb033796f25f5ffa31d9f3df876d75638b080d43f9b155b47bac62a364",
+    "reordered_queue_output_sha256": "d726cfeb033796f25f5ffa31d9f3df876d75638b080d43f9b155b47bac62a364"
+  },
+  "failure_code_counts": {
+    "P8_EDITORIAL_REPRODUCTION_FLAG": 1858
+  },
+  "generator": "python tools/certify_append_transclusion.py",
+  "proof_counts": {
+    "1": {
+      "failed": 0,
+      "passed": 9134
+    },
+    "2": {
+      "failed": 0,
+      "passed": 9134
+    },
+    "3": {
+      "failed": 0,
+      "passed": 9134
+    },
+    "4": {
+      "failed": 0,
+      "passed": 9134
+    },
+    "5": {
+      "failed": 0,
+      "passed": 9134
+    },
+    "6": {
+      "failed": 0,
+      "passed": 9134
+    },
+    "7": {
+      "failed": 0,
+      "passed": 9134
+    },
+    "8": {
+      "failed": 1858,
+      "passed": 7276
+    }
+  },
+  "resolution_method_counts": {
+    "blocked": 1858,
+    "direct_transclusion": 7276
+  },
+  "schema": "qamus.append_queue_certification_wave_report.v1",
+  "selection": {
+    "class": "exact_certified_transclusion",
+    "first_location": "2:134:13",
+    "last_location": "86:6:3",
+    "limit": null,
+    "ordering": "phase, then numeric canonical_location S:A:W",
+    "phases": [
+      {
+        "name": "remaining_single_entry",
+        "phase": 1,
+        "selected_count": 9106
+      },
+      {
+        "name": "agreeing_multi_entry",
+        "phase": 2,
+        "selected_count": 28
+      }
+    ],
+    "selected_count": 9134
+  },
+  "stop_condition": {
+    "proof_1_failures": 0,
+    "rule": "proof 1 failures > 20% of full selected population",
+    "threshold_rows": 1826,
+    "triggered": false
+  },
+  "wave_sha256": "5aa43f676e0814af772b8d3ecfea23de4e31930ea22d1d5b193cf1494766e8ad"
+}

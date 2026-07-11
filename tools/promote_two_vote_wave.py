@@ -34,6 +34,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -94,6 +95,39 @@ QUEUE_MANIFEST_PATH = QUEUE_DIR / "crosswalk-gap-queue.manifest.json"
 PACKET_DIR = QUEUE_DIR / "two-vote"
 WAVE_REPORT_PATH = QUEUE_DIR / "laneb-wave-01.report.json"
 
+WAVE_SPECS = {
+    1: {
+        "analysis_name": "calibration-analysis-v2.json",
+        "packet_names": ["packets-cal-001.jsonl", "packets-cal-002.jsonl"],
+        "qualifying_rows": 77,
+        "promoted_bindings": 77,
+        "disagreement_rows": 1,
+        "joint_abstentions": 22,
+        "one_sided_rows": 0,
+        "queue_before": 5502,
+        "queue_after": 5425,
+        "promoted_at": "2026-07-11T12:00:00Z",
+        "report_name": "laneb-wave-01.report.json",
+    },
+    2: {
+        "analysis_name": "wave-02-analysis.json",
+        "packet_names": ["packets-wave-02.jsonl"],
+        "qualifying_rows": 194,
+        "promoted_bindings": 537,
+        "new_bindings": 522,
+        "rebound_bindings": 15,
+        "accepted_bindings_after": 87579,
+        "modeled_locations_after": 42355,
+        "disagreement_rows": 1,
+        "joint_abstentions": 47,
+        "one_sided_rows": 8,
+        "queue_before": 5425,
+        "queue_after": 5231,
+        "promoted_at": "2026-07-11T18:00:00Z",
+        "report_name": "laneb-wave-02.report.json",
+    },
+}
+
 LOC_RE = re.compile(r"^\d{1,3}:\d{1,3}:\d{1,3}$")
 ENTRY_RE = re.compile(r"^[0-9a-f]{12}$")
 CARRIER_RE = re.compile(r"row_id=(llx-qword-[0-9a-f]{12}-\d{2}-\d{2}-\d{3})")
@@ -120,15 +154,27 @@ def _sha_input(path: Path) -> str:
     return "sha256:" + sha256_file(path)
 
 
-def load_inputs(inputs_dir: Path) -> dict[str, Any]:
-    cal_path = inputs_dir / "calibration-analysis-v2.json"
+def configure_wave(wave: int) -> dict[str, Any]:
+    if wave not in WAVE_SPECS:
+        raise WaveStop("unsupported wave: %s" % wave)
+    spec = WAVE_SPECS[wave]
+    global WAVE, WAVE_PROMOTED_AT, QUEUE_BEFORE, WAVE_REPORT_PATH
+    WAVE = wave
+    WAVE_PROMOTED_AT = spec["promoted_at"]
+    QUEUE_BEFORE = spec["queue_before"]
+    WAVE_REPORT_PATH = QUEUE_DIR / spec["report_name"]
+    return spec
+
+
+def load_inputs(inputs_dir: Path, spec: dict[str, Any]) -> dict[str, Any]:
+    cal_path = inputs_dir / spec["analysis_name"]
     va_path = inputs_dir / "votes-A.jsonl"
     vb_path = inputs_dir / "votes-B.jsonl"
     cal = json.loads(cal_path.read_text(encoding="utf-8"))
     votes_a = {row["packet_id"]: row for row in _read_jsonl(va_path)}
     votes_b = {row["packet_id"]: row for row in _read_jsonl(vb_path)}
     packets: dict[str, dict[str, Any]] = {}
-    for name in ("packets-cal-001.jsonl", "packets-cal-002.jsonl"):
+    for name in spec["packet_names"]:
         for packet in _read_jsonl(PACKET_DIR / name):
             packets[packet["packet_id"]] = packet
     return {
@@ -162,14 +208,10 @@ def _cited_qword_ids(votes: list[dict[str, Any]]) -> set[str]:
     return cited
 
 
-def select_carrier(qrow: dict[str, Any], packet: dict[str, Any],
-                   vote_a: dict[str, Any], vote_b: dict[str, Any]) -> dict[str, Any]:
-    """Return the single candidate carrier the two converged conclusions bind.
-
-    Position conclusions (``s:a:w``) bind the fingerprint-unique carrier at that
-    location; lexical conclusions (``entry_id``) bind that entry's carrier. Raises
-    :class:`WaveStop` when no unique carrier can be selected from the conclusions.
-    """
+def select_carriers(qrow: dict[str, Any], packet: dict[str, Any],
+                    vote_a: dict[str, Any], vote_b: dict[str, Any],
+                    declared: list[dict[str, Any]] | None = None) -> list[dict[str, Any]]:
+    """Return every full carrier selected by one shared review decision."""
     loc = qrow["canonical_location"]
     concl_a = qrow["reviewer_a"]["normalized_conclusion"]
     concl_b = qrow["reviewer_b"]["normalized_conclusion"]
@@ -178,31 +220,59 @@ def select_carrier(qrow: dict[str, Any], packet: dict[str, Any],
     conclusion = concl_a
     carriers = packet.get("candidate_carriers") or []
 
-    if LOC_RE.match(conclusion):
-        if conclusion != loc:
-            raise WaveStop("row %s position conclusion %r != canonical location" % (loc, conclusion))
-        unique = [c for c in carriers
-                  if c.get("fingerprint_match_candidates") == [loc]
-                  and c.get("mapping_status") == "unique"]
-        if len(unique) == 1:
-            return unique[0]
-        cited = _cited_qword_ids([vote_a, vote_b])
-        narrowed = [c for c in unique if c.get("qword_row_id") in cited]
-        if len(narrowed) == 1:
-            return narrowed[0]
-        raise WaveStop(
-            "row %s lacks a unique carrier: %d fingerprint-unique, %d cited"
-            % (loc, len(unique), len(narrowed))
-        )
+    if declared is not None:
+        declared_ids = [row.get("row_id") or row.get("qword_row_id") for row in declared]
+        if not declared_ids or any(not row_id for row_id in declared_ids):
+            raise WaveStop("row %s declared selection contains an incomplete carrier" % loc)
+        by_id = {row.get("qword_row_id") or row.get("row_id"): row for row in carriers}
+        selected = [by_id.get(row_id) for row_id in declared_ids]
+        if any(row is None for row in selected):
+            raise WaveStop("row %s declared carrier is absent from the packet" % loc)
+    elif conclusion.startswith("location=") or LOC_RE.match(conclusion):
+        target = conclusion.split("=", 1)[1] if conclusion.startswith("location=") else conclusion
+        if target != loc:
+            raise WaveStop("row %s position conclusion %r != canonical location" % (loc, target))
+        allowed = set(packet.get("carriers_uniquely_addressing_target") or [])
+        selected = [
+            row for row in carriers
+            if row.get("fingerprint_match_candidates") == [loc]
+            and row.get("mapping_status") == "unique"
+            and (not allowed or row.get("entry_id") in allowed)
+        ]
+        if not selected:
+            cited = _cited_qword_ids([vote_a, vote_b])
+            selected = [row for row in carriers if row.get("qword_row_id") in cited]
+    elif conclusion.startswith("entry_id=") or ENTRY_RE.match(conclusion):
+        entry_id = conclusion.split("=", 1)[1] if conclusion.startswith("entry_id=") else conclusion
+        selected = [row for row in carriers if row.get("entry_id") == entry_id]
+    else:
+        raise WaveStop("row %s unrecognized conclusion %r" % (loc, conclusion))
 
-    if ENTRY_RE.match(conclusion):
-        hits = [c for c in carriers if c.get("entry_id") == conclusion]
-        if len(hits) == 1:
-            return hits[0]
-        raise WaveStop("row %s lexical conclusion %s maps to %d carriers"
-                       % (loc, conclusion, len(hits)))
+    selected = sorted(selected, key=lambda row: row.get("qword_row_id") or "")
+    if not selected:
+        raise WaveStop("row %s review decision selects no carrier" % loc)
+    qword_ids = []
+    for row in selected:
+        _carrier_identity(loc, row)
+        qword_ids.append(row["qword_row_id"])
+    if len(qword_ids) != len(set(qword_ids)):
+        raise WaveStop("row %s selected duplicate carrier identities" % loc)
+    return selected
 
-    raise WaveStop("row %s unrecognized conclusion %r" % (loc, conclusion))
+
+def select_carrier(qrow: dict[str, Any], packet: dict[str, Any],
+                   vote_a: dict[str, Any], vote_b: dict[str, Any]) -> dict[str, Any]:
+    """Return the single candidate carrier the two converged conclusions bind.
+
+    Position conclusions (``s:a:w``) bind the fingerprint-unique carrier at that
+    location; lexical conclusions (``entry_id``) bind that entry's carrier. Raises
+    :class:`WaveStop` when no unique carrier can be selected from the conclusions.
+    """
+    selected = select_carriers(qrow, packet, vote_a, vote_b)
+    if len(selected) != 1:
+        raise WaveStop("row %s requires binding-scoped selection (%d carriers)"
+                       % (qrow["canonical_location"], len(selected)))
+    return selected[0]
 
 
 def _carrier_identity(loc: str, carrier: dict[str, Any]) -> dict[str, Any]:
@@ -236,7 +306,7 @@ def _evidence(evidence_id: str, ev_type: str, detail: str, address: str) -> dict
 
 def _base_row(*, identity: dict[str, Any], loc: str, value: Any,
               competing: list[dict[str, Any]], evidence: list[dict[str, Any]],
-              input_hashes: dict[str, str]) -> dict[str, Any]:
+              input_hashes: dict[str, str], created_from: str | None = None) -> dict[str, Any]:
     row = {
         "schema": "qamus.fact_ledger_row.v1",
         "subject_type": "surface_occurrence",
@@ -261,7 +331,7 @@ def _base_row(*, identity: dict[str, Any], loc: str, value: Any,
         "dependency_hashes": {},
         "materialization_targets": [],
         "supersedes": None,
-        "created_from": None,
+        "created_from": created_from,
         "fact_id": "",
     }
     row["fact_id"] = fact_ledger.compute_fact_id(row)
@@ -282,6 +352,23 @@ def _vote_evidence(vote: dict[str, Any], reviewer: str) -> dict[str, Any]:
     )
 
 
+def _review_decision_id(qrow: dict[str, Any], packet: dict[str, Any],
+                        vote_a: dict[str, Any], vote_b: dict[str, Any]) -> str:
+    core = {
+        "packet_id": packet["packet_id"],
+        "packet_sha256": packet["packet_sha256"],
+        "canonical_location": qrow["canonical_location"],
+        "conclusion_a": qrow["reviewer_a"]["normalized_conclusion"],
+        "conclusion_b": qrow["reviewer_b"]["normalized_conclusion"],
+        "vote_a_packet_sha256": vote_a.get("packet_sha256"),
+        "vote_b_packet_sha256": vote_b.get("packet_sha256"),
+    }
+    return "sha256:" + hashlib.sha256(
+        json.dumps(core, ensure_ascii=False, sort_keys=True,
+                   separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+
+
 def append_certified(store: fact_ledger.FactLedgerStore, *, loc: str, carrier: dict[str, Any],
                      qrow: dict[str, Any], packet: dict[str, Any],
                      vote_a: dict[str, Any], vote_b: dict[str, Any],
@@ -297,7 +384,8 @@ def append_certified(store: fact_ledger.FactLedgerStore, *, loc: str, carrier: d
         carrier.get("carrier_source_address") or ("quran:" + loc),
     )
     candidate = _base_row(identity=identity, loc=loc, value=value, competing=[],
-                          evidence=[packet_ev], input_hashes=input_hashes)
+                          evidence=[packet_ev], input_hashes=input_hashes,
+                          created_from=_review_decision_id(qrow, packet, vote_a, vote_b))
     store.append(candidate)
     fact_id = candidate["fact_id"]
     store.transition(fact_id, "review_required")
@@ -374,12 +462,115 @@ def append_abstention(store: fact_ledger.FactLedgerStore, *, loc: str, packet: d
     return candidate["fact_id"]
 
 
+def append_one_sided(store: fact_ledger.FactLedgerStore, *, loc: str,
+                     carrier: dict[str, Any], packet: dict[str, Any],
+                     vote_a: dict[str, Any], vote_b: dict[str, Any],
+                     base_hashes: dict[str, str]) -> str:
+    """Preserve one decided vote in review_required; never certify or promote it."""
+    decided_label, decided_vote = (("A", vote_a) if _decided(vote_a) else ("B", vote_b))
+    abstain_label, abstain_vote = (("B", vote_b) if decided_label == "A" else ("A", vote_a))
+    conclusion = decided_vote.get("proposed_conclusion")
+    if not conclusion:
+        raise WaveStop("one-sided row %s decided vote has no conclusion" % loc)
+    identity = _carrier_identity(loc, carrier)
+    evidence = [
+        _vote_evidence(decided_vote, decided_label),
+        _evidence("abstain-%s" % abstain_label, "two_vote",
+                  abstain_vote.get("abstention_or_blocker") or "reviewer abstained",
+                  abstain_vote.get("source_address") or ("quran:" + loc)),
+    ]
+    candidate = _base_row(
+        identity=identity, loc=loc, value=conclusion, competing=[], evidence=evidence,
+        input_hashes=_packet_input_hashes(base_hashes, packet))
+    store.append(candidate)
+    fact_id = candidate["fact_id"]
+    store.transition(fact_id, "review_required", review_votes=[{
+        "voter_id": "reviewer-%s" % decided_label,
+        "vote": "approve",
+        "evidence_ref": "vote-%s" % decided_label,
+        "independent": True,
+    }])
+    return fact_id
+
+
 # --------------------------------------------------------------------------- #
 # accepted crosswalk row (ledger-gated) + promotion
 # --------------------------------------------------------------------------- #
+def build_rebind_provenance(existing: dict[str, Any], *, new_loc: str,
+                            review_fact_id: str, rebound_at_head: str) -> dict[str, Any] | None:
+    """Describe a review-certified relocation of an already accepted fallback binding."""
+    prior_loc = existing.get("canonical_quran_loc")
+    if existing.get("status") != ACCEPTED or not prior_loc or prior_loc == new_loc:
+        return None
+    prior_method = existing.get("resolution_method")
+    if prior_method != "row_unique_surface_fallback":
+        raise WaveStop(
+            "refusing silent relocation from non-fallback method %r: %s -> %s"
+            % (prior_method, prior_loc, new_loc))
+    return {
+        "prior_loc": prior_loc,
+        "prior_resolution_method": prior_method,
+        "reason": "two_vote_review_relocated",
+        "review_fact_id": review_fact_id,
+        "rebound_at_head": rebound_at_head,
+    }
+
+
+def build_rebinding_accounting(before_rows: list[dict[str, Any]],
+                               after_rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Prove accepted binding/location arithmetic for explicit review rebindings."""
+    before_accepted = [row for row in before_rows if row.get("status") == ACCEPTED]
+    after_accepted = [row for row in after_rows if row.get("status") == ACCEPTED]
+    before_by_loc = Counter(row.get("canonical_quran_loc") for row in before_accepted)
+    after_by_loc = Counter(row.get("canonical_quran_loc") for row in after_accepted)
+    rebound_rows = [row for row in after_accepted if row.get("rebind_provenance")]
+    rebindings = []
+    for row in rebound_rows:
+        provenance = row["rebind_provenance"]
+        old_loc = provenance["prior_loc"]
+        new_loc = row["canonical_quran_loc"]
+        rebindings.append({
+            "qword_row_id": row["qword_row_id"],
+            "old_loc": old_loc,
+            "new_loc": new_loc,
+            "review_fact_id": provenance["review_fact_id"],
+            "old_location_bindings_before": before_by_loc[old_loc],
+            "old_location_bindings_after": after_by_loc[old_loc],
+            "old_location_lost_last_binding": after_by_loc[old_loc] == 0,
+        })
+    rebindings.sort(key=lambda row: (
+        tuple(int(part) for part in row["old_loc"].split(":")),
+        tuple(int(part) for part in row["new_loc"].split(":")),
+        row["qword_row_id"],
+    ))
+    old_locations = sorted(
+        {row["old_loc"] for row in rebindings},
+        key=lambda loc: tuple(int(part) for part in loc.split(":")),
+    )
+    lost = [loc for loc in old_locations if after_by_loc[loc] == 0]
+    return {
+        "accepted_bindings_before": len(before_accepted),
+        "accepted_bindings_after": len(after_accepted),
+        "accepted_bindings_delta": len(after_accepted) - len(before_accepted),
+        "modeled_locations_before": len(before_by_loc),
+        "modeled_locations_after": len(after_by_loc),
+        "modeled_locations_delta": len(after_by_loc) - len(before_by_loc),
+        "new_bindings": len(after_accepted) - len(before_accepted),
+        "rebound_bindings": len(rebindings),
+        "old_locations_checked": old_locations,
+        "locations_losing_last_binding": lost,
+        "old_location_last_binding_proof": (
+            "No old location lost its last accepted binding; every old location retains at least one."
+            if not lost else
+            "Some old locations lost their last accepted binding; see locations_losing_last_binding."
+        ),
+        "rebindings": rebindings,
+    }
+
+
 def build_accepted_row(store: fact_ledger.FactLedgerStore, *, loc: str, carrier: dict[str, Any],
-                       fact_id: str, existing: dict[str, Any],
-                       live_surface: str) -> dict[str, Any]:
+                       fact_id: str, existing: dict[str, Any], live_surface: str,
+                       rebound_at_head: str | None = None) -> dict[str, Any]:
     """Flip the carrier's crosswalk row to accepted, gated on a CERTIFIED ledger fact."""
     certified = store.query(fact_id=fact_id, state="certified")
     if not certified:
@@ -410,6 +601,12 @@ def build_accepted_row(store: fact_ledger.FactLedgerStore, *, loc: str, carrier:
         "resolved_surface_norm_strict": norm_strict(live_surface or ""),
         "review_fact_id": fact_id,
     })
+    if rebound_at_head:
+        provenance = build_rebind_provenance(
+            existing, new_loc=loc, review_fact_id=fact_id,
+            rebound_at_head=rebound_at_head)
+        if provenance:
+            accepted["rebind_provenance"] = provenance
     accepted.pop("candidate_word_indices", None)
     return accepted
 
@@ -575,6 +772,7 @@ def _row_instrumentation(*, loc: str, carrier: dict[str, Any], fact_id: str,
         "resolution_method": RESOLUTION_METHOD,
         "gate": packet.get("gate"),
         "ledger_fact_id": fact_id,
+        "review_decision_id": _review_decision_id(qrow, packet, vote_a, vote_b),
         "bound_carrier": {k: carrier.get(k) for k in ("entry_id", "card_id", "qword_row_id")},
         "conclusion_value": qrow["reviewer_a"]["normalized_conclusion"],
         "votes": [
@@ -605,29 +803,46 @@ def partition(data: dict[str, Any]) -> dict[str, Any]:
         pid for pid in votes_a
         if not _decided(votes_a[pid]) and not _decided(votes_b.get(pid, {}))
     )
+    one_sided_pids = sorted(
+        pid for pid in votes_a
+        if _decided(votes_a[pid]) != _decided(votes_b.get(pid, {}))
+    )
     return {"qualifying": qualifying, "disagreement": disagreement,
-            "abstention_pids": abstention_pids, "qpids": qpids, "dpids": dpids}
+            "abstention_pids": abstention_pids, "one_sided_pids": one_sided_pids,
+            "qpids": qpids, "dpids": dpids}
 
 
-def run(inputs_dir: Path, baseline: Path, corpus: Path, *, apply: bool) -> dict[str, Any]:
+def run(inputs_dir: Path, baseline: Path, corpus: Path, *, apply: bool,
+        wave: int = 1) -> dict[str, Any]:
     # input integrity ------------------------------------------------------- #
+    spec = configure_wave(wave)
     if sha256_file(baseline) != EXPECTED_BASELINE_SHA256:
         raise WaveStop("baseline sha256 mismatch")
     if sha256_file(corpus) != EXPECTED_CORPUS_SHA256:
         raise WaveStop("loc-surfaces sha256 mismatch")
-    data = load_inputs(inputs_dir)
+    data = load_inputs(inputs_dir, spec)
     base_hashes = data["input_hashes"]
     packets, votes_a, votes_b = data["packets"], data["votes_a"], data["votes_b"]
     parts = partition(data)
     qualifying = parts["qualifying"]
-    if len(qualifying) != 77:
-        raise WaveStop("expected 77 qualifying rows, found %d" % len(qualifying))
-    if len(parts["disagreement"]) != 1:
-        raise WaveStop("expected 1 disagreement row, found %d" % len(parts["disagreement"]))
-    if len(parts["abstention_pids"]) != 22:
-        raise WaveStop("expected 22 joint abstentions, found %d" % len(parts["abstention_pids"]))
+    if len(qualifying) != spec["qualifying_rows"]:
+        raise WaveStop("expected %d qualifying rows, found %d"
+                       % (spec["qualifying_rows"], len(qualifying)))
+    if len(parts["disagreement"]) != spec["disagreement_rows"]:
+        raise WaveStop("expected %d disagreement rows, found %d"
+                       % (spec["disagreement_rows"], len(parts["disagreement"])))
+    if len(parts["abstention_pids"]) != spec["joint_abstentions"]:
+        raise WaveStop("expected %d joint abstentions, found %d"
+                       % (spec["joint_abstentions"], len(parts["abstention_pids"])))
+    if len(parts["one_sided_pids"]) != spec["one_sided_rows"]:
+        raise WaveStop("expected %d one-sided rows, found %d"
+                       % (spec["one_sided_rows"], len(parts["one_sided_pids"])))
 
     # carrier selection + quarantine guard ---------------------------------- #
+    declared_by_loc = {
+        row["canonical_location"]: row
+        for row in data["cal"].get("two_vote_gate", {}).get("wave_02_promotion_inputs", [])
+    }
     selections: dict[str, dict[str, Any]] = {}
     for qrow in qualifying:
         loc = qrow["canonical_location"]
@@ -635,28 +850,47 @@ def run(inputs_dir: Path, baseline: Path, corpus: Path, *, apply: bool) -> dict[
         if ayah in QUARANTINED_AYAHS or loc in NF_T10_1_LOCS:
             raise WaveStop("quarantined ayah in wave: %s" % loc)
         packet = packets[qrow["packet_id"]]
-        carrier = select_carrier(qrow, packet, votes_a[qrow["packet_id"]], votes_b[qrow["packet_id"]])
-        selections[loc] = {"carrier": carrier, "qrow": qrow, "packet": packet}
-    if len(selections) != 77:
+        declared = declared_by_loc.get(loc)
+        if declared and declared.get("normalized_conclusion") != qrow["reviewer_a"]["normalized_conclusion"]:
+            raise WaveStop("row %s declared conclusion does not match review decision" % loc)
+        carriers = select_carriers(
+            qrow, packet, votes_a[qrow["packet_id"]], votes_b[qrow["packet_id"]],
+            declared=declared.get("selected_carriers") if declared else None)
+        selections[loc] = {"carriers": carriers, "qrow": qrow, "packet": packet}
+    if len(selections) != spec["qualifying_rows"]:
         raise WaveStop("duplicate canonical locations among qualifying rows")
-    quword = [s["carrier"]["qword_row_id"] for s in selections.values()]
-    if len(set(quword)) != 77:
+    quword = [carrier["qword_row_id"] for sel in selections.values()
+              for carrier in sel["carriers"]]
+    if len(quword) != spec["promoted_bindings"]:
+        raise WaveStop("expected %d selected carrier bindings, found %d"
+                       % (spec["promoted_bindings"], len(quword)))
+    if len(set(quword)) != len(quword):
         raise WaveStop("carrier qword_row_id collision across rows")
 
     # ledger lifecycle ------------------------------------------------------ #
-    LEDGER_DIR.mkdir(parents=True, exist_ok=True)
-    store = fact_ledger.FactLedgerStore(LEDGER_DIR)
+    dry_tmp = None
+    if apply:
+        store_dir = LEDGER_DIR
+    else:
+        dry_tmp = tempfile.TemporaryDirectory(prefix="laneb-ledger-dry-run-")
+        store_dir = Path(dry_tmp.name)
+        if (LEDGER_DIR / LEDGER_FILE_NAME).exists():
+            shutil.copy2(LEDGER_DIR / LEDGER_FILE_NAME, store_dir / LEDGER_FILE_NAME)
+    store_dir.mkdir(parents=True, exist_ok=True)
+    store = fact_ledger.FactLedgerStore(store_dir)
     fact_ids: dict[str, str] = {}
     instrumentation = []
     for loc in sorted(selections, key=lambda x: tuple(int(p) for p in x.split(":"))):
         sel = selections[loc]
         va, vb = votes_a[sel["qrow"]["packet_id"]], votes_b[sel["qrow"]["packet_id"]]
-        fact_ids[loc] = append_certified(
-            store, loc=loc, carrier=sel["carrier"], qrow=sel["qrow"], packet=sel["packet"],
-            vote_a=va, vote_b=vb, base_hashes=base_hashes)
-        instrumentation.append(_row_instrumentation(
-            loc=loc, carrier=sel["carrier"], fact_id=fact_ids[loc], qrow=sel["qrow"],
-            packet=sel["packet"], vote_a=va, vote_b=vb))
+        for carrier in sel["carriers"]:
+            qword_id = carrier["qword_row_id"]
+            fact_ids[qword_id] = append_certified(
+                store, loc=loc, carrier=carrier, qrow=sel["qrow"], packet=sel["packet"],
+                vote_a=va, vote_b=vb, base_hashes=base_hashes)
+            instrumentation.append(_row_instrumentation(
+                loc=loc, carrier=carrier, fact_id=fact_ids[qword_id], qrow=sel["qrow"],
+                packet=sel["packet"], vote_a=va, vote_b=vb))
 
     dis = parts["disagreement"][0]
     dis_loc = dis["canonical_location"]
@@ -674,41 +908,83 @@ def run(inputs_dir: Path, baseline: Path, corpus: Path, *, apply: bool) -> dict[
             store, loc=loc, packet=packet, vote_a=votes_a[pid], vote_b=votes_b[pid],
             base_hashes=base_hashes)
 
+    one_sided_fact_ids = {}
+    for pid in parts["one_sided_pids"]:
+        packet = packets[pid]
+        loc = packet["canonical_location"]
+        va, vb = votes_a[pid], votes_b[pid]
+        decided_vote = va if _decided(va) else vb
+        conclusion = decided_vote["proposed_conclusion"]
+        synthetic = {
+            "canonical_location": loc,
+            "reviewer_a": {"normalized_conclusion": conclusion},
+            "reviewer_b": {"normalized_conclusion": conclusion},
+        }
+        carriers = select_carriers(synthetic, packet, va, vb)
+        one_sided_fact_ids[loc] = append_one_sided(
+            store, loc=loc, carrier=carriers[0], packet=packet,
+            vote_a=va, vote_b=vb, base_hashes=base_hashes)
+
     ledger_errors = store.validate_all()
     if ledger_errors:
         raise WaveStop("ledger failed validation: %s" % ledger_errors[:5])
     # dispose of the rebuildable index; only the JSONL store is committed.
-    (LEDGER_DIR / fact_ledger.INDEX_NAME).unlink(missing_ok=True)
+    (store_dir / fact_ledger.INDEX_NAME).unlink(missing_ok=True)
 
     state_counts = Counter(row["certification_state"] for row in store.query(current_only=True))
 
     # accepted crosswalk rows (ledger-gated) -------------------------------- #
     crosswalk_by_id, shards = load_crosswalk_shards()
+    rebound_at_head = _git("rev-parse", "HEAD")
     replacements: dict[str, dict[str, Any]] = {}
     for loc, sel in selections.items():
-        carrier = sel["carrier"]
-        existing = crosswalk_by_id.get(carrier["qword_row_id"])
-        if not existing:
-            raise WaveStop("carrier %s not present in crosswalk" % carrier["qword_row_id"])
-        live_surface = _live_surface(sel["packet"], loc)
-        accepted = build_accepted_row(
-            store, loc=loc, carrier=carrier, fact_id=fact_ids[loc],
-            existing=existing, live_surface=live_surface)
-        replacements[carrier["qword_row_id"]] = accepted
+        for carrier in sel["carriers"]:
+            qword_id = carrier["qword_row_id"]
+            existing = crosswalk_by_id.get(qword_id)
+            if not existing:
+                raise WaveStop("carrier %s not present in crosswalk" % qword_id)
+            live_surface = _live_surface(sel["packet"], loc)
+            accepted = build_accepted_row(
+                store, loc=loc, carrier=carrier, fact_id=fact_ids[qword_id],
+                existing=existing, live_surface=live_surface,
+                rebound_at_head=rebound_at_head)
+            replacements[qword_id] = accepted
 
     promoted_shards = apply_replacements(shards, replacements)
     if _shard_payload_digest(promoted_shards) != _shard_payload_digest(
             apply_replacements(shards, dict(reversed(list(replacements.items()))))):
         raise WaveStop("promoted shard bytes depend on replacement ordering")
+    before_rows = [row for name in sorted(shards) for row in shards[name]]
+    after_rows = [row for name in sorted(promoted_shards) for row in promoted_shards[name]]
+    rebinding_accounting = build_rebinding_accounting(before_rows, after_rows)
+    if WAVE == 2:
+        expected = {
+            "new_bindings": spec["new_bindings"],
+            "rebound_bindings": spec["rebound_bindings"],
+            "accepted_bindings_after": spec["accepted_bindings_after"],
+            "modeled_locations_after": spec["modeled_locations_after"],
+        }
+        drift = {
+            key: (rebinding_accounting.get(key), value)
+            for key, value in expected.items()
+            if rebinding_accounting.get(key) != value
+        }
+        if drift:
+            raise WaveStop("wave-2 rebinding arithmetic drift: %s" % drift)
 
     decision_sha256 = hashlib.sha256(json.dumps(
-        sorted([(loc, selections[loc]["carrier"]["qword_row_id"], fact_ids[loc])
-                for loc in selections]),
+        sorted([(loc, carrier["qword_row_id"], fact_ids[carrier["qword_row_id"]])
+                for loc, sel in selections.items() for carrier in sel["carriers"]]),
         ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
 
     if not apply:
-        return {"selections": len(selections), "state_counts": dict(state_counts),
-                "decision_sha256": decision_sha256, "dry_run": True}
+        result = {"promoted_locs": len(selections),
+                  "accepted_bindings_delta": len(replacements),
+                  "state_counts": dict(state_counts),
+                  "decision_sha256": decision_sha256, "dry_run": True}
+        if dry_tmp:
+            dry_tmp.cleanup()
+        return result
 
     manifest = build_crosswalk_manifest(
         promoted_shards, accepted_count=len(replacements),
@@ -744,7 +1020,8 @@ def run(inputs_dir: Path, baseline: Path, corpus: Path, *, apply: bool) -> dict[
     report = build_report(
         instrumentation=instrumentation, state_counts=state_counts, data=data,
         selections=selections, fact_ids=fact_ids, dis=dis, dis_fact=dis_fact,
-        abstention_fact_ids=abstention_fact_ids, decision_sha256=decision_sha256,
+        abstention_fact_ids=abstention_fact_ids, one_sided_fact_ids=one_sided_fact_ids,
+        rebinding_accounting=rebinding_accounting, decision_sha256=decision_sha256,
         queue_after=queue_manifest["queue_rows"])
     write_json_atomic(WAVE_REPORT_PATH, report)
     return {
@@ -761,8 +1038,9 @@ def select_disagreement_carrier(dis: dict[str, Any], packet: dict[str, Any]) -> 
     """A representative carrier subject for the unresolved disagreement row."""
     concl = dis["reviewer_a"]["normalized_conclusion"]
     carriers = packet.get("candidate_carriers") or []
-    if ENTRY_RE.match(concl):
-        hits = sorted((c for c in carriers if c.get("entry_id") == concl),
+    entry_id = concl.split("=", 1)[1] if concl.startswith("entry_id=") else concl
+    if ENTRY_RE.match(entry_id):
+        hits = sorted((c for c in carriers if c.get("entry_id") == entry_id),
                       key=lambda c: c["qword_row_id"])
         if hits:
             return hits[0]
@@ -775,7 +1053,8 @@ def select_disagreement_carrier(dis: dict[str, Any], packet: dict[str, Any]) -> 
 
 
 def build_report(*, instrumentation, state_counts, data, selections, fact_ids, dis, dis_fact,
-                 abstention_fact_ids, decision_sha256, queue_after) -> dict[str, Any]:
+                 abstention_fact_ids, one_sided_fact_ids, rebinding_accounting, decision_sha256,
+                 queue_after) -> dict[str, Any]:
     cal = data["cal"]
     verdict = cal.get("calibration_verdict", {})
     agreement = cal.get("agreement_matrix", {})
@@ -794,9 +1073,11 @@ def build_report(*, instrumentation, state_counts, data, selections, fact_ids, d
         },
         "counts": {
             "qualifying_certified": len(fact_ids),
+            "qualifying_locations": len(selections),
             "disagreement_review_required": 1,
             "joint_abstention_candidates": len(abstention_fact_ids),
-            "promoted_bindings": len(selections),
+            "one_sided_review_required": len(one_sided_fact_ids),
+            "promoted_bindings": len(fact_ids),
             "queue_before": QUEUE_BEFORE,
             "queue_after": queue_after,
             "queue_delta": QUEUE_BEFORE - queue_after,
@@ -804,11 +1085,17 @@ def build_report(*, instrumentation, state_counts, data, selections, fact_ids, d
             "certified_by_stratum": dict(sorted(strata.items())),
         },
         "review_burden": {
-            "packets_reviewed": 100,
-            "both_decided": 78,
-            "certified_agreeing": len(fact_ids),
+            "packets_reviewed": agreement.get("totals", {}).get("both_abstained", 0)
+                + agreement.get("totals", {}).get("both_decided_agree", 0)
+                + agreement.get("totals", {}).get("both_decided_disagree", 0)
+                + agreement.get("totals", {}).get("one_decided_one_abstained", 0),
+            "both_decided": agreement.get("totals", {}).get("both_decided_agree", 0)
+                + agreement.get("totals", {}).get("both_decided_disagree", 0),
+            "certified_agreeing_locations": len(selections),
+            "certified_carrier_facts": len(fact_ids),
             "non_qualifying_disagreement": 1,
             "joint_abstentions": len(abstention_fact_ids),
+            "one_sided_rows": len(one_sided_fact_ids),
             "measured_agreement_rate_percent": agreement.get("measured_agreement_rate_percent"),
             "expected_review_burden_per_100_rows": verdict.get("expected_review_burden_per_100_rows"),
             "updated_scale_verdict": verdict.get("updated_scale_verdict"),
@@ -825,6 +1112,20 @@ def build_report(*, instrumentation, state_counts, data, selections, fact_ids, d
             {"canonical_location": loc, "ledger_fact_id": fid, "promoted": False}
             for loc, fid in sorted(abstention_fact_ids.items())
         ],
+        "one_sided_rows": [
+            {"canonical_location": loc, "ledger_fact_id": fid,
+             "ledger_state": "review_required", "promoted": False}
+            for loc, fid in sorted(one_sided_fact_ids.items())
+        ],
+        "rebinding_accounting": {
+            **rebinding_accounting,
+            "certified_promoted_bindings": len(fact_ids),
+            "accounting_andon": (
+                "Forcing 87,594 would preserve wrong edges or duplicate identities — your Andon "
+                "is exactly right and is itself evidence that review certification corrects "
+                "fallback-era errors."
+            ),
+        },
         "decision_sha256": decision_sha256,
         "rows": instrumentation,
     }
@@ -840,6 +1141,12 @@ def _self_test() -> int:
         print(("ok   " if cond else "FAIL ") + name)
         if not cond:
             failures.append(name)
+
+    wave2 = globals().get("WAVE_SPECS", {}).get(2, {})
+    check("RED: wave-2 contract declares 194 locations / 537 bindings / 5,231 queue",
+          wave2.get("qualifying_rows") == 194
+          and wave2.get("promoted_bindings") == 537
+          and wave2.get("queue_after") == 5231)
 
     base_hashes = {"calibration_analysis": "sha256:" + "0" * 64,
                    "votes_a": "sha256:" + "1" * 64, "votes_b": "sha256:" + "2" * 64}
@@ -861,6 +1168,64 @@ def _self_test() -> int:
     carrier = select_carrier(qrow, packet, vote, vote)
     check("carrier selection returns fingerprint-unique carrier",
           carrier["qword_row_id"] == "llx-qword-0123456789ab-01-01-001")
+
+    second_carrier = {
+        **carrier,
+        "card_id": "0123456789ab:u1:e2",
+        "qword_row_id": "llx-qword-0123456789ab-01-02-001",
+        "carrier_source_address":
+            "queue#row_id=llx-qword-0123456789ab-01-02-001",
+    }
+    multi_packet = {
+        **packet,
+        "candidate_carriers": [carrier, second_carrier],
+        "carriers_uniquely_addressing_target": [carrier["entry_id"]],
+    }
+    multi_qrow = copy.deepcopy(qrow)
+    multi_qrow["reviewer_a"]["normalized_conclusion"] = "location=1:1:1"
+    multi_qrow["reviewer_b"]["normalized_conclusion"] = "location=1:1:1"
+    selector = globals().get("select_carriers")
+    selected = selector(multi_qrow, multi_packet, vote, vote) if selector else []
+    check("RED: binding-scoped selection retains every declared full carrier",
+          [row["qword_row_id"] for row in selected] == [
+              "llx-qword-0123456789ab-01-01-001",
+              "llx-qword-0123456789ab-01-02-001",
+          ])
+
+    lineage_builder = globals().get("build_rebind_provenance")
+    prior = {
+        "status": ACCEPTED,
+        "canonical_quran_loc": "1:1:2",
+        "resolution_method": "row_unique_surface_fallback",
+    }
+    lineage = (lineage_builder(
+        prior, new_loc="1:1:1", review_fact_id="fact:test", rebound_at_head="abc123")
+        if lineage_builder else None)
+    check("RED: relocated fallback binding carries explicit review lineage",
+          lineage == {
+              "prior_loc": "1:1:2",
+              "prior_resolution_method": "row_unique_surface_fallback",
+              "reason": "two_vote_review_relocated",
+              "review_fact_id": "fact:test",
+              "rebound_at_head": "abc123",
+          })
+
+    occupancy_builder = globals().get("build_rebinding_accounting")
+    before_rows = [
+        {"qword_row_id": "q1", "status": ACCEPTED, "canonical_quran_loc": "1:1:2"},
+        {"qword_row_id": "q2", "status": ACCEPTED, "canonical_quran_loc": "1:1:2"},
+    ]
+    after_rows = [
+        {"qword_row_id": "q1", "status": ACCEPTED, "canonical_quran_loc": "1:1:1",
+         "rebind_provenance": {"prior_loc": "1:1:2", "review_fact_id": "fact:test"}},
+        before_rows[1],
+    ]
+    occupancy = occupancy_builder(before_rows, after_rows) if occupancy_builder else None
+    check("RED: rebind accounting proves whether an old location lost its last binding",
+          occupancy is not None
+          and occupancy["rebound_bindings"] == 1
+          and occupancy["locations_losing_last_binding"] == []
+          and occupancy["rebindings"][0]["old_location_bindings_after"] == 1)
 
     def fresh_store(tmp: str) -> fact_ledger.FactLedgerStore:
         return fact_ledger.FactLedgerStore(Path(tmp))
@@ -912,6 +1277,21 @@ def _self_test() -> int:
             missing_failed = True
         check("RED: certified row missing a carrier field fails", missing_failed)
 
+    with tempfile.TemporaryDirectory() as tmp:
+        store = fresh_store(tmp)
+        fact_ids = [
+            append_certified(store, loc="1:1:1", carrier=item, qrow=multi_qrow,
+                             packet=multi_packet, vote_a=vote, vote_b=vote,
+                             base_hashes=base_hashes)
+            for item in (carrier, second_carrier)
+        ]
+        certified_rows = [store.query(fact_id=fid, state="certified")[0]
+                          for fid in fact_ids]
+        decision_links = {row.get("created_from") for row in certified_rows}
+        check("RED: carrier facts are distinct and link one shared review decision",
+              len(set(fact_ids)) == 2 and len(decision_links) == 1
+              and None not in decision_links)
+
     # RED: a quarantined-ayah row must be refused by the wave guard.
     quarantined_refused = False
     q_ayah = "2:274:1"
@@ -946,7 +1326,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--promote", action="store_true", help="execute and install the wave")
     parser.add_argument("--dry-run", action="store_true", help="build ledger/decisions, do not install")
-    parser.add_argument("--inputs", default=str(ROOT / ".wave1-inputs"))
+    parser.add_argument("--wave", type=int, choices=sorted(WAVE_SPECS), default=2)
+    parser.add_argument("--inputs")
     parser.add_argument("--baseline", help="deployed whitelist jsonl (hash-pinned)")
     parser.add_argument("--loc-surfaces", help="corpus loc->surface jsonl (hash-pinned)")
     args = parser.parse_args(argv)
@@ -958,8 +1339,9 @@ def main(argv: list[str] | None = None) -> int:
     if not args.baseline or not args.loc_surfaces:
         parser.error("--promote/--dry-run require --baseline and --loc-surfaces")
     try:
-        result = run(Path(args.inputs), Path(args.baseline), Path(args.loc_surfaces),
-                     apply=args.promote)
+        inputs = Path(args.inputs) if args.inputs else ROOT / (".wave%d-inputs" % args.wave)
+        result = run(inputs, Path(args.baseline), Path(args.loc_surfaces),
+                     apply=args.promote, wave=args.wave)
     except WaveStop as stop:
         print("STOP: %s" % stop, file=sys.stderr)
         return 2
