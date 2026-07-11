@@ -1,0 +1,64 @@
+{
+  "apply_timestamp": "2026-07-11T21:00:00Z",
+  "counts": {
+    "binding_tombstone_conflicts": 26,
+    "dependent_bindings": 26,
+    "fact_revisions": 104,
+    "facts": 26,
+    "payload_tombstones": 9,
+    "payloads": 9,
+    "replacement_bindings": 26
+  },
+  "entries_sha256_after": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d",
+  "entries_sha256_before": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d",
+  "generator": "python tools/apply_rm20_morphline.py --apply",
+  "input_sha256": {
+    ".inputs/proposals.jsonl": "c3a6e461426ca265a494ca9f93cb264115c5281e9d8c8843989688211158c15d",
+    ".inputs/reviews.jsonl": "58ee053dc1afd6bdd307f97ec3f52dd751849dc71b7dc07236c3f16c14ae79a2",
+    "qamus/indexes/largelexicon/crosswalk-gap/lane-d/rm20-dryrun-reports.jsonl": "729455873b1fb8d8de0e7dac461a1102b23a3441b4f38e04d4726a21da1a46d9"
+  },
+  "ledger_validation": {
+    "after_projection": "26 materialized facts; 26 four-state histories; zero errors",
+    "before_projection": "26 certified facts; zero errors"
+  },
+  "owner_decision": "2026-07-11 batch item D",
+  "public_whitelist_sha256_after": "972263b5472478b8805c39e107ecf5d6f8096acace8756d15a08967cddf90515",
+  "public_whitelist_sha256_before": "972263b5472478b8805c39e107ecf5d6f8096acace8756d15a08967cddf90515",
+  "refusal_gate": {
+    "blocked_insufficient_convention_exemplars": 3,
+    "fixtures": 5,
+    "positive_path_calls_during_gate": 0,
+    "tie_unresolved": 2
+  },
+  "schema": "qamus.rm20_morphline_apply_receipt.v1",
+  "shadow": {
+    "baseline_packet_sha256": "21e9c9c3d8f481ddee2404699fe8978ee2238ba0fafa54a1917963354274d9f2",
+    "double_compile_byte_identical": true,
+    "modify_locations": [
+      "12:42:2",
+      "18:100:4",
+      "22:26:3",
+      "31:12:7",
+      "31:14:3",
+      "46:15:3",
+      "6:79:4",
+      "7:11:7",
+      "7:128:3",
+      "7:128:9",
+      "9:107:4"
+    ],
+    "post": {
+      "live_only": 0,
+      "modify": 11,
+      "no_op": 0
+    },
+    "post_packet_sha256": "4e759811006561572e37f52d342e10b4c4bad242cf999587469ea2d861a96ec9",
+    "pre": {
+      "live_only": 0,
+      "modify": 0,
+      "no_op": 11
+    },
+    "refusal_locations_in_delta": 0
+  },
+  "wave": "RM-20"
+}
