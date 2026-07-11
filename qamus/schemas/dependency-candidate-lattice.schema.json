@@ -91,7 +91,22 @@
                    "preposition_phrase", "pp_attachment", "pp_attached_to_verb", "pp_attached_to_nominal",
                    "pp_attached_to_hidden_hal", "pp_attached_to_hidden_sifa", "oath_preposition", "idafa_head",
                    "idafa_dependent", "sifa", "badal", "tamyiz", "coordination", "condition", "relative_clause",
-                   "subordinate_clause", "none", "null"]
+                   "subordinate_clause", "abstained_unmodeled_construction", "none", "null"]
+        },
+        "claim_id": { "type": ["string", "null"], "description": "Claim identifier when this edge lints a submitted i'rab claim." },
+        "trigger_particle": { "type": ["string", "null"], "description": "Token ref of a recognized trigger whose construction is deliberately not modeled." },
+        "trigger_family": {
+          "type": ["string", "null"],
+          "enum": ["jussive", "inna_family", "la_jins", "istithna", "hal", "vocative", "kana_family", null]
+        },
+        "abstention_reason": { "type": ["string", "null"], "description": "Explicit reason the governor lattice abstained instead of returning a silent empty parse." },
+        "suppressed_rule": { "type": ["string", "null"], "description": "Heuristic suppressed because a recognized construction makes it unsafe (for example, false iḍāfa inside a kāna frame)." },
+        "mabni": { "type": ["boolean", "null"], "description": "True when the dependent is built/indeclinable rather than mu'rab." },
+        "mabni_on": { "type": ["string", "null"], "description": "The fixed building mark, such as fatha or sukun; not a declensional case claim." },
+        "fi_mahall_case_mood": {
+          "type": ["string", "null"],
+          "description": "Syntactic case/mood slot occupied by a mabni form; distinct from its fixed surface mark.",
+          "enum": ["nominative", "accusative", "genitive", "jussive", "subjunctive", "indicative", "none", "unknown", null]
         },
         "rel_label_ar": { "type": "string", "description": "traditional Arabic-grammar nomenclature (fāʿil/mafʿūl bihi/muḍāf ilayh/majrūr bi-ḥarf/...). Authored, source-clean." },
         "assigned_case_mood": {
@@ -104,7 +119,8 @@
           "type": "string",
           "enum": ["preposition_governs_genitive", "idafa_governs_genitive", "verb_governs_subject_nominative",
                    "verb_governs_object_accusative", "mubtada_governs_khabar_nominative", "operating_particle_governs_mood",
-                   "coordination_no_governor", "pp_attachment_unresolved", "governor_not_justified", "not_determinable", "none"]
+                   "coordination_no_governor", "pp_attachment_unresolved", "unmodeled_construction_abstention",
+                   "governor_not_justified", "not_determinable", "none"]
         },
         "justification_confidence": { "type": "string", "enum": ["low", "medium", "high"] },
         "evidence_class": { "type": "string", "enum": ["source_addressed", "heuristic", "unknown"], "description": "source_addressed = confirmed against the graph/voweled text; heuristic = surface rule only (arbitrary)." },
