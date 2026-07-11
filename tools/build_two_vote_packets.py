@@ -24,15 +24,18 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from tools import fact_ledger  # noqa: E402
+from tools.fusha_text_check import segment_candidates  # noqa: E402
+from tools.normalize_ar import bare, norm, norm_strict  # noqa: E402
 from tools.compile_canonical_hover_whitelist_packet import (  # noqa: E402
     canonical_public_loc,
     public_content,
 )
 
 
-AUTHORITATIVE_BASELINE_SHA = "446a536a432cc819ddfcfcf1bd61dd7601996c94"
+AUTHORITATIVE_BASELINE_SHA = "3f23dd4adab3222d1e8277bc5a1097186dc08f6d"
 EXPECTED_BASELINE_SHA256 = "972263b5472478b8805c39e107ecf5d6f8096acace8756d15a08967cddf90515"
 EXPECTED_LOC_SURFACES_SHA256 = "f2e079dcdce01148074a238e3937314cf02222298f91f83ed66dcbb599697ca7"
+EXPECTED_V1_PACKET_SHA256 = "95788fabc0ba7b65558d03b2d0854f361e507dfaeaa6ec3d43732a1b7985b311"
 TARGET_CLASSES = {"competing_lexical_senses", "unresolved_occurrence_ambiguity"}
 NF_T10_1_AYAHS = {"2:274", "4:64", "12:37", "48:15"}
 DEFAULT_CLASSIFICATION = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/laneb-classification.jsonl"
@@ -42,8 +45,10 @@ DEFAULT_BASELINE = ROOT.parent / "baseline-whitelist-972263b5.jsonl"
 DEFAULT_LOC_SURFACES = ROOT.parent / "loc-surfaces-f2e079dc.jsonl"
 DEFAULT_GATES = ROOT / "nahw/evals/grammar-decision-gates.json"
 DEFAULT_FACT_SCHEMA = ROOT / "qamus/schemas/fact-ledger-row.schema.json"
-DEFAULT_OUT = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/packets-cal-001.jsonl"
-DEFAULT_MANIFEST = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/calibration-batch.manifest.json"
+DEFAULT_HOMOGRAPH_KEYS = ROOT / "qamus/indexes/largelexicon/homograph-keys.json"
+DEFAULT_V1_PACKETS = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/packets-cal-001.jsonl"
+DEFAULT_OUT = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/packets-cal-002.jsonl"
+DEFAULT_MANIFEST = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/calibration-batch-v2.manifest.json"
 
 LOC_RE = re.compile(r"^(\d+):(\d+):(\d+)$")
 CARD_RE = re.compile(r"^([^:]+):u(\d+):e(\d+)$")
@@ -357,6 +362,232 @@ def entry_content_for_carrier(
     }
 
 
+def build_occurrence_mapping(
+    carrier: dict[str, Any],
+    matching_example: dict[str, Any],
+    ayah_context: Iterable[dict[str, Any]],
+) -> dict[str, Any]:
+    """Map an indexed example token to every matching ayah occurrence by a ±2 window."""
+    try:
+        qword_index = int(str(carrier["qword_row_id"]).rsplit("-", 1)[1])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ValueError(f"invalid carrier qword_row_id: {carrier.get('qword_row_id')!r}") from exc
+    content = matching_example.get("content") or {}
+    raw_tokens = str(content.get("ar") or "").split()
+    if not 1 <= qword_index <= len(raw_tokens):
+        raise ValueError(
+            f"carrier {carrier.get('qword_row_id')} qword index exceeds its example token count"
+        )
+    candidate_surface = raw_tokens[qword_index - 1]
+    candidate_key = norm_strict(candidate_surface)
+    if not candidate_key:
+        raise ValueError(f"carrier {carrier.get('qword_row_id')} points at punctuation, not a word")
+
+    example_words = [
+        (raw_index, token, norm_strict(token))
+        for raw_index, token in enumerate(raw_tokens, 1)
+        if norm_strict(token)
+    ]
+    try:
+        example_word_index = next(
+            index for index, (raw_index, _surface, _key) in enumerate(example_words)
+            if raw_index == qword_index
+        )
+    except StopIteration as exc:
+        raise ValueError(f"carrier {carrier.get('qword_row_id')} has no word-level example token") from exc
+    example_window = example_words[
+        max(0, example_word_index - 2):example_word_index + 3
+    ]
+    example_window_keys = [item[2] for item in example_window]
+
+    context = sorted((copy.deepcopy(row) for row in ayah_context), key=lambda row: loc_key(row["loc"]))
+    same_surface_indexes = [
+        index for index, row in enumerate(context)
+        if norm_strict(str(row.get("surface") or "")) == candidate_key
+    ]
+    if not same_surface_indexes:
+        raise ValueError(
+            f"example surface {candidate_surface!r} has no norm_strict occurrence in ayah context"
+        )
+    fingerprints: list[dict[str, Any]] = []
+    fingerprint_matches: list[str] = []
+    for index in same_surface_indexes:
+        words = context[max(0, index - 2):index + 3]
+        word_projection = [
+            {
+                "loc": word["loc"],
+                "surface": word["surface"],
+                "source_address": word["source_address"],
+            }
+            for word in words
+        ]
+        matches = [norm_strict(word["surface"]) for word in words] == example_window_keys
+        if matches:
+            fingerprint_matches.append(context[index]["loc"])
+        fingerprints.append(
+            {
+                "loc": context[index]["loc"],
+                "matches_example_fingerprint": matches,
+                "window": word_projection,
+                "window_sha256": stable_sha256(word_projection),
+            }
+        )
+    example_source = matching_example.get("source_address")
+    if not isinstance(example_source, str) or not example_source:
+        raise ValueError("matching example lacks a stable source address")
+    return {
+        "candidate_surface": {
+            "value": candidate_surface,
+            "norm_strict": candidate_key,
+            "source_address": f"{example_source}/ar#whitespace-token={qword_index}",
+        },
+        "example_window_fingerprint": {
+            "surfaces": [item[1] for item in example_window],
+            "norm_strict_surfaces": example_window_keys,
+            "source_address": f"{example_source}/ar#word-window={example_word_index + 1}:plus-minus-2",
+        },
+        "example_occurrence_candidates": [context[index]["loc"] for index in same_surface_indexes],
+        "fingerprint_match_candidates": fingerprint_matches,
+        "mapping_status": "unique" if len(fingerprint_matches) == 1 else "ambiguous",
+        "occurrence_fingerprints": fingerprints,
+    }
+
+
+def sourced(value: Any, source_address: str) -> dict[str, Any]:
+    return {"value": copy.deepcopy(value), "source_address": source_address}
+
+
+def build_morphology_record(
+    *,
+    target_loc: str,
+    target_surface: str,
+    target_source_address: str,
+    carriers: Iterable[dict[str, Any]],
+    entries: dict[str, dict[str, Any]],
+    entries_path: Path,
+    homograph_index: dict[str, list[tuple[int, dict[str, Any]]]],
+    homograph_path: Path,
+) -> dict[str, Any]:
+    """Expose deterministic morphology evidence without selecting or inventing a reading."""
+    if not target_surface or not norm_strict(target_surface):
+        return {"available": False}
+    normalization = {
+        "available": True,
+        "input": sourced(target_surface, target_source_address),
+        "analyses": {
+            "bare": sourced(bare(target_surface), "tools/normalize_ar.py#bare"),
+            "norm": sourced(norm(target_surface), "tools/normalize_ar.py#norm"),
+            "norm_strict": sourced(norm_strict(target_surface), "tools/normalize_ar.py#norm_strict"),
+        },
+    }
+
+    raw_segments = segment_candidates(target_surface)
+    segment_records: list[dict[str, Any]] = []
+    stem_keys: dict[int, set[str]] = collections.defaultdict(set)
+    for candidate_index, candidate in enumerate(raw_segments, 1):
+        candidate_source = f"tools/fusha_text_check.py#segment_candidates/{candidate_index}"
+        segments = []
+        for segment_index, segment in enumerate(candidate.get("segments") or [], 1):
+            segment_source = f"{candidate_source}/segments/{segment_index}"
+            segments.append(
+                {
+                    "role": sourced(segment.get("role"), f"{segment_source}/role"),
+                    "surface": sourced(segment.get("surface"), target_source_address),
+                }
+            )
+            if segment.get("role") == "stem" and segment.get("surface"):
+                stem_keys[candidate_index].add(norm_strict(segment["surface"]))
+        segment_records.append(
+            {
+                "candidate_index": sourced(candidate_index, candidate_source),
+                "legal": sourced(bool(candidate.get("legal")), f"{candidate_source}/legal"),
+                "single_letter_clitic": sourced(
+                    bool(candidate.get("single_letter_clitic")),
+                    f"{candidate_source}/single_letter_clitic",
+                ),
+                "segments": segments,
+            }
+        )
+
+    lexical_candidates: list[dict[str, Any]] = []
+    seen_entry_usages: set[tuple[str, int]] = set()
+    for carrier in sorted(carriers, key=canonical_bytes):
+        entry_id = str(carrier.get("entry_id") or "")
+        entry = entries.get(entry_id)
+        match = CARD_RE.fullmatch(str(carrier.get("card_id") or ""))
+        if entry is None or match is None or match.group(1) != entry_id:
+            continue
+        usage_index = int(match.group(2))
+        identity = (entry_id, usage_index)
+        if identity in seen_entry_usages:
+            continue
+        seen_entry_usages.add(identity)
+        usages = entry.get("usage") or []
+        if not 1 <= usage_index <= len(usages):
+            continue
+        base = row_source(entries_path, entry, f"id={entry_id}")
+        for form_index, form in enumerate(usages[usage_index - 1].get("forms") or [], 1):
+            form_key = norm_strict(str(form))
+            matching_segment_indexes = sorted(
+                index for index, keys in stem_keys.items() if form_key and form_key in keys
+            )
+            for segment_index in matching_segment_indexes:
+                form_source = f"{base}/usage/{usage_index}/forms/{form_index}"
+                candidate: dict[str, Any] = {
+                    "entry_id": sourced(entry_id, f"{base}/id"),
+                    "documented_form": sourced(form, form_source),
+                    "segment_candidate_index": sourced(
+                        segment_index,
+                        f"tools/fusha_text_check.py#segment_candidates/{segment_index}",
+                    ),
+                }
+                if entry.get("headword"):
+                    candidate["lemma"] = sourced(entry["headword"], f"{base}/headword")
+                if entry.get("root"):
+                    candidate["root"] = sourced(entry["root"], f"{base}/root")
+                pos_field = "section" if entry.get("section") else "category"
+                if entry.get(pos_field):
+                    candidate["pos"] = sourced(entry[pos_field], f"{base}/{pos_field}")
+                lexical_candidates.append(candidate)
+    lexical_candidates.sort(key=canonical_bytes)
+
+    homograph_flags: list[dict[str, Any]] = []
+    for _row_index, row in homograph_index.get(norm(target_surface), []):
+        base = f"{logical_path(homograph_path)}#keys/norm_key={row.get('norm_key')}"
+        homograph_flags.append(
+            {
+                "risk_flag": sourced(
+                    row.get("__risk_flag__"),
+                    f"{logical_path(homograph_path)}#risk_flag",
+                ),
+                "norm_key": sourced(row.get("norm_key"), f"{base}/norm_key"),
+                "root_count": sourced(row.get("root_count"), f"{base}/root_count"),
+                "roots": [
+                    sourced(root, f"{base}/roots/root={root}")
+                    for root in sorted(set(row.get("roots") or []))
+                ],
+            }
+        )
+    homograph_flags.sort(key=canonical_bytes)
+    return {
+        "available": True,
+        "target_loc": sourced(target_loc, target_source_address),
+        "normalization_analyses": normalization,
+        "segment_candidates": {
+            "available": bool(segment_records),
+            "candidates": segment_records,
+        },
+        "lemma_root_pos_candidates": {
+            "available": bool(lexical_candidates),
+            "candidates": lexical_candidates,
+        },
+        "homograph_flags": {
+            "available": bool(homograph_flags),
+            "flags": homograph_flags,
+        },
+    }
+
+
 def response_schema(gate: dict[str, Any], evidence_hashes: dict[str, str]) -> dict[str, Any]:
     evidence_items = {
         "type": "array",
@@ -407,6 +638,8 @@ def build_packet(
     baseline_path: Path,
     loc_surfaces_path: Path,
     entries_path: Path,
+    homograph_path: Path,
+    homograph_index: dict[str, list[tuple[int, dict[str, Any]]]],
     gate_path: Path,
     gate_ssot: dict[str, Any],
 ) -> dict[str, Any]:
@@ -440,8 +673,34 @@ def build_packet(
             f"canonical_location={loc}/full_carrier_candidates/row_id={carrier['row_id']}",
         )
         carrier["candidate_entry_content"] = entry_content_for_carrier(carrier, entry, entries_path)
+        carrier.update(
+            build_occurrence_mapping(
+                carrier,
+                carrier["candidate_entry_content"]["matching_usage_examples"][0],
+                context,
+            )
+        )
         carriers.append(carrier)
     carriers.sort(key=canonical_bytes)
+    carriers_uniquely_addressing_target = sorted(
+        {
+            str(carrier["entry_id"])
+            for carrier in carriers
+            if carrier["mapping_status"] == "unique"
+            and carrier["fingerprint_match_candidates"] == [loc]
+        }
+    )
+    target_context = next(row for row in context if row["loc"] == loc)
+    morphology_record = build_morphology_record(
+        target_loc=loc,
+        target_surface=queue_row["source_normalization"]["live_surface"],
+        target_source_address=target_context["source_address"],
+        carriers=carriers,
+        entries=entries,
+        entries_path=entries_path,
+        homograph_index=homograph_index,
+        homograph_path=homograph_path,
+    )
     gate = gate_for(classification["laneb_classification"], gate_ssot, gate_path)
     classification_content = scrub_source_line(classification)
     queue_content = scrub_source_line(queue_row)
@@ -451,11 +710,12 @@ def build_packet(
         "gate_ssot_sha256": sha256_file(gate_path),
         "laneb_classification_sha256": stable_sha256(classification_content),
         "live_public_content_sha256": stable_sha256(live_public),
+        "morphology_record_sha256": stable_sha256(morphology_record),
         "queue_row_sha256": stable_sha256(queue_content),
     }
     packet = {
-        "schema": "qamus.laneb_two_vote_calibration_packet.v1",
-        "packet_id": f"laneb-cal-001:{selection_rank:03d}:{loc}",
+        "schema": "qamus.laneb_two_vote_calibration_packet.v2",
+        "packet_id": f"laneb-cal-002:{selection_rank:03d}:{loc}",
         "calibration_stratum": stratum,
         "selection_rank": selection_rank,
         "canonical_location": loc,
@@ -466,6 +726,9 @@ def build_packet(
         },
         "ayah_word_context": context,
         "candidate_carriers": carriers,
+        "mapping_status": "unique" if carriers_uniquely_addressing_target else "ambiguous",
+        "carriers_uniquely_addressing_target": carriers_uniquely_addressing_target,
+        "morphology_record": morphology_record,
         "laneb_classification": {
             "content": classification_content,
             "source_address": row_source(classification_path, classification, f"canonical_location={loc}"),
@@ -491,6 +754,9 @@ def validate_packet(packet: dict[str, Any]) -> None:
         "live_row_public_content",
         "ayah_word_context",
         "candidate_carriers",
+        "mapping_status",
+        "carriers_uniquely_addressing_target",
+        "morphology_record",
         "laneb_classification",
         "queue_evidence",
         "gate",
@@ -506,6 +772,14 @@ def validate_packet(packet: dict[str, Any]) -> None:
     carriers = packet.get("candidate_carriers")
     if not isinstance(carriers, list) or not carriers:
         raise ValueError("packet has no candidate carriers")
+    if packet.get("mapping_status") not in {"unique", "ambiguous"}:
+        raise ValueError("packet missing a valid mapping_status")
+    uniquely_addressing = packet.get("carriers_uniquely_addressing_target")
+    if not isinstance(uniquely_addressing, list):
+        raise ValueError("packet missing carriers_uniquely_addressing_target")
+    morphology = packet.get("morphology_record")
+    if not isinstance(morphology, dict) or not isinstance(morphology.get("available"), bool):
+        raise ValueError("packet missing morphology_record availability")
     for index, carrier in enumerate(carriers):
         if any(not carrier.get(key) for key in ("entry_id", "card_id", "qword_row_id", "row_id")):
             raise ValueError(f"candidate carrier {index} lacks the full identity")
@@ -520,6 +794,31 @@ def validate_packet(packet: dict[str, Any]) -> None:
             raise ValueError(f"candidate carrier {index} has no matching usage example")
         if any(not item.get("content", {}).get("ref") for item in examples):
             raise ValueError(f"candidate carrier {index} matching example lacks ref")
+        if carrier.get("mapping_status") not in {"unique", "ambiguous"}:
+            raise ValueError(f"candidate carrier {index} lacks a valid mapping_status")
+        occurrences = carrier.get("example_occurrence_candidates")
+        fingerprints = carrier.get("occurrence_fingerprints")
+        if not isinstance(occurrences, list) or not occurrences:
+            raise ValueError(f"candidate carrier {index} has no occurrence candidates")
+        if not isinstance(fingerprints, list) or [item.get("loc") for item in fingerprints] != occurrences:
+            raise ValueError(f"candidate carrier {index} fingerprints differ from occurrence candidates")
+        matches = carrier.get("fingerprint_match_candidates")
+        expected_status = "unique" if isinstance(matches, list) and len(matches) == 1 else "ambiguous"
+        if carrier["mapping_status"] != expected_status:
+            raise ValueError(f"candidate carrier {index} mapping status differs from fingerprints")
+    derived_unique_entries = sorted(
+        {
+            str(carrier["entry_id"])
+            for carrier in carriers
+            if carrier["mapping_status"] == "unique"
+            and carrier["fingerprint_match_candidates"] == [packet["canonical_location"]]
+        }
+    )
+    if uniquely_addressing != derived_unique_entries:
+        raise ValueError("carriers_uniquely_addressing_target differs from carrier mappings")
+    expected_packet_status = "unique" if derived_unique_entries else "ambiguous"
+    if packet["mapping_status"] != expected_packet_status:
+        raise ValueError("packet mapping_status differs from target-addressing carriers")
     response = packet.get("required_response_schema") or {}
     if response.get("required") != RESPONSE_FIELDS:
         raise ValueError("required response schema fields differ from the fixed contract")
@@ -591,6 +890,8 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
         "entries": Path(args.entries),
         "baseline_whitelist": Path(args.baseline),
         "loc_surfaces": Path(args.loc_surfaces),
+        "homograph_keys": Path(args.homograph_keys),
+        "v1_packets": Path(args.v1_packets),
         "grammar_gate_ssot": Path(args.gates),
         "fact_ledger_schema": Path(args.fact_schema),
     }
@@ -602,15 +903,27 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
         raise ValueError("deployed baseline SHA-256 differs from the pinned queue input")
     if sha256_file(paths["loc_surfaces"]) != EXPECTED_LOC_SURFACES_SHA256:
         raise ValueError("loc-surfaces SHA-256 differs from f2e079dc pin")
+    if sha256_file(paths["v1_packets"]) != EXPECTED_V1_PACKET_SHA256:
+        raise ValueError("v1 packet SHA-256 differs from 95788fab lineage pin")
 
     classifications = load_jsonl(paths["classification"])
     queue_rows = load_jsonl(paths["queue"])
     entry_rows = load_jsonl(paths["entries"])
     baseline_rows = load_jsonl(paths["baseline_whitelist"])
     loc_rows = load_jsonl(paths["loc_surfaces"])
+    homograph_doc = load_json(paths["homograph_keys"])
+    v1_packets = load_jsonl(paths["v1_packets"])
     classifications_by_loc = index_unique(classifications, "canonical_location", "classification")
     queue_by_loc = index_unique(queue_rows, "canonical_location", "queue")
     entries = index_unique(entry_rows, "id", "entry")
+    v1_by_loc = index_unique(v1_packets, "canonical_location", "v1 packet")
+    homograph_index: dict[str, list[tuple[int, dict[str, Any]]]] = collections.defaultdict(list)
+    for index, row in enumerate(homograph_doc.get("keys") or [], 1):
+        key = row.get("norm_key")
+        if isinstance(key, str) and key:
+            indexed_row = copy.deepcopy(row)
+            indexed_row["__risk_flag__"] = homograph_doc.get("risk_flag")
+            homograph_index[key].append((index, indexed_row))
     baseline_by_loc: dict[str, list[dict[str, Any]]] = collections.defaultdict(list)
     for row in baseline_rows:
         loc = canonical_public_loc(row)
@@ -641,6 +954,16 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
         )
     gate_ssot = load_gate_ssot(paths["grammar_gate_ssot"], paths["fact_ledger_schema"])
     selected = select_calibration_rows(classifications)
+    selected_identity = [
+        (rank, stratum, row["canonical_location"])
+        for rank, (stratum, row) in enumerate(selected, 1)
+    ]
+    v1_identity = [
+        (int(packet["selection_rank"]), packet["calibration_stratum"], packet["canonical_location"])
+        for packet in sorted(v1_packets, key=lambda item: int(item["selection_rank"]))
+    ]
+    if selected_identity != v1_identity:
+        raise ValueError("STOP: selected calibration rows differ from the pinned v1 packet lineage")
 
     packets: list[dict[str, Any]] = []
     for rank, (stratum, classification) in enumerate(selected, 1):
@@ -648,6 +971,19 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
         if loc not in classifications_by_loc or loc not in queue_by_loc or loc not in baseline_by_loc:
             raise ValueError(f"selected location lacks classification, queue, or live row: {loc}")
         live_row = choose_live_row(baseline_by_loc[loc], queue_by_loc[loc], loc)
+        pinned_context = v1_by_loc[loc].get("ayah_word_context") or []
+        rebuilt_context = [
+            {
+                "loc": row["loc"],
+                "surface": row["surface"],
+                "source_address": row_source(paths["loc_surfaces"], row, f"loc={row['loc']}"),
+            }
+            for row in sorted(loc_by_ayah.get(ayah_of(loc), []), key=lambda item: loc_key(item["loc"]))
+        ]
+        if pinned_context != rebuilt_context:
+            raise ValueError(
+                f"STOP: pinned v1 ayah_word_context is insufficient or differs from loc-surfaces at {loc}"
+            )
         packet = build_packet(
             stratum=stratum,
             selection_rank=rank,
@@ -661,6 +997,8 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             baseline_path=paths["baseline_whitelist"],
             loc_surfaces_path=paths["loc_surfaces"],
             entries_path=paths["entries"],
+            homograph_path=paths["homograph_keys"],
+            homograph_index=homograph_index,
             gate_path=paths["grammar_gate_ssot"],
             gate_ssot=gate_ssot,
         )
@@ -674,11 +1012,32 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
         packet["laneb_classification"]["content"]["laneb_classification"]
         for packet in packets
     ).items()))
+    packet_mapping_counts = dict(sorted(collections.Counter(
+        packet["mapping_status"] for packet in packets
+    ).items()))
+    carrier_mapping_counts = dict(sorted(collections.Counter(
+        carrier["mapping_status"]
+        for packet in packets
+        for carrier in packet["candidate_carriers"]
+    ).items()))
+    occurrence_packets = [
+        packet for packet in packets
+        if packet["calibration_stratum"].startswith("occurrence_")
+    ]
+    occurrence_mapping_counts = dict(sorted(collections.Counter(
+        packet["mapping_status"] for packet in occurrence_packets
+    ).items()))
     manifest = {
-        "schema": "qamus.laneb_two_vote_calibration_manifest.v1",
+        "schema": "qamus.laneb_two_vote_calibration_manifest.v2",
         "generator": "tools/build_two_vote_packets.py",
         "authoritative_baseline_sha": AUTHORITATIVE_BASELINE_SHA,
         "scope": "packets_only_no_votes_no_conclusions_no_ledger_writes_no_crosswalk_writes",
+        "lineage": {
+            "parent_path": logical_path(paths["v1_packets"]),
+            "parent_sha256": EXPECTED_V1_PACKET_SHA256,
+            "same_rows_verified": True,
+            "identity_fields": ["selection_rank", "calibration_stratum", "canonical_location"],
+        },
         "population": {
             "row_count": len(population),
             "class_counts": dict(sorted(collections.Counter(
@@ -712,6 +1071,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
                 "entries": entry_rows,
                 "baseline_whitelist": baseline_rows,
                 "loc_surfaces": loc_rows,
+                "v1_packets": v1_packets,
             }.get(label))
             for label, path in paths.items()
         },
@@ -721,6 +1081,12 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             "sha256": hashlib.sha256(packet_bytes).hexdigest(),
             "stratum_counts": stratum_counts,
             "population_class_counts": class_counts,
+            "packet_mapping_status_counts": packet_mapping_counts,
+            "carrier_mapping_status_counts": carrier_mapping_counts,
+            "occurrence_ambiguity_packet_mapping_status_counts": occurrence_mapping_counts,
+            "occurrence_ambiguity_unique_with_fingerprints": sum(
+                packet["mapping_status"] == "unique" for packet in occurrence_packets
+            ),
             "packet_sha256_rule": "SHA-256 of canonical compact JSON for the packet before adding packet_sha256.",
         },
         "required_response_fields": RESPONSE_FIELDS,
@@ -731,6 +1097,9 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             "stop_conditions": [
                 "candidate entry lookup failures exceed 1%",
                 "gate SSOT lacks a tier for a selected decision trigger",
+                "pinned v1 ayah_word_context is insufficient or differs from loc-surfaces",
+                "loc-surfaces SHA-256 differs from f2e079dc pin",
+                "v1 packet SHA-256 differs from 95788fab lineage pin",
             ],
         },
     }
@@ -763,6 +1132,90 @@ def _synthetic_classification(
 
 def self_test() -> int:
     failures: list[str] = []
+    repeated_window = [
+        {"loc": f"2:1:{index}", "surface": surface, "source_address": f"fixture#loc={index}"}
+        for index, surface in enumerate(
+            ["قَبْلَ", "قَبْلَ", "عَلَىٰ", "بَعْدَ", "بَعْدَ"] * 2,
+            1,
+        )
+    ]
+    ambiguous_mapping = build_occurrence_mapping(
+        {"qword_row_id": "llx-qword-fixture-01-01-003"},
+        {
+            "content": {"ar": "قَبْلَ قَبْلَ عَلَىٰ بَعْدَ بَعْدَ", "ref": "2:1"},
+            "source_address": "fixture#usage/1/examples/1",
+        },
+        repeated_window,
+    )
+    if ambiguous_mapping["mapping_status"] != "ambiguous":
+        failures.append("repeated verbatim example window was not marked ambiguous")
+    if ambiguous_mapping["fingerprint_match_candidates"] != ["2:1:3", "2:1:8"]:
+        failures.append("ambiguous mapping did not preserve both matching positions")
+    reordered_mapping = build_occurrence_mapping(
+        {"qword_row_id": "llx-qword-fixture-01-01-003"},
+        {
+            "content": {"ar": "قَبْلَ قَبْلَ عَلَىٰ بَعْدَ بَعْدَ", "ref": "2:1"},
+            "source_address": "fixture#usage/1/examples/1",
+        },
+        reversed(repeated_window),
+    )
+    if canonical_bytes(ambiguous_mapping) != canonical_bytes(reordered_mapping):
+        failures.append("occurrence mapping changed under context reordering")
+    morphology = build_morphology_record(
+        target_loc="2:1:1",
+        target_surface="وَكِتَابٌ",
+        target_source_address="fixture#loc=2:1:1",
+        carriers=[{"entry_id": "entry-a", "card_id": "entry-a:u1:e1"}],
+        entries={
+            "entry-a": {
+                "id": "entry-a",
+                "headword": "كِتَاب",
+                "root": "ك ت ب",
+                "section": "noun",
+                "usage": [{"forms": ["كِتَابٌ"], "examples": [{"ref": "2:1"}]}],
+            }
+        },
+        entries_path=DEFAULT_ENTRIES,
+        homograph_index={},
+        homograph_path=ROOT / "qamus/indexes/largelexicon/homograph-keys.json",
+    )
+    lexical = morphology.get("lemma_root_pos_candidates", {})
+    if not lexical.get("available") or not lexical.get("candidates"):
+        failures.append("documented usage form did not produce a morphology candidate")
+    elif any(
+        not field.get("source_address")
+        for field in lexical["candidates"][0].values()
+        if isinstance(field, dict) and "value" in field
+    ):
+        failures.append("morphology candidate field lacks a source address")
+    homograph_row = {
+        "__risk_flag__": "norm_homograph",
+        "norm_key": norm("وَكِتَابٌ"),
+        "root_count": 2,
+        "roots": ["ك ت ب", "و ك ب"],
+    }
+    homograph_a = build_morphology_record(
+        target_loc="2:1:1",
+        target_surface="وَكِتَابٌ",
+        target_source_address="fixture#loc=2:1:1",
+        carriers=[],
+        entries={},
+        entries_path=DEFAULT_ENTRIES,
+        homograph_index={norm("وَكِتَابٌ"): [(1, homograph_row)]},
+        homograph_path=DEFAULT_HOMOGRAPH_KEYS,
+    )
+    homograph_b = build_morphology_record(
+        target_loc="2:1:1",
+        target_surface="وَكِتَابٌ",
+        target_source_address="fixture#loc=2:1:1",
+        carriers=[],
+        entries={},
+        entries_path=DEFAULT_ENTRIES,
+        homograph_index={norm("وَكِتَابٌ"): [(99, homograph_row)]},
+        homograph_path=DEFAULT_HOMOGRAPH_KEYS,
+    )
+    if canonical_bytes(homograph_a) != canonical_bytes(homograph_b):
+        failures.append("homograph morphology changed under input row reordering")
     missing_candidate_content = {
         "canonical_location": "2:1:1",
         "live_surface": "x",
@@ -783,9 +1236,19 @@ def self_test() -> int:
         "matching_usage_examples": [{"content": {"ref": "2:1"}}],
     }
     missing_gate["gate"] = {}
+    missing_enrichment = copy.deepcopy(missing_gate)
+    missing_enrichment["gate"] = {"tier": "two_vote_required"}
+    missing_enrichment["required_response_schema"] = {
+        "required": RESPONSE_FIELDS,
+        "properties": {
+            "gate": {"const": "two_vote_required"},
+            "evidence_hashes": {"const": {}},
+        },
+    }
     for label, packet in (
         ("missing candidate content", missing_candidate_content),
         ("missing gate", missing_gate),
+        ("missing v2 enrichment", missing_enrichment),
     ):
         try:
             validate_packet(packet)
@@ -834,7 +1297,7 @@ def self_test() -> int:
         failures.append("live row selection changed under duplicate input reordering")
     if failures:
         raise AssertionError("; ".join(failures))
-    print("SELFTESTS=8 FAILURES=0")
+    print("SELFTESTS=15 FAILURES=0")
     return 0
 
 
@@ -845,6 +1308,8 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--entries", default=DEFAULT_ENTRIES)
     result.add_argument("--baseline", default=DEFAULT_BASELINE)
     result.add_argument("--loc-surfaces", default=DEFAULT_LOC_SURFACES)
+    result.add_argument("--homograph-keys", default=DEFAULT_HOMOGRAPH_KEYS)
+    result.add_argument("--v1-packets", default=DEFAULT_V1_PACKETS)
     result.add_argument("--gates", default=DEFAULT_GATES)
     result.add_argument("--fact-schema", default=DEFAULT_FACT_SCHEMA)
     result.add_argument("--out", default=DEFAULT_OUT)
