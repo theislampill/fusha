@@ -4578,6 +4578,18 @@ except Exception as _e:
     check("T12 fact ledger tests (harness error)", False)
     print("  ", _e)
 
+# --- RM-20 owner-approved morphline application ---
+try:
+    _rm20_apply = run_text([
+        sys.executable, os.path.join(ROOT, "tools", "test_rm20_morphline_apply.py")])
+    check(
+        "RM-20 morphline apply tests (five refusals + reports + ledger + atomic SHADOW)",
+        _rm20_apply.returncode == 0,
+    )
+except Exception as _e:
+    check("RM-20 morphline apply tests (harness error)", False)
+    print("  ", _e)
+
 # --- T10 crosswalk-gap queue (Shadow Flywheel Activation Program) ---
 # The gap-queue builder's family classification, owner column set, fail-closed
 # uniqueness semantics (red-first false-unique fixture), and determinism.
