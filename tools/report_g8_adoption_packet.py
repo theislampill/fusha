@@ -263,6 +263,10 @@ def self_test():
                           "gloss": gloss}],
             "learner_explanation": "noun",
         }
+        # gloss text must stay comparable across shapes for the NF-T6-3 case
+        if extra.get("segments"):
+            for seg in extra["segments"]:
+                seg.setdefault("gloss_contribution", gloss)
         row["loc" if legacy else "canonical_wbw_loc"] = loc
         row.update(extra)
         return row
@@ -281,7 +285,12 @@ def self_test():
         public_row("1:1:6", "blocked", legacy=True),
         # NF-T6-1 mixed-shape case: deployed rows carry the wbw: prefix; identical public
         # content must still join and classify no_op (red-first vs the unfixed loc key).
-        public_row("wbw:1:1:7", "same", legacy=True),
+        # NF-T6-3: the deployed segment shape (class: "qg-noun", gloss_contribution) must
+        # project semantically equal to the contract shape (qg_class: "noun", gloss).
+        public_row("wbw:1:1:7", "same", legacy=True,
+                   segments=[{"role": "STEM", "surface": "كتاب",
+                              "class": "qg-noun", "gloss_contribution": "same",
+                              "label": "N", "segment_index": 0}]),
     ]
     bindings = [{"canonical_wbw_loc": "1:1:1", "binding_id": "chb:one",
                  "entry_id": "entry-one", "card_id": "card-one", "qword_row_id": "qword-one"}]
