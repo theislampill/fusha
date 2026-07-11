@@ -1,0 +1,633 @@
+{
+  "apply_allowlist_payload_ids": [
+    "payload:%D9%84%D9%84%D8%B0%D9%89:to-the-one-who",
+    "payload:%D9%84%D9%84%D8%B0%D9%89:to-the-One-Who",
+    "payload:%D9%84%D9%84%D9%87:to-for-Allah",
+    "payload:%D9%84%D8%A7%D8%A8%D8%B1%D8%A7%D9%87%D9%8A%D9%85:Abraham",
+    "payload:%D9%84%D9%84%D9%85%D9%84%D8%A7%D8%A6%D9%83%D8%A9:angels",
+    "payload:%D8%A8%D9%88%D8%A7%D9%84%D8%AF%D9%8A%D9%87:to-his-parents",
+    "payload:%D9%84%D9%82%D9%88%D9%85%D9%87:people",
+    "payload:%D9%84%D9%84%D9%83%D8%A7%D9%81%D8%B1%D9%8A%D9%86:for-the-disbelievers",
+    "payload:%D8%B6%D8%B1%D8%A7%D8%B1%D8%A7:to-cause-harm"
+  ],
+  "approved_payload_count": 9,
+  "approved_payloads": [
+    {
+      "binding_rebinds": [
+        {
+          "card_id": "5b382a023db8:u1:e8",
+          "entry_id": "5b382a023db8",
+          "loc": "12:42:2",
+          "morphline_fact_id": "sha256:842d39fe1a774b9b3c6673f265ad921fd6fba656310a0005bbec0076c463628f",
+          "new_binding_id": "chb:48ca4d42c0bdc01d",
+          "old_binding_id": "chb:0ac66cdccbe95852",
+          "qword_row_id": "llx-qword-5b382a023db8-01-08-002",
+          "supersedes": "chb:0ac66cdccbe95852"
+        },
+        {
+          "card_id": "58d16ee708f4:u1:e1",
+          "entry_id": "58d16ee708f4",
+          "loc": "12:42:2",
+          "morphline_fact_id": "sha256:c6a27fa547b776d136438f69d282a96311391d392990f16a45dbfd8c97c7d2f9",
+          "new_binding_id": "chb:2f5b75bf3f3189b3",
+          "old_binding_id": "chb:61c891dc75e6f15e",
+          "qword_row_id": "llx-qword-58d16ee708f4-01-01-002",
+          "supersedes": "chb:61c891dc75e6f15e"
+        }
+      ],
+      "final_canonical_payload_id": "chp:a1569b8bec4791be",
+      "input_row_ordinal": 1,
+      "locations": [
+        "12:42:2"
+      ],
+      "old_canonical_payload_id": "chp:97e6c1ab1ec04b6e",
+      "payload_id": "payload:%D9%84%D9%84%D8%B0%D9%89:to-the-one-who",
+      "payload_supersedes": "chp:97e6c1ab1ec04b6e",
+      "proposed_morphline": "Preposition lām (li-) · no lexical root · prefixed to and governing the relative pronoun ٱلَّذِى ('the one who', masc. sing.); a genitive prepositional phrase, 'to the one who'.",
+      "surface": "لِلَّذِى",
+      "tombstone": {
+        "canonical_payload_id": "chp:97e6c1ab1ec04b6e",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_canonical_payload_id": "chp:a1569b8bec4791be"
+      }
+    },
+    {
+      "binding_rebinds": [
+        {
+          "card_id": "367b8d3d8988:u1:e2",
+          "entry_id": "367b8d3d8988",
+          "loc": "6:79:4",
+          "morphline_fact_id": "sha256:0a018190fb7c00663a98164791f37b7ffb5c81c8e1db9ba0da14c2da0f25eee9",
+          "new_binding_id": "chb:ad10e853840ce577",
+          "old_binding_id": "chb:817e8b07097de831",
+          "qword_row_id": "llx-qword-367b8d3d8988-01-02-004",
+          "supersedes": "chb:817e8b07097de831"
+        }
+      ],
+      "final_canonical_payload_id": "chp:a7351d01770c5ca2",
+      "input_row_ordinal": 2,
+      "locations": [
+        "6:79:4"
+      ],
+      "old_canonical_payload_id": "chp:a9ef13bf2fc79238",
+      "payload_id": "payload:%D9%84%D9%84%D8%B0%D9%89:to-the-One-Who",
+      "payload_supersedes": "chp:a9ef13bf2fc79238",
+      "proposed_morphline": "Preposition lām (li-) · no lexical root · prefixed to and governing the relative pronoun ٱلَّذِى ('the One Who', masc. sing.); a genitive prepositional phrase, 'to the One Who' (referent: the Creator).",
+      "surface": "لِلَّذِى",
+      "tombstone": {
+        "canonical_payload_id": "chp:a9ef13bf2fc79238",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_canonical_payload_id": "chp:a7351d01770c5ca2"
+      }
+    },
+    {
+      "binding_rebinds": [
+        {
+          "card_id": "3907e535f2fb:u1:e1",
+          "entry_id": "3907e535f2fb",
+          "loc": "31:12:7",
+          "morphline_fact_id": "sha256:282c7145ad426c452bb6bd824f06923c0448e3d5c403aa914a75033313d4df05",
+          "new_binding_id": "chb:ca72eebf19a73362",
+          "old_binding_id": "chb:4854c0a777af2243",
+          "qword_row_id": "llx-qword-3907e535f2fb-01-01-007",
+          "supersedes": "chb:4854c0a777af2243"
+        },
+        {
+          "card_id": "6269f8851346:u1:e2",
+          "entry_id": "6269f8851346",
+          "loc": "7:128:9",
+          "morphline_fact_id": "sha256:d798a1ed6f9976d962c430b3fb0654def24aa077d168427e1593cafd72655a62",
+          "new_binding_id": "chb:d4b06dc57caaaaac",
+          "old_binding_id": "chb:4a6f20a65825084f",
+          "qword_row_id": "llx-qword-6269f8851346-01-02-010",
+          "supersedes": "chb:4a6f20a65825084f"
+        },
+        {
+          "card_id": "bac8f1ac793e:u1:e1",
+          "entry_id": "bac8f1ac793e",
+          "loc": "31:12:7",
+          "morphline_fact_id": "sha256:56663ab58cc20e149aa1c3703e98c38c56d3d8d0f9644fa4cdf30f76b7842f19",
+          "new_binding_id": "chb:d30fcb64d89f7356",
+          "old_binding_id": "chb:898dd845f584ba70",
+          "qword_row_id": "llx-qword-bac8f1ac793e-01-01-007",
+          "supersedes": "chb:898dd845f584ba70"
+        },
+        {
+          "card_id": "79f031f1c0cb:u2:e5",
+          "entry_id": "79f031f1c0cb",
+          "loc": "7:128:9",
+          "morphline_fact_id": "sha256:5eb2d2f847a9d3139ff91af0a6cf2d02f5a69708b6912b802115fbf3c79977a3",
+          "new_binding_id": "chb:edc2cb5aa6a7ec31",
+          "old_binding_id": "chb:998cd1424341c98a",
+          "qword_row_id": "llx-qword-79f031f1c0cb-02-05-010",
+          "supersedes": "chb:998cd1424341c98a"
+        }
+      ],
+      "final_canonical_payload_id": "chp:926bad4e26ed0dcc",
+      "input_row_ordinal": 3,
+      "locations": [
+        "7:128:9",
+        "31:12:7"
+      ],
+      "old_canonical_payload_id": "chp:bc83d1f1e105b273",
+      "payload_id": "payload:%D9%84%D9%84%D9%87:to-for-Allah",
+      "payload_supersedes": "chp:bc83d1f1e105b273",
+      "proposed_morphline": "Preposition lām (li-) · no lexical root · prefixed to the divine name ٱللَّه (Allāh) in the genitive (ٱللَّهِ); a genitive prepositional phrase, 'to/for Allah'.",
+      "surface": "لِلَّهِ",
+      "tombstone": {
+        "canonical_payload_id": "chp:bc83d1f1e105b273",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_canonical_payload_id": "chp:926bad4e26ed0dcc"
+      }
+    },
+    {
+      "binding_rebinds": [
+        {
+          "card_id": "4c40b7dda389:u1:e5",
+          "entry_id": "4c40b7dda389",
+          "loc": "22:26:3",
+          "morphline_fact_id": "sha256:bd34aafa9bf08bc5130fcc8f6dc1742672f23dfb87d441c69e3b21cc02766d13",
+          "new_binding_id": "chb:bc7f728a16535b04",
+          "old_binding_id": "chb:16d7e94a52b28fc4",
+          "qword_row_id": "llx-qword-4c40b7dda389-01-05-003",
+          "supersedes": "chb:16d7e94a52b28fc4"
+        },
+        {
+          "card_id": "f12ae52e78f7:u2:e2",
+          "entry_id": "f12ae52e78f7",
+          "loc": "22:26:3",
+          "morphline_fact_id": "sha256:ecacc7e64c0d835c1a239739519007e72cde46f5cdb639a9767afbe393caab85",
+          "new_binding_id": "chb:c02feacfcb8957c9",
+          "old_binding_id": "chb:8ccf040b26cbd308",
+          "qword_row_id": "llx-qword-f12ae52e78f7-02-02-003",
+          "supersedes": "chb:8ccf040b26cbd308"
+        },
+        {
+          "card_id": "ad9af170d670:u1:e4",
+          "entry_id": "ad9af170d670",
+          "loc": "22:26:3",
+          "morphline_fact_id": "sha256:f789a94d6aa01682750b0abe458875d4e42aabbebabb6e32c5d94b73a8f5b239",
+          "new_binding_id": "chb:0868951f5a96b843",
+          "old_binding_id": "chb:e12325c347506f2d",
+          "qword_row_id": "llx-qword-ad9af170d670-01-04-003",
+          "supersedes": "chb:e12325c347506f2d"
+        },
+        {
+          "card_id": "d2eddd3dbdad:u4:e7",
+          "entry_id": "d2eddd3dbdad",
+          "loc": "22:26:3",
+          "morphline_fact_id": "sha256:027c6627230fb548f9457826ffa82f00fa35e38b0a781df3e702b37b21711d59",
+          "new_binding_id": "chb:d037df516abae159",
+          "old_binding_id": "chb:e1aefe499f840639",
+          "qword_row_id": "llx-qword-d2eddd3dbdad-04-07-003",
+          "supersedes": "chb:e1aefe499f840639"
+        }
+      ],
+      "final_canonical_payload_id": "chp:6c8fedefb186acb2",
+      "input_row_ordinal": 4,
+      "locations": [
+        "22:26:3"
+      ],
+      "old_canonical_payload_id": "chp:7bb8430940ad0fdf",
+      "payload_id": "payload:%D9%84%D8%A7%D8%A8%D8%B1%D8%A7%D9%87%D9%8A%D9%85:Abraham",
+      "payload_supersedes": "chp:7bb8430940ad0fdf",
+      "proposed_morphline": "Preposition lām (li-) · no lexical root · prefixed to the proper name إِبْرَٰهِيم (Abraham), a diptote (mamnūʿ min al-ṣarf) in the genitive without tanwīn; 'to/for Abraham'.",
+      "surface": "لِإِبْرَٰهِيمَ",
+      "tombstone": {
+        "canonical_payload_id": "chp:7bb8430940ad0fdf",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_canonical_payload_id": "chp:6c8fedefb186acb2"
+      }
+    },
+    {
+      "binding_rebinds": [
+        {
+          "card_id": "4c40b7dda389:u1:e1",
+          "entry_id": "4c40b7dda389",
+          "loc": "7:11:7",
+          "morphline_fact_id": "sha256:7826a4cf82726dfe611ff201ad9c55f2c75d296cd3b280c70597c5d8e4ba582f",
+          "new_binding_id": "chb:aea286abb6f1fef4",
+          "old_binding_id": "chb:d4f16dcfa23702e6",
+          "qword_row_id": "llx-qword-4c40b7dda389-01-01-007",
+          "supersedes": "chb:d4f16dcfa23702e6"
+        }
+      ],
+      "final_canonical_payload_id": "chp:a9b93af17acfff49",
+      "input_row_ordinal": 5,
+      "locations": [
+        "7:11:7"
+      ],
+      "old_canonical_payload_id": "chp:856ed8c6da758e72",
+      "payload_id": "payload:%D9%84%D9%84%D9%85%D9%84%D8%A7%D8%A6%D9%83%D8%A9:angels",
+      "payload_supersedes": "chp:856ed8c6da758e72",
+      "proposed_morphline": "Preposition lām (li-) · no lexical root · prefixed to the definite noun ٱلْمَلَٰٓئِكَة ('the angels', collective/plural) in the genitive; a genitive prepositional phrase, 'to the angels'.",
+      "surface": "لِلْمَلَٰٓئِكَةِ",
+      "tombstone": {
+        "canonical_payload_id": "chp:856ed8c6da758e72",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_canonical_payload_id": "chp:a9b93af17acfff49"
+      }
+    },
+    {
+      "binding_rebinds": [
+        {
+          "card_id": "d6a4f976cb61:u1:e7",
+          "entry_id": "d6a4f976cb61",
+          "loc": "31:14:3",
+          "morphline_fact_id": "sha256:6fc1b62af82800fb0a6ae27731f70525b76535b76e9079579e4390b32c8fe13b",
+          "new_binding_id": "chb:d620aa1d1f31c3f5",
+          "old_binding_id": "chb:0336ef5572c56e23",
+          "qword_row_id": "llx-qword-d6a4f976cb61-01-07-003",
+          "supersedes": "chb:0336ef5572c56e23"
+        },
+        {
+          "card_id": "445f9e047a5b:u1:e3",
+          "entry_id": "445f9e047a5b",
+          "loc": "31:14:3",
+          "morphline_fact_id": "sha256:7be044be0bf29452dc46a353939d17734fbc3ddc481a6f73d2649fb8dbf855fd",
+          "new_binding_id": "chb:10f1b12c80e3fd70",
+          "old_binding_id": "chb:28579ac090539cfc",
+          "qword_row_id": "llx-qword-445f9e047a5b-01-03-003",
+          "supersedes": "chb:28579ac090539cfc"
+        },
+        {
+          "card_id": "191e9b80dfcd:u1:e1",
+          "entry_id": "191e9b80dfcd",
+          "loc": "46:15:3",
+          "morphline_fact_id": "sha256:3208db245e93956b8b67f48176f4ce0853b5b2e3e15bd1a650f24fcb957dbb4f",
+          "new_binding_id": "chb:99af377e6b7f7dfa",
+          "old_binding_id": "chb:48d6b3f6a549b8b2",
+          "qword_row_id": "llx-qword-191e9b80dfcd-01-01-003",
+          "supersedes": "chb:48d6b3f6a549b8b2"
+        },
+        {
+          "card_id": "9264e145b045:u1:e4",
+          "entry_id": "9264e145b045",
+          "loc": "31:14:3",
+          "morphline_fact_id": "sha256:1573e152be0f77230d5b49072916215c81721948ea6e936724538e7071dfcc3b",
+          "new_binding_id": "chb:a71134746b683cfd",
+          "old_binding_id": "chb:70032ac76176985f",
+          "qword_row_id": "llx-qword-9264e145b045-01-04-003",
+          "supersedes": "chb:70032ac76176985f"
+        },
+        {
+          "card_id": "b669e4468463:u1:e2",
+          "entry_id": "b669e4468463",
+          "loc": "31:14:3",
+          "morphline_fact_id": "sha256:035164ce8527c85cd5fca95ce6686b0049453c132fded7f9c445c668b795f401",
+          "new_binding_id": "chb:47d4615933a1b12a",
+          "old_binding_id": "chb:a05f7393a83db097",
+          "qword_row_id": "llx-qword-b669e4468463-01-02-003",
+          "supersedes": "chb:a05f7393a83db097"
+        },
+        {
+          "card_id": "97657fc0cb1c:u1:e10",
+          "entry_id": "97657fc0cb1c",
+          "loc": "46:15:3",
+          "morphline_fact_id": "sha256:41e9ed2a176590f4d5bdb11eb317421f8bf9c6bd42bda0c3c89013fcfef0f26d",
+          "new_binding_id": "chb:e2ee2f95b1e4a513",
+          "old_binding_id": "chb:aaacc4356528831a",
+          "qword_row_id": "llx-qword-97657fc0cb1c-01-10-003",
+          "supersedes": "chb:aaacc4356528831a"
+        },
+        {
+          "card_id": "361a2ebe2ad4:u2:e1",
+          "entry_id": "361a2ebe2ad4",
+          "loc": "31:14:3",
+          "morphline_fact_id": "sha256:bb74114672274614ae855027e9c5ddb6f3fb75a8b5a8eddefe142f5fac1beb94",
+          "new_binding_id": "chb:404b2f644a6a100b",
+          "old_binding_id": "chb:af00055f42eb1c15",
+          "qword_row_id": "llx-qword-361a2ebe2ad4-02-01-003",
+          "supersedes": "chb:af00055f42eb1c15"
+        },
+        {
+          "card_id": "a36aed085027:u1:e5",
+          "entry_id": "a36aed085027",
+          "loc": "46:15:3",
+          "morphline_fact_id": "sha256:94e9b3f01ec439fb8e517e020a7a88defc4286bd6536ba9b5ff0a086281bd63d",
+          "new_binding_id": "chb:c761cfe656bb3719",
+          "old_binding_id": "chb:daf2476586afa75a",
+          "qword_row_id": "llx-qword-a36aed085027-01-05-003",
+          "supersedes": "chb:daf2476586afa75a"
+        },
+        {
+          "card_id": "5970b19734fd:u2:e2",
+          "entry_id": "5970b19734fd",
+          "loc": "46:15:3",
+          "morphline_fact_id": "sha256:8471a3e531e4c6914eb2c7c29d2bc964a1f4ee7a958a7fc55b673487e96bc188",
+          "new_binding_id": "chb:b3dd8148ada50d00",
+          "old_binding_id": "chb:dd6283699b12a25a",
+          "qword_row_id": "llx-qword-5970b19734fd-02-02-003",
+          "supersedes": "chb:dd6283699b12a25a"
+        }
+      ],
+      "final_canonical_payload_id": "chp:a982b01796857636",
+      "input_row_ordinal": 7,
+      "locations": [
+        "31:14:3",
+        "46:15:3"
+      ],
+      "old_canonical_payload_id": "chp:c7f7edff8ad4a9f5",
+      "payload_id": "payload:%D8%A8%D9%88%D8%A7%D9%84%D8%AF%D9%8A%D9%87:to-his-parents",
+      "payload_supersedes": "chp:c7f7edff8ad4a9f5",
+      "proposed_morphline": "Preposition bā (bi-) · no lexical root · prefixed to the dual noun وَالِدَيْ ('two parents', oblique/genitive dual) with attached 3rd-person-masculine-singular possessive pronoun ـهِ ('his'); a genitive prepositional phrase, 'to his parents'.",
+      "surface": "بِوَٰلِدَيْهِ",
+      "tombstone": {
+        "canonical_payload_id": "chp:c7f7edff8ad4a9f5",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_canonical_payload_id": "chp:a982b01796857636"
+      }
+    },
+    {
+      "binding_rebinds": [
+        {
+          "card_id": "6269f8851346:u1:e2",
+          "entry_id": "6269f8851346",
+          "loc": "7:128:3",
+          "morphline_fact_id": "sha256:adf190470edf49220acd32047f3063afbdd414a319c32b68852df4e3f28aa895",
+          "new_binding_id": "chb:9c4299774227ccc2",
+          "old_binding_id": "chb:2d5be627ca6fbbdd",
+          "qword_row_id": "llx-qword-6269f8851346-01-02-003",
+          "supersedes": "chb:2d5be627ca6fbbdd"
+        },
+        {
+          "card_id": "79f031f1c0cb:u2:e5",
+          "entry_id": "79f031f1c0cb",
+          "loc": "7:128:3",
+          "morphline_fact_id": "sha256:976f0ee69d22427939c21e843761f0a87acf5b3653dcfc755d855dfdad822a13",
+          "new_binding_id": "chb:87a3fd84ce9b87c7",
+          "old_binding_id": "chb:351ad129b902bd45",
+          "qword_row_id": "llx-qword-79f031f1c0cb-02-05-003",
+          "supersedes": "chb:351ad129b902bd45"
+        }
+      ],
+      "final_canonical_payload_id": "chp:0b6f244faf7a6516",
+      "input_row_ordinal": 8,
+      "locations": [
+        "7:128:3"
+      ],
+      "old_canonical_payload_id": "chp:081e78afe8ba4372",
+      "payload_id": "payload:%D9%84%D9%82%D9%88%D9%85%D9%87:people",
+      "payload_supersedes": "chp:081e78afe8ba4372",
+      "proposed_morphline": "Preposition lām (li-) · no lexical root · prefixed to the noun قَوْم ('people') with attached 3rd-person-masculine-singular possessive pronoun ـهِ ('his') in the genitive; a genitive prepositional phrase, 'to/for his people'.",
+      "surface": "لِقَوْمِهِ",
+      "tombstone": {
+        "canonical_payload_id": "chp:081e78afe8ba4372",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_canonical_payload_id": "chp:0b6f244faf7a6516"
+      }
+    },
+    {
+      "binding_rebinds": [
+        {
+          "card_id": "0cc78289b69d:u1:e1",
+          "entry_id": "0cc78289b69d",
+          "loc": "18:100:4",
+          "morphline_fact_id": "sha256:168bc942224e15d3f99cb85523ea303a19a8b3cd9707551465951400372a1861",
+          "new_binding_id": "chb:276f01433f4642f5",
+          "old_binding_id": "chb:86cef9d25cfa4efe",
+          "qword_row_id": "llx-qword-0cc78289b69d-01-01-004",
+          "supersedes": "chb:86cef9d25cfa4efe"
+        }
+      ],
+      "final_canonical_payload_id": "chp:b1547524ab0f1357",
+      "input_row_ordinal": 10,
+      "locations": [
+        "18:100:4"
+      ],
+      "old_canonical_payload_id": "chp:482193d587ab57ec",
+      "payload_id": "payload:%D9%84%D9%84%D9%83%D8%A7%D9%81%D8%B1%D9%8A%D9%86:for-the-disbelievers",
+      "payload_supersedes": "chp:482193d587ab57ec",
+      "proposed_morphline": "Definite noun ٱلْكَٰفِرِين ('the disbelievers', masc. sound plural) in the genitive (oblique ـِينَ), governed by the prefixed preposition lām (li-); 'for the disbelievers'.",
+      "surface": "لِّلْكَٰفِرِينَ",
+      "tombstone": {
+        "canonical_payload_id": "chp:482193d587ab57ec",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_canonical_payload_id": "chp:b1547524ab0f1357"
+      }
+    },
+    {
+      "binding_rebinds": [
+        {
+          "card_id": "2cb4015f1b2f:u3:e5",
+          "entry_id": "2cb4015f1b2f",
+          "loc": "9:107:4",
+          "morphline_fact_id": "sha256:421e85104f96628fb99227bd8687f657bf33206ad5198e6943968f8745bbfb12",
+          "new_binding_id": "chb:c800c4041e9b3f33",
+          "old_binding_id": "chb:8e49b7c91b56f466",
+          "qword_row_id": "llx-qword-2cb4015f1b2f-03-05-004",
+          "supersedes": "chb:8e49b7c91b56f466"
+        },
+        {
+          "card_id": "ba21a135a54c:u1:e1",
+          "entry_id": "ba21a135a54c",
+          "loc": "9:107:4",
+          "morphline_fact_id": "sha256:3d188ed8ddfb2483eacc0223a67c368dcde9fcc3c90676455f6281459f487940",
+          "new_binding_id": "chb:65cb71d16fbd6013",
+          "old_binding_id": "chb:cefb94dc0fc35a18",
+          "qword_row_id": "llx-qword-ba21a135a54c-01-01-004",
+          "supersedes": "chb:cefb94dc0fc35a18"
+        }
+      ],
+      "final_canonical_payload_id": "chp:199fe78d7f4a282f",
+      "input_row_ordinal": 11,
+      "locations": [
+        "9:107:4"
+      ],
+      "old_canonical_payload_id": "chp:fffc4175204a8176",
+      "payload_id": "payload:%D8%B6%D8%B1%D8%A7%D8%B1%D8%A7:to-cause-harm",
+      "payload_supersedes": "chp:fffc4175204a8176",
+      "proposed_morphline": "Indefinite verbal noun (maṣdar) ضِرَار in the accusative with tanwīn (ـًا), functioning as a cause/purpose complement; 'to cause harm'.",
+      "surface": "ضِرَارًۭا",
+      "tombstone": {
+        "canonical_payload_id": "chp:fffc4175204a8176",
+        "reason": "payload_repaired_pending_binding_rebind",
+        "replacement_canonical_payload_id": "chp:199fe78d7f4a282f"
+      }
+    }
+  ],
+  "binding_rebind_count": 26,
+  "input_sha256": {
+    ".inputs/proposals.jsonl": "c3a6e461426ca265a494ca9f93cb264115c5281e9d8c8843989688211158c15d",
+    ".inputs/reviews.jsonl": "58ee053dc1afd6bdd307f97ec3f52dd751849dc71b7dc07236c3f16c14ae79a2",
+    "qamus/indexes/largelexicon/crosswalk-gap/lane-d/rm20-dryrun-reports.jsonl": "729455873b1fb8d8de0e7dac461a1102b23a3441b4f38e04d4726a21da1a46d9"
+  },
+  "ledger_lifecycle_contract": {
+    "evidence_contract": [
+      {
+        "detail": "Use the exact rationale from .inputs/proposals.jsonl at the containing payload's input_row_ordinal.",
+        "evidence_id": "rm20-proposal-row:<input_row_ordinal>",
+        "source_address": ".inputs/proposals.jsonl#row=<input_row_ordinal>",
+        "type": "two_vote"
+      },
+      {
+        "detail": "Use the exact reasoning from .inputs/reviews.jsonl at the containing payload's input_row_ordinal; require proposal_verdict=agree.",
+        "evidence_id": "rm20-review-row:<input_row_ordinal>",
+        "source_address": ".inputs/reviews.jsonl#row=<input_row_ordinal>",
+        "type": "two_vote"
+      }
+    ],
+    "fact_type": "morphline_rendering",
+    "rows_per_binding": [
+      {
+        "certification_state": "candidate",
+        "evidence_refs": [
+          "rm20-proposal-row:<input_row_ordinal>"
+        ],
+        "materialization_targets": [],
+        "review_votes": [],
+        "supersedes": null
+      },
+      {
+        "certification_state": "review_required",
+        "evidence_refs": [
+          "rm20-proposal-row:<input_row_ordinal>"
+        ],
+        "materialization_targets": [],
+        "review_votes": [
+          {
+            "evidence_ref": "rm20-proposal-row:<input_row_ordinal>",
+            "independent": true,
+            "vote": "approve",
+            "voter_id": "Opus-author"
+          }
+        ],
+        "supersedes": "same morphline_fact_id"
+      },
+      {
+        "certification_state": "certified",
+        "evidence_refs": [
+          "rm20-proposal-row:<input_row_ordinal>",
+          "rm20-review-row:<input_row_ordinal>"
+        ],
+        "materialization_targets": [],
+        "review_votes": [
+          {
+            "evidence_ref": "rm20-proposal-row:<input_row_ordinal>",
+            "independent": true,
+            "vote": "approve",
+            "voter_id": "Opus-author"
+          },
+          {
+            "evidence_ref": "rm20-review-row:<input_row_ordinal>",
+            "independent": true,
+            "vote": "approve",
+            "voter_id": "Codex-reviewer"
+          }
+        ],
+        "supersedes": "same morphline_fact_id"
+      },
+      {
+        "certification_state": "materialized",
+        "evidence_refs": [
+          "rm20-proposal-row:<input_row_ordinal>",
+          "rm20-review-row:<input_row_ordinal>"
+        ],
+        "materialization_targets": [
+          "canonical_hover_payload.public_payload.morphline"
+        ],
+        "review_votes": [
+          {
+            "evidence_ref": "rm20-proposal-row:<input_row_ordinal>",
+            "independent": true,
+            "vote": "approve",
+            "voter_id": "Opus-author"
+          },
+          {
+            "evidence_ref": "rm20-review-row:<input_row_ordinal>",
+            "independent": true,
+            "vote": "approve",
+            "voter_id": "Codex-reviewer"
+          }
+        ],
+        "supersedes": "same morphline_fact_id"
+      }
+    ],
+    "scope": "occurrence",
+    "subject_identity": "Use each binding_rebind's loc, entry_id, card_id, and qword_row_id as the complete surface_occurrence carrier.",
+    "value": "Use the containing approved_payload.proposed_morphline exactly."
+  },
+  "mode": "preparation_only",
+  "predeclared_shadow_delta": {
+    "alert_rule": "The post-repair modify location set must equal expected_modify_locations exactly; any missing or additional location is an alert.",
+    "expected_modify_count": 11,
+    "expected_modify_locations": [
+      "6:79:4",
+      "7:11:7",
+      "7:128:3",
+      "7:128:9",
+      "9:107:4",
+      "12:42:2",
+      "18:100:4",
+      "22:26:3",
+      "31:12:7",
+      "31:14:3",
+      "46:15:3"
+    ],
+    "whitelist_change": false
+  },
+  "refusal_fixtures": [
+    {
+      "expected_refusal": "tie_unresolved",
+      "fixture_id": "tie:payload:%D8%A8%D9%88%D8%A7%D9%84%D8%AF%D8%AA%D9%89:to-my-mother",
+      "loc": "19:32:2",
+      "payload_id": "payload:%D8%A8%D9%88%D8%A7%D9%84%D8%AF%D8%AA%D9%89:to-my-mother",
+      "qword_row_ids": [
+        "llx-qword-d547df241bb6-01-06-002",
+        "llx-qword-d6a4f976cb61-01-05-002"
+      ],
+      "review_verdict": "alternative",
+      "surface": "بِوَٰلِدَتِى"
+    },
+    {
+      "expected_refusal": "tie_unresolved",
+      "fixture_id": "tie:payload:%D9%84%D8%A7%D8%AE%D8%B1%D8%A7%D9%87%D9%85:to-the-last-of-them",
+      "loc": "7:39:3",
+      "payload_id": "payload:%D9%84%D8%A7%D8%AE%D8%B1%D8%A7%D9%87%D9%85:to-the-last-of-them",
+      "qword_row_ids": [
+        "llx-qword-0131159a9456-01-06-003"
+      ],
+      "review_verdict": "alternative",
+      "surface": "لِأُخْرَىٰهُمْ"
+    },
+    {
+      "expected_refusal": "blocked_insufficient_convention_exemplars",
+      "fixture_id": "blocked:pkt:fc71574d7dcc",
+      "loc": "5:6:56",
+      "packet_id": "pkt:fc71574d7dcc",
+      "payload_id": "payload:qg-lam:5:6:56",
+      "qword_row_ids": [
+        "llx-qword-30fad52d1929-04-01-059"
+      ],
+      "review_verdict": "insufficient_exemplars",
+      "surface": "لِيُطَهِّرَكُمْ"
+    },
+    {
+      "expected_refusal": "blocked_insufficient_convention_exemplars",
+      "fixture_id": "blocked:pkt:3d28e9c54ccc",
+      "loc": "5:6:56",
+      "packet_id": "pkt:3d28e9c54ccc",
+      "payload_id": "payload:qg-lam:5:6:56",
+      "qword_row_ids": [
+        "llx-qword-367b8d3d8988-02-02-059"
+      ],
+      "review_verdict": "insufficient_exemplars",
+      "surface": "لِيُطَهِّرَكُمْ"
+    },
+    {
+      "expected_refusal": "blocked_insufficient_convention_exemplars",
+      "fixture_id": "blocked:pkt:27cecf4ee756",
+      "loc": "9:62:4",
+      "packet_id": "pkt:27cecf4ee756",
+      "payload_id": "payload:qg-lam:9:62:4",
+      "qword_row_ids": [
+        "llx-qword-291e842312f6-01-04-004"
+      ],
+      "review_verdict": "insufficient_exemplars",
+      "surface": "لِيُرْضُوكُمْ"
+    }
+  ],
+  "schema": "qamus.morphline_approved_manifest.v1",
+  "source_report_schema": "qamus.lane_d_rm20_dryrun.v1",
+  "wave": "RM-20"
+}
