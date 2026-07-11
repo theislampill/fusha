@@ -118,7 +118,7 @@
   "p081-p090.jsonl": "ebbda53da062a948948bed56837fea1349796a78759cc15b624fb5acc90980c6",
   "p091-p100.jsonl": "87edbdb11e511ec7f82b1bbbc8175921ea7f9fbc63f543d24cfaa0f951fe685a",
   "v001-v010.jsonl": "c25640d0cf3ad5b55d030482b024a4fcf3d2b1c38aca81274199236677a2d498",
-  "v011-v020.jsonl": "b988e876743a31f6e9b44fc400b2ad89f17a2e992a7d7fe7d1bc9546a3062955",
+  "v011-v020.jsonl": "c01df58953f7d2baa884d801c780a3545d94de0b86b396ee13db6025c00f3c79",
   "v021-v030.jsonl": "d6e23e7ca2377abe0da006ca143f4acccc04891ed35b3878c1f0a89da9952643",
   "v031-v040.jsonl": "168999d763b66403e8f200543a01df3d46b47679f760269f45d798cabd337400",
   "v041-v050.jsonl": "738caadb145dfd33102d7463b9005a8885dcde26e17ee7896616d5b9074859fc",
@@ -244,7 +244,7 @@
   "p001-p040.jsonl": "cc36031bf0ccfd4539c8a23dd98fb67253bce43f6acc8fc20f607017bdcc8e7d",
   "p041-p080.jsonl": "3ae60e93209bfd36eaf4aa3b175e3bc3d95d95fee5bae259a6be880f58ad31da",
   "p081-p100.jsonl": "b1eaeeb78f9a1ef7f86d49496f2488163977e3104e68de7c8f7587ea40129c16",
-  "v001-v040.jsonl": "66b111a8bc82843e963ea2755c251fa6d93e7d94b44bcf6890b616c4710490b2",
+  "v001-v040.jsonl": "cd675850de25510d36ab5447dbb625496984bd52cc53fa300f56a52373a0d000",
   "v041-v080.jsonl": "952a526b963a3d1aa10365c54730a3b162508aeb16ab137d8dbdcb6e1f1f2650",
   "v081-v120.jsonl": "35a8548a8cc12381a533ff4c9718359273f05e071ca8ed768d90e7ca34804895",
   "v121-v160.jsonl": "ce251df2281b658a47fe81c3f5a33340694028d1467579a1365201a350a57422",
@@ -272,12 +272,12 @@
  "family_counts": {
   "in_crosswalk_morphline_repair": 13,
   "multiple_qword_candidates": 4813,
-  "no_qword_candidate": 10,
-  "unique_qword_candidate": 51
+  "no_qword_candidate": 8,
+  "unique_qword_candidate": 53
  },
  "loc_surfaces_sha256": "f2e079dcdce01148074a238e3937314cf02222298f91f83ed66dcbb599697ca7",
  "modeled_locations": 42699,
  "queue_rows": 4887,
- "queue_sha256": "4d61f98dcdec14136c1b46fb2a6f6e3dc581ea2dda80c0eb8cd62497fb337c13",
+ "queue_sha256": "f23d75bd43c3d85f216aa2aa834f5c26018367bbc35a96006255154765da9b0e",
  "schema": "qamus.crosswalk_gap_queue_manifest.v1"
 }
