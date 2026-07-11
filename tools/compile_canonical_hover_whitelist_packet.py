@@ -179,12 +179,14 @@ def compile_packet(payloads, bindings, exceptions, baseline, source_head=None,
     append_replace, no_ops, conflicts = [], [], list(input_conflicts)
     resolved_by_loc = {}
     conflicted_locs = set()
+    # NF-T6-2: loop-invariant — building this map per binding was quadratic at real scale
+    # (85,847 bindings x 23,211 payloads timed out the first full-baseline G8 run).
+    payload_lemma_status = {key: value.get("lemma_status") for key, value in by_id.items()}
     for b in sorted(bindings, key=lambda row: row.get("binding_id") or ""):
         loc = b.get("canonical_wbw_loc")
         boundary_errors = (["accepted binding schema is %s" % BINDING_SCHEMA_V2]
                            if b.get("schema") != BINDING_SCHEMA_V2
-                           else validate_binding(
-                               b, {key: value.get("lemma_status") for key, value in by_id.items()}))
+                           else validate_binding(b, payload_lemma_status))
         if b.get("source_key") != "qamus":
             boundary_errors.append("binding source_key must be qamus")
         if b.get("canonical_payload_id") in invalid_payload_ids:
