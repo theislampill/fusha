@@ -117,7 +117,18 @@ tools/      normalize_ar.py · qac_adapter.py · ocr_locator_notes
 
 ## Source-boundary rules (see `provenance/source-boundaries.md`)
 - External references (Quran.com, QAC, Tanzil, sunnah.com) are **internal evidence for triangulation only**.
-- **Never copy external gloss text.** Authored glosses are original, qamus-style English.
+- **No external gloss, translation, tafsīr, or OCR text is ever copied into public output.** The
+  published qamus-highlight hover carries only qamus's own authored English; a word we cannot
+  confidently author stays `PENDING` rather than being filled from an external gloss. During authoring,
+  external references (dictionaries, translations, corpora, tafsīr) are consulted only as *comparative
+  evidence*. Because every rendering describes the same Arabic source text, ordinary overlap of
+  individual words, conventional expressions, or semantically constrained passages with existing
+  translations can occur and should not by itself be read as evidence that a rendering was copied from
+  any particular source. Where wording is *intentionally reproduced* from an identified external edition
+  rather than independently authored or synthesized, that source is recorded and attributed under its
+  applicable terms. (The deeper provenance question — **D-01** — is open; this bullet states the output
+  boundary and does not preempt it. See `qamus/data/current/NOTICE.md` (D-12) and
+  `provenance/source-boundaries.md`.)
 - `informed_by` is an **internal** provenance label (which sources informed the authoring). The **public**
   qamus-highlight hover artifact must show **only** `{"src":"qamus","kind":"authored","lang":"en"}` — no `informed_by`,
   no external source names, no OCR snippets, no crop/source-image paths.
