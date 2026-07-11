@@ -68,6 +68,7 @@ EXPECTED_LOC_SURFACES_SHA256 = tv.EXPECTED_LOC_SURFACES_SHA256
 
 TARGET_CLASS = "competing_analyses"
 PILOT_SIZE = 100
+DECIDABLE_SIZE = 493
 
 DEFAULT_QUEUE = ROOT / "qamus/indexes/largelexicon/append-queue/append-queue.jsonl"
 DEFAULT_ENTRIES = ROOT / "qamus/data/current/entries.jsonl"
@@ -81,6 +82,22 @@ DEFAULT_OUT = ROOT / (
 DEFAULT_MANIFEST = ROOT / (
     "qamus/indexes/largelexicon/append-queue/two-vote/pilot-batch.manifest.json"
 )
+DEFAULT_PARTITION_MANIFEST = ROOT / (
+    "qamus/indexes/largelexicon/append-queue/class2/class2-partition.manifest.json"
+)
+DEFAULT_FUNCWORD_QUEUE = ROOT / (
+    "qamus/indexes/largelexicon/append-queue/class2/funcword-queue.jsonl"
+)
+DEFAULT_REBIND_QUEUE = ROOT / (
+    "qamus/indexes/largelexicon/append-queue/class2/rebind-queue.jsonl"
+)
+DEFAULT_DECIDABLE_OUT = ROOT / (
+    "qamus/indexes/largelexicon/append-queue/class2/two-vote/packets-decidable.jsonl"
+)
+DEFAULT_DECIDABLE_MANIFEST = ROOT / (
+    "qamus/indexes/largelexicon/append-queue/class2/two-vote/packets-decidable.manifest.json"
+)
+DEFAULT_DECIDABLE_LOC_SURFACES = ROOT / "qamus/indexes/quran-loc-surface/index.jsonl"
 
 # Named strata in fixed order (BRIEF: verb-vs-noun, noun-vs-particle,
 # same-section-different-root). ``other_section_conflict`` is a documented
@@ -234,6 +251,73 @@ def select_pilot_rows(
         },
     }
     return selected, diagnostics
+
+
+def _target_locations(rows: Iterable[dict[str, Any]], label: str) -> set[str]:
+    locations: set[str] = set()
+    for row in rows:
+        loc = (row.get("target") or {}).get("canonical_location")
+        if not isinstance(loc, str) or not loc:
+            raise ValueError(f"STOP: {label} row lacks target.canonical_location")
+        if loc in locations:
+            raise ValueError(f"STOP: {label} contains duplicate location {loc}")
+        locations.add(loc)
+    return locations
+
+
+def select_decidable_rows(
+    population: Iterable[dict[str, Any]],
+    decidable_locations: Iterable[str],
+    funcword_rows: Iterable[dict[str, Any]],
+    rebind_rows: Iterable[dict[str, Any]],
+    *,
+    expected_count: int = DECIDABLE_SIZE,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Exact-join the reconciled decidable locations and prove queue disjointness."""
+    locations = list(decidable_locations)
+    if len(locations) != expected_count:
+        raise ValueError(
+            f"STOP: decidable manifest has {len(locations)} locations; requires {expected_count}"
+        )
+    location_set = set(locations)
+    if len(location_set) != len(locations):
+        raise ValueError("STOP: decidable manifest contains duplicate locations")
+
+    population_by_loc: dict[str, dict[str, Any]] = {}
+    for row in population:
+        loc = row.get("canonical_location")
+        if not isinstance(loc, str) or not loc:
+            raise ValueError("STOP: competing_analyses row lacks canonical_location")
+        if loc in population_by_loc:
+            raise ValueError(f"STOP: competing_analyses population duplicates {loc}")
+        population_by_loc[loc] = row
+    missing = sorted(location_set - set(population_by_loc), key=loc_key)
+    if missing:
+        raise ValueError(f"STOP: decidable join missing {len(missing)} append rows: {missing[:10]}")
+
+    funcword_locations = _target_locations(funcword_rows, "funcword queue")
+    rebind_locations = _target_locations(rebind_rows, "rebind queue")
+    overlaps = {
+        "decidable_funcword": sorted(location_set & funcword_locations, key=loc_key),
+        "decidable_rebind": sorted(location_set & rebind_locations, key=loc_key),
+        "funcword_rebind": sorted(funcword_locations & rebind_locations, key=loc_key),
+    }
+    if any(overlaps.values()):
+        counts = {name: len(values) for name, values in overlaps.items()}
+        raise ValueError(f"STOP: class-2 queue overlap detected: {counts}")
+
+    selected = [population_by_loc[loc] for loc in sorted(location_set, key=loc_key)]
+    if len(selected) != expected_count:
+        raise ValueError(f"STOP: decidable join produced {len(selected)} rows; requires {expected_count}")
+    proof = {
+        "all_pairwise_overlaps_zero": True,
+        "decidable_count": len(location_set),
+        "funcword_count": len(funcword_locations),
+        "rebind_count": len(rebind_locations),
+        "overlap_counts": {name: len(values) for name, values in overlaps.items()},
+        "overlapping_locations": overlaps,
+    }
+    return selected, proof
 
 
 # ---------------------------------------------------------------------------
@@ -642,6 +726,18 @@ def validate_packet(packet: dict[str, Any]) -> None:
 # ---------------------------------------------------------------------------
 # Build orchestration
 # ---------------------------------------------------------------------------
+def apply_decidable_defaults(args: argparse.Namespace) -> None:
+    """Switch only inherited pilot defaults; preserve explicit CLI overrides."""
+    if not args.decidable:
+        return
+    if Path(args.out) == DEFAULT_OUT:
+        args.out = DEFAULT_DECIDABLE_OUT
+    if Path(args.manifest) == DEFAULT_MANIFEST:
+        args.manifest = DEFAULT_DECIDABLE_MANIFEST
+    if Path(args.loc_surfaces) == DEFAULT_LOC_SURFACES:
+        args.loc_surfaces = DEFAULT_DECIDABLE_LOC_SURFACES
+
+
 def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     paths = {
         "append_queue": Path(args.queue),
@@ -651,16 +747,35 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
         "grammar_gate_ssot": Path(args.gates),
         "fact_ledger_schema": Path(args.fact_schema),
     }
+    if args.decidable:
+        paths.update(
+            {
+                "partition_manifest": Path(args.partition_manifest),
+                "funcword_queue": Path(args.funcword_queue),
+                "rebind_queue": Path(args.rebind_queue),
+            }
+        )
     for label, path in paths.items():
         if not path.is_file():
             raise ValueError(f"missing input {label}: {path}")
     verify_repository_baseline(AUTHORITATIVE_BASELINE_SHA)
-    if sha256_file(paths["append_queue"]) != EXPECTED_APPEND_QUEUE_SHA256:
+    partition_doc: dict[str, Any] | None = None
+    if args.decidable:
+        partition_doc = load_json(paths["partition_manifest"])
+        partition_inputs = partition_doc.get("input_hashes_sha256") or {}
+        expected_append_sha = (partition_inputs.get("append_queue") or {}).get("sha256")
+        expected_loc_sha = (partition_inputs.get("quran_loc_surface") or {}).get("sha256")
+        if not expected_append_sha or not expected_loc_sha:
+            raise ValueError("STOP: partition manifest lacks append-queue or loc-surface SHA pins")
+    else:
+        expected_append_sha = EXPECTED_APPEND_QUEUE_SHA256
+        expected_loc_sha = EXPECTED_LOC_SURFACES_SHA256
+    if sha256_file(paths["append_queue"]) != expected_append_sha:
         raise ValueError("append-queue SHA-256 differs from the pinned input")
     if sha256_file(paths["entries"]) != EXPECTED_ENTRIES_SHA256:
         raise ValueError("entries SHA-256 differs from the pinned input")
-    if sha256_file(paths["loc_surfaces"]) != EXPECTED_LOC_SURFACES_SHA256:
-        raise ValueError("loc-surfaces SHA-256 differs from f2e079dc pin")
+    if sha256_file(paths["loc_surfaces"]) != expected_loc_sha:
+        raise ValueError("loc-surfaces SHA-256 differs from the pinned input")
 
     queue_rows = load_jsonl(paths["append_queue"])
     entry_rows = load_jsonl(paths["entries"])
@@ -702,7 +817,32 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             homograph_index[key].append((index, indexed_row))
 
     gate_ssot = load_gate_ssot(paths["grammar_gate_ssot"], paths["fact_ledger_schema"])
-    selected, diagnostics = select_pilot_rows(population, total=PILOT_SIZE)
+    disjointness: dict[str, Any] | None = None
+    if args.decidable:
+        assert partition_doc is not None
+        funcword_rows = load_jsonl(paths["funcword_queue"])
+        rebind_rows = load_jsonl(paths["rebind_queue"])
+        decidable_rows, disjointness = select_decidable_rows(
+            population,
+            (partition_doc.get("partition") or {}).get("decidable_locations") or [],
+            funcword_rows,
+            rebind_rows,
+        )
+        selected = [(stratum_of(row), row) for row in decidable_rows]
+        by_stratum = collections.Counter(stratum for stratum, _row in selected)
+        diagnostics = {
+            "population_stratum_counts": dict(sorted(by_stratum.items())),
+            "same_section_subtypes": {
+                "verb_only": sum(
+                    1 for _stratum, row in selected if analysis_sections(row) == {"verb"}
+                ),
+                "noun_only": sum(
+                    1 for _stratum, row in selected if analysis_sections(row) == {"noun"}
+                ),
+            },
+        }
+    else:
+        selected, diagnostics = select_pilot_rows(population, total=PILOT_SIZE)
 
     packets: list[dict[str, Any]] = []
     for rank, (stratum, row) in enumerate(selected, 1):
@@ -721,6 +861,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
                 homograph_index=homograph_index,
                 gate_path=paths["grammar_gate_ssot"],
                 gate_ssot=gate_ssot,
+                packet_id_prefix=("t11-class2-decidable" if args.decidable else "t11-comp-001"),
             )
         )
 
@@ -735,6 +876,93 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
     placeholder_clear_all = all(
         carrier["placeholder_clear"] for p in packets for carrier in p["candidate_carriers"]
     )
+
+    if args.decidable:
+        assert partition_doc is not None and disjointness is not None
+        manifest = {
+            "schema": "qamus.t11_class2_decidable_packet_manifest.v1",
+            "generator": "tools/build_competing_analysis_packets.py",
+            "authoritative_baseline_sha": AUTHORITATIVE_BASELINE_SHA,
+            "scope": "packets_only_no_votes_no_conclusions_no_ledger_writes_no_crosswalk_writes",
+            "decision_object": "which_bound_entry_analysis_governs_OR_retain_both_as_alternatives_OR_abstention",
+            "retain_both_is_first_class_outcome": True,
+            "no_live_payload": True,
+            "candidate_only": True,
+            "population": {
+                "primary_class": TARGET_CLASS,
+                "partition": "decidable",
+                "row_count": len(selected),
+                "expected_row_count": DECIDABLE_SIZE,
+                "unpacketed_rows": 0,
+                "sort_key": "numeric canonical_location",
+                "stratum_counts": diagnostics["population_stratum_counts"],
+                "same_section_subtypes": diagnostics["same_section_subtypes"],
+            },
+            "disjointness_proof": disjointness,
+            "gate_loading": {
+                "loader": "tools.fact_ledger._two_vote_fact_types",
+                "two_vote_fact_types": gate_ssot["two_vote_fact_types"],
+                "stratum_triggers": STRATUM_GATE_TRIGGERS,
+            },
+            "inputs": {
+                "append_queue": input_pin(paths["append_queue"], queue_rows),
+                "entries": input_pin(paths["entries"], entry_rows),
+                "loc_surfaces": input_pin(paths["loc_surfaces"], loc_rows),
+                "homograph_keys": input_pin(paths["homograph_keys"]),
+                "grammar_gate_ssot": input_pin(paths["grammar_gate_ssot"]),
+                "fact_ledger_schema": input_pin(paths["fact_ledger_schema"]),
+                "partition_manifest": input_pin(paths["partition_manifest"]),
+                "funcword_queue": input_pin(paths["funcword_queue"], funcword_rows),
+                "rebind_queue": input_pin(paths["rebind_queue"], rebind_rows),
+            },
+            "input_sha_pins": {
+                "append_queue": expected_append_sha,
+                "entries": EXPECTED_ENTRIES_SHA256,
+                "loc_surfaces": expected_loc_sha,
+                "partition_manifest": sha256_file(paths["partition_manifest"]),
+            },
+            "output": {
+                "path": logical_path(Path(args.out)),
+                "rows": len(packets),
+                "sha256": hashlib.sha256(packet_bytes).hexdigest(),
+                "packet_sha256s": [
+                    {
+                        "canonical_location": packet["canonical_location"],
+                        "packet_sha256": packet["packet_sha256"],
+                    }
+                    for packet in packets
+                ],
+                "stratum_counts": stratum_counts,
+                "gate_distribution": gate_counts,
+                "packet_mapping_status_counts": packet_mapping,
+                "carrier_mapping_status_counts": carrier_mapping,
+                "carriers_per_packet_min": min(carriers_per_packet),
+                "carriers_per_packet_max": max(carriers_per_packet),
+                "carriers_total": sum(carriers_per_packet),
+                "all_carriers_placeholder_clear": placeholder_clear_all,
+                "packet_sha256_rule": "SHA-256 of canonical compact JSON for the packet before adding packet_sha256.",
+            },
+            "required_response_fields": RESPONSE_FIELDS,
+            "response_decisions": DECISIONS,
+            "determinism": {
+                "stdlib_only": True,
+                "wall_clock_fields": False,
+                "double_build_required": True,
+            },
+            "validation": {
+                "self_test": "python tools/build_competing_analysis_packets.py --self-test",
+                "rebuild": "python tools/build_competing_analysis_packets.py --decidable",
+                "rollback": "git revert <commit>",
+                "stop_conditions": [
+                    "partition manifest decidable count is not exactly 493",
+                    "a decidable location does not exact-join to a competing_analyses append row",
+                    "decidable, funcword, or rebind queues overlap",
+                    "an input SHA-256 differs from its pinned value",
+                    "a carrier presents placeholder or empty content as evidence",
+                ],
+            },
+        }
+        return manifest, packets
 
     manifest = {
         "schema": "qamus.t11_competing_analysis_pilot_manifest.v1",
@@ -894,6 +1122,61 @@ def self_test() -> int:
         failures.append("pilot selection changed under input reordering")
     if len(forward) != 3:
         failures.append("pilot selection produced the wrong count")
+
+    # --- decidable population exact join + disjointness ---
+    decidable_fixture = [
+        _synthetic_row("2:1:2", [("ك ت ب", "verb"), ("ق ر ا", "verb")]),
+        _synthetic_row("2:1:1", [("", "noun"), ("ص م م", "verb")]),
+    ]
+    funcword_fixture = [{"target": {"canonical_location": "2:1:3"}}]
+    rebind_fixture = [{"target": {"canonical_location": "2:1:4"}}]
+    selected_decidable, disjointness = select_decidable_rows(
+        decidable_fixture,
+        ["2:1:2", "2:1:1"],
+        funcword_fixture,
+        rebind_fixture,
+        expected_count=2,
+    )
+    if [row["canonical_location"] for row in selected_decidable] != ["2:1:1", "2:1:2"]:
+        failures.append("decidable selection is not in numeric canonical-location order")
+    if disjointness.get("all_pairwise_overlaps_zero") is not True:
+        failures.append("decidable disjointness proof did not report zero overlaps")
+    try:
+        select_decidable_rows(
+            decidable_fixture,
+            ["2:1:1", "2:1:9"],
+            funcword_fixture,
+            rebind_fixture,
+            expected_count=2,
+        )
+    except ValueError as exc:
+        if "join" not in str(exc):
+            failures.append("missing decidable location raised the wrong error")
+    else:
+        failures.append("missing decidable location passed the exact join gate")
+    try:
+        select_decidable_rows(
+            decidable_fixture,
+            ["2:1:1", "2:1:2"],
+            [{"target": {"canonical_location": "2:1:2"}}],
+            rebind_fixture,
+            expected_count=2,
+        )
+    except ValueError as exc:
+        if "overlap" not in str(exc):
+            failures.append("decidable queue overlap raised the wrong error")
+    else:
+        failures.append("decidable queue overlap passed the disjointness gate")
+    mode_args = argparse.Namespace(
+        decidable=True,
+        out=DEFAULT_OUT,
+        manifest=DEFAULT_MANIFEST,
+        loc_surfaces=DEFAULT_LOC_SURFACES,
+    )
+    apply_decidable_defaults(mode_args)
+    expected_decidable_loc_surfaces = ROOT / "qamus/indexes/quran-loc-surface/index.jsonl"
+    if Path(mode_args.loc_surfaces) != expected_decidable_loc_surfaces:
+        failures.append("decidable mode retained the pilot loc-surface default")
 
     # --- gate resolution ---
     gate_ssot = load_gate_ssot(DEFAULT_GATES, DEFAULT_FACT_SCHEMA)
@@ -1078,6 +1361,14 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--fact-schema", default=DEFAULT_FACT_SCHEMA)
     result.add_argument("--out", default=DEFAULT_OUT)
     result.add_argument("--manifest", default=DEFAULT_MANIFEST)
+    result.add_argument("--partition-manifest", default=DEFAULT_PARTITION_MANIFEST)
+    result.add_argument("--funcword-queue", default=DEFAULT_FUNCWORD_QUEUE)
+    result.add_argument("--rebind-queue", default=DEFAULT_REBIND_QUEUE)
+    result.add_argument(
+        "--decidable",
+        action="store_true",
+        help="build the exact reconciled class-2 decidable population instead of the pilot",
+    )
     result.add_argument("--self-test", action="store_true")
     return result
 
@@ -1087,6 +1378,7 @@ def main() -> int:
     args = parser().parse_args()
     if args.self_test:
         return self_test()
+    apply_decidable_defaults(args)
     manifest, packets = build(args)
     write_outputs(manifest, packets, Path(args.out), Path(args.manifest))
     print(json.dumps(manifest["output"], ensure_ascii=False, indent=2, sort_keys=True))
