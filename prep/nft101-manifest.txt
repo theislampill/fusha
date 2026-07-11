@@ -1,0 +1,70 @@
+NF-T10-1 correction dependency manifest
+entry=1c5f7c9c8e05 usage_index=3 example_index=12 card_id=1c5f7c9c8e05:u3:e12
+edit=usage[2].examples[11].ref 4:46 -> 4:64
+
+BYTE-CHANGED — canonical/checksum/index
+qamus/data/current/entries.jsonl
+qamus/data/current/checksums.json
+qamus/indexes/current/by-quran-ref.json
+qamus/indexes/existing_qamus_index.min.json
+
+BYTE-CHANGED — source-address graph (requires the pinned full hover-stage input)
+qamus/indexes/current/source-address-full.jsonl
+qamus/indexes/current/quran-usage-spine-full.jsonl
+qamus/indexes/current/decision-backlinks-full.json
+
+REWRITTEN BY SOURCE-GRAPH GENERATOR — expected byte-identical unless its pinned input drifted
+qamus/indexes/current/source-address-full.meta.json
+qamus/indexes/current/quran-usage-spine-full.meta.json
+qamus/indexes/current/qamus-entry-field-addresses.jsonl
+qamus/indexes/current/qamus-entry-field-addresses.meta.json
+qamus/reports/xanadu-completion-report.md
+qamus/reports/source-address-usage-report.md
+
+BYTE-CHANGED — qword denominator and dependency anchors
+qamus/indexes/largelexicon/qword-denominator/v001-v040.jsonl
+qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json
+qamus/indexes/largelexicon/source-clean-fact-tables.meta.json
+qamus/indexes/largelexicon/RELEASE.json
+
+BYTE-CHANGED — qword crosswalk and generation anchors
+qamus/indexes/largelexicon/qword-crosswalk/v011-v020.jsonl
+qamus/indexes/largelexicon/qword-crosswalk/GENERATION.json
+qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json
+
+BYTE-CHANGED — NF-T10 durable queue
+qamus/indexes/largelexicon/crosswalk-gap/crosswalk-gap-queue.jsonl
+qamus/indexes/largelexicon/crosswalk-gap/crosswalk-gap-queue.manifest.json
+
+ROW IDS CHANGED IN PLACE
+llx-qword-1c5f7c9c8e05-03-12-001
+llx-qword-1c5f7c9c8e05-03-12-002
+llx-crosswalk-llx-qword-1c5f7c9c8e05-03-12-001
+llx-crosswalk-llx-qword-1c5f7c9c8e05-03-12-002
+queue canonical_location=4:64:9
+queue canonical_location=4:64:10
+
+READ/RE-EVALUATE ONLY — frozen historical evidence, do not regenerate for this correction
+qamus/indexes/largelexicon/crosswalk-gap/lane-c-dispositions.jsonl
+qamus/indexes/largelexicon/crosswalk-gap/lane-cd.summary.json
+qamus/reports/rm36-fallback-reverification/report.json
+qamus/reports/rm36-fallback-reverification/failing-rows.jsonl
+qamus/reports/rm36-fallback-reverification/unverified-buckets.jsonl
+qamus/reports/rm36-fallback-reverification/demotion-wave.report.json
+
+NO BYTE EFFECT
+qamus/data/current/entries.min.jsonl
+qamus/data/current/entry-manifest.json
+qamus/data/current/source-keys.json
+qamus/indexes/current/by-entry-id.json
+qamus/indexes/current/by-category.json
+qamus/indexes/current/by-lemma.json
+qamus/indexes/current/by-normalized-surface.json
+qamus/indexes/current/by-normalized-surface-detail.json
+qamus/indexes/current/by-root.json
+qamus/indexes/current/by-source-key.json
+qamus/indexes/largelexicon/qamus-qword-denominator.entry-shard-index.json
+qamus/indexes/largelexicon/qamus-qword-denominator.source-card-repair.json
+fusha/lexicon/largelexicon/lemma-source.full.jsonl
+fusha/lexicon/largelexicon/form-source.full.jsonl
+fusha/morphology/data/largelexicon-stems.full.jsonl
