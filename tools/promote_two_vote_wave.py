@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""promote_two_vote_wave — T10 Lane B wave-1: 77 two-vote-certified rows through the ledger.
+"""promote_two_vote_wave — T10 Lane B two-vote-certified waves through the ledger.
 
 The first real review-resolved promotion wave (EQ-17). Given the wave inputs
 (``calibration-analysis-v2.json`` plus both reviewer vote files) and the committed
@@ -9,8 +9,8 @@ two-vote packets, this tool:
 1. Writes the Lane B review lifecycle into a COMMITTED fact-ledger store
    (``fact-ledger/laneb-review.jsonl``) using the repo's own ``tools.fact_ledger``
    API — candidate -> review_required -> certified for every agreeing row, both
-   votes preserved on the one non-qualifying disagreement (review_required, not
-   promoted), and abstention-evidenced candidate rows for the joint abstentions.
+   votes preserved on any non-qualifying disagreement (review_required, not
+   promoted), and held candidate/review_required rows for abstentions.
 2. Selects the unique carrier each certified conclusion binds, then promotes those
    bindings into the accepted crosswalk via RM-19 ``atomic_promote_shards`` with
    ``resolution_method = "two_vote_certified_v1"`` and the certified ledger
@@ -125,6 +125,23 @@ WAVE_SPECS = {
         "queue_after": 5231,
         "promoted_at": "2026-07-11T18:00:00Z",
         "report_name": "laneb-wave-02.report.json",
+    },
+    3: {
+        "analysis_name": "wave-03-analysis.json",
+        "packet_names": ["packets-wave-03.jsonl"],
+        "qualifying_rows": 344,
+        "promoted_bindings": 752,
+        "new_bindings": 731,
+        "rebound_bindings": 21,
+        "accepted_bindings_after": 88310,
+        "modeled_locations_after": 42699,
+        "disagreement_rows": 0,
+        "joint_abstentions": 144,
+        "one_sided_rows": 12,
+        "queue_before": 5231,
+        "queue_after": 4887,
+        "promoted_at": "2026-07-11T20:00:00Z",
+        "report_name": "laneb-wave-03.report.json",
     },
 }
 
@@ -352,6 +369,14 @@ def _vote_evidence(vote: dict[str, Any], reviewer: str) -> dict[str, Any]:
     )
 
 
+def reviewer_voter_id(label: str, *, wave: int | None = None) -> str:
+    """Preserve the wave-3 engine-diverse reviewer identity in ledger votes."""
+    active_wave = WAVE if wave is None else wave
+    engines = {"A": "Opus", "B": "Codex"} if active_wave == 3 else {}
+    suffix = ":%s" % engines[label] if label in engines else ""
+    return "reviewer-%s%s" % (label, suffix)
+
+
 def _review_decision_id(qrow: dict[str, Any], packet: dict[str, Any],
                         vote_a: dict[str, Any], vote_b: dict[str, Any]) -> str:
     core = {
@@ -390,8 +415,8 @@ def append_certified(store: fact_ledger.FactLedgerStore, *, loc: str, carrier: d
     fact_id = candidate["fact_id"]
     store.transition(fact_id, "review_required")
     votes = [
-        {"voter_id": "reviewer-A", "vote": "approve", "evidence_ref": "vote-A", "independent": True},
-        {"voter_id": "reviewer-B", "vote": "approve", "evidence_ref": "vote-B", "independent": True},
+        {"voter_id": reviewer_voter_id("A"), "vote": "approve", "evidence_ref": "vote-A", "independent": True},
+        {"voter_id": reviewer_voter_id("B"), "vote": "approve", "evidence_ref": "vote-B", "independent": True},
     ]
     evidence = [packet_ev, _vote_evidence(vote_a, "A"), _vote_evidence(vote_b, "B")]
     store.transition(fact_id, "certified", review_votes=votes, evidence=evidence)
@@ -422,8 +447,8 @@ def append_disagreement(store: fact_ledger.FactLedgerStore, *, loc: str, carrier
     store.append(candidate)
     fact_id = candidate["fact_id"]
     votes = [
-        {"voter_id": "reviewer-A", "vote": "approve", "evidence_ref": "vote-A", "independent": True},
-        {"voter_id": "reviewer-B", "vote": "approve", "evidence_ref": "vote-B", "independent": True},
+        {"voter_id": reviewer_voter_id("A"), "vote": "approve", "evidence_ref": "vote-A", "independent": True},
+        {"voter_id": reviewer_voter_id("B"), "vote": "approve", "evidence_ref": "vote-B", "independent": True},
     ]
     evidence = [packet_ev, _vote_evidence(vote_a, "A"), _vote_evidence(vote_b, "B")]
     store.transition(fact_id, "review_required", review_votes=votes, evidence=evidence)
@@ -454,8 +479,8 @@ def append_abstention(store: fact_ledger.FactLedgerStore, *, loc: str, packet: d
     candidate = _base_row(identity=identity, loc=loc, value="pending",
                           competing=competing, evidence=evidence, input_hashes=input_hashes)
     votes = [
-        {"voter_id": "reviewer-A", "vote": "abstain", "evidence_ref": "abstain-A", "independent": True},
-        {"voter_id": "reviewer-B", "vote": "abstain", "evidence_ref": "abstain-B", "independent": True},
+        {"voter_id": reviewer_voter_id("A"), "vote": "abstain", "evidence_ref": "abstain-A", "independent": True},
+        {"voter_id": reviewer_voter_id("B"), "vote": "abstain", "evidence_ref": "abstain-B", "independent": True},
     ]
     candidate["review_votes"] = votes
     store.append(candidate)
@@ -465,7 +490,8 @@ def append_abstention(store: fact_ledger.FactLedgerStore, *, loc: str, packet: d
 def append_one_sided(store: fact_ledger.FactLedgerStore, *, loc: str,
                      carrier: dict[str, Any], packet: dict[str, Any],
                      vote_a: dict[str, Any], vote_b: dict[str, Any],
-                     base_hashes: dict[str, str]) -> str:
+                     base_hashes: dict[str, str],
+                     data_finding: dict[str, Any] | None = None) -> str:
     """Preserve one decided vote in review_required; never certify or promote it."""
     decided_label, decided_vote = (("A", vote_a) if _decided(vote_a) else ("B", vote_b))
     abstain_label, abstain_vote = (("B", vote_b) if decided_label == "A" else ("A", vote_a))
@@ -479,13 +505,17 @@ def append_one_sided(store: fact_ledger.FactLedgerStore, *, loc: str,
                   abstain_vote.get("abstention_or_blocker") or "reviewer abstained",
                   abstain_vote.get("source_address") or ("quran:" + loc)),
     ]
+    if data_finding:
+        evidence.append(_evidence(
+            "data-finding", "source_quote", data_finding["exact_reason"],
+            data_finding.get("source_address") or ("quran:" + loc)))
     candidate = _base_row(
         identity=identity, loc=loc, value=conclusion, competing=[], evidence=evidence,
         input_hashes=_packet_input_hashes(base_hashes, packet))
     store.append(candidate)
     fact_id = candidate["fact_id"]
     store.transition(fact_id, "review_required", review_votes=[{
-        "voter_id": "reviewer-%s" % decided_label,
+        "voter_id": reviewer_voter_id(decided_label),
         "vote": "approve",
         "evidence_ref": "vote-%s" % decided_label,
         "independent": True,
@@ -521,9 +551,15 @@ def build_rebinding_accounting(before_rows: list[dict[str, Any]],
     """Prove accepted binding/location arithmetic for explicit review rebindings."""
     before_accepted = [row for row in before_rows if row.get("status") == ACCEPTED]
     after_accepted = [row for row in after_rows if row.get("status") == ACCEPTED]
+    before_by_id = {row["qword_row_id"]: row for row in before_accepted}
     before_by_loc = Counter(row.get("canonical_quran_loc") for row in before_accepted)
     after_by_loc = Counter(row.get("canonical_quran_loc") for row in after_accepted)
-    rebound_rows = [row for row in after_accepted if row.get("rebind_provenance")]
+    rebound_rows = [
+        row for row in after_accepted
+        if row.get("rebind_provenance")
+        and row.get("rebind_provenance")
+            != before_by_id.get(row["qword_row_id"], {}).get("rebind_provenance")
+    ]
     rebindings = []
     for row in rebound_rows:
         provenance = row["rebind_provenance"]
@@ -776,10 +812,12 @@ def _row_instrumentation(*, loc: str, carrier: dict[str, Any], fact_id: str,
         "bound_carrier": {k: carrier.get(k) for k in ("entry_id", "card_id", "qword_row_id")},
         "conclusion_value": qrow["reviewer_a"]["normalized_conclusion"],
         "votes": [
-            {"voter_id": "reviewer-A", "vote": "approve",
+            {"voter_id": reviewer_voter_id("A"), "reviewer_engine": "Opus" if WAVE == 3 else None,
+             "vote": "approve",
              "confidence": vote_a.get("confidence"),
              "source_address": vote_a.get("source_address")},
-            {"voter_id": "reviewer-B", "vote": "approve",
+            {"voter_id": reviewer_voter_id("B"), "reviewer_engine": "Codex" if WAVE == 3 else None,
+             "vote": "approve",
              "confidence": vote_b.get("confidence"),
              "source_address": vote_b.get("source_address")},
         ],
@@ -892,13 +930,16 @@ def run(inputs_dir: Path, baseline: Path, corpus: Path, *, apply: bool,
                 loc=loc, carrier=carrier, fact_id=fact_ids[qword_id], qrow=sel["qrow"],
                 packet=sel["packet"], vote_a=va, vote_b=vb))
 
-    dis = parts["disagreement"][0]
-    dis_loc = dis["canonical_location"]
-    dis_packet = packets[dis["packet_id"]]
-    dis_carrier = select_disagreement_carrier(dis, dis_packet)
-    dis_fact = append_disagreement(
-        store, loc=dis_loc, carrier=dis_carrier, qrow=dis, packet=dis_packet,
-        vote_a=votes_a[dis["packet_id"]], vote_b=votes_b[dis["packet_id"]], base_hashes=base_hashes)
+    dis = parts["disagreement"][0] if parts["disagreement"] else None
+    dis_fact = None
+    if dis:
+        dis_loc = dis["canonical_location"]
+        dis_packet = packets[dis["packet_id"]]
+        dis_carrier = select_disagreement_carrier(dis, dis_packet)
+        dis_fact = append_disagreement(
+            store, loc=dis_loc, carrier=dis_carrier, qrow=dis, packet=dis_packet,
+            vote_a=votes_a[dis["packet_id"]], vote_b=votes_b[dis["packet_id"]],
+            base_hashes=base_hashes)
 
     abstention_fact_ids = {}
     for pid in parts["abstention_pids"]:
@@ -909,6 +950,10 @@ def run(inputs_dir: Path, baseline: Path, corpus: Path, *, apply: bool,
             base_hashes=base_hashes)
 
     one_sided_fact_ids = {}
+    data_findings = {
+        row["canonical_location"]: row
+        for row in data["cal"].get("method_and_data_findings", [])
+    }
     for pid in parts["one_sided_pids"]:
         packet = packets[pid]
         loc = packet["canonical_location"]
@@ -923,7 +968,8 @@ def run(inputs_dir: Path, baseline: Path, corpus: Path, *, apply: bool,
         carriers = select_carriers(synthetic, packet, va, vb)
         one_sided_fact_ids[loc] = append_one_sided(
             store, loc=loc, carrier=carriers[0], packet=packet,
-            vote_a=va, vote_b=vb, base_hashes=base_hashes)
+            vote_a=va, vote_b=vb, base_hashes=base_hashes,
+            data_finding=data_findings.get(loc))
 
     ledger_errors = store.validate_all()
     if ledger_errors:
@@ -957,7 +1003,7 @@ def run(inputs_dir: Path, baseline: Path, corpus: Path, *, apply: bool,
     before_rows = [row for name in sorted(shards) for row in shards[name]]
     after_rows = [row for name in sorted(promoted_shards) for row in promoted_shards[name]]
     rebinding_accounting = build_rebinding_accounting(before_rows, after_rows)
-    if WAVE == 2:
+    if WAVE in (2, 3):
         expected = {
             "new_bindings": spec["new_bindings"],
             "rebound_bindings": spec["rebound_bindings"],
@@ -970,7 +1016,7 @@ def run(inputs_dir: Path, baseline: Path, corpus: Path, *, apply: bool,
             if rebinding_accounting.get(key) != value
         }
         if drift:
-            raise WaveStop("wave-2 rebinding arithmetic drift: %s" % drift)
+            raise WaveStop("wave-%d rebinding arithmetic drift: %s" % (WAVE, drift))
 
     decision_sha256 = hashlib.sha256(json.dumps(
         sorted([(loc, carrier["qword_row_id"], fact_ids[carrier["qword_row_id"]])
@@ -979,7 +1025,9 @@ def run(inputs_dir: Path, baseline: Path, corpus: Path, *, apply: bool,
 
     if not apply:
         result = {"promoted_locs": len(selections),
-                  "accepted_bindings_delta": len(replacements),
+                  "promoted_bindings": len(replacements),
+                  "accepted_bindings_delta": rebinding_accounting["accepted_bindings_delta"],
+                  "rebinding_accounting": rebinding_accounting,
                   "state_counts": dict(state_counts),
                   "decision_sha256": decision_sha256, "dry_run": True}
         if dry_tmp:
@@ -1021,6 +1069,7 @@ def run(inputs_dir: Path, baseline: Path, corpus: Path, *, apply: bool,
         instrumentation=instrumentation, state_counts=state_counts, data=data,
         selections=selections, fact_ids=fact_ids, dis=dis, dis_fact=dis_fact,
         abstention_fact_ids=abstention_fact_ids, one_sided_fact_ids=one_sided_fact_ids,
+        data_findings=data_findings,
         rebinding_accounting=rebinding_accounting, decision_sha256=decision_sha256,
         queue_after=queue_manifest["queue_rows"])
     write_json_atomic(WAVE_REPORT_PATH, report)
@@ -1030,7 +1079,8 @@ def run(inputs_dir: Path, baseline: Path, corpus: Path, *, apply: bool,
         "queue_before": QUEUE_BEFORE,
         "queue_after": queue_manifest["queue_rows"],
         "decision_sha256": decision_sha256,
-        "accepted_bindings_delta": len(replacements),
+        "promoted_bindings": len(replacements),
+        "accepted_bindings_delta": rebinding_accounting["accepted_bindings_delta"],
     }
 
 
@@ -1053,8 +1103,8 @@ def select_disagreement_carrier(dis: dict[str, Any], packet: dict[str, Any]) -> 
 
 
 def build_report(*, instrumentation, state_counts, data, selections, fact_ids, dis, dis_fact,
-                 abstention_fact_ids, one_sided_fact_ids, rebinding_accounting, decision_sha256,
-                 queue_after) -> dict[str, Any]:
+                 abstention_fact_ids, one_sided_fact_ids, data_findings,
+                 rebinding_accounting, decision_sha256, queue_after) -> dict[str, Any]:
     cal = data["cal"]
     verdict = cal.get("calibration_verdict", {})
     agreement = cal.get("agreement_matrix", {})
@@ -1074,7 +1124,7 @@ def build_report(*, instrumentation, state_counts, data, selections, fact_ids, d
         "counts": {
             "qualifying_certified": len(fact_ids),
             "qualifying_locations": len(selections),
-            "disagreement_review_required": 1,
+            "disagreement_review_required": 1 if dis else 0,
             "joint_abstention_candidates": len(abstention_fact_ids),
             "one_sided_review_required": len(one_sided_fact_ids),
             "promoted_bindings": len(fact_ids),
@@ -1093,28 +1143,37 @@ def build_report(*, instrumentation, state_counts, data, selections, fact_ids, d
                 + agreement.get("totals", {}).get("both_decided_disagree", 0),
             "certified_agreeing_locations": len(selections),
             "certified_carrier_facts": len(fact_ids),
-            "non_qualifying_disagreement": 1,
+            "non_qualifying_disagreement": 1 if dis else 0,
             "joint_abstentions": len(abstention_fact_ids),
             "one_sided_rows": len(one_sided_fact_ids),
             "measured_agreement_rate_percent": agreement.get("measured_agreement_rate_percent"),
             "expected_review_burden_per_100_rows": verdict.get("expected_review_burden_per_100_rows"),
             "updated_scale_verdict": verdict.get("updated_scale_verdict"),
         },
-        "disagreement": {
+        "disagreement": ({
             "canonical_location": dis["canonical_location"],
             "packet_id": dis["packet_id"],
             "ledger_fact_id": dis_fact,
             "ledger_state": "review_required",
             "promoted": False,
             "reason": "two_vote_gate_not_satisfied_shared_discriminating_evidence_absent",
-        },
+        } if dis else None),
+        "disagreements": ([{
+            "canonical_location": dis["canonical_location"],
+            "packet_id": dis["packet_id"],
+            "ledger_fact_id": dis_fact,
+            "ledger_state": "review_required",
+            "promoted": False,
+        }] if dis else []),
         "joint_abstentions": [
             {"canonical_location": loc, "ledger_fact_id": fid, "promoted": False}
             for loc, fid in sorted(abstention_fact_ids.items())
         ],
         "one_sided_rows": [
             {"canonical_location": loc, "ledger_fact_id": fid,
-             "ledger_state": "review_required", "promoted": False}
+             "ledger_state": "review_required", "promoted": False,
+             "data_finding": data_findings.get(loc),
+             "data_quality_quarantine": loc in data_findings}
             for loc, fid in sorted(one_sided_fact_ids.items())
         ],
         "rebinding_accounting": {
@@ -1147,6 +1206,20 @@ def _self_test() -> int:
           wave2.get("qualifying_rows") == 194
           and wave2.get("promoted_bindings") == 537
           and wave2.get("queue_after") == 5231)
+    wave3 = globals().get("WAVE_SPECS", {}).get(3, {})
+    check("RED: wave-3 contract declares 344 locations / 0 disagreements / 144+12 holds",
+          wave3.get("qualifying_rows") == 344
+          and wave3.get("disagreement_rows") == 0
+          and wave3.get("joint_abstentions") == 144
+          and wave3.get("one_sided_rows") == 12
+          and wave3.get("queue_before") == 5231
+          and wave3.get("queue_after") == 4887
+          and wave3.get("report_name") == "laneb-wave-03.report.json")
+    reviewer_voter_id = globals().get("reviewer_voter_id")
+    check("RED: wave-3 ledger voter ids preserve Opus/Codex engine diversity",
+          callable(reviewer_voter_id)
+          and reviewer_voter_id("A", wave=3) == "reviewer-A:Opus"
+          and reviewer_voter_id("B", wave=3) == "reviewer-B:Codex")
 
     base_hashes = {"calibration_analysis": "sha256:" + "0" * 64,
                    "votes_a": "sha256:" + "1" * 64, "votes_b": "sha256:" + "2" * 64}
@@ -1226,6 +1299,19 @@ def _self_test() -> int:
           and occupancy["rebound_bindings"] == 1
           and occupancy["locations_losing_last_binding"] == []
           and occupancy["rebindings"][0]["old_location_bindings_after"] == 1)
+
+    before_with_prior_rebind = [
+        before_rows[0],
+        {**before_rows[1], "rebind_provenance": {
+            "prior_loc": "1:1:3", "review_fact_id": "fact:prior"}},
+    ]
+    after_with_prior_rebind = [after_rows[0], before_with_prior_rebind[1]]
+    incremental = (occupancy_builder(before_with_prior_rebind, after_with_prior_rebind)
+                   if occupancy_builder else None)
+    check("RED: wave rebind accounting excludes unchanged historical rebind lineage",
+          incremental is not None
+          and incremental["rebound_bindings"] == 1
+          and [row["qword_row_id"] for row in incremental["rebindings"]] == ["q1"])
 
     def fresh_store(tmp: str) -> fact_ledger.FactLedgerStore:
         return fact_ledger.FactLedgerStore(Path(tmp))
@@ -1326,7 +1412,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--promote", action="store_true", help="execute and install the wave")
     parser.add_argument("--dry-run", action="store_true", help="build ledger/decisions, do not install")
-    parser.add_argument("--wave", type=int, choices=sorted(WAVE_SPECS), default=2)
+    parser.add_argument("--wave", type=int, choices=sorted(WAVE_SPECS), default=3)
     parser.add_argument("--inputs")
     parser.add_argument("--baseline", help="deployed whitelist jsonl (hash-pinned)")
     parser.add_argument("--loc-surfaces", help="corpus loc->surface jsonl (hash-pinned)")
