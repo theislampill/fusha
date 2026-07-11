@@ -1,0 +1,461 @@
+{
+  "artifact": "qamus/indexes/largelexicon/append-queue/class2/funcword-queue.v2.jsonl",
+  "boundary_routes": {
+    "divine_name_entry": 11
+  },
+  "calibration_agreement": {
+    "agreement_basis": "Exact-diacritic homograph correction: the pre-pass selects the calibrated lexeme family; sentence-context subclasses remain for nahw review.",
+    "citations": [
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "2:24:1",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "in-light-family",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "in_light_not_inna",
+        "surface": "فَإِن"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "2:62:8",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "man-family",
+        "particle_class_before": "preposition",
+        "prepass_rule": "man_fatha_not_min",
+        "surface": "مَنْ"
+      },
+      {
+        "calibration_category": "other_particle",
+        "canonical_location": "2:96:20",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "an-masdariyya",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "an_light_not_anna",
+        "surface": "أَن"
+      },
+      {
+        "calibration_category": "relative",
+        "canonical_location": "2:111:6",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "man-family",
+        "particle_class_before": "preposition",
+        "prepass_rule": "man_fatha_not_min",
+        "surface": "مَن"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "2:111:16",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "in-light-family",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "in_light_not_inna",
+        "surface": "إِن"
+      },
+      {
+        "calibration_category": "interrogative",
+        "canonical_location": "2:130:7",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "man-family",
+        "particle_class_before": "preposition",
+        "prepass_rule": "man_fatha_not_min",
+        "surface": "مَن"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "2:182:1",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "man-family",
+        "particle_class_before": "preposition",
+        "prepass_rule": "man_fatha_not_min",
+        "surface": "فَمَنْ"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "2:237:1",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "in-light-family",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "in_light_not_inna",
+        "surface": "وَإِن"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "2:256:10",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "man-family",
+        "particle_class_before": "preposition",
+        "prepass_rule": "man_fatha_not_min",
+        "surface": "فَمَن"
+      },
+      {
+        "calibration_category": "other_particle",
+        "canonical_location": "2:266:3",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "an-masdariyya",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "an_light_not_anna",
+        "surface": "أَن"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "2:283:1",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "in-light-family",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "in_light_not_inna",
+        "surface": "وَإِن"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "3:61:1",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "man-family",
+        "particle_class_before": "preposition",
+        "prepass_rule": "man_fatha_not_min",
+        "surface": "فَمَنْ"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "3:118:28",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "in-light-family",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "in_light_not_inna",
+        "surface": "إِن"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "3:160:7",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "in-light-family",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "in_light_not_inna",
+        "surface": "وَإِن"
+      },
+      {
+        "calibration_category": "other_particle",
+        "canonical_location": "3:193:7",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "an-masdariyya",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "an_light_not_anna",
+        "surface": "أَنْ"
+      },
+      {
+        "calibration_category": "other_particle",
+        "canonical_location": "4:27:3",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "an-masdariyya",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "an_light_not_anna",
+        "surface": "أَن"
+      },
+      {
+        "calibration_category": "other_particle",
+        "canonical_location": "4:27:10",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "an-masdariyya",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "an_light_not_anna",
+        "surface": "أَن"
+      },
+      {
+        "calibration_category": "other_particle",
+        "canonical_location": "4:28:3",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "an-masdariyya",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "an_light_not_anna",
+        "surface": "أَن"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "4:85:9",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "man-family",
+        "particle_class_before": "preposition",
+        "prepass_rule": "man_fatha_not_min",
+        "surface": "وَمَن"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "4:89:17",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "in-light-family",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "in_light_not_inna",
+        "surface": "فَإِن"
+      },
+      {
+        "calibration_category": "other_particle",
+        "canonical_location": "4:90:13",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "an-masdariyya",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "an_light_not_anna",
+        "surface": "أَن"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "4:90:24",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "in-light-family",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "in_light_not_inna",
+        "surface": "فَإِنِ"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "4:112:1",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "man-family",
+        "particle_class_before": "preposition",
+        "prepass_rule": "man_fatha_not_min",
+        "surface": "وَمَن"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "4:119:11",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "man-family",
+        "particle_class_before": "preposition",
+        "prepass_rule": "man_fatha_not_min",
+        "surface": "وَمَن"
+      },
+      {
+        "calibration_category": "other_particle",
+        "canonical_location": "4:153:4",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "an-masdariyya",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "an_light_not_anna",
+        "surface": "أَن"
+      },
+      {
+        "calibration_category": "other_particle",
+        "canonical_location": "5:33:11",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "an-masdariyya",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "an_light_not_anna",
+        "surface": "أَن"
+      },
+      {
+        "calibration_category": "other_particle",
+        "canonical_location": "5:91:4",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "an-masdariyya",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "an_light_not_anna",
+        "surface": "أَن"
+      },
+      {
+        "calibration_category": "other_particle",
+        "canonical_location": "6:14:16",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "an-masdariyya",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "an_light_not_anna",
+        "surface": "أَنْ"
+      },
+      {
+        "calibration_category": "relative",
+        "canonical_location": "6:14:19",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "man-family",
+        "particle_class_before": "preposition",
+        "prepass_rule": "man_fatha_not_min",
+        "surface": "مَنْ"
+      },
+      {
+        "calibration_category": "conditional",
+        "canonical_location": "6:25:14",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "in-light-family",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "in_light_not_inna",
+        "surface": "وَإِن"
+      },
+      {
+        "calibration_category": "negation",
+        "canonical_location": "6:25:28",
+        "homograph_correction_reproduced": true,
+        "particle_class_after": "in-light-family",
+        "particle_class_before": "emphasis",
+        "prepass_rule": "in_light_not_inna",
+        "surface": "إِنْ"
+      }
+    ],
+    "context_subclass_policy": "Family-level only; this pre-pass does not guess conditional versus relative, interrogative, or negative function.",
+    "diacritic_decidable_rows": 31,
+    "homograph_corrections_reproduced": 31,
+    "minimum_required": 28,
+    "residual_calibration_findings": [
+      {
+        "canonical_location": "2:22:20",
+        "disposition": "function_confirmed",
+        "queue_class_agreement": "generic_supplemental_bucket",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "لِلَّهِ",
+        "taxonomy_category": "preposition"
+      },
+      {
+        "canonical_location": "2:109:4",
+        "disposition": "wrong_category",
+        "queue_class_agreement": "mismatch",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "أَهْلِ",
+        "taxonomy_category": "other_particle"
+      },
+      {
+        "canonical_location": "2:264:1",
+        "disposition": "needs_entry",
+        "queue_class_agreement": "generic_supplemental_bucket",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "يَٰٓأَيُّهَا",
+        "taxonomy_category": "other_particle"
+      },
+      {
+        "canonical_location": "3:36:1",
+        "disposition": "function_confirmed",
+        "queue_class_agreement": "mismatch",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "فَلَمَّا",
+        "taxonomy_category": "conditional"
+      },
+      {
+        "canonical_location": "3:75:2",
+        "disposition": "wrong_category",
+        "queue_class_agreement": "mismatch",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "أَهْلِ",
+        "taxonomy_category": "other_particle"
+      },
+      {
+        "canonical_location": "3:75:24",
+        "disposition": "function_confirmed",
+        "queue_class_agreement": "generic_supplemental_bucket",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "بِأَنَّهُمْ",
+        "taxonomy_category": "emphasis"
+      },
+      {
+        "canonical_location": "3:118:1",
+        "disposition": "needs_entry",
+        "queue_class_agreement": "generic_supplemental_bucket",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "يَٰٓأَيُّهَا",
+        "taxonomy_category": "other_particle"
+      },
+      {
+        "canonical_location": "3:164:23",
+        "disposition": "function_confirmed",
+        "queue_class_agreement": "generic_supplemental_bucket",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "لَفِى",
+        "taxonomy_category": "preposition"
+      },
+      {
+        "canonical_location": "4:49:1",
+        "disposition": "needs_entry",
+        "queue_class_agreement": "match_class_entry_wrong",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "أَلَمْ",
+        "taxonomy_category": "negation"
+      },
+      {
+        "canonical_location": "4:56:8",
+        "disposition": "needs_entry",
+        "queue_class_agreement": "match_class_entry_wrong",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "كُلَّمَا",
+        "taxonomy_category": "conditional"
+      },
+      {
+        "canonical_location": "4:71:1",
+        "disposition": "needs_entry",
+        "queue_class_agreement": "generic_supplemental_bucket",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "يَٰٓأَيُّهَا",
+        "taxonomy_category": "other_particle"
+      },
+      {
+        "canonical_location": "4:89:21",
+        "disposition": "needs_entry",
+        "queue_class_agreement": "generic_supplemental_bucket",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "حَيْثُ",
+        "taxonomy_category": "other_particle"
+      },
+      {
+        "canonical_location": "4:101:1",
+        "disposition": "needs_entry",
+        "queue_class_agreement": "match_class_entry_wrong",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "وَإِذَا",
+        "taxonomy_category": "conditional"
+      },
+      {
+        "canonical_location": "5:1:5",
+        "disposition": "needs_entry",
+        "queue_class_agreement": "generic_supplemental_bucket",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "يَٰٓأَيُّهَا",
+        "taxonomy_category": "other_particle"
+      },
+      {
+        "canonical_location": "5:90:1",
+        "disposition": "needs_entry",
+        "queue_class_agreement": "generic_supplemental_bucket",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "يَٰٓأَيُّهَا",
+        "taxonomy_category": "other_particle"
+      },
+      {
+        "canonical_location": "5:106:1",
+        "disposition": "needs_entry",
+        "queue_class_agreement": "generic_supplemental_bucket",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "يَٰٓأَيُّهَا",
+        "taxonomy_category": "other_particle"
+      },
+      {
+        "canonical_location": "6:25:22",
+        "disposition": "needs_entry",
+        "queue_class_agreement": "match_class_entry_wrong",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "إِذَا",
+        "taxonomy_category": "conditional"
+      },
+      {
+        "canonical_location": "6:28:12",
+        "disposition": "needs_entry",
+        "queue_class_agreement": "mismatch",
+        "reason": "outside the three approved exact-diacritic homograph families",
+        "surface": "لِمَا",
+        "taxonomy_category": "preposition"
+      }
+    ],
+    "shortfalls": []
+  },
+  "candidate_only": true,
+  "generation_command": "python tools/funcword_homograph_prepass.py",
+  "input_artifacts": {
+    "calibration": ".inputs/funcword-review-cal.jsonl",
+    "loc_surface": "qamus/indexes/quran-loc-surface/index.jsonl",
+    "rules": "nahw/rules/funcword-homograph-prepass-rules.json",
+    "v1_queue": "qamus/indexes/largelexicon/append-queue/class2/funcword-queue.jsonl"
+  },
+  "per_rule_counts": {
+    "an_light_not_anna": 35,
+    "in_light_not_inna": 40,
+    "man_fatha_not_min": 29
+  },
+  "row_counts": {
+    "changed": 104,
+    "total": 1043,
+    "unchanged": 939
+  },
+  "schema": "qamus.funcword_homograph_prepass_report.v1",
+  "v1_queue_untouched": true
+}

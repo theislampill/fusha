@@ -1,0 +1,58 @@
+{
+  "rules": [
+    {
+      "after_particle_class": "man-family",
+      "calibration_categories": [
+        "conditional",
+        "interrogative",
+        "relative"
+      ],
+      "exact_surfaces": [
+        "مَن",
+        "مَنْ",
+        "مَنِ",
+        "فَمَن",
+        "فَمَنْ",
+        "وَمَن",
+        "وَمَنِ"
+      ],
+      "from_particle_class": "preposition",
+      "reason": "Fatḥa on the mīm identifies مَن, not kasra مِـ of the preposition مِن; context still decides conditional, interrogative, or relative function.",
+      "rule_id": "man_fatha_not_min"
+    },
+    {
+      "after_particle_class": "in-light-family",
+      "calibration_categories": [
+        "conditional",
+        "negation"
+      ],
+      "exact_surfaces": [
+        "إِن",
+        "إِنِ",
+        "إِنْ",
+        "فَإِن",
+        "فَإِنِ",
+        "فَإِنْ",
+        "وَإِن",
+        "وَإِنْ"
+      ],
+      "from_particle_class": "emphasis",
+      "reason": "A light nūn without shadda identifies إِنْ-family, not emphatic إِنَّ; context still decides conditional or negative function.",
+      "rule_id": "in_light_not_inna"
+    },
+    {
+      "after_particle_class": "an-masdariyya",
+      "calibration_categories": [
+        "other_particle"
+      ],
+      "exact_surfaces": [
+        "أَن",
+        "أَنْ"
+      ],
+      "from_particle_class": "emphasis",
+      "reason": "A light nūn without shadda identifies subordinating أَنْ, not emphatic أَنَّ.",
+      "rule_id": "an_light_not_anna"
+    }
+  ],
+  "schema": "qamus.funcword_homograph_prepass_rules.v1"
+}
