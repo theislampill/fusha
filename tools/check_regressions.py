@@ -4336,9 +4336,12 @@ try:
         # T10 residue/RM-36 arithmetic: 86970 + 47 promotions - 37 demotions
         # = 86980 bindings; 42065 + 19 promoted locs - 0 fully lost locs
         # = 42084 modeled whitelist locations.
-        len(_t5_full_rows) == 86980
-        and len(_t5_full_b) == 86980
-        and _t5_full_whitelist_count == 42084
+        # T10 Lane B wave-1 (EQ-17): 86980 + 77 two-vote-certified promotions
+        # = 87057 bindings; 42084 + 77 newly-modeled locs - 0 lost
+        # = 42161 modeled whitelist locations.
+        len(_t5_full_rows) == 87057
+        and len(_t5_full_b) == 87057
+        and _t5_full_whitelist_count == 42161
         and not _t5_full_c and not _t5_full_wc,
     )
     check(
@@ -4560,6 +4563,57 @@ try:
           _t10.returncode == 0 and "GAP-QUEUE BUILDER SELF-TEST PASS" in (_t10.stdout or ""))
 except Exception as _e:
     check("T10 gap-queue builder self-test (harness error)", False)
+    print("  ", _e)
+
+# --- T10 Lane B wave-1: two-vote-certified promotion through the ledger (EQ-17) ---
+# The committed fact-ledger store carries the review lifecycle (77 certified,
+# 1 disagreement review_required, 22 abstention candidates); the accepted crosswalk
+# and gap queue reconcile to the promoted-loc count; the tool's red-first fixtures
+# (ledger-gate refusal, missing carrier, quarantine, determinism) hold.
+try:
+    import collections as _lb_collections
+    _lb_self = run_text([sys.executable, os.path.join(ROOT, "tools", "promote_two_vote_wave.py"),
+                         "--self-test"])
+    check("T10 Lane B wave promoter self-test (ledger-gate + carrier + quarantine + determinism)",
+          _lb_self.returncode == 0 and "PROMOTE-TWO-VOTE-WAVE SELF-TEST PASS" in (_lb_self.stdout or ""))
+    _lb_ledger_path = os.path.join(
+        ROOT, "qamus", "indexes", "largelexicon", "fact-ledger", "laneb-review.jsonl")
+    _lb_current = {}
+    with io.open(_lb_ledger_path, encoding="utf-8") as _lb_handle:
+        for _lb_line in _lb_handle:
+            if _lb_line.strip():
+                _lb_row = json.loads(_lb_line)
+                _lb_current[_lb_row["fact_id"]] = _lb_row  # last revision wins
+    _lb_states = _lb_collections.Counter(
+        _row["certification_state"] for _row in _lb_current.values())
+    check("T10 Lane B ledger states: certified=77 review_required=1 candidate=22 (conflicted=0)",
+          _lb_states.get("certified") == 77 and _lb_states.get("review_required") == 1
+          and _lb_states.get("candidate") == 22 and _lb_states.get("conflicted", 0) == 0)
+    _lb_carriers = {
+        (_row["subject_identity"]["loc"], _row["subject_identity"]["qword_row_id"])
+        for _row in _lb_current.values() if _row["certification_state"] == "certified"}
+    check("T10 Lane B certified facts are occurrence-scoped with full D-13 carriers (77 unique)",
+          len(_lb_carriers) == 77 and all(
+              _row.get("scope") == "occurrence"
+              and {"loc", "entry_id", "card_id", "qword_row_id"} <= set(_row["subject_identity"])
+              for _row in _lb_current.values() if _row["certification_state"] == "certified"))
+    _lb_report = json.loads(io.open(os.path.join(
+        ROOT, "qamus", "indexes", "largelexicon", "crosswalk-gap", "laneb-wave-01.report.json"),
+        encoding="utf-8").read())
+    check("T10 Lane B wave report: 77 promoted, queue 5502 -> 5425, method two_vote_certified_v1",
+          _lb_report["counts"]["promoted_bindings"] == 77
+          and _lb_report["counts"]["queue_before"] == 5502
+          and _lb_report["counts"]["queue_after"] == 5425
+          and _lb_report["resolution_method"] == "two_vote_certified_v1"
+          and len(_lb_report["rows"]) == 77)
+    _lb_manifest = json.loads(io.open(os.path.join(
+        ROOT, "qamus", "indexes", "largelexicon", "qamus-qword-crosswalk.manifest.json"),
+        encoding="utf-8").read())
+    check("T10 Lane B accepted crosswalk reconciles: 87057 accepted (86980 + 77)",
+          _lb_manifest["status_counts"].get("canonical_crosswalk_accepted") == 87057
+          and _lb_manifest.get("two_vote_promotion", {}).get("accepted_rows") == 77)
+except Exception as _e:
+    check("T10 Lane B wave promotion gate (harness error)", False)
     print("  ", _e)
 
 # --- T10 infrastructure: atomic shard promotion (RM-19) ---
