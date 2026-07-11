@@ -5,3 +5,8 @@
 *.tsv    text eol=lf
 *.py     text eol=lf
 *.md     text eol=lf
+*.html  text eol=lf
+*.css   text eol=lf
+*.js    text eol=lf
+# ^ T8: hash-anchored fixtures include .html (NF-T0-1: a CRLF checkout of the RH-LIVE-00
+#   DOM fixture produced the wrong-bytes manifest anchor); pin every text family we hash.

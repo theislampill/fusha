@@ -3576,10 +3576,9 @@ except Exception as _e:
 
 try:
     _coverage_evidence_prefixes = (
+        # narrowed at T8: the proofing matrices now carry HISTORICAL pointers in their
+        # headers (banner clause covers them); only genuinely immutable dated evidence stays.
         "qamus/reports/closure-2092/",
-        "qamus/reports/verbs/",
-        "qamus/reports/nouns/",
-        "qamus/reports/particles/",
         "qamus/reports/qamus-completion-manifest-summary-20260624.md",
     )
     _coverage_exempt_count = 0
@@ -4425,6 +4424,52 @@ try:
               bool(_t6_sha_lint(_seeded)))
 except Exception as _e:
     check("T6 adoption gates (ADR-003 G6/G7) harness error", False)
+    print("  ", _e)
+
+# --- T8 cross-platform hash durability (protects TRACKED bytes, not just working-tree state) ---
+try:
+    _t8_targets = [("qamus/examples/rh_live_00_admin_preview_dom_fixture.sample.html",
+                    "qamus/examples/rh_live_00_admin_preview_bundle_manifest.sample.json")]
+    _t8_failures = []
+    _t8_proofs = 0
+    # every checksums.json-listed dataset file participates too (manifest-declared shas)
+    _t8_cs = json.load(io.open(os.path.join(ROOT, "qamus", "data", "current", "checksums.json"), encoding="utf-8"))
+    for _rel, _decl in sorted(_t8_cs.items()):
+        # checksums.json keys map data/X to qamus/data/current/X and
+        # indexes/X to qamus/indexes/current/X (the strict validator layout)
+        _head, _tail = _rel.split("/", 1)
+        _repo_rel = "qamus/%s/current/%s" % (_head, _tail)
+        _pathp = os.path.join(ROOT, *_repo_rel.split("/"))
+        _wt = hashlib.sha256(io.open(_pathp, "rb").read()).hexdigest()
+        _git = subprocess.run(["git", "show", "HEAD:" + _repo_rel],
+                              cwd=ROOT, capture_output=True).stdout
+        _gt = hashlib.sha256(_git).hexdigest()
+        _attr = subprocess.run(["git", "check-attr", "eol", "--", _repo_rel],
+                               cwd=ROOT, capture_output=True, text=True).stdout
+        if not (_wt == _gt == _decl["sha256"]):
+            _t8_failures.append("%s: worktree=%s git=%s declared=%s" % (_rel, _wt[:8], _gt[:8], _decl["sha256"][:8]))
+        if ": lf" not in _attr:
+            _t8_failures.append("%s: eol attribute not lf (%r)" % (_rel, _attr.strip()))
+        _t8_proofs += 1
+    for _fixture, _manifest in _t8_targets:
+        _wt = hashlib.sha256(io.open(os.path.join(ROOT, *_fixture.split("/")), "rb").read()).hexdigest()
+        _git = subprocess.run(["git", "show", "HEAD:" + _fixture], cwd=ROOT, capture_output=True).stdout
+        _gt = hashlib.sha256(_git).hexdigest()
+        _m = json.load(io.open(os.path.join(ROOT, *_manifest.split("/")), encoding="utf-8"))
+        _decl = _m["artifacts"]["admin_preview_dom_fixture"]["sha256"]
+        _attr = subprocess.run(["git", "check-attr", "eol", "--", _fixture],
+                               cwd=ROOT, capture_output=True, text=True).stdout
+        if not (_wt == _gt == _decl):
+            _t8_failures.append("%s: worktree=%s git=%s manifest=%s" % (_fixture, _wt[:8], _gt[:8], _decl[:8]))
+        if ": lf" not in _attr:
+            _t8_failures.append("%s: eol attribute not lf" % _fixture)
+        _t8_proofs += 1
+    check("T8 hash durability: worktree == tracked-blob == manifest sha AND eol=lf pinned (%d anchored files)" % _t8_proofs,
+          not _t8_failures)
+    for _f in _t8_failures:
+        print("  ", _f)
+except Exception as _e:
+    check("T8 hash durability (scan error)", False)
     print("  ", _e)
 
 if fails:
