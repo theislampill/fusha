@@ -15,6 +15,7 @@ import re
 import shutil
 import subprocess
 import sys
+import unicodedata
 import uuid
 from collections import Counter, defaultdict
 from contextlib import contextmanager
@@ -36,6 +37,8 @@ PARSER_EVAL_DIR = ROOT / "fusha" / "parser" / "eval"
 PARSER_MODEL_CARD_DIR = ROOT / "fusha" / "parser" / "model-cards"
 REPORT_DIR = ROOT / "qamus" / "reports"
 QAMUS_LARGELX_DIR = ROOT / "qamus" / "indexes" / "largelexicon"
+HOMOGRAPH_KEYS = QAMUS_LARGELX_DIR / "homograph-keys.json"
+HYGIENE_REPORT = QAMUS_LARGELX_DIR / "hygiene-report.json"
 ALLOWLIST = LEXICON_DIR / "source-clean-table-allowlist.json"
 LEMMA_SAMPLE = LEXICON_DIR / "lemma-source.sample.jsonl"
 FORM_SAMPLE = LEXICON_DIR / "form-source.sample.jsonl"
@@ -74,6 +77,14 @@ FORBIDDEN_PUBLIC_SUBSTRINGS = {
 
 GENERATION_MANIFEST_NAME = "GENERATION.json"
 GENERATION_STALE_LOCK_SECONDS = 6 * 60 * 60
+
+# Build-time root certification is intentionally narrower than Arabic-text
+# normalization.  Tatweel is presentation-only, and final-radical alif maqsurah
+# is represented as ya for root identity.  Display/scripture text is untouched.
+ROOT_SHAPE_PATTERN = re.compile(r"^[ء-ي]( [ء-ي]){1,4}$")
+SURFACE_ALTERNATE_PATTERN = re.compile(r"\s*(?:/|؛|;|،|,|\||>|\s[-–—]\s)\s*")
+QURAN_SINGLE_REF_PATTERN = re.compile(r"^(\d{1,3}):(\d{1,3})$")
+QURAN_RANGE_REF_PATTERN = re.compile(r"^(\d{1,3}):(\d{1,3})[-–—](\d{1,3})$")
 
 
 class WriterLockError(RuntimeError):
@@ -620,12 +631,148 @@ def unique_keep_order(values: Iterable[str]) -> list[str]:
     return out
 
 
+def normalize_build_root(root: str) -> str:
+    """Normalize a root fact at build time without altering source text.
+
+    The root-only policy strips tatweel (including ``هـ`` notation), collapses
+    whitespace, and represents a final radical ``ى`` as ``ي``.  The final-
+    radical mapping is applied only to an otherwise letter-shaped 2--5 radical
+    candidate, never to a surface word copied into the root field.
+    """
+    normalized = " ".join((root or "").replace("ـ", "").split())
+    radicals = normalized.split()
+    if 2 <= len(radicals) <= 5 and all(re.fullmatch(r"[ء-ي]", item) for item in radicals):
+        if radicals[-1] == "ى":
+            radicals[-1] = "ي"
+        normalized = " ".join(radicals)
+    return normalized
+
+
+def is_root_shape(root: str) -> bool:
+    """Return whether *root* is exactly 2--5 space-separated Arabic radicals."""
+    return bool(ROOT_SHAPE_PATTERN.fullmatch(root or ""))
+
+
+def root_hygiene(raw_root: str) -> dict[str, Any]:
+    """Represent valid single/dual roots and fail closed on malformed input."""
+    source = (raw_root or "").strip()
+    if not source:
+        return {
+            "root": None,
+            "roots": [],
+            "root_source": None,
+            "no_root_reason": None,
+            "risk_flags": [],
+        }
+    parts = [normalize_build_root(part) for part in re.split(r"\s*/\s*", source)]
+    if not parts or any(not is_root_shape(part) for part in parts):
+        return {
+            "root": None,
+            "roots": [],
+            "root_source": source,
+            "no_root_reason": "malformed_root",
+            "risk_flags": ["malformed_root"],
+        }
+    roots = unique_keep_order(parts)
+    return {
+        "root": roots[0] if len(roots) == 1 else None,
+        "roots": roots,
+        "root_source": source,
+        "no_root_reason": None,
+        "risk_flags": [],
+    }
+
+
+def normalize_build_surface(surface: str) -> str:
+    """Strip presentation-only tatweel from a generated lookup surface."""
+    return (surface or "").replace("ـ", "").strip()
+
+
+def is_single_arabic_token(surface: str) -> bool:
+    """Accept one Arabic letter/mark token and reject spaces or punctuation."""
+    normalized = normalize_build_surface(surface)
+    if not normalized:
+        return False
+    has_letter = False
+    for character in normalized:
+        category = unicodedata.category(character)
+        if not (category.startswith("L") or category.startswith("M")):
+            return False
+        if "ARABIC" not in unicodedata.name(character, ""):
+            return False
+        has_letter = has_letter or category.startswith("L")
+    return has_letter
+
+
+def split_surface_alternates(surface: str) -> list[str]:
+    """Split explicit alternate delimiters; phrases remain invalid phrases."""
+    return unique_keep_order(SURFACE_ALTERNATE_PATTERN.split(surface or ""))
+
+
+def surface_hygiene(raw_surface: str) -> dict[str, Any]:
+    """Route an authored surface to accepted tokens or an explicit repair queue."""
+    source = (raw_surface or "").strip()
+    if re.search(r"[A-Za-z]", source):
+        return {
+            "source": source,
+            "surfaces": [],
+            "rejected": [source] if source else [],
+            "route": "entry_repair_queue",
+            "risk_flags": ["gloss_bearing_surface"],
+        }
+    candidates = split_surface_alternates(source)
+    accepted = [normalize_build_surface(item) for item in candidates if is_single_arabic_token(item)]
+    rejected = [item for item in candidates if not is_single_arabic_token(item)]
+    flags: list[str] = []
+    if rejected or (source and not accepted):
+        flags.append("malformed_surface")
+    return {
+        "source": source,
+        "surfaces": unique_keep_order(accepted),
+        "rejected": rejected,
+        "route": "entry_repair_queue" if flags else ("alternate_split" if len(accepted) > 1 else "accepted"),
+        "risk_flags": flags,
+    }
+
+
+def quran_ref_hygiene(reference: str | None) -> dict[str, Any]:
+    """Represent single and range ayah references without guessing word identity."""
+    value = (reference or "").strip()
+    range_match = QURAN_RANGE_REF_PATTERN.fullmatch(value)
+    if range_match:
+        surah, start, end = (int(item) for item in range_match.groups())
+        return {
+            "ref": value,
+            "ref_kind": "range",
+            "surah": surah,
+            "ayah_start": start,
+            "ayah_end": end,
+            "risk_flags": ["range_reference"],
+        }
+    single_match = QURAN_SINGLE_REF_PATTERN.fullmatch(value)
+    if single_match:
+        surah, ayah = (int(item) for item in single_match.groups())
+        return {
+            "ref": value,
+            "ref_kind": "single",
+            "surah": surah,
+            "ayah": ayah,
+            "risk_flags": [],
+        }
+    return {
+        "ref": value or None,
+        "ref_kind": "malformed",
+        "risk_flags": ["malformed_reference"],
+    }
+
+
 def split_headword(headword: str) -> list[str]:
     parts = re.split(r"\s*/\s*|\s+؛\s+|\s+,\s+", headword or "")
     return unique_keep_order(parts)
 
 
-def forms_for_entry(entry: dict[str, Any]) -> list[str]:
+def raw_forms_for_entry(entry: dict[str, Any]) -> list[str]:
+    """Return source-authored form cells before the single-token hygiene gate."""
     forms: list[str] = []
     forms.extend(split_headword(entry.get("headword", "")))
     for sense in entry.get("senses") or []:
@@ -633,6 +780,65 @@ def forms_for_entry(entry: dict[str, Any]) -> list[str]:
     for usage in entry.get("usage") or []:
         forms.extend(usage.get("forms") or [])
     return unique_keep_order(forms)
+
+
+def forms_for_entry(entry: dict[str, Any]) -> list[str]:
+    """Return only build-safe, single-token Arabic surfaces.
+
+    Rejected source cells remain visible through the hygiene report; this
+    function never repairs the read-only Qamus entry dataset.
+    """
+    forms: list[str] = []
+    for source in raw_forms_for_entry(entry):
+        forms.extend(surface_hygiene(source)["surfaces"])
+    return unique_keep_order(forms)
+
+
+def build_homograph_key_inventory(entries: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Build deterministic broad-normalization collisions across distinct roots."""
+    by_key: dict[str, dict[str, dict[str, set[str]]]] = defaultdict(
+        lambda: defaultdict(lambda: {"entry_ids": set(), "surfaces": set()})
+    )
+    for entry in entries:
+        root_result = root_hygiene(entry.get("root") or "")
+        if not root_result["roots"]:
+            continue
+        for surface in forms_for_entry(entry):
+            norm_key = N.norm(surface)
+            if not norm_key:
+                continue
+            for root in root_result["roots"]:
+                by_key[norm_key][root]["entry_ids"].add(entry["id"])
+                by_key[norm_key][root]["surfaces"].add(surface)
+    inventory: list[dict[str, Any]] = []
+    for norm_key in sorted(by_key):
+        root_map = by_key[norm_key]
+        if len(root_map) < 2:
+            continue
+        inventory.append(
+            {
+                "norm_key": norm_key,
+                "root_count": len(root_map),
+                "roots": sorted(root_map),
+                "entries": [
+                    {
+                        "root": root,
+                        "entry_ids": sorted(root_map[root]["entry_ids"]),
+                        "surfaces": sorted(root_map[root]["surfaces"]),
+                    }
+                    for root in sorted(root_map)
+                ],
+            }
+        )
+    return inventory
+
+
+@lru_cache(maxsize=1)
+def committed_homograph_norm_keys() -> frozenset[str]:
+    if not HOMOGRAPH_KEYS.exists():
+        return frozenset()
+    payload = json.loads(HOMOGRAPH_KEYS.read_text(encoding="utf-8"))
+    return frozenset(item["norm_key"] for item in payload.get("keys") or [])
 
 
 def section_to_pos(section: str, tags: Iterable[str] = ()) -> str:
@@ -649,7 +855,10 @@ def section_to_pos(section: str, tags: Iterable[str] = ()) -> str:
 
 
 def no_root_reason(entry: dict[str, Any], pos: str) -> str | None:
-    if entry.get("root"):
+    root_result = root_hygiene(entry.get("root") or "")
+    if root_result["no_root_reason"]:
+        return root_result["no_root_reason"]
+    if root_result["roots"]:
         return None
     if pos == "particle":
         return "function_only_no_root"
@@ -678,13 +887,15 @@ def qg_class_for_pos(pos: str) -> str:
 def entry_to_lemma(entry: dict[str, Any]) -> dict[str, Any]:
     pos = section_to_pos(entry.get("section", ""), entry.get("tags") or [])
     forms = forms_for_entry(entry)
-    root = (entry.get("root") or "").strip() or None
+    root_result = root_hygiene(entry.get("root") or "")
     return {
         "schema": f"{SCHEMA_PREFIX}/lemma-source@1",
         "entry_id": entry["id"],
         "source_keys": entry.get("source_keys") or [],
         "lemma": entry.get("headword"),
-        "root": root,
+        "root": root_result["root"],
+        "roots": root_result["roots"],
+        "root_source": root_result["root_source"],
         "no_root_reason": no_root_reason(entry, pos),
         "pos": pos,
         "forms": forms,
@@ -710,6 +921,7 @@ def form_rows_for_lemmas(lemmas: Iterable[dict[str, Any]]) -> list[dict[str, Any
                     "surface_bare": N.bare(form),
                     "lemma": lemma["lemma"],
                     "root": lemma["root"],
+                    "roots": lemma["roots"],
                     "no_root_reason": lemma["no_root_reason"],
                     "pos": lemma["pos"],
                     "source_status": lemma["source_status"],
@@ -722,8 +934,10 @@ def form_rows_for_lemmas(lemmas: Iterable[dict[str, Any]]) -> list[dict[str, Any
 
 def risk_flags(entry: dict[str, Any], pos: str, forms: list[str]) -> list[str]:
     flags: list[str] = []
+    root_result = root_hygiene(entry.get("root") or "")
     if not entry.get("root"):
         flags.append("no_root_recorded")
+    flags.extend(root_result["risk_flags"])
     if pos == "particle":
         flags.append("requires_nahw_function")
     if pos == "unknown":
@@ -732,7 +946,9 @@ def risk_flags(entry: dict[str, Any], pos: str, forms: list[str]) -> list[str]:
         flags.append("no_listed_forms")
     if any("/" in (entry.get("headword") or "") for _ in [0]):
         flags.append("compound_headword")
-    return flags
+    if any(N.norm(form) in committed_homograph_norm_keys() for form in forms):
+        flags.append("norm_homograph")
+    return unique_keep_order(flags)
 
 
 def stem_rows_for_entry(entry: dict[str, Any]) -> list[dict[str, Any]]:
@@ -754,6 +970,7 @@ def stem_rows_for_entry(entry: dict[str, Any]) -> list[dict[str, Any]]:
                 "surface_bare": N.bare(surface),
                 "lemma": lemma["lemma"],
                 "root": lemma["root"],
+                "roots": lemma["roots"],
                 "no_root_reason": lemma["no_root_reason"],
                 "pos": lemma["pos"],
                 "pattern": None,
@@ -792,6 +1009,7 @@ def qword_denominator_rows(entries: Iterable[dict[str, Any]]) -> list[dict[str, 
             for example_index, example in enumerate(usage.get("examples") or [], start=1):
                 card_id = f"{entry['id']}:u{usage_index}:e{example_index}"
                 card_text = example.get("ar") or ""
+                ref_result = quran_ref_hygiene(example.get("ref"))
                 words = [word for word in card_text.split() if word]
                 for qword_index, surface in enumerate(words, start=1):
                     rows.append(
@@ -808,10 +1026,29 @@ def qword_denominator_rows(entries: Iterable[dict[str, Any]]) -> list[dict[str, 
                             "visible_surface_norm_strict": N.norm_strict(surface),
                             "card_text_sha256": sha256_text(card_text),
                             "quran_ref": example.get("ref"),
+                            "ref_kind": ref_result["ref_kind"],
+                            "ref_range": (
+                                {
+                                    "surah": ref_result["surah"],
+                                    "ayah_start": ref_result["ayah_start"],
+                                    "ayah_end": ref_result["ayah_end"],
+                                }
+                                if ref_result["ref_kind"] == "range"
+                                else None
+                            ),
                             "canonical_quran_loc": None,
                             "canonical_wbw_loc": None,
-                            "route": "qamus_executor_source_crosswalk",
-                            "status": "denominator_needs_source_address_crosswalk",
+                            "route": (
+                                "range_reference_review"
+                                if ref_result["ref_kind"] == "range"
+                                else "qamus_executor_source_crosswalk"
+                            ),
+                            "status": (
+                                "denominator_range_reference_excluded_from_identity_acceptance"
+                                if ref_result["ref_kind"] == "range"
+                                else "denominator_needs_source_address_crosswalk"
+                            ),
+                            "risk_flags": ref_result["risk_flags"],
                             "source_status": SOURCE_STATUS,
                             "public_boundary": dict(PUBLIC_BOUNDARY),
                             "live_mutation_allowed": False,

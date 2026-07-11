@@ -1,0 +1,1542 @@
+{
+  "authoritative_baseline_sha": "446a536a432cc819ddfcfcf1bd61dd7601996c94",
+  "generated_by": "python tools/validate_largelexicon_hygiene.py --write",
+  "key_count": 53,
+  "keys": [
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "أ ن س",
+          "surfaces": [
+            "النَّاسُ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "ن و س",
+          "surfaces": [
+            "النَّاسُ"
+          ]
+        }
+      ],
+      "norm_key": "الناس",
+      "root_count": 2,
+      "roots": [
+        "أ ن س",
+        "ن و س"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "أ ن س",
+          "surfaces": [
+            "الْإِنْسُ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "ن و س",
+          "surfaces": [
+            "الْإِنْسُ"
+          ]
+        }
+      ],
+      "norm_key": "النس",
+      "root_count": 2,
+      "roots": [
+        "أ ن س",
+        "ن و س"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "أ ن س",
+          "surfaces": [
+            "الْإِنْسَانُ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "ن و س",
+          "surfaces": [
+            "الْإِنْسَانُ"
+          ]
+        }
+      ],
+      "norm_key": "النسان",
+      "root_count": 2,
+      "roots": [
+        "أ ن س",
+        "ن و س"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "أ ن س",
+          "surfaces": [
+            "آنَسَ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "ن و س",
+          "surfaces": [
+            "آنَسَ"
+          ]
+        }
+      ],
+      "norm_key": "انس",
+      "root_count": 2,
+      "roots": [
+        "أ ن س",
+        "ن و س"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "أ ن س",
+          "surfaces": [
+            "آنَسْتُمْ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "ن و س",
+          "surfaces": [
+            "آنَسْتُمْ"
+          ]
+        }
+      ],
+      "norm_key": "انستم",
+      "root_count": 2,
+      "roots": [
+        "أ ن س",
+        "ن و س"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "db1a68c31812"
+          ],
+          "root": "ر ع ي",
+          "surfaces": [
+            "ٱنظُرْنَا"
+          ]
+        },
+        {
+          "entry_ids": [
+            "d099cdaad3b9"
+          ],
+          "root": "ن ظ ر",
+          "surfaces": [
+            "اُنْظُرْنَا"
+          ]
+        }
+      ],
+      "norm_key": "انظرنا",
+      "root_count": 2,
+      "roots": [
+        "ر ع ي",
+        "ن ظ ر"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "d647268d206c"
+          ],
+          "root": "ب ر أ",
+          "surfaces": [
+            "أَبْرَأَ",
+            "بَرَأَ",
+            "بَرَّأَ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "d547df241bb6"
+          ],
+          "root": "ب ر ر",
+          "surfaces": [
+            "بَرّ",
+            "بِرّ"
+          ]
+        }
+      ],
+      "norm_key": "بر",
+      "root_count": 2,
+      "roots": [
+        "ب ر أ",
+        "ب ر ر"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "d647268d206c"
+          ],
+          "root": "ب ر أ",
+          "surfaces": [
+            "بَرَاء",
+            "بُرَآء"
+          ]
+        },
+        {
+          "entry_ids": [
+            "d547df241bb6"
+          ],
+          "root": "ب ر ر",
+          "surfaces": [
+            "بَرًّا"
+          ]
+        }
+      ],
+      "norm_key": "برا",
+      "root_count": 2,
+      "roots": [
+        "ب ر أ",
+        "ب ر ر"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "2603e0177e41"
+          ],
+          "root": "أ ب ي",
+          "surfaces": [
+            "أَبَيْنَ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "df6af97d5e93"
+          ],
+          "root": "ب ي ن",
+          "surfaces": [
+            "بَيَّنَ",
+            "بَيِّنٌ",
+            "بَيْنَ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "748db31e0c38"
+          ],
+          "root": "ح و ل",
+          "surfaces": [
+            "بَيْنَ"
+          ]
+        }
+      ],
+      "norm_key": "بين",
+      "root_count": 3,
+      "roots": [
+        "أ ب ي",
+        "ب ي ن",
+        "ح و ل"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "11083a89b17f"
+          ],
+          "root": "ت ب ب",
+          "surfaces": [
+            "تَبَّ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "a36aed085027"
+          ],
+          "root": "ت و ب",
+          "surfaces": [
+            "تُبْ"
+          ]
+        }
+      ],
+      "norm_key": "تب",
+      "root_count": 2,
+      "roots": [
+        "ت ب ب",
+        "ت و ب"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "11083a89b17f"
+          ],
+          "root": "ت ب ب",
+          "surfaces": [
+            "تَبَّتْ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "a36aed085027"
+          ],
+          "root": "ت و ب",
+          "surfaces": [
+            "تُبْتُ"
+          ]
+        }
+      ],
+      "norm_key": "تبت",
+      "root_count": 2,
+      "roots": [
+        "ت ب ب",
+        "ت و ب"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "d647268d206c"
+          ],
+          "root": "ب ر أ",
+          "surfaces": [
+            "تَبَرَّأَ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "8fed4103a14a"
+          ],
+          "root": "ت ب ر",
+          "surfaces": [
+            "تَبَّرَ"
+          ]
+        }
+      ],
+      "norm_key": "تبر",
+      "root_count": 2,
+      "roots": [
+        "ب ر أ",
+        "ت ب ر"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "d647268d206c"
+          ],
+          "root": "ب ر أ",
+          "surfaces": [
+            "تَبَرَّءُوا"
+          ]
+        },
+        {
+          "entry_ids": [
+            "d547df241bb6"
+          ],
+          "root": "ب ر ر",
+          "surfaces": [
+            "تَبَرُّوا"
+          ]
+        }
+      ],
+      "norm_key": "تبروا",
+      "root_count": 2,
+      "roots": [
+        "ب ر أ",
+        "ب ر ر"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "488d1175c005"
+          ],
+          "root": "ر و ح",
+          "surfaces": [
+            "تُرِيحُون"
+          ]
+        },
+        {
+          "entry_ids": [
+            "488d1175c005"
+          ],
+          "root": "ر ي ح",
+          "surfaces": [
+            "تُرِيحُون"
+          ]
+        }
+      ],
+      "norm_key": "تريحون",
+      "root_count": 2,
+      "roots": [
+        "ر و ح",
+        "ر ي ح"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "أ ن س",
+          "surfaces": [
+            "تَسْتَأْنِسُوا"
+          ]
+        },
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "ن و س",
+          "surfaces": [
+            "تَسْتَأْنِسُوا"
+          ]
+        }
+      ],
+      "norm_key": "تستنسوا",
+      "root_count": 2,
+      "roots": [
+        "أ ن س",
+        "ن و س"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "c49dfdec1d36"
+          ],
+          "root": "ص د د",
+          "surfaces": [
+            "تَصَدَّى"
+          ]
+        },
+        {
+          "entry_ids": [
+            "c49dfdec1d36"
+          ],
+          "root": "ص د ي",
+          "surfaces": [
+            "تَصَدَّى"
+          ]
+        }
+      ],
+      "norm_key": "تصدي",
+      "root_count": 2,
+      "roots": [
+        "ص د د",
+        "ص د ي"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "c49dfdec1d36"
+          ],
+          "root": "ص د د",
+          "surfaces": [
+            "تَصْدِيَة"
+          ]
+        },
+        {
+          "entry_ids": [
+            "c49dfdec1d36"
+          ],
+          "root": "ص د ي",
+          "surfaces": [
+            "تَصْدِيَة"
+          ]
+        }
+      ],
+      "norm_key": "تصديه",
+      "root_count": 2,
+      "roots": [
+        "ص د د",
+        "ص د ي"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "c516bb33e6e9"
+          ],
+          "root": "ك ن ن",
+          "surfaces": [
+            "تُكِنُّ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "3575d87778cd"
+          ],
+          "root": "ك و ن",
+          "surfaces": [
+            "تَكُنْ"
+          ]
+        }
+      ],
+      "norm_key": "تكن",
+      "root_count": 2,
+      "roots": [
+        "ك ن ن",
+        "ك و ن"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "3f40e0c0eb7a"
+          ],
+          "root": "م ن ن",
+          "surfaces": [
+            "تَمُنُّوا"
+          ]
+        },
+        {
+          "entry_ids": [
+            "cc5bc2a6f6c5"
+          ],
+          "root": "م ن ي",
+          "surfaces": [
+            "تَمَنَّوُا",
+            "تَمَنَّوْا"
+          ]
+        }
+      ],
+      "norm_key": "تمنوا",
+      "root_count": 2,
+      "roots": [
+        "م ن ن",
+        "م ن ي"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "31e79b908386"
+          ],
+          "root": "أ ن ي",
+          "surfaces": [
+            "حَمِيَةٍ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "cde99b977805"
+          ],
+          "root": "ح م ي",
+          "surfaces": [
+            "حَمِيَّة"
+          ]
+        }
+      ],
+      "norm_key": "حميه",
+      "root_count": 2,
+      "roots": [
+        "أ ن ي",
+        "ح م ي"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "543da5bcc248"
+          ],
+          "root": "أ خ ر",
+          "surfaces": [
+            "أَخَّرَ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "e2ae6f6094c7"
+          ],
+          "root": "خ ر ر",
+          "surfaces": [
+            "خَرَّ"
+          ]
+        }
+      ],
+      "norm_key": "خر",
+      "root_count": 2,
+      "roots": [
+        "أ خ ر",
+        "خ ر ر"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "dde8f621a435"
+          ],
+          "root": "ح ل ف",
+          "surfaces": [
+            "خَلَّاف"
+          ]
+        },
+        {
+          "entry_ids": [
+            "259fe620e117"
+          ],
+          "root": "خ ل ف",
+          "surfaces": [
+            "خِلَاف"
+          ]
+        }
+      ],
+      "norm_key": "خلاف",
+      "root_count": 2,
+      "roots": [
+        "ح ل ف",
+        "خ ل ف"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "402d4e5bea0c"
+          ],
+          "root": "د ر ر",
+          "surfaces": [
+            "دُرِّيّ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "3255ceeaded3"
+          ],
+          "root": "د ر ي",
+          "surfaces": [
+            "أَدْرَىٰ"
+          ]
+        }
+      ],
+      "norm_key": "دري",
+      "root_count": 2,
+      "roots": [
+        "د ر ر",
+        "د ر ي"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "488d1175c005"
+          ],
+          "root": "ر و ح",
+          "surfaces": [
+            "رَوْح",
+            "رُوح",
+            "رَّوْح"
+          ]
+        },
+        {
+          "entry_ids": [
+            "488d1175c005"
+          ],
+          "root": "ر ي ح",
+          "surfaces": [
+            "رَوْح",
+            "رُوح",
+            "رَّوْح"
+          ]
+        }
+      ],
+      "norm_key": "روح",
+      "root_count": 2,
+      "roots": [
+        "ر و ح",
+        "ر ي ح"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "488d1175c005"
+          ],
+          "root": "ر و ح",
+          "surfaces": [
+            "رِيح"
+          ]
+        },
+        {
+          "entry_ids": [
+            "488d1175c005"
+          ],
+          "root": "ر ي ح",
+          "surfaces": [
+            "رِيح"
+          ]
+        }
+      ],
+      "norm_key": "ريح",
+      "root_count": 2,
+      "roots": [
+        "ر و ح",
+        "ر ي ح"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "488d1175c005"
+          ],
+          "root": "ر و ح",
+          "surfaces": [
+            "رَيْحَان"
+          ]
+        },
+        {
+          "entry_ids": [
+            "488d1175c005"
+          ],
+          "root": "ر ي ح",
+          "surfaces": [
+            "رَيْحَان"
+          ]
+        }
+      ],
+      "norm_key": "ريحان",
+      "root_count": 2,
+      "roots": [
+        "ر و ح",
+        "ر ي ح"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "101401b11de8"
+          ],
+          "root": "ز ك و",
+          "surfaces": [
+            "زَكَاة"
+          ]
+        },
+        {
+          "entry_ids": [
+            "101401b11de8"
+          ],
+          "root": "ز ك ي",
+          "surfaces": [
+            "زَكَاة"
+          ]
+        }
+      ],
+      "norm_key": "زكاه",
+      "root_count": 2,
+      "roots": [
+        "ز ك و",
+        "ز ك ي"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "101401b11de8"
+          ],
+          "root": "ز ك و",
+          "surfaces": [
+            "زَكَى"
+          ]
+        },
+        {
+          "entry_ids": [
+            "101401b11de8"
+          ],
+          "root": "ز ك ي",
+          "surfaces": [
+            "زَكَى"
+          ]
+        }
+      ],
+      "norm_key": "زكي",
+      "root_count": 2,
+      "roots": [
+        "ز ك و",
+        "ز ك ي"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "9cb9f6f53207"
+          ],
+          "root": "أ س ر",
+          "surfaces": [
+            "أَسَرَ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "fbc9b2fdfed0"
+          ],
+          "root": "س ر ر",
+          "surfaces": [
+            "أَسَرَّ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "7c2dca9f6000"
+          ],
+          "root": "س ر ي",
+          "surfaces": [
+            "أَسْرِ"
+          ]
+        }
+      ],
+      "norm_key": "سر",
+      "root_count": 3,
+      "roots": [
+        "أ س ر",
+        "س ر ر",
+        "س ر ي"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "1145f1b5c819"
+          ],
+          "root": "أ س و",
+          "surfaces": [
+            "أُسْوَة"
+          ]
+        },
+        {
+          "entry_ids": [
+            "6d7fb324a641"
+          ],
+          "root": "س و ء",
+          "surfaces": [
+            "سَوْءَة"
+          ]
+        }
+      ],
+      "norm_key": "سوه",
+      "root_count": 2,
+      "roots": [
+        "أ س و",
+        "س و ء"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "746abe23a760"
+          ],
+          "root": "ص و ب",
+          "surfaces": [
+            "أَصَابَ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "746abe23a760"
+          ],
+          "root": "ص ي ب",
+          "surfaces": [
+            "أَصَابَ"
+          ]
+        }
+      ],
+      "norm_key": "صاب",
+      "root_count": 2,
+      "roots": [
+        "ص و ب",
+        "ص ي ب"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "18ae5e5e49fb"
+          ],
+          "root": "ص ب ب",
+          "surfaces": [
+            "صَبَّ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "d6464bbb16d5"
+          ],
+          "root": "ص ب و",
+          "surfaces": [
+            "أَصْبُ"
+          ]
+        }
+      ],
+      "norm_key": "صب",
+      "root_count": 2,
+      "roots": [
+        "ص ب ب",
+        "ص ب و"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "c49dfdec1d36"
+          ],
+          "root": "ص د د",
+          "surfaces": [
+            "صَدَّ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "c49dfdec1d36"
+          ],
+          "root": "ص د ي",
+          "surfaces": [
+            "صَدَّ"
+          ]
+        }
+      ],
+      "norm_key": "صد",
+      "root_count": 2,
+      "roots": [
+        "ص د د",
+        "ص د ي"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "c49dfdec1d36"
+          ],
+          "root": "ص د د",
+          "surfaces": [
+            "صَدِيد"
+          ]
+        },
+        {
+          "entry_ids": [
+            "c49dfdec1d36"
+          ],
+          "root": "ص د ي",
+          "surfaces": [
+            "صَدِيد"
+          ]
+        }
+      ],
+      "norm_key": "صديد",
+      "root_count": 2,
+      "roots": [
+        "ص د د",
+        "ص د ي"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "272144122d35"
+          ],
+          "root": "أ ص ر",
+          "surfaces": [
+            "إِصْر"
+          ]
+        },
+        {
+          "entry_ids": [
+            "2fee38d0e6c0",
+            "6bb15cbe2246"
+          ],
+          "root": "ص ر ر",
+          "surfaces": [
+            "صَرَّ",
+            "صِرّ"
+          ]
+        }
+      ],
+      "norm_key": "صر",
+      "root_count": 2,
+      "roots": [
+        "أ ص ر",
+        "ص ر ر"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "746abe23a760"
+          ],
+          "root": "ص و ب",
+          "surfaces": [
+            "صَوَابًا"
+          ]
+        },
+        {
+          "entry_ids": [
+            "746abe23a760"
+          ],
+          "root": "ص ي ب",
+          "surfaces": [
+            "صَوَابًا"
+          ]
+        }
+      ],
+      "norm_key": "صوابا",
+      "root_count": 2,
+      "roots": [
+        "ص و ب",
+        "ص ي ب"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "746abe23a760"
+          ],
+          "root": "ص و ب",
+          "surfaces": [
+            "صَيِّب"
+          ]
+        },
+        {
+          "entry_ids": [
+            "746abe23a760"
+          ],
+          "root": "ص ي ب",
+          "surfaces": [
+            "صَيِّب"
+          ]
+        }
+      ],
+      "norm_key": "صيب",
+      "root_count": 2,
+      "roots": [
+        "ص و ب",
+        "ص ي ب"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "28a37c16df79"
+          ],
+          "root": "أ ف ك",
+          "surfaces": [
+            "أُفِكَ",
+            "إِفْك"
+          ]
+        },
+        {
+          "entry_ids": [
+            "eef665ccd2dc"
+          ],
+          "root": "ف ك ك",
+          "surfaces": [
+            "فَكُّ"
+          ]
+        }
+      ],
+      "norm_key": "فك",
+      "root_count": 2,
+      "roots": [
+        "أ ف ك",
+        "ف ك ك"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "6fe9ada37a9b"
+          ],
+          "root": "ق ر أ",
+          "surfaces": [
+            "قَرَأَهُ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "887fec713dc3"
+          ],
+          "root": "ق ر ر",
+          "surfaces": [
+            "قُرَّة"
+          ]
+        }
+      ],
+      "norm_key": "قره",
+      "root_count": 2,
+      "roots": [
+        "ق ر أ",
+        "ق ر ر"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "8ea65de7280d"
+          ],
+          "root": "ق ل ل",
+          "surfaces": [
+            "أَقَلَّ",
+            "أَقَلُّ",
+            "قَلَّ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "430015446b77"
+          ],
+          "root": "ق و ل",
+          "surfaces": [
+            "قُلْ"
+          ]
+        }
+      ],
+      "norm_key": "قل",
+      "root_count": 2,
+      "roots": [
+        "ق ل ل",
+        "ق و ل"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "8ea65de7280d"
+          ],
+          "root": "ق ل ل",
+          "surfaces": [
+            "أَقَلَّت"
+          ]
+        },
+        {
+          "entry_ids": [
+            "430015446b77"
+          ],
+          "root": "ق و ل",
+          "surfaces": [
+            "قُلْتَ",
+            "قُلْتُ"
+          ]
+        }
+      ],
+      "norm_key": "قلت",
+      "root_count": 2,
+      "roots": [
+        "ق ل ل",
+        "ق و ل"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "01ec9e31203b"
+          ],
+          "root": "أ ل ل",
+          "surfaces": [
+            "إِلًّا"
+          ]
+        },
+        {
+          "entry_ids": [
+            "622a3d627d4d"
+          ],
+          "root": "ب غ ي",
+          "surfaces": [
+            "لَا"
+          ]
+        }
+      ],
+      "norm_key": "لا",
+      "root_count": 2,
+      "roots": [
+        "أ ل ل",
+        "ب غ ي"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "d5ac66156b8e"
+          ],
+          "root": "أ م ر",
+          "surfaces": [
+            "أَمَرَ",
+            "أَمْر"
+          ]
+        },
+        {
+          "entry_ids": [
+            "51186752f2f8"
+          ],
+          "root": "م ر ر",
+          "surfaces": [
+            "أَمَرّ",
+            "مَرّ",
+            "مَرَّ"
+          ]
+        }
+      ],
+      "norm_key": "مر",
+      "root_count": 2,
+      "roots": [
+        "أ م ر",
+        "م ر ر"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "c59a0161fac8"
+          ],
+          "root": "أ م ن",
+          "surfaces": [
+            "أَمِنَ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "3f40e0c0eb7a"
+          ],
+          "root": "م ن ن",
+          "surfaces": [
+            "مَنَّ"
+          ]
+        }
+      ],
+      "norm_key": "من",
+      "root_count": 2,
+      "roots": [
+        "أ م ن",
+        "م ن ن"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "3d82e28ccae0"
+          ],
+          "root": "أ م م",
+          "surfaces": [
+            "أُمَّة"
+          ]
+        },
+        {
+          "entry_ids": [
+            "9af2077b3ec4"
+          ],
+          "root": "أ م و",
+          "surfaces": [
+            "أَمَة"
+          ]
+        }
+      ],
+      "norm_key": "مه",
+      "root_count": 2,
+      "roots": [
+        "أ م م",
+        "أ م و"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "أ ن س",
+          "surfaces": [
+            "نَاس",
+            "نَاسٌ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "ن و س",
+          "surfaces": [
+            "نَاس",
+            "نَاسٌ"
+          ]
+        }
+      ],
+      "norm_key": "ناس",
+      "root_count": 2,
+      "roots": [
+        "أ ن س",
+        "ن و س"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "أ ن س",
+          "surfaces": [
+            "أَنَاسِيَّ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "ن و س",
+          "surfaces": [
+            "أَنَاسِيَّ"
+          ]
+        }
+      ],
+      "norm_key": "ناسي",
+      "root_count": 2,
+      "roots": [
+        "أ ن س",
+        "ن و س"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "أ ن س",
+          "surfaces": [
+            "إِنْسِيًّا"
+          ]
+        },
+        {
+          "entry_ids": [
+            "385725d86a5b"
+          ],
+          "root": "ن و س",
+          "surfaces": [
+            "إِنْسِيًّا"
+          ]
+        }
+      ],
+      "norm_key": "نسيا",
+      "root_count": 2,
+      "roots": [
+        "أ ن س",
+        "ن و س"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "6031796cfb94"
+          ],
+          "root": "ق ص ص",
+          "surfaces": [
+            "نَقُصُّ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "78e9fc4a99b5"
+          ],
+          "root": "ن ق ص",
+          "surfaces": [
+            "نَقْص"
+          ]
+        }
+      ],
+      "norm_key": "نقص",
+      "root_count": 2,
+      "roots": [
+        "ق ص ص",
+        "ن ق ص"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "5defcad62e03"
+          ],
+          "root": "ب د أ",
+          "surfaces": [
+            "يُبْدِئُ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "e2824ef7725d"
+          ],
+          "root": "ب د و",
+          "surfaces": [
+            "يُبْدِي"
+          ]
+        }
+      ],
+      "norm_key": "يبدي",
+      "root_count": 2,
+      "roots": [
+        "ب د أ",
+        "ب د و"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "c49dfdec1d36"
+          ],
+          "root": "ص د د",
+          "surfaces": [
+            "يَصِدُّون"
+          ]
+        },
+        {
+          "entry_ids": [
+            "c49dfdec1d36"
+          ],
+          "root": "ص د ي",
+          "surfaces": [
+            "يَصِدُّون"
+          ]
+        }
+      ],
+      "norm_key": "يصدون",
+      "root_count": 2,
+      "roots": [
+        "ص د د",
+        "ص د ي"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "e06ba04e7433"
+          ],
+          "root": "ف ت ر",
+          "surfaces": [
+            "يَفْتُرُونَ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "dc902fbbbd8c"
+          ],
+          "root": "ف ر ي",
+          "surfaces": [
+            "يَفْتُرُون"
+          ]
+        }
+      ],
+      "norm_key": "يفترون",
+      "root_count": 2,
+      "roots": [
+        "ف ت ر",
+        "ف ر ي"
+      ]
+    },
+    {
+      "entries": [
+        {
+          "entry_ids": [
+            "86d1bc421842"
+          ],
+          "root": "ك ف ف",
+          "surfaces": [
+            "يَكُفَّ"
+          ]
+        },
+        {
+          "entry_ids": [
+            "c9f6f53604e8"
+          ],
+          "root": "ك ف ي",
+          "surfaces": [
+            "يَكْفِ"
+          ]
+        }
+      ],
+      "norm_key": "يكف",
+      "root_count": 2,
+      "roots": [
+        "ك ف ف",
+        "ك ف ي"
+      ]
+    }
+  ],
+  "normalization": {
+    "key_function": "tools.normalize_ar.norm",
+    "purpose": "broad recall defeater only; never certifies root, sense, or hover identity",
+    "surface_build_normalization": "strip tatweel before generated lookup keys; preserve source/display text"
+  },
+  "risk_flag": "norm_homograph",
+  "schema": "qamus/largelexicon-homograph-keys@1",
+  "source": "qamus/data/current/entries.jsonl",
+  "source_sha256": "a68245e93ce1a8b76858b672a449ff94475abf010e8102575e7c0285c540a78f"
+}
