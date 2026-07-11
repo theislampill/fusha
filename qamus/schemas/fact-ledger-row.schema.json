@@ -424,6 +424,10 @@
         "id": "head_selection"
       },
       {
+        "gate_trigger": "advanced_nahw",
+        "id": "governing_entry_analysis"
+      },
+      {
         "id": "relation_label"
       },
       {
