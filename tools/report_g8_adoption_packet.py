@@ -271,6 +271,7 @@ def self_test():
         public_row("1:1:1", "book", row_id="chw:one", canonical_payload_id="chp:one"),
         public_row("1:1:2", "volume", row_id="chw:two", canonical_payload_id="chp:two"),
         public_row("1:1:3", "new book", row_id="chw:three", canonical_payload_id="chp:three"),
+        public_row("1:1:7", "same", row_id="chw:seven", canonical_payload_id="chp:seven"),
     ]
     baseline = [
         public_row("1:1:1", "book", legacy=True),
@@ -278,6 +279,9 @@ def self_test():
         public_row("1:1:4", "removed", legacy=True),
         public_row("1:1:5", "clean", legacy=True),
         public_row("1:1:6", "blocked", legacy=True),
+        # NF-T6-1 mixed-shape case: deployed rows carry the wbw: prefix; identical public
+        # content must still join and classify no_op (red-first vs the unfixed loc key).
+        public_row("wbw:1:1:7", "same", legacy=True),
     ]
     bindings = [{"canonical_wbw_loc": "1:1:1", "binding_id": "chb:one",
                  "entry_id": "entry-one", "card_id": "card-one", "qword_row_id": "qword-one"}]
@@ -288,10 +292,13 @@ def self_test():
     rowdiff, summary, samples = build_adoption_report(
         packet, bindings, conflicts, [], baseline, sample_size=1)
     counts = {name: summary["classifications"][name]["count"] for name in CLASSIFICATIONS}
-    if counts != {name: 1 for name in CLASSIFICATIONS}:
+    expected = {name: 1 for name in CLASSIFICATIONS}
+    expected["no_op"] = 2  # incl. the NF-T6-1 wbw:-prefixed mixed-shape no_op
+    if counts != expected:
         print("SELF-TEST FAIL classifications", counts); return 1
     noop = next(row for row in rowdiff if row["classification"] == "no_op")
-    if not noop["lineage_change"] or summary["lineage_only_improvement"]["count"] != 1:
+    if not noop["lineage_change"] or summary["lineage_only_improvement"]["count"] != 2:
+        # both no_ops (bare and wbw:-prefixed legacy rows) gain internal lineage records
         print("SELF-TEST FAIL legacy lineage-only", noop); return 1
     if summary["leak_false_block"]["count"] != 1:
         print("SELF-TEST FAIL leak false-block", summary); return 1
