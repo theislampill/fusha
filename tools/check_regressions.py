@@ -4472,6 +4472,18 @@ except Exception as _e:
     check("T8 hash durability (scan error)", False)
     print("  ", _e)
 
+# --- T9B shadow runner (Shadow Flywheel Activation Program) ---
+# The operational shadow compiler's alert evaluator + synthetic end-to-end pipeline.
+# Self-test only: no production paths, no overlay, no repo dataset mutation.
+try:
+    _t9b = run_text([sys.executable, os.path.join(ROOT, "tools", "run_shadow_compile.py"),
+                     "--self-test"])
+    check("T9B shadow runner self-test (alert classes + synthetic pipeline)",
+          _t9b.returncode == 0 and "SHADOW RUNNER SELF-TEST PASS" in (_t9b.stdout or ""))
+except Exception as _e:
+    check("T9B shadow runner self-test (harness error)", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)
