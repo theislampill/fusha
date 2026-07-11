@@ -4536,6 +4536,27 @@ except Exception as _e:
     check("RM-19 atomic shard promotion self-test (harness error)", False)
     print("  ", _e)
 
+# --- T10 residue investigation + RM-36 re-verification + T12 projectors ---
+try:
+    _cd = run_text([sys.executable, os.path.join(ROOT, "tools", "investigate_gap_residue.py"), "--self-test"])
+    check("T10 Lane C/D residue investigator self-test", _cd.returncode == 0)
+except Exception as _e:
+    check("T10 Lane C/D residue investigator self-test (harness error)", False)
+    print("  ", _e)
+try:
+    _rv = run_text([sys.executable, os.path.join(ROOT, "tools", "reverify_crosswalk_fallback.py"), "--self-test"])
+    check("RM-36 fallback re-verifier self-test", _rv.returncode == 0)
+except Exception as _e:
+    check("RM-36 fallback re-verifier self-test (harness error)", False)
+    print("  ", _e)
+try:
+    _pj = run_text([sys.executable, os.path.join(ROOT, "tools", "test_fact_projectors.py")])
+    check("T12 fact projector tests (registry + sarf + nahw cycles + defeaters)",
+          _pj.returncode == 0)
+except Exception as _e:
+    check("T12 fact projector tests (harness error)", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

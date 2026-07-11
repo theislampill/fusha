@@ -1,0 +1,240 @@
+{
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/projector-record.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Inspectable projector registrations and deterministic projection-run instrumentation.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/registry_entry"
+    },
+    {
+      "$ref": "#/$defs/projection_run"
+    }
+  ],
+  "title": "Qamus projector registry and run records v1",
+  "type": "object",
+  "$defs": {
+    "abstention": {
+      "additionalProperties": false,
+      "properties": {
+        "defeater_name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "detail": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "resolution": {
+          "enum": [
+            "abstained",
+            "tie_unresolved"
+          ],
+          "type": "string"
+        },
+        "subject_identity": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "subject_identity",
+        "defeater_name",
+        "detail",
+        "resolution"
+      ],
+      "type": "object"
+    },
+    "input": {
+      "additionalProperties": false,
+      "properties": {
+        "fact_id": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "hash": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "fact_id",
+        "hash"
+      ],
+      "type": "object"
+    },
+    "registry_entry": {
+      "additionalProperties": false,
+      "properties": {
+        "compatibility_class": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "defeater_checks": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "fact_family": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "gate_tier": {
+          "enum": [
+            "auto_safe",
+            "two_vote_required",
+            "human_source_review_required",
+            "never_auto_resolve"
+          ],
+          "type": "string"
+        },
+        "input_fact_types": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "output_fact_type": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "projector_id": {
+          "pattern": "^[a-z][a-z0-9._-]*$",
+          "type": "string"
+        },
+        "record_type": {
+          "const": "registry_entry"
+        },
+        "resolution_method": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "schema": {
+          "const": "qamus.projector_record.v1"
+        },
+        "version": {
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema",
+        "record_type",
+        "projector_id",
+        "fact_family",
+        "input_fact_types",
+        "output_fact_type",
+        "compatibility_class",
+        "defeater_checks",
+        "gate_tier",
+        "version",
+        "resolution_method"
+      ],
+      "type": "object"
+    },
+    "projection_run": {
+      "additionalProperties": false,
+      "properties": {
+        "abstentions": {
+          "items": {
+            "$ref": "#/$defs/abstention"
+          },
+          "type": "array"
+        },
+        "candidates_generated": {
+          "items": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "certifications": {
+          "items": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "finished_at": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "inputs": {
+          "items": {
+            "$ref": "#/$defs/input"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "materializations": {
+          "items": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "projector_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "record_type": {
+          "const": "projection_run"
+        },
+        "resolution_method": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "review_votes": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "runtime_ms": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "schema": {
+          "const": "qamus.projector_record.v1"
+        },
+        "started_at": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "superseded_dependents": {
+          "items": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "version": {
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema",
+        "record_type",
+        "projector_id",
+        "version",
+        "inputs",
+        "candidates_generated",
+        "abstentions",
+        "certifications",
+        "review_votes",
+        "materializations",
+        "superseded_dependents",
+        "started_at",
+        "finished_at",
+        "runtime_ms",
+        "resolution_method"
+      ],
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,588 @@
+#!/usr/bin/env python3
+"""End-to-end tests for registered fact-family projectors."""
+
+from __future__ import annotations
+
+import copy
+import json
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from tools import fact_ledger  # noqa: E402
+from tools import largelexicon_common  # noqa: E402
+from tools import fact_projectors  # noqa: E402
+
+
+ENTRIES_PATH = ROOT / "qamus" / "data" / "current" / "entries.jsonl"
+PROJECTOR_SCHEMA = ROOT / "qamus" / "schemas" / "projector-record.schema.json"
+NOW = "2026-07-11T12:00:00Z"
+LATER = "2026-07-11T12:30:00Z"
+
+
+def identity(loc: str, entry_id: str = "entry-v001") -> dict:
+    return {
+        "ref_type": "surface_occurrence",
+        "loc": loc,
+        "entry_id": entry_id,
+        "card_id": "card-" + loc.replace(":", "-"),
+        "qword_row_id": "qword-" + loc.replace(":", "-"),
+    }
+
+
+def source_row(
+    *,
+    family: str,
+    value: object,
+    surface: str,
+    entry_id: str = "entry-v001",
+    created_from: str | None = None,
+) -> dict:
+    fact_type = "sarf_form" if family == "sarf" else "particle_function"
+    row = {
+        "schema": "qamus.fact_ledger_row.v1",
+        "subject_type": "lexeme" if family == "sarf" else "construction",
+        "subject_identity": {
+            "ref_type": "lexeme" if family == "sarf" else "construction",
+            "id": ("lexeme:" if family == "sarf" else "particle:") + entry_id,
+        },
+        "fact_type": fact_type,
+        "candidate_or_value": {
+            "value": value,
+            "competing_alternatives": [],
+            "semantic_tie": False,
+        },
+        "scope": "lexeme_global" if family == "sarf" else "rule_global",
+        "source_address": {
+            "address": "qamus-entry:%s:%s" % (entry_id, surface),
+            "source_kind": "qamus_entry_field",
+        },
+        "evidence": [
+            {
+                "evidence_id": "ev-source-" + family,
+                "type": "source_quote",
+                "detail": "fixture-certified source fact for projector testing",
+            }
+        ],
+        "provenance": {
+            "actor": "test-suite",
+            "method": "fixture",
+            "created_at": NOW,
+            "input_hashes": {"fixture": "sha256:" + "1" * 64},
+        },
+        "review_votes": [],
+        "certification_state": "candidate",
+        "confidence_or_calibration": None,
+        "defeaters": [],
+        "exceptions": [],
+        "dependency_hashes": {},
+        "materialization_targets": [],
+        "supersedes": None,
+        "created_from": created_from,
+        "fact_id": "",
+    }
+    row["fact_id"] = fact_ledger.compute_fact_id(row)
+    return row
+
+
+def votes(evidence_ref: str, prefix: str = "reviewer") -> list[dict]:
+    return [
+        {
+            "voter_id": prefix + "-a",
+            "vote": "approve",
+            "evidence_ref": evidence_ref,
+            "independent": True,
+        },
+        {
+            "voter_id": prefix + "-b",
+            "vote": "approve",
+            "evidence_ref": evidence_ref,
+            "independent": True,
+        },
+    ]
+
+
+def certify_source(store: fact_ledger.FactLedgerStore, row: dict) -> dict:
+    stored = store.append(row)
+    store.transition(stored["fact_id"], "review_required")
+    return store.transition(
+        stored["fact_id"],
+        "certified",
+        review_votes=votes(stored["evidence"][0]["evidence_id"], "source-reviewer"),
+    )
+
+
+def sarf_occurrences(entry_id: str = "entry-v001") -> list[dict]:
+    return [
+        {"identity": identity("9:69:1", entry_id), "surface": "خُضْتُمْ"},
+        {"identity": identity("9:69:2", entry_id), "surface": "نَزَلَ"},
+        {"identity": identity("9:69:3", entry_id), "surface": "يخوضون"},
+        {
+            "identity": identity("9:69:4", entry_id),
+            "surface": "خُضْتُمْ",
+            "clitics": ["و"],
+        },
+    ]
+
+
+def sarf_forms(entry_id: str = "entry-v001", form: str = "I") -> list[dict]:
+    return [
+        {
+            "form_id": "form-khudtum",
+            "entry_id": entry_id,
+            "surface": "خُضْتُمْ",
+            "sarf_form": form,
+            "clitics": [],
+            "liaison": False,
+        },
+        {
+            "form_id": "form-yakhudun",
+            "entry_id": entry_id,
+            "surface": "يَخُوضُون",
+            "sarf_form": form,
+            "clitics": [],
+            "liaison": False,
+        },
+        {
+            "form_id": "form-nazzala",
+            "entry_id": entry_id,
+            "surface": "نَزَّلَ",
+            "sarf_form": "II",
+            "clitics": [],
+            "liaison": False,
+        },
+    ]
+
+
+def nahw_occurrences(entry_id: str = "particle-min") -> list[dict]:
+    return [
+        {
+            "identity": identity("2:1:1", entry_id),
+            "surface": "مِنْ",
+            "context": {"next_pos": "noun"},
+        },
+        {
+            "identity": identity("2:1:2", entry_id),
+            "surface": "مَنْ",
+            "context": {"next_pos": "noun"},
+        },
+    ]
+
+
+def min_pattern(function: str = "preposition_from") -> list[dict]:
+    return [
+        {
+            "pattern_id": "pattern-min-before-noun",
+            "particle_surface": "مِنْ",
+            "function": function,
+            "context_equals": {"next_pos": "noun"},
+        }
+    ]
+
+
+class RegistryTests(unittest.TestCase):
+    def test_default_registry_contracts_are_data_inspectable_and_schema_valid(self):
+        contracts = fact_projectors.REGISTRY.list_contracts()
+        self.assertEqual(
+            {fact_projectors.SARF_PROJECTOR_ID, fact_projectors.NAHW_PROJECTOR_ID},
+            {item["projector_id"] for item in contracts},
+        )
+        for contract in contracts:
+            self.assertEqual([], fact_projectors.validate_projector_record(contract))
+            self.assertTrue(contract["defeater_checks"])
+            self.assertIn(contract["gate_tier"], fact_projectors.load_gate_tiers())
+
+    def test_missing_defeater_list_and_unregistered_projector_fail_closed(self):
+        contract = copy.deepcopy(fact_projectors.REGISTRY.list_contracts()[0])
+        contract["defeater_checks"] = []
+        with self.assertRaisesRegex(fact_projectors.ProjectorValidationError, "defeater"):
+            fact_projectors.ProjectorRegistry().register(contract, lambda **_: {})
+        contract["defeater_checks"] = ["not_a_real_defeater_function"]
+        with self.assertRaisesRegex(fact_projectors.ProjectorValidationError, "callable"):
+            fact_projectors.ProjectorRegistry().register(contract, lambda **_: {})
+        with self.assertRaisesRegex(fact_projectors.ProjectorValidationError, "unregistered"):
+            fact_projectors.REGISTRY.run("projector:not-registered")
+
+    def test_cli_lists_projector_contracts(self):
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "tools" / "fact_projectors.py"), "list", "--json"],
+            cwd=ROOT,
+            text=True,
+            encoding="utf-8",
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(0, result.returncode, result.stderr + result.stdout)
+        listed = json.loads(result.stdout)
+        self.assertEqual(2, len(listed))
+        self.assertIn("compatibility_class", listed[0])
+
+    def test_projector_record_schema_is_pretty_and_accepts_both_record_kinds(self):
+        raw = PROJECTOR_SCHEMA.read_text(encoding="utf-8")
+        self.assertTrue(raw.endswith("\n"))
+        self.assertGreater(len(raw.splitlines()), 20)
+        self.assertEqual("object", json.loads(raw)["type"])
+        self.assertEqual(
+            [], fact_projectors.validate_projector_record(
+                fact_projectors.REGISTRY.list_contracts()[0]
+            )
+        )
+
+    def test_detached_certified_source_is_rejected(self):
+        with tempfile.TemporaryDirectory() as first, tempfile.TemporaryDirectory() as second:
+            source = certify_source(
+                fact_ledger.FactLedgerStore(first),
+                source_row(family="sarf", value={"form": "I"}, surface="خَاضُوا"),
+            )
+            with self.assertRaisesRegex(fact_projectors.ProjectorValidationError, "current ledger"):
+                fact_projectors.REGISTRY.run(
+                    fact_projectors.SARF_PROJECTOR_ID,
+                    store=fact_ledger.FactLedgerStore(second),
+                    source_fact=source,
+                    occurrences=sarf_occurrences()[:1],
+                    documented_forms=sarf_forms(),
+                    created_at=NOW,
+                    started_at=NOW,
+                    finished_at=LATER,
+                    prior_candidates=[],
+                )
+
+
+class SarfProjectorTests(unittest.TestCase):
+    def run_sarf(self, store, source, occurrences=None, forms=None, prior=None):
+        return fact_projectors.REGISTRY.run(
+            fact_projectors.SARF_PROJECTOR_ID,
+            store=store,
+            source_fact=source,
+            occurrences=occurrences or sarf_occurrences(),
+            documented_forms=forms or sarf_forms(),
+            created_at=NOW,
+            started_at=NOW,
+            finished_at=LATER,
+            prior_candidates=prior or [],
+        )
+
+    def test_candidate_never_enters_ledger_as_certified_without_transitions(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            store = fact_ledger.FactLedgerStore(Path(tmp) / "source")
+            source = certify_source(
+                store,
+                source_row(family="sarf", value={"form": "I"}, surface="خَاضُوا"),
+            )
+            run = self.run_sarf(store, source)
+            candidate = store.query(fact_id=run["candidates_generated"][0])[0]
+            self.assertEqual("candidate", candidate["certification_state"])
+            self.assertEqual("I", candidate["candidate_or_value"]["value"]["sarf_form"])
+
+            illicit = copy.deepcopy(candidate)
+            illicit["certification_state"] = "certified"
+            illicit["review_votes"] = []
+            with tempfile.TemporaryDirectory() as other:
+                with self.assertRaisesRegex(fact_ledger.ValidationError, "new fact must begin as candidate"):
+                    fact_ledger.FactLedgerStore(other).append(illicit)
+
+    def test_each_sarf_defeater_fires_and_only_documented_exact_form_projects(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            store = fact_ledger.FactLedgerStore(tmp)
+            source = certify_source(
+                store,
+                source_row(family="sarf", value={"form": "I"}, surface="خَاضُوا"),
+            )
+            run = self.run_sarf(store, source)
+            self.assertEqual(1, len(run["candidates_generated"]))
+            by_loc = {item["subject_identity"]["loc"]: item for item in run["abstentions"]}
+            self.assertEqual("homograph_norm_key_collision", by_loc["9:69:2"]["defeater_name"])
+            self.assertEqual("harakah_blind_sole_candidate", by_loc["9:69:3"]["defeater_name"])
+            self.assertEqual("liaison_clitic_mismatch", by_loc["9:69:4"]["defeater_name"])
+
+    def test_sarf_full_cycle_and_correction_propagates_to_every_dependent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            store = fact_ledger.FactLedgerStore(tmp)
+            old_source = certify_source(
+                store,
+                source_row(family="sarf", value={"form": "I"}, surface="خَاضُوا"),
+            )
+            dependents = [
+                sarf_occurrences()[0],
+                {"identity": identity("9:70:1"), "surface": "خُضْتُمْ"},
+            ]
+            first = self.run_sarf(store, old_source, occurrences=dependents, forms=sarf_forms())
+            materialized = []
+            for dependent_id in first["candidates_generated"]:
+                materialized.append(
+                    fact_projectors.review_and_materialize(
+                        store,
+                        dependent_id,
+                        votes("ev-form-form-khudtum"),
+                        "review-artifact:sarf-demo",
+                        first,
+                    )
+                )
+            self.assertEqual(2, len(materialized))
+            self.assertTrue(
+                all(row["certification_state"] == "materialized" for row in materialized)
+            )
+            self.assertEqual(2, len(first["certifications"]))
+            self.assertEqual(2, len(first["materializations"]))
+
+            store.transition(old_source["fact_id"], "superseded")
+            new_source = certify_source(
+                store,
+                source_row(
+                    family="sarf",
+                    value={"form": "III"},
+                    surface="خَاضُوا",
+                    created_from=old_source["fact_id"],
+                ),
+            )
+            second = self.run_sarf(
+                store,
+                new_source,
+                occurrences=dependents,
+                forms=sarf_forms(form="III"),
+                prior=materialized,
+            )
+            replacements = [
+                store.query(fact_id=fact_id)[0]
+                for fact_id in second["candidates_generated"]
+            ]
+            old_ids = {row["fact_id"] for row in materialized}
+            self.assertEqual(old_ids, {row["created_from"] for row in replacements})
+            self.assertTrue(
+                all(
+                    row["dependency_hashes"]["source_fact"] == new_source["fact_id"]
+                    for row in replacements
+                )
+            )
+            self.assertEqual(old_ids, set(second["superseded_dependents"]))
+            self.assertTrue(old_ids.isdisjoint(second["candidates_generated"]))
+            self.assertEqual([], store.validate_all())
+
+    def test_real_entries_read_only_smoke_projects_a_documented_verb_form(self):
+        before = ENTRIES_PATH.stat().st_mtime_ns
+        entry = None
+        with ENTRIES_PATH.open(encoding="utf-8") as handle:
+            for line in handle:
+                candidate = json.loads(line)
+                forms = largelexicon_common.forms_for_entry(candidate)
+                if candidate.get("section") == "verb" and candidate.get("root") and forms:
+                    entry = candidate
+                    break
+        self.assertIsNotNone(entry)
+        form_rows = largelexicon_common.form_rows_for_lemmas(
+            [largelexicon_common.entry_to_lemma(entry)]
+        )
+        documented = [
+            {
+                "form_id": row["form_id"],
+                "entry_id": row["entry_id"],
+                "surface": row["surface"],
+                "sarf_form": "documented",
+                "clitics": [],
+                "liaison": False,
+            }
+            for row in form_rows
+        ]
+        occurrence = {
+            "identity": identity("1:1:1", entry["id"]),
+            "surface": documented[0]["surface"],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            store = fact_ledger.FactLedgerStore(tmp)
+            source = certify_source(
+                store,
+                source_row(
+                    family="sarf",
+                    value={"form": "documented", "root": entry["root"]},
+                    surface=documented[0]["surface"],
+                    entry_id=entry["id"],
+                ),
+            )
+            run = self.run_sarf(
+                store, source, occurrences=[occurrence], forms=documented
+            )
+            self.assertGreaterEqual(len(run["candidates_generated"]), 1)
+        self.assertEqual(before, ENTRIES_PATH.stat().st_mtime_ns)
+
+
+class NahwProjectorTests(unittest.TestCase):
+    def run_nahw(self, store, source, occurrences=None, patterns=None, prior=None):
+        return fact_projectors.REGISTRY.run(
+            fact_projectors.NAHW_PROJECTOR_ID,
+            store=store,
+            source_fact=source,
+            occurrences=occurrences or nahw_occurrences(),
+            construction_patterns=patterns or min_pattern(),
+            created_at=NOW,
+            started_at=NOW,
+            finished_at=LATER,
+            prior_candidates=prior or [],
+        )
+
+    def test_man_min_vowel_defeater_and_two_vote_gate(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            store = fact_ledger.FactLedgerStore(tmp)
+            source = certify_source(
+                store,
+                source_row(
+                    family="nahw",
+                    value="preposition_from",
+                    surface="مِنْ",
+                    entry_id="particle-min",
+                ),
+            )
+            run = self.run_nahw(store, source)
+            self.assertEqual(1, len(run["candidates_generated"]))
+            self.assertEqual("particle_vowel_distinction", run["abstentions"][0]["defeater_name"])
+            with self.assertRaisesRegex(fact_projectors.ProjectorValidationError, "two independent"):
+                fact_projectors.review_and_materialize(
+                    store,
+                    run["candidates_generated"][0],
+                    [],
+                    "review-artifact:nahw-demo",
+                    run,
+                )
+
+    def test_ambiguous_la_stays_tie_unresolved(self):
+        occurrence = {
+            "identity": identity("2:2:1", "particle-la"),
+            "surface": "لَا",
+            "context": {},
+        }
+        patterns = [
+            {
+                "pattern_id": "pattern-la",
+                "particle_surface": "لَا",
+                "function": "simple_negation",
+                "context_equals": {},
+                "competing_functions": ["prohibition"],
+            }
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            store = fact_ledger.FactLedgerStore(tmp)
+            source = certify_source(
+                store,
+                source_row(
+                    family="nahw",
+                    value="simple_negation",
+                    surface="لَا",
+                    entry_id="particle-la",
+                ),
+            )
+            run = self.run_nahw(store, source, [occurrence], patterns)
+            self.assertEqual([], run["candidates_generated"])
+            self.assertEqual("la_family_ambiguity", run["abstentions"][0]["defeater_name"])
+            self.assertEqual("tie_unresolved", run["abstentions"][0]["resolution"])
+
+    def test_nahw_full_cycle_and_correction_propagates_to_every_dependent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            store = fact_ledger.FactLedgerStore(tmp)
+            old_source = certify_source(
+                store,
+                source_row(
+                    family="nahw",
+                    value="preposition_from",
+                    surface="مِنْ",
+                    entry_id="particle-min",
+                ),
+            )
+            dependents = [
+                nahw_occurrences()[0],
+                {
+                    "identity": identity("2:1:3", "particle-min"),
+                    "surface": "مِنْ",
+                    "context": {"next_pos": "noun"},
+                },
+            ]
+            first = self.run_nahw(store, old_source, dependents, min_pattern())
+            materialized = []
+            for dependent_id in first["candidates_generated"]:
+                materialized.append(
+                    fact_projectors.review_and_materialize(
+                        store,
+                        dependent_id,
+                        votes("ev-pattern-pattern-min-before-noun"),
+                        "review-artifact:nahw-demo",
+                        first,
+                    )
+                )
+            self.assertEqual(2, len(materialized))
+
+            store.transition(old_source["fact_id"], "superseded")
+            new_source = certify_source(
+                store,
+                source_row(
+                    family="nahw",
+                    value="partitive_from",
+                    surface="مِنْ",
+                    entry_id="particle-min",
+                    created_from=old_source["fact_id"],
+                ),
+            )
+            second = self.run_nahw(
+                store,
+                new_source,
+                dependents,
+                min_pattern("partitive_from"),
+                prior=materialized,
+            )
+            replacements = [
+                store.query(fact_id=fact_id)[0]
+                for fact_id in second["candidates_generated"]
+            ]
+            old_ids = {row["fact_id"] for row in materialized}
+            self.assertEqual(old_ids, {row["created_from"] for row in replacements})
+            self.assertTrue(
+                all(
+                    row["dependency_hashes"]["source_fact"] == new_source["fact_id"]
+                    for row in replacements
+                )
+            )
+            self.assertEqual(old_ids, set(second["superseded_dependents"]))
+            self.assertEqual([], store.validate_all())
+
+
+class FlywheelTests(unittest.TestCase):
+    def test_run_record_has_required_instrumentation_and_aggregate_is_caller_timed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            store = fact_ledger.FactLedgerStore(tmp)
+            source = certify_source(
+                store,
+                source_row(family="sarf", value={"form": "I"}, surface="خَاضُوا"),
+            )
+            run = fact_projectors.REGISTRY.run(
+                fact_projectors.SARF_PROJECTOR_ID,
+                store=store,
+                source_fact=source,
+                occurrences=sarf_occurrences()[:1],
+                documented_forms=sarf_forms(),
+                created_at=NOW,
+                started_at=NOW,
+                finished_at=LATER,
+                prior_candidates=[],
+            )
+            self.assertEqual([], fact_projectors.validate_projector_record(run))
+            for key in (
+                "projector_id",
+                "version",
+                "inputs",
+                "candidates_generated",
+                "abstentions",
+                "certifications",
+                "review_votes",
+                "runtime_ms",
+                "resolution_method",
+            ):
+                self.assertIn(key, run)
+            metrics = fact_projectors.aggregate_projection_runs([run])
+            self.assertEqual(2.0, metrics["facts_per_hour"])
+            self.assertEqual(1, metrics["candidate_count"])
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
