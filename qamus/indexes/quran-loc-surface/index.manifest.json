@@ -1,0 +1,226 @@
+{
+  "artifact": "qamus/indexes/quran-loc-surface/index.jsonl",
+  "schema": "fusha/quran-loc-surface@1",
+  "row_schema": [
+    "loc",
+    "surface"
+  ],
+  "description": "Public-domain loc->surface rasm index for all 6,236 ayat (one row per Quranic word: {loc: 'surah:ayah:word', surface}).",
+  "source": {
+    "edition": "Tanzil Quran Text (Uthmani, Version 1.1)",
+    "url": "https://tanzil.net/pub/download/index.php?quranType=uthmani&outType=txt-2&agree=true",
+    "sha256": "bf4f57b968d03f4131c070b1e285da9be0e0a108a21c910e872801ca273312c8",
+    "license": "CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)",
+    "attribution": "Tanzil Project - https://tanzil.net",
+    "acquired_for": "RM-25 step 1 (network fetch authorised by brief)"
+  },
+  "tokenization": "verbatim Tanzil txt-2 segmentation; words split on U+0020; surfaces reproduced byte-for-byte (no de-diacritisation). Basmala is prepended to ayah 1 of every surah except 9 (surah 1's basmala is ayah 1:1), as Tanzil distributes it.",
+  "counts": {
+    "surahs": 114,
+    "ayat": 6236,
+    "words": 77881
+  },
+  "per_surah_words": {
+    "1": 29,
+    "2": 6121,
+    "3": 3485,
+    "4": 3751,
+    "5": 2808,
+    "6": 3054,
+    "7": 3324,
+    "8": 1238,
+    "9": 2498,
+    "10": 1837,
+    "11": 1921,
+    "12": 1781,
+    "13": 858,
+    "14": 834,
+    "15": 659,
+    "16": 1848,
+    "17": 1560,
+    "18": 1583,
+    "19": 965,
+    "20": 1339,
+    "21": 1173,
+    "22": 1278,
+    "23": 1054,
+    "24": 1320,
+    "25": 897,
+    "26": 1322,
+    "27": 1155,
+    "28": 1434,
+    "29": 980,
+    "30": 821,
+    "31": 550,
+    "32": 376,
+    "33": 1291,
+    "34": 887,
+    "35": 779,
+    "36": 729,
+    "37": 865,
+    "38": 737,
+    "39": 1176,
+    "40": 1223,
+    "41": 798,
+    "42": 864,
+    "43": 834,
+    "44": 350,
+    "45": 492,
+    "46": 647,
+    "47": 543,
+    "48": 564,
+    "49": 351,
+    "50": 377,
+    "51": 364,
+    "52": 316,
+    "53": 364,
+    "54": 346,
+    "55": 355,
+    "56": 383,
+    "57": 578,
+    "58": 476,
+    "59": 449,
+    "60": 352,
+    "61": 225,
+    "62": 179,
+    "63": 184,
+    "64": 245,
+    "65": 291,
+    "66": 253,
+    "67": 337,
+    "68": 304,
+    "69": 262,
+    "70": 221,
+    "71": 230,
+    "72": 289,
+    "73": 203,
+    "74": 259,
+    "75": 168,
+    "76": 247,
+    "77": 185,
+    "78": 177,
+    "79": 183,
+    "80": 137,
+    "81": 108,
+    "82": 84,
+    "83": 173,
+    "84": 111,
+    "85": 113,
+    "86": 65,
+    "87": 76,
+    "88": 96,
+    "89": 141,
+    "90": 86,
+    "91": 58,
+    "92": 75,
+    "93": 44,
+    "94": 31,
+    "95": 38,
+    "96": 76,
+    "97": 34,
+    "98": 98,
+    "99": 40,
+    "100": 44,
+    "101": 40,
+    "102": 32,
+    "103": 18,
+    "104": 37,
+    "105": 27,
+    "106": 21,
+    "107": 29,
+    "108": 14,
+    "109": 30,
+    "110": 23,
+    "111": 27,
+    "112": 19,
+    "113": 27,
+    "114": 24
+  },
+  "artifact_sha256": "97efbaca345d5f23d9e9c699eef155f5bf4e06bb725e430729a8962b1573d227",
+  "artifact_bytes": 3914807,
+  "consistency_proof": {
+    "reference": "loc-surfaces-f2e079dc.jsonl (49,902-loc wbw-derived slice)",
+    "reference_sha256": "f2e079dcdce01148074a238e3937314cf02222298f91f83ed66dcbb599697ca7",
+    "reference_locs": 49902,
+    "per_loc": {
+      "matched": 48366,
+      "nf_t10_1": 13,
+      "other": 1523,
+      "note": "literal per-loc diagnostic; the reference is example-relative so per-loc 'other' reflects loc-scheme/basmala convention + hamza encoding, not scripture-text errors (see per_ayah for the meaningful proof)"
+    },
+    "per_ayah": {
+      "nf_t10_1_divergent_words": 0,
+      "encoding_convention_words": 270,
+      "genuine_divergent_words": 15
+    },
+    "nf_t10_1_ayahs": [
+      "2:274",
+      "4:64",
+      "12:37",
+      "48:15"
+    ],
+    "genuine_divergence_rows": [
+      [
+        "4:16",
+        "واللذان"
+      ],
+      [
+        "5:65",
+        "سَيِّئَاتِهِمْ"
+      ],
+      [
+        "7:98",
+        "أَفَأَمِنَ"
+      ],
+      [
+        "10:44",
+        "شَيْئًا"
+      ],
+      [
+        "12:39",
+        "يَٰصَىٰحِبَىِ"
+      ],
+      [
+        "19:89",
+        "شَيْئًا"
+      ],
+      [
+        "21:20",
+        "اللَّيْلَ"
+      ],
+      [
+        "70:24",
+        "لِلسَّائِلِ"
+      ],
+      [
+        "70:24",
+        "وَالْمَحْرُومِ"
+      ],
+      [
+        "76:1",
+        "شَيْئًا"
+      ],
+      [
+        "79:28",
+        "فَسَوَّاهَا"
+      ],
+      [
+        "82:19",
+        "شَيْئًا"
+      ],
+      [
+        "91:10",
+        "دَسَّاهَا"
+      ],
+      [
+        "98:1",
+        "..."
+      ],
+      [
+        "114:2",
+        "إِلَٰهِ"
+      ]
+    ],
+    "verdict": "PASS (15 genuine content divergences, gate=50). NF-T10-1 bucket clean (0). All other divergences are Uthmani-edition orthographic conventions (hamza-seat, alif/alif-maqsura, yaa-fusion) or reference-side ayah-numbering / data artifacts in the example-relative wbw slice (e.g. 7:98 carries 7:97's word, 70:24 carries 70:25's text, 98:1 has a literal ellipsis, 114:2 merges ayahs 2-3); the Tanzil index carries the correct standard rasm at each loc."
+  }
+}
