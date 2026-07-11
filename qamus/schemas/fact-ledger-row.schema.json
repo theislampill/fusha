@@ -1,0 +1,454 @@
+{
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/fact-ledger-row.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One append-only qamus.fact_ledger_row.v1 fact revision. fact_id is sha256 over subject_type, subject_identity, fact_type, scope, and candidate_or_value.value only. Evidence, alternatives, provenance, votes, state, confidence/calibration, defeaters, exceptions, dependency hashes, materialization targets, supersedes, and created_from are excluded so review and lineage churn do not change semantic identity.",
+  "properties": {
+    "candidate_or_value": {
+      "additionalProperties": false,
+      "properties": {
+        "competing_alternatives": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "reason": {
+                "type": "string"
+              },
+              "semantic_tie": {
+                "type": "boolean"
+              },
+              "value": {}
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "semantic_tie": {
+          "type": "boolean"
+        },
+        "value": {}
+      },
+      "required": [
+        "value",
+        "competing_alternatives"
+      ],
+      "type": "object"
+    },
+    "certification_state": {
+      "enum": [
+        "candidate",
+        "review_required",
+        "certified",
+        "rejected",
+        "conflicted",
+        "blocked",
+        "invalid",
+        "superseded",
+        "materialized",
+        "tie_unresolved"
+      ],
+      "type": "string"
+    },
+    "confidence_or_calibration": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "basis_evidence_refs": {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            "kind": {
+              "enum": [
+                "confidence",
+                "calibration"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "type": [
+                "string",
+                "number"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "value",
+            "basis_evidence_refs"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "created_from": {
+      "anyOf": [
+        {
+          "pattern": "^(sha256:[0-9a-f]{64}|projector:[A-Za-z0-9._:-]+)$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "defeaters": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "type": "string"
+          },
+          "fact_ids": {
+            "items": {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "dependency_hashes": {
+      "additionalProperties": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "evidence": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "evidence_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "source_address": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "source_quote",
+              "two_vote",
+              "mcp_analysis",
+              "deterministic_derivation",
+              "statistical_signal"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "evidence_id",
+          "type",
+          "detail"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "exceptions": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "fact_id": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "fact_type": {
+      "description": "Open fact-type identifier. Known v1 types and gate-trigger mappings are registered in x-fact-type-registry; unknown future identifiers remain structurally valid.",
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "type": "string"
+    },
+    "materialization_targets": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "actor": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "created_at": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "input_hashes": {
+          "additionalProperties": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "minProperties": 1,
+          "type": "object"
+        },
+        "method": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "actor",
+        "method",
+        "created_at",
+        "input_hashes"
+      ],
+      "type": "object"
+    },
+    "review_votes": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence_ref": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "independent": {
+            "type": "boolean"
+          },
+          "vote": {
+            "enum": [
+              "approve",
+              "reject",
+              "abstain"
+            ],
+            "type": "string"
+          },
+          "voter_id": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "voter_id",
+          "vote",
+          "evidence_ref",
+          "independent"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schema": {
+      "const": "qamus.fact_ledger_row.v1"
+    },
+    "scope": {
+      "enum": [
+        "occurrence",
+        "ayah",
+        "lexeme_global",
+        "rule_global"
+      ],
+      "type": "string"
+    },
+    "source_address": {
+      "additionalProperties": false,
+      "description": "Exact evidence address. A deployed/materialized row is deliberately not an allowed source kind.",
+      "properties": {
+        "address": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "source_kind": {
+          "enum": [
+            "quran_token",
+            "qamus_entry_field",
+            "corpus_record",
+            "construction",
+            "rule",
+            "review_artifact"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "address",
+        "source_kind"
+      ],
+      "type": "object"
+    },
+    "subject_identity": {
+      "description": "Typed reference. surface_occurrence uses the complete D-13 carrier; every other subject uses ref_type plus id.",
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "card_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "entry_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "loc": {
+              "pattern": "^[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}$",
+              "type": "string"
+            },
+            "qword_row_id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "ref_type": {
+              "const": "surface_occurrence"
+            }
+          },
+          "required": [
+            "ref_type",
+            "loc",
+            "entry_id",
+            "card_id",
+            "qword_row_id"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "ref_type": {
+              "enum": [
+                "lexeme",
+                "root",
+                "entry",
+                "card",
+                "construction",
+                "rule"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "ref_type",
+            "id"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "subject_type": {
+      "enum": [
+        "lexeme",
+        "root",
+        "surface_occurrence",
+        "entry",
+        "card",
+        "construction",
+        "rule"
+      ],
+      "type": "string"
+    },
+    "supersedes": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "subject_type",
+    "subject_identity",
+    "fact_type",
+    "candidate_or_value",
+    "scope",
+    "source_address",
+    "evidence",
+    "provenance",
+    "review_votes",
+    "certification_state",
+    "confidence_or_calibration",
+    "defeaters",
+    "exceptions",
+    "dependency_hashes",
+    "materialization_targets",
+    "supersedes",
+    "created_from",
+    "fact_id"
+  ],
+  "title": "Qamus typed fact ledger row v1",
+  "type": "object",
+  "x-fact-type-registry": {
+    "open": true,
+    "registry_version": 1,
+    "types": [
+      {
+        "id": "morph_disambiguation"
+      },
+      {
+        "id": "pos"
+      },
+      {
+        "id": "sense"
+      },
+      {
+        "id": "particle_function"
+      },
+      {
+        "id": "head_selection"
+      },
+      {
+        "id": "relation_label"
+      },
+      {
+        "gate_trigger": "case_or_mood",
+        "id": "case_mood_governor"
+      },
+      {
+        "gate_trigger": "irab",
+        "id": "irab_rendering"
+      },
+      {
+        "id": "calibration"
+      },
+      {
+        "id": "sarf_form"
+      },
+      {
+        "id": "root_assignment"
+      },
+      {
+        "id": "gloss_contribution"
+      },
+      {
+        "id": "construction_membership"
+      }
+    ]
+  }
+}
