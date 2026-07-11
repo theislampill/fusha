@@ -4097,6 +4097,7 @@ try:
 
     from tools.build_canonical_hover_payload_table import build as _t5_build
     from tools.compile_canonical_hover_whitelist_packet import compile_packet as _t5_compile
+    from tools.rebind_canonical_hover import verify_dataset as _rm20_verify_dataset
     from tools.validate_canonical_hover_payload_table import (
         binding_id as _t5_binding_id,
         exception_id as _t5_exception_id,
@@ -4354,6 +4355,20 @@ try:
         not any(r.get("reason") == "co_occurrence_not_bound" for r in _t5_full_r)
         and not any(r.get("reason") == "richer-peer" for r in _t5_full_r),
     )
+
+    # RM-20: fixture-scale repair behavior plus a real-data, in-memory read-only
+    # verification of the current G1 payload/binding build outputs.
+    _rm20 = run_text([sys.executable, os.path.join(ROOT, "tools", "test_rebind_lineage.py")])
+    _rm20_full_errors = _rm20_verify_dataset(_t5_full_p, _t5_full_b)
+    check(
+        "RM-20 repair lineage: fixtures pass and G1 real-data build is live-payload sound",
+        _rm20.returncode == 0 and not _rm20_full_errors,
+    )
+    if _rm20.returncode:
+        print(_rm20.stdout)
+        print(_rm20.stderr)
+    if _rm20_full_errors:
+        print("  ", _rm20_full_errors[:20])
 
     _t5_subset = list(_t5_full_rows[:4096])
     _t5_shuffled = list(_t5_subset)
