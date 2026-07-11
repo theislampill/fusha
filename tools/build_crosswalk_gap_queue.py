@@ -19,6 +19,12 @@ Usage:
     python tools/build_crosswalk_gap_queue.py --self-test
 
 Lane assignment (primary_resolution_family):
+    resolved_canonical_morphline_repair
+                                    canonical SHADOW now carries the approved
+                                    morphline repair (terminal; retained as history)
+    tie_unresolved                  RM-20 review did not agree on value + reason
+    insufficient_convention_exemplars
+                                    qg-lam proposal remains blocked
     in_crosswalk_morphline_repair   loc IS modeled but every binding fail-closed on
                                     empty live morphline (Lane D)
     unique_qword_candidate          exactly one qword-denominator row matches
@@ -101,8 +107,78 @@ def morphline_state(live_row):
     return "present"
 
 
+def _resolve_repo_path(repo_root, path):
+    if os.path.isabs(path):
+        return path
+    return os.path.join(repo_root, *path.replace("\\", "/").split("/"))
+
+
+def load_lane_d_overlay(repo_root, repair_registry_path=None,
+                        morphline_manifest_path=None):
+    """Load and verify the active RM-20 generation and its disposition evidence."""
+    registry_path = repair_registry_path or os.path.join(
+        repo_root, "qamus", "indexes", "largelexicon", "canonical-repairs.json")
+    approved_path = morphline_manifest_path or os.path.join(
+        repo_root, "prep", "morphline-approved-manifest.json")
+    if not os.path.exists(registry_path) and not os.path.exists(approved_path):
+        return None
+    if not os.path.exists(registry_path) or not os.path.exists(approved_path):
+        raise RuntimeError("Lane-D overlay requires both repair registry and approved manifest")
+
+    with io.open(registry_path, encoding="utf-8") as fh:
+        registry = json.load(fh)
+    with io.open(approved_path, encoding="utf-8") as fh:
+        approved = json.load(fh)
+    if registry.get("schema") != "qamus.canonical_repair_registry.v1":
+        raise RuntimeError("unexpected canonical repair registry schema")
+    if approved.get("schema") != "qamus.morphline_approved_manifest.v1":
+        raise RuntimeError("unexpected morphline approved manifest schema")
+
+    active = registry.get("active_repairs") or []
+    wave_key = str(approved.get("wave") or "").lower().replace("-", "")
+    matching = [item for item in active if not wave_key or
+                wave_key in str(item.get("table") or "").lower().replace("-", "")]
+    if len(matching) != 1:
+        raise RuntimeError("expected exactly one active repair generation for %s" %
+                           (approved.get("wave") or "the approved manifest"))
+    repair = matching[0]
+    generation_path = os.path.join(
+        _resolve_repo_path(repo_root, repair.get("table") or ""), "GENERATION.json")
+    generation_id = "sha256:" + sha256_file(generation_path)
+    if generation_id != repair.get("generation_id"):
+        raise RuntimeError("canonical repair generation hash does not match registry")
+
+    resolved = collections.defaultdict(set)
+    for payload in approved.get("approved_payloads") or []:
+        for binding in payload.get("binding_rebinds") or []:
+            resolved[canon_loc(binding.get("loc"))].add(binding.get("card_id"))
+    expected_resolved = {
+        canon_loc(loc) for loc in
+        (approved.get("predeclared_shadow_delta") or {}).get(
+            "expected_modify_locations", [])
+    }
+    if set(resolved) != expected_resolved:
+        raise RuntimeError("approved repair binding locations differ from expected modify set")
+
+    refusals = collections.defaultdict(list)
+    for fixture in approved.get("refusal_fixtures") or []:
+        refusals[canon_loc(fixture.get("loc"))].append(fixture)
+    if set(resolved) & set(refusals):
+        raise RuntimeError("Lane-D location cannot be both repaired and refused")
+
+    return {
+        "approved_manifest_sha256": sha256_file(approved_path),
+        "generation_id": generation_id,
+        "registry_sha256": sha256_file(registry_path),
+        "resolved": {loc: sorted(value for value in values if value)
+                     for loc, values in resolved.items()},
+        "refusals": dict(refusals),
+    }
+
+
 def build_queue(repo_root, baseline_path, loc_surfaces_path=None,
-                crosswalk_glob=None, denominator_glob=None):
+                crosswalk_glob=None, denominator_glob=None,
+                repair_registry_path=None, morphline_manifest_path=None):
     """Returns (manifest, queue_rows). Pure function of its hash-pinned inputs."""
     from tools import normalize_ar as N
     from tools import compile_canonical_hover_whitelist_packet as compile_mod
@@ -111,6 +187,13 @@ def build_queue(repo_root, baseline_path, loc_surfaces_path=None,
         repo_root, "qamus", "indexes", "largelexicon", "qword-crosswalk", "*.jsonl")
     qd_glob = denominator_glob or os.path.join(
         repo_root, "qamus", "indexes", "largelexicon", "qword-denominator", "*.jsonl")
+
+    lane_d = None
+    if (repair_registry_path is not None or morphline_manifest_path is not None
+            or (crosswalk_glob is None and denominator_glob is None)):
+        lane_d = load_lane_d_overlay(
+            repo_root, repair_registry_path=repair_registry_path,
+            morphline_manifest_path=morphline_manifest_path)
 
     # modeled locations + per-loc accepted bindings and their required-field state
     modeled_bindings = collections.defaultdict(list)
@@ -235,7 +318,68 @@ def build_queue(repo_root, baseline_path, loc_surfaces_path=None,
             "shadow_effect": None,
         })
 
+    lane_d_location_counts = collections.Counter()
+    lane_d_fixture_counts = collections.Counter()
+    if lane_d:
+        rows_by_loc = {row["canonical_location"]: row for row in queue}
+        expected_locs = set(lane_d["resolved"]) | set(lane_d["refusals"])
+        missing = expected_locs - set(rows_by_loc)
+        if missing:
+            raise RuntimeError("Lane-D evidence locations absent from queue: %s" % sorted(missing))
+
+        for loc in sorted(expected_locs):
+            row = rows_by_loc[loc]
+            row["repair_generation_id"] = lane_d["generation_id"]
+            row["repair_registry_sha256"] = lane_d["registry_sha256"]
+            row["morphline_approved_manifest_sha256"] = \
+                lane_d["approved_manifest_sha256"]
+            if loc in lane_d["resolved"]:
+                family = "resolved_canonical_morphline_repair"
+                fixture_ids = lane_d["resolved"][loc]
+                row.update({
+                    "primary_resolution_family": family,
+                    "provenance_state": "resolved_canonical_repair",
+                    "review_state": "resolved_terminal",
+                    "blocker_or_exception": None,
+                    "shadow_effect": "modify",
+                    "fixture_ids": fixture_ids,
+                    "refusal_fixture_ids": [],
+                })
+            else:
+                fixtures = lane_d["refusals"][loc]
+                expected_refusals = {item.get("expected_refusal") for item in fixtures}
+                if expected_refusals == {"tie_unresolved"}:
+                    family = "tie_unresolved"
+                elif expected_refusals == {
+                        "blocked_insufficient_convention_exemplars"}:
+                    family = "insufficient_convention_exemplars"
+                else:
+                    raise RuntimeError("mixed or unknown Lane-D refusal family at %s" % loc)
+                qword_ids = sorted({qid for item in fixtures
+                                    for qid in (item.get("qword_row_ids") or [])})
+                card_by_qword = {
+                    item.get("qword_row_id"): item.get("card_id")
+                    for item in row["full_carrier_candidates"]
+                }
+                if any(qid not in card_by_qword for qid in qword_ids):
+                    raise RuntimeError("Lane-D refusal fixture carrier absent at %s" % loc)
+                fixture_ids = sorted({card_by_qword[qid] for qid in qword_ids})
+                row.update({
+                    "primary_resolution_family": family,
+                    "provenance_state": "refusal_evidence",
+                    "review_state": "blocked",
+                    "blocker_or_exception": sorted(expected_refusals)[0],
+                    "shadow_effect": None,
+                    "fixture_ids": fixture_ids,
+                    "refusal_fixture_ids": sorted(
+                        item.get("fixture_id") for item in fixtures),
+                })
+            lane_d_location_counts[family] += 1
+            lane_d_fixture_counts[family] += len(fixture_ids)
+
     fam_counts = collections.Counter(r["primary_resolution_family"] for r in queue)
+    lane_d_location_counts["total"] = sum(lane_d_location_counts.values())
+    lane_d_fixture_counts["total"] = sum(lane_d_fixture_counts.values())
     manifest = {
         "schema": MANIFEST_SCHEMA,
         "baseline_sha256": sha256_file(baseline_path),
@@ -245,9 +389,20 @@ def build_queue(repo_root, baseline_path, loc_surfaces_path=None,
         "loc_surfaces_sha256": (sha256_file(loc_surfaces_path)
                                  if loc_surfaces_path else None),
         "queue_rows": len(queue),
+        "active_live_only_rows": sum(
+            row.get("review_state") != "resolved_terminal" for row in queue),
         "family_counts": dict(sorted(fam_counts.items())),
         "modeled_locations": len(modeled_bindings),
+        "lane_d_location_counts": dict(sorted(lane_d_location_counts.items())),
+        "lane_d_fixture_counts": dict(sorted(lane_d_fixture_counts.items())),
     }
+    if lane_d:
+        manifest.update({
+            "canonical_repair_registry_sha256": lane_d["registry_sha256"],
+            "morphline_approved_manifest_sha256": lane_d[
+                "approved_manifest_sha256"],
+            "repair_generation_id": lane_d["generation_id"],
+        })
     return manifest, queue
 
 
@@ -261,7 +416,7 @@ def write_outputs(outdir, manifest, queue):
     manifest["queue_sha256"] = sha256_file(qpath)
     mpath = os.path.join(outdir, "crosswalk-gap-queue.manifest.json")
     with io.open(mpath, "w", encoding="utf-8", newline="\n") as fh:
-        json.dump(manifest, fh, ensure_ascii=False, sort_keys=True, indent=1)
+        json.dump(manifest, fh, ensure_ascii=False, sort_keys=True, indent=2)
         fh.write("\n")  # repo artifact-ergonomics gate: trailing newline required
     return qpath, mpath, manifest
 
@@ -407,6 +562,117 @@ def _self_test():
         check("manifest hash-pins baseline + every input file",
               m4["baseline_sha256"] and m4["loc_surfaces_sha256"]
               and len(m4["crosswalk_files"]) == 1 and len(m4["denominator_files"]) == 1)
+        pretty_dir = os.path.join(tmp, "pretty")
+        _qp, pretty_manifest, _wm = write_outputs(pretty_dir, m4, q4)
+        with io.open(pretty_manifest, encoding="utf-8") as fh:
+            pretty_text = fh.read()
+        check("reviewer manifest is indent=2 with trailing newline",
+              pretty_text.splitlines()[1].startswith("  ")
+              and pretty_text.endswith("\n"))
+
+        # RED-FIRST post-repair overlay: location rows stay canonical-location
+        # unique while approved repairs become terminal and refusal evidence
+        # remains active. Two qg-lam fixtures at one location must not duplicate
+        # the queue row.
+        repair_dir = os.path.join(tmp, "repair-generation"); os.makedirs(repair_dir)
+        generation_path = os.path.join(repair_dir, "GENERATION.json")
+        with io.open(generation_path, "w", encoding="utf-8", newline="\n") as fh:
+            json.dump({"schema": "fusha/largelexicon-shard-generation@1"}, fh)
+            fh.write("\n")
+        generation_id = "sha256:" + sha256_file(generation_path)
+        registry_path = os.path.join(tmp, "canonical-repairs.json")
+        with io.open(registry_path, "w", encoding="utf-8", newline="\n") as fh:
+            json.dump({
+                "schema": "qamus.canonical_repair_registry.v1",
+                "active_repairs": [{
+                    "generation_id": generation_id,
+                    "table": repair_dir,
+                }],
+            }, fh)
+            fh.write("\n")
+        approved_path = os.path.join(tmp, "approved.json")
+        with io.open(approved_path, "w", encoding="utf-8", newline="\n") as fh:
+            json.dump({
+                "schema": "qamus.morphline_approved_manifest.v1",
+                "predeclared_shadow_delta": {
+                    "expected_modify_locations": ["1:1:2"],
+                },
+                "approved_payloads": [{
+                    "binding_rebinds": [{
+                        "loc": "1:1:2", "card_id": "c2:u1:e1",
+                        "qword_row_id": "q2",
+                    }],
+                }],
+                "refusal_fixtures": [{
+                    "expected_refusal": "tie_unresolved",
+                    "fixture_id": "tie:one", "loc": "1:1:3",
+                    "qword_row_ids": ["q3"],
+                }, {
+                    "expected_refusal": "blocked_insufficient_convention_exemplars",
+                    "fixture_id": "blocked:one", "loc": "1:1:4",
+                    "qword_row_ids": ["q4"],
+                }, {
+                    "expected_refusal": "blocked_insufficient_convention_exemplars",
+                    "fixture_id": "blocked:two", "loc": "1:1:4",
+                    "qword_row_ids": ["q5"],
+                }],
+            }, fh)
+            fh.write("\n")
+        w(os.path.join(qd_dir, "d.jsonl"), [
+            {"quran_ref": "1:1", "visible_surface_norm_strict": "كتاب",
+             "row_id": "q2", "entry_id": "e2", "card_id": "c2:u1:e1",
+             "qword_row_id": "q2", "card_text_sha256": "aa"},
+            {"quran_ref": "1:1", "visible_surface_norm_strict": "رحيم",
+             "row_id": "q3", "entry_id": "e3", "card_id": "c3:u1:e1",
+             "qword_row_id": "q3", "card_text_sha256": "bb"},
+            {"quran_ref": "1:1", "visible_surface_norm_strict": "غريب",
+             "row_id": "q4", "entry_id": "e4", "card_id": "c4:u1:e1",
+             "qword_row_id": "q4", "card_text_sha256": "cc"},
+            {"quran_ref": "1:1", "visible_surface_norm_strict": "غريب",
+             "row_id": "q5", "entry_id": "e5", "card_id": "c5:u1:e1",
+             "qword_row_id": "q5", "card_text_sha256": "dd"},
+        ])
+        w(baseline, [live("1:1:2", "كِتَاب"), live("1:1:3", "رَحِيم"),
+                     live("1:1:4", "غَرِيب")])
+        m6, q6 = build_queue(
+            REPO, baseline, crosswalk_glob=os.path.join(cw_dir, "*.jsonl"),
+            denominator_glob=os.path.join(qd_dir, "*.jsonl"),
+            repair_registry_path=registry_path,
+            morphline_manifest_path=approved_path,
+        )
+        by_loc = {row["canonical_location"]: row for row in q6}
+        check("RED-FIRST: approved repair becomes terminal resolved family",
+              by_loc["1:1:2"]["primary_resolution_family"] ==
+              "resolved_canonical_morphline_repair"
+              and by_loc["1:1:2"]["review_state"] == "resolved_terminal")
+        check("RED-FIRST: resolved row pins generation + registry SHA",
+              by_loc["1:1:2"]["repair_generation_id"] == generation_id
+              and by_loc["1:1:2"]["repair_registry_sha256"] ==
+              sha256_file(registry_path))
+        check("RED-FIRST: tie remains active and blocked",
+              by_loc["1:1:3"]["primary_resolution_family"] == "tie_unresolved"
+              and by_loc["1:1:3"]["review_state"] == "blocked")
+        check("RED-FIRST: qg-lam fixtures collapse to one location row",
+              by_loc["1:1:4"]["primary_resolution_family"] ==
+              "insufficient_convention_exemplars"
+              and by_loc["1:1:4"]["fixture_ids"] ==
+              ["c4:u1:e1", "c5:u1:e1"]
+              and len([r for r in q6 if r["canonical_location"] == "1:1:4"]) == 1)
+        check("RED-FIRST: manifest records location + fixture counts",
+              m6["lane_d_location_counts"] == {
+                  "insufficient_convention_exemplars": 1,
+                  "resolved_canonical_morphline_repair": 1,
+                  "tie_unresolved": 1,
+                  "total": 3,
+              }
+              and m6["lane_d_fixture_counts"] == {
+                  "insufficient_convention_exemplars": 2,
+                  "resolved_canonical_morphline_repair": 1,
+                  "tie_unresolved": 1,
+                  "total": 4,
+              }
+              and m6["queue_rows"] == 3
+              and m6["active_live_only_rows"] == 2)
     finally:
         import shutil
         shutil.rmtree(tmp, ignore_errors=True)
