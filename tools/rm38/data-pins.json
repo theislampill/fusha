@@ -1,0 +1,22 @@
+{
+  "schema": "fusha/rm38-data-pins@1",
+  "split_seed": "rm38-eval-v1",
+  "sources": {
+    "eqtb": {
+      "attribution": "Extended Quranic Treebank (EQTB 2025), Mendeley Data DOI 10.17632/rk96pn66m4.1.",
+      "distribution_url": "https://data.mendeley.com/datasets/rk96pn66m4/1",
+      "filename": "TO_PIN",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "sha256": "TO_PIN"
+    },
+    "quranmorph": {
+      "attribution": "QuranMorph, SinaLab/Qabas, Akra, Hammouda, and Jarrar, arXiv:2506.18148.",
+      "distribution_url": "https://sina.birzeit.edu/qabas",
+      "filename": "TO_PIN",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "sha256": "TO_PIN"
+    }
+  }
+}

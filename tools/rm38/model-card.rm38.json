@@ -1,0 +1,32 @@
+{
+  "claim": "RM-38 external-gold comparison; per-layer; no aggregate score; abstention-accounted; EQTB syntax partly DL-silver; QAC consult-only",
+  "corpus_storage": "user-local only; SHA-256 pinned; never committed",
+  "engine_mode": "default abstention-first; no QAC adapter or QAC data path",
+  "evaluable_layers": [
+    "segmentation",
+    "pos",
+    "lemma",
+    "root",
+    "features",
+    "governor"
+  ],
+  "license": {
+    "eqtb": "CC BY 4.0",
+    "quranmorph": "CC BY 4.0"
+  },
+  "split": {
+    "dev_percent": 20,
+    "test_percent": 80,
+    "unit": "ayah",
+    "method": "sha256(seed + unit_id) modulo 100"
+  },
+  "syntax_qualification": "EQTB syntax is partly DL-silver; every governor report carries the silver flag",
+  "unevaluable_layers": [
+    "assigned_case_mood_as_governor_consequence",
+    "justification_rule",
+    "gate",
+    "evidence_class",
+    "ambiguity_reason",
+    "confidence_as_label"
+  ]
+}
