@@ -1,0 +1,75 @@
+{
+  "change_profiles": {
+    "cp01": [
+      "added:lemma_is_multiword",
+      "added:multiword_reason",
+      "removed:public_boundary",
+      "changed:schema",
+      "removed:source_status"
+    ],
+    "cp02": [
+      "added:multiword_reason",
+      "removed:public_boundary",
+      "changed:schema",
+      "removed:source_status",
+      "added:surface_is_multiword"
+    ],
+    "cp03": [
+      "removed:features",
+      "removed:form",
+      "added:multiword_reason",
+      "removed:pattern",
+      "removed:public_boundary",
+      "changed:schema",
+      "removed:source",
+      "removed:source_status",
+      "added:surface_is_multiword"
+    ],
+    "cp04": [
+      "removed:features",
+      "removed:form",
+      "removed:pattern",
+      "removed:public_boundary",
+      "changed:schema",
+      "removed:source",
+      "removed:source_status"
+    ],
+    "cp05": [
+      "removed:live_mutation_allowed",
+      "removed:public_boundary",
+      "changed:schema",
+      "removed:source_status"
+    ],
+    "cp06": [
+      "removed:live_mutation_allowed",
+      "removed:public_boundary",
+      "removed:resolution_normalizer",
+      "removed:resolution_source",
+      "removed:resolution_wbw_lookup_built_at",
+      "removed:resolution_wbw_lookup_sha256",
+      "changed:schema"
+    ],
+    "cp07": [
+      "removed:public_boundary",
+      "changed:schema",
+      "removed:source_status"
+    ]
+  },
+  "dispositions": [
+    "carried",
+    "flagged",
+    "quarantined"
+  ],
+  "generator": "tools/rehearse_largelexicon_regeneration.py",
+  "identity_fields": {
+    "form-source": "form_id",
+    "lemma-source": "entry_id",
+    "qword-crosswalk": "row_id",
+    "qword-denominator": "row_id",
+    "stem-source": "stem_id"
+  },
+  "row_count": 253292,
+  "row_schema": "qamus/rm22-regeneration-accounting-row@1",
+  "schema": "qamus/rm22-regeneration-accounting-meta@1",
+  "sha256": "36f0379260a927f02dd103d1c15d66e1bc979be2c3d1d778affdb4b672b87460"
+}
