@@ -1,0 +1,4070 @@
+{
+  "agreement_matrix": [
+    {
+      "count": 2,
+      "reviewer_a_decision": "abstention",
+      "reviewer_b_decision": "abstention"
+    },
+    {
+      "count": 491,
+      "reviewer_a_decision": "governing_entry",
+      "reviewer_b_decision": "governing_entry"
+    }
+  ],
+  "certified_candidates": [
+    {
+      "canonical_location": "2:24:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "0c0e1edc8c65",
+      "packet_id": "t11-class2-decidable:001:2:24:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:27:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "0c5f30e50041",
+      "packet_id": "t11-class2-decidable:002:2:27:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:27:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "763dbd0471de",
+      "packet_id": "t11-class2-decidable:003:2:27:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:42:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "6471f74ceb4e",
+      "packet_id": "t11-class2-decidable:004:2:42:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:42:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "28fd81126a28",
+      "packet_id": "t11-class2-decidable:005:2:42:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:68:15",
+      "decision": "governing_entry",
+      "governing_entry_id": "7aa81aa90341",
+      "packet_id": "t11-class2-decidable:006:2:68:15",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:68:17",
+      "decision": "governing_entry",
+      "governing_entry_id": "4ae0d7b24275",
+      "packet_id": "t11-class2-decidable:007:2:68:17",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:69:17",
+      "decision": "governing_entry",
+      "governing_entry_id": "fbc9b2fdfed0",
+      "packet_id": "t11-class2-decidable:008:2:69:17",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:70:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "21bcc0905331",
+      "packet_id": "t11-class2-decidable:009:2:70:11",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:74:16",
+      "decision": "governing_entry",
+      "governing_entry_id": "7f42e9796371",
+      "packet_id": "t11-class2-decidable:010:2:74:16",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:76:15",
+      "decision": "governing_entry",
+      "governing_entry_id": "acd67e5639ee",
+      "packet_id": "t11-class2-decidable:011:2:76:15",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:96:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "26fc04f9d447",
+      "packet_id": "t11-class2-decidable:012:2:96:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:96:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "24c53b976cf4",
+      "packet_id": "t11-class2-decidable:013:2:96:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:96:17",
+      "decision": "governing_entry",
+      "governing_entry_id": "588b093309e9",
+      "packet_id": "t11-class2-decidable:014:2:96:17",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:130:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "1ffcc554ec44",
+      "packet_id": "t11-class2-decidable:015:2:130:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:226:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "ca6588b7711b",
+      "packet_id": "t11-class2-decidable:016:2:226:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:237:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "e11ae777e759",
+      "packet_id": "t11-class2-decidable:017:2:237:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:239:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "a17c90658e33",
+      "packet_id": "t11-class2-decidable:018:2:239:3",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:239:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "331b6ce2346f",
+      "packet_id": "t11-class2-decidable:019:2:239:5",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:256:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "5970b19734fd",
+      "packet_id": "t11-class2-decidable:020:2:256:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:256:16",
+      "decision": "governing_entry",
+      "governing_entry_id": "6520ab46a9dc",
+      "packet_id": "t11-class2-decidable:021:2:256:16",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:261:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "fe14aee02f4b",
+      "packet_id": "t11-class2-decidable:022:2:261:10",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:266:28",
+      "decision": "governing_entry",
+      "governing_entry_id": "7d6e5b852be1",
+      "packet_id": "t11-class2-decidable:023:2:266:28",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "2:283:25",
+      "decision": "governing_entry",
+      "governing_entry_id": "bb789f4cfd10",
+      "packet_id": "t11-class2-decidable:024:2:283:25",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:14:24",
+      "decision": "governing_entry",
+      "governing_entry_id": "aa1e635cbb3d",
+      "packet_id": "t11-class2-decidable:025:3:14:24",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:36:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "b8e9a3a37453",
+      "packet_id": "t11-class2-decidable:026:3:36:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:36:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "b8e9a3a37453",
+      "packet_id": "t11-class2-decidable:027:3:36:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:36:19",
+      "decision": "governing_entry",
+      "governing_entry_id": "7a9f73115d7f",
+      "packet_id": "t11-class2-decidable:028:3:36:19",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:43:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "c26ca4dc9302",
+      "packet_id": "t11-class2-decidable:029:3:43:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:55:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "a3829d9357ae",
+      "packet_id": "t11-class2-decidable:030:3:55:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:103:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "07c919b3a9f2",
+      "packet_id": "t11-class2-decidable:031:3:103:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:103:26",
+      "decision": "governing_entry",
+      "governing_entry_id": "af406a3dfc4a",
+      "packet_id": "t11-class2-decidable:032:3:103:26",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:106:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "1773d3fc1e63",
+      "packet_id": "t11-class2-decidable:033:3:106:2",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:106:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "177fb17bf61b",
+      "packet_id": "t11-class2-decidable:034:3:106:4",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:118:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "ca6588b7711b",
+      "packet_id": "t11-class2-decidable:035:3:118:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:118:21",
+      "decision": "governing_entry",
+      "governing_entry_id": "dcfb17c4fe01",
+      "packet_id": "t11-class2-decidable:036:3:118:21",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:119:15",
+      "decision": "governing_entry",
+      "governing_entry_id": "a64de8f8cc14",
+      "packet_id": "t11-class2-decidable:037:3:119:15",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:119:19",
+      "decision": "governing_entry",
+      "governing_entry_id": "85136ba00e1e",
+      "packet_id": "t11-class2-decidable:038:3:119:19",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:125:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "e83bf2fa0b6d",
+      "packet_id": "t11-class2-decidable:039:3:125:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:127:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "53bbf2c4975a",
+      "packet_id": "t11-class2-decidable:040:3:127:2",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:160:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "a9d49eb4606b",
+      "packet_id": "t11-class2-decidable:041:3:160:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:164:15",
+      "decision": "governing_entry",
+      "governing_entry_id": "101401b11de8",
+      "packet_id": "t11-class2-decidable:042:3:164:15",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:180:17",
+      "decision": "governing_entry",
+      "governing_entry_id": "3681072a840d",
+      "packet_id": "t11-class2-decidable:043:3:180:17",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:187:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "2cd8905c46fc",
+      "packet_id": "t11-class2-decidable:044:3:187:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:191:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "3aadc0459dc6",
+      "packet_id": "t11-class2-decidable:045:3:191:5",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:191:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "3540ba349285",
+      "packet_id": "t11-class2-decidable:046:3:191:7",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:191:17",
+      "decision": "governing_entry",
+      "governing_entry_id": "28fd81126a28",
+      "packet_id": "t11-class2-decidable:047:3:191:17",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "3:193:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "bbfb049e4563",
+      "packet_id": "t11-class2-decidable:048:3:193:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:27:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "b8b0d09bccfa",
+      "packet_id": "t11-class2-decidable:049:4:27:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:27:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "71e588b17717",
+      "packet_id": "t11-class2-decidable:050:4:27:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:37:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "6feb8d7d9db3",
+      "packet_id": "t11-class2-decidable:051:4:37:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:37:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "6feb8d7d9db3",
+      "packet_id": "t11-class2-decidable:052:4:37:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:49:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "101401b11de8",
+      "packet_id": "t11-class2-decidable:053:4:49:9",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:56:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "8bb806510d1d",
+      "packet_id": "t11-class2-decidable:054:4:56:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:56:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "29155b1ab459",
+      "packet_id": "t11-class2-decidable:055:4:56:9",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:71:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "247452622312",
+      "packet_id": "t11-class2-decidable:056:4:71:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:83:20",
+      "decision": "governing_entry",
+      "governing_entry_id": "8476404e1fbc",
+      "packet_id": "t11-class2-decidable:057:4:83:20",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:85:15",
+      "decision": "governing_entry",
+      "governing_entry_id": "9b91f8729f9a",
+      "packet_id": "t11-class2-decidable:058:4:85:15",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:89:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "24c53b976cf4",
+      "packet_id": "t11-class2-decidable:059:4:89:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:89:13",
+      "decision": "governing_entry",
+      "governing_entry_id": "2cec1fa6610d",
+      "packet_id": "t11-class2-decidable:060:4:89:13",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:90:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "fd658be10554",
+      "packet_id": "t11-class2-decidable:061:4:90:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:90:21",
+      "decision": "governing_entry",
+      "governing_entry_id": "3a8d5a151bbc",
+      "packet_id": "t11-class2-decidable:062:4:90:21",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:99:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "75ebfe9cf7d1",
+      "packet_id": "t11-class2-decidable:063:4:99:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:101:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "609db1b78e93",
+      "packet_id": "t11-class2-decidable:065:4:101:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:120:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "cc5bc2a6f6c5",
+      "packet_id": "t11-class2-decidable:066:4:120:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "4:141:20",
+      "decision": "governing_entry",
+      "governing_entry_id": "3c659ae5608c",
+      "packet_id": "t11-class2-decidable:067:4:141:20",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:1:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "e3565220ef7b",
+      "packet_id": "t11-class2-decidable:068:5:1:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:4:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "2e2003e26d7e",
+      "packet_id": "t11-class2-decidable:069:5:4:12",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:7:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "21dd8c76ae19",
+      "packet_id": "t11-class2-decidable:070:5:7:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:33:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "ba21a135a54c",
+      "packet_id": "t11-class2-decidable:071:5:33:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:33:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "51e7b558eefa",
+      "packet_id": "t11-class2-decidable:072:5:33:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:33:22",
+      "decision": "governing_entry",
+      "governing_entry_id": "7838e4ff1aef",
+      "packet_id": "t11-class2-decidable:073:5:33:22",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:64:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "108315a0be83",
+      "packet_id": "t11-class2-decidable:074:5:64:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:64:25",
+      "decision": "governing_entry",
+      "governing_entry_id": "714b269ac820",
+      "packet_id": "t11-class2-decidable:075:5:64:25",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:64:35",
+      "decision": "governing_entry",
+      "governing_entry_id": "0c0e1edc8c65",
+      "packet_id": "t11-class2-decidable:076:5:64:35",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:64:38",
+      "decision": "governing_entry",
+      "governing_entry_id": "285d790cd18a",
+      "packet_id": "t11-class2-decidable:077:5:64:38",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:71:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "eb9db6c9ce18",
+      "packet_id": "t11-class2-decidable:078:5:71:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:71:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "eb9db6c9ce18",
+      "packet_id": "t11-class2-decidable:079:5:71:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:83:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "58f31246c7ae",
+      "packet_id": "t11-class2-decidable:080:5:83:9",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:91:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "9cabebe3f9b8",
+      "packet_id": "t11-class2-decidable:081:5:91:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:91:20",
+      "decision": "governing_entry",
+      "governing_entry_id": "f07be7c7113d",
+      "packet_id": "t11-class2-decidable:082:5:91:20",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:99:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "e2824ef7725d",
+      "packet_id": "t11-class2-decidable:083:5:99:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "5:99:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "bb789f4cfd10",
+      "packet_id": "t11-class2-decidable:084:5:99:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:14:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "beae77dd607f",
+      "packet_id": "t11-class2-decidable:085:6:14:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:14:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "beae77dd607f",
+      "packet_id": "t11-class2-decidable:086:6:14:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:25:13",
+      "decision": "governing_entry",
+      "governing_entry_id": "10f881fc3033",
+      "packet_id": "t11-class2-decidable:087:6:25:13",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:28:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "e2824ef7725d",
+      "packet_id": "t11-class2-decidable:088:6:28:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:31:20",
+      "decision": "governing_entry",
+      "governing_entry_id": "af95ef53a640",
+      "packet_id": "t11-class2-decidable:089:6:31:20",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:45:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "763dbd0471de",
+      "packet_id": "t11-class2-decidable:090:6:45:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:45:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "44714c2f1293",
+      "packet_id": "t11-class2-decidable:091:6:45:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:57:18",
+      "decision": "governing_entry",
+      "governing_entry_id": "6031796cfb94",
+      "packet_id": "t11-class2-decidable:092:6:57:18",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:63:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "0e45298adbd9",
+      "packet_id": "t11-class2-decidable:093:6:63:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:70:13",
+      "decision": "governing_entry",
+      "governing_entry_id": "eda77e007077",
+      "packet_id": "t11-class2-decidable:094:6:70:13",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:70:26",
+      "decision": "governing_entry",
+      "governing_entry_id": "802a64a08158",
+      "packet_id": "t11-class2-decidable:095:6:70:26",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:70:34",
+      "decision": "governing_entry",
+      "governing_entry_id": "eda77e007077",
+      "packet_id": "t11-class2-decidable:096:6:70:34",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:71:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "a15e00770b49",
+      "packet_id": "t11-class2-decidable:097:6:71:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:109:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "cb83b6decfbd",
+      "packet_id": "t11-class2-decidable:098:6:109:4",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:115:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "90d6ab43d466",
+      "packet_id": "t11-class2-decidable:099:6:115:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:115:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "802a64a08158",
+      "packet_id": "t11-class2-decidable:100:6:115:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:120:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "bca0136eba37",
+      "packet_id": "t11-class2-decidable:101:6:120:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:128:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "a5925b694669",
+      "packet_id": "t11-class2-decidable:102:6:128:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "6:128:19",
+      "decision": "governing_entry",
+      "governing_entry_id": "5af78b50e696",
+      "packet_id": "t11-class2-decidable:103:6:128:19",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:8:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "5d5308bcda87",
+      "packet_id": "t11-class2-decidable:104:7:8:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:8:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "5d5308bcda87",
+      "packet_id": "t11-class2-decidable:105:7:8:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:22:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "5f2e55239171",
+      "packet_id": "t11-class2-decidable:106:7:22:9",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:26:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "2c7649496fb4",
+      "packet_id": "t11-class2-decidable:107:7:26:10",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:40:16",
+      "decision": "governing_entry",
+      "governing_entry_id": "285c879ac87b",
+      "packet_id": "t11-class2-decidable:108:7:40:16",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:43:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "a47156e8ace3",
+      "packet_id": "t11-class2-decidable:109:7:43:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:43:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "108315a0be83",
+      "packet_id": "t11-class2-decidable:110:7:43:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:77:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "77ed5b1e74ad",
+      "packet_id": "t11-class2-decidable:111:7:77:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:95:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "75ebfe9cf7d1",
+      "packet_id": "t11-class2-decidable:112:7:95:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:95:18",
+      "decision": "governing_entry",
+      "governing_entry_id": "61c3bedee211",
+      "packet_id": "t11-class2-decidable:113:7:95:18",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:108:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "a47156e8ace3",
+      "packet_id": "t11-class2-decidable:114:7:108:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:127:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "75451a5d26b7",
+      "packet_id": "t11-class2-decidable:115:7:127:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:127:21",
+      "decision": "governing_entry",
+      "governing_entry_id": "4709f6b49cb5",
+      "packet_id": "t11-class2-decidable:116:7:127:21",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:136:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "ce7ac13d620a",
+      "packet_id": "t11-class2-decidable:117:7:136:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:138:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "d74277b0714a",
+      "packet_id": "t11-class2-decidable:118:7:138:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:138:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "7b8ccbd754e3",
+      "packet_id": "t11-class2-decidable:119:7:138:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:143:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "2506d1430f16",
+      "packet_id": "t11-class2-decidable:120:7:143:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:143:30",
+      "decision": "governing_entry",
+      "governing_entry_id": "e2ae6f6094c7",
+      "packet_id": "t11-class2-decidable:121:7:143:30",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:143:34",
+      "decision": "governing_entry",
+      "governing_entry_id": "555d341ae708",
+      "packet_id": "t11-class2-decidable:122:7:143:34",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:149:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "0919c7ce9ce8",
+      "packet_id": "t11-class2-decidable:123:7:149:2",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:154:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "bb49110446f7",
+      "packet_id": "t11-class2-decidable:124:7:154:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:154:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "29f469384423",
+      "packet_id": "t11-class2-decidable:125:7:154:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:154:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "a1a39574995e",
+      "packet_id": "t11-class2-decidable:126:7:154:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:156:19",
+      "decision": "governing_entry",
+      "governing_entry_id": "7ae3f9560bca",
+      "packet_id": "t11-class2-decidable:127:7:156:19",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:163:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "737cc7d8eca8",
+      "packet_id": "t11-class2-decidable:128:7:163:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:163:16",
+      "decision": "governing_entry",
+      "governing_entry_id": "737cc7d8eca8",
+      "packet_id": "t11-class2-decidable:129:7:163:16",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:163:20",
+      "decision": "governing_entry",
+      "governing_entry_id": "737cc7d8eca8",
+      "packet_id": "t11-class2-decidable:130:7:163:20",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:171:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "a7a17381d9e0",
+      "packet_id": "t11-class2-decidable:131:7:171:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:183:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "4af79d2fb7e5",
+      "packet_id": "t11-class2-decidable:132:7:183:4",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:189:17",
+      "decision": "governing_entry",
+      "governing_entry_id": "51186752f2f8",
+      "packet_id": "t11-class2-decidable:133:7:189:17",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:189:20",
+      "decision": "governing_entry",
+      "governing_entry_id": "baa65d37a55a",
+      "packet_id": "t11-class2-decidable:134:7:189:20",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:195:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "bc1a285908b2",
+      "packet_id": "t11-class2-decidable:135:7:195:3",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:202:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "7486acc96141",
+      "packet_id": "t11-class2-decidable:136:7:202:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "7:202:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "609db1b78e93",
+      "packet_id": "t11-class2-decidable:137:7:202:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "8:19:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "acd67e5639ee",
+      "packet_id": "t11-class2-decidable:138:8:19:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "8:19:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "acd67e5639ee",
+      "packet_id": "t11-class2-decidable:139:8:19:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "8:19:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "cc9148479eae",
+      "packet_id": "t11-class2-decidable:140:8:19:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "8:30:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "d071102b5ab5",
+      "packet_id": "t11-class2-decidable:141:8:30:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "8:30:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "d071102b5ab5",
+      "packet_id": "t11-class2-decidable:142:8:30:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "8:46:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "a47156e8ace3",
+      "packet_id": "t11-class2-decidable:143:8:46:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "8:46:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "e87da74fdb13",
+      "packet_id": "t11-class2-decidable:144:8:46:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "8:46:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "488d1175c005",
+      "packet_id": "t11-class2-decidable:145:8:46:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "8:47:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "6c0b36a3ac06",
+      "packet_id": "t11-class2-decidable:146:8:47:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "8:58:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "2cd8905c46fc",
+      "packet_id": "t11-class2-decidable:147:8:58:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "8:60:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "05ffcc9a615d",
+      "packet_id": "t11-class2-decidable:148:8:60:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "8:71:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "fd8fa2a00779",
+      "packet_id": "t11-class2-decidable:149:8:71:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "8:71:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "fd8fa2a00779",
+      "packet_id": "t11-class2-decidable:150:8:71:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:2:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "96691d3d4be0",
+      "packet_id": "t11-class2-decidable:151:9:2:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:12:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "576c644db783",
+      "packet_id": "t11-class2-decidable:152:9:12:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:41:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "baa65d37a55a",
+      "packet_id": "t11-class2-decidable:153:9:41:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:45:13",
+      "decision": "governing_entry",
+      "governing_entry_id": "e319c7d90f6d",
+      "packet_id": "t11-class2-decidable:154:9:45:13",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:49:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "0919c7ce9ce8",
+      "packet_id": "t11-class2-decidable:155:9:49:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:58:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "c8dcd00b0723",
+      "packet_id": "t11-class2-decidable:156:9:58:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:58:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "ce93950db658",
+      "packet_id": "t11-class2-decidable:157:9:58:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:58:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "ce93950db658",
+      "packet_id": "t11-class2-decidable:158:9:58:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:67:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "674fd8bf02d2",
+      "packet_id": "t11-class2-decidable:159:9:67:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:67:15",
+      "decision": "governing_entry",
+      "governing_entry_id": "470fa719de93",
+      "packet_id": "t11-class2-decidable:160:9:67:15",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:94:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "b9b30e7e289e",
+      "packet_id": "t11-class2-decidable:161:9:94:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:108:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "f0b32acc7882",
+      "packet_id": "t11-class2-decidable:162:9:108:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:110:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "ae9b58424b21",
+      "packet_id": "t11-class2-decidable:163:9:110:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "9:110:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "ae9b58424b21",
+      "packet_id": "t11-class2-decidable:164:9:110:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "10:22:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "744b6cea0cc9",
+      "packet_id": "t11-class2-decidable:165:10:22:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "10:22:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "d547df241bb6",
+      "packet_id": "t11-class2-decidable:166:10:22:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "10:28:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "0191d7ee3dae",
+      "packet_id": "t11-class2-decidable:167:10:28:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:5:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "92286b4362c9",
+      "packet_id": "t11-class2-decidable:168:11:5:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:5:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "3635ce63d0f9",
+      "packet_id": "t11-class2-decidable:169:11:5:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:8:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "b62b3a43c2d8",
+      "packet_id": "t11-class2-decidable:170:11:8:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:8:17",
+      "decision": "governing_entry",
+      "governing_entry_id": "5afedafad4eb",
+      "packet_id": "t11-class2-decidable:171:11:8:17",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:12:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "23b124a7024e",
+      "packet_id": "t11-class2-decidable:172:11:12:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:13:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "afe8c5105077",
+      "packet_id": "t11-class2-decidable:173:11:13:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:28:14",
+      "decision": "governing_entry",
+      "governing_entry_id": "eb9db6c9ce18",
+      "packet_id": "t11-class2-decidable:174:11:28:14",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:28:16",
+      "decision": "governing_entry",
+      "governing_entry_id": "c0d72d1edde0",
+      "packet_id": "t11-class2-decidable:175:11:28:16",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:39:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "d6a03d1febc7",
+      "packet_id": "t11-class2-decidable:176:11:39:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:39:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "f92aeb1d59ae",
+      "packet_id": "t11-class2-decidable:177:11:39:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:43:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "ad59deed170c",
+      "packet_id": "t11-class2-decidable:178:11:43:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:43:18",
+      "decision": "governing_entry",
+      "governing_entry_id": "748db31e0c38",
+      "packet_id": "t11-class2-decidable:179:11:43:18",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:67:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "e88b5faa3f17",
+      "packet_id": "t11-class2-decidable:180:11:67:7",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:67:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "d4165f3ec9e6",
+      "packet_id": "t11-class2-decidable:181:11:67:8",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:84:15",
+      "decision": "governing_entry",
+      "governing_entry_id": "78e9fc4a99b5",
+      "packet_id": "t11-class2-decidable:182:11:84:15",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:84:16",
+      "decision": "governing_entry",
+      "governing_entry_id": "33d5a6d68365",
+      "packet_id": "t11-class2-decidable:183:11:84:16",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:98:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "f0452c9b2cfb",
+      "packet_id": "t11-class2-decidable:184:11:98:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:98:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "f0452c9b2cfb",
+      "packet_id": "t11-class2-decidable:185:11:98:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "11:105:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "857019dfadb3",
+      "packet_id": "t11-class2-decidable:186:11:105:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:6:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "722b4065dc2a",
+      "packet_id": "t11-class2-decidable:187:12:6:7",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:6:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "90d6ab43d466",
+      "packet_id": "t11-class2-decidable:188:12:6:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:9:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "d5b9aa58cf0e",
+      "packet_id": "t11-class2-decidable:189:12:9:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:12:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "dd43f26c75af",
+      "packet_id": "t11-class2-decidable:190:12:12:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:20:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "5039109e6f8c",
+      "packet_id": "t11-class2-decidable:191:12:20:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:20:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "f33a3c703ac5",
+      "packet_id": "t11-class2-decidable:192:12:20:3",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:23:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "213945255c3b",
+      "packet_id": "t11-class2-decidable:193:12:23:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:23:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "dcb9db0408e7",
+      "packet_id": "t11-class2-decidable:194:12:23:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:25:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "640bed4d1561",
+      "packet_id": "t11-class2-decidable:195:12:25:3",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:25:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "69d4b33a557f",
+      "packet_id": "t11-class2-decidable:196:12:25:7",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:25:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "177fb17bf61b",
+      "packet_id": "t11-class2-decidable:197:12:25:8",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:33:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "019a7ca3a219",
+      "packet_id": "t11-class2-decidable:198:12:33:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:33:13",
+      "decision": "governing_entry",
+      "governing_entry_id": "d6464bbb16d5",
+      "packet_id": "t11-class2-decidable:199:12:33:13",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:43:18",
+      "decision": "governing_entry",
+      "governing_entry_id": "9c5b82ab4c22",
+      "packet_id": "t11-class2-decidable:200:12:43:18",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:43:24",
+      "decision": "governing_entry",
+      "governing_entry_id": "4d717720aaf3",
+      "packet_id": "t11-class2-decidable:201:12:43:24",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:47:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "b9c2b6507d75",
+      "packet_id": "t11-class2-decidable:202:12:47:7",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:66:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "21dd8c76ae19",
+      "packet_id": "t11-class2-decidable:203:12:66:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:66:18",
+      "decision": "governing_entry",
+      "governing_entry_id": "21dd8c76ae19",
+      "packet_id": "t11-class2-decidable:204:12:66:18",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:84:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "1773d3fc1e63",
+      "packet_id": "t11-class2-decidable:205:12:84:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:86:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "1550902df279",
+      "packet_id": "t11-class2-decidable:206:12:86:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:94:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "1bfcdba62f1f",
+      "packet_id": "t11-class2-decidable:207:12:94:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:100:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "5de0208f57c4",
+      "packet_id": "t11-class2-decidable:208:12:100:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:100:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "b3a878fad2b5",
+      "packet_id": "t11-class2-decidable:209:12:100:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:100:29",
+      "decision": "governing_entry",
+      "governing_entry_id": "e2824ef7725d",
+      "packet_id": "t11-class2-decidable:210:12:100:29",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "12:100:33",
+      "decision": "governing_entry",
+      "governing_entry_id": "390931ad3aec",
+      "packet_id": "t11-class2-decidable:211:12:100:33",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "13:3:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "7486acc96141",
+      "packet_id": "t11-class2-decidable:212:13:3:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "13:4:27",
+      "decision": "governing_entry",
+      "governing_entry_id": "51059035de59",
+      "packet_id": "t11-class2-decidable:213:13:4:27",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "13:15:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "cfaf17de125f",
+      "packet_id": "t11-class2-decidable:214:13:15:10",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "14:29:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "8bb806510d1d",
+      "packet_id": "t11-class2-decidable:215:14:29:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "14:29:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "887fec713dc3",
+      "packet_id": "t11-class2-decidable:216:14:29:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "14:33:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "f12aed82488d",
+      "packet_id": "t11-class2-decidable:217:14:33:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "15:15:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "159cf5e9a705",
+      "packet_id": "t11-class2-decidable:218:15:15:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "15:19:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "7486acc96141",
+      "packet_id": "t11-class2-decidable:219:15:19:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "15:19:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "5d5308bcda87",
+      "packet_id": "t11-class2-decidable:220:15:19:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "15:65:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "d2ad48a49439",
+      "packet_id": "t11-class2-decidable:221:15:65:12",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "15:88:13",
+      "decision": "governing_entry",
+      "governing_entry_id": "a724351bbad4",
+      "packet_id": "t11-class2-decidable:222:15:88:13",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "16:6:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "488d1175c005",
+      "packet_id": "t11-class2-decidable:223:16:6:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "16:6:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "c77a66a7c89b",
+      "packet_id": "t11-class2-decidable:224:16:6:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "16:8:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "2fa45cdb09ef",
+      "packet_id": "t11-class2-decidable:225:16:8:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "16:59:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "df392acc2f17",
+      "packet_id": "t11-class2-decidable:226:16:59:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "16:59:13",
+      "decision": "governing_entry",
+      "governing_entry_id": "89e08acf4448",
+      "packet_id": "t11-class2-decidable:227:16:59:13",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "16:62:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "b2bd7c33380a",
+      "packet_id": "t11-class2-decidable:228:16:62:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "16:62:17",
+      "decision": "governing_entry",
+      "governing_entry_id": "a6cb90179874",
+      "packet_id": "t11-class2-decidable:229:16:62:17",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "16:91:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "47d747ff370a",
+      "packet_id": "t11-class2-decidable:230:16:91:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "16:92:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "0c5f30e50041",
+      "packet_id": "t11-class2-decidable:231:16:92:4",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "16:98:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "7a9f73115d7f",
+      "packet_id": "t11-class2-decidable:232:16:98:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "16:98:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "32aa5c099adc",
+      "packet_id": "t11-class2-decidable:233:16:98:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "16:106:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "5970b19734fd",
+      "packet_id": "t11-class2-decidable:234:16:106:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "17:8:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "cc9148479eae",
+      "packet_id": "t11-class2-decidable:235:17:8:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "17:13:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "c0d72d1edde0",
+      "packet_id": "t11-class2-decidable:236:17:13:3",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "17:24:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "269ebe526439",
+      "packet_id": "t11-class2-decidable:237:17:24:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "17:29:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "da817d56cc16",
+      "packet_id": "t11-class2-decidable:238:17:29:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "17:29:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "da817d56cc16",
+      "packet_id": "t11-class2-decidable:239:17:29:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "17:60:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "69c9dd80a73e",
+      "packet_id": "t11-class2-decidable:240:17:60:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "17:91:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "7f42e9796371",
+      "packet_id": "t11-class2-decidable:241:17:91:8",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:10:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "ad59deed170c",
+      "packet_id": "t11-class2-decidable:242:18:10:2",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:10:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "d8fd4b950c4a",
+      "packet_id": "t11-class2-decidable:243:18:10:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:17:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "173bab4db284",
+      "packet_id": "t11-class2-decidable:244:18:17:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:18:15",
+      "decision": "governing_entry",
+      "governing_entry_id": "cfbbeb8e9d0e",
+      "packet_id": "t11-class2-decidable:245:18:18:15",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:18:19",
+      "decision": "governing_entry",
+      "governing_entry_id": "21341e858208",
+      "packet_id": "t11-class2-decidable:246:18:18:19",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:19:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "58d16ee708f4",
+      "packet_id": "t11-class2-decidable:247:18:19:11",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:21:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "0ba6e776b72c",
+      "packet_id": "t11-class2-decidable:248:18:21:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:46:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "d61581e0ee6b",
+      "packet_id": "t11-class2-decidable:249:18:46:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:50:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "b3504e19ef50",
+      "packet_id": "t11-class2-decidable:250:18:50:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:54:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "42a46ab615b9",
+      "packet_id": "t11-class2-decidable:251:18:54:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:54:14",
+      "decision": "governing_entry",
+      "governing_entry_id": "01b2733f6501",
+      "packet_id": "t11-class2-decidable:252:18:54:14",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:62:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "1cabc12cf11c",
+      "packet_id": "t11-class2-decidable:253:18:62:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:77:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "ef80091e5e95",
+      "packet_id": "t11-class2-decidable:254:18:77:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:82:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "8d144a4c3989",
+      "packet_id": "t11-class2-decidable:255:18:82:10",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:97:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "dbbe7132d765",
+      "packet_id": "t11-class2-decidable:256:18:97:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:109:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "7486acc96141",
+      "packet_id": "t11-class2-decidable:257:18:109:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:109:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "790533202149",
+      "packet_id": "t11-class2-decidable:258:18:109:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "18:109:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "790533202149",
+      "packet_id": "t11-class2-decidable:259:18:109:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "19:25:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "76b87c88da8c",
+      "packet_id": "t11-class2-decidable:260:19:25:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "19:46:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "b309f86b564e",
+      "packet_id": "t11-class2-decidable:261:19:46:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "19:46:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "f07be7c7113d",
+      "packet_id": "t11-class2-decidable:262:19:46:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "19:68:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "cc013b361d1c",
+      "packet_id": "t11-class2-decidable:263:19:68:5",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "20:7:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "eb140384baab",
+      "packet_id": "t11-class2-decidable:264:20:7:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "20:7:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "dcfb17c4fe01",
+      "packet_id": "t11-class2-decidable:265:20:7:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "20:18:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "cb346dc063bc",
+      "packet_id": "t11-class2-decidable:266:20:18:6",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "20:27:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "f92aeb1d59ae",
+      "packet_id": "t11-class2-decidable:267:20:27:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "20:54:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "db1a68c31812",
+      "packet_id": "t11-class2-decidable:268:20:54:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "20:69:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "b1dc9e039758",
+      "packet_id": "t11-class2-decidable:269:20:69:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "20:81:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "f92aeb1d59ae",
+      "packet_id": "t11-class2-decidable:270:20:81:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "20:111:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "3b1e87998062",
+      "packet_id": "t11-class2-decidable:271:20:111:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "20:118:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "f705316763ce",
+      "packet_id": "t11-class2-decidable:272:20:118:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "20:120:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "63addc5a2b8e",
+      "packet_id": "t11-class2-decidable:273:20:120:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "20:120:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "4cf293601eb9",
+      "packet_id": "t11-class2-decidable:274:20:120:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "20:134:18",
+      "decision": "governing_entry",
+      "governing_entry_id": "269ebe526439",
+      "packet_id": "t11-class2-decidable:275:20:134:18",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "21:40:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "91de73c13966",
+      "packet_id": "t11-class2-decidable:276:21:40:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "21:40:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "51e9879b93ab",
+      "packet_id": "t11-class2-decidable:277:21:40:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "21:49:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "f61cde04c203",
+      "packet_id": "t11-class2-decidable:278:21:49:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "21:49:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "e5c07f859038",
+      "packet_id": "t11-class2-decidable:279:21:49:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "21:72:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "cb28a4b2e211",
+      "packet_id": "t11-class2-decidable:280:21:72:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "21:80:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "6471f74ceb4e",
+      "packet_id": "t11-class2-decidable:281:21:80:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "21:91:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "488d1175c005",
+      "packet_id": "t11-class2-decidable:282:21:91:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "22:2:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "245f725da21d",
+      "packet_id": "t11-class2-decidable:283:22:2:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "22:2:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "63da116be953",
+      "packet_id": "t11-class2-decidable:284:22:2:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "22:2:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "b8e9a3a37453",
+      "packet_id": "t11-class2-decidable:285:22:2:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "22:2:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "97657fc0cb1c",
+      "packet_id": "t11-class2-decidable:286:22:2:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "22:19:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "e91deae107d0",
+      "packet_id": "t11-class2-decidable:287:22:19:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "22:44:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "72ba4179ff95",
+      "packet_id": "t11-class2-decidable:288:22:44:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "22:47:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "4610ca5d83fa",
+      "packet_id": "t11-class2-decidable:289:22:47:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "22:72:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "72ba4179ff95",
+      "packet_id": "t11-class2-decidable:291:22:72:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "22:72:13",
+      "decision": "governing_entry",
+      "governing_entry_id": "2bcbf158cfc6",
+      "packet_id": "t11-class2-decidable:292:22:72:13",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "23:20:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "c42b1543f528",
+      "packet_id": "t11-class2-decidable:293:23:20:7",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "23:67:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "2cec1fa6610d",
+      "packet_id": "t11-class2-decidable:294:23:67:4",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "23:106:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "db3aa47edd87",
+      "packet_id": "t11-class2-decidable:295:23:106:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "23:110:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "f12aed82488d",
+      "packet_id": "t11-class2-decidable:296:23:110:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "24:1:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "7aa81aa90341",
+      "packet_id": "t11-class2-decidable:297:24:1:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "24:4:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "b915c5cf9c6e",
+      "packet_id": "t11-class2-decidable:298:24:4:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "24:23:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "125f1546603f",
+      "packet_id": "t11-class2-decidable:299:24:23:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "24:23:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "f6ed53335490",
+      "packet_id": "t11-class2-decidable:300:24:23:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "24:26:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "e6fbd6f74df8",
+      "packet_id": "t11-class2-decidable:301:24:26:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "24:26:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "e6fbd6f74df8",
+      "packet_id": "t11-class2-decidable:302:24:26:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "24:26:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "d647268d206c",
+      "packet_id": "t11-class2-decidable:303:24:26:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "24:30:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "f40b70702983",
+      "packet_id": "t11-class2-decidable:304:24:30:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "24:58:37",
+      "decision": "governing_entry",
+      "governing_entry_id": "f12ae52e78f7",
+      "packet_id": "t11-class2-decidable:305:24:58:37",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "24:60:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "3aadc0459dc6",
+      "packet_id": "t11-class2-decidable:306:24:60:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "25:7:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "9605df7b3e1c",
+      "packet_id": "t11-class2-decidable:307:25:7:9",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "25:53:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "6a1bd8ef9357",
+      "packet_id": "t11-class2-decidable:308:25:53:3",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "25:53:14",
+      "decision": "governing_entry",
+      "governing_entry_id": "1f2cc527b097",
+      "packet_id": "t11-class2-decidable:309:25:53:14",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "25:63:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "f6860c032374",
+      "packet_id": "t11-class2-decidable:310:25:63:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "25:67:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "17753a1fce18",
+      "packet_id": "t11-class2-decidable:311:25:67:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "25:67:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "74c00dac2ced",
+      "packet_id": "t11-class2-decidable:312:25:67:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "25:72:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "51186752f2f8",
+      "packet_id": "t11-class2-decidable:313:25:72:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "25:72:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "51186752f2f8",
+      "packet_id": "t11-class2-decidable:314:25:72:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "25:77:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "c0d72d1edde0",
+      "packet_id": "t11-class2-decidable:315:25:77:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "26:58:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "8d144a4c3989",
+      "packet_id": "t11-class2-decidable:316:26:58:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "26:128:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "a5f770ccae28",
+      "packet_id": "t11-class2-decidable:317:26:128:5",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "26:130:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "a5bdaacdedd3",
+      "packet_id": "t11-class2-decidable:318:26:130:2",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "26:130:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "a5bdaacdedd3",
+      "packet_id": "t11-class2-decidable:319:26:130:3",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "26:182:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "69156893d156",
+      "packet_id": "t11-class2-decidable:320:26:182:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "27:7:16",
+      "decision": "governing_entry",
+      "governing_entry_id": "8bb806510d1d",
+      "packet_id": "t11-class2-decidable:321:27:7:16",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "27:20:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "e9dd6c4a6a4f",
+      "packet_id": "t11-class2-decidable:322:27:20:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "27:40:14",
+      "decision": "governing_entry",
+      "governing_entry_id": "53bbf2c4975a",
+      "packet_id": "t11-class2-decidable:323:27:40:14",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "27:44:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "4fa13413ff7f",
+      "packet_id": "t11-class2-decidable:324:27:44:9",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "27:88:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "51186752f2f8",
+      "packet_id": "t11-class2-decidable:325:27:88:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "28:8:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "ffc59ab7f365",
+      "packet_id": "t11-class2-decidable:326:28:8:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "28:11:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "6031796cfb94",
+      "packet_id": "t11-class2-decidable:327:28:11:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "28:18:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "67ec33d3f7e1",
+      "packet_id": "t11-class2-decidable:328:28:18:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "28:18:15",
+      "decision": "governing_entry",
+      "governing_entry_id": "520d12c49024",
+      "packet_id": "t11-class2-decidable:329:28:18:15",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "28:65:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "bbfb049e4563",
+      "packet_id": "t11-class2-decidable:330:28:65:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "28:65:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "20f0c48ad4ab",
+      "packet_id": "t11-class2-decidable:331:28:65:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "28:82:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "ba90390f3ae1",
+      "packet_id": "t11-class2-decidable:332:28:82:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "29:14:14",
+      "decision": "governing_entry",
+      "governing_entry_id": "3538a4af6393",
+      "packet_id": "t11-class2-decidable:333:29:14:14",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "30:4:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "52ba25e0e494",
+      "packet_id": "t11-class2-decidable:334:30:4:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "30:9:16",
+      "decision": "governing_entry",
+      "governing_entry_id": "c47a7e2f2e68",
+      "packet_id": "t11-class2-decidable:335:30:9:16",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "30:9:21",
+      "decision": "governing_entry",
+      "governing_entry_id": "f371ea9c4b67",
+      "packet_id": "t11-class2-decidable:336:30:9:21",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "30:11:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "cc9148479eae",
+      "packet_id": "t11-class2-decidable:337:30:11:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "30:17:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "f0542e3a35a1",
+      "packet_id": "t11-class2-decidable:338:30:17:4",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "30:17:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "8f4b5c2d0a9a",
+      "packet_id": "t11-class2-decidable:339:30:17:6",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "30:30:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "602b2e3cbd94",
+      "packet_id": "t11-class2-decidable:340:30:30:8",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "30:36:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "17ea426d371a",
+      "packet_id": "t11-class2-decidable:341:30:36:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "30:41:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "4cb26045b5b7",
+      "packet_id": "t11-class2-decidable:342:30:41:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "30:41:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "fb27e9575a60",
+      "packet_id": "t11-class2-decidable:343:30:41:2",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "31:18:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "2bde50b249e8",
+      "packet_id": "t11-class2-decidable:344:31:18:2",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "31:18:16",
+      "decision": "governing_entry",
+      "governing_entry_id": "d907e8ecac91",
+      "packet_id": "t11-class2-decidable:345:31:18:16",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "31:19:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "52cf80f165e1",
+      "packet_id": "t11-class2-decidable:346:31:19:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "31:19:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "bc1a285908b2",
+      "packet_id": "t11-class2-decidable:347:31:19:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "31:19:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "f40b70702983",
+      "packet_id": "t11-class2-decidable:348:31:19:4",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:14:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "58d16ee708f4",
+      "packet_id": "t11-class2-decidable:349:33:14:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:19:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "e88b5faa3f17",
+      "packet_id": "t11-class2-decidable:350:33:19:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:19:19",
+      "decision": "governing_entry",
+      "governing_entry_id": "7ff158f6a3e9",
+      "packet_id": "t11-class2-decidable:351:33:19:19",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:25:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "51e9879b93ab",
+      "packet_id": "t11-class2-decidable:352:33:25:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:33:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "887fec713dc3",
+      "packet_id": "t11-class2-decidable:353:33:33:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:33:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "15ff7cb94ab4",
+      "packet_id": "t11-class2-decidable:354:33:33:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:33:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "15ff7cb94ab4",
+      "packet_id": "t11-class2-decidable:355:33:33:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:33:24",
+      "decision": "governing_entry",
+      "governing_entry_id": "ad9af170d670",
+      "packet_id": "t11-class2-decidable:356:33:33:24",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:33:25",
+      "decision": "governing_entry",
+      "governing_entry_id": "ad9af170d670",
+      "packet_id": "t11-class2-decidable:357:33:33:25",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:48:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "f4ed24196de4",
+      "packet_id": "t11-class2-decidable:358:33:48:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:49:20",
+      "decision": "governing_entry",
+      "governing_entry_id": "c77a66a7c89b",
+      "packet_id": "t11-class2-decidable:359:33:49:20",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:49:21",
+      "decision": "governing_entry",
+      "governing_entry_id": "c77a66a7c89b",
+      "packet_id": "t11-class2-decidable:360:33:49:21",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:51:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "ba4b3917e703",
+      "packet_id": "t11-class2-decidable:361:33:51:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:60:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "e2a0e737a2ad",
+      "packet_id": "t11-class2-decidable:362:33:60:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:60:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "3c86f3a2dabe",
+      "packet_id": "t11-class2-decidable:363:33:60:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:60:16",
+      "decision": "governing_entry",
+      "governing_entry_id": "63a6f3557d65",
+      "packet_id": "t11-class2-decidable:364:33:60:16",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "33:72:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "e5c07f859038",
+      "packet_id": "t11-class2-decidable:365:33:72:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "34:2:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "285c879ac87b",
+      "packet_id": "t11-class2-decidable:366:34:2:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "34:9:14",
+      "decision": "governing_entry",
+      "governing_entry_id": "82abb3fec87c",
+      "packet_id": "t11-class2-decidable:367:34:9:14",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "34:9:18",
+      "decision": "governing_entry",
+      "governing_entry_id": "0919c7ce9ce8",
+      "packet_id": "t11-class2-decidable:368:34:9:18",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "34:54:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "748db31e0c38",
+      "packet_id": "t11-class2-decidable:369:34:54:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "35:18:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "97657fc0cb1c",
+      "packet_id": "t11-class2-decidable:370:35:18:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "35:18:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "97657fc0cb1c",
+      "packet_id": "t11-class2-decidable:371:35:18:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "35:34:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "c58bce4626f3",
+      "packet_id": "t11-class2-decidable:372:35:34:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "36:55:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "967ace8e960d",
+      "packet_id": "t11-class2-decidable:373:36:55:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "36:67:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "7b412295f443",
+      "packet_id": "t11-class2-decidable:374:36:67:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "36:67:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "7034f8b4a1f9",
+      "packet_id": "t11-class2-decidable:375:36:67:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "36:72:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "269ebe526439",
+      "packet_id": "t11-class2-decidable:376:36:72:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "37:48:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "609db1b78e93",
+      "packet_id": "t11-class2-decidable:377:37:48:2",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "37:48:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "53bbf2c4975a",
+      "packet_id": "t11-class2-decidable:378:37:48:3",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "37:107:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "603eecbe7dd7",
+      "packet_id": "t11-class2-decidable:379:37:107:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "37:107:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "d2f38ce36ca1",
+      "packet_id": "t11-class2-decidable:380:37:107:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "37:140:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "1bb11305509a",
+      "packet_id": "t11-class2-decidable:381:37:140:2",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "37:141:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "e67271537035",
+      "packet_id": "t11-class2-decidable:382:37:141:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "37:142:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "2461aa4915d8",
+      "packet_id": "t11-class2-decidable:383:37:142:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "38:21:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "afe8c5105077",
+      "packet_id": "t11-class2-decidable:384:38:21:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "38:22:19",
+      "decision": "governing_entry",
+      "governing_entry_id": "9b61507e2393",
+      "packet_id": "t11-class2-decidable:385:38:22:19",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "38:37:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "f4dbd60e1c18",
+      "packet_id": "t11-class2-decidable:386:38:37:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "38:42:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "263779da1141",
+      "packet_id": "t11-class2-decidable:387:38:42:4",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "39:23:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "722b4065dc2a",
+      "packet_id": "t11-class2-decidable:388:39:23:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "39:23:8",
+      "decision": "governing_entry",
+      "governing_entry_id": "f85900d57958",
+      "packet_id": "t11-class2-decidable:389:39:23:8",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "39:23:15",
+      "decision": "governing_entry",
+      "governing_entry_id": "057ab0427de6",
+      "packet_id": "t11-class2-decidable:390:39:23:15",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "39:38:22",
+      "decision": "governing_entry",
+      "governing_entry_id": "4fa13413ff7f",
+      "packet_id": "t11-class2-decidable:391:39:38:22",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "39:53:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "17753a1fce18",
+      "packet_id": "t11-class2-decidable:392:39:53:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "39:61:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "1de79647e05f",
+      "packet_id": "t11-class2-decidable:393:39:61:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "40:37:23",
+      "decision": "governing_entry",
+      "governing_entry_id": "11083a89b17f",
+      "packet_id": "t11-class2-decidable:394:40:37:23",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "41:16:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "d6a03d1febc7",
+      "packet_id": "t11-class2-decidable:395:41:16:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "42:15:17",
+      "decision": "governing_entry",
+      "governing_entry_id": "802a64a08158",
+      "packet_id": "t11-class2-decidable:396:42:15:17",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "42:16:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "633ba0c223db",
+      "packet_id": "t11-class2-decidable:397:42:16:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "42:20:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "12b08439f876",
+      "packet_id": "t11-class2-decidable:398:42:20:9",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "42:45:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "269ebe526439",
+      "packet_id": "t11-class2-decidable:399:42:45:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "42:49:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "cb28a4b2e211",
+      "packet_id": "t11-class2-decidable:400:42:49:12",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "43:33:15",
+      "decision": "governing_entry",
+      "governing_entry_id": "473d89cfc13e",
+      "packet_id": "t11-class2-decidable:401:43:33:15",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "43:33:17",
+      "decision": "governing_entry",
+      "governing_entry_id": "4cb26045b5b7",
+      "packet_id": "t11-class2-decidable:402:43:33:17",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "44:15:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "4fa13413ff7f",
+      "packet_id": "t11-class2-decidable:403:44:15:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "44:16:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "a5bdaacdedd3",
+      "packet_id": "t11-class2-decidable:404:44:16:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "44:16:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "ce7ac13d620a",
+      "packet_id": "t11-class2-decidable:405:44:16:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "46:9:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "dcd164232e6d",
+      "packet_id": "t11-class2-decidable:406:46:9:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "47:4:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "3f72628fa1ec",
+      "packet_id": "t11-class2-decidable:407:47:4:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "47:4:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "f01f89e91588",
+      "packet_id": "t11-class2-decidable:408:47:4:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "47:4:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "21dd8c76ae19",
+      "packet_id": "t11-class2-decidable:409:47:4:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "47:4:19",
+      "decision": "governing_entry",
+      "governing_entry_id": "ba21a135a54c",
+      "packet_id": "t11-class2-decidable:410:47:4:19",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "47:9:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "5970b19734fd",
+      "packet_id": "t11-class2-decidable:411:47:9:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "47:9:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "a5a8b696e5f7",
+      "packet_id": "t11-class2-decidable:412:47:9:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "47:23:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "539a43e0e1fc",
+      "packet_id": "t11-class2-decidable:413:47:23:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "47:35:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "947440c92db6",
+      "packet_id": "t11-class2-decidable:414:47:35:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "48:24:13",
+      "decision": "governing_entry",
+      "governing_entry_id": "bf358f5f2455",
+      "packet_id": "t11-class2-decidable:415:48:24:13",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "48:25:34",
+      "decision": "governing_entry",
+      "governing_entry_id": "5d308b003904",
+      "packet_id": "t11-class2-decidable:416:48:25:34",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "50:16:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "63addc5a2b8e",
+      "packet_id": "t11-class2-decidable:417:50:16:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "50:22:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "4fa13413ff7f",
+      "packet_id": "t11-class2-decidable:418:50:22:7",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "51:2:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "10f881fc3033",
+      "packet_id": "t11-class2-decidable:419:51:2:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "51:29:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "87842642b5c7",
+      "packet_id": "t11-class2-decidable:420:51:29:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "51:48:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "07b3facef5c4",
+      "packet_id": "t11-class2-decidable:421:51:48:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "51:48:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "f0c6b1440da2",
+      "packet_id": "t11-class2-decidable:422:51:48:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "52:19:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "2c43e49e4e34",
+      "packet_id": "t11-class2-decidable:423:52:19:2",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "52:21:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "a7f2709a62b2",
+      "packet_id": "t11-class2-decidable:424:52:21:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "52:30:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "3f40e0c0eb7a",
+      "packet_id": "t11-class2-decidable:425:52:30:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "52:44:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "0919c7ce9ce8",
+      "packet_id": "t11-class2-decidable:426:52:44:6",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "53:43:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "532d72ea4bc6",
+      "packet_id": "t11-class2-decidable:427:53:43:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "54:37:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "213945255c3b",
+      "packet_id": "t11-class2-decidable:428:54:37:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "55:9:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "5d5308bcda87",
+      "packet_id": "t11-class2-decidable:429:55:9:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "55:17:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "c94d92f4fca0",
+      "packet_id": "t11-class2-decidable:430:55:17:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "55:27:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "84c0b2782c39",
+      "packet_id": "t11-class2-decidable:431:55:27:5",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "55:31:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "f9ec9625dd58",
+      "packet_id": "t11-class2-decidable:432:55:31:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "55:33:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "4fb84ac70e66",
+      "packet_id": "t11-class2-decidable:433:55:33:7",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "55:33:12",
+      "decision": "governing_entry",
+      "governing_entry_id": "4fb84ac70e66",
+      "packet_id": "t11-class2-decidable:434:55:33:12",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "56:19:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "6a6fb1b4419b",
+      "packet_id": "t11-class2-decidable:435:56:19:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "56:19:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "7d41f96d61e8",
+      "packet_id": "t11-class2-decidable:436:56:19:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "56:89:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "488d1175c005",
+      "packet_id": "t11-class2-decidable:437:56:89:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "57:3:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "4cb26045b5b7",
+      "packet_id": "t11-class2-decidable:438:57:3:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "57:3:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "bca0136eba37",
+      "packet_id": "t11-class2-decidable:439:57:3:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "57:16:21",
+      "decision": "governing_entry",
+      "governing_entry_id": "0d050fe8e03c",
+      "packet_id": "t11-class2-decidable:440:57:16:21",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "58:5:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "f445c1587d5c",
+      "packet_id": "t11-class2-decidable:441:58:5:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "58:11:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "62c550168299",
+      "packet_id": "t11-class2-decidable:442:58:11:7",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "58:11:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "62c550168299",
+      "packet_id": "t11-class2-decidable:443:58:11:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "58:11:11",
+      "decision": "governing_entry",
+      "governing_entry_id": "62c550168299",
+      "packet_id": "t11-class2-decidable:444:58:11:11",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "58:22:28",
+      "decision": "governing_entry",
+      "governing_entry_id": "488d1175c005",
+      "packet_id": "t11-class2-decidable:445:58:22:28",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "59:15:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "17ea426d371a",
+      "packet_id": "t11-class2-decidable:446:59:15:6",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "59:15:7",
+      "decision": "governing_entry",
+      "governing_entry_id": "b38862a332fa",
+      "packet_id": "t11-class2-decidable:447:59:15:7",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "59:19:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "b3504e19ef50",
+      "packet_id": "t11-class2-decidable:448:59:19:10",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "60:10:40",
+      "decision": "governing_entry",
+      "governing_entry_id": "07c919b3a9f2",
+      "packet_id": "t11-class2-decidable:449:60:10:40",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "62:5:10",
+      "decision": "governing_entry",
+      "governing_entry_id": "97657fc0cb1c",
+      "packet_id": "t11-class2-decidable:450:62:5:10",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "65:4:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "4b3eec0b03f7",
+      "packet_id": "t11-class2-decidable:451:65:4:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "66:2:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "7aa81aa90341",
+      "packet_id": "t11-class2-decidable:452:66:2:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "67:8:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "f1643f45edbf",
+      "packet_id": "t11-class2-decidable:453:67:8:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "67:8:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "1f702ef366a8",
+      "packet_id": "t11-class2-decidable:454:67:8:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "67:21:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "777ed57b5bde",
+      "packet_id": "t11-class2-decidable:455:67:21:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "68:16:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "b93713cfed33",
+      "packet_id": "t11-class2-decidable:456:68:16:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "68:17:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "87d226f0443a",
+      "packet_id": "t11-class2-decidable:457:68:17:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "69:34:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "880ad7cf989a",
+      "packet_id": "t11-class2-decidable:458:69:34:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "70:21:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "e11ae777e759",
+      "packet_id": "t11-class2-decidable:459:70:21:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "70:40:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "c94d92f4fca0",
+      "packet_id": "t11-class2-decidable:460:70:40:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "70:43:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "94f0bd3faba8",
+      "packet_id": "t11-class2-decidable:461:70:43:5",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "70:43:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "356c4cfc066b",
+      "packet_id": "t11-class2-decidable:462:70:43:9",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "71:13:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "4ad302f84579",
+      "packet_id": "t11-class2-decidable:463:71:13:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "71:13:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "10f881fc3033",
+      "packet_id": "t11-class2-decidable:464:71:13:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "72:11:9",
+      "decision": "governing_entry",
+      "governing_entry_id": "640bed4d1561",
+      "packet_id": "t11-class2-decidable:465:72:11:9",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "73:9:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "c94d92f4fca0",
+      "packet_id": "t11-class2-decidable:466:73:9:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "75:29:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "8f72fab7eefc",
+      "packet_id": "t11-class2-decidable:467:75:29:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "75:29:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "3c48ced2c521",
+      "packet_id": "t11-class2-decidable:468:75:29:3",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "75:36:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "23b124a7024e",
+      "packet_id": "t11-class2-decidable:469:75:36:4",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "77:27:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "5d54e40a7cac",
+      "packet_id": "t11-class2-decidable:470:77:27:5",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "77:42:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "b8b0d09bccfa",
+      "packet_id": "t11-class2-decidable:471:77:42:3",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "78:23:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "58d16ee708f4",
+      "packet_id": "t11-class2-decidable:472:78:23:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "79:22:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "44714c2f1293",
+      "packet_id": "t11-class2-decidable:473:79:22:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "82:2:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "71950d40def3",
+      "packet_id": "t11-class2-decidable:474:82:2:3",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "82:4:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "0d82cf557616",
+      "packet_id": "t11-class2-decidable:475:82:4:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "82:8:6",
+      "decision": "governing_entry",
+      "governing_entry_id": "331b6ce2346f",
+      "packet_id": "t11-class2-decidable:476:82:8:6",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "83:2:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "33d5a6d68365",
+      "packet_id": "t11-class2-decidable:477:83:2:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "83:3:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "5d5308bcda87",
+      "packet_id": "t11-class2-decidable:478:83:3:4",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "83:3:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "43f7c3170070",
+      "packet_id": "t11-class2-decidable:479:83:3:5",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "84:16:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "833ac5812d30",
+      "packet_id": "t11-class2-decidable:480:84:16:3",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "84:19:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "331b6ce2346f",
+      "packet_id": "t11-class2-decidable:481:84:19:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "86:17:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "11cc5f8d924a",
+      "packet_id": "t11-class2-decidable:482:86:17:1",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "86:17:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "11cc5f8d924a",
+      "packet_id": "t11-class2-decidable:483:86:17:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "93:9:4",
+      "decision": "governing_entry",
+      "governing_entry_id": "4709f6b49cb5",
+      "packet_id": "t11-class2-decidable:484:93:9:4",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "94:3:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "0c5f30e50041",
+      "packet_id": "t11-class2-decidable:485:94:3:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "94:3:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "4cb26045b5b7",
+      "packet_id": "t11-class2-decidable:486:94:3:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "94:5:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "de86725d7318",
+      "packet_id": "t11-class2-decidable:487:94:5:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "94:7:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "f9ec9625dd58",
+      "packet_id": "t11-class2-decidable:488:94:7:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "94:7:3",
+      "decision": "governing_entry",
+      "governing_entry_id": "1cabc12cf11c",
+      "packet_id": "t11-class2-decidable:489:94:7:3",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "100:2:1",
+      "decision": "governing_entry",
+      "governing_entry_id": "4e2afd0fb269",
+      "packet_id": "t11-class2-decidable:490:100:2:1",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "101:4:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "1550902df279",
+      "packet_id": "t11-class2-decidable:491:101:4:5",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "106:4:2",
+      "decision": "governing_entry",
+      "governing_entry_id": "beae77dd607f",
+      "packet_id": "t11-class2-decidable:492:106:4:2",
+      "pilot_stratum": "same_section_different_root",
+      "retained_alternatives": []
+    },
+    {
+      "canonical_location": "113:3:5",
+      "decision": "governing_entry",
+      "governing_entry_id": "a26e6f85223d",
+      "packet_id": "t11-class2-decidable:493:113:3:5",
+      "pilot_stratum": "verb_vs_noun",
+      "retained_alternatives": []
+    }
+  ],
+  "confidence_cross_tab": [
+    {
+      "count": 2,
+      "reviewer_a_confidence": "abstain",
+      "reviewer_b_confidence": "abstain"
+    },
+    {
+      "count": 431,
+      "reviewer_a_confidence": "high",
+      "reviewer_b_confidence": "high"
+    },
+    {
+      "count": 5,
+      "reviewer_a_confidence": "high",
+      "reviewer_b_confidence": "medium"
+    },
+    {
+      "count": 55,
+      "reviewer_a_confidence": "medium",
+      "reviewer_b_confidence": "medium"
+    }
+  ],
+  "data_findings": [],
+  "disagreements": [],
+  "incompatible_reasoning_rows": [],
+  "inputs": {
+    "packet_file": "packets-decidable.jsonl",
+    "packet_manifest": "packets-decidable.manifest.json",
+    "reviewer_a": "Opus",
+    "reviewer_a_file": "votes-a.jsonl",
+    "reviewer_b": "Codex",
+    "reviewer_b_file": "votes-b.jsonl"
+  },
+  "joint_abstentions": [
+    {
+      "canonical_location": "4:101:4",
+      "packet_id": "t11-class2-decidable:064:4:101:4",
+      "reviewer_a_blocker": "target_surface_root_absent_from_bound_candidates: target ٱلْأَرْضِ at 4:101:4 does not derive from any bound entry root ['ض ر ب', 'ق ص ر']; both carriers cite ayah 4:101 for forms at other tokens ({'3f7262': ['ضَرَبُوا', 'ضَرَبْتُمْ', 'يَضْرِبُونَ', 'ضَرْبًا'], '609db1': ['تَقْصُرُوا', 'قَصَّرُوا', 'لَا يُقَصِّرُون', 'مُقَصِّرِينَ', 'قَاصِرَاتُ ٱلطَّرْف', 'مَقْصُورَات']}), so no bound analysis addresses this location",
+      "reviewer_b_blocker": "missing_matching_bound_carrier: target ٱلْأَرْضِ is a noun, but the packet binds only ض ر ب and ق ص ر verb-family entries"
+    },
+    {
+      "canonical_location": "22:47:6",
+      "packet_id": "t11-class2-decidable:290:22:47:6",
+      "reviewer_a_blocker": "target_surface_root_absent_from_bound_candidates: target وَعْدَهُۥ at 22:47:6 does not derive from any bound entry root ['ع ج ل', 'ع د د']; both carriers cite ayah 22:47 for forms at other tokens ({'4610ca': ['عَجِلْتُمْ', 'عَجِلْتَ', 'تَعْجَلْ', 'أَعْجَلَكَ', 'عَجَل', 'عَجُولًا', 'عَجِّلْ', 'عَجَّلْنَا', 'يُعَجِّلُ', 'تَعَجَّلَ', 'اِسْتَعْجَلْتُمْ', 'يَسْتَعْجِلُ', 'يَسْتَعْجِلُونَ', 'يَسْتَعْجِلُونَكَ', 'يَسْتَعْجِلُونَ (ي)', 'تَسْتَعْجِلْ', 'تَسْتَعْجِلُونَ', 'تَسْتَعْجِلُونَ (ي)', 'تَسْتَعْجِلُوهُ', 'اِسْتِعْجَالَهُمْ'], '55c548': ['عَدَّهُمْ']}), so no bound analysis addresses this location",
+      "reviewer_b_blocker": "missing_matching_bound_carrier: target وَعْدَهُۥ is the noun promise with possessive suffix, but the packet binds only ع ج ل and ع د د entries"
+    }
+  ],
+  "per_stratum": [
+    {
+      "certified_candidates": 376,
+      "confidence_cross_tab": [
+        {
+          "count": 2,
+          "reviewer_a_confidence": "abstain",
+          "reviewer_b_confidence": "abstain"
+        },
+        {
+          "count": 337,
+          "reviewer_a_confidence": "high",
+          "reviewer_b_confidence": "high"
+        },
+        {
+          "count": 3,
+          "reviewer_a_confidence": "high",
+          "reviewer_b_confidence": "medium"
+        },
+        {
+          "count": 36,
+          "reviewer_a_confidence": "medium",
+          "reviewer_b_confidence": "medium"
+        }
+      ],
+      "decision_agreements": 376,
+      "disagreements": 0,
+      "joint_abstentions": 2,
+      "pilot_stratum": "same_section_different_root",
+      "rows": 378
+    },
+    {
+      "certified_candidates": 115,
+      "confidence_cross_tab": [
+        {
+          "count": 94,
+          "reviewer_a_confidence": "high",
+          "reviewer_b_confidence": "high"
+        },
+        {
+          "count": 2,
+          "reviewer_a_confidence": "high",
+          "reviewer_b_confidence": "medium"
+        },
+        {
+          "count": 19,
+          "reviewer_a_confidence": "medium",
+          "reviewer_b_confidence": "medium"
+        }
+      ],
+      "decision_agreements": 115,
+      "disagreements": 0,
+      "joint_abstentions": 0,
+      "pilot_stratum": "verb_vs_noun",
+      "rows": 115
+    }
+  ],
+  "schema": "qamus.t11_class2_decidable_wave_analysis.v1",
+  "scope": "analysis_only_no_promotion",
+  "summary": {
+    "both_decided_agreement_percent": 100.0,
+    "both_decided_agreements": 491,
+    "both_decided_rows": 491,
+    "certified_candidates": 491,
+    "data_findings": 0,
+    "disagreements": 0,
+    "incompatible_reasoning": 0,
+    "joint_abstentions": 2,
+    "reasoning_compatible_agreements": 491,
+    "total_rows": 493
+  },
+  "validation": {
+    "expected_rows_each": 493,
+    "hard_findings": [],
+    "packet_rows": 493,
+    "reviewer_a_rows": 493,
+    "reviewer_b_rows": 493,
+    "valid": true
+  }
+}
