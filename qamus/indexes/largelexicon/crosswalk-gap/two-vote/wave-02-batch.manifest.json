@@ -1,0 +1,164 @@
+{
+  "authoritative_baseline_sha": "c0c4ea7c0fba5457177b70a97655e204165ed083",
+  "gate_loading": {
+    "classification_triggers": {
+      "competing_lexical_senses": [
+        "multi_sense_root"
+      ],
+      "unresolved_occurrence_ambiguity": [
+        "advanced_nahw"
+      ]
+    },
+    "loader": "tools.fact_ledger._two_vote_fact_types",
+    "two_vote_fact_types": [
+      "case_mood_governor",
+      "irab_rendering"
+    ]
+  },
+  "generator": "tools/build_two_vote_packets.py",
+  "inputs": {
+    "baseline_whitelist": {
+      "canonical_rows_sha256": "785f935c2dc01916b05df30f496e4fe202c21be38ce06223a8718733b846ffdc",
+      "path": "baseline-whitelist-972263b5.jsonl",
+      "row_count": 34322,
+      "sha256": "972263b5472478b8805c39e107ecf5d6f8096acace8756d15a08967cddf90515"
+    },
+    "classification": {
+      "canonical_rows_sha256": "ed628fc7ea483009f381646d90dd0403e9e2588ebfb69fa586e5a7bbd829c983",
+      "path": "qamus/indexes/largelexicon/crosswalk-gap/laneb-classification.jsonl",
+      "row_count": 5447,
+      "sha256": "10de3214aea4f6a100d5f19b5cabd3830b744ed35002644ee72e273d80ffafaf"
+    },
+    "entries": {
+      "canonical_rows_sha256": "bd37b6fe0dd16b3f6673f0ea3446d37066a007ffcb0735fba85fa38d8f6500d9",
+      "path": "qamus/data/current/entries.jsonl",
+      "row_count": 2092,
+      "sha256": "a68245e93ce1a8b76858b672a449ff94475abf010e8102575e7c0285c540a78f"
+    },
+    "fact_ledger_schema": {
+      "path": "qamus/schemas/fact-ledger-row.schema.json",
+      "sha256": "bdf5bbeab70aac450b7f30fed58010b86d459e1cd1475278ce8b6a234af8c087"
+    },
+    "grammar_gate_ssot": {
+      "path": "nahw/evals/grammar-decision-gates.json",
+      "sha256": "ccc18bed9af049013cc7aa69b9eb1b27b4639f06c5afd90070a6bc406dd20c5f"
+    },
+    "homograph_keys": {
+      "path": "qamus/indexes/largelexicon/homograph-keys.json",
+      "sha256": "442696b2e7624b06619e52533b6759bfbdb4a955ccdae3c7614bcedc78a5f32f"
+    },
+    "loc_surfaces": {
+      "canonical_rows_sha256": "648d85cbafdb788e9cf67fcc860b1c135874197b400616fe23d620ed2f4332ae",
+      "path": "loc-surfaces-f2e079dc.jsonl",
+      "row_count": 49902,
+      "sha256": "f2e079dcdce01148074a238e3937314cf02222298f91f83ed66dcbb599697ca7"
+    },
+    "queue": {
+      "canonical_rows_sha256": "a007d28ec1df56c56dfc108c3ec16177c58672e48f11aa9bf79cd397ee33eccc",
+      "path": "qamus/indexes/largelexicon/crosswalk-gap/crosswalk-gap-queue.jsonl",
+      "row_count": 5425,
+      "sha256": "b7a49d643fd226cfb2be2ae8a64b4c3e707b69fb0b2713bec456b4090a7842d0"
+    },
+    "v1_packets": {
+      "canonical_rows_sha256": "c1a593254884fb1bd64ad7039687c18f8d4d6ea85cedfac266e7985ccba275c7",
+      "path": "qamus/indexes/largelexicon/crosswalk-gap/two-vote/packets-cal-001.jsonl",
+      "row_count": 100,
+      "sha256": "95788fabc0ba7b65558d03b2d0854f361e507dfaeaa6ec3d43732a1b7985b311"
+    }
+  },
+  "lineage": {
+    "excluded_by": "canonical_location",
+    "excluded_calibration_path": "qamus/indexes/largelexicon/crosswalk-gap/two-vote/packets-cal-001.jsonl",
+    "excluded_calibration_sha256": "95788fabc0ba7b65558d03b2d0854f361e507dfaeaa6ec3d43732a1b7985b311"
+  },
+  "lookup_coverage": {
+    "candidate_entry_lookup_count": 18223,
+    "candidate_entry_lookup_miss_count": 0,
+    "candidate_entry_lookup_miss_rate": 0.0,
+    "stop_threshold": 0.01
+  },
+  "output": {
+    "carrier_mapping_status_counts": {
+      "ambiguous": 64,
+      "unique": 1398
+    },
+    "gate_distribution": {
+      "two_vote_required": 250
+    },
+    "occurrence_ambiguity_packet_mapping_status_counts": {
+      "unique": 160
+    },
+    "occurrence_ambiguity_unique_with_fingerprints": 160,
+    "packet_mapping_status_counts": {
+      "unique": 250
+    },
+    "packet_sha256_rule": "SHA-256 of canonical compact JSON for the packet before adding packet_sha256.",
+    "path": "qamus/indexes/largelexicon/crosswalk-gap/two-vote/packets-wave-02.jsonl",
+    "population_class_counts": {
+      "competing_lexical_senses": 90,
+      "unresolved_occurrence_ambiguity": 160
+    },
+    "residual_occurrence_rows": 3259,
+    "residual_occurrence_unique_mapping_rate": 0.9987726296409942,
+    "residual_occurrence_unique_mapping_rows": 3255,
+    "rows": 250,
+    "selected_occurrence_unique_mapping_rate": 1.0,
+    "selected_occurrence_unique_mapping_rows": 160,
+    "sha256": "9bd56a11af30b6c0bf3181a960da4cf1ece8ea15ec66d62ed2b6759b0d58dc65",
+    "stratum_counts": {
+      "competing_lexical_senses": 90,
+      "unresolved_occurrence_ambiguity": 160
+    }
+  },
+  "population": {
+    "class_counts": {
+      "competing_lexical_senses": 1941,
+      "unresolved_occurrence_ambiguity": 3484
+    },
+    "row_count": 5425
+  },
+  "required_response_fields": [
+    "proposed_conclusion",
+    "competing_alternatives",
+    "sarf_evidence",
+    "nahw_evidence",
+    "source_address",
+    "exact_reason",
+    "gate",
+    "abstention_or_blocker",
+    "confidence",
+    "evidence_hashes"
+  ],
+  "schema": "qamus.laneb_two_vote_wave_manifest.v1",
+  "scope": "packets_only_no_votes_no_conclusions_no_ledger_writes_no_crosswalk_writes",
+  "selection_rule": {
+    "competing_lexical_senses": "Lexicographic score: distinct two-root pair first, then count of candidate entries carrying usage evidence descending, root-pair text ascending, canonical location numeric ascending; take exactly 90.",
+    "excluded_ayahs": [
+      "2:274",
+      "4:64",
+      "12:37",
+      "48:15"
+    ],
+    "excluded_calibration_locations": 100,
+    "output_order": "90 competing_lexical_senses then 160 unresolved_occurrence_ambiguity; intrinsic score order; selection_rank 1..250.",
+    "pure_function": true,
+    "purpose": "membership_selection_only_never_semantic_adjudication",
+    "randomness": "none",
+    "underfill": "STOP if either exact stratum cannot be filled.",
+    "unresolved_occurrence_ambiguity": "Run the existing fingerprint mapper for every eligible row; unique target-addressing carrier first, then canonical location numeric ascending; take exactly 160.",
+    "wall_clock_inputs": "none"
+  },
+  "validation": {
+    "rebuild": "python tools/build_two_vote_packets.py --batch wave-02",
+    "rollback": "git revert <commit>",
+    "self_test": "python tools/build_two_vote_packets.py --self-test",
+    "stop_conditions": [
+      "candidate entry lookup failures exceed 1%",
+      "gate SSOT lacks a tier for a selected decision trigger",
+      "pinned v1 ayah_word_context is insufficient or differs from loc-surfaces",
+      "loc-surfaces SHA-256 differs from f2e079dc pin",
+      "v1 packet SHA-256 differs from 95788fab lineage pin",
+      "fewer than 90 lexical or 160 occurrence rows remain eligible"
+    ]
+  }
+}

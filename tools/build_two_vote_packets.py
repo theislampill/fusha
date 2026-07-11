@@ -33,6 +33,7 @@ from tools.compile_canonical_hover_whitelist_packet import (  # noqa: E402
 
 
 AUTHORITATIVE_BASELINE_SHA = "3f23dd4adab3222d1e8277bc5a1097186dc08f6d"
+WAVE_02_AUTHORITATIVE_BASELINE_SHA = "c0c4ea7c0fba5457177b70a97655e204165ed083"
 EXPECTED_BASELINE_SHA256 = "972263b5472478b8805c39e107ecf5d6f8096acace8756d15a08967cddf90515"
 EXPECTED_LOC_SURFACES_SHA256 = "f2e079dcdce01148074a238e3937314cf02222298f91f83ed66dcbb599697ca7"
 EXPECTED_V1_PACKET_SHA256 = "95788fabc0ba7b65558d03b2d0854f361e507dfaeaa6ec3d43732a1b7985b311"
@@ -49,6 +50,8 @@ DEFAULT_HOMOGRAPH_KEYS = ROOT / "qamus/indexes/largelexicon/homograph-keys.json"
 DEFAULT_V1_PACKETS = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/packets-cal-001.jsonl"
 DEFAULT_OUT = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/packets-cal-002.jsonl"
 DEFAULT_MANIFEST = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/calibration-batch-v2.manifest.json"
+DEFAULT_WAVE_OUT = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/packets-wave-02.jsonl"
+DEFAULT_WAVE_MANIFEST = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/two-vote/wave-02-batch.manifest.json"
 
 LOC_RE = re.compile(r"^(\d+):(\d+):(\d+)$")
 CARD_RE = re.compile(r"^([^:]+):u(\d+):e(\d+)$")
@@ -263,6 +266,47 @@ def select_calibration_rows(
     if len(result) != expected or len({row["canonical_location"] for _label, row in result}) != expected:
         raise ValueError("calibration selection is incomplete or contains duplicate locations")
     return result
+
+
+def select_wave_rows(
+    classifications: Iterable[dict[str, Any]],
+    *,
+    excluded_locations: set[str],
+    lexical_mapping_quality: dict[str, tuple[int, int]],
+    occurrence_mapping_quality: dict[str, bool],
+    lexical_count: int = 90,
+    occurrence_count: int = 160,
+) -> list[tuple[str, dict[str, Any]]]:
+    """Select wave membership only; scores never express a semantic verdict."""
+    eligible = [
+        row for row in classifications
+        if row.get("laneb_classification") in TARGET_CLASSES
+        and row["canonical_location"] not in excluded_locations
+        and ayah_of(row["canonical_location"]) not in NF_T10_1_AYAHS
+    ]
+    lexical = [row for row in eligible if row["laneb_classification"] == "competing_lexical_senses"]
+    occurrence = [
+        row for row in eligible
+        if row["laneb_classification"] == "unresolved_occurrence_ambiguity"
+    ]
+    lexical.sort(key=lambda row: (
+        -lexical_mapping_quality.get(row["canonical_location"], (0, 0))[0],
+        -lexical_mapping_quality.get(row["canonical_location"], (0, 0))[1],
+        root_pair(row) or ("~", "~"),
+        loc_key(row["canonical_location"]),
+    ))
+    occurrence.sort(key=lambda row: (
+        0 if occurrence_mapping_quality.get(row["canonical_location"], False) else 1,
+        loc_key(row["canonical_location"]),
+    ))
+    if len(lexical) < lexical_count or len(occurrence) < occurrence_count:
+        raise ValueError(
+            "STOP: wave underfill: "
+            f"eligible lexical={len(lexical)}/{lexical_count}, "
+            f"occurrence={len(occurrence)}/{occurrence_count}"
+        )
+    selected = lexical[:lexical_count] + occurrence[:occurrence_count]
+    return [(row["laneb_classification"], row) for row in selected]
 
 
 def load_gate_ssot(gate_path: Path, fact_schema_path: Path) -> dict[str, Any]:
@@ -642,6 +686,7 @@ def build_packet(
     homograph_index: dict[str, list[tuple[int, dict[str, Any]]]],
     gate_path: Path,
     gate_ssot: dict[str, Any],
+    packet_id_prefix: str = "laneb-cal-002",
 ) -> dict[str, Any]:
     loc = classification["canonical_location"]
     if queue_row.get("canonical_location") != loc or canonical_public_loc(live_row) != loc:
@@ -715,7 +760,7 @@ def build_packet(
     }
     packet = {
         "schema": "qamus.laneb_two_vote_calibration_packet.v2",
-        "packet_id": f"laneb-cal-002:{selection_rank:03d}:{loc}",
+        "packet_id": f"{packet_id_prefix}:{selection_rank:03d}:{loc}",
         "calibration_stratum": stratum,
         "selection_rank": selection_rank,
         "canonical_location": loc,
@@ -864,22 +909,22 @@ def repository_state_accepts_baseline(head: str, baseline: str, is_ancestor: boo
     return head == baseline or is_ancestor
 
 
-def verify_repository_baseline() -> None:
+def verify_repository_baseline(baseline: str = AUTHORITATIVE_BASELINE_SHA) -> None:
     head = current_head()
     process = subprocess.run(
-        ["git", "merge-base", "--is-ancestor", AUTHORITATIVE_BASELINE_SHA, head],
+        ["git", "merge-base", "--is-ancestor", baseline, head],
         cwd=ROOT,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         check=False,
     )
     if not repository_state_accepts_baseline(
-        head, AUTHORITATIVE_BASELINE_SHA, process.returncode == 0
+        head, baseline, process.returncode == 0
     ):
         detail = process.stderr.decode("utf-8", errors="replace").strip()
         raise ValueError(
             f"HEAD {head} does not descend from authoritative baseline "
-            f"{AUTHORITATIVE_BASELINE_SHA}: {detail or 'merge-base rejected ancestry'}"
+            f"{baseline}: {detail or 'merge-base rejected ancestry'}"
         )
 
 
@@ -898,7 +943,9 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
     for label, path in paths.items():
         if not path.is_file():
             raise ValueError(f"missing input {label}: {path}")
-    verify_repository_baseline()
+    verify_repository_baseline(
+        WAVE_02_AUTHORITATIVE_BASELINE_SHA if args.batch == "wave-02" else AUTHORITATIVE_BASELINE_SHA
+    )
     if sha256_file(paths["baseline_whitelist"]) != EXPECTED_BASELINE_SHA256:
         raise ValueError("deployed baseline SHA-256 differs from the pinned queue input")
     if sha256_file(paths["loc_surfaces"]) != EXPECTED_LOC_SURFACES_SHA256:
@@ -953,17 +1000,60 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             f"STOP: candidate entry lookup miss rate {miss_rate:.4%} exceeds 1%"
         )
     gate_ssot = load_gate_ssot(paths["grammar_gate_ssot"], paths["fact_ledger_schema"])
-    selected = select_calibration_rows(classifications)
-    selected_identity = [
-        (rank, stratum, row["canonical_location"])
-        for rank, (stratum, row) in enumerate(selected, 1)
-    ]
-    v1_identity = [
-        (int(packet["selection_rank"]), packet["calibration_stratum"], packet["canonical_location"])
-        for packet in sorted(v1_packets, key=lambda item: int(item["selection_rank"]))
-    ]
-    if selected_identity != v1_identity:
-        raise ValueError("STOP: selected calibration rows differ from the pinned v1 packet lineage")
+    wave_mode = args.batch == "wave-02"
+    occurrence_mapping_quality: dict[str, bool] = {}
+    lexical_mapping_quality: dict[str, tuple[int, int]] = {}
+    if wave_mode:
+        excluded_locations = set(v1_by_loc)
+        for row in population:
+            loc = row["canonical_location"]
+            if loc in excluded_locations or ayah_of(loc) in NF_T10_1_AYAHS:
+                continue
+            if row["laneb_classification"] == "competing_lexical_senses":
+                entry_ids = row.get("evidence", {}).get("candidate_entry_ids", [])
+                usage_count = sum(bool(entries.get(str(entry_id), {}).get("usage")) for entry_id in entry_ids)
+                lexical_mapping_quality[loc] = (int(root_pair(row) is not None), usage_count)
+                continue
+            queue_row = queue_by_loc.get(loc)
+            context = [
+                {
+                    "loc": item["loc"],
+                    "surface": item["surface"],
+                    "source_address": row_source(paths["loc_surfaces"], item, f"loc={item['loc']}"),
+                }
+                for item in loc_by_ayah.get(ayah_of(loc), [])
+            ]
+            uniquely_maps_target = False
+            for carrier in (queue_row or {}).get("full_carrier_candidates") or []:
+                entry = entries.get(str(carrier.get("entry_id")))
+                if entry is None:
+                    continue
+                content = entry_content_for_carrier(carrier, entry, paths["entries"])
+                mapping = build_occurrence_mapping(
+                    carrier, content["matching_usage_examples"][0], context
+                )
+                if mapping["fingerprint_match_candidates"] == [loc]:
+                    uniquely_maps_target = True
+                    break
+            occurrence_mapping_quality[loc] = uniquely_maps_target
+        selected = select_wave_rows(
+            classifications,
+            excluded_locations=excluded_locations,
+            lexical_mapping_quality=lexical_mapping_quality,
+            occurrence_mapping_quality=occurrence_mapping_quality,
+        )
+    else:
+        selected = select_calibration_rows(classifications)
+        selected_identity = [
+            (rank, stratum, row["canonical_location"])
+            for rank, (stratum, row) in enumerate(selected, 1)
+        ]
+        v1_identity = [
+            (int(packet["selection_rank"]), packet["calibration_stratum"], packet["canonical_location"])
+            for packet in sorted(v1_packets, key=lambda item: int(item["selection_rank"]))
+        ]
+        if selected_identity != v1_identity:
+            raise ValueError("STOP: selected calibration rows differ from the pinned v1 packet lineage")
 
     packets: list[dict[str, Any]] = []
     for rank, (stratum, classification) in enumerate(selected, 1):
@@ -971,7 +1061,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
         if loc not in classifications_by_loc or loc not in queue_by_loc or loc not in baseline_by_loc:
             raise ValueError(f"selected location lacks classification, queue, or live row: {loc}")
         live_row = choose_live_row(baseline_by_loc[loc], queue_by_loc[loc], loc)
-        pinned_context = v1_by_loc[loc].get("ayah_word_context") or []
+        pinned_context = (v1_by_loc.get(loc) or {}).get("ayah_word_context") or []
         rebuilt_context = [
             {
                 "loc": row["loc"],
@@ -980,7 +1070,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             }
             for row in sorted(loc_by_ayah.get(ayah_of(loc), []), key=lambda item: loc_key(item["loc"]))
         ]
-        if pinned_context != rebuilt_context:
+        if not wave_mode and pinned_context != rebuilt_context:
             raise ValueError(
                 f"STOP: pinned v1 ayah_word_context is insufficient or differs from loc-surfaces at {loc}"
             )
@@ -1001,6 +1091,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             homograph_index=homograph_index,
             gate_path=paths["grammar_gate_ssot"],
             gate_ssot=gate_ssot,
+            packet_id_prefix="laneb-wave-02" if wave_mode else "laneb-cal-002",
         )
         packets.append(packet)
 
@@ -1023,7 +1114,11 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
     occurrence_packets = [
         packet for packet in packets
         if packet["calibration_stratum"].startswith("occurrence_")
+        or packet["calibration_stratum"] == "unresolved_occurrence_ambiguity"
     ]
+    gate_counts = dict(sorted(collections.Counter(
+        packet["gate"]["tier"] for packet in packets
+    ).items()))
     occurrence_mapping_counts = dict(sorted(collections.Counter(
         packet["mapping_status"] for packet in occurrence_packets
     ).items()))
@@ -1083,6 +1178,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             "population_class_counts": class_counts,
             "packet_mapping_status_counts": packet_mapping_counts,
             "carrier_mapping_status_counts": carrier_mapping_counts,
+            "gate_distribution": gate_counts,
             "occurrence_ambiguity_packet_mapping_status_counts": occurrence_mapping_counts,
             "occurrence_ambiguity_unique_with_fingerprints": sum(
                 packet["mapping_status"] == "unique" for packet in occurrence_packets
@@ -1103,6 +1199,50 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             ],
         },
     }
+    if wave_mode:
+        selected_occurrence = [
+            row["canonical_location"] for label, row in selected
+            if label == "unresolved_occurrence_ambiguity"
+        ]
+        residual_occurrence = [
+            row["canonical_location"] for row in population
+            if row["laneb_classification"] == "unresolved_occurrence_ambiguity"
+            and row["canonical_location"] not in set(v1_by_loc)
+            and ayah_of(row["canonical_location"]) not in NF_T10_1_AYAHS
+            and row["canonical_location"] not in set(selected_occurrence)
+        ]
+        def unique_rate(locations: list[str]) -> float:
+            return sum(occurrence_mapping_quality.get(loc, False) for loc in locations) / len(locations) if locations else 0.0
+        manifest.update({
+            "schema": "qamus.laneb_two_vote_wave_manifest.v1",
+            "authoritative_baseline_sha": WAVE_02_AUTHORITATIVE_BASELINE_SHA,
+            "lineage": {
+                "excluded_calibration_path": logical_path(paths["v1_packets"]),
+                "excluded_calibration_sha256": EXPECTED_V1_PACKET_SHA256,
+                "excluded_by": "canonical_location",
+            },
+            "selection_rule": {
+                "purpose": "membership_selection_only_never_semantic_adjudication",
+                "pure_function": True,
+                "randomness": "none",
+                "wall_clock_inputs": "none",
+                "excluded_ayahs": sorted(NF_T10_1_AYAHS, key=lambda value: tuple(map(int, value.split(":")))),
+                "excluded_calibration_locations": len(v1_by_loc),
+                "competing_lexical_senses": "Lexicographic score: distinct two-root pair first, then count of candidate entries carrying usage evidence descending, root-pair text ascending, canonical location numeric ascending; take exactly 90.",
+                "unresolved_occurrence_ambiguity": "Run the existing fingerprint mapper for every eligible row; unique target-addressing carrier first, then canonical location numeric ascending; take exactly 160.",
+                "underfill": "STOP if either exact stratum cannot be filled.",
+                "output_order": "90 competing_lexical_senses then 160 unresolved_occurrence_ambiguity; intrinsic score order; selection_rank 1..250.",
+            },
+        })
+        manifest["output"].update({
+            "selected_occurrence_unique_mapping_rate": unique_rate(selected_occurrence),
+            "selected_occurrence_unique_mapping_rows": sum(occurrence_mapping_quality.get(loc, False) for loc in selected_occurrence),
+            "residual_occurrence_rows": len(residual_occurrence),
+            "residual_occurrence_unique_mapping_rate": unique_rate(residual_occurrence),
+            "residual_occurrence_unique_mapping_rows": sum(occurrence_mapping_quality.get(loc, False) for loc in residual_occurrence),
+        })
+        manifest["validation"]["rebuild"] = "python tools/build_two_vote_packets.py --batch wave-02"
+        manifest["validation"]["stop_conditions"].append("fewer than 90 lexical or 160 occurrence rows remain eligible")
     return manifest, packets
 
 
@@ -1274,6 +1414,44 @@ def self_test() -> int:
     projection = lambda rows: [(label, row["canonical_location"]) for label, row in rows]
     if projection(forward) != projection(reverse):
         failures.append("selection changed under input reordering")
+    calibration_locs = {"3:1:1", "5:1:1"}
+    wave_forward = select_wave_rows(
+        synthetic,
+        excluded_locations=calibration_locs,
+        lexical_mapping_quality={"4:1:1": (2, 2)},
+        occurrence_mapping_quality={"6:1:1": True, "7:1:1": False},
+        lexical_count=1,
+        occurrence_count=1,
+    )
+    wave_reverse = select_wave_rows(
+        reversed(synthetic),
+        excluded_locations=calibration_locs,
+        lexical_mapping_quality={"4:1:1": (2, 2)},
+        occurrence_mapping_quality={"6:1:1": True, "7:1:1": False},
+        lexical_count=1,
+        occurrence_count=1,
+    )
+    if projection(wave_forward) != projection(wave_reverse):
+        failures.append("wave selection changed under input reordering")
+    if projection(wave_forward) != [
+        ("competing_lexical_senses", "4:1:1"),
+        ("unresolved_occurrence_ambiguity", "6:1:1"),
+    ]:
+        failures.append("wave selection did not honor exclusions and mapping preference")
+    try:
+        select_wave_rows(
+            synthetic,
+            excluded_locations={row["canonical_location"] for row in synthetic},
+            lexical_mapping_quality={},
+            occurrence_mapping_quality={},
+            lexical_count=1,
+            occurrence_count=1,
+        )
+    except ValueError as exc:
+        if "STOP" not in str(exc) or "underfill" not in str(exc):
+            failures.append("wave underfill did not emit the required STOP reason")
+    else:
+        failures.append("wave selection accepted underfill")
     packet_rows = [
         {"selection_rank": 2, "value": "ب"},
         {"selection_rank": 1, "value": "ا"},
@@ -1315,6 +1493,7 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--out", default=DEFAULT_OUT)
     result.add_argument("--manifest", default=DEFAULT_MANIFEST)
     result.add_argument("--self-test", action="store_true")
+    result.add_argument("--batch", choices=("calibration", "wave-02"), default="calibration")
     return result
 
 
@@ -1322,6 +1501,10 @@ def main() -> int:
     args = parser().parse_args()
     if args.self_test:
         return self_test()
+    if args.batch == "wave-02" and Path(args.out) == DEFAULT_OUT:
+        args.out = DEFAULT_WAVE_OUT
+    if args.batch == "wave-02" and Path(args.manifest) == DEFAULT_MANIFEST:
+        args.manifest = DEFAULT_WAVE_MANIFEST
     manifest, packets = build(args)
     write_outputs(manifest, packets, Path(args.out), Path(args.manifest))
     print(json.dumps(manifest["output"], ensure_ascii=False, indent=2, sort_keys=True))
