@@ -1,0 +1,64 @@
+name: pr-gate
+# T9A (Shadow Flywheel Activation Program): fail-closed verification of every pull
+# request in clean public mode — no private overlay, no production credentials.
+# The full harness measured 2m42s at adoption time, so the "fast regression subset"
+# requirement is satisfied by running the COMPLETE harness on every PR; the dedicated
+# validators below run first as separately-named steps so a failure names its class.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pr-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Assert clean public mode (no overlay, no production env)
+        run: |
+          test -z "${FUSHA_LEAK_LOCAL:-}" && test -z "${FUSHA_LEAK_PRODUCTION:-}"
+          echo "public mode confirmed"
+
+      - name: Strict dataset integrity (fail-closed acceptance gate)
+        run: python tools/validate_current_qamus_dataset.py
+
+      - name: Schema validation (payload/binding/exception + compiler contract)
+        run: |
+          python tools/validate_canonical_hover_payload_table.py --self-test
+          python tools/build_canonical_hover_payload_table.py --self-test
+          python tools/compile_canonical_hover_whitelist_packet.py --self-test
+          python tools/report_g8_adoption_packet.py --self-test
+
+      - name: Public/private boundary
+        run: python tools/validate_public_private_boundary.py --self-test
+
+      - name: Changed-artifact, manifest, and canonical-path checks
+        run: |
+          python tools/validate_claude_ai_pack_drift.py
+          python tools/validate_artifact_freshness.py
+          python tools/validate_canonical_paths.py
+          python tools/validate_index_integrity.py
+
+      - name: Regression harness (complete; includes source-hash, leak-lint, hash-durability gates)
+        run: |
+          python tools/check_regressions.py | tee harness.log
+          tail -n 3 harness.log
+          grep -q "ALL REGRESSION CHECKS PASS" harness.log
+          echo "ok-count: $(grep -c '^ok ' harness.log)"
+
+      - name: Upload harness log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-harness-log
+          path: harness.log
+          retention-days: 14

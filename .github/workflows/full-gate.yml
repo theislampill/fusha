@@ -1,0 +1,47 @@
+name: full-gate
+# T9A (Shadow Flywheel Activation Program): the COMPLETE regression harness in
+# clean public mode. Runs on every merge to main, on a daily schedule, and on
+# manual dispatch. This workflow must never require the private production
+# overlay; production-only scanner behavior is exercised by the harness itself
+# through synthetic fixtures in fresh subprocesses.
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "47 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full-harness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Assert clean public mode (no overlay, no production env)
+        run: |
+          test -z "${FUSHA_LEAK_LOCAL:-}" && test -z "${FUSHA_LEAK_PRODUCTION:-}"
+          echo "public mode confirmed: no overlay env, no overlay file expected or present"
+
+      - name: Full regression harness
+        run: |
+          python tools/check_regressions.py | tee harness.log
+          tail -n 3 harness.log
+          grep -q "ALL REGRESSION CHECKS PASS" harness.log
+          echo "ok-count: $(grep -c '^ok ' harness.log)"
+
+      - name: Upload harness log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-harness-log
+          path: harness.log
+          retention-days: 30
