@@ -52,7 +52,9 @@ def main():
              f"Per-entry audit of the **{d['n']}** {sec} entries (public `section` split — authoritative "
              f"947 verb / 1045 noun / 100 particle). **0 unknown buckets.** Regenerate: "
              f"`tools/build_proofing_matrices.py` (from `qamus-2092-entry-matrix.jsonl`). Reconciles to "
-             f"`hover-gloss-terminal-scoreboard.md` ({_covpct}% overall) and `qamus-2092-terminal-scoreboard.md`.", "",
+             f"`hover-gloss-terminal-scoreboard.md` (HISTORICAL snapshot; {_covpct}% of example tokens "
+             f"resolved at matrix build time — current live coverage lives ONLY in `docs/STATUS.md`) "
+             f"and `qamus-2092-terminal-scoreboard.md`.", "",
              "| metric | value |", "|---|---:|",
              f"| {sec} entries | **{d['n']}** |",
              f"| entries fully hover-complete | {d['hc']} |",

@@ -18,11 +18,22 @@ edition** as distributed by the Tanzil Project.
 
 ## English renderings & glosses
 
-All English glosses in the qamus-highlight hover layer and all English renderings authored for
-Qamus entries are **original, qamus-authored** content (`{"src":"qamus","kind":"authored"}`).
-They are **not** copied from any external translation. External references (Quran.com, the
-Quranic Arabic Corpus, Tanzil, Tafsir MCP) are consulted only as **internal evidence for
-triangulation** and are never reproduced verbatim in public output.
+The English glosses and contextual renderings in Qamus are compiled and edited for Qamus's
+lexical, morphological, grammatical, and pedagogical purposes. During authoring, multiple
+translations, dictionaries, corpora, and tafsīr resources may be consulted as comparative
+evidence.
+
+Because all renderings concern the same Arabic source text, individual words, conventional
+expressions, and semantically constrained passages may overlap with wording found in existing
+English translations. Such textual overlap should not by itself be interpreted as evidence
+that a rendering was copied from any particular source.
+
+Where wording is intentionally reproduced from an identified external edition rather than
+independently authored or synthesized, that source should be recorded and attributed
+according to its applicable terms.
+
+*(Interim wording per owner decision D-12, 2026-07-10; the deeper provenance adjudication
+D-01 remains open and this section does not preempt it.)*
 
 ## Root / morphology evidence
 
