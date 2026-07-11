@@ -1,0 +1,276 @@
+{
+  "authoritative_baseline_sha": "bf6d7fc9c9ae40704ad6d82be5becbd946267f1c",
+  "buckets": {
+    "ayah_not_indexed": {
+      "denominator": 65742,
+      "numerator": 0,
+      "percent": 0.0
+    },
+    "demotion_candidate": {
+      "denominator": 65742,
+      "numerator": 37,
+      "percent": 0.056281
+    },
+    "pass": {
+      "denominator": 65742,
+      "numerator": 65246,
+      "percent": 99.245536
+    },
+    "surface_not_in_indexed_ayah": {
+      "denominator": 65742,
+      "numerator": 396,
+      "percent": 0.602355
+    },
+    "unverifiable_divergent_ayah": {
+      "denominator": 65742,
+      "numerator": 63,
+      "percent": 0.095829
+    }
+  },
+  "corpus_input": {
+    "filename": "loc-surfaces-f2e079dc.jsonl",
+    "row_count": 49902,
+    "sha256": "f2e079dcdce01148074a238e3937314cf02222298f91f83ed66dcbb599697ca7"
+  },
+  "coverage_claim": "PARTIAL: demotion_candidate=37, unverifiable_divergent_ayah=63, surface_not_in_indexed_ayah=396",
+  "coverage_status": "PARTIAL",
+  "crosswalk_input": {
+    "manifest": "qamus/indexes/largelexicon/qword-crosswalk/GENERATION.json",
+    "manifest_sha256": "2080e2f22843f3c9534c090eca500a72af95d247f08855bab4fc6c709084d6c2",
+    "rows_scanned": 117117,
+    "shards_verified": 210
+  },
+  "fallback_rows_checked": 65742,
+  "generated_by": "tools/reverify_crosswalk_fallback.py",
+  "known_divergent_ayahs": [
+    "2:214",
+    "2:274",
+    "3:152",
+    "4:64",
+    "12:37",
+    "19:67",
+    "48:15",
+    "92:3",
+    "93:3",
+    "98:1"
+  ],
+  "method_distribution": {
+    "card_exact_subsequence": 20135,
+    "row_unique_surface_fallback": 65742,
+    "unique_exact_ayah_surface_v1": 1093
+  },
+  "min_man_demonstration": {
+    "ayah": "24:35",
+    "conclusion": "vowel-preserving join keys keep مِن and مَن distinct; norm_strict collapses them",
+    "join_keys_collide": false,
+    "man": {
+      "join_surface_key": "مَن",
+      "loc": "24:35:39",
+      "norm_strict_key": "من",
+      "surface": "مَن"
+    },
+    "min": {
+      "join_surface_key": "مِن",
+      "loc": "24:35:18",
+      "norm_strict_key": "من",
+      "surface": "مِن"
+    },
+    "norm_strict_keys_collide": true
+  },
+  "partial_reasons": [
+    "demotion_candidate",
+    "unverifiable_divergent_ayah",
+    "surface_not_in_indexed_ayah"
+  ],
+  "representative_failing_rows": [
+    {
+      "bucket": "demotion_candidate",
+      "canonical_quran_loc": "2:259:50",
+      "card_id": "51186752f2f8:u1:e1",
+      "entry_id": "51186752f2f8",
+      "indexed_location_surface": "إِلَى",
+      "indexed_location_surface_join_key": "إِلَى",
+      "matching_positions": [
+        "2:259:38",
+        "2:259:44"
+      ],
+      "quran_ref": "2:259",
+      "qword_row_id": "llx-qword-51186752f2f8-01-01-042",
+      "row_id": "llx-crosswalk-llx-qword-51186752f2f8-01-01-042",
+      "row_surface_join_key": "إِلَىٰ",
+      "schema": "fusha/rm36-fallback-reverification-failing-row@1",
+      "visible_surface": "إِلَىٰ"
+    },
+    {
+      "bucket": "demotion_candidate",
+      "canonical_quran_loc": "2:259:50",
+      "card_id": "51186752f2f8:u1:e1",
+      "entry_id": "51186752f2f8",
+      "indexed_location_surface": "إِلَى",
+      "indexed_location_surface_join_key": "إِلَى",
+      "matching_positions": [
+        "2:259:38",
+        "2:259:44"
+      ],
+      "quran_ref": "2:259",
+      "qword_row_id": "llx-qword-51186752f2f8-01-01-049",
+      "row_id": "llx-crosswalk-llx-qword-51186752f2f8-01-01-049",
+      "row_surface_join_key": "إِلَىٰ",
+      "schema": "fusha/rm36-fallback-reverification-failing-row@1",
+      "visible_surface": "إِلَىٰ"
+    },
+    {
+      "bucket": "demotion_candidate",
+      "canonical_quran_loc": "2:259:50",
+      "card_id": "7cacefbcfc82:u1:e1",
+      "entry_id": "7cacefbcfc82",
+      "indexed_location_surface": "إِلَى",
+      "indexed_location_surface_join_key": "إِلَى",
+      "matching_positions": [
+        "2:259:38",
+        "2:259:44"
+      ],
+      "quran_ref": "2:259",
+      "qword_row_id": "llx-qword-7cacefbcfc82-01-01-042",
+      "row_id": "llx-crosswalk-llx-qword-7cacefbcfc82-01-01-042",
+      "row_surface_join_key": "إِلَىٰ",
+      "schema": "fusha/rm36-fallback-reverification-failing-row@1",
+      "visible_surface": "إِلَىٰ"
+    },
+    {
+      "bucket": "demotion_candidate",
+      "canonical_quran_loc": "2:259:50",
+      "card_id": "7cacefbcfc82:u1:e1",
+      "entry_id": "7cacefbcfc82",
+      "indexed_location_surface": "إِلَى",
+      "indexed_location_surface_join_key": "إِلَى",
+      "matching_positions": [
+        "2:259:38",
+        "2:259:44"
+      ],
+      "quran_ref": "2:259",
+      "qword_row_id": "llx-qword-7cacefbcfc82-01-01-049",
+      "row_id": "llx-crosswalk-llx-qword-7cacefbcfc82-01-01-049",
+      "row_surface_join_key": "إِلَىٰ",
+      "schema": "fusha/rm36-fallback-reverification-failing-row@1",
+      "visible_surface": "إِلَىٰ"
+    },
+    {
+      "bucket": "demotion_candidate",
+      "canonical_quran_loc": "2:259:50",
+      "card_id": "af75174c26a6:u1:e1",
+      "entry_id": "af75174c26a6",
+      "indexed_location_surface": "إِلَى",
+      "indexed_location_surface_join_key": "إِلَى",
+      "matching_positions": [
+        "2:259:38",
+        "2:259:44"
+      ],
+      "quran_ref": "2:259",
+      "qword_row_id": "llx-qword-af75174c26a6-01-01-042",
+      "row_id": "llx-crosswalk-llx-qword-af75174c26a6-01-01-042",
+      "row_surface_join_key": "إِلَىٰ",
+      "schema": "fusha/rm36-fallback-reverification-failing-row@1",
+      "visible_surface": "إِلَىٰ"
+    },
+    {
+      "bucket": "demotion_candidate",
+      "canonical_quran_loc": "2:259:50",
+      "card_id": "af75174c26a6:u1:e1",
+      "entry_id": "af75174c26a6",
+      "indexed_location_surface": "إِلَى",
+      "indexed_location_surface_join_key": "إِلَى",
+      "matching_positions": [
+        "2:259:38",
+        "2:259:44"
+      ],
+      "quran_ref": "2:259",
+      "qword_row_id": "llx-qword-af75174c26a6-01-01-049",
+      "row_id": "llx-crosswalk-llx-qword-af75174c26a6-01-01-049",
+      "row_surface_join_key": "إِلَىٰ",
+      "schema": "fusha/rm36-fallback-reverification-failing-row@1",
+      "visible_surface": "إِلَىٰ"
+    },
+    {
+      "bucket": "demotion_candidate",
+      "canonical_quran_loc": "2:259:50",
+      "card_id": "b3a878fad2b5:u1:e2",
+      "entry_id": "b3a878fad2b5",
+      "indexed_location_surface": "إِلَى",
+      "indexed_location_surface_join_key": "إِلَى",
+      "matching_positions": [
+        "2:259:38",
+        "2:259:44"
+      ],
+      "quran_ref": "2:259",
+      "qword_row_id": "llx-qword-b3a878fad2b5-01-02-042",
+      "row_id": "llx-crosswalk-llx-qword-b3a878fad2b5-01-02-042",
+      "row_surface_join_key": "إِلَىٰ",
+      "schema": "fusha/rm36-fallback-reverification-failing-row@1",
+      "visible_surface": "إِلَىٰ"
+    },
+    {
+      "bucket": "demotion_candidate",
+      "canonical_quran_loc": "2:259:50",
+      "card_id": "b3a878fad2b5:u1:e2",
+      "entry_id": "b3a878fad2b5",
+      "indexed_location_surface": "إِلَى",
+      "indexed_location_surface_join_key": "إِلَى",
+      "matching_positions": [
+        "2:259:38",
+        "2:259:44"
+      ],
+      "quran_ref": "2:259",
+      "qword_row_id": "llx-qword-b3a878fad2b5-01-02-049",
+      "row_id": "llx-crosswalk-llx-qword-b3a878fad2b5-01-02-049",
+      "row_surface_join_key": "إِلَىٰ",
+      "schema": "fusha/rm36-fallback-reverification-failing-row@1",
+      "visible_surface": "إِلَىٰ"
+    },
+    {
+      "bucket": "demotion_candidate",
+      "canonical_quran_loc": "2:259:50",
+      "card_id": "ef4d590e9dac:u4:e1",
+      "entry_id": "ef4d590e9dac",
+      "indexed_location_surface": "إِلَى",
+      "indexed_location_surface_join_key": "إِلَى",
+      "matching_positions": [
+        "2:259:38",
+        "2:259:44"
+      ],
+      "quran_ref": "2:259",
+      "qword_row_id": "llx-qword-ef4d590e9dac-04-01-042",
+      "row_id": "llx-crosswalk-llx-qword-ef4d590e9dac-04-01-042",
+      "row_surface_join_key": "إِلَىٰ",
+      "schema": "fusha/rm36-fallback-reverification-failing-row@1",
+      "visible_surface": "إِلَىٰ"
+    },
+    {
+      "bucket": "demotion_candidate",
+      "canonical_quran_loc": "2:259:50",
+      "card_id": "ef4d590e9dac:u4:e1",
+      "entry_id": "ef4d590e9dac",
+      "indexed_location_surface": "إِلَى",
+      "indexed_location_surface_join_key": "إِلَى",
+      "matching_positions": [
+        "2:259:38",
+        "2:259:44"
+      ],
+      "quran_ref": "2:259",
+      "qword_row_id": "llx-qword-ef4d590e9dac-04-01-049",
+      "row_id": "llx-crosswalk-llx-qword-ef4d590e9dac-04-01-049",
+      "row_surface_join_key": "إِلَىٰ",
+      "schema": "fusha/rm36-fallback-reverification-failing-row@1",
+      "visible_surface": "إِلَىٰ"
+    }
+  ],
+  "runtime_seconds": 6.625,
+  "schema": "fusha/rm36-fallback-reverification-report@1",
+  "stop_conditions": {
+    "demotion_candidate_percent": 0.056281,
+    "demotion_candidate_stop_exceeded": false,
+    "demotion_candidate_stop_threshold_percent": 1.0,
+    "resolution_method_field_distinguishable": true
+  },
+  "total_accepted_rows": 86970
+}
