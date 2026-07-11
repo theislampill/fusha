@@ -3537,6 +3537,9 @@ try:
         "tools/crawl_qamus_public_entries.py",
         "tools/build_source_triangulated_votes.py",
         "tools/scan_public_boundary.py",
+        # RM-25 step 1 (reviewed connector): public-domain Tanzil corpus acquisition,
+        # sha-pinned + re-fetch-reproducible; the built index is the committed artifact.
+        "tools/build_quran_loc_surface_index.py",
     }
     _network_import_offenders = set()
     for _scan_dir in ("tools", "scripts"):
@@ -3555,12 +3558,12 @@ try:
                         if _network_import_re.match(_line):
                             _network_import_offenders.add(_rel)
                             break
-    check("RM-08 import-scan lint: urllib/http.client/socket only in the 8 enumerated connectors",
+    check("RM-08 import-scan lint: urllib/http.client/socket only in the 9 enumerated connectors",
           not _network_import_offenders)
     for _rel in sorted(_network_import_offenders):
         print("  ", _rel)
 except Exception as _e:
-    check("RM-08 import-scan lint: urllib/http.client/socket only in the 8 enumerated connectors", False)
+    check("RM-08 import-scan lint: urllib/http.client/socket only in the 9 enumerated connectors", False)
     print("  ", _e)
 
 try:
