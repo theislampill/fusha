@@ -33,10 +33,19 @@ Records (all under records_dir, mode 0o400 after write):
     run-<UTC>/record.json      full run record, sha256-chained to the previous record
     run-<UTC>/g8-*.json[l]     reporter outputs; row-level diffs pruned to keep_rowdiff_runs
     snapshots/…                every snapshot_every-th record copied, kept forever
-    expected-changes.jsonl     operator-appended explanations: rows
-                               {"live_whitelist_sha256": "…", "reason": "…", "utc": "…"}
-                               or {"expected": {"modify_locations": ["…"],
-                               "registry_sha256": "…"}, "reason": "…", "utc": "…"}
+    expected-changes.jsonl     operator-appended explanations: rows. A v2 modify
+                               declaration's expected object has exactly:
+                               classification="modify", sorted modify_locations,
+                               registry_sha256, source_commit,
+                               input_artifact_hashes.canonical_repair_generation_ids,
+                               owner_reference, expected_count, valid_from (one commit
+                               or run_id), and expiry ("persistent", "one_shot", or
+                               one expiry run_id/date object); reason is also required.
+                               The sole legacy grandfather is the old locations +
+                               registry_sha256 shape, accepted only when the tracked
+                               canonical-repairs.json generations cover that exact set.
+                               No wildcard, prefix, family, union, or count-only
+                               declaration can explain a modify.
                                a baseline-hash change is EXPLAINED iff a row names the
                                new hash; crosswalk-input changes are explained by the
                                repo commit itself (source_head changes are recorded).
@@ -66,6 +75,7 @@ deliberate: the harness stays self-contained; this tool is the operational path.
 """
 import argparse
 import copy
+import datetime
 import glob
 import hashlib
 import io
@@ -99,6 +109,11 @@ CONFIG_SCHEMA = "fusha.shadow_run_config.v1"
 REPAIR_REGISTRY_SCHEMA = "qamus.canonical_repair_registry.v1"
 REPAIR_REGISTRY_RELATIVE = os.path.join(
     "qamus", "indexes", "largelexicon", "canonical-repairs.json")
+MODIFY_DECLARATION_FIELDS = {
+    "classification", "modify_locations", "registry_sha256", "source_commit",
+    "input_artifact_hashes", "owner_reference", "expected_count", "valid_from",
+    "expiry",
+}
 
 
 class CanonicalRepairError(RuntimeError):
@@ -505,14 +520,6 @@ def binding_id_set(build_dir):
     return ids
 
 
-def load_previous(records_dir):
-    ledger = os.path.join(records_dir, "shadow-ledger.jsonl")
-    if not os.path.exists(ledger):
-        return None
-    rows = read_jsonl(ledger)
-    return rows[-1] if rows else None
-
-
 def load_expected_changes(records_dir):
     path = os.path.join(records_dir, "expected-changes.jsonl")
     if not os.path.exists(path):
@@ -526,55 +533,268 @@ def modify_locations_from_rowdiff(rowdiff):
                    if row.get("classification") == "modify"})
 
 
-def evaluate_alerts(record, prev, expected_changes):
+def canonical_json_sha256(value):
+    """Hash a JSON value with the declaration identity's canonical encoding."""
+    blob = json.dumps(value, ensure_ascii=False, sort_keys=True,
+                      separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def is_hex_digest(value, length):
+    return (isinstance(value, str) and len(value) == length
+            and all(char in "0123456789abcdef" for char in value))
+
+
+def is_run_id(value):
+    if not isinstance(value, str) or len(value) != 20:
+        return False
+    try:
+        time.strptime(value, "run-%Y%m%dT%H%M%SZ")
+    except ValueError:
+        return False
+    return True
+
+
+def is_artifact_hash_value(value):
+    """Accept a pinned sha256 value or a sorted, non-empty set of such values."""
+    if isinstance(value, str):
+        digest = value[7:] if value.startswith("sha256:") else value
+        return is_hex_digest(digest, 64)
+    return (isinstance(value, list) and bool(value)
+            and all(isinstance(item, str) for item in value)
+            and value == sorted(set(value))
+            and all(is_artifact_hash_value(item) for item in value))
+
+
+def commit_is_reached(valid_from_commit, current_commit, repo_root):
+    if valid_from_commit == current_commit:
+        return True
+    if not repo_root:
+        return False
+    result = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", valid_from_commit, current_commit],
+        cwd=repo_root, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        check=False)
+    return result.returncode == 0
+
+
+def evaluate_alerts(record, prev, expected_changes, prior_ledger_rows=None,
+                    repo_root=None):
     """Owner-mandated alert classes. Returns (alerts, explained)."""
     alerts, explained = [], []
     counts = record["counts"]
+    prior_ledger_rows = prior_ledger_rows or []
+    record["expected_change_consumptions"] = []
 
     if record["packet_sha256_run1"] != record["packet_sha256_run2"]:
         alerts.append({"class": "reproducibility_failure",
                        "detail": "in-run double compile disagreed"})
     actual_modify_locations = set(record.get("modify_locations") or [])
     declared_modify_locations = set()
+    eligible_declarations = []
     declaration_errors = []
     registry_mismatches = set()
+    generation_mismatches = set()
+    classification_mismatches = set()
+    source_commit_mismatches = set()
+    validity_errors = []
+    declaration_count_mismatches = set()
+    consumed_declarations = {
+        item.get("declaration_sha256")
+        for ledger_row in prior_ledger_rows
+        for item in (ledger_row.get("expected_change_consumptions") or [])
+        if isinstance(item, dict)
+    }
     for row_index, row in enumerate(expected_changes):
-        expected = row.get("expected")
-        if not isinstance(expected, dict) or "modify_locations" not in expected:
+        if not isinstance(row, dict):
+            declaration_errors.append(
+                "expected-changes row %d is not an object" % (row_index + 1))
             continue
+        expected = row.get("expected")
+        if "expected" in row and not isinstance(expected, dict):
+            declaration_errors.append(
+                "expected-changes row %d has invalid expected object"
+                % (row_index + 1))
+            continue
+        if not isinstance(expected, dict):
+            continue
+        row_label = "expected-changes row %d" % (row_index + 1)
+        legacy = set(expected) == {"modify_locations", "registry_sha256"}
+        if not legacy:
+            missing = sorted(MODIFY_DECLARATION_FIELDS - set(expected))
+            extra = sorted(set(expected) - MODIFY_DECLARATION_FIELDS)
+            if missing:
+                declaration_errors.append(
+                    "%s missing required fields: %s" % (row_label, ", ".join(missing)))
+            if extra:
+                declaration_errors.append(
+                    "%s has unsupported fields: %s" % (row_label, ", ".join(extra)))
+        if not isinstance(row.get("reason"), str) or not row.get("reason").strip():
+            declaration_errors.append("%s has invalid or missing reason" % row_label)
         locations = expected.get("modify_locations")
         if (not isinstance(locations, list)
                 or any(not isinstance(loc, str) or not loc for loc in locations)
-                or locations != sorted(set(locations))):
+                or not locations or locations != sorted(set(locations))):
             declaration_errors.append(
-                "expected-changes row %d has invalid or unsorted modify_locations"
-                % (row_index + 1))
+                "%s has invalid or unsorted modify_locations" % row_label)
+            continue
+        declared_modify_locations.update(locations)
+        declared_sha = expected.get("registry_sha256")
+        recorded_sha = record.get("canonical_repair_registry_sha256")
+        if not is_hex_digest(declared_sha, 64):
+            declaration_errors.append("%s has invalid registry_sha256" % row_label)
+        elif declared_sha != recorded_sha:
+            registry_mismatches.add((declared_sha, recorded_sha))
+
+        if legacy:
+            coverage = record.get("canonical_repair_locations")
+            if not isinstance(coverage, list) or locations != coverage:
+                declaration_errors.append(
+                    "%s legacy declaration is not exactly covered by registered generations"
+                    % row_label)
+            elif declared_sha == recorded_sha:
+                eligible_declarations.append({
+                    "locations": locations, "row": row, "expiry": "persistent",
+                    "sha256": canonical_json_sha256(row),
+                })
+            continue
+
+        classification = expected.get("classification")
+        if classification != "modify":
+            classification_mismatches.add(str(classification))
+        expected_count = expected.get("expected_count")
+        if (isinstance(expected_count, bool) or not isinstance(expected_count, int)
+                or expected_count != len(locations)):
+            declaration_count_mismatches.add((str(expected_count), len(locations)))
+
+        source_commit = expected.get("source_commit")
+        if not is_hex_digest(source_commit, 40):
+            declaration_errors.append("%s has invalid source_commit" % row_label)
+
+        hashes = expected.get("input_artifact_hashes")
+        generation_ids = (hashes or {}).get("canonical_repair_generation_ids") \
+            if isinstance(hashes, dict) else None
+        if (not isinstance(hashes, dict)
+                or "canonical_repair_generation_ids" not in hashes
+                or any(not isinstance(name, str) or not name
+                       or not is_artifact_hash_value(value)
+                       for name, value in hashes.items())
+                or not isinstance(generation_ids, list) or not generation_ids
+                or generation_ids != sorted(set(generation_ids))
+                or any(not isinstance(item, str) or not item.startswith("sha256:")
+                       or not is_hex_digest(item[7:], 64) for item in generation_ids)):
+            declaration_errors.append(
+                "%s has invalid input_artifact_hashes" % row_label)
+            generation_ids = []
+        recorded_ids = sorted(
+            item.get("generation_id")
+            for item in (record.get("canonical_repair_generations") or [])
+            if isinstance(item, dict) and item.get("generation_id"))
+        if generation_ids and generation_ids != recorded_ids:
+            generation_mismatches.add((tuple(generation_ids), tuple(recorded_ids)))
+
+        owner_reference = expected.get("owner_reference")
+        if not isinstance(owner_reference, str) or not owner_reference.strip():
+            declaration_errors.append("%s has invalid owner_reference" % row_label)
+
+        valid_from = expected.get("valid_from")
+        valid_from_ok = False
+        source_commit_ok = source_commit == record.get("fusha_commit")
+        if isinstance(valid_from, dict) and set(valid_from) == {"run_id"} \
+                and is_run_id(valid_from.get("run_id")):
+            valid_from_ok = (is_run_id(record.get("run_id"))
+                             and valid_from["run_id"] <= record["run_id"])
+            if not valid_from_ok:
+                validity_errors.append("%s valid_from run is in the future" % row_label)
+        elif isinstance(valid_from, dict) and set(valid_from) == {"commit"} \
+                and is_hex_digest(valid_from.get("commit"), 40):
+            valid_from_ok = commit_is_reached(
+                valid_from["commit"], record.get("fusha_commit"), repo_root)
+            if not valid_from_ok:
+                validity_errors.append("%s valid_from commit is not reached" % row_label)
+            if valid_from["commit"] == source_commit and valid_from_ok:
+                source_commit_ok = True
         else:
-            declared_modify_locations.update(locations)
-        if "registry_sha256" in expected:
-            declared_sha = expected.get("registry_sha256")
-            recorded_sha = record.get("canonical_repair_registry_sha256")
-            if declared_sha != recorded_sha:
-                registry_mismatches.add((declared_sha, recorded_sha))
+            declaration_errors.append("%s has invalid valid_from" % row_label)
+        if is_hex_digest(source_commit, 40) and not source_commit_ok:
+            source_commit_mismatches.add((source_commit, record.get("fusha_commit")))
+
+        expiry = expected.get("expiry")
+        expiry_ok = False
+        declaration_sha = canonical_json_sha256(row)
+        if expiry == "persistent":
+            expiry_ok = True
+        elif expiry == "one_shot":
+            expiry_ok = declaration_sha not in consumed_declarations
+            if not expiry_ok:
+                validity_errors.append("%s one_shot declaration is already consumed"
+                                       % row_label)
+        elif isinstance(expiry, dict) and set(expiry) == {"run_id"} \
+                and is_run_id(expiry.get("run_id")):
+            expiry_ok = (is_run_id(record.get("run_id"))
+                         and record["run_id"] <= expiry["run_id"])
+            if not expiry_ok:
+                validity_errors.append("%s expiry run has passed" % row_label)
+        elif isinstance(expiry, dict) and set(expiry) == {"date"}:
+            try:
+                expiry_date = datetime.date.fromisoformat(expiry["date"])
+                run_date = datetime.datetime.strptime(
+                    record.get("started_utc"), "%Y-%m-%dT%H:%M:%SZ").date()
+                expiry_ok = run_date <= expiry_date
+            except (TypeError, ValueError):
+                declaration_errors.append("%s has invalid expiry date" % row_label)
+            if not expiry_ok and not any(
+                    message == "%s has invalid expiry date" % row_label
+                    for message in declaration_errors):
+                validity_errors.append("%s expiry date has passed" % row_label)
+        else:
+            declaration_errors.append("%s has invalid expiry" % row_label)
+
+        row_has_error = any(message.startswith(row_label) for message in declaration_errors)
+        semantic_ok = (classification == "modify"
+                       and expected_count == len(locations)
+                       and declared_sha == recorded_sha
+                       and generation_ids == recorded_ids
+                       and source_commit_ok and valid_from_ok and expiry_ok)
+        if not row_has_error and semantic_ok:
+            eligible_declarations.append({
+                "locations": locations, "row": row, "expiry": expiry,
+                "sha256": declaration_sha,
+            })
 
     uncovered_locations = sorted(actual_modify_locations
                                  - declared_modify_locations)
     missing_locations = sorted(declared_modify_locations
                                - actual_modify_locations)
     modify_count_mismatch = counts["modify"] != len(actual_modify_locations)
+    exact_declarations = [item for item in eligible_declarations
+                          if set(item["locations"]) == actual_modify_locations]
     modify_declaration_present = bool(
-        declared_modify_locations or declaration_errors or registry_mismatches)
+        declared_modify_locations or declaration_errors or registry_mismatches
+        or generation_mismatches or classification_mismatches
+        or source_commit_mismatches or validity_errors
+        or declaration_count_mismatches)
     modify_is_explained = (
         counts["modify"] > 0
         and modify_declaration_present
-        and not uncovered_locations
-        and not missing_locations
+        and exact_declarations
         and not declaration_errors
         and not registry_mismatches
+        and not generation_mismatches
+        and not classification_mismatches
+        and not source_commit_mismatches
+        and not validity_errors
+        and not declaration_count_mismatches
         and not modify_count_mismatch)
     if modify_is_explained:
         explained.append({"class": "declared_modify", "count": counts["modify"],
                           "explained_by": "expected-changes declaration"})
+        for item in exact_declarations:
+            if item["expiry"] == "one_shot":
+                record["expected_change_consumptions"].append({
+                    "declaration_sha256": item["sha256"],
+                    "run_id": record.get("run_id"),
+                })
     elif counts["modify"] > 0 or modify_declaration_present:
         alert = {"class": "unexpected_modify", "count": counts["modify"],
                  "uncovered_locations": uncovered_locations,
@@ -587,9 +807,29 @@ def evaluate_alerts(record, prev, expected_changes):
                     key=lambda pair: (str(pair[0]), str(pair[1])))]
         if declaration_errors:
             alert["declaration_errors"] = declaration_errors
+        if generation_mismatches:
+            alert["generation_id_mismatches"] = [
+                {"declared": list(declared), "recorded": list(recorded)}
+                for declared, recorded in sorted(generation_mismatches)]
+        if classification_mismatches:
+            alert["classification_mismatches"] = sorted(classification_mismatches)
+        if source_commit_mismatches:
+            alert["source_commit_mismatches"] = [
+                {"declared": declared, "recorded": recorded}
+                for declared, recorded in sorted(source_commit_mismatches,
+                                                  key=lambda pair: str(pair))]
+        if validity_errors:
+            alert["validity_errors"] = validity_errors
+        if declaration_count_mismatches:
+            alert["expected_count_mismatches"] = [
+                {"declared": declared, "location_count": location_count}
+                for declared, location_count in sorted(declaration_count_mismatches)]
         if modify_count_mismatch:
             alert["location_count"] = len(actual_modify_locations)
         alerts.append(alert)
+    if declaration_errors:
+        alerts.append({"class": "declaration_error",
+                       "errors": declaration_errors})
     if counts["conflict"] > 0 or counts["blocked"] > 0:
         alerts.append({"class": "unexpected_conflict_blocked",
                        "conflict": counts["conflict"], "blocked": counts["blocked"]})
@@ -715,9 +955,12 @@ def shadow_run(cfg):
     modify_locations = modify_locations_from_rowdiff(
         read_jsonl(os.path.join(run_dir, "g8-rowdiff.jsonl")))
     input_rows_sha = sha256_file(os.path.join(run_dir, "compiler_input_rows.jsonl"))
-    prev = load_previous(records_dir)
+    ledger_path = os.path.join(records_dir, "shadow-ledger.jsonl")
+    prior_ledger_rows = read_jsonl(ledger_path) if os.path.exists(ledger_path) else []
+    prev = prior_ledger_rows[-1] if prior_ledger_rows else None
     record = {
         "schema": RECORD_SCHEMA,
+        "run_id": os.path.basename(run_dir),
         "started_utc": started,
         "ended_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "runtime_seconds": round(time.perf_counter() - t0, 2),
@@ -729,6 +972,10 @@ def shadow_run(cfg):
         "live_whitelist_sha256": live_sha,
         "canonical_repair_registry_sha256": repair_overlay["registry_sha256"],
         "canonical_repair_generations": repair_overlay["generations"],
+        "canonical_repair_locations": sorted({
+            item["binding"]["canonical_wbw_loc"]
+            for item in repair_overlay["bindings"]
+        }),
         "modify_locations": modify_locations,
         "live_rows": len(live_rows),
         "input_rows_sha256": input_rows_sha,
@@ -752,7 +999,9 @@ def shadow_run(cfg):
                            "canonical_repair_overlay": repair_stats},
         "prev_record_sha256": (prev or {}).get("record_sha256"),
     }
-    alerts, explained = evaluate_alerts(record, prev, load_expected_changes(records_dir))
+    alerts, explained = evaluate_alerts(
+        record, prev, load_expected_changes(records_dir),
+        prior_ledger_rows=prior_ledger_rows, repo_root=repo_root)
     record["alerts"] = alerts
     record["explained"] = explained
 
@@ -767,7 +1016,9 @@ def shadow_run(cfg):
         "schema", "started_utc", "ended_utc", "fusha_commit", "compiler_version",
         "live_whitelist_sha256", "canonical_repair_registry_sha256",
         "canonical_repair_generations", "input_rows_sha256", "binding_count",
-        "packet_sha256_run1", "counts", "prev_record_sha256")}
+        "packet_sha256_run1", "counts", "prev_record_sha256",
+        "expected_change_consumptions")}
+    ledger_row["run_id"] = record["run_id"]
     ledger_row["record_sha256"] = record_sha
     ledger_row["run_dir"] = os.path.basename(run_dir)
     ledger_row["alert_count"] = len(alerts)
@@ -810,6 +1061,9 @@ def shadow_run(cfg):
 
 def _self_test():
     failures = []
+    commit_good = "c" * 40
+    registry_good = "a" * 64
+    generation_good = "sha256:" + ("b" * 64)
 
     def check(name, cond):
         print(("ok   " if cond else "FAIL ") + name)
@@ -820,17 +1074,17 @@ def _self_test():
         "packet_sha256_run1": "aa", "packet_sha256_run2": "aa",
         "schemas_consumed": list(ACCEPTED_SCHEMAS_CONSUMED),
         "schemas_produced": list(ACCEPTED_SCHEMAS_PRODUCED),
-        "expected_source_head": None, "fusha_commit": "headsha",
+        "expected_source_head": None, "fusha_commit": commit_good,
         "live_whitelist_sha256": "live1", "input_rows_sha256": "in1",
         "binding_count": 100,
-        "canonical_repair_registry_sha256": "registry-good",
+        "canonical_repair_registry_sha256": registry_good,
         "modify_locations": [],
         "counts": {"no_op": 50, "append": 10, "remove_or_unrepresented": 5,
                    "modify": 0, "conflict": 0, "blocked": 0,
                    "leak_false_block": 0, "build_carrier_conflicts": 2},
     }
     prev = {"live_whitelist_sha256": "live1", "input_rows_sha256": "in1",
-            "fusha_commit": "headsha", "packet_sha256_run1": "aa",
+            "fusha_commit": commit_good, "packet_sha256_run1": "aa",
             "binding_count": 100, "record_sha256": "r0",
             "counts": dict(base_record["counts"])}
 
@@ -855,9 +1109,34 @@ def _self_test():
           any(a["class"] == "unexpected_modify" for a in alerts))
 
     declared_locs = sorted("1:1:%d" % index for index in range(1, 12))
-    declaration = {"expected": {"modify_locations": declared_locs,
-                                "registry_sha256": "registry-good"},
-                   "reason": "owner decision D", "utc": "2026-07-11T00:00:00Z"}
+    generation_ids = [generation_good]
+    base_record["run_id"] = "run-20260711T220000Z"
+    base_record["started_utc"] = "2026-07-11T22:00:00Z"
+    base_record["canonical_repair_generations"] = [
+        {"generation_id": generation_ids[0], "table": "fixture", "binding_count": 11}
+    ]
+    base_record["canonical_repair_locations"] = list(declared_locs)
+    prev["run_id"] = "run-20260711T210000Z"
+    prev["canonical_repair_generations"] = list(
+        base_record["canonical_repair_generations"])
+
+    declaration = {
+        "expected": {
+            "classification": "modify",
+            "modify_locations": declared_locs,
+            "registry_sha256": registry_good,
+            "source_commit": commit_good,
+            "input_artifact_hashes": {
+                "canonical_repair_generation_ids": generation_ids,
+            },
+            "owner_reference": "decision-batch-2026-07-11 item D",
+            "expected_count": len(declared_locs),
+            "valid_from": {"commit": commit_good},
+            "expiry": "persistent",
+        },
+        "reason": "owner-approved RM-20 canonical repairs",
+        "utc": "2026-07-11T00:00:00Z",
+    }
     rec = json.loads(json.dumps(base_record))
     rec["counts"]["modify"] = len(declared_locs)
     rec["modify_locations"] = list(declared_locs)
@@ -886,7 +1165,7 @@ def _self_test():
           modify_alert.get("missing_locations") == [declared_locs[-1]])
 
     bad_registry_declaration = json.loads(json.dumps(declaration))
-    bad_registry_declaration["expected"]["registry_sha256"] = "registry-other"
+    bad_registry_declaration["expected"]["registry_sha256"] = "d" * 64
     rec = json.loads(json.dumps(base_record))
     rec["modify_locations"] = list(declared_locs)
     rec["counts"]["modify"] = len(declared_locs)
@@ -895,7 +1174,134 @@ def _self_test():
                          if a["class"] == "unexpected_modify"), {})
     check("declared registry sha mismatch -> unexpected_modify",
           modify_alert.get("registry_sha256_mismatches") == [{
-              "declared": "registry-other", "recorded": "registry-good"}])
+              "declared": "d" * 64, "recorded": registry_good}])
+
+    split_declarations = []
+    for locations in (declared_locs[:5], declared_locs[5:]):
+        split = json.loads(json.dumps(declaration))
+        split["expected"]["modify_locations"] = locations
+        split["expected"]["expected_count"] = len(locations)
+        split_declarations.append(split)
+    rec = json.loads(json.dumps(base_record))
+    rec["modify_locations"] = list(declared_locs)
+    rec["counts"]["modify"] = len(declared_locs)
+    alerts, _ = evaluate_alerts(rec, dict(prev), split_declarations)
+    check("declarations cannot union into count-only or family-style suppression",
+          any(a["class"] == "unexpected_modify" for a in alerts))
+
+    def changed_declaration(path, value):
+        changed = json.loads(json.dumps(declaration))
+        target = changed
+        for key in path[:-1]:
+            target = target[key]
+        target[path[-1]] = value
+        return changed
+
+    invalid_cases = [
+        ("generation id differs", ("expected", "input_artifact_hashes",
+                                    "canonical_repair_generation_ids"),
+         ["sha256:" + ("e" * 64)]),
+        ("classification is not modify", ("expected", "classification"), "append"),
+        ("source commit differs", ("expected", "source_commit"), "f" * 40),
+        ("valid-from run is in the future", ("expected", "valid_from"),
+         {"run_id": "run-20260712T000000Z"}),
+        ("valid-from commit is in the future", ("expected", "valid_from"),
+         {"commit": "1" * 40}),
+        ("expiry run has passed", ("expected", "expiry"),
+         {"run_id": "run-20260711T210000Z"}),
+        ("expiry date has passed", ("expected", "expiry"),
+         {"date": "2026-07-10"}),
+        ("declared expected count differs", ("expected", "expected_count"), 10),
+    ]
+    for name, path, value in invalid_cases:
+        rec = json.loads(json.dumps(base_record))
+        rec["modify_locations"] = list(declared_locs)
+        rec["counts"]["modify"] = len(declared_locs)
+        alerts, _ = evaluate_alerts(
+            rec, dict(prev), [changed_declaration(path, value)])
+        check(name + " -> alert persists",
+              any(a["class"] == "unexpected_modify" for a in alerts))
+
+    one_shot = changed_declaration(("expected", "expiry"), "one_shot")
+    consumed_sha = hashlib.sha256(json.dumps(
+        one_shot, ensure_ascii=False, sort_keys=True,
+        separators=(",", ":")).encode("utf-8")).hexdigest()
+    prior_rows = [{"expected_change_consumptions": [
+        {"declaration_sha256": consumed_sha, "run_id": "run-20260711T210000Z"}
+    ]}]
+    rec = json.loads(json.dumps(base_record))
+    rec["modify_locations"] = list(declared_locs)
+    rec["counts"]["modify"] = len(declared_locs)
+    alerts, _ = evaluate_alerts(
+        rec, dict(prev), [one_shot], prior_ledger_rows=prior_rows)
+    check("one-shot already consumed -> alert persists",
+          any(a["class"] == "unexpected_modify" for a in alerts))
+
+    required_expected_fields = [
+        "classification", "modify_locations", "registry_sha256", "source_commit",
+        "input_artifact_hashes", "owner_reference", "expected_count", "valid_from",
+        "expiry",
+    ]
+    for field in required_expected_fields + ["reason"]:
+        incomplete = json.loads(json.dumps(declaration))
+        if field == "reason":
+            del incomplete[field]
+        else:
+            del incomplete["expected"][field]
+        rec = json.loads(json.dumps(base_record))
+        rec["modify_locations"] = list(declared_locs)
+        rec["counts"]["modify"] = len(declared_locs)
+        alerts, _ = evaluate_alerts(rec, dict(prev), [incomplete])
+        check("missing required declaration field %s -> declaration_error" % field,
+              any(a["class"] == "declaration_error" for a in alerts)
+              and any(a["class"] == "unexpected_modify" for a in alerts))
+
+    wildcard = json.loads(json.dumps(declaration))
+    wildcard["expected"]["location_prefix"] = "1:1:"
+    rec = json.loads(json.dumps(base_record))
+    rec["modify_locations"] = list(declared_locs)
+    rec["counts"]["modify"] = len(declared_locs)
+    alerts, _ = evaluate_alerts(rec, dict(prev), [wildcard])
+    check("unsupported wildcard or prefix field -> declaration_error",
+          any(a["class"] == "declaration_error" for a in alerts)
+          and any(a["class"] == "unexpected_modify" for a in alerts))
+
+    rec = json.loads(json.dumps(base_record))
+    rec["modify_locations"] = list(declared_locs)
+    rec["counts"]["modify"] = len(declared_locs)
+    alerts, _ = evaluate_alerts(
+        rec, dict(prev), [{"expected": {}, "reason": "malformed"}])
+    check("empty expected object -> declaration_error",
+          any(a["class"] == "declaration_error" for a in alerts)
+          and any(a["class"] == "unexpected_modify" for a in alerts))
+
+    legacy = {"expected": {"modify_locations": declared_locs,
+                            "registry_sha256": registry_good},
+              "reason": "legacy owner decision D", "utc": "2026-07-11T00:00:00Z"}
+    rec = json.loads(json.dumps(base_record))
+    rec["modify_locations"] = list(declared_locs)
+    rec["counts"]["modify"] = len(declared_locs)
+    alerts, explained = evaluate_alerts(rec, dict(prev), [legacy])
+    check("legacy exact set covered by registered generation is grandfathered",
+          not any(a["class"] in {"declaration_error", "unexpected_modify"}
+                  for a in alerts)
+          and any(e["class"] == "declared_modify" for e in explained))
+
+    rec["canonical_repair_locations"] = declared_locs[:-1]
+    alerts, _ = evaluate_alerts(rec, dict(prev), [legacy])
+    check("legacy set not exactly covered by registered generation -> declaration_error",
+          any(a["class"] == "declaration_error" for a in alerts)
+          and any(a["class"] == "unexpected_modify" for a in alerts))
+
+    rec = json.loads(json.dumps(base_record))
+    rec["modify_locations"] = list(declared_locs)
+    rec["counts"]["modify"] = len(declared_locs)
+    alerts, explained = evaluate_alerts(
+        rec, dict(prev), [one_shot], prior_ledger_rows=[])
+    check("first one-shot use is explained and consumption recorded",
+          not any(a["class"] == "unexpected_modify" for a in alerts)
+          and len(rec.get("expected_change_consumptions", [])) == 1
+          and rec["expected_change_consumptions"][0]["declaration_sha256"] == consumed_sha)
 
     rowdiff_fixture = [
         {"canonical_wbw_loc": "2:2:2", "classification": "modify"},
