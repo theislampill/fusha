@@ -1,3 +1,4 @@
+# ATTIC (D-11): unreferenced at 446a536a; preserved for history; do not run in production paths
 """Regression test for the qamustyping3 acceptance gate."""
 
 from __future__ import annotations

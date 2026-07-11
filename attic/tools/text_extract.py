@@ -1,3 +1,4 @@
+# ATTIC (D-11): unreferenced at 446a536a; preserved for history; do not run in production paths
 """Shared text helpers for the sarf/nahw corpus ingest (SN1/SN2).
 
 Stdlib only. Strips note/PDF HTML while preserving Arabic text, transliteration,

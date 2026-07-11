@@ -146,4 +146,11 @@ def main():
         print("  ", x["root_cause"], x["safe_tier"], "pending=%d safe=%.0f" % (x["pending"], x["expected_safe"]))
 
 if __name__ == "__main__":
+    _argv = __import__("sys").argv
+    _d11_read_only = any(flag in _argv[1:] for flag in ("--self-test", "--fixture"))
+    if "--write" in _argv[1:]:
+        _argv.remove("--write")
+    elif not _d11_read_only:
+        print("DRY RUN: would write os.path.join(OUTDIR, 'root-cause-yield-ledger.json'); os.path.join(OUTDIR, 'root-cause-yield-ledger.md'); pass --write to apply")
+        raise SystemExit(0)
     main()

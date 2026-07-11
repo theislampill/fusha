@@ -1,3 +1,4 @@
+# ATTIC (D-11): unreferenced at 446a536a; preserved for history; do not run in production paths
 #!/usr/bin/env python3
 """SN3 — normalize the APKG + PDF extraction into a deduped sarf/nahw concept base.
 

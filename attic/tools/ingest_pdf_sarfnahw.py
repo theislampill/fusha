@@ -1,3 +1,4 @@
+# ATTIC (D-11): unreferenced at 446a536a; preserved for history; do not run in production paths
 #!/usr/bin/env python3
 """SN2 — extract the verb-chart PDFs + verb-tables DOCX (structure + English only).
 

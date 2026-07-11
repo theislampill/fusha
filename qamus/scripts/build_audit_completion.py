@@ -135,4 +135,11 @@ def build():
 
 
 if __name__ == "__main__":
+    _argv = __import__("sys").argv
+    _d11_read_only = any(flag in _argv[1:] for flag in ("--self-test", "--fixture"))
+    if "--write" in _argv[1:]:
+        _argv.remove("--write")
+    elif not _d11_read_only:
+        print("DRY RUN: would write os.path.join(REP, 'hover-token-completion.json'); os.path.join(REP, 'hover-token-completion.md'); os.path.join(REP, 'qamus-2092-audit-completion.json'); os.path.join(REP, 'qamus-2092-audit-completion.md'); pass --write to apply")
+        raise SystemExit(0)
     build()
