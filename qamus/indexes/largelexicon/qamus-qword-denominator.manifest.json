@@ -101,7 +101,7 @@
       "path": "qamus/indexes/largelexicon/qword-denominator/v001-v040.jsonl",
       "row_count": 9178,
       "schema": "qamus/largelexicon-qword-denominator@1",
-      "sha256": "66b111a8bc82843e963ea2755c251fa6d93e7d94b44bcf6890b616c4710490b2",
+      "sha256": "cd675850de25510d36ab5447dbb625496984bd52cc53fa300f56a52373a0d000",
       "source_key_range": {
         "end": 40,
         "prefix": "v",

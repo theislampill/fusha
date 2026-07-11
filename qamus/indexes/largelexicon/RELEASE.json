@@ -7,7 +7,7 @@
   "input": {
     "path": "qamus/data/current/entries.jsonl",
     "row_count": 2092,
-    "sha256": "a68245e93ce1a8b76858b672a449ff94475abf010e8102575e7c0285c540a78f"
+    "sha256": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d"
   },
   "manifest_constants": {
     "live_mutation_allowed": false,
@@ -80,7 +80,7 @@
       "manifest_path": "qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json",
       "row_count": 117117,
       "schema_path": "qamus/schemas/largelexicon-qword-crosswalk.schema.json",
-      "sha256": "b8a7966650708a3f8feea5b5c11f520bec4ecaca8e75ae1bf72bd617cecbd9da",
+      "sha256": "d5ef8d6f76c53edad0a21d9f4b30af06984581a43095884175c81321970f366a",
       "sha256_scope": "exact JSONL bytes in manifest order",
       "shard_count": 210,
       "source_row_schema": "qamus/largelexicon-qword-crosswalk@1",
@@ -88,6 +88,7 @@
       "target_row_schema": "qamus/largelexicon-qword-crosswalk@2",
       "validation": {
         "defect_family_counts": {
+          "additional_property": 1403,
           "row_constant": 117117,
           "schema_version": 117117
         },
@@ -99,7 +100,7 @@
       "manifest_path": "qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json",
       "row_count": 117117,
       "schema_path": "qamus/schemas/largelexicon-qword-denominator.schema.json",
-      "sha256": "4e067ea98517637f31515c7d5fa63307860fbdcaca18b689d7bea35cc755607f",
+      "sha256": "fca9d8c1057920cfff778362cbb311d0d4ad020c4529e85e86434cda24fd75ba",
       "sha256_scope": "exact JSONL bytes in manifest order",
       "shard_count": 54,
       "source_row_schema": "qamus/largelexicon-qword-denominator@1",

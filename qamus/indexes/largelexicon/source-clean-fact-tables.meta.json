@@ -1611,7 +1611,7 @@
         "path": "qamus/indexes/largelexicon/qword-crosswalk/v011-v020.jsonl",
         "row_count": 1469,
         "schema": "qamus/largelexicon-qword-crosswalk@1",
-        "sha256": "b988e876743a31f6e9b44fc400b2ad89f17a2e992a7d7fe7d1bc9546a3062955",
+        "sha256": "c01df58953f7d2baa884d801c780a3545d94de0b86b396ee13db6025c00f3c79",
         "source_key_range": {
           "end": 20,
           "prefix": "v",
@@ -2967,7 +2967,7 @@
         "path": "qamus/indexes/largelexicon/qword-denominator/v001-v040.jsonl",
         "row_count": 9178,
         "schema": "qamus/largelexicon-qword-denominator@1",
-        "sha256": "66b111a8bc82843e963ea2755c251fa6d93e7d94b44bcf6890b616c4710490b2",
+        "sha256": "cd675850de25510d36ab5447dbb625496984bd52cc53fa300f56a52373a0d000",
         "source_key_range": {
           "end": 40,
           "prefix": "v",

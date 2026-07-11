@@ -1,7 +1,7 @@
 {
   "data/entries.jsonl": {
     "bytes": 4830755,
-    "sha256": "a68245e93ce1a8b76858b672a449ff94475abf010e8102575e7c0285c540a78f"
+    "sha256": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d"
   },
   "data/entries.min.jsonl": {
     "bytes": 374290,
@@ -32,8 +32,8 @@
     "sha256": "be0aba31516bd64c12b1d2470bcc60c56736b936afb2923b5af6841a90140464"
   },
   "indexes/by-quran-ref.json": {
-    "bytes": 218342,
-    "sha256": "4069a8a7ef146c666df6f950663698a10747ab228e5c8ab49f0c0b56b3428fc0"
+    "bytes": 218358,
+    "sha256": "2b9ab275c4104ef153c4330a7dad53e1e15a8ce54e3285c8bf15adcf0e50a3e6"
   },
   "indexes/by-root.json": {
     "bytes": 44831,
