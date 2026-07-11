@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +17,14 @@ from largelexicon_table_reader import LargelexiconQwordTable
 ROOT = Path(__file__).resolve().parents[1]
 MAX_SHARD_BYTES = 10 * 1024 * 1024
 ACCEPTED = "canonical_crosswalk_accepted"
+PACKET = "source_crosswalk_packet_ready"
+DEMOTED = "canonical_crosswalk_demoted"
+VALID_STATUSES = frozenset({ACCEPTED, PACKET, DEMOTED})
+DEMOTION_WAVE = "rm36-demotion-01"
+DEMOTION_REASON = "vowel_preserving_ayah_uniqueness_failed"
+REINSTATEMENT_CONDITION = (
+    "uniqueness re-proof under _join_surface_key or reviewed occurrence adjudication"
+)
 
 
 def _iter_rows(manifest: dict[str, Any], errors: list[str]) -> list[dict[str, Any]]:
@@ -75,6 +84,9 @@ def _validate_rows(rows: list[dict[str, Any]], denominator_rows: dict[str, dict[
         qword_ids.add(qword_id)
         if row.get("public_boundary") != PUBLIC_BOUNDARY:
             errors.append(f"{label}: public_boundary must stay source-clean")
+        status = row.get("status")
+        if status not in VALID_STATUSES:
+            errors.append(f"{label}: invalid crosswalk status {status!r}")
         if not row.get("source_dependencies"):
             errors.append(f"{label}: missing source_dependencies")
         denominator_row = denominator_rows.get(qword_id)
@@ -87,7 +99,7 @@ def _validate_rows(rows: list[dict[str, Any]], denominator_rows: dict[str, dict[
             if dep_sha and dep_sha != _sha256_row(denominator_row):
                 errors.append(f"{label}: qword_denominator_row dependency sha mismatch")
         has_canonical_loc = bool(row.get("canonical_quran_loc") or row.get("canonical_wbw_loc"))
-        if row.get("status") == ACCEPTED:
+        if status == ACCEPTED:
             if not row.get("canonical_quran_loc") or not row.get("canonical_wbw_loc"):
                 errors.append(f"{label}: accepted crosswalk cannot have null canonical loc")
             if row.get("packet_class") is not None:
@@ -100,9 +112,43 @@ def _validate_rows(rows: list[dict[str, Any]], denominator_rows: dict[str, dict[
                 errors.append(f"{label}: canonical_quran_loc does not match quran_ref")
             if not _quran_ref_matches_loc(row.get("quran_ref"), row.get("canonical_wbw_loc")):
                 errors.append(f"{label}: canonical_wbw_loc does not match quran_ref")
+        elif status == DEMOTED:
+            demotion = row.get("demotion")
+            expected_scalar = {
+                "wave": DEMOTION_WAVE,
+                "reason": DEMOTION_REASON,
+                "prior_status": ACCEPTED,
+                "reinstatement_condition": REINSTATEMENT_CONDITION,
+            }
+            if not isinstance(demotion, dict):
+                errors.append(f"{label}: demoted crosswalk requires demotion object")
+            else:
+                if not row.get("canonical_quran_loc") or not row.get("canonical_wbw_loc"):
+                    errors.append(f"{label}: demoted crosswalk must retain both canonical locs")
+                if not _quran_ref_matches_loc(row.get("quran_ref"), row.get("canonical_quran_loc")):
+                    errors.append(f"{label}: demoted canonical_quran_loc does not match quran_ref")
+                if not _quran_ref_matches_loc(row.get("quran_ref"), row.get("canonical_wbw_loc")):
+                    errors.append(f"{label}: demoted canonical_wbw_loc does not match quran_ref")
+                for field, expected in expected_scalar.items():
+                    if demotion.get(field) != expected:
+                        errors.append(f"{label}: demotion.{field} must be {expected!r}")
+                evidence = demotion.get("evidence")
+                if not isinstance(evidence, dict):
+                    errors.append(f"{label}: demotion.evidence must be an object")
+                else:
+                    positions = evidence.get("positions")
+                    if not isinstance(positions, list) or len(positions) < 2 or not all(
+                        isinstance(position, str) and position for position in positions
+                    ):
+                        errors.append(f"{label}: demotion.evidence.positions requires repeated locations")
+                demoted_at_head = demotion.get("demoted_at_head")
+                if not isinstance(demoted_at_head, str) or not re.fullmatch(r"[0-9a-f]{40}", demoted_at_head):
+                    errors.append(f"{label}: demotion.demoted_at_head must be a 40-character lowercase hex SHA")
+            if row.get("packet_class") is not None:
+                errors.append(f"{label}: demoted crosswalk must not become a repair packet")
         elif has_canonical_loc:
             errors.append(f"{label}: rows with canonical locs must be {ACCEPTED}")
-        if row.get("status") != ACCEPTED and not row.get("packet_class"):
+        if status == PACKET and not row.get("packet_class"):
             errors.append(f"{label}: unresolved crosswalk rows need exact packet_class")
     return errors
 
@@ -163,6 +209,27 @@ def self_test() -> int:
     if clean_errors:
         failures.append(f"clean fixture should pass, got {clean_errors}")
 
+    demoted_row = {
+        **clean_row,
+        "status": "canonical_crosswalk_demoted",
+        "demotion": {
+            "wave": "rm36-demotion-01",
+            "reason": "vowel_preserving_ayah_uniqueness_failed",
+            "evidence": {"positions": ["1:1:1", "1:1:2"]},
+            "prior_status": ACCEPTED,
+            "demoted_at_head": "4" * 40,
+            "reinstatement_condition": (
+                "uniqueness re-proof under _join_surface_key or reviewed occurrence adjudication"
+            ),
+        },
+    }
+    demoted_errors = _validate_rows([demoted_row], denominator_rows)
+    if demoted_errors:
+        failures.append(f"demoted fixture should be valid-but-not-accepted, got {demoted_errors}")
+    compiler_inputs = [row for row in [clean_row, demoted_row] if row.get("status") == ACCEPTED]
+    if compiler_inputs != [clean_row]:
+        failures.append("demoted fixture must be excluded from compiler-input construction")
+
     cases = [
         (
             "missing denominator target",
@@ -183,6 +250,16 @@ def self_test() -> int:
             "accepted-row shape violation",
             [{**clean_row, "canonical_wbw_loc": None}],
             "accepted crosswalk cannot have null canonical loc",
+        ),
+        (
+            "demoted-row retained-location violation",
+            [{**demoted_row, "canonical_wbw_loc": None}],
+            "demoted crosswalk must retain both canonical locs",
+        ),
+        (
+            "demoted-row malformed evidence",
+            [{**demoted_row, "demotion": {**demoted_row["demotion"], "evidence": []}}],
+            "demotion.evidence must be an object",
         ),
     ]
     for label, rows, needle in cases:

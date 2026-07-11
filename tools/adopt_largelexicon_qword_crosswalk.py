@@ -39,6 +39,8 @@ from largelexicon_common import (
 ROOT = Path(__file__).resolve().parents[1]
 ACCEPTED = "canonical_crosswalk_accepted"
 PACKET = "source_crosswalk_packet_ready"
+DEMOTED = "canonical_crosswalk_demoted"
+VALID_STATUSES = frozenset({ACCEPTED, PACKET, DEMOTED})
 RESOLUTION_FIELDS = (
     "resolution_method",
     "resolution_confidence",
@@ -186,6 +188,10 @@ def adopt(
             else:
                 next_row = dict(row)
                 unchanged_count += 1
+            if next_row.get("status") not in VALID_STATUSES:
+                raise ValueError(
+                    f"{next_row.get('row_id')}: invalid crosswalk status {next_row.get('status')!r}"
+                )
             status_counts[str(next_row.get("status"))] += 1
             next_rows.append(next_row)
 

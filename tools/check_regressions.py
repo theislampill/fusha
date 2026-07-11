@@ -4299,9 +4299,12 @@ try:
     check(
         "T5 G1 full dry-run: bindings=%d whitelist=%d build=%.3fs" % (
             len(_t5_full_b), _t5_full_whitelist_count, _t5_full_build_seconds),
-        len(_t5_full_rows) == 86970
-        and len(_t5_full_b) == 86970
-        and _t5_full_whitelist_count == 42065
+        # T10 residue/RM-36 arithmetic: 86970 + 47 promotions - 37 demotions
+        # = 86980 bindings; 42065 + 19 promoted locs - 0 fully lost locs
+        # = 42084 modeled whitelist locations.
+        len(_t5_full_rows) == 86980
+        and len(_t5_full_b) == 86980
+        and _t5_full_whitelist_count == 42084
         and not _t5_full_c and not _t5_full_wc,
     )
     check(
@@ -4548,6 +4551,12 @@ try:
     check("RM-36 fallback re-verifier self-test", _rv.returncode == 0)
 except Exception as _e:
     check("RM-36 fallback re-verifier self-test (harness error)", False)
+    print("  ", _e)
+try:
+    _residue = run_text([sys.executable, os.path.join(ROOT, "tools", "resolve_gap_residue_wave.py"), "--self-test"])
+    check("T10 residue + RM-36 demotion self-test (red-first exclusions)", _residue.returncode == 0)
+except Exception as _e:
+    check("T10 residue + RM-36 demotion self-test (harness error)", False)
     print("  ", _e)
 try:
     _pj = run_text([sys.executable, os.path.join(ROOT, "tools", "test_fact_projectors.py")])
