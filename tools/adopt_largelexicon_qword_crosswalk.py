@@ -17,15 +17,21 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from largelexicon_common import (
+    atomic_promote_shards,
     PUBLIC_BOUNDARY,
     QWORD_CROSSWALK_MANIFEST,
     QWORD_CROSSWALK_SHARD_DIR,
     QWORD_DENOMINATOR_MANIFEST,
     FULL_TABLE_META,
+    generation_fingerprint,
     git_value,
     repo_rel,
+    rollback_generation,
     sha256_file,
+    sha256_jsonl_rows,
+    verify_generation,
     write_json,
+    write_json_atomic,
     write_jsonl,
 )
 
@@ -147,7 +153,12 @@ def adopt(
         sample = ", ".join(sorted(overlap)[:5])
         raise ValueError(f"resolved/unresolved overlap: {sample}")
 
+    shard_dir = root / "qamus" / "indexes" / "largelexicon" / "qword-crosswalk"
+    input_generation_fingerprint = generation_fingerprint(shard_dir)
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    current_generation = verify_generation(shard_dir)
+    if not current_generation["ok"]:
+        raise ValueError(f"current crosswalk generation is mixed or corrupt: {current_generation['errors']}")
     status_counts: Counter[str] = Counter()
     method_counts: Counter[str] = Counter()
     adopted_count = 0
@@ -156,6 +167,7 @@ def adopt(
     adopted_ids: set[str] = set()
     unresolved_ids: set[str] = set()
     new_shards: list[dict[str, Any]] = []
+    shard_payloads: dict[str, list[dict[str, Any]]] = {}
 
     for shard, rows in _iter_manifest_rows(manifest, root):
         next_rows: list[dict[str, Any]] = []
@@ -179,10 +191,13 @@ def adopt(
 
         shard_out = dict(shard)
         shard_path = root / shard["path"]
-        if not dry_run:
-            write_jsonl(shard_path, next_rows)
+        try:
+            shard_name = shard_path.relative_to(shard_dir).as_posix()
+        except ValueError as exc:
+            raise ValueError(f"crosswalk shard is outside its generation directory: {shard_path}") from exc
+        shard_payloads[shard_name] = next_rows
         shard_out["row_count"] = len(next_rows)
-        shard_out["sha256"] = sha256_file(shard_path)
+        shard_out["sha256"] = sha256_jsonl_rows(next_rows)
         shard_out["first_row_id"] = next_rows[0].get("row_id") if next_rows else None
         shard_out["last_row_id"] = next_rows[-1].get("row_id") if next_rows else None
         new_shards.append(shard_out)
@@ -238,8 +253,18 @@ def adopt(
         }
     )
     if not dry_run:
-        write_json(manifest_path, manifest)
-        _update_full_table_meta(root=root, crosswalk_manifest=manifest)
+        def install_sidecars(_generation: dict[str, Any]) -> None:
+            _update_full_table_meta(root=root, crosswalk_manifest=manifest)
+            # Install the authoritative external table manifest last.
+            write_json_atomic(manifest_path, manifest)
+
+        atomic_promote_shards(
+            shard_dir,
+            shard_payloads,
+            writer_id="tools/adopt_largelexicon_qword_crosswalk.py",
+            after_promote=install_sidecars,
+            expected_current_fingerprint=input_generation_fingerprint,
+        )
 
     report = {
         "schema": "qamus/largelexicon-crosswalk-adoption-report@1",
@@ -256,7 +281,7 @@ def adopt(
         "claim_boundary": manifest["claim_boundary"],
     }
     if not dry_run:
-        write_json(out_report, report)
+        write_json_atomic(out_report, report)
     return report
 
 
@@ -279,7 +304,34 @@ def _update_full_table_meta(*, root: Path, crosswalk_manifest: dict[str, Any]) -
         }
     )
     meta["qword_crosswalk_manifest"] = crosswalk_manifest
-    write_json(full_table_meta, meta)
+    write_json_atomic(full_table_meta, meta)
+
+
+def _refresh_manifest_after_rollback(*, root: Path, manifest_path: Path) -> None:
+    """Make the external consumer manifest describe the restored shard bytes."""
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    status_counts: Counter[str] = Counter()
+    row_count = 0
+    for shard in manifest.get("shards") or []:
+        path = root / shard["path"]
+        rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        shard["row_count"] = len(rows)
+        shard["sha256"] = sha256_file(path)
+        shard["first_row_id"] = rows[0].get("row_id") if rows else None
+        shard["last_row_id"] = rows[-1].get("row_id") if rows else None
+        row_count += len(rows)
+        status_counts.update(str(row.get("status")) for row in rows)
+    manifest.update(
+        {
+            "generated_at": now_iso(),
+            "generated_by": "tools/adopt_largelexicon_qword_crosswalk.py --rollback",
+            "row_count": row_count,
+            "shard_count": len(manifest.get("shards") or []),
+            "status_counts": dict(status_counts),
+        }
+    )
+    _update_full_table_meta(root=root, crosswalk_manifest=manifest)
+    write_json_atomic(manifest_path, manifest)
 
 
 def self_test() -> int:
@@ -373,6 +425,7 @@ def self_test() -> int:
             and adopted[0]["packet_class"] is None
             and adopted[1]["status"] == PACKET
             and json.loads(manifest_path.read_text(encoding="utf-8"))["status_counts"][ACCEPTED] == 1
+            and verify_generation(shard_dir, allow_legacy=False)["ok"]
         )
         print(json.dumps({"ok": ok, "report": report}, ensure_ascii=False, indent=2, sort_keys=True))
         return 0 if ok else 1
@@ -386,9 +439,20 @@ def main() -> int:
     parser.add_argument("--out-report", type=Path, default=ROOT / "qamus" / "reports" / "largelexicon-crosswalk-adoption-20260703.json")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--self-test", action="store_true")
+    parser.add_argument("--rollback", action="store_true", help="swap qword-crosswalk.prev back into service")
     args = parser.parse_args()
     if args.self_test:
         return self_test()
+    if args.rollback:
+        result = rollback_generation(
+            QWORD_CROSSWALK_SHARD_DIR,
+            writer_id="tools/adopt_largelexicon_qword_crosswalk.py --rollback",
+            after_rollback=lambda: _refresh_manifest_after_rollback(
+                root=ROOT, manifest_path=QWORD_CROSSWALK_MANIFEST
+            ),
+        )
+        print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+        return 0
     if not args.resolved or not args.unresolved:
         parser.error("--resolved and --unresolved are required unless --self-test is used")
     report = adopt(
