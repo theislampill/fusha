@@ -1,0 +1,251 @@
+{
+  "baseline_head": "949b3212034dfc361352aa280c0c8ddbe3560417",
+  "correction_pr_53": {
+    "active_residual_intersection": 0,
+    "corrected_ref": {
+      "from": "4:46",
+      "to": "4:64"
+    },
+    "data_commit": "d70efb2f13df26acc6ecf77f9826d1a3e4975643",
+    "merge_commit": "cce73d4",
+    "pull_request": 53,
+    "rows": [
+      {
+        "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/v011-v020.jsonl#row_id=llx-crosswalk-llx-qword-1c5f7c9c8e05-03-12-001",
+        "quran_ref": "4:64",
+        "qword_row_id": "llx-qword-1c5f7c9c8e05-03-12-001",
+        "row_id": "llx-crosswalk-llx-qword-1c5f7c9c8e05-03-12-001"
+      },
+      {
+        "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/v011-v020.jsonl#row_id=llx-crosswalk-llx-qword-1c5f7c9c8e05-03-12-002",
+        "quran_ref": "4:64",
+        "qword_row_id": "llx-qword-1c5f7c9c8e05-03-12-002",
+        "row_id": "llx-crosswalk-llx-qword-1c5f7c9c8e05-03-12-002"
+      }
+    ],
+    "verification": "landed and current; the corrected rows are not members of the 442 active RM-36 residual IDs"
+  },
+  "disposition_counts": {
+    "closed_by_correction": 0,
+    "closed_verified": 36,
+    "demoted": 37,
+    "exception": 406
+  },
+  "exception_cause_counts": {
+    "example_fragment_relative_index_artifact": 13,
+    "owner_gated_source_card_surface_fix": 1,
+    "vowel_preserving_surface_drift": 385,
+    "wbw_slice_reference_artifact": 7
+  },
+  "generated_by": "qamus/reports/rm36-residual-closure/build_rm36_residual_closure.py",
+  "inputs": {
+    "demotion_report": {
+      "path": "qamus/reports/rm36-fallback-reverification/demotion-wave.report.json",
+      "sha256": "33842231832b311208efcdc5c9f09ffec6b868d5ad4f2f80d98e94b4a98b41a5"
+    },
+    "full_quran_index": {
+      "path": "qamus/indexes/quran-loc-surface/index.jsonl",
+      "row_count": 77881,
+      "sha256": "97efbaca345d5f23d9e9c699eef155f5bf4e06bb725e430729a8962b1573d227"
+    },
+    "full_quran_index_manifest": {
+      "path": "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "sha256": "daa4d843ab4823a0247fb57ec5dc714d87b39e850b8a95b1dc9e13cdc4775190"
+    },
+    "prior_failing_rows": {
+      "path": "qamus/reports/rm36-fallback-reverification/failing-rows.jsonl",
+      "row_count": 479,
+      "sha256": "daef516d135db0dd361c84e6b5f2b8f330bbe97a8e4ad0f050bdb9d317fedd23"
+    },
+    "prior_residual_report": {
+      "path": "qamus/reports/rm36-fallback-reverification/residual-reclassification.report.json",
+      "sha256": "2f88386232cfbe3de5101214c5591810997596281ee4666631a780f809587b79"
+    },
+    "report_directory_git_attributes": {
+      "path": "qamus/reports/rm36-residual-closure/.gitattributes",
+      "sha256": "fb9a23962ad7ca9cb58a26f88c6abf27a576726f1d56b49a16e9f890ee7f8717"
+    }
+  },
+  "method": {
+    "check_regressions_proposed_hunk": "qamus/reports/rm36-residual-closure/check-regressions.proposed.patch",
+    "closure_rule": "canonical_quran_loc plus vowel-preserving exact surface join",
+    "exception_rule": "no generic unverifiable state; exact pair and concrete cause required",
+    "normalizer": "tools.validate_largelexicon_denominator_join._join_surface_key"
+  },
+  "new_owner_gated_canonical_data_defects": [
+    {
+      "canonical_quran_loc": "2:214:2",
+      "cause": "example_fragment_relative_index_artifact",
+      "exact_pair": {
+        "indexed": "حَسِبْتُمْ",
+        "visible": "إن"
+      },
+      "matching_positions_in_ayah": [],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/p051-p060.jsonl#row_id=llx-crosswalk-llx-qword-19de33871698-03-02-002",
+      "row_id": "llx-crosswalk-llx-qword-19de33871698-03-02-002"
+    },
+    {
+      "canonical_quran_loc": "2:214:3",
+      "cause": "example_fragment_relative_index_artifact",
+      "exact_pair": {
+        "indexed": "أَن",
+        "visible": "نصر"
+      },
+      "matching_positions_in_ayah": [],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/p051-p060.jsonl#row_id=llx-crosswalk-llx-qword-19de33871698-03-02-003",
+      "row_id": "llx-crosswalk-llx-qword-19de33871698-03-02-003"
+    },
+    {
+      "canonical_quran_loc": "2:214:4",
+      "cause": "example_fragment_relative_index_artifact",
+      "exact_pair": {
+        "indexed": "تَدْخُلُوا۟",
+        "visible": "الله"
+      },
+      "matching_positions_in_ayah": [],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/p051-p060.jsonl#row_id=llx-crosswalk-llx-qword-19de33871698-03-02-004",
+      "row_id": "llx-crosswalk-llx-qword-19de33871698-03-02-004"
+    },
+    {
+      "canonical_quran_loc": "2:214:5",
+      "cause": "example_fragment_relative_index_artifact",
+      "exact_pair": {
+        "indexed": "ٱلْجَنَّةَ",
+        "visible": "قريب"
+      },
+      "matching_positions_in_ayah": [],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/p051-p060.jsonl#row_id=llx-crosswalk-llx-qword-19de33871698-03-02-005",
+      "row_id": "llx-crosswalk-llx-qword-19de33871698-03-02-005"
+    },
+    {
+      "canonical_quran_loc": "2:274:2",
+      "cause": "example_fragment_relative_index_artifact",
+      "exact_pair": {
+        "indexed": "يُنفِقُونَ",
+        "visible": "وَالنَّهَارِ"
+      },
+      "matching_positions_in_ayah": [
+        "2:274:5"
+      ],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/p001-p010.jsonl#row_id=llx-crosswalk-llx-qword-2fcbd8198aa6-03-01-002",
+      "row_id": "llx-crosswalk-llx-qword-2fcbd8198aa6-03-01-002"
+    },
+    {
+      "canonical_quran_loc": "27:42:2",
+      "cause": "owner_gated_source_card_surface_fix",
+      "exact_pair": {
+        "indexed": "جَآءَتْ",
+        "visible": "عرشك"
+      },
+      "matching_positions_in_ayah": [],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/p061-p070.jsonl#row_id=llx-crosswalk-llx-qword-616dbd6dffcc-02-01-002",
+      "row_id": "llx-crosswalk-llx-qword-616dbd6dffcc-02-01-002"
+    },
+    {
+      "canonical_quran_loc": "12:37:2",
+      "cause": "example_fragment_relative_index_artifact",
+      "exact_pair": {
+        "indexed": "لَا",
+        "visible": "مما"
+      },
+      "matching_positions_in_ayah": [],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/p071-p080.jsonl#row_id=llx-crosswalk-llx-qword-ca5dd7eb89ec-01-02-002",
+      "row_id": "llx-crosswalk-llx-qword-ca5dd7eb89ec-01-02-002"
+    },
+    {
+      "canonical_quran_loc": "12:37:3",
+      "cause": "example_fragment_relative_index_artifact",
+      "exact_pair": {
+        "indexed": "يَأْتِيكُمَا",
+        "visible": "علمني"
+      },
+      "matching_positions_in_ayah": [],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/p071-p080.jsonl#row_id=llx-crosswalk-llx-qword-ca5dd7eb89ec-01-02-003",
+      "row_id": "llx-crosswalk-llx-qword-ca5dd7eb89ec-01-02-003"
+    },
+    {
+      "canonical_quran_loc": "12:37:4",
+      "cause": "example_fragment_relative_index_artifact",
+      "exact_pair": {
+        "indexed": "طَعَامٌ",
+        "visible": "ربي"
+      },
+      "matching_positions_in_ayah": [],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/p071-p080.jsonl#row_id=llx-crosswalk-llx-qword-ca5dd7eb89ec-01-02-004",
+      "row_id": "llx-crosswalk-llx-qword-ca5dd7eb89ec-01-02-004"
+    },
+    {
+      "canonical_quran_loc": "48:15:2",
+      "cause": "example_fragment_relative_index_artifact",
+      "exact_pair": {
+        "indexed": "ٱلْمُخَلَّفُونَ",
+        "visible": "قال"
+      },
+      "matching_positions_in_ayah": [],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/p071-p080.jsonl#row_id=llx-crosswalk-llx-qword-ca5dd7eb89ec-02-03-002",
+      "row_id": "llx-crosswalk-llx-qword-ca5dd7eb89ec-02-03-002"
+    },
+    {
+      "canonical_quran_loc": "48:15:3",
+      "cause": "example_fragment_relative_index_artifact",
+      "exact_pair": {
+        "indexed": "إِذَا",
+        "visible": "الله"
+      },
+      "matching_positions_in_ayah": [],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/p071-p080.jsonl#row_id=llx-crosswalk-llx-qword-ca5dd7eb89ec-02-03-003",
+      "row_id": "llx-crosswalk-llx-qword-ca5dd7eb89ec-02-03-003"
+    },
+    {
+      "canonical_quran_loc": "48:15:4",
+      "cause": "example_fragment_relative_index_artifact",
+      "exact_pair": {
+        "indexed": "ٱنطَلَقْتُمْ",
+        "visible": "من"
+      },
+      "matching_positions_in_ayah": [],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/p071-p080.jsonl#row_id=llx-crosswalk-llx-qword-ca5dd7eb89ec-02-03-004",
+      "row_id": "llx-crosswalk-llx-qword-ca5dd7eb89ec-02-03-004"
+    },
+    {
+      "canonical_quran_loc": "48:15:5",
+      "cause": "example_fragment_relative_index_artifact",
+      "exact_pair": {
+        "indexed": "إِلَىٰ",
+        "visible": "قبل"
+      },
+      "matching_positions_in_ayah": [],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/p071-p080.jsonl#row_id=llx-crosswalk-llx-qword-ca5dd7eb89ec-02-03-005",
+      "row_id": "llx-crosswalk-llx-qword-ca5dd7eb89ec-02-03-005"
+    },
+    {
+      "canonical_quran_loc": "3:152:19",
+      "cause": "example_fragment_relative_index_artifact",
+      "exact_pair": {
+        "indexed": "مَّا",
+        "visible": "مَآ"
+      },
+      "matching_positions_in_ayah": [
+        "3:152:17"
+      ],
+      "packet_ref": "qamus/indexes/largelexicon/qword-crosswalk/v551-v560.jsonl#row_id=llx-crosswalk-llx-qword-fcc8279b4b96-02-01-018",
+      "row_id": "llx-crosswalk-llx-qword-fcc8279b4b96-02-01-018"
+    }
+  ],
+  "new_owner_gated_canonical_data_defects_count": 14,
+  "output": {
+    "residual_artifact": "qamus/reports/rm36-residual-closure/residual-closure.jsonl",
+    "residual_artifact_row_count": 479,
+    "residual_artifact_sha256": "4f7ce3f1e1c78a655cd481a51a322f7e8a0a6ed992c6f70580dd603b243846e0"
+  },
+  "schema": "fusha/rm36-residual-closure-report@1",
+  "scope": {
+    "active_closed_by_correction": 0,
+    "active_closed_verified": 36,
+    "active_explicit_exceptions": 406,
+    "current_failing_rows": 479,
+    "exact_current_non_pass_non_terminal_rows": 442,
+    "prior_terminal_demotions": 37
+  },
+  "status": "TERMINAL"
+}
