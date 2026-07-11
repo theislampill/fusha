@@ -1,0 +1,5547 @@
+{
+  "accepted_crosswalk_identity": {
+    "baseline_row_count": 86970,
+    "baseline_sha256": "ce820f78994defd1cc83d6b059f88b4c48bcce46d81c420e8f425808fcd293e3",
+    "range_crosswalk_rows": 147,
+    "range_crosswalk_rows_with_accepted_identity": 0,
+    "row_count": 86970,
+    "sha256": "ce820f78994defd1cc83d6b059f88b4c48bcce46d81c420e8f425808fcd293e3",
+    "unchanged_from_authoritative_baseline": true
+  },
+  "actual_counts": {
+    "dual_root_rows": 5,
+    "entries": 2092,
+    "example_reference_rows": 7700,
+    "final_radical_alif_maqsura_normalized": 2,
+    "gloss_bearing_surface_rows": 35,
+    "malformed_root_rows": 121,
+    "non_single_token_surface_rows": 263,
+    "norm_homograph_keys": 53,
+    "parenthesized_root_rows": 1,
+    "range_qword_rows_excluded_from_identity_acceptance": 147,
+    "range_reference_cards": 16,
+    "raw_root_shape_failures": 133,
+    "slash_composite_root_rows": 7,
+    "tatweel_heh_root_rows_normalized": 7,
+    "verbatim_word_copy_root_rows": 118
+  },
+  "audited_counts": {
+    "gloss_bearing_surface_rows": 35,
+    "non_single_token_surface_rows": 263,
+    "norm_homograph_keys_minimum": 23,
+    "range_qword_rows_excluded_from_identity_acceptance": 147,
+    "range_reference_cards": 16,
+    "slash_composite_root_rows": 7,
+    "verbatim_word_copy_root_rows": 118
+  },
+  "authoritative_baseline_sha": "446a536a432cc819ddfcfcf1bd61dd7601996c94",
+  "generated_by": "python tools/validate_largelexicon_hygiene.py --write",
+  "homograph_inventory": {
+    "key_count": 53,
+    "path": "qamus/indexes/largelexicon/homograph-keys.json",
+    "risk_flag": "norm_homograph"
+  },
+  "mode": "flag_and_report_only_until_authorized_regeneration",
+  "normalization_policy": {
+    "root_final_radical": "map final-radical ى to ي only for otherwise valid 2-5-radical roots",
+    "root_shape_gate": "^[ء-ي]( [ء-ي]){1,4}$",
+    "root_tatweel": "strip tatweel at build time, including heh notation هـ -> ه",
+    "source_and_display_text": "read-only and byte-preserved",
+    "surface_tatweel": "strip tatweel from generated lookup surfaces only"
+  },
+  "queues": {
+    "range_references": [
+      {
+        "card_id": "049756ecbbf9:u3:e1",
+        "entry_id": "049756ecbbf9",
+        "qword_count_excluded_from_identity_acceptance": 9,
+        "range": {
+          "ayah_end": 3,
+          "ayah_start": 1,
+          "surah": 69
+        },
+        "ref": "69:1-3",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "3b300a693995:u1:e2",
+        "entry_id": "3b300a693995",
+        "qword_count_excluded_from_identity_acceptance": 16,
+        "range": {
+          "ayah_end": 53,
+          "ayah_start": 52,
+          "surah": 15
+        },
+        "ref": "15:52-53",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "3be33b51d633:u1:e1",
+        "entry_id": "3be33b51d633",
+        "qword_count_excluded_from_identity_acceptance": 6,
+        "range": {
+          "ayah_end": 18,
+          "ayah_start": 17,
+          "surah": 84
+        },
+        "ref": "84:17-18",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "4af79d2fb7e5:u1:e3",
+        "entry_id": "4af79d2fb7e5",
+        "qword_count_excluded_from_identity_acceptance": 6,
+        "range": {
+          "ayah_end": 16,
+          "ayah_start": 15,
+          "surah": 86
+        },
+        "ref": "86:15-16",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "606be1ed9274:u1:e1",
+        "entry_id": "606be1ed9274",
+        "qword_count_excluded_from_identity_acceptance": 7,
+        "range": {
+          "ayah_end": 65,
+          "ayah_start": 64,
+          "surah": 23
+        },
+        "ref": "23:64-65",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "6269f8851346:u1:e5",
+        "entry_id": "6269f8851346",
+        "qword_count_excluded_from_identity_acceptance": 9,
+        "range": {
+          "ayah_end": 11,
+          "ayah_start": 10,
+          "surah": 23
+        },
+        "ref": "23:10-11",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "63addc5a2b8e:u1:e3",
+        "entry_id": "63addc5a2b8e",
+        "qword_count_excluded_from_identity_acceptance": 8,
+        "range": {
+          "ayah_end": 5,
+          "ayah_start": 4,
+          "surah": 114
+        },
+        "ref": "114:4-5",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "71d302278712:u1:e1",
+        "entry_id": "71d302278712",
+        "qword_count_excluded_from_identity_acceptance": 6,
+        "range": {
+          "ayah_end": 40,
+          "ayah_start": 39,
+          "surah": 56
+        },
+        "ref": "56:39-40",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "7f673c8b767f:u1:e3",
+        "entry_id": "7f673c8b767f",
+        "qword_count_excluded_from_identity_acceptance": 11,
+        "range": {
+          "ayah_end": 2,
+          "ayah_start": 1,
+          "surah": 106
+        },
+        "ref": "106:1-2",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "9cabebe3f9b8:u2:e4",
+        "entry_id": "9cabebe3f9b8",
+        "qword_count_excluded_from_identity_acceptance": 11,
+        "range": {
+          "ayah_end": 2,
+          "ayah_start": 1,
+          "surah": 56
+        },
+        "ref": "56:1-2",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "ae39253c0a8c:u1:e1",
+        "entry_id": "ae39253c0a8c",
+        "qword_count_excluded_from_identity_acceptance": 7,
+        "range": {
+          "ayah_end": 13,
+          "ayah_start": 12,
+          "surah": 21
+        },
+        "ref": "21:12-13",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "b75d80a03a31:u1:e1",
+        "entry_id": "b75d80a03a31",
+        "qword_count_excluded_from_identity_acceptance": 23,
+        "range": {
+          "ayah_end": 15,
+          "ayah_start": 14,
+          "surah": 2
+        },
+        "ref": "2:14-15",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "e00e8dcfe6f0:u1:e1",
+        "entry_id": "e00e8dcfe6f0",
+        "qword_count_excluded_from_identity_acceptance": 8,
+        "range": {
+          "ayah_end": 27,
+          "ayah_start": 26,
+          "surah": 17
+        },
+        "ref": "17:26-27",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "e65baeb3674c:u1:e1",
+        "entry_id": "e65baeb3674c",
+        "qword_count_excluded_from_identity_acceptance": 6,
+        "range": {
+          "ayah_end": 46,
+          "ayah_start": 45,
+          "surah": 44
+        },
+        "ref": "44:45-46",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "e6b0e7cd0f15:u1:e1",
+        "entry_id": "e6b0e7cd0f15",
+        "qword_count_excluded_from_identity_acceptance": 8,
+        "range": {
+          "ayah_end": 35,
+          "ayah_start": 34,
+          "surah": 75
+        },
+        "ref": "75:34-35",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      },
+      {
+        "card_id": "e9dd6c4a6a4f:u1:e1",
+        "entry_id": "e9dd6c4a6a4f",
+        "qword_count_excluded_from_identity_acceptance": 6,
+        "range": {
+          "ayah_end": 72,
+          "ayah_start": 71,
+          "surah": 12
+        },
+        "ref": "12:71-72",
+        "ref_kind": "range",
+        "risk_flags": [
+          "range_reference"
+        ],
+        "route": "range_reference_review"
+      }
+    ],
+    "root_hygiene": [
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "014677d54d50",
+        "headword": "خَبَالًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "خَبَالًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "0191d7ee3dae",
+        "headword": "مَكَانَكُمْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "مَكَانَكُمْ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "024794041a31",
+        "headword": "رِفْد",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "رِفْد",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "02aec6b4799a",
+        "headword": "عَتِيق",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "عَتِيق",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "03702280a6ce",
+        "headword": "حَرَسًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "حَرَسًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "0392f838d2b6",
+        "headword": "إِدًّا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "إِدًّا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "03a647901e42",
+        "headword": "قَائِلُون",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "قَائِلُون",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "tatweel_heh_notation",
+        "entry_id": "057c698b5fa2",
+        "headword": "يُصْهَرُ / صِهْرًا",
+        "no_root_reason": null,
+        "risk_flags": [],
+        "root": "ص ه ر",
+        "root_source": "ص هـ ر",
+        "roots": [
+          "ص ه ر"
+        ],
+        "route": "normalized_at_build_time"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "0a4065024804",
+        "headword": "يَكْلَؤُكُمْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "يَكْلَؤُكُمْ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "0b760a96cdc3",
+        "headword": "تَلْفَحُ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "تَلْفَحُ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "0d3017393f07",
+        "headword": "مَخْمَصَة",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "مَخْمَصَة",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "0d8525ae87e0",
+        "headword": "نُعَاس",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "نُعَاس",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "slash_composite_root",
+        "entry_id": "101401b11de8",
+        "headword": "زَكَى / زَكَاة",
+        "no_root_reason": null,
+        "risk_flags": [],
+        "root": null,
+        "root_source": "ز ك و / ز ك ي",
+        "roots": [
+          "ز ك و",
+          "ز ك ي"
+        ],
+        "route": "normalized_at_build_time"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "15cc60f2abfd",
+        "headword": "حُبُك",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "حُبُك",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "1671a0dd8551",
+        "headword": "يَهْجَعُونَ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "يَهْجَعُونَ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "17515e1dc9d3",
+        "headword": "هَلُمَّ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "هَلُمَّ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "1be8f5faaa8a",
+        "headword": "هُدِّمَتْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "هُدِّمَتْ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "1bfcdba62f1f",
+        "headword": "تُفَنِّدُونِ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "تُفَنِّدُونِ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "1eb427fb6ebb",
+        "headword": "جَدّ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "جَدّ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "207e8cb6e2c8",
+        "headword": "بِدَارًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "بِدَارًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "2461aa4915d8",
+        "headword": "ٱلْتَقَمَهُ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "ٱلْتَقَمَهُ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "2745be9c0cca",
+        "headword": "بَازِغًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "بَازِغًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "29155b1ab459",
+        "headword": "نَضِجَتْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "نَضِجَتْ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "29ae231aff74",
+        "headword": "يُنْغِضُونَ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "يُنْغِضُونَ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "2cf0c19466cb",
+        "headword": "خَامِدُون",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "خَامِدُون",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "2f0767751dd8",
+        "headword": "عَائِلًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "عَائِلًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "34bd58ce0861",
+        "headword": "تُكْوَىٰ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "تُكْوَىٰ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "356c4cfc066b",
+        "headword": "يُوفِضُونَ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "يُوفِضُونَ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "379e54e9b447",
+        "headword": "لَمْح",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "لَمْح",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "slash_composite_root",
+        "entry_id": "385725d86a5b",
+        "headword": "آنَسَ",
+        "no_root_reason": null,
+        "risk_flags": [],
+        "root": null,
+        "root_source": "أ ن س / ن و س",
+        "roots": [
+          "أ ن س",
+          "ن و س"
+        ],
+        "route": "normalized_at_build_time"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "38b74257a070",
+        "headword": "بَاسِقَات",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "بَاسِقَات",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "391c5e9eb5b1",
+        "headword": "هَشِيم",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "هَشِيم",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "39672b1d67d1",
+        "headword": "يَتَمَطَّىٰ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "يَتَمَطَّىٰ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "3a125c386c88",
+        "headword": "قَصَمْنَا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "قَصَمْنَا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "3a4822f4385a",
+        "headword": "تَفَثَهُمْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "تَفَثَهُمْ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "3c0c971698e7",
+        "headword": "تَثْرِيب",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "تَثْرِيب",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "3da4c13db9c8",
+        "headword": "عِجَاف",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "عِجَاف",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "3ed21daa1310",
+        "headword": "أَبْتَر",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَبْتَر",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "41394113354e",
+        "headword": "أَيَامَى",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَيَامَى",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "41a9911c082e",
+        "headword": "يَنْعِقُ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "يَنْعِقُ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "438b497a38c6",
+        "headword": "سُبَاتًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "سُبَاتًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "slash_composite_root",
+        "entry_id": "488d1175c005",
+        "headword": "تُرِيحُون / رَوْح / رُوح / رِيح / رَيْحَان",
+        "no_root_reason": null,
+        "risk_flags": [],
+        "root": null,
+        "root_source": "ر و ح / ر ي ح",
+        "roots": [
+          "ر و ح",
+          "ر ي ح"
+        ],
+        "route": "normalized_at_build_time"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "4accb6d07c54",
+        "headword": "وَاصِب",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "وَاصِب",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "4d04f110219e",
+        "headword": "هَيْتَ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "هَيْتَ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "50c673a03370",
+        "headword": "أَخْدَان",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَخْدَان",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "52dc6b3e545f",
+        "headword": "أَمْتًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَمْتًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "55de6345c432",
+        "headword": "حُوبًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "حُوبًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "5b5eefaac9f7",
+        "headword": "مَوَاخِر",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "مَوَاخِر",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "5b626770ac68",
+        "headword": "وَطَرًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "وَطَرًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "6019e47beaef",
+        "headword": "حَتْمًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "حَتْمًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "60b1dc36ddca",
+        "headword": "غُلْف",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "غُلْف",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "66aa57881e6a",
+        "headword": "خَنَّاس",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "خَنَّاس",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "6885a7c60ca3",
+        "headword": "أَمَل",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَمَل",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "69c8c142f62d",
+        "headword": "حَثِيثًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "حَثِيثًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "6bc3ee5c53ce",
+        "headword": "سَاهُون",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "سَاهُون",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "6f42d55940e3",
+        "headword": "لُغُوب",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "لُغُوب",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "726ebe27db60",
+        "headword": "ٱنْحَرْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "ٱنْحَرْ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "7450300c1ba8",
+        "headword": "غُثَاء",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "غُثَاء",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "slash_composite_root",
+        "entry_id": "746abe23a760",
+        "headword": "أَصَابَ / صَوَابًا / صَيِّب",
+        "no_root_reason": null,
+        "risk_flags": [],
+        "root": null,
+        "root_source": "ص و ب / ص ي ب",
+        "roots": [
+          "ص و ب",
+          "ص ي ب"
+        ],
+        "route": "normalized_at_build_time"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "756008366928",
+        "headword": "بَاخِع",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "بَاخِع",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "tatweel_heh_notation",
+        "entry_id": "76abc800fcb8",
+        "headword": "يَهِيمُونَ / هِيم",
+        "no_root_reason": null,
+        "risk_flags": [],
+        "root": "ه ي م",
+        "root_source": "هـ ي م",
+        "roots": [
+          "ه ي م"
+        ],
+        "route": "normalized_at_build_time"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "7838e4ff1aef",
+        "headword": "يُنفَوْا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "يُنفَوْا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "7b412295f443",
+        "headword": "مَسَخْنَاهُمْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "مَسَخْنَاهُمْ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "7eb58f5d3705",
+        "headword": "جَامِدَة",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "جَامِدَة",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "81072014e469",
+        "headword": "ثَيِّبَات",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "ثَيِّبَات",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "83c485be45ad",
+        "headword": "هَاؤُمُ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "هَاؤُمُ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "8476404e1fbc",
+        "headword": "يَسْتَنْبِطُونَهُ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "يَسْتَنْبِطُونَهُ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "887302078759",
+        "headword": "كُشِطَتْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "كُشِطَتْ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "88946123f046",
+        "headword": "رُقُود",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "رُقُود",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "8a3648f16039",
+        "headword": "رَاسِخُون",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "رَاسِخُون",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "8d8166c1bcb9",
+        "headword": "هَيْهَاتَ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "هَيْهَاتَ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "8f0900a48cd8",
+        "headword": "حِطَّة",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "حِطَّة",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "93d9fe312f48",
+        "headword": "تَعْسًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "تَعْسًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "9433401704d3",
+        "headword": "تَنَابَزُوا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "تَنَابَزُوا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "tatweel_heh_notation",
+        "entry_id": "963f6cd9e1f0",
+        "headword": "جَاهَدَ",
+        "no_root_reason": null,
+        "risk_flags": [],
+        "root": "ج ه د",
+        "root_source": "ج هـ د",
+        "roots": [
+          "ج ه د"
+        ],
+        "route": "normalized_at_build_time"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "987d3b514aad",
+        "headword": "أَكْدَىٰ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَكْدَىٰ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "98de46aff7c3",
+        "headword": "كَادِح",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "كَادِح",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "9cfc31ad54ac",
+        "headword": "أَلْهَمَهَا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَلْهَمَهَا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "9f3d80d90ec2",
+        "headword": "جَمًّا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "جَمًّا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "a0b57e314368",
+        "headword": "إِمْرًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "إِمْرًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "a0efd154b578",
+        "headword": "ثَجَّاجًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "ثَجَّاجًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "a189e0ee8815",
+        "headword": "سَحِيق",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "سَحِيق",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "a26e6f85223d",
+        "headword": "وَقَبَ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "وَقَبَ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "a3df2ff0b02a",
+        "headword": "وَجَبَتْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "وَجَبَتْ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "a41d4678480f",
+        "headword": "كُسَالَى",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "كُسَالَى",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "a4ac4b3d1c8b",
+        "headword": "أَقْنَىٰ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَقْنَىٰ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "a77e26d33f67",
+        "headword": "أَضْغَانَهُمْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَضْغَانَهُمْ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "a7a17381d9e0",
+        "headword": "نَتَقْنَا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "نَتَقْنَا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "ab009aea619c",
+        "headword": "هَضِيم",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "هَضِيم",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "acd836dd5c6d",
+        "headword": "نَمِيرُ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "نَمِيرُ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "ad45d3307b18",
+        "headword": "وَسِيلَة",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "وَسِيلَة",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "tatweel_heh_notation",
+        "entry_id": "ad6198a060e9",
+        "headword": "يَهِيجُ",
+        "no_root_reason": null,
+        "risk_flags": [],
+        "root": "ه ي ج",
+        "root_source": "هـ ي ج",
+        "roots": [
+          "ه ي ج"
+        ],
+        "route": "normalized_at_build_time"
+      },
+      {
+        "defect_class": "slash_composite_root",
+        "entry_id": "af75174c26a6",
+        "headword": "يَتَسَنَّه",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "س ن ن / و / ه",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "b0d5a6a57295",
+        "headword": "سَدِيدًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "سَدِيدًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "b3a1a967c4fa",
+        "headword": "مَتْرَبَة",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "مَتْرَبَة",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "b4956a49a454",
+        "headword": "حَرْد",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "حَرْد",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "b77b8a42f60a",
+        "headword": "يَنْقَضَّ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "يَنْقَضَّ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "ba90390f3ae1",
+        "headword": "وَيْكَأَنَّ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "وَيْكَأَنَّ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "bb18399b52c3",
+        "headword": "أُفٍّ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أُفٍّ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "bc8ab33a5bdf",
+        "headword": "حَسْبُهُ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "حَسْبُهُ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "bce187e00659",
+        "headword": "عَذْب",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "عَذْب",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "slash_composite_root",
+        "entry_id": "c49dfdec1d36",
+        "headword": "صَدَّ / صَدِيد / تَصَدَّى / يَصِدُّون / تَصْدِيَة",
+        "no_root_reason": null,
+        "risk_flags": [],
+        "root": null,
+        "root_source": "ص د د / ص د ي",
+        "roots": [
+          "ص د د",
+          "ص د ي"
+        ],
+        "route": "normalized_at_build_time"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "c50d034ef7fc",
+        "headword": "حَنِيذ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "حَنِيذ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "c525edb21986",
+        "headword": "حَنَانًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "حَنَانًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "c5a3debd1d4e",
+        "headword": "عَلَيْكُمْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "عَلَيْكُمْ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "parenthesized_root",
+        "entry_id": "c63837955935",
+        "headword": "كُبَّتْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "ك ب (ك) ب",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "c9b15a7407f9",
+        "headword": "أَلَدّ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَلَدّ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "c9b635bcbdaa",
+        "headword": "تَهَجَّدْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "تَهَجَّدْ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "caf2deb2c39d",
+        "headword": "فَهَّمْنَاهَا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "فَهَّمْنَاهَا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "cb0cbd433887",
+        "headword": "إِمْلَاق",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "إِمْلَاق",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "cb346dc063bc",
+        "headword": "أَهُشُّ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَهُشُّ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "cb74da5b5dce",
+        "headword": "رَمِيم",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "رَمِيم",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "cc1cfe29709d",
+        "headword": "أَقْلِعِي",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَقْلِعِي",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "cfab6122c62f",
+        "headword": "أُفَوِّضُ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أُفَوِّضُ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "d00d6dad1204",
+        "headword": "شَاكِلَة",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "شَاكِلَة",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "d249ba3477f2",
+        "headword": "مَشِيد",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "مَشِيد",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "d54a026b21eb",
+        "headword": "تَنِيَا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "تَنِيَا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "tatweel_heh_notation",
+        "entry_id": "d6c4b6e4e61c",
+        "headword": "انْهَارَ",
+        "no_root_reason": null,
+        "risk_flags": [],
+        "root": "ه و ر",
+        "root_source": "هـ و ر",
+        "roots": [
+          "ه و ر"
+        ],
+        "route": "normalized_at_build_time"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "d779132e894c",
+        "headword": "لُبَدًا",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "لُبَدًا",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "e10eba589c16",
+        "headword": "تَنُوءُ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "تَنُوءُ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "e4ed181b19e8",
+        "headword": "نَحْس",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "نَحْس",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "e6b0e7cd0f15",
+        "headword": "أَوْلَىٰ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَوْلَىٰ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "e786f87489bf",
+        "headword": "أَجْدَر",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَجْدَر",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "e8deb0deacd9",
+        "headword": "نَاشِطَات",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "نَاشِطَات",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "slash_composite_root",
+        "entry_id": "e919504a83fa",
+        "headword": "ٱبْتَلَى",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "ب ل و / ي",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "tatweel_heh_notation",
+        "entry_id": "ecd5e033b470",
+        "headword": "يُهْرَعُونَ",
+        "no_root_reason": null,
+        "risk_flags": [],
+        "root": "ه ر ع",
+        "root_source": "هـ ر ع",
+        "roots": [
+          "ه ر ع"
+        ],
+        "route": "normalized_at_build_time"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "f0542e3a35a1",
+        "headword": "تُمْسُونَ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "تُمْسُونَ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "f2d4aa89ba69",
+        "headword": "ٱنكَدَرَتْ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "ٱنكَدَرَتْ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "f7f4211b26da",
+        "headword": "وَكَزَهُ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "وَكَزَهُ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "f85900d57958",
+        "headword": "تَقْشَعِرُّ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "تَقْشَعِرُّ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "fc2cf591b547",
+        "headword": "أَوَّاه",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "أَوَّاه",
+        "roots": [],
+        "route": "entry_repair_queue"
+      },
+      {
+        "defect_class": "tatweel_heh_notation",
+        "entry_id": "fcf483d2df23",
+        "headword": "يَلْهَثْ",
+        "no_root_reason": null,
+        "risk_flags": [],
+        "root": "ل ه ث",
+        "root_source": "ل هـ ث",
+        "roots": [
+          "ل ه ث"
+        ],
+        "route": "normalized_at_build_time"
+      },
+      {
+        "defect_class": "verbatim_word_copy_root",
+        "entry_id": "ff4b9484e3cf",
+        "headword": "يَلْفِظُ",
+        "no_root_reason": "malformed_root",
+        "risk_flags": [
+          "malformed_root"
+        ],
+        "root": null,
+        "root_source": "يَلْفِظُ",
+        "roots": [],
+        "route": "entry_repair_queue"
+      }
+    ],
+    "surface_hygiene": [
+      {
+        "accepted_surfaces": [],
+        "entry_id": "0135b6be178e",
+        "rejected_parts": [
+          "حَاشَ لِلَّه"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "حَاشَ لِلَّه"
+      },
+      {
+        "accepted_surfaces": [
+          "أَحَقّ",
+          "حَقًّا"
+        ],
+        "entry_id": "049756ecbbf9",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "أَحَقّ / حَقًّا"
+      },
+      {
+        "accepted_surfaces": [
+          "الحَقّ",
+          "حَقّ"
+        ],
+        "entry_id": "049756ecbbf9",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "الحَقّ / حَقّ"
+      },
+      {
+        "accepted_surfaces": [
+          "اِسْتَحَقَّ",
+          "اِسْتَحَقَّا"
+        ],
+        "entry_id": "049756ecbbf9",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "اِسْتَحَقَّ / اِسْتَحَقَّا"
+      },
+      {
+        "accepted_surfaces": [
+          "حَقِيق",
+          "حُقَّت"
+        ],
+        "entry_id": "049756ecbbf9",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "حَقِيق / حُقَّت"
+      },
+      {
+        "accepted_surfaces": [
+          "حَقَّ",
+          "حَقَّتْ"
+        ],
+        "entry_id": "049756ecbbf9",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "حَقَّ / حَقَّتْ"
+      },
+      {
+        "accepted_surfaces": [
+          "يُحِقّ",
+          "يُحِقَّ"
+        ],
+        "entry_id": "049756ecbbf9",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "يُحِقّ / يُحِقَّ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "07c919b3a9f2",
+        "rejected_parts": [
+          "مِيثَاقًا غَلِيظًا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مِيثَاقًا غَلِيظًا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "07ebdee8e93e",
+        "rejected_parts": [
+          "أَصْحَابُ الحِجْر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَصْحَابُ الحِجْر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "07ebdee8e93e",
+        "rejected_parts": [
+          "أَصْحَابُ الْحِجْر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَصْحَابُ الْحِجْر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "0bf59423714b",
+        "rejected_parts": [
+          "لَا جَرَمَ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لَا جَرَمَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "0bf59423714b",
+        "rejected_parts": [
+          "لَا يَجْرِمَنَّكُمْ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لَا يَجْرِمَنَّكُمْ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "0d050fe8e03c",
+        "rejected_parts": [
+          "ذُو ٱلطَّوْل"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذُو ٱلطَّوْل"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "107c6b63f769",
+        "rejected_parts": [
+          "أَصْحَابُ الأَيْكَة"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَصْحَابُ الأَيْكَة"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "107c6b63f769",
+        "rejected_parts": [
+          "أَصْحَابُ الْأَيْكَة"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَصْحَابُ الْأَيْكَة"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "1145f1b5c819",
+        "rejected_parts": [
+          "أُسْوَةٌ حَسَنَةٌ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أُسْوَةٌ حَسَنَةٌ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "13be2b9d132b",
+        "rejected_parts": [
+          "(شَدِيدُ) الْمِحَال"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "(شَدِيدُ) الْمِحَال"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "153383998175",
+        "rejected_parts": [
+          "أُولُو الْأَلْبَاب"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أُولُو الْأَلْبَاب"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "157442d7e625",
+        "rejected_parts": [
+          "عَمَّ (عَنْ + مَ)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "عَمَّ (عَنْ + مَ)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "157442d7e625",
+        "rejected_parts": [
+          "عَمَّا (عَنْ + مَا)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "عَمَّا (عَنْ + مَا)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "15963278a29f",
+        "rejected_parts": [
+          "قَوْمُ تُبَّع"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قَوْمُ تُبَّع"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "162bddf6461c",
+        "rejected_parts": [
+          "رُوحُ ٱلْقُدُس"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "رُوحُ ٱلْقُدُس"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "1650fb53a8c2",
+        "rejected_parts": [
+          "ر ف ق"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ر ف ق"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "1998c6248a12",
+        "rejected_parts": [
+          "ج ب ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ج ب ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "1c0e586d8885",
+        "rejected_parts": [
+          "الْمَلَإ الْأَعْلَى"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "الْمَلَإ الْأَعْلَى"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "1c4c58d664ab",
+        "rejected_parts": [
+          "أَحَدَ عَشَرَ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَحَدَ عَشَرَ"
+      },
+      {
+        "accepted_surfaces": [
+          "النُّفُوس",
+          "نُفُوسِكُمْ"
+        ],
+        "entry_id": "1c5f7c9c8e05",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "النُّفُوس / نُفُوسِكُمْ"
+      },
+      {
+        "accepted_surfaces": [
+          "الْأَنْفُس",
+          "الْأَنْفُسِ",
+          "أَنْفُسَهُمْ",
+          "أَنْفُسِهِمْ",
+          "أَنْفُسَهُنَّ",
+          "أَنْفُسِكُمْ",
+          "أَنْفُسَكُمْ",
+          "أَنْفُسَنَا",
+          "أَنْفُسًا"
+        ],
+        "entry_id": "1c5f7c9c8e05",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "الْأَنْفُس /الْأَنْفُسِ /أَنْفُسَهُمْ /أَنْفُسِهِمْ /أَنْفُسَهُنَّ /أَنْفُسِكُمْ /أَنْفُسَكُمْ /أَنْفُسَنَا /أَنْفُسًا"
+      },
+      {
+        "accepted_surfaces": [
+          "نَفْس",
+          "النَّفْس",
+          "النُّفُوس",
+          "نَفْسٍ",
+          "نَفْسًا"
+        ],
+        "entry_id": "1c5f7c9c8e05",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "نَفْس / النَّفْس / النُّفُوس / نَفْسٍ / نَفْسًا"
+      },
+      {
+        "accepted_surfaces": [
+          "نَفْس",
+          "نَفْسَهُ",
+          "نَفْسِهِ",
+          "نَفْسِهَا",
+          "نَفْسَهَا"
+        ],
+        "entry_id": "1c5f7c9c8e05",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "نَفْس / نَفْسَهُ / نَفْسِهِ / نَفْسِهَا / نَفْسَهَا"
+      },
+      {
+        "accepted_surfaces": [
+          "نَفْسِك",
+          "نَفْسَكَ",
+          "نَفْسِكِ",
+          "نَفْسِي"
+        ],
+        "entry_id": "1c5f7c9c8e05",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "نَفْسِك / نَفْسَكَ / نَفْسِكِ / نَفْسِي"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "1d1155c1ea36",
+        "rejected_parts": [
+          "يَقْدِرُ عَلَى"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "يَقْدِرُ عَلَى"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "1dc4f46943ad",
+        "rejected_parts": [
+          "أَبِي لَهَب"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَبِي لَهَب"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "1f2cc527b097",
+        "rejected_parts": [
+          "ح ج ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ح ج ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "1fd424ee1e74",
+        "rejected_parts": [
+          "بَادِيَ الرَّأْي"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "بَادِيَ الرَّأْي"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "202eddfdb3c5",
+        "rejected_parts": [
+          "س ف ح"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "س ف ح"
+      },
+      {
+        "accepted_surfaces": [
+          "حَمِيد",
+          "حَمِيدًا"
+        ],
+        "entry_id": "2132ee9b51c1",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "حَمِيد / حَمِيدًا"
+      },
+      {
+        "accepted_surfaces": [
+          "حَمْدِ",
+          "الْحَمْد",
+          "حَمْدِهِ",
+          "حَمْدِكَ"
+        ],
+        "entry_id": "2132ee9b51c1",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "حَمْدِ / الْحَمْد / حَمْدِهِ / حَمْدِكَ"
+      },
+      {
+        "accepted_surfaces": [
+          "مُحَمَّد",
+          "مُحَمَّدٌ"
+        ],
+        "entry_id": "2132ee9b51c1",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "مُحَمَّد / مُحَمَّدٌ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "21588055751c",
+        "rejected_parts": [
+          "أَدْرَكَهُ ٱلْغَرَقُ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَدْرَكَهُ ٱلْغَرَقُ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "2309463bc4f2",
+        "rejected_parts": [
+          "ح ف ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ح ف ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "25212709ef97",
+        "rejected_parts": [
+          "ب ر د"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ب ر د"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "25fa75c0ef53",
+        "rejected_parts": [
+          "غ و ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "غ و ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "28bbf28ac7c5",
+        "rejected_parts": [
+          "إِلْ يَاسِينَ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "إِلْ يَاسِينَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "29570abca114",
+        "rejected_parts": [
+          "أَخْلَدَ إِلَى"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَخْلَدَ إِلَى"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "2cb4015f1b2f",
+        "rejected_parts": [
+          "فَالْفَارِقَاتِ فَرْقًا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "فَالْفَارِقَاتِ فَرْقًا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "2cb4015f1b2f",
+        "rejected_parts": [
+          "يَوْمَ الْفُرْقَان"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "يَوْمَ الْفُرْقَان"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "2e04f3e16655",
+        "rejected_parts": [
+          "مِن تِلْقَاءِ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مِن تِلْقَاءِ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "2e9f6760722b",
+        "rejected_parts": [
+          "خ ل ل"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "خ ل ل"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "2f4151b667e5",
+        "rejected_parts": [
+          "(جَنَّات",
+          "جَنَّاتُ) عَدْنٍ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "(جَنَّات/جَنَّاتُ) عَدْنٍ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "3041d6f44a27",
+        "rejected_parts": [
+          "أَقَامَ الصَّلَاةَ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَقَامَ الصَّلَاةَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "3041d6f44a27",
+        "rejected_parts": [
+          "تَقُومُ السَّاعَةُ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "تَقُومُ السَّاعَةُ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "33787ee8c0c1",
+        "rejected_parts": [
+          "أَتَيْنَاهُم بِـ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَتَيْنَاهُم بِـ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "33787ee8c0c1",
+        "rejected_parts": [
+          "فَأْتِ بِـ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "فَأْتِ بِـ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "33787ee8c0c1",
+        "rejected_parts": [
+          "يَأْتِي بِـ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "يَأْتِي بِـ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "349b6c66ca3e",
+        "rejected_parts": [
+          "ق ن ع"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ق ن ع"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "3635ce63d0f9",
+        "rejected_parts": [
+          "يُغْشَىٰ عَلَيْهِ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "يُغْشَىٰ عَلَيْهِ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "3c0edd60b334",
+        "rejected_parts": [
+          "إِنْ ... لَمَّا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "إِنْ ... لَمَّا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "3ce907fa9e9f",
+        "rejected_parts": [
+          "بَنُو إِسْرَائِيل"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "بَنُو إِسْرَائِيل"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "3ce907fa9e9f",
+        "rejected_parts": [
+          "بَنِي إِسْرَائِيل"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "بَنِي إِسْرَائِيل"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "3f40e0c0eb7a",
+        "rejected_parts": [
+          "رَيْبَ ٱلْمَنُونِ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "رَيْبَ ٱلْمَنُونِ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "3f40e0c0eb7a",
+        "rejected_parts": [
+          "غَيْرُ مَمْنُونٍ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "غَيْرُ مَمْنُونٍ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "3f72628fa1ec",
+        "rejected_parts": [
+          "ضَرَب (مَثَلًا",
+          "الأَمْثَال)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ضَرَب (مَثَلًا / الأَمْثَال)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "3f72628fa1ec",
+        "rejected_parts": [
+          "ضَرَبَ مَثَلًا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ضَرَبَ مَثَلًا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "3f72628fa1ec",
+        "rejected_parts": [
+          "ضَرَبُوا فِي ٱلْأَرْض"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ضَرَبُوا فِي ٱلْأَرْض"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "3f72628fa1ec",
+        "rejected_parts": [
+          "نَضْرِبُ صَفْحًا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "نَضْرِبُ صَفْحًا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "402d4e5bea0c",
+        "rejected_parts": [
+          "د ر ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "د ر ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "430015446b77",
+        "rejected_parts": [
+          "يُقَالُ لَهُ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "يُقَالُ لَهُ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "444a6379d037",
+        "rejected_parts": [
+          "غ م م"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "غ م م"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "449fce4a2171",
+        "rejected_parts": [
+          "مِن لَدُن"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مِن لَدُن"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "4610ca5d83fa",
+        "rejected_parts": [
+          "تَسْتَعْجِلُونَ (ي)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "تَسْتَعْجِلُونَ (ي)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "4610ca5d83fa",
+        "rejected_parts": [
+          "يَسْتَعْجِلُونَ (ي)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "يَسْتَعْجِلُونَ (ي)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "47c70a0ec0cf",
+        "rejected_parts": [
+          "ذَا النُّون"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذَا النُّون"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "4acdaa9da7ef",
+        "rejected_parts": [
+          "ص غ ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ص غ ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "4af79d2fb7e5",
+        "rejected_parts": [
+          "كِيدُونِ(ى)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "كِيدُونِ(ى)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "4cc5cc64c9f5",
+        "rejected_parts": [
+          "تَارَةً أُخْرَىٰ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "تَارَةً أُخْرَىٰ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "4e7ead35510e",
+        "rejected_parts": [
+          "أَنْزَلَ - أَنْزَلَهُ - أَنْزَلَتْ | to descend, come down"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَنْزَلَ - أَنْزَلَهُ - أَنْزَلَتْ | to descend, come down"
+      },
+      {
+        "accepted_surfaces": [
+          "أَنْزَلْنَاهُ",
+          "أَنْزَلْنَا",
+          "أَنْزَلْنَاهَا",
+          "سَأُنْزِلُ"
+        ],
+        "entry_id": "4e7ead35510e",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "أَنْزَلْنَاهُ - أَنْزَلْنَا - أَنْزَلْنَاهَا - سَأُنْزِلُ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "4e7ead35510e",
+        "rejected_parts": [
+          "أَنْزِلْنِي مُنْزَلًا | land, accommodate"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَنْزِلْنِي مُنْزَلًا | land, accommodate"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "4e7ead35510e",
+        "rejected_parts": [
+          "الْمُنْزِلِينَ | those who accommodate"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "الْمُنْزِلِينَ | those who accommodate"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "4e7ead35510e",
+        "rejected_parts": [
+          "تَنْزِيل / تَنْزِيلًا | to send down, reveal continually"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "تَنْزِيل / تَنْزِيلًا | to send down, reveal continually"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "4e7ead35510e",
+        "rejected_parts": [
+          "مُنَزَّلٌ / مُنَزَّلِين | the one sending down"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مُنَزَّلٌ / مُنَزَّلِين | the one sending down"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "4e7ead35510e",
+        "rejected_parts": [
+          "مُنْزَلٌ | sent down; مُنْزِلُونَ | those sending down"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مُنْزَلٌ | sent down; مُنْزِلُونَ | those sending down"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "4e7ead35510e",
+        "rejected_parts": [
+          "نَازِلَة | descending; مَنَازِل | places of setting"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "نَازِلَة | descending; مَنَازِل | places of setting"
+      },
+      {
+        "accepted_surfaces": [
+          "نَزَلَ",
+          "يَنْزِلُ",
+          "نَزَّلَكَ",
+          "يَتَنَزَّلُ",
+          "تَتَنَزَّلُ"
+        ],
+        "entry_id": "4e7ead35510e",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "نَزَلَ - يَنْزِلُ - نَزَّلَكَ - يَتَنَزَّلُ - تَتَنَزَّلُ"
+      },
+      {
+        "accepted_surfaces": [
+          "نَزَّلَ",
+          "يُنَزِّلُ",
+          "تَنَزُّلًا",
+          "نُزِّلَ",
+          "يُنَزَّلُ"
+        ],
+        "entry_id": "4e7ead35510e",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "نَزَّلَ - يُنَزِّلُ - تَنَزُّلًا - نُزِّلَ - يُنَزَّلُ"
+      },
+      {
+        "accepted_surfaces": [
+          "نَزَّلْنَا",
+          "تَنَزَّلَ",
+          "نَزَلَ",
+          "يَنْزِلُ",
+          "يَنْزِلَ",
+          "يُنَزَّلُ"
+        ],
+        "entry_id": "4e7ead35510e",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "نَزَّلْنَا - تَنَزَّلَ - نَزَلَ - يَنْزِلُ - يَنْزِلَ - يُنَزَّلُ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "4e7ead35510e",
+        "rejected_parts": [
+          "نُزُل - نُزُلًا / نُزُلِهِمْ | accommodation"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "نُزُل - نُزُلًا / نُزُلِهِمْ | accommodation"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "506be512630a",
+        "rejected_parts": [
+          "عَلَىٰ حَرْف"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "عَلَىٰ حَرْف"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "51186752f2f8",
+        "rejected_parts": [
+          "ذُو مِرَّة"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذُو مِرَّة"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "52705122983e",
+        "rejected_parts": [
+          "لَا جُنَاحَ عَلَى"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لَا جُنَاحَ عَلَى"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "52705122983e",
+        "rejected_parts": [
+          "لَيْسَ عَلَيْكُمْ جُنَاح"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لَيْسَ عَلَيْكُمْ جُنَاح"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "52c289e4b9c3",
+        "rejected_parts": [
+          "بَهِيمَةُ الْأَنْعَامِ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "بَهِيمَةُ الْأَنْعَامِ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "52dd92add8e0",
+        "rejected_parts": [
+          "أَصْحَابُ الأُخْدُود"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَصْحَابُ الأُخْدُود"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "52dd92add8e0",
+        "rejected_parts": [
+          "أَصْحَابُ الْأُخْدُود"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَصْحَابُ الْأُخْدُود"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "57ff5ef29e13",
+        "rejected_parts": [
+          "مِائَةِ أَلْف"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مِائَةِ أَلْف"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "58d16ee708f4",
+        "rejected_parts": [
+          "مَا لَبِثَ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَا لَبِثَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "58d16ee708f4",
+        "rejected_parts": [
+          "مَا لَبِثُوا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَا لَبِثُوا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "59f24254988d",
+        "rejected_parts": [
+          "خ ب ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "خ ب ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "5af78b50e696",
+        "rejected_parts": [
+          "مِنْ أَجْلِ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مِنْ أَجْلِ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "5c023acd8514",
+        "rejected_parts": [
+          "ذَا الْكِفْل"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذَا الْكِفْل"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "5c9c180859bc",
+        "rejected_parts": [
+          "غ س ق"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "غ س ق"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "5d308b003904",
+        "rejected_parts": [
+          "لَا يَزَالُ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لَا يَزَالُ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "5d308b003904",
+        "rejected_parts": [
+          "مَا زَالَت"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَا زَالَت"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "609db1b78e93",
+        "rejected_parts": [
+          "قَاصِرَاتُ ٱلطَّرْف"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قَاصِرَاتُ ٱلطَّرْف"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "609db1b78e93",
+        "rejected_parts": [
+          "لَا يُقَصِّرُون"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لَا يُقَصِّرُون"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "61c3bedee211",
+        "rejected_parts": [
+          "شَعَائِرِ اللَّهِ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "شَعَائِرِ اللَّهِ"
+      },
+      {
+        "accepted_surfaces": [
+          "لَا"
+        ],
+        "entry_id": "622a3d627d4d",
+        "rejected_parts": [
+          "مَا يَنْبَغِي"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لَا / مَا يَنْبَغِي"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "622a3d627d4d",
+        "rejected_parts": [
+          "مَا يَنْبَغِي"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَا يَنْبَغِي"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "6bb15cbe2246",
+        "rejected_parts": [
+          "ص ر ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ص ر ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7172a5394a7b",
+        "rejected_parts": [
+          "كَفَّرَ عَن"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "كَفَّرَ عَن"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "72ad6514d536",
+        "rejected_parts": [
+          "ح ل م"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ح ل م"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "73d08c30e902",
+        "rejected_parts": [
+          "حُورٍ (عِين)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "حُورٍ (عِين)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "744b6cea0cc9",
+        "rejected_parts": [
+          "سِيرَتَهَا الْأُولَىٰ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "سِيرَتَهَا الْأُولَىٰ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "744b6cea0cc9",
+        "rejected_parts": [
+          "سِيرَتَهَا ٱلْأُولَىٰ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "سِيرَتَهَا ٱلْأُولَىٰ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7527209dda9e",
+        "rejected_parts": [
+          "كُلَّ مَا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "كُلَّ مَا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "763dbd0471de",
+        "rejected_parts": [
+          "قَاطِعَةَ أَمْرًا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قَاطِعَةَ أَمْرًا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "763dbd0471de",
+        "rejected_parts": [
+          "قَطَعْنَا دَابِر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قَطَعْنَا دَابِر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "763dbd0471de",
+        "rejected_parts": [
+          "يَقْطَعُونَ وَادِيًا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "يَقْطَعُونَ وَادِيًا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "76dfb0dc39ee",
+        "rejected_parts": [
+          "غ ب ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "غ ب ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "790e8c848efc",
+        "rejected_parts": [
+          "كَأَنْ (لَمْ)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "كَأَنْ (لَمْ)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "790e8c848efc",
+        "rejected_parts": [
+          "كَأَنْ لَمْ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "كَأَنْ لَمْ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "(لَا) قِبَل"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "(لَا) قِبَل"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "(لَا) قِبَل | no facing / cannot face"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "(لَا) قِبَل | no facing / cannot face"
+      },
+      {
+        "accepted_surfaces": [
+          "أَقْبَلَ",
+          "أَقْبَلَتْ",
+          "أَقْبَلُوا",
+          "أَقْبِلْ"
+        ],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "أَقْبَلَ - أَقْبَلَتْ - أَقْبَلُوا - أَقْبِلْ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "تَقَبَّلَ | to accept graciously"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "تَقَبَّلَ | to accept graciously"
+      },
+      {
+        "accepted_surfaces": [
+          "تَقَبَّلَهَا",
+          "يَتَقَبَّل",
+          "تُقُبِّلَ",
+          "يُتَقَبَّل"
+        ],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "تَقَبَّلَهَا - يَتَقَبَّل - تُقُبِّلَ - يُتَقَبَّل"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "قَابِل | the one accepting"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قَابِل | the one accepting"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "قَبَائِل | tribes"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قَبَائِل | tribes"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "قَبُول | acceptance"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قَبُول | acceptance"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "قَبِيلَة | counterparts, folks"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قَبِيلَة | counterparts, folks"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "قَبْل | before"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قَبْل | before"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "قُبُلًا - قَبِيلًا | face to face"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قُبُلًا - قَبِيلًا | face to face"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "قُبُلًا | face to face"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قُبُلًا | face to face"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "قِبَل - قِبَلِهِ - قِبَلَكَ | towards"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قِبَل - قِبَلِهِ - قِبَلَكَ | towards"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "قِبْلَة / الْقِبْلَة / قِبْلَةً / قِبْلَتَهُمْ / قِبْلَتَكَ | direction one faces"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قِبْلَة / الْقِبْلَة / قِبْلَةً / قِبْلَتَهُمْ / قِبْلَتَكَ | direction one faces"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "مُتَقَابِلِينَ | facing each other"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مُتَقَابِلِينَ | facing each other"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [
+          "مُسْتَقْبِل | something coming towards / towards"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مُسْتَقْبِل | something coming towards / towards"
+      },
+      {
+        "accepted_surfaces": [
+          "يَقْبَل",
+          "تَقْبَلُوا",
+          "يُقْبَل"
+        ],
+        "entry_id": "7947580aed3e",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "يَقْبَل - تَقْبَلُوا - يُقْبَل - يَقْبَل"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "79ef9f0563e5",
+        "rejected_parts": [
+          "ق و ت"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ق و ت"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "7ea2cfcc722e",
+        "rejected_parts": [
+          "خَمْسِينَ أَلْف"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "خَمْسِينَ أَلْف"
+      },
+      {
+        "accepted_surfaces": [
+          "هُمَا"
+        ],
+        "entry_id": "7f25d6c3e392",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "accepted",
+        "surface_source": "هُمَا / هُمَا / هُمَا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "82abb3fec87c",
+        "rejected_parts": [
+          "خَسَفَ بِهِ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "خَسَفَ بِهِ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "84c0b2782c39",
+        "rejected_parts": [
+          "ذُو الْجَلَال"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذُو الْجَلَال"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "84c0b2782c39",
+        "rejected_parts": [
+          "ذِي الْجَلَال"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذِي الْجَلَال"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "85d4f8dee30f",
+        "rejected_parts": [
+          "ثَلَاثُ مِائَة"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ثَلَاثُ مِائَة"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "8679e622012c",
+        "rejected_parts": [
+          "ن و ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ن و ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "887fec713dc3",
+        "rejected_parts": [
+          "قُرَّةُ عَيْن"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "قُرَّةُ عَيْن"
+      },
+      {
+        "accepted_surfaces": [
+          "هُنَّ"
+        ],
+        "entry_id": "896fc440f451",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "accepted",
+        "surface_source": "هُنَّ / هُنَّ / هُنَّ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "8a9ac86da47a",
+        "rejected_parts": [
+          "ح ظ ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ح ظ ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "8b243839d1c4",
+        "rejected_parts": [
+          "مَلَك الْمَوْت"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَلَك الْمَوْت"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "8b243839d1c4",
+        "rejected_parts": [
+          "مَّلَك الْمَوْت"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَّلَك الْمَوْت"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "8e2506f45485",
+        "rejected_parts": [
+          "اِثْنَا عَشَرَ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "اِثْنَا عَشَرَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "8e2506f45485",
+        "rejected_parts": [
+          "اِثْنَي عَشَرَ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "اِثْنَي عَشَرَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "92286b4362c9",
+        "rejected_parts": [
+          "لَا يَسْتَثْنُونَ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لَا يَسْتَثْنُونَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "9389cc128849",
+        "rejected_parts": [
+          "لِ + مَا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لِ + مَا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "95b675acad58",
+        "rejected_parts": [
+          "ح م م"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ح م م"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "963f6cd9e1f0",
+        "rejected_parts": [
+          "جَهْدَ أَيْمَانِهِمْ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "جَهْدَ أَيْمَانِهِمْ"
+      },
+      {
+        "accepted_surfaces": [
+          "كَ",
+          "كِ"
+        ],
+        "entry_id": "967098527388",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "ـكَ / ـكِ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "972a53c81a73",
+        "rejected_parts": [
+          "ه م ز"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ه م ز"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "9907a8b1669e",
+        "rejected_parts": [
+          "ح ص ب"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ح ص ب"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "99b49971385c",
+        "rejected_parts": [
+          "أَحَدَ عَشَر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَحَدَ عَشَر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "99b49971385c",
+        "rejected_parts": [
+          "اثْنَا عَشَر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "اثْنَا عَشَر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "99b49971385c",
+        "rejected_parts": [
+          "اثْنَى عَشَر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "اثْنَى عَشَر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "99b49971385c",
+        "rejected_parts": [
+          "تِسْعَةَ عَشَر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "تِسْعَةَ عَشَر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "9b91f8729f9a",
+        "rejected_parts": [
+          "ذَا ٱلْكِفْل"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذَا ٱلْكِفْل"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "9c0e409e7c6b",
+        "rejected_parts": [
+          "ه ي م ن"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ه ي م ن"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "a04259b0887d",
+        "rejected_parts": [
+          "عَسَى ٱللَّهُ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "عَسَى ٱللَّهُ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "a04259b0887d",
+        "rejected_parts": [
+          "عَسَىٰٓ أَن"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "عَسَىٰٓ أَن"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "a04259b0887d",
+        "rejected_parts": [
+          "عَسَيْتُمْ إِن"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "عَسَيْتُمْ إِن"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "a17c90658e33",
+        "rejected_parts": [
+          "ر ج ل"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ر ج ل"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "a1feead9300b",
+        "rejected_parts": [
+          "فِيمَا (فِي + مَا)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "فِيمَا (فِي + مَا)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "a2944dda1edf",
+        "rejected_parts": [
+          "تَقْرَبُوا ٱلزِّنَى"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "تَقْرَبُوا ٱلزِّنَى"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "a36aed085027",
+        "rejected_parts": [
+          "تَابَ عَلَى"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "تَابَ عَلَى"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "a36aed085027",
+        "rejected_parts": [
+          "مَتَاب(ي)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَتَاب(ي)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "a6200e6a0d07",
+        "rejected_parts": [
+          "ٱسْتَوَى إِلَى"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ٱسْتَوَى إِلَى"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "a6200e6a0d07",
+        "rejected_parts": [
+          "ٱسْتَوَى عَلَى"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ٱسْتَوَى عَلَى"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "a72e8cb236fe",
+        "rejected_parts": [
+          "ع ل ق"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ع ل ق"
+      },
+      {
+        "accepted_surfaces": [
+          "لَمْ",
+          "أَلَمْ",
+          "أَفَلَمْ",
+          "أَوَلَمْ"
+        ],
+        "entry_id": "afe866d4f423",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "لَمْ / أَلَمْ / أَفَلَمْ / أَوَلَمْ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "b1bc336babae",
+        "rejected_parts": [
+          "بِضْعِ سِنِينَ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "بِضْعِ سِنِينَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "b56da5c447c1",
+        "rejected_parts": [
+          "السَّمَاء الدُّنْيَا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "السَّمَاء الدُّنْيَا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "b62b915fcd1f",
+        "rejected_parts": [
+          "ل م م"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ل م م"
+      },
+      {
+        "accepted_surfaces": [
+          "هُمْ",
+          "هُم",
+          "هِمْ"
+        ],
+        "entry_id": "b851675d8484",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "هُمْ / هُم / هِمْ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "b8e480aebafe",
+        "rejected_parts": [
+          "مَا لَكَ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَا لَكَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "b8e480aebafe",
+        "rejected_parts": [
+          "مَا لَكُمْ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَا لَكُمْ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "b8e480aebafe",
+        "rejected_parts": [
+          "مَا لَنَا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَا لَنَا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "b8e480aebafe",
+        "rejected_parts": [
+          "مَا لَهَا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَا لَهَا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "b8e480aebafe",
+        "rejected_parts": [
+          "مَا لِـ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَا لِـ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "b8e480aebafe",
+        "rejected_parts": [
+          "مَا لِي"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَا لِي"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "bab524b08b5d",
+        "rejected_parts": [
+          "(حَبْلِ) الْوَرِيدِ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "(حَبْلِ) الْوَرِيدِ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c020d5fbd5f2",
+        "rejected_parts": [
+          "عَلَى قُلُوب"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "عَلَى قُلُوب"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c0db352d65c2",
+        "rejected_parts": [
+          "ع ر ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ع ر ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c38383d3a3d4",
+        "rejected_parts": [
+          "الْمَلَأَ الْأَعْلَى"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "الْمَلَأَ الْأَعْلَى"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c38383d3a3d4",
+        "rejected_parts": [
+          "الْمَلَإِ الْأَعْلَى"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "الْمَلَإِ الْأَعْلَى"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c58bce4626f3",
+        "rejected_parts": [
+          "ذَهَبَ (ب)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذَهَبَ (ب)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c58bce4626f3",
+        "rejected_parts": [
+          "لَنَذْهَبَنَّ (ب)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لَنَذْهَبَنَّ (ب)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c58bce4626f3",
+        "rejected_parts": [
+          "يَذْهَبَا (ب)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "يَذْهَبَا (ب)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "to believe, have faith: آمِنُوا - آمَنَ - تُؤْمِنُ - يُؤْمِنُ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "to believe, have faith: آمِنُوا - آمَنَ - تُؤْمِنُ - يُؤْمِنُ"
+      },
+      {
+        "accepted_surfaces": [
+          "آمَنَ",
+          "آمَنْتَ",
+          "آمَنْتُمْ",
+          "آمَنَّا",
+          "يُؤْمِنُ",
+          "يُؤْمِنُونَ"
+        ],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "آمَنَ - آمَنْتَ - آمَنْتُمْ - آمَنَّا - يُؤْمِنُ - يُؤْمِنُونَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "آمَنَ إِيمَانًا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "آمَنَ إِيمَانًا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "آمَنَهُمْ | to make one safe"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "آمَنَهُمْ | to make one safe"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "آمِنًا - آمِنِينَ (pl.) | safe"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "آمِنًا - آمِنِينَ (pl.) | safe"
+      },
+      {
+        "accepted_surfaces": [
+          "أَمِنَ",
+          "أَمِنَكُمْ",
+          "تَأْمَنُهُ",
+          "تَأْمَنَّا",
+          "أَمِنْتُكُمْ",
+          "اؤْتُمِنَ"
+        ],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "أَمِنَ - أَمِنَكُمْ - تَأْمَنُهُ - تَأْمَنَّا - أَمِنْتُكُمْ - اؤْتُمِنَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "أَمِنَ - أَمِنُوا - يَأْمَنُ - يَأْمَنُوا / يَأْمَنُونَ | to feel safe"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَمِنَ - أَمِنُوا - يَأْمَنُ - يَأْمَنُوا / يَأْمَنُونَ | to feel safe"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "أَمِنَ أَمَانَةً"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَمِنَ أَمَانَةً"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "إِيمَانُكُمْ - إِيمَانِكُمْ - إِيمَانِكُم - belief, faith"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "إِيمَانُكُمْ - إِيمَانِكُمْ - إِيمَانِكُم - belief, faith"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "الْأَمَانَاتُ / أَمَانَاتِهِمْ / أَمَانَاتِكُمْ (pl.)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "الْأَمَانَاتُ / أَمَانَاتِهِمْ / أَمَانَاتِكُمْ (pl.)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "الْأَمَانَةُ / أَمَانَةٌ | trust"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "الْأَمَانَةُ / أَمَانَةٌ | trust"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "الْأَمِينُ / أَمِينٌ - أَمِينٍ | trustworthy"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "الْأَمِينُ / أَمِينٌ - أَمِينٍ | trustworthy"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "الْأَمِينُ | secure; أَمِينٌ / أَمِينَةٌ | safe"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "الْأَمِينُ | secure; أَمِينٌ / أَمِينَةٌ | safe"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "الْأَمْنُ - الْأَمَنَةُ | safety, peace"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "الْأَمْنُ - الْأَمَنَةُ | safety, peace"
+      },
+      {
+        "accepted_surfaces": [
+          "الْإِيمَان",
+          "الْإِيمَانِ",
+          "إِيمَان",
+          "إِيمَانًا",
+          "إِيمَانِهِ",
+          "إِيمَانِهَا"
+        ],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "الْإِيمَان - الْإِيمَانِ / إِيمَان - إِيمَانًا - إِيمَانِهِ - إِيمَانِهَا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "الْمُؤْمِنُ | the Source of Serenity"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "الْمُؤْمِنُ | the Source of Serenity"
+      },
+      {
+        "accepted_surfaces": [
+          "تُؤْمِنُ",
+          "تُؤْمِنُونَ",
+          "تُؤْمِنُوا",
+          "يُؤْمَنُ",
+          "تُؤْمِنَ"
+        ],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "تُؤْمِنُ - تُؤْمِنُونَ - تُؤْمِنُوا - يُؤْمَنُ - تُؤْمِنَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "مَأْمَنَهُ | a place of safety; أَمَنَةً | tranquility; مَأْمُونٌ | something safe"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَأْمَنَهُ | a place of safety; أَمَنَةً | tranquility; مَأْمُونٌ | something safe"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "مُؤْمِنٌ - مُؤْمِنًا - مُؤْمِنٍ > a believer; الْمُؤْمِنُونَ / الْمُؤْمِنِينَ (pl.)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مُؤْمِنٌ - مُؤْمِنًا - مُؤْمِنٍ > a believer; الْمُؤْمِنُونَ / الْمُؤْمِنِينَ (pl.)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c59a0161fac8",
+        "rejected_parts": [
+          "مُؤْمِنَةٌ - مُؤْمِنَةً > a believer (fmn.); الْمُؤْمِنَاتُ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "gloss_bearing_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مُؤْمِنَةٌ - مُؤْمِنَةً > a believer (fmn.); الْمُؤْمِنَاتُ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c6aaf597187e",
+        "rejected_parts": [
+          "إِمَّا ... وَإِمَّا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "إِمَّا ... وَإِمَّا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "c7cdec2513e8",
+        "rejected_parts": [
+          "س ر ب"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "س ر ب"
+      },
+      {
+        "accepted_surfaces": [
+          "اذْكُرْ",
+          "اذْكُرُوا",
+          "تَذَكَّرَ",
+          "تَذَكَّرُوا",
+          "تَذَكَّرُونَ",
+          "يَتَذَكَّرُ",
+          "يَذَّكَّرُ",
+          "مُذَكِّر"
+        ],
+        "entry_id": "ca43414f9b01",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "اذْكُرْ / اذْكُرُوا / تَذَكَّرَ / تَذَكَّرُوا / تَذَكَّرُونَ / يَتَذَكَّرُ / يَذَّكَّرُ / مُذَكِّر"
+      },
+      {
+        "accepted_surfaces": [
+          "الذَّاكِرِينَ",
+          "الذَّاكِرَات"
+        ],
+        "entry_id": "ca43414f9b01",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "الذَّاكِرِينَ / الذَّاكِرَات"
+      },
+      {
+        "accepted_surfaces": [
+          "ذَكَر",
+          "الذَّكَر"
+        ],
+        "entry_id": "ca43414f9b01",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "ذَكَر / الذَّكَر"
+      },
+      {
+        "accepted_surfaces": [
+          "ذَكَرَ",
+          "ذُكِرَ",
+          "ذَكَرُوا",
+          "ذَكَرْتُمْ",
+          "يَذْكُرُ",
+          "يَذْكُرُوا",
+          "تَذْكُرُوا",
+          "أَذْكُرُ",
+          "أَذْكُرُوا"
+        ],
+        "entry_id": "ca43414f9b01",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "ذَكَرَ / ذُكِرَ / ذَكَرُوا / ذَكَرْتُمْ / يَذْكُرُ / يَذْكُرُوا / تَذْكُرُوا / أَذْكُرُ / أَذْكُرُوا"
+      },
+      {
+        "accepted_surfaces": [
+          "ذِكْر",
+          "ذِكْرَى",
+          "ذِكْرُكُمْ",
+          "ذِكْرِي",
+          "ذِكْرٌ",
+          "ذِكْرًا",
+          "الذِّكْر",
+          "الذِّكْرَى",
+          "تَذْكِرَة",
+          "مُدَّكِر"
+        ],
+        "entry_id": "ca43414f9b01",
+        "rejected_parts": [],
+        "risk_flags": [
+          "non_single_token_surface"
+        ],
+        "route": "alternate_split",
+        "surface_source": "ذِكْر / ذِكْرَى / ذِكْرُكُمْ / ذِكْرِي / ذِكْرٌ / ذِكْرًا / الذِّكْر / الذِّكْرَى / تَذْكِرَة / مُدَّكِر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "ce12698e1d42",
+        "rejected_parts": [
+          "تِسْعِينَ وَتِسْعُون"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "تِسْعِينَ وَتِسْعُون"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "ce7ac13d620a",
+        "rejected_parts": [
+          "ذُو ٱنتِقَامٍ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذُو ٱنتِقَامٍ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "d01ac6c506d6",
+        "rejected_parts": [
+          "أَصْحَابُ الرَّسّ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَصْحَابُ الرَّسّ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "d04ce63e31af",
+        "rejected_parts": [
+          "يَا أَيَّتُهَا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "يَا أَيَّتُهَا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "d04ce63e31af",
+        "rejected_parts": [
+          "يَا أَيُّهَا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "يَا أَيُّهَا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "d71139d084f8",
+        "rejected_parts": [
+          "غَيْرِ آسِن"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "غَيْرِ آسِن"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "d73fc44bc3d3",
+        "rejected_parts": [
+          "أَبِي لَهَب"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَبِي لَهَب"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "d768c574ae8f",
+        "rejected_parts": [
+          "عَسَى (أَنْ)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "عَسَى (أَنْ)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "d84692e8d2c8",
+        "rejected_parts": [
+          "أَيْنَ مَا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَيْنَ مَا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "d8b8169ae3d3",
+        "rejected_parts": [
+          "أَمَّنْ (أَمْ + مَنْ)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَمَّنْ (أَمْ + مَنْ)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "d907e8ecac91",
+        "rejected_parts": [
+          "ف خ ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ف خ ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "dafede9a7483",
+        "rejected_parts": [
+          "أَسَاطِير (الأَوَّلِينَ)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "أَسَاطِير (الأَوَّلِينَ)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "db346075f3c3",
+        "rejected_parts": [
+          "ع ر ب"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ع ر ب"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "dbbc876bd82f",
+        "rejected_parts": [
+          "مَنْ ذَا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَنْ ذَا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "dbeb6ed80467",
+        "rejected_parts": [
+          "ذ ن ب"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذ ن ب"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "dec8266662ab",
+        "rejected_parts": [
+          "خُطُوَاتِ (الشَّيْطَانِ)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "خُطُوَاتِ (الشَّيْطَانِ)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "df1fc22384e9",
+        "rejected_parts": [
+          "كَأَيِّن (مِنْ)"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "كَأَيِّن (مِنْ)"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "e2824ef7725d",
+        "rejected_parts": [
+          "بَادِيَ الرَّأْي"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "بَادِيَ الرَّأْي"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "e5040e06a079",
+        "rejected_parts": [
+          "ف ق ر"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ف ق ر"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "e786d0387204",
+        "rejected_parts": [
+          "ق و ي"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ق و ي"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "ecc843ac7693",
+        "rejected_parts": [
+          "(يَا) لَيْتَ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "(يَا) لَيْتَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "eef665ccd2dc",
+        "rejected_parts": [
+          "ف ك ك"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ف ك ك"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "f0452c9b2cfb",
+        "rejected_parts": [
+          "حَبْلِ ٱلْوَرِيد"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "حَبْلِ ٱلْوَرِيد"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "f1643f45edbf",
+        "rejected_parts": [
+          "لَا يَكَادُ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لَا يَكَادُ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "f1643f45edbf",
+        "rejected_parts": [
+          "لَا يَكَادُونَ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لَا يَكَادُونَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "f1643f45edbf",
+        "rejected_parts": [
+          "لَمْ يَكَدْ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لَمْ يَكَدْ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "f1643f45edbf",
+        "rejected_parts": [
+          "مَا كَادُوا"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَا كَادُوا"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "f6860c032374",
+        "rejected_parts": [
+          "لَا يَتَكَلَّمُون"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "لَا يَتَكَلَّمُون"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "f6860c032374",
+        "rejected_parts": [
+          "مَا خَطْبُكَ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "مَا خَطْبُكَ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "f6c115011ede",
+        "rejected_parts": [
+          "ن و م"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ن و م"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "fa13754adc5b",
+        "rejected_parts": [
+          "ع ص ف"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ع ص ف"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "fc3a23479a10",
+        "rejected_parts": [
+          "ذَا القَرْنَيْن"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذَا القَرْنَيْن"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "fc3a23479a10",
+        "rejected_parts": [
+          "ذَا الْقَرْنَيْن"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذَا الْقَرْنَيْن"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "fc3a23479a10",
+        "rejected_parts": [
+          "ذِي الْقَرْنَيْن"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذِي الْقَرْنَيْن"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "fc992d2e44c6",
+        "rejected_parts": [
+          "ن ك ل"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ن ك ل"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "fd293e877166",
+        "rejected_parts": [
+          "غ ر م"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "غ ر م"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "fe688e34da2d",
+        "rejected_parts": [
+          "ذَا الْقَرْنَيْنِ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذَا الْقَرْنَيْنِ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "fe688e34da2d",
+        "rejected_parts": [
+          "ذِي الْقَرْنَيْنِ"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ذِي الْقَرْنَيْنِ"
+      },
+      {
+        "accepted_surfaces": [],
+        "entry_id": "fe688e34da2d",
+        "rejected_parts": [
+          "ق ر ن"
+        ],
+        "risk_flags": [
+          "non_single_token_surface",
+          "malformed_surface"
+        ],
+        "route": "entry_repair_queue",
+        "surface_source": "ق ر ن"
+      }
+    ]
+  },
+  "schema": "qamus/largelexicon-hygiene-report@1",
+  "source": "qamus/data/current/entries.jsonl",
+  "source_sha256": "a68245e93ce1a8b76858b672a449ff94475abf010e8102575e7c0285c540a78f"
+}
