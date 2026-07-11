@@ -13,7 +13,7 @@
     "canonical_payload_id": { "type": "string", "pattern": "^chp:[0-9a-f]{16}$" },
     "entry_id": { "type": "string", "minLength": 1 },
     "entry_url": { "type": ["string", "null"] },
-    "source_key": { "const": "qamus" },
+    "source_key": { "const": "qamus", "description": "Citation CARRIER identity: the constant 'qamus' names the Qamus app as the source system carrying this hover, NOT a lookup value. RM-21 disambiguation: this is a SEPARATE concept from the repo-wide page-ordinal `source_keys` (arrays on the largelexicon-*-source schemas and Qamus entries, e.g. `qamus:{entry}#source_key={page-ordinal}`), which identify a source-photo page within an entry. Documented-only fork: the const stays 'qamus' (renaming would invalidate committed rows); the two `source_key`/`source_keys` meanings are distinguished by description, not merged." },
     "sense_index": { "type": ["integer", "null"] },
     "card_index": { "type": ["integer", "null"] },
     "card_id": { "type": ["string", "null"], "minLength": 1 },
@@ -24,7 +24,7 @@
     "canonical_wbw_loc": { "type": ["string", "null"], "pattern": "^[0-9]+:[0-9]+:[0-9]+$" },
     "exact_transclusion_group_key": { "type": "string", "minLength": 1 },
     "binding_status": { "type": "string", "enum": ["candidate", "accepted", "blocked", "exception"] },
-    "binding_gate": { "type": "string", "enum": ["source_address_exact", "certified_lemma", "certified_pattern", "function_context"] },
+    "binding_gate": { "type": "string", "enum": ["source_address_exact", "certified_lemma", "certified_pattern", "function_context"], "description": "RM-21 unified authorization enum -- CANONICAL (split) spelling: source_address_exact | certified_lemma | certified_pattern | function_context. This is the same authorization concept as the certified-lemma schema's fanout_gate, whose fused legacy value lemma_pattern_pos aliases certified_lemma + certified_pattern. See tools/validate_schema_coherence.py (CANONICAL_GATE + GATE_ALIASES); no data regeneration." },
     "reason": { "type": ["string", "null"], "enum": ["source_address_exact_ok", "source-crosswalk", "certified-lemma-needed", "pattern-rule-needed", "nahw-function-needed", "validator/schema", "renderer/qg", "owner-decision", "scholar-irab", null] },
     "exception_id": { "type": ["string", "null"] },
     "supersedes": { "type": ["string", "null"], "pattern": "^chb:[0-9a-f]{16}$" }
