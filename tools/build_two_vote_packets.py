@@ -96,6 +96,60 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def verify_wave_4_queue_pin(
+    queue_path: Path, queue_manifest_path: Path, required_manifest_sha256: str
+) -> None:
+    """Refuse Wave 4 unless both the manifest bytes and its queue state match."""
+    actual_manifest_sha256 = sha256_file(queue_manifest_path)
+    if actual_manifest_sha256 != required_manifest_sha256:
+        raise ValueError(
+            "STOP: queue manifest SHA-256 differs from the required post-repair pin: "
+            f"expected {required_manifest_sha256}, got {actual_manifest_sha256}"
+        )
+    manifest = load_json(queue_manifest_path)
+    pinned_queue_sha256 = manifest.get("queue_sha256")
+    actual_queue_sha256 = sha256_file(queue_path)
+    if pinned_queue_sha256 != actual_queue_sha256:
+        raise ValueError(
+            "STOP: queue SHA-256 differs from the state pinned by the required queue manifest: "
+            f"expected {pinned_queue_sha256}, got {actual_queue_sha256}"
+        )
+
+
+def load_wave_4_strata(path: Path) -> dict[str, int]:
+    """Load caller-owned Wave 4 class counts; the mixed batch must total 250."""
+    document = load_json(path)
+    if not isinstance(document, dict) or set(document) != TARGET_CLASSES:
+        raise ValueError(
+            "STOP: wave-4 strata must contain exactly " + ", ".join(sorted(TARGET_CLASSES))
+        )
+    if any(not isinstance(count, int) or count < 0 for count in document.values()):
+        raise ValueError("STOP: wave-4 stratum counts must be non-negative integers")
+    if sum(document.values()) != 250:
+        raise ValueError("STOP: wave-4 strata must total exactly 250 rows")
+    return document
+
+
+def load_excluded_locations(paths: Iterable[Path]) -> set[str]:
+    """Load canonical locations from caller-owned JSON or JSONL exclusion lists."""
+    excluded: set[str] = set()
+    for path in paths:
+        if path.suffix == ".jsonl":
+            rows: Any = load_jsonl(path)
+        else:
+            rows = load_json(path)
+            if isinstance(rows, dict):
+                rows = rows.get("locations", rows.get("rows"))
+        if not isinstance(rows, list):
+            raise ValueError(f"STOP: exclusion list must be a JSON array or JSONL rows: {path}")
+        for row in rows:
+            loc = row if isinstance(row, str) else row.get("canonical_location", row.get("loc"))
+            if not isinstance(loc, str) or not LOC_RE.fullmatch(loc):
+                raise ValueError(f"STOP: exclusion row lacks a canonical location in {path}: {row!r}")
+            excluded.add(loc)
+    return excluded
+
+
 def loc_key(loc: str) -> tuple[int, int, int]:
     match = LOC_RE.fullmatch(str(loc))
     if not match:
@@ -357,6 +411,41 @@ def select_proportional_lexicographic_rows(
         selected.extend((classification, row) for row in rows[:quotas[classification]])
     if len(selected) != batch_size:
         raise ValueError("STOP: proportional wave selection did not fill the batch")
+    return selected
+
+
+def select_wave_4_rows(
+    classifications: Iterable[dict[str, Any]],
+    *,
+    excluded_locations: set[str],
+    strata: dict[str, int],
+) -> list[tuple[str, dict[str, Any]]]:
+    """Select a 250-row mixed Wave 4 from caller-supplied residual strata.
+
+    Wave 3 nearly exhausted the occurrence-ambiguity priority slice. The
+    post-NF-T10-1 residual therefore determines both class counts and exclusions
+    at execution time; neither is encoded in this tooling. Within each requested
+    class, canonical-location ordering makes membership deterministic. Packet
+    construction and its frozen response format remain unchanged.
+    """
+    by_class = {classification: [] for classification in sorted(TARGET_CLASSES)}
+    for row in classifications:
+        classification = row.get("laneb_classification")
+        if (
+            classification in by_class
+            and row["canonical_location"] not in excluded_locations
+        ):
+            by_class[classification].append(row)
+    selected: list[tuple[str, dict[str, Any]]] = []
+    for classification, rows in by_class.items():
+        rows.sort(key=lambda row: loc_key(row["canonical_location"]))
+        required = strata[classification]
+        if len(rows) < required:
+            raise ValueError(
+                "STOP: wave-4 stratum underfill: "
+                f"{classification} eligible={len(rows)}/{required}"
+            )
+        selected.extend((classification, row) for row in rows[:required])
     return selected
 
 
@@ -980,6 +1069,7 @@ def verify_repository_baseline(baseline: str = AUTHORITATIVE_BASELINE_SHA) -> No
 
 
 def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    wave_four_mode = getattr(args, "wave", None) == 4
     paths = {
         "classification": Path(args.classification),
         "queue": Path(args.queue),
@@ -993,6 +1083,11 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
     }
     if args.batch == "wave-03":
         paths["wave_02_packets"] = Path(args.wave_02_packets)
+    if wave_four_mode:
+        paths["queue_manifest"] = Path(args.queue_manifest)
+        paths["strata"] = Path(args.strata)
+        for index, path in enumerate(args.exclude_locations, 1):
+            paths[f"exclude_locations_{index}"] = Path(path)
     for label, path in paths.items():
         if not path.is_file():
             raise ValueError(f"missing input {label}: {path}")
@@ -1001,7 +1096,13 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
         "wave-02": WAVE_02_AUTHORITATIVE_BASELINE_SHA,
         "wave-03": WAVE_03_AUTHORITATIVE_BASELINE_SHA,
     }
-    verify_repository_baseline(baseline_by_batch[args.batch])
+    verify_repository_baseline(
+        WAVE_03_AUTHORITATIVE_BASELINE_SHA if wave_four_mode else baseline_by_batch[args.batch]
+    )
+    if wave_four_mode:
+        verify_wave_4_queue_pin(
+            paths["queue"], paths["queue_manifest"], args.queue_manifest_sha256
+        )
     if sha256_file(paths["baseline_whitelist"]) != EXPECTED_BASELINE_SHA256:
         raise ValueError("deployed baseline SHA-256 differs from the pinned queue input")
     if sha256_file(paths["loc_surfaces"]) != EXPECTED_LOC_SURFACES_SHA256:
@@ -1059,16 +1160,23 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             f"STOP: candidate entry lookup miss rate {miss_rate:.4%} exceeds 1%"
         )
     gate_ssot = load_gate_ssot(paths["grammar_gate_ssot"], paths["fact_ledger_schema"])
-    wave_mode = args.batch in {"wave-02", "wave-03"}
+    wave_mode = args.batch in {"wave-02", "wave-03"} or wave_four_mode
     wave_three_mode = args.batch == "wave-03"
     occurrence_mapping_quality: dict[str, bool] = {}
     lexical_mapping_quality: dict[str, tuple[int, int]] = {}
     if wave_mode:
-        excluded_locations = set(v1_by_loc)
-        excluded_locations.update(packet["canonical_location"] for packet in wave_02_packets)
+        if wave_four_mode:
+            excluded_locations = load_excluded_locations(
+                paths[label] for label in paths if label.startswith("exclude_locations_")
+            )
+        else:
+            excluded_locations = set(v1_by_loc)
+            excluded_locations.update(packet["canonical_location"] for packet in wave_02_packets)
         for row in population:
             loc = row["canonical_location"]
-            if loc in excluded_locations or ayah_of(loc) in NF_T10_1_AYAHS:
+            if loc in excluded_locations or (
+                not wave_four_mode and ayah_of(loc) in NF_T10_1_AYAHS
+            ):
                 continue
             if row["laneb_classification"] == "competing_lexical_senses":
                 entry_ids = row.get("evidence", {}).get("candidate_entry_ids", [])
@@ -1097,7 +1205,13 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
                     uniquely_maps_target = True
                     break
             occurrence_mapping_quality[loc] = uniquely_maps_target
-        if wave_three_mode:
+        if wave_four_mode:
+            selected = select_wave_4_rows(
+                classifications,
+                excluded_locations=excluded_locations,
+                strata=load_wave_4_strata(paths["strata"]),
+            )
+        elif wave_three_mode:
             selected = select_proportional_lexicographic_rows(
                 classifications,
                 excluded_locations=excluded_locations,
@@ -1159,7 +1273,9 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             gate_path=paths["grammar_gate_ssot"],
             gate_ssot=gate_ssot,
             packet_id_prefix=(
-                f"laneb-{args.batch}" if wave_mode else "laneb-cal-002"
+                "laneb-wave-04" if wave_four_mode else (
+                    f"laneb-{args.batch}" if wave_mode else "laneb-cal-002"
+                )
             ),
         )
         packets.append(packet)
@@ -1278,16 +1394,45 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             row["canonical_location"] for row in population
             if row["laneb_classification"] == "unresolved_occurrence_ambiguity"
             and row["canonical_location"] not in excluded_locations
-            and ayah_of(row["canonical_location"]) not in NF_T10_1_AYAHS
+            and (wave_four_mode or ayah_of(row["canonical_location"]) not in NF_T10_1_AYAHS)
             and row["canonical_location"] not in set(selected_occurrence)
         ]
         def unique_rate(locations: list[str]) -> float:
             return sum(occurrence_mapping_quality.get(loc, False) for loc in locations) / len(locations) if locations else 0.0
         manifest.update({
             "schema": "qamus.laneb_two_vote_wave_manifest.v1",
-            "authoritative_baseline_sha": baseline_by_batch[args.batch],
+            "authoritative_baseline_sha": (
+                WAVE_03_AUTHORITATIVE_BASELINE_SHA
+                if wave_four_mode
+                else baseline_by_batch[args.batch]
+            ),
         })
-        if wave_three_mode:
+        if wave_four_mode:
+            strata = load_wave_4_strata(paths["strata"])
+            manifest["lineage"] = {
+                "queue_manifest_required_sha256": args.queue_manifest_sha256,
+                "excluded_by": "canonical_location",
+                "exclude_location_inputs": [
+                    input_pin(paths[label])
+                    for label in paths if label.startswith("exclude_locations_")
+                ],
+                "excluded_unique_locations": len(excluded_locations),
+            }
+            manifest["selection_rule"] = {
+                "purpose": "membership_selection_only_never_semantic_adjudication",
+                "pure_function": True,
+                "randomness": "none",
+                "wall_clock_inputs": "none",
+                "batch_size": 250,
+                "strata_input": input_pin(paths["strata"]),
+                "stratum_counts": strata,
+                "excluded_previously_packeted_and_quarantined_locations": len(excluded_locations),
+                "allocation": "Caller-supplied post-repair residual class counts; tooling requires an exact 250-row total.",
+                "within_stratum": "Canonical location numeric ascending.",
+                "underfill": "STOP if any caller-supplied stratum cannot be filled.",
+                "output_order": "Class name ascending, then canonical location numeric ascending; selection_rank 1..250.",
+            }
+        elif wave_three_mode:
             eligible_counts = dict(sorted(collections.Counter(
                 row["laneb_classification"] for row in population
                 if row["canonical_location"] not in excluded_locations
@@ -1350,11 +1495,19 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             "residual_occurrence_unique_mapping_rate": unique_rate(residual_occurrence),
             "residual_occurrence_unique_mapping_rows": sum(occurrence_mapping_quality.get(loc, False) for loc in residual_occurrence),
         })
-        manifest["validation"]["rebuild"] = f"python tools/build_two_vote_packets.py --batch {args.batch}"
+        manifest["validation"]["rebuild"] = (
+            "python tools/build_two_vote_packets.py --wave 4 <required inputs>"
+            if wave_four_mode
+            else f"python tools/build_two_vote_packets.py --batch {args.batch}"
+        )
         manifest["validation"]["stop_conditions"].append(
-            "fewer than 500 eligible rows remain"
-            if wave_three_mode
-            else "fewer than 90 lexical or 160 occurrence rows remain eligible"
+            "a caller-supplied wave-4 stratum cannot be filled"
+            if wave_four_mode
+            else (
+                "fewer than 500 eligible rows remain"
+                if wave_three_mode
+                else "fewer than 90 lexical or 160 occurrence rows remain eligible"
+            )
         )
     return manifest, packets
 
@@ -1385,6 +1538,57 @@ def _synthetic_classification(
 
 def self_test() -> int:
     failures: list[str] = []
+    with tempfile.TemporaryDirectory() as temp_dir:
+        fixture_dir = Path(temp_dir)
+        fixture_queue = fixture_dir / "queue.jsonl"
+        fixture_manifest = fixture_dir / "queue.manifest.json"
+        fixture_queue.write_text('{"canonical_location":"2:1:1"}\n', encoding="utf-8")
+        fixture_manifest.write_text(
+            json.dumps({"queue_sha256": sha256_file(fixture_queue)}, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        try:
+            verify_wave_4_queue_pin(
+                fixture_queue,
+                fixture_manifest,
+                "0" * 64,
+            )
+        except ValueError as exc:
+            if "STOP" not in str(exc) or "queue manifest SHA-256" not in str(exc):
+                failures.append("wave-4 wrong queue-manifest pin lacked the required STOP reason")
+        else:
+            failures.append("wave-4 accepted a queue manifest outside the required SHA pin")
+        accepted_pin = sha256_file(fixture_manifest)
+        verify_wave_4_queue_pin(fixture_queue, fixture_manifest, accepted_pin)
+        fixture_queue.write_text('{"canonical_location":"2:1:2"}\n', encoding="utf-8")
+        try:
+            verify_wave_4_queue_pin(fixture_queue, fixture_manifest, accepted_pin)
+        except ValueError as exc:
+            if "STOP" not in str(exc) or "queue SHA-256" not in str(exc):
+                failures.append("wave-4 stale queue bytes lacked the required STOP reason")
+        else:
+            failures.append("wave-4 accepted queue bytes outside the pinned manifest state")
+        strata_path = fixture_dir / "strata.json"
+        strata_path.write_text(
+            json.dumps(
+                {
+                    "competing_lexical_senses": 249,
+                    "unresolved_occurrence_ambiguity": 1,
+                }
+            ),
+            encoding="utf-8",
+        )
+        if load_wave_4_strata(strata_path) != {
+            "competing_lexical_senses": 249,
+            "unresolved_occurrence_ambiguity": 1,
+        }:
+            failures.append("wave-4 strata were not loaded from the caller-owned input")
+        prior_packets = fixture_dir / "prior.jsonl"
+        quarantine = fixture_dir / "quarantine.json"
+        prior_packets.write_text('{"canonical_location":"2:1:1"}\n', encoding="utf-8")
+        quarantine.write_text(json.dumps({"locations": ["2:1:2"]}), encoding="utf-8")
+        if load_excluded_locations([prior_packets, quarantine]) != {"2:1:1", "2:1:2"}:
+            failures.append("wave-4 did not combine parameterized prior-packet and quarantine lists")
     repeated_window = [
         {"loc": f"2:1:{index}", "surface": surface, "source_address": f"fixture#loc={index}"}
         for index, surface in enumerate(
@@ -1619,7 +1823,7 @@ def self_test() -> int:
         failures.append("live row selection changed under duplicate input reordering")
     if failures:
         raise AssertionError("; ".join(failures))
-    print("SELFTESTS=17 FAILURES=0")
+    print("SELFTESTS=20 FAILURES=0")
     return 0
 
 
@@ -1633,6 +1837,11 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--homograph-keys", default=DEFAULT_HOMOGRAPH_KEYS)
     result.add_argument("--v1-packets", default=DEFAULT_V1_PACKETS)
     result.add_argument("--wave-02-packets", default=DEFAULT_WAVE_02_PACKETS)
+    result.add_argument("--wave", type=int, choices=(4,))
+    result.add_argument("--queue-manifest")
+    result.add_argument("--queue-manifest-sha256")
+    result.add_argument("--strata")
+    result.add_argument("--exclude-locations", action="append", default=[])
     result.add_argument("--gates", default=DEFAULT_GATES)
     result.add_argument("--fact-schema", default=DEFAULT_FACT_SCHEMA)
     result.add_argument("--out", default=DEFAULT_OUT)
@@ -1646,6 +1855,20 @@ def main() -> int:
     args = parser().parse_args()
     if args.self_test:
         return self_test()
+    if args.wave == 4:
+        if args.batch != "calibration":
+            raise ValueError("STOP: --wave 4 cannot be combined with --batch")
+        required = {
+            "--queue-manifest": args.queue_manifest,
+            "--queue-manifest-sha256": args.queue_manifest_sha256,
+            "--strata": args.strata,
+            "--exclude-locations": args.exclude_locations,
+        }
+        missing = [flag for flag, value in required.items() if not value]
+        if missing:
+            raise ValueError("STOP: --wave 4 requires " + ", ".join(missing))
+        if Path(args.out) == DEFAULT_OUT or Path(args.manifest) == DEFAULT_MANIFEST:
+            raise ValueError("STOP: --wave 4 requires explicit --out and --manifest paths")
     if args.batch == "wave-02" and Path(args.out) == DEFAULT_OUT:
         args.out = DEFAULT_WAVE_OUT
     if args.batch == "wave-02" and Path(args.manifest) == DEFAULT_MANIFEST:
