@@ -31,6 +31,17 @@ and only authored via the certified author + key-aware 2-vote pipeline. Deduplic
 
 ## Boundaries
 
-- No external gloss text is copied; authored glosses are original qamus-style English.
+- **No external gloss, translation, tafsīr, or OCR text is ever copied into public output.** The
+  published qamus-highlight hover carries only qamus's own authored English; a word we cannot
+  confidently author stays `PENDING` rather than being filled from an external gloss. During authoring,
+  external references (dictionaries, translations, corpora, tafsīr) are consulted only as *comparative
+  evidence*. Because every rendering describes the same Arabic source text, ordinary overlap of
+  individual words, conventional expressions, or semantically constrained passages with existing
+  translations can occur and should not by itself be read as evidence that a rendering was copied from
+  any particular source. Where wording is *intentionally reproduced* from an identified external edition
+  rather than independently authored or synthesized, that source is recorded and attributed under its
+  applicable terms. (The deeper provenance question — **D-01** — is open; this bullet states the output
+  boundary and does not preempt it. See `qamus/data/current/NOTICE.md` (D-12) and
+  `provenance/source-boundaries.md`.)
 - Public output carries `{src:"qamus",kind:"authored",lang:"en"}` only — no `informed_by`, no source names.
 - Ṣaḥīḥayn remains **plan-only** (`corpora/sahihayn/`); no hadith text is committed here.

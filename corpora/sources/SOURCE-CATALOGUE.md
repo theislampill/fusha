@@ -46,7 +46,7 @@ consistent. **No gloss text from any of these is copied into Fusha.**
 | **Quranic Arabic Corpus (QAC)** | morphology / root sanity-check | consulted to *confirm* radicals, not to import | reference-only; informs, does not populate |
 | **Tanzil** | verifying the Uthmani Arabic of an ʾāyah | text-fidelity check | reference-only; Arabic must match, never re-pointed |
 | **sunnah.com** | locating/confirming a ḥadīth's wording & numbering | manual lookup | reference-only; never copy translation/commentary |
-| **Named Arabic dictionaries** (e.g. classical lexicons) | sense disambiguation, polysemy | consulted by a human author | reference-only; authored glosses are original prose |
+| **Named Arabic dictionaries** (e.g. classical lexicons) | sense disambiguation, polysemy | consulted by a human author | reference-only (comparative evidence); public glosses are qamus-authored, not copied. |
 
 ## C. Internal Fusha artifacts (the spine)
 
