@@ -4484,6 +4484,18 @@ except Exception as _e:
     check("T9B shadow runner self-test (harness error)", False)
     print("  ", _e)
 
+# --- T10 crosswalk-gap queue (Shadow Flywheel Activation Program) ---
+# The gap-queue builder's family classification, owner column set, fail-closed
+# uniqueness semantics (red-first false-unique fixture), and determinism.
+try:
+    _t10 = run_text([sys.executable, os.path.join(ROOT, "tools", "build_crosswalk_gap_queue.py"),
+                     "--self-test"])
+    check("T10 gap-queue builder self-test (families + columns + uniqueness + determinism)",
+          _t10.returncode == 0 and "GAP-QUEUE BUILDER SELF-TEST PASS" in (_t10.stdout or ""))
+except Exception as _e:
+    check("T10 gap-queue builder self-test (harness error)", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)
