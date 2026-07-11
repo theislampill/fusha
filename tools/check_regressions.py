@@ -4496,6 +4496,17 @@ except Exception as _e:
     check("T10 gap-queue builder self-test (harness error)", False)
     print("  ", _e)
 
+# --- T10 infrastructure: atomic shard promotion (RM-19) ---
+# Stdlib tmpdir tests: crash preservation, lock exclusion, generation hashes,
+# mixed-generation rejection, rollback, recovery, and determinism.
+try:
+    _rm19 = run_text([sys.executable, os.path.join(ROOT, "tools", "test_atomic_promotion.py")])
+    check("RM-19 atomic shard promotion self-test (lock + recovery + rollback)",
+          _rm19.returncode == 0 and not (_rm19.stdout or "").strip() and not (_rm19.stderr or "").strip())
+except Exception as _e:
+    check("RM-19 atomic shard promotion self-test (harness error)", False)
+    print("  ", _e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

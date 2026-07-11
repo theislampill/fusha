@@ -10,14 +10,18 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
+import shutil
 import subprocess
 import sys
+import uuid
 from collections import Counter, defaultdict
+from contextlib import contextmanager
 from datetime import UTC, datetime
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable, Iterator, Mapping
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -68,6 +72,13 @@ FORBIDDEN_PUBLIC_SUBSTRINGS = {
     "ocr",
 }
 
+GENERATION_MANIFEST_NAME = "GENERATION.json"
+GENERATION_STALE_LOCK_SECONDS = 6 * 60 * 60
+
+
+class WriterLockError(RuntimeError):
+    """Raised when a shard-family writer cannot acquire exclusive ownership."""
+
 
 @lru_cache(maxsize=None)
 def _forbidden_label_pattern(label: str) -> re.Pattern[str]:
@@ -109,7 +120,9 @@ def now_iso() -> str:
 
 def git_value(*args: str) -> str:
     try:
-        out = subprocess.check_output(["git", "-C", str(ROOT), *args], text=True, encoding="utf-8")
+        out = subprocess.check_output(
+            ["git", "-C", str(ROOT), *args], text=True, encoding="utf-8", stderr=subprocess.DEVNULL
+        )
         return out.strip()
     except Exception:
         return "unknown"
@@ -165,6 +178,434 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def sha256_jsonl_rows(rows: Iterable[dict[str, Any]]) -> str:
+    digest = hashlib.sha256()
+    for row in rows:
+        digest.update(json.dumps(row, ensure_ascii=False, sort_keys=True).encode("utf-8"))
+        digest.update(b"\n")
+    return digest.hexdigest()
+
+
+def writer_lock_path(target_dir: Path) -> Path:
+    return target_dir.with_name(f"{target_dir.name}.lock")
+
+
+def previous_generation_path(target_dir: Path) -> Path:
+    return target_dir.with_name(f"{target_dir.name}.prev")
+
+
+def _staging_generation_path(target_dir: Path) -> Path:
+    return target_dir.with_name(f"{target_dir.name}.staging-{os.getpid()}")
+
+
+def writer_lock_status(
+    target_dir: Path, *, stale_after_seconds: int = GENERATION_STALE_LOCK_SECONDS
+) -> dict[str, Any]:
+    """Inspect a lock without stealing it.
+
+    Six hours is the conservative default stale threshold.  Age is advisory:
+    even an older lock is never removed automatically; an operator must first
+    confirm that its recorded PID/writer is no longer active and remove it.
+    """
+    path = writer_lock_path(target_dir)
+    if not path.exists():
+        return {"exists": False, "path": str(path), "stale": False}
+    try:
+        details = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        details = {"unreadable": True}
+    age_seconds = max(0.0, datetime.now(UTC).timestamp() - path.stat().st_mtime)
+    return {
+        "exists": True,
+        "path": str(path),
+        "stale": age_seconds >= stale_after_seconds,
+        "age_seconds": age_seconds,
+        "stale_after_seconds": stale_after_seconds,
+        "details": details,
+    }
+
+
+@contextmanager
+def exclusive_writer_lock(
+    target_dir: Path,
+    *,
+    writer_id: str,
+    stale_after_seconds: int = GENERATION_STALE_LOCK_SECONDS,
+) -> Iterator[dict[str, Any]]:
+    """Hold the fail-closed O_EXCL lock beside ``target_dir``.
+
+    Stale locks are reported but never auto-stolen, including locks younger
+    than the documented threshold.  Manual removal requires out-of-band proof
+    that the recorded writer is dead.
+    """
+    target_dir = Path(target_dir)
+    target_dir.parent.mkdir(parents=True, exist_ok=True)
+    path = writer_lock_path(target_dir)
+    token = uuid.uuid4().hex
+    acquired_at = now_iso()
+    payload = {
+        "schema": "fusha/largelexicon-writer-lock@1",
+        "pid": os.getpid(),
+        "writer_id": writer_id,
+        "acquired_at": acquired_at,
+        "stale_after_seconds": stale_after_seconds,
+        "token": token,
+    }
+    try:
+        fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o644)
+    except FileExistsError as exc:
+        status = writer_lock_status(target_dir, stale_after_seconds=stale_after_seconds)
+        stale_text = "stale-candidate" if status.get("stale") else "active-or-young"
+        raise WriterLockError(
+            f"writer lock exists at {path} ({stale_text}); second writer fails closed. "
+            "Never auto-steal it; verify the recorded process is dead before manual removal."
+        ) from exc
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as handle:
+            json.dump(payload, handle, ensure_ascii=False, indent=2, sort_keys=True)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        yield payload
+    finally:
+        try:
+            current = json.loads(path.read_text(encoding="utf-8"))
+            if current.get("token") == token:
+                path.unlink()
+        except (FileNotFoundError, OSError, ValueError):
+            pass
+
+
+def _fsync_file(path: Path) -> None:
+    with path.open("r+b") as handle:
+        os.fsync(handle.fileno())
+
+
+def _fsync_directory(path: Path) -> None:
+    """Best-effort directory durability (supported on Linux; harmless on Windows)."""
+    try:
+        fd = os.open(path, os.O_RDONLY)
+    except OSError:
+        return
+    try:
+        os.fsync(fd)
+    except OSError:
+        pass
+    finally:
+        os.close(fd)
+
+
+def write_json_atomic(path: Path, obj: dict[str, Any]) -> None:
+    """Write a JSON file completely, then atomically replace its file path."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.tmp-{os.getpid()}-{uuid.uuid4().hex}")
+    try:
+        write_json(temporary, obj)
+        _fsync_file(temporary)
+        os.replace(temporary, path)
+        _fsync_directory(path.parent)
+    finally:
+        if temporary.exists():
+            temporary.unlink()
+
+
+def _safe_shard_name(name: str) -> str:
+    relative = Path(name)
+    if relative.is_absolute() or ".." in relative.parts or relative.suffix != ".jsonl":
+        raise ValueError(f"unsafe shard path: {name!r}")
+    return relative.as_posix()
+
+
+def _jsonl_row_count(path: Path) -> tuple[int, list[str]]:
+    count = 0
+    errors: list[str] = []
+    with path.open("r", encoding="utf-8") as handle:
+        for line_no, line in enumerate(handle, start=1):
+            if not line.strip():
+                continue
+            count += 1
+            try:
+                json.loads(line)
+            except ValueError as exc:
+                errors.append(f"{path.name}:{line_no}: invalid JSON: {exc}")
+    return count, errors
+
+
+def verify_generation(target_dir: Path, *, allow_legacy: bool = True) -> dict[str, Any]:
+    """Cheaply detect missing, extra, truncated, or mixed-generation shards.
+
+    A pre-RM-19 directory with no ``GENERATION.json`` remains valid when
+    ``allow_legacy`` is true.  Once the sidecar exists, every JSONL shard must
+    match its declared row count and SHA-256 exactly.
+    """
+    target_dir = Path(target_dir)
+    generation_path = target_dir / GENERATION_MANIFEST_NAME
+    if not target_dir.is_dir():
+        return {"ok": False, "legacy": False, "errors": [f"missing generation directory: {target_dir}"]}
+    if not generation_path.exists():
+        if allow_legacy:
+            return {"ok": True, "legacy": True, "errors": [], "path": str(target_dir)}
+        return {"ok": False, "legacy": False, "errors": [f"missing {GENERATION_MANIFEST_NAME}"]}
+    try:
+        generation = json.loads(generation_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        return {"ok": False, "legacy": False, "errors": [f"invalid {GENERATION_MANIFEST_NAME}: {exc}"]}
+
+    errors: list[str] = []
+    declared_rows = generation.get("shards")
+    if not isinstance(declared_rows, list):
+        return {"ok": False, "legacy": False, "errors": ["GENERATION.json shards must be a list"]}
+    declared: dict[str, dict[str, Any]] = {}
+    for shard in declared_rows:
+        if not isinstance(shard, dict) or not isinstance(shard.get("path"), str):
+            errors.append("GENERATION.json contains an invalid shard record")
+            continue
+        try:
+            name = _safe_shard_name(shard["path"])
+        except ValueError as exc:
+            errors.append(str(exc))
+            continue
+        if name in declared:
+            errors.append(f"duplicate declared shard: {name}")
+        declared[name] = shard
+
+    actual = {
+        path.relative_to(target_dir).as_posix()
+        for path in target_dir.rglob("*.jsonl")
+        if path.is_file()
+    }
+    expected = set(declared)
+    if actual != expected:
+        missing = sorted(expected - actual)
+        extra = sorted(actual - expected)
+        if missing:
+            errors.append(f"missing shards: {missing}")
+        if extra:
+            errors.append(f"unexpected shards: {extra}")
+    actual_total = 0
+    for name in sorted(expected & actual):
+        path = target_dir / name
+        row_count, row_errors = _jsonl_row_count(path)
+        actual_total += row_count
+        errors.extend(row_errors)
+        shard = declared[name]
+        if row_count != shard.get("row_count"):
+            errors.append(f"{name}: row_count mismatch: {row_count} != {shard.get('row_count')}")
+        digest = sha256_file(path)
+        if digest != shard.get("sha256"):
+            errors.append(f"{name}: sha256 mismatch: {digest} != {shard.get('sha256')}")
+    if generation.get("shard_count") != len(declared):
+        errors.append(f"shard_count mismatch: {generation.get('shard_count')} != {len(declared)}")
+    if generation.get("row_count") != actual_total:
+        errors.append(f"generation row_count mismatch: {generation.get('row_count')} != {actual_total}")
+    return {
+        "ok": not errors,
+        "legacy": False,
+        "errors": errors,
+        "path": str(target_dir),
+        "generation": generation,
+    }
+
+
+def generation_fingerprint(target_dir: Path) -> str:
+    """Hash all generation file names and bytes to reject stale writer inputs."""
+    target_dir = Path(target_dir)
+    if not target_dir.exists():
+        return "missing"
+    digest = hashlib.sha256()
+    for path in sorted(item for item in target_dir.rglob("*") if item.is_file()):
+        digest.update(path.relative_to(target_dir).as_posix().encode("utf-8"))
+        digest.update(b"\0")
+        with path.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(chunk)
+        digest.update(b"\0")
+    return digest.hexdigest()
+
+
+def _remove_staging_dirs(target_dir: Path) -> None:
+    for path in target_dir.parent.glob(f"{target_dir.name}.staging-*"):
+        if path.is_dir():
+            shutil.rmtree(path)
+
+
+def _recover_generation_unlocked(target_dir: Path) -> dict[str, Any]:
+    """Recover the tiny gap between ``current -> .prev`` and staging promotion.
+
+    Deterministic policy: a present current directory wins.  If current is
+    absent and ``.prev`` exists, restore ``.prev`` and discard staging debris.
+    This chooses the last known-good generation rather than guessing whether a
+    staged generation was intended to become live.
+    """
+    previous = previous_generation_path(target_dir)
+    if target_dir.exists():
+        _remove_staging_dirs(target_dir)
+        return {"action": "current_present", "path": str(target_dir)}
+    if previous.exists():
+        os.rename(previous, target_dir)
+        _remove_staging_dirs(target_dir)
+        _fsync_directory(target_dir.parent)
+        return {"action": "restored_previous", "path": str(target_dir)}
+    staging = sorted(target_dir.parent.glob(f"{target_dir.name}.staging-*"))
+    valid = [path for path in staging if path.is_dir() and verify_generation(path, allow_legacy=False)["ok"]]
+    if len(valid) == 1:
+        os.rename(valid[0], target_dir)
+        _remove_staging_dirs(target_dir)
+        _fsync_directory(target_dir.parent)
+        return {"action": "promoted_only_complete_staging", "path": str(target_dir)}
+    if staging:
+        raise RuntimeError(
+            f"cannot recover {target_dir}: no prior generation and {len(valid)} of {len(staging)} staging dirs validate"
+        )
+    return {"action": "nothing_to_recover", "path": str(target_dir)}
+
+
+def recover_generation(target_dir: Path, *, writer_id: str = "largelexicon-recovery") -> dict[str, Any]:
+    with exclusive_writer_lock(target_dir, writer_id=writer_id):
+        return _recover_generation_unlocked(Path(target_dir))
+
+
+def atomic_promote_shards(
+    target_dir: Path,
+    shards: Mapping[str, Iterable[dict[str, Any]]],
+    *,
+    writer_id: str,
+    promoted_at: str | None = None,
+    after_row: Callable[[Path, dict[str, Any]], None] | None = None,
+    after_current_to_previous: Callable[[], None] | None = None,
+    after_promote: Callable[[dict[str, Any]], None] | None = None,
+    expected_current_fingerprint: str | None = None,
+) -> dict[str, Any]:
+    """Validate and promote one complete shard generation under a writer lock.
+
+    Directory replacement is intentionally two renames because portable
+    Windows/Linux APIs cannot atomically exchange non-empty directories.  The
+    tiny interval with no current directory is recovered deterministically by
+    :func:`recover_generation`, which restores ``.prev``.
+    """
+    target_dir = Path(target_dir)
+    names = [_safe_shard_name(name) for name in shards]
+    if len(set(names)) != len(names):
+        raise ValueError("duplicate shard paths")
+    normalized = {name: shards[original] for name, original in zip(names, shards)}
+    staging = _staging_generation_path(target_dir)
+    previous = previous_generation_path(target_dir)
+    with exclusive_writer_lock(target_dir, writer_id=writer_id):
+        _recover_generation_unlocked(target_dir)
+        if target_dir.exists():
+            current_check = verify_generation(target_dir)
+            if not current_check["ok"]:
+                raise RuntimeError(f"refusing to replace invalid current generation: {current_check['errors']}")
+        if expected_current_fingerprint is not None:
+            actual_fingerprint = generation_fingerprint(target_dir)
+            if actual_fingerprint != expected_current_fingerprint:
+                raise RuntimeError(
+                    "current generation changed after writer input was read; refusing stale promotion"
+                )
+        if staging.exists():
+            shutil.rmtree(staging)
+        staging.mkdir(parents=True)
+        moved_current = False
+        promoted_new = False
+        try:
+            generation_shards: list[dict[str, Any]] = []
+            total_rows = 0
+            for name in sorted(normalized):
+                path = staging / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                row_count = 0
+                with path.open("w", encoding="utf-8", newline="\n") as handle:
+                    for row in normalized[name]:
+                        handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True))
+                        handle.write("\n")
+                        row_count += 1
+                        if after_row is not None:
+                            after_row(path, row)
+                    handle.flush()
+                    os.fsync(handle.fileno())
+                total_rows += row_count
+                generation_shards.append(
+                    {"path": name, "row_count": row_count, "sha256": sha256_file(path)}
+                )
+            generation = {
+                "schema": "fusha/largelexicon-shard-generation@1",
+                "writer_id": writer_id,
+                "promoted_at": promoted_at or now_iso(),
+                "shard_count": len(generation_shards),
+                "row_count": total_rows,
+                "shards": generation_shards,
+            }
+            write_json(staging / GENERATION_MANIFEST_NAME, generation)
+            _fsync_file(staging / GENERATION_MANIFEST_NAME)
+            staged_check = verify_generation(staging, allow_legacy=False)
+            if not staged_check["ok"]:
+                raise RuntimeError(f"staged generation failed validation: {staged_check['errors']}")
+            _fsync_directory(staging)
+
+            if previous.exists():
+                shutil.rmtree(previous)
+            if target_dir.exists():
+                os.rename(target_dir, previous)
+                moved_current = True
+                _fsync_directory(target_dir.parent)
+            if after_current_to_previous is not None:
+                after_current_to_previous()
+            os.rename(staging, target_dir)
+            promoted_new = True
+            _fsync_directory(target_dir.parent)
+            live_check = verify_generation(target_dir, allow_legacy=False)
+            if not live_check["ok"]:
+                raise RuntimeError(f"promoted generation failed validation: {live_check['errors']}")
+            if after_promote is not None:
+                after_promote(generation)
+            return generation
+        except Exception:
+            if promoted_new and target_dir.exists():
+                shutil.rmtree(target_dir)
+            if not target_dir.exists() and moved_current and previous.exists():
+                os.rename(previous, target_dir)
+                _fsync_directory(target_dir.parent)
+            if staging.exists():
+                shutil.rmtree(staging)
+            raise
+
+
+def rollback_generation(
+    target_dir: Path,
+    *,
+    writer_id: str = "largelexicon-rollback",
+    after_rollback: Callable[[], None] | None = None,
+) -> dict[str, Any]:
+    """Swap ``target_dir`` with its single preserved ``.prev`` generation."""
+    target_dir = Path(target_dir)
+    previous = previous_generation_path(target_dir)
+    temporary = target_dir.with_name(f"{target_dir.name}.rollback-{os.getpid()}")
+    with exclusive_writer_lock(target_dir, writer_id=writer_id):
+        _recover_generation_unlocked(target_dir)
+        if not target_dir.exists() or not previous.exists():
+            raise RuntimeError(f"rollback requires both {target_dir} and {previous}")
+        if temporary.exists():
+            shutil.rmtree(temporary)
+        os.rename(target_dir, temporary)
+        try:
+            os.rename(previous, target_dir)
+            os.rename(temporary, previous)
+            _fsync_directory(target_dir.parent)
+        except Exception:
+            if target_dir.exists() and temporary.exists() and not previous.exists():
+                os.rename(target_dir, previous)
+                os.rename(temporary, target_dir)
+            elif not target_dir.exists() and temporary.exists():
+                os.rename(temporary, target_dir)
+            raise
+        result = verify_generation(target_dir)
+        if not result["ok"]:
+            raise RuntimeError(f"rolled-back generation failed validation: {result['errors']}")
+        if after_rollback is not None:
+            after_rollback()
+        return {"action": "rolled_back", "verification": result}
 
 
 def unique_keep_order(values: Iterable[str]) -> list[str]:
@@ -433,7 +874,11 @@ def _qword_row_sort_key(row: dict[str, Any]) -> tuple[Any, ...]:
 
 
 def write_qword_denominator_shards(
-    rows: Iterable[dict[str, Any]], *, shard_size: int = 40, all_entries: Iterable[dict[str, Any]] | None = None
+    rows: Iterable[dict[str, Any]],
+    *,
+    shard_size: int = 40,
+    all_entries: Iterable[dict[str, Any]] | None = None,
+    _after_row: Callable[[Path, dict[str, Any]], None] | None = None,
 ) -> dict[str, Any]:
     """Write qword denominator shards plus manifest and entry reverse index.
 
@@ -450,19 +895,15 @@ def write_qword_denominator_shards(
     all_entry_lookup = {entry["id"]: entry for entry in (all_entries or [])}
     all_entry_id_set = set(all_entry_lookup)
 
-    if QWORD_DENOMINATOR_FULL.exists():
-        QWORD_DENOMINATOR_FULL.unlink()
-    QWORD_DENOMINATOR_SHARD_DIR.mkdir(parents=True, exist_ok=True)
-    for stale in QWORD_DENOMINATOR_SHARD_DIR.glob("*.jsonl"):
-        stale.unlink()
-
     shards: list[dict[str, Any]] = []
+    shard_payloads: dict[str, list[dict[str, Any]]] = {}
     entry_index: dict[str, dict[str, Any]] = {}
     total_rows = 0
     for label in sorted(grouped, key=lambda value: _source_key_sort_key(value.split("-")[0] if "-" in value else value)):
         shard_rows = grouped[label]
-        shard_path = QWORD_DENOMINATOR_SHARD_DIR / f"{label}.jsonl"
-        write_jsonl(shard_path, shard_rows)
+        shard_name = f"{label}.jsonl"
+        shard_path = QWORD_DENOMINATOR_SHARD_DIR / shard_name
+        shard_payloads[shard_name] = shard_rows
         total_rows += len(shard_rows)
         entry_ids = sorted({row["entry_id"] for row in shard_rows})
         source_keys = sorted({_primary_source_key(row) for row in shard_rows}, key=_source_key_sort_key)
@@ -480,7 +921,7 @@ def write_qword_denominator_shards(
                 "path": repo_rel(shard_path),
                 "schema": "qamus/largelexicon-qword-denominator@1",
                 "row_count": len(shard_rows),
-                "sha256": sha256_file(shard_path),
+                "sha256": sha256_jsonl_rows(shard_rows),
                 "first_row_id": shard_rows[0].get("row_id"),
                 "last_row_id": shard_rows[-1].get("row_id"),
                 "source_key_range": ranges[label],
@@ -528,7 +969,6 @@ def write_qword_denominator_shards(
         "public_boundary": dict(PUBLIC_BOUNDARY),
         "repairs": source_card_repairs,
     }
-    write_json(QWORD_DENOMINATOR_SOURCE_REPAIR, source_card_repair_obj)
     manifest = {
         "schema": "qamus/largelexicon-qword-denominator-manifest@1",
         **common_freshness,
@@ -586,8 +1026,22 @@ def write_qword_denominator_shards(
         "public_boundary": dict(PUBLIC_BOUNDARY),
         "entries": dict(sorted(entry_index.items())),
     }
-    write_json(QWORD_DENOMINATOR_MANIFEST, manifest)
-    write_json(QWORD_DENOMINATOR_ENTRY_INDEX, entry_index_obj)
+    def install_sidecars(_generation: dict[str, Any]) -> None:
+        # The external table manifest is installed last: readers either see
+        # the old manifest or the complete new one, never a partial JSON file.
+        write_json_atomic(QWORD_DENOMINATOR_SOURCE_REPAIR, source_card_repair_obj)
+        write_json_atomic(QWORD_DENOMINATOR_ENTRY_INDEX, entry_index_obj)
+        write_json_atomic(QWORD_DENOMINATOR_MANIFEST, manifest)
+
+    atomic_promote_shards(
+        QWORD_DENOMINATOR_SHARD_DIR,
+        shard_payloads,
+        writer_id="tools.largelexicon_common.write_qword_denominator_shards",
+        after_row=_after_row,
+        after_promote=install_sidecars,
+    )
+    if QWORD_DENOMINATOR_FULL.exists():
+        QWORD_DENOMINATOR_FULL.unlink()
     return manifest
 
 
