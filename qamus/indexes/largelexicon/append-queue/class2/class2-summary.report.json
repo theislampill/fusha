@@ -1,0 +1,117 @@
+{
+  "candidate_only": true,
+  "conflict_row_dispositions": {
+    "counts": {
+      "content_host": 3,
+      "function": 16
+    },
+    "rows": [
+      {
+        "canonical_location": "7:156:4",
+        "criterion": "entry_coverage",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "11:72:6",
+        "criterion": "entry_coverage",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "12:72:5",
+        "criterion": "entry_coverage",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "12:100:10",
+        "criterion": "entry_coverage",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "17:72:4",
+        "criterion": "entry_coverage",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "18:10:10",
+        "criterion": "segmentation_stem",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "18:16:2",
+        "criterion": "segmentation_stem",
+        "partition": "content_host"
+      },
+      {
+        "canonical_location": "18:54:4",
+        "criterion": "entry_coverage",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "18:62:11",
+        "criterion": "entry_coverage",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "24:4:17",
+        "criterion": "entry_coverage",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "28:57:21",
+        "criterion": "segmentation_stem",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "38:42:1",
+        "criterion": "segmentation_stem",
+        "partition": "content_host"
+      },
+      {
+        "canonical_location": "38:59:1",
+        "criterion": "entry_coverage",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "42:15:1",
+        "criterion": "entry_coverage",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "47:23:1",
+        "criterion": "entry_coverage",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "50:22:6",
+        "criterion": "entry_coverage",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "50:35:5",
+        "criterion": "segmentation_stem",
+        "partition": "function"
+      },
+      {
+        "canonical_location": "61:14:25",
+        "criterion": "segmentation_stem",
+        "partition": "content_host"
+      },
+      {
+        "canonical_location": "90:1:7",
+        "criterion": "entry_coverage",
+        "partition": "function"
+      }
+    ]
+  },
+  "contested_count": 0,
+  "generated_by": "tools/build_class2_queues.py",
+  "partition_counts": {
+    "content_host": 2330,
+    "decidable": 493,
+    "function": 1043,
+    "pos_undetermined": 2
+  },
+  "partition_sum": 3868,
+  "rows_moved_by_tanwin_nominal_v1": 8,
+  "schema": "qamus.class2_queue_summary.v1"
+}
