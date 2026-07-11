@@ -4299,9 +4299,9 @@ try:
     check(
         "T5 G1 full dry-run: bindings=%d whitelist=%d build=%.3fs" % (
             len(_t5_full_b), _t5_full_whitelist_count, _t5_full_build_seconds),
-        len(_t5_full_rows) == 85877
-        and len(_t5_full_b) == 85877
-        and _t5_full_whitelist_count == 40972
+        len(_t5_full_rows) == 86240
+        and len(_t5_full_b) == 86240
+        and _t5_full_whitelist_count == 41335
         and not _t5_full_c and not _t5_full_wc,
     )
     check(
