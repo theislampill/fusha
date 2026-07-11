@@ -4,8 +4,10 @@
 
 The digital Arabic Qurʾān text used by the Qamus qamus-highlight layer and reproduced in the
 example āyāt of this dataset (`entries.jsonl` `usage[].examples[].ar`), in the hover-token audit
-(`qamus/reports/hover-token-audit-full.jsonl`), and in the source-address spine
-(`qamus/indexes/current/quran-usage-spine-full.json`) is the **Tanzil Quran Text**.
+(`qamus/reports/hover-token-audit-full.jsonl`), in the source-address spine
+(`qamus/indexes/current/quran-usage-spine-full.json`), and in the full-Quran
+loc→surface rasm index (`qamus/indexes/quran-loc-surface/index.jsonl`, Tanzil
+Uthmani v1.1) is the **Tanzil Quran Text**.
 
 > © Tanzil Project — https://tanzil.net — licensed under **Creative Commons Attribution 3.0
 > (CC BY 3.0)** — https://creativecommons.org/licenses/by/3.0/
