@@ -1,0 +1,9 @@
+{
+  "active_repairs": [
+    {
+      "generation_id": "sha256:cef6975f3a2e050f83ea15fead1b5addb052e4a2c77fd3e5f3ef54f56f313352",
+      "table": "qamus/indexes/largelexicon/canonical-hover-shadow-rm20"
+    }
+  ],
+  "schema": "qamus.canonical_repair_registry.v1"
+}
