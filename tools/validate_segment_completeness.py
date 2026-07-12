@@ -503,6 +503,319 @@ def build_sense_companion():
     }
 
 
+# ===========================================================================
+# LIVE RICH-HOVER WHITELIST ROW GATES  (defect classes C1..C5)
+#
+# Gates A..G above operate on the AUTHORING record shape (segments carry a
+# `role`, plus `sarf`/`nahw`/`parse_key` blocks). The DEPLOYED rich-hover
+# whitelist uses a leaner RUNTIME row shape: each segment carries a display
+# `class` (qg-*), a `label`, a `role`, a `surface` and a `sarf_note`; the row
+# carries a `morphline`, a `token_contribution_gloss` and a
+# `learner_explanation`. The five defect classes catalogued by the segment-
+# completeness audit are defined over THAT runtime shape, so they are
+# implemented here as a second, self-contained classifier `classify_live_row`.
+# Both shapes share this one module, so a single --self-test proves the whole
+# gate red-first. Runtime rows have no `sarf`/`parse_key`, so gates A..G stay
+# inert on them, and authoring records have no `morphline`, so C1..C5 stay
+# inert on those -- the two layers never cross-fire.
+#
+# Every class FAILS CLOSED (a match is a rejection). Deterministic, stdlib-only,
+# offline; reads no live Qamus data (the whitelist path is a CLI argument).
+#
+#   C1 stem_swallow      a verb STEM surface begins with an imperfect agreement
+#                        prefix (unambiguous ي/ن, or the ambiguous ت/أ/إ only on
+#                        an undifferentiated whole-token plural swallow) or a
+#                        proclitic (ل/ف/و/ب/ك/س) that is NOT a root radical and is
+#                        NOT already carried by a preceding prefix-sibling segment.
+#   C2 whole_token_root  a single whole-token nominal/derived segment (است/مست/
+#                        مـ/تـ, >=5 letters) whose root is left UNASSERTED and which
+#                        is not a clean derivational participle/adjective (its
+#                        leading mīm/tāʾ is inseparable pattern morphology, not a
+#                        folded clitic -> no separable affix -> not a swallow).
+#   C3 misclassified_fn  a function segment (qg-negation / qg-particle /
+#                        qg-ma-particle) whose surface is actually a finite verb
+#                        (imperfect prefix + real second radical, or a plural
+#                        و-ا / و-ن ending) with a real lexical root.
+#   C4 fallback_leak     morphline/learner prose falls back to a generic bundle
+#                        ("as context requires" / "not separately asserted" /
+#                        "exposes the visible ...").
+#   C5 suffix_swallow    the morphline asserts an attached +OBJ/+POSS/+SUBJ
+#                        pronoun (or the surface ends in an enclitic pronoun the
+#                        gloss renders) yet no pronoun/suffix segment exists.
+#
+# Tightening (proven by the two negative fixtures in --self-test):
+#   * C1 preceding-prefix-sibling check + the ambiguous ت/أ/إ carve-out let the
+#     correctly-split 102:3:3 تَعْلَمُونَ (STEM+SUBJ) PASS while 2:91:3 تقتلون
+#     (whole-token) and 83:26:5 فَلْيَتَنَافَسِ (welded lām) are REJECTED.
+#   * C2 clitic-presence / clean-participle guard + transliterated-root
+#     recognition let 4:144:17 مُّبِينًا (Form IV participle, zero clitics) PASS
+#     while 9:107:3 مَسْجِدًا (root uncertified) is REJECTED.
+# ===========================================================================
+
+# Diacritics to strip for leading-letter / enclitic detection on runtime rows.
+_LIVE_DIAC = set()
+for _c in list(range(0x064B, 0x0659)) + [0x0670, 0x0640] + list(range(0x06D6, 0x06EE)):
+    _LIVE_DIAC.add(chr(_c))
+
+def _live_bare(s):
+    """Strip Qurʾanic diacritics/annotation marks and fold alif-wasla for detection."""
+    return "".join(ch for ch in (s or "") if ch not in _LIVE_DIAC).replace("ٱ", "ا")
+
+_HARAKAT_ONLY = set(chr(c) for c in range(0x064B, 0x0653))
+def _deharaka(s):
+    return "".join(ch for ch in (s or "") if ch not in _HARAKAT_ONLY)
+
+_VERB_STEM_CLASSES = {"qg-verb-stem"}
+_PREFIX_CLASSES = {"qg-verb-prefix", "qg-conjunction", "qg-lam", "qg-result-fa",
+                   "qg-preposition", "qg-future-particle", "qg-derivative-prefix",
+                   "qg-emphasis", "qg-particle"}
+_PRON_SUFFIX_CLASSES = {"qg-object-pronoun", "qg-subject-pronoun", "qg-possessive-pronoun",
+                        "qg-pronoun", "qg-plural-suffix", "qg-dual-suffix",
+                        "qg-referential-pronoun"}
+_FUNC_ONLY_CLASSES = {"qg-negation", "qg-particle", "qg-ma-particle"}
+
+_IMPF_UNAMBIG = set("ين")       # yāʾ (3rd) and nūn (1st pl) never begin a bare stem
+_IMPF_AMBIG = set("تأإاآ")      # tāʾ/hamza/alif collide with Form II..X and imperative augments
+_PROCLITIC = set("لفوبكس")      # lām, fāʾ, wāw, bāʾ, kāf, sīn
+_BAD_SECOND = set("اٰوي")       # a weak/long second letter is not a finite-verb signature
+_PLURAL_VERB_SUFFIX = ("ون", "وا", "ين")
+_IMPF_STRICT = set("يتن")
+
+_FALLBACK_PHRASES = ("as context requires", "not separately asserted", "exposes the visible")
+
+_ENCLITIC = ["هما", "كما", "هم", "هن", "كم", "كن", "ها", "هو", "نا", "ه", "ك", "ي"]
+_OBJ_POSS_HINTS = ("+obj", "+poss", "attached object", "attached possessive",
+                   "object pronoun", "possessive pronoun", "attached pronoun")
+_GLOSS_PRON = (" him", " them", " us", " your", " his", " its", " her", "you")
+_PERF_SUBJ_SUFFIX = ("نا", "تم", "تن", "وا", "تما")
+_VOC_DEM_MARKERS = ("vocative", "demonstrative", "deictic", "addressee", "addressed")
+_PARTICLE_STOPLIST = {"افلا", "انما", "اينما", "اولا", "الا", "اما", "اءنك", "اءن", "اذا", "اذ"}
+
+_SUBJ_OBJ_MARKER = re.compile(r"\d[mf][spd]\s+(?:subject|object)")
+_ROOT_ARABIC_RE = re.compile(r"root\s+([؀-ۿ\s]+?)(?:·|\||\-| - |$)")
+_ROOT_LATIN_RE = re.compile(r"root\s+[a-z](?:[\s\-][a-z]){1,}")
+_ROOT_UNCERT = ("root not certified", "root not asserted", "no lexical root",
+                "not certified in frozen", "root uncertified")
+
+
+def _live_segments(rec):
+    return rec.get("segments") or []
+
+def _live_root_radicals(morphline):
+    """Extract Arabic root radicals asserted as 'root ن ف س ...' -> ['ن','ف','س']; else None."""
+    mm = _ROOT_ARABIC_RE.search(morphline or "")
+    if mm:
+        rad = [x for x in mm.group(1).split() if x]
+        if rad:
+            return rad
+    return None
+
+def _live_root_asserted(morphline):
+    """True if the morphline asserts a root (Arabic radicals OR a transliterated b-y-n form)."""
+    low = (morphline or "").lower()
+    if any(u in low for u in _ROOT_UNCERT):
+        return False
+    if _live_root_radicals(morphline or ""):
+        return True
+    if _ROOT_LATIN_RE.search(low):
+        return True
+    return False
+
+def _is_verb_stem(s):
+    if not isinstance(s, dict):
+        return False
+    if s.get("class") in _VERB_STEM_CLASSES:
+        return True
+    if s.get("role") == "verb_stem":
+        return True
+    if s.get("label") in ("STEM", "V") and "verb" in (s.get("role") or "").lower():
+        return True
+    return False
+
+def _is_vocative_ya(raw):
+    d = _deharaka(raw)
+    return bool(d) and d[0] == "ي" and len(d) > 1 and d[1] in ("ٰ", "ا")
+
+
+def _c1_stem_swallow(rec):
+    errs = []
+    segs = _live_segments(rec)
+    m = rec.get("morphline") or ""
+    for i, s in enumerate(segs):
+        if not _is_verb_stem(s):
+            continue
+        surf = s.get("surface") or ""
+        bare = _live_bare(surf)
+        if not bare:
+            continue
+        note = s.get("sarf_note") or ""
+        is_impf = ("imperfect" in (m + " " + note).lower() or "مضارع" in m or "مضارع" in note)
+        rad = _live_root_radicals(m)
+        first = bare[0]
+        prev = segs[i - 1] if i > 0 else None
+        prev_prefix = isinstance(prev, dict) and prev.get("class") in _PREFIX_CLASSES
+        # preceding-prefix-sibling check: a split-out prefix carries the swallowed clitic ONLY
+        # when its own surface actually ends with that leading letter (this is stricter than a
+        # bare "any preceding prefix" test, so a lām welded behind an unrelated fāʾ is caught).
+        prev_covers = prev_prefix and _live_bare(prev.get("surface")).endswith(first)
+        # C1a: unambiguous imperfect agreement prefix (yāʾ/nūn) folded into an imperfect stem
+        # with no split prefix sibling. Gated on `is_impf` so a yāʾ/nūn first radical never fires.
+        if is_impf and first in _IMPF_UNAMBIG and not prev_prefix and (rad is None or rad[0] != first):
+            errs.append(("C1", "stem_swallow: imperfect verb stem %r folds its agreement prefix %r into the STEM" % (surf, first)))
+            continue
+        # C1b: a proclitic (imperative/purpose lām, resumption fāʾ/wāw, bi/ka/sa) welded to the
+        # stem front with NO split prefix sibling, root-aware (leading clitic is not a radical).
+        # The sīn+tāʾ carve-out keeps the Form VIII/X است-/ـْتَ infix (e.g. نَسْتَعِينُ) from being
+        # misread as a future-particle sīn.
+        if (first in _PROCLITIC and not prev_prefix and rad is not None and first not in rad
+                and not (first == "س" and bare[1:2] == "ت")):
+            errs.append(("C1", "stem_swallow: verb stem %r begins with proclitic %r folded into the STEM" % (surf, first)))
+            continue
+        # C1c: an imperative/purpose/emphatic lām welded to the stem front BEHIND an unrelated
+        # prefix (fāʾ/wāw) that does not carry it — the 83:26:5 فَ+لْيَ… shape a bare preceding-
+        # prefix test would miss. Restricted to the lām (the documented governor) so Form VIII/X
+        # sīn/tāʾ infixes behind an agreement prefix never trip it.
+        if first == "ل" and prev_prefix and not prev_covers and rad is not None and "ل" not in rad:
+            errs.append(("C1", "stem_swallow: verb stem %r welds an imperative/purpose lām behind an "
+                              "unrelated prefix instead of splitting it out" % surf))
+            continue
+        # C1d: ambiguous tāʾ/hamza/alif prefix — a defect ONLY on an undifferentiated whole-token
+        # plural swallow, so a correctly split STEM+SUBJ imperfect (102:3:3) passes.
+        if first in _IMPF_AMBIG and is_impf and rad and rad[0] != first:
+            ends_plural = any(bare.endswith(sfx) for sfx in _PLURAL_VERB_SUFFIX)
+            has_subject_seg = any(
+                isinstance(sg, dict) and (sg.get("class") in _PRON_SUFFIX_CLASSES
+                                          or "subject" in (sg.get("role") or "").lower())
+                for sg in segs)
+            whole = len(segs) == 1 or bare == _live_bare(rec.get("surface"))
+            if ends_plural and not has_subject_seg and whole:
+                errs.append(("C1", "stem_swallow: whole-token imperfect verb %r folds its agreement "
+                                  "prefix and plural subject ending into one undifferentiated STEM" % surf))
+    return errs
+
+
+_C2_WHOLE_LABELS = {"TOK", "TOKEN", "SEG", "N"}
+_C2_WHOLE_ROLES = {"whole_token", "token", "token_host", "noun_stem"}
+_C2_WHOLE_CLASSES = {"qg-segment", "qg-noun", "qg-noun-stem", "qg-adjective"}
+
+def _c2_whole_token_root(rec):
+    errs = []
+    segs = _live_segments(rec)
+    if len(segs) != 1:
+        return errs
+    s = segs[0]
+    if not isinstance(s, dict):
+        return errs
+    cls = s.get("class"); role = (s.get("role") or "").lower(); lab = s.get("label") or ""
+    note = (s.get("sarf_note") or "").lower()
+    m = rec.get("morphline") or ""
+    bare = _live_bare(s.get("surface"))
+    if not bare or len(bare) < 5:
+        return errs
+    wholeish = (lab in _C2_WHOLE_LABELS or role in _C2_WHOLE_ROLES or cls in _C2_WHOLE_CLASSES)
+    if not wholeish:
+        return errs
+    # clitic-presence / clean-participle guard: a derivational participle or adjective has NO
+    # separable affix (its leading mīm/tāʾ is inseparable pattern morphology) -> not a swallow.
+    if (cls == "qg-adjective" or "participle" in m.lower() or "participle" in note
+            or "adjective" in m.lower()):
+        return errs
+    if (cls == "qg-proper-noun" or "proper" in role or "proper name" in note
+            or "divine name" in note):
+        return errs
+    # only a genuinely UNASSERTED root is a defect (Arabic OR transliterated root counts as asserted).
+    if _live_root_asserted(m):
+        return errs
+    derived = False
+    if bare.startswith("است") or bare.startswith("مست"):
+        derived = True
+    elif bare[0] == "م" and not bare.startswith(("من", "ما", "مه")):
+        derived = True
+    elif bare[0] == "ت":
+        derived = True
+    if derived:
+        errs.append(("C2", "whole_token_root: single derived whole-token %r leaves its root unasserted "
+                          "(no separable segment, no certified root)" % (s.get("surface"))))
+    return errs
+
+
+def _c3_misclassified_function(rec):
+    errs = []
+    segs = _live_segments(rec)
+    m = rec.get("morphline") or ""
+    learner = rec.get("learner_explanation") or ""
+    low_all = (m + " " + learner).lower()
+    raw_surface = rec.get("surface") or ""
+    for s in segs:
+        if not isinstance(s, dict):
+            continue
+        cls = s.get("class"); note = (s.get("sarf_note") or "").lower()
+        func = cls in _FUNC_ONLY_CLASSES or "function only no root" in note
+        if not func:
+            continue
+        if _is_vocative_ya(raw_surface) or any(v in low_all for v in _VOC_DEM_MARKERS):
+            continue
+        bare = _live_bare(s.get("surface"))
+        if not bare or bare in _PARTICLE_STOPLIST:
+            continue
+        impf_verb = (bare[0] in _IMPF_STRICT and len(bare) >= 5 and bare[1] not in _BAD_SECOND)
+        perf_verb = (bare.endswith("وا") or bare.endswith("ون")) and len(bare) >= 5
+        if impf_verb or perf_verb:
+            errs.append(("C3", "misclassified_function: %s segment %r is actually a finite verb form" % (cls, s.get("surface"))))
+    return errs
+
+
+def _c4_fallback_leak(rec):
+    m = rec.get("morphline") or ""
+    learner = rec.get("learner_explanation") or ""
+    blob = (m + " " + learner).lower()
+    for ph in _FALLBACK_PHRASES:
+        if ph in blob:
+            return [("C4", "fallback_leak: morphline/learner text uses the generic fallback %r" % ph)]
+    return []
+
+
+def _c5_suffix_swallow(rec):
+    segs = _live_segments(rec)
+    m = rec.get("morphline") or ""
+    learner = rec.get("learner_explanation") or ""
+    gloss = rec.get("token_contribution_gloss") or ""
+    low_all = (m + " " + learner).lower()
+    has_pron_seg = any(isinstance(sg, dict) and sg.get("class") in _PRON_SUFFIX_CLASSES for sg in segs)
+    if has_pron_seg:
+        return []
+    if any(v in low_all for v in _VOC_DEM_MARKERS):
+        return []
+    surf = _live_bare(rec.get("surface"))
+    end_enc = None
+    for enc in _ENCLITIC:
+        if surf.endswith(enc) and len(surf) >= len(enc) + 2:
+            end_enc = enc
+            break
+    mlow = m.lower()
+    obj_poss = any(h in mlow for h in _OBJ_POSS_HINTS) or bool(_SUBJ_OBJ_MARKER.search(mlow))
+    perf_subj = ("perfect" in mlow and "+subj" in mlow
+                 and any(surf.endswith(x) for x in _PERF_SUBJ_SUFFIX))
+    gloss_pron = end_enc is not None and any(w in gloss.lower() for w in _GLOSS_PRON)
+    if obj_poss or perf_subj or gloss_pron:
+        tag = end_enc or ("+SUBJ" if perf_subj else "(morphline)")
+        return [("C5", "suffix_swallow: attached pronoun/subject %r asserted but no pronoun/suffix "
+                      "segment is present" % tag)]
+    return []
+
+
+LIVE_CLASSES = ["C1", "C2", "C3", "C4", "C5"]
+_LIVE_CLASS_FNS = [_c1_stem_swallow, _c2_whole_token_root, _c3_misclassified_function,
+                   _c4_fallback_leak, _c5_suffix_swallow]
+
+def classify_live_row(rec):
+    """Run every live-row completeness class. Returns a list of (code, message). Empty == clean."""
+    out = []
+    for fn in _LIVE_CLASS_FNS:
+        out += fn(rec)
+    return out
+
+
 # ---------------------------------------------------------------------------
 def _read_jsonl(path):
     for line_no, line in enumerate(io.open(path, encoding="utf-8"), 1):
@@ -530,6 +843,211 @@ def emit_fixture(path):
     return 0
 
 
+# ---------------------------------------------------------------------------
+# Live-row fixtures: the 9 confirmed positives (each must be REJECTED by its
+# class) + the 2 known false alarms (each must PASS). Each positive carries a
+# `defective` shape (the actual live row) and a `corrected` shape (the complete
+# segmentation) so --self-test proves the class red-first and green-after.
+def _live_fixtures():
+    return [
+        # ---- C1 stem_swallow ----
+        {"loc": "83:26:5", "expect": "C1",
+         "defective": {
+             "loc": "83:26:5", "surface": "فَلْيَتَنَافَسِ", "token_contribution_gloss": "strive",
+             "morphline": "root ن ف س · finite verb form · imperfect active · finite",
+             "learner_explanation": "finite verb from root ن ف س",
+             "segments": [
+                 {"class": "qg-result-fa", "label": "FA", "role": "prefix_result_fa", "surface": "فَ", "sarf_note": "function proclitic; no lexical root"},
+                 {"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "لْيَتَنَافَسِ", "sarf_note": "finite verb stem from root ن ف س"}]},
+         "corrected": {
+             "loc": "83:26:5", "surface": "فَلْيَتَنَافَسِ", "token_contribution_gloss": "so let him compete",
+             "morphline": "root ن ف س · Form VI imperfect active · jussive · 3ms · governed by imperative lām",
+             "learner_explanation": "the fāʾ, imperative lām, and imperfect prefix are visible before the stem",
+             "segments": [
+                 {"class": "qg-result-fa", "label": "FA", "role": "prefix_result_fa", "surface": "فَ", "sarf_note": "resumption fāʾ"},
+                 {"class": "qg-lam", "label": "IMPV", "role": "prefix_imperative_lam", "surface": "لْ", "sarf_note": "imperative lām governor"},
+                 {"class": "qg-verb-prefix", "label": "PFX", "role": "verb_prefix", "surface": "يَ", "sarf_note": "imperfect 3ms prefix; root ن ف س"},
+                 {"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "تَنَافَسِ", "sarf_note": "Form VI stem from root ن ف س"}]}},
+        {"loc": "2:91:3", "expect": "C1",
+         "defective": {
+             "loc": "2:91:3", "surface": "تقتلون", "token_contribution_gloss": "you kill",
+             "morphline": "root ق ت ل · imperfect active verb 2mp · base قَتَلَ",
+             "learner_explanation": "the verb you all kill",
+             "segments": [{"class": "qg-verb-stem", "label": "V", "role": "verb_stem", "surface": "تقتلون", "sarf_note": "imperfect active 2mp from root ق ت ل; base قَتَلَ"}]},
+         "corrected": {
+             "loc": "2:91:3", "surface": "تقتلون", "token_contribution_gloss": "you all kill",
+             "morphline": "root ق ت ل · imperfect active · 2mp",
+             "learner_explanation": "prefix, stem, and plural subject are all visible",
+             "segments": [
+                 {"class": "qg-verb-prefix", "label": "PFX", "role": "verb_prefix", "surface": "تَ", "sarf_note": "2nd person imperfect prefix; root ق ت ل"},
+                 {"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "قْتُلُ", "sarf_note": "imperfect stem from root ق ت ل"},
+                 {"class": "qg-subject-pronoun", "label": "SUBJ", "role": "subject_suffix_2mp", "surface": "ونَ", "sarf_note": "masculine plural subject marker"}]}},
+        # ---- C2 whole_token_root ----
+        {"loc": "9:107:3", "expect": "C2",
+         "defective": {
+             "loc": "9:107:3", "surface": "مَسْجِدًۭا", "token_contribution_gloss": "Mosque",
+             "morphline": "noun/proper-name token · root not certified in frozen row",
+             "learner_explanation": "contributes 'Mosque' in this example.",
+             "segments": [{"class": "qg-noun-stem", "label": "N", "role": "noun_stem", "surface": "مَسْجِدًۭا", "sarf_note": "noun/proper-name token · root not certified in frozen row"}]},
+         "corrected": {
+             "loc": "9:107:3", "surface": "مَسْجِدًۭا", "token_contribution_gloss": "a mosque",
+             "morphline": "root س ج د · noun of place (مَفْعِل) · accusative indefinite",
+             "learner_explanation": "place of prostration from root س ج د",
+             "segments": [{"class": "qg-noun-stem", "label": "N", "role": "noun_stem", "surface": "مَسْجِدًۭا", "sarf_note": "noun of place from root س ج د"}]}},
+        # ---- C3 misclassified_function ----
+        {"loc": "24:4:13", "expect": "C3",
+         "defective": {
+             "loc": "24:4:13", "surface": "تَقْبَلُوا۟", "token_contribution_gloss": "do not accept",
+             "morphline": "function only no root · NEG",
+             "learner_explanation": "This word contributes 'do not accept'.",
+             "segments": [{"class": "qg-negation", "label": "NEG", "role": "negation", "surface": "تَقْبَلُوا۟", "sarf_note": ""}]},
+         "corrected": {
+             "loc": "24:4:13", "surface": "تَقْبَلُوا۟", "token_contribution_gloss": "you accept",
+             "morphline": "root ق ب ل · imperfect active · 2mp (jussive after negation)",
+             "learner_explanation": "prefix, stem, and plural subject are visible",
+             "segments": [
+                 {"class": "qg-verb-prefix", "label": "PFX", "role": "verb_prefix", "surface": "تَ", "sarf_note": "2nd person imperfect prefix; root ق ب ل"},
+                 {"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "قْبَلُ", "sarf_note": "imperfect stem from root ق ب ل"},
+                 {"class": "qg-subject-pronoun", "label": "SUBJ", "role": "subject_suffix_2mp", "surface": "وا۟", "sarf_note": "masculine plural subject marker"}]}},
+        {"loc": "40:72:4", "expect": "C3",
+         "defective": {
+             "loc": "40:72:4", "surface": "يُسْجَرُونَ", "token_contribution_gloss": "to set on fire",
+             "morphline": "function particle; no lexical root",
+             "learner_explanation": "This token contributes 'to set on fire'.",
+             "segments": [{"class": "qg-particle", "label": "P", "role": "particle_or_preposition", "surface": "يُسْجَرُونَ", "sarf_note": "function particle; no lexical root"}]},
+         "corrected": {
+             "loc": "40:72:4", "surface": "يُسْجَرُونَ", "token_contribution_gloss": "they are set ablaze",
+             "morphline": "root س ج ر · imperfect passive · 3mp",
+             "learner_explanation": "prefix, stem, and plural subject are visible",
+             "segments": [
+                 {"class": "qg-verb-prefix", "label": "PFX", "role": "verb_prefix", "surface": "يُ", "sarf_note": "3rd person imperfect passive prefix; root س ج ر"},
+                 {"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "سْجَرُ", "sarf_note": "imperfect passive stem from root س ج ر"},
+                 {"class": "qg-subject-pronoun", "label": "SUBJ", "role": "subject_suffix_3mp", "surface": "ونَ", "sarf_note": "masculine plural subject marker"}]}},
+        # ---- C4 fallback_leak ----
+        {"loc": "6:84:20", "expect": "C4",
+         "defective": {
+             "loc": "6:84:20", "surface": "نَجْزِى", "token_contribution_gloss": "We reward",
+             "morphline": "root ج ز ي · finite verb form · imperfect active/passive as context requires · 1st person plural · indicative/subjunctive/jussive mood context not separately asserted",
+             "learner_explanation": "the hover exposes the visible prefix/stem/suffix pieces and the person/number/mood facts",
+             "segments": [
+                 {"class": "qg-verb-prefix", "label": "PFX", "role": "verb_prefix", "surface": "نَ", "sarf_note": "1st person plural imperfect prefix; root ج ز ي"},
+                 {"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "جْزِى", "sarf_note": "finite verb stem from root ج ز ي"}]},
+         "corrected": {
+             "loc": "6:84:20", "surface": "نَجْزِى", "token_contribution_gloss": "We reward",
+             "morphline": "root ج ز ي · imperfect active · 1cp · indicative",
+             "learner_explanation": "the نَ marks the first person plural subject; the stem gives reward",
+             "segments": [
+                 {"class": "qg-verb-prefix", "label": "PFX", "role": "verb_prefix", "surface": "نَ", "sarf_note": "1st person plural imperfect prefix; root ج ز ي"},
+                 {"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "جْزِى", "sarf_note": "imperfect stem from root ج ز ي"}]}},
+        {"loc": "2:40:3", "expect": "C4",
+         "defective": {
+             "loc": "2:40:3", "surface": "ٱذْكُرُوا۟", "token_contribution_gloss": "remember",
+             "morphline": "root ذ ك ر · finite verb form · perfect/imperative active/passive as context requires · 3mp · indicative/subjunctive/jussive mood context not separately asserted",
+             "learner_explanation": "the hover exposes the visible prefix/stem/suffix pieces and the person/number/mood facts",
+             "segments": [
+                 {"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "ٱذْكُرُ", "sarf_note": "finite verb stem from root ذ ك ر"},
+                 {"class": "qg-subject-pronoun", "label": "SUBJ", "role": "subject_suffix_3mp", "surface": "وا۟", "sarf_note": "visible 3mp subject ending"}]},
+         "corrected": {
+             "loc": "2:40:3", "surface": "ٱذْكُرُوا۟", "token_contribution_gloss": "remember",
+             "morphline": "root ذ ك ر · imperative active · 2mp",
+             "learner_explanation": "the imperative stem gives remember and the plural ending marks you all",
+             "segments": [
+                 {"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "ٱذْكُرُ", "sarf_note": "imperative stem from root ذ ك ر"},
+                 {"class": "qg-subject-pronoun", "label": "SUBJ", "role": "subject_suffix_2mp", "surface": "وا۟", "sarf_note": "visible 2mp subject ending"}]}},
+        # ---- C5 suffix_swallow ----
+        {"loc": "7:43:33", "expect": "C5",
+         "defective": {
+             "loc": "7:43:33", "surface": "أُورِثْتُمُوهَا", "token_contribution_gloss": "you inherited it",
+             "morphline": "root و ر ث · passive verb + 2mp subject + 3fs object",
+             "learner_explanation": "the ending marks you all and it",
+             "segments": [{"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "أُورِثْتُمُوهَا", "sarf_note": "passive finite verb from root و ر ث with subject/object"}]},
+         "corrected": {
+             "loc": "7:43:33", "surface": "أُورِثْتُمُوهَا", "token_contribution_gloss": "you all inherited it",
+             "morphline": "root و ر ث · passive perfect · 2mp subject · 3fs object",
+             "learner_explanation": "the subject ending marks you all and the object pronoun marks it",
+             "segments": [
+                 {"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "أُورِثْتُ", "sarf_note": "passive perfect stem from root و ر ث"},
+                 {"class": "qg-subject-pronoun", "label": "SUBJ", "role": "subject_suffix_2mp", "surface": "تُمُو", "sarf_note": "2mp subject connector"},
+                 {"class": "qg-object-pronoun", "label": "OBJ", "role": "object_pronoun_3fs", "surface": "هَا", "sarf_note": "3fs attached object pronoun"}]}},
+        {"loc": "2:235:17", "expect": "C5",
+         "defective": {
+             "loc": "2:235:17", "surface": "سَتَذْكُرُونَهُنَّ", "token_contribution_gloss": "will mention them",
+             "morphline": "noun/proper-name token · root not certified in frozen row",
+             "learner_explanation": "contributes 'will mention them' in this example.",
+             "segments": [{"class": "qg-noun-stem", "label": "N", "role": "noun_stem", "surface": "سَتَذْكُرُونَهُنَّ", "sarf_note": "noun/proper-name token · root not certified in frozen row"}]},
+         "corrected": {
+             "loc": "2:235:17", "surface": "سَتَذْكُرُونَهُنَّ", "token_contribution_gloss": "you will mention them",
+             "morphline": "root ذ ك ر · imperfect active · 2mp · future سَـ · 3fp object",
+             "learner_explanation": "the future sīn, the prefix, the plural subject, and the object pronoun are all visible",
+             "segments": [
+                 {"class": "qg-future-particle", "label": "FUT", "role": "future_particle", "surface": "سَ", "sarf_note": "future particle sīn"},
+                 {"class": "qg-verb-prefix", "label": "PFX", "role": "verb_prefix", "surface": "تَ", "sarf_note": "2nd person imperfect prefix; root ذ ك ر"},
+                 {"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "ذْكُرُ", "sarf_note": "imperfect stem from root ذ ك ر"},
+                 {"class": "qg-subject-pronoun", "label": "SUBJ", "role": "subject_suffix_2mp", "surface": "ونَ", "sarf_note": "masculine plural subject marker"},
+                 {"class": "qg-object-pronoun", "label": "OBJ", "role": "object_pronoun_3fp", "surface": "هُنَّ", "sarf_note": "3fp attached object pronoun"}]}},
+        # ---- negatives: known false alarms; each MUST pass (no class fires) ----
+        {"loc": "102:3:3", "expect": None, "negative": True,
+         "row": {
+             "loc": "102:3:3", "surface": "تَعْلَمُونَ", "token_contribution_gloss": "you know",
+             "morphline": "root ع ل م · Form I imperfect active · +SUBJ 2mp · future supplied by سَوْفَ",
+             "learner_explanation": "تَعْلَمُ is the verb stem, ونَ marks the plural subject, and سَوْفَ supplies the future",
+             "segments": [
+                 {"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "تَعْلَمُ", "sarf_note": "sarf: Form I imperfect stem from ع ل م"},
+                 {"class": "qg-subject-pronoun", "label": "SUBJ", "role": "subject_marker_2mp", "surface": "ونَ", "sarf_note": "sarf: masculine plural subject marker"}]}},
+        {"loc": "4:144:17", "expect": None, "negative": True,
+         "row": {
+             "loc": "4:144:17", "surface": "مُّبِينًا", "token_contribution_gloss": "clear",
+             "morphline": "adjective/active participle · root b-y-n",
+             "learner_explanation": "The Arabic adjective describes the authority as clear or manifest.",
+             "segments": [{"class": "qg-adjective", "label": "TOK", "role": "whole_token", "surface": "مُّبِينًا", "sarf_note": "sarf: adjective/active participle · root b-y-n"}]}},
+    ]
+
+
+def _self_test_live():
+    """Red-first proof for the live-row classes C1..C5 against the 9 positives + 2 negatives."""
+    failures = []
+    fired_classes = set()
+    for fx in _live_fixtures():
+        loc = fx["loc"]
+        if fx.get("negative"):
+            hits = classify_live_row(fx["row"])
+            if hits:
+                failures.append("negative %s must PASS all live classes but fired %s"
+                                % (loc, [c for c, _ in hits]))
+            continue
+        want = fx["expect"]
+        red = {c for c, _ in classify_live_row(fx["defective"])}
+        if want not in red:
+            failures.append("positive %s defective row must be REJECTED by %s but fired only %s"
+                            % (loc, want, sorted(red)))
+        else:
+            fired_classes.add(want)
+        green = {c for c, _ in classify_live_row(fx["corrected"])}
+        if want in green:
+            failures.append("positive %s corrected row must PASS %s but it still fired" % (loc, want))
+    for cls in LIVE_CLASSES:
+        if cls not in fired_classes:
+            failures.append("no fixture exercised class %s red-first" % cls)
+    return failures
+
+
+def scan_whitelist(path):
+    """Read-only classifier scan over a live rich-hover whitelist JSONL. Returns per-class counts."""
+    counts = {c: 0 for c in LIVE_CLASSES}
+    distinct = set()
+    rows = 0
+    for _line_no, rec in _read_jsonl(path):
+        rows += 1
+        hit_classes = {c for c, _ in classify_live_row(rec)}
+        for c in hit_classes:
+            counts[c] += 1
+        if hit_classes:
+            distinct.add(rec.get("loc"))
+    return {"rows": rows, "counts": counts,
+            "total_class_hits": sum(counts.values()),
+            "distinct_rows_flagged": len(distinct)}
+
+
 def _self_test():
     failures = []
 
@@ -555,11 +1073,16 @@ def _self_test():
     if "".join(s["surface"] for s in malformed["segments"]) != SURFACE_83_26_5:
         failures.append("malformed segments do not concatenate to the surface")
 
+    # 4. LIVE-ROW classes C1..C5: red-first on the 9 positives, green on the 2 false alarms.
+    failures += _self_test_live()
+
     for f in failures:
         print("FAIL " + f)
     if not failures:
         print("ok   validate_segment_completeness self-test: corrected 83:26:5 passes all 7 gates; "
-              "malformed [FA,STEM] trips every gate %s" % ",".join(ALL_GATES))
+              "malformed [FA,STEM] trips every gate %s; live-row classes %s each reject their "
+              "confirmed positive and pass the corrected shape; 102:3:3 and 4:144:17 pass clean"
+              % (",".join(ALL_GATES), ",".join(LIVE_CLASSES)))
     return 0 if not failures else 1
 
 
@@ -568,9 +1091,20 @@ def main():
     ap.add_argument("metadata", nargs="?", help="path to a rich-hover morphosyntax JSONL")
     ap.add_argument("--self-test", action="store_true", help="run the red-first self-test and exit")
     ap.add_argument("--emit-fixture", dest="emit", help="write the corrected 83:26:5 exemplar JSONL")
+    ap.add_argument("--scan-whitelist", dest="scan",
+                    help="read-only C1..C5 classifier scan over a live rich-hover whitelist JSONL")
     a = ap.parse_args()
     if a.self_test:
         return _self_test()
+    if a.scan:
+        rep = scan_whitelist(a.scan)
+        print("scanned %d rich-hover whitelist row(s) for completeness defects" % rep["rows"])
+        for c in LIVE_CLASSES:
+            print("  %s  count=%d" % (c, rep["counts"][c]))
+        print("total_class_hits=%d  distinct_rows_flagged=%d"
+              % (rep["total_class_hits"], rep["distinct_rows_flagged"]))
+        print(json.dumps(rep, ensure_ascii=False, sort_keys=True))
+        return 0
     if a.emit:
         return emit_fixture(a.emit)
     if not a.metadata:
