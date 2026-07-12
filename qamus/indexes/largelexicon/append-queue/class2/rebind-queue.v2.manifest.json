@@ -1,0 +1,19 @@
+{
+  "candidate_only": true,
+  "crosswalk_shard_count": 210,
+  "generator": "tools/enrich_rebind_queue.py",
+  "inputs": {
+    "qamus/data/current/entries.jsonl": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d",
+    "qamus/indexes/current/by-normalized-surface.json": "be0aba31516bd64c12b1d2470bcc60c56736b936afb2923b5af6841a90140464",
+    "qamus/indexes/current/by-root.json": "7349990175a0a44a847e0d4235199ec7dab32b220b28c22f067ef5c25a2eb306",
+    "qamus/indexes/largelexicon/append-queue/append-queue.jsonl": "d726cfeb033796f25f5ffa31d9f3df876d75638b080d43f9b155b47bac62a364",
+    "qamus/indexes/largelexicon/append-queue/class2/rebind-queue.jsonl": "20381420253f1196726b848c3ea1e42600f1f5ef7341d9dfaedf4285fff4f138",
+    "qamus/indexes/quran-loc-surface/index.jsonl": "97efbaca345d5f23d9e9c699eef155f5bf4e06bb725e430729a8962b1573d227"
+  },
+  "outputs": {
+    "qamus/indexes/largelexicon/append-queue/class2/rebind-queue.v2.jsonl": "783e916ec4a5c0970ebaf7c616d87e6133959dde6c39ef252b07663c1aea53c9",
+    "qamus/indexes/largelexicon/append-queue/class2/rebind-queue.v2.report.json": "01fd5887ebb84de557d5e844abd079024651bb2ff9ae4757b3f5f10817e45a7c"
+  },
+  "row_count": 2330,
+  "schema": "qamus/class2-rebind-enrichment-manifest@1"
+}
