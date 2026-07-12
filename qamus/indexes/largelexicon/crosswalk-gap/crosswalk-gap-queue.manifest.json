@@ -272,9 +272,9 @@
     "v921-v947.jsonl": "0c71f359034464a06f3c6289a6cb9743b0ce79b47a54ed398f0447ef949c09ba"
   },
   "family_counts": {
-    "affirmed_live_no_canonical_carrier": 79,
+    "affirmed_live_no_canonical_carrier": 215,
     "insufficient_convention_exemplars": 2,
-    "multiple_qword_candidates": 4701,
+    "multiple_qword_candidates": 4565,
     "no_qword_candidate": 8,
     "resolved_canonical_morphline_repair": 11,
     "tie_unresolved": 2,
@@ -296,9 +296,22 @@
   "modeled_locations": 42732,
   "morphline_approved_manifest_sha256": "f0a4dc4c154cf67d2c918ecd04fa853e19392ceb6f448f0d41626e231058820f",
   "queue_rows": 4854,
-  "queue_sha256": "e703ed68afd8f3aa584d9dcf2470543140a4d3a8a9b2036e2d24442abcc245b8",
+  "queue_sha256": "4d249ff2c99a01fadacabe99d1b1c8d665909431848a222a1958eb42bf8fc106",
   "repair_generation_id": "sha256:cef6975f3a2e050f83ea15fead1b5addb052e4a2c77fd3e5f3ef54f56f313352",
   "schema": "qamus.crosswalk_gap_queue_manifest.v1",
+  "wave_04_affirm_live_t3_due_process": {
+    "active_live_only_after": 4843,
+    "active_live_only_before": 4843,
+    "gate_fail": 0,
+    "gate_pass": 136,
+    "ledger_store": "qamus/indexes/largelexicon/fact-ledger/laneb-review.jsonl",
+    "promoted_at": "2026-07-12T00:00:00Z",
+    "queue_after": 4854,
+    "queue_before": 4854,
+    "report": "qamus/indexes/largelexicon/crosswalk-gap/laneb-wave-04-affirm-live-t3.report.json",
+    "report_sha256": "4d7d4571d8a0e6cfd83003d22d6b205776e80df0ec36e1a547a29690fa5e33ae",
+    "resolution_method": "wave4_affirm_live_t3_due_process_v1"
+  },
   "wave_04_promotion": {
     "affirmed_live_no_canonical_carrier": 79,
     "disagreements_annotated": 138,
