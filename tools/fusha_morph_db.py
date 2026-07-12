@@ -58,7 +58,11 @@ def load_morph_db(db: str = "smoke") -> dict[str, list[dict[str, Any]]]:
     else:
         rows["largelexicon_stems"] = []
         rows["largelexicon_source"] = []
-    rows["db"] = [{"name": db, "claim": "candidate morphology data; not arbitrary-text certification"}]
+    rows["db"] = [{
+        "name": db,
+        "table_role": "lookup_evidence_baseline",
+        "claim": "documented-form lookup/evidence baseline; contains no generated morphology",
+    }]
     return rows
 
 

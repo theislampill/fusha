@@ -1,0 +1,26 @@
+{
+  "fixtures": {
+    "emitted": {
+      "path": "fusha/morphology/fixtures/rm40-eval-emitted.jsonl",
+      "sha256": "74a823872502ac1a00357dc5247b45ba333429ab0c2c927ba70e219c87226a79"
+    },
+    "gold": {
+      "path": "fusha/morphology/fixtures/rm40-eval-gold.jsonl",
+      "sha256": "6694bed8382c4b481f30d0a9d2e61dac33e57ceeea75c51f5e03ece1dbb000b8"
+    }
+  },
+  "gold_sources": {
+    "eqtb": {
+      "citation": "Mendeley 10.17632/rk96pn66m4.1",
+      "license": "CC BY 4.0",
+      "sha256": "TO_PIN"
+    },
+    "quranmorph": {
+      "citation": "arXiv:2506.18148",
+      "license": "CC BY 4.0",
+      "sha256": "TO_PIN"
+    }
+  },
+  "note": "Synthetic offline fixtures for the RM-40 generation eval self-test. Real gold-set (QuranMorph CC BY 4.0 + EQTB) runs use user-local hash-pinned data, never committed.",
+  "schema": "fusha/rm40-data-manifest@1"
+}

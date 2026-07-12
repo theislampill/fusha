@@ -34,6 +34,24 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 
+def is_generation_deploy_eligible(row):
+    """Live-deploy discriminator gate (RM-40): fail-closed on generated forms.
+
+    The sarf projection branch already stamps ``generation_used: False`` on the
+    sourced-baseline signal (see the classifier below). This guard is the
+    belt-and-suspenders enforcement for any downstream whitelist/merge step: a
+    row is deploy-eligible ONLY if it is a materialized, sourced (non-generated)
+    baseline fact. A ``generation_used: true`` row is refused even if it somehow
+    reaches ``materialized`` in the ledger — paradigm-generated candidates can
+    never enter the live hover surface.
+    """
+    return (
+        row.get("generation_used", False) is False
+        and row.get("certification_state") == "materialized"
+        and row.get("source") == "qamus_current_authored"
+    )
+
+
 def read_jsonl(path):
     with io.open(path, encoding="utf-8") as handle:
         for line_number, line in enumerate(handle, 1):

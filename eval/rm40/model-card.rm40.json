@@ -1,0 +1,7 @@
+{
+  "candidates_never_facts": true,
+  "claim": "RM-40 paradigm-generated candidates; precision/recall vs QuranMorph+EQTB surfaces; per-slot; no aggregate; fabrication-budget=0; candidates-never-facts; QAC consult-only",
+  "deploy_eligible": false,
+  "gate_tier": "two_vote_required",
+  "schema": "fusha/rm40-model-card@1"
+}

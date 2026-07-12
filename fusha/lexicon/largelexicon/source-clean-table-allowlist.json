@@ -1,5 +1,5 @@
 {
-  "claim_boundary": "Only source-clean Qamus-authored generated fact tables are committed. Raw QAC/MCP/Quran.com/Tafsir payloads remain private evidence/cache data.",
+  "claim_boundary": "Only source-clean Qamus-authored generated fact tables are committed. Raw QAC/MCP/Quran.com/Tafsir payloads remain private evidence/cache data. Baseline rows are sourced documented forms (the lookup/evidence baseline); RM-40 paradigm-generated candidate forms live in a separate artifact and are never merged into these tables.",
   "generated_at": "2026-07-01T12:05:22Z",
   "generated_by": "tools.largelexicon_common",
   "private_only_sources": [
@@ -28,7 +28,8 @@
       "path": "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
       "raw_external_allowed": false,
       "schema": "fusha/largelexicon/lemma-source@1",
-      "source": "qamus_current_authored"
+      "source": "qamus_current_authored",
+      "table_role": "lookup_evidence_baseline"
     },
     {
       "commit_allowed": true,
@@ -36,7 +37,8 @@
       "path": "fusha/lexicon/largelexicon/form-source.full.jsonl",
       "raw_external_allowed": false,
       "schema": "fusha/largelexicon/form-source@1",
-      "source": "qamus_current_authored"
+      "source": "qamus_current_authored",
+      "table_role": "lookup_evidence_baseline"
     },
     {
       "commit_allowed": true,
@@ -44,7 +46,8 @@
       "path": "fusha/morphology/data/largelexicon-stems.full.jsonl",
       "raw_external_allowed": false,
       "schema": "fusha/largelexicon/stem-source@1",
-      "source": "qamus_current_authored"
+      "source": "qamus_current_authored",
+      "table_role": "lookup_evidence_baseline"
     },
     {
       "commit_allowed": true,
@@ -54,6 +57,7 @@
       "raw_external_allowed": false,
       "schema": "qamus/largelexicon-qword-denominator-manifest@1",
       "source": "qamus_current_authored",
+      "table_role": "lookup_evidence_baseline",
       "storage": "sharded_jsonl_manifest"
     },
     {
@@ -64,6 +68,7 @@
       "raw_external_allowed": false,
       "schema": "qamus/largelexicon-qword-crosswalk-manifest@1",
       "source": "qamus_current_authored",
+      "table_role": "lookup_evidence_baseline",
       "storage": "sharded_jsonl_manifest"
     }
   ]

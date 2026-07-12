@@ -1,0 +1,98 @@
+{
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/paradigm-generated-candidate.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One RM-40 paradigm-licensed generated candidate. Generated forms are CANDIDATES-NEVER-FACTS: certification_state is always 'candidate', generation_used is always true, source is always 'paradigm_generated' (never 'qamus_current_authored'), supersedes is always null (a generated row may never supersede a sourced baseline fact), and provenance carries the paradigm id plus the passed rule chain. These rows live in a store disjoint from the sourced lookup/evidence baseline and are not deployment-eligible.",
+  "properties": {
+    "candidate_id": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "certification_state": {
+      "const": "candidate"
+    },
+    "competing_alternatives": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "generated_surface": {"minLength": 1, "type": "string"},
+          "surface_norm_strict": {"minLength": 1, "type": "string"},
+          "wazn": {"minLength": 1, "type": "string"},
+          "semantic_tie": {"type": "boolean"}
+        },
+        "required": ["generated_surface", "surface_norm_strict", "semantic_tie"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "generation_used": {
+      "const": true
+    },
+    "provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "actor": {"const": "sarf.paradigm_generated.v1"},
+        "method": {"const": "paradigm_licensed_generation"},
+        "paradigm_id": {"minLength": 1, "type": "string"},
+        "rule_chain": {
+          "items": {"minLength": 1, "type": "string"},
+          "minItems": 1,
+          "type": "array"
+        },
+        "input_source": {"minLength": 1, "type": "string"},
+        "created_at": {"minLength": 1, "type": "string"}
+      },
+      "required": ["actor", "method", "paradigm_id", "rule_chain", "input_source", "created_at"],
+      "type": "object"
+    },
+    "schema": {
+      "const": "qamus.paradigm_generated_candidate.v1"
+    },
+    "semantic_tie": {
+      "type": "boolean"
+    },
+    "source": {
+      "const": "paradigm_generated"
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "pos": {"enum": ["verb", "noun"], "type": "string"},
+        "lemma": {"minLength": 1, "type": "string"},
+        "root": {"minLength": 1, "type": "string"},
+        "measure": {"type": ["string", "null"]},
+        "slot": {"minLength": 1, "type": "string"}
+      },
+      "required": ["pos", "lemma", "root", "slot"],
+      "type": "object"
+    },
+    "supersedes": {
+      "type": "null"
+    },
+    "value": {
+      "additionalProperties": false,
+      "properties": {
+        "generated_surface": {"minLength": 1, "type": "string"},
+        "surface_norm_strict": {"minLength": 1, "type": "string"},
+        "wazn": {"minLength": 1, "type": "string"}
+      },
+      "required": ["generated_surface", "surface_norm_strict", "wazn"],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "candidate_id",
+    "certification_state",
+    "generation_used",
+    "source",
+    "subject",
+    "value",
+    "competing_alternatives",
+    "semantic_tie",
+    "provenance",
+    "supersedes"
+  ],
+  "title": "Qamus RM-40 paradigm-generated candidate v1",
+  "type": "object"
+}
