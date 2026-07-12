@@ -12,12 +12,18 @@ rules. This file is the orientation.
 
 ## The one-sentence rule
 
-> **External sources are *internal evidence* used to check our own work; the only
-> thing we *publish* is original content we authored and can stand behind, and a
-> public hover/gloss artifact carries `{src:'qamus', kind:'authored', lang:'en'}` and nothing
-> else.**
+> **External sources are *internal evidence* used to check and inform our own work;
+> what we *publish* is content we compiled and edited for Qamus's own lexical,
+> morphological, and pedagogical purposes and can stand behind — and every public
+> hover/gloss artifact carries `{src:'qamus', kind:'authored', lang:'en'}` and nothing
+> else, never an external source name, address, or other internal provenance
+> metadata.**
 
-Everything below is an unpacking of that sentence.
+Everything below is an unpacking of that sentence. On the provenance of the
+*expression* (as opposed to this output boundary), this file follows owner decision
+**D-12** in [`qamus/data/current/NOTICE.md`](../qamus/data/current/NOTICE.md); the
+deeper dataset-licensing adjudication **D-01** ([`docs/CLAIMS-AND-RELEASES.md`](../docs/CLAIMS-AND-RELEASES.md))
+is open and nothing here preempts it.
 
 ## Two kinds of "source"
 
@@ -27,11 +33,12 @@ other:
 | Role | What it means | What it may touch |
 |---|---|---|
 | **Evidence (internal)** | A reference we consulted *while authoring* to check a root, a part of speech, a verse boundary, or our reading of a word. | Private notes, validation scripts, `informed_by` labels in **internal** schemas. |
-| **Publication (public)** | Text/data we wrote ourselves and are willing to attach our name to. | The committed files in this repo; the public hover artifact. |
+| **Publication (public)** | Text/data we compiled and edited ourselves and are willing to attach our name to. | The committed files in this repo; the public hover artifact. |
 
 The boundary between these two roles is the whole point of this directory. A fact
 we *learned* from an external corpus does not become *publishable* by being true —
-it becomes publishable by being **re-authored as our own original content**.
+it becomes publishable by being **re-authored as our own compiled and edited
+expression**.
 
 ## What is and isn't copyrightable (why this is allowed at all)
 
@@ -41,13 +48,27 @@ it becomes publishable by being **re-authored as our own original content**.
   corpus we consulted as an `informed_by` label **internally**.
 - **Expressive text is copyrightable.** A particular English gloss, a definition's
   wording, an explanatory note, a curated example sentence — these are someone's
-  authored expression. We **never copy** them. We write our own.
+  authored expression. During authoring such editions and references **may be
+  consulted as comparative evidence**; what we publish is compiled and edited for
+  Qamus's own purposes. Because every rendering describes the same Arabic source
+  text, ordinary overlap of individual words, conventional expressions, or
+  semantically constrained passages can occur and does **not**, by itself, establish
+  that a rendering was copied from any particular source. Where wording is
+  *intentionally reproduced* from an identified external edition rather than
+  independently authored or synthesized, that source is **recorded and attributed**
+  under its applicable terms; the deeper provenance question may otherwise remain
+  unadjudicated (D-01, see the note at the top of this file). What we never do is
+  *paste* external gloss text into the published output or ship it under Qamus's
+  name without that record — if we cannot author a word ourselves it stays `PENDING`
+  (see the public-hover invariant below).
 - **The Qurʾanic text itself is not ours to alter.** We reproduce it unchanged or
   not at all (see `source-boundaries.md` §4).
 
 So: *roots and POS tags may be checked against external corpora and labelled as
-`informed_by` internally; glosses, definitions, and notes are authored from
-scratch.*
+`informed_by` **internally**; glosses, definitions, and notes are authored and
+edited for Qamus's own purposes — comparative sources may inform them, overlap
+alone does not establish derivation, and any intentional reproduction is recorded
+and attributed rather than shipped silently.*
 
 ## The public-hover invariant
 

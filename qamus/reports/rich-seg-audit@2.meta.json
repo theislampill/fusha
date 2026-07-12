@@ -1,0 +1,249 @@
+{
+  "authoritative_classifier": {
+    "branch": "rich-seg-completeness-v2",
+    "commit": "7469c025",
+    "mode": "classify_live_row (C1..C5) over the runtime schema",
+    "repo": "fusha",
+    "tool": "tools/validate_segment_completeness.py"
+  },
+  "candidate_unreviewed_count": 1389,
+  "confirmed_defect_count": 14,
+  "confirmed_valid_count": 0,
+  "denominator_semantics": {
+    "authoritative_candidate_denominator": 1403,
+    "candidate_denominator_note": "UNIQUE-UNION of gate-flagged rows. This is a CANDIDATE total, NOT a confirmed-defect total.",
+    "confirmed_so_far": 14,
+    "wave_sizing_rule": "Production wave sizes derive ONLY from confirmed/calibrated subsets, never from the candidate total."
+  },
+  "false_positive_classes_removed_by_v2_gate": [
+    "مواقيت 2:189:6 (was a C2-style false alarm in looser audits; v2 gate does NOT flag)",
+    "منازل 36:39:3 (was a C2-style false alarm in looser audits; v2 gate does NOT flag)",
+    "102:3:3 تعلمون and 4:144:17 مبينا (v2 gate passes clean)"
+  ],
+  "false_positives_confirmed": [],
+  "ground_truth_locs_observed_in_flagged_set": {
+    "12:82:11": [
+      "confirmed_defect",
+      "C3",
+      "C3"
+    ],
+    "24:4:13": [
+      "confirmed_defect",
+      "C3",
+      "C3"
+    ],
+    "27:49:14": [
+      "confirmed_defect",
+      "C3",
+      "C3"
+    ],
+    "27:49:4": [
+      "confirmed_defect",
+      "C3",
+      "C3"
+    ],
+    "2:235:17": [
+      "confirmed_defect",
+      "C5",
+      "C5"
+    ],
+    "2:40:3": [
+      "confirmed_defect",
+      "C4",
+      "C4"
+    ],
+    "2:91:3": [
+      "confirmed_defect",
+      "C1",
+      "C1"
+    ],
+    "40:72:4": [
+      "confirmed_defect",
+      "C3",
+      "C3"
+    ],
+    "46:24:4": [
+      "confirmed_defect",
+      "C2",
+      "C2"
+    ],
+    "6:84:20": [
+      "confirmed_defect",
+      "C4",
+      "C4"
+    ],
+    "76:23:6": [
+      "confirmed_defect",
+      "C2",
+      "C2"
+    ],
+    "7:43:33": [
+      "confirmed_defect",
+      "C5",
+      "C5"
+    ],
+    "83:26:5": [
+      "confirmed_defect",
+      "C1",
+      "C1"
+    ],
+    "9:107:3": [
+      "confirmed_defect",
+      "C2",
+      "C2"
+    ]
+  },
+  "ground_truth_not_flagged": {
+    "2:189:6": {
+      "gate_verdict": "true_negative_gate_correctly_passed",
+      "gt_state": "confirmed_valid"
+    },
+    "36:39:3": {
+      "gate_verdict": "true_negative_gate_correctly_passed",
+      "gt_state": "confirmed_valid"
+    },
+    "39:42:2": {
+      "gate_verdict": "false_negative_gate_MISS",
+      "gt_state": "confirmed_defect"
+    }
+  },
+  "known_true_negatives_not_flagged": {
+    "102:3:3": "brief false-alarm تعلمون — v2 gate passes clean (negative fixture)",
+    "4:144:17": "brief false-alarm مبينا — v2 gate passes clean (negative fixture)"
+  },
+  "multi_detector_rows": 25,
+  "mutually_exclusive_primary_partition": {
+    "C1": 254,
+    "C2": 128,
+    "C3": 5,
+    "C4": 523,
+    "C5": 493
+  },
+  "overlap_dedup_delta": 25,
+  "per_class": {
+    "C1": {
+      "candidate_unreviewed": 252,
+      "confirmed_defect": 2,
+      "confirmed_valid": 0,
+      "name": "stem_swallow",
+      "primary_partition": 254,
+      "raw_detector_hits": 254,
+      "secondary_overlap": 0
+    },
+    "C2": {
+      "candidate_unreviewed": 125,
+      "confirmed_defect": 3,
+      "confirmed_valid": 0,
+      "name": "whole_token_root",
+      "primary_partition": 128,
+      "raw_detector_hits": 128,
+      "secondary_overlap": 0
+    },
+    "C3": {
+      "candidate_unreviewed": 0,
+      "confirmed_defect": 5,
+      "confirmed_valid": 0,
+      "name": "misclassified_function",
+      "primary_partition": 5,
+      "raw_detector_hits": 5,
+      "secondary_overlap": 0
+    },
+    "C4": {
+      "candidate_unreviewed": 521,
+      "confirmed_defect": 2,
+      "confirmed_valid": 0,
+      "name": "fallback_leak",
+      "primary_partition": 523,
+      "raw_detector_hits": 529,
+      "secondary_overlap": 6
+    },
+    "C5": {
+      "candidate_unreviewed": 491,
+      "confirmed_defect": 2,
+      "confirmed_valid": 0,
+      "name": "suffix_swallow",
+      "primary_partition": 493,
+      "raw_detector_hits": 512,
+      "secondary_overlap": 19
+    }
+  },
+  "precision_interval_per_class": {
+    "C1": {
+      "false_pos": 0,
+      "note": "point estimate from a SMALL ground-truth sample; NOT a confirmed population rate. Wide Wilson 95%% interval reflects the tiny n.",
+      "point": 1.0,
+      "sample_n": 2,
+      "true_pos": 2,
+      "wilson95": [
+        0.3424,
+        1.0
+      ]
+    },
+    "C2": {
+      "false_pos": 0,
+      "note": "point estimate from a SMALL ground-truth sample; NOT a confirmed population rate. Wide Wilson 95%% interval reflects the tiny n.",
+      "point": 1.0,
+      "sample_n": 3,
+      "true_pos": 3,
+      "wilson95": [
+        0.4385,
+        1.0
+      ]
+    },
+    "C3": {
+      "false_pos": 0,
+      "note": "point estimate from a SMALL ground-truth sample; NOT a confirmed population rate. Wide Wilson 95%% interval reflects the tiny n.",
+      "point": 1.0,
+      "sample_n": 5,
+      "true_pos": 5,
+      "wilson95": [
+        0.5655,
+        1.0
+      ]
+    },
+    "C4": {
+      "false_pos": 0,
+      "note": "point estimate from a SMALL ground-truth sample; NOT a confirmed population rate. Wide Wilson 95%% interval reflects the tiny n.",
+      "point": 1.0,
+      "sample_n": 2,
+      "true_pos": 2,
+      "wilson95": [
+        0.3424,
+        1.0
+      ]
+    },
+    "C5": {
+      "false_pos": 0,
+      "note": "point estimate from a SMALL ground-truth sample; NOT a confirmed population rate. Wide Wilson 95%% interval reflects the tiny n.",
+      "point": 1.0,
+      "sample_n": 2,
+      "true_pos": 2,
+      "wilson95": [
+        0.3424,
+        1.0
+      ]
+    }
+  },
+  "raw_hits_per_detector": {
+    "C1": 254,
+    "C2": 128,
+    "C3": 5,
+    "C4": 529,
+    "C5": 512
+  },
+  "report": "rich-seg-audit@2",
+  "secondary_overlap_counts": {
+    "C1": 0,
+    "C2": 0,
+    "C3": 0,
+    "C4": 6,
+    "C5": 19
+  },
+  "total_class_hits_pre_dedup": 1428,
+  "unique_union_rows_flagged": 1403,
+  "whitelist": {
+    "path_basename": "rh_live_01_beta_whitelist.jsonl",
+    "rows": 34322,
+    "sha256_16": "1f362abe6ebdba1d"
+  }
+}
