@@ -550,6 +550,37 @@ def build_sense_companion():
 #   * C2 clitic-presence / clean-participle guard + transliterated-root
 #     recognition let 4:144:17 مُّبِينًا (Form IV participle, zero clitics) PASS
 #     while 9:107:3 مَسْجِدًا (root uncertified) is REJECTED.
+#
+# v3 recall extension (rich-seg-detector-v3; CANDIDATES ONLY, never certification):
+#   * C2 derived-verb signatures — the v2 heuristic only recognised است/مست/مـ/تـ
+#     leads, so a weak-root (لفيف/ناقص/أجوف) derived VERB flattened to a single
+#     whole-token segment with its root unasserted slipped through. The audited
+#     false-negative is 39:42:2 يَتَوَفَّى (root و ف ي, Form V يَتَفَعَّلُ, مُعْتَلٌّ
+#     لَفِيفٌ مَفْرُوقٌ): imperfect prefix يـ + derivational tāʾ, root never
+#     asserted (morphline literally "whole_token"). Three whitelist-calibrated
+#     verb signatures now fire on a root-UNASSERTED whole-token:
+#       V1  imperfect-prefix / hamza(-waṣl) lead + tāʾ second letter
+#           (يت/تت/نت/أت/ات/إت — the Form V/VI/VIII derived family, plus أتى),
+#       V2  the Form X sīn-tāʾ augment behind the same leads (يست/تست/نست/أست),
+#       V3  a yāʾ-initial imperfect plural (يـ…ون / يـ…وا, length >= 5).
+#     Classical ṣarf rules the Form V/VI tāʾ a زائد wazn augment INSIDE the stem
+#     (QAC segments 83:26:5 as REM+IMPV+V with the tāʾ stem-internal), so these
+#     signatures never demand splitting the tāʾ out — they only flag that a
+#     derived-form token's ROOT is unasserted. A root-asserted Form V/VI whole
+#     token (and every participle/adjective/proper-noun) stays clean, so the
+#     confirmed-valid مَوَٰقِيتُ 2:189:6 and مَنَازِلَ 36:39:3 keep passing.
+#   * C3 content-noun signatures — a content noun/adjective misfiled as a
+#     function particle was previously caught only when it looked like a finite
+#     verb. Two precision-calibrated nominal signatures now fire on a
+#     function-only segment: (N1) definite-article lead ال at bare length >= 5,
+#     minus the relative pronouns (ٱلَّذِى family — genuine function words);
+#     (N2) tanwīn nunation in the raw surface at bare length >= 4 (a nunated
+#     token is a noun, never a particle; the length floor keeps the genuine
+#     nunated particle إِذًۭا and the compensation-tanwīn ئِذٍ of يَوْمَئِذٍ clean).
+#
+# Two-tier contract: classify_live_row is the CANDIDATE-GENERATOR tier. Its
+# output is a review queue for the authoring/certification pipeline; it never
+# writes a certification, a public root, or any whitelist/live mutation.
 # ===========================================================================
 
 # Diacritics to strip for leading-letter / enclitic detection on runtime rows.
@@ -590,6 +621,17 @@ _GLOSS_PRON = (" him", " them", " us", " your", " his", " its", " her", "you")
 _PERF_SUBJ_SUFFIX = ("نا", "تم", "تن", "وا", "تما")
 _VOC_DEM_MARKERS = ("vocative", "demonstrative", "deictic", "addressee", "addressed")
 _PARTICLE_STOPLIST = {"افلا", "انما", "اينما", "اولا", "الا", "اما", "اءنك", "اءن", "اذا", "اذ"}
+
+# v3: leads that can begin a derived-form verb token (imperfect agreement prefixes
+# يـ/تـ/نـ/أـ plus the hamzat-waṣl carriers ا/إ of the Form VIII perfect/maṣdar).
+_IMPF_WHOLE = set("يتنأاإ")
+# v3: relative pronouns (and the divine-name shapes) that legitimately begin with ال
+# yet ARE function words — excluded from the C3 definite-article content signature.
+_RELATIVE_BARE = {"الذي", "الذى", "التي", "التى", "الذين", "اللذين", "اللتين",
+                  "اللذان", "اللتان", "اللائي", "اللاتي", "اللواتي", "الذان",
+                  "الله", "اللهم"}
+# v3: tanwīn nunation marks (fatḥatān/ḍammatān/kasratān) in the RAW surface.
+_TANWIN = set("ًٌٍ")
 
 _SUBJ_OBJ_MARKER = re.compile(r"\d[mf][spd]\s+(?:subject|object)")
 _ROOT_ARABIC_RE = re.compile(r"root\s+([؀-ۿ\s]+?)(?:·|\||\-| - |$)")
@@ -710,7 +752,7 @@ def _c2_whole_token_root(rec):
     note = (s.get("sarf_note") or "").lower()
     m = rec.get("morphline") or ""
     bare = _live_bare(s.get("surface"))
-    if not bare or len(bare) < 5:
+    if not bare or len(bare) < 4:
         return errs
     wholeish = (lab in _C2_WHOLE_LABELS or role in _C2_WHOLE_ROLES or cls in _C2_WHOLE_CLASSES)
     if not wholeish:
@@ -725,6 +767,26 @@ def _c2_whole_token_root(rec):
         return errs
     # only a genuinely UNASSERTED root is a defect (Arabic OR transliterated root counts as asserted).
     if _live_root_asserted(m):
+        return errs
+    # ---- v3 derived-verb signatures (recall fix for 39:42:2 يَتَوَفَّى and its family). ----
+    # A derived/finite VERB flattened to one whole-token segment with its root unasserted.
+    # The tāʾ here is the زائد wazn augment of Forms V/VI/VIII (stem-internal per QAC/ṣarf),
+    # so the defect asserted is ONLY the missing root, never a demand to split the tāʾ.
+    # Signatures are whitelist-calibrated (zero noun false-positives against 34,322 rows);
+    # weak roots (لفيف يَتَوَفَّى / ناقص يَتَوَلَّى / أجوف يَسْتَوِى) all carry the same signature.
+    verb_sig = None
+    if bare[0] in _IMPF_WHOLE and bare[1:2] == "ت":
+        verb_sig = "derivational-ta family (Form V/VI/VIII or hamza+ta)"
+    elif len(bare) >= 5 and bare[0] in _IMPF_WHOLE and bare[1:3] == "ست":
+        verb_sig = "Form X sin-ta augment"
+    elif len(bare) >= 5 and bare[0] == "ي" and (bare.endswith("ون") or bare.endswith("وا")):
+        verb_sig = "ya-initial imperfect plural"
+    if verb_sig:
+        errs.append(("C2", "whole_token_root: derived/finite verb whole-token %r (%s) leaves its "
+                          "root unasserted (candidate for root authoring, not certification)"
+                          % (s.get("surface"), verb_sig)))
+        return errs
+    if len(bare) < 5:
         return errs
     derived = False
     if bare.startswith("است") or bare.startswith("مست"):
@@ -762,6 +824,19 @@ def _c3_misclassified_function(rec):
         perf_verb = (bare.endswith("وا") or bare.endswith("ون")) and len(bare) >= 5
         if impf_verb or perf_verb:
             errs.append(("C3", "misclassified_function: %s segment %r is actually a finite verb form" % (cls, s.get("surface"))))
+            continue
+        # ---- v3 content-noun signatures (recall for noun/adjective misfiled as particle). ----
+        # N1: definite-article lead at length >= 5, minus the relative pronouns (genuine
+        #     function words) — e.g. ٱلتَّوْرَىٰةِ / ٱلشَّيْطَٰنُ filed as qg-particle.
+        raw = s.get("surface") or ""
+        defart_noun = (bare.startswith("ال") and len(bare) >= 5 and bare not in _RELATIVE_BARE)
+        # N2: tanwīn nunation marks a NOUN, never a particle; the bare-length >= 4 floor
+        #     keeps the genuine nunated particle إِذًۭا and the compensation-tanwīn ئِذٍ clean.
+        tanwin_noun = (len(bare) >= 4 and any(ch in raw for ch in _TANWIN))
+        if defart_noun or tanwin_noun:
+            sig = "definite-article noun" if defart_noun else "tanwin-nunated noun/adjective"
+            errs.append(("C3", "misclassified_function: %s segment %r is actually a content "
+                              "word (%s)" % (cls, s.get("surface"), sig)))
     return errs
 
 
@@ -844,10 +919,14 @@ def emit_fixture(path):
 
 
 # ---------------------------------------------------------------------------
-# Live-row fixtures: the 9 confirmed positives (each must be REJECTED by its
-# class) + the 2 known false alarms (each must PASS). Each positive carries a
-# `defective` shape (the actual live row) and a `corrected` shape (the complete
-# segmentation) so --self-test proves the class red-first and green-after.
+# Live-row fixtures: 12 confirmed positives (each must be REJECTED by its
+# class; 9 from v2 + the v3 recall trio 39:42:2 / 17:45:1 / 48:29:28) + 7
+# negatives that must PASS (102:3:3, 4:144:17, and the v3 five: the confirmed-
+# valid مَوَٰقِيتُ 2:189:6 and مَنَازِلَ 36:39:3, a root-asserted Form V whole token,
+# the relative pronoun ٱلَّذِينَ, and the nunated particle إِذًۭا). Each positive
+# carries a `defective` shape (the actual live row) and a `corrected` shape
+# (the complete/repaired row) so --self-test proves the class red-first and
+# green-after.
 def _live_fixtures():
     return [
         # ---- C1 stem_swallow ----
@@ -985,6 +1064,46 @@ def _live_fixtures():
                  {"class": "qg-verb-stem", "label": "STEM", "role": "verb_stem", "surface": "ذْكُرُ", "sarf_note": "imperfect stem from root ذ ك ر"},
                  {"class": "qg-subject-pronoun", "label": "SUBJ", "role": "subject_suffix_2mp", "surface": "ونَ", "sarf_note": "masculine plural subject marker"},
                  {"class": "qg-object-pronoun", "label": "OBJ", "role": "object_pronoun_3fp", "surface": "هُنَّ", "sarf_note": "3fp attached object pronoun"}]}},
+        # ---- v3: C2 derived-verb recall — the audited false-negative 39:42:2 يَتَوَفَّى ----
+        # (root و ف ي, Form V يَتَفَعَّلُ, مُعْتَلٌّ لَفِيفٌ مَفْرُوقٌ). The defective shape is the
+        # ACTUAL live whitelist row: one whole-token segment, morphline literally
+        # "whole_token", root never asserted. The corrected shape asserts the root and
+        # keeps the derivational tāʾ inside the stem (stem-internal wazn augment per ṣarf).
+        {"loc": "39:42:2", "expect": "C2",
+         "defective": {
+             "loc": "39:42:2", "surface": "يَتَوَفَّى", "token_contribution_gloss": "takes",
+             "morphline": "whole_token",
+             "learner_explanation": "This word contributes “takes” in the cited example; the visible Arabic pieces are shown in the segments.",
+             "segments": [{"class": "qg-segment", "label": "TOK", "role": "whole_token", "surface": "يَتَوَفَّى", "sarf_note": "sarf: visible whole token"}]},
+         "corrected": {
+             "loc": "39:42:2", "surface": "يَتَوَفَّى", "token_contribution_gloss": "takes",
+             "morphline": "root و ف ي · Form V (يَتَفَعَّلُ) imperfect active · 3ms · indicative",
+             "learner_explanation": "the derivational tāʾ is part of the Form V stem; the weak لفيف root و ف ي is asserted",
+             "segments": [{"class": "qg-segment", "label": "TOK", "role": "whole_token", "surface": "يَتَوَفَّى", "sarf_note": "sarf: Form V imperfect from root و ف ي; the tāʾ is the wazn augment"}]}},
+        # ---- v3: C3 content-noun recall — tanwīn-nunated noun misfiled as a particle ----
+        {"loc": "17:45:1", "expect": "C3",
+         "defective": {
+             "loc": "17:45:1", "surface": "حِجَابًا", "token_contribution_gloss": "veil, barrier",
+             "morphline": "function particle; no lexical root",
+             "learner_explanation": "This token contributes 'veil, barrier'.",
+             "segments": [{"class": "qg-particle", "label": "P", "role": "particle_or_preposition", "surface": "حِجَابًا", "sarf_note": "function particle; no lexical root"}]},
+         "corrected": {
+             "loc": "17:45:1", "surface": "حِجَابًا", "token_contribution_gloss": "a veil",
+             "morphline": "root ح ج ب · noun · accusative indefinite",
+             "learner_explanation": "a barrier or veil from root ح ج ب",
+             "segments": [{"class": "qg-noun-stem", "label": "N", "role": "noun_stem", "surface": "حِجَابًا", "sarf_note": "sarf: noun from root ح ج ب"}]}},
+        # ---- v3: C3 content-noun recall — definite-article noun misfiled as a particle ----
+        {"loc": "48:29:28", "expect": "C3",
+         "defective": {
+             "loc": "48:29:28", "surface": "ٱلتَّوْرَىٰةِ", "token_contribution_gloss": "the Torah",
+             "morphline": "function particle; no lexical root",
+             "learner_explanation": "This token contributes 'the Torah'.",
+             "segments": [{"class": "qg-particle", "label": "P", "role": "particle_or_preposition", "surface": "ٱلتَّوْرَىٰةِ", "sarf_note": "function particle; no lexical root"}]},
+         "corrected": {
+             "loc": "48:29:28", "surface": "ٱلتَّوْرَىٰةِ", "token_contribution_gloss": "the Torah",
+             "morphline": "definite noun · the Torah (revealed book)",
+             "learner_explanation": "the definite noun names the Torah",
+             "segments": [{"class": "qg-noun-stem", "label": "N", "role": "noun_stem", "surface": "ٱلتَّوْرَىٰةِ", "sarf_note": "sarf: proper name: the Torah (revealed book)"}]}},
         # ---- negatives: known false alarms; each MUST pass (no class fires) ----
         {"loc": "102:3:3", "expect": None, "negative": True,
          "row": {
@@ -1000,6 +1119,45 @@ def _live_fixtures():
              "morphline": "adjective/active participle · root b-y-n",
              "learner_explanation": "The Arabic adjective describes the authority as clear or manifest.",
              "segments": [{"class": "qg-adjective", "label": "TOK", "role": "whole_token", "surface": "مُّبِينًا", "sarf_note": "sarf: adjective/active participle · root b-y-n"}]}},
+        # ---- v3 negatives: confirmed-VALID live rows and function words that must stay clean ----
+        # 2:189:6 مَوَٰقِيتُ — confirmed valid: root asserted, noun base (live whitelist shape).
+        {"loc": "2:189:6", "expect": None, "negative": True,
+         "row": {
+             "loc": "2:189:6", "surface": "مَوَٰقِيتُ", "token_contribution_gloss": "to set a time",
+             "morphline": "root و ق ت · noun base",
+             "learner_explanation": "مَوَٰقِيتُ contributes “to set a time”; the hover exposes the noun base from root و ق ت.",
+             "segments": [{"class": "qg-noun-stem", "label": "N", "role": "noun_base", "surface": "مَوَٰقِيتُ", "sarf_note": "sarf: token host is tied to root و ق ت"}]}},
+        # 36:39:3 مَنَازِلَ — confirmed valid: root asserted, noun/adjective (live whitelist shape).
+        {"loc": "36:39:3", "expect": None, "negative": True,
+         "row": {
+             "loc": "36:39:3", "surface": "مَنَازِلَ", "token_contribution_gloss": "stages",
+             "morphline": "root ن ز ل · noun/adjective",
+             "learner_explanation": "This token contributes “stages”.",
+             "segments": [{"class": "qg-noun-stem", "label": "N", "role": "noun_stem", "surface": "مَنَازِلَ", "sarf_note": "sarf: lexical host from root ن ز ل"}]}},
+        # 10:3:2 تَذَكَّرُونَ — a Form V whole token whose derivational tāʾ is correctly kept
+        # stem-internal AND whose root is asserted: the V1 signature must NOT fire.
+        {"loc": "10:3:2", "expect": None, "negative": True,
+         "row": {
+             "loc": "10:3:2", "surface": "تَذَكَّرُونَ", "token_contribution_gloss": "take heed",
+             "morphline": "root ذ ك ر · Form V (تَفَعَّلَ) imperfect active · 2mp",
+             "learner_explanation": "the derivational tāʾ belongs to the Form V pattern; root ذ ك ر",
+             "segments": [{"class": "qg-segment", "label": "TOK", "role": "whole_token", "surface": "تَذَكَّرُونَ", "sarf_note": "sarf: Form V imperfect from root ذ ك ر; the leading tāʾ is the wazn augment"}]}},
+        # 7:157:31 ٱلَّذِينَ — a relative pronoun IS a genuine function word: the definite-article
+        # content signature (N1) must NOT fire on the relative-pronoun family.
+        {"loc": "7:157:31", "expect": None, "negative": True,
+         "row": {
+             "loc": "7:157:31", "surface": "ٱلَّذِينَ", "token_contribution_gloss": "those who",
+             "morphline": "function particle; no lexical root",
+             "learner_explanation": "relative pronoun: those who",
+             "segments": [{"class": "qg-particle", "label": "P", "role": "particle", "surface": "ٱلَّذِينَ", "sarf_note": "function particle; no lexical root"}]}},
+        # 29:48:11 إِذًۭا — a GENUINELY nunated particle (ḥarf of answer/consequence): the
+        # tanwīn content signature (N2) must NOT fire below the bare-length floor.
+        {"loc": "29:48:11", "expect": None, "negative": True,
+         "row": {
+             "loc": "29:48:11", "surface": "إِذًۭا", "token_contribution_gloss": "then",
+             "morphline": "ḥarf of answer/consequence · no lexical root",
+             "learner_explanation": "particle of answer/consequence",
+             "segments": [{"class": "qg-particle", "label": "P", "role": "particle", "surface": "إِذًۭا", "sarf_note": "function particle; no lexical root"}]}},
     ]
 
 
@@ -1073,7 +1231,7 @@ def _self_test():
     if "".join(s["surface"] for s in malformed["segments"]) != SURFACE_83_26_5:
         failures.append("malformed segments do not concatenate to the surface")
 
-    # 4. LIVE-ROW classes C1..C5: red-first on the 9 positives, green on the 2 false alarms.
+    # 4. LIVE-ROW classes C1..C5: red-first on the 12 positives, green on the 7 negatives.
     failures += _self_test_live()
 
     for f in failures:
@@ -1081,7 +1239,9 @@ def _self_test():
     if not failures:
         print("ok   validate_segment_completeness self-test: corrected 83:26:5 passes all 7 gates; "
               "malformed [FA,STEM] trips every gate %s; live-row classes %s each reject their "
-              "confirmed positive and pass the corrected shape; 102:3:3 and 4:144:17 pass clean"
+              "confirmed positive and pass the corrected shape (v3: 39:42:2 يتوفى C2-caught, "
+              "17:45:1/48:29:28 content-as-particle C3-caught); negatives 102:3:3, 4:144:17, "
+              "2:189:6, 36:39:3, 10:3:2, 7:157:31, 29:48:11 all pass clean"
               % (",".join(ALL_GATES), ",".join(LIVE_CLASSES)))
     return 0 if not failures else 1
 
