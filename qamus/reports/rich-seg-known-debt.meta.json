@@ -9,10 +9,10 @@
       "C4",
       "C5"
     ],
-    "classifier_semantics_commit": "7469c025",
+    "classifier_semantics_commit": "df89d8c8",
     "entrypoint": "classify_live_row",
     "tool": "tools/validate_segment_completeness.py",
-    "tool_commit": "3d806386"
+    "tool_commit": "df89d8c8"
   },
   "ceiling_direction": "monotonic_non_increasing",
   "confirmed_defect_carried": {
@@ -28,7 +28,7 @@
     "note": "ground-truthed confirmed defects from audit@2 that remain UNREPAIRED in the live whitelist (still flagged, byte-unchanged). Carried as debt with review_status=confirmed_defect until their repair wave lands."
   },
   "contract": {
-    "ceiling_semantics": "debt_ceiling is the CURRENT count and an upper bound; a re-generated manifest MUST have count <= previous ceiling. An increase fails closed.",
+    "ceiling_semantics": "debt_ceiling is the CURRENT count and an upper bound; a re-generated manifest at the SAME manifest_version MUST have count <= previous ceiling. An increase fails closed. The monotonic rule applies PER-MANIFEST-VERSION: a version bump (detector-recall correction) restarts the ceiling and must record the previous ceiling in `regeneration`.",
     "fail_closed_conditions": [
       "a newly-flagged row whose canonical_location is not in the manifest (new debt)",
       "a manifest loc whose live row_hash no longer matches (modified-but-still-invalid)",
@@ -41,11 +41,12 @@
     "repair_lanes": [
       "C1",
       "C2",
+      "C3",
       "C4",
       "C5"
     ]
   },
-  "debt_ceiling": 1395,
+  "debt_ceiling": 1452,
   "excluded_now_valid": {
     "count": 8,
     "detail": [
@@ -134,20 +135,39 @@
     ],
     "reason": "audit@2 rows that the authoritative classifier now passes CLEAN against the live whitelist (repaired C3 lane + Wave-0 exemplars). Excluded from debt; the gate must NOT grandfather them (they are valid and evaluated normally)."
   },
-  "manifest_content_sha256": "c1557886d235c8501bd78366d497a643007b3ff3801857a4be3ada7934795acb",
+  "manifest_content_sha256": "7763b675cdc19a9cdf7aa78a7956629a0df8f3faae9bacdcef8be573c7e63387",
+  "manifest_version": 2,
   "partition_by_primary_class": {
     "C1": 253,
-    "C2": 126,
+    "C2": 175,
+    "C3": 9,
     "C4": 523,
-    "C5": 493
+    "C5": 492
   },
   "partition_by_review_status": {
-    "candidate_flag": 1389,
+    "candidate_flag": 1446,
     "confirmed_defect": 6
   },
   "purpose": "Pinned known-debt manifest for the rich-seg deploy gate. The gate may grandfather a live whitelist row ONLY when its canonical_location AND row_hash EXACTLY match an entry here. Everything else fails closed.",
+  "regeneration": {
+    "manifest_version_bump": "1 -> 2",
+    "new_locs_by_class": {
+      "C2": 48,
+      "C3": 9
+    },
+    "new_locs_count": 57,
+    "previous_classifier_commit": "3d806386",
+    "previous_debt_ceiling": 1395,
+    "primary_reclassified": {
+      "23:90:2": "C5 -> C2 (v3 catch outranks; previous class retained as secondary flag)"
+    },
+    "reason": "detector-recall correction (v2->v3, +58 pre-existing defects newly detected; monotonic rule applies per-manifest-version)",
+    "repair_lane_changes": {
+      "C3": "REOPENED at detector v3 (9 new C3 candidates); the originally repaired C3 locs stay excluded_now_valid (never grandfathered)"
+    }
+  },
   "report": "rich-seg-known-debt",
-  "rows_with_secondary_flags": 24,
+  "rows_with_secondary_flags": 25,
   "source_audit": {
     "branch": "rich-seg-audit2",
     "commit": "3d806386",
@@ -155,7 +175,7 @@
     "rows": 1403
   },
   "whitelist": {
-    "path_basename": "rh_live_01_beta_whitelist.jsonl",
+    "path_basename": "wl.jsonl",
     "rows": 34322,
     "sha256": "1c06d85a28cb4c2733c1aeb394b15e200e2b483d62b0a740f5cd20d466c0903c",
     "sha256_16": "1c06d85a28cb4c27"
