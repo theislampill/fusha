@@ -1,0 +1,73 @@
+{
+  "candidate_only": true,
+  "counts": {
+    "candidate": 2,
+    "certified": 491,
+    "certified_by_stratum": {
+      "same_section_different_root": 376,
+      "verb_vs_noun": 115
+    },
+    "conflicted": 0,
+    "joint_abstentions": 2,
+    "materialized": 0,
+    "packets_reviewed": 493,
+    "review_required": 0
+  },
+  "created_at": "2026-07-11T00:00:00Z",
+  "determinism": {
+    "canonical_jsonl": true,
+    "double_build_required": true,
+    "representative_carrier_rule": "lexicographically_first_complete_qword_row_id_within_governing_entry",
+    "wall_clock_fields": false
+  },
+  "generated_by": "tools/certify_class2_decidable_wave.py",
+  "input_sha_pins": {
+    "assembler_analysis": "dda1601d2152095f48fe9dc3be88a790d459e36031cce5dc77919bc296f60d91",
+    "entries": "a68245e93ce1a8b76858b672a449ff94475abf010e8102575e7c0285c540a78f",
+    "fact_ledger_schema_current": "d82e60f646d8b633cfd960a3ae568bffc9e4a293bb3daf8ab1b50cb87907f44d",
+    "grammar_gate_ssot": "ccc18bed9af049013cc7aa69b9eb1b27b4639f06c5afd90070a6bc406dd20c5f",
+    "packet_manifest": "589c48a33f5adb4a012e0286c75ac31269174ddd6c354738b1e9ba6bf949609f",
+    "packets": "ecb34710f3ef93726ab1633d79a8de7fc88d9735c8b0833c47fd1062e0b67740",
+    "votes_a": "3dc17f2409ca0e003c787060417a83e80d50d35dac068123bb77e2ae6192b209",
+    "votes_a_canonical": "3dc17f2409ca0e003c787060417a83e80d50d35dac068123bb77e2ae6192b209",
+    "votes_b": "ddc6e4e1aa7f9d9456424dec6f0644bd1f816cf183d40f10c69b05eba473bb51",
+    "votes_b_canonical": "40b09e07e69e6a5d83ca88cf639ff4775a035b13845f25dc34f3603ab1b9aa9e"
+  },
+  "no_live_payload": true,
+  "outputs": {
+    "assembler_analysis": {
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/c2-decidable-analysis.json",
+      "sha256": "dda1601d2152095f48fe9dc3be88a790d459e36031cce5dc77919bc296f60d91"
+    },
+    "ledger": {
+      "current_facts": 493,
+      "path": "qamus/indexes/largelexicon/fact-ledger/c2-decidable/ledger.jsonl",
+      "revision_rows": 1475,
+      "sha256": "8932735eeb116e1014517ee4bf77dd95aef7a096ae783df671f71eb10920788a"
+    },
+    "report": {
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/certification-decidable.report.json",
+      "sha256": "db85d5d169bbebbadab647b7753cb230b9f00b9f09ed39b89ae231f2c5b08e76"
+    },
+    "votes_a": {
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/votes-a.jsonl",
+      "sha256": "3dc17f2409ca0e003c787060417a83e80d50d35dac068123bb77e2ae6192b209"
+    },
+    "votes_b": {
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/votes-b.jsonl",
+      "sha256": "40b09e07e69e6a5d83ca88cf639ff4775a035b13845f25dc34f3603ab1b9aa9e"
+    }
+  },
+  "schema": "qamus.t11_class2_decidable_certification_manifest.v1",
+  "scope": "certification_only_no_materialization_no_live_payload",
+  "shadow_surface_assertion": {
+    "expected": "byte_stable",
+    "reason": "certified facts are not materialized and carry no materialization targets",
+    "untouched": [
+      "qamus/indexes/largelexicon/qword-crosswalk/",
+      "qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json",
+      "qamus/indexes/largelexicon/append-queue/class2/rebind-queue.jsonl",
+      "WBW and hover-whitelist compiler inputs"
+    ]
+  }
+}
