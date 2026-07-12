@@ -1,0 +1,1014 @@
+{
+  "items": [
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "so it increased them",
+          "label": "",
+          "role": "",
+          "segment_index": 0,
+          "surface": "فَزَادَهُمُ"
+        }
+      ],
+      "item_id": "C5-000",
+      "loc": "2:10:4",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "066a61cfd36c2e97cadb8e340a7f716f9d64c29b59c4904abc24a07ca73a9e9d",
+      "stratum": "seg1",
+      "surface": "فَزَادَهُمُ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun",
+          "gloss_contribution": "their ears",
+          "label": "",
+          "role": "ism majrur",
+          "segment_index": 0,
+          "surface": "ءَاذَانِهِم"
+        }
+      ],
+      "item_id": "C5-001",
+      "loc": "2:19:12",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "a0c48c9491f667611d099998a2acddf474cb14af5847b1eb800bf1cfb3aeaf87",
+      "stratum": "seg1",
+      "surface": "ءَاذَانِهِم"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "then He fashioned them",
+          "label": "",
+          "role": "",
+          "segment_index": 0,
+          "surface": "فَسَوَّىٰهُنَّ"
+        }
+      ],
+      "item_id": "C5-002",
+      "loc": "2:29:13",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "60f7ebc0bac85ec9372eb63b6351d11a87355be8cc46e1c4650b4f95ac0fa2cb",
+      "stratum": "seg1",
+      "surface": "فَسَوَّىٰهُنَّ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun",
+          "gloss_contribution": "and your spouse",
+          "label": "",
+          "role": "fāʿil (subject)",
+          "segment_index": 0,
+          "surface": "وَزَوْجُكَ"
+        }
+      ],
+      "item_id": "C5-003",
+      "loc": "2:35:5",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "f4e38d24adbe6d617e180e1581f089c2bfa20ebb434f5094a41e36ef89696aa3",
+      "stratum": "seg1",
+      "surface": "وَزَوْجُكَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "lest you two become",
+          "label": "",
+          "role": "causal fa + present verb + you-two",
+          "segment_index": 0,
+          "surface": "فَتَكُونَا"
+        }
+      ],
+      "item_id": "C5-004",
+      "loc": "2:35:16",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "be16ff9e1c80f3dfa2ae110f383bf0d010c97bf3863d447748e83811819f25ca",
+      "stratum": "seg1",
+      "surface": "فَتَكُونَا"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "We saved you",
+          "label": "",
+          "role": "verb",
+          "segment_index": 0,
+          "surface": "فَأَنجَيْنَٰكُمْ"
+        }
+      ],
+      "item_id": "C5-005",
+      "loc": "2:50:5",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "afe1df4798b008ea1499ae29997d855a3cf8a8300227945ad0ffeb10f1134bc4",
+      "stratum": "seg1",
+      "surface": "فَأَنجَيْنَٰكُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-preposition",
+          "gloss_contribution": "from you (all)",
+          "label": "",
+          "role": "preposition",
+          "segment_index": 0,
+          "surface": "عَنكُم"
+        }
+      ],
+      "item_id": "C5-006",
+      "loc": "2:52:3",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "bc9ad3c5f296083c27d2cc203f1c3f87abc685ef5008c66b5033a4360372b5ab",
+      "stratum": "seg1",
+      "surface": "عَنكُم"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun-stem",
+          "gloss_contribution": "your sins",
+          "label": "",
+          "role": "noun",
+          "segment_index": 0,
+          "surface": "خَطَٰيَٰكُمْ"
+        }
+      ],
+      "item_id": "C5-007",
+      "loc": "2:58:18",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "17560dca96bded4386ecabce4f680af2f1995afc9b3ef6aea32ba672951b840f",
+      "stratum": "seg1",
+      "surface": "خَطَٰيَٰكُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun-stem",
+          "gloss_contribution": "with your staff",
+          "label": "N",
+          "nahw_note": "nahw: no function-token override required for this simple addressed nominal row",
+          "role": "noun_stem",
+          "sarf_note": "noun · root عصو",
+          "segment_index": 0,
+          "surface": "بِّعَصَاكَ"
+        }
+      ],
+      "item_id": "C5-008",
+      "loc": "2:60:7",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "c1277430c23ae34f780117b63577658fb4a062a3b49ba0b5cc29abc667a75bb0",
+      "stratum": "seg1",
+      "surface": "بِّعَصَاكَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-preposition",
+          "gloss_contribution": "among you",
+          "label": "",
+          "role": "preposition + genitive pronoun",
+          "segment_index": 0,
+          "surface": "مِّنكُم"
+        }
+      ],
+      "item_id": "C5-009",
+      "loc": "2:85:8",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "14071990abed8f07b11cc193a5fa2f04bd8c9a45affbdbeb5223f22d1eea1a6f",
+      "stratum": "seg1",
+      "surface": "مِّنكُم"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "you ransom them",
+          "label": "",
+          "role": "conditional-answer verb",
+          "segment_index": 0,
+          "surface": "تُفَٰدُوهُمْ"
+        }
+      ],
+      "item_id": "C5-010",
+      "loc": "2:85:18",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "2405e4421fe4ef9c124edd267fe28b826d2c32052725ea1afd48c263429ce17d",
+      "stratum": "seg1",
+      "surface": "تُفَٰدُوهُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun",
+          "gloss_contribution": "their expulsion",
+          "label": "",
+          "role": "verbal noun + pronoun",
+          "segment_index": 0,
+          "surface": "إِخْرَاجُهُمْ"
+        }
+      ],
+      "item_id": "C5-011",
+      "loc": "2:85:22",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "51ca11e7264749124637dfe4d53504f952a9b96b6103b5d1e4b4f7546d48ea28",
+      "stratum": "seg1",
+      "surface": "إِخْرَاجُهُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-preposition",
+          "gloss_contribution": "of you",
+          "label": "",
+          "role": "جار ومجرور",
+          "segment_index": 0,
+          "surface": "مِنكُمْ"
+        }
+      ],
+      "item_id": "C5-012",
+      "loc": "2:85:33",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "f283c605184cf9e3a81a228bd45a2d5440fcba196966f7a3168a43e684bc2a73",
+      "stratum": "seg1",
+      "surface": "مِنكُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-result-fa",
+          "gloss_contribution": "so / then",
+          "label": "FA",
+          "nahw_note": "function preserved without asserting a wider governor",
+          "role": "prefix_result_fa",
+          "sarf_note": "visible written piece",
+          "segment_index": 0,
+          "surface": "فَ"
+        },
+        {
+          "class": "qg-segment",
+          "gloss_contribution": "for him",
+          "label": "HOST",
+          "nahw_note": "function preserved without asserting a wider governor",
+          "role": "token_host",
+          "sarf_note": "visible written piece",
+          "segment_index": 1,
+          "surface": "لَهُۥٓ"
+        }
+      ],
+      "item_id": "C5-013",
+      "loc": "2:112:8",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "fbec98c5668031231d02fd8a14249db2ed3acb7dfaa184911891ec52fbf2148c",
+      "stratum": "seg2",
+      "surface": "فَلَهُۥٓ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun",
+          "gloss_contribution": "Glory be to Him",
+          "label": "",
+          "role": "مفعول مطلق منصوب ومضاف",
+          "segment_index": 0,
+          "surface": "سُبْحَٰنَهُۥ"
+        }
+      ],
+      "item_id": "C5-014",
+      "loc": "2:116:5",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "c04b195940a8c26d091929ba936a1b41927fe34091863b633a0bdd83794f7093",
+      "stratum": "seg1",
+      "surface": "سُبْحَٰنَهُۥ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "then I will let him enjoy",
+          "label": "",
+          "role": "conjunction + verb + object pronoun",
+          "segment_index": 0,
+          "surface": "فَأُمَتِّعُهُۥ"
+        }
+      ],
+      "item_id": "C5-015",
+      "loc": "2:126:22",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "fb9d9a99f6ffad634f38bc981596976342495ecde0f1e2e506ccd633f6f4b04c",
+      "stratum": "seg1",
+      "surface": "فَأُمَتِّعُهُۥ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "I will compel him",
+          "label": "",
+          "role": "verb",
+          "segment_index": 0,
+          "surface": "أَضْطَرُّهُۥٓ"
+        }
+      ],
+      "item_id": "C5-016",
+      "loc": "2:126:25",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "46978cb1b5d894be472370b3124d6fa2cbafba3ba508ab88f55bd5ac97c2fd97",
+      "stratum": "seg1",
+      "surface": "أَضْطَرُّهُۥٓ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun-stem",
+          "gloss_contribution": "came to you",
+          "label": "N",
+          "nahw_note": "nahw: token contribution in context",
+          "role": "noun_stem",
+          "sarf_note": "sarf: nominal or content-word host",
+          "segment_index": 0,
+          "surface": "جَآءَكَ"
+        }
+      ],
+      "item_id": "C5-017",
+      "loc": "2:145:26",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "c6a18d5dd38b9494c11b0b963e083cfad471d3a1874772fac5480e86547a20a5",
+      "stratum": "seg1",
+      "surface": "جَآءَكَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "We gave them",
+          "label": "",
+          "role": "verb of the relative clause, with object",
+          "segment_index": 0,
+          "surface": "ءَاتَيْنَٰهُمُ"
+        }
+      ],
+      "item_id": "C5-018",
+      "loc": "2:146:2",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "b02f675f4ec4723a86da01442d9cd936afdec262de31079597f364ec0d590f07",
+      "stratum": "seg1",
+      "surface": "ءَاتَيْنَٰهُمُ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "they recognize him",
+          "label": "",
+          "role": "finite present verb + object pronoun",
+          "segment_index": 0,
+          "surface": "يَعْرِفُونَهُۥ"
+        }
+      ],
+      "item_id": "C5-019",
+      "loc": "2:146:4",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "794038b46d701f68bd17dd1fd3eb5ead8d525d50844a7a64cb639f61ec14170c",
+      "stratum": "seg1",
+      "surface": "يَعْرِفُونَهُۥ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "they love them",
+          "label": "",
+          "role": "main verb",
+          "segment_index": 0,
+          "surface": "يُحِبُّونَهُمْ"
+        }
+      ],
+      "item_id": "C5-020",
+      "loc": "2:165:9",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "94d92f4ceac97eb7a748085de8b342e516436a89102dbe106f404aaa4e56276a",
+      "stratum": "seg1",
+      "surface": "يُحِبُّونَهُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun-stem",
+          "gloss_contribution": "your heads",
+          "label": "N",
+          "nahw_note": "nahw: no function-token override required for this simple addressed nominal row",
+          "role": "noun_stem",
+          "sarf_note": "noun · root رأس",
+          "segment_index": 0,
+          "surface": "رُءُوسَكُمْ"
+        }
+      ],
+      "item_id": "C5-021",
+      "loc": "2:196:13",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "81244934d5471895fe49d316a46aa6e8ef4c94c05e1e42801edf16e455e9078d",
+      "stratum": "seg1",
+      "surface": "رُءُوسَكُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-segment",
+          "gloss_contribution": "comes to them",
+          "label": "HOST",
+          "nahw_note": "token host",
+          "role": "stem",
+          "sarf_note": "visible host",
+          "segment_index": 0,
+          "surface": "يَأْتِيَهُمُ"
+        }
+      ],
+      "item_id": "C5-022",
+      "loc": "2:210:5",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "6ba6d2700c765840347e54593439470ac44f9ee9a6b25f2b33b452dff859a708",
+      "stratum": "seg1",
+      "surface": "يَأْتِيَهُمُ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "and they ask you",
+          "label": "",
+          "role": "main verb opening the ruling",
+          "segment_index": 0,
+          "surface": "وَيَسْـَٔلُونَكَ"
+        }
+      ],
+      "item_id": "C5-023",
+      "loc": "2:222:1",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "659f26a41749a5dc12ce6691b608077cd25f4cc4b3a2a30d015a541d2ed33c00",
+      "stratum": "seg1",
+      "surface": "وَيَسْـَٔلُونَكَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "you approach them",
+          "label": "",
+          "role": "",
+          "segment_index": 0,
+          "surface": "تَقْرَبُوهُنَّ"
+        }
+      ],
+      "item_id": "C5-024",
+      "loc": "2:222:12",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "a0242ebcf542e1f880b8487cce303c03936b333b93c91675914497a4aa29a835",
+      "stratum": "seg1",
+      "surface": "تَقْرَبُوهُنَّ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "has ordered you",
+          "label": "",
+          "role": "فعل ماضٍ + ضمير مفعول",
+          "segment_index": 0,
+          "surface": "أَمَرَكُمُ"
+        }
+      ],
+      "item_id": "C5-025",
+      "loc": "2:222:20",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "4d72ab76cad75e78ee696faf5aa97ba6093ed25568d35061b4938c6d4c8952df",
+      "stratum": "seg1",
+      "surface": "أَمَرَكُمُ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun",
+          "gloss_contribution": "for your oaths",
+          "label": "",
+          "role": "preposition + plural noun + pronoun",
+          "segment_index": 0,
+          "surface": "لِّأَيْمَٰنِكُمْ"
+        }
+      ],
+      "item_id": "C5-026",
+      "loc": "2:224:5",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "3f69a3ebc95f2c86927a4f77d61be50afc16e991a7db929111a35223cbeb3ad9",
+      "stratum": "seg1",
+      "surface": "لِّأَيْمَٰنِكُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-segment",
+          "gloss_contribution": "you have given them (f.)",
+          "label": "TOK",
+          "role": "token",
+          "segment_index": 0,
+          "surface": "ءَاتَيْتُمُوهُنَّ"
+        }
+      ],
+      "item_id": "C5-027",
+      "loc": "2:229:14",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "8a783402af5b185b9ea5ee4da8cea1f32f86f640d403a4c1d5e48d61ee684f67",
+      "stratum": "seg1",
+      "surface": "ءَاتَيْتُمُوهُنَّ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "you prevent them",
+          "label": "",
+          "role": "",
+          "segment_index": 0,
+          "surface": "تَعْضُلُوهُنَّ"
+        }
+      ],
+      "item_id": "C5-028",
+      "loc": "2:232:7",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "117e6e1ec13cbd92bc2f8e634f6bff335371ebe2fffb45f8a42d7c41f2eee576",
+      "stratum": "seg1",
+      "surface": "تَعْضُلُوهُنَّ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun",
+          "gloss_contribution": "between them",
+          "label": "",
+          "role": "adverb 'agree between them'",
+          "segment_index": 0,
+          "surface": "بَيْنَهُم"
+        }
+      ],
+      "item_id": "C5-029",
+      "loc": "2:232:13",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "9040ef0ee0560df4de9c31f7540650973ce2880ead08ea0d36b2cae5cd422793",
+      "stratum": "seg1",
+      "surface": "بَيْنَهُم"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-preposition",
+          "gloss_contribution": "of you",
+          "label": "",
+          "role": "جار ومجرور",
+          "segment_index": 0,
+          "surface": "مِنكُمْ"
+        }
+      ],
+      "item_id": "C5-030",
+      "loc": "2:232:20",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "532e8512501acaf85d8ce9b29a4946ef620a7cd0798cb072c8cb20536d6d0031",
+      "stratum": "seg1",
+      "surface": "مِنكُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-preposition",
+          "gloss_contribution": "among you",
+          "label": "",
+          "role": "prepositional phrase (among you)",
+          "segment_index": 0,
+          "surface": "مِنكُمْ"
+        }
+      ],
+      "item_id": "C5-031",
+      "loc": "2:234:3",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "8cc4dca389cd0ea63c4daeed8496ae6bf530b3804c9186673a6f67413fd06666",
+      "stratum": "seg1",
+      "surface": "مِنكُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun",
+          "gloss_contribution": "yourselves",
+          "label": "",
+          "role": "genitive noun",
+          "segment_index": 0,
+          "surface": "أَنفُسِكُمْ"
+        }
+      ],
+      "item_id": "C5-032",
+      "loc": "2:235:13",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "bbd7e77861933501cb45a48330fa9224cf4b34b1c69fef3c5ba451ccb5662ad8",
+      "stratum": "seg1",
+      "surface": "أَنفُسِكُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun-stem",
+          "gloss_contribution": "will mention them",
+          "label": "N",
+          "nahw_note": "nahw: nominal token in its local phrase",
+          "role": "noun_stem",
+          "sarf_note": "sarf: noun/proper-name token · root not certified in frozen row",
+          "segment_index": 0,
+          "surface": "سَتَذْكُرُونَهُنَّ"
+        }
+      ],
+      "item_id": "C5-033",
+      "loc": "2:235:17",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "6e7fff083820dfae532d1f9d01e044b1e1bebeadf89661f691e29f18fec62581",
+      "stratum": "seg1",
+      "surface": "سَتَذْكُرُونَهُنَّ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "you make a promise to them",
+          "label": "",
+          "role": "",
+          "segment_index": 0,
+          "surface": "تُوَاعِدُوهُنَّ"
+        }
+      ],
+      "item_id": "C5-034",
+      "loc": "2:235:20",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "7387f67594ed3155ac0965376c2ef5ab759ea39a2be0a496d3c8ab907797e265",
+      "stratum": "seg1",
+      "surface": "تُوَاعِدُوهُنَّ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun",
+          "gloss_contribution": "your own selves",
+          "label": "",
+          "role": "اسم مجرور مضاف",
+          "segment_index": 0,
+          "surface": "أَنفُسِكُمْ"
+        }
+      ],
+      "item_id": "C5-035",
+      "loc": "2:235:41",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "738f304ce6cba9561c83f7024406865f6b4ea37581e2b1e7e300adc2070f15c5",
+      "stratum": "seg1",
+      "surface": "أَنفُسِكُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "so beware of Him",
+          "label": "",
+          "role": "conjunction fa + command verb + Him",
+          "segment_index": 0,
+          "surface": "فَٱحْذَرُوهُ"
+        }
+      ],
+      "item_id": "C5-036",
+      "loc": "2:235:42",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "804a8c66d572fa42f471aa6bc58e78a318a6f340551be1350fab395d54550868",
+      "stratum": "seg1",
+      "surface": "فَٱحْذَرُوهُ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-preposition",
+          "gloss_contribution": "among you",
+          "label": "",
+          "role": "prepositional phrase (among you)",
+          "segment_index": 0,
+          "surface": "مِنكُمْ"
+        }
+      ],
+      "item_id": "C5-037",
+      "loc": "2:240:3",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "85bb887f3b43f8d2dd17c6e8b8738bb6c499fe5a3b830b1647e494781980bc61",
+      "stratum": "seg1",
+      "surface": "مِنكُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "He gave them life",
+          "label": "",
+          "role": "verb",
+          "segment_index": 0,
+          "surface": "أَحْيَٰهُمْ"
+        }
+      ],
+      "item_id": "C5-038",
+      "loc": "2:243:17",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "990cb79c6f58cbbe63b1dc7337df3f06c04e0c3501175d605fbbff90ee9fe3ff",
+      "stratum": "seg1",
+      "surface": "أَحْيَٰهُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun",
+          "gloss_contribution": "with him",
+          "label": "",
+          "role": "ẓarf (adverb of accompaniment)",
+          "segment_index": 0,
+          "surface": "مَعَهُۥ"
+        }
+      ],
+      "item_id": "C5-039",
+      "loc": "2:249:35",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "9bfb182ee8c11c13688aa3ca3f8a7bf1ab2fae83fc956f2312ff745e0727559f",
+      "stratum": "seg1",
+      "surface": "مَعَهُۥ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-result-fa",
+          "gloss_contribution": "so",
+          "label": "FA",
+          "nahw_note": "nahw: challenge/result relation",
+          "role": "prefix_result_fa",
+          "sarf_note": "sarf: prefixed fāʾ function token",
+          "segment_index": 0,
+          "surface": "فَ"
+        },
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "bring",
+          "label": "STEM",
+          "nahw_note": "nahw: imperative verb",
+          "role": "verb_stem",
+          "sarf_note": "sarf: Form I imperative stem from root أ ت ي",
+          "segment_index": 1,
+          "surface": "أْتِ"
+        }
+      ],
+      "item_id": "C5-040",
+      "loc": "2:258:32",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "c971b1a55d53ce1050d9769919af22c133a496bef80f70182234f40fb3d9516c",
+      "stratum": "seg2",
+      "surface": "فَأْتِ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "so He caused him to die",
+          "label": "",
+          "role": "verb + object pronoun",
+          "segment_index": 0,
+          "surface": "فَأَمَاتَهُ"
+        }
+      ],
+      "item_id": "C5-041",
+      "loc": "2:259:17",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "d91e5999daeaae4ed1d2630ce005d459ea8e097e110aed21ec8759f56adabb88",
+      "stratum": "seg1",
+      "surface": "فَأَمَاتَهُ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "He raised him up",
+          "label": "",
+          "role": "verb",
+          "segment_index": 0,
+          "surface": "بَعَثَهُۥ"
+        }
+      ],
+      "item_id": "C5-042",
+      "loc": "2:259:22",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "f481ff00557bda193f93229208a10d901a08b7e693f111c6fcd944adcbd7a2a0",
+      "stratum": "seg1",
+      "surface": "بَعَثَهُۥ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun",
+          "gloss_contribution": "your food",
+          "label": "",
+          "role": "genitive noun",
+          "segment_index": 0,
+          "surface": "طَعَامِكَ"
+        }
+      ],
+      "item_id": "C5-043",
+      "loc": "2:259:39",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "daf076805f8ec4c980b2802866bbc756130067134ef7379f3c9a617e2db7ead0",
+      "stratum": "seg1",
+      "surface": "طَعَامِكَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun",
+          "gloss_contribution": "and your drink",
+          "label": "",
+          "role": "معطوف مجرور مضاف + ضمير",
+          "segment_index": 0,
+          "surface": "وَشَرَابِكَ"
+        }
+      ],
+      "item_id": "C5-044",
+      "loc": "2:259:40",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "965cc7147818cf867db81b6ea5e9ebe257c968d1c85f28f7172edfdc6dcb27d2",
+      "stratum": "seg1",
+      "surface": "وَشَرَابِكَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-noun",
+          "gloss_contribution": "your donkey",
+          "label": "",
+          "role": "noun + possessive pronoun",
+          "segment_index": 0,
+          "surface": "حِمَارِكَ"
+        }
+      ],
+      "item_id": "C5-045",
+      "loc": "2:259:45",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "ca4b6f7f4f0ca4e033790ad34390a374e4e6984e13e8c781850c5d05e6acd416",
+      "stratum": "seg1",
+      "surface": "حِمَارِكَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "and that We may make you",
+          "label": "",
+          "role": "فعل مضارع منصوب ومفعول به",
+          "segment_index": 0,
+          "surface": "وَلِنَجْعَلَكَ"
+        }
+      ],
+      "item_id": "C5-046",
+      "loc": "2:259:46",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "92e874cfbf44ca53ecec3a10d257ecc9cd1397ee6b10c2a22f69463db1f4d9d8",
+      "stratum": "seg1",
+      "surface": "وَلِنَجْعَلَكَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "We clothe it",
+          "label": "",
+          "role": "",
+          "segment_index": 0,
+          "surface": "نَكْسُوهَا"
+        }
+      ],
+      "item_id": "C5-047",
+      "loc": "2:259:55",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "375cd1a63c585e6e6a83789390810e6bad2b1923f70e568d2a9581b6696236bd",
+      "stratum": "seg1",
+      "surface": "نَكْسُوهَا"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-conjunction",
+          "gloss_contribution": "and",
+          "label": "WA",
+          "nahw_note": "nahw: function prefix preserved",
+          "role": "prefix_conjunction",
+          "sarf_note": "sarf: visible proclitic preserved",
+          "segment_index": 0,
+          "surface": "وَ"
+        },
+        {
+          "class": "qg-noun-stem",
+          "gloss_contribution": "and his case",
+          "label": "HOST",
+          "nahw_note": "",
+          "role": "host",
+          "sarf_note": "sarf: host segment",
+          "segment_index": 1,
+          "surface": "أَمْرُهُۥٓ"
+        }
+      ],
+      "item_id": "C5-048",
+      "loc": "2:275:35",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "43d120659c1f3b3d91aa3333dbe195f5e748c60a9d6e84b0e61d90d028bcd2f2",
+      "stratum": "seg2",
+      "surface": "وَأَمْرُهُۥٓ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-vocative",
+          "gloss_contribution": "O",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يَٰٓ"
+        },
+        {
+          "class": "qg-noun-stem",
+          "gloss_contribution": "you (the one)",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "أَيُّ"
+        },
+        {
+          "class": "qg-particle",
+          "gloss_contribution": "(attention)",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 2,
+          "surface": "هَا"
+        }
+      ],
+      "item_id": "C5-049",
+      "loc": "12:78:2",
+      "packet_id": "CALIB-C5@3d80638+1c06d85a",
+      "row_hash": "dbcf50d8cfe4500a46ea9a96376fd35752465c3a65bdefe0bfeaff28ae5525f1",
+      "stratum": "seg3",
+      "surface": "يَٰٓأَيُّهَا"
+    }
+  ],
+  "manifest": {
+    "audit_sha": "3d806386",
+    "blind": true,
+    "builder_version": "calibration-packet-builder/1",
+    "candidate_locs_missing_from_whitelist": 0,
+    "candidate_population": {
+      "seg1": 462,
+      "seg2": 30,
+      "seg3": 1
+    },
+    "candidate_total_present_in_whitelist": 493,
+    "class": "C5",
+    "created_note": "2026-07-12",
+    "item_count": 50,
+    "packet_id": "CALIB-C5@3d80638+1c06d85a",
+    "packet_sha256": "d0019272bf4738c659d3199533f5cdf210d0263c765a1c13cb847f3f591b2e38",
+    "packet_sha256_algorithm": "sha256 over canonical JSON of the items array",
+    "row_hash_algorithm": "sha256(json.dumps(row,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode('utf-8'))",
+    "source_whitelist_sha": "1c06d85a",
+    "strata_allocation": {
+      "seg1": 46,
+      "seg2": 3,
+      "seg3": 1,
+      "seg4plus": 0
+    },
+    "strata_definition": {
+      "axis": "segment_count_bucket",
+      "buckets": {
+        "seg1": "1 segment",
+        "seg2": "2 segments",
+        "seg3": "3 segments",
+        "seg4plus": "4 or more segments"
+      },
+      "note": "Stratum is the count of segments in the CURRENT live whitelist row: structural and blind (does not encode any defect/valid disposition)."
+    },
+    "strata_order": [
+      "seg1",
+      "seg2",
+      "seg3",
+      "seg4plus"
+    ]
+  }
+}
