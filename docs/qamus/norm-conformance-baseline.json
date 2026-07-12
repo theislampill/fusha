@@ -1,0 +1,197 @@
+{
+  "_note": "norm@1 conformance baseline. Regenerate: tools/check_rich_hover_norm.py --whitelist <wl> --debt-manifest qamus/reports/rich-seg-known-debt.jsonl --json <out>. READ-ONLY snapshot; live whitelist may advance.",
+  "_snapshot": {
+    "as_of": "2026-07-12",
+    "basename": "rh_live_01_beta_whitelist.jsonl",
+    "rows": 34322,
+    "sha256": "1c06d85a28cb4c2733c1aeb394b15e200e2b483d62b0a740f5cd20d466c0903c"
+  },
+  "clause_counts": {
+    "N-CONS-01": 4001,
+    "N-LANG-01": 4769,
+    "N-LANG-02": 324,
+    "N-PED-01": 947,
+    "N-PED-02": 528,
+    "N-ROOT-01": 1019,
+    "N-ROOT-02": 16891,
+    "N-SEG-02": 1811
+  },
+  "clause_samples": {
+    "N-CONS-01": [
+      {
+        "detail": "same-bare-surface sibling asserts a root that this content row declines",
+        "loc": "2:21:2",
+        "surface": "ٱلنَّاسُ"
+      },
+      {
+        "detail": "same-bare-surface sibling asserts a root that this content row declines",
+        "loc": "2:13:7",
+        "surface": "النَّاسُ"
+      },
+      {
+        "detail": "same-bare-surface sibling asserts a root that this content row declines",
+        "loc": "4:28:7",
+        "surface": "ٱلْإِنسَٰنُ"
+      }
+    ],
+    "N-LANG-01": [
+      {
+        "detail": "internal meta-/process-language rendered to the learner",
+        "loc": "6:84:20",
+        "surface": "نَجْزِى"
+      },
+      {
+        "detail": "internal meta-/process-language rendered to the learner",
+        "loc": "24:31:20",
+        "surface": "يُبْدِينَ"
+      },
+      {
+        "detail": "internal meta-/process-language rendered to the learner",
+        "loc": "6:151:20",
+        "surface": "نَرْزُقُكُمْ"
+      }
+    ],
+    "N-LANG-02": [
+      {
+        "detail": "learner_explanation is Arabic-prose-dominated, not English",
+        "loc": "8:58:2",
+        "surface": "تَخَافَنَّ"
+      },
+      {
+        "detail": "learner_explanation is Arabic-prose-dominated, not English",
+        "loc": "22:31:12",
+        "surface": "ٱلسَّمَآءِ"
+      },
+      {
+        "detail": "learner_explanation is Arabic-prose-dominated, not English",
+        "loc": "65:8:3",
+        "surface": "قَرْيَةٍ"
+      }
+    ],
+    "N-PED-01": [
+      {
+        "detail": "a segment has an empty gloss_contribution",
+        "loc": "15:2:1",
+        "surface": "رُّبَمَا"
+      },
+      {
+        "detail": "a segment has an empty gloss_contribution",
+        "loc": "10:68:20",
+        "surface": "أَتَقُولُونَ"
+      },
+      {
+        "detail": "a segment has an empty gloss_contribution",
+        "loc": "10:68:25",
+        "surface": "تَعْلَمُونَ"
+      }
+    ],
+    "N-PED-02": [
+      {
+        "detail": "morphline hedges features with 'as context requires'",
+        "loc": "6:84:20",
+        "surface": "نَجْزِى"
+      },
+      {
+        "detail": "morphline hedges features with 'as context requires'",
+        "loc": "24:31:20",
+        "surface": "يُبْدِينَ"
+      },
+      {
+        "detail": "morphline hedges features with 'as context requires'",
+        "loc": "6:151:20",
+        "surface": "نَرْزُقُكُمْ"
+      }
+    ],
+    "N-ROOT-01": [
+      {
+        "detail": "content row declines root with hedge prose instead of asserting it",
+        "loc": "15:7:4",
+        "surface": "بالملائكة"
+      },
+      {
+        "detail": "content row declines root with hedge prose instead of asserting it",
+        "loc": "10:53:6",
+        "surface": "وَرَبِّىٓ"
+      },
+      {
+        "detail": "content row declines root with hedge prose instead of asserting it",
+        "loc": "54:42:2",
+        "surface": "بِـَٔايَٰتِنَا"
+      }
+    ],
+    "N-ROOT-02": [
+      {
+        "detail": "rootless row carries no typed rationale (function-word/proper-name/jamid-contested/pending)",
+        "loc": "3:123:4",
+        "surface": "بِبَدْرٍ"
+      },
+      {
+        "detail": "rootless row carries no typed rationale (function-word/proper-name/jamid-contested/pending)",
+        "loc": "2:213:37",
+        "surface": "لِمَا"
+      },
+      {
+        "detail": "rootless row carries no typed rationale (function-word/proper-name/jamid-contested/pending)",
+        "loc": "2:10:1",
+        "surface": "فِى"
+      }
+    ],
+    "N-SEG-02": [
+      {
+        "detail": "non-canonical segment class(es): qg-segment",
+        "loc": "27:10:7",
+        "surface": "جَآنٌّۭ"
+      },
+      {
+        "detail": "non-canonical segment class(es): qg-segment",
+        "loc": "7:73:16",
+        "surface": "بَيِّنَةٌۭ"
+      },
+      {
+        "detail": "non-canonical segment class(es): qg-segment",
+        "loc": "49:13:6",
+        "surface": "ذَكَرٍۢ"
+      }
+    ]
+  },
+  "conformance_pct": 70.26,
+  "contract_version": "norm@1",
+  "debt_overlap": {
+    "debt_manifest_locs": 1452,
+    "nonconformant_must_in_known_debt": 825,
+    "nonconformant_must_new_debt": 9384
+  },
+  "fully_conformant_rows": 24113,
+  "must_clauses": [
+    "N-ROOT-01",
+    "N-LANG-01",
+    "N-LANG-02",
+    "N-SEG-01",
+    "N-SEG-02",
+    "N-PED-01",
+    "N-PED-02",
+    "N-CONS-01"
+  ],
+  "n_lang_01_phrase_breakdown": {
+    "<label-notation>": 2648,
+    "accounted for": 87,
+    "exposes the visible": 526,
+    "frozen row": 220,
+    "no public root asserted": 702,
+    "no unsupported public source": 20,
+    "no unsupported public source label": 20,
+    "no unsupported root": 5,
+    "not separately asserted": 528,
+    "preserved where relevant": 20,
+    "retained and accounted": 33,
+    "root not asserted": 557,
+    "root not certified": 224,
+    "visible piece accounted": 20
+  },
+  "nonconformant_rows_must": 10209,
+  "should_clauses": [
+    "N-ROOT-02",
+    "N-COLOUR-02"
+  ],
+  "total_rows": 34322
+}
