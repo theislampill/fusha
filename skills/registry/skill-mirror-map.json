@@ -1,11 +1,11 @@
 {
   "authoritative_sources": {
     "nahw": {
-      "norm_sha256": "06aa54787f3e13a528a1a5a8d9ef8a77807109ba2183b6295cf0fd7ed5e6fbda",
+      "norm_sha256": "37c5e64fbcd8c862d85e434b435ae13bf4b98ec0ff5ad3cc856a603190884ca5",
       "path": "nahw/SKILL.md"
     },
     "sarf": {
-      "norm_sha256": "32e883ee903a100baf073a6657803226a41b89269df1512a60ff1ae3fd0e3f04",
+      "norm_sha256": "bfc38d5f3a62f94bb47aa8839fb79d16db16e0a39cf642b8ab1f71ab91f0b974",
       "path": "sarf/SKILL.md"
     }
   },
@@ -13,49 +13,49 @@
     {
       "path": "dist/claude-ai/pack/sarf/SKILL.md",
       "role": "generated-mirror",
-      "sha256": "32e883ee903a100baf073a6657803226a41b89269df1512a60ff1ae3fd0e3f04",
+      "sha256": "bfc38d5f3a62f94bb47aa8839fb79d16db16e0a39cf642b8ab1f71ab91f0b974",
       "skill": "sarf"
     },
     {
       "path": "dist/claude-ai/pack/nahw/SKILL.md",
       "role": "generated-mirror",
-      "sha256": "06aa54787f3e13a528a1a5a8d9ef8a77807109ba2183b6295cf0fd7ed5e6fbda",
+      "sha256": "37c5e64fbcd8c862d85e434b435ae13bf4b98ec0ff5ad3cc856a603190884ca5",
       "skill": "nahw"
     }
   ],
   "known_stale_installs": [
     {
-      "canonical_sha256": "5c80dfd6493f66d3d2f65c7a6a204f6b0979c039a6dffbc739709fcfe3daf00b",
+      "canonical_sha256": "098ab086cecc1decd21fc4a68498fe69293d119bb181e4dbd1438ae5a435f91b",
       "fix": "regenerate via scripts/install_codex_instructions.py (never hand-sync)",
-      "observed_sha256": "5c80dfd6493f66d3d2f65c7a6a204f6b0979c039a6dffbc739709fcfe3daf00b",
+      "observed_sha256": "098ab086cecc1decd21fc4a68498fe69293d119bb181e4dbd1438ae5a435f91b",
       "skill": "nahw",
       "target": "local_codex_install"
     },
     {
-      "canonical_sha256": "54afc4f8052dddc8805dafdc8383210b1f080884ab39c71ff49960983edf45ce",
+      "canonical_sha256": "e219762c9930a6c15011f421641f8689525d12a400a33312c3a2623754cd5e08",
       "fix": "regenerate via scripts/install_codex_instructions.py (never hand-sync)",
-      "observed_sha256": "54afc4f8052dddc8805dafdc8383210b1f080884ab39c71ff49960983edf45ce",
+      "observed_sha256": "e219762c9930a6c15011f421641f8689525d12a400a33312c3a2623754cd5e08",
       "skill": "sarf",
       "target": "local_codex_install"
     }
   ],
   "mirrors": [
     {
-      "expected_norm_sha256": "32e883ee903a100baf073a6657803226a41b89269df1512a60ff1ae3fd0e3f04",
+      "expected_norm_sha256": "bfc38d5f3a62f94bb47aa8839fb79d16db16e0a39cf642b8ab1f71ab91f0b974",
       "generator": "scripts/build_claude_ai_project_pack.py",
       "skill": "sarf",
       "target": "claude_ai_pack",
       "transform": "identity"
     },
     {
-      "expected_norm_sha256": "06aa54787f3e13a528a1a5a8d9ef8a77807109ba2183b6295cf0fd7ed5e6fbda",
+      "expected_norm_sha256": "37c5e64fbcd8c862d85e434b435ae13bf4b98ec0ff5ad3cc856a603190884ca5",
       "generator": "scripts/build_claude_ai_project_pack.py",
       "skill": "nahw",
       "target": "claude_ai_pack",
       "transform": "identity"
     },
     {
-      "expected_norm_sha256": "54afc4f8052dddc8805dafdc8383210b1f080884ab39c71ff49960983edf45ce",
+      "expected_norm_sha256": "e219762c9930a6c15011f421641f8689525d12a400a33312c3a2623754cd5e08",
       "generator": "scripts/install_claude_skills.py",
       "regenerator": "tools/generate_skill_mirrors.py",
       "skill": "sarf",
@@ -63,7 +63,7 @@
       "transform": "frontmatter_name"
     },
     {
-      "expected_norm_sha256": "5c80dfd6493f66d3d2f65c7a6a204f6b0979c039a6dffbc739709fcfe3daf00b",
+      "expected_norm_sha256": "098ab086cecc1decd21fc4a68498fe69293d119bb181e4dbd1438ae5a435f91b",
       "generator": "scripts/install_claude_skills.py",
       "regenerator": "tools/generate_skill_mirrors.py",
       "skill": "nahw",
@@ -71,7 +71,7 @@
       "transform": "frontmatter_name"
     },
     {
-      "expected_norm_sha256": "54afc4f8052dddc8805dafdc8383210b1f080884ab39c71ff49960983edf45ce",
+      "expected_norm_sha256": "e219762c9930a6c15011f421641f8689525d12a400a33312c3a2623754cd5e08",
       "generator": "scripts/install_codex_instructions.py",
       "regenerator": "tools/generate_skill_mirrors.py",
       "skill": "sarf",
@@ -79,7 +79,7 @@
       "transform": "frontmatter_name"
     },
     {
-      "expected_norm_sha256": "5c80dfd6493f66d3d2f65c7a6a204f6b0979c039a6dffbc739709fcfe3daf00b",
+      "expected_norm_sha256": "098ab086cecc1decd21fc4a68498fe69293d119bb181e4dbd1438ae5a435f91b",
       "generator": "scripts/install_codex_instructions.py",
       "regenerator": "tools/generate_skill_mirrors.py",
       "skill": "nahw",

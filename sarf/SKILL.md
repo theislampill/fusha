@@ -459,3 +459,68 @@ discriminators in [`tools/skill_fixtures/skill_rules_increment21.py`](../tools/s
   (caused 4/10 C4 hard errors).
 - **`sarf-passive-vocalism-voice-commit`** — ُ-ِ perfect / ُ-َ imperfect vocalism ⇒ commit voice=passive; the
   "active/passive as context requires" hedge is legal only for an undiacritized/qirāʾāt-split address.
+
+## 19. ṣarf@2.2 — CANDIDATE increment (QAMUS-RICH-NORM-001 consolidation) — NOT released; does not amend @2
+
+These rules are **candidate** (drafted forward from the rich-hover normative-defect ANDON, the
+`norm@1` normalization contract, the global lexeme join / entry-root-inheritance lattice, and the
+C4/C5/W13 waves; Fable adjudicates). They answer *"what does a CORRECT row look like?"* — the norm
+clauses the C1–C5 defect classes never asserted — and close the detector blind spots the ANDON
+traced (G1 proclitic→rootless remainder, G2 clean stem null root, G3 participle exemption, G4
+root-in-مادة-prose, G5 field-language, G6 sound-plural swallow, G7 headword/entry incoherence). Each
+carries an explicit CONDITION, PROJECTION, GUARDS, DEFEATERS. Machine-readable rows (with `projector`
+blocks + source-addressed evidence + red-first fixtures) are in
+[`qamus/skills/rule-registry-increment-22.jsonl`](../qamus/skills/rule-registry-increment-22.jsonl);
+discriminators in [`tools/skill_fixtures/skill_rules_increment22.py`](../tools/skill_fixtures/skill_rules_increment22.py);
+trace + contract + join evidence in [`impl-records/andon-rich-norm/QAMUS-RICH-NORM-001-TRACE.md`](../impl-records/andon-rich-norm/QAMUS-RICH-NORM-001-TRACE.md),
+[`docs/qamus/RICH-HOVER-NORMALIZATION-CONTRACT.md`](../docs/qamus/RICH-HOVER-NORMALIZATION-CONTRACT.md),
+[`qamus/reports/ROOT-INHERITANCE-JOIN.md`](../qamus/reports/ROOT-INHERITANCE-JOIN.md).
+
+**norm@1 contract clauses (rendered-row conformance — projector-ready detectors):**
+- **`sarf-norm-root-hedge-ban`** (N-ROOT-01) — CONDITION a content-segment row asserts no root AND
+  carries a hedge ("no public root asserted", "function only no root") → PROJECT flag nonconformant;
+  route to inheritance/authoring. Catches the multi-segment hedge (فَحَقَّ = FA+TOK) and the clean stem
+  (خَلَقَ) that C2's single-segment gate skips (ANDON G1/G2).
+- **`sarf-norm-typed-rootless-rationale`** (N-ROOT-02, review-gated) — CONDITION a rootless row carries
+  no typed rationale from the closed set {function-word, proper-name, jamid-contested, pending} →
+  PROJECT flag; require the typed field (never silent, never hedge prose).
+- **`sarf-norm-field-language-meta-ban`** (N-LANG-01) — CONDITION a rendered field matches the
+  meta-marker blocklist (superset of C4's three phrases) OR leaks `\b[A-Z]{1,6}:\S` label notation
+  (`FA:فَ`, `TOK:حَقَّ`) into learner text → PROJECT flag; rewrite to clean English.
+- **`sarf-norm-english-led-rendered-fields`** (N-LANG-02) — CONDITION learner_explanation is an
+  Arabic-prose dump (arabic_words≥6, or ≥4 & ratio≥0.6, or latin<3 & arabic≥3) → PROJECT flag. Short
+  quoted Arabic forms inside an English sentence stay clean (كَلِمَةُ dumped a raw iʿrāb string).
+- **`sarf-norm-gloss-contribution-present`** (N-PED-01) — CONDITION any segment has a blank
+  gloss_contribution → PROJECT flag; every piece must teach.
+- **`sarf-norm-same-surface-root-coherence`** (N-CONS-01) — CONDITION a folded-bare-surface group has
+  ≥1 rooted content row and this content row hedges/omits the root → PROJECT flag; inherit the sibling's
+  root or record a homograph rationale (حَقَّتْ asserts ح ق ق 25 rows before فَحَقَّ is served rootless).
+- **`sarf-entry-root-inheritance-tier0`** (N-CONS-02 / lexeme join) — CONDITION a rootless content row's
+  dagger-alef-normalized surface == an entry headword/usage.form (attested) → PROJECT the entry root as
+  **certification_state=candidate** (tier-0). GUARD attested-source only (pattern never certifies);
+  stays candidate to the 2-vote; divine-name exclusion. خَلَقَ IS a headword; مُسَخَّرَٰتٍ matches v198.
+- **`sarf-entry-id-context-only-not-root`** (lexeme-join tier-A correction) — CONDITION a carrier
+  entry_id is present but the surface is NOT a form of that entry (فَوْقَكُمُ carries the أخذ id) →
+  PROJECT keep it example-context only; a **bare entry_id NEVER asserts a root**.
+- **`sarf-rooted-vs-entry-conflict-never-auto-resolve`** (lexeme-join conflict) — CONDITION a row's
+  asserted root disagrees with the entry attesting the same surface (464 rows / 804 edges) → PROJECT
+  route 2-vote/review; NEVER auto-resolve; an agreeing pair is confirmed.
+
+**ANDON detector gaps + C4/C5/W13 refinements (sarf-domain — projector-ready):**
+- **`sarf-root-in-madda-prose-recognized`** (G4) — CONDITION a root appears in the Arabic idiom مادة (كلم)
+  / مادّة (not the `root <radicals>` form) → PROJECT recognize it as ASSERTED; do not read the row rootless.
+- **`sarf-sound-plural-suffix-swallow-detect`** (G6 / O-2) — CONDITION a single-blob token ends in a sound
+  plural ـات/ـين (+tanwīn) with the suffix unsegmented (مُسَخَّرَٰتٍ) → PROJECT flag the swallow; split
+  STEM + PL-F/PL, independent of the root check. GUARD a radical ت routes to 2-vote (root-radical-not-clitic).
+- **`sarf-mu-pattern-taught-not-coloured`** (C5/W1-A) — CONDITION a مُ- derivational pattern (مُفَعَّل/تَفَعَّل)
+  and the entry attests the form → PROJECT NAME the wazn in the morphline ("Form II passive participle, wazn
+  mufaʿʿal"); keep the مُ **stem-internal** (no coloured peel, per DR-1). Unattested → hold, never fabricate.
+- **`sarf-honest-sentence-template`** (C4 + 100%-agreement telemetry) — CONDITION the learner template has any
+  slot whose fact the morphline does not assert → PROJECT render the honest-generic variant (deterministic,
+  zero morphology authoring). Generalizes the completeness-claim rule.
+- **`sarf-loc-range-external-authority-prevalidation`** (C5/W1-A) — CONDITION an address is confirmed only by a
+  LOCAL index (a local index validating itself is circular) → PROJECT cannot prevalidate; require an EXTERNAL
+  authority. The 17:1:22 catch proved a local index confirmed an address the external oracle rejected.
+- **`sarf-demonstrative-dagger-alef-normalize`** (W13) — CONDITION the surface carries U+0670 (dagger-alef:
+  ذٰلِك/كَذٰلِك, مُسَخَّرَٰت) → PROJECT fold it to plain alif before the wbw/entry-form match (the engine missed
+  it twice). GUARD fold U+0670 → ا only; hamza / alif-maqṣūra preserved (root-significant).
