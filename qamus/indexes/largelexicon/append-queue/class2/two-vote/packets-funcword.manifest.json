@@ -1,0 +1,97 @@
+{
+  "boundary_route_rows": {
+    "count": 11,
+    "locations": [
+      "2:22:20",
+      "6:45:7",
+      "6:57:17",
+      "14:30:2",
+      "16:62:2",
+      "22:31:2",
+      "27:44:26",
+      "30:4:4",
+      "35:34:3",
+      "42:49:1",
+      "71:13:5"
+    ],
+    "route": "divine_name_entry"
+  },
+  "candidate_only": true,
+  "count_assertion": true,
+  "decision_object": "which_function_reading_governs_the_particle_token_OR_reclassify_OR_needs_entry_OR_abstention",
+  "determinism": {
+    "canonicalisation": "imported from tools.build_two_vote_packets",
+    "double_build_required": true,
+    "stdlib_only": true,
+    "wall_clock_fields": false
+  },
+  "disjointness_proof": {
+    "all_pairwise_overlaps_zero": true,
+    "decidable_count": 493,
+    "funcword_count": 1043,
+    "overlap_counts": {
+      "funcword_decidable": 0,
+      "funcword_rebind": 0
+    },
+    "rebind_count": 2330
+  },
+  "generator": "tools/build_funcword_two_vote_packets.py",
+  "input_sha_pins": {
+    "entries": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d",
+    "funcword_queue_v2": "a40aabf38e3337e1b5ccbffa411df702c89a8fb8f2e2660218414bca220d5bd7",
+    "gate_ssot": "ccc18bed9af049013cc7aa69b9eb1b27b4639f06c5afd90070a6bc406dd20c5f",
+    "loc_surfaces": "97efbaca345d5f23d9e9c699eef155f5bf4e06bb725e430729a8962b1573d227",
+    "prepass_rules": "dd09d8f66e5a000964271f95449b2f0f5119abe9012b5553b95fedfa2c317cf3"
+  },
+  "inputs": {
+    "entries": {
+      "path": "qamus/data/current/entries.jsonl",
+      "sha256": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d"
+    },
+    "funcword_queue_v2": {
+      "canonical_rows_sha256": "fd1000277dfcba68680a65a6e8866b96fed539d487c0f4a8f10db8d2074352df",
+      "path": "qamus/indexes/largelexicon/append-queue/class2/funcword-queue.v2.jsonl",
+      "row_count": 1043,
+      "sha256": "a40aabf38e3337e1b5ccbffa411df702c89a8fb8f2e2660218414bca220d5bd7"
+    },
+    "gate_ssot": {
+      "path": "nahw/evals/grammar-decision-gates.json",
+      "sha256": "ccc18bed9af049013cc7aa69b9eb1b27b4639f06c5afd90070a6bc406dd20c5f"
+    },
+    "loc_surfaces": {
+      "path": "qamus/indexes/quran-loc-surface/index.jsonl",
+      "sha256": "97efbaca345d5f23d9e9c699eef155f5bf4e06bb725e430729a8962b1573d227"
+    },
+    "prepass_rules": {
+      "path": "nahw/rules/funcword-homograph-prepass-rules.json",
+      "sha256": "dd09d8f66e5a000964271f95449b2f0f5119abe9012b5553b95fedfa2c317cf3"
+    }
+  },
+  "lane": "class2_function_word_two_vote",
+  "manifest_sha256": "2f8d57a5188101027b3d00758244a4994ae3d48a61eb3155e4a8edd78bc4df87",
+  "outputs": {
+    "packets": {
+      "bytes_sha256": "1f6507318b1a4414121ee40f3a37fb23aaa5c355bc447bac56a059ffe56eb53f",
+      "canonical_rows_sha256": "8e0fe57ae1740aee97b763c74d2b69b9c45508f09821b3c768cb06685c4dca3c",
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/packets-funcword.jsonl",
+      "row_count": 1043
+    }
+  },
+  "packet_count": 1043,
+  "response_gate": {
+    "confidence_enum": [
+      "high",
+      "medium",
+      "low",
+      "abstain"
+    ],
+    "decision_enum": [
+      "function_confirmed",
+      "reclassify",
+      "needs_entry",
+      "abstention"
+    ],
+    "tier": "two_vote_required"
+  },
+  "schema": "qamus.t11_funcword_packets_manifest.v1"
+}
