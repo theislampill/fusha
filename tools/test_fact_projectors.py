@@ -189,7 +189,11 @@ class RegistryTests(unittest.TestCase):
     def test_default_registry_contracts_are_data_inspectable_and_schema_valid(self):
         contracts = fact_projectors.REGISTRY.list_contracts()
         self.assertEqual(
-            {fact_projectors.SARF_PROJECTOR_ID, fact_projectors.NAHW_PROJECTOR_ID},
+            {
+                fact_projectors.SARF_PROJECTOR_ID,
+                fact_projectors.NAHW_PROJECTOR_ID,
+                fact_projectors.SARF_GENERATED_PROJECTOR_ID,
+            },
             {item["projector_id"] for item in contracts},
         )
         for contract in contracts:
@@ -219,7 +223,7 @@ class RegistryTests(unittest.TestCase):
         )
         self.assertEqual(0, result.returncode, result.stderr + result.stdout)
         listed = json.loads(result.stdout)
-        self.assertEqual(2, len(listed))
+        self.assertEqual(3, len(listed))
         self.assertIn("compatibility_class", listed[0])
 
     def test_projector_record_schema_is_pretty_and_accepts_both_record_kinds(self):

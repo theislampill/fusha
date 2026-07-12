@@ -4612,6 +4612,34 @@ for _script, _marker, _label in (
         check(_label + " (harness error)", False)
         print("  ", _e)
 
+# --- RM-40 staged paradigm-licensed generation (offline synthetic only) ---
+# Candidates-never-facts: generated forms are candidate-only, live in a store
+# disjoint from the sourced lookup/evidence baseline, and are not deploy-eligible.
+for _script, _marker, _label in (
+    ("rm40_gate_stack.py", "RM-40 gate stack self-test OK",
+     "RM-40 gate stack self-test (weak/hamza/masdar abstain)"),
+    ("fusha_paradigm_generate.py", "RM-40 paradigm generator self-test OK",
+     "RM-40 paradigm generator self-test (abstain-first, competing preserved)"),
+    ("validate_rm40_generation.py", "RM-40 generation validator self-test OK",
+     "RM-40 generation validator self-test (plane-disjointness, supersedes, no-overwrite)"),
+    ("rm40_eval_harness.py", "RM-40 evaluation harness self-test OK",
+     "RM-40 evaluation harness self-test (fabrication budget, norm_strict join, no aggregate)"),
+):
+    try:
+        _rm40 = run_text([
+            sys.executable, os.path.join(ROOT, "tools", _script), "--self-test",
+        ], timeout=60)
+        check(_label, _rm40.returncode == 0 and _marker in (_rm40.stdout or ""))
+    except Exception as _e:
+        check(_label + " (harness error)", False)
+        print("  ", _e)
+try:
+    _rm40t = run_text([sys.executable, os.path.join(ROOT, "tools", "test_rm40_generation.py")])
+    check("RM-40 generation tests (12 red-first checklist items)", _rm40t.returncode == 0)
+except Exception as _e:
+    check("RM-40 generation tests (harness error)", False)
+    print("  ", _e)
+
 # --- RM-20 owner-approved morphline application ---
 try:
     _rm20_apply = run_text([

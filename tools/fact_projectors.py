@@ -29,6 +29,10 @@ ROOT = Path(__file__).resolve().parents[1]
 PROJECTOR_SCHEMA_PATH = ROOT / "qamus" / "schemas" / "projector-record.schema.json"
 SARF_PROJECTOR_ID = "sarf.documented_form.v1"
 NAHW_PROJECTOR_ID = "nahw.particle_function.v1"
+# RM-40 staged paradigm-licensed generation. Distinct output_fact_type keeps it
+# out of the documented-form lookup plane, and gate_tier is two_vote_required so
+# a generated form can NEVER auto-promote the way a documented-form lookup can.
+SARF_GENERATED_PROJECTOR_ID = "sarf.paradigm_generated.v1"
 
 
 class ProjectorValidationError(ValueError):
@@ -434,6 +438,60 @@ def project_nahw_particle_functions(
     return run
 
 
+def project_sarf_paradigm_generated(
+    *,
+    contract: Dict[str, Any],
+    lexeme: Dict[str, Any],
+    store_dir: Any,
+    started_at: str,
+    finished_at: str,
+    baseline_forms: Iterable[Dict[str, Any]] = (),
+    slots: Optional[List[str]] = None,
+) -> Dict[str, Any]:
+    """RM-40 paradigm-licensed generation: emit candidate rows into a disjoint store.
+
+    Generated forms are candidates-never-facts. They are written to their own
+    append-only ``generated-candidates`` store (never the sourced baseline table
+    and never the fact ledger's certified plane). This projector's run record is
+    inspectable like the documented-form projectors, but its candidates ride the
+    two_vote_required gate and are not deployment-eligible (see
+    ``build_append_queue.is_generation_deploy_eligible``).
+    """
+    from tools import fusha_paradigm_generate as generator
+
+    lexeme_hash = _hash(lexeme)
+    run = {
+        "schema": "qamus.projector_record.v1",
+        "record_type": "projection_run",
+        "projector_id": contract["projector_id"],
+        "version": contract["version"],
+        "inputs": [{"fact_id": lexeme_hash, "hash": lexeme_hash}],
+        "candidates_generated": [],
+        "abstentions": [],
+        "certifications": [],
+        "review_votes": [],
+        "materializations": [],
+        "superseded_dependents": [],
+        "started_at": started_at,
+        "finished_at": finished_at,
+        "runtime_ms": max(
+            0, round((_parse_time(finished_at) - _parse_time(started_at)).total_seconds() * 1000)
+        ),
+        "resolution_method": contract["resolution_method"],
+    }
+    if str(lexeme.get("pos")) == "noun":
+        rows = generator.generate_noun_plural(lexeme, baseline_forms=baseline_forms)
+    else:
+        rows = generator.generate_verb(lexeme, slots=slots, baseline_forms=baseline_forms)
+    if rows:
+        generator.write_candidates(store_dir, rows)
+        run["candidates_generated"] = [row["candidate_id"] for row in rows]
+    errors = validate_projector_record(run)
+    if errors:
+        raise ProjectorValidationError("invalid generation run: " + "; ".join(errors))
+    return run
+
+
 def review_and_materialize(
     store: fact_ledger.FactLedgerStore,
     fact_id: str,
@@ -540,9 +598,31 @@ NAHW_CONTRACT = {
     "resolution_method": "documented_surface_context_lookup",
 }
 
+SARF_GENERATED_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "projector_id": SARF_GENERATED_PROJECTOR_ID,
+    "fact_family": "sarf",
+    "input_fact_types": ["root_assignment", "sarf_form"],
+    "output_fact_type": "sarf_generated_form",
+    "compatibility_class": (
+        "regular paradigm cells synthesised for a certified lexeme (root+measure) "
+        "that the documented-form baseline lacks; candidates-never-facts, written to "
+        "a disjoint generated-candidates store, never merged into the sourced baseline"
+    ),
+    "defeater_checks": [
+        "homograph_norm_key_collision",
+        "harakah_blind_sole_candidate",
+    ],
+    "gate_tier": "two_vote_required",
+    "version": "1.0.0",
+    "resolution_method": "paradigm_licensed_generation",
+}
+
 REGISTRY = ProjectorRegistry()
 REGISTRY.register(SARF_CONTRACT, project_sarf_documented_forms)
 REGISTRY.register(NAHW_CONTRACT, project_nahw_particle_functions)
+REGISTRY.register(SARF_GENERATED_CONTRACT, project_sarf_paradigm_generated)
 
 
 def main(argv: Optional[List[str]] = None) -> int:
