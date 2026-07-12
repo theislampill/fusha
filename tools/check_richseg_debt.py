@@ -43,9 +43,15 @@ REQUIRED_FIELDS = [
     "first_known_commit", "review_status", "repair_lane", "skill_rule_ids",
     "validator_gate_ids", "review_condition",
 ]
-VALID_LANES = {"C1", "C2", "C4", "C5"}          # C3 lane repaired -> excluded from debt
-VALID_PRIMARY = {"C1", "C2", "C4", "C5"}
+VALID_LANES = {"C1", "C2", "C3", "C4", "C5"}    # C3 lane REOPENED at detector v3 (new content-noun
+VALID_PRIMARY = {"C1", "C2", "C3", "C4", "C5"}  # candidates); the originally repaired C3 locs stay
+                                                # excluded_now_valid and are never grandfathered.
 VALID_STATUS = {"candidate_flag", "confirmed_defect"}
+
+# Ground-truthed REPAIRED C3 locs (the original C3 repair wave). These are
+# excluded_now_valid forever: they must never re-enter the debt manifest even
+# though the C3 lane itself was REOPENED at detector v3 for new candidates.
+REPAIRED_C3_LOCS = frozenset({"12:82:11", "24:4:13", "27:49:4", "27:49:14", "40:72:4"})
 
 
 # ---------------------------------------------------------------------------
@@ -80,8 +86,8 @@ def check_manifest_wellformed(manifest):
             failures.append(("invalid_repair_lane", loc, r.get("repair_lane")))
         if r.get("primary_class") not in VALID_PRIMARY:
             failures.append(("invalid_primary_class", loc, r.get("primary_class")))
-        if r.get("primary_class") == "C3":
-            failures.append(("c3_must_be_excluded", loc))
+        if r.get("primary_class") == "C3" and loc in REPAIRED_C3_LOCS:
+            failures.append(("c3_repaired_loc_in_debt", loc))
         if r.get("review_status") not in VALID_STATUS:
             failures.append(("invalid_review_status", loc, r.get("review_status")))
     return failures
@@ -254,10 +260,19 @@ def self_test():
     record("fail_content_tampered", False, recomputed == tampered_meta_sha,
            [("manifest_content_tampered", recomputed[:16])])
 
-    # STRUCTURAL: a C3 row must be rejected (C3 lane is repaired/excluded)
-    c3row = dict(golden[0]); c3row["primary_class"] = "C3"; c3row["repair_lane"] = "C1"
+    # STRUCTURAL: a REPAIRED C3 loc must be rejected (never re-enters debt)
+    c3row = dict(golden[0])
+    c3row["canonical_location"] = "24:4:13"
+    c3row["primary_class"] = "C3"; c3row["repair_lane"] = "C3"
+    c3row["primary_name"] = "misclassified_function"
     sf = check_manifest_wellformed([c3row])
-    record("fail_c3_in_debt", False, len(sf) == 0, sf)
+    record("fail_c3_repaired_loc_in_debt", False, len(sf) == 0, sf)
+
+    # STRUCTURAL: the C3 lane is REOPENED for new candidates -> a C3 row at a
+    # non-repaired loc is well-formed and PASSES.
+    c3new = dict(c3row); c3new["canonical_location"] = "17:45:1"
+    sf = check_manifest_wellformed([c3new])
+    record("pass_c3_reopened_lane", True, len(sf) == 0, sf)
 
     # STRUCTURAL: golden manifest is well-formed -> PASS
     sf = check_manifest_wellformed(golden)
