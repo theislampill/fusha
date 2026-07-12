@@ -64,10 +64,13 @@ GENERATED_MIRROR_COPIES = (
 # here. The drift sentinel uses these to prove an install is stale (observed != canonical) so it is
 # REPAIRED BY REGENERATION.
 RECORDED_STALE_INSTALL_OBSERVATIONS = (
+    # skill-release: the two local_codex_install mirrors were REGENERATED deterministically from the
+    # authoritative SKILL.md sources, so each observed sha now equals its canonical regeneration (the
+    # documented FIX for a stale install; prior stale shas preserved in git history + SKILL-CHANGELOG).
     {"target": "local_codex_install", "skill": "nahw",
-     "observed_sha256": "82e7af99e808d5f520503c3ac6fc606ba7a857e73cd438e43b190650b1dd69b8"},
+     "observed_sha256": "f8e9a663b3c6f7d1bb4f93932bc9b9aff80b42e703940ab78d299ac4afa5e483"},
     {"target": "local_codex_install", "skill": "sarf",
-     "observed_sha256": "b26d7d7721b6f807c9227c4f789862a0a3260d392ed70414fbaeea2d39178b34"},
+     "observed_sha256": "cbe6b4769abad41e9ecbb0d7db2f17e669e4425d5a57670851ce769945b96082"},
 )
 
 

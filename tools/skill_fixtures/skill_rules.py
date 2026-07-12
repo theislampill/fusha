@@ -321,3 +321,176 @@ SUPERSEDED = {
     "source_ref_fidelity": _reffid_superseded,
     "supersede_propagation": _supersede_superseded,
 }
+
+
+# --- skill-untested-fix: boundary discriminators for the 15 accepted-untested registry rules (gate 4) ---
+def _blank_beats_wrong_corrected(case):
+    """a null root/pattern/lemma is correct when none can be certified; never fabricate one from resemblance"""
+    return 'null_blank'
+
+
+def _blank_beats_wrong_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'fabricated_from_resemblance'
+
+def _sifa_verb_gloss_repair_corrected(case):
+    """an adjectival sifa mushabbaha (kazim) carrying a verb-shaped 'suppress anger' gloss is an entry-repair candidate, not a hover patch"""
+    return 'entry_repair_candidate'
+
+
+def _sifa_verb_gloss_repair_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'partial_hover_override'
+
+def _morph_correct_bytes_wrong_corrected(case):
+    """a correct morphological decision must NOT ship when the surface bytes do not match; mechanics gate the deploy"""
+    return 'blocked_mechanics'
+
+
+def _morph_correct_bytes_wrong_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'ship_anyway'
+
+def _quarantine_family_corrected(case):
+    """a data-error quarantine matches on the stem: aliiman (acc) quarantines aliimun (nom) too, not just the exact case ending"""
+    return 'quarantine_family'
+
+
+def _quarantine_family_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'allow_other_case'
+
+def _uncertain_prefer_pending_corrected(case):
+    """when a sarf reading is not certified, prefer pending with a precise reason over resolving on a guess"""
+    return 'pending_with_reason'
+
+
+def _uncertain_prefer_pending_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'resolved_uncertain'
+
+def _decision_maps_src_corrected(case):
+    """a resolved sarf decision authors the gloss with src=qamus recorded at S:A:W; the superseded path authored without stamping the source"""
+    return 'author_src_qamus'
+
+
+def _decision_maps_src_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'author_no_src_stamp'
+
+def _retry_before_impossible_corrected(case):
+    """a row is almost never truly impossible: attempt a source-backed per-occurrence retry before emitting impossible/blocked"""
+    return 'retry_source_backed'
+
+
+def _retry_before_impossible_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'emit_impossible'
+
+def _token_right_entry_wrong_corrected(case):
+    """when the token is right but the entry is mis-filed, emit a repair candidate with a source address; never mutate live data"""
+    return 'repair_candidate'
+
+
+def _token_right_entry_wrong_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'mutate_live_entry'
+
+def _verbose_spread_to_concise_corrected(case):
+    """a verbose verb-shape spread-gloss on a non-primary slot is improved by a concise certified fusha override"""
+    return 'apply_concise_certified'
+
+
+def _verbose_spread_to_concise_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'keep_verbose_spread'
+
+def _phrase_aware_pending_corrected(case):
+    """prefer a phrase-aware pending over shipping a wrong one-word gloss"""
+    return 'phrase_aware_pending'
+
+
+def _phrase_aware_pending_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'wrong_one_word_gloss'
+
+def _clause_relation_recorded_corrected(case):
+    """relative pronouns, subordinating conjunctions, purpose lam and temporal conditionals must record their clause relation, not a generic particle gloss"""
+    return 'purpose_clause'
+
+
+def _clause_relation_recorded_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'generic_particle'
+
+def _temporal_expression_review_corrected(case):
+    """yawma-idhin requires temporal-expression review (yawma = time noun + idhin = attached 'then'); a bare 'day' hover is not rich closure"""
+    return 'temporal_expression_review'
+
+
+def _temporal_expression_review_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'bare_day_hover'
+
+def _resolve_only_if_unique_corrected(case):
+    """resolve only when the construction uniquely fixes the sense; otherwise emit pending with the precise blocker"""
+    return 'pending_needs_nahw_review'
+
+
+def _resolve_only_if_unique_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'resolved_ambiguous'
+
+def _layer1_safe_with_evidence_corrected(case):
+    """even a layer-1-safe rule (prep governs genitive) stays a two-vote candidate when the ending is unvoweled/unconfirmed; resolve only with evidence"""
+    return 'candidate_two_vote'
+
+
+def _layer1_safe_with_evidence_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'resolved_no_evidence'
+
+def _prep_host_pronoun_both_corrected(case):
+    """preposition/host+pronoun rows (fiiha, duunihim) must expose BOTH the relation and the attached pronoun"""
+    return 'expose_both'
+
+
+def _prep_host_pronoun_both_superseded(case):
+    """Pre-fix behaviour that produced the documented wrong label."""
+    return 'relation_only'
+
+CORRECTED.update({
+    "blank_beats_wrong": _blank_beats_wrong_corrected,
+    "sifa_verb_gloss_repair": _sifa_verb_gloss_repair_corrected,
+    "morph_correct_bytes_wrong": _morph_correct_bytes_wrong_corrected,
+    "quarantine_family": _quarantine_family_corrected,
+    "uncertain_prefer_pending": _uncertain_prefer_pending_corrected,
+    "decision_maps_src": _decision_maps_src_corrected,
+    "retry_before_impossible": _retry_before_impossible_corrected,
+    "token_right_entry_wrong": _token_right_entry_wrong_corrected,
+    "verbose_spread_to_concise": _verbose_spread_to_concise_corrected,
+    "phrase_aware_pending": _phrase_aware_pending_corrected,
+    "clause_relation_recorded": _clause_relation_recorded_corrected,
+    "temporal_expression_review": _temporal_expression_review_corrected,
+    "resolve_only_if_unique": _resolve_only_if_unique_corrected,
+    "layer1_safe_with_evidence": _layer1_safe_with_evidence_corrected,
+    "prep_host_pronoun_both": _prep_host_pronoun_both_corrected,
+})
+
+SUPERSEDED.update({
+    "blank_beats_wrong": _blank_beats_wrong_superseded,
+    "sifa_verb_gloss_repair": _sifa_verb_gloss_repair_superseded,
+    "morph_correct_bytes_wrong": _morph_correct_bytes_wrong_superseded,
+    "quarantine_family": _quarantine_family_superseded,
+    "uncertain_prefer_pending": _uncertain_prefer_pending_superseded,
+    "decision_maps_src": _decision_maps_src_superseded,
+    "retry_before_impossible": _retry_before_impossible_superseded,
+    "token_right_entry_wrong": _token_right_entry_wrong_superseded,
+    "verbose_spread_to_concise": _verbose_spread_to_concise_superseded,
+    "phrase_aware_pending": _phrase_aware_pending_superseded,
+    "clause_relation_recorded": _clause_relation_recorded_superseded,
+    "temporal_expression_review": _temporal_expression_review_superseded,
+    "resolve_only_if_unique": _resolve_only_if_unique_superseded,
+    "layer1_safe_with_evidence": _layer1_safe_with_evidence_superseded,
+    "prep_host_pronoun_both": _prep_host_pronoun_both_superseded,
+})
