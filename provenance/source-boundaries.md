@@ -32,14 +32,21 @@ returned wording as the public hover.
 
 1. A fact **learned** from an external source is not publishable merely because it
    is true. It becomes publishable only by being **re-authored** as our own
-   original content.
+   compiled and edited expression.
 2. **Roots and POS are facts** → may be confirmed against QAC and recorded with an
    internal `informed_by:'qac'` label.
 3. **Glosses, definitions, notes, example selections, and translations are
-   expression** → must be **written by us from scratch**. Never paste, never
-   "lightly reword", never machine-translate someone else's gloss and call it ours.
-4. There is **no** publication path that copies external expressive text. If you
-   cannot author it yourself, it stays out (emit `PENDING`).
+   expression** → are **authored and edited for Qamus's own purposes**. Comparative
+   editions and references may be consulted, but you must never *paste*, never
+   "lightly reword", and never machine-translate someone else's gloss and ship it
+   under Qamus's name. Overlap with an existing translation, on its own, does not
+   establish copying (the renderings describe the same Arabic source text); where
+   wording is *intentionally reproduced* from an identified edition it is **recorded
+   and attributed** under its terms (see [`../qamus/data/current/NOTICE.md`](../qamus/data/current/NOTICE.md),
+   owner decision **D-12**; **D-01** dataset licensing remains open), never passed
+   off silently.
+4. There is **no** publication path that silently ships external expressive text as
+   Qamus's own. If you cannot author a word yourself, it stays out (emit `PENDING`).
 
 ## §2. The `informed_by` label policy
 
@@ -130,9 +137,11 @@ If any box is unchecked, the commit does not go in.
 
 ## §7. Why this is defensible
 
-- We publish **our own expression** + **uncopyrightable facts** + **unaltered
-  primary scripture**.
+- We publish **expression we compiled and edited ourselves** + **uncopyrightable
+  facts** + **unaltered primary scripture**; any wording intentionally reproduced
+  from an identified edition is recorded and attributed under its terms (D-12).
 - We consult external corpora the way a scholar consults a reference shelf: to
-  **check** our work, named internally as evidence, never reproduced.
+  **check and inform** our work, named internally as evidence, and their text is
+  never pasted into the published output.
 - The public artifact is self-evidently ours: `{src:'qamus', kind:'authored', lang:'en'}`,
   with `PENDING` wherever our confidence runs out.
