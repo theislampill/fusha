@@ -4704,14 +4704,15 @@ try:
                 _lb_current[_lb_row["fact_id"]] = _lb_row  # last revision wins
     _lb_states = _lb_collections.Counter(
         _row["certification_state"] for _row in _lb_current.values())
-    check("T10 Lane B ledger states after wave 4: certified=1521 review_required=160 candidate=213",
-          _lb_states.get("certified") == 1521 and _lb_states.get("review_required") == 160
-          and _lb_states.get("candidate") == 213 and _lb_states.get("conflicted", 0) == 0)
+    check("T10 Lane B ledger states after affirm-live T3 tranche: certified=1657 review_required=24 candidate=213 rejected=136",
+          _lb_states.get("certified") == 1657 and _lb_states.get("review_required") == 24
+          and _lb_states.get("candidate") == 213 and _lb_states.get("rejected") == 136
+          and _lb_states.get("conflicted", 0) == 0)
     _lb_carriers = {
         (_row["subject_identity"]["loc"], _row["subject_identity"]["qword_row_id"])
         for _row in _lb_current.values() if _row["certification_state"] == "certified"}
-    check("T10 Lane B certified facts are occurrence-scoped with full D-13 carriers (1521 unique)",
-          len(_lb_carriers) == 1521 and all(
+    check("T10 Lane B certified facts are occurrence-scoped with full D-13 carriers (1657 unique)",
+          len(_lb_carriers) == 1657 and all(
               _row.get("scope") == "occurrence"
               and {"loc", "entry_id", "card_id", "qword_row_id"} <= set(_row["subject_identity"])
               for _row in _lb_current.values() if _row["certification_state"] == "certified"))
