@@ -1,7 +1,8 @@
 # Largelexicon Implementation
 
-Largelexicon implements the first measured bridge from the Qamus 2,092-entry
-dataset into Fusha parser/checker tooling.
+Largelexicon implements the first measured bridge from the Qamus
+2,092-entry dataset into Fusha
+parser/checker tooling.
 
 ## Implemented Lanes
 
@@ -93,17 +94,32 @@ tranche closure claims.
 
 ## Current Measured Denominators
 
+<!-- All values are read live from the cited manifests at apply time. Do NOT hand-type. -->
+
 - Qamus lemma rows: 2,092.
 - Qamus form/stem rows: 8,483.
-- Qamus all-visible-qword denominator rows: 117,117, stored as one logical
-  manifest-backed table under `qamus/indexes/largelexicon/qword-denominator/`.
-- Qamus qword crosswalk rows: 117,117, stored as one logical manifest-backed
-  table under `qamus/indexes/largelexicon/qword-crosswalk/`.
-- Current accepted qword crosswalk rows: 85,877. Current source-crosswalk
-  packet rows: 31,240.
-- Qamus entries acknowledged by the qword manifest: 2,092; entries with qword
-  rows in the current export: 2,091; current source-card repair packet: `n993`
-  / `مَلْجَأ` (`pg443.jpeg`, candidate ref `42:47`).
+- Qamus all-visible-qword denominator rows:
+  117,117, stored as one
+  logical manifest-backed table under `qamus/indexes/largelexicon/qword-denominator/`.
+- Qamus qword crosswalk rows:
+  117,117, stored as one
+  logical manifest-backed table under `qamus/indexes/largelexicon/qword-crosswalk/`.
+- Current accepted qword crosswalk rows:
+  `qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json#status_counts.canonical_crosswalk_accepted` (read live — moves per promotion wave; not transcribed here)
+  (plus
+  37
+  demoted). Current source-crosswalk packet-ready rows:
+  `qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json#status_counts.source_crosswalk_packet_ready` (read live — moves per promotion wave; not transcribed here).
+  <!-- Historical: the 2026-07-03 ADOPTION snapshot was 85,877 accepted / 31,240 packet
+       (`…qamus-qword-crosswalk.manifest.json#adoption.evidence_counts`). The live status_counts
+       above supersede it after the two-vote/lane-A wave-3 promotions (crosswalk `generated_at` 2026-07-11). -->
+- Qamus entries acknowledged by the qword manifest:
+  2,092; entries
+  with qword rows in the current export:
+  2,091;
+  current source-card repair packet:
+  1 row
+  — entry `2a071cd0b50e` / `مَلْجَأ` (`pg443.jpeg`, candidate ref `42:47`; public entry key `n993`).
 - Current largelexicon parser scope: dependency-free candidate analysis over
   committed Qamus-derived tables, plus smoke arbitrary input. It is not yet a
   CAMeL/MADAMIRA/Stanza-equivalent analyzer, trained statistical disambiguator,

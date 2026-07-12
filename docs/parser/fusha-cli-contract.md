@@ -76,12 +76,17 @@ Prototype equivalent:
 ```bash
 python tools/validate_qamus_mode_a_adoption.py --self-test
 python tools/validate_qamustyping3_acceptance.py --self-test
+python tools/validate_qamustyping4_acceptance.py --self-test
 ```
 
-Input: Mode A fixture bundle and qamustyping3 implementation ledger.
+Input: Mode A fixture bundle and the qamustyping3 **and qamustyping4**
+implementation ledgers.
 
 Output: stage status, source rows, all-qword fixture rows, external-source
 policy, public/private projection checks, and claim-boundary checks.
+(qamustyping4 adds the all-qword page/card acceptance checks for the observed
+RH-LIVE sparse-page regressions — see
+`docs/parser/qamustyping4-implementation.md`.)
 
 ## Stable Row Shape
 
