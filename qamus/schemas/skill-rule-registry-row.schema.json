@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "fusha/skill-rule-registry-row@1",
+  "title": "Skill rule registry row",
+  "description": "One versioned rule in the fusha sarf/nahw rule registry. Existing baseline rules are @1; the 2026-07-12 evolved (v-next) rules are @2. Validated fail-closed by tools/validate_skill_registry.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "skill_rule_id",
+    "skill",
+    "skill_version",
+    "status",
+    "fact_family",
+    "scope",
+    "evidence_addresses",
+    "positive_examples",
+    "negative_or_boundary_examples",
+    "defeaters",
+    "abstention_condition",
+    "gate",
+    "code_references",
+    "test_references",
+    "relationships",
+    "provenance"
+  ],
+  "properties": {
+    "skill_rule_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable unique id. Existing rules keep their SKILL-PARITY-MATRIX id; v-next keep their revised-rules rule_id."
+    },
+    "skill": {
+      "type": "string",
+      "enum": ["sarf", "nahw"]
+    },
+    "skill_version": {
+      "type": "string",
+      "pattern": "^(sarf|nahw)@[12]$",
+      "description": "Must agree with `skill`: existing baseline = @1, evolved v-next = @2."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["accepted", "candidate", "blocked"]
+    },
+    "fact_family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope": {
+      "type": "string"
+    },
+    "evidence_addresses": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Source-addressed evidence anchors (SKILL.md loci, quran:S:A:W, impl-record paths). MUST be non-empty when status == accepted (fail-closed)."
+    },
+    "positive_examples": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "example_id references into the 142-row example bank (examples.jsonl + examples-fill.jsonl)."
+    },
+    "negative_or_boundary_examples": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "defeaters": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "abstention_condition": {
+      "type": ["string", "null"]
+    },
+    "gate": {
+      "type": "string",
+      "minLength": 1
+    },
+    "code_references": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "test_references": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "target_id", "target_kind"],
+        "properties": {
+          "type": { "type": "string", "enum": ["supersedes", "extends", "cites"] },
+          "target_id": { "type": "string", "minLength": 1 },
+          "target_kind": {
+            "type": "string",
+            "enum": ["registry", "external"],
+            "description": "registry = target_id is another skill_rule_id in this file (dangling-checked). external = an un-extracted SKILL.md passage (NOT-IN-MATRIX), exempt from the dangling check."
+          },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Free-form origin metadata (origin, source path, matrix_commit, relationship, coverage_verdict...)."
+    }
+  },
+  "allOf": [
+    {
+      "description": "Allowed (skill_version, status) transitions. @1 baseline may be accepted or candidate; @2 v-next may only be candidate or blocked (not released to accepted).",
+      "if": { "properties": { "skill_version": { "pattern": "@2$" } } },
+      "then": { "properties": { "status": { "enum": ["candidate", "blocked"] } } }
+    },
+    {
+      "if": { "properties": { "skill_version": { "pattern": "@1$" } } },
+      "then": { "properties": { "status": { "enum": ["accepted", "candidate"] } } }
+    }
+  ]
+}
