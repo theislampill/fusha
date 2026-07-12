@@ -105,6 +105,24 @@ class FactLedgerTests(unittest.TestCase):
             with self.assertRaisesRegex(fact_ledger.ValidationError, "illegal transition"):
                 store.transition(row["fact_id"], "certified", review_votes=approving_votes())
 
+    def test_review_required_can_append_named_t4_annotation_revision(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            store = fact_ledger.FactLedgerStore(tmp)
+            row = store.append(make_row())
+            reviewed = store.transition(row["fact_id"], "review_required")
+            annotated = store.transition(
+                row["fact_id"],
+                "review_required",
+                exceptions=[{
+                    "type": "tier_due_process_annotation",
+                    "annotation": "t4_packet",
+                    "evidence_reference": "lane-input:verdicts#packet_id=fixture",
+                }],
+            )
+            self.assertEqual("review_required", annotated["certification_state"])
+            self.assertEqual(reviewed["fact_id"], annotated["supersedes"])
+            self.assertEqual([], store.validate_all())
+
     def test_two_vote_fact_cannot_certify_without_independent_votes(self):
         with tempfile.TemporaryDirectory() as tmp:
             store = fact_ledger.FactLedgerStore(tmp)

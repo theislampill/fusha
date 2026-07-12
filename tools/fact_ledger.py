@@ -207,6 +207,26 @@ def _is_collision_revision(row: Dict[str, Any]) -> bool:
     )
 
 
+def _is_tier_annotation_revision(row: Dict[str, Any], previous: Dict[str, Any]) -> bool:
+    """Allow an append-only T4 annotation without changing review disposition."""
+
+    if previous.get("certification_state") != "review_required":
+        return False
+    prior_exceptions = previous.get("exceptions") or []
+    next_exceptions = row.get("exceptions") or []
+    if next_exceptions[:len(prior_exceptions)] != prior_exceptions:
+        return False
+    added = next_exceptions[len(prior_exceptions):]
+    if not added or any(item.get("type") != "tier_due_process_annotation" for item in added):
+        return False
+    stable_ignoring = {"exceptions", "provenance", "supersedes"}
+    return all(
+        row.get(key) == value
+        for key, value in previous.items()
+        if key not in stable_ignoring
+    )
+
+
 def validate_row(row: Dict[str, Any], *, previous: Optional[Dict[str, Any]] = None,
                  schema: Optional[Dict[str, Any]] = None,
                  gate_path: os.PathLike[str] | str = GATE_PATH) -> None:
@@ -283,6 +303,8 @@ def validate_row(row: Dict[str, Any], *, previous: Optional[Dict[str, Any]] = No
         if state == "conflicted" and _is_collision_revision(row):
             if prior not in {"review_required", "certified"}:
                 raise ValidationError("collision assignment requires a review_required or certified fact")
+        elif state == prior == "review_required" and _is_tier_annotation_revision(row, previous):
+            pass
         elif state not in TRANSITIONS.get(prior, set()):
             raise ValidationError("illegal transition: %s -> %s" % (prior, state))
 

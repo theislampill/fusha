@@ -1,0 +1,2217 @@
+{
+  "check_regressions_edited": false,
+  "constant_hunks": [],
+  "created_at": "2026-07-12T00:00:00Z",
+  "gate_counts": {
+    "deterministic_fail": 0,
+    "deterministic_pass": 61,
+    "lillahi_t2": 6,
+    "t3_host_a": 51,
+    "t3_host_b": 10,
+    "t4_packet": 5
+  },
+  "generator": "tools/tier_due_process.py",
+  "input_hashes": {
+    "committed_inputs": {
+      "dh_t3_verdicts": "sha256:4da0e679af70f009cf3463af29f1425428c9895364b2cab8af587d5e8965485b",
+      "lillahi_t2_verdicts": "sha256:3b00c3d74d190e06efb98f0a3f2dcaf8a97a53cd3cc9703226831c511f16cf43",
+      "nahw_evals_grammar_decision_gates_json": "sha256:ccc18bed9af049013cc7aa69b9eb1b27b4639f06c5afd90070a6bc406dd20c5f",
+      "qamus_data_current_entries_jsonl": "sha256:b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d",
+      "qamus_indexes_largelexicon_append_queue_class2_two_vote_funcword_votes_a_jsonl": "sha256:e2cd4d7d2dab7835d0714beac947d03dff98bd2bc0a50f8f05bd3d2008485bb8",
+      "qamus_indexes_largelexicon_append_queue_class2_two_vote_funcword_votes_b_jsonl": "sha256:6e3e7777b96641b374bec98b433c67138a969ae19fee9e9910e055c1dcf43a60",
+      "qamus_indexes_largelexicon_append_queue_class2_two_vote_rebind_votes_a_jsonl": "sha256:aa3eb85ae32c462fa96afe348c446bbf8e38a01043716efe5dc24c4ad55f9ea8",
+      "qamus_indexes_largelexicon_append_queue_class2_two_vote_rebind_votes_b_jsonl": "sha256:5ae0c7d86eb1bd435050cc318531ac528e497dd0996a439a3a96a58fb5b452e9",
+      "qamus_indexes_largelexicon_fact_ledger_funcword_cert_ledger_jsonl": "sha256:bb9e16300a55b3ee92cab94d227c43a0bf8a5571c55c6df1826af8634c4a67a7",
+      "qamus_indexes_largelexicon_fact_ledger_rebind_cert_ledger_jsonl": "sha256:d3321fb63d5124c147631d255f903ac8c2f1d612bb4dc39744e9232d576b13ac",
+      "qamus_indexes_quran_loc_surface_index_jsonl": "sha256:97efbaca345d5f23d9e9c699eef155f5bf4e06bb725e430729a8962b1573d227",
+      "qamus_schemas_fact_ledger_row_schema_json": "sha256:18b08c751e425ab34aed525ac064474aa97566d534dd8590d950df27b46257d5",
+      "tools_build_funcword_two_vote_packets_py": "sha256:5d68d8eda69e3adb29c83fb50c5c3017601ce9a51aa827eb78bee318fecc2045"
+    },
+    "lane_inputs": {
+      "dh-t3-verdicts.jsonl": "sha256:4da0e679af70f009cf3463af29f1425428c9895364b2cab8af587d5e8965485b",
+      "lillahi-t2-verdicts.jsonl": "sha256:3b00c3d74d190e06efb98f0a3f2dcaf8a97a53cd3cc9703226831c511f16cf43"
+    }
+  },
+  "ledger_arithmetic": {
+    "funcword_cert": {
+      "append_delta": 24,
+      "current_state_counts_after": {
+        "certified": 894,
+        "rejected": 6,
+        "review_required": 149
+      },
+      "current_state_counts_before": {
+        "certified": 888,
+        "review_required": 155
+      },
+      "physical_rows": [
+        2974,
+        2998
+      ]
+    },
+    "rebind_cert": {
+      "append_delta": 96,
+      "current_state_counts_after": {
+        "certified": 1234,
+        "rejected": 10,
+        "review_required": 14
+      },
+      "current_state_counts_before": {
+        "certified": 1173,
+        "review_required": 75
+      },
+      "physical_rows": [
+        3669,
+        3765
+      ]
+    }
+  },
+  "method": "t11_tier_due_process_v1",
+  "outputs": {
+    "funcword_cert_sha256": "sha256:72ed6be0d31643f2c62242c342c6ebd91dcabc638ddfcf039015abd7d6288e16",
+    "rebind_cert_sha256": "sha256:a873ab38aec92d78188ff11cd5b68c8d7e4a38218ab99db6e457d45705bc1b93"
+  },
+  "protected_surface_assertion": {
+    "after": {
+      "append_queue": "sha256:53d2afdac5b36f64c59e690a1c51d3f1bfbe3973397fd935e724490152574219",
+      "canonical_shadow": "sha256:8c86844fec2e0cf1e2fb3f2781fd669fd12191e5f90e4ccf06f151c25f948849",
+      "public_whitelist": "sha256:972263b5472478b8805c39e107ecf5d6f8096acace8756d15a08967cddf90515",
+      "qword_crosswalk": "sha256:cd99cf312074eddbd99217179a79d5bda77957f1af8c3dca0b2cf89b02b4404a"
+    },
+    "before": {
+      "append_queue": "sha256:53d2afdac5b36f64c59e690a1c51d3f1bfbe3973397fd935e724490152574219",
+      "canonical_shadow": "sha256:8c86844fec2e0cf1e2fb3f2781fd669fd12191e5f90e4ccf06f151c25f948849",
+      "public_whitelist": "sha256:972263b5472478b8805c39e107ecf5d6f8096acace8756d15a08967cddf90515",
+      "qword_crosswalk": "sha256:cd99cf312074eddbd99217179a79d5bda77957f1af8c3dca0b2cf89b02b4404a"
+    },
+    "no_queue_crosswalk_whitelist_change": true,
+    "observed": "byte_stable"
+  },
+  "rows": [
+    {
+      "canonical_location": "2:62:14",
+      "current_fact_id": "sha256:69da0d3904d8db2936cbee8e53e82bf9ec5e2c25eae68e8736d34ce16f94901d",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ص ل ح": [
+            "root_skeleton_strict"
+          ]
+        },
+        "derived_root_overlap": [
+          "ص ل ح"
+        ],
+        "documented_form_overlap": [],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "root_derivation",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "صَٰلِحًا",
+        "target_surface_keys": [
+          "صالحا",
+          "صلحا"
+        ],
+        "winning_host_entry_id": "4d22dd9db001",
+        "winning_host_root": "ص ل ح"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:016:2:62:14",
+      "prior_fact_id": "sha256:69da0d3904d8db2936cbee8e53e82bf9ec5e2c25eae68e8736d34ce16f94901d",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "4d22dd9db001"
+    },
+    {
+      "canonical_location": "2:74:3",
+      "current_fact_id": "sha256:59e0c7ba40d6fa714f98d941d397764db2c4877fe9bc6de84dae920a3dd380b4",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "قلوب",
+          "قلوبكم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "قُلُوبُكُم",
+        "target_surface_keys": [
+          "قلوب",
+          "قلوبكم"
+        ],
+        "winning_host_entry_id": "7f416e8c42c3",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:023:2:74:3",
+      "prior_fact_id": "sha256:59e0c7ba40d6fa714f98d941d397764db2c4877fe9bc6de84dae920a3dd380b4",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "7f416e8c42c3"
+    },
+    {
+      "canonical_location": "2:237:20",
+      "current_fact_id": "sha256:4d87b384dd7ec63e7e2af7e441e7822561848148905e73d48110448a30fadd1a",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "يد",
+          "يده"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِيَدِهِۦ",
+        "target_surface_keys": [
+          "بيد",
+          "بيده",
+          "يد",
+          "يده"
+        ],
+        "winning_host_entry_id": "dc571b74a440",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-rebind:055:2:237:20",
+      "prior_fact_id": "sha256:59903401f9cd99d81aa7f76f52ea9a0af4b3e6ae0508e990975aa02ec64a5ba6",
+      "verdict": "t3_host_b",
+      "winning_engine": "B",
+      "winning_host_entry_id": "dc571b74a440"
+    },
+    {
+      "canonical_location": "2:256:12",
+      "current_fact_id": "sha256:7c59fb37bd8155b213d74174d35b18d746ec3a9b8bf470daf8f1e575f0e981fe",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ط غ ي": [
+            "clitic_segmented_form",
+            "root_skeleton_weak_folded"
+          ]
+        },
+        "derived_root_overlap": [
+          "ط غ ي"
+        ],
+        "documented_form_overlap": [
+          "الطاغوت"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلطَّٰغُوتِ",
+        "target_surface_keys": [
+          "الطاغوت",
+          "الطغوت",
+          "بالطاغوت",
+          "بالطغوت"
+        ],
+        "winning_host_entry_id": "714b269ac820",
+        "winning_host_root": "ط غ ي"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:061:2:256:12",
+      "prior_fact_id": "sha256:7c59fb37bd8155b213d74174d35b18d746ec3a9b8bf470daf8f1e575f0e981fe",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "714b269ac820"
+    },
+    {
+      "canonical_location": "2:264:7",
+      "current_fact_id": "sha256:31f03686d4d82bad213aa60e395c69acde89f4e85b2bb620eb54134b4de7f96e",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "م ن ن": [
+            "clitic_segmented_form",
+            "root_skeleton_strict"
+          ]
+        },
+        "derived_root_overlap": [
+          "م ن ن"
+        ],
+        "documented_form_overlap": [
+          "المن"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلْمَنِّ",
+        "target_surface_keys": [
+          "المن",
+          "بالمن"
+        ],
+        "winning_host_entry_id": "3f40e0c0eb7a",
+        "winning_host_root": "م ن ن"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:068:2:264:7",
+      "prior_fact_id": "sha256:31f03686d4d82bad213aa60e395c69acde89f4e85b2bb620eb54134b4de7f96e",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "3f40e0c0eb7a"
+    },
+    {
+      "canonical_location": "3:103:16",
+      "current_fact_id": "sha256:3ffc6324d1dbf97c24cefd5658b121b82d05b7eb207fce361995af69677900e9",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "قلوب",
+          "قلوبكم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "قُلُوبِكُمْ",
+        "target_surface_keys": [
+          "قلوب",
+          "قلوبكم"
+        ],
+        "winning_host_entry_id": "7f416e8c42c3",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:117:3:103:16",
+      "prior_fact_id": "sha256:3ffc6324d1dbf97c24cefd5658b121b82d05b7eb207fce361995af69677900e9",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "7f416e8c42c3"
+    },
+    {
+      "canonical_location": "3:106:3",
+      "current_fact_id": "sha256:689b31daa4e17812b52d980bcc9881ecf62cb6151e81c28ba865673c8e4a6ec4",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "وجوه"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "وُجُوهٌ",
+        "target_surface_keys": [
+          "جو",
+          "جوه",
+          "وجو",
+          "وجوه"
+        ],
+        "winning_host_entry_id": "855156f634ea",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:121:3:106:3",
+      "prior_fact_id": "sha256:689b31daa4e17812b52d980bcc9881ecf62cb6151e81c28ba865673c8e4a6ec4",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "855156f634ea"
+    },
+    {
+      "canonical_location": "3:106:5",
+      "current_fact_id": "sha256:d24afcaf6872a1b3bec10ff731cce8121a45e4b719cd08b994cde56ec667fb72",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "وجوه"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "وُجُوهٌ",
+        "target_surface_keys": [
+          "جو",
+          "جوه",
+          "وجو",
+          "وجوه"
+        ],
+        "winning_host_entry_id": "855156f634ea",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:122:3:106:5",
+      "prior_fact_id": "sha256:d24afcaf6872a1b3bec10ff731cce8121a45e4b719cd08b994cde56ec667fb72",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "855156f634ea"
+    },
+    {
+      "canonical_location": "3:106:9",
+      "current_fact_id": "sha256:d9342d8d858d8f8305d09955f8bf3fd753b68e06fa954e780e28dad7adc0b4fd",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "وجوه",
+          "وجوههم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "وُجُوهُهُمْ",
+        "target_surface_keys": [
+          "جوه",
+          "جوههم",
+          "وجوه",
+          "وجوههم"
+        ],
+        "winning_host_entry_id": "855156f634ea",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:123:3:106:9",
+      "prior_fact_id": "sha256:d9342d8d858d8f8305d09955f8bf3fd753b68e06fa954e780e28dad7adc0b4fd",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "855156f634ea"
+    },
+    {
+      "canonical_location": "3:118:22",
+      "current_fact_id": "sha256:8b496467c267096927f724fe72dd5ad69b922f72ccc4a637c83a56044cbd0486",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "صدور",
+          "صدورهم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "صُدُورُهُمْ",
+        "target_surface_keys": [
+          "صدور",
+          "صدورهم"
+        ],
+        "winning_host_entry_id": "d2ea2afc4bf5",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:131:3:118:22",
+      "prior_fact_id": "sha256:8b496467c267096927f724fe72dd5ad69b922f72ccc4a637c83a56044cbd0486",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "d2ea2afc4bf5"
+    },
+    {
+      "canonical_location": "4:90:7",
+      "current_fact_id": "sha256:fb782693662808ac3a7c18f51160c16b10769a5147992478f082db094f23e39c",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "بين",
+          "بينهم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "وَبَيْنَهُم",
+        "target_surface_keys": [
+          "بين",
+          "بينهم",
+          "وبين",
+          "وبينهم"
+        ],
+        "winning_host_entry_id": "44691c484a58",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:185:4:90:7",
+      "prior_fact_id": "sha256:fb782693662808ac3a7c18f51160c16b10769a5147992478f082db094f23e39c",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "44691c484a58"
+    },
+    {
+      "canonical_location": "4:90:12",
+      "current_fact_id": "sha256:5dd6f5e044cac41df8955cb19ec0df0886bc1c432e482a1dcd87d6c7599fa189",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "صدور",
+          "صدورهم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "صُدُورُهُمْ",
+        "target_surface_keys": [
+          "صدور",
+          "صدورهم"
+        ],
+        "winning_host_entry_id": "d2ea2afc4bf5",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:186:4:90:12",
+      "prior_fact_id": "sha256:5dd6f5e044cac41df8955cb19ec0df0886bc1c432e482a1dcd87d6c7599fa189",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "d2ea2afc4bf5"
+    },
+    {
+      "canonical_location": "5:7:19",
+      "current_fact_id": "sha256:0ac5a0a007a425b43ed3adc5e80ef70c0c74c5cb29f8c566d82bd36c6da67441",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "الصدور"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "ٱلصُّدُورِ",
+        "target_surface_keys": [
+          "الصدور"
+        ],
+        "winning_host_entry_id": "d2ea2afc4bf5",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:222:5:7:19",
+      "prior_fact_id": "sha256:0ac5a0a007a425b43ed3adc5e80ef70c0c74c5cb29f8c566d82bd36c6da67441",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "d2ea2afc4bf5"
+    },
+    {
+      "canonical_location": "7:43:28",
+      "current_fact_id": "sha256:002facf18ce8520b66ec1eebd5e7d9d7df072d27aab9ca66bcaec9ffb4300345",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ح ق ق": [
+            "clitic_segmented_form",
+            "root_skeleton_strict"
+          ]
+        },
+        "derived_root_overlap": [
+          "ح ق ق"
+        ],
+        "documented_form_overlap": [
+          "الحق"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلْحَقِّ",
+        "target_surface_keys": [
+          "الحق",
+          "بالحق"
+        ],
+        "winning_host_entry_id": "049756ecbbf9",
+        "winning_host_root": "ح ق ق"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:354:7:43:28",
+      "prior_fact_id": "sha256:002facf18ce8520b66ec1eebd5e7d9d7df072d27aab9ca66bcaec9ffb4300345",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "049756ecbbf9"
+    },
+    {
+      "canonical_location": "7:95:3",
+      "current_fact_id": "sha256:9b9bf454ffb672e46e1aac4e7f50b0500a741488a3ae79ac18d6ed17f5009ca4",
+      "disposition": "review_required:t4_packet",
+      "evidence_reference": "lane-input:dh-t3-verdicts.jsonl#packet_id=t11-class2-rebind:358:7:95:3",
+      "packet_id": "t11-class2-rebind:358:7:95:3",
+      "prior_fact_id": "sha256:9b9bf454ffb672e46e1aac4e7f50b0500a741488a3ae79ac18d6ed17f5009ca4",
+      "verdict": "t4_packet"
+    },
+    {
+      "canonical_location": "7:143:21",
+      "current_fact_id": "sha256:6ffddf764cdae74b29d6fa06ca8fd54ef34f06acab9f737a37b08aa1f1de0e71",
+      "disposition": "review_required:t4_packet",
+      "evidence_reference": "lane-input:dh-t3-verdicts.jsonl#packet_id=t11-class2-rebind:379:7:143:21",
+      "packet_id": "t11-class2-rebind:379:7:143:21",
+      "prior_fact_id": "sha256:6ffddf764cdae74b29d6fa06ca8fd54ef34f06acab9f737a37b08aa1f1de0e71",
+      "verdict": "t4_packet"
+    },
+    {
+      "canonical_location": "7:189:26",
+      "current_fact_id": "sha256:df4d0ba770b5985b52952122de201a0793283644aa0adaa7ac2b1ebc02617ac7",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ص ل ح": [
+            "root_skeleton_strict"
+          ]
+        },
+        "derived_root_overlap": [
+          "ص ل ح"
+        ],
+        "documented_form_overlap": [],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "root_derivation",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "صَٰلِحًا",
+        "target_surface_keys": [
+          "صالحا",
+          "صلحا"
+        ],
+        "winning_host_entry_id": "4d22dd9db001",
+        "winning_host_root": "ص ل ح"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:403:7:189:26",
+      "prior_fact_id": "sha256:df4d0ba770b5985b52952122de201a0793283644aa0adaa7ac2b1ebc02617ac7",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "4d22dd9db001"
+    },
+    {
+      "canonical_location": "9:8:14",
+      "current_fact_id": "sha256:94fa8925de4ac23f8c24309986f0d3aafe094b4fc60dd6090d09871c6a077320",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "قلوب",
+          "قلوبهم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "قُلُوبُهُمْ",
+        "target_surface_keys": [
+          "قلوب",
+          "قلوبهم"
+        ],
+        "winning_host_entry_id": "7f416e8c42c3",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:427:9:8:14",
+      "prior_fact_id": "sha256:94fa8925de4ac23f8c24309986f0d3aafe094b4fc60dd6090d09871c6a077320",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "7f416e8c42c3"
+    },
+    {
+      "canonical_location": "9:45:10",
+      "current_fact_id": "sha256:b03d362209c7b7f7f37ef73e2e83fa20f8855cc3a2e0523626c1768854d5ef58",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "قلوب",
+          "قلوبهم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "قُلُوبُهُمْ",
+        "target_surface_keys": [
+          "قلوب",
+          "قلوبهم"
+        ],
+        "winning_host_entry_id": "7f416e8c42c3",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:446:9:45:10",
+      "prior_fact_id": "sha256:b03d362209c7b7f7f37ef73e2e83fa20f8855cc3a2e0523626c1768854d5ef58",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "7f416e8c42c3"
+    },
+    {
+      "canonical_location": "9:49:15",
+      "current_fact_id": "sha256:ad0901d0c6813c2c6f89d7f49fb81645a5b35e07f1f49ff1f84789390f1c8d9e",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ك ف ر": [
+            "clitic_segmented_form",
+            "root_skeleton_strict"
+          ]
+        },
+        "derived_root_overlap": [
+          "ك ف ر"
+        ],
+        "documented_form_overlap": [
+          "الكافرين"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلْكَٰفِرِينَ",
+        "target_surface_keys": [
+          "الكافرين",
+          "الكفرين",
+          "بالكافرين",
+          "بالكفرين"
+        ],
+        "winning_host_entry_id": "7172a5394a7b",
+        "winning_host_root": "ك ف ر"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:447:9:49:15",
+      "prior_fact_id": "sha256:ad0901d0c6813c2c6f89d7f49fb81645a5b35e07f1f49ff1f84789390f1c8d9e",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "7172a5394a7b"
+    },
+    {
+      "canonical_location": "9:67:7",
+      "current_fact_id": "sha256:b9af4d713584e0b8e6343824e19d332ca8a34191c0b20f27ea5439fe375bfdbc",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ن ك ر": [
+            "clitic_segmented_form",
+            "root_skeleton_strict"
+          ]
+        },
+        "derived_root_overlap": [
+          "ن ك ر"
+        ],
+        "documented_form_overlap": [
+          "المنكر"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلْمُنكَرِ",
+        "target_surface_keys": [
+          "المنكر",
+          "بالمنكر"
+        ],
+        "winning_host_entry_id": "72ba4179ff95",
+        "winning_host_root": "ن ك ر"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:450:9:67:7",
+      "prior_fact_id": "sha256:b9af4d713584e0b8e6343824e19d332ca8a34191c0b20f27ea5439fe375bfdbc",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "72ba4179ff95"
+    },
+    {
+      "canonical_location": "11:5:4",
+      "current_fact_id": "sha256:0c6d2f09de3e2aecc0b1e4a9c8e993c1ae2785be251dc6a029b816dac737cf56",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "صدور",
+          "صدورهم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "صُدُورَهُمْ",
+        "target_surface_keys": [
+          "صدور",
+          "صدورهم"
+        ],
+        "winning_host_entry_id": "d2ea2afc4bf5",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:473:11:5:4",
+      "prior_fact_id": "sha256:0c6d2f09de3e2aecc0b1e4a9c8e993c1ae2785be251dc6a029b816dac737cf56",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "d2ea2afc4bf5"
+    },
+    {
+      "canonical_location": "11:5:19",
+      "current_fact_id": "sha256:51a19979991a5d69593cf8afedd10fa25aca0751389f61387267c84fece864b3",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "الصدور"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "ٱلصُّدُورِ",
+        "target_surface_keys": [
+          "الصدور"
+        ],
+        "winning_host_entry_id": "d2ea2afc4bf5",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:478:11:5:19",
+      "prior_fact_id": "sha256:51a19979991a5d69593cf8afedd10fa25aca0751389f61387267c84fece864b3",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "d2ea2afc4bf5"
+    },
+    {
+      "canonical_location": "12:9:9",
+      "current_fact_id": "sha256:66da4cf762767bea37c921cf368fde1c070b5ca43ef97bc31c63a59580194bf1",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "أبي",
+          "أبيكم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "أَبِيكُمْ",
+        "target_surface_keys": [
+          "أبي",
+          "أبيكم"
+        ],
+        "winning_host_entry_id": "023cbf6af0e1",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:543:12:9:9",
+      "prior_fact_id": "sha256:66da4cf762767bea37c921cf368fde1c070b5ca43ef97bc31c63a59580194bf1",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "023cbf6af0e1"
+    },
+    {
+      "canonical_location": "12:87:19",
+      "current_fact_id": "sha256:581d67e22f90de2e2c58894fffeec943265568ede18d2973ce00de6ac1bbd480",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "noun_convention",
+        "noun_convention_overlap": [
+          "قوم"
+        ],
+        "passed": true,
+        "surface": "ٱلْقَوْمُ",
+        "target_surface_keys": [
+          "القوم"
+        ],
+        "winning_host_entry_id": "65d3d5c51f24",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-rebind:590:12:87:19",
+      "prior_fact_id": "sha256:4c96a89d0fc643e3febb1bd003f1259bb44890b156ade30e5dd8d1e223e5c832",
+      "verdict": "t3_host_b",
+      "winning_engine": "B",
+      "winning_host_entry_id": "65d3d5c51f24"
+    },
+    {
+      "canonical_location": "12:100:36",
+      "current_fact_id": "sha256:fccf6462c81492282902993a55089213be4f58fe4557eaf47fcf0b2fb9062caa",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "بين"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "وَبَيْنَ",
+        "target_surface_keys": [
+          "بين",
+          "وبين"
+        ],
+        "winning_host_entry_id": "44691c484a58",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:604:12:100:36",
+      "prior_fact_id": "sha256:fccf6462c81492282902993a55089213be4f58fe4557eaf47fcf0b2fb9062caa",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "44691c484a58"
+    },
+    {
+      "canonical_location": "14:17:9",
+      "current_fact_id": "sha256:83c1249f1e49a607bdc9f2f8f99064863a6b6323d42c39e005277641e141ff71",
+      "disposition": "review_required:t4_packet",
+      "evidence_reference": "lane-input:dh-t3-verdicts.jsonl#packet_id=t11-class2-rebind:617:14:17:9",
+      "packet_id": "t11-class2-rebind:617:14:17:9",
+      "prior_fact_id": "sha256:83c1249f1e49a607bdc9f2f8f99064863a6b6323d42c39e005277641e141ff71",
+      "verdict": "t4_packet"
+    },
+    {
+      "canonical_location": "14:28:10",
+      "current_fact_id": "sha256:5f108fc5cd4c84d6f0c0b262a9c479590876e51a4cda07abd62afc5c8bb604da",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "قوم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "قَوْمَهُمْ",
+        "target_surface_keys": [
+          "قوم",
+          "قومهم"
+        ],
+        "winning_host_entry_id": "65d3d5c51f24",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-rebind:622:14:28:10",
+      "prior_fact_id": "sha256:bf6da1832f268b312024e3bfdf503805f5b3901cbd9fe77e69f1422a5ec1c5cc",
+      "verdict": "t3_host_b",
+      "winning_engine": "B",
+      "winning_host_entry_id": "65d3d5c51f24"
+    },
+    {
+      "canonical_location": "16:106:16",
+      "current_fact_id": "sha256:fa5e48def980b64ba99f5f826d15b1f23051d72c319b74ffdd0506e1dc7d5601",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ك ف ر": [
+            "clitic_segmented_form",
+            "root_skeleton_strict"
+          ]
+        },
+        "derived_root_overlap": [
+          "ك ف ر"
+        ],
+        "documented_form_overlap": [
+          "الكفر"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلْكُفْرِ",
+        "target_surface_keys": [
+          "الكفر",
+          "بالكفر"
+        ],
+        "winning_host_entry_id": "7172a5394a7b",
+        "winning_host_root": "ك ف ر"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:659:16:106:16",
+      "prior_fact_id": "sha256:fa5e48def980b64ba99f5f826d15b1f23051d72c319b74ffdd0506e1dc7d5601",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "7172a5394a7b"
+    },
+    {
+      "canonical_location": "17:60:7",
+      "current_fact_id": "sha256:4af082aa6ba6ecb459f4825af93f643bce21492c77f8c52cbaf64f1c7afce709",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "الناس"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلنَّاسِ",
+        "target_surface_keys": [
+          "الناس",
+          "بالناس"
+        ],
+        "winning_host_entry_id": "385725d86a5b",
+        "winning_host_root": "أ ن س / ن و س"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:672:17:60:7",
+      "prior_fact_id": "sha256:4af082aa6ba6ecb459f4825af93f643bce21492c77f8c52cbaf64f1c7afce709",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "385725d86a5b"
+    },
+    {
+      "canonical_location": "18:20:9",
+      "current_fact_id": "sha256:0568f0da67ff859c79c5fef49080143bb991665f352a388e0c8a716fa53ae65d",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "ملتهم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "مِلَّتِهِمْ",
+        "target_surface_keys": [
+          "ملت",
+          "ملتهم"
+        ],
+        "winning_host_entry_id": "09e948fe6613",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:696:18:20:9",
+      "prior_fact_id": "sha256:0568f0da67ff859c79c5fef49080143bb991665f352a388e0c8a716fa53ae65d",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "09e948fe6613"
+    },
+    {
+      "canonical_location": "20:7:3",
+      "current_fact_id": "sha256:c26c4d4371ee5227729a2f00199522346847c3c9fe2bd951c8c41229f2f5c9b2",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ق و ل": [
+            "clitic_segmented_form",
+            "root_skeleton_weak_folded"
+          ]
+        },
+        "derived_root_overlap": [
+          "ق و ل"
+        ],
+        "documented_form_overlap": [
+          "القول"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلْقَوْلِ",
+        "target_surface_keys": [
+          "القول",
+          "بالقول"
+        ],
+        "winning_host_entry_id": "430015446b77",
+        "winning_host_root": "ق و ل"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:755:20:7:3",
+      "prior_fact_id": "sha256:c26c4d4371ee5227729a2f00199522346847c3c9fe2bd951c8c41229f2f5c9b2",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "430015446b77"
+    },
+    {
+      "canonical_location": "20:111:2",
+      "current_fact_id": "sha256:db794db3bae137f68b457362d52f475a99fd541f26b855607a03eb6efc7d5b0a",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "الوجوه"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "ٱلْوُجُوهُ",
+        "target_surface_keys": [
+          "الوجو",
+          "الوجوه"
+        ],
+        "winning_host_entry_id": "855156f634ea",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:768:20:111:2",
+      "prior_fact_id": "sha256:db794db3bae137f68b457362d52f475a99fd541f26b855607a03eb6efc7d5b0a",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "855156f634ea"
+    },
+    {
+      "canonical_location": "21:18:3",
+      "current_fact_id": "sha256:1979d5a300d395cba2d0e590aa47878b82b3cac023e51f8a25263b4ae8b7baf0",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ح ق ق": [
+            "clitic_segmented_form",
+            "root_skeleton_strict"
+          ]
+        },
+        "derived_root_overlap": [
+          "ح ق ق"
+        ],
+        "documented_form_overlap": [
+          "الحق"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلْحَقِّ",
+        "target_surface_keys": [
+          "الحق",
+          "بالحق"
+        ],
+        "winning_host_entry_id": "049756ecbbf9",
+        "winning_host_root": "ح ق ق"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:778:21:18:3",
+      "prior_fact_id": "sha256:1979d5a300d395cba2d0e590aa47878b82b3cac023e51f8a25263b4ae8b7baf0",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "049756ecbbf9"
+    },
+    {
+      "canonical_location": "22:31:20",
+      "current_fact_id": "sha256:1402696d4dac27037e0821b860d4bbea21d2c90e0f369f54bbe733117ca097da",
+      "disposition": "review_required:t4_packet",
+      "evidence_reference": "lane-input:dh-t3-verdicts.jsonl#packet_id=t11-class2-rebind:810:22:31:20",
+      "packet_id": "t11-class2-rebind:810:22:31:20",
+      "prior_fact_id": "sha256:1402696d4dac27037e0821b860d4bbea21d2c90e0f369f54bbe733117ca097da",
+      "verdict": "t4_packet"
+    },
+    {
+      "canonical_location": "22:44:2",
+      "current_fact_id": "sha256:f5a6962f9986dbc2e1ceb5d46a3b2556102eed9a74e05a4a06e8fb9a5768f306",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "مدين"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "مَدْيَنَ",
+        "target_surface_keys": [
+          "مدين"
+        ],
+        "winning_host_entry_id": "28e1bcdfdd4d",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:813:22:44:2",
+      "prior_fact_id": "sha256:f5a6962f9986dbc2e1ceb5d46a3b2556102eed9a74e05a4a06e8fb9a5768f306",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "28e1bcdfdd4d"
+    },
+    {
+      "canonical_location": "22:47:2",
+      "current_fact_id": "sha256:3562b6e0aa58d90ab6d25a667019ef192034bc441eb2db959cecdf439e426af9",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ع ذ ب": [
+            "clitic_segmented_form",
+            "root_skeleton_strict"
+          ]
+        },
+        "derived_root_overlap": [
+          "ع ذ ب"
+        ],
+        "documented_form_overlap": [
+          "العذاب"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلْعَذَابِ",
+        "target_surface_keys": [
+          "العذاب",
+          "بالعذاب"
+        ],
+        "winning_host_entry_id": "50634b339290",
+        "winning_host_root": "ع ذ ب"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:816:22:47:2",
+      "prior_fact_id": "sha256:3562b6e0aa58d90ab6d25a667019ef192034bc441eb2db959cecdf439e426af9",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "50634b339290"
+    },
+    {
+      "canonical_location": "22:72:8",
+      "current_fact_id": "sha256:d9f99e57ae22f586d784ba6789753cec1cf0cc46f489e04cdb8e8bb02bb30509",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "وجوه"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "وُجُوهِ",
+        "target_surface_keys": [
+          "جو",
+          "جوه",
+          "وجو",
+          "وجوه"
+        ],
+        "winning_host_entry_id": "855156f634ea",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:820:22:72:8",
+      "prior_fact_id": "sha256:d9f99e57ae22f586d784ba6789753cec1cf0cc46f489e04cdb8e8bb02bb30509",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "855156f634ea"
+    },
+    {
+      "canonical_location": "24:58:36",
+      "current_fact_id": "sha256:fde417d64be2d3f232f1f206af94373dd2c837a40fae452e348f7abfbec9d683",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "بعد"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بَعْدَهُنَّ",
+        "target_surface_keys": [
+          "بعد",
+          "بعدهن",
+          "عد",
+          "عدهن"
+        ],
+        "winning_host_entry_id": "b8f11936525a",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:855:24:58:36",
+      "prior_fact_id": "sha256:fde417d64be2d3f232f1f206af94373dd2c837a40fae452e348f7abfbec9d683",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "b8f11936525a"
+    },
+    {
+      "canonical_location": "28:11:1",
+      "current_fact_id": "sha256:83ff6f7c587dd81873c775f8b0529f47b6b102c3bec3fd4dc93fcc32469ba950",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ق و ل": [
+            "clitic_segmented_form",
+            "root_skeleton_weak_folded"
+          ]
+        },
+        "derived_root_overlap": [
+          "ق و ل"
+        ],
+        "documented_form_overlap": [
+          "قالت"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "وَقَالَتْ",
+        "target_surface_keys": [
+          "قالت",
+          "وقالت"
+        ],
+        "winning_host_entry_id": "430015446b77",
+        "winning_host_root": "ق و ل"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-rebind:894:28:11:1",
+      "prior_fact_id": "sha256:5e4c9fb9355b0745d7476c3699c952fc68a6f0c20125dde5a1bf79659d5da0c7",
+      "verdict": "t3_host_b",
+      "winning_engine": "B",
+      "winning_host_entry_id": "430015446b77"
+    },
+    {
+      "canonical_location": "28:45:12",
+      "current_fact_id": "sha256:4beafe078788c86463a55bc20f562ce47e551425da6b92d6fbd1c3751d50b94d",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "مدين"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "مَدْيَنَ",
+        "target_surface_keys": [
+          "مدين"
+        ],
+        "winning_host_entry_id": "28e1bcdfdd4d",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:901:28:45:12",
+      "prior_fact_id": "sha256:4beafe078788c86463a55bc20f562ce47e551425da6b92d6fbd1c3751d50b94d",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "28e1bcdfdd4d"
+    },
+    {
+      "canonical_location": "30:9:24",
+      "current_fact_id": "sha256:b7910fdcea62311ceee1a43ff9cfc009387457589e6c23ca76e271e02e37beb3",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ب ي ن": [
+            "clitic_segmented_form",
+            "root_skeleton_weak_folded"
+          ]
+        },
+        "derived_root_overlap": [
+          "ب ي ن"
+        ],
+        "documented_form_overlap": [
+          "البينات"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلْبَيِّنَٰتِ",
+        "target_surface_keys": [
+          "البينات",
+          "البينت",
+          "بالبينات",
+          "بالبينت"
+        ],
+        "winning_host_entry_id": "df6af97d5e93",
+        "winning_host_root": "ب ي ن"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:915:30:9:24",
+      "prior_fact_id": "sha256:b7910fdcea62311ceee1a43ff9cfc009387457589e6c23ca76e271e02e37beb3",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "df6af97d5e93"
+    },
+    {
+      "canonical_location": "30:48:14",
+      "current_fact_id": "sha256:8271103fd79a383545f9cc9bc5e13ddfe08d1389eea56d84483b6de3a9477e8d",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ر أ ى": [
+            "clitic_segmented_form",
+            "root_skeleton_weak_folded"
+          ]
+        },
+        "derived_root_overlap": [
+          "ر أ ى"
+        ],
+        "documented_form_overlap": [
+          "ترى",
+          "تري"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "فَتَرَى",
+        "target_surface_keys": [
+          "ترى",
+          "تري",
+          "فترى",
+          "فتري"
+        ],
+        "winning_host_entry_id": "1fd424ee1e74",
+        "winning_host_root": "ر أ ى"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-rebind:944:30:48:14",
+      "prior_fact_id": "sha256:bfc647860c6b9407e525bbdfb7c477a55c842725971218616e88b53d5aa44506",
+      "verdict": "t3_host_b",
+      "winning_engine": "B",
+      "winning_host_entry_id": "1fd424ee1e74"
+    },
+    {
+      "canonical_location": "33:32:11",
+      "current_fact_id": "sha256:ef878b8b5278d4a30c4a6764caf923b90520eb87edb101597b8c2fd8d71172ec",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ق و ل": [
+            "clitic_segmented_form",
+            "root_skeleton_weak_folded"
+          ]
+        },
+        "derived_root_overlap": [
+          "ق و ل"
+        ],
+        "documented_form_overlap": [
+          "القول"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلْقَوْلِ",
+        "target_surface_keys": [
+          "القول",
+          "بالقول"
+        ],
+        "winning_host_entry_id": "430015446b77",
+        "winning_host_root": "ق و ل"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:962:33:32:11",
+      "prior_fact_id": "sha256:ef878b8b5278d4a30c4a6764caf923b90520eb87edb101597b8c2fd8d71172ec",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "430015446b77"
+    },
+    {
+      "canonical_location": "33:51:31",
+      "current_fact_id": "sha256:fa0bd1e10d68d7e60d2d0efd3ed47e5775c2a80a2e0a37fd6c3af813c42f15fc",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "قلوب",
+          "قلوبكم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "قُلُوبِكُمْ",
+        "target_surface_keys": [
+          "قلوب",
+          "قلوبكم"
+        ],
+        "winning_host_entry_id": "7f416e8c42c3",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:973:33:51:31",
+      "prior_fact_id": "sha256:fa0bd1e10d68d7e60d2d0efd3ed47e5775c2a80a2e0a37fd6c3af813c42f15fc",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "7f416e8c42c3"
+    },
+    {
+      "canonical_location": "33:60:7",
+      "current_fact_id": "sha256:b466e7ddaf800c9a751ebe672cdbc338d6029f0364f0c3c8aa642db807f22379",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "قلوب",
+          "قلوبهم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "قُلُوبِهِم",
+        "target_surface_keys": [
+          "قلوب",
+          "قلوبهم"
+        ],
+        "winning_host_entry_id": "7f416e8c42c3",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:975:33:60:7",
+      "prior_fact_id": "sha256:b466e7ddaf800c9a751ebe672cdbc338d6029f0364f0c3c8aa642db807f22379",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "7f416e8c42c3"
+    },
+    {
+      "canonical_location": "34:54:3",
+      "current_fact_id": "sha256:c867daf303a1f72796dc73a12b299cddbda211c258e5ec1a10e6c23e68454575",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "بين"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "وَبَيْنَ",
+        "target_surface_keys": [
+          "بين",
+          "وبين"
+        ],
+        "winning_host_entry_id": "44691c484a58",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:991:34:54:3",
+      "prior_fact_id": "sha256:c867daf303a1f72796dc73a12b299cddbda211c258e5ec1a10e6c23e68454575",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "44691c484a58"
+    },
+    {
+      "canonical_location": "37:93:1",
+      "current_fact_id": "sha256:30b89d079079642e5733afadf07786ee8a87068808be09ba30c41cbdf73b42de",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ر و غ": [
+            "clitic_segmented_form",
+            "root_skeleton_weak_folded"
+          ]
+        },
+        "derived_root_overlap": [
+          "ر و غ"
+        ],
+        "documented_form_overlap": [
+          "راغ"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "فَرَاغَ",
+        "target_surface_keys": [
+          "راغ",
+          "فراغ"
+        ],
+        "winning_host_entry_id": "5f3f9006c88e",
+        "winning_host_root": "ر و غ"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-rebind:1012:37:93:1",
+      "prior_fact_id": "sha256:e2f7a0e79bbfdba298117686e269cf1621e39e68550de486303f9864fb7d1efc",
+      "verdict": "t3_host_b",
+      "winning_engine": "B",
+      "winning_host_entry_id": "5f3f9006c88e"
+    },
+    {
+      "canonical_location": "38:62:6",
+      "current_fact_id": "sha256:ebce256a600e13679033be9516dfed7f2f7fe7186e0979fddcdaf79eb096a68a",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "رجالا"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "رِجَالًا",
+        "target_surface_keys": [
+          "رجالا"
+        ],
+        "winning_host_entry_id": "51e6d97b4ade",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:1022:38:62:6",
+      "prior_fact_id": "sha256:ebce256a600e13679033be9516dfed7f2f7fe7186e0979fddcdaf79eb096a68a",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "51e6d97b4ade"
+    },
+    {
+      "canonical_location": "40:36:4",
+      "current_fact_id": "sha256:102dc6efa3551e7507a3eace772afdef3036acc40dfb9043f633ee2abd6965ae",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ب ن ي": [
+            "root_skeleton_weak_folded"
+          ]
+        },
+        "derived_root_overlap": [
+          "ب ن ي"
+        ],
+        "documented_form_overlap": [],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "root_derivation",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "ٱبْنِ",
+        "target_surface_keys": [
+          "ابن"
+        ],
+        "winning_host_entry_id": "ae9b58424b21",
+        "winning_host_root": "ب ن ي"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-rebind:1048:40:36:4",
+      "prior_fact_id": "sha256:7b2233bfc4bcde4cb838e03a9de4f3e0edaa0bd627b1f578db022fb0bc039a7d",
+      "verdict": "t3_host_b",
+      "winning_engine": "B",
+      "winning_host_entry_id": "ae9b58424b21"
+    },
+    {
+      "canonical_location": "40:78:29",
+      "current_fact_id": "sha256:dd271fcffb2a3c9754b0c16830d0c75620120b82e4c9716fdf8096a1d6f171ef",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ح ق ق": [
+            "clitic_segmented_form",
+            "root_skeleton_strict"
+          ]
+        },
+        "derived_root_overlap": [
+          "ح ق ق"
+        ],
+        "documented_form_overlap": [
+          "الحق"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلْحَقِّ",
+        "target_surface_keys": [
+          "الحق",
+          "بالحق"
+        ],
+        "winning_host_entry_id": "049756ecbbf9",
+        "winning_host_root": "ح ق ق"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:1051:40:78:29",
+      "prior_fact_id": "sha256:dd271fcffb2a3c9754b0c16830d0c75620120b82e4c9716fdf8096a1d6f171ef",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "049756ecbbf9"
+    },
+    {
+      "canonical_location": "42:15:29",
+      "current_fact_id": "sha256:c87fdf86d235adeb7ae6cf24b4226823cdf51c35f7867b851323cda985ab9291",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "بين",
+          "بينكم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "وَبَيْنَكُمُ",
+        "target_surface_keys": [
+          "بين",
+          "بينكم",
+          "وبين",
+          "وبينكم"
+        ],
+        "winning_host_entry_id": "44691c484a58",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:1068:42:15:29",
+      "prior_fact_id": "sha256:c87fdf86d235adeb7ae6cf24b4226823cdf51c35f7867b851323cda985ab9291",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "44691c484a58"
+    },
+    {
+      "canonical_location": "43:33:10",
+      "current_fact_id": "sha256:0aac7a0b62d4200526a96de54e19838d535a794633430e7f3757160fe7bbaf28",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ر ح م": [
+            "clitic_segmented_form",
+            "root_skeleton_strict"
+          ]
+        },
+        "derived_root_overlap": [
+          "ر ح م"
+        ],
+        "documented_form_overlap": [
+          "الرحمان",
+          "الرحمن"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلرَّحْمَٰنِ",
+        "target_surface_keys": [
+          "الرحمان",
+          "الرحمن",
+          "بالرحمان",
+          "بالرحمن"
+        ],
+        "winning_host_entry_id": "a988d51ee485",
+        "winning_host_root": "ر ح م"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:1083:43:33:10",
+      "prior_fact_id": "sha256:0aac7a0b62d4200526a96de54e19838d535a794633430e7f3757160fe7bbaf28",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "a988d51ee485"
+    },
+    {
+      "canonical_location": "47:4:6",
+      "current_fact_id": "sha256:416d129dded885eb1eb619c953aa2d64c4401893083c948ce13738ad1a486566",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "الرقاب"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "ٱلرِّقَابِ",
+        "target_surface_keys": [
+          "الرقاب"
+        ],
+        "winning_host_entry_id": "e9a3604fdfb1",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:1095:47:4:6",
+      "prior_fact_id": "sha256:416d129dded885eb1eb619c953aa2d64c4401893083c948ce13738ad1a486566",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "e9a3604fdfb1"
+    },
+    {
+      "canonical_location": "50:9:9",
+      "current_fact_id": "sha256:1af3ffeff959daf03e67b861fd666ffc9259abb5a896139677d57dfa5ad9d1fa",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "حب"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "وَحَبَّ",
+        "target_surface_keys": [
+          "حب",
+          "وحب"
+        ],
+        "winning_host_entry_id": "c988ccb4f63d",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:1114:50:9:9",
+      "prior_fact_id": "sha256:1af3ffeff959daf03e67b861fd666ffc9259abb5a896139677d57dfa5ad9d1fa",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "c988ccb4f63d"
+    },
+    {
+      "canonical_location": "50:19:4",
+      "current_fact_id": "sha256:e9a9f7f5568febb638531464c22827cc65c8fe7f19136924eec26ca29bbd0dba",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ح ق ق": [
+            "clitic_segmented_form",
+            "root_skeleton_strict"
+          ]
+        },
+        "derived_root_overlap": [
+          "ح ق ق"
+        ],
+        "documented_form_overlap": [
+          "الحق"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِٱلْحَقِّ",
+        "target_surface_keys": [
+          "الحق",
+          "بالحق"
+        ],
+        "winning_host_entry_id": "049756ecbbf9",
+        "winning_host_root": "ح ق ق"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:1119:50:19:4",
+      "prior_fact_id": "sha256:e9a9f7f5568febb638531464c22827cc65c8fe7f19136924eec26ca29bbd0dba",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "049756ecbbf9"
+    },
+    {
+      "canonical_location": "51:29:7",
+      "current_fact_id": "sha256:be5829d4539ff9b6c7e759835322c3ec14196c17d5413cd01f6a112c0624c338",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ق و ل": [
+            "clitic_segmented_form",
+            "root_skeleton_weak_folded"
+          ]
+        },
+        "derived_root_overlap": [
+          "ق و ل"
+        ],
+        "documented_form_overlap": [
+          "قالت"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "وَقَالَتْ",
+        "target_surface_keys": [
+          "قالت",
+          "وقالت"
+        ],
+        "winning_host_entry_id": "430015446b77",
+        "winning_host_root": "ق و ل"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-rebind:1125:51:29:7",
+      "prior_fact_id": "sha256:704397110d6637052cb269e1e4ae11b37a8050b922dddb36f2008eda7490e994",
+      "verdict": "t3_host_b",
+      "winning_engine": "B",
+      "winning_host_entry_id": "430015446b77"
+    },
+    {
+      "canonical_location": "55:44:3",
+      "current_fact_id": "sha256:6c4b6047fc69c1af6ca433eb34305aaa70791d0d6e7541d06b8f49f51c72fffe",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "بين"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "وَبَيْنَ",
+        "target_surface_keys": [
+          "بين",
+          "وبين"
+        ],
+        "winning_host_entry_id": "44691c484a58",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:1145:55:44:3",
+      "prior_fact_id": "sha256:6c4b6047fc69c1af6ca433eb34305aaa70791d0d6e7541d06b8f49f51c72fffe",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "44691c484a58"
+    },
+    {
+      "canonical_location": "57:16:7",
+      "current_fact_id": "sha256:5e10631fd97644825998d9bdf686443c5c274274b1d2ba5f420869f60ff77f3b",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "قلوب",
+          "قلوبهم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "قُلُوبُهُمْ",
+        "target_surface_keys": [
+          "قلوب",
+          "قلوبهم"
+        ],
+        "winning_host_entry_id": "7f416e8c42c3",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:1147:57:16:7",
+      "prior_fact_id": "sha256:5e10631fd97644825998d9bdf686443c5c274274b1d2ba5f420869f60ff77f3b",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "7f416e8c42c3"
+    },
+    {
+      "canonical_location": "57:16:25",
+      "current_fact_id": "sha256:f1d5ea3c650b7592baa071138d38c6e5946156c93855f92ab177a11da9c095c3",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "قلوب",
+          "قلوبهم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "قُلُوبُهُمْ",
+        "target_surface_keys": [
+          "قلوب",
+          "قلوبهم"
+        ],
+        "winning_host_entry_id": "7f416e8c42c3",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:1157:57:16:25",
+      "prior_fact_id": "sha256:f1d5ea3c650b7592baa071138d38c6e5946156c93855f92ab177a11da9c095c3",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "7f416e8c42c3"
+    },
+    {
+      "canonical_location": "58:22:25",
+      "current_fact_id": "sha256:22af6bfbeab9fbded8314fa1c883b40e7b22fa2ed1ca18f4477b0ae26f92bf4c",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "قلوب",
+          "قلوبهم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "قُلُوبِهِمُ",
+        "target_surface_keys": [
+          "قلوب",
+          "قلوبهم"
+        ],
+        "winning_host_entry_id": "7f416e8c42c3",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:1166:58:22:25",
+      "prior_fact_id": "sha256:22af6bfbeab9fbded8314fa1c883b40e7b22fa2ed1ca18f4477b0ae26f92bf4c",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "7f416e8c42c3"
+    },
+    {
+      "canonical_location": "59:13:5",
+      "current_fact_id": "sha256:18999055485e7e01144d985497fe2671e2763f988a1fe0b96ab812b3329f304f",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "صدور",
+          "صدورهم"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "صُدُورِهِم",
+        "target_surface_keys": [
+          "صدور",
+          "صدورهم"
+        ],
+        "winning_host_entry_id": "d2ea2afc4bf5",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:1178:59:13:5",
+      "prior_fact_id": "sha256:18999055485e7e01144d985497fe2671e2763f988a1fe0b96ab812b3329f304f",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "d2ea2afc4bf5"
+    },
+    {
+      "canonical_location": "60:10:25",
+      "current_fact_id": "sha256:e120eb1e2e88d3857b34fa0c5a55fbe90d5c5295f159bb5a033c511a210a2a9b",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ح ل ل": [
+            "root_skeleton_strict"
+          ]
+        },
+        "derived_root_overlap": [
+          "ح ل ل"
+        ],
+        "documented_form_overlap": [],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "root_derivation",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "يَحِلُّونَ",
+        "target_surface_keys": [
+          "يحلون"
+        ],
+        "winning_host_entry_id": "f92aeb1d59ae",
+        "winning_host_root": "ح ل ل"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-rebind:1184:60:10:25",
+      "prior_fact_id": "sha256:aa4eaa6556130611f3c11bfb35dd070862beb7baf087be0b2954c0382588d25b",
+      "verdict": "t3_host_b",
+      "winning_engine": "B",
+      "winning_host_entry_id": "f92aeb1d59ae"
+    },
+    {
+      "canonical_location": "61:14:25",
+      "current_fact_id": "sha256:326356737d4bdb8ccea55aad1e42fe2841d3071b92103abc343009879634c165",
+      "disposition": "review_required:t4_packet",
+      "evidence_reference": "lane-input:dh-t3-verdicts.jsonl#packet_id=t11-class2-rebind:1190:61:14:25",
+      "packet_id": "t11-class2-rebind:1190:61:14:25",
+      "prior_fact_id": "sha256:326356737d4bdb8ccea55aad1e42fe2841d3071b92103abc343009879634c165",
+      "verdict": "t4_packet"
+    },
+    {
+      "canonical_location": "69:7:8",
+      "current_fact_id": "sha256:cf7a59d26248223ec626524de5da0584df2dbcab64dc77b707c45354ea289b8d",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {
+          "ر أ ى": [
+            "clitic_segmented_form",
+            "root_skeleton_weak_folded"
+          ]
+        },
+        "derived_root_overlap": [
+          "ر أ ى"
+        ],
+        "documented_form_overlap": [
+          "ترى",
+          "تري"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "فَتَرَى",
+        "target_surface_keys": [
+          "ترى",
+          "تري",
+          "فترى",
+          "فتري"
+        ],
+        "winning_host_entry_id": "1fd424ee1e74",
+        "winning_host_root": "ر أ ى"
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-rebind:1211:69:7:8",
+      "prior_fact_id": "sha256:86f23fd8711d4aa4409005d5a25b9bf36359a0e8a673fdb30332bff34dad2e13",
+      "verdict": "t3_host_b",
+      "winning_engine": "B",
+      "winning_host_entry_id": "1fd424ee1e74"
+    },
+    {
+      "canonical_location": "72:6:7",
+      "current_fact_id": "sha256:d964d40b32292b3d5a1998c98972bc718f93d58ecb21e8485f5a206e31d81169",
+      "deterministic_check": {
+        "annotation": null,
+        "derived_root_methods": {},
+        "derived_root_overlap": [],
+        "documented_form_overlap": [
+          "رجال"
+        ],
+        "lookup_boundary": "exact committed documented forms and legal clitic stems; rooted entries may use the committed deterministic root derivation; blank-root nouns require a dedicated-noun definite-article convention match",
+        "method": "documented_form",
+        "noun_convention_overlap": [],
+        "passed": true,
+        "surface": "بِرِجَالٍ",
+        "target_surface_keys": [
+          "برجال",
+          "رجال"
+        ],
+        "winning_host_entry_id": "51e6d97b4ade",
+        "winning_host_root": ""
+      },
+      "disposition": "certified",
+      "lifecycle": "review_required->certified",
+      "packet_id": "t11-class2-rebind:1217:72:6:7",
+      "prior_fact_id": "sha256:d964d40b32292b3d5a1998c98972bc718f93d58ecb21e8485f5a206e31d81169",
+      "verdict": "t3_host_a",
+      "winning_engine": "A",
+      "winning_host_entry_id": "51e6d97b4ade"
+    },
+    {
+      "canonical_location": "22:31:2",
+      "current_fact_id": "sha256:558af043cb351a206fd53dbdf7a0a82b362c2a6fa0aba4e1bfa246731c5b63fa",
+      "disposition": "certified:preposition",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-funcword:643:22:31:2",
+      "prior_fact_id": "sha256:d471bb5b850415069a5dd6b48713b4367c6a92e537209c3adfb1d48e084c4c4b",
+      "ssot_citation": "tools/build_funcword_two_vote_packets.py CLASS_MAP['supplemental_function_target'] candidate (\"preposition\", \"lam al-jarr\", \"genitive lam (e.g. the fused lillah divine-name token)\") [lines 184-192], reinforced by the O2 divine-name boundary ruling in build_packet() [lines 546-554]: the fused lam-jarr + divine name is kept on the divine_name_entry route with the lam-jarr reading committed to the 'preposition' taxonomy category, NOT 'lam_family'.",
+      "verdict": "t2_normalize_to_preposition"
+    },
+    {
+      "canonical_location": "27:44:26",
+      "current_fact_id": "sha256:5446ab01422e12a07c6f87288d12d0568bdbf6c9ba7fe96947334990503df4ab",
+      "disposition": "certified:preposition",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-funcword:704:27:44:26",
+      "prior_fact_id": "sha256:82720bb7da5d4536b79ff69e1ba0852444d6d426ea7a33121ccbc99c0fbee6a8",
+      "ssot_citation": "tools/build_funcword_two_vote_packets.py CLASS_MAP['supplemental_function_target'] candidate (\"preposition\", \"lam al-jarr\", \"genitive lam (e.g. the fused lillah divine-name token)\") [lines 184-192], reinforced by the O2 divine-name boundary ruling in build_packet() [lines 546-554]: the fused lam-jarr + divine name is kept on the divine_name_entry route with the lam-jarr reading committed to the 'preposition' taxonomy category, NOT 'lam_family'.",
+      "verdict": "t2_normalize_to_preposition"
+    },
+    {
+      "canonical_location": "30:4:4",
+      "current_fact_id": "sha256:e582ae26638cf2409928ca1c643ab455cf24dc440fe560f1439e53b02f828b90",
+      "disposition": "certified:preposition",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-funcword:729:30:4:4",
+      "prior_fact_id": "sha256:048553a0a80112a8b6609a0effbf1039174c2e62502fcb3fc8beeb9ed3978b28",
+      "ssot_citation": "tools/build_funcword_two_vote_packets.py CLASS_MAP['supplemental_function_target'] candidate (\"preposition\", \"lam al-jarr\", \"genitive lam (e.g. the fused lillah divine-name token)\") [lines 184-192], reinforced by the O2 divine-name boundary ruling in build_packet() [lines 546-554]: the fused lam-jarr + divine name is kept on the divine_name_entry route with the lam-jarr reading committed to the 'preposition' taxonomy category, NOT 'lam_family'.",
+      "verdict": "t2_normalize_to_preposition"
+    },
+    {
+      "canonical_location": "35:34:3",
+      "current_fact_id": "sha256:cc3f9bcecec0a8770aedb54f8e2bd938c909a5c21329998ac0334656a3a90dd4",
+      "disposition": "certified:preposition",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-funcword:805:35:34:3",
+      "prior_fact_id": "sha256:8548c821223a00167166c0c02e4748b3e89a8b38193dc6048cb0e4cd059797fd",
+      "ssot_citation": "tools/build_funcword_two_vote_packets.py CLASS_MAP['supplemental_function_target'] candidate (\"preposition\", \"lam al-jarr\", \"genitive lam (e.g. the fused lillah divine-name token)\") [lines 184-192], reinforced by the O2 divine-name boundary ruling in build_packet() [lines 546-554]: the fused lam-jarr + divine name is kept on the divine_name_entry route with the lam-jarr reading committed to the 'preposition' taxonomy category, NOT 'lam_family'.",
+      "verdict": "t2_normalize_to_preposition"
+    },
+    {
+      "canonical_location": "42:49:1",
+      "current_fact_id": "sha256:bee65e983f00fbb33c4ef78c5000085331b3bb07e6554f98c1a306b191a0185b",
+      "disposition": "certified:preposition",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-funcword:874:42:49:1",
+      "prior_fact_id": "sha256:94fe4d89f14e54270baa24acf80ec8aeb869701cbe01d3a5910cb7d1fdbaf022",
+      "ssot_citation": "tools/build_funcword_two_vote_packets.py CLASS_MAP['supplemental_function_target'] candidate (\"preposition\", \"lam al-jarr\", \"genitive lam (e.g. the fused lillah divine-name token)\") [lines 184-192], reinforced by the O2 divine-name boundary ruling in build_packet() [lines 546-554]: the fused lam-jarr + divine name is kept on the divine_name_entry route with the lam-jarr reading committed to the 'preposition' taxonomy category, NOT 'lam_family'.",
+      "verdict": "t2_normalize_to_preposition"
+    },
+    {
+      "canonical_location": "71:13:5",
+      "current_fact_id": "sha256:481ac000cf0ced7e857bc95ebea729f1979c5e080641a894fc04cd79fcbbe44e",
+      "disposition": "certified:preposition",
+      "lifecycle": "review_required->rejected + candidate->review_required->certified",
+      "packet_id": "t11-class2-funcword:1006:71:13:5",
+      "prior_fact_id": "sha256:8d62fe5d9f6be82bb5ff2e0a2a2e915e5fc34433505a10f569214bec856e0b0f",
+      "ssot_citation": "tools/build_funcword_two_vote_packets.py CLASS_MAP['supplemental_function_target'] candidate (\"preposition\", \"lam al-jarr\", \"genitive lam (e.g. the fused lillah divine-name token)\") [lines 184-192], reinforced by the O2 divine-name boundary ruling in build_packet() [lines 546-554]: the fused lam-jarr + divine name is kept on the divine_name_entry route with the lam-jarr reading committed to the 'preposition' taxonomy category, NOT 'lam_family'.",
+      "verdict": "t2_normalize_to_preposition"
+    }
+  ],
+  "schema": "qamus.tier_due_process_report.v1"
+}
