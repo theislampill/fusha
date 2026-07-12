@@ -4592,6 +4592,24 @@ except Exception as _e:
     check("T12 fact ledger tests (harness error)", False)
     print("  ", _e)
 
+# --- RM-38 external-gold evaluation mechanics (offline synthetic only) ---
+for _script, _marker, _label in (
+    ("validate.py", "RM-38 validator self-test OK",
+     "RM-38 evaluation validator self-test"),
+    ("runner.py", "RM-38 evaluation runner self-test OK",
+     "RM-38 evaluation runner self-test"),
+):
+    try:
+        _rm38 = run_text([
+            sys.executable,
+            os.path.join(ROOT, "tools", "rm38", _script),
+            "--self-test",
+        ], timeout=60)
+        check(_label, _rm38.returncode == 0 and _marker in (_rm38.stdout or ""))
+    except Exception as _e:
+        check(_label + " (harness error)", False)
+        print("  ", _e)
+
 # --- RM-20 owner-approved morphline application ---
 try:
     _rm20_apply = run_text([
