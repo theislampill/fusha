@@ -6,11 +6,11 @@
 ## Provenance / inputs (pinned)
 
 - **Whitelist snapshot:** `/tmp/rhwl_snapshot.jsonl` copied from live
-  `/srv/dawah-ops/hermes-workspace/qamus-app/qamus_wbw/rh_live_01_beta_whitelist.jsonl` at task start.
+  `<runtime>/qamus_wbw/rh_live_01_beta_whitelist.jsonl` at task start.
   - `sha256 = 1c06d85a28cb4c2733c1aeb394b15e200e2b483d62b0a740f5cd20d466c0903c`, **34,322 rows**. All analysis below is over this snapshot only.
 - **Detector (authoritative classifier):** `tools/validate_segment_completeness.py`, entrypoint `classify_live_row`, classes **C1–C5**, at fusha **origin/main commit `df89d8c8`** (rich-seg detector **v3**). Local fusha checkout HEAD `e87bd62` is a *divergent* lineage that does NOT contain df89d8c — file was extracted from the commit directly.
 - **Debt ledger:** `qamus/reports/rich-seg-known-debt.jsonl` (**1,452 rows**, `debt_ceiling=1452`, was 1,395 pre-v3), `rich-seg-audit@2.jsonl` (**1,403 rows**), both on fusha origin/main. `rich-seg-known-debt.meta.json` pins `classifier_semantics_commit=df89d8c8`.
-- **Entry data:** `/srv/dawah-ops/hermes-workspace/qamus-service/entries/*.json` (2,092 entries). Root/form map built from `headword` + `senses[].ar` + **`usage[].forms`** (all `/`-split).
+- **Entry data:** `<service-data>/entries/*.json` (2,092 entries). Root/form map built from `headword` + `senses[].ar` + **`usage[].forms`** (all `/`-split).
 - **MCP `analyze_word`** used for per-row ground truth (sarf + iʿrāb).
 
 **Detector-consistency contract confirmed:** my corpus scan of `classify_live_row` over the snapshot reproduces the v3 ledger counts (C1 254 / C2 175 / C3 9 / C4 528 / C5 512; 1,452 rows flagged = the ceiling). Minor C2/C3/C4 drift (175 vs 178 / 9 vs 14 / 528 vs 529) is the expected live-whitelist mutation since the commit's own scan — direction and magnitude confirm the same detector.
