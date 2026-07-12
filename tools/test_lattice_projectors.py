@@ -40,6 +40,9 @@ class RegistryTests(unittest.TestCase):
                 "sarf.c1_impf_segmentation.v1",
                 "sarf.c5_enclitic_segmentation.v1",
                 "sarf.meta_form56_ta_negative.v1",
+                "sarf.root_inherit_transclusion.v1",
+                "sarf.note_normalize.v1",
+                "sarf.suffix_fempl_segmentation.v1",
             ],
         )
         for e in reg["registered"]:
@@ -124,6 +127,59 @@ class ProjectionTests(unittest.TestCase):
         # candidate carries lineage + gate, never a certified/materialized state
         self.assertEqual("two_vote_required", recs[0]["gate_tier"])
         self.assertTrue(recs[0]["created_from"].startswith("projector:"))
+
+
+class RootInheritanceTests(unittest.TestCase):
+    def _idx(self):
+        entries = [
+            {"id": "e1", "root": "ك ف ر", "headword": "كَفَرَ", "category": "Verbs with Derivatives",
+             "usage": [{"forms": ["الْكَافِرِينَ", "كَافِرٌ"]}]},
+            {"id": "e2", "root": "س خ ر", "headword": "سَخَّرَ", "category": "Verbs with Derivatives",
+             "usage": [{"forms": ["مُسَخَّرَات", "مُسَخَّر"]}]},
+        ]
+        return L.build_entry_index(entries)
+
+    def test_dagger_alef_matches_full_alif_but_hamza_preserved(self):
+        self.assertEqual(L.match_key("مُسَخَّرَٰتٍۭ"), L.match_key("مُسَخَّرَات"))
+        self.assertNotEqual(L.match_key("أمن"), L.match_key("امن"))
+
+    def test_rootless_lexhead_inherits_and_is_candidate(self):
+        form_root, eid_root = self._idx()
+        row = {"loc": "36:70:4", "surface": "الْكَافِرِينَ", "morphline": "no public root asserted",
+               "segments": [{"segment_index": 0, "surface": "الْ", "label": "ART", "role": "definite_article"},
+                            {"segment_index": 1, "surface": "كَافِرِ", "label": "STEM", "role": "participle_stem"},
+                            {"segment_index": 2, "surface": "ينَ", "label": "PL", "role": "masculine_plural_suffix"}]}
+        proj = {e["projector_id"]: e for e in L.load_registry()["registered"]}["sarf.root_inherit_transclusion.v1"]
+        recs, instr, worked = L.run_root_inherit(proj, [row], form_root, eid_root, {}, {})
+        self.assertEqual("ك ف ر", recs[0]["inherited"]["root"])
+        self.assertEqual("candidate", recs[0]["certification_state"])
+        self.assertIsNone(recs[0]["guard"])
+
+    def test_carrier_entry_id_alone_does_not_assert_root(self):
+        # entry_id points at an example-context entry whose forms do NOT include the surface:
+        # it must NOT drive inheritance (DR-2), so the row falls through to authoring.
+        form_root, eid_root = self._idx()
+        row = {"loc": "2:63:5", "surface": "فَوْقَكُمُ", "morphline": "no public root asserted",
+               "entry_id": "e1",  # كفر example page, but فوقكم is not a كفر form
+               "segments": [{"segment_index": 0, "surface": "فَوْقَ", "label": "TOK", "role": "token"}]}
+        proj = {e["projector_id"]: e for e in L.load_registry()["registered"]}["sarf.root_inherit_transclusion.v1"]
+        recs, instr, worked = L.run_root_inherit(proj, [row], form_root, eid_root, {}, {})
+        self.assertEqual([], recs)
+        self.assertEqual(1, instr["authoring_no_attested_source"])
+
+
+class SuffixFemplTests(unittest.TestCase):
+    def test_projects_stem_plus_plural(self):
+        form_root, _ = L.build_entry_index([
+            {"id": "e2", "root": "س خ ر", "headword": "سَخَّرَ", "category": "Verbs with Derivatives",
+             "usage": [{"forms": ["مُسَخَّر", "مُسَخَّرَات"]}]}])
+        row = {"loc": "7:54:23", "surface": "مُسَخَّرَٰتٍۭ", "morphline": "no public root asserted",
+               "segments": [{"segment_index": 0, "surface": "مُسَخَّرَٰتٍۭ", "label": "TOK", "role": "token"}]}
+        proj = {e["projector_id"]: e for e in L.load_registry()["registered"]}["sarf.suffix_fempl_segmentation.v1"]
+        recs, instr = L.run_suffix_fempl(proj, [row], form_root, {}, {})
+        self.assertEqual(1, len(recs))
+        self.assertEqual("feminine_plural_suffix", recs[0]["proposed_segments"][1]["role"])
+        self.assertEqual("س خ ر", recs[0]["inherited_root"])
 
 
 if __name__ == "__main__":
