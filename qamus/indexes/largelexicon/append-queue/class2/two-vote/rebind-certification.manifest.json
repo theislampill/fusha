@@ -1,0 +1,99 @@
+{
+  "candidate_only": true,
+  "counts": {
+    "certified_rebind_same_host": 1167,
+    "certified_requires_authoring": 6,
+    "current_states": {
+      "certified": 1173,
+      "review_required": 75
+    },
+    "disagreements": {
+      "abstention": 1,
+      "different_host": 66,
+      "rebind_vs_authoring": 8
+    },
+    "exceptions": {
+      "benign_rootless_convention": 7,
+      "documented_underivable_particle": 7
+    },
+    "history_rows": 3669,
+    "history_states": {
+      "candidate": 1248,
+      "certified": 1173,
+      "review_required": 1248
+    },
+    "packets_reviewed": 1248
+  },
+  "created_at": "2026-07-11T00:00:00Z",
+  "determinism": {
+    "double_build_required": true,
+    "fixed_created_at": "2026-07-11T00:00:00Z",
+    "representative_carrier_rule": "lexicographically_first_complete_bound_qword_row_id",
+    "wall_clock_fields": false
+  },
+  "generated_by": "tools/certify_rebind_wave.py",
+  "input_sha_pins": {
+    "append_queue_carriers": "d726cfeb033796f25f5ffa31d9f3df876d75638b080d43f9b155b47bac62a364",
+    "assembler_analysis_source": "89e96bdc143058f38cf89084e0495194d60c8e8f902fe755bb07cc25fe486e65",
+    "entries": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d",
+    "fact_ledger_schema_current": "d82e60f646d8b633cfd960a3ae568bffc9e4a293bb3daf8ab1b50cb87907f44d",
+    "grammar_gate_ssot": "ccc18bed9af049013cc7aa69b9eb1b27b4639f06c5afd90070a6bc406dd20c5f",
+    "ownership_audit_canonical": "7be859e1c7d2948b1e51b25049a8bc1538d498ab6b205fa1ab0533fd86f6cd44",
+    "ownership_audit_source": "3eb2ecdd00778c9373a73ca99bfd83a253f171d62ca48a0919aa7c2ed5151a3e",
+    "packet_manifest": "95a0377b1e10cb49c6b63a7d6846264d5e899aa869ca66d4405c61d9dc64e1f2",
+    "packets": "55819cedd30fa2db19df2647fd4c6438bfe7e47f7d71044d9f2e0a8d4974b3a4",
+    "votes_a_canonical": "aa3eb85ae32c462fa96afe348c446bbf8e38a01043716efe5dc24c4ad55f9ea8",
+    "votes_a_source": "aac09116a823a501b73705047b7d875ed7ab3adb46c42c7dc38cd93f20d23a15",
+    "votes_b_canonical": "5ae0c7d86eb1bd435050cc318531ac528e497dd0996a439a3a96a58fb5b452e9",
+    "votes_b_source": "5ae0c7d86eb1bd435050cc318531ac528e497dd0996a439a3a96a58fb5b452e9"
+  },
+  "mutation_boundaries": {
+    "crosswalk_changed": false,
+    "materialized": false,
+    "v2_queue_changed": false,
+    "whitelist_changed": false
+  },
+  "no_live_payload": true,
+  "outputs": {
+    "ledger": {
+      "current_facts": 1248,
+      "path": "qamus/indexes/largelexicon/fact-ledger/rebind-cert/ledger.jsonl",
+      "revision_rows": 3669,
+      "sha256": "d3321fb63d5124c147631d255f903ac8c2f1d612bb4dc39744e9232d576b13ac"
+    },
+    "rebind-analysis.json": {
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/rebind-analysis.json",
+      "sha256": "b42c190c8f440ded549fcec8303ce5f025165f86ca2fe9d71a7cd263116f3ab9"
+    },
+    "rebind-cert-audit.jsonl": {
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/rebind-cert-audit.jsonl",
+      "sha256": "7be859e1c7d2948b1e51b25049a8bc1538d498ab6b205fa1ab0533fd86f6cd44"
+    },
+    "rebind-votes-a.jsonl": {
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/rebind-votes-a.jsonl",
+      "sha256": "aa3eb85ae32c462fa96afe348c446bbf8e38a01043716efe5dc24c4ad55f9ea8"
+    },
+    "rebind-votes-b.jsonl": {
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/rebind-votes-b.jsonl",
+      "sha256": "5ae0c7d86eb1bd435050cc318531ac528e497dd0996a439a3a96a58fb5b452e9"
+    },
+    "report": {
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/rebind-certification.report.json",
+      "sha256": "c8e5b4e254e287415ebf03bf53c9e453a14a57cd3a48f2f3fb1a4e2cc394ace4"
+    }
+  },
+  "row_arithmetic": "1173*3 + 75*2 = 3669",
+  "schema": "qamus.t11_rebind_certification_manifest.v1",
+  "scope": "certification_only_no_materialization_no_live_payload",
+  "shadow_surface_assertion": {
+    "expected": "byte_stable",
+    "reason": "certified facts are not materialized and carry no materialization targets",
+    "untouched": [
+      "qamus/indexes/largelexicon/qword-crosswalk/",
+      "qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json",
+      "qamus/indexes/largelexicon/append-queue/class2/rebind-queue.v2.jsonl",
+      "qamus/indexes/largelexicon/append-queue/class2/funcword-queue.v2.jsonl",
+      "WBW and hover-whitelist compiler inputs"
+    ]
+  }
+}
