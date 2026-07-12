@@ -3530,6 +3530,19 @@ except Exception as _e:
     check("largelexicon candidate layer runnable", False)
     print("  ", _e)
 
+# --- QAMUS-RICH-SEG-001 segment-completeness gate (authoring gates A..G + live-row C1..C5) ---
+# Red-first proof: the malformed [FA,STEM] authoring record trips every gate A..G; each of the
+# 9 confirmed live-row defects is REJECTED by its class C1..C5; and the two known false alarms
+# (102:3:3 correctly-split imperfect, 4:144:17 Form IV participle) PASS clean.
+try:
+    _rseg = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_segment_completeness.py"),
+                      "--self-test"], timeout=120)
+    check("segment-completeness self-test (A..G gates + live-row C1..C5 red-first; 102:3:3 & 4:144:17 pass)",
+          _rseg.returncode == 0 and "live-row classes C1,C2,C3,C4,C5" in (_rseg.stdout or ""))
+except Exception as _rseg_e:
+    check("segment-completeness self-test (harness error)", False)
+    print("  ", _rseg_e)
+
 # VN-01 hardening flywheel fixtures (2026-07-07): D7 dark-mode + run#32 deploy-mechanics
 for _p, _req in (
     ("sarf/evals/surfacemap-wbw-absent-eval.jsonl", ("id", "surface", "decision", "reason")),
