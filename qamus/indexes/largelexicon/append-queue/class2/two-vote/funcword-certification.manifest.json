@@ -1,0 +1,106 @@
+{
+  "candidate_only": true,
+  "counts": {
+    "certified_total": 888,
+    "current_states": {
+      "certified": 888,
+      "review_required": 155
+    },
+    "disagreements": {
+      "abstention-vs-decision": 7,
+      "confirmed-vs-needs_entry": 26,
+      "different-category": 66,
+      "other": 56
+    },
+    "divine_name_rows": {
+      "certified": 5,
+      "review_required": 6
+    },
+    "history_rows": 2974,
+    "history_states": {
+      "candidate": 1043,
+      "certified": 888,
+      "review_required": 1043
+    },
+    "ordinary_certified": 862,
+    "packets_reviewed": 1043,
+    "t2_normalized_certified": 26
+  },
+  "created_at": "2026-07-12T00:00:00Z",
+  "determinism": {
+    "double_build_required": true,
+    "fixed_created_at": "2026-07-12T00:00:00Z",
+    "packet_order": "lexicographic_packet_id",
+    "representative_carrier_rule": "lexicographically_first_complete_bound_qword_row_id",
+    "wall_clock_fields": false
+  },
+  "generated_by": "tools/certify_funcword_wave.py",
+  "input_sha_pins": {
+    "append_queue_carriers_read_only": "d726cfeb033796f25f5ffa31d9f3df876d75638b080d43f9b155b47bac62a364",
+    "assembler_analysis_canonical": "b5befe978d7a6748a7fc8ce0a39e18802a472cc38a0b2a824527f79167152ace",
+    "assembler_analysis_source": "71c6c6017d5386e4e616ff58e0b7757f962228246214ee58d417056229fbaf60",
+    "entries": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d",
+    "fact_ledger_schema_current": "18b08c751e425ab34aed525ac064474aa97566d534dd8590d950df27b46257d5",
+    "funcword_queue_v2_read_only": "a40aabf38e3337e1b5ccbffa411df702c89a8fb8f2e2660218414bca220d5bd7",
+    "grammar_gate_ssot": "ccc18bed9af049013cc7aa69b9eb1b27b4639f06c5afd90070a6bc406dd20c5f",
+    "packet_manifest": "bfc7c30765222e93326ffcc00fef1251c1e9cd2abd3b934e7e96f060f770b050",
+    "packets": "fa01441d1f901323663b2852b67384818740ff6b3976fdf0654e2de65305b575",
+    "votes_a_canonical": "e2cd4d7d2dab7835d0714beac947d03dff98bd2bc0a50f8f05bd3d2008485bb8",
+    "votes_a_source": "e2cd4d7d2dab7835d0714beac947d03dff98bd2bc0a50f8f05bd3d2008485bb8",
+    "votes_b_canonical": "6e3e7777b96641b374bec98b433c67138a969ae19fee9e9910e055c1dcf43a60",
+    "votes_b_source": "6e3e7777b96641b374bec98b433c67138a969ae19fee9e9910e055c1dcf43a60"
+  },
+  "mutation_boundaries": {
+    "crosswalk_changed": false,
+    "materialized": false,
+    "queue_changed": false,
+    "whitelist_changed": false
+  },
+  "no_live_payload": true,
+  "outputs": {
+    "funcword-analysis.json": {
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/funcword-analysis.json",
+      "sha256": "b5befe978d7a6748a7fc8ce0a39e18802a472cc38a0b2a824527f79167152ace"
+    },
+    "funcword-votes-a.jsonl": {
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/funcword-votes-a.jsonl",
+      "sha256": "e2cd4d7d2dab7835d0714beac947d03dff98bd2bc0a50f8f05bd3d2008485bb8"
+    },
+    "funcword-votes-b.jsonl": {
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/funcword-votes-b.jsonl",
+      "sha256": "6e3e7777b96641b374bec98b433c67138a969ae19fee9e9910e055c1dcf43a60"
+    },
+    "ledger": {
+      "current_facts": 1043,
+      "path": "qamus/indexes/largelexicon/fact-ledger/funcword-cert/ledger.jsonl",
+      "revision_rows": 2974,
+      "sha256": "bb9e16300a55b3ee92cab94d227c43a0bf8a5571c55c6df1826af8634c4a67a7"
+    },
+    "report": {
+      "path": "qamus/indexes/largelexicon/append-queue/class2/two-vote/funcword-certification.report.json",
+      "sha256": "171fdeff3db4f527cdcf16e215822976cc7f8435b0c45330d64a5d4736db2f86"
+    }
+  },
+  "registry_delta": {
+    "gate_trigger": "advanced_nahw",
+    "id": "function_word_analysis",
+    "schema_changed": true
+  },
+  "row_arithmetic": "888*3 + 155*2 = 2974",
+  "schema": "qamus.t11_funcword_certification_manifest.v1",
+  "scope": "certification_only_no_materialization_no_live_payload",
+  "shadow_surface_assertion": {
+    "expected": "byte_stable",
+    "method": "SHA-256 snapshot before and after canonical install",
+    "observed": "byte_stable",
+    "paths": [
+      "qamus/data/current/entries.jsonl",
+      "qamus/indexes/largelexicon/append-queue/append-queue.jsonl",
+      "qamus/indexes/largelexicon/append-queue/class2/funcword-queue.v2.jsonl",
+      "qamus/indexes/largelexicon/append-queue/class2/rebind-queue.v2.jsonl",
+      "qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json",
+      "qamus/indexes/largelexicon/qword-crosswalk"
+    ],
+    "reason": "facts are not materialized and carry no materialization targets"
+  }
+}
