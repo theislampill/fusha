@@ -5048,6 +5048,32 @@ try:
             pass
     check("SKILL-RELEASE gate 12: released + @2.1-increment registry validates merged (0 dup / 0 dangling)",
           _merged_ok)
+
+    # Gate 13: INCREMENT-22 @2.2 candidate fixtures (18 rules: 15 sarf + 3 nahw; 12 norm-domain) —
+    # the QAMUS-RICH-NORM-001 consolidation: red-first + non-constant-discriminator guard + builder
+    # regeneration-clean + every @2.2 registry id covered + norm@1 contract clauses present.
+    _sr_inc22 = run_text([sys.executable, os.path.join(ROOT, "tools", "skill_fixtures",
+                                                       "test_skill_fixtures_increment22.py")], timeout=120)
+    check("SKILL-RELEASE gate 13: @2.2 increment red-first + non-constant-discriminator fixtures pass",
+          _sr_inc22.returncode == 0 and "PASS" in (_sr_inc22.stdout or ""))
+    # Gate 13: the @2.2 increment MERGED with the released + @2.1 registries validates (0 dup / 0 dangling).
+    _inc22 = os.path.join(ROOT, "qamus", "skills", "rule-registry-increment-22.jsonl")
+    _merged22_ok = False
+    try:
+        _m22fd, _m22path = _tmp.mkstemp(suffix="-merged22-registry.jsonl")
+        with os.fdopen(_m22fd, "w", encoding="utf-8", newline="\n") as _m22f:
+            for _p in (_base, _inc, _inc22):
+                _m22f.write(open(_p, encoding="utf-8").read().replace("\r\n", "\n").replace("\r", "\n"))
+        _sr_merged22 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_skill_registry.py"),
+                                 "--registry", _m22path], timeout=120)
+        _merged22_ok = _sr_merged22.returncode == 0 and ", 0 errors" in (_sr_merged22.stdout or "")
+    finally:
+        try:
+            os.remove(_m22path)
+        except Exception:
+            pass
+    check("SKILL-RELEASE gate 13: released + @2.1 + @2.2 increment registry validates merged (0 dup / 0 dangling)",
+          _merged22_ok)
 except Exception as _sr_e:
     check("SKILL-RELEASE skill-release candidate gates (harness error)", False)
     print("  ", _sr_e)

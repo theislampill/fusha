@@ -404,3 +404,24 @@ discriminators in [`tools/skill_fixtures/skill_rules_increment21.py`](../tools/s
 - **`nahw-lam-prefix-typology`** — the lām prefix has distinct types, each its own segment with its own consequence:
   لام الأمر (jussive governor), لام التعليل/كي (subjunctive via أن مضمرة), لام الجر (jarr), لام الابتداء/التوكيد
   (emphasis, no mood effect). Resolve the type before glossing or segmenting.
+
+## naḥw@2.2 — CANDIDATE increment (QAMUS-RICH-NORM-001 consolidation) — NOT released; does not amend @2
+
+These rules are **candidate** (drafted forward from the rich-hover normative-defect ANDON + the `norm@1`
+normalization contract; Fable adjudicates). They apply the norm rendered-field discipline to the
+grammatical notes — the naḥw side of the field-language / committed-feature clauses. Machine-readable rows
+(with `projector` blocks + source-addressed evidence + red-first fixtures) are in
+[`qamus/skills/rule-registry-increment-22.jsonl`](../qamus/skills/rule-registry-increment-22.jsonl);
+discriminators in [`tools/skill_fixtures/skill_rules_increment22.py`](../tools/skill_fixtures/skill_rules_increment22.py);
+contract in [`docs/qamus/RICH-HOVER-NORMALIZATION-CONTRACT.md`](../docs/qamus/RICH-HOVER-NORMALIZATION-CONTRACT.md).
+
+**norm@1 rendered-note discipline (projector-ready):**
+- **`nahw-norm-note-leads-english`** (N-LANG-03) — CONDITION a sarf_note/nahw_note opens as an Arabic-prose
+  dump rather than English → PROJECT flag; lead the note in English, Arabic grammatical terms may follow.
+- **`nahw-irab-note-not-verbatim-source`** (N-LANG-01/02) — CONDITION the nahw_note IS the raw upstream-analyzer
+  Arabic iʿrāb string pasted verbatim (39:71:31 كَلِمَةُ carried "فاعل مرفوع وعلامة رفعه الضمة وهو مضاف") → PROJECT
+  flag; author an English iʿrāb ("subject, nominative; first term of an iḍāfa"). The raw analyzer iʿrāb is analysis
+  input, not rendered copy.
+- **`nahw-mood-note-commits-or-named-ambiguity`** (N-PED-02) — CONDITION mood is knowable at the address AND the
+  note hedges "as (the) context requires" → PROJECT flag; commit the mood in the note (17:12:16 منصوب بأن مضمرة).
+  GUARD a genuinely qirāʾāt-split/unknowable mood renders a named ambiguity, not a hedge.

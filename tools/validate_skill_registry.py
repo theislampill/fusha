@@ -41,15 +41,16 @@ SKILLS = {"sarf", "nahw"}
 STATUSES = {"accepted", "candidate", "blocked"}
 REL_TYPES = {"supersedes", "extends", "cites"}
 REL_KINDS = {"registry", "external"}
-# Allowed (version-suffix, status) transitions. @2 v-next and @2.1 increment may not be `accepted`
-# (unreleased, drafted forward); @1 baseline may not be `blocked`.
+# Allowed (version-suffix, status) transitions. @2 v-next and the @2.1 / @2.2 increments may not be
+# `accepted` (unreleased, drafted forward); @1 baseline may not be `blocked`.
 ALLOWED_TRANSITIONS = {
     ("1", "accepted"), ("1", "candidate"),
     ("2", "candidate"), ("2", "blocked"),
     ("2.1", "candidate"), ("2.1", "blocked"),
+    ("2.2", "candidate"), ("2.2", "blocked"),
 }
 # Recognized version suffixes (the part after '@'), per skill.
-VERSION_SUFFIXES = ("1", "2", "2.1")
+VERSION_SUFFIXES = ("1", "2", "2.1", "2.2")
 
 
 def _err(errors, code, rid, msg):
@@ -264,6 +265,11 @@ def self_test():
            [_row(skill_rule_id="so-inc-acc", skill_version="sarf@2.1", status="accepted",
                  gate="x", evidence_addresses=["a"])],
            "invalid_state_transition")
+    # 5d. invalid_state_transition  (@2.2 increment cannot be accepted)
+    expect("invalid_state_transition (@2.2 accepted)",
+           [_row(skill_rule_id="so-inc22-acc", skill_version="sarf@2.2", status="accepted",
+                 gate="x", evidence_addresses=["a"])],
+           "invalid_state_transition")
     # 6. missing_skill_version
     expect("missing_skill_version (blank)",
            [_row(skill_version="")],
@@ -301,6 +307,13 @@ def self_test():
         _row(skill_rule_id="so-inc21", skill="nahw", skill_version="nahw@2.1", status="candidate",
              gate="@2.1-candidate", evidence_addresses=["quran:2:40:3"],
              relationships=[{"type": "extends", "target_id": "sarf-inc-target",
+                             "target_kind": "registry"}]),
+    ])
+    expect_clean("green: @2.2 increment candidate w/ resolvable extends is valid", [
+        _row(skill_rule_id="sarf-inc22-target"),
+        _row(skill_rule_id="so-inc22", skill="sarf", skill_version="sarf@2.2", status="candidate",
+             gate="@2.2-candidate", evidence_addresses=["quran:38:14:6"],
+             relationships=[{"type": "extends", "target_id": "sarf-inc22-target",
                              "target_kind": "registry"}]),
     ])
 

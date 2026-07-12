@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "fusha/skill-rule-registry-row@1",
   "title": "Skill rule registry row",
-  "description": "One versioned rule in the fusha sarf/nahw rule registry. Existing baseline rules are @1; the 2026-07-12 evolved (v-next) rules are @2; the 2026-07-12 calibration-cycle increment rules are @2.1 (candidate-only, drafted forward, never amending released @2). Validated fail-closed by tools/validate_skill_registry.py.",
+  "description": "One versioned rule in the fusha sarf/nahw rule registry. Existing baseline rules are @1; the 2026-07-12 evolved (v-next) rules are @2; the 2026-07-12 calibration-cycle increment rules are @2.1 and the QAMUS-RICH-NORM-001 consolidation increment rules are @2.2 (both candidate-only, drafted forward, never amending released @2). Validated fail-closed by tools/validate_skill_registry.py.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -35,8 +35,8 @@
     },
     "skill_version": {
       "type": "string",
-      "pattern": "^(sarf|nahw)@(1|2|2\\.1)$",
-      "description": "Must agree with `skill`: existing baseline = @1, evolved v-next = @2, calibration-cycle increment = @2.1 (candidate-only)."
+      "pattern": "^(sarf|nahw)@(1|2|2\\.1|2\\.2)$",
+      "description": "Must agree with `skill`: existing baseline = @1, evolved v-next = @2, calibration-cycle increment = @2.1, rich-norm consolidation increment = @2.2 (both @2.1/@2.2 candidate-only)."
     },
     "status": {
       "type": "string",
@@ -143,6 +143,10 @@
     },
     {
       "if": { "properties": { "skill_version": { "pattern": "^(sarf|nahw)@2\\.1$" } } },
+      "then": { "properties": { "status": { "enum": ["candidate", "blocked"] } } }
+    },
+    {
+      "if": { "properties": { "skill_version": { "pattern": "^(sarf|nahw)@2\\.2$" } } },
       "then": { "properties": { "status": { "enum": ["candidate", "blocked"] } } }
     },
     {
