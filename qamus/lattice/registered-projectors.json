@@ -96,6 +96,103 @@
         "version": "1.0.0",
         "resolution_method": "rule_level_negative_projection"
       }
+    },
+    {
+      "projector_id": "sarf.root_inherit_transclusion.v1",
+      "kind": "root_inheritance",
+      "skill_rule_ids": [
+        "sarf-pattern-never-certifies-root",
+        "sarf-root-entry-pages-transclusion-gates-exceptions-v016-entry",
+        "sarf-broken-plural-shares-root-surface-link-lemma-root",
+        "sarf-certifiable-noun-adjective-participle-host-should-carry-appropriate",
+        "sarf-5-qac-internal-morphology-evidence-public-source-root",
+        "sarf-richseg-derived-nominal-exposes-root"
+      ],
+      "class_predicate": "pred_rootless_lexhead",
+      "guards": [
+        "within_root_ambiguity_guard",
+        "cross_source_root_conflict",
+        "root_homograph_ambiguity",
+        "jamid_contested_review",
+        "divine_name_exclusion"
+      ],
+      "target_population_note": "Rootless whitelist rows carrying a lexical-head (STEM/TOK/*_stem/proper-noun) segment whose morphline asserts no public root. A CERTIFIED root is inherited by transclusion from an ATTESTED source in priority order: (tier-0) the qamus entry headword / usage.forms the lexeme matches; (tier-A) the same match confirmed by the row's own carrier entry_id (self-join); (tier-B) a certified same-surface sibling; (tier-C) a certified same-stem sibling. Pattern alone NEVER certifies (DR-2, sarf-pattern-never-certifies-root): inheritance is only ever from an attested source and stays candidate until the 2-vote / review gate.",
+      "registry_entry": {
+        "schema": "qamus.projector_record.v1",
+        "record_type": "registry_entry",
+        "projector_id": "sarf.root_inherit_transclusion.v1",
+        "fact_family": "sarf",
+        "input_fact_types": ["sarf_segmentation", "qamus_entry_root"],
+        "output_fact_type": "sarf_root",
+        "compatibility_class": "a rootless lexical-head whitelist row whose surface or stem-segment match-key (NFC, harakat/tanwin/annotation-stripped, alif-wasla + dagger-alef normalized to plain alif, hamza/alif-maqsura preserved) is attested as a qamus entry headword/usage.form or a certified same-surface/same-stem sibling, and whose attested sources do not disagree, is not homographic, is not jamid/contested, and is not a divine-name token",
+        "defeater_checks": [
+          "within_root_ambiguity_guard",
+          "cross_source_root_conflict",
+          "root_homograph_ambiguity",
+          "jamid_contested_review",
+          "divine_name_exclusion"
+        ],
+        "gate_tier": "two_vote_required",
+        "version": "1.0.0",
+        "resolution_method": "certified_root_attested_source_transclusion"
+      }
+    },
+    {
+      "projector_id": "sarf.note_normalize.v1",
+      "kind": "note_normalization",
+      "skill_rule_ids": [
+        "nahw-same-surface-equivalent-function-rich-peers-transclusion-obligations",
+        "sarf-blank-beats-wrong-root-pattern-lemma-null-root",
+        "sarf-certifiable-noun-adjective-participle-host-should-carry-appropriate"
+      ],
+      "class_predicate": "pred_boilerplate_note",
+      "guards": ["divine_name_exclusion"],
+      "target_population_note": "Segments whose sarf_note/nahw_note is internal boilerplate ('visible piece accounted', 'no unsupported public source label', 'function/context contribution preserved'). Each is replaced by a deterministic per-(role) pedagogy note. Clitic/affix roles (article, sound-plural, dual, attached pronoun) resolve immediately; a STEM/TOK lexical head requires the P-ROOT-INHERIT chain (note = '<pos> from root X') and is otherwise left for authoring. Never asserts morphology beyond the segment's own attested role + inherited root.",
+      "registry_entry": {
+        "schema": "qamus.projector_record.v1",
+        "record_type": "registry_entry",
+        "projector_id": "sarf.note_normalize.v1",
+        "fact_family": "sarf",
+        "input_fact_types": ["sarf_segmentation"],
+        "output_fact_type": "sarf_segment_note",
+        "compatibility_class": "a certified segment carrying an internal-boilerplate sarf/nahw note whose role has a deterministic pedagogy template (clitic/affix) or whose lexical-head note can be completed by an auto-tier inherited root",
+        "defeater_checks": [
+          "stem_note_requires_inherited_root_chain",
+          "no_morphology_beyond_attested_role_or_inherited_root"
+        ],
+        "gate_tier": "two_vote_required",
+        "version": "1.0.0",
+        "resolution_method": "deterministic_per_class_note_template"
+      }
+    },
+    {
+      "projector_id": "sarf.suffix_fempl_segmentation.v1",
+      "kind": "suffix_segmentation",
+      "skill_rule_ids": [
+        "sarf-root-radical-not-clitic",
+        "sarf-broken-plural-shares-root-surface-link-lemma-root",
+        "nahw-same-surface-equivalent-function-rich-peers-transclusion-obligations",
+        "sarf-pattern-never-certifies-root"
+      ],
+      "class_predicate": "pred_suffix_fempl",
+      "guards": ["radical_taa_homograph"],
+      "target_population_note": "Single-token (unsegmented) rootless rows whose surface ends with the feminine sound plural ـات (+ tanwin variants) or the dual/plural ـان/ـين, where the remainder match-key is an attested stem (entry form/headword or certified sibling). Projects a STEM + PL-F/PL-DL segmentation candidate. This closes the C5 tanwin/niswa detector-vocabulary gap (O-2, which had zero candidates). GUARD: a trailing ـات that is a radical ت rather than a suffix (sarf-root-radical-not-clitic) routes to 2-vote.",
+      "registry_entry": {
+        "schema": "qamus.projector_record.v1",
+        "record_type": "registry_entry",
+        "projector_id": "sarf.suffix_fempl_segmentation.v1",
+        "fact_family": "sarf",
+        "input_fact_types": ["sarf_segmentation"],
+        "output_fact_type": "sarf_segmentation",
+        "compatibility_class": "a single-token rootless row whose surface ends with an attested feminine-plural ـات or dual/plural ـان/ـين suffix and whose remainder is an attested stem, where the trailing consonant is not a root radical",
+        "defeater_checks": [
+          "radical_taa_homograph",
+          "attested_stem_remainder_required"
+        ],
+        "gate_tier": "two_vote_required",
+        "version": "1.0.0",
+        "resolution_method": "attested_stem_remainder_suffix_segmentation"
+      }
     }
   ]
 }

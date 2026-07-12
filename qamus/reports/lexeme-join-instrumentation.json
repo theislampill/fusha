@@ -1,0 +1,58 @@
+{
+  "schema": "qamus.lattice.lexeme_join.v1",
+  "normalizer": "vendored services/qamus_wbw/normalize.py::norm (content-word key)",
+  "inputs": {
+    "whitelist_rows": 34318,
+    "entries": 2092,
+    "lexeme_index_keys": 6691,
+    "whitelist_sha256_16": "18675606fda1bce3"
+  },
+  "occurrence_to_entry": {
+    "rows_matching_at_least_one_entry": 20413,
+    "match_coverage": 0.5948,
+    "rooted_rows_matched": 7259,
+    "rootless_rows_matched": 13154,
+    "coherent_rooted_confirmed": 5008,
+    "conflict_rooted_row_vs_entry": 464,
+    "inheritable_auto_single_root": 5201,
+    "inheritable_multi_root_two_vote": 148,
+    "matched_no_root_information": 9592,
+    "per_section_rows": {
+      "n": 7971,
+      "p": 4473,
+      "v": 10352
+    },
+    "per_section_edges": {
+      "n": 8378,
+      "p": 5189,
+      "v": 10824
+    }
+  },
+  "entry_to_occurrence": {
+    "entries_with_recognized_occurrence": 1740,
+    "orphan_entries_no_occurrence": 352,
+    "covered_by_section": {
+      "n": 888,
+      "p": 60,
+      "v": 792
+    },
+    "orphan_by_section": {
+      "n": 157,
+      "p": 40,
+      "v": 155
+    }
+  },
+  "edge_count": 24391,
+  "edge_types": {
+    "headword": 10050,
+    "derived": 3721,
+    "form": 10309,
+    "sense": 311
+  },
+  "relation_counts": {
+    "root_confirms": 5014,
+    "linkage_only": 13044,
+    "root_inherit_candidate": 5529,
+    "root_conflict": 804
+  }
+}

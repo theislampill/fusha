@@ -1,0 +1,353 @@
+{
+  "schema": "qamus.lattice.inheritance_instrumentation.v1",
+  "inputs": {
+    "whitelist_rows": 34318,
+    "whitelist_sha256_16": "18675606fda1bce3",
+    "entries": 2092,
+    "entry_form_keys": 4743,
+    "rooted_sibling_surfaces": 5035
+  },
+  "root_inheritance_projectors": [
+    {
+      "projector_id": "sarf.root_inherit_transclusion.v1",
+      "kind": "root_inheritance",
+      "skill_rule_ids": [
+        "sarf-pattern-never-certifies-root",
+        "sarf-root-entry-pages-transclusion-gates-exceptions-v016-entry",
+        "sarf-broken-plural-shares-root-surface-link-lemma-root",
+        "sarf-certifiable-noun-adjective-participle-host-should-carry-appropriate",
+        "sarf-5-qac-internal-morphology-evidence-public-source-root",
+        "sarf-richseg-derived-nominal-exposes-root"
+      ],
+      "gate_tier": "two_vote_required",
+      "rootless_rows": 24171,
+      "rootless_function_nostem": 19116,
+      "rootless_lexhead_rows": 5055,
+      "divine_excluded": 718,
+      "authoring_no_attested_source": 1330,
+      "auto_by_tier": {
+        "tier0": 1484,
+        "tierA": 307,
+        "tierB": 610,
+        "tierC": 276
+      },
+      "routed_by_guard": {
+        "homograph": 222,
+        "cross_source_conflict": 41,
+        "within_root_ambiguity": 67,
+        "jamid_review": 0
+      },
+      "routed_by_tier": {
+        "tier0": 125,
+        "tierA": 3,
+        "tierB": 149,
+        "tierC": 53
+      },
+      "totals": {
+        "auto_inheritable": 2677,
+        "review_routed": 330,
+        "inheritable_total": 3007,
+        "authoring_first": 1330,
+        "eligible_non_divine": 4337,
+        "inheritable_share_of_eligible": 0.6933,
+        "auto_share_of_eligible": 0.6172
+      }
+    }
+  ],
+  "note_normalization_projectors": [
+    {
+      "projector_id": "sarf.note_normalize.v1",
+      "kind": "note_normalization",
+      "skill_rule_ids": [
+        "nahw-same-surface-equivalent-function-rich-peers-transclusion-obligations",
+        "sarf-blank-beats-wrong-root-pattern-lemma-null-root",
+        "sarf-certifiable-noun-adjective-participle-host-should-carry-appropriate"
+      ],
+      "gate_tier": "two_vote_required",
+      "boilerplate_segments_reachable": 27,
+      "segments_replaced": 7,
+      "stem_segments_needing_root_chain": 1,
+      "by_role": {
+        "accusative_tanwin_adverbial": {
+          "reachable": 2,
+          "replaced": 0,
+          "needs_root_chain": 0
+        },
+        "adjective_with_accusative_tanwin": {
+          "reachable": 1,
+          "replaced": 0,
+          "needs_root_chain": 0
+        },
+        "adjective_with_nominative_tanwin": {
+          "reachable": 3,
+          "replaced": 0,
+          "needs_root_chain": 0
+        },
+        "definite_article": {
+          "reachable": 2,
+          "replaced": 2,
+          "needs_root_chain": 0
+        },
+        "demonstrative_pronoun": {
+          "reachable": 1,
+          "replaced": 0,
+          "needs_root_chain": 0
+        },
+        "dual_pronoun": {
+          "reachable": 1,
+          "replaced": 0,
+          "needs_root_chain": 0
+        },
+        "dual_subject_suffix": {
+          "reachable": 1,
+          "replaced": 0,
+          "needs_root_chain": 0
+        },
+        "emphatic_lam": {
+          "reachable": 1,
+          "replaced": 0,
+          "needs_root_chain": 0
+        },
+        "masculine_plural_suffix": {
+          "reachable": 1,
+          "replaced": 1,
+          "needs_root_chain": 0
+        },
+        "noun_stem": {
+          "reachable": 2,
+          "replaced": 1,
+          "needs_root_chain": 1
+        },
+        "noun_with_accusative_tanwin": {
+          "reachable": 2,
+          "replaced": 0,
+          "needs_root_chain": 0
+        },
+        "noun_with_genitive_tanwin": {
+          "reachable": 2,
+          "replaced": 0,
+          "needs_root_chain": 0
+        },
+        "participle_stem": {
+          "reachable": 1,
+          "replaced": 1,
+          "needs_root_chain": 0
+        },
+        "possessive_pronoun": {
+          "reachable": 1,
+          "replaced": 1,
+          "needs_root_chain": 0
+        },
+        "quantifier": {
+          "reachable": 1,
+          "replaced": 0,
+          "needs_root_chain": 0
+        },
+        "subordinating_particle": {
+          "reachable": 3,
+          "replaced": 0,
+          "needs_root_chain": 0
+        },
+        "third_person_pronoun": {
+          "reachable": 1,
+          "replaced": 0,
+          "needs_root_chain": 0
+        },
+        "verb_stem": {
+          "reachable": 1,
+          "replaced": 1,
+          "needs_root_chain": 0
+        }
+      }
+    }
+  ],
+  "suffix_segmentation_projectors": [
+    {
+      "projector_id": "sarf.suffix_fempl_segmentation.v1",
+      "kind": "suffix_segmentation",
+      "skill_rule_ids": [
+        "sarf-root-radical-not-clitic",
+        "sarf-broken-plural-shares-root-surface-link-lemma-root",
+        "nahw-same-surface-equivalent-function-rich-peers-transclusion-obligations",
+        "sarf-pattern-never-certifies-root"
+      ],
+      "gate_tier": "two_vote_required",
+      "single_tok_rootless_rows": 2971,
+      "fempl": {
+        "reachable": 10,
+        "auto": 9,
+        "guard_radical_taa": 1
+      },
+      "dual": {
+        "reachable": 27,
+        "auto": 27,
+        "guard_radical_taa": 0
+      },
+      "no_attested_stem": 139
+    }
+  ],
+  "worked_examples": {
+    "38:14:6": {
+      "schema": "qamus.lattice.projection_record.v1",
+      "projector_id": "sarf.root_inherit_transclusion.v1",
+      "skill_rule_ids": [
+        "sarf-pattern-never-certifies-root",
+        "sarf-root-entry-pages-transclusion-gates-exceptions-v016-entry",
+        "sarf-broken-plural-shares-root-surface-link-lemma-root",
+        "sarf-certifiable-noun-adjective-participle-host-should-carry-appropriate",
+        "sarf-5-qac-internal-morphology-evidence-public-source-root",
+        "sarf-richseg-derived-nominal-exposes-root"
+      ],
+      "kind": "root_inheritance",
+      "target_loc": "38:14:6",
+      "target_surface": "فَحَقَّ",
+      "inherited": {
+        "root": "ح ق ق",
+        "tier": "tier0",
+        "pattern": null,
+        "pos": null
+      },
+      "certification_state": "candidate",
+      "gate_tier": "two_vote_required",
+      "guard": null,
+      "projection_state": "candidate",
+      "review_route": "two_vote_required",
+      "evidence": [
+        {
+          "type": "entry_form_attestation",
+          "root": "ح ق ق",
+          "matched_forms": [
+            "حَقّ",
+            "حَقَّ"
+          ],
+          "carrier_self_join": false,
+          "detail": "qamus entry asserts this root for the attested headword/usage.form"
+        }
+      ],
+      "created_note": "root inherited by transclusion from an ATTESTED source (entry form/headword, form-confirmed carrier entry, or certified sibling); candidate until the review gate -- pattern alone never certifies (DR-2)",
+      "created_from": "projector:sarf.root_inherit_transclusion.v1"
+    },
+    "36:70:4": {
+      "schema": "qamus.lattice.projection_record.v1",
+      "projector_id": "sarf.root_inherit_transclusion.v1",
+      "skill_rule_ids": [
+        "sarf-pattern-never-certifies-root",
+        "sarf-root-entry-pages-transclusion-gates-exceptions-v016-entry",
+        "sarf-broken-plural-shares-root-surface-link-lemma-root",
+        "sarf-certifiable-noun-adjective-participle-host-should-carry-appropriate",
+        "sarf-5-qac-internal-morphology-evidence-public-source-root",
+        "sarf-richseg-derived-nominal-exposes-root"
+      ],
+      "kind": "root_inheritance",
+      "target_loc": "36:70:4",
+      "target_surface": "الْكَافِرِينَ",
+      "inherited": {
+        "root": "ك ف ر",
+        "tier": "tier0",
+        "pattern": null,
+        "pos": null
+      },
+      "certification_state": "candidate",
+      "gate_tier": "two_vote_required",
+      "guard": null,
+      "projection_state": "candidate",
+      "review_route": "two_vote_required",
+      "evidence": [
+        {
+          "type": "entry_form_attestation",
+          "root": "ك ف ر",
+          "matched_forms": [
+            "الْكَافِرِينَ",
+            "كَافِرٌ"
+          ],
+          "carrier_self_join": false,
+          "detail": "qamus entry asserts this root for the attested headword/usage.form"
+        }
+      ],
+      "created_note": "root inherited by transclusion from an ATTESTED source (entry form/headword, form-confirmed carrier entry, or certified sibling); candidate until the review gate -- pattern alone never certifies (DR-2)",
+      "created_from": "projector:sarf.root_inherit_transclusion.v1"
+    },
+    "16:3:1": {
+      "schema": "qamus.lattice.projection_record.v1",
+      "projector_id": "sarf.root_inherit_transclusion.v1",
+      "skill_rule_ids": [
+        "sarf-pattern-never-certifies-root",
+        "sarf-root-entry-pages-transclusion-gates-exceptions-v016-entry",
+        "sarf-broken-plural-shares-root-surface-link-lemma-root",
+        "sarf-certifiable-noun-adjective-participle-host-should-carry-appropriate",
+        "sarf-5-qac-internal-morphology-evidence-public-source-root",
+        "sarf-richseg-derived-nominal-exposes-root"
+      ],
+      "kind": "root_inheritance",
+      "target_loc": "16:3:1",
+      "target_surface": "خَلَقَ",
+      "inherited": {
+        "root": "خ ل ق",
+        "tier": "tier0",
+        "pattern": null,
+        "pos": null
+      },
+      "certification_state": "candidate",
+      "gate_tier": "two_vote_required",
+      "guard": null,
+      "projection_state": "candidate",
+      "review_route": "two_vote_required",
+      "evidence": [
+        {
+          "type": "entry_form_attestation",
+          "root": "خ ل ق",
+          "matched_forms": [
+            "خَلَقَ",
+            "خُلُق"
+          ],
+          "carrier_self_join": false,
+          "detail": "qamus entry asserts this root for the attested headword/usage.form"
+        }
+      ],
+      "created_note": "root inherited by transclusion from an ATTESTED source (entry form/headword, form-confirmed carrier entry, or certified sibling); candidate until the review gate -- pattern alone never certifies (DR-2)",
+      "created_from": "projector:sarf.root_inherit_transclusion.v1"
+    },
+    "7:54:23": {
+      "schema": "qamus.lattice.projection_record.v1",
+      "projector_id": "sarf.root_inherit_transclusion.v1",
+      "skill_rule_ids": [
+        "sarf-pattern-never-certifies-root",
+        "sarf-root-entry-pages-transclusion-gates-exceptions-v016-entry",
+        "sarf-broken-plural-shares-root-surface-link-lemma-root",
+        "sarf-certifiable-noun-adjective-participle-host-should-carry-appropriate",
+        "sarf-5-qac-internal-morphology-evidence-public-source-root",
+        "sarf-richseg-derived-nominal-exposes-root"
+      ],
+      "kind": "root_inheritance",
+      "target_loc": "7:54:23",
+      "target_surface": "مُسَخَّرَٰتٍۭ",
+      "inherited": {
+        "root": "س خ ر",
+        "tier": "tier0",
+        "pattern": "مُفَعَّل",
+        "pos": "Form II derived participle"
+      },
+      "certification_state": "candidate",
+      "gate_tier": "two_vote_required",
+      "guard": null,
+      "projection_state": "candidate",
+      "review_route": "two_vote_required",
+      "evidence": [
+        {
+          "type": "entry_form_attestation",
+          "root": "س خ ر",
+          "matched_forms": [
+            "مُسَخَّرَات",
+            "مُسَخَّرَاتٌ"
+          ],
+          "carrier_self_join": false,
+          "detail": "qamus entry asserts this root for the attested headword/usage.form"
+        }
+      ],
+      "created_note": "root inherited by transclusion from an ATTESTED source (entry form/headword, form-confirmed carrier entry, or certified sibling); candidate until the review gate -- pattern alone never certifies (DR-2)",
+      "created_from": "projector:sarf.root_inherit_transclusion.v1"
+    }
+  },
+  "ledger_rows_written": 3048,
+  "ledger_rows_total": 3048
+}
