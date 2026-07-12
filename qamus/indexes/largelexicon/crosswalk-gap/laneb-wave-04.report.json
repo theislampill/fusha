@@ -1,0 +1,2614 @@
+{
+  "affirm_live_rows": [
+    {
+      "canonical_location": "1:7:9",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:8336964de06927d18280bf578662d3dc886571e6f8b5f8910727b6fee4173b3b",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:3:5",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:f037e5fca48b1353915b81412cc1f1563311a5e8997130a4540c99e7544fdaf2",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:4:3",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:5a3d0a46a0fca4a5b07daf2f4b01bea52d734532be887aca81d617148d2bcc1e",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:4:6",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:e38bed28a07cfdd55d5ea5dd05d3994411391c7393458f06cb5b4b574901edbc",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:7:3",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:93ec876f00f6f351379ce083c1b7f25041a04b6a234137beecfb7cd70c7b895e",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:14:9",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:7dd3f20787bec3c52f43da7e643e92c73da8ba568c02b846a96cacbe32d38ec3",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:16:5",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:2e4aff910c6775a99647d30622516ed8018d61d270f1541ae7d6ad951501f6fd",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:17:6",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:2644be3c30421436d8775666234b1051698fdcff5a2f9ef775d43048846dec08",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:17:7",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:68cec082b16fe3ac7edaa6cfdf6ebce911cccc349fbf056970f68e9d063ecc47",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:19:4",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:d651c219e31614f3d89ba6a17e4c6de77d7e2aba75990b90131b2df992fe3087",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:20:5",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:a789066a0531d0052e10118063b3de5411e231bf1a5750e2d2b2deddd82f6ef9",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:20:6",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:e2ea7936bccf23d4b349a22cec37bbb02dbe0401563e5c2cf7db6d8224850825",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:20:10",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:3ec5a9582b9b94224c4ef080505e6be3cae1e8b5232307609cfcc530b7b7cad9",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:20:15",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:68e1a31bb0210b46bd0bcb3b591e2a50702f798314ff6a27318ca1e669145558",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:20:22",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:ba075ce7f388910003ad6c3576bd4d352726be425c1cc24d3cca6385b7df2c33",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:22:10",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:81c5a5ae9be0e2cc4e1acb5d075cd357755f430f484743f49437715711c2e183",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:22:11",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:5843b7eb9ebf69dce6417783a51d1b48cb95a2e9d077de8f9a4df3025f7e6928",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:25:17",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:b0dc82479c0772a33cbdc3bd122861f04e55152859a3d7b7ab931a7d9a50e25a",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:30:4",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:5d0a409935609096ae54a8efc705fead0ef3cd4e3cdee6a3d987cabc64d08d6b",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:30:17",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:7333706a27fc44ea4e15ed7a2ebf4f07ed34e6f62dc9fe99a085004ba219368f",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:34:7",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:f808ede5a3312b7526fee03885e90c5d65ac84c956cc6ff5ef35f37d173be840",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:34:9",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:b66fbf695ebf3c082601e9787365fbbb94a6c93ab9c8471da567dec0dc9ba698",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:35:6",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:5c9784c3998b300792b4e97d6797b49b8fdff204dff6e6628f12c780f2f01af2",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:39:4",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:70f8a478b26d314fc89dab5f1508ecf9cd1927c35a55eb87d980a46360da32a6",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:48:12",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:4d7029849736a26daffe10860d39f8f493bfd6361b78803fa8543bc80b5ebd90",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:49:10",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:74dfa78d2a7960beb2e634ea50796bc931642fc43d08c2f173820eaebf2e5d6d",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:49:12",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:57abe6725874353cf88a771c66b482e8be40f5ffdead2730166b402a3fe9adfa",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:49:15",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:27aaac3dabebd02391be7fb2bb4c424750d12920ea3b08242dfa770cb82571a0",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:51:3",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:62c4f63d5e7de3e9adb9429b913c6aa32bf099db2fc15561b69405ca24e6581d",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:51:5",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:85ee35cf7ed9aa208194fb6b19ad858e8b9978517defab1a05b339058849d7d0",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:54:3",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:e4a91d0654b4940233486aa686d756a97f2577d479d9cb2e3e8f0b6cc890d562",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:54:12",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:b4def0fdea2f017d1d5ade2d3c15eb56ed05e9f85b58d5cd62707108d5005e8c",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:58:5",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:b5dcdb2235aeddfb31c86ac02770a24d4c041e39cc946d738cb5d9c73495d978",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:58:15",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:20954f086d86990e459e6cf9aa0d7a1532ee3d0dc51cacee685f0d95f165b2b5",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:59:15",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:1e1fe9ef7ebdf78ead6b4deadb5ca8a65ff6b9e1cbdf90e3c44329899983c2d9",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:60:3",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:6f11775967c38483d6ab0a34e6fc83d98607f4f1593e579151d8d5252ca2deec",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:60:12",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:b0273b0954c29d223e9cb48b1b8a0ff6404d576131055fdecf9fd779fd495f57",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:61:3",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:3e72c9ac96fce834b8f6970bcd473809566dabfafc828f28efe67067f96449f5",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:61:6",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:3e0219f8fa2e1b4a26b653e468318eef7504323dfe7796910566dc846a02f7de",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:61:39",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:9dca0e22da7d9457e0990ac3c109a07ee788f1995a6c233be2e117c94b2d14fd",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:61:40",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:478739ce4bc90ff2fb87343fcf951abe33cdd0d339f6cff879a16a22ed7a299e",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:62:6",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:7de11a07c3244b082d906f320cf9d731e059a601808ed49155c7993c796a44f8",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:63:10",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:6f3552031327140a020b69c6224f29196d587c74f631ddc65796aa6ce76c8b32",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:67:3",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:1a48ebd99ae379fc99a2e6e3be562e34f99b7e9fd5bee334fffe21849dc54754",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:67:10",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:d7e5fedc60c14e40ea86267d451f2c09ab460ba40d6aafe8d6cd1956fc84faa6",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:68:13",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:e23f1ce628dbaa10ec69b8770c1ea154b33549291df4a2fa6c476f1f17463b57",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:69:13",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:1a155466b0211a0de6b348a1185a2b21e6279ac4df1a36a1fc94c9359d66e631",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:71:5",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:b304cdedd90022da4bfd6ad0c5be332fd36969c9de03660df8a434544757dc29",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:71:15",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:3e74f088e0cfc4673154361949b1f5f9ce197cb75d4fe11f657e8c1584131530",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:74:14",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:f85ffd80786da422738e9f668d9c5ea2ca26db93715f7dc6d36e3da32a4c5826",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:76:10",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:f17823db73affe835438685a6f3fc4093c4d78c86b346b6fcd32d429c7247581",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:82:7",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:ea9625f882b882dfb1607c116fb302ea385cf67e17173efd4461e191d4d9cfba",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:83:13",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:1870fb51bf76448c24ebf9b7996036d20b25a7f7245f3bddeb66b11f3aa92092",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:83:14",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:a7a91261cc4ab04ae22ec0d2f6b8eddc62dfb6728a5776b2aad472d20814ad29",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:83:20",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:5a2d7beeb923bf3650209ea522ade207e91f53ca5ba0aed27c4491d5a4eeade1",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:83:22",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:5d50d4bffc3ea34fefd6eed637ec711db4d958597696cdbad3c7aee7be5b8c5d",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:85:3",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:ca2b24fba9381d6240882ac2bf36d3875388ca3877403199a09a144f231dcb93",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:85:29",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:8e55f18332c1350a32635453f21f76780c89f3fba6139306b9e286e03fcbe310",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:85:37",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:5cccde207b6b1e94d2065fbd10a37c9fea46f3a061d10372b4fe5abe20b03175",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:85:40",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:8b25662ed313ef9c17fc0f642632640930981ebb52d41e3dd5024bb66ba1d71e",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:85:42",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:f01c9361448f2bdff64cc939dbf1b399510faaff082f950217f0921de9879d79",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:87:18",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:80e17f259c23c53b439ab1e7f77204090f1c953d509386cfbe76cce728807ba4",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:87:22",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:cacd9a8a0bbc52b0a99e57aaf9a1a8dcf1014a09d5b48d95acbc766b88288d62",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:96:4",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:a8d8a1a044e4a8b1b838520d44a25043fda9c4ee1dbddf2e555441c0d07e1d40",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:102:28",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:52c588f86b9372de36a67216c1ba81690593cf890971080f20c2f3ed132b37f6",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:102:29",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:23c7ac76b8b177b4461173d3634ab0f55eafd6a6f4a0dc70e3193c917eeb1e4e",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:102:32",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:c406e432f5fe69cdb0dbd064e5a7bb0a3def88255fd7e9f0bdfa5c0f7772c679",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:102:60",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:1213c950a256c586fb598ca2a6a0eba209c2d4882dfefa8d1d63a38ae9081504",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:102:64",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:0412e5c1faa5068eab47b4abc28055f7b2512c28700c67ecd85a99b8f9196514",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:109:30",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:c62243f46a31bf1728b8badf21aec1bddd4b3ed655a1d08538883a94b060cca5",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:112:1",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:e0830e63c882b062a30fbf3644bc76baa0cf98a3751cc18678bdb92e63e07876",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:114:11",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:2868a7a4992061f3001325a1f7a358d52ce5a7d9fa49c5542cd9ea427abdde4a",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:114:13",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:a6f9b788eac3460220f92902a8035df0cc2ef00fd0c9bff554df37a0a0e815c8",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:119:1",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:374ddc0c915cdd44e61fba1d8cdd9c470224449aab62b9ca73724b02bba61ce1",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:124:2",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:d73b30bd9a4bd80a3ea563781722bc960f9e444784a7cb11928f8f1cb2d8223e",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:125:12",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:8c72b3c03c2549de1027973d86825a66b53bc0334b358a8afd0465c5bb43a5d9",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:125:13",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:6a038fd0df411605bee5701cea8beda3a80959352b0c9eac7178b94ebec2ffc8",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:125:19",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:cc0ac437b7e49c29cd372824f64694ed651c46a54ca190ee8dc078b231db452e",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    },
+    {
+      "canonical_location": "2:126:26",
+      "conclusion": "affirm_live_no_carrier_owns_token",
+      "crosswalk_changed": false,
+      "ledger_fact_id": "sha256:c8a1b27133b8ea6e038fc01594f38b57b8083f7db3f3bc563f6b2e73f910eec4",
+      "queue_family": "affirmed_live_no_canonical_carrier"
+    }
+  ],
+  "binding_rows": [
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "3635ce63d0f9:u1:e8",
+          "entry_id": "3635ce63d0f9",
+          "ledger_fact_id": "sha256:4b5ea35bde2ce1643a229e20bbb2061c51ef4954464709835fca43ffacde2ee1",
+          "qword_row_id": "llx-qword-3635ce63d0f9-01-08-010"
+        }
+      ],
+      "canonical_location": "2:7:9",
+      "conclusion": "entry_id=3635ce63d0f9",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:006:2:7:9"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "ad9af170d670:u1:e5",
+          "entry_id": "ad9af170d670",
+          "ledger_fact_id": "sha256:475a61919adb5f79db830bf665c39875e3769d820844f7045a872c9eb23df754",
+          "qword_row_id": "llx-qword-ad9af170d670-01-05-035"
+        }
+      ],
+      "canonical_location": "2:25:31",
+      "conclusion": "entry_id=ad9af170d670",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:020:2:25:31"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "259fe620e117:u1:e5",
+          "entry_id": "259fe620e117",
+          "ledger_fact_id": "sha256:998d3c998bc84a2a6ae8e0b0cf5d9e40ff5837f0629dd1d5e8581acd06ffd0b3",
+          "qword_row_id": "llx-qword-259fe620e117-01-05-009"
+        }
+      ],
+      "canonical_location": "2:30:9",
+      "conclusion": "entry_id=259fe620e117",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:022:2:30:9"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "3cce862b69a0:u2:e1",
+          "entry_id": "3cce862b69a0",
+          "ledger_fact_id": "sha256:142a0c42bd103ffb8b0c689bf0956b0d7093e3f0c4ca6e167e1e61906e33e8cc",
+          "qword_row_id": "llx-qword-3cce862b69a0-02-01-015"
+        }
+      ],
+      "canonical_location": "2:35:15",
+      "conclusion": "entry_id=3cce862b69a0",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:029:2:35:15"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "299c939af2af:u1:e1",
+          "entry_id": "299c939af2af",
+          "ledger_fact_id": "sha256:53f8e94541d46530d707eec3c17961f8141935ff99988006464a2d7d8ab5634c",
+          "qword_row_id": "llx-qword-299c939af2af-01-01-007"
+        }
+      ],
+      "canonical_location": "2:57:7",
+      "conclusion": "entry_id=299c939af2af",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:039:2:57:7"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "5d54e40a7cac:u1:e3",
+          "entry_id": "5d54e40a7cac",
+          "ledger_fact_id": "sha256:e9da8418625138c13116bf3e1622363aeb767027d2b8c49f39e3e73724779f1e",
+          "qword_row_id": "llx-qword-5d54e40a7cac-01-03-003"
+        }
+      ],
+      "canonical_location": "2:60:2",
+      "conclusion": "entry_id=5d54e40a7cac",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:043:2:60:2"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "9c40ab09fe94:u1:e1",
+          "entry_id": "9c40ab09fe94",
+          "ledger_fact_id": "sha256:c5ca4b5bc0babed5f1679a3b3a45935f388544f4e5a9cb48fc99f36053aeac78",
+          "qword_row_id": "llx-qword-9c40ab09fe94-01-01-019"
+        }
+      ],
+      "canonical_location": "2:61:19",
+      "conclusion": "entry_id=9c40ab09fe94",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:048:2:61:19"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "b56da5c447c1:u1:e6",
+          "entry_id": "b56da5c447c1",
+          "ledger_fact_id": "sha256:918912323936c034defcfc632c586787d7ac3b01b66559e84a2f150de0cf9987",
+          "qword_row_id": "llx-qword-b56da5c447c1-01-06-028"
+        }
+      ],
+      "canonical_location": "2:61:27",
+      "conclusion": "entry_id=b56da5c447c1",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:049:2:61:27"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "6708891659a2:u1:e1",
+          "entry_id": "6708891659a2",
+          "ledger_fact_id": "sha256:7c2b1ecdea4d42be778f766d29532f185a028fd53a80b35d19df212d337e54e1",
+          "qword_row_id": "llx-qword-6708891659a2-01-01-044"
+        }
+      ],
+      "canonical_location": "2:61:41",
+      "conclusion": "entry_id=6708891659a2",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:052:2:61:41"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "fd9a86c17cc4:u1:e1",
+          "entry_id": "fd9a86c17cc4",
+          "ledger_fact_id": "sha256:5f4233e14c822c4996599911e8eac8901fa56c7cf878ae47bf12303577f2b7de",
+          "qword_row_id": "llx-qword-fd9a86c17cc4-01-01-015"
+        }
+      ],
+      "canonical_location": "2:69:14",
+      "conclusion": "entry_id=fd9a86c17cc4",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:059:2:69:14"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "088ebd5e2393:u6:e3",
+          "entry_id": "088ebd5e2393",
+          "ledger_fact_id": "sha256:4bea0bdaf253bfcd888cffe8b18da8110647f8ddb235f76e15153c56aebcdfb3",
+          "qword_row_id": "llx-qword-088ebd5e2393-06-03-013"
+        }
+      ],
+      "canonical_location": "2:71:13",
+      "conclusion": "entry_id=088ebd5e2393",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:061:2:71:13"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "9cb9f6f53207:u1:e2",
+          "entry_id": "9cb9f6f53207",
+          "ledger_fact_id": "sha256:41941fcf71cbbe0129f8daa0071cfa528cc41d4673f975548b9567b792952cc5",
+          "qword_row_id": "llx-qword-9cb9f6f53207-01-02-017"
+        }
+      ],
+      "canonical_location": "2:85:17",
+      "conclusion": "entry_id=9cb9f6f53207",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:071:2:85:17"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "af75174c26a6:u3:e1",
+          "entry_id": "af75174c26a6",
+          "ledger_fact_id": "sha256:1c64c97d4685ac12bb905c127d19b48cd2337189d79fc7b0ddd94a7b9c4c4eab",
+          "qword_row_id": "llx-qword-af75174c26a6-03-01-015"
+        }
+      ],
+      "canonical_location": "2:96:14",
+      "conclusion": "entry_id=af75174c26a6",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:079:2:96:14"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "4f99a11c3127:u1:e8",
+          "entry_id": "4f99a11c3127",
+          "ledger_fact_id": "sha256:4f9a6c526fed891f0ed64d59705bad45b161075a8c1a1610f28724ec3efb3996",
+          "qword_row_id": "llx-qword-4f99a11c3127-01-08-049"
+        }
+      ],
+      "canonical_location": "2:102:45",
+      "conclusion": "entry_id=4f99a11c3127",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:083:2:102:45"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "a6200e6a0d07:u7:e1",
+          "entry_id": "a6200e6a0d07",
+          "ledger_fact_id": "sha256:bbb1c8638c9f1e9f212eabf92296aa4f0923079a36dbc75b7f881ba1c30e2d8a",
+          "qword_row_id": "llx-qword-a6200e6a0d07-07-01-018"
+        }
+      ],
+      "canonical_location": "2:108:17",
+      "conclusion": "entry_id=a6200e6a0d07",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:086:2:108:17"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "16e05c2ec837:u1:e7",
+          "entry_id": "16e05c2ec837",
+          "ledger_fact_id": "sha256:170fa51ed575f02950b832698bff0a077dcf8ac7aded9f196c9228d71c0ef245",
+          "qword_row_id": "llx-qword-16e05c2ec837-01-07-004"
+        }
+      ],
+      "canonical_location": "2:125:4",
+      "conclusion": "entry_id=16e05c2ec837",
+      "decision_kind": "entry",
+      "packet_id": "laneb-wave-04:093:2:125:4"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "5319740434d2:u1:e1",
+          "entry_id": "5319740434d2",
+          "ledger_fact_id": "sha256:9a0f5e40973d1e1854eae6cf5aff97ae2ff87b145d06c9477d6c799181e09ea1",
+          "qword_row_id": "llx-qword-5319740434d2-01-01-001"
+        }
+      ],
+      "canonical_location": "2:138:1",
+      "conclusion": "location=2:138:1",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:101:2:138:1"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "5319740434d2:u1:e1",
+          "entry_id": "5319740434d2",
+          "ledger_fact_id": "sha256:885a2fbc4e3b2ff91e1d1bbd2f2c68564dfd588de1c75f0baa75f84fa93ad690",
+          "qword_row_id": "llx-qword-5319740434d2-01-01-008"
+        }
+      ],
+      "canonical_location": "2:138:7",
+      "conclusion": "location=2:138:7",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:104:2:138:7"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "5d89e690256d:u1:e6",
+          "entry_id": "5d89e690256d",
+          "ledger_fact_id": "sha256:c6b59b0aa0eb2212439203dd9e47b1242d6df249d4b3992c1fb3afd9ff93081a",
+          "qword_row_id": "llx-qword-5d89e690256d-01-06-014"
+        }
+      ],
+      "canonical_location": "2:145:13",
+      "conclusion": "location=2:145:13",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:116:2:145:13"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "5d89e690256d:u1:e6",
+          "entry_id": "5d89e690256d",
+          "ledger_fact_id": "sha256:7d6d28f63a2fb8d9155468b09aeddcf1f8e9c01fcba748a0101d7d7a427d663b",
+          "qword_row_id": "llx-qword-5d89e690256d-01-06-019"
+        }
+      ],
+      "canonical_location": "2:145:17",
+      "conclusion": "location=2:145:17",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:117:2:145:17"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "68e87fcb398a:u2:e1",
+          "entry_id": "68e87fcb398a",
+          "ledger_fact_id": "sha256:3317242d8ca6081ee6ae9242613fa341599aedc7a121281fd1faf4c196f8a600",
+          "qword_row_id": "llx-qword-68e87fcb398a-02-01-002"
+        }
+      ],
+      "canonical_location": "2:163:2",
+      "conclusion": "location=2:163:2",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:130:2:163:2"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "68e87fcb398a:u2:e1",
+          "entry_id": "68e87fcb398a",
+          "ledger_fact_id": "sha256:f3d0feb7c0dee1f75b6ebf3f2e9dc520c98a1edfb0f1c6b3fc69b6b27f95d365",
+          "qword_row_id": "llx-qword-68e87fcb398a-02-01-006"
+        }
+      ],
+      "canonical_location": "2:163:5",
+      "conclusion": "location=2:163:5",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:131:2:163:5"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "23cbc83bf4b2:u1:e2",
+          "entry_id": "23cbc83bf4b2",
+          "ledger_fact_id": "sha256:434bf24ecbd17d25c200d281d4ec3a814362097a338fca87acf57987d07a0fd0",
+          "qword_row_id": "llx-qword-23cbc83bf4b2-01-02-027"
+        },
+        {
+          "card_id": "388bbd38acf6:u2:e5",
+          "entry_id": "388bbd38acf6",
+          "ledger_fact_id": "sha256:fc0f2d6535416922af785e60e1b46b7ba3baba3529a317746ff7390e9a37b9b3",
+          "qword_row_id": "llx-qword-388bbd38acf6-02-05-027"
+        },
+        {
+          "card_id": "543da5bcc248:u3:e5",
+          "entry_id": "543da5bcc248",
+          "ledger_fact_id": "sha256:a4182b3ec7d4a8f134ab5c5313a155f3b46e843cd9cd53d6646ef1e28d9a90f5",
+          "qword_row_id": "llx-qword-543da5bcc248-03-05-027"
+        },
+        {
+          "card_id": "55c548d602e9:u1:e12",
+          "entry_id": "55c548d602e9",
+          "ledger_fact_id": "sha256:de805a76458aec4711ab563c8fef7c30973b8aff856060b414d12bac192bf828",
+          "qword_row_id": "llx-qword-55c548d602e9-01-12-027"
+        },
+        {
+          "card_id": "603eecbe7dd7:u1:e6",
+          "entry_id": "603eecbe7dd7",
+          "ledger_fact_id": "sha256:e8b7aa4d35a55bf058f7b05dab809c221ecd4e88ab07ea2b304d7b72d56010e2",
+          "qword_row_id": "llx-qword-603eecbe7dd7-01-06-027"
+        },
+        {
+          "card_id": "afca6b7fb675:u3:e1",
+          "entry_id": "afca6b7fb675",
+          "ledger_fact_id": "sha256:1030eceba4b78114eebf42073c1a17926d2473bc116b0fc5d5a9ad7aad0d2790",
+          "qword_row_id": "llx-qword-afca6b7fb675-03-01-027"
+        },
+        {
+          "card_id": "fbd1d2c5825e:u1:e1",
+          "entry_id": "fbd1d2c5825e",
+          "ledger_fact_id": "sha256:7d2d1ea831256beafb7dbe4bd97ad90bb744e1f6c0e71f1ff6a63e69347ca134",
+          "qword_row_id": "llx-qword-fbd1d2c5825e-01-01-027"
+        }
+      ],
+      "canonical_location": "2:184:24",
+      "conclusion": "location=2:184:24",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:162:2:184:24"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "1cf05c1e5d9c:u1:e4",
+          "entry_id": "1cf05c1e5d9c",
+          "ledger_fact_id": "sha256:568d8d34b667ff46dd0118fe850b2628e8e562de25ec36cf59db5a4d7fc9c9ac",
+          "qword_row_id": "llx-qword-1cf05c1e5d9c-01-04-031"
+        },
+        {
+          "card_id": "29587bc586c7:u1:e1",
+          "entry_id": "29587bc586c7",
+          "ledger_fact_id": "sha256:14a2b74661f2615d1d10dd28d277c7a8f86814f6401529d07593764e7bf5b9c9",
+          "qword_row_id": "llx-qword-29587bc586c7-01-01-031"
+        },
+        {
+          "card_id": "55c548d602e9:u1:e6",
+          "entry_id": "55c548d602e9",
+          "ledger_fact_id": "sha256:97df40c6e121312ff14f168b1a9ac0fb3caeb2107c86b3b17ea6fc74cc85a9d7",
+          "qword_row_id": "llx-qword-55c548d602e9-01-06-031"
+        },
+        {
+          "card_id": "efa9daeebae2:u1:e2",
+          "entry_id": "efa9daeebae2",
+          "ledger_fact_id": "sha256:b3ff913f1b01023224f3ea1523aa936a4abb6e6d2351249c4290518143aa691d",
+          "qword_row_id": "llx-qword-efa9daeebae2-01-02-031"
+        }
+      ],
+      "canonical_location": "2:185:28",
+      "conclusion": "location=2:185:28",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:166:2:185:28"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "1cf05c1e5d9c:u1:e4",
+          "entry_id": "1cf05c1e5d9c",
+          "ledger_fact_id": "sha256:ce4e1a50a3686398a1bbb600b418c1ae6f94303180ecddd5c1facf59c75afaba",
+          "qword_row_id": "llx-qword-1cf05c1e5d9c-01-04-036"
+        },
+        {
+          "card_id": "29587bc586c7:u1:e1",
+          "entry_id": "29587bc586c7",
+          "ledger_fact_id": "sha256:5aa90b28980d5e29eeed4a015418a27ef710d4d03688523e2f74ac27772abc9b",
+          "qword_row_id": "llx-qword-29587bc586c7-01-01-036"
+        },
+        {
+          "card_id": "55c548d602e9:u1:e6",
+          "entry_id": "55c548d602e9",
+          "ledger_fact_id": "sha256:35ed8e6ce28b49ea74317397ce927a6664f1df57769624e5c9cfd5f108b02ab2",
+          "qword_row_id": "llx-qword-55c548d602e9-01-06-036"
+        },
+        {
+          "card_id": "efa9daeebae2:u1:e2",
+          "entry_id": "efa9daeebae2",
+          "ledger_fact_id": "sha256:7aa2b001e85fcbef617ef7415b9737b36249f8edab815ef23da634af46b15583",
+          "qword_row_id": "llx-qword-efa9daeebae2-01-02-036"
+        }
+      ],
+      "canonical_location": "2:185:33",
+      "conclusion": "location=2:185:33",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:169:2:185:33"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "1773d3fc1e63:u2:e1",
+          "entry_id": "1773d3fc1e63",
+          "ledger_fact_id": "sha256:5c3d0d64b600cc6f6ff5a0a7dec98e842ee9e0d65f237e10f9a78de72cd1ac00",
+          "qword_row_id": "llx-qword-1773d3fc1e63-02-01-040"
+        },
+        {
+          "card_id": "177fb17bf61b:u1:e2",
+          "entry_id": "177fb17bf61b",
+          "ledger_fact_id": "sha256:9f0ede77d921da697629e45e113d7156d626dbbb7491caead2a583c339602614",
+          "qword_row_id": "llx-qword-177fb17bf61b-01-02-040"
+        },
+        {
+          "card_id": "2495957025c6:u1:e1",
+          "entry_id": "2495957025c6",
+          "ledger_fact_id": "sha256:0c0c2eae72c94ed806efb108959f96acfca622dac845e50791e0a27d57ec364f",
+          "qword_row_id": "llx-qword-2495957025c6-01-01-040"
+        },
+        {
+          "card_id": "55dd18892bf9:u2:e6",
+          "entry_id": "55dd18892bf9",
+          "ledger_fact_id": "sha256:1be1322830a61762cf20d1b869fb79edfa74c34a51c9721cf44825368a7e27e3",
+          "qword_row_id": "llx-qword-55dd18892bf9-02-06-040"
+        },
+        {
+          "card_id": "6471f74ceb4e:u1:e3",
+          "entry_id": "6471f74ceb4e",
+          "ledger_fact_id": "sha256:4fdeb54c5552f48f485b649d6a240518c89cd61b46b34cd4095123fb40c67037",
+          "qword_row_id": "llx-qword-6471f74ceb4e-01-03-040"
+        },
+        {
+          "card_id": "7b8ccbd754e3:u1:e4",
+          "entry_id": "7b8ccbd754e3",
+          "ledger_fact_id": "sha256:0635f1c174164a64995875e2ff732ceef9ac749cc527fc84e17ecba4624cef9f",
+          "qword_row_id": "llx-qword-7b8ccbd754e3-01-04-040"
+        },
+        {
+          "card_id": "7cfa6fd795af:u1:e1",
+          "entry_id": "7cfa6fd795af",
+          "ledger_fact_id": "sha256:74fc58445bfc28ff60f11764379156571e6d03e73f7e88278706f533f2f5105c",
+          "qword_row_id": "llx-qword-7cfa6fd795af-01-01-040"
+        },
+        {
+          "card_id": "90d6ab43d466:u1:e4",
+          "entry_id": "90d6ab43d466",
+          "ledger_fact_id": "sha256:7af64c4d76c94fb8a37af3eaade58ff2465576c6d85010bb9400e5138fdfb8e1",
+          "qword_row_id": "llx-qword-90d6ab43d466-01-04-040"
+        },
+        {
+          "card_id": "a6de8fd64244:u4:e1",
+          "entry_id": "a6de8fd64244",
+          "ledger_fact_id": "sha256:6654d966c5c1a3e3c9cbed876160345d0925c0596b0a45f66ce6c748544b4704",
+          "qword_row_id": "llx-qword-a6de8fd64244-04-01-040"
+        },
+        {
+          "card_id": "cdae12eb8156:u1:e1",
+          "entry_id": "cdae12eb8156",
+          "ledger_fact_id": "sha256:438e73c373629bc760e66ee81379e7ef74d73184b7a1d8ea03e6b06cc2a59f14",
+          "qword_row_id": "llx-qword-cdae12eb8156-01-01-004"
+        }
+      ],
+      "canonical_location": "2:187:36",
+      "conclusion": "location=2:187:36",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:180:2:187:36"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "4f666d15bb7e:u2:e8",
+          "entry_id": "4f666d15bb7e",
+          "ledger_fact_id": "sha256:de50185809fdacfe65617cb4990179de5067f50554b070fed3db44dcd7ccd356",
+          "qword_row_id": "llx-qword-4f666d15bb7e-02-08-009"
+        },
+        {
+          "card_id": "9e4222baccd2:u2:e1",
+          "entry_id": "9e4222baccd2",
+          "ledger_fact_id": "sha256:0ea62efd09c9ec0869da9e9b282743cb9dbd0e3269baa995a30338972ad9633c",
+          "qword_row_id": "llx-qword-9e4222baccd2-02-01-009"
+        }
+      ],
+      "canonical_location": "2:194:8",
+      "conclusion": "location=2:194:8",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:195:2:194:8"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "4f666d15bb7e:u2:e8",
+          "entry_id": "4f666d15bb7e",
+          "ledger_fact_id": "sha256:4a1b5f2de300a45a3d4f360ba53987f13d9423f02db6687b23092d2cf836dd77",
+          "qword_row_id": "llx-qword-4f666d15bb7e-02-08-015"
+        },
+        {
+          "card_id": "9e4222baccd2:u2:e1",
+          "entry_id": "9e4222baccd2",
+          "ledger_fact_id": "sha256:8be3986d00b25592919798ff9c0425e8d14f7e220329c047bc8a34f15a7b9f3e",
+          "qword_row_id": "llx-qword-9e4222baccd2-02-01-015"
+        }
+      ],
+      "canonical_location": "2:194:14",
+      "conclusion": "location=2:194:14",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:197:2:194:14"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "1a9f6df3889e:u4:e2",
+          "entry_id": "1a9f6df3889e",
+          "ledger_fact_id": "sha256:f6b23bad899c918c0676d5123e1febb63ac8fe1eecc9db78cf87820040aa20da",
+          "qword_row_id": "llx-qword-1a9f6df3889e-04-02-009"
+        },
+        {
+          "card_id": "1cf05c1e5d9c:u2:e2",
+          "entry_id": "1cf05c1e5d9c",
+          "ledger_fact_id": "sha256:ed1050ccf4b7ea5eadeb6c237d6e4427aa2fa979d7c219bd6dc75260935af75a",
+          "qword_row_id": "llx-qword-1cf05c1e5d9c-02-02-009"
+        },
+        {
+          "card_id": "4bba2359dc9c:u1:e6",
+          "entry_id": "4bba2359dc9c",
+          "ledger_fact_id": "sha256:f6d728d8ebe02ea0206301f12173107dd324bf2f4e281596752971eaf844fb6b",
+          "qword_row_id": "llx-qword-4bba2359dc9c-01-06-009"
+        },
+        {
+          "card_id": "79cb36de6246:u1:e4",
+          "entry_id": "79cb36de6246",
+          "ledger_fact_id": "sha256:b1df473860b3762877439e785453c77ebd053602d988d5d739ecf4ff7d35bd27",
+          "qword_row_id": "llx-qword-79cb36de6246-01-04-009"
+        },
+        {
+          "card_id": "cc013b361d1c:u1:e8",
+          "entry_id": "cc013b361d1c",
+          "ledger_fact_id": "sha256:f794fa468587dbda5e2c51f6b0ffd1aea08c150059434e695aa4ba454f44bf38",
+          "qword_row_id": "llx-qword-cc013b361d1c-01-08-009"
+        },
+        {
+          "card_id": "efa9daeebae2:u1:e3",
+          "entry_id": "efa9daeebae2",
+          "ledger_fact_id": "sha256:0732eb6b58cce11d79167695a0b0d906c6023a8c45f3f735fc387bcb5809ca81",
+          "qword_row_id": "llx-qword-efa9daeebae2-01-03-009"
+        },
+        {
+          "card_id": "f0220b252769:u1:e3",
+          "entry_id": "f0220b252769",
+          "ledger_fact_id": "sha256:4b3a74894c7b04adc7adabd8911d4c99d42870be8377ebd4687d3384e8a302a8",
+          "qword_row_id": "llx-qword-f0220b252769-01-03-009"
+        },
+        {
+          "card_id": "f371ea9c4b67:u3:e2",
+          "entry_id": "f371ea9c4b67",
+          "ledger_fact_id": "sha256:d3aced8d9443b040daeef1abb152518e36902f8e58f697b0558a55798bfd493b",
+          "qword_row_id": "llx-qword-f371ea9c4b67-03-02-009"
+        },
+        {
+          "card_id": "f92aeb1d59ae:u3:e5",
+          "entry_id": "f92aeb1d59ae",
+          "ledger_fact_id": "sha256:0eac0c8e181d353a1e8aa565081499a0ae4766091bc0cf73fcbb9d928ee260a4",
+          "qword_row_id": "llx-qword-f92aeb1d59ae-03-05-009"
+        }
+      ],
+      "canonical_location": "2:196:8",
+      "conclusion": "location=2:196:8",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:203:2:196:8"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "1a9f6df3889e:u4:e2",
+          "entry_id": "1a9f6df3889e",
+          "ledger_fact_id": "sha256:843443185c40bccc58443375ec1831d205a28fc69a8dfa233b44e39a36a24be2",
+          "qword_row_id": "llx-qword-1a9f6df3889e-04-02-046"
+        },
+        {
+          "card_id": "1cf05c1e5d9c:u2:e2",
+          "entry_id": "1cf05c1e5d9c",
+          "ledger_fact_id": "sha256:abbba7ff38d562fcba880d9d2fae5de97e5eda60c87df9f3edc72676b46044fc",
+          "qword_row_id": "llx-qword-1cf05c1e5d9c-02-02-046"
+        },
+        {
+          "card_id": "4bba2359dc9c:u1:e6",
+          "entry_id": "4bba2359dc9c",
+          "ledger_fact_id": "sha256:2b92db8d0c207618a86b6e6a9bf50868c1c25525cfb7b05362b8aa0fa152e3b6",
+          "qword_row_id": "llx-qword-4bba2359dc9c-01-06-046"
+        },
+        {
+          "card_id": "79cb36de6246:u1:e4",
+          "entry_id": "79cb36de6246",
+          "ledger_fact_id": "sha256:ed6fac33631124a7852703dc1e20c6ed5c162f004e0b85f13c2405657cd3cf2e",
+          "qword_row_id": "llx-qword-79cb36de6246-01-04-046"
+        },
+        {
+          "card_id": "cc013b361d1c:u1:e8",
+          "entry_id": "cc013b361d1c",
+          "ledger_fact_id": "sha256:725833000a6a20fc11601addb9e8118d8f240aee074aaee07a788c97580c9b0d",
+          "qword_row_id": "llx-qword-cc013b361d1c-01-08-046"
+        },
+        {
+          "card_id": "efa9daeebae2:u1:e3",
+          "entry_id": "efa9daeebae2",
+          "ledger_fact_id": "sha256:220f2a4331d4f5a9c2aee1445ffc33ad500865478812b69bd1aed891c7034441",
+          "qword_row_id": "llx-qword-efa9daeebae2-01-03-046"
+        },
+        {
+          "card_id": "f0220b252769:u1:e3",
+          "entry_id": "f0220b252769",
+          "ledger_fact_id": "sha256:d62321e237f692b46291f5eeca0d72a7401e5a3fb7d3092406bfead53c4f8a91",
+          "qword_row_id": "llx-qword-f0220b252769-01-03-046"
+        },
+        {
+          "card_id": "f371ea9c4b67:u3:e2",
+          "entry_id": "f371ea9c4b67",
+          "ledger_fact_id": "sha256:913644536cc3ecece3242736be6a60d3a203d87d7a7cb07bbbf5050f9215c3c7",
+          "qword_row_id": "llx-qword-f371ea9c4b67-03-02-046"
+        },
+        {
+          "card_id": "f92aeb1d59ae:u3:e5",
+          "entry_id": "f92aeb1d59ae",
+          "ledger_fact_id": "sha256:050a9a6a3e1366b3eac303159f4ff0b4f7985650bf014f6e7bd128c8ca2cefeb",
+          "qword_row_id": "llx-qword-f92aeb1d59ae-03-05-046"
+        }
+      ],
+      "canonical_location": "2:196:42",
+      "conclusion": "location=2:196:42",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:214:2:196:42"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "39659e4cdea3:u3:e1",
+          "entry_id": "39659e4cdea3",
+          "ledger_fact_id": "sha256:9f2fb54b2bb0d4d80d8a5aa0e4dca18fc12ebb75676ba1739521f76ede9ca638",
+          "qword_row_id": "llx-qword-39659e4cdea3-03-01-008"
+        },
+        {
+          "card_id": "55dd18892bf9:u2:e9",
+          "entry_id": "55dd18892bf9",
+          "ledger_fact_id": "sha256:6d4b2121fbeeda8c368bdbdec2b2fb78c6c199858ab537508e1899e153bf5e50",
+          "qword_row_id": "llx-qword-55dd18892bf9-02-09-008"
+        },
+        {
+          "card_id": "633ba0c223db:u1:e2",
+          "entry_id": "633ba0c223db",
+          "ledger_fact_id": "sha256:280182c0d0bc8f5316fdd5866f74abd67ec8618821cb7458a539b7188b1a60d8",
+          "qword_row_id": "llx-qword-633ba0c223db-01-02-008"
+        }
+      ],
+      "canonical_location": "2:197:7",
+      "conclusion": "location=2:197:7",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:223:2:197:7"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "0f79975eb71d:u1:e23",
+          "entry_id": "0f79975eb71d",
+          "ledger_fact_id": "sha256:7ec64a90a6c8a867bc836aa3b9137d890727c84245bb88745ca01bf654e88d31",
+          "qword_row_id": "llx-qword-0f79975eb71d-01-23-008"
+        },
+        {
+          "card_id": "55dd18892bf9:u1:e3",
+          "entry_id": "55dd18892bf9",
+          "ledger_fact_id": "sha256:434d751dfba94c4e473a90b38b066ff8d4ffce6cd0c29d2514a769040dbd593c",
+          "qword_row_id": "llx-qword-55dd18892bf9-01-03-008"
+        }
+      ],
+      "canonical_location": "2:201:8",
+      "conclusion": "location=2:201:8",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:229:2:201:8"
+    },
+    {
+      "bound_carrier_facts": [
+        {
+          "card_id": "0f79975eb71d:u1:e23",
+          "entry_id": "0f79975eb71d",
+          "ledger_fact_id": "sha256:316f7deb6e47a099882ce845e1069c522a54b9e58e8fadae026f67372a4d42c0",
+          "qword_row_id": "llx-qword-0f79975eb71d-01-23-011"
+        },
+        {
+          "card_id": "55dd18892bf9:u1:e3",
+          "entry_id": "55dd18892bf9",
+          "ledger_fact_id": "sha256:11a59bd052fde506a148a3ccd1c13323e7c19ccc80f2f616e1ee7f4e7c24a8c9",
+          "qword_row_id": "llx-qword-55dd18892bf9-01-03-011"
+        }
+      ],
+      "canonical_location": "2:201:11",
+      "conclusion": "location=2:201:11",
+      "decision_kind": "location",
+      "packet_id": "laneb-wave-04:230:2:201:11"
+    }
+  ],
+  "bindings_accounting": {
+    "accepted_bindings_after": 88386,
+    "accepted_bindings_before": 88310,
+    "accepted_bindings_delta": 76,
+    "modeled_locations_after": 42732,
+    "modeled_locations_before": 42699,
+    "new_bindings": 76,
+    "note": "33 binding decisions (17 location + 16 entry) select 76 fingerprint-unique carrier facts; all 76 are new bindings, 0 rebinds.",
+    "rebound_bindings": 0
+  },
+  "certification_criterion": "decision AND reasoning agreement (112 rows only)",
+  "counts": {
+    "active_live_only_after": 4843,
+    "active_live_only_before": 4876,
+    "affirm_live_facts": 79,
+    "affirm_live_rows": 79,
+    "binding_carrier_facts": 76,
+    "certified_agreeing_rows": 112,
+    "common_packets": 250,
+    "disagreement_annotations": 138,
+    "entry_consensus_rows": 16,
+    "ledger_state_counts_after": {
+      "candidate": 213,
+      "certified": 1521,
+      "review_required": 160
+    },
+    "ledger_state_counts_before": {
+      "candidate": 213,
+      "certified": 1366,
+      "review_required": 22
+    },
+    "location_consensus_rows": 17,
+    "queue_after": 4854,
+    "queue_before": 4887,
+    "queue_delta": 33
+  },
+  "decision_sha256": "7a560b157a07e717937c96d6986c674ae61299f82d8141491efcba68be4bb085",
+  "disagreements": [
+    {
+      "canonical_location": "2:31:3",
+      "class": "abstention-vs-decision",
+      "ledger_fact_id": "sha256:6ff2e154dab40f873614c12b58c05c30699790daa1c15ba36d48774e2d4da552",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": "a_abstention_nf_w4_1"
+    },
+    {
+      "canonical_location": "2:34:3",
+      "class": "retain_both-vs-decision",
+      "ledger_fact_id": "sha256:e6912b53b5ebbd98d3ef05736440cafc20866e76c4e8be6233d5fec153d9bbb8",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": "b_retain_both_vs_entry"
+    },
+    {
+      "canonical_location": "2:128:9",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:4f23398f74b4d2de632040ab5f795d79ff660a82483e99d0d05b4ea6e355a498",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:130:12",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:494e5aa52953d24a232ff8cf03d132e2d9cc6995284f95e7128a6c0fcc0fe731",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:130:15",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:b266c6fa730c5f6839c650ac2e23ba0f752534c2e227e280d464b78c67ff744b",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:138:2",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:ef5d54497d3c1fc39244f4ef85373e20b4764435d55d1532cab90c72fb3268f4",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:138:6",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:001f849a6c814c7671c24126b8a7482aea249bf4eb063f2b50b2ca644c323268",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:140:17",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:e3383addf4e63791fa0ee1f44014376c27ff30ed94351c44452cfc9aeedb6850",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:140:25",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:77668057b51c99aa2b5daa6a00f107ec33fc048745990b8823ecb5c8b7460885",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:140:27",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:6372400216f91ae1ae6012c9bbabaafc07ac5b4940717ef7df7dd47cd0621130",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:142:3",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:aa0cc5dc511f23d92ccd29d4490f07343c059e5050d6c1ab40acc9caaa09836f",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:142:17",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:99f6e7b7d90599fb600657f3bae6e083bf2c0d675ca695de018235a0c03e94f5",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:143:10",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:60a37b5c8d43a6159e15fc006d19b1319cad321ef4c0fa738c7b9a08c13a6a8b",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:143:23",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:5f169a415e18aec82615fd9df712a49212325eeb65e2baf8c41aa72ab2d47336",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:144:4",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:83935b3aa0e6da4208ac5a0837f0c862a6bdfae2158d1c74f213b47b9b596d63",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:145:1",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:efc8c1e4e2482d1503c8e950fc89f886e25d6b31e6453d30449ec55fce26a576",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:145:8",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:c7a2bdc28089425b979a433752782c3093557445df2a40153a3ea389823d670c",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:145:11",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:20ae924203f928130a134c478be6fcd29115f25d31d5d89ca7b1c70b223bd3de",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:145:20",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:b7c41433ff30e288e95b794c559c0a826ca48cbbcbc62f4707f0430335194b30",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:145:23",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:d556a278ab6bcb230b360d32ce1c9176ae560a784a31fce50e86a45390fb976d",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:145:25",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:adb50ff4c883f8b622ddb7302c631b96423183cad82fe6ee9bc374b1a7f0aa26",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:145:27",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:fb9eb89682cefe34a18171e10e96e8a40f73a26428416a6af0a72f877783cf30",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:148:12",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:b11b84b66d80d896ad7deaec6357ecd5e79caf747b5ab94a4f08fabae9bbb047",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:148:15",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:c7fbcae6683085cc211b34f533ba956315551daff8fac1b65760f9377dad1e60",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:150:18",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:3d4f450ce9f0b56fb59dbfca00b19c1ff8e692bf6211b07a8cac6589155ee06c",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:150:29",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:1dcc0be166f883bb4cc90b385a8f355e8ed4c4878524deeca47f05a4215b7601",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:158:6",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:1965e3040b7562556537d213347f61f3dd8e833110e6e8431582a48f9988c0d0",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:158:22",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:ff58d9aa93ab4cb97af458de97a9bb2d26528e9ba04a9a5d9034369e1bb386a2",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:159:6",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:baf5e0957256badad9b776c0cddadefe851d23e4df80477b0c7b37b22211833d",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:159:9",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:30a2b487b7e029638db25c0beba2f175dd70488f9580f7a4ae0ee6cfe813121f",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:164:2",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:d756c1b21607ee017139d7974d3fb608d594bffbb18b359450f3dae45b444bcf",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:164:5",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:dd7dc5cadd9468d202a3901ed9252c46023d3c7b961f8b26f528ba0c7be89599",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:164:12",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:4f4dcae630bb6d60c5f1148e703fb31304fe4111ab6b21f5d90d5fe666f688ca",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:164:20",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:1f8917861c049acc41a7746437f901a98d5be086fcdd8b0c2fb8d233d9efaed9",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:164:21",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:8b4738e8ec738cf08d437bed69bb4c3f437f27eb4c6b5164a135689576c69953",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:164:22",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:3a31b99cee12ca88d977f1caab293ab572849765d95cc66f005431ae4b26cdff",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:164:31",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:f21a0ba16dbaab7895327f6ff9b115c6530820575a8f53c8742cc2a898043048",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:164:39",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:e4a0600529f82a44b6b4945798a0b063863f632dc5b1c355d097438c631a8e2f",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:164:40",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:ad006448df97a3a284dc90c19b66b3d6daa80e0248bdba7204a7d7f5f74d62f0",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:165:3",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:ef33237a1670d8539e92f1f9c64c6ce2b860bd2f0df7e6a42bbd8b54a10e2598",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:165:5",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:a533d7d58a1c98746b3e1b3670492bd7519fd60eb3422ad0a60210475eae57e5",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:165:7",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:cf5355766a0918abe009bdac0869c8b3158636aaf8a65a58744ed6888a743628",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:165:11",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:80bb68e42cbee60591b4458076f51ae0071ba344c176f079fcdda5c5f5c2abfb",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:165:16",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:a0e8d32cb5bf754adf218a09e8b042a40ed14a03cbece5ece8f664da276c11b1",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:165:23",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:5bb7b510419ab52619b8d1b6b577cf7f1975be6b80c95f3eae42b92841e4dc3c",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:165:26",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:156c5c1326a0cbac704886a77a85b5d5c1f42ab28b91298609297db525bcec8f",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:165:29",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:47c5f6b8012a0ede74feaa8aaeee8638c5f3ef93c68cba099d2ff2feef58d55b",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:165:31",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:dc9589bf466e7dcee92e6ee16c82e2f7c66688f4fb3c1a4ea8598fe57b4ffeec",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:173:12",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:39197734c3a9f378203438a044a4290fd32bd997a499784a34549b006ce9845d",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:177:2",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:127ebb89c28f5c809e2cb2f95b1ff6360d4ec01595eaa067390b2e6ecde8289b",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:177:10",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:70ab5574b34320caf69c569d945d6a45f0cbf8f1a9191361c83bd85c033db809",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:177:19",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:126268733cb2db3be371f5b966b3895ecae6346701084afa9dc4cbeb260c548d",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:177:34",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:c11933e8dd0a6ceb5a3a95d34f532fed26524ae8af0e7f64d69512c95ca9dba7",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:178:15",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:49341dff932dec4d89998759d57b89715dda28ee3681b0dfe6a77ca916732a11",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:178:18",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:25b3bad20681394d4745121731f3ccd0cb0c2469bef861172941422e30b0cad0",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:178:26",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:9af5474c0633e71e6081c4127f549493c2f7a12bab7069cbfefbe9b7ef9ef89e",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:178:28",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:02476d6c60cfc2ed7739836d8423fff454dd6198e50b4c8cce8d8295b5301cbc",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:178:31",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:9e3d970ec826b477acce91d653156294c39054f0c103c171038585c811870f91",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:178:34",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:3b368f5f132cc92eb7f2a0c766f27e95caf75158cefbf0f169b039d69a7ed6d3",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:184:20",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:727bf82a9d38b71f9db8da6d831e5f5af8b71dbf7c48c7518c5bc1d18619a5f4",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:185:10",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:8b4543e9aaeebacd23fb7599987fd03a5590bd2e17c06ecdf9fe32a1850769cc",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:185:22",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:b38b2fd78c352fdcce9810d698fb79b2c685eb84376b76c69434813ddc9db4b5",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:185:25",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:ad63211cf60abbc0498233f8857894359c40dbd143ac577b30e856ecc59c128f",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:185:29",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:735266207ea9e0aa384cac10daa8c7c95594982dc16adaecd6f52e1a1df6c487",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:185:30",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:319d37637918dd976c44442a26c2fccda5460b613122fe9d9d0e12686451e741",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:185:34",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:4deade817d7dc42b8d7330cc8274ea51ec1c433c9ae06db3451a1c925ca86413",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:185:39",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:1e30d9c3d39b1a0b551c136f4c32bd74f21fa2702e483f5732462139f987862c",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:185:40",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:c8184c51fd5f7ad44aad4f301df317b10fc6ceacbfb00e43bdf97b992f9b12d0",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:2",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:2616a824684a8a74e4810bb9df5a8a68e02fa503b18aa6e858d02702f50d1258",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:4",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:755950e581a04516e97eb46a0073641848257c52a8c916f09b010000b7c2290c",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:6",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:f3f4c941f2d44707693a60c1e1b3c812f3a9a243ee44ff180d6bdad86e13d430",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:15",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:741fa29ba6b5d88ab3ae672feb1a13dfca2b1bd7dd0e4a9222fd30999136e6a0",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:29",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:cf18743f05ba71421ab6a38dc091ce98ba63a0b8d28437b8a094ba96892fee49",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:30",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:2fda8fe65a4b40b29af6d98958106286ae307afe1077413fd6a41949e1fcf7a3",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:35",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:69fab3518ff8109e3678937354adcedf81157766918be3ac159e848ea78f564c",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:38",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:d9ab73045b6f1537d587ffc149bbe92d5e8f6ad5a2fa3d1781ef4135683f47ce",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:39",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:6dfc9541e74877af2ca1a978e8d2832571dd15442c133b394fa7f1a18cea0a07",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:41",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:4bed236ce34c382c6ae6cd5bcd42571621cd1317d08d9ce5008d7af36cd534c5",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:45",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:6349457baf99e7d08c77aca91326e93456bfc85ec5b2f5b7388d8529bdf1cf60",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:50",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:72b1eb30059c98b5d900ccd4c28975a07298599d72e6922819f19635adc71dac",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:56",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:c7aa4fd5f0b44262bd87d736c5124adecdd9813ca16cbace434283ac716d39df",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:187:61",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:4361d7fc0077c1ec0491d0ee019721a9cf97c4127679e176afad67ea23dc621c",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:189:10",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:e694cf1baf12ea0868295d479eb001ae925e3ac5094c6ba7e9b492711e5c5756",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:189:13",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:37a4e1ebce088a59402c7f8a29b30bff34650dae25c6c30176aeb4d4f110b3a2",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:189:14",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:0edd8957c5be64e39cd15ea44b0cadd4d14a3efc532d20242312fcfb9b297903",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:189:17",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:b6e8ad6eb9e1d67d1e19f04ee21bab550c639bb399688d7a02a166517930231f",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:189:18",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:88522e29f59a6c48a095278e4d85f8cfcf70043a755a2541b505cd001ecb63b3",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:189:21",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:f316cb8160d0caacba31c9919e570dfd9302782d0c58d61692d68b939d764503",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:189:22",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:144a4e099b199d8c096c9491756cca6fe2a40ffeae273930ebd93ffbde250d48",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:194:9",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:47e1194f584c1f98536f8f860bcd837ce00570afcc01fdcd8013eabc59c854aa",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:194:15",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:e8a613e21311e26127a3593b5152bc0644080f1110226e0e72295a84c18d2e8e",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:194:17",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:b5478e3335651846515050e6d89e60780b6b1a4436c25deead200f34db9baf08",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:195:12",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:af0d3b4c297cb4347f3a17b277944c90c8779f09e292d1242248634e89a1e0b5",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:2",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:7daafcab6c3c988d5abe2a86430b13690499810fe621c64ed3130dc480059f0f",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:7",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:109ec7c8fced6ef7e2b3f22ae662e946c62fc3a87569595e0330eebd9d049699",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:9",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:17c683ced8afb733b1c9acf4352b1f444b8526a543b6137a1017d30db49649ab",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:10",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:41e6938cd60e1421e0937e6fb1387bf2b02c80252e28cd5953329a33439d03ea",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:16",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:5c5e5503d7983c7a2f297156705f1b37ba9b8088a602a8131dbcd0eb6377a2ba",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:18",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:fcd347abd7a8e59b27e4ff52656569b82b59ec87b869873e04b1f1af168e648c",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:28",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:33bff5506e07ce0210aa316f432fa2e836ea8938666c943ff8d80542d2c568c7",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:30",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:30b8c97fad14f6430835217c817d755230904727036117a7521212ebbae27d01",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:32",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:e458352e314dd95128dd1d6b256842bb392d43035e89671f898563b3c7c0de18",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:36",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:2299501caef84fe8691132820bcacead394c9e49442ee394bfbfdba036c8d227",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:40",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:b39fb4ef47a4f0a242dbc4775730063bba5a17f87bf51350fb65293137fcf24d",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:41",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:51f4ea7aeeb8d79377f298ccc997163a1137e90728d3ce4ef5227061a10f22f8",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:43",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:41b4767cff4e6c584edc8830003147a4568fd7d028ade1698979b9de691a2ddc",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:44",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:61d483dd3ccb503bd42c81be3cc3899090cd0310d64eb5bab7ff0bbc93c065b1",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:45",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:662e133a536501dc6a86a37b43e4443acc2f98eb40f7f1f75142d2388823ca74",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:46",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:cbd053127bf018b95e8fdc092716976cec97a66a9eceff1511cdf171d9dbf8e0",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:52",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:98b59a4a8bb723cc1fd8e9a7ca1280cdf14d44ece793065a4479dd8e38c50754",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:61",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:4d20a5c85038b9200398390cef3dfb8b25f78f08b1e0e72ae309cc4cf1bbc95f",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:68",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:2ff4903ff74819457115e6a892f19a4f6d43596496cf58ae51189701fa52d818",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:196:71",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:ba42048b9ae96109d5e92bbb432aaa86195ec0eaf5a1a396b9504447e57b9fa9",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:197:19",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:b00548a985861120ad9982482b4b0e2f58f3ce758df615be1a999aedb6e3cd2a",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:197:24",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:006dbdb2754302e7976cd1be855633601e0ca3d1eec7f2d8ba2db315a6d6dc5f",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:198:7",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:5cdac83543a92dd6e4621fabdcd87d27200ca9b79f861e26dfc5c4e1f4b4e3d1",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:198:11",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:fb5bdcb74462d367eaf9fca74c3665732bdc10abaff6503b754dd9cdd0f61994",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:198:23",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:541de523985a62323ca2c71cc4c0f49266db69ebaa779162b633990123885b53",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:203:2",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:aef4b1b54e428ffb2605a9f1f4048e294c4922adbc3758ab288b81860dae6303",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:203:3",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:4ad8b55993259c969a41b803e933e31a9187a5b44d401ef0df7dcb9781a567e0",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:203:8",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:ddbf09e4564d11d0daf41832013981c36215de12aa05d0a3dfdf77e9469a9a6d",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:203:10",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:d69e4ec092a7ccd1fdd153dbed1ce2c4e405cf5037b9ae1d0be4b76e18c668c7",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:203:11",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:fa011284f0772064c621bf8faaa809358864fa0e467346b51abe83e8c5c5fbbe",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:203:12",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:50c17431c50e72a0ac37cd9ec234d0fc9b18a30a02e395ce38cc6f9c82dcb5b3",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:203:15",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:c198439363a603b81fb7361e576619fe861c013a9d31aec0cfb9164f2779b4b4",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:203:16",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:0ed6ae68256b88d021ad5d1af43ed282894f677544ebda52b9eeabc1784b5703",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:203:17",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:71c4ffb93e62dc11d18760096864a1f6023908bef67c4d3f59cf581e12bbade2",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:203:21",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:18022b203336422f260a6925cf0a10521d4e6efdfbd5d085b89c83c44fbd8219",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:210:6",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:f908606d0661401728cd21f04ec7da640372067450aae9089c4f011fd5c97f9d",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:210:15",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:79bf5eb9cf72824937a4009f2f95979c390b39140af571adab3cf45337bf92b4",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:212:7",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:604a640faa0d5b63de7cbf1f13750b88c329ce9b2b5c02fd124a089101123bc7",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:212:17",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:129439b97af39d82694f81598a5cd40e0ae560136fb03a9b5078621a178da66a",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:213:2",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:09d4a715567f2216236233a0fa2c28b3263f5536d2342a817a57f38a9cb8aa14",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:213:6",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:42f5d3db40b5f845996e0a42716b9dfff0f0ebfff57e4da0e6b860f7fbe08114",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:213:16",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:ff774bbea3449baa80db349f51a1021c5b6bb3dfa9c7128961fdc895bc1062f8",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:213:18",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:86b8fe58f074054b792b3b95429396242876081c657690ae9f64e48baca7fcb3",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:213:19",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:d256db7b7860d62e91ab21c5e29d230f33a3c139fc5233c820d070ddd2292403",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    },
+    {
+      "canonical_location": "2:213:22",
+      "class": "A-bound-vs-B-affirmed",
+      "ledger_fact_id": "sha256:5db79cfdcba9b9da4970514c43ce783c692366c21ad517f4630a7bccc33297d4",
+      "ledger_state": "review_required",
+      "promoted": false,
+      "routed_to": "tier_process",
+      "special": null
+    }
+  ],
+  "inputs": {
+    "packets_wave_04": "sha256:9785a3e594bd0aba73a5417ba565903642ba92f73adbbcfb80889ecc6f345203",
+    "votes_a": "sha256:eae6df36cb915de523fa817bd80861a95f586411caa873370d9e2e5bf29015b2",
+    "votes_b": "sha256:5224cd3848c0600acaf1c9fb330d788b5052cd7badf3df5407239f88aebf8002",
+    "wave_04_analysis": "sha256:38cd13accf457e0d26c0a506660c2124c84b4102e866344a95bc08f93ce16c19"
+  },
+  "ledger_store": "qamus/indexes/largelexicon/fact-ledger/laneb-review.jsonl",
+  "promoted_at": "2026-07-11T22:00:00Z",
+  "queue_family_table": {
+    "active_after": 4839,
+    "active_before": 4872,
+    "family_counts_after": {
+      "affirmed_live_no_canonical_carrier": 79,
+      "insufficient_convention_exemplars": 2,
+      "multiple_qword_candidates": 4701,
+      "no_qword_candidate": 8,
+      "resolved_canonical_morphline_repair": 11,
+      "tie_unresolved": 2,
+      "unique_qword_candidate": 51
+    },
+    "family_counts_before": {
+      "insufficient_convention_exemplars": 2,
+      "multiple_qword_candidates": 4813,
+      "no_qword_candidate": 8,
+      "resolved_canonical_morphline_repair": 11,
+      "tie_unresolved": 2,
+      "unique_qword_candidate": 51
+    }
+  },
+  "resolution_method": "two_vote_certified_v1",
+  "schema": "qamus/laneb-wave-report@1",
+  "shadow_delta": {
+    "declared": {
+      "live_only": [
+        4876,
+        4843
+      ],
+      "modify": [
+        11,
+        11
+      ],
+      "no_op": [
+        29435,
+        29468
+      ]
+    },
+    "note": "live_only and modify are verified from the rebuilt queue; the 33 newly-bound locations all carry live-content parity, so they move live_only -> no_op (-33 / +33). affirm_live rows keep shadow_effect null -> no shadow movement.",
+    "queue_verified": {
+      "live_only_after": 4843,
+      "modify_after": 11
+    }
+  },
+  "state": "finalized",
+  "wave": 4
+}
