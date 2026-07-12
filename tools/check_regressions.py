@@ -2947,7 +2947,9 @@ try:
 except Exception:
     check("curriculum adjacent-context regression readback runnable", False)
 
-for _script, _label in (("test_bulk_two_vote_requests.py", "bulk two-vote builder self-test"),
+for _script, _label in (("test_build_two_vote_packets_wave4.py",
+                         "wave-4 selection + packet enrichment fixtures"),
+                        ("test_bulk_two_vote_requests.py", "bulk two-vote builder self-test"),
                         ("test_bulk_two_vote_request_validator.py", "bulk two-vote validator self-test"),
                         ("test_phase4_two_vote_requests.py", "Phase4 exact-addressed two-vote request self-test"),
                         ("test_phase4_two_vote_reconciliation.py", "Phase4 exact-addressed two-vote reconciliation self-test"),

@@ -53,7 +53,12 @@ def norm_strict(s):
         if o == 0x0670:
             out.append("ا")
             continue
-        if o == 0x0640 or 0x0653 <= o <= 0x0655 or 0x06D6 <= o <= 0x06ED:
+        if o in (0x0654, 0x0655):
+            # Tanzil may encode a standalone hamza as tatweel + combining hamza.
+            # NFC cannot compose that sequence, so retain the consonant as ء.
+            out.append("ء")
+            continue
+        if o == 0x0640 or o == 0x0653 or 0x06D6 <= o <= 0x06ED:
             continue
         out.append(ch)
     s = "".join(out)
@@ -68,7 +73,10 @@ def bare(s):
     out = []
     for ch in s:
         o = ord(ch)
-        if 0x064B <= o <= 0x0655 or o == 0x0670 or o == 0x0640 or 0x06D6 <= o <= 0x06ED:
+        if o in (0x0654, 0x0655):
+            out.append("ء")
+            continue
+        if 0x064B <= o <= 0x0653 or o == 0x0670 or o == 0x0640 or 0x06D6 <= o <= 0x06ED:
             continue
         out.append(ch)
     return "".join(out).replace("ٱ", "ا")
@@ -125,6 +133,7 @@ def ends_tanwin_alef(raw):
 if __name__ == "__main__":
     # self-check: the homograph distinctions that must never collapse
     assert norm_strict("إِلَيْنَا") != norm_strict("لين"), "إلينا must not look like ل ي ن"
+    assert norm_strict("ٱلْـَٔاخِرَةِ") == norm_strict("ٱلْءَاخِرَةِ"), "combining hamza must survive"
     assert is_man_who("مَنْ") and not is_man_who("مِنْ") and not is_man_who("وَمِنَ"), "مَن/مِن/وَمِنَ"
     assert is_man_who("مَنِ") and not is_man_who("مَنَّ"), "liaison مَنِ is who; verb مَنَّ is not"
     assert not shadda_on("لِمَا", "م") and shadda_on("لَمَّا", "م"), "لِمَا vs لَمَّا"

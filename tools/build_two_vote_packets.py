@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import collections
 import copy
+import dataclasses
 import hashlib
 import json
 import re
@@ -37,6 +38,7 @@ WAVE_02_AUTHORITATIVE_BASELINE_SHA = "c0c4ea7c0fba5457177b70a97655e204165ed083"
 WAVE_03_AUTHORITATIVE_BASELINE_SHA = "2defdc9eb65656fc93f0cd9ff5a73c6b68da1b61"
 EXPECTED_BASELINE_SHA256 = "972263b5472478b8805c39e107ecf5d6f8096acace8756d15a08967cddf90515"
 EXPECTED_LOC_SURFACES_SHA256 = "f2e079dcdce01148074a238e3937314cf02222298f91f83ed66dcbb599697ca7"
+WAVE_04_EXPECTED_LOC_SURFACES_SHA256 = "97efbaca345d5f23d9e9c699eef155f5bf4e06bb725e430729a8962b1573d227"
 EXPECTED_V1_PACKET_SHA256 = "95788fabc0ba7b65558d03b2d0854f361e507dfaeaa6ec3d43732a1b7985b311"
 EXPECTED_WAVE_02_PACKET_SHA256 = "9bd56a11af30b6c0bf3181a960da4cf1ece8ea15ec66d62ed2b6759b0d58dc65"
 TARGET_CLASSES = {"competing_lexical_senses", "unresolved_occurrence_ambiguity"}
@@ -46,6 +48,7 @@ DEFAULT_QUEUE = ROOT / "qamus/indexes/largelexicon/crosswalk-gap/crosswalk-gap-q
 DEFAULT_ENTRIES = ROOT / "qamus/data/current/entries.jsonl"
 DEFAULT_BASELINE = ROOT.parent / "baseline-whitelist-972263b5.jsonl"
 DEFAULT_LOC_SURFACES = ROOT.parent / "loc-surfaces-f2e079dc.jsonl"
+DEFAULT_WAVE_04_LOC_SURFACES = ROOT / "qamus/indexes/quran-loc-surface/index.jsonl"
 DEFAULT_GATES = ROOT / "nahw/evals/grammar-decision-gates.json"
 DEFAULT_FACT_SCHEMA = ROOT / "qamus/schemas/fact-ledger-row.schema.json"
 DEFAULT_HOMOGRAPH_KEYS = ROOT / "qamus/indexes/largelexicon/homograph-keys.json"
@@ -66,6 +69,7 @@ GATE_TRIGGERS = {
 }
 RESPONSE_FIELDS = [
     "proposed_conclusion",
+    "conclusion_rationale",
     "competing_alternatives",
     "sarf_evidence",
     "nahw_evidence",
@@ -76,6 +80,12 @@ RESPONSE_FIELDS = [
     "confidence",
     "evidence_hashes",
 ]
+
+
+@dataclasses.dataclass(frozen=True)
+class Wave4Exclusions:
+    locations: set[str]
+    review_fact_ids: set[str]
 
 
 def canonical_bytes(value: Any) -> bytes:
@@ -97,9 +107,13 @@ def sha256_file(path: Path) -> str:
 
 
 def verify_wave_4_queue_pin(
-    queue_path: Path, queue_manifest_path: Path, required_manifest_sha256: str
+    queue_path: Path,
+    queue_manifest_path: Path,
+    required_manifest_sha256: str,
+    loc_surface_index_path: Path | None = None,
+    required_loc_surface_index_sha256: str | None = None,
 ) -> None:
-    """Refuse Wave 4 unless both the manifest bytes and its queue state match."""
+    """Refuse Wave 4 unless the queue and optional loc-index pins both match."""
     actual_manifest_sha256 = sha256_file(queue_manifest_path)
     if actual_manifest_sha256 != required_manifest_sha256:
         raise ValueError(
@@ -114,6 +128,16 @@ def verify_wave_4_queue_pin(
             "STOP: queue SHA-256 differs from the state pinned by the required queue manifest: "
             f"expected {pinned_queue_sha256}, got {actual_queue_sha256}"
         )
+    if loc_surface_index_path is not None or required_loc_surface_index_sha256 is not None:
+        if loc_surface_index_path is None or required_loc_surface_index_sha256 is None:
+            raise ValueError("STOP: loc-surface index path and SHA-256 pin must be supplied together")
+        actual_loc_surface_index_sha256 = sha256_file(loc_surface_index_path)
+        if actual_loc_surface_index_sha256 != required_loc_surface_index_sha256:
+            raise ValueError(
+                "STOP: loc-surface index SHA-256 differs from the required Wave 4 pin: "
+                f"expected {required_loc_surface_index_sha256}, "
+                f"got {actual_loc_surface_index_sha256}"
+            )
 
 
 def load_wave_4_strata(path: Path) -> dict[str, int]:
@@ -148,6 +172,44 @@ def load_excluded_locations(paths: Iterable[Path]) -> set[str]:
                 raise ValueError(f"STOP: exclusion row lacks a canonical location in {path}: {row!r}")
             excluded.add(loc)
     return excluded
+
+
+def _row_review_fact_ids(row: dict[str, Any]) -> set[str]:
+    rebind_provenance = row.get("rebind_provenance")
+    values = {
+        row.get("review_fact_id"),
+        row.get("ledger_fact_id"),
+        rebind_provenance.get("review_fact_id")
+        if isinstance(rebind_provenance, dict)
+        else None,
+    }
+    return {value for value in values if isinstance(value, str) and value}
+
+
+def load_wave_4_exclusions(paths: Iterable[Path]) -> Wave4Exclusions:
+    """Load prior selections by both location and stable review-fact identity."""
+    locations: set[str] = set()
+    review_fact_ids: set[str] = set()
+    for path in paths:
+        document: Any = load_jsonl(path) if path.suffix == ".jsonl" else load_json(path)
+        if isinstance(document, dict):
+            rows = document.get("locations", document.get("rows"))
+        else:
+            rows = document
+        if not isinstance(rows, list):
+            raise ValueError(f"STOP: exclusion list must be a JSON array or JSONL rows: {path}")
+        for row in rows:
+            if isinstance(row, str):
+                loc = row
+            elif isinstance(row, dict):
+                loc = row.get("canonical_location", row.get("loc"))
+                review_fact_ids.update(_row_review_fact_ids(row))
+            else:
+                loc = None
+            if not isinstance(loc, str) or not LOC_RE.fullmatch(loc):
+                raise ValueError(f"STOP: exclusion row lacks a canonical location in {path}: {row!r}")
+            locations.add(loc)
+    return Wave4Exclusions(locations=locations, review_fact_ids=review_fact_ids)
 
 
 def loc_key(loc: str) -> tuple[int, int, int]:
@@ -417,7 +479,9 @@ def select_proportional_lexicographic_rows(
 def select_wave_4_rows(
     classifications: Iterable[dict[str, Any]],
     *,
+    queue_by_loc: dict[str, dict[str, Any]],
     excluded_locations: set[str],
+    excluded_review_fact_ids: set[str],
     strata: dict[str, int],
 ) -> list[tuple[str, dict[str, Any]]]:
     """Select a 250-row mixed Wave 4 from caller-supplied residual strata.
@@ -431,9 +495,20 @@ def select_wave_4_rows(
     by_class = {classification: [] for classification in sorted(TARGET_CLASSES)}
     for row in classifications:
         classification = row.get("laneb_classification")
+        loc = row["canonical_location"]
+        queue_row = queue_by_loc.get(loc)
+        review_fact_ids = _row_review_fact_ids(row)
+        if queue_row is not None:
+            review_fact_ids.update(_row_review_fact_ids(queue_row))
         if (
             classification in by_class
-            and row["canonical_location"] not in excluded_locations
+            and loc not in excluded_locations
+            and not review_fact_ids.intersection(excluded_review_fact_ids)
+            and queue_row is not None
+            and queue_row.get("primary_resolution_family") == "multiple_qword_candidates"
+            and queue_row.get("provenance_state") == "unresolved_candidate"
+            and queue_row.get("review_state") == "pending"
+            and queue_row.get("data_quality_quarantine") is not True
         ):
             by_class[classification].append(row)
     selected: list[tuple[str, dict[str, Any]]] = []
@@ -447,6 +522,141 @@ def select_wave_4_rows(
             )
         selected.extend((classification, row) for row in rows[:required])
     return selected
+
+
+def render_wave_4_selection_artifact(
+    selected: Iterable[tuple[str, dict[str, Any]]],
+) -> bytes:
+    """Project membership only; never carry source-row semantic fields."""
+    records = [
+        {
+            "schema": "qamus.wave_4_ordering_selection.v1",
+            "selection_basis": "ordering_only",
+            "selection_rank": rank,
+            "stratum": stratum,
+            "canonical_location": row["canonical_location"],
+        }
+        for rank, (stratum, row) in enumerate(selected, 1)
+    ]
+    return render_jsonl(records)
+
+
+WAVE_4_ROUTES = (
+    "selected",
+    "lane-a-eligible",
+    "review-routing",
+    "blocked",
+    "quarantined",
+)
+
+
+def partition_wave_4_rows(
+    queue_rows: Iterable[dict[str, Any]],
+    *,
+    classifications_by_loc: dict[str, dict[str, Any]],
+    selected: Iterable[tuple[str, dict[str, Any]]],
+    queue_path: Path | None = None,
+    classification_path: Path | None = None,
+) -> dict[str, list[dict[str, Any]]]:
+    """Route every active queue row exactly once, including non-Lane-B work."""
+    selected_locations = {row["canonical_location"] for _stratum, row in selected}
+    routed: dict[str, list[dict[str, Any]]] = {route: [] for route in WAVE_4_ROUTES}
+    active_locations: set[str] = set()
+    for queue_row in queue_rows:
+        if queue_row.get("provenance_state") != "unresolved_candidate":
+            continue
+        loc = str(queue_row["canonical_location"])
+        if loc in active_locations:
+            raise ValueError(f"STOP: active Wave 4 queue contains duplicate location {loc}")
+        active_locations.add(loc)
+        classification = classifications_by_loc.get(loc)
+        queue_source = (
+            row_source(queue_path, queue_row, f"canonical_location={loc}")
+            if queue_path is not None
+            else None
+        )
+        common: dict[str, Any] = {
+            "schema": "qamus.wave_4_routing.v1",
+            "canonical_location": loc,
+        }
+        if queue_source:
+            common["queue_source_address"] = queue_source
+
+        if (
+            queue_row.get("data_quality_quarantine") is True
+            or queue_row.get("review_state") == "review_required"
+        ):
+            route = "quarantined"
+            record = {
+                **common,
+                "route": route,
+                "exact_reason": "queue row is review-required or data-quality quarantined",
+            }
+        elif loc in selected_locations:
+            route = "selected"
+            record = {
+                **common,
+                "route": route,
+                "stratum": classification.get("laneb_classification") if classification else None,
+            }
+        elif queue_row.get("primary_resolution_family") == "unique_qword_candidate":
+            route = "lane-a-eligible"
+            record = {
+                **common,
+                "route": route,
+                "primary_resolution_family": "unique_qword_candidate",
+                "candidate_entry_ids": copy.deepcopy(queue_row.get("candidate_entry_ids") or []),
+                "candidate_qword_row_ids": copy.deepcopy(queue_row.get("candidate_qword_row_ids") or []),
+            }
+        elif classification and classification.get("laneb_classification") == "normalization_collision":
+            route = "review-routing"
+            record = {
+                **common,
+                "route": route,
+                "laneb_classification": "normalization_collision",
+                "collision_evidence": copy.deepcopy(classification.get("evidence") or {}),
+            }
+            if classification_path is not None:
+                record["classification_source_address"] = row_source(
+                    classification_path,
+                    classification,
+                    f"canonical_location={loc}",
+                )
+        else:
+            route = "blocked"
+            record = {
+                **common,
+                "route": route,
+                "exact_reason": "active row is not selected and has no mechanical or collision route",
+                "primary_resolution_family": queue_row.get("primary_resolution_family"),
+                "laneb_classification": (
+                    classification.get("laneb_classification") if classification else None
+                ),
+            }
+        routed[route].append(record)
+
+    for rows in routed.values():
+        rows.sort(key=lambda row: loc_key(row["canonical_location"]))
+    routed_locations = [
+        row["canonical_location"]
+        for route in WAVE_4_ROUTES
+        for row in routed[route]
+    ]
+    if len(routed_locations) != len(set(routed_locations)):
+        raise ValueError("STOP: Wave 4 routing assigned an active queue row more than once")
+    if set(routed_locations) != active_locations:
+        raise ValueError(
+            "STOP: Wave 4 routing arithmetic does not account for every active queue row"
+        )
+    return routed
+
+
+def render_wave_4_routing_artifact(rows: Iterable[dict[str, Any]]) -> bytes:
+    """Render a deterministic JSONL routing side artifact."""
+    return b"".join(
+        canonical_bytes(row) + b"\n"
+        for row in sorted(rows, key=lambda item: loc_key(item["canonical_location"]))
+    )
 
 
 def load_gate_ssot(gate_path: Path, fact_schema_path: Path) -> dict[str, Any]:
@@ -637,8 +847,83 @@ def build_occurrence_mapping(
     }
 
 
+def candidate_role(fingerprint_match_candidates: Iterable[str], target_loc: str) -> str:
+    """Classify a carrier only by whether its exact fingerprint covers the target."""
+    return (
+        "aligns_to_target_token"
+        if target_loc in set(fingerprint_match_candidates)
+        else "host_lexeme_incidental"
+    )
+
+
 def sourced(value: Any, source_address: str) -> dict[str, Any]:
     return {"value": copy.deepcopy(value), "source_address": source_address}
+
+
+def _target_self_from_live_payload(
+    *,
+    target_surface: str,
+    target_source_address: str,
+    live_payload: dict[str, Any],
+    live_source_address: str,
+) -> dict[str, Any]:
+    """Project only target-owned morphology already stated by the live payload."""
+    morphline = str(live_payload.get("morphline") or "")
+    root_match = re.search(r"(?:^|·)\s*root\s+([^·]+)", morphline, flags=re.IGNORECASE)
+    root = root_match.group(1).strip() if root_match else None
+    if root and root.lower().startswith("no "):
+        root = None
+
+    segments = live_payload.get("segments") or []
+    classes: list[str] = []
+    roles: list[str] = []
+    for segment in segments:
+        if not isinstance(segment, dict):
+            continue
+        classes.append(
+            str(segment.get("class") or segment.get("qg_class") or segment.get("qg") or "")
+            .removeprefix("qg-")
+            .replace("-", "_")
+        )
+        roles.append(str(segment.get("role") or "").replace("-", "_"))
+    morphology_signals = classes + roles
+    pos: str | None = None
+    for marker, value in (
+        ("verb", "verb"),
+        ("proper_noun", "proper_noun"),
+        ("pronoun", "pronoun"),
+        ("adjective", "adjective"),
+        ("noun", "noun"),
+    ):
+        if any(marker in signal for signal in morphology_signals):
+            pos = value
+            break
+    if pos is None and any(
+        marker in signal
+        for signal in morphology_signals
+        for marker in (
+            "particle",
+            "preposition",
+            "conjunction",
+            "comitative",
+            "result",
+            "relative",
+            "vocative",
+            "exception",
+            "relation",
+            "lam",
+            "conditional",
+            "negation",
+        )
+    ):
+        pos = "particle"
+    particle_flag = pos == "particle"
+    return {
+        "surface": sourced(target_surface, target_source_address),
+        "root": sourced(root, f"{live_source_address}/morphline"),
+        "pos": sourced(pos, f"{live_source_address}/segments"),
+        "particle_flag": sourced(particle_flag, f"{live_source_address}/segments"),
+    }
 
 
 def build_morphology_record(
@@ -646,6 +931,8 @@ def build_morphology_record(
     target_loc: str,
     target_surface: str,
     target_source_address: str,
+    target_live_payload: dict[str, Any],
+    target_live_source_address: str,
     carriers: Iterable[dict[str, Any]],
     entries: dict[str, dict[str, Any]],
     entries_path: Path,
@@ -756,6 +1043,12 @@ def build_morphology_record(
     return {
         "available": True,
         "target_loc": sourced(target_loc, target_source_address),
+        "target_self": _target_self_from_live_payload(
+            target_surface=target_surface,
+            target_source_address=target_source_address,
+            live_payload=target_live_payload,
+            live_source_address=target_live_source_address,
+        ),
         "normalization_analyses": normalization,
         "segment_candidates": {
             "available": bool(segment_records),
@@ -791,7 +1084,14 @@ def response_schema(gate: dict[str, Any], evidence_hashes: dict[str, str]) -> di
         "additionalProperties": False,
         "required": RESPONSE_FIELDS,
         "properties": {
-            "proposed_conclusion": {"type": ["string", "null"]},
+            "proposed_conclusion": {
+                "anyOf": [
+                    {"const": "affirm_live_no_carrier_owns_token"},
+                    {"type": "string", "minLength": 1},
+                    {"type": "null"},
+                ]
+            },
+            "conclusion_rationale": {"type": "string", "minLength": 1},
             "competing_alternatives": {
                 "type": "array",
                 "items": {"type": "string", "minLength": 1},
@@ -858,12 +1158,14 @@ def build_packet(
             f"canonical_location={loc}/full_carrier_candidates/row_id={carrier['row_id']}",
         )
         carrier["candidate_entry_content"] = entry_content_for_carrier(carrier, entry, entries_path)
-        carrier.update(
-            build_occurrence_mapping(
-                carrier,
-                carrier["candidate_entry_content"]["matching_usage_examples"][0],
-                context,
-            )
+        mapping = build_occurrence_mapping(
+            carrier,
+            carrier["candidate_entry_content"]["matching_usage_examples"][0],
+            context,
+        )
+        carrier.update(mapping)
+        carrier["candidate_role"] = candidate_role(
+            mapping["fingerprint_match_candidates"], loc
         )
         carriers.append(carrier)
     carriers.sort(key=canonical_bytes)
@@ -880,6 +1182,8 @@ def build_packet(
         target_loc=loc,
         target_surface=queue_row["source_normalization"]["live_surface"],
         target_source_address=target_context["source_address"],
+        target_live_payload=live_row,
+        target_live_source_address=row_source(baseline_path, live_row, f"loc={loc}"),
         carriers=carriers,
         entries=entries,
         entries_path=entries_path,
@@ -991,6 +1295,9 @@ def validate_packet(packet: dict[str, Any]) -> None:
         expected_status = "unique" if isinstance(matches, list) and len(matches) == 1 else "ambiguous"
         if carrier["mapping_status"] != expected_status:
             raise ValueError(f"candidate carrier {index} mapping status differs from fingerprints")
+        expected_role = candidate_role(matches or [], packet["canonical_location"])
+        if carrier.get("candidate_role") != expected_role:
+            raise ValueError(f"candidate carrier {index} role differs from fingerprint coverage")
     derived_unique_entries = sorted(
         {
             str(carrier["entry_id"])
@@ -1068,7 +1375,9 @@ def verify_repository_baseline(baseline: str = AUTHORITATIVE_BASELINE_SHA) -> No
         )
 
 
-def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+def build(
+    args: argparse.Namespace,
+) -> tuple[dict[str, Any], list[dict[str, Any]], dict[str, bytes]]:
     wave_four_mode = getattr(args, "wave", None) == 4
     paths = {
         "classification": Path(args.classification),
@@ -1101,12 +1410,24 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
     )
     if wave_four_mode:
         verify_wave_4_queue_pin(
-            paths["queue"], paths["queue_manifest"], args.queue_manifest_sha256
+            paths["queue"],
+            paths["queue_manifest"],
+            args.queue_manifest_sha256,
+            paths["loc_surfaces"],
+            WAVE_04_EXPECTED_LOC_SURFACES_SHA256,
         )
     if sha256_file(paths["baseline_whitelist"]) != EXPECTED_BASELINE_SHA256:
         raise ValueError("deployed baseline SHA-256 differs from the pinned queue input")
-    if sha256_file(paths["loc_surfaces"]) != EXPECTED_LOC_SURFACES_SHA256:
-        raise ValueError("loc-surfaces SHA-256 differs from f2e079dc pin")
+    expected_loc_surfaces_sha256 = (
+        WAVE_04_EXPECTED_LOC_SURFACES_SHA256
+        if wave_four_mode
+        else EXPECTED_LOC_SURFACES_SHA256
+    )
+    if sha256_file(paths["loc_surfaces"]) != expected_loc_surfaces_sha256:
+        raise ValueError(
+            "loc-surfaces SHA-256 differs from the "
+            f"{expected_loc_surfaces_sha256[:8]} pin"
+        )
     if sha256_file(paths["v1_packets"]) != EXPECTED_V1_PACKET_SHA256:
         raise ValueError("v1 packet SHA-256 differs from 95788fab lineage pin")
     if args.batch == "wave-03" and sha256_file(paths["wave_02_packets"]) != EXPECTED_WAVE_02_PACKET_SHA256:
@@ -1166,9 +1487,11 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
     lexical_mapping_quality: dict[str, tuple[int, int]] = {}
     if wave_mode:
         if wave_four_mode:
-            excluded_locations = load_excluded_locations(
+            wave_4_exclusions = load_wave_4_exclusions(
                 paths[label] for label in paths if label.startswith("exclude_locations_")
             )
+            excluded_locations = wave_4_exclusions.locations
+            excluded_review_fact_ids = wave_4_exclusions.review_fact_ids
         else:
             excluded_locations = set(v1_by_loc)
             excluded_locations.update(packet["canonical_location"] for packet in wave_02_packets)
@@ -1208,7 +1531,9 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
         if wave_four_mode:
             selected = select_wave_4_rows(
                 classifications,
+                queue_by_loc=queue_by_loc,
                 excluded_locations=excluded_locations,
+                excluded_review_fact_ids=excluded_review_fact_ids,
                 strata=load_wave_4_strata(paths["strata"]),
             )
         elif wave_three_mode:
@@ -1235,6 +1560,18 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
         ]
         if selected_identity != v1_identity:
             raise ValueError("STOP: selected calibration rows differ from the pinned v1 packet lineage")
+
+    wave_4_routing = (
+        partition_wave_4_rows(
+            queue_rows,
+            classifications_by_loc=classifications_by_loc,
+            selected=selected,
+            queue_path=paths["queue"],
+            classification_path=paths["classification"],
+        )
+        if wave_four_mode
+        else None
+    )
 
     packets: list[dict[str, Any]] = []
     for rank, (stratum, classification) in enumerate(selected, 1):
@@ -1380,7 +1717,11 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
                 "candidate entry lookup failures exceed 1%",
                 "gate SSOT lacks a tier for a selected decision trigger",
                 "pinned v1 ayah_word_context is insufficient or differs from loc-surfaces",
-                "loc-surfaces SHA-256 differs from f2e079dc pin",
+                (
+                    "loc-surfaces SHA-256 differs from 97efbaca Wave 4 pin"
+                    if wave_four_mode
+                    else "loc-surfaces SHA-256 differs from f2e079dc pin"
+                ),
                 "v1 packet SHA-256 differs from 95788fab lineage pin",
             ],
         },
@@ -1411,12 +1752,14 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
             strata = load_wave_4_strata(paths["strata"])
             manifest["lineage"] = {
                 "queue_manifest_required_sha256": args.queue_manifest_sha256,
+                "loc_surface_index_required_sha256": WAVE_04_EXPECTED_LOC_SURFACES_SHA256,
                 "excluded_by": "canonical_location",
                 "exclude_location_inputs": [
                     input_pin(paths[label])
                     for label in paths if label.startswith("exclude_locations_")
                 ],
                 "excluded_unique_locations": len(excluded_locations),
+                "excluded_promoted_review_fact_ids": len(excluded_review_fact_ids),
             }
             manifest["selection_rule"] = {
                 "purpose": "membership_selection_only_never_semantic_adjudication",
@@ -1509,16 +1852,56 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], list[dict[str, Any]
                 else "fewer than 90 lexical or 160 occurrence rows remain eligible"
             )
         )
-    return manifest, packets
+    side_artifacts: dict[str, bytes] = {}
+    if wave_4_routing is not None:
+        side_artifacts = {
+            "lane-a-eligible": render_wave_4_routing_artifact(
+                wave_4_routing["lane-a-eligible"]
+            ),
+            "review-routing": render_wave_4_routing_artifact(
+                wave_4_routing["review-routing"]
+            ),
+        }
+        routing_counts = {
+            route: len(wave_4_routing[route]) for route in WAVE_4_ROUTES
+        }
+        active_queue_rows = sum(routing_counts.values())
+        manifest["output"]["routing_accounting"] = {
+            "active_queue_rows": active_queue_rows,
+            "route_counts": routing_counts,
+            "arithmetic": (
+                "active_queue_rows == selected + lane-a-eligible + review-routing "
+                "+ blocked + quarantined"
+            ),
+            "arithmetic_verified": active_queue_rows == sum(routing_counts.values()),
+        }
+        manifest["output"]["side_artifacts"] = {
+            label: {
+                "path": logical_path(Path(args.out).parent / f"{label}.jsonl"),
+                "rows": len(wave_4_routing[label]),
+                "sha256": hashlib.sha256(content).hexdigest(),
+            }
+            for label, content in side_artifacts.items()
+        }
+    return manifest, packets, side_artifacts
 
 
-def write_outputs(manifest: dict[str, Any], packets: list[dict[str, Any]], out: Path, manifest_path: Path) -> None:
+def write_outputs(
+    manifest: dict[str, Any],
+    packets: list[dict[str, Any]],
+    out: Path,
+    manifest_path: Path,
+    *,
+    side_artifacts: dict[str, bytes] | None = None,
+) -> None:
     out.parent.mkdir(parents=True, exist_ok=True)
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
     out.write_bytes(render_jsonl(packets))
     with manifest_path.open("w", encoding="utf-8", newline="\n") as handle:
         json.dump(manifest, handle, ensure_ascii=False, indent=2, sort_keys=True)
         handle.write("\n")
+    for label, content in sorted((side_artifacts or {}).items()):
+        (out.parent / f"{label}.jsonl").write_bytes(content)
 
 
 def _synthetic_classification(
@@ -1622,6 +2005,8 @@ def self_test() -> int:
         target_loc="2:1:1",
         target_surface="وَكِتَابٌ",
         target_source_address="fixture#loc=2:1:1",
+        target_live_payload={"morphline": "root ك ت ب · noun", "segments": [{"class": "qg-noun-stem"}]},
+        target_live_source_address="fixture-live#loc=2:1:1",
         carriers=[{"entry_id": "entry-a", "card_id": "entry-a:u1:e1"}],
         entries={
             "entry-a": {
@@ -1655,6 +2040,8 @@ def self_test() -> int:
         target_loc="2:1:1",
         target_surface="وَكِتَابٌ",
         target_source_address="fixture#loc=2:1:1",
+        target_live_payload={},
+        target_live_source_address="fixture-live#loc=2:1:1",
         carriers=[],
         entries={},
         entries_path=DEFAULT_ENTRIES,
@@ -1665,6 +2052,8 @@ def self_test() -> int:
         target_loc="2:1:1",
         target_surface="وَكِتَابٌ",
         target_source_address="fixture#loc=2:1:1",
+        target_live_payload={},
+        target_live_source_address="fixture-live#loc=2:1:1",
         carriers=[],
         entries={},
         entries_path=DEFAULT_ENTRIES,
@@ -1869,6 +2258,8 @@ def main() -> int:
             raise ValueError("STOP: --wave 4 requires " + ", ".join(missing))
         if Path(args.out) == DEFAULT_OUT or Path(args.manifest) == DEFAULT_MANIFEST:
             raise ValueError("STOP: --wave 4 requires explicit --out and --manifest paths")
+        if Path(args.loc_surfaces) == DEFAULT_LOC_SURFACES:
+            args.loc_surfaces = DEFAULT_WAVE_04_LOC_SURFACES
     if args.batch == "wave-02" and Path(args.out) == DEFAULT_OUT:
         args.out = DEFAULT_WAVE_OUT
     if args.batch == "wave-02" and Path(args.manifest) == DEFAULT_MANIFEST:
@@ -1877,8 +2268,14 @@ def main() -> int:
         args.out = DEFAULT_WAVE_03_OUT
     if args.batch == "wave-03" and Path(args.manifest) == DEFAULT_MANIFEST:
         args.manifest = DEFAULT_WAVE_03_MANIFEST
-    manifest, packets = build(args)
-    write_outputs(manifest, packets, Path(args.out), Path(args.manifest))
+    manifest, packets, side_artifacts = build(args)
+    write_outputs(
+        manifest,
+        packets,
+        Path(args.out),
+        Path(args.manifest),
+        side_artifacts=side_artifacts,
+    )
     print(json.dumps(manifest["output"], ensure_ascii=False, indent=2, sort_keys=True))
     return 0
 
