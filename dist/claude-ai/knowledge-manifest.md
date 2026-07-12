@@ -9,8 +9,8 @@
 | `provenance/source-boundaries.md` | 8,845 | `00387365d067` |
 | `qamus/data/current/README.md` | 4,848 | `5d101c4ca990` |
 | `qamus/data/current/NOTICE.md` | 2,230 | `053d61d5fa03` |
-| `sarf/SKILL.md` | 35,989 | `a0952dba01ae` |
-| `nahw/SKILL.md` | 31,849 | `da42780cda69` |
+| `sarf/SKILL.md` | 42,032 | `32e883ee903a` |
+| `nahw/SKILL.md` | 35,173 | `06aa54787f3e` |
 | `sarf/procedures/root-decision.md` | 1,274 | `928621c10dae` |
 | `sarf/procedures/verb-form.md` | 1,430 | `9d04a28beebc` |
 | `sarf/procedures/noun-plural-gender.md` | 3,939 | `37b678753fcd` |

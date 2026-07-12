@@ -5021,6 +5021,33 @@ try:
                                                       "test_skill_fixtures_richseg.py")], timeout=120)
     check("SKILL-RELEASE gate 11: rich-seg @2 candidate red-first fixtures pass",
           _sr_rseg.returncode == 0 and "PASS" in (_sr_rseg.stdout or ""))
+
+    # Gate 12: INCREMENT-21 @2.1 candidate fixtures (27 rules: 19 sarf + 8 nahw) — red-first + non-constant
+    # discriminator guard + builder regeneration-clean + every @2.1 registry id covered.
+    _sr_inc = run_text([sys.executable, os.path.join(ROOT, "tools", "skill_fixtures",
+                                                     "test_skill_fixtures_increment21.py")], timeout=120)
+    check("SKILL-RELEASE gate 12: @2.1 increment red-first + non-constant-discriminator fixtures pass",
+          _sr_inc.returncode == 0 and "PASS" in (_sr_inc.stdout or ""))
+    # Gate 12: the @2.1 increment MERGED with the released registry validates (0 dup / 0 dangling).
+    import tempfile as _tmp
+    _base = os.path.join(ROOT, "qamus", "skills", "rule-registry.jsonl")
+    _inc = os.path.join(ROOT, "qamus", "skills", "rule-registry-increment-21.jsonl")
+    _merged_ok = False
+    try:
+        _mfd, _mpath = _tmp.mkstemp(suffix="-merged-registry.jsonl")
+        with os.fdopen(_mfd, "w", encoding="utf-8", newline="\n") as _mf:
+            for _p in (_base, _inc):
+                _mf.write(open(_p, encoding="utf-8").read().replace("\r\n", "\n").replace("\r", "\n"))
+        _sr_merged = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_skill_registry.py"),
+                               "--registry", _mpath], timeout=120)
+        _merged_ok = _sr_merged.returncode == 0 and ", 0 errors" in (_sr_merged.stdout or "")
+    finally:
+        try:
+            os.remove(_mpath)
+        except Exception:
+            pass
+    check("SKILL-RELEASE gate 12: released + @2.1-increment registry validates merged (0 dup / 0 dangling)",
+          _merged_ok)
 except Exception as _sr_e:
     check("SKILL-RELEASE skill-release candidate gates (harness error)", False)
     print("  ", _sr_e)
