@@ -1,0 +1,375 @@
+{
+  "authoritative_sources": {
+    "nahw": {
+      "norm_sha256": "da42780cda693ec088cabbc72c45703b4b8090580670d61c7862037fd19c2d31",
+      "path": "nahw/SKILL.md"
+    },
+    "sarf": {
+      "norm_sha256": "a0952dba01ae336892603aab2d528ce594ac8923dd6266d0a24f9adb70ff498c",
+      "path": "sarf/SKILL.md"
+    }
+  },
+  "checkout_commit": "73566927cdcde788677bdd665e98b98c1cb2a2d3",
+  "duplicate_copies": [
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/repos/fusha-final/nahw/SKILL.md",
+      "role": "deployed-copy",
+      "sha256": "da42780cda693ec088cabbc72c45703b4b8090580670d61c7862037fd19c2d31",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/repos/fusha-final/sarf/SKILL.md",
+      "role": "deployed-copy",
+      "sha256": "a0952dba01ae336892603aab2d528ce594ac8923dd6266d0a24f9adb70ff498c",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/repos/fusha-verify/nahw/SKILL.md",
+      "role": "deployed-copy",
+      "sha256": "da42780cda693ec088cabbc72c45703b4b8090580670d61c7862037fd19c2d31",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/repos/fusha-verify/sarf/SKILL.md",
+      "role": "deployed-copy",
+      "sha256": "a0952dba01ae336892603aab2d528ce594ac8923dd6266d0a24f9adb70ff498c",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/repos/fusha-final/dist/claude-ai/pack/nahw/SKILL.md",
+      "role": "generated-mirror",
+      "sha256": "da42780cda693ec088cabbc72c45703b4b8090580670d61c7862037fd19c2d31",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/repos/fusha-final/dist/claude-ai/pack/sarf/SKILL.md",
+      "role": "generated-mirror",
+      "sha256": "a0952dba01ae336892603aab2d528ce594ac8923dd6266d0a24f9adb70ff498c",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/fusha-current-origin-main/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "5ed5db6ae8dce5d1da50dd28f769a80f7153ca1fbbeb1adb9d3d9212ad1bc11b",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/fusha-current-origin-main/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/fusha-parser-current-main/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "d04e2e9740d6ff4658f764d3e6d8deb324300dc66057f6ce04f9ea4c75e74485",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/fusha-parser-current-main/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "3aeec5eb125ef20a947ac5d961f91b2a2b360748851f8c618e1fe81610d9715f",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/fusha/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ead5419081e4cb21dcc8a6356b051f9cfeb946c79bedf2f4fd231ecfbbc4fb13",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/fusha/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "932c9c7dd38750b5f20bde45b1f80e6f48ea1cff76640f048c185da0842d17a8",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/dogfood-lessons-repo-734ee5d-20260626-234243/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ff06d21cb628ed6dc5b0af5ce810ae81fad9ab40a6530f61b031852aa24af8c9",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/dogfood-lessons-repo-734ee5d-20260626-234243/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/dogfood-lessons-repo-e23631a-20260626-233951/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ff06d21cb628ed6dc5b0af5ce810ae81fad9ab40a6530f61b031852aa24af8c9",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/dogfood-lessons-repo-e23631a-20260626-233951/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/dogfood-queue-repo-88b62b7-20260626-235938/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ff06d21cb628ed6dc5b0af5ce810ae81fad9ab40a6530f61b031852aa24af8c9",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/dogfood-queue-repo-88b62b7-20260626-235938/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/dogfood-review-repo-1a60c61-20260627-000849/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ff06d21cb628ed6dc5b0af5ce810ae81fad9ab40a6530f61b031852aa24af8c9",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/dogfood-review-repo-1a60c61-20260627-000849/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-tools-1a60c61-20260627-001725/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ff06d21cb628ed6dc5b0af5ce810ae81fad9ab40a6530f61b031852aa24af8c9",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-tools-1a60c61-20260627-001725/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-tools-1a60c61-20260627-001911/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ff06d21cb628ed6dc5b0af5ce810ae81fad9ab40a6530f61b031852aa24af8c9",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-tools-1a60c61-20260627-001911/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-tools-e04e368-20260627-002844/repo/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ff06d21cb628ed6dc5b0af5ce810ae81fad9ab40a6530f61b031852aa24af8c9",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-closeout-tools-e04e368-20260627-002844/repo/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-tools-31a7654dde3e/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ff06d21cb628ed6dc5b0af5ce810ae81fad9ab40a6530f61b031852aa24af8c9",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-tools-31a7654dde3e/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-tools-4a66210-20260626-225033/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ff06d21cb628ed6dc5b0af5ce810ae81fad9ab40a6530f61b031852aa24af8c9",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-tools-4a66210-20260626-225033/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-tools-b010037-20260626-214536/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ff06d21cb628ed6dc5b0af5ce810ae81fad9ab40a6530f61b031852aa24af8c9",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-tools-b010037-20260626-214536/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-tools-fcffc79-20260626-194628/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ff06d21cb628ed6dc5b0af5ce810ae81fad9ab40a6530f61b031852aa24af8c9",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase2p9-tools-fcffc79-20260626-194628/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase3-tools-40a98fa-20260626-195928/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ff06d21cb628ed6dc5b0af5ce810ae81fad9ab40a6530f61b031852aa24af8c9",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase3-tools-40a98fa-20260626-195928/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase3-tools-922af2ec334f-20260626-141729/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "ff06d21cb628ed6dc5b0af5ce810ae81fad9ab40a6530f61b031852aa24af8c9",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/qamus-shadow-graph/phase3-tools-922af2ec334f-20260626-141729/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "4722f3eed5c71134223e336d57d17605284f28507decfd9daf50b3a36cbb3208",
+      "skill": "sarf"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/repos/fusha/nahw/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "dd59c4932ef83cd613941cad238b5b4003bf7f7623764bce81e666381ef9b4b1",
+      "skill": "nahw"
+    },
+    {
+      "location": "server",
+      "path": "/srv/dawah-ops/hermes-workspace/repos/fusha/sarf/SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "24eeee01cf5d799b7e6aab5014f4425044a05815e62ca33c5a8fe5edb44da651",
+      "skill": "sarf"
+    },
+    {
+      "location": "local-codex-install",
+      "path": "C:\\Users\\theis\\.codex\\skills\\fusha-nahw\\SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "82e7af99e808d5f520503c3ac6fc606ba7a857e73cd438e43b190650b1dd69b8",
+      "skill": "unknown"
+    },
+    {
+      "location": "local-codex-install",
+      "path": "C:\\Users\\theis\\.codex\\skills\\fusha-sarf\\SKILL.md",
+      "role": "stale-duplicate",
+      "sha256": "b26d7d7721b6f807c9227c4f789862a0a3260d392ed70414fbaeea2d39178b34",
+      "skill": "unknown"
+    }
+  ],
+  "known_stale_installs": [
+    {
+      "canonical_sha256": "f8e9a663b3c6f7d1bb4f93932bc9b9aff80b42e703940ab78d299ac4afa5e483",
+      "fix": "regenerate via scripts/install_codex_instructions.py (never hand-sync)",
+      "observed_sha256": "82e7af99e808d5f520503c3ac6fc606ba7a857e73cd438e43b190650b1dd69b8",
+      "skill": "nahw",
+      "target": "local_codex_install"
+    },
+    {
+      "canonical_sha256": "cbe6b4769abad41e9ecbb0d7db2f17e669e4425d5a57670851ce769945b96082",
+      "fix": "regenerate via scripts/install_codex_instructions.py (never hand-sync)",
+      "observed_sha256": "b26d7d7721b6f807c9227c4f789862a0a3260d392ed70414fbaeea2d39178b34",
+      "skill": "sarf",
+      "target": "local_codex_install"
+    }
+  ],
+  "mirrors": [
+    {
+      "expected_norm_sha256": "da42780cda693ec088cabbc72c45703b4b8090580670d61c7862037fd19c2d31",
+      "generator": "scripts/build_claude_ai_project_pack.py",
+      "skill": "nahw",
+      "target": "claude_ai_pack",
+      "transform": "identity"
+    },
+    {
+      "expected_norm_sha256": "a0952dba01ae336892603aab2d528ce594ac8923dd6266d0a24f9adb70ff498c",
+      "generator": "scripts/build_claude_ai_project_pack.py",
+      "skill": "sarf",
+      "target": "claude_ai_pack",
+      "transform": "identity"
+    },
+    {
+      "expected_norm_sha256": "f8e9a663b3c6f7d1bb4f93932bc9b9aff80b42e703940ab78d299ac4afa5e483",
+      "generator": "scripts/install_claude_skills.py",
+      "regenerator": "tools/generate_skill_mirrors.py",
+      "skill": "nahw",
+      "target": "claude_code_install",
+      "transform": "frontmatter_name"
+    },
+    {
+      "expected_norm_sha256": "cbe6b4769abad41e9ecbb0d7db2f17e669e4425d5a57670851ce769945b96082",
+      "generator": "scripts/install_claude_skills.py",
+      "regenerator": "tools/generate_skill_mirrors.py",
+      "skill": "sarf",
+      "target": "claude_code_install",
+      "transform": "frontmatter_name"
+    },
+    {
+      "expected_norm_sha256": "f8e9a663b3c6f7d1bb4f93932bc9b9aff80b42e703940ab78d299ac4afa5e483",
+      "generator": "scripts/install_codex_instructions.py",
+      "regenerator": "tools/generate_skill_mirrors.py",
+      "skill": "nahw",
+      "target": "local_codex_install",
+      "transform": "frontmatter_name"
+    },
+    {
+      "expected_norm_sha256": "cbe6b4769abad41e9ecbb0d7db2f17e669e4425d5a57670851ce769945b96082",
+      "generator": "scripts/install_codex_instructions.py",
+      "regenerator": "tools/generate_skill_mirrors.py",
+      "skill": "sarf",
+      "target": "local_codex_install",
+      "transform": "frontmatter_name"
+    }
+  ],
+  "provenance": "derived deterministically from C-SKILL-MAP SKILL-SOURCE-MAP.json@1 + computed canonical mirror shas (build_registry.py)",
+  "schema": "fusha/skill-mirror-map@1"
+}

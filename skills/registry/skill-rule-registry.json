@@ -1,0 +1,1701 @@
+{
+  "checkout_commit": "73566927cdcde788677bdd665e98b98c1cb2a2d3",
+  "provenance": "derived deterministically from C-SKILL-MAP SKILL-PARITY-MATRIX.json@1 (build_registry.py)",
+  "rule_count": 107,
+  "rule_count_by_skill": {
+    "nahw": 44,
+    "sarf": 54
+  },
+  "rules": [
+    {
+      "code_implementation": [
+        "nahw/rules/context-sense-rules.json:2"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "nahw/evals/irab-polysemy-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "The six nahw principles (encode these)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-4-context-resolves-contronyms-multi-sense-roots-restricts",
+      "source": "nahw/SKILL.md:323",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/referent-guard-rules.json:2"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "nahw/examples/ayah-context-decisions.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "The six nahw principles (encode these)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-5-referent-matters-carry-name-prophet-proper-noun",
+      "source": "nahw/SKILL.md:325",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "The six nahw principles (encode these)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-6-prefer-phrase-aware-pending-over-wrong-word",
+      "source": "nahw/SKILL.md:326",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/negation-rules.json:4",
+        "nahw/rules/particle-context-rules.json:46",
+        "tools/normalize_ar.py:5",
+        "tools/normalize_ar.py:85"
+      ],
+      "last_accepted_commit": "ea20f0fd262aa8c356485d398c9a8fd8f3758fba",
+      "permanent_tests": [
+        "nahw/evals/hover-context-eval.json",
+        "nahw/evals/particle-function-eval.jsonl",
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "Production finding (SN ingest — negation scope & function-word inventory)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-additions-verb-charts-amau-corpus-1-governing-negative",
+      "source": "nahw/SKILL.md:356",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/referent-guard-rules.json:2",
+        "tools/fusha_text_check.py:215"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "nahw/examples/ayah-context-decisions.jsonl",
+        "sarf/evals/false-clitic-split-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "6. Pronoun / suffix handling",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-attached-pronouns-change-wording-but-head-sense-let",
+      "source": "nahw/SKILL.md:117",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/particle-context-rules.json:46",
+        "tools/normalize_ar.py:85"
+      ],
+      "last_accepted_commit": "9e1d3fbae0dbef881dba28cc91fc5a7871b37c29",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "Production finding (morphosyntax contract — particles, phrases, clauses)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-authoring-hover-function-bearing-token-classify-syntactic-function",
+      "source": "nahw/SKILL.md:212",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/negation-rules.json:4"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "nahw/evals/hover-context-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Do not resolve; mark pending (examples)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-bare-noun-vs-verb-vs-verbal-negation-next",
+      "source": "nahw/SKILL.md:335",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/particle-context-rules.json:46",
+        "tools/normalize_ar.py:85",
+        "tools/scan_public_boundary.py:119"
+      ],
+      "last_accepted_commit": "36687a15fd04e17f61c0a758c31c79e98b8b2d15",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl",
+        "nahw/evals/public-boundary-scanner-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "Production finding (VN-00 public visual ANDON)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-batch05d-merge09-merge10-added-function-token-projection-gate",
+      "source": "nahw/SKILL.md:268",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_governor.py:173",
+        "tools/validate_linguistic_decisions.py:47"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "nahw/evals/governor-dependency-lattice.jsonl",
+        "nahw/evals/grammar-decision-gates.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Governor / iʿrāb / dependency candidate lattice (the P2 grammar-checker engine)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-case-mood-consequence-stated-governor-assert-case-together",
+      "source": "nahw/SKILL.md:280",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_cefr_gate.py:3",
+        "tools/fusha_governor.py:173",
+        "tools/fusha_learner_feedback.py:84"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "curriculum/cefr-fusha-levels.json",
+        "nahw/evals/governor-dependency-lattice.jsonl",
+        "qamus/examples/learner_feedback.sample.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Governor / iʿrāb / dependency candidate lattice (the P2 grammar-checker engine)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-cefr-scaffolding-certification-expose-i-r-b-terminology",
+      "source": "nahw/SKILL.md:295",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_governor.py:173",
+        "tools/validate_linguistic_decisions.py:47"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "nahw/evals/governor-dependency-lattice.jsonl",
+        "nahw/evals/grammar-decision-gates.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Governor / iʿrāb / dependency candidate lattice (the P2 grammar-checker engine)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-checker-now-emits-conservative-governor-dependency-candidate-lattice",
+      "source": "nahw/SKILL.md:276",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/context-sense-rules.json",
+        "nahw/rules/state-transition-rules.json"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "8. Conditionals & relative pronouns",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-conditionals-relative-pronouns-man-ma-in-idha-apodosis-jawab",
+      "source": "nahw/SKILL.md:127",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_governor.py:173"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "nahw/evals/governor-dependency-lattice.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Governor / iʿrāb / dependency candidate lattice (the P2 grammar-checker engine)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-coordinating-w-w-headless-coordinating-w-w-has",
+      "source": "nahw/SKILL.md:290",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/particle-context-rules.json:46",
+        "tools/normalize_ar.py:85"
+      ],
+      "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production finding (VN-00 public visual ANDON)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-expose-particle-function-host-plus-attached-plural-pronoun",
+      "source": "nahw/SKILL.md:237",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/context-sense-rules.json:2",
+        "nahw/rules/referent-guard-rules.json:2",
+        "tools/validate_linguistic_decisions.py:47"
+      ],
+      "last_accepted_commit": "94bd79eb03d6173c4934917b10710ae95c7443bd",
+      "permanent_tests": [
+        "nahw/evals/grammar-decision-gates.json",
+        "nahw/evals/irab-polysemy-eval.jsonl",
+        "nahw/examples/ayah-context-decisions.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Preamble safety gate",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-grammar-safety-grammarproblems-eval-gate-general-llm-confidence",
+      "source": "nahw/SKILL.md:12",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "MISSING",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "Production finding (morphosyntax contract — particles, phrases, clauses)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-h-l-interrogative-h-l-maf-l-li",
+      "source": "nahw/SKILL.md:227",
+      "status": "candidate"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_governor.py:173"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "nahw/evals/governor-dependency-lattice.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Governor / iʿrāb / dependency candidate lattice (the P2 grammar-checker engine)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-i-fa-keeps-alternatives-bare-noun-noun-ambiguous",
+      "source": "nahw/SKILL.md:288",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_governor.py:173",
+        "tools/fusha_suggest.py:134"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "nahw/evals/governor-dependency-lattice.jsonl",
+        "nahw/evals/irab-right-answer-wrong-reason.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Governor / iʿrāb / dependency candidate lattice (the P2 grammar-checker engine)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-i-r-b-suggestion-gating-correction-touches-case",
+      "source": "nahw/SKILL.md:293",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/build_funcword_two_vote_packets.py",
+        "nahw/rules/context-sense-rules.json"
+      ],
+      "last_accepted_commit": "e87bd626aaccb32da583441612e62f9f092e7b0a",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "9. Iḍāfa & jar-majrūr",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-largelexicon-collision-safety-short-function-surfaces-route-by-function",
+      "source": "nahw/SKILL.md:159",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_governor.py:173",
+        "tools/fusha_learner_feedback.py:84"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "nahw/evals/governor-dependency-lattice.jsonl",
+        "qamus/examples/learner_feedback.sample.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "Governor / iʿrāb / dependency candidate lattice (the P2 grammar-checker engine)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-lattice-feeds-rich-hover-learner-feedback-justified-edge",
+      "source": "nahw/SKILL.md:297",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_learner_feedback.py:84",
+        "tools/scan_public_boundary.py:119"
+      ],
+      "last_accepted_commit": "a544e6f8b95ca781c5dce64b576281b4f61c3415",
+      "permanent_tests": [
+        "nahw/evals/public-boundary-scanner-eval.jsonl",
+        "qamus/examples/learner_feedback.sample.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "9. Iḍāfa & jar-majrūr",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-learner-facing-tooltip-prose-explain-arabic-workflow-put",
+      "source": "nahw/SKILL.md:166",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "MISSING",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "Production finding (morphosyntax contract — particles, phrases, clauses)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-may-ordinary-coordination-oath-preposition-comitative-w-w",
+      "source": "nahw/SKILL.md:215",
+      "status": "candidate"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "MISSING",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production finding (morphosyntax contract — particles, phrases, clauses)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-may-resumption-coordination-result-conditional-answer-supplemental-cause",
+      "source": "nahw/SKILL.md:217",
+      "status": "candidate"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/particle-context-rules.json:46",
+        "tools/normalize_ar.py:85"
+      ],
+      "last_accepted_commit": "5d7b78fc898e6315769919a053f3116ad125c50e",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production finding (VN-00 public visual ANDON)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-n0030-v030-repeated-relation-plus-pronoun-particle-cluster",
+      "source": "nahw/SKILL.md:244",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/particle-context-rules.json:46",
+        "tools/fusha_governor.py:173",
+        "tools/normalize_ar.py:85",
+        "tools/validate_backfillfull_sarf_nahw_largelexicon.py:6"
+      ],
+      "last_accepted_commit": "f61264c1487ea46ed7c26ca7d2dbb62f011e1bcf",
+      "permanent_tests": [
+        "nahw/evals/governor-dependency-lattice.jsonl",
+        "nahw/evals/particle-function-eval.jsonl",
+        "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Largelexicon / Plan 15 Routing",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-nahw-owned-plan-15-routes-governor-irab-fixture",
+      "source": "nahw/SKILL.md:55",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_governor.py",
+        "tools/validate_linguistic_decisions.py"
+      ],
+      "last_accepted_commit": "a5296382821336d3f3436c13dcee8457c7a45f35",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "3. Output contract",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-output-contract-function-class-attachment-composition-parse-key",
+      "source": "nahw/SKILL.md:86",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/particle-context-rules.json",
+        "tools/normalize_ar.py"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "4. Particle decision ladder",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-particle-decision-ladder-content-letter-harakah-man-min-lam-lima",
+      "source": "nahw/SKILL.md:107",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/negation-rules.json:4",
+        "nahw/rules/particle-context-rules.json:46",
+        "tools/normalize_ar.py:85"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "nahw/evals/hover-context-eval.json",
+        "nahw/evals/particle-function-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "7. Negation handling",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-past-negation-jussive-future-negation-negation-prohibition-no",
+      "source": "nahw/SKILL.md:124",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_governor.py:173"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "nahw/evals/governor-dependency-lattice.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Governor / iʿrāb / dependency candidate lattice (the P2 grammar-checker engine)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-pp-attachment-stays-unresolved-unless-justified-which-head",
+      "source": "nahw/SKILL.md:286",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/negation-rules.json:4",
+        "nahw/rules/particle-context-rules.json:46",
+        "tools/normalize_ar.py:5",
+        "tools/normalize_ar.py:85"
+      ],
+      "last_accepted_commit": "ce5bf44d16aa6c6b0fe63e3074ae09b6902ea54b",
+      "permanent_tests": [
+        "nahw/evals/hover-context-eval.json",
+        "nahw/evals/particle-function-eval.jsonl",
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production finding (PP1 — particle p001–p100 proofing pilot)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-proofing-100-particle-entries-example-y-t-219",
+      "source": "nahw/SKILL.md:365",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/particle-context-rules.json:46",
+        "tools/normalize_ar.py:85"
+      ],
+      "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production finding (VN-00 public visual ANDON)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-question-particle-function-specific-qg-role-generic-token",
+      "source": "nahw/SKILL.md:236",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/negation-rules.json:4"
+      ],
+      "last_accepted_commit": "ea20f0fd262aa8c356485d398c9a8fd8f3758fba",
+      "permanent_tests": [
+        "nahw/evals/hover-context-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "References (SN ingest)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-references-irab-case-mood-md-references-irab-case",
+      "source": "nahw/SKILL.md:351",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "9e1d3fbae0dbef881dba28cc91fc5a7871b37c29",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production finding (morphosyntax contract — particles, phrases, clauses)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-relative-pronouns-subordinating-conjunctions-purpose-l-m-temporal",
+      "source": "nahw/SKILL.md:225",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/particle-context-rules.json:46",
+        "tools/normalize_ar.py:85",
+        "tools/validate_vn00_aggressive_false_closure.py:3"
+      ],
+      "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl",
+        "sarf/evals/vn00-aggressive-false-closure.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production finding (VN-00 public visual ANDON)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-require-contextual-m-classification-transclusion-default-table-gloss",
+      "source": "nahw/SKILL.md:238",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "Production finding (VN-00 public visual ANDON)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-requires-temporal-expression-review-time-noun-attached-time",
+      "source": "nahw/SKILL.md:249",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "13. When to resolve vs pending",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-resolve-construction-uniquely-fixes-sense-otherwise-emit-pending",
+      "source": "nahw/SKILL.md:183",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Governor / iʿrāb / dependency candidate lattice (the P2 grammar-checker engine)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-resolve-layer-1-safe-rule-evidence-standalone-preposition",
+      "source": "nahw/SKILL.md:283",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/validate_morphosyntax_token_metadata.py",
+        "tools/build_crosswalk_gap_queue.py"
+      ],
+      "last_accepted_commit": "a544e6f8b95ca781c5dce64b576281b4f61c3415",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "9. Iḍāfa & jar-majrūr",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-role-aware-qg-classes-qg-lam-qg-result-fa-function-specific",
+      "source": "nahw/SKILL.md:147",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/validate_vn00_aggressive_false_closure.py:3"
+      ],
+      "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
+      "permanent_tests": [
+        "sarf/evals/vn00-aggressive-false-closure.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production finding (VN-00 public visual ANDON)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-same-surface-equivalent-function-rich-peers-transclusion-obligations",
+      "source": "nahw/SKILL.md:272",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production finding (VN-00 public visual ANDON)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-similar-preposition-host-plus-pronoun-rows-expose-both",
+      "source": "nahw/SKILL.md:239",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/validate_dependency_lattice.py",
+        "tools/fusha_governor.py"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "nahw/evals/governor-dependency-lattice.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Governor / iʿrāb / dependency candidate lattice (the P2 grammar-checker engine)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-single-governor-spine-governed-node-at-most-one-head",
+      "source": "nahw/SKILL.md:291",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/particle-context-rules.json:46",
+        "tools/fusha_text_check.py:215",
+        "tools/normalize_ar.py:5",
+        "tools/normalize_ar.py:85"
+      ],
+      "last_accepted_commit": "f99a0ebbd820945a056925789b25746c17432035",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl",
+        "sarf/evals/false-clitic-split-eval.jsonl",
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production finding (P4/P5)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-surface-keyed-gloss-safe-harak-t-guard-place",
+      "source": "nahw/SKILL.md:340",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_governor.py:173"
+      ],
+      "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
+      "permanent_tests": [
+        "nahw/evals/governor-dependency-lattice.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "Production finding (VN-00 public visual ANDON)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-tanwin-case-endings-used-opaque-public-grammar-labels",
+      "source": "nahw/SKILL.md:251",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_learner_feedback.py:84",
+        "tools/validate_backfillfull_sarf_nahw_largelexicon.py:6"
+      ],
+      "last_accepted_commit": "f61264c1487ea46ed7c26ca7d2dbb62f011e1bcf",
+      "permanent_tests": [
+        "qamus/examples/learner_feedback.sample.jsonl",
+        "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "Largelexicon / Plan 15 Routing",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-task-mentions-largelexicon-plan-15-qword-denominator-qword",
+      "source": "nahw/SKILL.md:50",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "MISSING",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "2. Input contract",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-token-quran-ref-token-loc-surrounding-tokens-known",
+      "source": "nahw/SKILL.md:81",
+      "status": "candidate"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/particle-context-rules.json:46",
+        "tools/fusha_governor.py:173",
+        "tools/fusha_text_check.py:215",
+        "tools/normalize_ar.py:85",
+        "tools/scan_public_boundary.py:119"
+      ],
+      "last_accepted_commit": "36687a15fd04e17f61c0a758c31c79e98b8b2d15",
+      "permanent_tests": [
+        "nahw/evals/governor-dependency-lattice.jsonl",
+        "nahw/evals/particle-function-eval.jsonl",
+        "nahw/evals/public-boundary-scanner-eval.jsonl",
+        "sarf/evals/false-clitic-split-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "Production finding (VN-00 public visual ANDON)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-v003-added-common-particle-proclitic-addendum-closed-they",
+      "source": "nahw/SKILL.md:258",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "MISSING",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production finding (VN-00 public visual ANDON)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-v045-added-validator-sensitive-context-traps-surface-plus",
+      "source": "nahw/SKILL.md:254",
+      "status": "candidate"
+    },
+    {
+      "code_implementation": [
+        "tools/validate_vn00_aggressive_false_closure.py:3"
+      ],
+      "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
+      "permanent_tests": [
+        "sarf/evals/vn00-aggressive-false-closure.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production finding (VN-00 public visual ANDON)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-vn-00-public-readback-found-common-grammar-tokens",
+      "source": "nahw/SKILL.md:233",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/particle-context-rules.json:46",
+        "tools/normalize_ar.py:85"
+      ],
+      "last_accepted_commit": "9e1d3fbae0dbef881dba28cc91fc5a7871b37c29",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production finding (morphosyntax contract — particles, phrases, clauses)",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-vocative-particles-exceptive-particles-preserve-governed-noun-structure",
+      "source": "nahw/SKILL.md:229",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/scan_public_boundary.py:119"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "nahw/evals/public-boundary-scanner-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "14. How to author a qamus grammatical gloss",
+      "skill": "nahw",
+      "skill_rule_id": "nahw-write-concise-original-english-rendering-function-context-e",
+      "source": "nahw/SKILL.md:187",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/particle-context-rules.json:46",
+        "sarf/rules/root-decision-rules.json:2",
+        "tools/normalize_ar.py:5",
+        "tools/normalize_ar.py:85"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl",
+        "sarf/evals/qamus-regression-eval.json",
+        "sarf/examples/root-form-decisions.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "The five sarf principles (encode these)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-1-infer-root-norm-alone-drops-hamza-harak",
+      "source": "sarf/SKILL.md:358",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "sarf/rules/root-decision-rules.json:2",
+        "tools/normalize_ar.py:5"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "sarf/evals/qamus-regression-eval.json",
+        "sarf/examples/root-form-decisions.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "The five sarf principles (encode these)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-2-preserve-hamza-seat-distinctions-recall-may-hamza",
+      "source": "sarf/SKILL.md:360",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "sarf/rules/pos-mismatch-rules.json:2"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "The five sarf principles (encode these)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-3-pos-mismatch-blocker-no-verb-gloss-noun",
+      "source": "sarf/SKILL.md:362",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "sarf/rules/masdar-participle-gates.json:2",
+        "tools/fusha_text_check.py:215",
+        "tools/normalize_ar.py:5"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "sarf/evals/false-clitic-split-eval.jsonl",
+        "sarf/evals/nominal-derivative-error-eval.jsonl",
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "The five sarf principles (encode these)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-4-derived-form-stem-matching-conservative-form-iv",
+      "source": "sarf/SKILL.md:365",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/validate_backfillfull_sarf_nahw_largelexicon.py:6"
+      ],
+      "last_accepted_commit": "f61264c1487ea46ed7c26ca7d2dbb62f011e1bcf",
+      "permanent_tests": [
+        "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Largelexicon / Plan 15 Routing",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-4-plan-15-route-family",
+      "source": "sarf/SKILL.md:45",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/scan_public_boundary.py:119"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "nahw/evals/public-boundary-scanner-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "The five sarf principles (encode these)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-5-qac-internal-morphology-evidence-public-source-root",
+      "source": "sarf/SKILL.md:367",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_morphology_lattice.py:122"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "sarf/evals/morphology-candidate-lattice.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "16. Morphology candidate lattice (the P2/P2b grammar-checker engine)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-analyse-rank-force-analyser-emits-readings-separate-step",
+      "source": "sarf/SKILL.md:299",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "sarf/rules/masdar-participle-gates.json:2",
+        "tools/fusha_learner_feedback.py:84"
+      ],
+      "last_accepted_commit": "36687a15fd04e17f61c0a758c31c79e98b8b2d15",
+      "permanent_tests": [
+        "qamus/examples/learner_feedback.sample.jsonl",
+        "sarf/evals/nominal-derivative-error-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "13d. Production findings (VN-00 public visual ANDON)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-batch05d-merge09-merge10-lesson-exact-token-readback-still",
+      "source": "sarf/SKILL.md:280",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "16. Morphology candidate lattice (the P2/P2b grammar-checker engine)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-blank-beats-wrong-root-pattern-lemma-null-root",
+      "source": "sarf/SKILL.md:307",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/normalize_ar.py:5"
+      ],
+      "last_accepted_commit": "ea20f0fd262aa8c356485d398c9a8fd8f3758fba",
+      "permanent_tests": [
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production findings (SN ingest — verb charts + AMAU vocab corpus)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-broken-plural-shares-root-surface-link-lemma-root",
+      "source": "sarf/SKILL.md:393",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/validate_vn00_aggressive_false_closure.py:152"
+      ],
+      "last_accepted_commit": "058d4a8e8b1ca9c156190701086dd0079c58e5c0",
+      "permanent_tests": [
+        "sarf/evals/combining-mark-byte-exact-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "17. Deploy-mechanics the sarf author owns (VN-01 run #32 flywheel)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-byte-exact-base-letter-carve-resplit-candidate-segmentation",
+      "source": "sarf/SKILL.md:337",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "d103b1b66b1f0e879b29d9a823f6fcf29bc24a05",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "13c. Production findings (P13 — reference-assisted batch, +694 live)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-carried-suppress-anger-verb-gloss-entry-repair-candidate",
+      "source": "sarf/SKILL.md:233",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_cefr_gate.py:3",
+        "tools/fusha_learner_feedback.py:84"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "curriculum/cefr-fusha-levels.json",
+        "qamus/examples/learner_feedback.sample.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "16. Morphology candidate lattice (the P2/P2b grammar-checker engine)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-cefr-scaffolding-certification-how-much-morphology-metalanguage-you",
+      "source": "sarf/SKILL.md:312",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/particle-context-rules.json:46",
+        "sarf/rules/masdar-participle-gates.json:2",
+        "tools/normalize_ar.py:85"
+      ],
+      "last_accepted_commit": "a544e6f8b95ca781c5dce64b576281b4f61c3415",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl",
+        "sarf/evals/nominal-derivative-error-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "8. Common clitics & suffixes",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-certifiable-noun-adjective-participle-host-should-carry-appropriate",
+      "source": "sarf/SKILL.md:152",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_text_check.py:215",
+        "tools/validate_vn00_aggressive_false_closure.py:152"
+      ],
+      "last_accepted_commit": "058d4a8e8b1ca9c156190701086dd0079c58e5c0",
+      "permanent_tests": [
+        "sarf/evals/combining-mark-byte-exact-eval.jsonl",
+        "sarf/evals/false-clitic-split-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "17. Deploy-mechanics the sarf author owns (VN-01 run #32 flywheel)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-combining-mark-order-at-clitic-boundaries-diacritic-tanw",
+      "source": "sarf/SKILL.md:340",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_morphology_lattice.py:122",
+        "tools/fusha_text_check.py:215"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "sarf/evals/false-clitic-split-eval.jsonl",
+        "sarf/evals/morphology-candidate-lattice.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "16. Morphology candidate lattice (the P2/P2b grammar-checker engine)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-consume-clitic-lattice-rebuild-each-candidate-s-segment",
+      "source": "sarf/SKILL.md:302",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/scan_public_boundary.py:119"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "nahw/evals/public-boundary-scanner-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "NEVER DO THIS (wrong-gloss prevention)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-copy-external-gloss-expose-informed-qac-quran-com",
+      "source": "sarf/SKILL.md:373",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "058d4a8e8b1ca9c156190701086dd0079c58e5c0",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "17. Deploy-mechanics the sarf author owns (VN-01 run #32 flywheel)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-correct-morphological-decision-still-fails-ship-surface-bytes",
+      "source": "sarf/SKILL.md:333",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "sarf/rules/masdar-participle-gates.json:2"
+      ],
+      "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
+      "permanent_tests": [
+        "sarf/evals/nominal-derivative-error-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "13d. Production findings (VN-00 public visual ANDON)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-derivative-adjectives-need-endings-too-needs-article-derivative",
+      "source": "sarf/SKILL.md:257",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/validate_vn00_aggressive_false_closure.py:3"
+      ],
+      "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
+      "permanent_tests": [
+        "sarf/evals/vn00-aggressive-false-closure.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "13d. Production findings (VN-00 public visual ANDON)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-draft-flat-finite-verbs-solved-peers-transclusion-failures",
+      "source": "sarf/SKILL.md:244",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_morphology_lattice.py:122",
+        "tools/fusha_text_check.py:215"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "sarf/evals/false-clitic-split-eval.jsonl",
+        "sarf/evals/morphology-candidate-lattice.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "16. Morphology candidate lattice (the P2/P2b grammar-checker engine)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-evidence-class-drives-gate-closed-set-voweled-confirmable",
+      "source": "sarf/SKILL.md:309",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "sarf/rules/masdar-participle-gates.json:2"
+      ],
+      "last_accepted_commit": "ea20f0fd262aa8c356485d398c9a8fd8f3758fba",
+      "permanent_tests": [
+        "sarf/evals/nominal-derivative-error-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production findings (SN ingest — verb charts + AMAU vocab corpus)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-gender-data-guess-corpus-carries-explicit-m-f",
+      "source": "sarf/SKILL.md:402",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_morphology_lattice.py:122"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "sarf/evals/morphology-candidate-lattice.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "16. Morphology candidate lattice (the P2/P2b grammar-checker engine)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-general-checker-now-emits-ranked-morphology-candidate-lattice",
+      "source": "sarf/SKILL.md:295",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/normalize_ar.py:5"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "NEVER DO THIS (wrong-gloss prevention)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-gloss-norm-alone-drop-hamza-distinction-authored-gloss",
+      "source": "sarf/SKILL.md:371",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_learner_feedback.py:84",
+        "tools/fusha_morphology_lattice.py:122",
+        "tools/fusha_suggest.py:134",
+        "tools/fusha_text_check.py:215"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "nahw/evals/irab-right-answer-wrong-reason.jsonl",
+        "qamus/examples/learner_feedback.sample.jsonl",
+        "sarf/evals/false-clitic-split-eval.jsonl",
+        "sarf/evals/morphology-candidate-lattice.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "16. Morphology candidate lattice (the P2/P2b grammar-checker engine)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-how-sarf-fault-becomes-suggestion-learner-hint-unvoweled",
+      "source": "sarf/SKILL.md:314",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/build_funcword_two_vote_packets.py",
+        "tools/fusha_text_check.py"
+      ],
+      "last_accepted_commit": "e87bd626aaccb32da583441612e62f9f092e7b0a",
+      "permanent_tests": [
+        "sarf/evals/false-clitic-split-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "8. Common clitics & suffixes",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-largelexicon-collision-morphology-candidates-not-truth-allah-family",
+      "source": "sarf/SKILL.md:171",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "sarf/rules/pos-mismatch-rules.json:2"
+      ],
+      "last_accepted_commit": "ea20f0fd262aa8c356485d398c9a8fd8f3758fba",
+      "permanent_tests": [
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production findings (SN ingest — verb charts + AMAU vocab corpus)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-leading-ambiguous-plural-noun-vs-form-iv-verb",
+      "source": "sarf/SKILL.md:399",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "MISSING",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "13d. Production findings (VN-00 public visual ANDON)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-lexical-final-letters-can-look-like-suffixes-rows",
+      "source": "sarf/SKILL.md:263",
+      "status": "candidate"
+    },
+    {
+      "code_implementation": [
+        "tools/normalize_ar.py:5"
+      ],
+      "last_accepted_commit": "d103b1b66b1f0e879b29d9a823f6fcf29bc24a05",
+      "permanent_tests": [
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "13c. Production findings (P13 — reference-assisted batch, +694 live)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-live-key-norm-strict-which-keeps-article-consonant",
+      "source": "sarf/SKILL.md:221",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "sarf/rules/masdar-participle-gates.json:2",
+        "tools/fusha_learner_feedback.py:84"
+      ],
+      "last_accepted_commit": "77e1c892a12d0baf2905faea7013e254ee57600b",
+      "permanent_tests": [
+        "qamus/examples/learner_feedback.sample.jsonl",
+        "sarf/evals/nominal-derivative-error-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "8. Common clitics & suffixes",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-mint-unsupported-renderer-classes-real-sarf-facts-live",
+      "source": "sarf/SKILL.md:146",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/validate_linguistic_decisions.py"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "3. Output contract — emit this object before any gloss/repair/resolve",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-output-contract-decision-enum-resolved-pending-quarantine",
+      "source": "sarf/SKILL.md:90",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "sarf/rules/masdar-participle-gates.json:2"
+      ],
+      "last_accepted_commit": "ea20f0fd262aa8c356485d398c9a8fd8f3758fba",
+      "permanent_tests": [
+        "sarf/evals/nominal-derivative-error-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production findings (SN ingest — verb charts + AMAU vocab corpus)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-participles-split-active-passive-penult-vowel-teacher-vs",
+      "source": "sarf/SKILL.md:397",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/build_funcword_two_vote_packets.py"
+      ],
+      "last_accepted_commit": "9e1d3fbae0dbef881dba28cc91fc5a7871b37c29",
+      "permanent_tests": [
+        "nahw/evals/particle-function-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "8. Common clitics & suffixes",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-prefix-shape-not-enough-raw-waw-fa-alif-lam-ma-handed-to-nahw",
+      "source": "sarf/SKILL.md:182",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "sarf/rules/masdar-participle-gates.json:2"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "sarf/evals/nominal-derivative-error-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "NEVER DO THIS (wrong-gloss prevention)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-put-verb-infinitive-noun-proper-noun-participle-whose",
+      "source": "sarf/SKILL.md:372",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "sarf/rules/pos-mismatch-rules.json:2"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "6. POS decision ladder",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-qac-pos-qamus-category-morphological-shape-wazn-context",
+      "source": "sarf/SKILL.md:112",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "sarf/rules/root-decision-rules.json:2"
+      ],
+      "last_accepted_commit": "7e31306f9b34c82e1f58647b7bb884f3c49b4e99",
+      "permanent_tests": [
+        "sarf/examples/root-form-decisions.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "5. Root decision ladder (stop at the first that certifies)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-qamus-source-entry-qac-root-photographed-source-page",
+      "source": "sarf/SKILL.md:106",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "f99a0ebbd820945a056925789b25746c17432035",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production findings (P4/P5 authored-gloss batch)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-quarantine-whole-inflection-family-data-error-quarantine-accusative",
+      "source": "sarf/SKILL.md:384",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/normalize_ar.py:5"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "9. Homograph quarantine rules",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-readings-collapse-under-norm-decide-content-letter-s",
+      "source": "sarf/SKILL.md:188",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/referent-guard-rules.json:2"
+      ],
+      "last_accepted_commit": "d103b1b66b1f0e879b29d9a823f6fcf29bc24a05",
+      "permanent_tests": [
+        "nahw/examples/ayah-context-decisions.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "13c. Production findings (P13 — reference-assisted batch, +694 live)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-referent-landmines-stay-pending-divine-name-vs-common",
+      "source": "sarf/SKILL.md:229",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "NEVER DO THIS (wrong-gloss prevention)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-resolve-uncertain-prefer-pending-precise-reason",
+      "source": "sarf/SKILL.md:374",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_learner_feedback.py:84",
+        "tools/validate_vn00_aggressive_false_closure.py:3"
+      ],
+      "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
+      "permanent_tests": [
+        "qamus/examples/learner_feedback.sample.jsonl",
+        "sarf/evals/vn00-aggressive-false-closure.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "13d. Production findings (VN-00 public visual ANDON)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-rich-shell-morphology-closure-vn-00-public-readback",
+      "source": "sarf/SKILL.md:237",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/validate_vn00_aggressive_false_closure.py:3"
+      ],
+      "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
+      "permanent_tests": [
+        "sarf/evals/vn00-aggressive-false-closure.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "13d. Production findings (VN-00 public visual ANDON)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-root-entry-pages-transclusion-gates-exceptions-v016-entry",
+      "source": "sarf/SKILL.md:248",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "14. Integration with qamus-highlight",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-sarf-decision-maps-directly-resolved-author-gloss-src",
+      "source": "sarf/SKILL.md:286",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_learner_feedback.py:84",
+        "tools/validate_backfillfull_sarf_nahw_largelexicon.py:6"
+      ],
+      "last_accepted_commit": "f61264c1487ea46ed7c26ca7d2dbb62f011e1bcf",
+      "permanent_tests": [
+        "qamus/examples/learner_feedback.sample.jsonl",
+        "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "Largelexicon / Plan 15 Routing",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-sarf-owned-plan-15-routes-lexicon-entry-needed",
+      "source": "sarf/SKILL.md:51",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/validate_vn00_aggressive_false_closure.py:152"
+      ],
+      "last_accepted_commit": "058d4a8e8b1ca9c156190701086dd0079c58e5c0",
+      "permanent_tests": [
+        "sarf/evals/combining-mark-byte-exact-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "17. Deploy-mechanics the sarf author owns (VN-01 run #32 flywheel)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-single-segment-surface-drop-authored-single-segment-surface",
+      "source": "sarf/SKILL.md:344",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "058d4a8e8b1ca9c156190701086dd0079c58e5c0",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "17. Deploy-mechanics the sarf author owns (VN-01 run #32 flywheel)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-source-backed-retry-impossible-row-almost-truly-impossible",
+      "source": "sarf/SKILL.md:351",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "nahw/rules/context-sense-rules.json:2"
+      ],
+      "last_accepted_commit": "f99a0ebbd820945a056925789b25746c17432035",
+      "permanent_tests": [
+        "nahw/evals/irab-polysemy-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production findings (P4/P5 authored-gloss batch)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-surface-stable-dominant-sense-authoring-works-at-scale",
+      "source": "sarf/SKILL.md:377",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/validate_vn00_aggressive_false_closure.py:152"
+      ],
+      "last_accepted_commit": "058d4a8e8b1ca9c156190701086dd0079c58e5c0",
+      "permanent_tests": [
+        "sarf/evals/combining-mark-byte-exact-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "17. Deploy-mechanics the sarf author owns (VN-01 run #32 flywheel)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-surfacemap-wbw-lookup-absent-display-loc-can-render",
+      "source": "sarf/SKILL.md:347",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_governor.py:173",
+        "tools/fusha_learner_feedback.py:84",
+        "tools/validate_vn00_aggressive_false_closure.py:3"
+      ],
+      "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
+      "permanent_tests": [
+        "nahw/evals/governor-dependency-lattice.jsonl",
+        "qamus/examples/learner_feedback.sample.jsonl",
+        "sarf/evals/vn00-aggressive-false-closure.jsonl"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "13d. Production findings (VN-00 public visual ANDON)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-tanwin-case-endings-plural-suffixes-learner-jargon-diacritic",
+      "source": "sarf/SKILL.md:260",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/validate_backfillfull_sarf_nahw_largelexicon.py:6"
+      ],
+      "last_accepted_commit": "f61264c1487ea46ed7c26ca7d2dbb62f011e1bcf",
+      "permanent_tests": [
+        "qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "Largelexicon / Plan 15 Routing",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-task-mentions-largelexicon-plan-15-qword-denominator-qword",
+      "source": "sarf/SKILL.md:38",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_text_check.py:215",
+        "tools/scan_public_boundary.py:119"
+      ],
+      "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
+      "permanent_tests": [
+        "nahw/evals/public-boundary-scanner-eval.jsonl",
+        "sarf/evals/false-clitic-split-eval.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "16. Morphology candidate lattice (the P2/P2b grammar-checker engine)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-three-distinct-layers-them-apart-1-segmentation-candidate",
+      "source": "sarf/SKILL.md:304",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "12. When to create a Qamus repair candidate",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-token-right-but-entry-wrong-mis-filed-form",
+      "source": "sarf/SKILL.md:199",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_text_check.py:215",
+        "tools/normalize_ar.py:5"
+      ],
+      "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
+      "permanent_tests": [
+        "sarf/evals/false-clitic-split-eval.jsonl",
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "4. Normalization ladder (each rung is for a different job; never display these)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-tools-normalize-ar-py-provides-them-1-raw",
+      "source": "sarf/SKILL.md:97",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/normalize_ar.py:5"
+      ],
+      "last_accepted_commit": "d103b1b66b1f0e879b29d9a823f6fcf29bc24a05",
+      "permanent_tests": [
+        "sarf/evals/qamus-regression-eval.json"
+      ],
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "13c. Production findings (P13 — reference-assisted batch, +694 live)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-true-homographs-share-norm-strict-key-stay-pending",
+      "source": "sarf/SKILL.md:226",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": [
+        "tools/fusha_learner_feedback.py:84"
+      ],
+      "last_accepted_commit": "36687a15fd04e17f61c0a758c31c79e98b8b2d15",
+      "permanent_tests": [
+        "qamus/examples/learner_feedback.sample.jsonl"
+      ],
+      "projector_or_reviewer_consumer": [
+        "tools/project_largelexicon_qamus_hover_candidates.py:20"
+      ],
+      "scope": "13d. Production findings (VN-00 public visual ANDON)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-v003-addendum-root-prose-phrase-glosses-segmentation-regression",
+      "source": "sarf/SKILL.md:267",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "d103b1b66b1f0e879b29d9a823f6fcf29bc24a05",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "13c. Production findings (P13 — reference-assisted batch, +694 live)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-verbose-verb-shape-spread-gloss-improved-concise-certified",
+      "source": "sarf/SKILL.md:231",
+      "status": "accepted"
+    },
+    {
+      "code_implementation": "MISSING",
+      "last_accepted_commit": "MISSING",
+      "permanent_tests": "MISSING",
+      "projector_or_reviewer_consumer": "MISSING",
+      "scope": "Production findings (P4/P5 authored-gloss batch)",
+      "skill": "sarf",
+      "skill_rule_id": "sarf-verified-authored-gloss-may-override-non-primary-spread",
+      "source": "sarf/SKILL.md:381",
+      "status": "candidate"
+    }
+  ],
+  "schema": "fusha/skill-rule-registry@1"
+}
