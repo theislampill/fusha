@@ -1,0 +1,183 @@
+{
+  "anomalies": [],
+  "as_of": "2026-07-12",
+  "authoritative_classifier": {
+    "classes": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5"
+    ],
+    "classifier_semantics_commit": "df89d8c8",
+    "entrypoint": "classify_live_row",
+    "tool": "tools/validate_segment_completeness.py",
+    "tool_commit": "df89d8c8"
+  },
+  "ceiling_direction": "monotonic_non_increasing",
+  "confirmed_defect_carried": {
+    "count": 6,
+    "locs": [
+      "2:40:3",
+      "2:91:3",
+      "2:235:17",
+      "6:84:20",
+      "7:43:33",
+      "9:107:3"
+    ],
+    "note": "ground-truthed confirmed defects from audit@2 that remain UNREPAIRED in the live whitelist (still flagged, byte-unchanged). Carried as debt with review_status=confirmed_defect until their repair wave lands."
+  },
+  "contract": {
+    "ceiling_semantics": "debt_ceiling is the CURRENT count and an upper bound; a re-generated manifest at the SAME manifest_version MUST have count <= previous ceiling. An increase fails closed. The monotonic rule applies PER-MANIFEST-VERSION: a version bump (detector-recall correction) restarts the ceiling and must record the previous ceiling in `regeneration`.",
+    "fail_closed_conditions": [
+      "a newly-flagged row whose canonical_location is not in the manifest (new debt)",
+      "a manifest loc whose live row_hash no longer matches (modified-but-still-invalid)",
+      "total permitted-debt count exceeds debt_ceiling (debt increase)",
+      "an exception/grandfather request for a loc not in the manifest (unknown exception)",
+      "a manifest row missing repair_lane / review_condition (missing repair disposition)",
+      "manifest_content_sha256 mismatch (manifest tampered)"
+    ],
+    "grandfather_rule": "grandfather a live row IFF (canonical_location, row_hash) is present in rich-seg-known-debt.jsonl AND matches byte-for-byte",
+    "repair_lanes": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5"
+    ]
+  },
+  "debt_ceiling": 1452,
+  "excluded_now_valid": {
+    "count": 8,
+    "detail": [
+      {
+        "audit_primary_class": "C3",
+        "audit_row_hash": "59ed05b915c04b183598db8e3120486230f29e97161d4f37839c167e07ce58e3",
+        "canonical_location": "12:82:11",
+        "ground_truthed": true,
+        "hash_changed": true,
+        "live_row_hash": "e04ca1cc1a9b47eccade7fc3f5a8f055c0702d44012eea96b84b164abdeb5406",
+        "reason": "reclassified_clean_by_authoritative_classifier"
+      },
+      {
+        "audit_primary_class": "C3",
+        "audit_row_hash": "d7e718de854290ff3275689c6a9266362889531d9ef9ba0f45691074e0e4d452",
+        "canonical_location": "24:4:13",
+        "ground_truthed": true,
+        "hash_changed": true,
+        "live_row_hash": "f7e251cf0dd143b4edd767474a158c399a47976c623b084adbfa22d8164e51ae",
+        "reason": "reclassified_clean_by_authoritative_classifier"
+      },
+      {
+        "audit_primary_class": "C3",
+        "audit_row_hash": "31437cad5893550621f6ed5103e437692648d6354d1bdaa25a26d3e53dd58059",
+        "canonical_location": "27:49:4",
+        "ground_truthed": true,
+        "hash_changed": true,
+        "live_row_hash": "866133f67e513031f9e7eea4b74257bbd891dcb6b3b8c9f8fef26b426e961391",
+        "reason": "reclassified_clean_by_authoritative_classifier"
+      },
+      {
+        "audit_primary_class": "C3",
+        "audit_row_hash": "dfd4f680e3754d0b10b314ad22cdeb1ebde9940a33e37502e9b810ba05050e49",
+        "canonical_location": "27:49:14",
+        "ground_truthed": true,
+        "hash_changed": true,
+        "live_row_hash": "ac3abbd78ed69c09d00c3aa8693e096d45de7db614a8e0fab6cca297c646d09c",
+        "reason": "reclassified_clean_by_authoritative_classifier"
+      },
+      {
+        "audit_primary_class": "C3",
+        "audit_row_hash": "56336aacf47a459a6d14242926cdb591e5de9590785f4eba6b85d5a8c7341337",
+        "canonical_location": "40:72:4",
+        "ground_truthed": true,
+        "hash_changed": true,
+        "live_row_hash": "64979860175bd221b8b8aac65eaa1726fed5da584a3101c7aa8a633194a5da00",
+        "reason": "reclassified_clean_by_authoritative_classifier"
+      },
+      {
+        "audit_primary_class": "C2",
+        "audit_row_hash": "58fddaa32781511583ad15956352b4d243519525e371c696a70f056fb94da531",
+        "canonical_location": "46:24:4",
+        "ground_truthed": true,
+        "hash_changed": true,
+        "live_row_hash": "6e3e247a6337e41a4aeb4a004da0564478df9327696d83a220995d57429e014d",
+        "reason": "reclassified_clean_by_authoritative_classifier"
+      },
+      {
+        "audit_primary_class": "C2",
+        "audit_row_hash": "5f54a5f553887cc457ac26a42b5bb584986735dfad19f6507ca3c83d1ee60c6c",
+        "canonical_location": "76:23:6",
+        "ground_truthed": true,
+        "hash_changed": true,
+        "live_row_hash": "79aa8c38bc5ad598596619a653f863208660cb84385204ecbefc34296e7b362d",
+        "reason": "reclassified_clean_by_authoritative_classifier"
+      },
+      {
+        "audit_primary_class": "C1",
+        "audit_row_hash": "c61f49cd86037d53017c02c03c3c8f042de583075a1f0111c7efd9a7867ad8de",
+        "canonical_location": "83:26:5",
+        "ground_truthed": true,
+        "hash_changed": true,
+        "live_row_hash": "0b328fc4366e3d9504d56f40738bf9cf2a5a72ee6e64e37c8d44f329aa9a7858",
+        "reason": "reclassified_clean_by_authoritative_classifier"
+      }
+    ],
+    "locs": [
+      "12:82:11",
+      "24:4:13",
+      "27:49:4",
+      "27:49:14",
+      "40:72:4",
+      "46:24:4",
+      "76:23:6",
+      "83:26:5"
+    ],
+    "reason": "audit@2 rows that the authoritative classifier now passes CLEAN against the live whitelist (repaired C3 lane + Wave-0 exemplars). Excluded from debt; the gate must NOT grandfather them (they are valid and evaluated normally)."
+  },
+  "manifest_content_sha256": "7763b675cdc19a9cdf7aa78a7956629a0df8f3faae9bacdcef8be573c7e63387",
+  "manifest_version": 2,
+  "partition_by_primary_class": {
+    "C1": 253,
+    "C2": 175,
+    "C3": 9,
+    "C4": 523,
+    "C5": 492
+  },
+  "partition_by_review_status": {
+    "candidate_flag": 1446,
+    "confirmed_defect": 6
+  },
+  "purpose": "Pinned known-debt manifest for the rich-seg deploy gate. The gate may grandfather a live whitelist row ONLY when its canonical_location AND row_hash EXACTLY match an entry here. Everything else fails closed.",
+  "regeneration": {
+    "manifest_version_bump": "1 -> 2",
+    "new_locs_by_class": {
+      "C2": 48,
+      "C3": 9
+    },
+    "new_locs_count": 57,
+    "previous_classifier_commit": "3d806386",
+    "previous_debt_ceiling": 1395,
+    "primary_reclassified": {
+      "23:90:2": "C5 -> C2 (v3 catch outranks; previous class retained as secondary flag)"
+    },
+    "reason": "detector-recall correction (v2->v3, +58 pre-existing defects newly detected; monotonic rule applies per-manifest-version)",
+    "repair_lane_changes": {
+      "C3": "REOPENED at detector v3 (9 new C3 candidates); the originally repaired C3 locs stay excluded_now_valid (never grandfathered)"
+    }
+  },
+  "report": "rich-seg-known-debt",
+  "rows_with_secondary_flags": 25,
+  "source_audit": {
+    "branch": "rich-seg-audit2",
+    "commit": "3d806386",
+    "report": "rich-seg-audit@2",
+    "rows": 1403
+  },
+  "whitelist": {
+    "path_basename": "wl.jsonl",
+    "rows": 34322,
+    "sha256": "1c06d85a28cb4c2733c1aeb394b15e200e2b483d62b0a740f5cd20d466c0903c",
+    "sha256_16": "1c06d85a28cb4c27"
+  }
+}

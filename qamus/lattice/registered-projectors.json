@@ -1,0 +1,101 @@
+{
+  "schema": "qamus.lattice.registered_projectors.v1",
+  "description": "Data-driven transclusion-lattice projector registrations for T12. Each entry keys a projector to released sarf@2 / nahw@2 skill rule ids and carries a projector-record.v1 registry_entry (validated against qamus/schemas/projector-record.schema.json) plus a declarative projector block. A new @2.1 rule registers a projector by APPENDING an object here whose class_predicate and guards resolve to named callables in tools/lattice_projectors.py -- no code change is required when the predicate/guards are among the shipped declarative set.",
+  "skill_registry_commit": "73566927cdcde788677bdd665e98b98c1cb2a2d3",
+  "gate_authority": "The known-debt manifest ceiling and the renderer completeness gate remain the deploy authorities. Projectors emit CANDIDATE projections only; nothing here mutates the live whitelist.",
+  "registered": [
+    {
+      "projector_id": "sarf.c1_impf_segmentation.v1",
+      "kind": "positive_transclusion",
+      "skill_rule_ids": [
+        "sarf-three-distinct-layers-them-apart-1-segmentation-candidate",
+        "sarf-prefix-shape-not-enough-raw-waw-fa-alif-lam-ma-handed-to-nahw",
+        "sarf-consume-clitic-lattice-rebuild-each-candidate-s-segment"
+      ],
+      "class_predicate": "pred_c1_impf",
+      "guards": [
+        "homograph_surface_ambiguity",
+        "surface_byte_exact",
+        "meta_form56_ta_split",
+        "construction_match"
+      ],
+      "target_population_note": "C1 mudari occurrences carved PFX|STEM|(SUBJ); calibration target population = 254 debt rows.",
+      "registry_entry": {
+        "schema": "qamus.projector_record.v1",
+        "record_type": "registry_entry",
+        "projector_id": "sarf.c1_impf_segmentation.v1",
+        "fact_family": "sarf",
+        "input_fact_types": ["sarf_segmentation"],
+        "output_fact_type": "sarf_segmentation",
+        "compatibility_class": "byte-exact same-surface muDaari occurrences of a certified PFX|STEM|(SUBJ) segmentation whose surface is not homographic across the certified corpus and whose stem carries no derivational-ta split",
+        "defeater_checks": [
+          "homograph_surface_ambiguity",
+          "surface_byte_exact",
+          "meta_form56_ta_split"
+        ],
+        "gate_tier": "two_vote_required",
+        "version": "1.0.0",
+        "resolution_method": "certified_segmentation_byte_exact_transclusion"
+      }
+    },
+    {
+      "projector_id": "sarf.c5_enclitic_segmentation.v1",
+      "kind": "positive_transclusion",
+      "skill_rule_ids": [
+        "sarf-consume-clitic-lattice-rebuild-each-candidate-s-segment",
+        "sarf-tanwin-case-endings-plural-suffixes-learner-jargon-diacritic",
+        "nahw-attached-pronouns-change-wording-but-head-sense-let",
+        "nahw-expose-particle-function-host-plus-attached-plural-pronoun"
+      ],
+      "class_predicate": "pred_c5_enclitic",
+      "guards": [
+        "homograph_surface_ambiguity",
+        "surface_byte_exact",
+        "meta_form56_ta_split",
+        "construction_match"
+      ],
+      "target_population_note": "C5 host+enclitic-pronoun occurrences; calibration target population = 493 debt rows.",
+      "registry_entry": {
+        "schema": "qamus.projector_record.v1",
+        "record_type": "registry_entry",
+        "projector_id": "sarf.c5_enclitic_segmentation.v1",
+        "fact_family": "sarf",
+        "input_fact_types": ["sarf_segmentation"],
+        "output_fact_type": "sarf_segmentation",
+        "compatibility_class": "byte-exact same-surface occurrences of a certified HOST + enclitic-pronoun segmentation whose surface is not homographic across the certified corpus",
+        "defeater_checks": [
+          "homograph_surface_ambiguity",
+          "surface_byte_exact",
+          "meta_form56_ta_split"
+        ],
+        "gate_tier": "two_vote_required",
+        "version": "1.0.0",
+        "resolution_method": "certified_segmentation_byte_exact_transclusion"
+      }
+    },
+    {
+      "projector_id": "sarf.meta_form56_ta_negative.v1",
+      "kind": "negative_meta",
+      "skill_rule_ids": [
+        "sarf-4-derived-form-stem-matching-conservative-form-iv"
+      ],
+      "class_predicate": "pred_any_candidate",
+      "guards": ["meta_form56_ta_split"],
+      "grounding": "DR-1 primary-source grounding: in Form V (tafaCCala) and Form VI (tafaaCala) the initial taa' is a derivational augment that is STEM-INTERNAL; it is never an inflectional/clitic prefix and must never be carved off as a separate segment. This is a RULE-LEVEL (meta-transclusive) negative projector: it does not project rows, it forbids any occurrence-level projection that would split a derivational taa'.",
+      "target_population_note": "Applies across the whole candidate stream as a blocking guard; expected certified-base violations = 0 (clean-base proof).",
+      "registry_entry": {
+        "schema": "qamus.projector_record.v1",
+        "record_type": "registry_entry",
+        "projector_id": "sarf.meta_form56_ta_negative.v1",
+        "fact_family": "sarf",
+        "input_fact_types": ["sarf_segmentation"],
+        "output_fact_type": "sarf_segmentation_block",
+        "compatibility_class": "any candidate projection whose Form V/VI source or projected segmentation splits a derivational stem-internal taa' into a standalone clitic/prefix segment",
+        "defeater_checks": ["meta_form56_ta_split"],
+        "gate_tier": "never_auto_resolve",
+        "version": "1.0.0",
+        "resolution_method": "rule_level_negative_projection"
+      }
+    }
+  ]
+}
