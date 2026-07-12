@@ -1,0 +1,1347 @@
+{
+  "items": [
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "they spend",
+          "label": "V",
+          "nahw_note": "nahw: verbal predicate",
+          "role": "imperfect_plural_verb",
+          "sarf_note": "sarf: imperfect verb with plural subject ending; root ن ف ق · base أَنفَقَ · IV active",
+          "segment_index": 0,
+          "surface": "يُنفِقُونَ"
+        }
+      ],
+      "item_id": "C1-000",
+      "loc": "2:3:8",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "8942966496d888f998c71ce7abce5b4bd5732aa32737fa109e11235458d07d14",
+      "stratum": "seg1",
+      "surface": "يُنفِقُونَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "see",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يُبْصِرُ"
+        },
+        {
+          "class": "qg-subject-pronoun",
+          "gloss_contribution": "they",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "ونَ"
+        }
+      ],
+      "item_id": "C1-001",
+      "loc": "2:17:17",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "14eaf000457883cf0f0269fcba246425942fca2b7c302bb653d20130dfeb0005",
+      "stratum": "seg2",
+      "surface": "يُبْصِرُونَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "comes",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يَأْتِيَ"
+        },
+        {
+          "class": "qg-emphasis",
+          "gloss_contribution": "surely",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "نَّ"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "you all",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 2,
+          "surface": "كُم"
+        }
+      ],
+      "item_id": "C1-002",
+      "loc": "2:38:6",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "47d8b8cee0b64f5116b42c02f3bd81dfa25b277dda75406dcedfee87f710b809",
+      "stratum": "seg3",
+      "surface": "يَأْتِيَنَّكُم"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "they kept rebelling",
+          "label": "V",
+          "nahw_note": "nahw: verb of its clause",
+          "role": "verb",
+          "sarf_note": "sarf: finite verb form; person-prefix and number-suffix are conjugation, one lexical unit",
+          "segment_index": 0,
+          "surface": "يَفْسُقُونَ"
+        }
+      ],
+      "item_id": "C1-003",
+      "loc": "2:59:18",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "5052df37e180da5984cb006482461d6288d2eeec4c04d66ec6ac7220749d7e94",
+      "stratum": "seg1",
+      "surface": "يَفْسُقُونَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "they transgress",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يَعْتَدُونَ"
+        }
+      ],
+      "item_id": "C1-004",
+      "loc": "2:61:59",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "8a0fa21e8c26642bd86ac1c1ec22bf62806019598d5f72971dc7f1eb6e32f43a",
+      "stratum": "seg1",
+      "surface": "يَعْتَدُونَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "they come to you",
+          "label": "",
+          "role": "verb",
+          "segment_index": 0,
+          "surface": "يَأْتُوكُمْ"
+        }
+      ],
+      "item_id": "C1-005",
+      "loc": "2:85:16",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "c4131a756af463b06209b9add696f65f7557c91a1ae42eac32e6ad9888a20dd6",
+      "stratum": "seg1",
+      "surface": "يَأْتُوكُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "you kill",
+          "label": "V",
+          "nahw_note": "nahw: finite verb with addressed plural subject",
+          "role": "verb_stem",
+          "sarf_note": "sarf: imperfect active 2mp from root ق ت ل; base قَتَلَ",
+          "segment_index": 0,
+          "surface": "تقتلون"
+        }
+      ],
+      "item_id": "C1-006",
+      "loc": "2:91:3",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "fe641e0809fdad7725b77782e6150c0a589be6c4213035b8c39eb6980ff6bce3",
+      "stratum": "seg1",
+      "surface": "تقتلون"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "enter",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يَدْخُلُ"
+        },
+        {
+          "class": "qg-subject-pronoun",
+          "gloss_contribution": "they",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "و"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "it",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 2,
+          "surface": "هَآ"
+        }
+      ],
+      "item_id": "C1-007",
+      "loc": "2:114:19",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "f0463d4c21ae009fa6d6a2e8bbffbcef0c09ccb753a2b11768359bc09edc0592",
+      "stratum": "seg3",
+      "surface": "يَدْخُلُوهَآ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "takes",
+          "label": "",
+          "role": "verb",
+          "segment_index": 0,
+          "surface": "يَتَّخِذُ"
+        }
+      ],
+      "item_id": "C1-008",
+      "loc": "2:165:4",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "9c5694f62283fe3c881d44c638aa35f6619d9cfbc795721b0a3d0a1235c72e2c",
+      "stratum": "seg1",
+      "surface": "يَتَّخِذُ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "they spend",
+          "label": "V",
+          "nahw_note": "nahw: verbal predicate",
+          "role": "imperfect_plural_verb",
+          "sarf_note": "sarf: imperfect verb with plural subject ending; root ن ف ق · base أَنفَقَ · IV active",
+          "segment_index": 0,
+          "surface": "يُنفِقُونَ"
+        }
+      ],
+      "item_id": "C1-009",
+      "loc": "2:215:3",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "f5cf9ee7a52733596e7acda87f7ee27c702cb98804d6efc9043aea419a4d5826",
+      "stratum": "seg1",
+      "surface": "يُنفِقُونَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "the two of them fear",
+          "label": "V",
+          "nahw_note": "nahw: verb of its clause",
+          "role": "verb",
+          "sarf_note": "sarf: finite verb form; person-prefix and number-suffix are conjugation, one lexical unit",
+          "segment_index": 0,
+          "surface": "يَخَافَآ"
+        }
+      ],
+      "item_id": "C1-010",
+      "loc": "2:229:18",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "7b4d612e3429a2b80f315d9d9f53a948b0c81672272528fc6bc6121c7dc3744d",
+      "stratum": "seg1",
+      "surface": "يَخَافَآ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "they two return to each other",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يَتَرَاجَعَ"
+        },
+        {
+          "class": "qg-subject-pronoun",
+          "gloss_contribution": "they two",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "آ"
+        }
+      ],
+      "item_id": "C1-011",
+      "loc": "2:230:18",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "c18ad8fd3ef7cac092cc805521e2e887e80c2e2cc6e59817ccc2dd05be85b99e",
+      "stratum": "seg2",
+      "surface": "يَتَرَاجَعَآ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "he makes clear",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يُبَيِّنُ"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "them",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "هَا"
+        }
+      ],
+      "item_id": "C1-012",
+      "loc": "2:230:28",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "81d866ea2e9cceaee2e2a17be429043b5a9ad17ac070b4254d93dcd82f1b5415",
+      "stratum": "seg2",
+      "surface": "يُبَيِّنُهَا"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "they marry",
+          "label": "",
+          "role": "verb",
+          "segment_index": 0,
+          "surface": "يَنكِحْنَ"
+        }
+      ],
+      "item_id": "C1-013",
+      "loc": "2:232:9",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "508a77623072b06383584841c026a75eb96c8125e6de080fa7716a6ed7b3996e",
+      "stratum": "seg1",
+      "surface": "يَنكِحْنَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "he completes",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يُتِمَّ"
+        }
+      ],
+      "item_id": "C1-014",
+      "loc": "2:233:9",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "b11d945b0b2823c4a201386a41de7f8b0ed4d5f02d6515cb0fcb6cd5364d5f52",
+      "stratum": "seg1",
+      "surface": "يُتِمَّ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "they are certain",
+          "label": "",
+          "role": "verb",
+          "segment_index": 0,
+          "surface": "يَظُنُّونَ"
+        }
+      ],
+      "item_id": "C1-015",
+      "loc": "2:249:45",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "50e2b83f79db4881c614dbdf19b46984fe4517630da6a3c2cbe62d6e9b2e6ed8",
+      "stratum": "seg1",
+      "surface": "يَظُنُّونَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "gives life",
+          "label": "",
+          "role": "verb 'how Allah gives life'",
+          "segment_index": 0,
+          "surface": "يُحْىِۦ"
+        }
+      ],
+      "item_id": "C1-016",
+      "loc": "2:259:12",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "21113ffc8d097e1c5580378c3cad110faee8e4336e2db5c86a76aa95372970ec",
+      "stratum": "seg1",
+      "surface": "يُحْىِۦ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "We raise them up",
+          "label": "",
+          "role": "verb+object",
+          "segment_index": 0,
+          "surface": "نُنشِزُهَا"
+        }
+      ],
+      "item_id": "C1-017",
+      "loc": "2:259:53",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "39eb003a58822414e946d1cfc9e8cbf11f00f44606405376eeed43cc458450f8",
+      "stratum": "seg1",
+      "surface": "نُنشِزُهَا"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "they spend",
+          "label": "V",
+          "nahw_note": "nahw: verbal predicate",
+          "role": "imperfect_plural_verb",
+          "sarf_note": "sarf: imperfect verb with plural subject ending; root ن ف ق · base أَنفَقَ · IV active",
+          "segment_index": 0,
+          "surface": "يُنفِقُونَ"
+        }
+      ],
+      "item_id": "C1-018",
+      "loc": "2:265:3",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "75ae0abd649fcafa404ce649383fbfd05282a59d56582b6b030033512476eaae",
+      "stratum": "seg1",
+      "surface": "يُنفِقُونَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "strikes / falls upon",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يُصِبْ"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "it (feminine)",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "هَا"
+        }
+      ],
+      "item_id": "C1-019",
+      "loc": "2:265:21",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "a068c6fe7eeae348be535812f1826e46e6defb036dea9adeeda60c29829c0519",
+      "stratum": "seg2",
+      "surface": "يُصِبْهَا"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "He knows",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يَعْلَمُ"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "it",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "هُۥ"
+        }
+      ],
+      "item_id": "C1-020",
+      "loc": "2:270:11",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "e65f4c42b6ece567ff6df5cc759c6fc806ecc92f832463a2b24a6c234ea96cdd",
+      "stratum": "seg2",
+      "surface": "يَعْلَمُهُۥ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "thinks them",
+          "label": "",
+          "role": "verb + object pronoun",
+          "segment_index": 0,
+          "surface": "يَحْسَبُهُمُ"
+        }
+      ],
+      "item_id": "C1-021",
+      "loc": "2:273:12",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "88a323ad7dc1260fb156a414603976baad415be454b25ded85f216f0a8406f40",
+      "stratum": "seg1",
+      "surface": "يَحْسَبُهُمُ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "consume / devour",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يَأْكُلُ"
+        },
+        {
+          "class": "qg-subject-pronoun",
+          "gloss_contribution": "they",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "ونَ"
+        }
+      ],
+      "item_id": "C1-022",
+      "loc": "2:275:2",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "3d0b8fb7c212f4c3be4057f2ec1f8b18192cbb3a5ed7f3690ada7ef6bed50ba2",
+      "stratum": "seg2",
+      "surface": "يَأْكُلُونَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-conjunction",
+          "gloss_contribution": "and",
+          "label": "CONJ",
+          "nahw_note": "nahw: clause link/relation",
+          "role": "prefix_conjunction",
+          "sarf_note": "sarf: function proclitic; no lexical root",
+          "segment_index": 0,
+          "surface": "وَ"
+        },
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "and let him write",
+          "label": "STEM",
+          "nahw_note": "nahw: finite verb contribution",
+          "role": "verb_stem",
+          "sarf_note": "sarf: finite verb stem from root ك ت ب",
+          "segment_index": 1,
+          "surface": "لْيَكْتُب"
+        }
+      ],
+      "item_id": "C1-023",
+      "loc": "2:282:11",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "79828ab5fe85648e3b2e557c60ab459e21c8248ad1a9e415f464141d7917d811",
+      "stratum": "seg2",
+      "surface": "وَلْيَكْتُب"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "refuses",
+          "label": "V",
+          "nahw_note": "nahw: verb of its clause",
+          "role": "verb",
+          "sarf_note": "sarf: finite verb form; person-prefix and number-suffix are conjugation, one lexical unit",
+          "segment_index": 0,
+          "surface": "يَأْبَ"
+        }
+      ],
+      "item_id": "C1-024",
+      "loc": "2:282:16",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "dda831a196a9c22ef132d31de59c65c504125328e981bb2e3cf54e6a1a14bad8",
+      "stratum": "seg1",
+      "surface": "يَأْبَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-result-fa",
+          "gloss_contribution": "so/then",
+          "label": "FA",
+          "nahw_note": "nahw: clause link/relation",
+          "role": "prefix_result_fa",
+          "sarf_note": "sarf: function proclitic; no lexical root",
+          "segment_index": 0,
+          "surface": "فَ"
+        },
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "so let him write",
+          "label": "STEM",
+          "nahw_note": "nahw: finite verb contribution",
+          "role": "verb_stem",
+          "sarf_note": "sarf: finite verb stem from root ك ت ب",
+          "segment_index": 1,
+          "surface": "لْيَكْتُبْ"
+        }
+      ],
+      "item_id": "C1-025",
+      "loc": "2:282:23",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "ffdff5b9c119cbc959d16a9f4325a47e7afe589814be5ed6e0deb4946bb537dc",
+      "stratum": "seg2",
+      "surface": "فَلْيَكْتُبْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "you grow weary",
+          "label": "V",
+          "nahw_note": "nahw: verb of its clause",
+          "role": "verb",
+          "sarf_note": "sarf: finite verb form; person-prefix and number-suffix are conjugation, one lexical unit",
+          "segment_index": 0,
+          "surface": "تَسْـَٔمُوٓا۟"
+        }
+      ],
+      "item_id": "C1-026",
+      "loc": "2:282:79",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "bca0eb4f51a3b8e4c3e239b42b9b62d1b0de1783b84680b59211b3be0f839831",
+      "stratum": "seg1",
+      "surface": "تَسْـَٔمُوٓا۟"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-result-fa",
+          "gloss_contribution": "so/then",
+          "label": "FA",
+          "nahw_note": "nahw: clause link/relation",
+          "role": "prefix_result_fa",
+          "sarf_note": "sarf: function proclitic; no lexical root",
+          "segment_index": 0,
+          "surface": "فَ"
+        },
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "then let him deliver",
+          "label": "STEM",
+          "nahw_note": "nahw: finite verb contribution",
+          "role": "verb_stem",
+          "sarf_note": "sarf: finite verb stem from root أ د ي",
+          "segment_index": 1,
+          "surface": "لْيُؤَدِّ"
+        }
+      ],
+      "item_id": "C1-027",
+      "loc": "2:283:14",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "9b9ca20eb88709095e9d7c41ebe99e8d1bb57e85269b9fb5528f3e6969354265",
+      "stratum": "seg2",
+      "surface": "فَلْيُؤَدِّ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-conjunction",
+          "gloss_contribution": "and",
+          "label": "CONJ",
+          "nahw_note": "nahw: clause link/relation",
+          "role": "prefix_conjunction",
+          "sarf_note": "sarf: function proclitic; no lexical root",
+          "segment_index": 0,
+          "surface": "وَ"
+        },
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "and let him fear",
+          "label": "STEM",
+          "nahw_note": "nahw: finite verb contribution",
+          "role": "verb_stem",
+          "sarf_note": "sarf: finite verb stem from root و ق ي",
+          "segment_index": 1,
+          "surface": "لْيَتَّقِ"
+        }
+      ],
+      "item_id": "C1-028",
+      "loc": "2:283:18",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "e4573c89e24da4e112eea3daf333b1dba7b0046c2141ef98a8488983684da650",
+      "stratum": "seg2",
+      "surface": "وَلْيَتَّقِ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "He calls to account",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يُحَاسِبْ"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "you (pl.)",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "كُم"
+        }
+      ],
+      "item_id": "C1-029",
+      "loc": "2:284:15",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "80a7c36263fb489a3fb52fca4698147356fa4a440ec27948bcc0cea78c0df7f8",
+      "stratum": "seg2",
+      "surface": "يُحَاسِبْكُم"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "He will love you",
+          "label": "",
+          "role": "verb + object pronoun",
+          "segment_index": 0,
+          "surface": "يُحْبِبْكُمُ"
+        }
+      ],
+      "item_id": "C1-030",
+      "loc": "3:31:7",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "1ac0a959ba7a194343fe1fdf3530591a302c4329584b70d3faa7ffcf6d218417",
+      "stratum": "seg1",
+      "surface": "يُحْبِبْكُمُ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "can there be, will be",
+          "label": "verb of being",
+          "nahw_note": "فعل مضارع ناسخ مرفوع وعلامة رفعه الضمة",
+          "role": "فعل مضارع ناسخ مرفوع",
+          "sarf_note": "فعل مضارع للغائب، أجوف واوي، من باب نَصَرَ، على وزن يَفْعُلُ، من مادة (كون)",
+          "segment_index": 0,
+          "surface": "يَكُونُ"
+        }
+      ],
+      "item_id": "C1-031",
+      "loc": "3:47:4",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "1277190c81395b139d38cae508ba517daa16cb2e2e378cb641f4bcef57367b92",
+      "stratum": "seg1",
+      "surface": "يَكُونُ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "they prostrate",
+          "label": "",
+          "role": "verb in a descriptive clause",
+          "segment_index": 0,
+          "surface": "يَسْجُدُونَ"
+        }
+      ],
+      "item_id": "C1-032",
+      "loc": "3:113:14",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "a2d573622982f8f31ee53d20269bfdb6e47d592aee9618151e09cf043794fd7f",
+      "stratum": "seg1",
+      "surface": "يَسْجُدُونَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "do not grieve",
+          "label": "V",
+          "role": "verb",
+          "segment_index": 0,
+          "surface": "تَحْزَنُوا۟"
+        }
+      ],
+      "item_id": "C1-033",
+      "loc": "3:139:4",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "8f25b9d1e811cad5203620457c10e3b8e0c30ec7175382422b765ba7fc1a032f",
+      "stratum": "seg1",
+      "surface": "تَحْزَنُوا۟"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "touches",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يَمْسَسْ"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "you",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "كُمْ"
+        }
+      ],
+      "item_id": "C1-034",
+      "loc": "3:140:2",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "d969157dee805e51a6a2a4d9f97e9dce29eb4959ada733176e03e3bde71c28e5",
+      "stratum": "seg2",
+      "surface": "يَمْسَسْكُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "he turns back",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يَنقَلِبْ"
+        }
+      ],
+      "item_id": "C1-035",
+      "loc": "3:144:18",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "3ea81bc872847c1c0a964c0323b4efbd9b38ff0556106c60578d66c6631a9cfd",
+      "stratum": "seg1",
+      "surface": "يَنقَلِبْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "do not grieve",
+          "label": "V",
+          "nahw_note": "nahw: verb of its clause",
+          "role": "verb",
+          "sarf_note": "sarf: finite verb form; person-prefix and number-suffix are conjugation, one lexical unit",
+          "segment_index": 0,
+          "surface": "تَحْزَنُوا۟"
+        }
+      ],
+      "item_id": "C1-036",
+      "loc": "3:153:15",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "2cf666a8b793358544d60f31bf43692bb5b214ab7974c71b21be28378fde54ac",
+      "stratum": "seg1",
+      "surface": "تَحْزَنُوا۟"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "they conceal",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يَكْتُمُ"
+        },
+        {
+          "class": "qg-subject-pronoun",
+          "gloss_contribution": "they (masc. pl.)",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "ونَ"
+        }
+      ],
+      "item_id": "C1-037",
+      "loc": "3:167:33",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "148478c88f08b58b7d1520e2384372073719d98f4629bfedd2a7e3f489bdb74f",
+      "stratum": "seg2",
+      "surface": "يَكْتُمُونَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "they are provided for",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يُرْزَقُ"
+        },
+        {
+          "class": "qg-subject-pronoun",
+          "gloss_contribution": "they",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "ونَ"
+        }
+      ],
+      "item_id": "C1-038",
+      "loc": "3:169:13",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "171503709d0e0fee31369439c498bc9c6f8011cb600f60b0d0dfc292089c09e1",
+      "stratum": "seg2",
+      "surface": "يُرْزَقُونَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "join / catch up with",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يَلْحَقُ"
+        },
+        {
+          "class": "qg-subject-pronoun",
+          "gloss_contribution": "they",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "و"
+        },
+        {
+          "class": "qg-particle",
+          "gloss_contribution": "(spelling alif)",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 2,
+          "surface": "ا۟"
+        }
+      ],
+      "item_id": "C1-039",
+      "loc": "3:170:10",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "ed2878ebf48743b340cc46d69271eac8f70f6dc234b72dd9e91f51fc5d9ebb6c",
+      "stratum": "seg3",
+      "surface": "يَلْحَقُوا۟"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "both commit",
+          "label": "VERB",
+          "nahw_note": "nahw: finite verb with dual subject",
+          "role": "verb_stem",
+          "sarf_note": "sarf: imperfect active verb from root أ ت ي with dual subject marking",
+          "segment_index": 0,
+          "surface": "يأتيان"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "it",
+          "label": "OBJ",
+          "nahw_note": "nahw: object of the verb",
+          "role": "object_pronoun",
+          "sarf_note": "sarf: attached 3fs object pronoun",
+          "segment_index": 1,
+          "surface": "ها"
+        }
+      ],
+      "item_id": "C1-040",
+      "loc": "4:16:2",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "a10af6ae222e220783a9c5b29e13979ad8d5d07d42ae1b6a4592988369a2ed79",
+      "stratum": "seg2",
+      "surface": "يأتيانها"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "he multiplies",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يُضَٰعِفْ"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "it (fem.)",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "هَا"
+        }
+      ],
+      "item_id": "C1-041",
+      "loc": "4:40:10",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "913a0994d227b14b563c5b154a6c5a3c29289652a6670d6587f703e9f424f7a0",
+      "stratum": "seg2",
+      "surface": "يُضَٰعِفْهَا"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "curse",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "نَلْعَنَ"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "them",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "هُمْ"
+        }
+      ],
+      "item_id": "C1-042",
+      "loc": "4:47:20",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "d6790b941517bd9d2155c9ab48d3b9af351f1467a4ea64973fc34c79fe8171ff",
+      "stratum": "seg2",
+      "surface": "نَلْعَنَهُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "they make (someone) judge",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يُحَكِّمُو"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "you",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "كَ"
+        }
+      ],
+      "item_id": "C1-043",
+      "loc": "4:65:6",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "81023144d4b44b03982c532842d2e84cc6a353d7a966b1a79537b16202f7a456",
+      "stratum": "seg2",
+      "surface": "يُحَكِّمُوكَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "find",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يَجِدُ"
+        },
+        {
+          "class": "qg-subject-pronoun",
+          "gloss_contribution": "they",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "وا۟"
+        }
+      ],
+      "item_id": "C1-044",
+      "loc": "4:65:12",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "c4381e6db6855b1e22b96128bdb1f2f5cae29b80bcc86f83081125e72ca9ea30",
+      "stratum": "seg2",
+      "surface": "يَجِدُوا۟"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "they feel secure",
+          "label": "V",
+          "nahw_note": "nahw: verb; subject is wāw al-jamāʿa 'they'",
+          "role": "verb",
+          "sarf_note": "sarf: Form I imperfect 3rd-person-masculine-plural from أ م ن (to be safe); the و is the plural subject",
+          "segment_index": 0,
+          "surface": "يَأْمَنُو"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "from you",
+          "label": "you",
+          "nahw_note": "nahw: the party they seek safety from",
+          "role": "object pronoun",
+          "sarf_note": "attached 2nd-person-masculine-plural pronoun",
+          "segment_index": 1,
+          "surface": "كُمْ"
+        }
+      ],
+      "item_id": "C1-045",
+      "loc": "4:91:103",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "4fa31bab370f8ee954aaea9511a4345c7d078db42ef7a1e1e03b7670369ac0d0",
+      "stratum": "seg2",
+      "surface": "يَأْمَنُوكُمْ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-result-fa",
+          "gloss_contribution": "so/then",
+          "label": "FA",
+          "nahw_note": "nahw: function prefix preserved",
+          "role": "prefix_result_or_conjunction",
+          "sarf_note": "sarf: visible proclitic preserved",
+          "segment_index": 0,
+          "surface": "فَ"
+        },
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "to slit",
+          "label": "HOST",
+          "nahw_note": "",
+          "role": "host",
+          "sarf_note": "sarf: host segment",
+          "segment_index": 1,
+          "surface": "لَيُبَتِّكُنَّ"
+        }
+      ],
+      "item_id": "C1-046",
+      "loc": "4:119:4",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "ebc419681345602161ebd29891000b938f2a64b1905b330b2806140756661d83",
+      "stratum": "seg2",
+      "surface": "فَلَيُبَتِّكُنَّ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "he informs",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يُنَبِّئُ"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "them",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "هُمُ"
+        }
+      ],
+      "item_id": "C1-047",
+      "loc": "5:14:21",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "1f9455ee2d1d89cc68a604eca40f0f6ed8304214ffffe85a1abf83c864ff4d11",
+      "stratum": "seg2",
+      "surface": "يُنَبِّئُهُمُ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "they make",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "يَصْنَعُ"
+        },
+        {
+          "class": "qg-subject-pronoun",
+          "gloss_contribution": "they (masc. plural)",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "ونَ"
+        }
+      ],
+      "item_id": "C1-048",
+      "loc": "5:14:25",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "128b984d49dcd7a821644a0ce462f206cfd47fbcbe96c98ab3faa07442576e49",
+      "stratum": "seg2",
+      "surface": "يَصْنَعُونَ"
+    },
+    {
+      "current_segments": [
+        {
+          "class": "qg-result-fa",
+          "gloss_contribution": "so/then",
+          "label": "FA",
+          "nahw_note": "nahw: ḥarf rābiṭ (resumption) linking to the preceding clause",
+          "role": "prefix_result_fa",
+          "sarf_note": "sarf: resumptive fāʼ (ḥarf), function proclitic, no lexical root",
+          "segment_index": 0,
+          "surface": "فَ"
+        },
+        {
+          "class": "qg-lam",
+          "gloss_contribution": "let",
+          "label": "IMPV",
+          "nahw_note": "nahw: lām al-amr jazms the following imperfect verb",
+          "role": "imperative_lam",
+          "sarf_note": "sarf: lām of command (ḥarf), a jussive governor (ḥarf jazm wa-amr)",
+          "segment_index": 1,
+          "surface": "لْ"
+        },
+        {
+          "class": "qg-verb-prefix",
+          "gloss_contribution": "(he/one)",
+          "label": "PFX",
+          "nahw_note": "nahw: 3rd-person imperfect marker",
+          "role": "imperfect_prefix",
+          "sarf_note": "sarf: imperfect agreement prefix yāʼ, 3rd person masculine",
+          "segment_index": 2,
+          "surface": "يَ"
+        },
+        {
+          "class": "qg-verb-stem",
+          "gloss_contribution": "strive",
+          "label": "STEM",
+          "nahw_note": "nahw: majzuum imperfect verb, sukuun muqaddar (iltiqaaʼ al-saakinayn)",
+          "role": "verb_stem",
+          "sarf_note": "sarf: Form VI imperfect stem, baab tafaaʽala, wazn yatafaaʽalu, root n-f-s",
+          "segment_index": 3,
+          "surface": "تَنَافَسِ"
+        }
+      ],
+      "item_id": "C1-049",
+      "loc": "83:26:5",
+      "packet_id": "CALIB-C1@3d80638+1c06d85a",
+      "row_hash": "350be05ac81a631a0654f97d3128e11fead7789ae1bd95c33ad7b4c8cda4780c",
+      "stratum": "seg4plus",
+      "surface": "فَلْيَتَنَافَسِ"
+    }
+  ],
+  "manifest": {
+    "audit_sha": "3d806386",
+    "blind": true,
+    "builder_version": "calibration-packet-builder/1",
+    "candidate_locs_missing_from_whitelist": 0,
+    "candidate_population": {
+      "seg1": 119,
+      "seg2": 116,
+      "seg3": 18,
+      "seg4plus": 1
+    },
+    "candidate_total_present_in_whitelist": 254,
+    "class": "C1",
+    "created_note": "2026-07-12",
+    "item_count": 50,
+    "packet_id": "CALIB-C1@3d80638+1c06d85a",
+    "packet_sha256": "c0ab143f734a5bc34801e39d27ca749c394bba6457fd8289f23586944c2abd62",
+    "packet_sha256_algorithm": "sha256 over canonical JSON of the items array",
+    "row_hash_algorithm": "sha256(json.dumps(row,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode('utf-8'))",
+    "source_whitelist_sha": "1c06d85a",
+    "strata_allocation": {
+      "seg1": 23,
+      "seg2": 23,
+      "seg3": 3,
+      "seg4plus": 1
+    },
+    "strata_definition": {
+      "axis": "segment_count_bucket",
+      "buckets": {
+        "seg1": "1 segment",
+        "seg2": "2 segments",
+        "seg3": "3 segments",
+        "seg4plus": "4 or more segments"
+      },
+      "note": "Stratum is the count of segments in the CURRENT live whitelist row: structural and blind (does not encode any defect/valid disposition)."
+    },
+    "strata_order": [
+      "seg1",
+      "seg2",
+      "seg3",
+      "seg4plus"
+    ]
+  }
+}
