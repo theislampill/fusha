@@ -4984,6 +4984,47 @@ except Exception as _rm21_e:
     check("RM-21 schema-coherence self-test (harness error)", False)
     print("  ", _rm21_e)
 
+# --- SKILL-RELEASE: sarf@2 / nahw@2 skill-release candidate gates (registry / fixtures / drift / rich-seg) ---
+# Wires the four skill-release feature branches into the harness. Each self-test is deterministic, stdlib-only,
+# offline, and fails closed. Reconciled to this file's real conventions (run_text + check).
+try:
+    # Gate 8: versioned skill-rule registry validates (fail-closed self-test + the real committed registry).
+    _sr_reg_st = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_skill_registry.py"),
+                           "--self-test"], timeout=120)
+    check("SKILL-RELEASE gate 8: skill-rule registry validator self-test",
+          _sr_reg_st.returncode == 0 and "skill registry self-test OK" in (_sr_reg_st.stdout or ""))
+    _sr_reg = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_skill_registry.py")], timeout=120)
+    check("SKILL-RELEASE gate 8: skill-rule registry validates (0 errors, no dup ids / dangling)",
+          _sr_reg.returncode == 0 and ", 0 errors" in (_sr_reg.stdout or ""))
+
+    # Gate 9: permanent RED-FIRST skill fixtures (corrected==green, superseded==red-first).
+    _sr_fx = run_text([sys.executable, os.path.join(ROOT, "tools", "test_skill_fixtures.py")], timeout=120)
+    check("SKILL-RELEASE gate 9: permanent red-first skill fixtures pass",
+          _sr_fx.returncode == 0 and "PASS" in (_sr_fx.stdout or ""))
+
+    # Gate 10: skill-drift sentinel (10 drift classes) + deterministic mirror generation. --real must be 0 debt.
+    _sr_drift_st = run_text([sys.executable, os.path.join(ROOT, "tools", "check_skill_drift.py"),
+                             "--self-test"], timeout=120)
+    check("SKILL-RELEASE gate 10: skill-drift self-test (all 10 classes trip red-first, structural invariants hold)",
+          _sr_drift_st.returncode == 0)
+    _sr_drift_real = run_text([sys.executable, os.path.join(ROOT, "tools", "check_skill_drift.py"),
+                               "--real"], timeout=120)
+    check("SKILL-RELEASE gate 10: skill-drift --real reports 0 findings (accepted-untested + stale-installs cleared)",
+          _sr_drift_real.returncode == 0 and "0 finding(s)" in (_sr_drift_real.stdout or ""))
+    _sr_mirror_st = run_text([sys.executable, os.path.join(ROOT, "tools", "generate_skill_mirrors.py"),
+                              "--self-test"], timeout=120)
+    check("SKILL-RELEASE gate 10: deterministic mirror generation self-test (committed == regenerated)",
+          _sr_mirror_st.returncode == 0)
+
+    # Gate 11: rich-seg @2 candidate fixtures (5 sarf + 4 nahw rules; both over-segmentation boundary negatives).
+    _sr_rseg = run_text([sys.executable, os.path.join(ROOT, "tools", "skill_fixtures",
+                                                      "test_skill_fixtures_richseg.py")], timeout=120)
+    check("SKILL-RELEASE gate 11: rich-seg @2 candidate red-first fixtures pass",
+          _sr_rseg.returncode == 0 and "PASS" in (_sr_rseg.stdout or ""))
+except Exception as _sr_e:
+    check("SKILL-RELEASE skill-release candidate gates (harness error)", False)
+    print("  ", _sr_e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)
