@@ -428,6 +428,10 @@
         "id": "governing_entry_analysis"
       },
       {
+        "gate_trigger": "advanced_nahw",
+        "id": "function_word_analysis"
+      },
+      {
         "id": "relation_label"
       },
       {
