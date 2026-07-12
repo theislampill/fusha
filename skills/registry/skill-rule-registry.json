@@ -40,7 +40,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-nahw-6-prefer-phrase-aware-pending-over-wrong-word",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": "MISSING",
       "scope": "The six nahw principles (encode these)",
       "skill": "nahw",
@@ -539,7 +542,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "9e1d3fbae0dbef881dba28cc91fc5a7871b37c29",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-nahw-relative-pronouns-subordinating-conjunctions-purpose-l-m-temporal",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": "MISSING",
       "scope": "Production finding (morphosyntax contract — particles, phrases, clauses)",
       "skill": "nahw",
@@ -568,7 +574,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-nahw-requires-temporal-expression-review-time-noun-attached-time",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": [
         "tools/project_largelexicon_qamus_hover_candidates.py:20"
       ],
@@ -581,7 +590,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-nahw-resolve-construction-uniquely-fixes-sense-otherwise-emit-pending",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": "MISSING",
       "scope": "13. When to resolve vs pending",
       "skill": "nahw",
@@ -592,7 +604,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-nahw-resolve-layer-1-safe-rule-evidence-standalone-preposition",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": "MISSING",
       "scope": "Governor / iʿrāb / dependency candidate lattice (the P2 grammar-checker engine)",
       "skill": "nahw",
@@ -634,7 +649,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "a8a7f68bb1485c1a923067201e3e9b1f502e8f13",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-nahw-similar-preposition-host-plus-pronoun-rows-expose-both",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": "MISSING",
       "scope": "Production finding (VN-00 public visual ANDON)",
       "skill": "nahw",
@@ -948,7 +966,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "17e54199349a3c4b5a44069a251aaa13edc5784b",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-sarf-blank-beats-wrong-root-pattern-lemma-null-root",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": "MISSING",
       "scope": "16. Morphology candidate lattice (the P2/P2b grammar-checker engine)",
       "skill": "sarf",
@@ -989,7 +1010,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "d103b1b66b1f0e879b29d9a823f6fcf29bc24a05",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-sarf-carried-suppress-anger-verb-gloss-entry-repair-candidate",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": [
         "tools/project_largelexicon_qamus_hover_candidates.py:20"
       ],
@@ -1088,7 +1112,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "058d4a8e8b1ca9c156190701086dd0079c58e5c0",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-sarf-correct-morphological-decision-still-fails-ship-surface-bytes",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": [
         "tools/project_largelexicon_qamus_hover_candidates.py:20"
       ],
@@ -1384,7 +1411,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "f99a0ebbd820945a056925789b25746c17432035",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-sarf-quarantine-whole-inflection-family-data-error-quarantine-accusative",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": "MISSING",
       "scope": "Production findings (P4/P5 authored-gloss batch)",
       "skill": "sarf",
@@ -1425,7 +1455,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-sarf-resolve-uncertain-prefer-pending-precise-reason",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": "MISSING",
       "scope": "NEVER DO THIS (wrong-gloss prevention)",
       "skill": "sarf",
@@ -1472,7 +1505,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-sarf-sarf-decision-maps-directly-resolved-author-gloss-src",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": "MISSING",
       "scope": "14. Integration with qamus-highlight",
       "skill": "sarf",
@@ -1519,7 +1555,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "058d4a8e8b1ca9c156190701086dd0079c58e5c0",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-sarf-source-backed-retry-impossible-row-almost-truly-impossible",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": "MISSING",
       "scope": "17. Deploy-mechanics the sarf author owns (VN-01 run #32 flywheel)",
       "skill": "sarf",
@@ -1617,7 +1656,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "567256ae2fa9ef081fef301afff1aacc1b749532",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-sarf-token-right-but-entry-wrong-mis-filed-form",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": "MISSING",
       "scope": "12. When to create a Qamus repair candidate",
       "skill": "sarf",
@@ -1677,7 +1719,10 @@
     {
       "code_implementation": "MISSING",
       "last_accepted_commit": "d103b1b66b1f0e879b29d9a823f6fcf29bc24a05",
-      "permanent_tests": "MISSING",
+      "permanent_tests": [
+        "tools/skill_fixtures/skill_fixtures.jsonl#untested-sarf-verbose-verb-shape-spread-gloss-improved-concise-certified",
+        "tools/test_skill_fixtures.py"
+      ],
       "projector_or_reviewer_consumer": "MISSING",
       "scope": "13c. Production findings (P13 — reference-assisted batch, +694 live)",
       "skill": "sarf",
