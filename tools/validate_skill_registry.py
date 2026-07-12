@@ -41,12 +41,15 @@ SKILLS = {"sarf", "nahw"}
 STATUSES = {"accepted", "candidate", "blocked"}
 REL_TYPES = {"supersedes", "extends", "cites"}
 REL_KINDS = {"registry", "external"}
-# Allowed (version-suffix, status) transitions. @2 v-next may not be `accepted` (unreleased);
-# @1 baseline may not be `blocked`.
+# Allowed (version-suffix, status) transitions. @2 v-next and @2.1 increment may not be `accepted`
+# (unreleased, drafted forward); @1 baseline may not be `blocked`.
 ALLOWED_TRANSITIONS = {
     ("1", "accepted"), ("1", "candidate"),
     ("2", "candidate"), ("2", "blocked"),
+    ("2.1", "candidate"), ("2.1", "blocked"),
 }
+# Recognized version suffixes (the part after '@'), per skill.
+VERSION_SUFFIXES = ("1", "2", "2.1")
 
 
 def _err(errors, code, rid, msg):
@@ -100,7 +103,7 @@ def validate_rows(rows):
         sv = r.get("skill_version")
         skill = r.get("skill")
         ok_sv = (isinstance(sv, str) and skill in SKILLS
-                 and sv in (skill + "@1", skill + "@2"))
+                 and sv in tuple(skill + "@" + suf for suf in VERSION_SUFFIXES))
         if not ok_sv:
             _err(errors, "missing_skill_version", rid,
                  "skill_version %r absent/malformed or disagrees with skill %r" % (sv, skill))
@@ -108,7 +111,7 @@ def validate_rows(rows):
         # invalid_state_transition
         status = r.get("status")
         if ok_sv and status in STATUSES:
-            suffix = sv[-1]
+            suffix = sv.split("@", 1)[1]  # version part after '@' (e.g. "1", "2", "2.1")
             if (suffix, status) not in ALLOWED_TRANSITIONS:
                 _err(errors, "invalid_state_transition", rid,
                      "(%s, %s) is not an allowed transition" % (sv, status))
@@ -256,6 +259,11 @@ def self_test():
     expect("invalid_state_transition (@1 blocked)",
            [_row(skill_rule_id="so-b1", skill_version="sarf@1", status="blocked", gate="x")],
            "invalid_state_transition")
+    # 5c. invalid_state_transition  (@2.1 increment cannot be accepted)
+    expect("invalid_state_transition (@2.1 accepted)",
+           [_row(skill_rule_id="so-inc-acc", skill_version="sarf@2.1", status="accepted",
+                 gate="x", evidence_addresses=["a"])],
+           "invalid_state_transition")
     # 6. missing_skill_version
     expect("missing_skill_version (blank)",
            [_row(skill_version="")],
@@ -287,6 +295,13 @@ def self_test():
     expect_clean("green: blocked @2 rule with no positive example is valid", [
         _row(skill_rule_id="so-qglam", skill_version="sarf@2", status="blocked",
              gate="@2-blocked", evidence_addresses=["x"], positive_examples=[]),
+    ])
+    expect_clean("green: @2.1 increment candidate w/ resolvable extends is valid", [
+        _row(skill_rule_id="sarf-inc-target"),
+        _row(skill_rule_id="so-inc21", skill="nahw", skill_version="nahw@2.1", status="candidate",
+             gate="@2.1-candidate", evidence_addresses=["quran:2:40:3"],
+             relationships=[{"type": "extends", "target_id": "sarf-inc-target",
+                             "target_kind": "registry"}]),
     ])
 
     print("-" * 60)

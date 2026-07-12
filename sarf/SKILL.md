@@ -401,3 +401,61 @@ Operational additions:
   stem each select a distinct Qamus sense.
 - **Gender is data, not a guess.** The corpus carries explicit m/f on nouns; use the entry's gender for agreement
   and participle‑form choice rather than inferring from the tail.
+
+## 18. ṣarf@2.1 — CANDIDATE increment (2026-07-12 calibration cycle) — NOT released; does not amend @2
+
+These rules are **candidate** (drafted forward from the C1/C2/C4/C5 + W13 + DR-1/2/6 + measured-effect
+calibration; Fable adjudicates). Each is written so a deterministic projector can key on it — an explicit
+CONDITION, the PROJECTION it propagates (or the abstention/hold it forces), GUARDS, and DEFEATERS. The
+machine-readable rows (with `projector` blocks + source-addressed evidence + red-first fixtures) live in
+[`qamus/skills/rule-registry-increment-21.jsonl`](../qamus/skills/rule-registry-increment-21.jsonl);
+discriminators in [`tools/skill_fixtures/skill_rules_increment21.py`](../tools/skill_fixtures/skill_rules_increment21.py).
+
+**Projector-ready (deterministic guards / routing / consistency — safe for the lattice):**
+- **`sarf-cross-source-root-conflict-no-majority-vote`** — CONDITION two certified source roots differ after
+  w/y→و/ي normalization (a reviewed-lexicography source giving ألك vs QAC ملك for ملائكة 66:6:12) → PROJECT block certification, emit both
+  candidates, route engine-diverse 2-vote. GUARD normalize before compare; never majority-vote a root.
+- **`sarf-jamid-vs-mushtaqq-routing`** — CONDITION token is جامد/etymology-contested (ملكوت, مثاني, مسكين) →
+  PROJECT route 2-vote, gloss may ship root-silent; مشتق with a certified root → wave-eligible after review.
+  The detector must not message a jāmid token as "derived whole-token".
+- **`sarf-loc-integrity-address-xcheck`** (validator-grade) — CONDITION stated word-index is impossible
+  (4:91:103 in a 32-word āyah) OR mismatches the resolved surface (25:33:2→8, 61:4:3→11, 17:92:2→9, 2:91:3→w23;
+  FIVE independent finds) → PROJECT fail closed before any wave write; reroute mismatches to the addressing lane.
+- **`sarf-imperative-second-person-invariant`** (validator-grade) — CONDITION aspect==imperative and person is
+  not 2nd → PROJECT hard violation (SUBJ gloss must be 2nd person, never "they"). Caught 9/10 C4 hard errors deterministically, no external lookup.
+- **`sarf-completeness-claim-requires-asserted-facts`** — CONDITION learner text claims person/number/mood
+  completeness while the morphline abstains on person or mood → PROJECT swap to the honest-generic variant (523/523 C4).
+- **`sarf-segment-morphline-person-consistency`** — CONDITION distinct person across {PFX-seg, morphline, SUBJ-seg,
+  learner} > 1 (17:12:16 self-contradicts) → PROJECT hard violation; block until reconciled.
+- **`sarf-form-v-vi-ta-is-wazn-augment`** — CONDITION wazn ∈ {تفعّل, تفاعل} with a leading ت → PROJECT keep the ت
+  in the stem (زائد wazn augment, Shadhā al-ʿArf), never peel it as a proclitic. GUARD the inflectional muḍāriʿ ت IS a segment.
+- **`sarf-root-radical-not-clitic`** — CONDITION a suffix-shaped letter (ك/ي/ه/ا/و) is a ROOT RADICAL, final
+  (تهدي ي of ه د ي) or initial (وعد و of و ع د) → PROJECT prevent the clitic peel. The ي-family was 2/2 FP in C5.
+- **`sarf-zero-marker-agreement-no-segment`** — CONDITION subject is mustatir (3ms perfect / imperative) → PROJECT
+  no suffix segment is expected; only an OVERT clitic gets a segment.
+- **`sarf-negated-mention-no-keyword-fire`** — CONDITION a detector keyword ("pronoun/ضمير") sits inside a negation
+  window ("not an attached pronoun", الكبرى) → PROJECT suppress the false fire.
+- **`sarf-epenthetic-ishbaa-waw-not-segment`** — CONDITION ـتُمُو + pronoun and the letter is و (أورثتموها) →
+  PROJECT the و is ishbāʿ, stays with the تم segment. GUARD a genuine واو الجماعة IS its own segment.
+- **`sarf-jam-marker-single-pronoun-segment`** — CONDITION an enclitic pronoun cluster (هم/هن/هما/كم) → PROJECT one
+  pronoun segment carrying the jamʿ letters + a decomposition note, never a bare هـ orphaning the mīm/nūn.
+- **`sarf-within-root-pos-arm`** — CONDITION two candidate roots and exactly one supports the POS reading (قُل →
+  imperative "say" ⇒ ق و ل, excluding ق ل ل) → PROJECT rebind to that root; HALT if 0 or >1 support it.
+- **`sarf-content-hold-absent-ownership-arm`** — CONDITION content token: morphology names a root but no entry
+  usage[].forms documents the surface (ربك, الشياطين) → PROJECT HOLD (review_required); absence of an arm is
+  inventory, not proof; never fabricate a rebind edge.
+- **`sarf-coarse-tier-verb-subject-one-unit`** — CONDITION a whole-token finite verb commits root+form+person and no
+  object pronoun is fused → PROJECT prevent the C1 stem_swallow flag (verb+subject is ONE valid coarse unit per the reviewed-lexicography convention;
+  C1's theory is refuted at 34.1% precision). GUARD a rootless whole-token is still a defect; the OBJECT pronoun always splits.
+
+**Review-gated (linguistic identification needs authoring/2-vote; only the consequence is deterministic):**
+- **`sarf-pattern-never-certifies-root`** — a surface wazn (است/مست/ت-initial ibdāl) NEVER certifies a root;
+  two-tier candidate_root→certified only on an explicit مادة from a reviewed-lexicography source. (استوى→سوي VIII.)
+- **`sarf-weak-whole-token-detector`** — a whole-token verb whose certified root is weak (lafīf/nāqiṣ/ajwaf) and
+  whose weak radicals are absent from the surface (يتوفى, و ف ي Form V, 24 attested) is a completeness defect the
+  ت-prefix allow-lists miss.
+- **`sarf-hamza-initial-disambiguation`** — resolve an أ-initial verb among {1s imperfect, Form IV perfect, Form IV
+  imperative, interrogative particle + verb} before tagging; the lazy "1s or Form IV" disjunction is a BLOCKED output
+  (caused 4/10 C4 hard errors).
+- **`sarf-passive-vocalism-voice-commit`** — ُ-ِ perfect / ُ-َ imperfect vocalism ⇒ commit voice=passive; the
+  "active/passive as context requires" hedge is legal only for an undiacritized/qirāʾāt-split address.

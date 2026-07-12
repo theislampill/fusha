@@ -370,3 +370,37 @@ the key‑aware 2‑vote caught and kept pending: هَدَيْنَا "We guided"
 حَرَّمَ "forbade" (verb) ↔ حُرُم "sacred" (noun); وَلَدٌ "child" (noun) ↔ وَلَدَ "begot" (verb). Lesson: the live
 `norm_strict` key drops the person/voice/POS‑distinguishing harakāt, so a same‑key set must be one *word AND one
 person/POS* before a surface gloss is safe.
+
+## naḥw@2.1 — CANDIDATE increment (2026-07-12 calibration cycle) — NOT released; does not amend @2
+
+These rules are **candidate** (drafted forward from the C1/C4/C5 + W13 + DR-1/DR-6 calibration; Fable
+adjudicates). Each is written for a deterministic projector: explicit CONDITION, PROJECTION, GUARDS,
+DEFEATERS. Machine-readable rows (with `projector` blocks + source-addressed evidence + red-first fixtures)
+are in [`qamus/skills/rule-registry-increment-21.jsonl`](../qamus/skills/rule-registry-increment-21.jsonl);
+discriminators in [`tools/skill_fixtures/skill_rules_increment21.py`](../tools/skill_fixtures/skill_rules_increment21.py).
+
+**Projector-ready (deterministic consequence / guard):**
+- **`nahw-jazm-only-on-mudari`** (HARD invariant) — CONDITION aspect != imperfect and a mood
+  (jussive/subjunctive/indicative) is asserted → PROJECT violation; strip the mood from the perfect/imperative.
+  Mood is a category of the muḍāriʿ ONLY; a mabnī perfect/imperative carries no iʿrāb mood.
+- **`nahw-ma-man-function-per-occurrence`** — CONDITION a مَا/مَن reading is applied from a different occurrence of
+  the same surface (5:116 carries relative مَا AND nāfiya مَا in one āyah) → PROJECT prevent the cross-occurrence
+  propagation; resolve each occurrence on its own local function + scope.
+- **`nahw-la-nahiya-jussive-governor`** — CONDITION the particle is لا الناهية before a muḍāriʿ → PROJECT it governs
+  the verb into jussive and the verb is CONTENT keeping its root. GLOSS-OWNERSHIP corollary: the verb glosses only its
+  own meaning (تحزنوا = "grieve"); the negation belongs to لا, so a token gloss "do not grieve" wrongly imports it.
+- **`nahw-ha-tanbih-not-pronoun`** — CONDITION surface family يا+أيها/أيتها and the segment is ها → PROJECT type it as
+  حرف تنبيه (vocative element), never an attached pronoun clitic.
+- **`nahw-fused-preposition-closed-class-floor`** — CONDITION surface ∈ fused jarr+pronoun inventory (فيها/عليكم/منه)
+  → PROJECT affirm on the function-word floor, do not park in review.
+- **`nahw-lam-qasam-nun-tawkid-finite`** — CONDITION لام + نون التوكيد on an energic verb in an oath-answer frame
+  (فَلَيُبَتِّكُنَّ 4:119:4) → PROJECT gloss as a finite energic future (marfūʿ), BLOCK any dictionary-infinitive/maṣdar
+  gloss ("to slit"). GUARD mood distinguishes qasam (marfūʿ) from لام الأمر (majzūm).
+
+**Review-gated (identification is contextual; the consequence is deterministic once typed):**
+- **`nahw-mood-from-governor`** — mood is decidable from a visible governor (لِ/أَنْ/لَمْ/لَا الناهية/شرط) + final
+  vowel; commit the mood or state an explicit named ambiguity — never "mood context not separately asserted" when a
+  governor is visible (17:12:16 منصوب بأن مضمرة; the وَلْيَكْتُب family is majzūm).
+- **`nahw-lam-prefix-typology`** — the lām prefix has distinct types, each its own segment with its own consequence:
+  لام الأمر (jussive governor), لام التعليل/كي (subjunctive via أن مضمرة), لام الجر (jarr), لام الابتداء/التوكيد
+  (emphasis, no mood effect). Resolve the type before glossing or segmenting.

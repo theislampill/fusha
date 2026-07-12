@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "fusha/skill-rule-registry-row@1",
   "title": "Skill rule registry row",
-  "description": "One versioned rule in the fusha sarf/nahw rule registry. Existing baseline rules are @1; the 2026-07-12 evolved (v-next) rules are @2. Validated fail-closed by tools/validate_skill_registry.py.",
+  "description": "One versioned rule in the fusha sarf/nahw rule registry. Existing baseline rules are @1; the 2026-07-12 evolved (v-next) rules are @2; the 2026-07-12 calibration-cycle increment rules are @2.1 (candidate-only, drafted forward, never amending released @2). Validated fail-closed by tools/validate_skill_registry.py.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -35,8 +35,8 @@
     },
     "skill_version": {
       "type": "string",
-      "pattern": "^(sarf|nahw)@[12]$",
-      "description": "Must agree with `skill`: existing baseline = @1, evolved v-next = @2."
+      "pattern": "^(sarf|nahw)@(1|2|2\\.1)$",
+      "description": "Must agree with `skill`: existing baseline = @1, evolved v-next = @2, calibration-cycle increment = @2.1 (candidate-only)."
     },
     "status": {
       "type": "string",
@@ -103,16 +103,50 @@
     "provenance": {
       "type": "object",
       "description": "Free-form origin metadata (origin, source path, matrix_commit, relationship, coverage_verdict...)."
+    },
+    "projector": {
+      "type": "object",
+      "description": "OPTIONAL lattice/projector sketch. Present on @2.1 (and later) rules that a deterministic transclusion/projection engine can key on. Makes a rule latticeable rather than prose-only.",
+      "additionalProperties": true,
+      "properties": {
+        "readiness": {
+          "type": "string",
+          "enum": ["projector_ready", "review_gated"],
+          "description": "projector_ready = the condition is machine-checkable and the projection deploys deterministically (a guard/routing/consistency projector). review_gated = the linguistic identification needs an authoring/2-vote pass; only the consequence is deterministic once identified."
+        },
+        "condition": {
+          "type": "string",
+          "description": "Machine-checkable trigger (what a projector matches on)."
+        },
+        "projection": {
+          "type": "string",
+          "description": "The fact that propagates when the condition holds (or the abstention/hold that is forced)."
+        },
+        "guards": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Homograph / 2-vote / qirāʾa / provenance guards that must be honored before the projection deploys."
+        },
+        "scope": {
+          "type": "string",
+          "enum": ["surface-match", "root-match", "construction-match", "occurrence-match", "loc-match"],
+          "description": "The keying scope of the projection."
+        }
+      }
     }
   },
   "allOf": [
     {
-      "description": "Allowed (skill_version, status) transitions. @1 baseline may be accepted or candidate; @2 v-next may only be candidate or blocked (not released to accepted).",
-      "if": { "properties": { "skill_version": { "pattern": "@2$" } } },
+      "description": "Allowed (skill_version, status) transitions. @1 baseline may be accepted or candidate; @2 v-next and @2.1 increment may only be candidate or blocked (never released to accepted from this file).",
+      "if": { "properties": { "skill_version": { "pattern": "^(sarf|nahw)@2$" } } },
       "then": { "properties": { "status": { "enum": ["candidate", "blocked"] } } }
     },
     {
-      "if": { "properties": { "skill_version": { "pattern": "@1$" } } },
+      "if": { "properties": { "skill_version": { "pattern": "^(sarf|nahw)@2\\.1$" } } },
+      "then": { "properties": { "status": { "enum": ["candidate", "blocked"] } } }
+    },
+    {
+      "if": { "properties": { "skill_version": { "pattern": "^(sarf|nahw)@1$" } } },
       "then": { "properties": { "status": { "enum": ["accepted", "candidate"] } } }
     }
   ]
