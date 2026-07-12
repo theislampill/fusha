@@ -24,7 +24,8 @@ def build(sample_size: int, out_dir: Path | None = None, commit_full: bool = Fal
         "sample_rows": len(sample),
         "full_rows_available": len(stems),
         "committed_full": commit_full,
-        "claim": "generated Qamus-authored morphology candidates; not arbitrary-text certification",
+        "table_role": "lookup_evidence_baseline",
+        "claim": "documented-form lookup/evidence baseline (sourced surfaces only); not arbitrary-text certification",
     }
 
 

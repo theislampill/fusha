@@ -6,8 +6,10 @@ largelexicon candidate table.
 This directory is the P1 implementation for the qamustyping2 plan. It is small by design: it proves the morphology families needed by the Mode A smoke fixtures before broad lexicon/generator expansion.
 
 It does not vendor external morphology databases, train a model, or claim broad arbitrary-text coverage. The full
-largelexicon table is generated from Qamus-authored repo data and remains a candidate/fact table, not a certified
-paradigm database.
+largelexicon table is the **lookup / evidence baseline (documented forms only)**: every row is a surface lifted
+from an owner/Qamus-authored entry with `pattern/form/features` deliberately null — it contains **no generated
+morphology**. Paradigm-licensed *generated* candidate forms (RM-40) are candidates-never-facts and live in a
+separate, provably disjoint store; they are never merged into this baseline table.
 
 ## Data
 
@@ -18,8 +20,14 @@ paradigm database.
 - `data/compatibility-stem-suffix.jsonl`: allowed stem/suffix pairings for the smoke substrate.
 - `data/patterns.jsonl`: small pattern labels.
 - `data/particles.jsonl`: function-token rows.
-- `data/largelexicon-stems.full.jsonl`: generated Qamus-authored full stem/form
-  candidate table, allowed by `fusha/lexicon/largelexicon/source-clean-table-allowlist.json`.
+- `data/largelexicon-stems.full.jsonl`: the Qamus-authored full stem/form
+  **lookup / evidence baseline** (documented forms only; `table_role:
+  lookup_evidence_baseline`), allowed by
+  `fusha/lexicon/largelexicon/source-clean-table-allowlist.json`.
+- `data/generated-candidates.sample.jsonl`: tiny synthetic sample of RM-40
+  paradigm-generated candidates (candidates-never-facts; disjoint from the
+  baseline). Runtime candidates are written to
+  `qamus/indexes/largelexicon/generated-candidates/`.
 
 ## Tools
 
