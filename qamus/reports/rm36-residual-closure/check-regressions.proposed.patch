@@ -1,0 +1,23 @@
+diff --git a/tools/check_regressions.py b/tools/check_regressions.py
+--- a/tools/check_regressions.py
++++ b/tools/check_regressions.py
+@@ -4832,6 +4832,19 @@ except Exception as _e:
+     check("RM-36 fallback re-verifier self-test (harness error)", False)
+     print("  ", _e)
+ try:
++    _rm36c_dir = os.path.join(ROOT, "qamus", "reports", "rm36-residual-closure")
++    _rm36c_test = run_text([
++        sys.executable, os.path.join(_rm36c_dir, "test_build_rm36_residual_closure.py")
++    ])
++    check("RM-36 residual closure tests", _rm36c_test.returncode == 0)
++    _rm36c_check = run_text([
++        sys.executable, os.path.join(_rm36c_dir, "build_rm36_residual_closure.py"), "--check"
++    ])
++    check("RM-36 residual closure artifacts", _rm36c_check.returncode == 0)
++except Exception as _e:
++    check("RM-36 residual closure harness error", False)
++    print("  ", _e)
++try:
+     _residue = run_text([sys.executable, os.path.join(ROOT, "tools", "resolve_gap_residue_wave.py"), "--self-test"])
+     check("T10 residue + RM-36 demotion self-test (red-first exclusions)", _residue.returncode == 0)
+ except Exception as _e:
