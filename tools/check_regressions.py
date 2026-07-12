@@ -2947,6 +2947,26 @@ try:
 except Exception:
     check("curriculum adjacent-context regression readback runnable", False)
 
+# --- T11 class-2 lane tooling (enrichment, pre-pass, packet builders) ---
+for _script, _args, _marker, _label in (
+    ("test_enrich_rebind_queue.py", [], "OK",
+     "rebind-queue root-lookup enrichment tests"),
+    ("test_funcword_homograph_prepass.py", [], "OK",
+     "function-word homograph pre-pass tests"),
+    ("build_rebind_two_vote_packets.py", ["--self-test"], "SELFTESTS=OK",
+     "rebind two-vote packet builder self-test"),
+    ("build_funcword_two_vote_packets.py", ["--self-test"], "SELF-TEST OK",
+     "function-word two-vote packet builder self-test"),
+):
+    try:
+        _c2 = run_text([sys.executable, os.path.join(ROOT, "tools", _script)]
+                       + _args, timeout=300)
+        _out = (_c2.stdout or "") + (_c2.stderr or "")
+        check(_label, _c2.returncode == 0 and _marker in _out)
+    except Exception as _e:
+        check(_label + " (harness error)", False)
+        print("  ", _e)
+
 for _script, _label in (("test_build_two_vote_packets_wave4.py",
                          "wave-4 selection + packet enrichment fixtures"),
                         ("test_bulk_two_vote_requests.py", "bulk two-vote builder self-test"),
