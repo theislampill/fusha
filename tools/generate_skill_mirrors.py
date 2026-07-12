@@ -27,6 +27,7 @@ CLI:
 """
 import argparse
 import hashlib
+import json
 import os
 import sys
 
@@ -40,6 +41,33 @@ MIRROR_TARGETS = (
     ("claude_ai_pack", "identity", "pack/{skill}/SKILL.md"),
     ("claude_code_install", "frontmatter_name", "fusha-{skill}/SKILL.md"),
     ("local_codex_install", "frontmatter_name", "fusha-{skill}/SKILL.md"),
+)
+
+# Per-target provenance (repo-relative script paths only -- never machine-absolute or production paths).
+MIRROR_SOURCE_META = {
+    "claude_ai_pack": {"generator": "scripts/build_claude_ai_project_pack.py"},
+    "claude_code_install": {"generator": "scripts/install_claude_skills.py",
+                            "regenerator": "tools/generate_skill_mirrors.py"},
+    "local_codex_install": {"generator": "scripts/install_codex_instructions.py",
+                            "regenerator": "tools/generate_skill_mirrors.py"},
+}
+
+# Materialized-mirror copies whose bytes must match the authoritative pin. Paths are ALWAYS repo-relative
+# (never machine-absolute) so nothing production-specific is baked into the tracked map.
+GENERATED_MIRROR_COPIES = (
+    ("claude_ai_pack", "dist/claude-ai/pack/{skill}/SKILL.md"),
+)
+
+# Recorded empirical observations of the local skill installs (content hashes only -- NEVER a filesystem
+# path). The install location is referenced ONLY by its non-production target label; the real absolute
+# install path is resolved at runtime by the installer from an env/base and is deliberately NOT tracked
+# here. The drift sentinel uses these to prove an install is stale (observed != canonical) so it is
+# REPAIRED BY REGENERATION.
+RECORDED_STALE_INSTALL_OBSERVATIONS = (
+    {"target": "local_codex_install", "skill": "nahw",
+     "observed_sha256": "82e7af99e808d5f520503c3ac6fc606ba7a857e73cd438e43b190650b1dd69b8"},
+    {"target": "local_codex_install", "skill": "sarf",
+     "observed_sha256": "b26d7d7721b6f807c9227c4f789862a0a3260d392ed70414fbaeea2d39178b34"},
 )
 
 
@@ -114,6 +142,63 @@ def check_dir(dest, repo=REPO):
     return drifts
 
 
+def build_map(repo=REPO):
+    """Deterministically build the skill-mirror map from the authoritative sources. Every path is
+    repo-relative; no machine-absolute or production-specific literal is ever emitted. Install locations are
+    referenced only by their non-production target label (the real absolute path is resolved at runtime by the
+    installer, never tracked). Fully derivable from the authoritative SKILL.md bytes plus recorded install
+    content-hash observations -- so the tracked map is regenerable, not hand-edited."""
+    texts = {skill: read_source(skill, repo) for skill in SKILLS}
+    auth = {skill: {"path": "%s/SKILL.md" % skill,
+                    "norm_sha256": hashlib.sha256(texts[skill].encode("utf-8")).hexdigest()}
+            for skill in SKILLS}
+    mirrors = []
+    for label, tname, _tmpl in MIRROR_TARGETS:
+        for skill in SKILLS:
+            entry = {"target": label, "skill": skill, "transform": tname,
+                     "expected_norm_sha256": canonical_sha(tname, skill, texts[skill])}
+            entry.update(MIRROR_SOURCE_META.get(label, {}))
+            mirrors.append(entry)
+    tname_by_label = {l: t for (l, t, _1) in MIRROR_TARGETS}
+    duplicate_copies = []
+    for label, tmpl in GENERATED_MIRROR_COPIES:
+        for skill in SKILLS:
+            duplicate_copies.append({"path": tmpl.format(skill=skill), "role": "generated-mirror",
+                                     "skill": skill,
+                                     "sha256": canonical_sha(tname_by_label[label], skill, texts[skill])})
+    known_stale = []
+    for obs in RECORDED_STALE_INSTALL_OBSERVATIONS:
+        skill = obs["skill"]
+        known_stale.append({"target": obs["target"], "skill": skill,
+                            "observed_sha256": obs["observed_sha256"],
+                            "canonical_sha256": canonical_sha("frontmatter_name", skill, texts[skill]),
+                            "fix": "regenerate via scripts/install_codex_instructions.py (never hand-sync)"})
+    return {
+        "schema": "fusha/skill-mirror-map@1",
+        "provenance": ("derived deterministically from the authoritative <skill>/SKILL.md sources by "
+                       "tools/generate_skill_mirrors.py --emit-map; repo-relative paths only, no "
+                       "machine-absolute or production-specific literals; install locations referenced by "
+                       "non-production target label"),
+        "authoritative_sources": auth,
+        "mirrors": mirrors,
+        "duplicate_copies": duplicate_copies,
+        "known_stale_installs": known_stale,
+    }
+
+
+def map_json(repo=REPO):
+    """Canonical deterministic JSON for the map (sorted keys, LF newlines, trailing newline)."""
+    return json.dumps(build_map(repo), indent=2, sort_keys=True, ensure_ascii=False) + "\n"
+
+
+def emit_map(path=None, repo=REPO):
+    dest = path or os.path.join(repo, "skills", "registry", "skill-mirror-map.json")
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
+    with open(dest, "w", encoding="utf-8", newline="\n") as f:
+        f.write(map_json(repo))
+    return dest
+
+
 def _self_test():
     import tempfile
     fails = []
@@ -161,6 +246,36 @@ def _self_test():
     except ValueError:
         pass
 
+    # 7) skill-mirror map is deterministic, repo-relative ONLY (no production/machine-absolute literal), and
+    #    carries exactly the fields the drift sentinel reconciles; regenerated map matches the tracked file.
+    mj1 = map_json(REPO)
+    if map_json(REPO) != mj1:
+        fails.append("map_json must be deterministic")
+    _bs = chr(92)  # backslash, kept out of any contiguous production literal in this source
+    _leak_needles = ("/srv", "srv/" + "dawah", "hermes-" + "workspace", "da" + "wah",
+                     "C:" + _bs + "Users", "C:" + _bs + "workspace", "C:" + "/Users")
+    for needle in _leak_needles:
+        if needle in mj1:
+            fails.append("map leaks production/machine literal %r" % needle)
+    m = build_map(REPO)
+    if set(m["authoritative_sources"]) != set(SKILLS):
+        fails.append("map authoritative_sources must cover both skills")
+    for _sk, meta in m["authoritative_sources"].items():
+        if os.path.isabs(meta["path"]) or ":" in meta["path"]:
+            fails.append("authoritative path must be repo-relative: %r" % meta["path"])
+    for d in m["duplicate_copies"]:
+        if os.path.isabs(d["path"]) or ":" in d["path"]:
+            fails.append("duplicate_copies path must be repo-relative: %r" % d["path"])
+    if len(m["mirrors"]) != len(SKILLS) * len(MIRROR_TARGETS):
+        fails.append("map mirrors count wrong: %d" % len(m["mirrors"]))
+    if len(m["known_stale_installs"]) != len(RECORDED_STALE_INSTALL_OBSERVATIONS):
+        fails.append("map known_stale_installs count wrong")
+    _tracked = os.path.join(REPO, "skills", "registry", "skill-mirror-map.json")
+    if os.path.exists(_tracked):
+        _cur = open(_tracked, encoding="utf-8").read().replace("\r\n", "\n").replace("\r", "\n")
+        if _cur != mj1:
+            fails.append("committed skill-mirror-map.json != regenerated map_json (stale/hand-edited)")
+
     for f in fails:
         print("FAIL " + f)
     if not fails:
@@ -174,6 +289,8 @@ def main():
     ap.add_argument("--emit", metavar="DIR", help="regenerate all mirrors under DIR")
     ap.add_argument("--check", metavar="DIR", help="compare mirrors under DIR to canonical (exit!=0 on drift)")
     ap.add_argument("--print-shas", action="store_true", help="print canonical sha per (skill, transform)")
+    ap.add_argument("--emit-map", metavar="PATH", nargs="?", const="",
+                    help="(re)generate skills/registry/skill-mirror-map.json (repo-relative paths only)")
     ap.add_argument("--self-test", action="store_true")
     a = ap.parse_args()
     if a.self_test:
@@ -185,6 +302,10 @@ def main():
     if a.emit:
         for rel in emit(a.emit):
             print("emit", rel)
+        return 0
+    if a.emit_map is not None:
+        dest = emit_map(a.emit_map or None)
+        print("emit-map", os.path.relpath(dest, REPO).replace(os.sep, "/"))
         return 0
     if a.check:
         drifts = check_dir(a.check)
