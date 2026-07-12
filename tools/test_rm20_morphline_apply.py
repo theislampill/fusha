@@ -144,7 +144,7 @@ class Rm20PositivePathTests(unittest.TestCase):
             self.assertFalse((target / "index.json").exists())
 
     def test_real_frozen_inputs_pass_all_precommit_gates_in_tempdir(self) -> None:
-        if not INPUTS.is_dir():
+        if not (INPUTS / "proposals.jsonl").is_file():
             self.skipTest("workspace-only frozen inputs are absent in a fresh checkout")
         result = subprocess.run(
             [sys.executable, str(APPLY), "--self-test-positive"],
