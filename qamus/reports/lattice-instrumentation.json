@@ -1,0 +1,72 @@
+{
+  "schema": "qamus.lattice.instrumentation.v1",
+  "inputs": {
+    "whitelist_rows": 34322,
+    "whitelist_sha256_16": "1c06d85a28cb4c27",
+    "corpus_tokens": 77881,
+    "uncovered_debt_tokens": 43581,
+    "homograph_surfaces": 2467
+  },
+  "positive_projectors": [
+    {
+      "projector_id": "sarf.c1_impf_segmentation.v1",
+      "kind": "positive_transclusion",
+      "skill_rule_ids": [
+        "sarf-three-distinct-layers-them-apart-1-segmentation-candidate",
+        "sarf-prefix-shape-not-enough-raw-waw-fa-alif-lam-ma-handed-to-nahw",
+        "sarf-consume-clitic-lattice-rebuild-each-candidate-s-segment"
+      ],
+      "gate_tier": "two_vote_required",
+      "certified_source_rows": 679,
+      "distinct_certified_source_surfaces": 381,
+      "reachable_uncovered_rows": 1020,
+      "auto_candidates": 215,
+      "routed_two_vote": 805,
+      "blocked_by_guard": {},
+      "acceleration_rows_per_source_surface": 2.6772
+    },
+    {
+      "projector_id": "sarf.c5_enclitic_segmentation.v1",
+      "kind": "positive_transclusion",
+      "skill_rule_ids": [
+        "sarf-consume-clitic-lattice-rebuild-each-candidate-s-segment",
+        "sarf-tanwin-case-endings-plural-suffixes-learner-jargon-diacritic",
+        "nahw-attached-pronouns-change-wording-but-head-sense-let",
+        "nahw-expose-particle-function-host-plus-attached-plural-pronoun"
+      ],
+      "gate_tier": "two_vote_required",
+      "certified_source_rows": 4822,
+      "distinct_certified_source_surfaces": 1725,
+      "reachable_uncovered_rows": 8027,
+      "auto_candidates": 1242,
+      "routed_two_vote": 6785,
+      "blocked_by_guard": {},
+      "acceleration_rows_per_source_surface": 4.6533
+    }
+  ],
+  "negative_meta_projectors": [
+    {
+      "projector_id": "sarf.meta_form56_ta_negative.v1",
+      "kind": "negative_meta",
+      "skill_rule_ids": [
+        "sarf-4-derived-form-stem-matching-conservative-form-iv"
+      ],
+      "gate_tier": "never_auto_resolve",
+      "form56_certified_base_rows": 47,
+      "certified_base_ta_split_violations": 6,
+      "certified_base_ta_split_locs": [
+        "2:259:58",
+        "4:115:7",
+        "9:114:12",
+        "11:56:2",
+        "52:33:3",
+        "69:44:2"
+      ],
+      "candidate_projections_blocked": 0,
+      "clean_base_proof": false,
+      "note": "certified-base rows where a Form V perfect derivational taa' is carved as a verb_prefix (stem lost its augment); FLAGGED for owner review under the never_auto_resolve gate -- the lattice does not modify certified content"
+    }
+  ],
+  "ledger_rows_written": 9047,
+  "ledger_rows_total": 9047
+}
