@@ -12,6 +12,30 @@
       "pattern": "^\\d{1,3}:\\d{1,3}:\\d{1,3}$",
       "description": "Quran token address S:A:W."
     },
+    "fact_ids": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" } },
+    "status": { "type": "string", "minLength": 1 },
+    "source_address": {
+      "type": "object",
+      "required": ["address", "source_kind"],
+      "additionalProperties": false,
+      "properties": {
+        "address": { "type": "string", "minLength": 1 },
+        "source_kind": { "type": "string", "minLength": 1 }
+      }
+    },
+    "materialization_target": {
+      "type": "object",
+      "required": ["artifact", "field", "live_mutation_allowed"],
+      "additionalProperties": false,
+      "properties": {
+        "artifact": { "type": "string", "minLength": 1 },
+        "field": { "type": "string", "minLength": 1 },
+        "live_mutation_allowed": { "const": false }
+      }
+    },
+    "producer": { "type": "string", "minLength": 1 },
+    "projector_id": { "type": "string", "pattern": "^[A-Za-z0-9._:-]+$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
     "wbw_loc": {
       "type": "string",
       "pattern": "^wbw:\\d{1,3}:\\d{1,3}:\\d{1,3}$",

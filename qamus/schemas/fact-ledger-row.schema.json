@@ -179,6 +179,15 @@
       "pattern": "^sha256:[0-9a-f]{64}$",
       "type": "string"
     },
+    "fact_ids": {
+      "description": "Optional additive lineage carrier for fixture projections; historical fact rows remain valid without it.",
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
     "fact_type": {
       "description": "Open fact-type identifier. Known v1 types and gate-trigger mappings are registered in x-fact-type-registry; unknown future identifiers remain structurally valid.",
       "minLength": 1,
@@ -191,6 +200,19 @@
       },
       "type": "array"
     },
+    "materialization_target": {
+      "additionalProperties": false,
+      "description": "Optional fixture-only materialization address; never an apply authorization.",
+      "properties": {
+        "artifact": { "minLength": 1, "type": "string" },
+        "field": { "minLength": 1, "type": "string" },
+        "live_mutation_allowed": { "const": false }
+      },
+      "required": ["artifact", "field", "live_mutation_allowed"],
+      "type": "object"
+    },
+    "producer": { "minLength": 1, "type": "string" },
+    "projector_id": { "pattern": "^[A-Za-z0-9._:-]+$", "type": "string" },
     "provenance": {
       "additionalProperties": false,
       "properties": {
@@ -379,6 +401,11 @@
           "type": "null"
         }
       ]
+    },
+    "status": { "minLength": 1, "type": "string" },
+    "version": {
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "type": "string"
     }
   },
   "required": [
