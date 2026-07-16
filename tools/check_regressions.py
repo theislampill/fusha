@@ -5144,6 +5144,38 @@ except Exception as _fd_compiler_e:
     check("F-D shared compiler gates (harness error)", False)
     print("  ", _fd_compiler_e)
 
+# F-B/F-C: canonical occurrence-to-appearance index.  The self-test is red-first
+# (same-loc fork must fail; same-surface different-loc pair is allowed) and the
+# real check binds the committed index to the sibling read-only whitelist.
+try:
+    _idx_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_appearance_parity.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "F-B/F-C occurrence appearance parity red-first self-test",
+        _idx_self.returncode == 0
+        and "APPEARANCE PARITY SELF-TEST PASS" in (_idx_self.stdout or ""),
+    )
+    _idx_real = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_appearance_parity.py"),
+        "--index",
+        os.path.join(ROOT, "qamus", "indexes", "occurrence-appearances.jsonl"),
+        "--whitelist",
+        os.path.join(ROOT, "..", "data", "rh_live_01_beta_whitelist.jsonl"),
+    ], timeout=120)
+    check(
+        "F-B/F-C committed occurrence appearance index parity validates",
+        _idx_real.returncode == 0
+        and "divergent canonical locations: 0" in (_idx_real.stdout or "")
+        and "APPEARANCE PARITY PASS" in (_idx_real.stdout or ""),
+    )
+except Exception as _idx_e:
+    check("F-B/F-C occurrence appearance parity gates (harness error)", False)
+    print("  ", _idx_e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

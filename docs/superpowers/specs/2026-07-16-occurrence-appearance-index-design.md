@@ -22,7 +22,7 @@ The projection hash is SHA-256 over canonical JSON containing exactly `segments`
 
 ## Validation and proof
 
-`tools/validate_appearance_parity.py` validates record shape, count fields, hash syntax, optional per-appearance hashes, duplicate `loc` records, and source rows supplied through `--whitelist`. A repeated `loc` with divergent hashes fails. Different `loc` values with the same normalized surface and ayah context are intentionally allowed and are tested explicitly with `39:63:3`/`22:18:9`.
+`tools/validate_appearance_parity.py` validates record shape, count fields, hash syntax, optional per-appearance hashes, duplicate `loc` records, and source rows supplied through `--whitelist`. A repeated `loc` with divergent hashes fails. Different `loc` values with the same normalized surface, including the `39:63:3`/`22:18:9` cross-ayah pair, are intentionally allowed.
 
 The validator's self-test is red-first: a synthetic same-`loc` fork must fail, while a same-surface/different-`loc` pair must pass. The real invocation reports source row count, duplicate analysis count, and unresolved entry refs without claiming linguistic correctness, browser impressions, or exact word emphasis where the source lacks it.
 

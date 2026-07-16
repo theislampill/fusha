@@ -10,10 +10,10 @@
 
 ## Global Constraints
 
-- Use `C:\workspace\ai\in\andon-projection\idx-wt` only; preserve the no-push boundary.
+- Use the user-provided linked checkout only; preserve the no-push boundary.
 - Commit messages use the `idx:` prefix.
 - Read the sibling `data/rh_live_01_beta_whitelist.jsonl` as the reader surface; do not mutate it or `entries.jsonl`.
-- Use one canonical record per `loc`; identical normalized surface plus ayah context at different `loc` values remains allowed.
+- Use one canonical record per `loc`; identical normalized surfaces at different `loc` values, including across ayahs, remain allowed.
 - Projection hashes cover exactly `segments`, `glosses`, `morphline`, `root`, and `facts`.
 - Entry-store ayah-only refs are not projected to every word without an entry-page source relationship; unresolved attribution is reported.
 - JSONL is UTF-8, one object per line, sorted deterministically, with a trailing newline.
