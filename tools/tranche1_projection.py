@@ -15,6 +15,7 @@ from typing import Any, Dict, Iterable, List, Tuple
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from tools import build_phase4_apply_readiness_manifest
 from tools import fact_ledger, fact_projectors
 
 
@@ -73,6 +74,13 @@ def _write_jsonl(path: Path, rows: Iterable[Dict[str, Any]]) -> None:
     with path.open("w", encoding="utf-8", newline="\n") as handle:
         for row in rows:
             handle.write(canonical_json(row) + "\n")
+
+
+def _write_json(path: Path, row: Dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
+        json.dump(row, handle, ensure_ascii=False, sort_keys=True, indent=2)
+        handle.write("\n")
 
 
 def _load_policy(path: Path) -> Dict[str, Any]:
@@ -605,6 +613,105 @@ def _field_mappings(source_row: Dict[str, Any], candidate: bool) -> List[Dict[st
     } for index, segment in enumerate(source_row["segments"])]
 
 
+def _apply_plan_rows(projections: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    rows = []
+    for projection in projections:
+        loc = projection["canonical_quran_loc"]
+        digest = hashlib.sha256(("tranche1:" + loc).encode("utf-8")).hexdigest()
+        parse_id = "parse:" + digest[:24]
+        rows.append({
+            "id": "phase4-hover-decision-plan:%s:%s" % (loc.replace(":", "_"), digest[:8]),
+            "phase": "phase4_hover_decision_plan",
+            "source_phase": "tranche1_fixture_candidate",
+            "status": "planned_not_applied",
+            "parse_id": parse_id,
+            "identity": {
+                "quran_loc": "quran:" + loc,
+                "wbw_loc": "wbw:" + loc,
+                "parse_id": parse_id,
+                "surface_sample": projection["surface"],
+            },
+            "public_hover": {
+                "gloss": projection["public_gloss"],
+                "src": "qamus",
+                "kind": "authored",
+                "lang": "en",
+            },
+            "token_decision_preview": {
+                "loc": loc,
+                "gloss": projection["public_gloss"],
+                "src": "qamus",
+                "kind": "authored",
+                "lang": "en",
+            },
+            "safe_scope": "token_only_fixture",
+            "reason_agreement_key": "tranche1-fixture-candidate-not-certified",
+            "fact_ids": projection["fact_ids"],
+            "producer": projection["producer"],
+            "projector_id": projection["projector_id"],
+            "version": projection["version"],
+            "apply_policy": {
+                "apply_allowed": False,
+                "live_mutation_allowed": False,
+                "closure_claim_allowed": False,
+                "append_only_ledger_required": True,
+                "requires_backup_rebuild_health_readback_before_apply": True,
+                "identity": "quran:S:A:W plus wbw:S:A:W; parse key is not primary identity",
+                "public_boundary": "src=qamus, kind=authored, lang=en; no external provenance",
+                "component_candidates_can_certify": False,
+                "raw_surface_identity_allowed": False,
+                "parse_key_primary_identity": False,
+            },
+        })
+    return rows
+
+
+def _human_review_packet(
+    queue: List[Dict[str, Any]], source_rows: Dict[str, Dict[str, Any]]
+) -> Dict[str, Any]:
+    questions = {
+        "unresolved": "Choose the typed compatibility or legacy rationale for the fused versus segmented same-surface rows.",
+        "source_gap": "Provide or reject occurrence-level typed evidence before any singular, template, root, or ending claim is authored.",
+        "producer_pending": "Provide a source-addressed segmentation before replacing the generic whole-token segment.",
+        "syntax_pending": "Provide governor and ending evidence before any case or syntactic role is authored.",
+    }
+    rows = []
+    for queued in queue:
+        loc = queued["loc"]
+        source = source_rows[loc]
+        rows.append({
+            "row_id": "tranche1-review-" + loc.replace(":", "-"),
+            "entry_id": source.get("entry_id") or "tranche1-entry-" + loc.replace(":", "-"),
+            "card_id": "tranche1-card-" + str(source.get("card_ref") or ":".join(loc.split(":")[:2])).replace(":", "-"),
+            "surface": queued["surface"],
+            "exact_question": questions[queued["status"]],
+            "required_evidence": [
+                "exact source-addressed row",
+                "typed fact or explicit unresolved rationale",
+                "review decision with blocker disposition",
+            ],
+            "allowed_decisions": ["accept", "reject", "revise", "defer_with_reason"],
+            "on_accept": "Record the reviewed fact or rationale as a new fixture candidate; do not apply it live.",
+            "on_reject": "Keep the occurrence in the typed queue and record the rejection reason.",
+            "status": queued["status"],
+            "blocker": queued["blocker"],
+            "route": queued["route"],
+            "fact_ids": queued["fact_ids"],
+            "producer": queued["producer"],
+            "projector_id": queued["projector_id"],
+            "version": queued["version"],
+            "live_mutation_allowed": False,
+        })
+    return {
+        "schema": "qamus/human-review-packet@1",
+        "packet_id": "tranche1-eight-canary-unresolved",
+        "reviewer_role": "owner",
+        "max_packet_size": 25,
+        "fixture_only": True,
+        "rows": rows,
+    }
+
+
 def compile_tranche(
     whitelist_path: Path,
     policy_path: Path,
@@ -783,6 +890,19 @@ def compile_tranche(
     for name, rows in artifacts.items():
         _write_jsonl(out_dir / name, rows)
 
+    apply_plan = _apply_plan_rows(projections)
+    apply_plan_path = out_dir / "apply-plan.jsonl"
+    _write_jsonl(apply_plan_path, apply_plan)
+    packet_path = out_dir / "human-review-packet.json"
+    _write_json(packet_path, _human_review_packet(queue, source_by_loc))
+    manifest_path = out_dir / "apply-readiness-manifest.json"
+    build_phase4_apply_readiness_manifest.build_manifest(
+        str(apply_plan_path),
+        str(manifest_path),
+        source_corpus=str(whitelist_path),
+        source_commit=source_commit,
+    )
+
     return {
         "schema": "qamus.tranche1_compile_summary.v1",
         "canonical_count": len(normalized),
@@ -794,7 +914,13 @@ def compile_tranche(
         "output_dir": str(out_dir),
         "artifact_hashes": {
             name: raw_hash((out_dir / name).read_text(encoding="utf-8"))
-            for name in ["source-canaries.jsonl", *artifacts]
+            for name in [
+                "source-canaries.jsonl",
+                *artifacts,
+                "apply-plan.jsonl",
+                "human-review-packet.json",
+                "apply-readiness-manifest.json",
+            ]
         },
     }
 

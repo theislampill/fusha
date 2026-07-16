@@ -18,6 +18,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCHEMA = os.path.join(ROOT, "qamus", "schemas", "phase4-apply-readiness-manifest.schema.json")
 MANIFEST_ID = re.compile(r"^phase4-apply-readiness:[0-9a-f]{16}$")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
+SOURCE_COMMIT = re.compile(r"^[0-9a-f]{40}$")
 FORBIDDEN_PUBLIC_LABELS = (
     "informed_by",
     "mcp",
@@ -87,6 +88,11 @@ def sha256_file(path):
     return digest.hexdigest()
 
 
+def jsonl_row_count(path):
+    with io.open(path, encoding="utf-8") as handle:
+        return sum(1 for line in handle if line.strip())
+
+
 def manifest_text_leaks(row):
     text = json.dumps(row, ensure_ascii=False).lower()
     return [label for label in FORBIDDEN_PUBLIC_LABELS if label in text]
@@ -154,6 +160,45 @@ def validate_plan_match(row, plan_jsonl, errors):
         _err(errors, "source_plan.row_count does not match plan_jsonl")
 
 
+def validate_source_corpus(row, source_corpus, source_commit, errors):
+    source = row.get("source_corpus")
+    if source is None:
+        if source_corpus is not None or source_commit is not None:
+            _err(errors, "source_corpus manifest block is required for requested source verification")
+        return
+    if not isinstance(source, dict):
+        _err(errors, "source_corpus must be an object")
+        return
+    artifact = str(source.get("artifact") or "")
+    if not artifact or "/" in artifact or "\\" in artifact:
+        _err(errors, "source_corpus.artifact must be a basename, not a path")
+    if not SHA256.fullmatch(str(source.get("sha256") or "")):
+        _err(errors, "source_corpus.sha256 must be a sha256 hex digest")
+    if not isinstance(source.get("row_count"), int) or source.get("row_count") <= 0:
+        _err(errors, "source_corpus.row_count must be positive")
+    if not SOURCE_COMMIT.fullmatch(str(source.get("source_commit") or "")):
+        _err(errors, "source_corpus.source_commit must be a 40-character lowercase Git SHA")
+    if source.get("source_commit_scope") != "fusha_checkout":
+        _err(errors, "source_corpus.source_commit_scope must be fusha_checkout")
+    if source.get("verification_status") != "verified_read_only_snapshot":
+        _err(errors, "source_corpus.verification_status must be verified_read_only_snapshot")
+    if source.get("mutation_performed") is not False:
+        _err(errors, "source_corpus.mutation_performed must be false")
+
+    if source_corpus is not None:
+        if not os.path.isfile(source_corpus):
+            _err(errors, "source_corpus path does not exist: %s" % source_corpus)
+        else:
+            if artifact != os.path.basename(source_corpus):
+                _err(errors, "source_corpus.artifact does not match source corpus basename")
+            if source.get("sha256") != sha256_file(source_corpus):
+                _err(errors, "source_corpus.sha256 does not match source corpus")
+            if source.get("row_count") != jsonl_row_count(source_corpus):
+                _err(errors, "source_corpus.row_count does not match source corpus")
+    if source_commit is not None and source.get("source_commit") != source_commit:
+        _err(errors, "source_corpus.source_commit does not match --source-commit")
+
+
 def validate_excluded_tranche_rows(row, source_tranche_jsonl, errors):
     excluded = row.get("excluded_tranche_rows")
     if excluded is None:
@@ -207,7 +252,13 @@ def validate_excluded_tranche_rows(row, source_tranche_jsonl, errors):
             _err(errors, "excluded_tranche_rows.sample_excluded[%d].required_gate must be non-empty" % idx)
 
 
-def validate(path, plan_jsonl=None, source_tranche_jsonl=None):
+def validate(
+    path,
+    plan_jsonl=None,
+    source_tranche_jsonl=None,
+    source_corpus=None,
+    source_commit=None,
+):
     errors = []
     if not os.path.exists(SCHEMA):
         _err(errors, "schema missing: %s" % SCHEMA)
@@ -248,6 +299,7 @@ def validate(path, plan_jsonl=None, source_tranche_jsonl=None):
     validate_public_boundary(row, errors)
     validate_required_gates(row, errors)
     validate_excluded_tranche_rows(row, source_tranche_jsonl, errors)
+    validate_source_corpus(row, source_corpus, source_commit, errors)
 
     rollback = row.get("rollback") or {}
     if rollback.get("required") is not True:
@@ -337,19 +389,44 @@ def main():
     parser.add_argument("manifest_json", nargs="?")
     parser.add_argument("--plan-jsonl")
     parser.add_argument("--source-tranche-jsonl")
+    parser.add_argument("--source-corpus")
+    parser.add_argument("--source-commit")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
     if args.self_test:
         raise SystemExit(self_test())
     if not args.manifest_json:
         parser.error("manifest_json is required unless --self-test is used")
-    count, errors = validate(args.manifest_json, args.plan_jsonl, args.source_tranche_jsonl)
+    count, errors = validate(
+        args.manifest_json,
+        args.plan_jsonl,
+        args.source_tranche_jsonl,
+        args.source_corpus,
+        args.source_commit,
+    )
     print("checked %d Phase 4 apply-readiness manifest" % count)
     if errors:
         print("FAIL")
         for err in errors:
             print("- %s" % err)
         raise SystemExit(1)
+    manifest = read_json(args.manifest_json)
+    source = manifest.get("source_corpus")
+    if source:
+        print(
+            "verified source corpus %s rows=%d sha256=%s status=%s"
+            % (
+                source["artifact"],
+                source["row_count"],
+                source["sha256"],
+                source["verification_status"],
+            )
+        )
+        print(
+            "verified source commit %s scope=%s"
+            % (source["source_commit"], source["source_commit_scope"])
+        )
+    print("status=%s apply_authorized=false live_mutation_allowed=false" % manifest["status"])
     print("PASS — Phase 4 apply-readiness manifest is source-only and non-mutating")
 
 

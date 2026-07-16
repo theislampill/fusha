@@ -78,6 +78,49 @@
         }
       }
     },
+    "source_corpus": {
+      "type": "object",
+      "required": [
+        "artifact",
+        "sha256",
+        "row_count",
+        "source_commit",
+        "source_commit_scope",
+        "verification_status",
+        "mutation_performed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "artifact": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "[/\\\\]"
+          }
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "row_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "source_commit_scope": {
+          "const": "fusha_checkout"
+        },
+        "verification_status": {
+          "const": "verified_read_only_snapshot"
+        },
+        "mutation_performed": {
+          "const": false
+        }
+      }
+    },
     "truth_owners": {
       "type": "object",
       "required": [

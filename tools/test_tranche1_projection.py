@@ -267,5 +267,66 @@ class TrancheValidatorTests(unittest.TestCase):
             self.assertTrue(any("output hash" in error for error in errors), errors)
 
 
+class TrancheApplyGateTests(unittest.TestCase):
+    def compile_fixture(self, out_dir: Path) -> None:
+        from tools import tranche1_projection
+
+        tranche1_projection.compile_tranche(
+            WHITELIST,
+            FIXTURE_DIR / "canary-policy.json",
+            out_dir,
+            SOURCE_COMMIT,
+        )
+
+    def test_manifest_records_and_verifies_corpus_snapshot(self) -> None:
+        from tools import validate_phase4_apply_readiness_manifest
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            out_dir = Path(temp_dir)
+            self.compile_fixture(out_dir)
+            manifest_path = out_dir / "apply-readiness-manifest.json"
+            manifest = read_json(manifest_path)
+            self.assertEqual("pre_apply_not_authorized", manifest["status"])
+            self.assertEqual(34323, manifest["source_corpus"]["row_count"])
+            self.assertEqual(
+                "5805cc9f3b3c98f5e2b6209871f106d708dc42848b135e780531cc8b2e38ac6e",
+                manifest["source_corpus"]["sha256"],
+            )
+            count, errors = validate_phase4_apply_readiness_manifest.validate(
+                str(manifest_path),
+                str(out_dir / "apply-plan.jsonl"),
+                source_corpus=str(WHITELIST),
+                source_commit=SOURCE_COMMIT,
+            )
+            self.assertEqual(1, count)
+            self.assertEqual([], errors)
+
+    def test_manifest_rejects_source_commit_drift(self) -> None:
+        from tools import validate_phase4_apply_readiness_manifest
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            out_dir = Path(temp_dir)
+            self.compile_fixture(out_dir)
+            _count, errors = validate_phase4_apply_readiness_manifest.validate(
+                str(out_dir / "apply-readiness-manifest.json"),
+                str(out_dir / "apply-plan.jsonl"),
+                source_corpus=str(WHITELIST),
+                source_commit="0" * 40,
+            )
+            self.assertTrue(any("source_commit" in error for error in errors), errors)
+
+    def test_gate_artifacts_are_bounded_and_non_authorizing(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            out_dir = Path(temp_dir)
+            self.compile_fixture(out_dir)
+            plan = read_jsonl(out_dir / "apply-plan.jsonl")
+            packet = read_json(out_dir / "human-review-packet.json")
+            self.assertEqual(4, len(plan))
+            self.assertTrue(all(row["status"] == "planned_not_applied" for row in plan))
+            self.assertTrue(all(row["apply_policy"]["apply_allowed"] is False for row in plan))
+            self.assertEqual(4, len(packet["rows"]))
+            self.assertEqual(25, packet["max_packet_size"])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

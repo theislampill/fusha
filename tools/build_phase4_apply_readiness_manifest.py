@@ -11,6 +11,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import tempfile
 
 
@@ -53,6 +54,32 @@ def sha256_file(path):
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def jsonl_row_count(path):
+    with io.open(path, encoding="utf-8") as handle:
+        return sum(1 for line in handle if line.strip())
+
+
+def source_corpus_summary(source_corpus, source_commit):
+    if not source_corpus or not source_commit:
+        raise ValueError("source_corpus and source_commit must be supplied together")
+    if not os.path.isfile(source_corpus):
+        raise ValueError("source_corpus does not exist: %s" % source_corpus)
+    if not re.fullmatch(r"[0-9a-f]{40}", source_commit):
+        raise ValueError("source_commit must be a 40-character lowercase Git SHA")
+    count = jsonl_row_count(source_corpus)
+    if count < 1:
+        raise ValueError("source_corpus must contain at least one non-empty row")
+    return {
+        "artifact": os.path.basename(source_corpus),
+        "sha256": sha256_file(source_corpus),
+        "row_count": count,
+        "source_commit": source_commit,
+        "source_commit_scope": "fusha_checkout",
+        "verification_status": "verified_read_only_snapshot",
+        "mutation_performed": False,
+    }
 
 
 def write_json(path, row):
@@ -172,7 +199,13 @@ def excluded_tranche_summary(source_tranche_jsonl, plan_jsonl):
     }
 
 
-def build_manifest(plan_jsonl, out_json, source_tranche_jsonl=None):
+def build_manifest(
+    plan_jsonl,
+    out_json,
+    source_tranche_jsonl=None,
+    source_corpus=None,
+    source_commit=None,
+):
     plan_sha = sha256_file(plan_jsonl)
     summary = plan_summary(plan_jsonl)
     manifest = {
@@ -239,6 +272,8 @@ def build_manifest(plan_jsonl, out_json, source_tranche_jsonl=None):
     excluded_summary = excluded_tranche_summary(source_tranche_jsonl, plan_jsonl)
     if excluded_summary:
         manifest["excluded_tranche_rows"] = excluded_summary
+    if source_corpus is not None or source_commit is not None:
+        manifest["source_corpus"] = source_corpus_summary(source_corpus, source_commit)
     write_json(out_json, manifest)
     return manifest
 
@@ -340,6 +375,8 @@ def main():
     parser.add_argument("plan_jsonl", nargs="?")
     parser.add_argument("--out-json")
     parser.add_argument("--source-tranche-jsonl")
+    parser.add_argument("--source-corpus")
+    parser.add_argument("--source-commit")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
     if args.self_test:
@@ -347,7 +384,13 @@ def main():
     if not args.plan_jsonl:
         parser.error("plan_jsonl is required unless --self-test is used")
     out_path = args.out_json or os.path.splitext(args.plan_jsonl)[0] + ".apply-readiness.json"
-    manifest = build_manifest(args.plan_jsonl, out_path, source_tranche_jsonl=args.source_tranche_jsonl)
+    manifest = build_manifest(
+        args.plan_jsonl,
+        out_path,
+        source_tranche_jsonl=args.source_tranche_jsonl,
+        source_corpus=args.source_corpus,
+        source_commit=args.source_commit,
+    )
     print(json.dumps({
         "manifest": out_path,
         "row_count": manifest["source_plan"]["row_count"],
@@ -355,6 +398,7 @@ def main():
         "apply_authorized": manifest["apply_policy"]["apply_authorized"],
         "live_mutation_allowed": manifest["apply_policy"]["live_mutation_allowed"],
         "status": manifest["status"],
+        "source_corpus": manifest.get("source_corpus"),
     }, ensure_ascii=False, sort_keys=True, indent=2))
     print("PASS — Phase 4 apply-readiness manifest built for internal review only")
 
