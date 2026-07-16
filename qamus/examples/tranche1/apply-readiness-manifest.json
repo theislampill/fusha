@@ -1,0 +1,164 @@
+{
+  "abort_conditions": [
+    "source plan validator fails",
+    "source plan sha or row count changes unexpectedly",
+    "append-only ledger target is missing",
+    "backup or rollback artifact is missing",
+    "derived WBW rebuild fails",
+    "token-decision validation fails",
+    "public-boundary scan reports a public leak",
+    "health check fails",
+    "targeted public readback mismatches intended hover",
+    "repo or live HEAD moves during a gated apply"
+  ],
+  "apply_policy": {
+    "apply_allowed": false,
+    "apply_authorized": false,
+    "closure_claim_allowed": false,
+    "component_candidates_can_certify": false,
+    "decision_plan_only": true,
+    "live_mutation_allowed": false,
+    "mirror_sync_allowed": false,
+    "parse_key_primary_identity": false,
+    "raw_surface_identity_allowed": false,
+    "service_restart_allowed": false,
+    "wbw_rebuild_allowed": false
+  },
+  "generated_by": "tools/build_phase4_apply_readiness_manifest.py",
+  "id": "phase4-apply-readiness:77837c6c42ac05e0",
+  "phase": "phase4_apply_readiness_manifest",
+  "public_boundary": {
+    "external_source_names_public": false,
+    "internal_provenance_public": false,
+    "kind": "authored",
+    "lang": "en",
+    "src": "qamus"
+  },
+  "required_gates": {
+    "append_only_ledger": {
+      "evidence_required": "A future apply must append last-wins token decisions; it must not rewrite unrelated rows.",
+      "required": true,
+      "status": "not_run"
+    },
+    "backup": {
+      "evidence_required": "A future apply must identify a rollback artifact before any live write.",
+      "required": true,
+      "status": "not_run"
+    },
+    "health_check": {
+      "evidence_required": "A future apply must prove the service/app health check after rebuild.",
+      "required": true,
+      "status": "not_run"
+    },
+    "public_boundary_scan": {
+      "evidence_required": "A future apply must prove zero public provenance leakage.",
+      "required": true,
+      "status": "not_run"
+    },
+    "rebuild": {
+      "evidence_required": "A future apply must rebuild the derived hover artifact from the append-only ledger.",
+      "required": true,
+      "status": "not_run"
+    },
+    "rollback_rehearsal": {
+      "evidence_required": "A future apply must have an explicit rollback command or append-only revert path.",
+      "required": true,
+      "status": "not_run"
+    },
+    "targeted_public_readback": {
+      "evidence_required": "A future apply must read back affected public pages and exact hover payloads.",
+      "required": true,
+      "status": "not_run"
+    },
+    "validation": {
+      "evidence_required": "A future apply must run token-decision, public-boundary, and exact-address validators.",
+      "required": true,
+      "status": "not_run"
+    }
+  },
+  "rollback": {
+    "required": true,
+    "status": "not_run",
+    "strategy": "append_only_revert_or_restore_backup"
+  },
+  "sample_tokens": [
+    {
+      "parse_id": "parse:5d9056a08b43be804c760079",
+      "plan_id": "phase4-hover-decision-plan:3_141_4:5d9056a0",
+      "public_hover": {
+        "gloss": "they believed",
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "quran_loc": "quran:3:141:4",
+      "surface_sample": "آمَنُوا",
+      "wbw_loc": "wbw:3:141:4"
+    },
+    {
+      "parse_id": "parse:7f9f7f0afe60d9c92ad0db6a",
+      "plan_id": "phase4-hover-decision-plan:24_31_76:7f9f7f0a",
+      "public_hover": {
+        "gloss": "the believers",
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "quran_loc": "quran:24:31:76",
+      "surface_sample": "ٱلْمُؤْمِنُونَ",
+      "wbw_loc": "wbw:24:31:76"
+    },
+    {
+      "parse_id": "parse:28e3c0a189d690e3f5ef8a14",
+      "plan_id": "phase4-hover-decision-plan:2_34_5:28e3c0a1",
+      "public_hover": {
+        "gloss": "to Adam",
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "quran_loc": "quran:2:34:5",
+      "surface_sample": "لِءَادَمَ",
+      "wbw_loc": "wbw:2:34:5"
+    },
+    {
+      "parse_id": "parse:7b1268b077816583b789439f",
+      "plan_id": "phase4-hover-decision-plan:39_63_3:7b1268b0",
+      "public_hover": {
+        "gloss": "the heavens",
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "quran_loc": "quran:39:63:3",
+      "surface_sample": "السَّمَاوَاتِ",
+      "wbw_loc": "wbw:39:63:3"
+    }
+  ],
+  "source_corpus": {
+    "artifact": "rh_live_01_beta_whitelist.jsonl",
+    "mutation_performed": false,
+    "row_count": 34323,
+    "sha256": "5805cc9f3b3c98f5e2b6209871f106d708dc42848b135e780531cc8b2e38ac6e",
+    "source_commit": "f706698a9f682de1731b1913221538c7a4289870",
+    "source_commit_scope": "fusha_checkout",
+    "verification_status": "verified_read_only_snapshot"
+  },
+  "source_plan": {
+    "artifact": "apply-plan.jsonl",
+    "parse_id_count": 4,
+    "plan_id_count": 4,
+    "quran_loc_count": 4,
+    "row_count": 4,
+    "sha256": "77837c6c42ac05e0658528a2581ed2954baf325da042f74ad7ee67904e973c95",
+    "wbw_loc_count": 4
+  },
+  "status": "pre_apply_not_authorized",
+  "truth_owners": {
+    "hover_decision_plan": "phase4_hover_decision_plan_jsonl",
+    "live_entries": "live_entries_truth_owner_symbolic",
+    "live_wbw_lookup": "live_wbw_lookup_truth_owner_symbolic",
+    "public_render": "public_http_readback_truth_owner_symbolic",
+    "token_decision_ledger": "live_token_decision_ledger_truth_owner_symbolic"
+  }
+}

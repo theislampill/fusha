@@ -33,6 +33,8 @@ NAHW_PROJECTOR_ID = "nahw.particle_function.v1"
 # out of the documented-form lookup plane, and gate_tier is two_vote_required so
 # a generated form can NEVER auto-promote the way a documented-form lookup can.
 SARF_GENERATED_PROJECTOR_ID = "sarf.paradigm_generated.v1"
+TRANCHE1_SARF_PROJECTOR_ID = "sarf.tranche1_fixture_projection.v1"
+TRANCHE1_NAHW_PROJECTOR_ID = "nahw.tranche1_fixture_projection.v1"
 
 
 class ProjectorValidationError(ValueError):
@@ -556,6 +558,45 @@ def aggregate_projection_runs(runs: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
     }
 
 
+def tranche1_fixture_policy_guard(*_args: Any, **_kwargs: Any) -> None:
+    """Named contract guard; the lattice runner performs the actual checks."""
+
+    return None
+
+
+def project_tranche1_fixture(
+    *,
+    contract: Dict[str, Any],
+    source_row: Dict[str, Any],
+    policy: Dict[str, Any],
+    fact_ids: List[str],
+) -> Dict[str, Any]:
+    """Delegate a fixture-only candidate or typed abstention to its lattice path."""
+
+    from tools import lattice_projectors
+
+    registered = {
+        row["projector_id"]: row
+        for row in lattice_projectors.load_registry()["registered"]
+    }
+    projector_id = contract["projector_id"]
+    if projector_id not in registered:
+        raise ProjectorValidationError("lattice registry lacks projector: " + projector_id)
+    lattice_entry = registered[projector_id]
+    embedded = lattice_entry["registry_entry"]
+    for field in ("fact_family", "version", "producer"):
+        if embedded.get(field) != contract.get(field):
+            raise ProjectorValidationError(
+                "fact/lattice projector contract mismatch for %s: %s" % (projector_id, field)
+            )
+    return lattice_projectors.run_tranche1_fixture_projector(
+        lattice_entry,
+        source_row,
+        policy,
+        fact_ids=fact_ids,
+    )
+
+
 SARF_CONTRACT = {
     "schema": "qamus.projector_record.v1",
     "record_type": "registry_entry",
@@ -619,10 +660,42 @@ SARF_GENERATED_CONTRACT = {
     "resolution_method": "paradigm_licensed_generation",
 }
 
+TRANCHE1_SARF_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "producer": "tools.tranche1_projection",
+    "projector_id": TRANCHE1_SARF_PROJECTOR_ID,
+    "fact_family": "sarf",
+    "input_fact_types": ["surface_observation"],
+    "output_fact_type": "morphology_projection_candidate",
+    "compatibility_class": "Q7 fixture rows whose exact surface and typed status pass the tranche-local policy guards",
+    "defeater_checks": ["tranche1_fixture_policy_guard"],
+    "gate_tier": "two_vote_required",
+    "version": "1.0.0",
+    "resolution_method": "fixture_policy_projection",
+}
+
+TRANCHE1_NAHW_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "producer": "tools.tranche1_projection",
+    "projector_id": TRANCHE1_NAHW_PROJECTOR_ID,
+    "fact_family": "nahw",
+    "input_fact_types": ["surface_observation"],
+    "output_fact_type": "syntax_projection_candidate",
+    "compatibility_class": "Q7 fixture rows whose exact surface and typed status pass the tranche-local policy guards",
+    "defeater_checks": ["tranche1_fixture_policy_guard"],
+    "gate_tier": "two_vote_required",
+    "version": "1.0.0",
+    "resolution_method": "fixture_policy_projection",
+}
+
 REGISTRY = ProjectorRegistry()
 REGISTRY.register(SARF_CONTRACT, project_sarf_documented_forms)
 REGISTRY.register(NAHW_CONTRACT, project_nahw_particle_functions)
 REGISTRY.register(SARF_GENERATED_CONTRACT, project_sarf_paradigm_generated)
+REGISTRY.register(TRANCHE1_SARF_CONTRACT, project_tranche1_fixture)
+REGISTRY.register(TRANCHE1_NAHW_CONTRACT, project_tranche1_fixture)
 
 
 def main(argv: Optional[List[str]] = None) -> int:

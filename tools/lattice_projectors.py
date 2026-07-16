@@ -127,10 +127,20 @@ def pred_any_candidate(row: Dict[str, Any]) -> bool:  # negative-meta placeholde
     return True
 
 
+def pred_tranche1_morphology(policy: Dict[str, Any]) -> bool:
+    return policy.get("fact_family") == "sarf"
+
+
+def pred_tranche1_syntax(policy: Dict[str, Any]) -> bool:
+    return policy.get("fact_family") == "nahw"
+
+
 NAMED_PREDICATES: Dict[str, Callable[[Dict[str, Any]], bool]] = {
     "pred_c1_impf": pred_c1_impf,
     "pred_c5_enclitic": pred_c5_enclitic,
     "pred_any_candidate": pred_any_candidate,
+    "pred_tranche1_morphology": pred_tranche1_morphology,
+    "pred_tranche1_syntax": pred_tranche1_syntax,
 }
 
 
@@ -217,12 +227,85 @@ def construction_match(ctx: Dict[str, Any]) -> Optional[Dict[str, str]]:
     return None
 
 
+def tranche1_exact_surface(ctx: Dict[str, Any]) -> Optional[Dict[str, str]]:
+    if ctx["source_row"].get("loc") != ctx["policy"].get("loc"):
+        return {"resolution": "blocked", "detail": "source and policy locations differ"}
+    if norm(ctx["source_row"].get("surface", "")) != norm(ctx["policy"].get("surface", "")):
+        return {"resolution": "blocked", "detail": "source and policy surfaces differ"}
+    return None
+
+
+def tranche1_typed_status(ctx: Dict[str, Any]) -> Optional[Dict[str, str]]:
+    status = ctx["policy"].get("status")
+    allowed = {"candidate", "unresolved", "source_gap", "producer_pending", "syntax_pending"}
+    if status not in allowed:
+        return {"resolution": "blocked", "detail": "policy status is not a typed tranche status"}
+    blocker = ctx["policy"].get("blocker")
+    route = ctx["policy"].get("route")
+    if status == "candidate" and (blocker is not None or route is not None):
+        return {"resolution": "blocked", "detail": "candidate status cannot carry blocker or route"}
+    if status != "candidate" and (not blocker or not isinstance(route, dict)):
+        return {"resolution": "blocked", "detail": "queue status requires blocker and typed route"}
+    return None
+
+
 NAMED_GUARDS: Dict[str, Callable[[Dict[str, Any]], Optional[Dict[str, str]]]] = {
     "homograph_surface_ambiguity": homograph_surface_ambiguity,
     "surface_byte_exact": surface_byte_exact,
     "meta_form56_ta_split": meta_form56_ta_split,
     "construction_match": construction_match,
+    "tranche1_exact_surface": tranche1_exact_surface,
+    "tranche1_typed_status": tranche1_typed_status,
 }
+
+
+def run_tranche1_fixture_projector(
+    projector: Dict[str, Any],
+    source_row: Dict[str, Any],
+    policy: Dict[str, Any],
+    fact_ids: List[str],
+) -> Dict[str, Any]:
+    """Emit a bounded Q7 fixture candidate or typed queue record."""
+
+    predicate = NAMED_PREDICATES[projector["class_predicate"]]
+    if not predicate(policy):
+        raise LatticeError("tranche fixture policy does not match projector family")
+    if not fact_ids or any(not re.fullmatch(r"sha256:[0-9a-f]{64}", value) for value in fact_ids):
+        raise LatticeError("tranche fixture output requires valid fact_ids")
+    ctx = {"source_row": source_row, "policy": policy}
+    for guard_name in projector["guards"]:
+        failure = NAMED_GUARDS[guard_name](ctx)
+        if failure:
+            raise LatticeError("%s: %s" % (guard_name, failure["detail"]))
+
+    registry_entry = projector["registry_entry"]
+    status = policy["status"]
+    candidate = status == "candidate"
+    loc = policy["loc"]
+    return {
+        "schema": "qamus.tranche1_projector_output.v1",
+        "record_type": "candidate_projection" if candidate else "typed_queue_record",
+        "loc": loc,
+        "surface": source_row["surface"],
+        "fact_ids": list(fact_ids),
+        "status": status,
+        "source_address": {
+            "address": "quran:%s / wbw:%s" % (loc, loc),
+            "source_kind": "quran_token",
+        },
+        "materialization_target": {
+            "artifact": "public-hover-projections.jsonl" if candidate else "unresolved-queue.jsonl",
+            "field": "segments" if candidate else "queue",
+            "public_materialization_allowed": False,
+            "live_mutation_allowed": False,
+        },
+        "producer": registry_entry["producer"],
+        "projector_id": registry_entry["projector_id"],
+        "version": registry_entry["version"],
+        "blocker": policy.get("blocker"),
+        "route": policy.get("route"),
+        "live_mutation_allowed": False,
+    }
 
 
 # --------------------------------------------------------------------------- #

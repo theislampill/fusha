@@ -1,0 +1,141 @@
+{
+  "fixture_only": true,
+  "max_packet_size": 25,
+  "packet_id": "tranche1-eight-canary-unresolved",
+  "reviewer_role": "owner",
+  "rows": [
+    {
+      "allowed_decisions": [
+        "accept",
+        "reject",
+        "revise",
+        "defer_with_reason"
+      ],
+      "blocker": "The fused and segmented same-surface rows lack a typed compatibility or legacy rationale.",
+      "card_id": "tranche1-card-22-18",
+      "entry_id": "tranche1-entry-22-18-9",
+      "exact_question": "Choose the typed compatibility or legacy rationale for the fused versus segmented same-surface rows.",
+      "fact_ids": [
+        "sha256:90432929e0ed463c568f0e269d6b5916c5f34f01477e6107f04ea039fd4730fd"
+      ],
+      "live_mutation_allowed": false,
+      "on_accept": "Record the reviewed fact or rationale as a new fixture candidate; do not apply it live.",
+      "on_reject": "Keep the occurrence in the typed queue and record the rejection reason.",
+      "producer": "tools.tranche1_projection",
+      "projector_id": "sarf.tranche1_fixture_projection.v1",
+      "required_evidence": [
+        "exact source-addressed row",
+        "typed fact or explicit unresolved rationale",
+        "review decision with blocker disposition"
+      ],
+      "route": {
+        "lane": "sarf",
+        "procedure": "sarf/procedures/morphology-candidate-lattice.md"
+      },
+      "row_id": "tranche1-review-22-18-9",
+      "status": "unresolved",
+      "surface": "ٱلسَّمَٰوَٰتِ",
+      "version": "1.0.0"
+    },
+    {
+      "allowed_decisions": [
+        "accept",
+        "reject",
+        "revise",
+        "defer_with_reason"
+      ],
+      "blocker": "The source lacks typed singular, template, root, and ending facts for this occurrence.",
+      "card_id": "tranche1-card-2-13",
+      "entry_id": "c59a0161fac8",
+      "exact_question": "Provide or reject occurrence-level typed evidence before any singular, template, root, or ending claim is authored.",
+      "fact_ids": [
+        "sha256:29040921ac06507493d1c9b3eb0ab7bd59ca850de7c7f9eb545fa3730f6ff8eb"
+      ],
+      "live_mutation_allowed": false,
+      "on_accept": "Record the reviewed fact or rationale as a new fixture candidate; do not apply it live.",
+      "on_reject": "Keep the occurrence in the typed queue and record the rejection reason.",
+      "producer": "tools.tranche1_projection",
+      "projector_id": "sarf.tranche1_fixture_projection.v1",
+      "required_evidence": [
+        "exact source-addressed row",
+        "typed fact or explicit unresolved rationale",
+        "review decision with blocker disposition"
+      ],
+      "route": {
+        "lane": "sarf",
+        "procedure": "sarf/procedures/root-decision.md"
+      },
+      "row_id": "tranche1-review-2-13-12",
+      "status": "source_gap",
+      "surface": "السُّفَهَاءُ",
+      "version": "1.0.0"
+    },
+    {
+      "allowed_decisions": [
+        "accept",
+        "reject",
+        "revise",
+        "defer_with_reason"
+      ],
+      "blocker": "The source supplies only a generic whole-token segment, so no automatic split is permitted.",
+      "card_id": "tranche1-card-7-54",
+      "entry_id": "tranche1-entry-7-54-23",
+      "exact_question": "Provide a source-addressed segmentation before replacing the generic whole-token segment.",
+      "fact_ids": [
+        "sha256:305065dd733bf7275a7a8a18944545f33bd486770d03cbbe041a962651ec4cc8"
+      ],
+      "live_mutation_allowed": false,
+      "on_accept": "Record the reviewed fact or rationale as a new fixture candidate; do not apply it live.",
+      "on_reject": "Keep the occurrence in the typed queue and record the rejection reason.",
+      "producer": "tools.tranche1_projection",
+      "projector_id": "sarf.tranche1_fixture_projection.v1",
+      "required_evidence": [
+        "exact source-addressed row",
+        "typed fact or explicit unresolved rationale",
+        "review decision with blocker disposition"
+      ],
+      "route": {
+        "lane": "sarf",
+        "procedure": "sarf/procedures/clitic-and-host-morphology.md"
+      },
+      "row_id": "tranche1-review-7-54-23",
+      "status": "producer_pending",
+      "surface": "مُسَخَّرَٰتٍۭ",
+      "version": "1.0.0"
+    },
+    {
+      "allowed_decisions": [
+        "accept",
+        "reject",
+        "revise",
+        "defer_with_reason"
+      ],
+      "blocker": "Governor and ending evidence are absent, so no case or syntactic role is asserted.",
+      "card_id": "tranche1-card-5-2",
+      "entry_id": "3d82e28ccae0",
+      "exact_question": "Provide governor and ending evidence before any case or syntactic role is authored.",
+      "fact_ids": [
+        "sha256:e8a967163480058f8c3ee487f9d67dc9ba60b2ec0e2e202c1908a119be7a99d6"
+      ],
+      "live_mutation_allowed": false,
+      "on_accept": "Record the reviewed fact or rationale as a new fixture candidate; do not apply it live.",
+      "on_reject": "Keep the occurrence in the typed queue and record the rejection reason.",
+      "producer": "tools.tranche1_projection",
+      "projector_id": "nahw.tranche1_fixture_projection.v1",
+      "required_evidence": [
+        "exact source-addressed row",
+        "typed fact or explicit unresolved rationale",
+        "review decision with blocker disposition"
+      ],
+      "route": {
+        "lane": "nahw",
+        "procedure": "nahw/procedures/governor-dependency-lattice.md"
+      },
+      "row_id": "tranche1-review-5-2-12",
+      "status": "syntax_pending",
+      "surface": "ٱلْهَدْىَ",
+      "version": "1.0.0"
+    }
+  ],
+  "schema": "qamus/human-review-packet@1"
+}

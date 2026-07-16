@@ -8,6 +8,30 @@
   "additionalProperties": false,
   "properties": {
     "schema": { "const": "fusha/dependency-candidate-lattice@1" },
+    "fact_ids": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" } },
+    "status": { "type": "string", "minLength": 1 },
+    "source_address": {
+      "type": "object",
+      "required": ["address", "source_kind"],
+      "additionalProperties": false,
+      "properties": {
+        "address": { "type": "string", "minLength": 1 },
+        "source_kind": { "type": "string", "minLength": 1 }
+      }
+    },
+    "materialization_target": {
+      "type": "object",
+      "required": ["artifact", "field", "live_mutation_allowed"],
+      "additionalProperties": false,
+      "properties": {
+        "artifact": { "type": "string", "minLength": 1 },
+        "field": { "type": "string", "minLength": 1 },
+        "live_mutation_allowed": { "const": false }
+      }
+    },
+    "producer": { "type": "string", "minLength": 1 },
+    "projector_id": { "type": "string", "pattern": "^[A-Za-z0-9._:-]+$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
     "input_mode": { "type": "string", "enum": ["source_addressed", "corpus_backed", "arbitrary_typing"] },
     "source_unit": {
       "type": "object",
