@@ -171,6 +171,14 @@ def splits_derivational_ta(analysis: Dict[str, Any]) -> bool:
         role = seg.get("role", "") or ""
         if role in _STEM_ROLES:
             continue
+        # D-1/D-3 (owner 2026-07-16): a taa' segment EXPLICITLY classed as a
+        # derivational form-marker (house DER convention) is the desired rich
+        # representation of the Form V/VI pattern augment -- distinguished from
+        # root radicals and person-prefixes by its class, and therefore NOT an
+        # illegal carving. Only misclassified carvings (person-prefix, clitic,
+        # generic token classes) remain blocked below.
+        if role.startswith("derivative_prefix") or (seg.get("class") or "") == "qg-derivative-prefix":
+            continue
         if skeleton(seg.get("surface", "")) != "ت":  # not a bare taa'
             continue
         nxt = next((s for s in segs[i + 1:] if s.get("role") in _STEM_ROLES), None)
@@ -760,6 +768,41 @@ def build_root_sibling_index(
     return surf, stem
 
 
+
+
+# Closed-class function words NEVER inherit a content root by surface join
+# (Window-1 2026-07-16: the tier-0 join proposed م ن ن for the particle مِن
+# from the entry مَنَّ, أ ل ل for لَا, ه م م for هُمْ -- 28/246 of a live
+# tranche; every one refused downstream by the MCP مادة gate as حرف/اسم مبني.
+# This is the projector-level port of the source-selection closed-class law:
+# particles, personal/relative/demonstrative/interrogative pronouns are
+# مبنيّ inventory items, not derivations of triliteral content roots).
+# Normalized (match_key) bare forms; the و/ف proclitic is stripped before lookup.
+_CLOSED_CLASS_FUNCTION_WORDS = frozenset((
+    # prepositions / particles
+    "من", "في", "عن", "علي", "الي", "حتي", "مع", "لا", "ما", "ان", "الا",
+    "لم", "لن", "لو", "بل", "قد", "ثم", "او", "اذ", "اذا", "هل", "الم",
+    "اما", "لما", "كي", "لكن", "ليت", "لعل", "سوف", "نعم", "بلي", "كلا",
+    # personal pronouns
+    "هو", "هي", "هم", "هن", "هما", "انت", "انتم", "انتن", "انا", "نحن",
+    "اياك", "اياه", "اياهم", "ايانا",
+    # relatives / demonstratives / interrogatives
+    "الذي", "التي", "الذين", "اللاتي", "اللائي", "اللذان", "اللتان",
+    "ذلك", "ذلكم", "هذا", "هذه", "هذان", "هاتان", "هولاء", "اولئك", "تلك",
+    "كيف", "اين", "متي", "اني", "ايان", "كم", "من ذا",
+))
+
+
+def is_closed_class_function_word(key: str) -> bool:
+    """True iff the normalized surface (optionally behind a و/ف proclitic)
+    is a closed-class function word."""
+    if key in _CLOSED_CLASS_FUNCTION_WORDS:
+        return True
+    for pre in ("و", "ف"):
+        if key.startswith(pre) and key[len(pre):] in _CLOSED_CLASS_FUNCTION_WORDS:
+            return True
+    return False
+
 # --------------------------------------------------------------------------- #
 # P-ROOT-INHERIT
 # --------------------------------------------------------------------------- #
@@ -783,6 +826,7 @@ def run_root_inherit(
         "rootless_function_nostem": 0,
         "rootless_lexhead_rows": 0,
         "divine_excluded": 0,
+        "closed_class_function_excluded": 0,
         "authoring_no_attested_source": 0,
         "auto_by_tier": {"tier0": 0, "tierA": 0, "tierB": 0, "tierC": 0},
         "routed_by_guard": {"homograph": 0, "cross_source_conflict": 0,
@@ -804,6 +848,9 @@ def run_root_inherit(
         ks = match_key(surf)
         if any(is_divine_seg(s) for s in segs) or ks in _DIVINE_KEYS:
             instr["divine_excluded"] += 1
+            continue
+        if is_closed_class_function_word(ks):
+            instr["closed_class_function_excluded"] += 1
             continue
         match_keys = [ks] + [match_key(s.get("surface", "")) for s in heads]
         roots0: set = set()
@@ -1697,6 +1744,53 @@ def self_test() -> int:
         and ji["occurrence_to_entry"]["conflict_rooted_row_vs_entry"] == 1
         and ji["entry_to_occurrence"]["orphan_entries_no_occurrence"] == 1  # زهرة has no occurrence
         and ji["entry_to_occurrence"]["entries_with_recognized_occurrence"] == 1
+    )
+
+    # t22: closed-class function words never inherit content roots by surface
+    # join (Window-1 2026-07-16: من proposed م ن ن from the entry مَنَّ -- red
+    # before the guard, green after). Non-constant discriminator: the content
+    # verb خَلَقَ with an identical evidence shape MUST still inherit.
+    fw_row = {"loc": "2:49:3", "surface": "مِن",
+              "morphline": "no public root asserted · TOK:مِن",
+              "segments": [{"segment_index": 0, "surface": "مِن", "class": "qg-segment",
+                            "role": "token", "label": "TOK", "gloss_contribution": "from"}]}
+    cw_row = {"loc": "16:3:1", "surface": "خَلَقَ",
+              "morphline": "no public root asserted · STEM:خَلَقَ",
+              "segments": [{"segment_index": 0, "surface": "خَلَقَ", "class": "qg-verb-stem",
+                            "role": "verb_stem", "label": "STEM", "gloss_contribution": "created"}]}
+    fw_proj = {"projector_id": "sarf.root_inherit_transclusion.v1", "kind": "root_inheritance",
+               "skill_rule_ids": [], "registry_entry": {"gate_tier": "two_vote_required"}}
+    fw_recs, fw_instr, _fw = run_root_inherit(
+        fw_proj, [fw_row], {match_key("مِن"): {("م ن ن", "vX", "verb", "مَنَّ")}}, {}, {}, {})
+    cw_recs, _ci, _cw = run_root_inherit(
+        fw_proj, [cw_row], {match_key("خَلَقَ"): {("خ ل ق", "v029", "verb", "خَلَقَ")}}, {}, {}, {})
+    results["t22_closed_class_function_guard"] = (
+        fw_recs == [] and fw_instr["closed_class_function_excluded"] == 1
+        and len(cw_recs) == 1 and cw_recs[0]["inherited"]["root"] == "خ ل ق"
+        and is_closed_class_function_word(match_key("وَمَا"))      # proclitic strip
+        and not is_closed_class_function_word(match_key("مَال"))  # near-miss content word
+    )
+
+    # t23 (D-1/D-3 owner correction): a Form-V taa' EXPLICITLY classed as the
+    # derivational form-marker (DER) is permitted rich segmentation; the same
+    # surface shape classed as a person-prefix remains blocked (red stays red).
+    der_row = {"morphline": "root و ك ل · Form V perfect active",
+               "segments": [
+                   {"segment_index": 0, "surface": "تَ", "class": "qg-derivative-prefix",
+                    "role": "derivative_prefix_form_v", "label": "DER",
+                    "gloss_contribution": "Form V marker"},
+                   {"segment_index": 1, "surface": "وَكَّلْ", "class": "qg-verb-stem",
+                    "role": "verb_stem", "label": "STEM", "gloss_contribution": "relied"}]}
+    pfx_row = {"morphline": "root و ك ل · Form V perfect active",
+               "segments": [
+                   {"segment_index": 0, "surface": "تَ", "class": "qg-verb-prefix",
+                    "role": "verb_prefix", "label": "PFX",
+                    "gloss_contribution": "imperfect prefix"},
+                   {"segment_index": 1, "surface": "وَكَّلْ", "class": "qg-verb-stem",
+                    "role": "verb_stem", "label": "STEM", "gloss_contribution": "relied"}]}
+    results["t23_der_taa_permitted_pfx_taa_blocked"] = (
+        splits_derivational_ta(der_row) is False
+        and splits_derivational_ta(pfx_row) is True
     )
 
     ok = all(v is True for k, v in results.items() if k.startswith("t"))

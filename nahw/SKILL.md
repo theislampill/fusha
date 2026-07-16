@@ -425,3 +425,24 @@ contract in [`docs/qamus/RICH-HOVER-NORMALIZATION-CONTRACT.md`](../docs/qamus/RI
 - **`nahw-mood-note-commits-or-named-ambiguity`** (N-PED-02) — CONDITION mood is knowable at the address AND the
   note hedges "as (the) context requires" → PROJECT flag; commit the mood in the note (17:12:16 منصوب بأن مضمرة).
   GUARD a genuinely qirāʾāt-split/unknowable mood renders a named ambiguity, not a hedge.
+
+## naḥw@2.3 — CANDIDATE increment (Window-1 measured flywheel) — NOT released; does not amend @2
+
+These rules are **candidate** (drafted forward from the first live-seeding window's WAVE-RECORD; Fable
+adjudicates). They add the addressing-convention and surface↔gloss binding gates the Window-1 lane needed.
+Machine-readable rows (with `projector` blocks + source-addressed evidence + red-first fixtures) are in
+[`qamus/skills/rule-registry-increment-23.jsonl`](../qamus/skills/rule-registry-increment-23.jsonl);
+discriminators in [`tools/skill_fixtures/skill_rules_increment23.py`](../tools/skill_fixtures/skill_rules_increment23.py);
+evidence in [`impl-records/WINDOW-1-2026-07-16-WAVE-RECORD.md`](../impl-records/WINDOW-1-2026-07-16-WAVE-RECORD.md).
+
+**addressing + binding gates (projector-ready):**
+- **`nahw-basmala-aware-loc-authority`** — CONDITION a loc word-index on ayah-1 of a basmala-carrying surah
+  (not 1 or 9) exceeds the basmala-blind `ayah_wordcount` authority → PROJECT apply the +4 basmala band
+  before the range verdict; do NOT hold when word-index ≤ authority+4 (87:1:7, 96:1:7, 17:1:22 were falsely
+  held in W1 until cap+4). GUARD surah 1/9 get no offset; a word-index beyond authority+4 is a genuine
+  overflow, correctly held; :100+ fragment pseudo-locs are exempt.
+- **`nahw-surface-gloss-single-wordlist-binding`** — CONDITION a row's gloss resolves from a NEIGHBOURING
+  word-list index rather than its own surface (basmala-inclusive surface vs basmala-blind gloss at the same
+  numeric index: 96:1:2 ٱللَّهِ→"the name", 96:1:5 ٱقْرَأْ→"He created") → PROJECT flag the binding corruption;
+  re-resolve the gloss against the surface's own index; block publish until they agree. GUARD a gloss that
+  lexically matches its own surface is a valid translation, not a skew (8 corrupt W1 rows).

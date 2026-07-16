@@ -68,9 +68,9 @@ RECORDED_STALE_INSTALL_OBSERVATIONS = (
     # authoritative SKILL.md sources, so each observed sha now equals its canonical regeneration (the
     # documented FIX for a stale install; prior stale shas preserved in git history + SKILL-CHANGELOG).
     {"target": "local_codex_install", "skill": "nahw",
-     "observed_sha256": "098ab086cecc1decd21fc4a68498fe69293d119bb181e4dbd1438ae5a435f91b"},
+     "observed_sha256": "309c675bf8061c8e2d9d6b3cdd59d39e95183db6f80ad83ccaeec8d0a6b155e9"},
     {"target": "local_codex_install", "skill": "sarf",
-     "observed_sha256": "e219762c9930a6c15011f421641f8689525d12a400a33312c3a2623754cd5e08"},
+     "observed_sha256": "7533d9a39c4bfbfc7284aabe890d6ce077d1fc6d003a7eb541770332b8d5de02"},
 )
 
 

@@ -524,3 +524,66 @@ trace + contract + join evidence in [`impl-records/andon-rich-norm/QAMUS-RICH-NO
 - **`sarf-demonstrative-dagger-alef-normalize`** (W13) — CONDITION the surface carries U+0670 (dagger-alef:
   ذٰلِك/كَذٰلِك, مُسَخَّرَٰت) → PROJECT fold it to plain alif before the wbw/entry-form match (the engine missed
   it twice). GUARD fold U+0670 → ا only; hamza / alif-maqṣūra preserved (root-significant).
+
+## 20. ṣarf@2.3 — CANDIDATE increment (Window-1 measured flywheel) — NOT released; does not amend @2
+
+These rules are **candidate** (drafted forward from the first live-seeding window's WAVE-RECORD
+adjudicator catches + the C2-reviewerA calibration deltas; Fable adjudicates). They harden the
+root-certification bar and the rendered-row discipline against the exact defect classes measured in
+Window-1 (2026-07-16). Each carries an explicit CONDITION, PROJECTION, GUARDS, DEFEATERS. Machine-readable
+rows (with `projector` blocks + source-addressed evidence + red-first fixtures) are in
+[`qamus/skills/rule-registry-increment-23.jsonl`](../qamus/skills/rule-registry-increment-23.jsonl);
+discriminators in [`tools/skill_fixtures/skill_rules_increment23.py`](../tools/skill_fixtures/skill_rules_increment23.py);
+evidence in [`impl-records/WINDOW-1-2026-07-16-WAVE-RECORD.md`](../impl-records/WINDOW-1-2026-07-16-WAVE-RECORD.md),
+[`impl-records/calibration/C2-reviewerA.md`](../impl-records/calibration/C2-reviewerA.md),
+[`docs/qamus/RICH-HOVER-NORMALIZATION-CONTRACT.md`](../docs/qamus/RICH-HOVER-NORMALIZATION-CONTRACT.md).
+
+**root-certification gates (projector-ready):**
+- **`sarf-surface-join-never-certifies-root`** — CONDITION an occurrence root is inherited by a
+  surface/skeleton join from an entry-form and no per-occurrence surface-matched مادة confirms it →
+  PROJECT downgrade to `candidate_root_uncertified`; route per-occurrence confirmation. Hollow/geminate/
+  weak-final skeletons collide under one surface (مال م و ل vs م ي ل; نُقِرُّ ق ر ر; يده ي د ي). GUARD a
+  strong triliteral with a per-occurrence مادة agreeing with the join certifies (خُلِّفُوا precedent generalized).
+- **`sarf-closed-class-never-inherits-root`** — CONDITION a closed-class function word (حرف/ضمير/اسم موصول/
+  اسم إشارة/اسم استفهام) is assigned a content root by join (من←م ن ن, لا←أ ل ل, هم←ه م م) → PROJECT strip the
+  root; label حرف / اسم مبني rootless; reject before any per-occurrence analysis spend. GUARD a POS-confirmed content homograph (verb
+  مَنَّ) keeps its root. The largest mechanical Window-1 win (~17% of a 167-row lane were guaranteed rejects).
+- **`sarf-same-occurrence-cross-source-root-held`** — CONDITION two certified sources give DIFFERENT roots
+  for the SAME occurrence and both are classical (اسمه سمو vs سمي; ملائكة أ ل ك vs م ل ك) → PROJECT hold; emit
+  both candidate roots; route 2-vote/owner. GUARD normalize w/y + hamza-seat first (romanization never
+  false-alarms a conflict); never majority-vote, never silently choose.
+- **`sarf-root-display-consistency-invariant`** (N-ROOT-03, review-gated) — CONDITION morphline prose
+  asserts a transliterated root while the structured root field is null (or a populated field never surfaces
+  in prose) → PROJECT flag the display inconsistency; backfill the field only through per-occurrence
+  certification (523 W1 rows showed 'root q-w-l'-style translit with a null field). A transliteration is a
+  display artifact, NOT a certification tier; the invariant is bidirectional.
+- **`sarf-every-segment-carries-gloss`** (N-PED-01) — CONDITION a rendered segment (esp. a pronoun suffix
+  from a split packet) has an empty `gloss_contribution` → PROJECT flag; fill from the deterministic
+  closed-class suffix table (ه/ها/هم/كم/نا/ي/ك) where the role is determinate. GUARD a role-ambiguous
+  suffix_pronoun stays pending, never guessed (269 empty segments leaked the row-level seam; 421 filled in W1-G).
+- **`sarf-orthographic-match-symmetry`** — CONDITION a candidate↔corpus match normalizes one side and leaves
+  the other raw (فحياكم vs فأحياكم; الصلوة vs الصلاة) → PROJECT re-run with the SAME normalizer on BOTH sides
+  (recovers ~50 W1 no_matches). GUARD an ambiguous fold — two DISTINCT raw words mapping to one key (لا/إلا) —
+  must BLOCK the match and route disambiguation, never pick arbitrarily.
+
+### @2.3 worked examples — the tiered rich-segmentation standard (owner-ratified 2026-07-16, N-SEG-03)
+
+**تَوَكَّلْتُ (11:56:2) — the two تs teach the whole doctrine.** Rich target shape:
+
+### @2.3 worked examples — the tiered rich-segmentation standard (owner-ratified 2026-07-16, N-SEG-03)
+
+**تَوَكَّلْتُ (11:56:2) — the two ت's teach the whole doctrine.** Rich target shape:
+`DER:تَ + STEM:وَكَّلْ + SUBJ:تُ` — the INITIAL تَ is the Form-V derivational
+form-marker (pattern تَفَعَّلَ; `qg-derivative-prefix`, role `derivative_prefix_form_v`):
+not a root letter of و ك ل, not the imperfect person-prefix, not a clitic. The FINAL
+تُ is the attached 1cs SUBJECT pronoun (rafʿ). Same letter, three-way contrast:
+derivational · root-radical (none here) · inflectional. The superseded shape
+(`PFX:تَ "imperfect prefix"`) misclassified derivational morphology as inflection on a
+PERFECT verb — the exact defect the six D-3 rows carried.
+
+**وَيَحِقَّ (36:70 family) — the enhanced-tier exemplar.** Rich target shape:
+`WA:وَ + PFX:يَ + STEM:حِقّ + (mood vowel)` — conjunction · imperfect person-prefix
+(here a REAL person-prefix, unlike the Form-V تَ) · root-bearing geminate material of
+ح ق ق · jussive/naṣb morphology committed in the morphline. Legacy coarse rows that
+render the whole verb as one unit remain LEGACY-VALID; a substantive repair of this
+token must meet the rich shape.
