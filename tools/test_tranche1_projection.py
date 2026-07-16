@@ -55,6 +55,14 @@ def read_jsonl(path: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
 
 
+def write_jsonl(path: Path, rows: list[dict]) -> None:
+    path.write_text(
+        "".join(json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n" for row in rows),
+        encoding="utf-8",
+        newline="\n",
+    )
+
+
 class TrancheSchemaTests(unittest.TestCase):
     def test_crosswalk_schema_requires_lineage(self) -> None:
         self.assertTrue(CROSSWALK_SCHEMA.exists(), "crosswalk schema must exist")
@@ -208,6 +216,55 @@ class TrancheCompilerTests(unittest.TestCase):
                     self.assertEqual(row["surface"], "".join(s["surface"] for s in row["segments"]))
                     self.assertEqual("tools.tranche1_projection", row["producer"])
                     self.assertFalse(row["live_mutation_allowed"])
+
+
+class TrancheValidatorTests(unittest.TestCase):
+    def compile_fixture(self, out_dir: Path) -> None:
+        from tools import tranche1_projection
+
+        tranche1_projection.compile_tranche(
+            WHITELIST,
+            FIXTURE_DIR / "canary-policy.json",
+            out_dir,
+            SOURCE_COMMIT,
+        )
+
+    def test_validator_accepts_clean_fixture(self) -> None:
+        from tools import validate_tranche1_projection
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            out_dir = Path(temp_dir)
+            self.compile_fixture(out_dir)
+            self.assertEqual(
+                [],
+                validate_tranche1_projection.validate_tranche(out_dir, WHITELIST, SOURCE_COMMIT),
+            )
+
+    def test_validator_rejects_segment_parity_drift(self) -> None:
+        from tools import validate_tranche1_projection
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            out_dir = Path(temp_dir)
+            self.compile_fixture(out_dir)
+            path = out_dir / "public-hover-projections.jsonl"
+            rows = read_jsonl(path)
+            rows[0]["segments"][0]["surface"] += "x"
+            write_jsonl(path, rows)
+            errors = validate_tranche1_projection.validate_tranche(out_dir, WHITELIST, SOURCE_COMMIT)
+            self.assertTrue(any("segment parity" in error for error in errors), errors)
+
+    def test_validator_rejects_round_trip_hash_drift(self) -> None:
+        from tools import validate_tranche1_projection
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            out_dir = Path(temp_dir)
+            self.compile_fixture(out_dir)
+            path = out_dir / "projection-crosswalk.jsonl"
+            rows = read_jsonl(path)
+            rows[0]["output_row_hash"] = "sha256:" + "0" * 64
+            write_jsonl(path, rows)
+            errors = validate_tranche1_projection.validate_tranche(out_dir, WHITELIST, SOURCE_COMMIT)
+            self.assertTrue(any("output hash" in error for error in errors), errors)
 
 
 if __name__ == "__main__":
