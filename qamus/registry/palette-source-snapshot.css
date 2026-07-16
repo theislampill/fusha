@@ -1,0 +1,622 @@
+/* Vendored palette snapshot of the live qamus wbw.css colour layer.
+   Provenance: qamus.dawah.wiki /static/wbw.css as pulled 2026-07-16 for the
+   ontology reconciliation (pedagogical-projection ANDON). This snapshot is
+   the repo-self-contained source for registry builds; operational rebuilds
+   may pass --css <path> to compare against a newer live copy. */
+/* ============================================================
+   qamus word-by-word — hover/tap-to-translate
+   Production-ready feature styles. URETHANE-native (--du-* tokens,
+   data-du-mode aware). Self-contained: link AFTER du-tokens.css.
+   No external origins. No audio (kept out of v1 by design).
+
+   Render contract (server emits, inside .ayah-ar / .s-ar):
+     aligned word:  <span class="qword" data-tr="gloss" data-loc="4:28:6"
+                          tabindex="0" lang="ar">خُلِقَ</span>
+     root word:     add class qword--root
+     plain word:    <span class="qw-plain" lang="ar">يَا</span>   (no data, inert)
+   ============================================================ */
+
+/* Kawkab Mono Qamus font: embedded from user-provided kawkab-mono-0.500.zip (OFL). */
+@font-face{
+  font-family: "Kawkab Mono Qamus";
+  src: url("/static/KawkabMono-Regular.woff2?duv=20260626d") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+:root{ --qamus-ar-font: "Kawkab Mono Qamus", "Kawkab Mono", "Amiri Quran", "Amiri", "Scheherazade New", "Noto Naskh Arabic", serif; }
+.du-body [lang="ar"],
+.du-body [dir="rtl"],
+.ayah-line,
+#qtip .qtip-ar,
+.hw,
+.d-root-ar,
+.qword,
+.qw-plain,
+.qg-word,
+.qg-surface,
+.qg-seg{
+  font-family: var(--qamus-ar-font) !important;
+}
+/* Qamus Arabic font surface ------------------------------------------------- */
+/* --- the interactive word --------------------------------------------- */
+.ayah-line{
+  display: block;
+  align-items: baseline;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 100%;
+  text-align: right;
+  gap: .12em;
+  direction: rtl;
+  unicode-bidi: isolate;
+  white-space: normal;
+  font-family: var(--qamus-ar-font);
+  font-size: 1.55rem;
+  line-height: 2.35;
+  overflow: visible;
+}
+.ayah-line .ayah-ar{
+  display: inline-block;
+  direction: rtl;
+  unicode-bidi: isolate;
+  white-space: normal;
+  font: inherit;
+  width: fit-content;
+  max-width: 100%;
+  overflow: visible;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.ayah-line .ayah-mark{
+  display: inline;
+  direction: rtl;
+  unicode-bidi: isolate;
+  font: inherit;
+  line-height: 1;
+  color: var(--du-text);
+  padding-inline: 0;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.ayah-ar .qword,
+.s-ar.qword,
+.u-forms .qword{
+  cursor: help;
+  white-space: nowrap;
+  border-radius: 7px;
+  padding: 0 .06em;
+  margin: 0 -.02em;
+  /* UNIFORM affordance: every interactive word carries the same faint dotted
+     underline, so the WHOLE ayah reads as live — never just some words. */
+  text-decoration: underline dotted color-mix(in srgb, var(--du-muted) 40%, transparent);
+  text-decoration-thickness: 1.2px;
+  text-underline-offset: .26em;
+  text-decoration-skip-ink: none;
+  transition: background-color .13s ease-out, box-shadow .13s ease-out, color .13s ease-out;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  scroll-margin: 96px;
+  color: var(--qg-flat-word-color);
+}
+.ayah-ar .qw-plain{ white-space: nowrap; }
+
+/* hover / keyboard-focus / pinned = the "illumination" moment */
+.ayah-ar .qword:hover,
+.ayah-ar .qword.is-active,
+.s-ar.qword:hover,
+.s-ar.qword.is-active,
+.u-forms .qword:hover,
+.u-forms .qword.is-active{
+  background: color-mix(in srgb, var(--du-link) 17%, var(--du-panel));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--du-link) 34%, transparent),
+              var(--du-glow);
+  color: var(--du-text);
+}
+/* keyboard users get a real, visible ring (never removed) */
+.ayah-ar .qword:focus-visible,
+.s-ar.qword:focus-visible,
+.u-forms .qword:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--du-link) 70%, transparent);
+  outline-offset: 2px;
+}
+.qword:focus:not(:focus-visible){ outline: none; }
+
+/* grammar-color layer: applied only when certified morphosyntax metadata exists */
+.qword,
+.qg-word,
+#wbw-legend,
+#qtip{
+  --qg-conjunction-color: #5db7ff;
+  --qg-particle-color: #5db7ff;
+  --qg-future-particle-color: #22d3ee;
+  --qg-question-color: #38bdf8;
+  --qg-negation-color: #fb7185;
+  --qg-article-color: #f2c94c;
+  --qg-noun-color: #f8fafc;
+  --qg-verb-color: #7ddc8a;
+  --qg-verb-prefix-color: #7dd3fc;
+  --qg-verb-stem-color: #f8fafc;
+  --qg-pronoun-color: #c084fc;
+  --qg-subject-pronoun-color: #38bdf8;
+  --qg-object-pronoun-color: #c084fc;
+  --qg-possessive-pronoun-color: #d8b4fe;
+  --qg-preposition-color: #ff8b73;
+  --qg-lam-color: #f59e0b;
+  --qg-ma-particle-color: #a78bfa;
+  --qg-oath-color: #ff8b73;
+  --qg-result-color: #ff76a8;
+  --qg-result-fa-color: #fb7185;
+  --qg-comitative-color: #ffa85d;
+  --qg-vocative-color: #ffd166;
+  --qg-relative-color: #b6cf70;
+  --qg-conditional-color: #34d399;
+  --qg-interrogative-color: #2dd4bf;
+  --qg-demonstrative-color: #c3e88d;
+  --qg-referential-pronoun-color: #e879f9;
+  --qg-exception-color: #f28bd4;
+  --qg-alternative-color: #fbbf24;
+  --qg-emphasis-color: #f59e0b;
+  --qg-noun-stem-color: var(--qg-noun-color);
+  --qg-proper-noun-color: #fde68a;
+  --qg-number-color: #fcd34d;
+  --qg-adjective-color: #facc15;
+  --qg-dual-suffix-color: #22d3ee;
+  --qg-plural-suffix-color: #60a5fa;
+  --qg-derivative-prefix-color: #a78bfa;
+  --qg-segment-color: var(--du-text);
+  --qg-flat-word-color: color-mix(in srgb, var(--du-link) 72%, var(--du-text));
+}
+.qg-word{
+  direction: rtl;
+  unicode-bidi: isolate;
+  white-space: nowrap;
+  display: inline;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-variant-ligatures: contextual common-ligatures;
+  font-feature-settings: "calt" 1, "liga" 1;
+}
+.qg-surface,
+.qg-part{
+  display: inline;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+.qg-word.qg-colored .qg-surface{
+  background-image: var(--qg-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.ayah-ar .qword.qg-colored,
+.s-ar.qword.qg-colored,
+.u-forms .qword.qg-colored{
+  direction: rtl;
+  unicode-bidi: isolate;
+  white-space: nowrap;
+  background-image: var(--qg-gradient);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: 0 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-variant-ligatures: contextual common-ligatures;
+  font-feature-settings: "calt" 1, "liga" 1;
+  line-height: 2.3;
+  padding-inline: 0;
+  padding-top: .45em;
+  padding-bottom: .24em;
+  overflow: visible;
+}
+.ayah-ar .qword.qg-colored:hover,
+.ayah-ar .qword.qg-colored.is-active,
+.s-ar.qword.qg-colored:hover,
+.s-ar.qword.qg-colored.is-active,
+.u-forms .qword.qg-colored:hover,
+.u-forms .qword.qg-colored.is-active{
+  background-image: var(--qg-gradient);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: 0 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.qg-token-segments{
+  display: none !important;
+}
+.qg-seg{
+  display: inline;
+  border-radius: .18em;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0;
+  letter-spacing: 0;
+  word-spacing: 0;
+  line-height: 1.65;
+  text-decoration: none;
+}
+.qg-conjunction{ color: var(--qg-conjunction-color); }
+.qg-particle{ color: var(--qg-particle-color); }
+.qg-future-particle{ color: var(--qg-future-particle-color); }
+.qg-question{ color: var(--qg-question-color); }
+.qg-negation{ color: var(--qg-negation-color); }
+.qg-article{ color: var(--qg-article-color); }
+.qg-noun{ color: var(--qg-noun-color); }
+.qg-verb,
+.qg-verb-prefix{ color: var(--qg-verb-prefix-color); }
+.qg-verb-stem{ color: var(--qg-verb-stem-color); }
+.qg-verb{ color: var(--qg-verb-color); }
+.qg-verb-prefix{ opacity: .92; }
+.qg-pronoun{ color: var(--qg-pronoun-color); }
+.qg-subject-pronoun{ color: var(--qg-subject-pronoun-color); }
+.qg-object-pronoun{ color: var(--qg-object-pronoun-color); }
+.qg-possessive-pronoun{ color: var(--qg-possessive-pronoun-color); }
+.qg-preposition,
+.qg-preposition{ color: var(--qg-preposition-color); }
+.qg-oath{ color: var(--qg-preposition-color); }
+.qg-lam{ color: var(--qg-lam-color); }
+.qg-ma-particle{ color: var(--qg-ma-particle-color); }
+.qg-result{ color: var(--qg-result-color); }
+.qg-result-fa{ color: var(--qg-result-fa-color); }
+.qg-comitative{ color: var(--qg-comitative-color); }
+.qg-vocative{ color: var(--qg-vocative-color); }
+.qg-relative{ color: var(--qg-relative-color); }
+.qg-conditional{ color: var(--qg-conditional-color); }
+.qg-interrogative{ color: var(--qg-interrogative-color); }
+.qg-demonstrative{ color: var(--qg-demonstrative-color); }
+.qg-referential-pronoun{ color: var(--qg-referential-pronoun-color); }
+.qg-exception{ color: var(--qg-exception-color); }
+.qg-alternative{ color: var(--qg-alternative-color); }
+.qg-emphasis{ color: var(--qg-emphasis-color); }
+.qg-noun-stem{ color: var(--qg-noun-stem-color); }
+.qg-proper-noun{ color: var(--qg-proper-noun-color); }
+.qg-number{ color: var(--qg-number-color); }
+.qg-adjective{ color: var(--qg-adjective-color); }
+.qg-dual-suffix{ color: var(--qg-dual-suffix-color); }
+.qg-plural-suffix{ color: var(--qg-plural-suffix-color); }
+.qg-derivative-prefix{ color: var(--qg-derivative-prefix-color); }
+.qg-segment{ color: var(--qg-segment-color); }
+
+/* plain (un-aligned) word: deliberately inert, reads as ordinary text */
+.qw-plain{ cursor: default; }
+
+/* pending (located but not yet glossed): visibly lighter/tentative — NEVER looks like a finished
+   gloss. Still hoverable/focusable to surface the honest reason. */
+.ayah-ar .qword.qw-pending,
+.s-ar.qword.qw-pending,
+.u-forms .qword.qw-pending{
+  text-decoration-style: dashed;
+  text-decoration-color: color-mix(in srgb, var(--du-muted) 22%, transparent);
+  opacity: .8;
+}
+/* low-confidence (particle/pronoun) glosses: a touch lighter than form-matched glosses */
+.qword[data-conf="low"]{ text-decoration-color: color-mix(in srgb, var(--du-muted) 30%, transparent); }
+/* the tooltip in pending mode reads as a STATE, not a translation */
+#qtip.pending .qtip-gloss{ font-style: italic; font-weight: 500; opacity: .82; }
+
+/* --- the tooltip plaque (single shared node, appended to <body>) -------- */
+#qtip{
+  position: fixed;
+  z-index: 80;
+  width: min(22rem, calc(100vw - 16px));
+  max-width: 22rem;
+  padding: 8px 12px 10px;
+  border-radius: 9px;
+  background: var(--du-panel);
+  border: 1px solid var(--du-edge);
+  box-shadow: var(--du-psh), var(--du-bev);
+  color: var(--du-text);
+  direction: ltr;
+  text-align: left;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .14s ease-out, transform .14s ease-out;
+}
+#qtip.show{ opacity: 1; transform: none; }
+
+/* clitic prefix (e.g. "the +") — shown separately above the stem gloss, never merged into it */
+#qtip .qtip-pre{
+  display: none;
+  margin-bottom: 1px;
+  font: 600 .72rem/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--du-muted); letter-spacing: .2px;
+}
+#qtip .qtip-gloss{
+  display: block;
+  font: 700 1rem/1.28 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  letter-spacing: .1px;
+}
+#qtip .qtip-token{
+  display: none;
+  margin-top: 2px;
+  color: var(--du-muted);
+  font: 650 .78rem/1.35 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+#qtip .qtip-morphline{
+  display: none;
+  margin-top: 4px;
+  color: var(--du-muted);
+  font: 600 .74rem/1.38 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+/* pronoun-suffix English (e.g. "+ his / its") — shown separately below the stem gloss, muted */
+#qtip .qtip-suf{
+  display: none;
+  margin-top: 1px;
+  font: 600 .72rem/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--du-muted); letter-spacing: .2px;
+}
+#qtip .qtip-ar{
+  display: none;
+  margin-top: 6px;
+  padding-top: 18px;
+  padding-bottom: 10px;
+  border-top: 1px solid color-mix(in srgb, var(--du-edge) 62%, transparent);
+  font: 700 1.18rem/2.45 "Scheherazade New", "Amiri Quran", "Amiri", serif;
+  overflow: visible;
+}
+#qtip .qtip-ar .qg-word{
+  display: inline-block;
+  line-height: 2.45;
+  padding-top: .45em;
+  padding-bottom: .24em;
+  overflow: visible;
+}
+#qtip .qtip-ar .qg-surface{
+  display: inline-block;
+  line-height: 2.65;
+  padding-top: .55em;
+  padding-bottom: .3em;
+  overflow: visible;
+}
+#qtip .qg-parse-key{
+  display: none;
+  margin-top: 5px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  border: 1px solid color-mix(in srgb, var(--du-edge) 74%, transparent);
+  border-radius: 999px;
+  padding: 2px 7px;
+  background: color-mix(in srgb, var(--du-link) 10%, transparent);
+  color: var(--du-muted);
+  font: 700 .58rem/1.35 ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+  letter-spacing: .2px;
+}
+#qtip .qg-breakdown{
+  display: none;
+  margin-top: 5px;
+  color: var(--du-muted);
+  font: 500 .7rem/1.36 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+#qtip .qg-breakdown-row{
+  display: grid;
+  grid-template-columns: 3.7rem 4.7rem minmax(0, 1fr);
+  column-gap: .55rem;
+  align-items: baseline;
+  margin-top: 4px;
+  line-height: 1.45;
+}
+#qtip .qg-role-badge{
+  grid-column: 1;
+  justify-self: start;
+  border: 1px solid color-mix(in srgb, var(--du-edge) 74%, transparent);
+  border-radius: 999px;
+  padding: 1px 6px;
+  color: var(--du-text);
+  background: color-mix(in srgb, var(--du-panel) 78%, var(--du-link) 8%);
+  font: 800 .58rem/1.45 ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+  letter-spacing: .2px;
+}
+#qtip .qg-breakdown-row .qg-seg{
+  grid-column: 2;
+  direction: rtl;
+  unicode-bidi: isolate;
+  justify-self: end;
+  text-align: end;
+  min-width: 4rem;
+  padding: 0 !important;
+  background: transparent;
+  font-size: .96rem;
+  line-height: 1.55;
+}
+#qtip .qg-hover-contribution{
+  grid-column: 3;
+  color: var(--du-text);
+  font-weight: 650;
+}
+#qtip .qg-hover-sarf-note,
+#qtip .qg-hover-nahw-note{
+  grid-column: 3;
+  display: block;
+  color: var(--du-muted);
+  font-size: .62rem;
+}
+#qtip .qtip-explain{
+  display: none;
+  margin: 7px 0 0;
+  color: var(--du-text);
+  font: 500 .76rem/1.42 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  opacity: .95;
+}
+/* alternate authored glosses (public-safe); shown only when present */
+#qtip .qtip-cands{
+  display: none;
+  margin-top: 2px;
+  font: 500 .76rem/1.3 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--du-muted);
+}
+/* provenance labels (informed_by) — draft/preview only; never reference gloss text */
+#qtip .qtip-prov{
+  display: none;
+  margin-top: 3px;
+  font: 500 .6rem/1.1 ui-monospace, "SF Mono", Menlo, monospace;
+  letter-spacing: .2px;
+  color: var(--du-muted);
+  opacity: .8;
+}
+#qtip .qtip-loc{
+  display: block;
+  margin-top: 2px;
+  font: 600 .66rem/1 ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+  letter-spacing: .3px;
+  color: var(--du-muted);
+  font-variant-numeric: tabular-nums;
+}
+#qtip .qtip-loc:empty{ display: none; }
+
+/* caret: a rotated glass square pointing at the word; --caret = x within tip */
+#qtip::after{
+  content: "";
+  position: absolute;
+  left: var(--caret, 50%);
+  bottom: -5px;
+  width: 10px; height: 10px;
+  margin-left: -5px;
+  background: var(--du-panel);
+  border-right: 1px solid var(--du-edge);
+  border-bottom: 1px solid var(--du-edge);
+  transform: rotate(45deg);
+}
+#qtip.below::after{ bottom: auto; top: -5px; transform: rotate(225deg); }
+
+/* --- discoverability hint (one quiet line under the usage heading) ------ */
+.qhint{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0 12px;
+  font-size: .8rem;
+  color: var(--du-muted);
+}
+.qhint svg{ width: 15px; height: 15px; flex: none; opacity: .85; }
+
+/* coarse pointers (touch): bigger comfortable hit area, no hover-stick */
+@media (hover: none){
+  .ayah-ar .qword, .s-ar.qword{ padding: .06em .12em; }
+}
+
+/* honor reduced motion: no rise, instant reveal */
+@media (prefers-reduced-motion: reduce){
+  .ayah-ar .qword, .s-ar.qword, .u-forms .qword{ transition: none; }
+  #qtip{ transition: opacity .01s linear; transform: none; }
+  #qtip.show{ transform: none; }
+}
+
+/* honesty indicator added by wbw.js. .preview = loud (mock data); .beta = small subtle pill */
+#wbw-preview-badge{
+  position: fixed; z-index: 90; left: 50%; bottom: 14px; transform: translateX(-50%);
+  max-width: calc(100vw - 24px);
+  background: #7a3d00; color: #fff5e6; border: 1px solid #9a6b12;
+  font: 700 .72rem/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  letter-spacing: .2px; padding: 7px 13px; border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.3); pointer-events: none; text-align: center;
+}
+#wbw-preview-badge.beta{
+  left: auto; right: 12px; transform: none; bottom: 12px;
+  background: rgba(30,34,44,.82); color: #e8eef6; border-color: rgba(255,255,255,.20);
+  font-weight: 600; font-size: .66rem; padding: 5px 11px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.25); pointer-events: auto; cursor: default;
+}
+/* keep the beta pill clear of the mobile bottom nav; inert on touch (no title tooltip there) */
+@media (max-width: 640px){ #wbw-preview-badge.beta{ bottom: 66px; right: 8px; pointer-events: none; } }
+
+/* subtle, honest per-āyah draft-coverage chip next to the ref chip */
+.ayah-cov{
+  display: inline-block; margin-inline-start: 8px; vertical-align: middle;
+  font-size: .7rem; font-weight: 600; letter-spacing: .2px; opacity: .6; cursor: help;
+}
+.ayah-cov::before{ content: "✦ "; opacity: .7; }
+
+/* Detail usage layout: full cited ayat must wrap inside the card.
+   Do not create a horizontal scroller; every aligned word remains an interactive
+   qword span, while certified rows get role-colored rich hover payloads. */
+.detailcard .ayah{
+  overflow: visible;
+  max-width: 100%;
+}
+.detailcard .ayah-line{
+  gap: .18em;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+.detailcard .ayah-line .ayah-ar{
+  white-space: normal;
+  width: fit-content;
+  max-width: 100%;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+/* Grammar-color contrast: dark-mode noun/stem white is unreadable on light panels. */
+html[data-du-mode="light"] .qword,
+html[data-du-mode="light"] .qg-word,
+html[data-du-mode="light"] #wbw-legend,
+html[data-du-mode="light"] #qtip{
+  --qg-adjective-color: #92400e;
+  --qg-alternative-color: #92400e;
+  --qg-article-color: #8a6b0a;
+  --qg-comitative-color: #b45300;
+  --qg-conditional-color: #047857;
+  --qg-conjunction-color: #0070ca;
+  --qg-demonstrative-color: #3f6212;
+  --qg-derivative-prefix-color: #7c3aed;
+  --qg-dual-suffix-color: #0369a1;
+  --qg-emphasis-color: #92400e;
+  --qg-exception-color: #cd1798;
+  --qg-flat-word-color: #2257d0;
+  --qg-future-particle-color: #0369a1;
+  --qg-interrogative-color: #0f766e;
+  --qg-lam-color: #9a6306;
+  --qg-ma-particle-color: #774cf7;
+  --qg-negation-color: #df0626;
+  --qg-noun-color: #1d2939;
+  --qg-noun-stem-color: #1d2939;
+  --qg-number-color: #92400e;
+  --qg-oath-color: #d82500;
+  --qg-object-pronoun-color: #9734fa;
+  --qg-particle-color: #0070ca;
+  --qg-plural-suffix-color: #1d4ed8;
+  --qg-possessive-pronoun-color: #6b21a8;
+  --qg-preposition-color: #d82500;
+  --qg-pronoun-color: #9734fa;
+  --qg-proper-noun-color: #876c02;
+  --qg-question-color: #0676a8;
+  --qg-referential-pronoun-color: #86198f;
+  --qg-relative-color: #627728;
+  --qg-result-color: #dd0050;
+  --qg-result-fa-color: #df0626;
+  --qg-segment-color: #1d2939;
+  --qg-subject-pronoun-color: #0676a8;
+  --qg-verb-color: #22802f;
+  --qg-verb-prefix-color: #0476ac;
+  --qg-verb-stem-color: #1d2939;
+  --qg-vocative-color: #936700;
+}
+
+/* D7 qg-colour learner legend (source-clean: grammar roles + colours only) */
+#wbw-legend-toggle{ position:fixed; right:8px; bottom:44px; z-index:9998; font:inherit; font-size:.7rem;
+  background:var(--du-panel,#fff); color:var(--du-text,#1d2939); border:1px solid var(--du-edge,rgba(0,0,0,.28));
+  border-radius:999px; padding:2px 10px; cursor:pointer; box-shadow:var(--du-psh,0 2px 8px rgba(0,0,0,.15)); }
+#wbw-legend-toggle:focus-visible{ outline:2px solid var(--du-edge,#4b5563); outline-offset:2px; }
+#wbw-legend{ position:fixed; right:8px; bottom:76px; z-index:9999; max-width:min(340px,92vw);
+  background:var(--du-panel,#fff); color:var(--du-text,#1d2939); border:1px solid var(--du-edge,rgba(0,0,0,.28));
+  border-radius:12px; padding:10px 12px; box-shadow:var(--du-psh,0 8px 28px rgba(0,0,0,.2)); font-size:.78rem; }
+#wbw-legend[hidden]{ display:none; }
+.wbw-legend-h{ font-weight:700; margin-bottom:7px; font-size:.8rem; color:var(--du-text,#1d2939); }
+.wbw-legend-grid{ display:grid; grid-template-columns:1fr 1fr; gap:4px 12px; }
+.wbw-legend-item{ display:flex; align-items:center; gap:7px; line-height:1.35; }
+.wbw-legend-sw{ width:14px; height:14px; border-radius:3px; flex:none; background-clip:padding-box; border:1px solid var(--du-edge,rgba(0,0,0,.4)); box-shadow:0 0 0 1px rgba(128,132,140,.5) inset; }
+.wbw-legend-lb{ color:var(--du-text,#1d2939); font-weight:500; }
+@media (max-width:640px){ #wbw-legend-toggle{ bottom:100px; } #wbw-legend{ bottom:132px; } }

@@ -18,7 +18,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_CSS_PATH = ROOT.parent / "data" / "wbw.css"
+DEFAULT_CSS_PATH = ROOT / "qamus" / "registry" / "palette-source-snapshot.css"
 SCHEMA_PATH = ROOT / "qamus" / "schemas" / "morphosyntax-token.schema.json"
 REGISTRY_PATH = ROOT / "qamus" / "registry" / "qg-class-reconciliation.json"
 MATRIX_PATH = ROOT / "qamus" / "registry" / "palette-collision-matrix.json"
@@ -390,7 +390,7 @@ def _colour_missing(theme: str, reason: str) -> dict:
     return {"css_value": None, "resolved_rgb": None, "rgb": None, "opacity": None, "missing": True, "reason": reason, "theme": theme}
 
 
-def build_registry(css_text: str, schema: dict, css_source: str = "../../data/wbw.css") -> dict:
+def build_registry(css_text: str, schema: dict, css_source: str = "qamus/registry/palette-source-snapshot.css") -> dict:
     default_vars, light_vars = parse_qg_variables(css_text)
     live_classes = {name.removeprefix("--qg-").removesuffix("-color") for name in default_vars if name != "--qg-flat-word-color"}
     live_classes |= {name.removeprefix("--qg-").removesuffix("-color") for name in light_vars if name != "--qg-flat-word-color"}

@@ -27,7 +27,7 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
     css_path = args.css.resolve()
     css_text = css_path.read_text(encoding="utf-8")
-    registry = build_registry(css_text, read_schema(), css_source="../../data/wbw.css")
+    registry = build_registry(css_text, read_schema(), css_source="qamus/registry/palette-source-snapshot.css")
     matrix = build_collision_matrix(registry)
     if args.write:
         dump_json(REGISTRY_PATH, registry)
