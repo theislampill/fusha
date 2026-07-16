@@ -23,7 +23,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_INDEX = os.path.join(REPO_ROOT, "qamus", "indexes", "occurrence-appearances.jsonl")
-DEFAULT_WHITELIST = os.path.join(REPO_ROOT, "..", "data", "rh_live_01_beta_whitelist.jsonl")
+# The corpus whitelist is an external artifact; it must be passed explicitly.
 _HASH_RE = re.compile(r"^[0-9a-f]{64}$")
 
 sys.path.insert(0, REPO_ROOT)
@@ -259,14 +259,26 @@ def self_test():
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--index", default=DEFAULT_INDEX)
-    parser.add_argument("--whitelist", default=DEFAULT_WHITELIST)
+    parser.add_argument("--whitelist", default=None,
+                        help="external corpus whitelist (explicit path; the corpus is "
+                             "not repo-tracked, so there is no implicit default)")
+    parser.add_argument("--structure-only", action="store_true",
+                        help="validate the committed index's structural invariants "
+                             "without a corpus (repo-self-contained harness mode)")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args(argv)
     if args.self_test:
         return self_test()
 
     records = list(_read_jsonl(args.index))
-    source_rows = list(_read_jsonl(args.whitelist)) if args.whitelist else []
+    if args.structure_only:
+        source_rows = []
+    elif args.whitelist:
+        source_rows = list(_read_jsonl(args.whitelist))
+    else:
+        parser.error("provide --whitelist PATH for a corpus parity run, "
+                     "or --structure-only for the repo-self-contained check")
+        return 2
     report = validate_records(records, source_rows=source_rows)
     print(render_report(report))
     return 0 if report.ok else 1
