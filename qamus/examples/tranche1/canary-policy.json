@@ -1,0 +1,129 @@
+{
+  "schema": "qamus.tranche1_canary_policy.v1",
+  "producer": "tools.tranche1_projection",
+  "version": "1.0.0",
+  "canaries": [
+    {
+      "loc": "3:141:4",
+      "surface": "آمَنُوا",
+      "fact_family": "sarf",
+      "projector_id": "sarf.tranche1_fixture_projection.v1",
+      "status": "candidate",
+      "expected_segment_labels": ["STEM", "SUBJ"],
+      "pos": "verb",
+      "morphology_candidate": {
+        "verb_form": "IV",
+        "voice": "active",
+        "aspect": "perfect",
+        "person": "3",
+        "number": "plural",
+        "gender": "masculine"
+      },
+      "learner_explanation": "The stem contributes “believed,” and the ending contributes the plural subject “they.”",
+      "blocker": null,
+      "route": null
+    },
+    {
+      "loc": "24:31:76",
+      "surface": "ٱلْمُؤْمِنُونَ",
+      "fact_family": "sarf",
+      "projector_id": "sarf.tranche1_fixture_projection.v1",
+      "status": "candidate",
+      "expected_segment_labels": ["ART", "DER", "STEM", "PL"],
+      "pos": "participle",
+      "morphology_candidate": {
+        "number": "plural",
+        "state": "definite",
+        "derivative_type": "active_participle_candidate"
+      },
+      "learner_explanation": "The article, derived-form marker, stem, and plural ending remain separate in this candidate.",
+      "blocker": null,
+      "route": null
+    },
+    {
+      "loc": "2:34:5",
+      "surface": "لِءَادَمَ",
+      "fact_family": "nahw",
+      "projector_id": "nahw.tranche1_fixture_projection.v1",
+      "status": "candidate",
+      "expected_segment_labels": ["LAM", "NAME"],
+      "pos": "proper_noun",
+      "morphology_candidate": {
+        "case": "genitive",
+        "state": "proper",
+        "derivative_type": "proper_noun"
+      },
+      "learner_explanation": "The prepositional lām contributes “to,” followed by the proper name Adam.",
+      "blocker": null,
+      "route": null
+    },
+    {
+      "loc": "39:63:3",
+      "surface": "السَّمَاوَاتِ",
+      "fact_family": "sarf",
+      "projector_id": "sarf.tranche1_fixture_projection.v1",
+      "status": "candidate",
+      "expected_segment_labels": ["ART", "N", "PL"],
+      "pos": "noun",
+      "morphology_candidate": {
+        "number": "plural",
+        "state": "definite"
+      },
+      "learner_explanation": "The article, noun stem, and plural ending remain separate in this candidate.",
+      "blocker": null,
+      "route": null
+    },
+    {
+      "loc": "22:18:9",
+      "surface": "ٱلسَّمَٰوَٰتِ",
+      "fact_family": "sarf",
+      "projector_id": "sarf.tranche1_fixture_projection.v1",
+      "status": "unresolved",
+      "expected_segment_labels": ["ART", "NOUN"],
+      "blocker": "The fused and segmented same-surface rows lack a typed compatibility or legacy rationale.",
+      "route": {
+        "lane": "sarf",
+        "procedure": "sarf/procedures/morphology-candidate-lattice.md"
+      }
+    },
+    {
+      "loc": "2:13:12",
+      "surface": "السُّفَهَاءُ",
+      "fact_family": "sarf",
+      "projector_id": "sarf.tranche1_fixture_projection.v1",
+      "status": "source_gap",
+      "expected_segment_labels": ["ART", "N"],
+      "blocker": "The source lacks typed singular, template, root, and ending facts for this occurrence.",
+      "route": {
+        "lane": "sarf",
+        "procedure": "sarf/procedures/root-decision.md"
+      }
+    },
+    {
+      "loc": "7:54:23",
+      "surface": "مُسَخَّرَٰتٍۭ",
+      "fact_family": "sarf",
+      "projector_id": "sarf.tranche1_fixture_projection.v1",
+      "status": "producer_pending",
+      "expected_segment_labels": ["TOK"],
+      "blocker": "The source supplies only a generic whole-token segment, so no automatic split is permitted.",
+      "route": {
+        "lane": "sarf",
+        "procedure": "sarf/procedures/clitic-and-host-morphology.md"
+      }
+    },
+    {
+      "loc": "5:2:12",
+      "surface": "ٱلْهَدْىَ",
+      "fact_family": "nahw",
+      "projector_id": "nahw.tranche1_fixture_projection.v1",
+      "status": "syntax_pending",
+      "expected_segment_labels": ["ART", "N"],
+      "blocker": "Governor and ending evidence are absent, so no case or syntactic role is asserted.",
+      "route": {
+        "lane": "nahw",
+        "procedure": "nahw/procedures/governor-dependency-lattice.md"
+      }
+    }
+  ]
+}

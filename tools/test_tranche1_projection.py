@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -19,6 +20,9 @@ from tools import lattice_projectors  # noqa: E402
 
 SCHEMA_DIR = ROOT / "qamus" / "schemas"
 CROSSWALK_SCHEMA = SCHEMA_DIR / "tranche1-projection-crosswalk.schema.json"
+FIXTURE_DIR = ROOT / "qamus" / "examples" / "tranche1"
+WHITELIST = ROOT.parent / "data" / "rh_live_01_beta_whitelist.jsonl"
+SOURCE_COMMIT = "f706698a9f682de1731b1913221538c7a4289870"
 LINEAGE_FIELDS = {
     "fact_ids",
     "status",
@@ -45,6 +49,10 @@ def validate_crosswalk(row: dict) -> list[str]:
     errors: list[str] = []
     fact_ledger._validate_node(row, schema, "$", errors, schema)
     return errors
+
+
+def read_jsonl(path: Path) -> list[dict]:
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
 
 
 class TrancheSchemaTests(unittest.TestCase):
@@ -148,6 +156,58 @@ class TrancheProjectorTests(unittest.TestCase):
             (result["producer"], result["projector_id"], result["version"]),
         )
         self.assertEqual("candidate_projection", result["record_type"])
+
+
+class TrancheCompilerTests(unittest.TestCase):
+    def compile_fixture(self, out_dir: Path) -> dict:
+        from tools import tranche1_projection
+
+        return tranche1_projection.compile_tranche(
+            WHITELIST,
+            FIXTURE_DIR / "canary-policy.json",
+            out_dir,
+            SOURCE_COMMIT,
+        )
+
+    def test_compiler_emits_exact_four_plus_four(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            out_dir = Path(temp_dir)
+            summary = self.compile_fixture(out_dir)
+            self.assertEqual(4, summary["candidate_count"])
+            self.assertEqual(4, summary["queue_count"])
+            self.assertEqual(0, summary["live_mutations"])
+            self.assertEqual(8, len(read_jsonl(out_dir / "normalized-public-payload.jsonl")))
+
+    def test_source_gap_omits_guessed_facts(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            out_dir = Path(temp_dir)
+            self.compile_fixture(out_dir)
+            queue = {row["loc"]: row for row in read_jsonl(out_dir / "unresolved-queue.jsonl")}
+            row = queue["2:13:12"]
+            def keys(value: object) -> set[str]:
+                if isinstance(value, dict):
+                    return set(value) | set().union(*(keys(item) for item in value.values()))
+                if isinstance(value, list):
+                    return set().union(*(keys(item) for item in value)) if value else set()
+                return set()
+
+            for forbidden in ("root", "candidate_root", "template", "singular", "morphline", "segments", "public_payload"):
+                self.assertNotIn(forbidden, keys(row))
+            self.assertEqual("source_gap", row["status"])
+            self.assertIn("singular", row["blocker"].lower())
+            self.assertIn("template", row["blocker"].lower())
+
+    def test_positive_segments_reconstruct_exact_surface(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            out_dir = Path(temp_dir)
+            self.compile_fixture(out_dir)
+            candidates = read_jsonl(out_dir / "public-hover-projections.jsonl")
+            self.assertEqual(4, len(candidates))
+            for row in candidates:
+                with self.subTest(loc=row["canonical_quran_loc"]):
+                    self.assertEqual(row["surface"], "".join(s["surface"] for s in row["segments"]))
+                    self.assertEqual("tools.tranche1_projection", row["producer"])
+                    self.assertFalse(row["live_mutation_allowed"])
 
 
 if __name__ == "__main__":
