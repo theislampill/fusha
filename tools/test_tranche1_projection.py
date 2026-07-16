@@ -185,6 +185,19 @@ class TrancheCompilerTests(unittest.TestCase):
             self.assertEqual(4, summary["queue_count"])
             self.assertEqual(0, summary["live_mutations"])
             self.assertEqual(8, len(read_jsonl(out_dir / "normalized-public-payload.jsonl")))
+            dom_rows = read_jsonl(out_dir / "dom-consumption.expectations.jsonl")
+            self.assertEqual(8, len(dom_rows))
+            self.assertTrue(
+                all(
+                    row["producer"] == "tools.tranche1_projection"
+                    and row["projector_id"] in {
+                        "sarf.tranche1_fixture_projection.v1",
+                        "nahw.tranche1_fixture_projection.v1",
+                    }
+                    and row["version"] == "1.0.0"
+                    for row in dom_rows
+                )
+            )
 
     def test_source_gap_omits_guessed_facts(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
