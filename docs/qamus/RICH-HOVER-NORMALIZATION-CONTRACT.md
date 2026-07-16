@@ -181,3 +181,30 @@ violations), and cross-references each nonconforming row against
 **KNOWN** debt (the C1–C5 classes already saw it) from **NEW** debt (only `norm@1` sees it).
 `--self-test` proves each MUST clause red-first against the four drift shapes above plus a clean
 `حَقَّتْ`-style row.
+## N-SEG-03 — tiered segmentation standard (owner-ratified 2026-07-16)
+
+**Target house style (rich):** a newly authored or substantively repaired rich
+hover exposes EVERY confidently identifiable, pedagogically useful morpheme as
+its own coloured segment with its own explanation, distinguishing at least:
+particle/conjunction · imperfect/person inflectional prefix · derivational
+form-marker · root-bearing patterned material · subject/number/gender/case/mood
+morphology. Example shape: وَ | يَ | حِقّ | َ (conjunction · person prefix ·
+root material · mood vowel), exactly reconstructing the written form.
+
+**Legacy-valid baseline:** rows authored before this clause that collapse a
+finite verb into a coarser unit remain VALID (not defects, not queue items);
+they are upgraded opportunistically when substantively touched.
+
+**Derivational form-markers (MUST):** pattern augments that are not root
+radicals — e.g. the Form V/VI initial ت of تَفَعَّلَ/تَفَاعَلَ — are exposed as
+their own segment with the derivative form-marker class (house DER:
+`qg-derivative-prefix`, form-specific role such as `derivative_prefix_form_v`),
+NEVER (a) fused indistinguishably into the root-bearing material, (b) classed
+as the imperfect person-prefix, (c) classed as a detachable particle/clitic, or
+(d) presented as an independent lexical element. Exact surface reconstruction
+is unchanged by this clause.
+
+**Security precondition:** a morpheme is split ONLY when the split point is
+orthographically clean; fused orthography (idghām, alif-maqṣūra merges) is
+committed in the morphline/notes instead, pending the owner's split-point
+convention.
