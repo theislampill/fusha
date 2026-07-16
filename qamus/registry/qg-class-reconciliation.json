@@ -1,0 +1,5020 @@
+{
+  "accessibility_floor": {
+    "class_checks": "embedded per class under classes[].accessibility_floor",
+    "computed_value_runtime_validation": "separate renderer-phase deliverable",
+    "failure_count": 22,
+    "normal_text_threshold": 4.5,
+    "required_missing_checks": [
+      {
+        "class_id": "qg-case",
+        "theme": "dark"
+      },
+      {
+        "class_id": "qg-case",
+        "theme": "light"
+      },
+      {
+        "class_id": "qg-relation",
+        "theme": "dark"
+      },
+      {
+        "class_id": "qg-relation",
+        "theme": "light"
+      },
+      {
+        "class_id": "qg-unknown",
+        "theme": "dark"
+      },
+      {
+        "class_id": "qg-unknown",
+        "theme": "light"
+      }
+    ],
+    "required_missing_count": 6,
+    "scope": "static CSS colours against page and panel backgrounds in both themes"
+  },
+  "classes": [
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#facc15",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 11.7
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#facc15",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 10.14
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#92400e",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.06
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#92400e",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.94
+          }
+        }
+      },
+      "canonical_class_id": "qg-adjective",
+      "class_id": "qg-adjective",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-adjective-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#facc15",
+          "rgb": [
+            250,
+            204,
+            21
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-adjective-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#92400e",
+          "rgb": [
+            146,
+            64,
+            14
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "noun host, article, or case ending"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-adjective",
+        "css_value": "var(--qg-adjective-color)",
+        "custom_property": "--qg-adjective-color",
+        "effective_selector": ".qg-adjective",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-adjective",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "stem"
+        ],
+        "semantic_family": "adjectival host",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#fbbf24",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 10.73
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#fbbf24",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 9.31
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#92400e",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.06
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#92400e",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.94
+          }
+        }
+      },
+      "canonical_class_id": "qg-alternative",
+      "class_id": "qg-alternative",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-alternative-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#fbbf24",
+          "rgb": [
+            251,
+            191,
+            36
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-alternative-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#92400e",
+          "rgb": [
+            146,
+            64,
+            14
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-alternative",
+        "css_value": "var(--qg-alternative-color)",
+        "custom_property": "--qg-alternative-color",
+        "effective_selector": ".qg-alternative",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-alternative",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "particle"
+        ],
+        "semantic_family": "alternative/disjunction role",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#f2c94c",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 11.29
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#f2c94c",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 9.79
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#8a6b0a",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.29
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#8a6b0a",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.91
+          }
+        }
+      },
+      "canonical_class_id": "qg-article",
+      "class_id": "qg-article",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-article-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#f2c94c",
+          "rgb": [
+            242,
+            201,
+            76
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-article-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#8a6b0a",
+          "rgb": [
+            138,
+            107,
+            10
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-article",
+        "css_value": "var(--qg-article-color)",
+        "custom_property": "--qg-article-color",
+        "effective_selector": ".qg-article",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-article",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "definite_article"
+        ],
+        "semantic_family": "definiteness article",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": false,
+          "failures": [
+            "REQUIRED-MISSING"
+          ],
+          "page": null,
+          "panel": null
+        },
+        "light": {
+          "available": false,
+          "failures": [
+            "REQUIRED-MISSING"
+          ],
+          "page": null,
+          "panel": null
+        }
+      },
+      "canonical_class_id": "qg-case",
+      "class_id": "qg-case",
+      "colour": {
+        "dark": {
+          "css_value": null,
+          "missing": true,
+          "opacity": null,
+          "reason": "no live CSS variable or selector",
+          "resolved_rgb": null,
+          "rgb": null,
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": null,
+          "missing": true,
+          "opacity": null,
+          "reason": "no live CSS variable or selector",
+          "resolved_rgb": null,
+          "rgb": null,
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "public renderer class until Q6-2 exposes it"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [],
+        "required": "projection-status or owner-approved internal text; no public colour output",
+        "status": "REQUIRED-MISSING"
+      },
+      "public_internal_status": "internal-canonical",
+      "renderer_token": {
+        "css_selector": null,
+        "css_value": null,
+        "custom_property": null,
+        "effective_selector": null,
+        "emitted": false,
+        "opacity": null
+      },
+      "schema_membership": "schema-enum",
+      "semantic_class_id": "qg-case",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "case_ending"
+        ],
+        "semantic_family": "case/ending internal role",
+        "typed_fields": [
+          "internal fact carrier",
+          "projection-status"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#ffa85d",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 9.39
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#ffa85d",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.15
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#b45300",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.3
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#b45300",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.92
+          }
+        }
+      },
+      "canonical_class_id": "qg-comitative",
+      "class_id": "qg-comitative",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-comitative-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#ffa85d",
+          "rgb": [
+            255,
+            168,
+            93
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-comitative-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#b45300",
+          "rgb": [
+            180,
+            83,
+            0
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": false,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-comitative",
+        "css_value": "var(--qg-comitative-color)",
+        "custom_property": "--qg-comitative-color",
+        "effective_selector": ".qg-comitative",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-comitative",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "prefix_comitative_waw"
+        ],
+        "semantic_family": "comitative waw",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#34d399",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 9.32
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#34d399",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.08
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#047857",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.69
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#047857",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.37
+          }
+        }
+      },
+      "canonical_class_id": "qg-conditional",
+      "class_id": "qg-conditional",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-conditional-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#34d399",
+          "rgb": [
+            52,
+            211,
+            153
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-conditional-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#047857",
+          "rgb": [
+            4,
+            120,
+            87
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-conditional",
+        "css_value": "var(--qg-conditional-color)",
+        "custom_property": "--qg-conditional-color",
+        "effective_selector": ".qg-conditional",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-conditional",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "conditional_particle"
+        ],
+        "semantic_family": "conditional role",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#5db7ff",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.26
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#5db7ff",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 7.16
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#0070ca",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.31
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#0070ca",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.93
+          }
+        }
+      },
+      "canonical_class_id": "qg-conjunction",
+      "class_id": "qg-conjunction",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-conjunction-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#5db7ff",
+          "rgb": [
+            93,
+            183,
+            255
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-conjunction-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#0070ca",
+          "rgb": [
+            0,
+            112,
+            202
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-conjunction",
+        "css_value": "var(--qg-conjunction-color)",
+        "custom_property": "--qg-conjunction-color",
+        "effective_selector": ".qg-conjunction",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-conjunction",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "conjunction_particle",
+          "prefix_conjunction",
+          "prefix_coordination_fa"
+        ],
+        "semantic_family": "coordination/conjunction",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#c3e88d",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 13.01
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#c3e88d",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 11.28
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#3f6212",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.05
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#3f6212",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.93
+          }
+        }
+      },
+      "canonical_class_id": "qg-demonstrative",
+      "class_id": "qg-demonstrative",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-demonstrative-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#c3e88d",
+          "rgb": [
+            195,
+            232,
+            141
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-demonstrative-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#3f6212",
+          "rgb": [
+            63,
+            98,
+            18
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-demonstrative",
+        "css_value": "var(--qg-demonstrative-color)",
+        "custom_property": "--qg-demonstrative-color",
+        "effective_selector": ".qg-demonstrative",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-demonstrative",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "stem"
+        ],
+        "semantic_family": "demonstrative host",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#a78bfa",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.58
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#a78bfa",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.71
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#7c3aed",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.87
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#7c3aed",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.58
+          }
+        }
+      },
+      "canonical_class_id": "qg-derivative-prefix",
+      "class_id": "qg-derivative-prefix",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-derivative-prefix-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#a78bfa",
+          "rgb": [
+            167,
+            139,
+            250
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-derivative-prefix-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#7c3aed",
+          "rgb": [
+            124,
+            58,
+            237
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "person/tense prefix without typed derivational evidence"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": false,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-derivative-prefix",
+        "css_value": "var(--qg-derivative-prefix-color)",
+        "custom_property": "--qg-derivative-prefix-color",
+        "effective_selector": ".qg-derivative-prefix",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-derivative-prefix",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "derivative_prefix"
+        ],
+        "semantic_family": "derivational prefix",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#22d3ee",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 9.91
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#22d3ee",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.6
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#0369a1",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.07
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#0369a1",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.81
+          }
+        }
+      },
+      "canonical_class_id": "qg-dual-suffix",
+      "class_id": "qg-dual-suffix",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-dual-suffix-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#22d3ee",
+          "rgb": [
+            34,
+            211,
+            238
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-dual-suffix-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#0369a1",
+          "rgb": [
+            3,
+            105,
+            161
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "case ending or generic segment fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": false,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-dual-suffix",
+        "css_value": "var(--qg-dual-suffix-color)",
+        "custom_property": "--qg-dual-suffix-color",
+        "effective_selector": ".qg-dual-suffix",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-dual-suffix",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "dual_suffix"
+        ],
+        "semantic_family": "dual suffix",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#f59e0b",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.34
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#f59e0b",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 7.23
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#92400e",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.06
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#92400e",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.94
+          }
+        }
+      },
+      "canonical_class_id": "qg-emphasis",
+      "class_id": "qg-emphasis",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-emphasis-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#f59e0b",
+          "rgb": [
+            245,
+            158,
+            11
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-emphasis-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#92400e",
+          "rgb": [
+            146,
+            64,
+            14
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-emphasis",
+        "css_value": "var(--qg-emphasis-color)",
+        "custom_property": "--qg-emphasis-color",
+        "effective_selector": ".qg-emphasis",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-emphasis",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "particle"
+        ],
+        "semantic_family": "emphasis role",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#f28bd4",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.04
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#f28bd4",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.97
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#cd1798",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.3
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#cd1798",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.93
+          }
+        }
+      },
+      "canonical_class_id": "qg-exception",
+      "class_id": "qg-exception",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-exception-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#f28bd4",
+          "rgb": [
+            242,
+            139,
+            212
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-exception-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#cd1798",
+          "rgb": [
+            205,
+            23,
+            152
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-exception",
+        "css_value": "var(--qg-exception-color)",
+        "custom_property": "--qg-exception-color",
+        "effective_selector": ".qg-exception",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-exception",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "exceptive_particle"
+        ],
+        "semantic_family": "exception role",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#22d3ee",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 9.91
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#22d3ee",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.6
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#0369a1",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.07
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#0369a1",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.81
+          }
+        }
+      },
+      "canonical_class_id": "qg-future-particle",
+      "class_id": "qg-future-particle",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-future-particle-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#22d3ee",
+          "rgb": [
+            34,
+            211,
+            238
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-future-particle-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#0369a1",
+          "rgb": [
+            3,
+            105,
+            161
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-future-particle",
+        "css_value": "var(--qg-future-particle-color)",
+        "custom_property": "--qg-future-particle-color",
+        "effective_selector": ".qg-future-particle",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-future-particle",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "particle"
+        ],
+        "semantic_family": "future/aspect particle",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#2dd4bf",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 9.62
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#2dd4bf",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.35
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#0f766e",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.68
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#0f766e",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.36
+          }
+        }
+      },
+      "canonical_class_id": "qg-interrogative",
+      "class_id": "qg-interrogative",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-interrogative-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#2dd4bf",
+          "rgb": [
+            45,
+            212,
+            191
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-interrogative-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#0f766e",
+          "rgb": [
+            15,
+            118,
+            110
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": false,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-interrogative",
+        "css_value": "var(--qg-interrogative-color)",
+        "custom_property": "--qg-interrogative-color",
+        "effective_selector": ".qg-interrogative",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-interrogative",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "interrogative_particle"
+        ],
+        "semantic_family": "interrogative particle subtype",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#f59e0b",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.34
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#f59e0b",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 7.23
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#9a6306",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.31
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#9a6306",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.94
+          }
+        }
+      },
+      "canonical_class_id": "qg-lam",
+      "class_id": "qg-lam",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-lam-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#f59e0b",
+          "rgb": [
+            245,
+            158,
+            11
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-lam-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#9a6306",
+          "rgb": [
+            154,
+            99,
+            6
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-lam",
+        "css_value": "var(--qg-lam-color)",
+        "custom_property": "--qg-lam-color",
+        "effective_selector": ".qg-lam",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-lam",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "prefix_purpose_lam",
+          "prefix_imperative_lam",
+          "prefix_lam"
+        ],
+        "semantic_family": "lam particle subtype",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#a78bfa",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.58
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#a78bfa",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.71
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#774cf7",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.31
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#774cf7",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.94
+          }
+        }
+      },
+      "canonical_class_id": "qg-ma-particle",
+      "class_id": "qg-ma-particle",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-ma-particle-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#a78bfa",
+          "rgb": [
+            167,
+            139,
+            250
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-ma-particle-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#774cf7",
+          "rgb": [
+            119,
+            76,
+            247
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-ma-particle",
+        "css_value": "var(--qg-ma-particle-color)",
+        "custom_property": "--qg-ma-particle-color",
+        "effective_selector": ".qg-ma-particle",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-ma-particle",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "particle_ma"
+        ],
+        "semantic_family": "ma particle subtype",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#fb7185",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.66
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#fb7185",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.77
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#df0626",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.28
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#df0626",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.91
+          }
+        }
+      },
+      "alias_policy": {
+        "evidence": [
+          "docs/parser/qamus-grammar-v1-class-map.md",
+          "docs/GLOSSARY.md",
+          "tools/validate_schema_coherence.py"
+        ],
+        "linguistic_distinction_found": false,
+        "normalizes_to": "qg-negation",
+        "owner_decision_required": false
+      },
+      "canonical_class_id": "qg-negation",
+      "class_id": "qg-negation",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-negation-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#fb7185",
+          "rgb": [
+            251,
+            113,
+            133
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-negation-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#df0626",
+          "rgb": [
+            223,
+            6,
+            38
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [
+        "qg-negative"
+      ],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-negation",
+        "css_value": "var(--qg-negation-color)",
+        "custom_property": "--qg-negation-color",
+        "effective_selector": ".qg-negation",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-negation",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "negative_particle"
+        ],
+        "semantic_family": "negation",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#fb7185",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.66
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#fb7185",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.77
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#df0626",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.28
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#df0626",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.91
+          }
+        }
+      },
+      "alias_policy": {
+        "emitted": false,
+        "linguistic_distinction_found": false,
+        "normalizes_to": "qg-negation"
+      },
+      "canonical_class_id": "qg-negation",
+      "class_id": "qg-negative",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-negation-color)",
+          "inherited_from": "qg-negation",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#fb7185",
+          "rgb": [
+            251,
+            113,
+            133
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-negation-color)",
+          "inherited_from": "qg-negation",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#df0626",
+          "rgb": [
+            223,
+            6,
+            38
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "qg-negation text label",
+          "projection-status if rejected"
+        ],
+        "required": "normalize input to qg-negation and never emit qg-negative",
+        "status": "existing-alias-normalization"
+      },
+      "public_internal_status": "legacy-alias",
+      "renderer_token": {
+        "alias_target": "qg-negation",
+        "css_selector": null,
+        "css_value": "var(--qg-negation-color)",
+        "custom_property": "--qg-negation-color",
+        "effective_selector": null,
+        "emitted": false,
+        "opacity": 1.0
+      },
+      "schema_membership": "schema-enum",
+      "semantic_class_id": "qg-negation",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "typed display segment"
+        ],
+        "semantic_family": "legacy negation alias",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#f8fafc",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 17.12
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#f8fafc",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 14.85
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#1d2939",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 12.57
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#1d2939",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 14.4
+          }
+        }
+      },
+      "canonical_class_id": "qg-noun",
+      "class_id": "qg-noun",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-noun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#f8fafc",
+          "rgb": [
+            248,
+            250,
+            252
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-noun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#1d2939",
+          "rgb": [
+            29,
+            41,
+            57
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "new precise noun host where qg-noun-stem is available"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-noun",
+        "css_value": "var(--qg-noun-color)",
+        "custom_property": "--qg-noun-color",
+        "effective_selector": ".qg-noun",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-noun",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "stem"
+        ],
+        "semantic_family": "legacy broad noun host",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#f8fafc",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 17.12
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#f8fafc",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 14.85
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#1d2939",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 12.57
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#1d2939",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 14.4
+          }
+        }
+      },
+      "canonical_class_id": "qg-noun-stem",
+      "class_id": "qg-noun-stem",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-noun-stem-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#f8fafc",
+          "rgb": [
+            248,
+            250,
+            252
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-noun-stem-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#1d2939",
+          "rgb": [
+            29,
+            41,
+            57
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "article, suffix, case ending, or pronoun segment"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-noun-stem",
+        "css_value": "var(--qg-noun-stem-color)",
+        "custom_property": "--qg-noun-stem-color",
+        "effective_selector": ".qg-noun-stem",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-noun-stem",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "stem"
+        ],
+        "semantic_family": "lexical noun host",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#fcd34d",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 12.42
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#fcd34d",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 10.77
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#92400e",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.06
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#92400e",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.94
+          }
+        }
+      },
+      "canonical_class_id": "qg-number",
+      "class_id": "qg-number",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-number-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#fcd34d",
+          "rgb": [
+            252,
+            211,
+            77
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-number-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#92400e",
+          "rgb": [
+            146,
+            64,
+            14
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "number suffix or case ending"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-number",
+        "css_value": "var(--qg-number-color)",
+        "custom_property": "--qg-number-color",
+        "effective_selector": ".qg-number",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-number",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "stem",
+          "number"
+        ],
+        "semantic_family": "number host",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#ff8b73",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 7.84
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#ff8b73",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.8
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#d82500",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.29
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#d82500",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.92
+          }
+        }
+      },
+      "canonical_class_id": "qg-oath",
+      "class_id": "qg-oath",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-preposition-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#ff8b73",
+          "rgb": [
+            255,
+            139,
+            115
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-preposition-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#d82500",
+          "rgb": [
+            216,
+            37,
+            0
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-oath",
+        "css_value": "var(--qg-preposition-color)",
+        "custom_property": "--qg-preposition-color",
+        "effective_selector": ".qg-oath",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-oath",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "prefix_oath"
+        ],
+        "semantic_family": "oath preposition role",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#c084fc",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.78
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#c084fc",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.88
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#9734fa",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.29
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#9734fa",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.91
+          }
+        }
+      },
+      "canonical_class_id": "qg-object-pronoun",
+      "class_id": "qg-object-pronoun",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-object-pronoun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#c084fc",
+          "rgb": [
+            192,
+            132,
+            252
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-object-pronoun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#9734fa",
+          "rgb": [
+            151,
+            52,
+            250
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-object-pronoun",
+        "css_value": "var(--qg-object-pronoun-color)",
+        "custom_property": "--qg-object-pronoun-color",
+        "effective_selector": ".qg-object-pronoun",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-object-pronoun",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "object_pronoun"
+        ],
+        "semantic_family": "object pronoun",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#5db7ff",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.26
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#5db7ff",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 7.16
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#0070ca",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.31
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#0070ca",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.93
+          }
+        }
+      },
+      "canonical_class_id": "qg-particle",
+      "class_id": "qg-particle",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-particle-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#5db7ff",
+          "rgb": [
+            93,
+            183,
+            255
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-particle-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#0070ca",
+          "rgb": [
+            0,
+            112,
+            202
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-particle",
+        "css_value": "var(--qg-particle-color)",
+        "custom_property": "--qg-particle-color",
+        "effective_selector": ".qg-particle",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-particle",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "particle",
+          "prefix_particle",
+          "conditional_particle",
+          "subordinating_particle",
+          "interrogative_particle",
+          "time_adverb",
+          "accusative_particle",
+          "purpose_particle",
+          "prefix_supplemental_fa",
+          "prefix_interrogative_hamza",
+          "prefix_equalization_hamza",
+          "attention_particle",
+          "preventive_ma"
+        ],
+        "semantic_family": "function particle",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#60a5fa",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 7.05
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#60a5fa",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.11
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#1d4ed8",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.73
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#1d4ed8",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.56
+          }
+        }
+      },
+      "canonical_class_id": "qg-plural-suffix",
+      "class_id": "qg-plural-suffix",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-plural-suffix-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#60a5fa",
+          "rgb": [
+            96,
+            165,
+            250
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-plural-suffix-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#1d4ed8",
+          "rgb": [
+            29,
+            78,
+            216
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "case ending or generic segment fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": false,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-plural-suffix",
+        "css_value": "var(--qg-plural-suffix-color)",
+        "custom_property": "--qg-plural-suffix-color",
+        "effective_selector": ".qg-plural-suffix",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-plural-suffix",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "plural_suffix"
+        ],
+        "semantic_family": "plural suffix",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#d8b4fe",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 10.13
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#d8b4fe",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.79
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#6b21a8",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 7.46
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#6b21a8",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.54
+          }
+        }
+      },
+      "canonical_class_id": "qg-possessive-pronoun",
+      "class_id": "qg-possessive-pronoun",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-possessive-pronoun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#d8b4fe",
+          "rgb": [
+            216,
+            180,
+            254
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-possessive-pronoun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#6b21a8",
+          "rgb": [
+            107,
+            33,
+            168
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-possessive-pronoun",
+        "css_value": "var(--qg-possessive-pronoun-color)",
+        "custom_property": "--qg-possessive-pronoun-color",
+        "effective_selector": ".qg-possessive-pronoun",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-possessive-pronoun",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "possessive_pronoun"
+        ],
+        "semantic_family": "possessive pronoun",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#ff8b73",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 7.84
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#ff8b73",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.8
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#d82500",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.29
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#d82500",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.92
+          }
+        }
+      },
+      "canonical_class_id": "qg-preposition",
+      "class_id": "qg-preposition",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-preposition-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#ff8b73",
+          "rgb": [
+            255,
+            139,
+            115
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-preposition-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#d82500",
+          "rgb": [
+            216,
+            37,
+            0
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-preposition",
+        "css_value": "var(--qg-preposition-color)",
+        "custom_property": "--qg-preposition-color",
+        "effective_selector": ".qg-preposition,\n.qg-preposition",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-preposition",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "preposition",
+          "prefix_preposition"
+        ],
+        "semantic_family": "preposition",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#c084fc",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.78
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#c084fc",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.88
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#9734fa",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.29
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#9734fa",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.91
+          }
+        }
+      },
+      "canonical_class_id": "qg-pronoun",
+      "class_id": "qg-pronoun",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-pronoun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#c084fc",
+          "rgb": [
+            192,
+            132,
+            252
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-pronoun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#9734fa",
+          "rgb": [
+            151,
+            52,
+            250
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-pronoun",
+        "css_value": "var(--qg-pronoun-color)",
+        "custom_property": "--qg-pronoun-color",
+        "effective_selector": ".qg-pronoun",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-pronoun",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "subject_pronoun",
+          "object_pronoun",
+          "possessive_pronoun"
+        ],
+        "semantic_family": "legacy broad pronoun role",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#fde68a",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 14.38
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#fde68a",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 12.47
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#876c02",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.3
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#876c02",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.93
+          }
+        }
+      },
+      "canonical_class_id": "qg-proper-noun",
+      "class_id": "qg-proper-noun",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-proper-noun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#fde68a",
+          "rgb": [
+            253,
+            230,
+            138
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-proper-noun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#876c02",
+          "rgb": [
+            135,
+            108,
+            2
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "root assertion by color alone"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-proper-noun",
+        "css_value": "var(--qg-proper-noun-color)",
+        "custom_property": "--qg-proper-noun-color",
+        "effective_selector": ".qg-proper-noun",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-proper-noun",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "stem"
+        ],
+        "semantic_family": "proper-name host",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#38bdf8",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.36
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#38bdf8",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 7.25
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#0676a8",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.31
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#0676a8",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.94
+          }
+        }
+      },
+      "canonical_class_id": "qg-question",
+      "class_id": "qg-question",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-question-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#38bdf8",
+          "rgb": [
+            56,
+            189,
+            248
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-question-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#0676a8",
+          "rgb": [
+            6,
+            118,
+            168
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-question",
+        "css_value": "var(--qg-question-color)",
+        "custom_property": "--qg-question-color",
+        "effective_selector": ".qg-question",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-question",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "interrogative_particle"
+        ],
+        "semantic_family": "interrogative role",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#e879f9",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 7.28
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#e879f9",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.31
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#86198f",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 7.04
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#86198f",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.07
+          }
+        }
+      },
+      "canonical_class_id": "qg-referential-pronoun",
+      "class_id": "qg-referential-pronoun",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-referential-pronoun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#e879f9",
+          "rgb": [
+            232,
+            121,
+            249
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-referential-pronoun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#86198f",
+          "rgb": [
+            134,
+            25,
+            143
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-referential-pronoun",
+        "css_value": "var(--qg-referential-pronoun-color)",
+        "custom_property": "--qg-referential-pronoun-color",
+        "effective_selector": ".qg-referential-pronoun",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-referential-pronoun",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "relative_pronoun",
+          "subject_pronoun",
+          "object_pronoun"
+        ],
+        "semantic_family": "referential pronoun",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": false,
+          "failures": [
+            "REQUIRED-MISSING"
+          ],
+          "page": null,
+          "panel": null
+        },
+        "light": {
+          "available": false,
+          "failures": [
+            "REQUIRED-MISSING"
+          ],
+          "page": null,
+          "panel": null
+        }
+      },
+      "canonical_class_id": "qg-relation",
+      "class_id": "qg-relation",
+      "colour": {
+        "dark": {
+          "css_value": null,
+          "missing": true,
+          "opacity": null,
+          "reason": "no live CSS variable or selector",
+          "resolved_rgb": null,
+          "rgb": null,
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": null,
+          "missing": true,
+          "opacity": null,
+          "reason": "no live CSS variable or selector",
+          "resolved_rgb": null,
+          "rgb": null,
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "colour-only claim about a dependency edge"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [],
+        "required": "projection-status or owner-approved internal text; no public colour output",
+        "status": "REQUIRED-MISSING"
+      },
+      "public_internal_status": "internal-canonical",
+      "renderer_token": {
+        "css_selector": null,
+        "css_value": null,
+        "custom_property": null,
+        "effective_selector": null,
+        "emitted": false,
+        "opacity": null
+      },
+      "schema_membership": "schema-enum",
+      "semantic_class_id": "qg-relation",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "syntax.dependency",
+          "syntax.attachment"
+        ],
+        "semantic_family": "dependency/relation internal role",
+        "typed_fields": [
+          "internal fact carrier",
+          "projection-status"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#b6cf70",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 10.36
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#b6cf70",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.99
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#627728",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.29
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#627728",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.91
+          }
+        }
+      },
+      "canonical_class_id": "qg-relative",
+      "class_id": "qg-relative",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-relative-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#b6cf70",
+          "rgb": [
+            182,
+            207,
+            112
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-relative-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#627728",
+          "rgb": [
+            98,
+            119,
+            40
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-relative",
+        "css_value": "var(--qg-relative-color)",
+        "custom_property": "--qg-relative-color",
+        "effective_selector": ".qg-relative",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-relative",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "relative_particle",
+          "relative_pronoun"
+        ],
+        "semantic_family": "relative role",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#ff76a8",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 7.17
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#ff76a8",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.22
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#dd0050",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.28
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#dd0050",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.91
+          }
+        }
+      },
+      "canonical_class_id": "qg-result",
+      "class_id": "qg-result",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-result-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#ff76a8",
+          "rgb": [
+            255,
+            118,
+            168
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-result-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#dd0050",
+          "rgb": [
+            221,
+            0,
+            80
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": false,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-result",
+        "css_value": "var(--qg-result-color)",
+        "custom_property": "--qg-result-color",
+        "effective_selector": ".qg-result",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-result",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "result_particle"
+        ],
+        "semantic_family": "result particle",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#fb7185",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 6.66
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#fb7185",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 5.77
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#df0626",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.28
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#df0626",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.91
+          }
+        }
+      },
+      "canonical_class_id": "qg-result-fa",
+      "class_id": "qg-result-fa",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-result-fa-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#fb7185",
+          "rgb": [
+            251,
+            113,
+            133
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-result-fa-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#df0626",
+          "rgb": [
+            223,
+            6,
+            38
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-result-fa",
+        "css_value": "var(--qg-result-fa-color)",
+        "custom_property": "--qg-result-fa-color",
+        "effective_selector": ".qg-result-fa",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-result-fa",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "prefix_resumption_fa",
+          "prefix_result_fa",
+          "prefix_cause_fa"
+        ],
+        "semantic_family": "result/resumption/cause fa",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#e2e9ee",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 14.61
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#e2e9ee",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 12.67
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#1d2939",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 12.57
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#1d2939",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 14.4
+          }
+        }
+      },
+      "canonical_class_id": "qg-segment",
+      "class_id": "qg-segment",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-segment-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#e2e9ee",
+          "rgb": [
+            226,
+            233,
+            238
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-segment-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#1d2939",
+          "rgb": [
+            29,
+            41,
+            57
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "canonical semantic class; do not infer a role from its color"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role"
+        ],
+        "required": "a nonempty semantic role label or explicit projection-status; generic SEG/segment is insufficient",
+        "status": "REQUIRED-MISSING"
+      },
+      "public_internal_status": "live-generic-fallback",
+      "renderer_token": {
+        "css_selector": ".qg-segment",
+        "css_value": "var(--qg-segment-color)",
+        "custom_property": "--qg-segment-color",
+        "effective_selector": ".qg-segment",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "live-css-only",
+      "semantic_class_id": "qg-segment",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "untyped fallback"
+        ],
+        "semantic_family": "generic live fallback",
+        "typed_fields": [
+          "pending/status reason",
+          "segment.role when available"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#38bdf8",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 8.36
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#38bdf8",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 7.25
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#0676a8",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.31
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#0676a8",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.94
+          }
+        }
+      },
+      "canonical_class_id": "qg-subject-pronoun",
+      "class_id": "qg-subject-pronoun",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-subject-pronoun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#38bdf8",
+          "rgb": [
+            56,
+            189,
+            248
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-subject-pronoun-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#0676a8",
+          "rgb": [
+            6,
+            118,
+            168
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-subject-pronoun",
+        "css_value": "var(--qg-subject-pronoun-color)",
+        "custom_property": "--qg-subject-pronoun-color",
+        "effective_selector": ".qg-subject-pronoun",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-subject-pronoun",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "subject_pronoun"
+        ],
+        "semantic_family": "subject pronoun",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": false,
+          "failures": [
+            "REQUIRED-MISSING"
+          ],
+          "page": null,
+          "panel": null
+        },
+        "light": {
+          "available": false,
+          "failures": [
+            "REQUIRED-MISSING"
+          ],
+          "page": null,
+          "panel": null
+        }
+      },
+      "canonical_class_id": "qg-unknown",
+      "class_id": "qg-unknown",
+      "colour": {
+        "dark": {
+          "css_value": null,
+          "missing": true,
+          "opacity": null,
+          "reason": "no live CSS variable or selector",
+          "resolved_rgb": null,
+          "rgb": null,
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": null,
+          "missing": true,
+          "opacity": null,
+          "reason": "no live CSS variable or selector",
+          "resolved_rgb": null,
+          "rgb": null,
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "public qg class; use projection-status"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [],
+        "required": "projection-status or owner-approved internal text; no public colour output",
+        "status": "REQUIRED-MISSING"
+      },
+      "public_internal_status": "status-only",
+      "renderer_token": {
+        "css_selector": null,
+        "css_value": null,
+        "custom_property": null,
+        "effective_selector": null,
+        "emitted": false,
+        "opacity": null
+      },
+      "schema_membership": "schema-enum",
+      "semantic_class_id": "projection-status",
+      "status_entry": {
+        "points_to": "projection-status",
+        "reason": "Q6-2 boundary: qg-unknown is not a public qg class."
+      },
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "other"
+        ],
+        "semantic_family": "projection-status placeholder",
+        "typed_fields": [
+          "projection-status"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#7ddc8a",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 10.64
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#7ddc8a",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 9.23
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#22802f",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.28
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#22802f",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.9
+          }
+        }
+      },
+      "canonical_class_id": "qg-verb",
+      "class_id": "qg-verb",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-verb-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#7ddc8a",
+          "rgb": [
+            125,
+            220,
+            138
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-verb-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#22802f",
+          "rgb": [
+            34,
+            128,
+            47
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "new precise morphology where qg-verb-stem or qg-verb-prefix is available"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": false,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-verb",
+        "css_value": "var(--qg-verb-color)",
+        "custom_property": "--qg-verb-color",
+        "effective_selector": ".qg-verb",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-verb",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "stem"
+        ],
+        "semantic_family": "legacy broad verb host",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#7dd3fc",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 0.92,
+            "ratio": 9.24
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#7dd3fc",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 0.92,
+            "ratio": 8.11
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page",
+            "panel"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#0476ac",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 0.92,
+            "ratio": 3.79
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#0476ac",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 0.92,
+            "ratio": 4.27
+          }
+        }
+      },
+      "canonical_class_id": "qg-verb-prefix",
+      "class_id": "qg-verb-prefix",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-verb-prefix-color)",
+          "opacity": 0.92,
+          "resolvable": true,
+          "resolved_rgb": "#7dd3fc",
+          "rgb": [
+            125,
+            211,
+            252
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-verb-prefix-color)",
+          "opacity": 0.92,
+          "resolvable": true,
+          "resolved_rgb": "#0476ac",
+          "rgb": [
+            4,
+            118,
+            172
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "lexical verb stem",
+        "nominal derivative marker without a typed split"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": false,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-verb-prefix",
+        "css_value": "var(--qg-verb-prefix-color)",
+        "custom_property": "--qg-verb-prefix-color",
+        "effective_selector": ".qg-verb,\n.qg-verb-prefix",
+        "emitted": true,
+        "opacity": 0.92,
+        "opacity_selector": ".qg-verb-prefix"
+      },
+      "required_ontology_change": {
+        "action": "SPLIT",
+        "decision_made": false,
+        "derivational_marker_semantic": "derivational marker",
+        "migration_note": "Retain qg-verb-prefix in current CSS/data. Future source-addressed projection must map the two typed facts to owner-approved classes; this lane does not rename or recolour the live class.",
+        "person_prefix_semantic": "person/tense inflectional prefix",
+        "status": "REQUIRED-OWNER-DECISION"
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-verb-prefix",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "verb_prefix",
+          "form_v_prefix",
+          "imperfect_prefix"
+        ],
+        "semantic_family": "verb prefix or inflectional marker",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#f8fafc",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 17.12
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#f8fafc",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 14.85
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#1d2939",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 12.57
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#1d2939",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 14.4
+          }
+        }
+      },
+      "canonical_class_id": "qg-verb-stem",
+      "class_id": "qg-verb-stem",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-verb-stem-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#f8fafc",
+          "rgb": [
+            248,
+            250,
+            252
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-verb-stem-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#1d2939",
+          "rgb": [
+            29,
+            41,
+            57
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "prefix, suffix, case ending, or dependency relation"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": true
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-verb-stem",
+        "css_value": "var(--qg-verb-stem-color)",
+        "custom_property": "--qg-verb-stem-color",
+        "effective_selector": ".qg-verb-stem",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-verb-stem",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "stem"
+        ],
+        "semantic_family": "lexical verb host",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    },
+    {
+      "accessibility_floor": {
+        "dark": {
+          "available": true,
+          "failures": [],
+          "page": {
+            "background_rgb": "#11181d",
+            "foreground_rgb": "#ffd166",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 12.42
+          },
+          "panel": {
+            "background_rgb": "#1d252b",
+            "foreground_rgb": "#ffd166",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 10.77
+          }
+        },
+        "light": {
+          "available": true,
+          "failures": [
+            "page"
+          ],
+          "page": {
+            "background_rgb": "#e8eef3",
+            "foreground_rgb": "#936700",
+            "normal_text_failure": true,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.29
+          },
+          "panel": {
+            "background_rgb": "#fbfdfd",
+            "foreground_rgb": "#936700",
+            "normal_text_failure": false,
+            "normal_text_floor": 4.5,
+            "opacity": 1.0,
+            "ratio": 4.92
+          }
+        }
+      },
+      "canonical_class_id": "qg-vocative",
+      "class_id": "qg-vocative",
+      "colour": {
+        "dark": {
+          "css_value": "var(--qg-vocative-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#ffd166",
+          "rgb": [
+            255,
+            209,
+            102
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "dark"
+        },
+        "light": {
+          "css_value": "var(--qg-vocative-color)",
+          "opacity": 1.0,
+          "resolvable": true,
+          "resolved_rgb": "#936700",
+          "rgb": [
+            147,
+            103,
+            0
+          ],
+          "source": "../../data/wbw.css",
+          "theme": "light"
+        }
+      },
+      "exclusions": [
+        "a different semantic role or untyped fallback"
+      ],
+      "legacy_aliases": [],
+      "non_colour_fallback": {
+        "channels": [
+          "segment.label",
+          "segment.role",
+          "hover breakdown text"
+        ],
+        "condition": "the producer must project a nonempty learner-safe label or role; blank fields remain REQUIRED-MISSING",
+        "conditional": true,
+        "renderer_support": {
+          "grammar_key": true,
+          "legend_entry": false
+        },
+        "status": "present"
+      },
+      "public_internal_status": "public-canonical",
+      "renderer_token": {
+        "css_selector": ".qg-vocative",
+        "css_value": "var(--qg-vocative-color)",
+        "custom_property": "--qg-vocative-color",
+        "effective_selector": ".qg-vocative",
+        "emitted": true,
+        "opacity": 1.0,
+        "opacity_selector": null
+      },
+      "schema_membership": "schema-enum+live-css",
+      "semantic_class_id": "qg-vocative",
+      "typed_applicability": {
+        "segment_roles_or_status_fields": [
+          "vocative_particle",
+          "vocative_support"
+        ],
+        "semantic_family": "vocative",
+        "typed_fields": [
+          "display.segments[].class",
+          "display.segments[].role",
+          "display.segments[].label"
+        ]
+      }
+    }
+  ],
+  "generated_by": "tools/build_qg_ontology_registry.py",
+  "inventory": {
+    "internal_canonical_count": 2,
+    "legacy_alias_count": 1,
+    "legacy_alias_ids": [
+      "qg-negative"
+    ],
+    "live_css_class_count": 38,
+    "live_css_class_ids": [
+      "qg-adjective",
+      "qg-alternative",
+      "qg-article",
+      "qg-comitative",
+      "qg-conditional",
+      "qg-conjunction",
+      "qg-demonstrative",
+      "qg-derivative-prefix",
+      "qg-dual-suffix",
+      "qg-emphasis",
+      "qg-exception",
+      "qg-future-particle",
+      "qg-interrogative",
+      "qg-lam",
+      "qg-ma-particle",
+      "qg-negation",
+      "qg-noun",
+      "qg-noun-stem",
+      "qg-number",
+      "qg-oath",
+      "qg-object-pronoun",
+      "qg-particle",
+      "qg-plural-suffix",
+      "qg-possessive-pronoun",
+      "qg-preposition",
+      "qg-pronoun",
+      "qg-proper-noun",
+      "qg-question",
+      "qg-referential-pronoun",
+      "qg-relative",
+      "qg-result",
+      "qg-result-fa",
+      "qg-segment",
+      "qg-subject-pronoun",
+      "qg-verb",
+      "qg-verb-prefix",
+      "qg-verb-stem",
+      "qg-vocative"
+    ],
+    "live_generic_fallback_count": 1,
+    "public_canonical_count": 37,
+    "schema_canonical_count": 40,
+    "schema_canonical_ids": [
+      "qg-adjective",
+      "qg-alternative",
+      "qg-article",
+      "qg-case",
+      "qg-comitative",
+      "qg-conditional",
+      "qg-conjunction",
+      "qg-demonstrative",
+      "qg-derivative-prefix",
+      "qg-dual-suffix",
+      "qg-emphasis",
+      "qg-exception",
+      "qg-future-particle",
+      "qg-interrogative",
+      "qg-lam",
+      "qg-ma-particle",
+      "qg-negation",
+      "qg-noun",
+      "qg-noun-stem",
+      "qg-number",
+      "qg-oath",
+      "qg-object-pronoun",
+      "qg-particle",
+      "qg-plural-suffix",
+      "qg-possessive-pronoun",
+      "qg-preposition",
+      "qg-pronoun",
+      "qg-proper-noun",
+      "qg-question",
+      "qg-referential-pronoun",
+      "qg-relation",
+      "qg-relative",
+      "qg-result",
+      "qg-result-fa",
+      "qg-subject-pronoun",
+      "qg-unknown",
+      "qg-verb",
+      "qg-verb-prefix",
+      "qg-verb-stem",
+      "qg-vocative"
+    ],
+    "schema_enum_count": 41,
+    "schema_enum_ids": [
+      "qg-adjective",
+      "qg-alternative",
+      "qg-article",
+      "qg-case",
+      "qg-comitative",
+      "qg-conditional",
+      "qg-conjunction",
+      "qg-demonstrative",
+      "qg-derivative-prefix",
+      "qg-dual-suffix",
+      "qg-emphasis",
+      "qg-exception",
+      "qg-future-particle",
+      "qg-interrogative",
+      "qg-lam",
+      "qg-ma-particle",
+      "qg-negation",
+      "qg-negative",
+      "qg-noun",
+      "qg-noun-stem",
+      "qg-number",
+      "qg-oath",
+      "qg-object-pronoun",
+      "qg-particle",
+      "qg-plural-suffix",
+      "qg-possessive-pronoun",
+      "qg-preposition",
+      "qg-pronoun",
+      "qg-proper-noun",
+      "qg-question",
+      "qg-referential-pronoun",
+      "qg-relation",
+      "qg-relative",
+      "qg-result",
+      "qg-result-fa",
+      "qg-subject-pronoun",
+      "qg-unknown",
+      "qg-verb",
+      "qg-verb-prefix",
+      "qg-verb-stem",
+      "qg-vocative"
+    ],
+    "status_only_count": 1,
+    "union_row_count": 42,
+    "valid_final_count": 39,
+    "valid_final_definition": "public-canonical plus internal-canonical ids; excludes qg-segment fallback, qg-unknown projection-status, and legacy aliases"
+  },
+  "registry_version": "qg-ontology-reconciliation-v1",
+  "source_inputs": {
+    "alias_reference": "tools/validate_schema_coherence.py:QG_LEGACY_ALIASES",
+    "class_map_reference": "docs/parser/qamus-grammar-v1-class-map.md",
+    "live_css": "../../data/wbw.css",
+    "live_css_sha256": "5e34864bb2db285985e6f0af34ac831b50d094e2ef90b069393f23a0c4a3fadc",
+    "schema": "qamus/schemas/morphosyntax-token.schema.json",
+    "schema_sha256": "1f211136593c5d15766506ed4b2fe650ce76089b497c1aa186267f5881cd7a7b"
+  },
+  "theme_inputs": {
+    "dark": {
+      "backgrounds": {
+        "page": {
+          "css_value": "hsl(205 26% 9%)",
+          "resolved_rgb": "#11181d"
+        },
+        "panel": {
+          "css_value": "hsl(205 20% 14%)",
+          "resolved_rgb": "#1d252b"
+        }
+      },
+      "du_text": {
+        "css_value": "hsl(205 28% 91%)",
+        "resolved_rgb": "#e2e9ee"
+      },
+      "mode": "dark",
+      "source_note": "URETHANE dark token defaults paired with wbw.css; wbw.css references these tokens but does not define them."
+    },
+    "light": {
+      "backgrounds": {
+        "page": {
+          "css_value": "hsl(205 30% 93%)",
+          "resolved_rgb": "#e8eef3"
+        },
+        "panel": {
+          "css_value": "hsl(205 40% 99%)",
+          "resolved_rgb": "#fbfdfd"
+        }
+      },
+      "du_text": {
+        "css_value": "hsl(205 55% 14%)",
+        "resolved_rgb": "#102737"
+      },
+      "mode": "light",
+      "source_note": "URETHANE token defaults paired with wbw.css; wbw.css references these tokens but does not define them."
+    }
+  }
+}
