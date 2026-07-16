@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/legacy-valid-record.schema.json",
+  "title": "Internal legacy-valid record v1",
+  "description": "Compatibility record only. legacy_valid is never learner-visible or live-materialized.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "record_type", "contract_version", "canonical_occurrence", "projection_status", "legacy_reason", "unresolved_fact_ids", "blocked_spans", "upgrade_route", "evidence_status", "learner_visible", "public_materialization_allowed"],
+  "properties": {
+    "schema": {"const": "qamus.legacy_valid_record.v1"},
+    "record_type": {"const": "legacy_valid"},
+    "contract_version": {"const": "1.0.0"},
+    "canonical_occurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["occurrence_id", "quran_loc", "surface"],
+      "properties": {
+        "occurrence_id": {"type": "string", "pattern": "^quran:[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}$"},
+        "quran_loc": {"type": "string", "pattern": "^[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}$"},
+        "surface": {"type": "string", "minLength": 1}
+      }
+    },
+    "projection_status": {"type": "string", "enum": ["legacy_valid", "upgrade_pending", "blocked"]},
+    "legacy_reason": {"type": "string", "minLength": 1},
+    "unresolved_fact_ids": {"type": "array", "items": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}},
+    "blocked_spans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["span_id", "start", "end", "surface", "reason"],
+        "properties": {
+          "span_id": {"type": "string", "minLength": 1},
+          "start": {"type": "integer"},
+          "end": {"type": "integer"},
+          "surface": {"type": "string", "minLength": 1},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "upgrade_route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["route_id", "owner", "next_contract_version"],
+      "properties": {
+        "route_id": {"type": "string", "minLength": 1},
+        "owner": {"type": "string", "minLength": 1},
+        "next_contract_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+      }
+    },
+    "evidence_status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "summary"],
+      "properties": {
+        "status": {"type": "string", "minLength": 1},
+        "summary": {"type": "string", "minLength": 1}
+      }
+    },
+    "learner_visible": {"const": false},
+    "public_materialization_allowed": {"const": false}
+  }
+}

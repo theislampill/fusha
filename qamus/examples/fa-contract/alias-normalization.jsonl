@@ -1,0 +1,1 @@
+{"schema":"qamus.typed_claim_alias_fixture.v1","input":{"segments":[{"qg_class":"qg-negative"},{"metadata":{"qg_class":"qg-negative"}}],"qg_classes":["qg-negative","qg-verb"]},"expected":{"segments":[{"qg_class":"qg-negation"},{"metadata":{"qg_class":"qg-negation"}}],"qg_classes":["qg-negation","qg-verb"]}}
