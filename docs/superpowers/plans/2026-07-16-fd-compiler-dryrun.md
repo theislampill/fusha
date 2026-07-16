@@ -10,7 +10,7 @@
 
 ## Global constraints
 
-- Work only in `C:\workspace\ai\in\andon-projection\fd-wt`; never push.
+- Work only in the specified isolated worktree; never push.
 - Prefix commits with `fd:`.
 - Read-only corpus inputs; never modify `data/` or live/runtime files.
 - No public source quotations or external-source prose in the learner payload.
@@ -67,4 +67,3 @@
 ## Done when
 
 The F-D contract extension validates its fixtures; the compiler generates a single-payload Ṣufahāʾ card and honest 455-row dry-run; all requested reports/docs exist; the full harness prints `ALL REGRESSION CHECKS PASS`; the render is either freshly verified by Playwright or explicitly handed off with render instructions; and no live/read-only corpus state was mutated.
-

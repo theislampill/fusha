@@ -260,6 +260,35 @@
         "version": "1.0.0",
         "resolution_method": "fixture_policy_projection"
       }
+    },
+    {
+      "projector_id": "fd.shared_candidate_projection.v1",
+      "kind": "fixture_projection",
+      "producer": "tools.fd_compiler",
+      "skill_rule_ids": [
+        "fd-evidence-mode-contract",
+        "fd-source-addressed-projection"
+      ],
+      "class_predicate": "pred_any_candidate",
+      "guards": [
+        "construction_match",
+        "surface_byte_exact"
+      ],
+      "target_population_note": "Fixture-only shared compiler for owner-supplied evidence and v575 candidate rows; emits no live or corpus mutation.",
+      "registry_entry": {
+        "schema": "qamus.projector_record.v1",
+        "record_type": "registry_entry",
+        "producer": "tools.fd_compiler",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "fact_family": "shared",
+        "input_fact_types": ["typed_fact", "surface_observation"],
+        "output_fact_type": "candidate_projection",
+        "compatibility_class": "contract-conformant source-addressed typed facts or structurally verified rows in the bounded F-D fixture lane",
+        "defeater_checks": ["fd_typed_fact_contract", "fd_live_mutation_block"],
+        "gate_tier": "human_source_review_required",
+        "version": "1.0.0",
+        "resolution_method": "contract_bound_candidate_projection"
+      }
     }
   ]
 }

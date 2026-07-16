@@ -1,0 +1,513 @@
+{
+  "schema": "qamus.fd.normalized_public_payload.v1",
+  "payload_version": "1.0.0",
+  "src": "qamus",
+  "kind": "authored",
+  "lang": "en",
+  "canonical_identity": {
+    "quran_loc": "2:13:12",
+    "wbw_loc": "wbw:2:13:12",
+    "surface": "السُّفَهَاءُ",
+    "entry_id": "1ffcc554ec44",
+    "card_id": "fd-sufaha-2-13-12"
+  },
+  "at_rest_spans": [
+    {
+      "span_id": "article",
+      "start": 0,
+      "end": 2,
+      "surface": "ال",
+      "role": "definite_article",
+      "owner_fact_ids": [
+        "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841"
+      ],
+      "visual_equivalent": "[ART]"
+    },
+    {
+      "span_id": "lexical-body",
+      "start": 2,
+      "end": 11,
+      "surface": "سُّفَهَاء",
+      "role": "lexical_body",
+      "owner_fact_ids": [
+        "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+        "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+        "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+        "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+        "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+        "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+        "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+        "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+        "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+        "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+      ],
+      "visual_equivalent": "[LEX]"
+    },
+    {
+      "span_id": "case-ending",
+      "start": 11,
+      "end": 12,
+      "surface": "ُ",
+      "role": "case_ending",
+      "owner_fact_ids": [
+        "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+        "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+      ],
+      "visual_equivalent": "[CASE:NOM]"
+    }
+  ],
+  "components": [
+    {
+      "component_id": "article",
+      "span_ids": [
+        "article"
+      ],
+      "surface": "ال",
+      "label": "Article",
+      "visual_equivalent": "[ART]",
+      "sarf": "Ṣarf: definite article; it has no lexical root.",
+      "nahw": "Naḥw: the article marks definiteness on the noun.",
+      "learner_text": "ال marks the noun as definite.",
+      "fact_ids": [
+        "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841"
+      ]
+    },
+    {
+      "component_id": "lexical-body",
+      "span_ids": [
+        "lexical-body"
+      ],
+      "surface": "سُّفَهَاء",
+      "label": "Noun stem",
+      "visual_equivalent": "[LEX]",
+      "sarf": "Ṣarf: the plural body is a broken plural on فُعَلَاء from root س ف ه. It compares with singular سَفِيه on فَعِيل; the retained radicals are س ف ه. The singular augment inventory includes ي, while the plural introduces ا + ء, so ي is removed in this paired form.",
+      "nahw": "Naḥw: this lexical body is the explicit subject (فاعل) of آمَنَ in the كما clause.",
+      "learner_text": "سُفَهَاء is the plural body; it keeps the root letters and changes the pattern from فَعِيل to فُعَلَاء.",
+      "fact_ids": [
+        "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+        "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+        "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+        "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+        "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+        "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+        "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+        "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+        "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+      ]
+    },
+    {
+      "component_id": "case-ending",
+      "span_ids": [
+        "case-ending"
+      ],
+      "surface": "ُ",
+      "label": "Case ending",
+      "visual_equivalent": "[CASE:NOM]",
+      "sarf": "Ṣarf boundary: this final mark is outside the lexical body and is not part of plural formation.",
+      "nahw": "Naḥw: the final ḍammah ُ is nominative (مرفوع) because the word is the subject of آمَنَ; it is the visible ending mark, not part of سُفَهَاء.",
+      "learner_text": "The final ُ is a nominative case ending because the noun is the subject of آمَنَ.",
+      "fact_ids": [
+        "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+        "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+      ]
+    }
+  ],
+  "comparison": {
+    "singular": {
+      "surface": "سَفِيه",
+      "pattern": "فَعِيل",
+      "span_note": "paired source form"
+    },
+    "plural": {
+      "surface": "سُفَهَاء",
+      "pattern": "فُعَلَاء",
+      "span_note": "lexical body without final ُ"
+    },
+    "root": "س ف ه",
+    "retained_radicals": [
+      "س",
+      "ف",
+      "ه"
+    ],
+    "removed": "ي",
+    "introduced": [
+      "ا",
+      "ء"
+    ]
+  },
+  "rich_explanations": {
+    "sarf": "The root س ف ه is retained. The singular سَفِيه follows فَعِيل; the plural body سُفَهَاء follows فُعَلَاء. The paired certified augment inventories name ي for the singular and ا + ء for the plural, so the plural has no ي.",
+    "nahw": "The body سُفَهَاء is the explicit subject of آمَنَ in the كما clause. Therefore the final ḍammah ُ is the visible nominative ending; it is separated from the lexical body."
+  },
+  "unresolved_tension": {
+    "tension_id": "tension:fd:sufaha-jamid-mushtaq",
+    "status": "unresolved",
+    "visual_equivalent": "[UNRESOLVED]",
+    "learner_text": "The jām id/mushtaq classification remains unresolved; it is not used to certify the card's root, pattern, or case explanation."
+  },
+  "entry_linkage": {
+    "entry_id": "1ffcc554ec44",
+    "entry_address": "entry:1ffcc554ec44:usage.forms",
+    "occurrence_id": "quran:2:13:12",
+    "occurrence_to_entry": true,
+    "entry_to_occurrence": true,
+    "reverse_edge": {
+      "entry_id": "1ffcc554ec44",
+      "occurrence_id": "quran:2:13:12"
+    }
+  },
+  "repeated_appearance_parity": {
+    "family_id": "sufaha-safih-family",
+    "family_members_observed": [
+      {
+        "quran_loc": "2:13:12",
+        "surface": "السُّفَهَاءُ",
+        "payload_family_id": "fd.family.sufaha.v1",
+        "same_payload_consumption": true
+      },
+      {
+        "quran_loc": "2:142:2",
+        "surface": "ٱلسُّفَهَآءُ",
+        "payload_family_id": "fd.family.sufaha.v1",
+        "same_payload_consumption": true
+      },
+      {
+        "quran_loc": "2:282:40",
+        "surface": "سَفِيهًا",
+        "payload_family_id": "fd.family.sufaha.v1",
+        "same_payload_consumption": true
+      },
+      {
+        "quran_loc": "7:155:21",
+        "surface": "ٱلسُّفَهَآءُ",
+        "payload_family_id": "fd.family.sufaha.v1",
+        "same_payload_consumption": true
+      }
+    ],
+    "same_family_payload_id": true,
+    "page_trace_available": false,
+    "page_trace_inferred": false,
+    "confirmed_repeated_page_appearances": [],
+    "coverage_count": 0
+  },
+  "provenance": {
+    "contract_id": "fd:sufaha:2:13:12",
+    "source_address": "quran:2:13:12",
+    "entry_address": "entry:1ffcc554ec44:usage.forms",
+    "typed_fact_count": 11,
+    "fact_ids": [
+      "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+      "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+      "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+      "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+      "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+      "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+      "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+      "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+      "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+      "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+      "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+    ],
+    "evidence_mode_counts": {
+      "direct_source_attestation": 8,
+      "cross_source_corroboration": 1,
+      "paired_form_inference": 1,
+      "normalized_lexical_body": 1
+    },
+    "producer_id": "tools.fd_compiler",
+    "projector_id": "fd.shared_candidate_projection.v1",
+    "projector_version": "1.0.0"
+  },
+  "font_proof": {
+    "font_family": "Kawkab Mono Qamus",
+    "asset": "assets/KawkabMono-Regular.woff2",
+    "assertion": "document.fonts.check('32px \\\"Kawkab Mono Qamus\\\"')",
+    "expected": true,
+    "runtime_status": "pending_until_render"
+  },
+  "exact_reconstruction": {
+    "expected_surface": "السُّفَهَاءُ",
+    "reconstructed_surface": "السُّفَهَاءُ",
+    "passed": true,
+    "span_order": [
+      "article",
+      "lexical-body",
+      "case-ending"
+    ]
+  },
+  "proof_points": [
+    {
+      "id": "canonical_identity",
+      "status": "PASS",
+      "witness": {
+        "quran_loc": "2:13:12",
+        "wbw_loc": "wbw:2:13:12",
+        "surface": "السُّفَهَاءُ",
+        "entry_id": "1ffcc554ec44",
+        "card_id": "fd-sufaha-2-13-12"
+      }
+    },
+    {
+      "id": "at_rest_rich_projection",
+      "status": "PASS",
+      "witness": [
+        {
+          "span_id": "article",
+          "start": 0,
+          "end": 2,
+          "surface": "ال",
+          "role": "definite_article",
+          "owner_fact_ids": [
+            "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841"
+          ],
+          "visual_equivalent": "[ART]"
+        },
+        {
+          "span_id": "lexical-body",
+          "start": 2,
+          "end": 11,
+          "surface": "سُّفَهَاء",
+          "role": "lexical_body",
+          "owner_fact_ids": [
+            "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+            "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+            "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+            "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+            "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+            "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+            "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+            "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+            "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+            "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+          ],
+          "visual_equivalent": "[LEX]"
+        },
+        {
+          "span_id": "case-ending",
+          "start": 11,
+          "end": 12,
+          "surface": "ُ",
+          "role": "case_ending",
+          "owner_fact_ids": [
+            "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+            "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+          ],
+          "visual_equivalent": "[CASE:NOM]"
+        }
+      ]
+    },
+    {
+      "id": "rich_sarf_explanation",
+      "status": "PASS",
+      "witness": "The root س ف ه is retained. The singular سَفِيه follows فَعِيل; the plural body سُفَهَاء follows فُعَلَاء. The paired certified augment inventories name ي for the singular and ا + ء for the plural, so the plural has no ي."
+    },
+    {
+      "id": "rich_nahw_explanation",
+      "status": "PASS",
+      "witness": "The body سُفَهَاء is the explicit subject of آمَنَ in the كما clause. Therefore the final ḍammah ُ is the visible nominative ending; it is separated from the lexical body."
+    },
+    {
+      "id": "singular_plural_comparison",
+      "status": "PASS",
+      "witness": {
+        "singular": {
+          "surface": "سَفِيه",
+          "pattern": "فَعِيل",
+          "span_note": "paired source form"
+        },
+        "plural": {
+          "surface": "سُفَهَاء",
+          "pattern": "فُعَلَاء",
+          "span_note": "lexical body without final ُ"
+        },
+        "root": "س ف ه",
+        "retained_radicals": [
+          "س",
+          "ف",
+          "ه"
+        ],
+        "removed": "ي",
+        "introduced": [
+          "ا",
+          "ء"
+        ]
+      }
+    },
+    {
+      "id": "root_s_f_h",
+      "status": "PASS",
+      "witness": "س ف ه"
+    },
+    {
+      "id": "singular_pattern_fa_iil",
+      "status": "PASS",
+      "witness": "فَعِيل"
+    },
+    {
+      "id": "plural_pattern_fu_alaa",
+      "status": "PASS",
+      "witness": "فُعَلَاء"
+    },
+    {
+      "id": "retained_radicals",
+      "status": "PASS",
+      "witness": "س ف ه"
+    },
+    {
+      "id": "removed_ya",
+      "status": "PASS",
+      "witness": "ي"
+    },
+    {
+      "id": "introduced_alif_hamza",
+      "status": "PASS",
+      "witness": "ا + ء"
+    },
+    {
+      "id": "lexical_body",
+      "status": "PASS",
+      "witness": "سُفَهَاء"
+    },
+    {
+      "id": "lexical_body_vs_case",
+      "status": "PASS",
+      "witness": "سُفَهَاء + ُ"
+    },
+    {
+      "id": "nominative_reason",
+      "status": "PASS",
+      "witness": "final ُ is a nominative ending"
+    },
+    {
+      "id": "exact_governor",
+      "status": "PASS",
+      "witness": "subject of آمَنَ in the كما clause"
+    },
+    {
+      "id": "non_colour_equivalents",
+      "status": "PASS",
+      "witness": "badges, brackets, and labels"
+    },
+    {
+      "id": "kawkab_mono_font",
+      "status": "RUNTIME_ASSERTION",
+      "witness": {
+        "font_family": "Kawkab Mono Qamus",
+        "asset": "assets/KawkabMono-Regular.woff2",
+        "assertion": "document.fonts.check('32px \\\"Kawkab Mono Qamus\\\"')",
+        "expected": true,
+        "runtime_status": "pending_until_render"
+      }
+    },
+    {
+      "id": "exact_reconstruction",
+      "status": "PASS",
+      "witness": {
+        "expected_surface": "السُّفَهَاءُ",
+        "reconstructed_surface": "السُّفَهَاءُ",
+        "passed": true,
+        "span_order": [
+          "article",
+          "lexical-body",
+          "case-ending"
+        ]
+      }
+    },
+    {
+      "id": "repeated_appearance_parity",
+      "status": "PASS",
+      "witness": {
+        "family_id": "sufaha-safih-family",
+        "family_members_observed": [
+          {
+            "quran_loc": "2:13:12",
+            "surface": "السُّفَهَاءُ",
+            "payload_family_id": "fd.family.sufaha.v1",
+            "same_payload_consumption": true
+          },
+          {
+            "quran_loc": "2:142:2",
+            "surface": "ٱلسُّفَهَآءُ",
+            "payload_family_id": "fd.family.sufaha.v1",
+            "same_payload_consumption": true
+          },
+          {
+            "quran_loc": "2:282:40",
+            "surface": "سَفِيهًا",
+            "payload_family_id": "fd.family.sufaha.v1",
+            "same_payload_consumption": true
+          },
+          {
+            "quran_loc": "7:155:21",
+            "surface": "ٱلسُّفَهَآءُ",
+            "payload_family_id": "fd.family.sufaha.v1",
+            "same_payload_consumption": true
+          }
+        ],
+        "same_family_payload_id": true,
+        "page_trace_available": false,
+        "page_trace_inferred": false,
+        "confirmed_repeated_page_appearances": [],
+        "coverage_count": 0
+      }
+    },
+    {
+      "id": "entry_reciprocity",
+      "status": "PASS",
+      "witness": {
+        "entry_id": "1ffcc554ec44",
+        "entry_address": "entry:1ffcc554ec44:usage.forms",
+        "occurrence_id": "quran:2:13:12",
+        "occurrence_to_entry": true,
+        "entry_to_occurrence": true,
+        "reverse_edge": {
+          "entry_id": "1ffcc554ec44",
+          "occurrence_id": "quran:2:13:12"
+        }
+      }
+    },
+    {
+      "id": "provenance_projector",
+      "status": "PASS",
+      "witness": {
+        "contract_id": "fd:sufaha:2:13:12",
+        "source_address": "quran:2:13:12",
+        "entry_address": "entry:1ffcc554ec44:usage.forms",
+        "typed_fact_count": 11,
+        "fact_ids": [
+          "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+          "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+          "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+          "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+          "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+          "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+          "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+          "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+          "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+          "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+          "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+        ],
+        "evidence_mode_counts": {
+          "direct_source_attestation": 8,
+          "cross_source_corroboration": 1,
+          "paired_form_inference": 1,
+          "normalized_lexical_body": 1
+        },
+        "producer_id": "tools.fd_compiler",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "projector_version": "1.0.0"
+      }
+    },
+    {
+      "id": "unresolved_jamid_mushtaq",
+      "status": "UNRESOLVED",
+      "witness": {
+        "tension_id": "tension:fd:sufaha-jamid-mushtaq",
+        "status": "unresolved",
+        "visual_equivalent": "[UNRESOLVED]",
+        "learner_text": "The jām id/mushtaq classification remains unresolved; it is not used to certify the card's root, pattern, or case explanation."
+      }
+    }
+  ],
+  "live_mutation_allowed": false
+}

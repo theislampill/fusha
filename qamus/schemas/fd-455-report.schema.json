@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/fd-455-report.schema.json",
+  "title": "F-D 455-row candidate report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "report_version", "candidate_only", "verified_row_count", "input_verdict_count", "metrics", "flag_matrix", "primary_blocker_counts", "metric_definitions", "primary_blocker_policy", "projector_id", "producer_id", "live_mutation_allowed"],
+  "properties": {
+    "schema": {"const": "qamus.fd.455_candidate_report.v1"},
+    "report_version": {"const": "1.0.0"},
+    "candidate_only": {"const": true},
+    "verified_row_count": {"const": 455},
+    "input_verdict_count": {"type": "integer", "minimum": 455},
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rows compiling successfully", "rows failing linguistic consistency", "rows missing span ownership", "rows missing learner-language fields", "rows missing entry linkage", "rows missing a projector", "rows requiring F-B morphology producers", "rows requiring F-C naḥw producers", "rows routed to source/scholar review", "repeated page appearances covered", "parity failures", "exact reconstruction failures"],
+      "properties": {
+        "rows compiling successfully": {"type": "integer", "minimum": 0},
+        "rows failing linguistic consistency": {"type": "integer", "minimum": 0},
+        "rows missing span ownership": {"type": "integer", "minimum": 0},
+        "rows missing learner-language fields": {"type": "integer", "minimum": 0},
+        "rows missing entry linkage": {"type": "integer", "minimum": 0},
+        "rows missing a projector": {"type": "integer", "minimum": 0},
+        "rows requiring F-B morphology producers": {"type": "integer", "minimum": 0},
+        "rows requiring F-C naḥw producers": {"type": "integer", "minimum": 0},
+        "rows routed to source/scholar review": {"type": "integer", "minimum": 0},
+        "repeated page appearances covered": {"type": "integer", "minimum": 0},
+        "parity failures": {"type": "integer", "minimum": 0},
+        "exact reconstruction failures": {"type": "integer", "minimum": 0}
+      }
+    },
+    "flag_matrix": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}},
+    "primary_blocker_counts": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}},
+    "metric_definitions": {"type": "object", "minProperties": 12},
+    "primary_blocker_policy": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "projector_id": {"const": "fd.shared_candidate_projection.v1"},
+    "producer_id": {"const": "tools.fd_compiler"},
+    "live_mutation_allowed": {"const": false}
+  }
+}
