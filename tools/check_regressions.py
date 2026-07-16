@@ -5074,6 +5074,32 @@ try:
             pass
     check("SKILL-RELEASE gate 13: released + @2.1 + @2.2 increment registry validates merged (0 dup / 0 dangling)",
           _merged22_ok)
+
+    # Gate 14: INCREMENT-23 @2.3 candidate fixtures (8 rules: 6 sarf + 2 nahw; 2 norm-domain) — the
+    # Window-1-2026-07-16 measured flywheel increment: red-first + non-constant-discriminator guard +
+    # builder regeneration-clean + every @2.3 registry id covered + the N-ROOT-03 / N-PED-01 clauses present.
+    _sr_inc23 = run_text([sys.executable, os.path.join(ROOT, "tools", "skill_fixtures",
+                                                       "test_skill_fixtures_increment23.py")], timeout=120)
+    check("SKILL-RELEASE gate 14: @2.3 increment red-first + non-constant-discriminator fixtures pass",
+          _sr_inc23.returncode == 0 and "PASS" in (_sr_inc23.stdout or ""))
+    # Gate 14: the @2.3 increment MERGED with the released + @2.1 + @2.2 registries validates (0 dup / 0 dangling).
+    _inc23 = os.path.join(ROOT, "qamus", "skills", "rule-registry-increment-23.jsonl")
+    _merged23_ok = False
+    try:
+        _m23fd, _m23path = _tmp.mkstemp(suffix="-merged23-registry.jsonl")
+        with os.fdopen(_m23fd, "w", encoding="utf-8", newline="\n") as _m23f:
+            for _p in (_base, _inc, _inc22, _inc23):
+                _m23f.write(open(_p, encoding="utf-8").read().replace("\r\n", "\n").replace("\r", "\n"))
+        _sr_merged23 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_skill_registry.py"),
+                                 "--registry", _m23path], timeout=120)
+        _merged23_ok = _sr_merged23.returncode == 0 and ", 0 errors" in (_sr_merged23.stdout or "")
+    finally:
+        try:
+            os.remove(_m23path)
+        except Exception:
+            pass
+    check("SKILL-RELEASE gate 14: released + @2.1 + @2.2 + @2.3 increment registry validates merged (0 dup / 0 dangling)",
+          _merged23_ok)
 except Exception as _sr_e:
     check("SKILL-RELEASE skill-release candidate gates (harness error)", False)
     print("  ", _sr_e)
