@@ -5125,6 +5125,25 @@ except Exception as _fa_contract_e:
     check("F-A typed-claim contract gates (harness error)", False)
     print("  ", _fa_contract_e)
 
+# F-D: shared evidence compiler — the checked-in contract, normalized payload,
+# generated HTML proof, registered projector, and 455-row candidate matrix must
+# all validate together. This gate is fixture-only and never mutates data/ or a
+# live/runtime surface.
+try:
+    _fd_compiler_self = run_text([sys.executable,
+                                  os.path.join(ROOT, "tools", "validate_fd_compiler.py"),
+                                  "--self-test"], timeout=120)
+    check("F-D shared compiler contract/payload/render/matrix self-test passes",
+          _fd_compiler_self.returncode == 0 and
+          "FD COMPILER SELF-TEST PASS" in (_fd_compiler_self.stdout or ""))
+    _fd_compiler_unit = run_text([sys.executable, "-m", "unittest", "tools.test_fd_compiler", "-q"], timeout=120)
+    check("F-D compiler red/green unit fixtures pass",
+          _fd_compiler_unit.returncode == 0 and
+          "OK" in ((_fd_compiler_unit.stdout or "") + (_fd_compiler_unit.stderr or "")))
+except Exception as _fd_compiler_e:
+    check("F-D shared compiler gates (harness error)", False)
+    print("  ", _fd_compiler_e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

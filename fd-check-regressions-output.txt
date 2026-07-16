@@ -1,0 +1,1137 @@
+ok   مَن is who, مِن is from, وَمِنَ is from
+ok   liaison مَنِ is who; verb مَنَّ is not who
+ok   لَمْ and لِمَ share a norm key (so a gloss must use diacritics)
+ok   kasra distinguishes لِمَ from لَمْ
+ok   إِلَيْنَا norm_strict keeps the hamza, ≠ لين
+ok   إيمان ≠ أيمان (norm_strict keeps hamza)
+ok   لَمَّا has shadda on mīm, لِمَا does not
+ok   كُلّ ḍamma vs كَلَّا fatḥa on kāf
+ok   قُرْءَانًا ends in tanwīn-alef (not the pronoun نا)
+ok   أَنزَلَ (IV) ≠ نَزَلَ (I) — hamza kept by norm_strict
+ok   نَزَّلَ (II) has shadda on zāy, نَزَلَ (I) does not
+ok   ذِكْر and ذَكَر share a norm key (so a gloss must use diacritics)
+ok   kasra on ḏāl marks ذِكْر (maṣdar), fatḥa marks ذَكَر (noun)
+ok   أُمّ 'mother' and أَمْ 'or' collide under norm_strict (surface key unsafe → pending)
+ok   الملك key catches both مُلْك 'dominion' and مَلِك 'king' (vowel homograph → pending)
+ok   iʿrāb decision requires two-vote (not auto)
+ok   norm-only / OCR-only / copied-gloss can NEVER auto-resolve
+ok   لا النافية للجنس + istithnāʾ require two-vote
+ok   a clean lexical decision with no grammar triggers is auto_safe
+ok   grammar trigger lists match SSOT across all 4 homes
+ok   grammar trigger SSOT mutation harness passes
+ok   procedure exists: sarf/procedures/root-decision.md
+ok   procedure exists: sarf/procedures/verb-form.md
+ok   procedure exists: sarf/procedures/weak-root.md
+ok   procedure exists: sarf/procedures/hamza-root.md
+ok   procedure exists: sarf/procedures/doubled-root.md
+ok   procedure exists: sarf/procedures/masdar-participle.md
+ok   procedure exists: sarf/procedures/proper-noun.md
+ok   procedure exists: sarf/procedures/qamus-entry-authoring.md
+ok   procedure exists: sarf/procedures/corpus-to-qamus.md
+ok   procedure exists: sarf/procedures/noun-plural-gender.md
+ok   procedure exists: sarf/procedures/homograph-risk.md
+ok   procedure exists: sarf/procedures/hover-application.md
+ok   procedure exists: sarf/procedures/clitic-and-host-morphology.md
+ok   procedure exists: sarf/procedures/verb-form-and-mood-review.md
+ok   procedure exists: nahw/procedures/particle-decision.md
+ok   procedure exists: nahw/procedures/preposition-pronoun.md
+ok   procedure exists: nahw/procedures/negation.md
+ok   procedure exists: nahw/procedures/relative-interrogative.md
+ok   procedure exists: nahw/procedures/conditionals.md
+ok   procedure exists: nahw/procedures/irab-case-mood.md
+ok   procedure exists: nahw/procedures/hover-application.md
+ok   procedure exists: nahw/procedures/qamus-entry-authoring.md
+ok   procedure exists: nahw/procedures/corpus-to-qamus.md
+ok   procedure exists: nahw/procedures/idafa-jar-majrur.md
+ok   procedure exists: nahw/procedures/referent-context.md
+ok   procedure exists: nahw/procedures/grammar-risk-gate.md
+ok   procedure exists: nahw/procedures/function-token-hover-review.md
+ok   procedure exists: nahw/procedures/ma-function-decision.md
+ok   procedure exists: nahw/procedures/pp-attachment-review.md
+ok   procedure exists: nahw/procedures/governing-particle-mood-review.md
+ok   procedure exists: nahw/procedures/exception-and-vocative-review.md
+ok   procedure exists: qamus/procedures/grammar-resource-usage.md
+ok   procedure exists: qamus/procedures/source-triangulation-and-public-boundary.md
+ok   procedure exists: qamus/procedures/closure-lane-routing.md
+ok   architecture artifact exists: qamus/schemas/language-state.schema.json
+ok   architecture artifact exists: qamus/schemas/token-state.schema.json
+ok   architecture artifact exists: qamus/schemas/state-transition.schema.json
+ok   architecture artifact exists: tools/build_language_state_graph.py
+ok   architecture artifact exists: tools/query_language_state.py
+ok   architecture artifact exists: qamus/indexes/language_state_graph.sample.json
+ok   architecture artifact exists: qamus/reports/language-state-machine-report.md
+ok   architecture artifact exists: tools/build_decision_backlinks.py
+ok   architecture artifact exists: qamus/indexes/decision_backlinks.json
+ok   architecture artifact exists: qamus/reports/source-address-usage-report.md
+ok   architecture artifact exists: qamus/reports/xanadu-source-graph-completion.md
+ok   architecture artifact exists: tools/corpus_to_qamus_candidates.py
+ok   architecture artifact exists: tools/corpus_to_hover_decisions.py
+ok   architecture artifact exists: qamus/reports/corpus-to-qamus-pipeline.md
+ok   architecture artifact exists: qamus/examples/corpus_to_qamus.sample.jsonl
+ok   architecture artifact exists: tools/run_grammar_evals.py
+ok   architecture artifact exists: tools/grade_grammar_reasoning.py
+ok   architecture artifact exists: nahw/evals/grammar-problems-derived-eval.jsonl
+ok   architecture artifact exists: sarf/rules/surface-state-transition-rules.json
+ok   architecture artifact exists: nahw/rules/state-transition-rules.json
+ok   architecture artifact exists: curriculum/README.md
+ok   architecture artifact exists: curriculum/zero-to-fluency-roadmap.md
+ok   architecture artifact exists: curriculum/assessment/grading-rubric.md
+ok   architecture artifact exists: curriculum/assessment/answer-key.schema.md
+ok   architecture artifact exists: curriculum/assessment/level-checkpoints.sample.jsonl
+ok   architecture artifact exists: curriculum/progress/learner-progress.template.md
+ok   architecture artifact exists: curriculum/progress/missed-error-log.template.md
+ok   architecture artifact exists: curriculum/tutor-session-protocol.md
+ok   architecture artifact exists: sarf/curriculum/zero-to-fluency-sarf.md
+ok   architecture artifact exists: nahw/curriculum/zero-to-fluency-nahw.md
+ok   tafsir-mcp artifact exists: tools/tafsir_mcp_client.py
+ok   tafsir-mcp artifact exists: tools/tafsir_mcp_probe.py
+ok   tafsir-mcp artifact exists: tools/fetch_tafsir_mcp_ayah.py
+ok   tafsir-mcp artifact exists: tools/analyze_tafsir_mcp_word.py
+ok   tafsir-mcp artifact exists: tools/build_tafsir_mcp_cache.py
+ok   tafsir-mcp artifact exists: tools/validate_tafsir_mcp_cache.py
+ok   tafsir-mcp artifact exists: tools/mcp_to_language_state.py
+ok   tafsir-mcp artifact exists: sources/tafsir_mcp/README.md
+ok   tafsir-mcp artifact exists: sources/tafsir_mcp/schema.json
+ok   tafsir-mcp artifact exists: sources/tafsir_mcp/examples/001_001_001.analyze_word.sample.json
+ok   tafsir-mcp artifact exists: sources/tafsir_mcp/examples/001_001.fetch_ayah.sample.json
+ok   tafsir-mcp artifact exists: sources/tafsir_mcp/procedures/sarf-morphology-via-mcp.md
+ok   tafsir-mcp artifact exists: sources/tafsir_mcp/procedures/nahw-irab-via-mcp.md
+ok   tafsir-mcp artifact exists: sources/tafsir_mcp/evals/sarf_cases.jsonl
+ok   tafsir-mcp artifact exists: sources/tafsir_mcp/evals/irab_cases.jsonl
+ok   tafsir-mcp artifact exists: sources/tafsir_mcp/evals/morphology-eval.jsonl
+ok   tafsir-mcp artifact exists: sources/tafsir_mcp/evals/irab-eval.jsonl
+ok   tafsir-mcp artifact exists: qamus/reports/tafsir-mcp-integration-report.md
+ok   sarf/SKILL.md is MCP-free (self-contained skill)
+ok   nahw/SKILL.md is MCP-free (self-contained skill)
+ok   install-package artifact exists: INSTALL.md
+ok   install-package artifact exists: skills/sarf/SKILL.md
+ok   install-package artifact exists: skills/sarf/manifest.json
+ok   install-package artifact exists: skills/nahw/SKILL.md
+ok   install-package artifact exists: skills/nahw/manifest.json
+ok   install-package artifact exists: scripts/install_claude_skills.py
+ok   install-package artifact exists: scripts/install_codex_instructions.py
+ok   install-package artifact exists: scripts/verify_skill_install.py
+ok   install-package artifact exists: dist/codex/AGENTS.fusha.md
+ok   install-package artifact exists: qamus/reports/skill-installation-report.md
+ok   install-package artifact exists: curriculum/qamus-driven-fluency-engine.md
+ok   skills/sarf/SKILL.md wrapper is MCP-free
+ok   skills/nahw/SKILL.md wrapper is MCP-free
+ok   suffix/pronoun artifact exists: qamus/schemas/suffix-pronoun-decision.schema.json
+ok   suffix/pronoun artifact exists: tools/build_suffix_pronoun_decisions.py
+ok   suffix/pronoun artifact exists: tools/validate_suffix_pronoun_decisions.py
+ok   suffix/pronoun artifact exists: sarf/procedures/suffix-pronoun-state.md
+ok   suffix/pronoun artifact exists: nahw/procedures/pronoun-attachment.md
+ok   suffix/pronoun artifact exists: sarf/rules/suffix-pronoun-rules.json
+ok   suffix/pronoun artifact exists: nahw/rules/pronoun-attachment-rules.json
+ok   suffix/pronoun artifact exists: qamus/reports/suffix-pronoun-hover-report.md
+ok   suffix/pronoun artifact exists: qamus/candidates/qamus_2092/suffix_pronoun_hover_batch_001.jsonl
+ok   suffix/pronoun artifact exists: nahw/evals/suffix-pronoun-eval.jsonl
+ok   suffix lane resolves أعمالنا='our deeds'
+ok   suffix lane excludes verb hosts (no 'our knowledge' for عَلِمْنَا)
+ok   suffix/pronoun eval encodes noun-resolve + verb-pending contract
+ok   source-adapter/rescue artifact exists: sources/source-adapter.schema.json
+ok   source-adapter/rescue artifact exists: sources/README.md
+ok   source-adapter/rescue artifact exists: sources/tafsir_mcp/adapter.json
+ok   source-adapter/rescue artifact exists: sources/qac/adapter.json
+ok   source-adapter/rescue artifact exists: sources/qac/concept-map-adapter.json
+ok   source-adapter/rescue artifact exists: sources/quran_com/adapter.json
+ok   source-adapter/rescue artifact exists: sources/tanzil/adapter.json
+ok   source-adapter/rescue artifact exists: tools/qac_concept_map_adapter.py
+ok   source-adapter/rescue artifact exists: tools/test_qac_concept_map_adapter.py
+ok   source-adapter/rescue artifact exists: tools/source_photo_indexer.py
+ok   source-adapter/rescue artifact exists: tools/source_photo_cropper.py
+ok   source-adapter/rescue artifact exists: tools/source_photo_rescue.py
+ok   source-adapter/rescue artifact exists: tools/source_photo_verify_entry.py
+ok   source-adapter/rescue artifact exists: qamus/reports/source-photo-rescue-report.md
+ok   source-adapter/rescue artifact exists: qamus/indexes/source_photo_index.json
+ok   source adapters are internal-only (public_exposable=false, required_by_skills=false)
+ok   QAC concept-map adapter stays internal-only and parser-tested
+ok   source-photo locator uses section spans (v001 pg002, n001 pg279, p001 pg453)
+ok   source-photo locator artifact keeps early verbs/nouns/particles in their source sections or verified overrides
+ok   RH-LIVE source-photo entry-locator samples survive regeneration
+ok   mcp_to_language_state extracts POS/form/voice/case correctly (wazn-name not mistaken for verb)
+ok   token-layer artifact exists: qamus/schemas/hover-token-decision.schema.json
+ok   token-layer artifact exists: tools/export_token_hover_decisions.py
+ok   token-layer artifact exists: tools/validate_token_hover_decisions.py
+ok   token-layer artifact exists: qamus/reports/token-addressed-hover-layer.md
+ok   token-layer artifact exists: qamus/candidates/qamus_2092/token_hover_decisions_batch_001.jsonl
+ok   token-layer artifact exists: qamus/reports/particles/particle-token-hardtail-report.md
+ok   token layer: public records src=qamus,kind=authored and any lang is en
+ok   token layer resolves a surface-key collision (>=2 distinct per-token glosses incl لَمْ/لِمَ)
+ok   token layer: public/runtime export validation requires lang=en
+ok   grammar-problems-derived-eval has >=72 cases (88)
+ok   language state graph sample encodes homograph splits
+ok   fixture sarf/examples/qamus-regressions.jsonl parses (38 rows)
+ok   fixture sarf/examples/root-form-decisions.jsonl parses (10 rows)
+ok   fixture sarf/examples/verb-measure-examples.jsonl parses (18 rows)
+ok   fixture nahw/examples/function-word-decisions.jsonl parses (24 rows)
+ok   fixture nahw/examples/ayah-context-decisions.jsonl parses (10 rows)
+ok   fixture qamus/examples/linguistic-decisions.sample.jsonl parses (5 rows)
+ok   P0 dataset committed: entries.jsonl has 2092 entries
+ok   P0 dataset: schema + 7 indexes present
+ok   P1 source-address graph present (full)
+ok   P2 entry matrix has 2092 rows
+ok   P3 hover-token audit covers all 49,900 tokens
+ok   P3 audit: no generic pending (every pending token has an exact blocker)
+ok   Andon hover regression validator present (no staged lookup artifact)
+ok   P4 suffix/pronoun invariants pass (test_suffix_pronoun.py)
+ok   A0 report reconciliation (no stale-as-current scoreboards)
+ok   A1 artifact ergonomics (no one-line mega-indexes; pretty/JSONL; trailing newlines)
+ok   Phase4 per-token completion manifest (49,900 terminal, risk-tagged)
+ok   Phase4 per-entry completion rollup (2,092, 0 unknown)
+ok   Phase2 sarf engine complete (derivatives + Madinah modes + false-clitic)
+ok   Phase3 nahw engine complete (particle functions + iʿrāb polysemy)
+ok   June25 validator covers token: بِسَلَامٍ
+ok   June25 validator covers token: بِبَدْرٍ
+ok   June25 validator covers token: وَٱلتِّينِ
+ok   June25 validator covers token: وَٱلزَّيْتُونِ
+ok   June25 validator covers token: وَبِٱلنَّجْمِ
+ok   June25 validator covers token: جَادَلُوكَ
+ok   June25 validator covers token: مُعَلَّمٌ
+ok   June25 validator covers token: ذَٰلِكُمْ
+ok   June25 eval fixture exists: FCS-021
+ok   June25 eval fixture exists: FCS-022
+ok   June25 eval fixture exists: FCS-023
+ok   June25 eval fixture exists: FCS-024
+ok   June25 eval fixture exists: FCS-025
+ok   June25 eval fixture exists: FCS-045
+ok   June25 eval fixture exists: FCS-046
+ok   June25 eval fixture exists: FCS-047
+ok   June25 eval fixture exists: FCS-048
+ok   June25 eval fixture exists: FCS-049
+ok   June25 eval fixture exists: FCS-050
+ok   June25 eval fixture exists: PF-033
+ok   June25 eval fixture exists: PF-034
+ok   June25 eval fixture exists: PF-035
+ok   June25 eval fixture exists: PF-036
+ok   June25 eval fixture exists: PF-037
+ok   June25 eval fixture exists: PF-038
+ok   June25 eval fixture exists: PF-054
+ok   June25 eval fixture exists: PF-055
+ok   June25 eval fixture exists: PF-056
+ok   June25 eval fixture exists: PF-057
+ok   June25 eval fixture exists: PF-058
+ok   June25 eval fixture exists: PF-059
+ok   June25 eval fixture exists: PF-060
+ok   June25 eval fixture exists: PF-061
+ok   June25 eval fixture exists: PF-062
+ok   June25 eval fixture exists: IP-026
+ok   June25 eval fixture exists: IP-027
+ok   June25 eval fixture exists: IP-028
+ok   June25 eval fixture exists: IP-029
+ok   June25 eval fixture exists: IP-030
+ok   June25 eval fixture exists: IP-031
+ok   June25 eval fixture exists: IP-032
+ok   June25 eval fixture exists: IP-033
+ok   June25 eval fixture exists: IP-034
+ok   morphosyntax-token contract artifact exists: qamus/schemas/morphosyntax-token.schema.json
+ok   morphosyntax-token contract artifact exists: qamus/reports/morphosyntax-token-contract.md
+ok   morphosyntax-token contract artifact exists: qamus/examples/morphosyntax_token.sample.jsonl
+ok   morphosyntax-token contract artifact exists: tools/validate_morphosyntax_token_metadata.py
+ok   morphosyntax-token contract artifact exists: tools/audit_wbw_lookup_morphosyntax.py
+ok   morphosyntax-token schema requires public_gloss_lang=en
+ok   morphosyntax-token schema requires parse_key + qamus-grammar-v1 display palette
+ok   morphosyntax validator self-test
+ok   morphosyntax sample validates
+ok   rich-hover certification validator self-test
+ok   P-RICH-CERT-01 particle certification sample validates
+ok   P-RICH-CERT-02 particle collision certification sample validates
+ok   P-RICH-CERT-03 an/inna family certification sample validates
+ok   P-RICH-CERT-04 la temporal family certification sample validates
+ok   VN-RICH-CERT-00 calibration certification sample validates
+ok   VN-RICH-CERT-01 standard certification sample validates
+ok   VN-RICH-CERT-02 standard certification sample validates
+ok   VN-RICH-CERT-03 standard certification sample validates
+ok   VN-RICH-CERT-04 standard certification sample validates
+ok   VN-RICH-CERT-05 standard certification sample validates
+ok   VN-RICH-CERT-06 standard certification sample validates
+ok   VN-RICH-CERT-07 standard certification sample validates
+ok   VN-RICH-CERT-08 standard certification sample validates
+ok   VN-RICH-CERT-09 standard certification sample validates
+ok   VN-RICH-CERT-10 standard certification sample validates
+ok   VN-RICH-CERT-11 standard certification sample validates
+ok   VN-RICH-CERT-12 standard certification sample validates
+ok   VN-RICH-CERT-13 standard certification sample validates
+ok   VN-RICH-CERT-14 standard certification sample validates
+ok   VN-RICH-CERT-15 standard certification sample validates
+ok   VN-RICH-CERT-16 standard certification sample validates
+ok   VN-RICH-CERT-17 standard certification sample validates
+ok   VN-RICH-CERT-18 standard certification sample validates
+ok   VN-RICH-CERT-19 standard certification sample validates
+ok   VN-RICH-CERT-20 standard certification sample validates
+ok   RICH-CERT report count through VN20
+ok   RICH-CERT reports carry flywheel impact fields
+ok   RICH-CERT flywheel synthesis report exists
+ok   RICH-CERT learner category promoted: rich_cert_preview_overclaim
+ok   RICH-CERT learner category promoted: rich_cert_pending_gate
+ok   RICH-CERT learner category promoted: rh_live_preview_only
+ok   RICH-CERT learner category promoted: hidden_number_morphology
+ok   RICH-CERT learner category promoted: hidden_derivative_shape
+ok   RICH-CERT learner category promoted: hidden_imperfect_prefix
+ok   RICH-CERT learner category promoted: quran_display_text_mismatch
+ok   RICH-CERT learner category promoted: process_prose_in_hover
+ok   RICH-CERT learner category promoted: card_level_coverage_hidden
+ok   RH-LIVE ANDON flywheel report exists
+ok   RH-LIVE-00 preview candidate validator self-test
+ok   RH-LIVE-00 preview candidate sample validates
+ok   RH-LIVE-00 source-triangulation readiness validator self-test
+ok   RH-LIVE-00 source-triangulation readiness sample validates
+ok   RH-LIVE-00 source readiness moved all nine rows to exact-address two-vote
+ok   RH-LIVE-00 source-derived two-vote request sample validates
+ok   RH-LIVE-00 source-derived two-vote request sample has nine rows
+ok   RH-LIVE-00 two-vote request preserves يَسْأَلُكَ context gloss split
+ok   RH-LIVE-00 source-derived two-vote response sample validates
+ok   RH-LIVE-00 source-derived two-vote response sample has eighteen rows
+ok   RH-LIVE-00 two-vote responses agree on contextual يَسْأَلُكَ gloss
+ok   RH-LIVE-00 source-derived two-vote reconciliation yields 9 certified/0 unresolved
+ok   RH-LIVE-00 report present: rh-live-00-two-vote-response-reconciliation-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-two-vote-response-reconciliation-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-two-vote-response-reconciliation-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-two-vote-request-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-two-vote-request-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-renderer-admin-preview-plan-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-renderer-admin-preview-plan-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-renderer-admin-preview-plan-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-renderer-admin-preview-plan-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-renderer-admin-preview-plan-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-renderer-admin-preview-plan-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-renderer-admin-preview-plan-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-renderer-admin-preview-plan-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-renderer-admin-preview-plan-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-renderer-admin-preview-plan-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-source-triangulation-readiness-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-source-triangulation-readiness-20260627.md
+ok   RH-LIVE-00 report present: rh-live-00-admin-preview-bundle-manifest-20260628.md
+ok   RH-LIVE-00 report present: rh-live-00-admin-preview-dom-fixture-20260628.md
+ok   RH-LIVE-00 report present: rh-live-00-admin-preview-dom-fixture-20260628.md
+ok   RH-LIVE-00 report present: rh-live-00-admin-preview-dom-fixture-20260628.md
+ok   RH-LIVE-00 report present: rh-live-00-admin-preview-dom-fixture-20260628.md
+ok   RH-LIVE-00 report present: rh-live-00-admin-preview-dom-fixture-20260628.md
+ok   RH-LIVE-00 report present: rh-live-00-admin-preview-dom-fixture-20260628.md
+ok   RH-LIVE-00 report present: rh-live-00-admin-preview-dom-fixture-20260628.md
+ok   RH-LIVE-00 report present: rh-live-00-admin-preview-dom-fixture-20260628.md
+ok   RH-LIVE-00 report present: rh-live-00-admin-preview-dom-fixture-20260628.md
+ok   RH-LIVE-00 report present: rh-live-00-admin-preview-dom-fixture-20260628.md
+ok   RH-LIVE-00 admin-preview DOM fixture validator self-test
+ok   RH-LIVE-00 admin-preview DOM fixture sample validates
+ok   RH-LIVE-00 admin-preview bundle manifest validator self-test
+ok   RH-LIVE-00 admin-preview bundle manifest sample validates
+ok   wbw lookup morphosyntax audit self-test
+ok   wbw audit reports rich metadata coverage
+ok   wbw audit gates Kawkab segment alignment
+ok   rich-hover morphosyntax candidate generator self-test
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/parse-key.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/typed-edge.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/backlink-index.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/decision-linkage.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/blocker-linkage.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/repair-impact-preview.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/hover-edit-intent.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/public-private-boundary.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/detector-maturity.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/live-shadow-run-manifest.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/production-bug-lesson.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/shadow-review-pack.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/shadow-admin-debug-pack.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/shadow-admin-route-contract.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/full-corpus-hover-dogfood-audit.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/phase4-closure-tranche.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/phase4-two-vote-request.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/phase4-two-vote-response.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/phase4-gloss-adjudication-request.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/phase4-gloss-adjudication-response.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/phase4-hover-decision-plan.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/phase4-apply-readiness-manifest.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/phase4-draft-token-decision-ledger.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/schemas/phase4-owner-authorization-request.schema.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/public_private_boundary.sample.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/detector_maturity.sample.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/live_shadow_run_manifest.sample.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/parse_key.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/decision_linkage.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/hover_edit_intent.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/repair_impact_preview.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/production_bug_lesson_from_intent.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_preposition_oath_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vocative_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_nominal_pos_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/shadow_review_pack.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/shadow_admin_debug_pack.sample.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/shadow_admin_route_contract.sample.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_hover_dogfood_audit.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_subagent_lane.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_lane_packet.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_review_output.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_reconciliation.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_next_state_queue.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_known_defect_readiness.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_known_defect_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_suffix_batch_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_preposition_oath_batch_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vocative_batch_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_nominal_pos_batch_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_particle_tranche_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_particle_tranche_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_particle_tranche_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_particle_remaining67_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_particle_remaining67_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_particle_remaining67_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-particle-remaining67-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn00_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn00_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn00_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn00-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn01_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn01_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn01_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn01-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn02_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn02_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn02_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn02-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn03_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn03_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn03_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn03-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn04_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn04_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn04_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn04-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn05_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn05_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn05_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn05-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn06_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn06_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn06_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn06-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn07_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn07_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn07_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn07-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn08_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn08_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn08_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn08-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn09_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn09_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn09_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn09-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn10_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn10_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn10_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn10-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn11_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn11_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn11_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn11-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn12_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn12_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn12_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn12-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn13_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn13_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn13_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn13-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn14_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn14_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn14_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn14-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn15_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn15_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn15_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn15-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn16_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn16_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn16_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn16-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn18_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn18_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn18_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn18-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn19_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn19_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn19_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn19-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn20_inventory.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_vn20_skill_impact.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/dogfood_vn20_production_bug_lesson.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vn20-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_queue_summary.sample.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/full_corpus_dogfood_review_pack.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/shadow_review_pack_from_dogfood_review.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_closure_tranche.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_closure_tranche_from_dogfood_review.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_two_vote_request.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_two_vote_request_from_dogfood_review.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_two_vote_response.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_two_vote_response_from_dogfood_review.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_gloss_adjudication_request.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_gloss_adjudication_response.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_hover_decision_plan.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_hover_decision_plan_from_dogfood_review.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_apply_readiness_manifest.sample.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_apply_readiness_manifest_from_dogfood_review.sample.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_draft_token_decision_ledger.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_draft_token_decision_ledger_from_dogfood_review.sample.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_owner_authorization_request.sample.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/examples/phase4_owner_authorization_request_from_dogfood_review.sample.json
+ok   Phase2 live-shadow graph contract artifact exists: qamus/procedures/production-bug-lessons.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-suffix-batch-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-preposition-oath-batch-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-vocative-batch-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-nominal-pos-batch-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/full-corpus-dogfood-particle-tranche-20260627.md
+ok   Phase2 live-shadow graph contract artifact exists: nahw/procedures/grammar-problems-issue-clusters.md
+ok   Phase2 live-shadow graph contract artifact exists: nahw/rules/grammar-problems-issue-clusters.json
+ok   Phase2 live-shadow graph contract artifact exists: nahw/evals/grammar-problems-phase3p25-mining.jsonl
+ok   Phase2 live-shadow graph contract artifact exists: nahw/evals/grammar-problems-phase3p25-mining.md
+ok   Phase2 live-shadow graph contract artifact exists: qamus/reports/live-shadow-graph-workflow.md
+ok   Phase2 live-shadow graph contract artifact exists: tools/summarize_shadow_closure_queue.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_detector_maturity.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_live_shadow_run_manifest.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_public_private_boundary.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_parse_key_contract.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_curriculum_assessment.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_decision_linkage.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_hover_edit_intent.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_repair_impact_preview.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_shadow_review_pack.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_shadow_admin_debug_pack.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_shadow_admin_route_contract.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_full_corpus_hover_dogfood_audit.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_full_corpus_hover_dogfood_audit.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_full_corpus_dogfood_subagent_lanes.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_full_corpus_dogfood_lane_packets.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_full_corpus_dogfood_review_outputs.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/summarize_full_corpus_dogfood_review_outputs.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/reconcile_full_corpus_dogfood_review_outputs.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_full_corpus_dogfood_next_state_queues.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_full_corpus_dogfood_known_defect_readiness.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/summarize_full_corpus_dogfood_queue.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_full_corpus_dogfood_review_pack.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_shadow_review_pack_from_dogfood_review.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/plan_phase4_closure_tranche.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_phase4_closure_tranche.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_phase4_two_vote_requests.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_phase4_two_vote_requests.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_phase4_two_vote_responses.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/reconcile_phase4_two_vote_responses.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_phase4_gloss_adjudication_requests.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_phase4_gloss_adjudication_requests.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_phase4_gloss_adjudication_responses.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/reconcile_phase4_gloss_adjudication_responses.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_phase4_hover_decision_plan.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_phase4_hover_decision_plan.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_phase4_apply_readiness_manifest.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_phase4_apply_readiness_manifest.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_phase4_draft_token_decision_ledger.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_phase4_draft_token_decision_ledger.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_phase4_owner_authorization_request.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_phase4_owner_authorization_request.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/query_shadow_admin_debug_pack.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/plan_shadow_hover_edit_intent.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/plan_shadow_repair_impact_preview.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_production_bug_lesson.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_dogfood_production_bug_lessons.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_grammar_regression_mining.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_grammar_regression_mining.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/validate_grammar_issue_clusters.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/summarize_rich_wbw_roles.py
+ok   Phase2 live-shadow graph contract artifact exists: tools/build_shadow_admin_debug_pack.py
+ok   VN-08 sample preserves component-only evidence as non-applyable blocker rows
+ok   VN-09 sample preserves component-only evidence as non-applyable blocker rows
+ok   VN-09 sample keeps renderer metadata backfill rows non-live-applyable
+ok   VN-10 sample preserves component-only evidence as non-applyable blocker rows
+ok   VN-10 sample keeps renderer metadata backfill rows non-live-applyable
+ok   VN-10 sample keeps bā/lām relation rows gated
+ok   VN-11 sample preserves component-only evidence as non-applyable blocker rows
+ok   VN-11 sample keeps renderer metadata backfill rows non-live-applyable
+ok   VN-11 sample keeps pronoun/function collisions exact-address gated
+ok   VN-11 sample keeps suffix and relation rows gated
+ok   VN-12 sample preserves component-only evidence as non-applyable blocker rows
+ok   VN-12 sample keeps renderer metadata backfill rows non-live-applyable
+ok   VN-12 sample keeps finite verb rows exact-address gated
+ok   VN-12 sample keeps nominal/POS leakage rows gated
+ok   VN-12 sample keeps suffix and relation rows gated
+ok   VN-13 sample preserves component-only evidence as non-applyable blocker rows
+ok   VN-13 sample keeps renderer metadata backfill rows non-live-applyable
+ok   VN-13 sample keeps finite verb rows exact-address gated
+ok   VN-13 sample keeps nominal/POS leakage rows gated
+ok   VN-13 sample keeps suffix and relation rows gated
+ok   VN-14 sample preserves component-only evidence as non-applyable blocker rows
+ok   VN-14 sample keeps renderer metadata backfill rows non-live-applyable
+ok   VN-14 sample keeps finite verb rows exact-address gated
+ok   VN-14 sample keeps nominal/POS leakage rows gated
+ok   VN-14 sample keeps suffix and relation rows gated
+ok   VN-14 sample contains no live-applyable candidate rows
+ok   VN-15 sample preserves component-only evidence as non-applyable blocker rows
+ok   VN-15 sample keeps renderer metadata backfill rows non-live-applyable
+ok   VN-15 sample keeps finite verb rows exact-address gated
+ok   VN-15 sample keeps nominal/POS leakage rows gated
+ok   VN-15 sample keeps suffix and relation rows gated
+ok   VN-15 sample contains no live-applyable candidate rows
+ok   VN-16 sample preserves component-only evidence as non-applyable blocker rows
+ok   VN-16 sample keeps rich metadata review rows non-live-applyable
+ok   VN-16 sample keeps finite/passive verb rows exact-address gated
+ok   VN-16 sample keeps nominal/POS leakage rows gated
+ok   VN-16 sample keeps suffix, false-prefix, and relation rows gated
+ok   VN-16 sample contains no live-applyable candidate rows
+ok   VN-17 sample preserves component-only evidence as non-applyable blocker rows
+ok   VN-17 sample keeps rich metadata review rows non-live-applyable
+ok   VN-17 sample keeps finite/passive verb rows exact-address gated
+ok   VN-17 sample keeps nominal/POS leakage rows gated
+ok   VN-17 sample keeps suffix, relation, and token-only rows gated
+ok   VN-17 sample contains no live-applyable candidate rows
+ok   VN-18 sample preserves component-only evidence as non-applyable blocker rows
+ok   VN-18 sample keeps rich metadata review rows non-live-applyable
+ok   VN-18 sample keeps finite/passive verb rows exact-address gated
+ok   VN-18 sample keeps nominal/POS leakage rows gated
+ok   VN-18 sample keeps suffix, relation, and token-only rows gated
+ok   VN-18 sample contains no live-applyable candidate rows
+ok   VN-19 sample preserves component-only evidence as non-applyable blocker rows
+ok   VN-19 sample keeps rich metadata review rows non-live-applyable
+ok   VN-19 sample keeps finite/passive verb rows exact-address gated
+ok   VN-19 sample keeps nominal/POS leakage rows gated
+ok   VN-19 sample keeps suffix, relation, and token-only rows gated
+ok   VN-19 sample contains no live-applyable candidate rows
+ok   VN-20 sample preserves component-only evidence as non-applyable blocker rows
+ok   VN-20 sample keeps rich metadata review rows non-live-applyable
+ok   VN-20 sample keeps finite/passive verb rows exact-address gated
+ok   VN-20 sample keeps nominal/POS leakage rows gated
+ok   VN-20 sample keeps suffix, relation, and token-only rows gated
+ok   VN-20 sample contains no live-applyable candidate rows
+ok   dogfood-derived wama blocker is preserved in Phase4 dry-run tranche only
+ok   dogfood-derived wama blocker is not emitted as a two-vote request
+ok   dogfood-derived yasaluka two-vote request keeps ask-you review hint
+ok   dogfood-derived fa-ahlaknahum two-vote request keeps finite-verb object review hint
+ok   dogfood-derived yasaluka two-vote responses keep matching ask-you reason
+ok   dogfood-derived fa-ahlaknahum two-vote responses keep matching finite-verb object reason
+ok   dogfood-derived two-vote responses reconcile only to certified_not_applied
+ok   dogfood-derived wama blocker is not emitted as a hover decision plan
+ok   dogfood-derived yasaluka hover plan stays planned_not_applied and source-clean
+ok   dogfood-derived fa-ahlaknahum hover plan stays planned_not_applied and source-clean
+ok   dogfood-derived apply-readiness manifest preserves excluded wama blocker
+ok   dogfood-derived owner authorization request preserves excluded wama blocker
+ok   dogfood-derived owner authorization requires exact request id and artifact hashes
+ok   rich-hover sample segment surfaces concatenate exactly (422 rows)
+ok   Phase2 live shadow graph builder self-test
+ok   Phase2 shadow graph validator self-test
+ok   Phase2 public-boundary scanner self-test
+ok   Phase2 WBW compare self-test
+ok   Phase2 shadow closure queue summarizer self-test
+ok   Phase2 public/private boundary validator self-test
+ok   Phase2 public/private boundary sample validates
+ok   Phase2 parse-key contract validator self-test
+ok   Phase2 parse-key sample validates
+ok   curriculum assessment validator self-test
+ok   curriculum assessment checkpoint sample validates
+ok   Phase2 detector maturity validator self-test
+ok   Phase2 detector maturity sample validates
+ok   Phase2 live shadow run manifest validator self-test
+ok   Phase2 live shadow run manifest sample validates
+ok   Phase2 shadow review-pack validator self-test
+ok   Phase2 shadow review-pack sample validates
+ok   Phase2 review-pack detector maturity validates
+ok   Phase2 decision linkage validator self-test
+ok   Phase2 decision linkage sample validates
+ok   Phase2 hover edit intent validator self-test
+ok   Phase2 hover edit intent sample validates
+ok   Phase2 repair impact preview validator self-test
+ok   Phase2 repair impact preview sample validates
+ok   Phase2 production bug lesson sample validates
+ok   source-selection majority/canonical class-signature self-test
+ok   source-selection accept fixture validates
+ok   Source-selection dogfood production bug lesson sample validates
+ok   public entry-count guard self-test
+ok   public entry count == 2092 (section split + manifest consistency)
+ok   Phase3.5 production bug lesson from edit intent sample validates
+ok   Phase3.5 production bug lesson builder self-test
+ok   Full-corpus dogfood production bug lesson builder self-test
+ok   Full-corpus dogfood production bug lesson sample validates
+ok   Preposition/oath dogfood production bug lesson sample validates
+ok   Vocative dogfood production bug lesson sample validates
+ok   Nominal POS dogfood production bug lesson sample validates
+ok   Particle tranche dogfood production bug lesson sample validates
+ok   Remaining particle dogfood production bug lesson sample validates
+ok   VN-00 dogfood production bug lesson sample validates
+ok   VN-01 dogfood production bug lesson sample validates
+ok   VN-02 dogfood production bug lesson sample validates
+ok   VN-03 dogfood production bug lesson sample validates
+ok   VN-04 dogfood production bug lesson sample validates
+ok   VN-05 dogfood production bug lesson sample validates
+ok   VN-06 dogfood production bug lesson sample validates
+ok   VN-07 dogfood production bug lesson sample validates
+ok   VN-08 dogfood production bug lesson sample validates
+ok   VN-09 dogfood production bug lesson sample validates
+ok   VN-10 dogfood production bug lesson sample validates
+ok   VN-11 dogfood production bug lesson sample validates
+ok   VN-12 dogfood production bug lesson sample validates
+ok   VN-13 dogfood production bug lesson sample validates
+ok   VN-14 dogfood production bug lesson sample validates
+ok   VN-15 dogfood production bug lesson sample validates
+ok   VN-16 dogfood production bug lesson sample validates
+ok   VN-17 dogfood production bug lesson sample validates
+ok   VN-18 dogfood production bug lesson sample validates
+ok   VN-19 dogfood production bug lesson sample validates
+ok   VN-20 dogfood production bug lesson sample validates
+ok   Phase2 rich WBW role taxonomy self-test
+ok   Phase2.9 rich WBW gate-case validator self-test
+ok   Phase3 shadow admin debug pack self-test
+ok   Phase3 shadow admin debug pack validator self-test
+ok   Phase3 shadow admin debug pack sample validates
+ok   Phase3 shadow admin route contract validator self-test
+ok   Phase3 shadow admin route contract sample validates
+ok   Phase3 shadow admin route contract matches debug pack sample
+ok   Full-corpus hover dogfood audit builder self-test
+ok   Full-corpus hover dogfood audit validator self-test
+ok   Full-corpus hover dogfood audit sample validates
+ok   Full-corpus dogfood subagent lane validator self-test
+ok   Full-corpus dogfood subagent lane sample validates
+ok   Full-corpus dogfood lane-packet builder self-test
+ok   Full-corpus dogfood lane-packet sample validates
+ok   Full-corpus dogfood review-output validator self-test
+ok   Full-corpus dogfood review-output sample validates
+ok   Full-corpus dogfood review-output summarizer self-test
+ok   Full-corpus dogfood review-output sample summarizes
+ok   Full-corpus dogfood controller reconciliation self-test
+ok   Full-corpus dogfood controller reconciliation sample validates
+ok   Full-corpus dogfood next-state queue builder self-test
+ok   Full-corpus dogfood next-state queue sample validates
+ok   Full-corpus dogfood known-defect readiness builder self-test
+ok   Full-corpus dogfood known-defect readiness sample validates
+ok   Full-corpus dogfood queue summarizer self-test
+ok   Full-corpus dogfood review-pack builder self-test
+ok   Dogfood review to shadow review-pack bridge self-test
+ok   Dogfood-derived shadow review-pack sample validates
+ok   Phase4 dry-run closure tranche planner self-test
+ok   Phase4 dry-run closure tranche validator self-test
+ok   Phase4 dry-run closure tranche sample validates
+ok   Dogfood-derived Phase4 dry-run closure tranche sample validates
+ok   Phase4 exact-addressed two-vote request builder self-test
+ok   Phase4 exact-addressed two-vote request validator self-test
+ok   Phase4 exact-addressed two-vote request sample validates
+ok   Dogfood-derived Phase4 exact-addressed two-vote request sample validates
+ok   Phase4 exact-addressed two-vote response validator self-test
+ok   Phase4 exact-addressed two-vote response sample validates
+ok   Dogfood-derived Phase4 exact-addressed two-vote response sample validates
+ok   Phase4 exact-addressed two-vote response reconciler self-test
+ok   Phase4 exact-addressed gloss adjudication request builder self-test
+ok   Phase4 exact-addressed gloss adjudication request validator self-test
+ok   Phase4 exact-addressed gloss adjudication request sample validates
+ok   Phase4 exact-addressed gloss adjudication response validator self-test
+ok   Phase4 exact-addressed gloss adjudication response sample validates
+ok   Phase4 exact-addressed gloss adjudication response reconciler self-test
+ok   Phase4 hover decision plan builder self-test
+ok   Phase4 hover decision plan validator self-test
+ok   Phase4 hover decision plan sample validates
+ok   Dogfood-derived Phase4 hover decision plan sample validates
+ok   Phase4 apply-readiness manifest builder self-test
+ok   Phase4 apply-readiness manifest validator self-test
+ok   Phase4 apply-readiness manifest sample validates
+ok   Dogfood-derived Phase4 apply-readiness manifest sample validates
+ok   Phase4 draft token-decision ledger builder self-test
+ok   Phase4 draft token-decision ledger validator self-test
+ok   Phase4 draft token-decision ledger sample validates
+ok   Dogfood-derived Phase4 draft token-decision ledger sample validates
+ok   Phase4 owner authorization request sample validates
+ok   Dogfood-derived Phase4 owner authorization request sample validates
+ok   Phase3 shadow admin debug pack query self-test
+ok   Phase3 shadow hover edit intent planner self-test
+ok   Phase3 shadow repair impact preview planner self-test
+ok   Phase3.25 grammar regression mining builder self-test
+ok   Phase3.25 grammar regression mining validator self-test
+ok   Phase3.25 grammar regression mining ledger validates
+ok   Phase3.5 grammar issue clusters validator self-test
+ok   Phase3.5 grammar issue clusters validate mining coverage
+ok   curriculum assessment teaches يَسْأَلُكَ token/context gloss split
+ok   drills preserve adjacent subject source for يَسْأَلُكَ
+ok   production bug lesson records يَسْأَلُكَ contextual subject source
+ok   rebind-queue root-lookup enrichment tests
+ok   function-word homograph pre-pass tests
+ok   rebind two-vote packet builder self-test
+ok   function-word two-vote packet builder self-test
+ok   wave-4 selection + packet enrichment fixtures
+ok   bulk two-vote builder self-test
+ok   bulk two-vote validator self-test
+ok   Phase4 exact-addressed two-vote request self-test
+ok   Phase4 exact-addressed two-vote reconciliation self-test
+ok   Phase4 exact-addressed gloss adjudication self-test
+ok   Phase4 exact-addressed gloss adjudication response reconciliation self-test
+ok   Phase4 hover decision plan self-test
+ok   Phase4 apply-readiness manifest self-test
+ok   Phase4 draft token-decision ledger self-test
+ok   Phase4 owner authorization request self-test
+ok   closure-2092 report ergonomics (no crushed one-line Markdown reports)
+ok   closure-2092 canonical paths (no stale index/scoreboard/coverage refs)
+ok   closure-2092 source-graph integrity (0 orphans, no zero-count collapse)
+ok   closure-2092 surface index covers usage.forms (F1)
+ok   closure-2092 blocker root-cause ledger (controlled vocab, reconciled)
+ok   closure-2092 open-stem lane sanity (host-noun-only, roots flattened, no false blockers)
+ok   closure-2092 batch gate token_hover_decisions(andon_hover_regression_repairs_20260625.jsonl)
+ok   closure-2092 batch gate token_hover_decisions(andon_hover_regression_repairs_20260625_002.jsonl)
+ok   closure-2092 batch gate token_hover_decisions(andon_hover_regression_repairs_20260625_003.jsonl)
+ok   closure-2092 batch gate token_hover_decisions(andon_hover_regression_repairs_20260625_004.jsonl)
+ok   closure-2092 batch gate token_hover_decisions(andon_hover_regression_repairs_20260625_005.jsonl)
+ok   closure-2092 batch gate token_hover_decisions(andon_hover_regression_repairs_20260625_006.jsonl)
+ok   closure-2092 batch gate token_hover_decisions(andon_hover_regression_repairs_20260625_007.jsonl)
+ok   closure-2092 batch gate token_hover_decisions(andon_hover_regression_repairs_20260625_008.jsonl)
+ok   closure-2092 batch gate token_hover_decisions(form_variant_batch_001.jsonl)
+ok   closure-2092 batch gate form_variant_family_batches(form_variant_batch_001.jsonl)
+ok   closure-2092 batch gate token_hover_decisions(token_irab_batch_001.jsonl)
+ok   closure-2092 batch gate token_hover_decisions(token_irab_batch_002.jsonl)
+ok   closure-2092 batch gate token_hover_decisions(token_irab_batch_003.jsonl)
+ok   closure-2092 batch gate suffix_pronoun_decisions(host_lexeme_batch_001.jsonl)
+ok   closure-2092 batch gate suffix_pronoun_decisions(suffix_pronoun_hover_batch_001.jsonl)
+ok   closure-2092 Phase4 lane verb_clitic_candidates
+ok   closure-2092 Phase4 lane new_entry_proposals
+ok   closure-2092 Phase4 lane source_entry_repair_candidates
+ok   closure-2092 corpus fixture (read-only, no translation, Ṣaḥīḥayn plan-only)
+ok   closure-2092 scar-family fixtures (>=16, verb-clitic + voice + banned, all reject)
+ok   P9 grammar gate has >=8 wrong-reasoning trap cases (8)
+ok   parser-checker artifact exists: qamus/schemas/parser-check-ir.schema.json
+ok   parser-checker artifact exists: qamus/schemas/grammar-issue.schema.json
+ok   parser-checker artifact exists: tools/fusha_check.py
+ok   parser-checker artifact exists: tools/validate_parser_check.py
+ok   parser-checker artifact exists: qamus/examples/parser_check_regression.sample.jsonl
+ok   parser-checker artifact exists: qamus/reports/parser-checker-substrate.md
+ok   parser-checker validator self-test (6 FAIL conditions reject; good units clean)
+ok   parser-checker self-test (regression examples + 13 issue classes + out_of_scope boundary)
+ok   parser-checker regression fixture validates (13 units, 0 violations)
+ok   general-checker artifact exists: qamus/schemas/fusha-text-check.schema.json
+ok   general-checker artifact exists: qamus/schemas/rich-hover-candidate.schema.json
+ok   general-checker artifact exists: tools/fusha_text_check.py
+ok   general-checker artifact exists: tools/validate_fusha_text_check.py
+ok   general-checker artifact exists: tools/rich_hover_flywheel.py
+ok   general-checker artifact exists: tools/validate_rich_hover_candidate.py
+ok   general-checker artifact exists: qamus/examples/fusha_text_check.sample.jsonl
+ok   general-checker artifact exists: qamus/examples/rich_hover_flywheel.sample.jsonl
+ok   general-checker artifact exists: qamus/reports/general-checker-rich-hover-flywheel.md
+ok   general text-checker self-test (3 modes, ambiguity-preserving, never auto_safe, source-clean)
+ok   general text-checker validator self-test (10 FAIL conditions reject; fixture rows clean)
+ok   general text-check fixture validates (10 records, 0 violations)
+ok   rich-hover flywheel self-test (candidates round-trip into the certification validator)
+ok   rich-hover candidate validator self-test (10 FAIL conditions reject; round-trip)
+ok   rich-hover flywheel fixture validates (10 candidates, 0 violations)
+ok   RH-LIVE Plan 15 parser flywheel artifact exists: tools/validate_rh_live_plan15_flywheel.py
+ok   RH-LIVE Plan 15 parser flywheel artifact exists: tools/import_rh_live_plan15_flywheel.py
+ok   RH-LIVE Plan 15 parser flywheel artifact exists: qamus/examples/rh_live_plan15_parser_flywheel.sample.jsonl
+ok   RH-LIVE Plan 15 parser flywheel artifact exists: qamus/examples/rh_live_plan15_parser_flywheel.sample.meta.json
+ok   RH-LIVE Plan 15 parser flywheel artifact exists: qamus/examples/rh_live_plan15_vn01_vn02_subword_graph.sample.jsonl
+ok   RH-LIVE Plan 15 parser flywheel artifact exists: qamus/examples/rh_live_plan15_vn01_vn02_subword_graph.sample.meta.json
+ok   RH-LIVE Plan 15 parser flywheel artifact exists: qamus/reports/closure-2092/rh-live-plan15-parser-flywheel-20260701.md
+ok   RH-LIVE Plan 15 parser flywheel artifact exists: qamus/reports/closure-2092/rh-live-plan15-parser-flywheel-20260701.json
+ok   RH-LIVE Plan 15 parser flywheel artifact exists: qamus/reports/closure-2092/rh-live-plan15-vn01-vn02-subword-graph-20260701.md
+ok   RH-LIVE Plan 15 parser flywheel artifact exists: qamus/reports/closure-2092/rh-live-plan15-vn01-vn02-subword-graph-20260701.json
+ok   RH-LIVE Plan 15 flywheel validator self-test (claim-boundary + leak reject)
+ok   RH-LIVE Plan 15 flywheel sample validates (parser-known/partial routed, no live claim)
+ok   RH-LIVE Plan 15 VN-01/VN-02 subword graph sample validates (stem route included)
+ok   RH-LIVE Plan 15 report records a valid ancestor Fusha HEAD
+ok   RH-LIVE Plan 15 sample meta records a valid ancestor Fusha HEAD
+ok   RH-LIVE Plan 15 VN-01/VN-02 supplement records a valid ancestor Fusha HEAD
+ok   RH-LIVE Plan 15 VN-01/VN-02 sample meta records a valid ancestor Fusha HEAD
+ok   p2 artifact exists: tools/leak_sot.py
+ok   p2 artifact exists: tools/validate_source_boundary.py
+ok   p2 artifact exists: qamus/schemas/dependency-candidate-lattice.schema.json
+ok   p2 artifact exists: tools/fusha_governor.py
+ok   p2 artifact exists: tools/validate_dependency_lattice.py
+ok   p2 artifact exists: qamus/examples/dependency_lattice.sample.jsonl
+ok   p2 artifact exists: qamus/schemas/cross-builder-conflict.schema.json
+ok   p2 artifact exists: tools/fusha_conflicts.py
+ok   p2 artifact exists: tools/validate_cross_builder_conflict.py
+ok   p2 artifact exists: qamus/examples/cross_builder_conflict.sample.jsonl
+ok   p2 leak source-of-truth self-test (union catches 5 legacy detectors; cert tafsir/tanzil gap closed)
+ok   p2 leak-SoT drift gate (leak_sot is a verified SUPERSET of all legacy detectors)
+ok   p2 governor/dependency lattice self-test (layer-1-safe; PP unresolved; right-answer-wrong-reason; never auto_safe)
+ok   p2 dependency-lattice validator self-test (9 FAIL conditions reject)
+ok   p2 dependency-lattice fixture validates (6 lattices, 0 violations)
+ok   p2 cross-builder conflict self-test (10 types; gate=max; precedence; surfaces never picks)
+ok   p2 conflict validator self-test (FAIL conditions incl. precedence + gate=max reject)
+ok   p2 conflict fixture validates (10 records, 0 violations)
+ok   p2b artifact exists: qamus/reports/p2b-learning-cefr.md
+ok   p2b artifact exists: curriculum/cefr-fusha-instruction.md
+ok   p2b artifact exists: curriculum/cefr-fusha-levels.json
+ok   p2b artifact exists: curriculum/kc-catalog.json
+ok   p2b artifact exists: qamus/schemas/morphology-candidate-lattice.schema.json
+ok   p2b artifact exists: qamus/schemas/learner-feedback-event.schema.json
+ok   p2b artifact exists: qamus/schemas/cefr-fusha-level.schema.json
+ok   p2b morphology candidate lattice self-test (ranked; ambiguity kept; never auto_safe)
+ok   p2b suggestion engine self-test (abstain-first; retain/reject/abstain no replacement; NMS->C10)
+ok   p2b text-check validator self-test (base 12 + M1-M8 morphology + 8b/8c/9b/10/11 suggestion)
+ok   p2b learner-feedback hint ladder self-test (bottom-out withheld past gate; cause-referencing)
+ok   p2b learner-feedback validator self-test (LF-1..10 reject)
+ok   p2b CEFR instruction self-test (7 levels clean; no certification/copied prose; beginner-safe)
+ok   p2b CEFR gating self-test (subset-visible; monotonic gates; ambiguity preserved; no reveal)
+ok   p2b learner-feedback fixture validates (0 violations)
+ok   p2b CEFR levels fixture validates (7 levels, 0 violations)
+ok   sarf/nahw skill back-prop self-test (ambiguity / governor / right-answer-wrong-reason / CEFR-scaffold / leak / tool-paths)
+ok   sarf/nahw skill back-prop tree clean (skills cite live tools, preserve ambiguity, gate iʿrāb)
+ok   sarf skill structural validator still green (additive edits)
+ok   nahw skill structural validator still green (additive edits)
+ok   VN-00 aggressive false-closure validator self-test (class coverage / flywheel targets / leak checks)
+ok   VN-00 aggressive false-closure fixtures tree clean (sarf/nahw/drill terminal flywheel gate)
+ok   VN-00 meta-transclusion projection validator self-test
+ok   VN-00 Plan18 meta-transclusion projection queues remain exact or explicit family-summary packets
+ok   sarf/nahw curriculum/drills/README back-prop self-test (4 named dirs engine-aligned; READMEs no-overclaim / current-stack / leak-free)
+ok   sarf/nahw curriculum/drills/README tree clean (no forced-parse drills; CEFR scaffolding not certification; cited tools exist)
+ok   data/runtime artifact exists: tools/fusha_review_scheduler.py
+ok   data/runtime artifact exists: tools/fusha_tutor_runtime.py
+ok   data/runtime artifact exists: tools/validate_tutor_runtime.py
+ok   data/runtime artifact exists: tools/fusha_checkpoint_coverage.py
+ok   data/runtime artifact exists: tools/qamus_wbw_adapter.py
+ok   data/runtime artifact exists: tools/validate_public_runnability.py
+ok   data/runtime artifact exists: qamus/schemas/tutor-progress-state.schema.json
+ok   data/runtime artifact exists: qamus/schemas/tutor-event.schema.json
+ok   data/runtime artifact exists: provenance/public-runnability.md
+ok   review scheduler self-test (deterministic Leitner; full-pass-only promotion; wrong-reason/pending HOLD)
+ok   tutor runtime self-test (schema-graded not self-report; two-vote gating; --write-gated; deterministic)
+ok   tutor runtime contract validator self-test (no self-report; promotion gate; --write gate; schema-conformant)
+ok   checkpoint coverage self-test (by level/hardness/route; empty bands; dangling-citation detection)
+ok   checkpoint sample has 0 dangling cited paths (referential integrity)
+ok   qamus_wbw adapter self-test (imports on a clone; load_services raises actionable SystemExit)
+ok   public-runnability matrix self-test (reconciles with live importers; new unguarded imports caught)
+ok   public-runnability matrix in sync with live qamus_wbw importers
+ok   P1/P2 artifact exists: tools/fusha_placement_test.py
+ok   P1/P2 artifact exists: curriculum/assessment/placement-test.sample.jsonl
+ok   P1/P2 artifact exists: tools/validate_drill_keys.py
+ok   P1/P2 artifact exists: tools/fusha_eval_coverage.py
+ok   P1/P2 artifact exists: tools/validate_tutor_event_replay.py
+ok   P1/P2 artifact exists: tools/validate_index_integrity.py
+ok   P1/P2 artifact exists: tools/report_dataset_integrity.py
+ok   P1/P2 artifact exists: qamus/reports/dataset-integrity-blocker.md
+ok   P1/P2 artifact exists: tools/validate_claude_ai_pack_drift.py
+ok   P1/P2 artifact exists: tools/validate_cefr_monotonicity.py
+ok   P1/P2 artifact exists: curriculum/drills/keys/quranic-function-words.keys.jsonl
+ok   P1-3 placement-test runner self-test (deterministic; ASAG-graded not self-report; rung routing)
+ok   P1-4 drill answer-key validator self-test (schema + leak + dangling-citation reject)
+ok   P1-4 drill answer-key fixtures validate (0 violations)
+ok   P1-5 eval-bank coverage reporter self-test (per-bank counts; runner-gap; report-only)
+ok   P1-5 eval-bank coverage real report (report-only, exit 0)
+ok   P1-6 tutor event-log replay validator self-test (event-sourced replay reconstructs state; tamper caught)
+ok   P2-8 index referential-integrity validator self-test (orphan id caught)
+ok   P2-8 index referential-integrity real indexes (0 orphan ids)
+ok   P2-9 dataset-integrity reporter self-test (synthetic match/mismatch; non-fatal vs --strict)
+ok   RM-01 strict dataset gate: validate_current_qamus_dataset exit 0 (armed 2026-07-10, owner D-09)
+ok   P2-10 claude.ai pack-drift validator self-test (read-only; drift caught)
+ok   P2-10 claude.ai pack manifest in sync (0 drift)
+ok   P2-11 CEFR monotonicity self-test (non-monotonic caught; no certification/forced-parse/reveal)
+ok   P2-11 CEFR real levels monotonic (scaffolding not certification)
+ok   largelexicon artifact exists: docs/parser/largelexicon-claim-boundary.md
+ok   largelexicon artifact exists: docs/parser/largelexicon-source-ledger.md
+ok   largelexicon artifact exists: docs/parser/largelexicon-implementation.md
+ok   largelexicon artifact exists: docs/parser/meta-transclusive-lattice-projection.md
+ok   largelexicon artifact exists: tools/build_largelexicon_source_inventory.py
+ok   largelexicon artifact exists: tools/build_largelexicon_morph_db.py
+ok   largelexicon artifact exists: tools/largelexicon_table_reader.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_source_ledger.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_table_manifest.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_table_reader.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_claim_boundary.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_claim_cards.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_morph_db.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_parser.py
+ok   largelexicon artifact exists: tools/fusha_largelexicon_cli.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_cli_contract.py
+ok   largelexicon artifact exists: tools/build_largelexicon_qamus_mode_a_worklist.py
+ok   largelexicon artifact exists: tools/project_largelexicon_qamus_hover_candidates.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_qamus_mode_a.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_qg_projection.py
+ok   largelexicon artifact exists: tools/adopt_largelexicon_qword_crosswalk.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_qword_crosswalk.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_denominator_join.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_transclusion.py
+ok   largelexicon artifact exists: tools/validate_meta_transclusion_projection.py
+ok   largelexicon artifact exists: tools/build_largelexicon_flywheel_artifacts.py
+ok   largelexicon artifact exists: tools/validate_largelexicon_skill_curriculum_backfill.py
+ok   largelexicon artifact exists: tools/validate_backfillfull_sarf_nahw_largelexicon.py
+ok   largelexicon artifact exists: fusha/lexicon/largelexicon/source-clean-table-allowlist.json
+ok   largelexicon artifact exists: fusha/lexicon/largelexicon/lemma-source.sample.jsonl
+ok   largelexicon artifact exists: fusha/lexicon/largelexicon/form-source.sample.jsonl
+ok   largelexicon artifact exists: fusha/lexicon/largelexicon/lemma-source.full.jsonl
+ok   largelexicon artifact exists: fusha/lexicon/largelexicon/form-source.full.jsonl
+ok   largelexicon artifact exists: fusha/morphology/examples/largelexicon-stems.sample.jsonl
+ok   largelexicon artifact exists: fusha/morphology/data/largelexicon-stems.full.jsonl
+ok   largelexicon artifact exists: qamus/schemas/largelexicon-table-manifest.schema.json
+ok   largelexicon artifact exists: qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json
+ok   largelexicon artifact exists: qamus/indexes/largelexicon/qamus-qword-denominator.entry-shard-index.json
+ok   largelexicon artifact exists: qamus/indexes/largelexicon/qamus-qword-denominator.source-card-repair.json
+ok   largelexicon artifact exists: qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json
+ok   largelexicon artifact exists: qamus/indexes/largelexicon/qword-denominator/v001-v040.jsonl
+ok   largelexicon artifact exists: qamus/indexes/largelexicon/qword-crosswalk/v001-v010.jsonl
+ok   largelexicon artifact exists: qamus/indexes/largelexicon/qword-denominator/n1041-n1045.jsonl
+ok   largelexicon artifact exists: qamus/indexes/largelexicon/qword-denominator/p001-p040.jsonl
+ok   largelexicon artifact exists: qamus/indexes/largelexicon/source-clean-fact-tables.meta.json
+ok   largelexicon artifact exists: qamus/reports/largelexicon-crosswalk-adoption-20260703.json
+ok   largelexicon artifact exists: qamus/reports/largelexicon-claim-cards.json
+ok   largelexicon artifact exists: qamus/examples/mode_a_all_qword/largelexicon-qamus-mode-a-worklist.sample.jsonl
+ok   largelexicon artifact exists: qamus/examples/largelexicon/hover-candidates.sample.jsonl
+ok   largelexicon artifact exists: qamus/examples/largelexicon/flywheel-artifacts.sample.jsonl
+ok   largelexicon artifact exists: qamus/procedures/largelexicon-rollout-consumption.md
+ok   largelexicon artifact exists: sarf/procedures/largelexicon-morphology-expansion.md
+ok   largelexicon artifact exists: nahw/procedures/largelexicon-function-token-routing.md
+ok   largelexicon artifact exists: curriculum/largelexicon-tutor-routing.md
+ok   largelexicon artifact exists: curriculum/drills/largelexicon-morphology-and-hover.md
+ok   largelexicon source-ledger self-test (canonical ledger + freshness + committed source-clean full tables)
+ok   largelexicon qword table manifest self-test (shards + entry reverse index + source-card repair packet)
+ok   largelexicon qword table reader self-test (manifest-backed iteration, entry lookup, row lookup)
+ok   largelexicon claim-boundary self-test (no live/arbitrary/CAMeL-class overclaim)
+ok   largelexicon claim-card self-test (supported vs not-yet-supported claims gated)
+ok   largelexicon morph DB self-test (source-clean Qamus-derived sample + full stem tables)
+ok   largelexicon parser self-test (opt-in --db largelexicon, smoke default preserved)
+ok   largelexicon Mode A self-test (visible qword denominator + trace)
+ok   largelexicon qg projection self-test (source-clean hover candidates or exact packets)
+ok   largelexicon qword crosswalk adoption self-test (source-clean packet projection)
+ok   largelexicon qword crosswalk materialized table validates
+ok   largelexicon denominator join self-test (loc-first join; qword_index false join rejected)
+ok   largelexicon denominator/crosswalk materialized loc-first join validates
+ok   largelexicon qword crosswalk transclusion dependencies validate
+ok   largelexicon meta-transclusive projection self-test (false visual closure families)
+ok   largelexicon sarf/nahw/curriculum flywheel self-test
+ok   backfillfull sarf/nahw largelexicon route/transclusion self-test
+ok   largelexicon local CLI contract self-test (analyze-token/card, project-hover, validate-mode-a)
+ok   certified-lemma fanout self-test (surface-only/homograph/QAC-leak/uncertified reject)
+ok   certified-lemma sample rows validate (certified, source-clean, homograph-safe)
+ok   canonical hover payload table self-test (id-determinism/leak/segment-concat/binding-gate reject)
+ok   canonical hover payload sample validates (payload+binding+exception referentially sound)
+ok   canonical hover payload builder self-test (dedup/full-carrier/weaker-peer/tie/incomplete)
+ok   canonical hover whitelist compiler self-test (append/no-op/conflict/exception; source-clean)
+ok   projection row_id stability self-test (content-addressed; provenance/timestamp/collision reject)
+ok   projection row_id sample validates (stable, content-addressed, source-clean)
+ok   renderer completeness gate self-test (empty-seg/dropped-seg/morphline-desync/bad-role reject)
+ok   renderer completeness sample validates (no silent renderer gaps)
+ok   segment-completeness self-test (A..G gates + live-row C1..C5 red-first; 102:3:3 & 4:144:17 pass)
+ok   flywheel fixture well-formed + keyed: sarf/evals/surfacemap-wbw-absent-eval.jsonl
+ok   flywheel fixture well-formed + keyed: sarf/evals/combining-mark-byte-exact-eval.jsonl
+ok   flywheel fixture well-formed + keyed: qamus/examples/dogfood_d7_darkmode_contrast_lesson.sample.jsonl
+ok   RM-08 import-scan lint: urllib/http.client/socket only in the 9 enumerated connectors
+ok   NF-T0-1 sample-manifest artifact hashes match tracked bytes (12 verified, 3 live-side skipped)
+ok   RM-06 coverage-% lint: stale coverage figures only in STATUS.md/HISTORICAL/dated evidence (15 historical/evidence files exempt)
+ok   RM-07 docs cite no phantom evidence glob (bulk_twovote_certified_batch: 0 hits in docs/)
+ok   RM-09 tree-wide recurrence lint (public classes; 2228 tracked text files scanned)
+ok   RM-09 production-augmented lint (public mode — overlay lint skipped)
+ok   T2 overlay mechanism: public clone self-test passes without an overlay
+ok   T2 overlay mechanism: production mode fails closed with exit 2
+ok   T2 overlay mechanism: synthetic overlay loads and augments matching
+ok   T2 overlay mechanism: synthetic loader stdout contains no overlay values
+ok   T2.1 ambient-overlay isolation: former-default file cannot alter public mode (fresh subprocesses; synthetic; original state restored)
+ok   T3A RM-04 matcher fixtures (4 rows: boundary-aware labels + negation-aware completion)
+ok   T3A LAT-01 honest-open rows pass; intended-positive still fails
+ok   RM-11 missing/empty/unknown gate aliases fail closed
+ok   RM-11 never_auto alias is equivalent to canonical never_auto_resolve
+ok   RM-13 مَنْ + verb has no jar-majrur edge or contradiction
+ok   RM-13 مَنْ + nominative noun has no fabricated contradiction
+ok   RM-13 مِنْ + noun keeps preposition behavior
+ok   RM-13 unvoweled من keeps existing preposition behavior
+ok   SF-09 cp1252 guard: fusha_morph_analyze.py
+ok   SF-09 cp1252 guard: fusha_morph_generate.py
+ok   SF-09 cp1252 guard: eval_fusha_morphology.py
+ok   SF-09 cp1252 guard: validate_fusha_morph_db.py
+ok   SF-09 cp1252 guard: fusha_largelexicon_cli.py
+ok   T3B-2 RM-12: rm12-p04-harakah-conflict
+ok   T3B-2 RM-12: rm12-harakah-agreeing-control
+ok   T3B-2 tm-port: tm-allah-split
+ok   T3B-2 tm-port: tm-allah-family
+ok   T3B-2 tm-port: tm-agreement-retain
+ok   T3B-2 tm-port: tm-misquote-case-a
+ok   T3B-2 tm-port: tm-verbatim-1-2
+ok   T3B-2 tm-port: tm-typo-hint-control
+ok   T5 fixture JSONL has 9 self-contained probe rows
+ok   T5 T1 full carrier: payloads=1 bindings=2 whitelist=1 repairs=0 conflicts=0
+ok   T5 T2 permutation: payload+binding+repair+conflict bytes identical; tie_unresolved=1
+ok   T5 T5 qword coordinate: bindings=2 distinct_ids=2
+ok   T5 T6 forced payload-id collision fails validator
+ok   T5 T6 forced binding-id collision fails validator
+ok   T5 T13 two payload ids at one accepted loc fail validator
+ok   T5 T7 review/status flips preserve ids; carrier flip changes binding id
+ok   T5 T10 two-exception orders: conflicts=1 emits=0 byte-identical
+ok   T5 LAT-05 accepted null replacement: conflicts=1 emits=0
+ok   T5 validator self-test
+ok   T5 builder self-test
+ok   T5 compiler self-test
+ok   T5 G1 full dry-run: bindings=88386 whitelist=42732 build=3.408s
+ok   T5 G1 diagnostics: co_occurrence_not_bound=0 richer-peer=0
+ok   RM-20 repair lineage: fixtures pass and G1 real-data build is live-payload sound
+ok   T5 G2 real-corpus permutation subset=4096 byte-identical
+ok   T6 G7 valid boundary row accepted
+ok   T6 G7-dependency-hash-missing rejects with source_dependency_missing
+ok   T6 G7-carrier-incomplete rejects with carrier_incomplete_waiver
+ok   T6 G7-provenance-missing rejects with provenance_missing
+ok   T6 G7-schema-version-wrong rejects with input_schema_version
+ok   T6 G7-index-drift-red-first rejects with source_dependency_index_drift
+ok   T6 G6a compile report provenance fields present
+ok   T6 G6a identical inputs reproduce packet sha byte-identically
+ok   T6 G6a changed input changes packet sha in stable direction
+ok   T6 G6b/G8 adoption reporter self-test (six classes + legacy no-op + lineage)
+ok   T6 G6c lane AST parses and hardcoded-sha lint green at HEAD
+ok   T6 G6c seeded temp copy makes hardcoded-sha lint red
+ok   T8 hash durability: worktree == tracked-blob == manifest sha AND eol=lf pinned (12 anchored files)
+ok   T9B shadow runner self-test (alert classes + synthetic pipeline)
+ok   RM-20 shadow runner canonical-repair overlay tests
+ok   T10 Lane B classifier self-test
+ok   T11 append-queue builder self-test
+ok   T12 fact ledger tests
+ok   RM-38 evaluation validator self-test
+ok   RM-38 evaluation runner self-test
+ok   RM-40 gate stack self-test (weak/hamza/masdar abstain)
+ok   RM-40 paradigm generator self-test (abstain-first, competing preserved)
+ok   RM-40 generation validator self-test (plane-disjointness, supersedes, no-overwrite)
+ok   RM-40 evaluation harness self-test (fabrication budget, norm_strict join, no aggregate)
+ok   RM-40 generation tests (12 red-first checklist items)
+ok   RM-20 morphline apply tests (five refusals + reports + ledger + atomic SHADOW)
+ok   T10 gap-queue builder self-test (families + columns + uniqueness + determinism)
+ok   T10 Lane B wave promoter self-test (ledger-gate + carrier + quarantine + determinism)
+ok   T10 Lane B ledger states after affirm-live T3 tranche: certified=1657 review_required=24 candidate=213 rejected=136
+ok   T10 Lane B certified facts are occurrence-scoped with full D-13 carriers (1657 unique)
+ok   T10 Lane B wave report: 77 promoted, queue 5502 -> 5425, method two_vote_certified_v1
+ok   T10 Lane B wave 2 report: 194 locations / 537 carrier facts / queue 5425 -> 5231
+ok   T10 Lane B wave 2 truthful accounting: 522 new + 15 rebound = 537 promoted
+ok   T10 Lane B wave 2 old-location occupancy proof: none of 15 lost its last binding
+ok   T10 Lane B wave 2 retains 537 binding-scoped provenance edges
+ok   T10 Lane B wave 2 rebind lineage: 15 explicit old->new pairs match report
+ok   T10 Lane B wave 3 report: 344 locations / 752 carrier facts / queue 5231 -> 4887
+ok   T10 Lane B wave 3 authoritative holds: 0 disagreement / 144 joint / 12 one-sided
+ok   T10 Lane B wave 3 11:44:8 remains data-quality quarantined review_required
+ok   T10 Lane B wave 3 ledger votes preserve Opus/Codex engine diversity
+ok   T10 Lane B wave 3 truthful accounting: 731 new + 21 rebound = 752 promoted
+ok   T10 Lane B wave 3 old-location occupancy proof: none of 21 lost its last binding
+ok   T10 Lane B wave 3 retains 752 binding-scoped provenance edges
+ok   T10 Lane B accepted crosswalk reconciles: 88386 accepted (87579 + 731 new)
+ok   T10 Lane B wave 4 queue reconciles: 4887 -> 4854 (33 promoted, 79 affirmed-live refamilied)
+ok   RM-19 atomic shard promotion self-test (lock + recovery + rollback)
+ok   T10 Lane C/D residue investigator self-test
+ok   RM-36 fallback re-verifier self-test
+ok   T10 residue + RM-36 demotion self-test (red-first exclusions)
+ok   T12 fact projector tests (registry + sarf + nahw cycles + defeaters)
+ok   D-11 grammar-reasoning grader self-test
+ok   D-11 language-state sample query
+ok   D-11 source-photo field verifier self-test
+ok   D-11 Tafsir MCP committed cache validator
+ok   RM-28 eval replay: morphology
+ok   RM-28 eval replay: deploy-mechanics
+ok   RM-28 eval replay: governor
+ok   RM-28 eval replay: wrong-reasoning
+ok   RM-28 dormant bulk deterministic hover-decision test
+ok   RM-28 dormant largerollout3 acceptance test
+ok   RM-28 dormant pending-source triangulation test
+ok   RM-28 dormant token i'rab help test
+ok   RM-21 schema-coherence self-test (gate-enum/qg-drift/source_key/surface_norm/cross-field; red-first)
+ok   SKILL-RELEASE gate 8: skill-rule registry validator self-test
+ok   SKILL-RELEASE gate 8: skill-rule registry validates (0 errors, no dup ids / dangling)
+ok   SKILL-RELEASE gate 9: permanent red-first skill fixtures pass
+ok   SKILL-RELEASE gate 10: skill-drift self-test (all 10 classes trip red-first, structural invariants hold)
+ok   SKILL-RELEASE gate 10: skill-drift --real reports 0 findings (accepted-untested + stale-installs cleared)
+ok   SKILL-RELEASE gate 10: deterministic mirror generation self-test (committed == regenerated)
+ok   SKILL-RELEASE gate 11: rich-seg @2 candidate red-first fixtures pass
+ok   SKILL-RELEASE gate 12: @2.1 increment red-first + non-constant-discriminator fixtures pass
+ok   SKILL-RELEASE gate 12: released + @2.1-increment registry validates merged (0 dup / 0 dangling)
+ok   SKILL-RELEASE gate 13: @2.2 increment red-first + non-constant-discriminator fixtures pass
+ok   SKILL-RELEASE gate 13: released + @2.1 + @2.2 increment registry validates merged (0 dup / 0 dangling)
+ok   SKILL-RELEASE gate 14: @2.3 increment red-first + non-constant-discriminator fixtures pass
+ok   SKILL-RELEASE gate 14: released + @2.1 + @2.2 + @2.3 increment registry validates merged (0 dup / 0 dangling)
+ok   F-A typed-claim contract self-test and red-first fixtures pass
+ok   F-A typed-claim contract fixture boundary passes
+ok   F-D shared compiler contract/payload/render/matrix self-test passes
+ok   F-D compiler red/green unit fixtures pass
+
+ALL REGRESSION CHECKS PASS

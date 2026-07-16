@@ -31,6 +31,19 @@ PUBLIC_UNRESOLVED_STATUSES = {
     "syntax_pending",
     "blocked",
 }
+EVIDENCE_MODES = {
+    "direct_source_attestation",
+    "cross_source_corroboration",
+    "deterministic_derivation_from_certified_facts",
+    "paired_form_inference",
+    "normalized_lexical_body",
+    "owner_or_scholar_adjudication",
+    "unresolved",
+}
+DERIVED_EVIDENCE_MODES = {
+    "deterministic_derivation_from_certified_facts",
+    "paired_form_inference",
+}
 PROSE_ONLY_ERROR = (
     "learner-visible claim lacks backing typed fact: "
     "a prose assertion is not itself a typed fact"
@@ -145,11 +158,103 @@ def _fact_map(row: dict[str, Any]) -> tuple[dict[str, dict[str, Any]], list[str]
     return facts, errors
 
 
+def _validate_evidence_semantics(
+    row: dict[str, Any],
+    fact: dict[str, Any],
+    fact_index: int,
+    facts: dict[str, dict[str, Any]],
+    tension_ids: dict[str, dict[str, Any]],
+    expected_quran: str,
+) -> list[str]:
+    """Validate the additive F-D evidence carrier without certifying prose."""
+
+    errors: list[str] = []
+    prefix = f"facts[{fact_index}]"
+    mode = fact.get("evidence_mode")
+    if mode not in EVIDENCE_MODES:
+        errors.append(f"{prefix}: evidence_mode is not a closed F-D value")
+
+    source_evidence = fact.get("source_evidence")
+    if not isinstance(source_evidence, dict):
+        return errors
+    source_addresses = source_evidence.get("source_addresses")
+    if not isinstance(source_addresses, list) or not source_addresses:
+        errors.append(f"{prefix}: source_evidence requires at least one exact source address")
+    else:
+        for address_index, address in enumerate(source_addresses):
+            if not isinstance(address, dict):
+                continue
+            if not address.get("address"):
+                errors.append(
+                    f"{prefix}.source_evidence.source_addresses[{address_index}]: exact address is required"
+                )
+
+    representations = [
+        key for key in ("source_quotation", "structured_source_fact") if key in source_evidence
+    ]
+    if len(representations) != 1:
+        errors.append(f"{prefix}: source_evidence must carry exactly one quotation or structured source fact")
+
+    derivation_chain = fact.get("derivation_chain")
+    dependencies = fact.get("dependencies") or {}
+    dependency_fact_ids = set(dependencies.get("fact_ids", [])) if isinstance(dependencies, dict) else set()
+    if mode in DERIVED_EVIDENCE_MODES:
+        if not isinstance(derivation_chain, list) or not derivation_chain:
+            errors.append(f"{prefix}: {mode} requires a non-empty derivation_chain")
+        for step_index, step in enumerate(derivation_chain or []):
+            for input_id in step.get("input_fact_ids", []):
+                if input_id not in facts:
+                    errors.append(
+                        f"{prefix}.derivation_chain[{step_index}]: input fact {input_id} is not present"
+                    )
+                if input_id not in dependency_fact_ids:
+                    errors.append(
+                        f"{prefix}.derivation_chain[{step_index}]: input fact {input_id} is not listed in dependencies"
+                    )
+    if mode == "cross_source_corroboration" and len(source_addresses or []) < 2:
+        errors.append(f"{prefix}: cross_source_corroboration requires multiple source addresses")
+    if mode == "unresolved" and fact.get("certification", {}).get("status") == "certified":
+        errors.append(f"{prefix}: unresolved evidence cannot be certified")
+
+    if isinstance(dependencies, dict):
+        for dependency_id in dependencies.get("fact_ids", []):
+            if dependency_id not in facts:
+                errors.append(f"{prefix}: dependency fact {dependency_id} is not present")
+
+    for contradiction_index, contradiction in enumerate(fact.get("contradiction_records", [])):
+        tension_id = contradiction.get("tension_id")
+        tension = tension_ids.get(tension_id)
+        if tension is None:
+            errors.append(
+                f"{prefix}.contradiction_records[{contradiction_index}]: tension {tension_id} is not present"
+            )
+        elif contradiction.get("relation") == "attached_unresolved" and tension.get("status") != "unresolved":
+            errors.append(
+                f"{prefix}.contradiction_records[{contradiction_index}]: attached_unresolved requires an unresolved tension"
+            )
+    return errors
+
+
 def _validate_projection_semantics(row: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     occurrence = row.get("canonical_occurrence") or {}
     facts, fact_errors = _fact_map(row)
     errors.extend(fact_errors)
+    tension_records = row.get("tension_records", [])
+    tension_ids: dict[str, dict[str, Any]] = {}
+    if isinstance(tension_records, list):
+        for tension_index, tension in enumerate(tension_records):
+            tension_id = tension.get("tension_id") if isinstance(tension, dict) else None
+            if tension_id in tension_ids:
+                errors.append(f"tension_records[{tension_index}]: duplicate tension_id {tension_id}")
+            else:
+                tension_ids[tension_id] = tension
+            if isinstance(tension, dict):
+                for fact_id in tension.get("fact_ids", []):
+                    if fact_id not in facts:
+                        errors.append(
+                            f"tension_records[{tension_index}]: fact {fact_id} is not present in this contract"
+                        )
     expected_quran = f"quran:{occurrence.get('quran_loc', '')}"
     if occurrence.get("occurrence_id") != expected_quran:
         errors.append("canonical_occurrence: occurrence_id must equal quran:<quran_loc>")
@@ -160,6 +265,7 @@ def _validate_projection_semantics(row: dict[str, Any]) -> list[str]:
 
     for index, fact in enumerate(row.get("facts", [])):
         errors.extend(_surface_span_errors(occurrence, fact, index))
+        errors.extend(_validate_evidence_semantics(row, fact, index, facts, tension_ids, expected_quran))
         source = fact.get("source") or {}
         source_address = fact.get("source_address") or {}
         if source.get("source_kind") != source_address.get("source_kind"):

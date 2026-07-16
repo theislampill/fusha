@@ -1,0 +1,1310 @@
+{
+  "schema": "qamus.typed_claim_contract.v1",
+  "contract_version": "1.0.0",
+  "contract_id": "fd:sufaha:2:13:12",
+  "record_type": "projection_input",
+  "canonical_occurrence": {
+    "occurrence_id": "quran:2:13:12",
+    "quran_loc": "2:13:12",
+    "wbw_loc": "wbw:2:13:12",
+    "surface": "السُّفَهَاءُ",
+    "surface_length": 12,
+    "entry_id": "1ffcc554ec44",
+    "card_id": "fd-sufaha-2-13-12"
+  },
+  "facts": [
+    {
+      "fact_id": "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+      "fact_type": "singular_plural_relation",
+      "fact_value": {
+        "singular": "سَفِيه",
+        "plural": "سُفَهَاء",
+        "relationship": "singular_of_plural"
+      },
+      "surface_spans": [
+        {
+          "span_id": "lexical-body",
+          "start": 2,
+          "end": 11,
+          "surface": "سُّفَهَاء",
+          "role": "lexical_body"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fd-sufaha-owner",
+          "owner_type": "owner_certified_fixture"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.fd_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "source": {
+        "source_id": "sufaha-evidence.jsonl#fact=1",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "sufaha-evidence.jsonl#fact=1",
+        "source_kind": "review_artifact"
+      },
+      "certification": {
+        "status": "certified",
+        "reason": "Owner-certified evidence supplied for this dry-run fixture; no new scholarly certification performed."
+      },
+      "evidence": {
+        "status": "certified",
+        "confidence": "high",
+        "evidence_ids": [
+          "fd:sufaha:evidence:1"
+        ],
+        "summary": "singular سَفِيه exists as the singular of this plural"
+      },
+      "evidence_mode": "direct_source_attestation",
+      "source_evidence": {
+        "source_quotation": "{السُّفَهَاءُ}: اسْمٌ، مُذَكَّرٌ، جَمْعُ تَكْسِيرٍ لِلْكَثْرَةِ، مُفْرَدُهُ: (سَفِيهٌ) — and standalone attestation {سَفِيهًا} at 2:282; entry forms list contains سَفِيهًا",
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "quran:2:282:40",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "entry:1ffcc554ec44:usage.forms",
+            "source_kind": "qamus_entry_field"
+          }
+        ]
+      },
+      "derivation_chain": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "quran:2:282:40",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "entry:1ffcc554ec44:usage.forms",
+            "source_kind": "qamus_entry_field"
+          }
+        ]
+      },
+      "contradiction_records": [],
+      "producer": {
+        "id": "tools.fd_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "rule_id": "fd.sufaha.singular-plural-attestation",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "version": "1.0.0"
+      },
+      "guards": [
+        {
+          "guard_id": "fd.fixture_only",
+          "reason": "This fact may feed only the fixture/dry-run projection; it cannot authorize a live mutation."
+        }
+      ],
+      "defeaters": [],
+      "unresolved_blockers": [],
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "fd.sufaha.2-13-12.v1"
+      ]
+    },
+    {
+      "fact_id": "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+      "fact_type": "plural_formation",
+      "fact_value": {
+        "plural": "سُفَهَاء",
+        "formation": "broken_plural",
+        "singular": "سَفِيه"
+      },
+      "surface_spans": [
+        {
+          "span_id": "lexical-body",
+          "start": 2,
+          "end": 11,
+          "surface": "سُّفَهَاء",
+          "role": "lexical_body"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fd-sufaha-owner",
+          "owner_type": "owner_certified_fixture"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.fd_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "source": {
+        "source_id": "sufaha-evidence.jsonl#fact=2",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "sufaha-evidence.jsonl#fact=2",
+        "source_kind": "review_artifact"
+      },
+      "certification": {
+        "status": "certified",
+        "reason": "Owner-certified evidence supplied for this dry-run fixture; no new scholarly certification performed."
+      },
+      "evidence": {
+        "status": "certified",
+        "confidence": "high",
+        "evidence_ids": [
+          "fd:sufaha:evidence:2"
+        ],
+        "summary": "plural سُفَهَاء is its broken plural"
+      },
+      "evidence_mode": "direct_source_attestation",
+      "source_evidence": {
+        "source_quotation": "{السُّفَهَاءُ}: اسْمٌ، مُذَكَّرٌ، جَمْعُ تَكْسِيرٍ لِلْكَثْرَةِ، مُفْرَدُهُ: (سَفِيهٌ)",
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "derivation_chain": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "contradiction_records": [],
+      "producer": {
+        "id": "tools.fd_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "rule_id": "fd.sufaha.broken-plural-attestation",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "version": "1.0.0"
+      },
+      "guards": [
+        {
+          "guard_id": "fd.fixture_only",
+          "reason": "This fact may feed only the fixture/dry-run projection; it cannot authorize a live mutation."
+        }
+      ],
+      "defeaters": [],
+      "unresolved_blockers": [],
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "fd.sufaha.2-13-12.v1"
+      ]
+    },
+    {
+      "fact_id": "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+      "fact_type": "root",
+      "fact_value": {
+        "root": "س ف ه",
+        "source_agreement": "MCP_QAC_entry"
+      },
+      "surface_spans": [
+        {
+          "span_id": "lexical-body",
+          "start": 2,
+          "end": 11,
+          "surface": "سُّفَهَاء",
+          "role": "lexical_body"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fd-sufaha-owner",
+          "owner_type": "owner_certified_fixture"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.fd_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "source": {
+        "source_id": "sufaha-evidence.jsonl#fact=3",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "sufaha-evidence.jsonl#fact=3",
+        "source_kind": "review_artifact"
+      },
+      "certification": {
+        "status": "certified",
+        "reason": "Owner-certified evidence supplied for this dry-run fixture; no new scholarly certification performed."
+      },
+      "evidence": {
+        "status": "certified",
+        "confidence": "high",
+        "evidence_ids": [
+          "fd:sufaha:evidence:3"
+        ],
+        "summary": "shared root س ف ه"
+      },
+      "evidence_mode": "cross_source_corroboration",
+      "source_evidence": {
+        "source_quotation": "MCP: مِنْ مَادَّةِ: (سفه) [both]; QAC: 2:13 السفهاء\\tسفه\\tN, 2:282 سفيها\\tسفه\\tN; entry: \"root\": \"س ف ه\"",
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "quran:2:282:40",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "sufaha-evidence.jsonl#fact=3#MCP:analyze_word",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "qac:2:13:12:root",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "qac:2:282:40:root",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "entry:1ffcc554ec44:root",
+            "source_kind": "qamus_entry_field"
+          }
+        ]
+      },
+      "derivation_chain": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "quran:2:282:40",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "sufaha-evidence.jsonl#fact=3#MCP:analyze_word",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "qac:2:13:12:root",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "qac:2:282:40:root",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "entry:1ffcc554ec44:root",
+            "source_kind": "qamus_entry_field"
+          }
+        ]
+      },
+      "contradiction_records": [],
+      "producer": {
+        "id": "tools.fd_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "rule_id": "fd.sufaha.root-cross-source-corroboration",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "version": "1.0.0"
+      },
+      "guards": [
+        {
+          "guard_id": "fd.fixture_only",
+          "reason": "This fact may feed only the fixture/dry-run projection; it cannot authorize a live mutation."
+        }
+      ],
+      "defeaters": [],
+      "unresolved_blockers": [],
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "fd.sufaha.2-13-12.v1"
+      ]
+    },
+    {
+      "fact_id": "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+      "fact_type": "singular_pattern",
+      "fact_value": {
+        "word": "سَفِيه",
+        "pattern": "فَعِيل"
+      },
+      "surface_spans": [
+        {
+          "span_id": "lexical-body",
+          "start": 2,
+          "end": 11,
+          "surface": "سُّفَهَاء",
+          "role": "lexical_body"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fd-sufaha-owner",
+          "owner_type": "owner_certified_fixture"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.fd_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "source": {
+        "source_id": "sufaha-evidence.jsonl#fact=4",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "sufaha-evidence.jsonl#fact=4",
+        "source_kind": "review_artifact"
+      },
+      "certification": {
+        "status": "certified",
+        "reason": "Owner-certified evidence supplied for this dry-run fixture; no new scholarly certification performed."
+      },
+      "evidence": {
+        "status": "certified",
+        "confidence": "high",
+        "evidence_ids": [
+          "fd:sufaha:evidence:4"
+        ],
+        "summary": "singular pattern فَعِيل"
+      },
+      "evidence_mode": "direct_source_attestation",
+      "source_evidence": {
+        "source_quotation": "{سَفِيهًا}: ... ثُلَاثِيٌّ مَزِيدٌ بِحَرْفِ: الْيَاءِ، عَلَى وَزْنِ: (فَعِيلٌ)، مِنْ مَادَّةِ: (سفه)",
+        "source_addresses": [
+          {
+            "address": "quran:2:282:40",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "derivation_chain": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "quran:2:282:40",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "contradiction_records": [],
+      "producer": {
+        "id": "tools.fd_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "rule_id": "fd.sufaha.singular-pattern-attestation",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "version": "1.0.0"
+      },
+      "guards": [
+        {
+          "guard_id": "fd.fixture_only",
+          "reason": "This fact may feed only the fixture/dry-run projection; it cannot authorize a live mutation."
+        }
+      ],
+      "defeaters": [],
+      "unresolved_blockers": [],
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "fd.sufaha.2-13-12.v1"
+      ]
+    },
+    {
+      "fact_id": "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+      "fact_type": "plural_pattern",
+      "fact_value": {
+        "word": "سُفَهَاء",
+        "pattern": "فُعَلَاء"
+      },
+      "surface_spans": [
+        {
+          "span_id": "lexical-body",
+          "start": 2,
+          "end": 11,
+          "surface": "سُّفَهَاء",
+          "role": "lexical_body"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fd-sufaha-owner",
+          "owner_type": "owner_certified_fixture"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.fd_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "source": {
+        "source_id": "sufaha-evidence.jsonl#fact=5",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "sufaha-evidence.jsonl#fact=5",
+        "source_kind": "review_artifact"
+      },
+      "certification": {
+        "status": "certified",
+        "reason": "Owner-certified evidence supplied for this dry-run fixture; no new scholarly certification performed."
+      },
+      "evidence": {
+        "status": "certified",
+        "confidence": "high",
+        "evidence_ids": [
+          "fd:sufaha:evidence:5"
+        ],
+        "summary": "plural pattern فُعَلَاء"
+      },
+      "evidence_mode": "direct_source_attestation",
+      "source_evidence": {
+        "source_quotation": "{السُّفَهَاءُ}: ... مَمْدُودٌ، عَلَى وَزْنِ: (فُعَلَاءُ)، مِنْ مَادَّةِ: (سفه)",
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "derivation_chain": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "contradiction_records": [],
+      "producer": {
+        "id": "tools.fd_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "rule_id": "fd.sufaha.plural-pattern-attestation",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "version": "1.0.0"
+      },
+      "guards": [
+        {
+          "guard_id": "fd.fixture_only",
+          "reason": "This fact may feed only the fixture/dry-run projection; it cannot authorize a live mutation."
+        }
+      ],
+      "defeaters": [],
+      "unresolved_blockers": [],
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "fd.sufaha.2-13-12.v1"
+      ]
+    },
+    {
+      "fact_id": "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+      "fact_type": "retained_radicals",
+      "fact_value": {
+        "retained_radicals": [
+          "س",
+          "ف",
+          "ه"
+        ],
+        "invariant": true
+      },
+      "surface_spans": [
+        {
+          "span_id": "lexical-body",
+          "start": 2,
+          "end": 11,
+          "surface": "سُّفَهَاء",
+          "role": "lexical_body"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fd-sufaha-owner",
+          "owner_type": "owner_certified_fixture"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.fd_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "source": {
+        "source_id": "sufaha-evidence.jsonl#fact=6",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "sufaha-evidence.jsonl#fact=6",
+        "source_kind": "review_artifact"
+      },
+      "certification": {
+        "status": "certified",
+        "reason": "Owner-certified evidence supplied for this dry-run fixture; no new scholarly certification performed."
+      },
+      "evidence": {
+        "status": "certified",
+        "confidence": "high",
+        "evidence_ids": [
+          "fd:sufaha:evidence:6"
+        ],
+        "summary": "retained radicals — س ف ه invariant across both"
+      },
+      "evidence_mode": "direct_source_attestation",
+      "source_evidence": {
+        "source_quotation": "MCP سفيها: مِنْ مَادَّةِ: (سفه); MCP السفهاء: مِنْ مَادَّةِ: (سفه); QAC root column سفه for both",
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "quran:2:282:40",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "qac:2:13:12:root",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "qac:2:282:40:root",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "entry:1ffcc554ec44:root",
+            "source_kind": "qamus_entry_field"
+          }
+        ]
+      },
+      "derivation_chain": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "quran:2:282:40",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "qac:2:13:12:root",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "qac:2:282:40:root",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "entry:1ffcc554ec44:root",
+            "source_kind": "qamus_entry_field"
+          }
+        ]
+      },
+      "contradiction_records": [],
+      "producer": {
+        "id": "tools.fd_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "rule_id": "fd.sufaha.retained-radicals-attestation",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "version": "1.0.0"
+      },
+      "guards": [
+        {
+          "guard_id": "fd.fixture_only",
+          "reason": "This fact may feed only the fixture/dry-run projection; it cannot authorize a live mutation."
+        }
+      ],
+      "defeaters": [],
+      "unresolved_blockers": [],
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "fd.sufaha.2-13-12.v1"
+      ]
+    },
+    {
+      "fact_id": "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+      "fact_type": "paired_y_removal",
+      "fact_value": {
+        "removed_letter": "ي",
+        "singular_augment_inventory": [
+          "ي"
+        ],
+        "plural_augment_inventory": [
+          "ا",
+          "ء"
+        ]
+      },
+      "surface_spans": [
+        {
+          "span_id": "lexical-body",
+          "start": 2,
+          "end": 11,
+          "surface": "سُّفَهَاء",
+          "role": "lexical_body"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fd-sufaha-owner",
+          "owner_type": "owner_certified_fixture"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.fd_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "source": {
+        "source_id": "sufaha-evidence.jsonl#fact=7",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "sufaha-evidence.jsonl#fact=7",
+        "source_kind": "review_artifact"
+      },
+      "certification": {
+        "status": "certified",
+        "reason": "Owner-certified evidence supplied for this dry-run fixture; no new scholarly certification performed."
+      },
+      "evidence": {
+        "status": "certified",
+        "confidence": "high",
+        "evidence_ids": [
+          "fd:sufaha:evidence:7"
+        ],
+        "summary": "the singular template's ي disappears in the plural"
+      },
+      "evidence_mode": "paired_form_inference",
+      "source_evidence": {
+        "source_quotation": "singular سَفِيهًا: ثُلَاثِيٌّ مَزِيدٌ بِحَرْفِ: الْيَاءِ، عَلَى وَزْنِ: (فَعِيلٌ) — plural السُّفَهَاءُ: ثُلَاثِيٌّ مَزِيدٌ بِحَرْفَيْنِ: الْأَلِفِ وَالْهَمْزَةِ، عَلَى وَزْنِ: (فُعَلَاءُ)",
+        "source_addresses": [
+          {
+            "address": "quran:2:282:40",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "derivation_chain": [
+        {
+          "step_id": "fd.sufaha.compare-certified-augment-inventories",
+          "operation": "compare certified singular and plural augment inventories",
+          "input_fact_ids": [
+            "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+            "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b"
+          ],
+          "input_source_addresses": [
+            {
+              "address": "quran:2:282:40",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "quran:2:13:12",
+              "source_kind": "quran_token"
+            }
+          ],
+          "output": "the singular inventory names ي while the plural inventory names ا and ء; ي is absent from the plural pair"
+        }
+      ],
+      "dependencies": {
+        "fact_ids": [
+          "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+          "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b"
+        ],
+        "source_addresses": [
+          {
+            "address": "quran:2:282:40",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "contradiction_records": [],
+      "producer": {
+        "id": "tools.fd_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "rule_id": "fd.sufaha.paired-form-y-removal",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "version": "1.0.0"
+      },
+      "guards": [
+        {
+          "guard_id": "fd.fixture_only",
+          "reason": "This fact may feed only the fixture/dry-run projection; it cannot authorize a live mutation."
+        }
+      ],
+      "defeaters": [],
+      "unresolved_blockers": [],
+      "dependent_fact_ids": [
+        "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+        "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b"
+      ],
+      "dependent_projection_ids": [
+        "fd.sufaha.2-13-12.v1"
+      ]
+    },
+    {
+      "fact_id": "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+      "fact_type": "plural_introduced_letters",
+      "fact_value": {
+        "introduced_letters": [
+          "ا",
+          "ء"
+        ],
+        "count": 2
+      },
+      "surface_spans": [
+        {
+          "span_id": "lexical-body",
+          "start": 2,
+          "end": 11,
+          "surface": "سُّفَهَاء",
+          "role": "lexical_body"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fd-sufaha-owner",
+          "owner_type": "owner_certified_fixture"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.fd_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "source": {
+        "source_id": "sufaha-evidence.jsonl#fact=8",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "sufaha-evidence.jsonl#fact=8",
+        "source_kind": "review_artifact"
+      },
+      "certification": {
+        "status": "certified",
+        "reason": "Owner-certified evidence supplied for this dry-run fixture; no new scholarly certification performed."
+      },
+      "evidence": {
+        "status": "certified",
+        "confidence": "high",
+        "evidence_ids": [
+          "fd:sufaha:evidence:8"
+        ],
+        "summary": "the plural template introduces ا and ء"
+      },
+      "evidence_mode": "direct_source_attestation",
+      "source_evidence": {
+        "source_quotation": "{السُّفَهَاءُ}: ... ثُلَاثِيٌّ مَزِيدٌ بِحَرْفَيْنِ: الْأَلِفِ وَالْهَمْزَةِ، مَمْدُودٌ",
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "derivation_chain": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "contradiction_records": [],
+      "producer": {
+        "id": "tools.fd_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "rule_id": "fd.sufaha.plural-augment-attestation",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "version": "1.0.0"
+      },
+      "guards": [
+        {
+          "guard_id": "fd.fixture_only",
+          "reason": "This fact may feed only the fixture/dry-run projection; it cannot authorize a live mutation."
+        }
+      ],
+      "defeaters": [],
+      "unresolved_blockers": [],
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "fd.sufaha.2-13-12.v1"
+      ]
+    },
+    {
+      "fact_id": "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+      "fact_type": "plural_lexical_body",
+      "fact_value": {
+        "lexical_body": "سُفَهَاء",
+        "excluded_final_mark": "ُ",
+        "excluded_article": "ال"
+      },
+      "surface_spans": [
+        {
+          "span_id": "lexical-body",
+          "start": 2,
+          "end": 11,
+          "surface": "سُّفَهَاء",
+          "role": "lexical_body"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fd-sufaha-owner",
+          "owner_type": "owner_certified_fixture"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.fd_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "source": {
+        "source_id": "sufaha-evidence.jsonl#fact=9",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "sufaha-evidence.jsonl#fact=9",
+        "source_kind": "review_artifact"
+      },
+      "certification": {
+        "status": "certified",
+        "reason": "Owner-certified evidence supplied for this dry-run fixture; no new scholarly certification performed."
+      },
+      "evidence": {
+        "status": "certified",
+        "confidence": "high",
+        "evidence_ids": [
+          "fd:sufaha:evidence:9"
+        ],
+        "summary": "the plural lexical body is سُفَهَاء (without the final vowel)"
+      },
+      "evidence_mode": "normalized_lexical_body",
+      "source_evidence": {
+        "source_quotation": "entry forms: [\"سَفِهَ\", \"سُفَهَاء\", \"سَفِيهًا\", \"سَفَاهَة\"]; MCP headword token {السُّفَهَاءُ} (al- + final ḍamma stripped → سُفَهَاء)",
+        "source_addresses": [
+          {
+            "address": "entry:1ffcc554ec44:usage.forms",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "derivation_chain": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "entry:1ffcc554ec44:usage.forms",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "contradiction_records": [
+        {
+          "tension_id": "tension:fd:sufaha-jamid-mushtaq",
+          "relation": "attached_unresolved",
+          "note": "This classification tension does not change the certified lexical-body or case facts."
+        }
+      ],
+      "producer": {
+        "id": "tools.fd_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "rule_id": "fd.sufaha.lexical-body-normalization",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "version": "1.0.0"
+      },
+      "guards": [
+        {
+          "guard_id": "fd.fixture_only",
+          "reason": "This fact may feed only the fixture/dry-run projection; it cannot authorize a live mutation."
+        }
+      ],
+      "defeaters": [],
+      "unresolved_blockers": [],
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "fd.sufaha.2-13-12.v1"
+      ]
+    },
+    {
+      "fact_id": "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+      "fact_type": "case_ending",
+      "fact_value": {
+        "ending": "ُ",
+        "case": "nominative",
+        "case_arabic": "مرفوع"
+      },
+      "surface_spans": [
+        {
+          "span_id": "case-ending",
+          "start": 11,
+          "end": 12,
+          "surface": "ُ",
+          "role": "case_ending"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fd-sufaha-owner",
+          "owner_type": "owner_certified_fixture"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.fd_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "source": {
+        "source_id": "sufaha-evidence.jsonl#fact=10",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "sufaha-evidence.jsonl#fact=10",
+        "source_kind": "review_artifact"
+      },
+      "certification": {
+        "status": "certified",
+        "reason": "Owner-certified evidence supplied for this dry-run fixture; no new scholarly certification performed."
+      },
+      "evidence": {
+        "status": "certified",
+        "confidence": "high",
+        "evidence_ids": [
+          "fd:sufaha:evidence:10"
+        ],
+        "summary": "the final ُ at 2:13:12 is a nominative case ending (naḥw), not part of plural formation"
+      },
+      "evidence_mode": "direct_source_attestation",
+      "source_evidence": {
+        "source_quotation": "2:13: فَاعِلٌ مَرْفُوعٌ وَعَلَامَةُ رَفْعِهِ الضَّمَّةُ الظَّاهِرَةُ — 2:282 same lexeme: خَبَرُ كَانَ مَنْصُوبٌ وَعَلَامَةُ نَصْبِهِ الْفَتْحَةُ الظَّاهِرَةُ",
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "quran:2:282:40",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "derivation_chain": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "quran:2:282:40",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "contradiction_records": [],
+      "producer": {
+        "id": "tools.fd_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "rule_id": "fd.sufaha.nominative-ending-attestation",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "version": "1.0.0"
+      },
+      "guards": [
+        {
+          "guard_id": "fd.fixture_only",
+          "reason": "This fact may feed only the fixture/dry-run projection; it cannot authorize a live mutation."
+        }
+      ],
+      "defeaters": [],
+      "unresolved_blockers": [],
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "fd.sufaha.2-13-12.v1"
+      ]
+    },
+    {
+      "fact_id": "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d",
+      "fact_type": "governor_relation",
+      "fact_value": {
+        "governor": "آمَنَ",
+        "relation": "explicit_subject",
+        "clause": "كما",
+        "case_reason": "subject_of_governor"
+      },
+      "surface_spans": [
+        {
+          "span_id": "lexical-body",
+          "start": 2,
+          "end": 11,
+          "surface": "سُّفَهَاء",
+          "role": "lexical_body"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fd-sufaha-owner",
+          "owner_type": "owner_certified_fixture"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.fd_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "source": {
+        "source_id": "sufaha-evidence.jsonl#fact=11",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "sufaha-evidence.jsonl#fact=11",
+        "source_kind": "review_artifact"
+      },
+      "certification": {
+        "status": "certified",
+        "reason": "Owner-certified evidence supplied for this dry-run fixture; no new scholarly certification performed."
+      },
+      "evidence": {
+        "status": "certified",
+        "confidence": "high",
+        "evidence_ids": [
+          "fd:sufaha:evidence:11"
+        ],
+        "summary": "the exact governor/subject relation at 2:13:12 (what makes it nominative — subject of آمَنَ in the كما clause)"
+      },
+      "evidence_mode": "direct_source_attestation",
+      "source_evidence": {
+        "source_quotation": "فَاعِلٌ مَرْفُوعٌ وَعَلَامَةُ رَفْعِهِ الضَّمَّةُ الظَّاهِرَةُ، وَالْمَصْدَرُ الْمُؤَوَّلُ ﴿مَا آمَنَ﴾ فِي مَحَلِّ جَرٍّ بِالْكَافِ، وَشِبْهُ الْجُمْلَةِ فِي مَحَلِّ نَصْبٍ نَائِبٌ عَنِ الْمَفْعُولِ الْمُطْلَقِ",
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "derivation_chain": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "contradiction_records": [],
+      "producer": {
+        "id": "tools.fd_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "rule_id": "fd.sufaha.governor-subject-attestation",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "version": "1.0.0"
+      },
+      "guards": [
+        {
+          "guard_id": "fd.fixture_only",
+          "reason": "This fact may feed only the fixture/dry-run projection; it cannot authorize a live mutation."
+        }
+      ],
+      "defeaters": [],
+      "unresolved_blockers": [],
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "fd.sufaha.2-13-12.v1"
+      ]
+    }
+  ],
+  "tension_records": [
+    {
+      "tension_id": "tension:fd:sufaha-jamid-mushtaq",
+      "status": "unresolved",
+      "statement": "Whether the lexical item should be classified as jām id or mushtaq remains unresolved in this lane.",
+      "fact_ids": [
+        "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e"
+      ],
+      "resolution_requirement": "owner_or_scholar_adjudication"
+    }
+  ],
+  "projection": {
+    "projection_id": "fd.sufaha.2-13-12.v1",
+    "status": "candidate",
+    "unresolved_status": null,
+    "learner_visible": true,
+    "materialization_target": {
+      "artifact": "qamus/examples/fd/sufaha-normalized-public-payload.json",
+      "field": "components",
+      "public_materialization_allowed": false,
+      "live_mutation_allowed": false
+    },
+    "claim": {
+      "text": "The generated card relates سَفِيه and سُفَهَاء, identifies their root and patterns, and explains the subject's nominative ending.",
+      "language": "en",
+      "fact_bindings": [
+        {
+          "fact_id": "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+          "fact_field": "fact_value.relationship",
+          "surface_span_ids": [
+            "lexical-body"
+          ]
+        },
+        {
+          "fact_id": "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+          "fact_field": "fact_value.formation",
+          "surface_span_ids": [
+            "lexical-body"
+          ]
+        },
+        {
+          "fact_id": "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+          "fact_field": "fact_value.root",
+          "surface_span_ids": [
+            "lexical-body"
+          ]
+        },
+        {
+          "fact_id": "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+          "fact_field": "fact_value.pattern",
+          "surface_span_ids": [
+            "lexical-body"
+          ]
+        },
+        {
+          "fact_id": "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+          "fact_field": "fact_value.pattern",
+          "surface_span_ids": [
+            "lexical-body"
+          ]
+        },
+        {
+          "fact_id": "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+          "fact_field": "fact_value.retained_radicals",
+          "surface_span_ids": [
+            "lexical-body"
+          ]
+        },
+        {
+          "fact_id": "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+          "fact_field": "fact_value.removed_letter",
+          "surface_span_ids": [
+            "lexical-body"
+          ]
+        },
+        {
+          "fact_id": "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+          "fact_field": "fact_value.introduced_letters",
+          "surface_span_ids": [
+            "lexical-body"
+          ]
+        },
+        {
+          "fact_id": "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+          "fact_field": "fact_value.lexical_body",
+          "surface_span_ids": [
+            "lexical-body"
+          ]
+        },
+        {
+          "fact_id": "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+          "fact_field": "fact_value.case",
+          "surface_span_ids": [
+            "case-ending"
+          ]
+        },
+        {
+          "fact_id": "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d",
+          "fact_field": "fact_value.governor",
+          "surface_span_ids": [
+            "lexical-body"
+          ]
+        }
+      ]
+    },
+    "learner_statement": "The generated card explains the word's root, form, and governed ending from source-addressed facts.",
+    "public_payload": {
+      "segments": [
+        {
+          "role": "definite_article",
+          "surface": "ال",
+          "qg_class": "qg-article",
+          "gloss": "the"
+        },
+        {
+          "role": "lexical_body",
+          "surface": "سُّفَهَاء",
+          "qg_class": "qg-noun-stem",
+          "gloss": "foolish ones"
+        },
+        {
+          "role": "case_ending",
+          "surface": "ُ",
+          "qg_class": "qg-case-ending",
+          "gloss": "nominative ending"
+        }
+      ]
+    }
+  }
+}

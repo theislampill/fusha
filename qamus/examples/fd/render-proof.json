@@ -1,0 +1,12 @@
+{
+  "font_check": true,
+  "exact_reconstruction": true,
+  "compact_present": true,
+  "expanded_present": true,
+  "same_payload_identity": true,
+  "live_mutation_allowed": false,
+  "viewport": {
+    "width": 1440,
+    "height": 1100
+  }
+}

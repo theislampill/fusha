@@ -1,0 +1,61 @@
+{
+  "schema": "qamus.fd.455_candidate_report.v1",
+  "report_version": "1.0.0",
+  "candidate_only": true,
+  "verified_row_count": 455,
+  "input_verdict_count": 575,
+  "metrics": {
+    "rows compiling successfully": 455,
+    "rows failing linguistic consistency": 0,
+    "rows missing span ownership": 0,
+    "rows missing learner-language fields": 383,
+    "rows missing entry linkage": 0,
+    "rows missing a projector": 455,
+    "rows requiring F-B morphology producers": 437,
+    "rows requiring F-C naḥw producers": 437,
+    "rows routed to source/scholar review": 455,
+    "repeated page appearances covered": 0,
+    "parity failures": 0,
+    "exact reconstruction failures": 0
+  },
+  "flag_matrix": {
+    "learner_language_fields": 383,
+    "morphology_producer": 437,
+    "nahw_producer": 437,
+    "projector": 455,
+    "source_scholar_review": 455
+  },
+  "primary_blocker_counts": {
+    "learner_language_fields_missing": 383,
+    "source_scholar_review": 72
+  },
+  "metric_definitions": {
+    "rows compiling successfully": "Rows for which the compiler emitted a candidate or review record after structural checks.",
+    "rows failing linguistic consistency": "Rows whose source surface/segment invariant failed.",
+    "rows missing span ownership": "Rows without deterministic owned at-rest spans.",
+    "rows missing learner-language fields": "Rows with at least one missing supplied learner-language field.",
+    "rows missing entry linkage": "Rows whose source entry ID did not join the read-only entry corpus.",
+    "rows missing a projector": "Rows with no projector identity before F-D assignment.",
+    "rows requiring F-B morphology producers": "Rows without a direct structured morphology producer carrier.",
+    "rows requiring F-C naḥw producers": "Rows without a direct structured naḥw producer carrier.",
+    "rows routed to source/scholar review": "All v575 structural-verified rows remain routed because semantic certification was not performed.",
+    "repeated page appearances covered": "Confirmed repeated page/render appearances with an available trace; never inferred from row counts.",
+    "parity failures": "Rows whose candidate parity witness failed.",
+    "exact reconstruction failures": "Rows whose generated at-rest spans failed exact reconstruction."
+  },
+  "primary_blocker_policy": [
+    "learner_language_fields_missing",
+    "source_scholar_review",
+    "linguistic_consistency",
+    "span_ownership",
+    "entry_linkage",
+    "projector_missing",
+    "F-B_morphology_producer",
+    "F-C_nahw_producer",
+    "parity",
+    "exact_reconstruction"
+  ],
+  "projector_id": "fd.shared_candidate_projection.v1",
+  "producer_id": "tools.fd_compiler",
+  "live_mutation_allowed": false
+}
