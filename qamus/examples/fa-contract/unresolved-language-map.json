@@ -1,0 +1,11 @@
+{
+  "schema": "qamus.unresolved_language_map.v1",
+  "version": "1.0.0",
+  "entries": [
+    {"status":"unresolved","language":"en","learner_statement":"This explanation is still being checked.","public":true},
+    {"status":"source_gap","language":"en","learner_statement":"The source evidence for this explanation is not available yet.","public":true},
+    {"status":"producer_pending","language":"en","learner_statement":"The typed analysis for this explanation is still being prepared.","public":true},
+    {"status":"syntax_pending","language":"en","learner_statement":"The sentence context for this explanation is still being checked.","public":true},
+    {"status":"blocked","language":"en","learner_statement":"This explanation is temporarily unavailable while its evidence is reviewed.","public":true}
+  ]
+}

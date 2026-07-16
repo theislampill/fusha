@@ -5104,6 +5104,27 @@ except Exception as _sr_e:
     check("SKILL-RELEASE skill-release candidate gates (harness error)", False)
     print("  ", _sr_e)
 
+# F-A: governed typed-claim authoring boundary — prose-only input must fail,
+# tranche-1-backed input must pass, aliases must normalize, and unresolved
+# language must remain explicitly mapped before any projection can proceed.
+try:
+    _fa_contract_self = run_text([sys.executable,
+                                  os.path.join(ROOT, "tools", "validate_typed_claim_contract.py"),
+                                  "--self-test"], timeout=120)
+    check("F-A typed-claim contract self-test and red-first fixtures pass",
+          _fa_contract_self.returncode == 0 and
+          "FA TYPED-CLAIM CONTRACT SELF-TEST PASS" in (_fa_contract_self.stdout or ""))
+    _fa_contract_fixtures = run_text([sys.executable,
+                                      os.path.join(ROOT, "tools", "validate_typed_claim_contract.py"),
+                                      "--fixtures",
+                                      os.path.join(ROOT, "qamus", "examples", "fa-contract")], timeout=120)
+    check("F-A typed-claim contract fixture boundary passes",
+          _fa_contract_fixtures.returncode == 0 and
+          "FA TYPED-CLAIM CONTRACT FIXTURES PASS" in (_fa_contract_fixtures.stdout or ""))
+except Exception as _fa_contract_e:
+    check("F-A typed-claim contract gates (harness error)", False)
+    print("  ", _fa_contract_e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

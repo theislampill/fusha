@@ -8,6 +8,17 @@
   "required": ["schema", "canonical_payload_id", "payload_family", "surface_norm", "lemma_status", "pos", "sarf_certification", "nahw_certification", "public_payload"],
   "additionalProperties": false,
   "properties": {
+    "governed_contract_ref": {
+      "description": "Optional additive pointer to the governed F-A typed-claim contract.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_id", "contract_version", "fact_ids"],
+      "properties": {
+        "contract_id": {"type": "string", "pattern": "^[A-Za-z0-9._:-]+$", "minLength": 1},
+        "contract_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "fact_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}}
+      }
+    },
     "schema": { "const": "qamus.canonical_hover_payload.v2" },
     "fact_ids": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" } },
     "status": { "type": "string", "minLength": 1 },
