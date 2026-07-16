@@ -563,6 +563,34 @@ for _args, _label in ((["--self-test"], "morphosyntax validator self-test"),
     except Exception:
         check(_label + " runnable", False)
 
+# ONTO QG ontology reconciliation: live CSS/schema coverage, owner-boundary statuses,
+# pairwise palette artifact integrity, and static contrast-floor record are one harness gate.
+for _art in (
+        "qamus/registry/qg-class-reconciliation.json",
+        "qamus/registry/qg-class-reconciliation.md",
+        "qamus/registry/palette-collision-matrix.json",
+        "qamus/registry/palette-collision-matrix.md",
+        "tools/qg_registry.py",
+        "tools/build_qg_ontology_registry.py",
+        "tools/validate_qg_registry.py",
+        "tools/test_validate_qg_registry.py"):
+    check("ONTO qg registry artifact exists: %s" % _art, os.path.exists(os.path.join(_R, _art)))
+try:
+    _v = run_text([sys.executable, os.path.join(_R, "tools", "test_validate_qg_registry.py")])
+    check("ONTO qg registry focused tests", _v.returncode == 0)
+    if _v.returncode != 0:
+        _out = (_v.stdout or _v.stderr).strip().splitlines()
+        if _out:
+            print("  ", _out[-1])
+    _v = run_text([sys.executable, os.path.join(_R, "tools", "validate_qg_registry.py"), "--self-test"])
+    check("ONTO qg registry consistency self-test", _v.returncode == 0)
+    if _v.returncode != 0:
+        _out = (_v.stdout or _v.stderr).strip().splitlines()
+        if _out:
+            print("  ", _out[-1])
+except Exception:
+    check("ONTO qg registry validator runnable", False)
+
 for _args, _label in (
         (["--self-test"], "rich-hover certification validator self-test"),
         ([
