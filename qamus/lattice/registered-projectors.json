@@ -193,6 +193,73 @@
         "version": "1.0.0",
         "resolution_method": "attested_stem_remainder_suffix_segmentation"
       }
+    },
+    {
+      "projector_id": "sarf.tranche1_fixture_projection.v1",
+      "kind": "fixture_projection",
+      "producer": "tools.tranche1_projection",
+      "skill_rule_ids": [
+        "sarf-root-decision",
+        "sarf-clitic-and-host-morphology",
+        "sarf-morphology-candidate-lattice"
+      ],
+      "class_predicate": "pred_tranche1_morphology",
+      "guards": [
+        "tranche1_exact_surface",
+        "tranche1_typed_status"
+      ],
+      "target_population_note": "Fixture-only Q7 canaries; emits candidates or typed queue records and never writes a corpus or public runtime.",
+      "registry_entry": {
+        "schema": "qamus.projector_record.v1",
+        "record_type": "registry_entry",
+        "producer": "tools.tranche1_projection",
+        "projector_id": "sarf.tranche1_fixture_projection.v1",
+        "fact_family": "sarf",
+        "input_fact_types": ["surface_observation"],
+        "output_fact_type": "morphology_projection_candidate",
+        "compatibility_class": "Q7 fixture rows whose exact surface and typed status pass the tranche-local policy guards",
+        "defeater_checks": [
+          "tranche1_exact_surface",
+          "tranche1_typed_status"
+        ],
+        "gate_tier": "two_vote_required",
+        "version": "1.0.0",
+        "resolution_method": "fixture_policy_projection"
+      }
+    },
+    {
+      "projector_id": "nahw.tranche1_fixture_projection.v1",
+      "kind": "fixture_projection",
+      "producer": "tools.tranche1_projection",
+      "skill_rule_ids": [
+        "nahw-preposition-pronoun",
+        "nahw-governor-dependency-lattice",
+        "nahw-irab-case-mood",
+        "nahw-pp-attachment-review"
+      ],
+      "class_predicate": "pred_tranche1_syntax",
+      "guards": [
+        "tranche1_exact_surface",
+        "tranche1_typed_status"
+      ],
+      "target_population_note": "Fixture-only Q7 canaries; emits candidates or typed queue records and never writes a corpus or public runtime.",
+      "registry_entry": {
+        "schema": "qamus.projector_record.v1",
+        "record_type": "registry_entry",
+        "producer": "tools.tranche1_projection",
+        "projector_id": "nahw.tranche1_fixture_projection.v1",
+        "fact_family": "nahw",
+        "input_fact_types": ["surface_observation"],
+        "output_fact_type": "syntax_projection_candidate",
+        "compatibility_class": "Q7 fixture rows whose exact surface and typed status pass the tranche-local policy guards",
+        "defeater_checks": [
+          "tranche1_exact_surface",
+          "tranche1_typed_status"
+        ],
+        "gate_tier": "two_vote_required",
+        "version": "1.0.0",
+        "resolution_method": "fixture_policy_projection"
+      }
     }
   ]
 }

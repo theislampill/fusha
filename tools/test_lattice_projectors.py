@@ -43,6 +43,8 @@ class RegistryTests(unittest.TestCase):
                 "sarf.root_inherit_transclusion.v1",
                 "sarf.note_normalize.v1",
                 "sarf.suffix_fempl_segmentation.v1",
+                "sarf.tranche1_fixture_projection.v1",
+                "nahw.tranche1_fixture_projection.v1",
             ],
         )
         for e in reg["registered"]:

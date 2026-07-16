@@ -13,6 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from tools import fact_ledger  # noqa: E402
+from tools import fact_projectors  # noqa: E402
+from tools import lattice_projectors  # noqa: E402
 
 
 SCHEMA_DIR = ROOT / "qamus" / "schemas"
@@ -74,6 +76,78 @@ class TrancheSchemaTests(unittest.TestCase):
                     required = set(schema["$defs"]["lattice"].get("required", []))
                 newly_added = LINEAGE_FIELDS - {"source_address"}
                 self.assertTrue(newly_added.isdisjoint(required), (name, "new lineage fields must remain additive"))
+
+
+class TrancheProjectorTests(unittest.TestCase):
+    def test_tranche_projector_contracts_are_registered_with_lineage(self) -> None:
+        contracts = {row["projector_id"]: row for row in fact_projectors.REGISTRY.list_contracts()}
+        for projector_id, family in (
+            ("sarf.tranche1_fixture_projection.v1", "sarf"),
+            ("nahw.tranche1_fixture_projection.v1", "nahw"),
+        ):
+            with self.subTest(projector_id=projector_id):
+                contract = contracts[projector_id]
+                self.assertEqual(family, contract["fact_family"])
+                self.assertEqual("tools.tranche1_projection", contract["producer"])
+                self.assertEqual("1.0.0", contract["version"])
+                self.assertEqual([], fact_projectors.validate_projector_record(contract))
+
+    def test_source_gap_abstains_without_copying_linguistic_claims(self) -> None:
+        projector = {
+            row["projector_id"]: row for row in lattice_projectors.load_registry()["registered"]
+        }["sarf.tranche1_fixture_projection.v1"]
+        source_row = {
+            "loc": "2:13:12",
+            "surface": "السُّفَهَاءُ",
+            "root": "must-not-copy",
+            "morphline": "must-not-copy",
+            "segments": [{"surface": "must-not-copy"}],
+        }
+        policy = {
+            "loc": "2:13:12",
+            "surface": "السُّفَهَاءُ",
+            "fact_family": "sarf",
+            "status": "source_gap",
+            "blocker": "source lacks typed singular, template, root, and ending facts",
+            "route": {"lane": "sarf", "procedure": "sarf/procedures/root-decision.md"},
+        }
+        result = lattice_projectors.run_tranche1_fixture_projector(
+            projector,
+            source_row,
+            policy,
+            fact_ids=["sha256:" + "a" * 64],
+        )
+        self.assertEqual("typed_queue_record", result["record_type"])
+        self.assertEqual("source_gap", result["status"])
+        self.assertEqual("tools.tranche1_projection", result["producer"])
+        self.assertEqual("sarf.tranche1_fixture_projection.v1", result["projector_id"])
+        self.assertEqual("1.0.0", result["version"])
+        blob = json.dumps(result, ensure_ascii=False)
+        self.assertNotIn("must-not-copy", blob)
+        self.assertNotIn("public_payload", result)
+
+    def test_candidate_path_names_producer_projector_and_version(self) -> None:
+        projector = {
+            row["projector_id"]: row for row in lattice_projectors.load_registry()["registered"]
+        }["nahw.tranche1_fixture_projection.v1"]
+        result = lattice_projectors.run_tranche1_fixture_projector(
+            projector,
+            {"loc": "2:34:5", "surface": "لِءَادَمَ"},
+            {
+                "loc": "2:34:5",
+                "surface": "لِءَادَمَ",
+                "fact_family": "nahw",
+                "status": "candidate",
+                "blocker": None,
+                "route": None,
+            },
+            fact_ids=["sha256:" + "b" * 64],
+        )
+        self.assertEqual(
+            ("tools.tranche1_projection", "nahw.tranche1_fixture_projection.v1", "1.0.0"),
+            (result["producer"], result["projector_id"], result["version"]),
+        )
+        self.assertEqual("candidate_projection", result["record_type"])
 
 
 if __name__ == "__main__":
