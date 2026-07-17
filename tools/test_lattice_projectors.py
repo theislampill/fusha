@@ -39,12 +39,14 @@ class RegistryTests(unittest.TestCase):
             [
                 "sarf.c1_impf_segmentation.v1",
                 "sarf.c5_enclitic_segmentation.v1",
+                "sarf.fb1_clitic_pronoun_composition.v1",
                 "sarf.meta_form56_ta_negative.v1",
                 "sarf.root_inherit_transclusion.v1",
                 "sarf.note_normalize.v1",
                 "sarf.suffix_fempl_segmentation.v1",
                 "sarf.tranche1_fixture_projection.v1",
                 "nahw.tranche1_fixture_projection.v1",
+                "fd.shared_candidate_projection.v1",
             ],
         )
         for e in reg["registered"]:
