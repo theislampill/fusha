@@ -1,0 +1,570 @@
+{
+  "abstention_count": 4,
+  "abstention_rate": 0.5714285714285714,
+  "authorization_state": "pre_apply_not_authorized",
+  "candidate_count": 3,
+  "forms": {
+    "II": {
+      "abstention": 1,
+      "candidate": 0,
+      "population": 1
+    },
+    "IV": {
+      "abstention": 3,
+      "candidate": 1,
+      "population": 4
+    },
+    "VIII": {
+      "abstention": 0,
+      "candidate": 1,
+      "population": 1
+    },
+    "quadriliteral": {
+      "abstention": 0,
+      "candidate": 1,
+      "population": 1
+    }
+  },
+  "mode": "candidate_only",
+  "producer": {
+    "id": "tools.fam5_derived_verb_producer",
+    "projector_id": "sarf.fam5.derived_verb.v1",
+    "version": "1.0.0"
+  },
+  "row_outcomes": [
+    {
+      "blockers": [],
+      "entry_id": "08c89bbcbaad",
+      "form_class": "quadriliteral",
+      "loc": "12:51:21",
+      "pattern_id": "quadriliteral.perfect_active.3ms",
+      "route": "entry_backed_derived_form_pattern",
+      "source_addresses": [
+        {
+          "address": "quran:12:51:21",
+          "source_kind": "quran_token"
+        },
+        {
+          "address": "entry:08c89bbcbaad:usage[0].forms[0]",
+          "source_kind": "qamus_entry_field"
+        },
+        {
+          "address": "registry:fam5-derived-verbs:pattern:quadriliteral.perfect_active.3ms",
+          "source_kind": "review_artifact"
+        },
+        {
+          "address": "corpus:whitelist:12:51:21",
+          "source_kind": "corpus_record"
+        },
+        {
+          "address": "v575-verdict:12:51:21",
+          "source_kind": "review_artifact"
+        }
+      ],
+      "status": "candidate",
+      "surface": "حَصْحَصَ",
+      "template_hypothesis": "quadriliteral.perfect_active.3ms"
+    },
+    {
+      "blockers": [],
+      "entry_id": "e2b37f88f22f",
+      "form_class": "VIII",
+      "loc": "14:26:6",
+      "pattern_id": "derived.form_viii.perfect_passive.3fs",
+      "route": "entry_backed_derived_form_pattern",
+      "source_addresses": [
+        {
+          "address": "quran:14:26:6",
+          "source_kind": "quran_token"
+        },
+        {
+          "address": "entry:e2b37f88f22f:usage[0].forms[0]",
+          "source_kind": "qamus_entry_field"
+        },
+        {
+          "address": "registry:fam5-derived-verbs:pattern:derived.form_viii.perfect_passive.3fs",
+          "source_kind": "review_artifact"
+        },
+        {
+          "address": "corpus:whitelist:14:26:6",
+          "source_kind": "corpus_record"
+        },
+        {
+          "address": "v575-verdict:14:26:6",
+          "source_kind": "review_artifact"
+        }
+      ],
+      "status": "candidate",
+      "surface": "ٱجْتُثَّتْ",
+      "template_hypothesis": "derived.form_viii.perfect_passive.3fs"
+    },
+    {
+      "blockers": [
+        {
+          "blocker_id": "fam5.source_gap",
+          "reason": "No exact source-grounded entry form is available; a surface or label cannot certify a derived template. Blocker: fam5.source_gap."
+        }
+      ],
+      "entry_id": null,
+      "form_class": "IV",
+      "loc": "3:141:4",
+      "pattern_id": null,
+      "route": "source_gap",
+      "source_addresses": [
+        {
+          "address": "quran:3:141:4",
+          "source_kind": "quran_token"
+        },
+        {
+          "address": "corpus:whitelist:3:141:4",
+          "source_kind": "corpus_record"
+        },
+        {
+          "address": "v575-verdict:3:141:4",
+          "source_kind": "review_artifact"
+        }
+      ],
+      "status": "source_gap",
+      "surface": "آمَنُوا",
+      "template_hypothesis": "derived.form_iv.perfect_active.3mp"
+    },
+    {
+      "blockers": [
+        {
+          "blocker_id": "fam5.source_gap",
+          "reason": "No exact source-grounded entry form is available; a surface or label cannot certify a derived template. Blocker: fam5.source_gap."
+        }
+      ],
+      "entry_id": null,
+      "form_class": "IV",
+      "loc": "42:20:12",
+      "pattern_id": null,
+      "route": "source_gap",
+      "source_addresses": [
+        {
+          "address": "quran:42:20:12",
+          "source_kind": "quran_token"
+        },
+        {
+          "address": "corpus:whitelist:42:20:12",
+          "source_kind": "corpus_record"
+        },
+        {
+          "address": "v575-verdict:42:20:12",
+          "source_kind": "review_artifact"
+        }
+      ],
+      "status": "source_gap",
+      "surface": "يُرِيدُ",
+      "template_hypothesis": "derived.form_iv.imperfect_active.3ms.weak_middle"
+    },
+    {
+      "blockers": [
+        {
+          "blocker_id": "fam5.source_gap",
+          "reason": "No exact source-grounded entry form is available; a surface or label cannot certify a derived template. Blocker: fam5.source_gap."
+        }
+      ],
+      "entry_id": null,
+      "form_class": "IV",
+      "loc": "42:20:3",
+      "pattern_id": null,
+      "route": "source_gap",
+      "source_addresses": [
+        {
+          "address": "quran:42:20:3",
+          "source_kind": "quran_token"
+        },
+        {
+          "address": "corpus:whitelist:42:20:3",
+          "source_kind": "corpus_record"
+        },
+        {
+          "address": "v575-verdict:42:20:3",
+          "source_kind": "review_artifact"
+        }
+      ],
+      "status": "source_gap",
+      "surface": "يُرِيدُ",
+      "template_hypothesis": "derived.form_iv.imperfect_active.3ms.weak_middle"
+    },
+    {
+      "blockers": [
+        {
+          "blocker_id": "fam5.owner_gated",
+          "reason": "The FAM4 carrier routed this derived-form marker to the derived_verbs owner; no claim is emitted here without the required owner fact. Blocker: fam5.owner_gated."
+        }
+      ],
+      "entry_id": null,
+      "form_class": "II",
+      "loc": "4:72:4",
+      "pattern_id": null,
+      "route": "owner_gated",
+      "source_addresses": [
+        {
+          "address": "quran:4:72:4",
+          "source_kind": "quran_token"
+        },
+        {
+          "address": "corpus:whitelist:4:72:4",
+          "source_kind": "corpus_record"
+        },
+        {
+          "address": "v575-verdict:4:72:4",
+          "source_kind": "review_artifact"
+        }
+      ],
+      "status": "blocked",
+      "surface": "لَّيُبَطِّئَنَّ",
+      "template_hypothesis": "derived.form_ii.imperfect_active.3ms.energic"
+    },
+    {
+      "blockers": [],
+      "entry_id": "efa9daeebae2",
+      "form_class": "IV",
+      "loc": "5:3:41",
+      "pattern_id": "derived.form_iv.perfect_active.1cs",
+      "route": "entry_backed_derived_form_pattern",
+      "source_addresses": [
+        {
+          "address": "quran:5:3:41",
+          "source_kind": "quran_token"
+        },
+        {
+          "address": "entry:efa9daeebae2:usage[0].forms[0]",
+          "source_kind": "qamus_entry_field"
+        },
+        {
+          "address": "registry:fam5-derived-verbs:pattern:derived.form_iv.perfect_active.1cs",
+          "source_kind": "review_artifact"
+        },
+        {
+          "address": "corpus:whitelist:5:3:41",
+          "source_kind": "corpus_record"
+        },
+        {
+          "address": "v575-verdict:5:3:41",
+          "source_kind": "review_artifact"
+        }
+      ],
+      "status": "candidate",
+      "surface": "أَكْمَلْتُ",
+      "template_hypothesis": "derived.form_iv.perfect_active.1cs"
+    }
+  ],
+  "source_survey": [
+    {
+      "letters": [
+        {
+          "end": 2,
+          "letter": "ح",
+          "marks": [
+            "َ"
+          ],
+          "start": 0
+        },
+        {
+          "end": 4,
+          "letter": "ص",
+          "marks": [
+            "ْ"
+          ],
+          "start": 2
+        },
+        {
+          "end": 6,
+          "letter": "ح",
+          "marks": [
+            "َ"
+          ],
+          "start": 4
+        },
+        {
+          "end": 8,
+          "letter": "ص",
+          "marks": [
+            "َ"
+          ],
+          "start": 6
+        }
+      ],
+      "loc": "12:51:21",
+      "source_situation": "entry_form_attestation",
+      "surface": "حَصْحَصَ",
+      "template_hypothesis": "quadriliteral.perfect_active.3ms"
+    },
+    {
+      "letters": [
+        {
+          "end": 1,
+          "letter": "ٱ",
+          "marks": [],
+          "start": 0
+        },
+        {
+          "end": 3,
+          "letter": "ج",
+          "marks": [
+            "ْ"
+          ],
+          "start": 1
+        },
+        {
+          "end": 5,
+          "letter": "ت",
+          "marks": [
+            "ُ"
+          ],
+          "start": 3
+        },
+        {
+          "end": 8,
+          "letter": "ث",
+          "marks": [
+            "ّ",
+            "َ"
+          ],
+          "start": 5
+        },
+        {
+          "end": 10,
+          "letter": "ت",
+          "marks": [
+            "ْ"
+          ],
+          "start": 8
+        }
+      ],
+      "loc": "14:26:6",
+      "source_situation": "entry_form_attestation",
+      "surface": "ٱجْتُثَّتْ",
+      "template_hypothesis": "derived.form_viii.perfect_passive.3fs"
+    },
+    {
+      "letters": [
+        {
+          "end": 1,
+          "letter": "آ",
+          "marks": [],
+          "start": 0
+        },
+        {
+          "end": 3,
+          "letter": "م",
+          "marks": [
+            "َ"
+          ],
+          "start": 1
+        },
+        {
+          "end": 5,
+          "letter": "ن",
+          "marks": [
+            "ُ"
+          ],
+          "start": 3
+        },
+        {
+          "end": 6,
+          "letter": "و",
+          "marks": [],
+          "start": 5
+        },
+        {
+          "end": 7,
+          "letter": "ا",
+          "marks": [],
+          "start": 6
+        }
+      ],
+      "loc": "3:141:4",
+      "source_situation": "hosting_entry_only",
+      "surface": "آمَنُوا",
+      "template_hypothesis": "derived.form_iv.perfect_active.3mp"
+    },
+    {
+      "letters": [
+        {
+          "end": 2,
+          "letter": "ي",
+          "marks": [
+            "ُ"
+          ],
+          "start": 0
+        },
+        {
+          "end": 4,
+          "letter": "ر",
+          "marks": [
+            "ِ"
+          ],
+          "start": 2
+        },
+        {
+          "end": 5,
+          "letter": "ي",
+          "marks": [],
+          "start": 4
+        },
+        {
+          "end": 7,
+          "letter": "د",
+          "marks": [
+            "ُ"
+          ],
+          "start": 5
+        }
+      ],
+      "loc": "42:20:12",
+      "source_situation": "hosting_entry_only",
+      "surface": "يُرِيدُ",
+      "template_hypothesis": "derived.form_iv.imperfect_active.3ms.weak_middle"
+    },
+    {
+      "letters": [
+        {
+          "end": 2,
+          "letter": "ي",
+          "marks": [
+            "ُ"
+          ],
+          "start": 0
+        },
+        {
+          "end": 4,
+          "letter": "ر",
+          "marks": [
+            "ِ"
+          ],
+          "start": 2
+        },
+        {
+          "end": 5,
+          "letter": "ي",
+          "marks": [],
+          "start": 4
+        },
+        {
+          "end": 7,
+          "letter": "د",
+          "marks": [
+            "ُ"
+          ],
+          "start": 5
+        }
+      ],
+      "loc": "42:20:3",
+      "source_situation": "hosting_entry_only",
+      "surface": "يُرِيدُ",
+      "template_hypothesis": "derived.form_iv.imperfect_active.3ms.weak_middle"
+    },
+    {
+      "letters": [
+        {
+          "end": 3,
+          "letter": "ل",
+          "marks": [
+            "ّ",
+            "َ"
+          ],
+          "start": 0
+        },
+        {
+          "end": 5,
+          "letter": "ي",
+          "marks": [
+            "ُ"
+          ],
+          "start": 3
+        },
+        {
+          "end": 7,
+          "letter": "ب",
+          "marks": [
+            "َ"
+          ],
+          "start": 5
+        },
+        {
+          "end": 10,
+          "letter": "ط",
+          "marks": [
+            "ّ",
+            "ِ"
+          ],
+          "start": 7
+        },
+        {
+          "end": 12,
+          "letter": "ئ",
+          "marks": [
+            "َ"
+          ],
+          "start": 10
+        },
+        {
+          "end": 15,
+          "letter": "ن",
+          "marks": [
+            "ّ",
+            "َ"
+          ],
+          "start": 12
+        }
+      ],
+      "loc": "4:72:4",
+      "source_situation": "fam4_owner_packet",
+      "surface": "لَّيُبَطِّئَنَّ",
+      "template_hypothesis": "derived.form_ii.imperfect_active.3ms.energic"
+    },
+    {
+      "letters": [
+        {
+          "end": 2,
+          "letter": "أ",
+          "marks": [
+            "َ"
+          ],
+          "start": 0
+        },
+        {
+          "end": 4,
+          "letter": "ك",
+          "marks": [
+            "ْ"
+          ],
+          "start": 2
+        },
+        {
+          "end": 6,
+          "letter": "م",
+          "marks": [
+            "َ"
+          ],
+          "start": 4
+        },
+        {
+          "end": 8,
+          "letter": "ل",
+          "marks": [
+            "ْ"
+          ],
+          "start": 6
+        },
+        {
+          "end": 10,
+          "letter": "ت",
+          "marks": [
+            "ُ"
+          ],
+          "start": 8
+        }
+      ],
+      "loc": "5:3:41",
+      "source_situation": "entry_form_attestation",
+      "surface": "أَكْمَلْتُ",
+      "template_hypothesis": "derived.form_iv.perfect_active.1cs"
+    }
+  ],
+  "working_set_count": 7
+}
