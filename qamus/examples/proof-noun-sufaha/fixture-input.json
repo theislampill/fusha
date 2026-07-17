@@ -1,0 +1,11 @@
+{
+  "schema": "qamus.proofn.fixture_input.v1",
+  "canonical_location": "2:13:12",
+  "surface": "السُّفَهَاءُ",
+  "lexical_entry_id": "1ffcc554ec44",
+  "page_context_entry_id": "c59a0161fac8",
+  "certified_fact_numbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+  "appearance_count": 2,
+  "authorization_state": "pre_apply_not_authorized",
+  "public_readback": "declared_not_measured"
+}
