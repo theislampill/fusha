@@ -38,6 +38,7 @@ TRANCHE1_NAHW_PROJECTOR_ID = "nahw.tranche1_fixture_projection.v1"
 FAM2_LEXICAL_PROJECTOR_ID = "sarf.fam2.lexical_formation.v1"
 FAM3_NUMBER_PROJECTOR_ID = "sarf.fam3.number_formation.v1"
 FAM4_FINITE_VERB_PROJECTOR_ID = "sarf.fam4.finite_verb.v1"
+FAM5_DERIVED_VERB_PROJECTOR_ID = "sarf.fam5.derived_verb.v1"
 
 
 class ProjectorValidationError(ValueError):
@@ -193,6 +194,12 @@ def fam4_finite_verb_evidence_guard(*_args: Any, **_kwargs: Any) -> None:
     return None
 
 
+def fam5_derived_verb_evidence_guard(*_args: Any, **_kwargs: Any) -> None:
+    """Named registry guard; FAM5 performs source and ownership checks itself."""
+
+    return None
+
+
 def project_fam4_finite_verb_pattern(
     *,
     contract: Dict[str, Any],
@@ -235,6 +242,62 @@ def project_fam4_finite_verb_pattern(
             "number": pattern["number"],
             "gender": pattern["gender"],
             "voice": pattern["voice"],
+            "evidence_mode": "deterministic_derivation_from_certified_facts",
+        },
+        "materialization_allowed": False,
+    }
+
+
+def project_fam5_derived_verb_pattern(
+    *,
+    contract: Dict[str, Any],
+    surface: str,
+    root: str | Iterable[str],
+    pattern_id: str,
+    form_registry: Any = None,
+    entry_surface: str | None = None,
+    evidence_certified: bool = False,
+    v575_verified: bool = False,
+) -> Dict[str, Any]:
+    """Run the closed FAM5 matcher only after caller-supplied evidence gates."""
+
+    from tools import fam5_derived_verb_producer as fam5
+
+    if not evidence_certified or not v575_verified or entry_surface != surface:
+        return {
+            "projector_id": contract["projector_id"],
+            "status": "abstained",
+            "route": "source_gap",
+            "candidate": None,
+            "materialization_allowed": False,
+        }
+    registry = fam5.load_derived_form_registry(form_registry) if isinstance(form_registry, (str, Path)) else (
+        list(form_registry) if form_registry is not None else fam5.load_derived_form_registry()
+    )
+    if isinstance(root, str):
+        radicals = [char for char in root if char not in " \t\n" and unicodedata.category(char) != "Mn"]
+    else:
+        radicals = [str(item) for item in root]
+    pattern = next((item for item in registry if item.get("pattern_id") == pattern_id), None)
+    matched = fam5._match_pattern(surface, radicals, pattern or {}, {"source_grounding": "entry_form_attestation"}) if pattern else None
+    if matched is None:
+        return {
+            "projector_id": contract["projector_id"],
+            "status": "abstained",
+            "route": "template_unresolved",
+            "candidate": None,
+            "materialization_allowed": False,
+        }
+    return {
+        "projector_id": contract["projector_id"],
+        "status": "candidate",
+        "route": "entry_backed_derived_form_pattern",
+        "candidate": {
+            "fact_type": "derived_verb_evidence",
+            "pattern_id": pattern_id,
+            "form": pattern["form"],
+            "template": pattern["template"],
+            "derivational_class": pattern.get("derivational_class"),
             "evidence_mode": "deterministic_derivation_from_certified_facts",
         },
         "materialization_allowed": False,
@@ -899,6 +962,25 @@ FAM4_FINITE_VERB_CONTRACT = {
     "resolution_method": "entry_backed_form_i_letter_reconstruction",
 }
 
+FAM5_DERIVED_VERB_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "producer": "tools.fam5_derived_verb_producer",
+    "projector_id": FAM5_DERIVED_VERB_PROJECTOR_ID,
+    "fact_family": "sarf",
+    "input_fact_types": ["entry_form_attestation"],
+    "output_fact_type": "derived_verb_evidence",
+    "compatibility_class": (
+        "exact entry-backed derived-verb surfaces whose closed Form-II, Form-IV, Form-VIII, or quadriliteral registry pattern "
+        "reconstructs root, derivational additions, inflection, weak operations, voice, and letter ownership; "
+        "surface-template-only, weak-root, assimilation, gemination-boundary, hamzat-al-wasl, and ambiguous joins abstain"
+    ),
+    "defeater_checks": ["fam5_derived_verb_evidence_guard"],
+    "gate_tier": "two_vote_required",
+    "version": "1.0.0",
+    "resolution_method": "entry_backed_closed_derived_form_letter_reconstruction",
+}
+
 REGISTRY = ProjectorRegistry()
 REGISTRY.register(SARF_CONTRACT, project_sarf_documented_forms)
 REGISTRY.register(NAHW_CONTRACT, project_nahw_particle_functions)
@@ -908,6 +990,7 @@ REGISTRY.register(TRANCHE1_NAHW_CONTRACT, project_tranche1_fixture)
 REGISTRY.register(FAM2_LEXICAL_CONTRACT, project_fam2_lexical_pattern)
 REGISTRY.register(FAM3_NUMBER_CONTRACT, project_fam3_number_pattern)
 REGISTRY.register(FAM4_FINITE_VERB_CONTRACT, project_fam4_finite_verb_pattern)
+REGISTRY.register(FAM5_DERIVED_VERB_CONTRACT, project_fam5_derived_verb_pattern)
 
 
 def main(argv: Optional[List[str]] = None) -> int:

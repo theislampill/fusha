@@ -198,6 +198,7 @@ class RegistryTests(unittest.TestCase):
                 fact_projectors.FAM2_LEXICAL_PROJECTOR_ID,
                 fact_projectors.FAM3_NUMBER_PROJECTOR_ID,
                 fact_projectors.FAM4_FINITE_VERB_PROJECTOR_ID,
+                fact_projectors.FAM5_DERIVED_VERB_PROJECTOR_ID,
             },
             {item["projector_id"] for item in contracts},
         )

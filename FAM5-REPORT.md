@@ -1,0 +1,89 @@
+# FAM5 derived-verb producer calibration
+
+- Family: `derived_verbs`
+- Producer: `tools.fam5_derived_verb_producer` v1.0.0
+- Mode: `candidate_only`; authorization: `pre_apply_not_authorized`
+- Working set: 7 rows; candidates: 3; typed abstentions: 4 (57.1%)
+- Packet artifacts: `qamus/examples/fam5-derived-verbs/generated/calibration-sample.jsonl`, `derived-verb-facts.jsonl`, `unresolved-records.jsonl`, and `calibration-summary.json`.
+
+## Source survey — all seven rows
+
+The survey was completed before matcher implementation. Letters below are the FAM4 carrier's base-letter tokens with their observed marks; the template field is a hypothesis unless a candidate row later binds it to an exact entry form and closed registry pattern.
+
+| Location | Surface | Base letters / marks | Template hypothesis | Evidence situation |
+| --- | --- | --- | --- | --- |
+| 12:51:21 | حَصْحَصَ | حَ صْ حَ صَ | quadriliteral.perfect_active.3ms | entry_form_attestation |
+| 14:26:6 | ٱجْتُثَّتْ | ٱ جْ تُ ثَّ تْ | derived.form_viii.perfect_passive.3fs | entry_form_attestation |
+| 3:141:4 | آمَنُوا | آ مَ نُ و ا | derived.form_iv.perfect_active.3mp | hosting_entry_only |
+| 42:20:12 | يُرِيدُ | يُ رِ ي دُ | derived.form_iv.imperfect_active.3ms.weak_middle | hosting_entry_only |
+| 42:20:3 | يُرِيدُ | يُ رِ ي دُ | derived.form_iv.imperfect_active.3ms.weak_middle | hosting_entry_only |
+| 4:72:4 | لَّيُبَطِّئَنَّ | لَّ يُ بَ طِّ ئَ نَّ | derived.form_ii.imperfect_active.3ms.energic | fam4_owner_packet |
+| 5:3:41 | أَكْمَلْتُ | أَ كْ مَ لْ تُ | derived.form_iv.perfect_active.1cs | entry_form_attestation |
+
+## Per-row typed outcome
+
+A candidate row has exactly one entry-form attestation plus one `derived_verb_evidence` fact. An abstention has exactly one `derived_verb_pending` fact and no claim envelope.
+
+| Location | Surface | Form class | Status | Route | Pattern | Entry | Blocker(s) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 12:51:21 | حَصْحَصَ | quadriliteral | candidate | entry_backed_derived_form_pattern | quadriliteral.perfect_active.3ms | 08c89bbcbaad | — |
+| 14:26:6 | ٱجْتُثَّتْ | VIII | candidate | entry_backed_derived_form_pattern | derived.form_viii.perfect_passive.3fs | e2b37f88f22f | — |
+| 3:141:4 | آمَنُوا | IV | source_gap | source_gap | — | — | fam5.source_gap |
+| 42:20:12 | يُرِيدُ | IV | source_gap | source_gap | — | — | fam5.source_gap |
+| 42:20:3 | يُرِيدُ | IV | source_gap | source_gap | — | — | fam5.source_gap |
+| 4:72:4 | لَّيُبَطِّئَنَّ | II | blocked | owner_gated | — | — | fam5.owner_gated |
+| 5:3:41 | أَكْمَلْتُ | IV | candidate | entry_backed_derived_form_pattern | derived.form_iv.perfect_active.1cs | efa9daeebae2 | — |
+
+## Precision and abstention by form class
+
+Precision here is calibration precision only: validated candidate facts divided by emitted candidates. It is not a corpus-wide accuracy estimate.
+
+| Form class | Population | Candidates | Abstentions | Calibration precision |
+| --- | ---: | ---: | ---: | ---: |
+| II | 1 | 0 | 1 | n/a |
+| IV | 4 | 1 | 3 | 1.000 |
+| VIII | 1 | 1 | 0 | 1.000 |
+| quadriliteral | 1 | 1 | 0 | 1.000 |
+| **Total** | **7** | **3** | **4** | **1.000** |
+
+## Zero-false-projection attestation basis
+
+The calibration packet supports a zero-false-projection attestation for this seven-row working set because:
+
+- every positive record is joined to an exact caller-supplied entry form, a verified v575 row, and one pattern in the closed FAM5 registry;
+- every candidate's typed fact reconstructs the exact observed surface from letter-level segments;
+- every written base letter has exactly one owner class, while Form-IV `أ`, Form-VIII infix `ت`, hamzat al-wasl, inflection, weak operations, voice, and mood are separate governed fields;
+- Form-VIII `ثّ` remains one written base-letter span under Treatment-C with an explicit A–D idghām classification; it is not naively split;
+- all adversarial fixtures, including surface-template-only input, fail closed with a typed blocker; and
+- candidate and unresolved projections both carry `pre_apply_not_authorized` and false materialization/mutation flags.
+
+This is a producer-calibration result, not a claim that the underlying morphology is ready for public projection.
+
+## EXACT NONCLAIMS
+
+The packet does not claim any derived-verb template for a surface-template-only row, a row without exact source grounding, an ambiguous entry join, a weak-root transformation without a registered defeater resolution, an unresolved assimilation or gemination boundary, an ungoverned hamzat-al-wasl onset, or a voice/diacritic mismatch.
+
+The packet does not claim that these seven rows are a representative corpus sample; does not project the derived-verb registry corpus-wide; does not infer scripture facts from labels, root hints, morphlines, whitelist IDs, or surface templates; does not emit glosses; does not certify a final Ṣarf or Naḥw analysis; and does not authorize public or live mutation.
+
+The packet does not claim that any form class beyond the attested Form-II, Form-IV, Form-VIII, and quadriliteral rows is implemented, or that the current assimilation, gemination, weak-root, hamzat-al-wasl, voice, person/number/gender, or mood rules are complete outside this calibration boundary.
+
+## Compounding Impact
+
+The reusable FAM4 carrier now has a bounded derived-form extension: the verb-affix registry, weak-root defeater routing, F-A contract, evidence modes, exact source joins, candidate gate, and N-LANG labels remain one pipeline. The new typed fields make downstream work explicit without broadening projection authority.
+
+Future corpus-wide work, when the owner authorizes it, can compound from the closed template registry and separately reviewed assimilation/gemination rules. It must begin with new source-grounded surveys and adversarial fixtures; this packet is not that authorization.
+
+Candidate Ṣarf skill increments:
+
+- require a source address before a derived template can become a typed fact;
+- model every written base letter as exactly one owned class, with derivational markers in their own D-3 classes;
+- preserve Treatment-C shared-letter gemination and the idghām A–D classification without naive span splitting;
+- keep hamzat al-wasl, weak-letter operations, assimilation, voice, person/number/gender, mood, and energic-nūn boundaries explicit; and
+- route ambiguity to `template_unresolved`, `owner_gated`, `weak_root_pattern_unresolved`, or `source_gap` instead of guessing.
+
+## Verification state
+
+- Focused FAM5 unit tests: pass.
+- FAM5 self-test and fixture validator: pass.
+- Packet mode: candidate-only; no corpus or public artifact was mutated.
+- Full repository harness: `tools/check_regressions.py` passed in the final verification run.
