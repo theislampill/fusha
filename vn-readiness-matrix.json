@@ -1,0 +1,852 @@
+{
+  "assignment_mode": "derived_proposal_requires_owner_confirmation",
+  "authoritative_vn_assignment_source": null,
+  "candidate_only": true,
+  "clitic_family_northstar": {
+    "affected_cards": 2032,
+    "affected_displayed_selected_word_rows": 58,
+    "affected_entries": 687,
+    "affected_repeated_appearances": 4028,
+    "affected_total_appearances": 8893,
+    "affected_unique_occurrences": 4865,
+    "calibrated_verified_rows": 4865,
+    "candidate_only": true,
+    "expected_deployable_appearances_after_clitic_certification": 8893,
+    "expected_deployable_rows_after_clitic_certification": 4865,
+    "expected_deployable_unique_occurrences_after_clitic_certification": 4865,
+    "family_rows": 4865,
+    "family_rows_with_entry_join": 3784,
+    "family_rows_without_entry_join": 1081,
+    "producer_status_counts": {
+      "verified": 4865
+    },
+    "source_certified_count": 0
+  },
+  "proposal_rule": "DERIVED PROPOSAL: order entries by observed source key v001-v947, n001-n1045, p001-p100 (the noun keys use three-digit padding below 1,000 and four digits thereafter); preserve the documented numeric VN-00 (v001-v047 plus n0001-n0045) and VN-01 (v048-v094 plus n0046-n0090) boundaries; split the remaining 1,908 entries into 19 contiguous balanced groups (first 8 groups 101 entries, remaining 11 groups 100 entries).",
+  "schema": "vnmap/readiness-matrix@1",
+  "totals": {
+    "appearances_affected": 7568,
+    "cards": 7700,
+    "displayed_selected_words": 7740,
+    "entries": 2092,
+    "unique_occurrences": 946
+  },
+  "tranches": [
+    {
+      "appearances_affected": 3034,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 1517,
+      "candidates_unlocked_by_calibrated_clitic_producers": 1517,
+      "cards": 974,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 6,
+        "assigned_status:draft_only": 9,
+        "closure_terminal_state:deploy_ready": 2,
+        "current_public_status:draft_or_flat": 12,
+        "current_public_status:rich_live": 13,
+        "decision:candidate_replacement": 5,
+        "decision:deploy_ready": 21,
+        "source_status:draft_only": 5,
+        "unresolved": 743
+      },
+      "displayed_selected_words": 816,
+      "entries": 92,
+      "expected_deployable_rows_after_clitic_certification": 1517,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 1517,
+      "family_locs_seen": 1517,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 642,
+        "display_local_to_canonical_crosswalk_missing": 644,
+        "duplicate_surface_edge_ambiguous": 46,
+        "missing_displayed_fragment_edge": 742,
+        "missing_entry_url_edge": 642,
+        "missing_quran_wbw_edge": 644,
+        "missing_selected_word_edge": 642,
+        "missing_source_card_edge": 1
+      },
+      "graph_crosswalk_gap_rows": 742,
+      "offline_unmeasured_render_or_decision_rows": 816,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 3034,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 4.4198,
+        "unique_occurrence_rows": 1517
+      },
+      "proposal_vn_tranche": "VN-00",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 147,
+      "unresolved": 816
+    },
+    {
+      "appearances_affected": 1088,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 544,
+      "candidates_unlocked_by_calibrated_clitic_producers": 544,
+      "cards": 802,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 25,
+        "current_public_status:draft_or_flat": 10,
+        "current_public_status:rich_live": 24,
+        "unresolved": 235
+      },
+      "displayed_selected_words": 294,
+      "entries": 92,
+      "expected_deployable_rows_after_clitic_certification": 544,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 544,
+      "family_locs_seen": 544,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 231,
+        "display_local_to_canonical_crosswalk_missing": 231,
+        "duplicate_surface_edge_ambiguous": 8,
+        "missing_displayed_fragment_edge": 235,
+        "missing_entry_url_edge": 231,
+        "missing_quran_wbw_edge": 231,
+        "missing_selected_word_edge": 231
+      },
+      "graph_crosswalk_gap_rows": 235,
+      "offline_unmeasured_render_or_decision_rows": 294,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 1088,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 1.5849,
+        "unique_occurrence_rows": 544
+      },
+      "proposal_vn_tranche": "VN-01",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 57,
+      "unresolved": 294
+    },
+    {
+      "appearances_affected": 1344,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 672,
+      "candidates_unlocked_by_calibrated_clitic_producers": 672,
+      "cards": 1139,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 60,
+        "current_public_status:rich_live": 2,
+        "unresolved": 515
+      },
+      "displayed_selected_words": 577,
+      "entries": 101,
+      "expected_deployable_rows_after_clitic_certification": 672,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 672,
+      "family_locs_seen": 672,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 510,
+        "display_local_to_canonical_crosswalk_missing": 510,
+        "duplicate_surface_edge_ambiguous": 2,
+        "missing_displayed_fragment_edge": 514,
+        "missing_entry_url_edge": 510,
+        "missing_quran_wbw_edge": 510,
+        "missing_selected_word_edge": 510,
+        "missing_source_card_edge": 1
+      },
+      "graph_crosswalk_gap_rows": 514,
+      "offline_unmeasured_render_or_decision_rows": 577,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 1344,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 1.9579,
+        "unique_occurrence_rows": 672
+      },
+      "proposal_vn_tranche": "VN-02",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 57,
+      "unresolved": 577
+    },
+    {
+      "appearances_affected": 608,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 304,
+      "candidates_unlocked_by_calibrated_clitic_producers": 304,
+      "cards": 835,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 94,
+        "current_public_status:rich_live": 3,
+        "unresolved": 939
+      },
+      "displayed_selected_words": 1036,
+      "entries": 101,
+      "expected_deployable_rows_after_clitic_certification": 304,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 304,
+      "family_locs_seen": 304,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 932,
+        "display_local_to_canonical_crosswalk_missing": 932,
+        "duplicate_surface_edge_ambiguous": 10,
+        "missing_displayed_fragment_edge": 939,
+        "missing_entry_url_edge": 932,
+        "missing_quran_wbw_edge": 932,
+        "missing_selected_word_edge": 932,
+        "missing_source_card_edge": 7
+      },
+      "graph_crosswalk_gap_rows": 941,
+      "offline_unmeasured_render_or_decision_rows": 1036,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 608,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.8857,
+        "unique_occurrence_rows": 304
+      },
+      "proposal_vn_tranche": "VN-03",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 100,
+      "unresolved": 1036
+    },
+    {
+      "appearances_affected": 210,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 105,
+      "candidates_unlocked_by_calibrated_clitic_producers": 105,
+      "cards": 620,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 44,
+        "current_public_status:rich_live": 1,
+        "unresolved": 574
+      },
+      "displayed_selected_words": 619,
+      "entries": 101,
+      "expected_deployable_rows_after_clitic_certification": 105,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 105,
+      "family_locs_seen": 105,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 568,
+        "display_local_to_canonical_crosswalk_missing": 568,
+        "duplicate_surface_edge_ambiguous": 1,
+        "missing_displayed_fragment_edge": 573,
+        "missing_entry_url_edge": 568,
+        "missing_quran_wbw_edge": 568,
+        "missing_selected_word_edge": 568
+      },
+      "graph_crosswalk_gap_rows": 573,
+      "offline_unmeasured_render_or_decision_rows": 619,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 210,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.3059,
+        "unique_occurrence_rows": 105
+      },
+      "proposal_vn_tranche": "VN-04",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 48,
+      "unresolved": 619
+    },
+    {
+      "appearances_affected": 402,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 201,
+      "candidates_unlocked_by_calibrated_clitic_producers": 201,
+      "cards": 450,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 40,
+        "unresolved": 465
+      },
+      "displayed_selected_words": 505,
+      "entries": 101,
+      "expected_deployable_rows_after_clitic_certification": 201,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 201,
+      "family_locs_seen": 201,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 459,
+        "display_local_to_canonical_crosswalk_missing": 459,
+        "duplicate_surface_edge_ambiguous": 2,
+        "missing_displayed_fragment_edge": 465,
+        "missing_entry_url_edge": 459,
+        "missing_quran_wbw_edge": 459,
+        "missing_selected_word_edge": 459
+      },
+      "graph_crosswalk_gap_rows": 465,
+      "offline_unmeasured_render_or_decision_rows": 505,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 402,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.5856,
+        "unique_occurrence_rows": 201
+      },
+      "proposal_vn_tranche": "VN-05",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 45,
+      "unresolved": 505
+    },
+    {
+      "appearances_affected": 220,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 110,
+      "candidates_unlocked_by_calibrated_clitic_producers": 110,
+      "cards": 365,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 18,
+        "current_public_status:rich_live": 1,
+        "unresolved": 303
+      },
+      "displayed_selected_words": 322,
+      "entries": 101,
+      "expected_deployable_rows_after_clitic_certification": 110,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 110,
+      "family_locs_seen": 110,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 302,
+        "display_local_to_canonical_crosswalk_missing": 302,
+        "duplicate_surface_edge_ambiguous": 1,
+        "missing_displayed_fragment_edge": 303,
+        "missing_entry_url_edge": 302,
+        "missing_quran_wbw_edge": 302,
+        "missing_selected_word_edge": 302
+      },
+      "graph_crosswalk_gap_rows": 303,
+      "offline_unmeasured_render_or_decision_rows": 322,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 220,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.3205,
+        "unique_occurrence_rows": 110
+      },
+      "proposal_vn_tranche": "VN-06",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 20,
+      "unresolved": 322
+    },
+    {
+      "appearances_affected": 58,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 29,
+      "candidates_unlocked_by_calibrated_clitic_producers": 29,
+      "cards": 270,
+      "current_quality_state_counts": {
+        "unresolved": 285
+      },
+      "displayed_selected_words": 285,
+      "entries": 101,
+      "expected_deployable_rows_after_clitic_certification": 29,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 29,
+      "family_locs_seen": 29,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 267,
+        "display_local_to_canonical_crosswalk_missing": 267,
+        "missing_displayed_fragment_edge": 285,
+        "missing_entry_url_edge": 267,
+        "missing_quran_wbw_edge": 267,
+        "missing_selected_word_edge": 267,
+        "missing_source_card_edge": 6
+      },
+      "graph_crosswalk_gap_rows": 285,
+      "offline_unmeasured_render_or_decision_rows": 285,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 58,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.0845,
+        "unique_occurrence_rows": 29
+      },
+      "proposal_vn_tranche": "VN-07",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 18,
+      "unresolved": 285
+    },
+    {
+      "appearances_affected": 34,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 17,
+      "candidates_unlocked_by_calibrated_clitic_producers": 17,
+      "cards": 190,
+      "current_quality_state_counts": {
+        "unresolved": 216
+      },
+      "displayed_selected_words": 216,
+      "entries": 101,
+      "expected_deployable_rows_after_clitic_certification": 17,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 17,
+      "family_locs_seen": 17,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 204,
+        "display_local_to_canonical_crosswalk_missing": 204,
+        "missing_displayed_fragment_edge": 216,
+        "missing_entry_url_edge": 204,
+        "missing_quran_wbw_edge": 204,
+        "missing_selected_word_edge": 204,
+        "missing_source_card_edge": 4
+      },
+      "graph_crosswalk_gap_rows": 216,
+      "offline_unmeasured_render_or_decision_rows": 216,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 34,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.0495,
+        "unique_occurrence_rows": 17
+      },
+      "proposal_vn_tranche": "VN-08",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 12,
+      "unresolved": 216
+    },
+    {
+      "appearances_affected": 126,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 63,
+      "candidates_unlocked_by_calibrated_clitic_producers": 63,
+      "cards": 110,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 18,
+        "current_public_status:rich_live": 3,
+        "unresolved": 91
+      },
+      "displayed_selected_words": 112,
+      "entries": 101,
+      "expected_deployable_rows_after_clitic_certification": 63,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 63,
+      "family_locs_seen": 63,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 84,
+        "display_local_to_canonical_crosswalk_missing": 84,
+        "missing_displayed_fragment_edge": 109,
+        "missing_entry_url_edge": 84,
+        "missing_quran_wbw_edge": 84,
+        "missing_selected_word_edge": 84,
+        "missing_source_card_edge": 2
+      },
+      "graph_crosswalk_gap_rows": 109,
+      "offline_unmeasured_render_or_decision_rows": 112,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 126,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.1836,
+        "unique_occurrence_rows": 63
+      },
+      "proposal_vn_tranche": "VN-09",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 28,
+      "unresolved": 112
+    },
+    {
+      "appearances_affected": 28,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 14,
+      "candidates_unlocked_by_calibrated_clitic_producers": 14,
+      "cards": 109,
+      "current_quality_state_counts": {
+        "current_public_status:draft_or_flat": 5,
+        "current_public_status:rich_live": 4,
+        "unresolved": 136
+      },
+      "displayed_selected_words": 145,
+      "entries": 100,
+      "expected_deployable_rows_after_clitic_certification": 14,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 14,
+      "family_locs_seen": 14,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 135,
+        "display_local_to_canonical_crosswalk_missing": 135,
+        "missing_displayed_fragment_edge": 136,
+        "missing_entry_url_edge": 135,
+        "missing_quran_wbw_edge": 135,
+        "missing_selected_word_edge": 135,
+        "missing_source_card_edge": 1
+      },
+      "graph_crosswalk_gap_rows": 136,
+      "offline_unmeasured_render_or_decision_rows": 145,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 28,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.0408,
+        "unique_occurrence_rows": 14
+      },
+      "proposal_vn_tranche": "VN-10",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 9,
+      "unresolved": 145
+    },
+    {
+      "appearances_affected": 132,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 66,
+      "candidates_unlocked_by_calibrated_clitic_producers": 66,
+      "cards": 204,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 1,
+        "current_public_status:draft_or_flat": 55,
+        "current_public_status:rich_live": 29,
+        "unresolved": 399
+      },
+      "displayed_selected_words": 484,
+      "entries": 100,
+      "expected_deployable_rows_after_clitic_certification": 66,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 66,
+      "family_locs_seen": 66,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 393,
+        "display_local_to_canonical_crosswalk_missing": 393,
+        "duplicate_surface_edge_ambiguous": 5,
+        "missing_displayed_fragment_edge": 393,
+        "missing_entry_url_edge": 393,
+        "missing_quran_wbw_edge": 393,
+        "missing_selected_word_edge": 393
+      },
+      "graph_crosswalk_gap_rows": 393,
+      "offline_unmeasured_render_or_decision_rows": 484,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 132,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.1923,
+        "unique_occurrence_rows": 66
+      },
+      "proposal_vn_tranche": "VN-11",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 66,
+      "unresolved": 484
+    },
+    {
+      "appearances_affected": 20,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 10,
+      "candidates_unlocked_by_calibrated_clitic_producers": 10,
+      "cards": 238,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 12,
+        "current_public_status:draft_or_flat": 50,
+        "current_public_status:rich_live": 13,
+        "unresolved": 368
+      },
+      "displayed_selected_words": 443,
+      "entries": 100,
+      "expected_deployable_rows_after_clitic_certification": 10,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 10,
+      "family_locs_seen": 10,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 367,
+        "display_local_to_canonical_crosswalk_missing": 367,
+        "duplicate_surface_edge_ambiguous": 8,
+        "missing_displayed_fragment_edge": 368,
+        "missing_entry_url_edge": 367,
+        "missing_quran_wbw_edge": 367,
+        "missing_selected_word_edge": 367
+      },
+      "graph_crosswalk_gap_rows": 368,
+      "offline_unmeasured_render_or_decision_rows": 443,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 20,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.0291,
+        "unique_occurrence_rows": 10
+      },
+      "proposal_vn_tranche": "VN-12",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 62,
+      "unresolved": 443
+    },
+    {
+      "appearances_affected": 20,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 10,
+      "candidates_unlocked_by_calibrated_clitic_producers": 10,
+      "cards": 194,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 32,
+        "current_public_status:draft_or_flat": 28,
+        "current_public_status:rich_live": 1,
+        "unresolved": 192
+      },
+      "displayed_selected_words": 253,
+      "entries": 100,
+      "expected_deployable_rows_after_clitic_certification": 10,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 10,
+      "family_locs_seen": 10,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 190,
+        "display_local_to_canonical_crosswalk_missing": 190,
+        "missing_displayed_fragment_edge": 192,
+        "missing_entry_url_edge": 190,
+        "missing_quran_wbw_edge": 190,
+        "missing_selected_word_edge": 190
+      },
+      "graph_crosswalk_gap_rows": 192,
+      "offline_unmeasured_render_or_decision_rows": 253,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 20,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.0291,
+        "unique_occurrence_rows": 10
+      },
+      "proposal_vn_tranche": "VN-13",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 60,
+      "unresolved": 253
+    },
+    {
+      "appearances_affected": 34,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 17,
+      "candidates_unlocked_by_calibrated_clitic_producers": 17,
+      "cards": 114,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 18,
+        "current_public_status:draft_or_flat": 14,
+        "current_public_status:rich_live": 1,
+        "unresolved": 89
+      },
+      "displayed_selected_words": 122,
+      "entries": 100,
+      "expected_deployable_rows_after_clitic_certification": 17,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 17,
+      "family_locs_seen": 17,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 59,
+        "display_local_to_canonical_crosswalk_missing": 59,
+        "missing_displayed_fragment_edge": 89,
+        "missing_entry_url_edge": 59,
+        "missing_quran_wbw_edge": 59,
+        "missing_selected_word_edge": 59
+      },
+      "graph_crosswalk_gap_rows": 89,
+      "offline_unmeasured_render_or_decision_rows": 122,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 34,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.0495,
+        "unique_occurrence_rows": 17
+      },
+      "proposal_vn_tranche": "VN-14",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 60,
+      "unresolved": 122
+    },
+    {
+      "appearances_affected": 12,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 6,
+      "candidates_unlocked_by_calibrated_clitic_producers": 6,
+      "cards": 136,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 7,
+        "unresolved": 165
+      },
+      "displayed_selected_words": 172,
+      "entries": 100,
+      "expected_deployable_rows_after_clitic_certification": 6,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 6,
+      "family_locs_seen": 6,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 165,
+        "display_local_to_canonical_crosswalk_missing": 165,
+        "missing_displayed_fragment_edge": 165,
+        "missing_entry_url_edge": 165,
+        "missing_quran_wbw_edge": 165,
+        "missing_selected_word_edge": 165
+      },
+      "graph_crosswalk_gap_rows": 165,
+      "offline_unmeasured_render_or_decision_rows": 172,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 12,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.0175,
+        "unique_occurrence_rows": 6
+      },
+      "proposal_vn_tranche": "VN-15",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 7,
+      "unresolved": 172
+    },
+    {
+      "appearances_affected": 12,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 6,
+      "candidates_unlocked_by_calibrated_clitic_producers": 6,
+      "cards": 140,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 2,
+        "unresolved": 219
+      },
+      "displayed_selected_words": 221,
+      "entries": 100,
+      "expected_deployable_rows_after_clitic_certification": 6,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 6,
+      "family_locs_seen": 6,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 219,
+        "display_local_to_canonical_crosswalk_missing": 219,
+        "missing_displayed_fragment_edge": 221,
+        "missing_entry_url_edge": 219,
+        "missing_quran_wbw_edge": 219,
+        "missing_selected_word_edge": 219
+      },
+      "graph_crosswalk_gap_rows": 221,
+      "offline_unmeasured_render_or_decision_rows": 221,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 12,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.0175,
+        "unique_occurrence_rows": 6
+      },
+      "proposal_vn_tranche": "VN-16",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 2,
+      "unresolved": 221
+    },
+    {
+      "appearances_affected": 60,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 30,
+      "candidates_unlocked_by_calibrated_clitic_producers": 30,
+      "cards": 149,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 10,
+        "unresolved": 221
+      },
+      "displayed_selected_words": 231,
+      "entries": 100,
+      "expected_deployable_rows_after_clitic_certification": 30,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 30,
+      "family_locs_seen": 30,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 160,
+        "display_local_to_canonical_crosswalk_missing": 160,
+        "duplicate_surface_edge_ambiguous": 5,
+        "missing_displayed_fragment_edge": 231,
+        "missing_entry_url_edge": 160,
+        "missing_quran_wbw_edge": 160,
+        "missing_selected_word_edge": 160
+      },
+      "graph_crosswalk_gap_rows": 231,
+      "offline_unmeasured_render_or_decision_rows": 231,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 60,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.0874,
+        "unique_occurrence_rows": 30
+      },
+      "proposal_vn_tranche": "VN-17",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 60,
+      "unresolved": 231
+    },
+    {
+      "appearances_affected": 88,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 44,
+      "candidates_unlocked_by_calibrated_clitic_producers": 44,
+      "cards": 215,
+      "current_quality_state_counts": {
+        "analysis_status:source_addressed_executor_candidate": 2,
+        "unresolved": 287
+      },
+      "displayed_selected_words": 289,
+      "entries": 100,
+      "expected_deployable_rows_after_clitic_certification": 44,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 44,
+      "family_locs_seen": 44,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 190,
+        "display_local_to_canonical_crosswalk_missing": 190,
+        "duplicate_surface_edge_ambiguous": 18,
+        "missing_displayed_fragment_edge": 289,
+        "missing_entry_url_edge": 190,
+        "missing_quran_wbw_edge": 190,
+        "missing_selected_word_edge": 190,
+        "missing_source_card_edge": 1
+      },
+      "graph_crosswalk_gap_rows": 289,
+      "offline_unmeasured_render_or_decision_rows": 289,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 88,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.1282,
+        "unique_occurrence_rows": 44
+      },
+      "proposal_vn_tranche": "VN-18",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 87,
+      "unresolved": 289
+    },
+    {
+      "appearances_affected": 0,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 0,
+      "candidates_unlocked_by_calibrated_clitic_producers": 0,
+      "cards": 210,
+      "current_quality_state_counts": {
+        "unresolved": 332
+      },
+      "displayed_selected_words": 332,
+      "entries": 100,
+      "expected_deployable_rows_after_clitic_certification": 0,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 0,
+      "family_locs_seen": 0,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 332,
+        "display_local_to_canonical_crosswalk_missing": 332,
+        "missing_displayed_fragment_edge": 332,
+        "missing_entry_url_edge": 332,
+        "missing_quran_wbw_edge": 332,
+        "missing_selected_word_edge": 332,
+        "missing_source_card_edge": 3
+      },
+      "graph_crosswalk_gap_rows": 332,
+      "offline_unmeasured_render_or_decision_rows": 332,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 0,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.0,
+        "unique_occurrence_rows": 0
+      },
+      "proposal_vn_tranche": "VN-19",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 0,
+      "unresolved": 332
+    },
+    {
+      "appearances_affected": 38,
+      "assignment_mode": "derived_proposal_requires_owner_confirmation",
+      "calibrated_clitic_candidate_occurrences": 19,
+      "candidates_unlocked_by_calibrated_clitic_producers": 19,
+      "cards": 236,
+      "current_quality_state_counts": {
+        "unresolved": 266
+      },
+      "displayed_selected_words": 266,
+      "entries": 100,
+      "expected_deployable_rows_after_clitic_certification": 19,
+      "expected_deployable_unique_occurrences_after_clitic_certification": 19,
+      "family_locs_seen": 19,
+      "graph_crosswalk_gap_counts": {
+        "canonical_occurrence_appearance_missing": 265,
+        "display_local_to_canonical_crosswalk_missing": 266,
+        "missing_displayed_fragment_edge": 265,
+        "missing_entry_url_edge": 265,
+        "missing_quran_wbw_edge": 266,
+        "missing_selected_word_edge": 265
+      },
+      "graph_crosswalk_gap_rows": 266,
+      "offline_unmeasured_render_or_decision_rows": 266,
+      "projected_fully_rich_coverage_gain": {
+        "appearance_rows": 38,
+        "candidate_only": true,
+        "unique_occurrence_percentage_of_D4": 0.0554,
+        "unique_occurrence_rows": 19
+      },
+      "proposal_vn_tranche": "VN-20",
+      "source_certification_state": "pending_owner_certification",
+      "source_certified_count": 0,
+      "unique_occurrences": 1,
+      "unresolved": 266
+    }
+  ]
+}

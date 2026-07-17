@@ -1,0 +1,195 @@
+{
+  "appearance_index_complete_rows": 1066,
+  "appearance_projection_parity_failures": 0,
+  "candidate_only": true,
+  "canonical_occurrence_trace_complete_rows": 1066,
+  "card_missing_edge_counts": {
+    "display_local_to_canonical_crosswalk_missing": 3208,
+    "missing_displayed_fragment_edge": 3208
+  },
+  "clitic_family_northstar": {
+    "affected_cards": 2032,
+    "affected_displayed_selected_word_rows": 58,
+    "affected_entries": 687,
+    "affected_repeated_appearances": 4028,
+    "affected_total_appearances": 8893,
+    "affected_unique_occurrences": 4865,
+    "calibrated_verified_rows": 4865,
+    "candidate_only": true,
+    "expected_deployable_appearances_after_clitic_certification": 8893,
+    "expected_deployable_rows_after_clitic_certification": 4865,
+    "expected_deployable_unique_occurrences_after_clitic_certification": 4865,
+    "family_rows": 4865,
+    "family_rows_with_entry_join": 3784,
+    "family_rows_without_entry_join": 1081,
+    "producer_status_counts": {
+      "verified": 4865
+    },
+    "source_certified_count": 0
+  },
+  "denominators": {
+    "D1_entries": 2092,
+    "D1_entries_by_space": {
+      "nouns": 1045,
+      "particles": 100,
+      "verbs": 947
+    },
+    "D2_cards_by_proposal_tranche": {
+      "VN-00": 974,
+      "VN-01": 802,
+      "VN-02": 1139,
+      "VN-03": 835,
+      "VN-04": 620,
+      "VN-05": 450,
+      "VN-06": 365,
+      "VN-07": 270,
+      "VN-08": 190,
+      "VN-09": 110,
+      "VN-10": 109,
+      "VN-11": 204,
+      "VN-12": 238,
+      "VN-13": 194,
+      "VN-14": 114,
+      "VN-15": 136,
+      "VN-16": 140,
+      "VN-17": 149,
+      "VN-18": 215,
+      "VN-19": 210,
+      "VN-20": 236
+    },
+    "D2_listed_quran_example_cards": 7700,
+    "D3_displayed_selected_word_rows": 7740,
+    "D3_selected_words_by_proposal_tranche": {
+      "VN-00": 816,
+      "VN-01": 294,
+      "VN-02": 577,
+      "VN-03": 1036,
+      "VN-04": 619,
+      "VN-05": 505,
+      "VN-06": 322,
+      "VN-07": 285,
+      "VN-08": 216,
+      "VN-09": 112,
+      "VN-10": 145,
+      "VN-11": 484,
+      "VN-12": 443,
+      "VN-13": 253,
+      "VN-14": 122,
+      "VN-15": 172,
+      "VN-16": 221,
+      "VN-17": 231,
+      "VN-18": 289,
+      "VN-19": 332,
+      "VN-20": 266
+    },
+    "D4_repeated_appearances": 21794,
+    "D4_total_appearances": 56117,
+    "D4_unique_canonical_occurrences": 34323
+  },
+  "edge_join_rows_total": 7740,
+  "entry_occurrence_reciprocity_failures": 9,
+  "forward_trace_complete_rows": 675,
+  "full_input_parity_checked": true,
+  "input_counts": {
+    "appearance_index_records": 34323,
+    "entries": 2092,
+    "family_rows": 4865,
+    "whitelist_rows": 34323
+  },
+  "input_id_space_counts": {
+    "nouns": {
+      "actual_entry_count": 1045,
+      "actual_unique_source_key_count": 1045,
+      "duplicate_source_keys": [],
+      "expected_count": 1045,
+      "extra_numbers": [],
+      "maximum": 1045,
+      "minimum": 1,
+      "missing_numbers": [],
+      "observed_first_key": "n001",
+      "observed_last_key": "n1045",
+      "prefix": "n"
+    },
+    "other": {
+      "actual_entry_count": 0,
+      "source_keys": []
+    },
+    "particles": {
+      "actual_entry_count": 100,
+      "actual_unique_source_key_count": 100,
+      "duplicate_source_keys": [],
+      "expected_count": 100,
+      "extra_numbers": [],
+      "maximum": 100,
+      "minimum": 1,
+      "missing_numbers": [],
+      "observed_first_key": "p001",
+      "observed_last_key": "p100",
+      "prefix": "p"
+    },
+    "verbs": {
+      "actual_entry_count": 947,
+      "actual_unique_source_key_count": 947,
+      "duplicate_source_keys": [],
+      "expected_count": 947,
+      "extra_numbers": [],
+      "maximum": 947,
+      "minimum": 1,
+      "missing_numbers": [],
+      "observed_first_key": "v001",
+      "observed_last_key": "v947",
+      "prefix": "v"
+    }
+  },
+  "manual_probe_count": 0,
+  "manual_probe_reasons": [
+    "pre_deploy_offline_lane_no_manual_or_browser_probe_input"
+  ],
+  "missing_edge_counts": {
+    "canonical_occurrence_appearance_missing": 6674,
+    "decision_backlink_missing": 7738,
+    "display_local_to_canonical_crosswalk_missing": 6677,
+    "duplicate_surface_edge_ambiguous": 106,
+    "missing_displayed_fragment_edge": 7062,
+    "missing_entry_url_edge": 6674,
+    "missing_quran_wbw_edge": 6677,
+    "missing_selected_word_edge": 6674,
+    "missing_source_card_edge": 26,
+    "missing_source_photo_edge": 7740,
+    "rendered_span_edge_missing": 7740
+  },
+  "offline_unmeasured_decision_backlink_rows": 7738,
+  "offline_unmeasured_rendered_span_rows": 7740,
+  "orphan_payload_rows": 33377,
+  "orphan_typed_fact_rows": 487,
+  "payload_input_rows": 34323,
+  "quality_state_counts": {
+    "analysis_status:source_addressed_executor_candidate": 389,
+    "assigned_status:draft_only": 9,
+    "closure_terminal_state:deploy_ready": 2,
+    "current_public_status:draft_or_flat": 174,
+    "current_public_status:rich_live": 95,
+    "decision:candidate_replacement": 5,
+    "decision:deploy_ready": 21,
+    "source_status:draft_only": 5,
+    "unresolved": 7040
+  },
+  "quran_wbw_trace_complete_rows": 1063,
+  "reverse_trace_complete_rows": 1057,
+  "rows_needing_source_address_crosswalk": 6677,
+  "schema": "vnmap/graph-metrics@1",
+  "source_card_missing_card_count": 0,
+  "source_photo_missing_entry_count": 2092,
+  "source_photo_missing_selected_word_rows": 7740,
+  "typed_fact_input_rows": 575,
+  "vn_assignment": {
+    "authoritative_source": null,
+    "ledger_field_value": null,
+    "search_scope": [
+      "docs/",
+      "qamus/",
+      "prior VN reports/records"
+    ],
+    "status": "none_found_derived_proposal_only"
+  }
+}

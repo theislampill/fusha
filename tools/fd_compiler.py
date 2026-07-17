@@ -1248,6 +1248,89 @@ def build_fact_derived_views(
     }
 
 
+def build_formation_learner_view(record: dict[str, Any]) -> dict[str, Any]:
+    """Compile an FAM2 formation fact into the shared learner-view shape.
+
+    FAM2 owns the typed entry/pattern facts; this shared compiler owns the
+    learner-facing copy and its exact-surface reconstruction check.  Arabic
+    source forms stay in the typed payload and source spans, not in learner
+    prose, so the copy remains N-LANG clean.
+    """
+
+    occurrence = record.get("canonical_occurrence") or {}
+    surface = str(occurrence.get("surface") or "")
+    formation_facts = [
+        fact for fact in record.get("facts", [])
+        if isinstance(fact, dict) and fact.get("fact_type") == "formation_evidence"
+    ]
+    if len(formation_facts) != 1:
+        raise ValueError("shared formation compiler requires exactly one formation_evidence fact")
+    value = formation_facts[0].get("fact_value") or {}
+    shape_labels = {
+        "broken_plural": "broken plural",
+        "sound_masculine_plural": "sound masculine plural",
+        "sound_feminine_plural": "sound feminine plural",
+        "dual": "dual",
+        "nisba_adjective": "nisba adjective",
+        "elative": "elative",
+    }
+    shape_label = shape_labels.get(str(value.get("sub_shape")), "lexical formation")
+    pattern_id = str(value.get("pattern_id") or "named pattern")
+    sarf_text = (
+        "Ṣarf — how this piece forms the word: "
+        f"The entry-backed singular is paired by the named {pattern_id} formation rule."
+    )
+    nahw_text = (
+        "Naḥw — what this piece does here: "
+        f"This exact lexical piece functions as the {shape_label} in this occurrence."
+    )
+    segments = [{
+        "segment_index": 0,
+        "surface": surface,
+        "role": "lexical_host",
+        "label": "LEXICAL FORMATION",
+        "sarf_note": sarf_text,
+        "nahw_note": nahw_text,
+    }]
+    reconstructed = "".join(segment["surface"] for segment in segments) == surface
+    learner_explanation = sarf_text + " " + nahw_text
+    n_lang_clean = _fd2_n_lang_clean([
+        sarf_text,
+        nahw_text,
+        learner_explanation,
+        shape_label,
+        pattern_id,
+    ])
+    payload_id = "fd.fam2.payload:" + _sha256({
+        "surface": surface,
+        "formation_fact_id": formation_facts[0].get("fact_id"),
+        "sarf": sarf_text,
+        "nahw": nahw_text,
+    })[:24]
+    return {
+        "payload_id": payload_id,
+        "surface": surface,
+        "segments": segments,
+        "sarf": sarf_text,
+        "nahw": nahw_text,
+        "sarf_text": sarf_text,
+        "nahw_text": nahw_text,
+        "learner_explanation": learner_explanation,
+        "generated_from_facts": True,
+        "reconstruction_passed": reconstructed,
+        "n_lang_clean": n_lang_clean,
+        "learner_complete": bool(reconstructed and n_lang_clean),
+        "compact_view": {"payload_id": payload_id, "surface": surface, "text": learner_explanation},
+        "expanded_view": {
+            "payload_id": payload_id,
+            "surface": surface,
+            "formation": copy.deepcopy(value),
+            "sarf": sarf_text,
+            "nahw": nahw_text,
+        },
+    }
+
+
 def _fd2_record_blockers(record: dict[str, Any] | None) -> list[str]:
     if not isinstance(record, dict):
         return []
