@@ -928,6 +928,11 @@ def build_v2(
         row["crosswalk_edge_usable"] = row["crosswalk_status"] in USABLE_CROSSWALK_STATUSES
         row["debt_repair_family"] = _clean(debt_by_id.get(selected_id, {}).get("repair_family")) or None
         row.update(assignment)
+        # The v1 ledger carried derived labels whose names could be mistaken
+        # for recovered authority. v2 exposes only the explicit scalar,
+        # status, claims, and proposal fields below.
+        for legacy_label_field in ("partition_label", "plan_table_label", "proposal_vn_tranche"):
+            row.pop(legacy_label_field, None)
         ledger.append(row)
     ledger.sort(
         key=lambda row: (

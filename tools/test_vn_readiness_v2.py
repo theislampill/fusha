@@ -47,6 +47,9 @@ class VnReadinessV2Tests(unittest.TestCase):
         proposed = next(row for row in result.ledger if row["source_key"] == "v150")
         self.assertEqual(proposed["vn_tranche"], "proposed:vn-partition-proposal.v1:VN-02")
         self.assertEqual(proposed["vn_tranche_plan_table_proposal"], "proposed:vn-plan-table.v1:VN-03")
+        self.assertNotIn("partition_label", proposed)
+        self.assertNotIn("plan_table_label", proposed)
+        self.assertNotIn("proposal_vn_tranche", proposed)
         row = result.matrix["views"]["authoritative_partition"]["tranches"][2]
         self.assertEqual(row["graph_complete_deterministic_exact_rows"], 1)
         self.assertEqual(row["graph_complete_candidate_rows"], 1)
