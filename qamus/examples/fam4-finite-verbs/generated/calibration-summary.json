@@ -1,0 +1,178 @@
+{
+  "candidate_count": 4,
+  "candidate_mode": "pre_apply_not_authorized",
+  "family": "finite_verbs",
+  "family_population": 12,
+  "materialization": "none",
+  "row_outcomes": [
+    {
+      "direct_entry_id": "06fc0ada60e9",
+      "evidence_situation": "direct_entry_form:exact",
+      "quran_loc": "2:143:14",
+      "route": "entry_backed_form_i_pattern",
+      "status": "candidate",
+      "sub_shape": "form_i_perfect_active",
+      "surface": "جَعَلْنَا",
+      "whitelist_entry_id": "df2cd8f0dcdb"
+    },
+    {
+      "direct_entry_id": "d591d10aecfd",
+      "evidence_situation": "direct_entry_form:quran_annotation_only",
+      "quran_loc": "4:22:2",
+      "route": "entry_backed_form_i_pattern",
+      "status": "candidate",
+      "sub_shape": "form_i_imperfect_active",
+      "surface": "تَنكِحُوا۟",
+      "whitelist_entry_id": "d591d10aecfd"
+    },
+    {
+      "direct_entry_id": null,
+      "evidence_situation": "owner_gated:entry_context=none",
+      "quran_loc": "4:72:4",
+      "route": "owner_gated",
+      "status": "abstention",
+      "sub_shape": "derived_form",
+      "surface": "لَّيُبَطِّئَنَّ",
+      "whitelist_entry_id": "ba9e994b43ed"
+    },
+    {
+      "direct_entry_id": "3575d87778cd",
+      "evidence_situation": "direct_entry_form:exact",
+      "quran_loc": "4:109:16",
+      "route": "entry_backed_form_i_pattern",
+      "status": "candidate",
+      "sub_shape": "form_i_imperfect_active",
+      "surface": "يَكُونُ",
+      "whitelist_entry_id": "01b2733f6501"
+    },
+    {
+      "direct_entry_id": "efa9daeebae2",
+      "evidence_situation": "owner_gated:entry_context=exact",
+      "quran_loc": "5:3:41",
+      "route": "owner_gated",
+      "status": "abstention",
+      "sub_shape": "derived_form",
+      "surface": "أَكْمَلْتُ",
+      "whitelist_entry_id": "727d20168f33"
+    },
+    {
+      "direct_entry_id": null,
+      "evidence_situation": "surface_not_finite_verb:entry_context=none",
+      "quran_loc": "11:44:3",
+      "route": "surface_not_finite_verb",
+      "status": "abstention",
+      "sub_shape": "non_finite_or_nonverb",
+      "surface": "ٱبْلَعِى",
+      "whitelist_entry_id": "f58ca7fb2cad"
+    },
+    {
+      "direct_entry_id": "08c89bbcbaad",
+      "evidence_situation": "owner_gated:entry_context=exact",
+      "quran_loc": "12:51:21",
+      "route": "owner_gated",
+      "status": "abstention",
+      "sub_shape": "derived_form",
+      "surface": "حَصْحَصَ",
+      "whitelist_entry_id": "08c89bbcbaad"
+    },
+    {
+      "direct_entry_id": "e2b37f88f22f",
+      "evidence_situation": "owner_gated:entry_context=exact",
+      "quran_loc": "14:26:6",
+      "route": "owner_gated",
+      "status": "abstention",
+      "sub_shape": "derived_form",
+      "surface": "ٱجْتُثَّتْ",
+      "whitelist_entry_id": "e2b37f88f22f"
+    },
+    {
+      "direct_entry_id": "8ea56e8ba9b4",
+      "evidence_situation": "weak_root_pattern_unresolved:entry_context=exact",
+      "quran_loc": "17:97:25",
+      "route": "weak_root_pattern_unresolved",
+      "status": "abstention",
+      "sub_shape": "weak_root",
+      "surface": "خَبَتْ",
+      "whitelist_entry_id": "8ea56e8ba9b4"
+    },
+    {
+      "direct_entry_id": null,
+      "evidence_situation": "surface_not_finite_verb:entry_context=none",
+      "quran_loc": "18:52:13",
+      "route": "surface_not_finite_verb",
+      "status": "abstention",
+      "sub_shape": "non_finite_or_nonverb",
+      "surface": "مَّوْبِقًۭا",
+      "whitelist_entry_id": "eb27089a63b3"
+    },
+    {
+      "direct_entry_id": "430015446b77",
+      "evidence_situation": "weak_root_pattern_unresolved:entry_context=exact",
+      "quran_loc": "27:18:7",
+      "route": "weak_root_pattern_unresolved",
+      "status": "abstention",
+      "sub_shape": "weak_root",
+      "surface": "قَالَتْ",
+      "whitelist_entry_id": "efbecdbb9803"
+    },
+    {
+      "direct_entry_id": "06fc0ada60e9",
+      "evidence_situation": "direct_entry_form:exact",
+      "quran_loc": "32:8:2",
+      "route": "entry_backed_form_i_pattern",
+      "status": "candidate",
+      "sub_shape": "form_i_perfect_active",
+      "surface": "جَعَلَ",
+      "whitelist_entry_id": "b0743d9417df"
+    }
+  ],
+  "sample_size": 12,
+  "source_inputs": "caller-supplied stratified rows, v575 verdicts, whitelist context rows, and entry records",
+  "source_survey": {
+    "all_rows_processed": 12,
+    "family_rows": 12,
+    "orthography_near_miss_rows_held_out": 0,
+    "rows_with_exact_entry_surface_match": 8,
+    "rows_with_quran_annotation_only_entry_match": 1,
+    "rows_with_whitelist_context_edge": 12,
+    "rows_without_candidate_entry_form": 3
+  },
+  "sub_shape_populations": {
+    "derived_form": {
+      "abstention_count": 4,
+      "candidate_count": 0,
+      "population": 4
+    },
+    "evidence_gap": {
+      "abstention_count": 0,
+      "candidate_count": 0,
+      "population": 0
+    },
+    "form_i_imperfect_active": {
+      "abstention_count": 0,
+      "candidate_count": 2,
+      "population": 2
+    },
+    "form_i_perfect_active": {
+      "abstention_count": 0,
+      "candidate_count": 2,
+      "population": 2
+    },
+    "form_i_perfect_passive": {
+      "abstention_count": 0,
+      "candidate_count": 0,
+      "population": 0
+    },
+    "non_finite_or_nonverb": {
+      "abstention_count": 2,
+      "candidate_count": 0,
+      "population": 2
+    },
+    "weak_root": {
+      "abstention_count": 2,
+      "candidate_count": 0,
+      "population": 2
+    }
+  },
+  "unresolved_count": 8
+}

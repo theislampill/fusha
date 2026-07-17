@@ -1,0 +1,80 @@
+# FAM4 Finite-Verb Producer Calibration
+
+Candidate-mode calibration for the `finite_verbs` STRAT family. The committed packet covers all 12 rows; no materialization, whitelist append, public publication, or live mutation is authorized.
+
+## Survey
+
+All 12 rows were processed. A whitelist `entry_id` is retained as a verse-context edge only; it becomes morphology evidence only when the observed written surface matches a caller-supplied entry form under the closed orthography guard. Labels, glosses, morphlines, and existing carrier labels never create a finite-verb fact.
+
+| survey measure | rows |
+| --- | ---: |
+| family rows | 12 |
+| rows with whitelist context edge | 12 |
+| rows with exact entry-form match | 8 |
+| rows with Qurʾanic-annotation-only entry match | 1 |
+| orthography near-misses held out | 0 |
+| rows without a direct entry-form match | 3 |
+
+The evidence situation for every row is preserved below, including direct entry matches, context-only joins, owner gates, weak-root defeaters, and the non-finite/non-verb route.
+
+## Precision + abstention by sub-shape
+
+Typed-candidate precision means **contract-valid candidates / emitted candidates**. It is not a linguistic gold-label precision estimate; no external adjudication is invented. `n/a` means that no candidate was emitted for the sub-shape.
+
+| sub-shape | population | candidates | abstentions | abstention rate | typed-candidate precision |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| form_i_perfect_active | 2 | 2 | 0 | 0.0% | 100.0% |
+| form_i_perfect_passive | 0 | 0 | 0 | n/a | n/a |
+| form_i_imperfect_active | 2 | 2 | 0 | 0.0% | 100.0% |
+| derived_form | 4 | 0 | 4 | 100.0% | n/a |
+| weak_root | 2 | 0 | 2 | 100.0% | n/a |
+| non_finite_or_nonverb | 2 | 0 | 2 | 100.0% | n/a |
+| evidence_gap | 0 | 0 | 0 | n/a | n/a |
+
+Overall: **4 candidates**, **8 typed abstentions**, and **66.7% abstention rate**. Fresh contract validation accepts **4/4** emitted candidates.
+
+## Per-row outcome table
+
+| quran location | surface | evidence situation | sub-shape | outcome | route or pattern | direct entry | whitelist edge |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| quran:2:143:14 | جَعَلْنَا | direct_entry_form:exact | form_i_perfect_active | candidate | entry_backed_form_i_pattern | 06fc0ada60e9 | df2cd8f0dcdb|
+| quran:4:22:2 | تَنكِحُوا۟ | direct_entry_form:quran_annotation_only | form_i_imperfect_active | candidate | entry_backed_form_i_pattern | d591d10aecfd | d591d10aecfd|
+| quran:4:72:4 | لَّيُبَطِّئَنَّ | owner_gated:entry_context=none | derived_form | abstention | owner_gated | — | ba9e994b43ed|
+| quran:4:109:16 | يَكُونُ | direct_entry_form:exact | form_i_imperfect_active | candidate | entry_backed_form_i_pattern | 3575d87778cd | 01b2733f6501|
+| quran:5:3:41 | أَكْمَلْتُ | owner_gated:entry_context=exact | derived_form | abstention | owner_gated | efa9daeebae2 | 727d20168f33|
+| quran:11:44:3 | ٱبْلَعِى | surface_not_finite_verb:entry_context=none | non_finite_or_nonverb | abstention | surface_not_finite_verb | — | f58ca7fb2cad|
+| quran:12:51:21 | حَصْحَصَ | owner_gated:entry_context=exact | derived_form | abstention | owner_gated | 08c89bbcbaad | 08c89bbcbaad|
+| quran:14:26:6 | ٱجْتُثَّتْ | owner_gated:entry_context=exact | derived_form | abstention | owner_gated | e2b37f88f22f | e2b37f88f22f|
+| quran:17:97:25 | خَبَتْ | weak_root_pattern_unresolved:entry_context=exact | weak_root | abstention | weak_root_pattern_unresolved | 8ea56e8ba9b4 | 8ea56e8ba9b4|
+| quran:18:52:13 | مَّوْبِقًۭا | surface_not_finite_verb:entry_context=none | non_finite_or_nonverb | abstention | surface_not_finite_verb | — | eb27089a63b3|
+| quran:27:18:7 | قَالَتْ | weak_root_pattern_unresolved:entry_context=exact | weak_root | abstention | weak_root_pattern_unresolved | 430015446b77 | efbecdbb9803|
+| quran:32:8:2 | جَعَلَ | direct_entry_form:exact | form_i_perfect_active | candidate | entry_backed_form_i_pattern | 06fc0ada60e9 | b0743d9417df|
+
+## Zero-false-projection attestation basis
+
+The packet supports a zero-false-projection attestation for this bounded producer run on these explicit grounds:
+
+- every candidate has a caller-supplied direct entry-form attestation and exactly one dependent `finite_verb_evidence` fact;
+- every finite fact names a closed Form-I registry pattern, identifies all three root radicals as written spans, assigns person/tense affixes to owned segments, and carries a passed exact reconstruction proof;
+- D-3 keeps person prefixes, derivative-form markers, and root radicals in separate classes; Form-V/VI `ت` is owner-gated to `derived_verbs`;
+- derived/quadriliteral rows are typed `owner_gated` and never analyzed, while hidden or alternating weak radicals are typed `weak_root_pattern_unresolved`;
+- unresolved records contain one typed pending blocker and no finite-verb fact or linguistic claim;
+- mood and case are kept as a separate Naḥw overlay and are never emitted as finite-verb morphology; and
+- every projection remains `pre_apply_not_authorized`, with public and live materialization disabled.
+
+This is a producer-contract attestation, not a claim that every Quranic verb analysis is linguistically complete.
+
+## EXACT NONCLAIMS
+
+This packet does not claim: scripture facts beyond the supplied occurrence and entry addresses; lexical senses or roots from labels, glosses, morphlines, or whitelist entry IDs alone; any derived-form analysis; any weak-root transformation rule; mood, case, iʿrāb, or governor interpretation as morphology; a semantic translation; source approval; whitelist append; public publication; live mutation; or readiness for `derived_verbs` ownership.
+
+## Compounding Impact
+
+The FAM4 verb-affix registry reuses and feeds the clitic producer’s `qg-subject-pronoun` subject-marker classes while keeping `qg-object-pronoun` distinct at the host boundary. Its weak-root defeater registry records the unresolved patterns and feeds future `derived_verbs` work only when that owner opens the lane. The existing F-A carrier and projector registry remain the single projection path.
+
+## Status
+
+- Candidate mode: `pre_apply_not_authorized`.
+- All 12 rows were surveyed; corpus inputs were caller-supplied and remain read-only.
+- No scripture text, whitelist row, public payload, or live runtime was mutated.
+- Recommended next gate: independent owner review of the named Form-I patterns and typed unresolved queue.

@@ -37,6 +37,7 @@ TRANCHE1_SARF_PROJECTOR_ID = "sarf.tranche1_fixture_projection.v1"
 TRANCHE1_NAHW_PROJECTOR_ID = "nahw.tranche1_fixture_projection.v1"
 FAM2_LEXICAL_PROJECTOR_ID = "sarf.fam2.lexical_formation.v1"
 FAM3_NUMBER_PROJECTOR_ID = "sarf.fam3.number_formation.v1"
+FAM4_FINITE_VERB_PROJECTOR_ID = "sarf.fam4.finite_verb.v1"
 
 
 class ProjectorValidationError(ValueError):
@@ -184,6 +185,60 @@ def fam2_lexical_orthography_guard(*_args: Any, **_kwargs: Any) -> None:
     """Named registration guard; FAM2 performs the exact pair check itself."""
 
     return None
+
+
+def fam4_finite_verb_evidence_guard(*_args: Any, **_kwargs: Any) -> None:
+    """Named registry guard; FAM4 performs letter-level checks itself."""
+
+    return None
+
+
+def project_fam4_finite_verb_pattern(
+    *,
+    contract: Dict[str, Any],
+    surface: str,
+    root: str | Iterable[str],
+    pattern_id: str,
+    affix_registry: Any = None,
+) -> Dict[str, Any]:
+    """Run the closed FAM4 Form-I matcher as a candidate-only registry call."""
+
+    from tools import fam4_finite_verb_producer as fam4
+
+    registry = fam4.load_affix_registry(affix_registry) if isinstance(affix_registry, (str, Path)) else (
+        affix_registry or fam4.load_affix_registry()
+    )
+    pattern = next((item for item in registry if item.get("pattern_id") == pattern_id), None)
+    if isinstance(root, str):
+        radicals = [char for char in root if char not in " \t\n" and unicodedata.category(char) != "Mn"]
+    else:
+        radicals = [str(item) for item in root]
+    matched = fam4._match_registered_pattern(surface, radicals, pattern or {}) if pattern else None
+    if matched is None:
+        return {
+            "projector_id": contract["projector_id"],
+            "status": "abstained",
+            "route": "pattern_unresolved",
+            "candidate": None,
+            "materialization_allowed": False,
+        }
+    return {
+        "projector_id": contract["projector_id"],
+        "status": "candidate",
+        "route": "entry_backed_form_i_pattern",
+        "candidate": {
+            "fact_type": "finite_verb_evidence",
+            "pattern_id": pattern_id,
+            "form": pattern["form"],
+            "tense_aspect": pattern["tense_aspect"],
+            "person": pattern["person"],
+            "number": pattern["number"],
+            "gender": pattern["gender"],
+            "voice": pattern["voice"],
+            "evidence_mode": "deterministic_derivation_from_certified_facts",
+        },
+        "materialization_allowed": False,
+    }
 
 
 def project_fam2_lexical_pattern(
@@ -826,6 +881,24 @@ FAM3_NUMBER_CONTRACT = {
     "resolution_method": "entry_backed_registered_number_pattern",
 }
 
+FAM4_FINITE_VERB_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "producer": "tools.fam4_finite_verb_producer",
+    "projector_id": FAM4_FINITE_VERB_PROJECTOR_ID,
+    "fact_family": "sarf",
+    "input_fact_types": ["entry_form_attestation"],
+    "output_fact_type": "finite_verb_evidence",
+    "compatibility_class": (
+        "exact entry-backed Form-I finite-verb surfaces with letter-level root and owned affix reconstruction; "
+        "derived, weak-root, non-finite, and label-only rows abstain"
+    ),
+    "defeater_checks": ["fam4_finite_verb_evidence_guard"],
+    "gate_tier": "two_vote_required",
+    "version": "1.0.0",
+    "resolution_method": "entry_backed_form_i_letter_reconstruction",
+}
+
 REGISTRY = ProjectorRegistry()
 REGISTRY.register(SARF_CONTRACT, project_sarf_documented_forms)
 REGISTRY.register(NAHW_CONTRACT, project_nahw_particle_functions)
@@ -834,6 +907,7 @@ REGISTRY.register(TRANCHE1_SARF_CONTRACT, project_tranche1_fixture)
 REGISTRY.register(TRANCHE1_NAHW_CONTRACT, project_tranche1_fixture)
 REGISTRY.register(FAM2_LEXICAL_CONTRACT, project_fam2_lexical_pattern)
 REGISTRY.register(FAM3_NUMBER_CONTRACT, project_fam3_number_pattern)
+REGISTRY.register(FAM4_FINITE_VERB_CONTRACT, project_fam4_finite_verb_pattern)
 
 
 def main(argv: Optional[List[str]] = None) -> int:
