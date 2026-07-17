@@ -1,0 +1,10 @@
+{
+  "family": "lexical_nouns_adjectives",
+  "sample_size": 40,
+  "family_population": 121,
+  "candidate_count": 2,
+  "unresolved_count": 38,
+  "candidate_mode": "pre_apply_not_authorized",
+  "materialization": "none",
+  "source_inputs": "caller-supplied stratified rows, verdict rows, and entry records"
+}

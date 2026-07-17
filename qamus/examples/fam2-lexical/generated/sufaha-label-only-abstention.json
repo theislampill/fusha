@@ -1,0 +1,182 @@
+{
+  "schema": "qamus.typed_claim_contract.v1",
+  "contract_version": "1.0.0",
+  "contract_id": "fam2:lexical:pending:2:13:12",
+  "record_type": "unresolved_projection",
+  "canonical_occurrence": {
+    "occurrence_id": "quran:2:13:12",
+    "quran_loc": "2:13:12",
+    "wbw_loc": "wbw:2:13:12",
+    "surface": "السُّفَهَاءُ",
+    "surface_length": 12,
+    "entry_id": "c59a0161fac8"
+  },
+  "facts": [
+    {
+      "fact_id": "sha256:097cef424544b25b1cff1e5b7150b72066bdc35e00c77190be4a760b63e5a232",
+      "fact_type": "formation_pending",
+      "fact_value": {
+        "occurrence": {
+          "loc": "2:13:12",
+          "surface": "السُّفَهَاءُ"
+        },
+        "written_span": {
+          "start": 0,
+          "end": 12,
+          "surface": "السُّفَهَاءُ"
+        },
+        "status": "unresolved",
+        "route": "entry_lookup_missing",
+        "reason_codes": [
+          "entry_lookup_missing"
+        ],
+        "requested_label": "broken plural",
+        "entry_id": "c59a0161fac8",
+        "source_fields": [
+          "surface",
+          "label_claim"
+        ]
+      },
+      "surface_spans": [
+        {
+          "span_id": "occurrence",
+          "start": 0,
+          "end": 12,
+          "surface": "السُّفَهَاءُ",
+          "role": "lexical_formation_occurrence"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fam2-lexical-formation",
+          "owner_type": "producer"
+        },
+        "secondary": [
+          {
+            "owner_id": "qamus-entry-source",
+            "owner_type": "source_owner"
+          },
+          {
+            "owner_id": "sarf-formation-registry",
+            "owner_type": "rule_owner"
+          }
+        ]
+      },
+      "source": {
+        "source_id": "fam2:occurrence:2:13:12",
+        "source_kind": "quran_token"
+      },
+      "source_address": {
+        "address": "quran:2:13:12",
+        "source_kind": "quran_token"
+      },
+      "certification": {
+        "status": "pending",
+        "reason": "FAM2 route is entry_lookup_missing; no formation fact was emitted."
+      },
+      "evidence": {
+        "status": "blocked",
+        "confidence": "unknown",
+        "evidence_ids": [
+          "fam2:unresolved:2:13:12:entry_lookup_missing"
+        ],
+        "summary": "The producer abstained because the exact formation prerequisites are incomplete."
+      },
+      "evidence_mode": "unresolved",
+      "source_evidence": {
+        "structured_source_fact": {
+          "source_record_id": "fam2:occurrence:2:13:12",
+          "entry_id": "c59a0161fac8",
+          "source_fields": [
+            "surface",
+            "label_claim"
+          ]
+        },
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "derivation_chain": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "contradiction_records": [],
+      "producer": {
+        "id": "tools.fam2_lexical_producer",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "rule_id": "fam2.abstain_without_formation_evidence",
+        "projector_id": "sarf.fam2.lexical_formation.v1",
+        "version": "1.0.0"
+      },
+      "guards": [
+        {
+          "guard_id": "fam2.abstain_typed_route",
+          "reason": "The family route is preserved as an explicit unresolved blocker."
+        },
+        {
+          "guard_id": "fam2.no_label_inference",
+          "reason": "A label, English gloss, or morphline cannot create a formation fact."
+        },
+        {
+          "guard_id": "fam2.candidate_only",
+          "reason": "No public materialization or live mutation is authorized."
+        }
+      ],
+      "defeaters": [
+        {
+          "defeater_id": "entry_lookup_missing",
+          "reason": "The producer encountered the typed FAM2 blocker entry_lookup_missing.",
+          "fact_ids": []
+        }
+      ],
+      "unresolved_blockers": [
+        {
+          "blocker_id": "entry_lookup_missing",
+          "reason": "FAM2 formation route: entry_lookup_missing."
+        }
+      ],
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "fam2.lexical.2.13.12.pending.v1"
+      ]
+    }
+  ],
+  "projection": {
+    "projection_id": "fam2.lexical.2.13.12.pending.v1",
+    "status": "source_gap",
+    "unresolved_status": "source_gap",
+    "learner_visible": true,
+    "materialization_target": {
+      "artifact": "qamus/examples/fam2-lexical/unresolved-sample.jsonl",
+      "field": "formation",
+      "public_materialization_allowed": false,
+      "live_mutation_allowed": false
+    },
+    "claim": null,
+    "learner_statement": "The source evidence for this explanation is not available yet.",
+    "public_payload": {
+      "surface": "السُّفَهَاءُ",
+      "surface_preserved": true,
+      "authorization_state": "pre_apply_not_authorized",
+      "status": "source_gap",
+      "route": "entry_lookup_missing",
+      "segments": [
+        {
+          "surface": "السُّفَهَاءُ",
+          "role": "lexical_host"
+        }
+      ]
+    }
+  }
+}
