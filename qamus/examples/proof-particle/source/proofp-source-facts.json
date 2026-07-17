@@ -1,0 +1,505 @@
+{
+  "context_rows": [
+    {
+      "adjacent_context_locs": [],
+      "adjacent_context_required": false,
+      "card_ref": "2:284",
+      "context_attachment_source": null,
+      "context_governor_source": null,
+      "context_object_source": null,
+      "context_subject_source": null,
+      "contextual_phrase_gloss": "whatever",
+      "flags": {
+        "component_candidates_can_certify": false,
+        "exact_address_public_beta": true,
+        "parse_key_primary_identity": false
+      },
+      "learner_explanation": "مَا is a relative function word here: it means “whatever” and points to what belongs to Allah.",
+      "loc": "2:284:2",
+      "morphline": "relative mā · function token; no lexical root",
+      "parse_key": {
+        "key": "parse:p-rh-live-01-andon-2-284-2",
+        "summary": ""
+      },
+      "public_preview": {
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "quran_loc": "quran:2:284:2",
+      "schema": "qamus.rh_live_01.public_beta.v1",
+      "segments": [
+        {
+          "class": "qg-relative",
+          "gloss_contribution": "whatever",
+          "label": "REL",
+          "nahw_note": "nahw: relative item in the possession statement",
+          "role": "relative_particle",
+          "sarf_note": "sarf: built relative particle; no root",
+          "segment_index": 0,
+          "surface": "مَا"
+        }
+      ],
+      "stage": "P-RH-LIVE-01-visible-card-andon-repair",
+      "surface": "مَا",
+      "token_contribution_gloss": "whatever",
+      "wbw_loc": "wbw:2:284:2"
+    },
+    {
+      "card_ref": "2:284",
+      "contextual_phrase_gloss": "and if",
+      "learner_explanation": "The 'wa' is 'and,' and 'in' (with kasra) is conditional 'if' — 'and if you disclose what is in yourselves.'",
+      "loc": "2:284:8",
+      "morphline": "conjunction + conditional particle governing jussive",
+      "parse_key": {
+        "key": "parse:vn00-r29:2-284-8",
+        "summary": ""
+      },
+      "public_preview": {
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "quran_loc": "quran:2:284:8",
+      "schema": "qamus.rh_live_01.public_beta.v1",
+      "segments": [
+        {
+          "class": "qg-conjunction",
+          "gloss_contribution": "and",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "وَ"
+        },
+        {
+          "class": "qg-conditional",
+          "gloss_contribution": "if",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "إِن"
+        }
+      ],
+      "stage": "P-RH-LIVE-01-vn01-SCH2",
+      "surface": "وَإِن",
+      "token_contribution_gloss": "and if",
+      "wbw_loc": "wbw:2:284:8"
+    },
+    {
+      "card_ref": "2:284",
+      "contextual_phrase_gloss": "you disclose",
+      "learner_explanation": "This is 'you (plural) disclose'; it is the verb of the condition after 'in,' so it is jussive, and the final 'wāw' is the plural subject 'you.'",
+      "loc": "2:284:9",
+      "morphline": "imperfect verb (2nd person plural), jussive as the conditional verb, with plural subject 'wāw'",
+      "parse_key": {
+        "key": "parse:vn00-r29:2-284-9",
+        "summary": ""
+      },
+      "public_preview": {
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "quran_loc": "quran:2:284:9",
+      "schema": "qamus.rh_live_01.public_beta.v1",
+      "segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "you disclose",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "تُبْدُو"
+        },
+        {
+          "class": "qg-subject-pronoun",
+          "gloss_contribution": "you (plural)",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "ا۟"
+        }
+      ],
+      "stage": "P-RH-LIVE-01-vn01-SCH3",
+      "surface": "تُبْدُوا۟",
+      "token_contribution_gloss": "you disclose",
+      "wbw_loc": "wbw:2:284:9"
+    },
+    {
+      "card_ref": "2:284",
+      "contextual_phrase_gloss": "what / that which",
+      "learner_explanation": "Here 'mā' is the relative 'what/that which' — 'whether you disclose what is in yourselves' — functioning as the object of 'disclose.'",
+      "loc": "2:284:10",
+      "morphline": "relative noun, accusative as direct object",
+      "parse_key": {
+        "key": "parse:vn00-r29:2-284-10",
+        "summary": ""
+      },
+      "public_preview": {
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "quran_loc": "quran:2:284:10",
+      "schema": "qamus.rh_live_01.public_beta.v1",
+      "segments": [
+        {
+          "class": "qg-relative",
+          "gloss_contribution": "what / that which",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "مَا"
+        }
+      ],
+      "stage": "P-RH-LIVE-01-vn01-SCH2",
+      "surface": "مَا",
+      "token_contribution_gloss": "what / that which",
+      "wbw_loc": "wbw:2:284:10"
+    },
+    {
+      "adjacent_context_locs": [],
+      "adjacent_context_required": false,
+      "card_ref": "2:284",
+      "context_attachment_source": null,
+      "context_governor_source": null,
+      "context_object_source": null,
+      "context_subject_source": null,
+      "contextual_phrase_gloss": "in",
+      "entry_id": "1d1155c1ea36",
+      "entry_url": "https://qamus.dawah.wiki/v068",
+      "flags": {
+        "component_candidates_can_certify": false,
+        "entry_example_scope_only": true,
+        "exact_address_public_beta": true,
+        "parse_key_primary_identity": false
+      },
+      "learner_explanation": "فِّى is the preposition “in.”",
+      "loc": "2:284:11",
+      "morphline": "preposition fī · no lexical root: function token",
+      "parse_key": {
+        "key": "parse:e11505dd8174a7b3c3437688",
+        "summary": "preposition fī · no lexical root: function token"
+      },
+      "public_preview": {
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "quran_loc": "quran:2:284:11",
+      "schema": "qamus.rh_live_01.public_beta.v1",
+      "segments": [
+        {
+          "class": "qg-preposition",
+          "gloss_contribution": "in",
+          "label": "PREP",
+          "nahw_note": "nahw: introduces the following governed noun",
+          "role": "preposition",
+          "sarf_note": "sarf: preposition; no lexical root",
+          "segment_index": 0,
+          "surface": "فِىٓ"
+        }
+      ],
+      "source_key": "v068",
+      "stage": "VN-RH-LIVE-01",
+      "surface": "فِىٓ",
+      "token_contribution_gloss": "in",
+      "wbw_loc": "wbw:2:284:11"
+    },
+    {
+      "card_ref": "2:284",
+      "contextual_phrase_gloss": "your own selves",
+      "learner_explanation": "‘your own selves’ — segmented: selves (noun-stem) + your (possessive-pronoun).",
+      "loc": "2:284:12",
+      "morphline": "your own selves",
+      "parse_key": {
+        "key": "parse:vn00-r29:2-284-12",
+        "summary": ""
+      },
+      "public_preview": {
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "quran_loc": "quran:2:284:12",
+      "schema": "qamus.rh_live_01.public_beta.v1",
+      "segments": [
+        {
+          "class": "qg-noun-stem",
+          "gloss_contribution": "selves",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "أَنفُسِ"
+        },
+        {
+          "class": "qg-possessive-pronoun",
+          "gloss_contribution": "your",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "كُمْ"
+        }
+      ],
+      "stage": "P-RH-LIVE-01-vn01-waveC",
+      "surface": "أَنفُسِكُمْ",
+      "token_contribution_gloss": "your own selves",
+      "wbw_loc": "wbw:2:284:12"
+    },
+    {
+      "card_ref": "2:284",
+      "contextual_phrase_gloss": "you conceal it",
+      "learner_explanation": "This is 'you (plural) conceal it'; the verb is jussive (coordinated after the conditional) and the final 'hu' is the object 'it.'",
+      "loc": "2:284:14",
+      "morphline": "imperfect verb (2nd person plural), jussive, with attached object pronoun",
+      "parse_key": {
+        "key": "parse:vn00-r29:2-284-14",
+        "summary": ""
+      },
+      "public_preview": {
+        "kind": "authored",
+        "lang": "en",
+        "src": "qamus"
+      },
+      "quran_loc": "quran:2:284:14",
+      "schema": "qamus.rh_live_01.public_beta.v1",
+      "segments": [
+        {
+          "class": "qg-verb",
+          "gloss_contribution": "you conceal",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 0,
+          "surface": "تُخْفُو"
+        },
+        {
+          "class": "qg-object-pronoun",
+          "gloss_contribution": "it",
+          "label": "",
+          "nahw_note": "",
+          "role": "",
+          "sarf_note": "",
+          "segment_index": 1,
+          "surface": "هُ"
+        }
+      ],
+      "stage": "P-RH-LIVE-01-vn01-SCH3",
+      "surface": "تُخْفُوهُ",
+      "token_contribution_gloss": "you conceal it",
+      "wbw_loc": "wbw:2:284:14"
+    }
+  ],
+  "entry": {
+    "headword": "مَا",
+    "id": "b8e480aebafe",
+    "root": "",
+    "root_translit": "ma",
+    "section": "particle",
+    "selected_card": {
+      "card_ref": "2:284",
+      "example_index": 1,
+      "forms": [
+        "مَا"
+      ],
+      "sense": 1,
+      "text": "لله ما في السماوات وما في الأرض",
+      "usage_index": 1
+    },
+    "senses": [
+      {
+        "ar": "مَا",
+        "gloss": "what, whatever, that or who",
+        "n": 1,
+        "translit": "ma"
+      },
+      {
+        "ar": "مَا",
+        "gloss": "what, as exclamation",
+        "n": 2,
+        "translit": "ma"
+      },
+      {
+        "ar": "مَا",
+        "gloss": "no, not",
+        "n": 3,
+        "translit": "ma"
+      },
+      {
+        "ar": "مَا",
+        "gloss": "what?",
+        "n": 4,
+        "translit": "ma"
+      },
+      {
+        "ar": "مَا لِـ",
+        "gloss": "what is the matter; why is it that",
+        "n": 5,
+        "translit": "ma li"
+      },
+      {
+        "ar": "مَاذَا",
+        "gloss": "what",
+        "n": 6,
+        "translit": "ma-za"
+      }
+    ],
+    "source_keys": [
+      "p099"
+    ],
+    "tags": [
+      "interrogative",
+      "negation",
+      "relative_pronoun",
+      "particle"
+    ]
+  },
+  "occurrence": {
+    "card_ref": "2:284",
+    "contextual_phrase_gloss": "what / that which",
+    "learner_explanation": "Here 'mā' is the relative 'what/that which' — 'whether you disclose what is in yourselves' — functioning as the object of 'disclose.'",
+    "loc": "2:284:10",
+    "morphline": "relative noun, accusative as direct object",
+    "parse_key": {
+      "key": "parse:vn00-r29:2-284-10",
+      "summary": ""
+    },
+    "public_preview": {
+      "kind": "authored",
+      "lang": "en",
+      "src": "qamus"
+    },
+    "quran_loc": "quran:2:284:10",
+    "schema": "qamus.rh_live_01.public_beta.v1",
+    "segments": [
+      {
+        "class": "qg-relative",
+        "gloss_contribution": "what / that which",
+        "label": "",
+        "nahw_note": "",
+        "role": "",
+        "sarf_note": "",
+        "segment_index": 0,
+        "surface": "مَا"
+      }
+    ],
+    "stage": "P-RH-LIVE-01-vn01-SCH2",
+    "surface": "مَا",
+    "token_contribution_gloss": "what / that which",
+    "wbw_loc": "wbw:2:284:10"
+  },
+  "reverse_crosswalk": {
+    "edge_ids": [
+      "edge:0579b445c58c804c2ff1e4e3",
+      "edge:05dee30ecdb1e1ce43baed0f",
+      "edge:09ad950a55f6adb45e6f464a",
+      "edge:1cee0e8fddda86b2e7fd3017",
+      "edge:510520295deb47784a60d249",
+      "edge:53c0c2e49b6e9fa255ebd31e",
+      "edge:55906e5549f37d0de53b32ae",
+      "edge:5f6322af097e2e9fb911ab66",
+      "edge:6bc47b49dfa71e2f49af6e74",
+      "edge:76be5e4cc36b62cd46a998a6",
+      "edge:83643d5b1d519b821ec78dfc",
+      "edge:8f9bf6a58e561eabe8d5b23d",
+      "edge:8ff2b2658288a0ac231c3971",
+      "edge:a5a36a2a601b5c940afd1694",
+      "edge:ac4c3e9da33009878dea948c",
+      "edge:c942702014659bc723c21252",
+      "edge:d581a30709d3d4e0efe2da27",
+      "edge:de10e5ddad2b023a73244550",
+      "edge:ead2d59313d445b6dbfc4906",
+      "edge:ebae7404f728f7d058814245",
+      "edge:f34e45bb23e0603cba51b0bd",
+      "edge:facf7ea84391f5d74bbe34fd"
+    ],
+    "entry_id": "b8e480aebafe",
+    "occurrence_ids": [],
+    "schema": "qamus.lexeme_entry_crosswalk.reverse.v1",
+    "selected_word_ids": [
+      "selected-word:b8e480aebafe:s1:u1:f1:c2:284:x1",
+      "selected-word:b8e480aebafe:s2:u2:f1:c69:3:x1",
+      "selected-word:b8e480aebafe:s3:u3:f1:c93:3:x1",
+      "selected-word:b8e480aebafe:s4:u4:f1:c82:6:x1",
+      "selected-word:b8e480aebafe:s5:u5:f1:c4:78:x1",
+      "selected-word:b8e480aebafe:s5:u5:f2:c4:78:x1",
+      "selected-word:b8e480aebafe:s5:u5:f3:c4:78:x1",
+      "selected-word:b8e480aebafe:s5:u5:f4:c4:78:x1",
+      "selected-word:b8e480aebafe:s5:u5:f5:c4:78:x1",
+      "selected-word:b8e480aebafe:s5:u5:f6:c4:78:x1",
+      "selected-word:b8e480aebafe:s6:u6:f1:c2:215:x1",
+      "selected-word:fc2cbc5b8380:s1:u1:f1:c37:85:x1"
+    ]
+  },
+  "same_surface_card_occurrence_locs": [
+    "2:284:10",
+    "2:284:2"
+  ],
+  "schema": "qamus.proof_particle.source_facts.v1",
+  "selected_word_crosswalk": {
+    "card_id": "card:b8e480aebafe:u1:x1",
+    "crosswalk_status": "deterministic_exact",
+    "edge_ids": [
+      "edge:038166aee98874fd50b06927",
+      "edge:52d98220391951f2eaf665e7",
+      "edge:c942702014659bc723c21252",
+      "edge:de10e5ddad2b023a73244550"
+    ],
+    "lexeme_form_status_counts": {
+      "deterministic_exact": 2
+    },
+    "matched_entry_ids": [
+      "b8e480aebafe"
+    ],
+    "occurrence_id": "",
+    "schema": "qamus.lexeme_entry_crosswalk.forward.v1",
+    "selected_word_id": "selected-word:b8e480aebafe:s1:u1:f1:c2:284:x1",
+    "source_entry_id": "b8e480aebafe"
+  },
+  "selection": {
+    "card_ref": "2:284",
+    "entry_id": "b8e480aebafe",
+    "occurrence_id": "quran:2:284:10",
+    "owner_list_label": "مَا",
+    "selected_word_id": "selected-word:b8e480aebafe:s1:u1:f1:c2:284:x1",
+    "sense_number": 1,
+    "source_key": "p099"
+  },
+  "source_capture": {
+    "inputs": [
+      {
+        "name": "entries.jsonl",
+        "sha256": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d"
+      },
+      {
+        "name": "rh_live_01_beta_whitelist.jsonl",
+        "sha256": "5805cc9f3b3c98f5e2b6209871f106d708dc42848b135e780531cc8b2e38ac6e"
+      },
+      {
+        "name": "lexeme-entry-crosswalk.forward.jsonl",
+        "sha256": "bf9f50a1fc7f7dd1b7929b1da8150e526766bed1b23a5e8b88e68eaa717d14c2"
+      },
+      {
+        "name": "lexeme-entry-crosswalk.reverse.jsonl",
+        "sha256": "88a0d670dd5e96c3c16425d346a9a21ab98cade64152e86028702cc4956c7f92"
+      }
+    ],
+    "mode": "read_only_lane_snapshot",
+    "note": "Read-only capture; no live MCP, runtime, or publication state is included."
+  }
+}
