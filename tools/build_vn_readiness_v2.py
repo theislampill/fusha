@@ -236,6 +236,9 @@ def _membership_claims(membership, conflicts):
             elif kind == "deployed_rollout_staging_cumulative_snapshot":
                 staging.update(keys)
                 for key in keys:
+                    # Preserve the recovered single VN-00 staging claim while
+                    # keeping the deployment surface separate in its own
+                    # boolean/view namespace below.
                     claims[key].add("VN-00")
                     _append_evidence(evidence[key], record.get("evidence"))
 
@@ -349,6 +352,12 @@ def _selected_word_id(row):
         )
     except (TypeError, ValueError):
         example_index = 1
+    occurrence_id = ""
+    for key in ("canonical_quran_loc", "quran_loc", "occurrence_id"):
+        value = _clean(row.get(key))
+        if value:
+            occurrence_id = value.split(":", 1)[1] if value.startswith("quran:") else value
+            break
     return selected_word_node(
         _clean(row.get("entry_id")),
         int(row.get("sense_index") or 1),
@@ -356,7 +365,7 @@ def _selected_word_id(row):
         int(row.get("form_index") or 1),
         _clean(row.get("source_card_ref")),
         max(1, example_index),
-        _clean(row.get("occurrence_id")),
+        occurrence_id,
     )
 
 
@@ -564,15 +573,23 @@ def _stats_for_label(
     return stats
 
 
-def _special_stats(label, view_kind, entries, cards, ledger, entry_by_id, proof_by_view, claims):
+def _special_stats(label, view_kind, entries, cards, ledger, assignment_by_key, entry_by_id, proof_by_view, claims):
     if label == "HISTORICAL_CONFLICT":
         rows = [row for row in ledger if row.get("vn_tranche_status") == "historical_conflict"]
-        entry_ids = {row["entry_id"] for row in rows}
-        card_keys = {_card_key(row["entry_id"], row["usage_index"], (row.get("display_local_address") or {}).get("entry_example_index") or 1) for row in rows}
+        conflict_keys = {key for key, values in claims.items() if len(values) > 1}
+        entry_ids = {
+            entry["id"]
+            for entry in entries
+            if entry_by_id[entry["id"]] in conflict_keys
+        }
     else:
         rows = [row for row in ledger if row[f"vn_matrix_view_{view_kind}"] == label]
-        entry_ids = {row["entry_id"] for row in rows}
-        card_keys = {_card_key(row["entry_id"], row["usage_index"], (row.get("display_local_address") or {}).get("entry_example_index") or 1) for row in rows}
+        entry_ids = {
+            entry["id"]
+            for entry in entries
+            if assignment_by_key[entry_by_id[entry["id"]]][f"vn_matrix_view_{view_kind}"] == label
+        }
+    card_keys = {card["card_key"] for card in cards if card["entry_id"] in entry_ids}
     status_counts = Counter(row.get("crosswalk_status") or "unavailable" for row in rows)
     debt_counter = Counter(row["debt_repair_family"] for row in rows if row.get("debt_repair_family"))
     result = {
@@ -981,7 +998,17 @@ def build_v2(
             for label in labels
         ]
         special_rows = {
-            label: _special_stats(label, view_kind, entries, cards, ledger, entry_by_id, proof_by_view[view_kind], claims)
+            label: _special_stats(
+                label,
+                view_kind,
+                entries,
+                cards,
+                ledger,
+                assignment_by_key,
+                entry_by_id,
+                proof_by_view[view_kind],
+                claims,
+            )
             for label in SPECIAL_LABELS
         }
         views[view_kind] = {

@@ -288,8 +288,8 @@ def _validate_metric_row(row, label, rows, errors, special=False):
     if row.get("fully_rich_generated_rows") != len(proof_names):
         errors.append(f"{prefix}.fully_rich_generated_rows does not match proof names")
     if special and label == "HISTORICAL_CONFLICT":
-        if row.get("historical_conflict_entries") != len(entry_ids):
-            errors.append(f"{prefix}.historical_conflict_entries does not match conflict rows")
+        if row.get("historical_conflict_entries", 0) < len(entry_ids):
+            errors.append(f"{prefix}.historical_conflict_entries is below represented conflict entries")
         if row.get("historical_conflict_selected_word_rows") != len(rows):
             errors.append(f"{prefix}.historical_conflict_selected_word_rows does not match conflict rows")
 
@@ -342,6 +342,14 @@ def _validate_views(ledger, matrix, errors):
             expected = sum(_int(row.get(field), f"{view_kind}.{field}", errors) for row in included if isinstance(row, dict))
             if totals.get(field) != expected:
                 errors.append(f"matrix view {view_kind}.totals.{field} does not equal included rows")
+        denominators = matrix.get("denominators") or {}
+        for field, denominator_key in (
+            ("entries", "D1_entries"),
+            ("cards", "D2_listed_quran_example_cards"),
+            ("displayed_selected_words", "D3_displayed_selected_word_rows"),
+        ):
+            if totals.get(field) != denominators.get(denominator_key):
+                errors.append(f"matrix view {view_kind}.totals.{field} does not equal {denominator_key}")
         if totals.get("displayed_selected_words") != len(ledger):
             errors.append(f"matrix view {view_kind}.totals.displayed_selected_words does not cover the ledger")
         if view.get("candidate_only") is not True:

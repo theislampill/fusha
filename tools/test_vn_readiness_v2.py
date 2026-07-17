@@ -2,7 +2,12 @@ import json
 from pathlib import Path
 import unittest
 
-from tools.build_vn_readiness_v2 import build_v2
+from tools.build_vn_readiness_v2 import (
+    _assignment_for_key,
+    _membership_claims,
+    _selected_word_id,
+    build_v2,
+)
 
 
 FIXTURE_ROOT = Path(__file__).resolve().parent.parent / "qamus" / "examples" / "vnmap-v2"
@@ -63,6 +68,41 @@ class VnReadinessV2Tests(unittest.TestCase):
             result.matrix["proofs"]["names"],
             ["fattabini 19:43:10", "ma 2:284:10", "sufaha 2:13:12"],
         )
+
+    def test_selected_word_identity_prefers_canonical_quran_address(self):
+        selected_id = _selected_word_id(
+            {
+                "entry_id": "entry-repaired",
+                "sense_index": 1,
+                "usage_index": 1,
+                "form_index": 1,
+                "source_card_ref": "28:35",
+                "occurrence_id": "28:35:2",
+                "canonical_quran_loc": "quran:28:35:12",
+                "display_local_address": {"entry_example_index": 1},
+            }
+        )
+        self.assertTrue(selected_id.endswith(":o28:35:12"))
+
+    def test_staging_only_surface_keeps_authority_and_separate_namespace(self):
+        membership = read_json(FIXTURE_ROOT / "membership.fixture.json")
+        membership["vn"]["VN-00"]["authoritative_sets"].append(
+            {
+                "set_id": "fixture-staging-only",
+                "kind": "deployed_rollout_staging_cumulative_snapshot",
+                "source_keys": ["v150"],
+                "evidence": [{"artifact": "fixture/staging-sourcekeys.json", "locator": "v150"}],
+            }
+        )
+        claims, evidence, doc_sets, staging = _membership_claims(
+            membership,
+            read_jsonl(FIXTURE_ROOT / "conflicts.fixture.jsonl"),
+        )
+        assignment = _assignment_for_key("v150", claims, evidence, doc_sets, staging)
+        self.assertEqual(assignment["vn_tranche_status"], "authoritative")
+        self.assertEqual(assignment["vn_tranche"], "VN-00")
+        self.assertTrue(assignment["vn00_staging_member"])
+        self.assertEqual(assignment["vn_matrix_view_authoritative_partition"], "VN-00-STAGING")
 
 
 if __name__ == "__main__":
