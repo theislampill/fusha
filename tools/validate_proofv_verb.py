@@ -22,8 +22,8 @@ from tools import proofv_verb_producer
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / "qamus" / "examples" / "proof-verb"
-DEFAULT_DATA = ROOT.parent / "data"
-DEFAULT_EDGES = ROOT.parent / "lanes" / "EDGES" / "full-artifacts"
+# External corpus paths are never defaulted (repo self-containment): without
+# explicit --whitelist/--entries the gate runs on the committed packet fixtures.
 
 TARGET_LOC = "19:43:10"
 TARGET_SURFACE = "فَٱتَّبِعْنِىٓ"
@@ -90,10 +90,21 @@ def _validate_source_survey(
     errors: list[str],
     source_occurrence: dict[str, Any],
     selection: dict[str, Any],
-    whitelist_path: Path,
+    whitelist_path: Path | None,
+    output_dir: Path,
 ) -> None:
+    fixture_mode = whitelist_path is None
     try:
-        rows = _jsonl(whitelist_path)
+        if fixture_mode:
+            fixture_rows = _jsonl(output_dir / "whitelist-survey-fixture.jsonl")
+            rows = [item.get("row") or {} for item in fixture_rows]
+            fixture_lines = {
+                _loc(item.get("row") or {}): item.get("source_line")
+                for item in fixture_rows
+            }
+        else:
+            rows = _jsonl(whitelist_path)
+            fixture_lines = {}
     except Exception as exc:  # pragma: no cover - surfaced as a gate failure
         errors.append(f"cannot read whitelist: {exc}")
         return
@@ -107,9 +118,16 @@ def _validate_source_survey(
         _check(errors, _loc(target) == TARGET_LOC, "survey target location is not 19:43:10")
         _check(errors, source_occurrence.get("source_line") >= 1, "source line was not recorded")
         if source_occurrence.get("source_line"):
-            with whitelist_path.open(encoding="utf-8") as handle:
-                actual = next((line_no for line_no, line in enumerate(handle, 1) if line_no == source_occurrence["source_line"]), None)
-            _check(errors, actual == source_occurrence["source_line"], "recorded source line cannot be reread")
+            if fixture_mode:
+                _check(
+                    errors,
+                    fixture_lines.get(TARGET_LOC) == source_occurrence["source_line"],
+                    "recorded source line disagrees with the committed survey fixture",
+                )
+            else:
+                with whitelist_path.open(encoding="utf-8") as handle:
+                    actual = next((line_no for line_no, line in enumerate(handle, 1) if line_no == source_occurrence["source_line"]), None)
+                _check(errors, actual == source_occurrence["source_line"], "recorded source line cannot be reread")
         _check(errors, source_occurrence.get("surface") == target.get("surface"), "source occurrence differs from surveyed row")
     _check(errors, selection.get("chosen_surface") == TARGET_SURFACE, "selection does not preserve the exact target surface")
     _check(errors, selection.get("chosen_loc") == TARGET_LOC, "selection location is not the surveyed target")
@@ -380,7 +398,7 @@ def validate_packet(output_dir: Path, whitelist_path: Path, entries_path: Path) 
     _check(errors, source_occurrence.get("surface") == TARGET_SURFACE, "source occurrence surface is not exact")
     _check(errors, source_occurrence.get("loc") == TARGET_LOC, "source occurrence location is wrong")
     _check(errors, source_occurrence.get("gloss_fields_excluded") is True and source_occurrence.get("read_only") is True, "source occurrence is not read-only/gloss-free")
-    _validate_source_survey(errors, source_occurrence, selection, whitelist_path)
+    _validate_source_survey(errors, source_occurrence, selection, whitelist_path, output_dir)
     _validate_crosswalk(errors, forward, reverse, selection)
     _validate_graph(errors, graph, manifest)
     fact_map = _validate_facts(errors, facts, manifest)
@@ -388,7 +406,11 @@ def validate_packet(output_dir: Path, whitelist_path: Path, entries_path: Path) 
     _validate_render_and_manifest(errors, render, manifest, output_dir)
 
     try:
-        entries = _jsonl(entries_path)
+        if entries_path is None:
+            entry_fixture = _json(output_dir / "entry-fixture.json")
+            entries = [entry_fixture]
+        else:
+            entries = _jsonl(entries_path)
         entry = next((row for row in entries if str(row.get("id")) == ENTRY_ID), None)
         _check(errors, isinstance(entry, dict), "nearest entry is absent from entries.jsonl")
         if entry:
@@ -403,8 +425,8 @@ def validate_packet(output_dir: Path, whitelist_path: Path, entries_path: Path) 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
-    parser.add_argument("--whitelist", type=Path, default=DEFAULT_DATA / "rh_live_01_beta_whitelist.jsonl")
-    parser.add_argument("--entries", type=Path, default=DEFAULT_DATA / "entries.jsonl")
+    parser.add_argument("--whitelist", type=Path, default=None, help="external corpus (optional; committed fixture used when absent)")
+    parser.add_argument("--entries", type=Path, default=None, help="external entries (optional; committed fixture used when absent)")
     parser.add_argument("--self-test", action="store_true", help="run the complete local packet gate")
     args = parser.parse_args(argv)
     errors = validate_packet(args.output_dir, args.whitelist, args.entries)
