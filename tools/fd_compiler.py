@@ -9,6 +9,7 @@ function in this module writes the read-only corpus or a live/runtime surface.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import html
 import json
@@ -40,6 +41,47 @@ SUFAHA_SURFACE = "السُّفَهَاءُ"
 SUFAHA_BODY = "سُّفَهَاء"
 SUFAHA_CASE = "ُ"
 FAMILY_PAYLOAD_ID = "fd.family.sufaha.v1"
+
+FD2_REPORT_SCHEMA = "qamus.fd2.455_rerun_report.v1"
+FD2_VERDICT_SCHEMA = "qamus.fd2.455_rerun_verdict.v1"
+FD2_BASELINE = {
+    "rows needing F-B": 437,
+    "rows needing F-C": 437,
+    "rows lacking learner-language": 383,
+    "rows with repeated-appearance coverage": 0,
+}
+FD2_METRIC_KEYS = (
+    "rows with complete morphology facts",
+    "rows with complete naḥw facts",
+    "rows with both",
+    "rows generating at-rest projection",
+    "rows generating rich Ṣarf",
+    "rows generating rich Naḥw",
+    "rows generating both compact and expanded views",
+    "rows with repeated-appearance parity",
+    "unresolved rows by exact blocker",
+    "source/scholar queues",
+    "reconstruction failures",
+    "projection conflicts",
+    "newly discovered producer defects",
+)
+_FD2_COMPONENT_FACT_TYPES = {
+    "function_component",
+    "host_component",
+    "clitic_component",
+    "protective_nun",
+}
+_FD2_FORBIDDEN_LEARNER_PHRASES = (
+    "source-addressed",
+    "calibration",
+    "producer",
+    "evidence",
+    "candidate",
+    "live mutation",
+    "informed_by",
+    "quran:",
+    "wbw:",
+)
 
 METRIC_KEYS = (
     "rows compiling successfully",
@@ -943,6 +985,699 @@ def _primary_blocker(flags: Sequence[str]) -> str:
         if flag in flags:
             return label
     return "source_scholar_review"
+
+
+def _fd2_loc(value: Any) -> str:
+    text = str(value or "").strip()
+    for prefix in ("quran:", "wbw:"):
+        if text.startswith(prefix):
+            text = text[len(prefix):]
+    return text
+
+
+def _fd2_positive_record(record: dict[str, Any] | None) -> bool:
+    return isinstance(record, dict) and record.get("record_type") == "projection_input"
+
+
+def _fd2_fact_values(record: dict[str, Any] | None, fact_types: set[str] | None = None) -> list[dict[str, Any]]:
+    if not _fd2_positive_record(record):
+        return []
+    values: list[dict[str, Any]] = []
+    for fact in record.get("facts", []):
+        if not isinstance(fact, dict):
+            continue
+        if fact_types is not None and fact.get("fact_type") not in fact_types:
+            continue
+        value = fact.get("fact_value")
+        if isinstance(value, dict):
+            values.append(value)
+    return values
+
+
+def _fd2_record_has_fact(record: dict[str, Any] | None, fact_type: str) -> bool:
+    if not _fd2_positive_record(record):
+        return False
+    return any(isinstance(fact, dict) and fact.get("fact_type") == fact_type for fact in record.get("facts", []))
+
+
+def _fd2_component_gloss(value: dict[str, Any]) -> str:
+    role = str(value.get("role", "")).lower()
+    klass = str(value.get("class", "")).lower()
+    typed_kind = str(value.get("typed_kind", "")).lower()
+    if "conjunction" in role or klass == "qg-conjunction":
+        return "and"
+    if "preposition" in role or klass == "qg-preposition":
+        return "a prepositional prefix"
+    if "article" in role or klass == "qg-article":
+        return "the definite article"
+    if "object" in role or "object-pronoun" in klass:
+        return "an attached object pronoun"
+    if "possessive" in role or "possessive-pronoun" in klass:
+        return "an attached possessive pronoun"
+    if "subject" in role or "subject-pronoun" in klass:
+        return "an attached subject marker"
+    if "protective" in role or "protective_nun" in typed_kind or klass == "qg-protective-nun":
+        return "a protective nūn marker"
+    if "verb-prefix" in klass or "verb_prefix" in typed_kind:
+        return "a finite-verb prefix"
+    if "host" in role or klass in {"qg-verb-stem", "qg-noun-stem", "qg-noun", "qg-adjective", "qg-verb"}:
+        return "the lexical host"
+    if "function" in typed_kind or klass.startswith("qg-") and klass not in {"qg-unknown", "qg-segment"}:
+        return "a grammar component"
+    return "a written component"
+
+
+def _fd2_sarf_note(gloss: str) -> str:
+    return f"Ṣarf — how this piece forms the word: {gloss.capitalize()} is one typed piece of the written composition."
+
+
+def _fd2_local_nahw_note(value: dict[str, Any], gloss: str) -> str:
+    role = str(value.get("role", "")).lower()
+    if "function" in str(value.get("typed_kind", "")).lower() or role.startswith("prefix_"):
+        action = "It contributes its closed-class function in this word."
+    elif "pronoun" in role or "clitic" in str(value.get("typed_kind", "")).lower():
+        action = "It attaches the pronoun contribution to the host."
+    elif "host" in role:
+        action = "It carries the lexical host contribution."
+    else:
+        action = "It occupies its exact typed span in the word."
+    return f"Naḥw — what this piece does here: {action}"
+
+
+def _fd2_relation_text(value: dict[str, Any]) -> str:
+    role = str(value.get("role", "")).lower()
+    relationship = str(value.get("relationship", "")).lower()
+    role_text = {
+        "subject": "the subject",
+        "object": "the object",
+        "agreement": "the agreement marker",
+        "mood": "the mood-governed occurrence",
+        "pronoun_attachment": "the attached pronoun",
+        "preposition_to_governed": "the preposition-to-occurrence relation",
+        "other": "the typed syntax relation",
+    }.get(role, "the typed syntax relation")
+    relation_text = {
+        "subject_of": "is linked as the subject of the named governor",
+        "subject_agreement": "records subject agreement with the named governor",
+        "object_of": "is linked as the object of the named governor",
+        "mood_governed_by": "carries the mood supplied by the named governor",
+        "governed_by": "is linked to the named governor",
+        "pronoun_as_name_of_inna": "is the attached name position in the named construction",
+        "attached_pronoun_complement": "is attached as a pronoun complement",
+        "preposition_governs": "is governed by the preposition",
+        "preposition_governs_following_occurrence": "governs the following occurrence",
+        "definiteness_marker_to_noun": "marks definiteness for the noun",
+    }.get(relationship, "has the source-addressed relation recorded here")
+    case_or_mood = value.get("case_or_mood") if isinstance(value.get("case_or_mood"), dict) else {}
+    state = str(case_or_mood.get("value") or "").strip()
+    ending = value.get("ending") if isinstance(value.get("ending"), dict) else {}
+    ending_state = str(ending.get("status") or "").strip()
+    suffix = f" Its case or mood is {state}." if state else ""
+    if ending_state == "visible":
+        suffix += " Its visible ending is part of the typed fact."
+    elif ending_state == "estimated":
+        suffix += " Its ending state remains estimated."
+    return f"{role_text.capitalize()} {relation_text}.{suffix}"
+
+
+def _fd2_n_lang_clean(values: Iterable[str]) -> bool:
+    for value in values:
+        text = str(value or "")
+        lowered = text.lower()
+        if any(phrase in lowered for phrase in _FD2_FORBIDDEN_LEARNER_PHRASES):
+            return False
+        if re.search(r"\b[A-Z]{1,6}:\S", text):
+            return False
+        if re.search(r"[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff]", text):
+            return False
+    return True
+
+
+def build_fact_derived_views(
+    surface: str,
+    fb_record: dict[str, Any] | None,
+    fc_record: dict[str, Any] | None,
+    *,
+    source_segments: Sequence[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Build learner-facing views from typed facts and exact source spans only."""
+
+    projection_conflicts: list[dict[str, str]] = []
+    for producer, record in (("F-B", fb_record), ("F-C", fc_record)):
+        if not isinstance(record, dict):
+            continue
+        canonical = record.get("canonical_occurrence") or {}
+        if canonical.get("surface") not in (None, surface):
+            projection_conflicts.append({
+                "producer": producer,
+                "code": "canonical_surface_mismatch",
+                "detail": "producer canonical surface differs from compiler source surface",
+            })
+
+    component_values = _fd2_fact_values(fb_record, _FD2_COMPONENT_FACT_TYPES)
+    if component_values:
+        component_values.sort(key=lambda value: (int(value.get("segment_index", 10**6)), str(value.get("surface", ""))))
+        component_surfaces = "".join(str(value.get("surface", "")) for value in component_values)
+        if component_surfaces != surface:
+            projection_conflicts.append({
+                "producer": "F-B",
+                "code": "component_surface_reconstruction",
+                "detail": "typed F-B component surfaces do not reconstruct the compiler source surface",
+            })
+    else:
+        component_values = [copy.deepcopy(segment) for segment in (source_segments or []) if isinstance(segment, dict)]
+
+    generated_from_facts = _fd2_positive_record(fb_record) or _fd2_positive_record(fc_record)
+    fb_active = _fd2_positive_record(fb_record)
+    fc_active = _fd2_positive_record(fc_record)
+    fc_values = _fd2_fact_values(fc_record, {"nahw_dependency"})
+    relation_text = _fd2_relation_text(fc_values[0]) if fc_values else ""
+
+    segments: list[dict[str, Any]] = []
+    component_glosses: list[str] = []
+    sarf_notes: list[str] = []
+    local_nahw_notes: list[str] = []
+    for index, value in enumerate(component_values):
+        gloss = _fd2_component_gloss(value)
+        component_glosses.append(gloss)
+        sarf_note = _fd2_sarf_note(gloss) if fb_active else ""
+        nahw_note = relation_text if fc_active else _fd2_local_nahw_note(value, gloss) if fb_active else ""
+        if sarf_note:
+            sarf_notes.append(sarf_note)
+        if nahw_note:
+            local_nahw_notes.append(nahw_note)
+        segments.append({
+            "segment_index": int(value.get("segment_index", index)),
+            "surface": str(value.get("surface", "")),
+            "role": str(value.get("role", "component")),
+            "class": str(value.get("class", "qg-unknown")),
+            "label": str(value.get("label", "PIECE")),
+            "gloss_contribution": gloss,
+            "sarf_note": sarf_note,
+            "nahw_note": nahw_note,
+        })
+
+    segment_surface = "".join(segment["surface"] for segment in segments)
+    if segments and segment_surface != surface:
+        projection_conflicts.append({
+            "producer": "FD2",
+            "code": "learner_segment_reconstruction",
+            "detail": "learner segments do not reconstruct the compiler source surface",
+        })
+
+    composition_text = ""
+    if fb_active:
+        composition_text = "Composition: " + " + ".join(component_glosses)
+    sarf_text = "\n".join(sarf_notes)
+    nahw_text = ""
+    if fc_active:
+        nahw_text = f"Naḥw — what this piece does here: {relation_text}"
+    elif fb_active:
+        nahw_text = "\n".join(local_nahw_notes)
+    contribution = " + ".join(component_glosses) if component_glosses else "the source occurrence"
+    contextual = relation_text if fc_active else contribution
+    learner_parts = []
+    if composition_text:
+        learner_parts.append(composition_text + ".")
+    if sarf_text:
+        learner_parts.append(sarf_text)
+    if nahw_text:
+        learner_parts.append(nahw_text)
+    learner_explanation = " ".join(learner_parts)
+    n_lang_values = [learner_explanation, contribution, contextual, composition_text, sarf_text, nahw_text]
+    n_lang_clean = _fd2_n_lang_clean(n_lang_values)
+    payload_id = "fd2.payload:" + _sha256({
+        "surface": surface,
+        "segments": segments,
+        "sarf": sarf_text,
+        "nahw": nahw_text,
+        "composition": composition_text,
+    })[:24]
+    compact_view = {
+        "payload_id": payload_id,
+        "surface": surface,
+        "text": learner_explanation or contribution,
+    }
+    expanded_view = {
+        "payload_id": payload_id,
+        "surface": surface,
+        "components": segments,
+        "component_gloss": component_glosses,
+        "sarf": sarf_text,
+        "nahw": nahw_text,
+        "composition": composition_text,
+    }
+    return {
+        "component_gloss": component_glosses,
+        "segments": segments,
+        "sarf_text": sarf_text,
+        "nahw_text": nahw_text,
+        "composition_text": composition_text,
+        "token_contribution_gloss": contribution,
+        "contextual_phrase_gloss": contextual,
+        "learner_explanation": learner_explanation,
+        "generated_from_facts": generated_from_facts,
+        "learner_complete": bool(generated_from_facts and segments and n_lang_clean),
+        "rich_sarf": bool(fb_active and sarf_text and n_lang_clean),
+        "rich_nahw": bool((fc_active or fb_active) and nahw_text and n_lang_clean),
+        "compact_view": compact_view,
+        "expanded_view": expanded_view,
+        "payload_id": payload_id,
+        "n_lang_clean": n_lang_clean,
+        "projection_conflicts": projection_conflicts,
+    }
+
+
+def _fd2_record_blockers(record: dict[str, Any] | None) -> list[str]:
+    if not isinstance(record, dict):
+        return []
+    blockers: set[str] = set()
+    for fact in record.get("facts", []):
+        if not isinstance(fact, dict):
+            continue
+        for blocker in fact.get("unresolved_blockers", []):
+            if isinstance(blocker, dict) and blocker.get("blocker_id"):
+                blockers.add(str(blocker["blocker_id"]))
+        value = fact.get("fact_value")
+        if isinstance(value, dict):
+            for code in value.get("reason_codes", []):
+                if code:
+                    blockers.add(str(code))
+    return sorted(blockers)
+
+
+def collect_calibrated_producer_records(
+    strat_rows: Sequence[dict[str, Any]],
+    verdict_rows: Sequence[dict[str, Any]],
+    source_rows: Sequence[dict[str, Any]],
+    *,
+    corpus_source_name: str = "corpus.jsonl",
+) -> dict[str, Any]:
+    """Run F-B and F-C within their calibrated scopes and return typed records."""
+
+    from tools.build_clitic_pronoun_producer import produce_record
+    from tools.fc_nahw_producer import _input_candidate, build_contract_record
+
+    source_by_loc = {_fd2_loc(row.get("loc")): row for row in source_rows}
+    verdict_by_loc = {_fd2_loc(row.get("loc")): row for row in verdict_rows}
+    fb_records: dict[str, dict[str, Any]] = {}
+    fc_records: dict[str, dict[str, Any]] = {}
+    fb_blockers_by_loc: dict[str, list[str]] = {}
+    fc_blockers_by_loc: dict[str, str] = {}
+    defects: list[dict[str, Any]] = []
+    corpus_by_loc = dict(source_by_loc)
+
+    for strat in sorted(strat_rows, key=lambda row: _fd2_loc(row.get("loc"))):
+        loc = _fd2_loc(strat.get("loc"))
+        family = strat.get("morphology_family", strat.get("family"))
+        verdict = verdict_by_loc.get(loc)
+        if family == "clitic_pronoun_compositions":
+            source = copy.deepcopy(source_by_loc.get(loc, strat))
+            source["loc"] = loc
+            source["quran_loc"] = "quran:" + loc
+            source["wbw_loc"] = "wbw:" + loc
+            source["surface"] = source.get("surface", strat.get("surface", ""))
+            source["morphology_family"] = family
+            source["_fb1_source_id"] = corpus_source_name
+            source["_fb1_source_address"] = f"corpus:{corpus_source_name}#loc={loc}"
+            source["_fb1_verdict"] = (verdict or {}).get("verdict")
+            try:
+                record = produce_record(source)
+            except Exception as exc:  # pragma: no cover - exercised by operational defects
+                defects.append({
+                    "loc": loc,
+                    "producer": "F-B",
+                    "code": "producer_exception",
+                    "detail": str(exc),
+                })
+            else:
+                fb_records[loc] = record
+                blockers = _fd2_record_blockers(record)
+                if blockers:
+                    fb_blockers_by_loc[loc] = blockers
+                if _fd2_positive_record(record) and not _fd2_record_has_fact(record, "clitic_composition"):
+                    defects.append({
+                        "loc": loc,
+                        "producer": "F-B",
+                        "code": "positive_without_composition_fact",
+                        "detail": "positive F-B record did not emit a clitic_composition fact",
+                    })
+
+        try:
+            candidate, reason = _input_candidate(strat, corpus_by_loc, verdict)
+        except Exception as exc:  # pragma: no cover - exercised by operational defects
+            defects.append({
+                "loc": loc,
+                "producer": "F-C",
+                "code": "selector_exception",
+                "detail": str(exc),
+            })
+            continue
+        if candidate is None:
+            fc_blockers_by_loc[loc] = reason
+            continue
+        try:
+            record = build_contract_record(candidate, source_record_id=candidate["source"]["source_id"])
+        except Exception as exc:  # pragma: no cover - exercised by operational defects
+            defects.append({
+                "loc": loc,
+                "producer": "F-C",
+                "code": "contract_exception",
+                "detail": str(exc),
+            })
+            continue
+        fc_records[loc] = record
+        if not _fd2_record_has_fact(record, "nahw_dependency"):
+            defects.append({
+                "loc": loc,
+                "producer": "F-C",
+                "code": "positive_without_nahw_fact",
+                "detail": "positive F-C record did not emit a nahw_dependency fact",
+            })
+
+    return {
+        "fb_records": fb_records,
+        "fc_records": fc_records,
+        "fb_blockers_by_loc": fb_blockers_by_loc,
+        "fc_blockers_by_loc": fc_blockers_by_loc,
+        "producer_defects": defects,
+    }
+
+
+def _fd2_primary_blocker(blockers: Sequence[str]) -> str:
+    priority = (
+        "projection_conflict",
+        "reconstruction_failure",
+        "producer_defect",
+        "learner_language_missing",
+        "morphology_facts_missing",
+        "nahw_facts_missing",
+        "entry_linkage_missing",
+        "source_row_missing",
+        "source_scholar_review",
+    )
+    for candidate in priority:
+        if candidate in blockers:
+            return candidate
+    for blocker in blockers:
+        if blocker.startswith(("fb1.", "fc:")):
+            return blocker
+    return "source_scholar_review"
+
+
+def _fd2_index_parity(index_row: dict[str, Any] | None, payload_id: str) -> dict[str, Any]:
+    if not isinstance(index_row, dict):
+        return {
+            "covered": False,
+            "reason": "merged occurrence index has no exact location",
+            "appearance_count": 0,
+            "same_payload_id": False,
+        }
+    appearances = index_row.get("appearances")
+    covered = (
+        index_row.get("unique") is True
+        and isinstance(appearances, list)
+        and index_row.get("appearance_count") == len(appearances)
+        and len(appearances) >= 2
+        and isinstance(index_row.get("projection_hash"), str)
+        and len(index_row["projection_hash"]) == 64
+    )
+    return {
+        "covered": covered,
+        "loc": index_row.get("loc"),
+        "appearance_count": len(appearances) if isinstance(appearances, list) else 0,
+        "projection_hash": index_row.get("projection_hash"),
+        "same_payload_id": bool(covered and payload_id),
+        "reason": "canonical occurrence reuses one generated payload identity" if covered else "merged occurrence index parity witness is incomplete",
+    }
+
+
+def compile_fd2_rows(
+    strat_rows: Sequence[dict[str, Any]],
+    verdict_rows: Sequence[dict[str, Any]],
+    source_rows: Sequence[dict[str, Any]],
+    entries: Sequence[dict[str, Any]],
+    occurrence_index: dict[str, dict[str, Any]],
+    *,
+    fb_records_by_loc: dict[str, dict[str, Any]] | None = None,
+    fc_records_by_loc: dict[str, dict[str, Any]] | None = None,
+    producer_diagnostics: dict[str, Any] | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Compile the FD2 matrix after guarded producer records are available."""
+
+    fb_records_by_loc = fb_records_by_loc or {}
+    fc_records_by_loc = fc_records_by_loc or {}
+    producer_diagnostics = producer_diagnostics or {}
+    source_by_loc = {_fd2_loc(row.get("loc")): row for row in source_rows}
+    verdict_by_loc = {_fd2_loc(row.get("loc")): row for row in verdict_rows}
+    entries_by_id = _entry_map(entries)
+    verified = [
+        row for row in strat_rows
+        if verdict_by_loc.get(_fd2_loc(row.get("loc")), {}).get("verdict") == "verified"
+    ]
+    matrix: list[dict[str, Any]] = []
+    metric_counts: Counter[str] = Counter()
+    unresolved_counts: Counter[str] = Counter()
+    source_queue_counts: Counter[str] = Counter()
+    scholar_queue_counts: Counter[str] = Counter()
+    primary_counts: Counter[str] = Counter()
+    flag_counts: Counter[str] = Counter()
+    all_defects = [copy.deepcopy(item) for item in producer_diagnostics.get("producer_defects", [])]
+
+    for strat in sorted(verified, key=lambda row: _fd2_loc(row.get("loc"))):
+        loc = _fd2_loc(strat.get("loc"))
+        source = source_by_loc.get(loc)
+        source_surface = str((source or {}).get("surface") or strat.get("surface") or "")
+        fb_record = fb_records_by_loc.get(loc)
+        fc_record = fc_records_by_loc.get(loc)
+        fb_positive = _fd2_positive_record(fb_record)
+        fc_positive = _fd2_positive_record(fc_record)
+        segments: list[dict[str, Any]] = []
+        owned_spans: list[dict[str, Any]] = []
+        flags: list[str] = []
+        if source is None:
+            flags.extend(["source_row_missing", "reconstruction_failure", "entry_linkage_missing"])
+        else:
+            segments = source.get("segments") if isinstance(source.get("segments"), list) else []
+            owned_spans, structural_flags = _source_segments(source)
+            flags.extend(structural_flags)
+            entry_id = source.get("entry_id")
+            if not entry_id or str(entry_id) not in entries_by_id:
+                flags.append("entry_linkage_missing")
+
+        views = build_fact_derived_views(
+            source_surface,
+            fb_record if fb_positive else None,
+            fc_record if fc_positive else None,
+            source_segments=segments,
+        )
+        conflicts = list(views["projection_conflicts"])
+        for defect in all_defects:
+            if _fd2_loc(defect.get("loc")) == loc:
+                conflicts.extend([])
+        if conflicts:
+            flags.append("projection_conflict")
+
+        morphology_complete = bool(_has_morphology_producer(source or {}) or _fd2_record_has_fact(fb_record, "clitic_composition"))
+        nahw_complete = bool(_has_nahw_producer(source or {}) or _fd2_record_has_fact(fc_record, "nahw_dependency"))
+        both_complete = morphology_complete and nahw_complete
+        at_rest = bool(source is not None and "linguistic_consistency" not in flags and "span_ownership" not in flags and "exact_reconstruction" not in flags)
+        if not at_rest:
+            flags.append("reconstruction_failure")
+
+        source_learner_complete = bool(source is not None and _has_learner_language(source, segments))
+        generated_learner_complete = bool(views["learner_complete"])
+        learner_complete = source_learner_complete or generated_learner_complete
+        rich_sarf = bool(views["rich_sarf"])
+        rich_nahw = bool(views["rich_nahw"])
+        both_views = bool(views["generated_from_facts"] and views["compact_view"] and views["expanded_view"] and views["n_lang_clean"])
+        payload_id = views["payload_id"] if views["generated_from_facts"] else "fd2.at_rest:" + _sha256({"loc": loc, "surface": source_surface, "spans": owned_spans})[:24]
+        parity = _fd2_index_parity(occurrence_index.get(loc), payload_id)
+        if not parity["covered"]:
+            flags.append("repeated_appearance_parity")
+
+        blockers: list[str] = []
+        if not morphology_complete:
+            blockers.append("morphology_facts_missing")
+        if not nahw_complete:
+            blockers.append("nahw_facts_missing")
+        if not learner_complete:
+            blockers.append("learner_language_missing")
+        if not at_rest:
+            blockers.append("reconstruction_failure")
+        if conflicts:
+            blockers.append("projection_conflict")
+        if source is None:
+            blockers.append("source_row_missing")
+        if source is not None and "entry_linkage_missing" in flags:
+            blockers.append("entry_linkage_missing")
+        if fb_record and not fb_positive:
+            blockers.extend("fb1." + code if not code.startswith("fb1.") else code for code in _fd2_record_blockers(fb_record))
+        fb_blockers = producer_diagnostics.get("fb_blockers_by_loc", {}).get(loc, [])
+        fc_blockers = producer_diagnostics.get("fc_blockers_by_loc", {}).get(loc)
+        if fc_blockers:
+            blockers.append("fc:" + str(fc_blockers))
+        row_defects = [copy.deepcopy(item) for item in all_defects if _fd2_loc(item.get("loc")) == loc]
+        if row_defects:
+            blockers.append("producer_defect")
+            flags.append("producer_defect")
+        blockers = sorted(set(blockers))
+        primary = _fd2_primary_blocker(blockers)
+        primary_counts[primary] += 1
+        for blocker in blockers:
+            unresolved_counts[blocker] += 1
+        for flag in flags:
+            flag_counts[flag] += 1
+
+        source_queue = bool(source is None or row_defects or fb_blockers or fc_blockers or "entry_linkage_missing" in flags or "reconstruction_failure" in flags)
+        scholar_queue = True
+        if source_queue:
+            source_queue_counts["source/scholar"] += 1
+        scholar_queue_counts["source/scholar"] += 1
+
+        if morphology_complete:
+            metric_counts[FD2_METRIC_KEYS[0]] += 1
+        if nahw_complete:
+            metric_counts[FD2_METRIC_KEYS[1]] += 1
+        if both_complete:
+            metric_counts[FD2_METRIC_KEYS[2]] += 1
+        if at_rest:
+            metric_counts[FD2_METRIC_KEYS[3]] += 1
+        if rich_sarf:
+            metric_counts[FD2_METRIC_KEYS[4]] += 1
+        if rich_nahw:
+            metric_counts[FD2_METRIC_KEYS[5]] += 1
+        if both_views:
+            metric_counts[FD2_METRIC_KEYS[6]] += 1
+        if parity["covered"]:
+            metric_counts[FD2_METRIC_KEYS[7]] += 1
+
+        producer_status = {
+            "F-B": "candidate" if fb_positive else "unresolved" if fb_record else "not_applicable",
+            "F-C": "candidate" if fc_positive else "withheld" if fc_blockers else "not_applicable",
+        }
+        matrix.append({
+            "schema": FD2_VERDICT_SCHEMA,
+            "loc": loc,
+            "quran_loc": "quran:" + loc,
+            "surface": source_surface,
+            "morphology_family": strat.get("morphology_family", strat.get("family")),
+            "source_verdict": "verified",
+            "compile_mode": "candidate",
+            "compile_status": "compiled_review_queue" if at_rest else "blocked_structural_input",
+            "producer_status": producer_status,
+            "producer_projectors": {
+                "F-B": (fb_record or {}).get("projection", {}).get("projection_id") if fb_record else None,
+                "F-C": (fc_record or {}).get("projection", {}).get("projection_id") if fc_record else None,
+            },
+            "fact_completeness": {
+                "morphology": morphology_complete,
+                "nahw": nahw_complete,
+                "both": both_complete,
+            },
+            "at_rest_projection": {
+                "generated": at_rest,
+                "payload_id": payload_id,
+                "owned_spans": owned_spans,
+            },
+            "learner_language": {
+                "source_preserved": source_learner_complete,
+                "generated_from_facts": views["generated_from_facts"],
+                "complete": learner_complete,
+                "n_lang_clean": views["n_lang_clean"],
+                "component_gloss": views["component_gloss"],
+                "sarf": views["sarf_text"],
+                "nahw": views["nahw_text"],
+                "composition": views["composition_text"],
+                "learner_explanation": views["learner_explanation"],
+            },
+            "views": {
+                "payload_id": payload_id,
+                "rich_sarf": rich_sarf,
+                "rich_nahw": rich_nahw,
+                "compact": views["compact_view"] if views["generated_from_facts"] else None,
+                "expanded": views["expanded_view"] if views["generated_from_facts"] else None,
+                "both_compact_and_expanded": both_views,
+            },
+            "repeated_appearance_parity": parity,
+            "flags": sorted(set(flags)),
+            "blockers": blockers,
+            "primary_blocker": primary,
+            "source_queue": source_queue,
+            "scholar_queue": scholar_queue,
+            "review_route": "source/scholar",
+            "reconstruction_failed": not at_rest,
+            "projection_conflicts": conflicts,
+            "producer_defects": row_defects,
+            "live_mutation_allowed": False,
+        })
+
+    metric_counts[FD2_METRIC_KEYS[8]] = dict(sorted(unresolved_counts.items()))
+    metric_counts[FD2_METRIC_KEYS[9]] = {
+        "source": sum(1 for row in matrix if row["source_queue"]),
+        "scholar": sum(1 for row in matrix if row["scholar_queue"]),
+        "both": sum(1 for row in matrix if row["source_queue"] and row["scholar_queue"]),
+        "routes": dict(sorted(scholar_queue_counts.items())),
+    }
+    metric_counts[FD2_METRIC_KEYS[10]] = sum(1 for row in matrix if row["reconstruction_failed"])
+    metric_counts[FD2_METRIC_KEYS[11]] = sum(bool(row["projection_conflicts"]) for row in matrix)
+    all_defects = sorted(all_defects, key=lambda item: _canonical_json(item))
+    metric_counts[FD2_METRIC_KEYS[12]] = {"count": len(all_defects), "items": all_defects}
+
+    after = {
+        "rows needing F-B": len(matrix) - metric_counts[FD2_METRIC_KEYS[0]],
+        "rows needing F-C": len(matrix) - metric_counts[FD2_METRIC_KEYS[1]],
+        "rows lacking learner-language": len(matrix) - sum(bool(row["learner_language"]["complete"]) for row in matrix),
+        "rows with repeated-appearance coverage": metric_counts[FD2_METRIC_KEYS[7]],
+    }
+    movement = {
+        "before": copy.deepcopy(FD2_BASELINE),
+        "after": after,
+        "delta": {key: after[key] - FD2_BASELINE[key] for key in FD2_BASELINE},
+        "interpretation": "Movement measures this calibrated 455-row candidate rerun only; it is not corpus-wide certification or live coverage.",
+    }
+    report = {
+        "schema": FD2_REPORT_SCHEMA,
+        "report_version": "1.0.0",
+        "candidate_only": True,
+        "verified_row_count": len(matrix),
+        "input_verdict_count": len(verdict_rows),
+        "metrics": {key: metric_counts.get(key, 0) for key in FD2_METRIC_KEYS},
+        "movement": movement,
+        "flag_matrix": dict(sorted(flag_counts.items())),
+        "primary_blocker_counts": dict(sorted(primary_counts.items())),
+        "producer_lineage": {
+            "F-B": "tools.build_clitic_pronoun_producer@1.0.0",
+            "F-C": "tools.fc_nahw_producer@1.0.0",
+            "compiler": "tools.fd_compiler@FD2",
+            "projector": PROJECTOR_ID,
+        },
+        "scope": {
+            "row_source": "strat-455.jsonl + v575-verdicts.jsonl",
+            "morphology_family": "F-B applies only to clitic_pronoun_compositions",
+            "nahw_condition": "F-C applies only when its exact source-evidence selector and strict contract builder accept",
+            "other_families": "prior state retained; no scope creep",
+        },
+        "metric_definitions": {
+            FD2_METRIC_KEYS[0]: "Rows with an existing structured morphology carrier or a positive guarded F-B clitic-composition fact.",
+            FD2_METRIC_KEYS[1]: "Rows with an existing structured naḥw carrier or a positive guarded F-C dependency fact.",
+            FD2_METRIC_KEYS[2]: "Rows satisfying both complete-fact predicates after the bounded merge.",
+            FD2_METRIC_KEYS[3]: "Rows whose source segments are owned and concatenate exactly to the canonical surface.",
+            FD2_METRIC_KEYS[4]: "Rows with a positive F-B fact-derived Ṣarf view that is N-LANG-clean.",
+            FD2_METRIC_KEYS[5]: "Rows with a positive typed local/F-C naḥw view that is N-LANG-clean.",
+            FD2_METRIC_KEYS[6]: "Rows with a fact-derived payload exposing one payload identity through compact and expanded views.",
+            FD2_METRIC_KEYS[7]: "Rows whose exact location has a unique merged occurrence record with two or more appearances and a stable projection hash.",
+            FD2_METRIC_KEYS[8]: "Counts of row blockers by exact stable blocker code or producer selector reason.",
+            FD2_METRIC_KEYS[9]: "Source and scholar queue counts; all verified candidate rows remain scholar-routed, while source counts identify input/producer/structural follow-up.",
+            FD2_METRIC_KEYS[10]: "Rows with failed source or typed-producer reconstruction.",
+            FD2_METRIC_KEYS[11]: "Rows where a generated producer/view surface conflicts with the canonical source surface.",
+            FD2_METRIC_KEYS[12]: "Producer exceptions or positive records that violate their typed-output contract; guarded abstentions are not defects.",
+        },
+        "verdicts_artifact": "fd2-455-verdicts.jsonl",
+        "verdicts_meta_artifact": "fd2-455-verdicts.meta.json",
+        "live_mutation_allowed": False,
+    }
+    return matrix, report
 
 
 def compile_verified_rows(
