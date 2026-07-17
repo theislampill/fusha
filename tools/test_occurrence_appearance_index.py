@@ -59,6 +59,24 @@ class OccurrenceAppearanceIndexTests(unittest.TestCase):
         self.assertEqual(record["entry_relationships"], ["entry-book"])
         self.assertEqual(record["projection_hash"], projection_hash(source))
 
+    def test_direct_source_key_entry_id_resolves_to_typed_entry_id(self):
+        source = row(
+            "1:1:2",
+            "كِتَابٌ",
+            "book",
+            source_key="n0002",
+            entry_id="n0002",
+        )
+        entries = [{
+            "id": "entry-book",
+            "source_keys": ["n2"],
+            "usage": [{"examples": [{"ref": "1:1"}]}],
+        }]
+
+        result = build_index([source], entries)
+
+        self.assertEqual(result.records[0]["entry_relationships"], ["entry-book"])
+
     def test_same_surface_different_locations_are_allowed(self):
         first = row("39:63:3", "السَّمَاوَاتِ", "segmented")
         second = row("22:18:9", "ٱلسَّمَٰوَٰتِ", "fused")

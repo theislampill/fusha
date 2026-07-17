@@ -87,7 +87,7 @@
     "D4_unique_canonical_occurrences": 34323
   },
   "edge_join_rows_total": 7740,
-  "entry_occurrence_reciprocity_failures": 9,
+  "entry_occurrence_reciprocity_failures": 3,
   "forward_trace_complete_rows": 675,
   "full_input_parity_checked": true,
   "input_counts": {
@@ -175,7 +175,7 @@
     "unresolved": 7040
   },
   "quran_wbw_trace_complete_rows": 1063,
-  "reverse_trace_complete_rows": 1057,
+  "reverse_trace_complete_rows": 1063,
   "rows_needing_source_address_crosswalk": 6677,
   "schema": "vnmap/graph-metrics@1",
   "source_card_missing_card_count": 0,
