@@ -1,0 +1,6 @@
+{
+  "artifact": "fc1-calibrated-sample.jsonl",
+  "count": 30,
+  "record_type": "projection_input",
+  "scope": "bounded FC1 calibration packet"
+}
