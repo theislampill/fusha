@@ -1,0 +1,12 @@
+{
+  "candidate_only": true,
+  "debt_rows": 5,
+  "famwide_rows": 1,
+  "metrics": {
+    "selected_word_rows_total": 5,
+    "selected_word_rows_with_lexeme_or_form_edge": 5,
+    "selected_word_rows_with_usable_lexeme_or_form_edge": 4,
+    "selected_word_rows_by_crosswalk_status": {"ambiguous": 1, "candidate": 1, "deterministic_exact": 3}
+  },
+  "schema": "qamus.edge_closure_summary.v1"
+}

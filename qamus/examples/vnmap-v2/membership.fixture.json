@@ -1,0 +1,14 @@
+{
+  "schema": "vnrec-authoritative-membership@1",
+  "read_only_recovery": true,
+  "proposal_id": "vn-partition-proposal.v1",
+  "corpus": {"entries": 4, "unique_source_key_identities": 4, "evidence": [{"artifact": "fixture/entries.jsonl", "locator": "lines 1-4", "claim": "fixture corpus"}]},
+  "staging_metadata": {"final_source_key_count": 1, "final_source_key_prefix_counts": {"v": 1, "n": 0, "p": 0}, "final_snapshot": "fixture-staging"},
+  "vn": {
+    "VN-00": {"historical_status": "recovered_in_two_non-equivalent_surfaces", "authoritative_sets": [{"set_id": "fixture-vn00-window", "kind": "documented_window_contract", "source_keys": ["v001"], "count": 1, "evidence": [{"artifact": "fixture/VNREC-REPORT.md", "locator": "VN-00", "claim": "CLOSED-FROZEN fixture window"}]}, {"set_id": "fixture-vn00-staging", "kind": "deployed_rollout_staging_cumulative_snapshot", "source_keys": ["v048"], "count": 1, "evidence": [{"artifact": "fixture/staging-sourcekeys.json", "locator": "v048", "claim": "separate staging namespace"}]}]},
+    "VN-01": {"historical_status": "recovered", "authoritative_sets": [{"set_id": "fixture-vn01-window", "kind": "documented_window_contract", "source_keys": ["v048"], "count": 1, "evidence": [{"artifact": "fixture/VNREC-REPORT.md", "locator": "VN-01", "claim": "CLOSED-FROZEN fixture window"}]}]},
+    "VN-02": {"historical_status": "future", "authoritative_sets": []},
+    "VN-03": {"historical_status": "future", "authoritative_sets": [], "future_definition_only": {"source_key_range": "v142–v188 + n0136–n0180", "count": 92}}
+  },
+  "global_reconciliation": {"historical_conflict_source_keys": ["v048"], "historical_conflict_entries": 1, "proposal_only_source_keys": ["v150", "p099"], "unassigned_source_keys": 0}
+}
