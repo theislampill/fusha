@@ -1,0 +1,125 @@
+{
+  "artifacts": [
+    {
+      "committed": true,
+      "path": "qamus/examples/proof-particle/README.md",
+      "sha256": "fae54851d9bfc1508fccd92917ed3176d5cdfa9dc30308bb022cdd29e2174a22"
+    },
+    {
+      "committed": true,
+      "path": "qamus/examples/proof-particle/particle-contract.json",
+      "sha256": "84ce078e8ad406a62f7481b06eaaa889243857712c7c75fae1480116a928e96b"
+    },
+    {
+      "committed": true,
+      "path": "qamus/examples/proof-particle/particle-graph-edges.jsonl",
+      "sha256": "d373527f03926792046686b180b2816d2ecf201c2ab8efb2a85d783738595bab"
+    },
+    {
+      "committed": true,
+      "path": "qamus/examples/proof-particle/particle-crosswalk-forward.json",
+      "sha256": "c76c18fa6e6961f65296fef668ed9467fe362b579967266e3ad966009abc4558"
+    },
+    {
+      "committed": true,
+      "path": "qamus/examples/proof-particle/particle-crosswalk-reverse.json",
+      "sha256": "7a4c73e2b28fd792875d74de6b90d237111c7ee31585aad3cc1923094816d80f"
+    },
+    {
+      "committed": true,
+      "path": "qamus/examples/proof-particle/particle-normalized-public-payload.json",
+      "sha256": "25c91d2e4c075129c4f75d9d45894fbd5d31e500548e61eb5c7abe7412ad45fc"
+    },
+    {
+      "committed": true,
+      "path": "qamus/examples/proof-particle/particle-rich-hover-candidate.jsonl",
+      "sha256": "157424e27c214cf87d1d8bfbec35a16097ede33bbb82b7d2d5bdde8a74540144"
+    },
+    {
+      "committed": true,
+      "path": "qamus/examples/proof-particle/particle-parity-fixture.json",
+      "sha256": "f18268eac7f2602977ffb56eba2cc12177636f5bd5366eb48653f2ae8ed11b24"
+    },
+    {
+      "committed": true,
+      "path": "qamus/examples/proof-particle/particle-card.html",
+      "sha256": "4332d33a1b7e9abd3f6a3fdb3c96a6e5da462affb535a5d51327c301117c9a55"
+    },
+    {
+      "committed": true,
+      "path": "qamus/examples/proof-particle/render-proof.json",
+      "sha256": "be293cd6784078b587e9dbbea9db780d79829d47d018bfd7f455d8d820f1f36e"
+    },
+    {
+      "committed": true,
+      "path": "qamus/examples/proof-particle/source/proofp-source-facts.json",
+      "sha256": "ccfe234e9104adc0f50886a1e68df94a9bb0e642d6313efb34578d7dad17b1d1"
+    }
+  ],
+  "candidate_only": true,
+  "checks": {
+    "contract": "pass",
+    "harness": "pass",
+    "parity": "pass",
+    "render": "measured",
+    "rich_hover_candidate": "pass",
+    "rm09": "pass",
+    "typed_graph": "pass"
+  },
+  "generator": {
+    "id": "tools.proofp_compiler",
+    "mcp": false,
+    "version": "1.0.0"
+  },
+  "lane": "PROOF-P",
+  "limits": [
+    "No live MCP or runtime readback was used.",
+    "The card-to-occurrence and entry-to-occurrence traces remain candidate because the source crosswalk leaves occurrence_id empty and the card repeats the surface.",
+    "Any certification, promotion, deployment, or live write remains owner-gated."
+  ],
+  "live_mutation_allowed": false,
+  "owner_section": "12",
+  "png_policy": {
+    "path": "particle-card.png",
+    "reason": "local render evidence only",
+    "tracked": false
+  },
+  "public_materialization_allowed": false,
+  "render": {
+    "exact_reconstruction": true,
+    "font_check": true,
+    "same_payload_identity": true,
+    "status": "measured"
+  },
+  "schema": "qamus.proof_particle.manifest.v1",
+  "selection": {
+    "card_ref": "2:284",
+    "entry_id": "b8e480aebafe",
+    "headword": "مَا",
+    "occurrence": "2:284:10",
+    "sense": 1,
+    "source_key": "p099"
+  },
+  "source_capture": {
+    "inputs": [
+      {
+        "name": "entries.jsonl",
+        "sha256": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d"
+      },
+      {
+        "name": "rh_live_01_beta_whitelist.jsonl",
+        "sha256": "5805cc9f3b3c98f5e2b6209871f106d708dc42848b135e780531cc8b2e38ac6e"
+      },
+      {
+        "name": "lexeme-entry-crosswalk.forward.jsonl",
+        "sha256": "bf9f50a1fc7f7dd1b7929b1da8150e526766bed1b23a5e8b88e68eaa717d14c2"
+      },
+      {
+        "name": "lexeme-entry-crosswalk.reverse.jsonl",
+        "sha256": "88a0d670dd5e96c3c16425d346a9a21ab98cade64152e86028702cc4956c7f92"
+      }
+    ],
+    "mode": "read_only_lane_snapshot",
+    "note": "Read-only capture; no live MCP, runtime, or publication state is included."
+  }
+}

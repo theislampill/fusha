@@ -1,0 +1,37 @@
+{
+  "checks": [
+    "compact_matches_at_rest",
+    "expanded_labels_exact",
+    "hover_boundary_exact",
+    "segments_reconstruct_exact_surface",
+    "candidate_only"
+  ],
+  "expected": {
+    "candidate_status": "candidate",
+    "hover_labels": [
+      "Ṣarf — how this piece forms the word",
+      "Naḥw — what this piece does here"
+    ],
+    "live_mutation_allowed": false,
+    "segment_classes": [
+      "qg-relative"
+    ],
+    "segments": [
+      {
+        "gloss_contribution": "what / that which",
+        "letter_ownership_class": "function_particle",
+        "qg_class": "qg-relative",
+        "role": "relative_particle",
+        "root": null,
+        "root_status": "function_only_no_root",
+        "segment_index": 0,
+        "surface": "مَا"
+      }
+    ],
+    "surface": "مَا",
+    "token_address": "2:284:10",
+    "wbw_loc": "wbw:2:284:10"
+  },
+  "payload_identity": "proofp.ma.2-284-10.v1",
+  "schema": "qamus.proof_particle.parity_fixture.v1"
+}

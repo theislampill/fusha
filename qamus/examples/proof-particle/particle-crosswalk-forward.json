@@ -1,0 +1,18 @@
+{
+  "card_id": "card:b8e480aebafe:u1:x1",
+  "card_ref": "2:284",
+  "edge_ids": [
+    "edge:e6f652bcbe408e35feb7b591",
+    "edge:2831a279ad2a5a84113ba2bd",
+    "edge:db498615864f9b668fdf5ab8"
+  ],
+  "entry_id": "b8e480aebafe",
+  "occurrence_id": "quran:2:284:10",
+  "reason": "The exact occurrence address is source-addressed, but the source selected-word crosswalk leaves occurrence_id empty and the card repeats the same surface.",
+  "schema": "qamus.proof_particle.entry_occurrence_forward.v1",
+  "selected_word_id": "selected-word:b8e480aebafe:s1:u1:f1:c2:284:x1",
+  "selected_word_status": "deterministic_exact",
+  "source_crosswalk_occurrence_id": "",
+  "surface": "مَا",
+  "trace_status": "candidate"
+}
