@@ -5295,6 +5295,53 @@ except Exception as _idx_e:
     check("F-B/F-C occurrence appearance parity gates (harness error)", False)
     print("  ", _idx_e)
 
+# VNMAP: entry -> sense -> example card -> selected word -> canonical
+# occurrence joins.  Both the focused tests and the committed artifacts are
+# repo-self-contained; external corpus paths are used only by the explicit
+# operational builder command.
+try:
+    _vn_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_entry_card_word_ledger",
+        "-q",
+    ], timeout=120)
+    check(
+        "VNMAP entry-card ledger focused tests pass",
+        _vn_unit.returncode == 0
+        and "OK" in ((_vn_unit.stdout or "") + (_vn_unit.stderr or "")),
+    )
+    _vn_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_vn_ledger.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "VNMAP ledger validator red-first self-test passes",
+        _vn_self.returncode == 0
+        and "VNMAP LEDGER SELF-TEST PASS" in (_vn_self.stdout or ""),
+    )
+    _vn_artifacts = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_vn_ledger.py"),
+        "--ledger",
+        os.path.join(ROOT, "vn-ledger.jsonl"),
+        "--metrics",
+        os.path.join(ROOT, "vn-graph-metrics.json"),
+        "--matrix",
+        os.path.join(ROOT, "vn-readiness-matrix.json"),
+        "--structure-only",
+    ], timeout=120)
+    check(
+        "VNMAP committed ledger/matrix/metrics structure gate passes",
+        _vn_artifacts.returncode == 0
+        and "VNMAP LEDGER VALIDATION PASS" in (_vn_artifacts.stdout or ""),
+    )
+except Exception as _vn_e:
+    check("VNMAP ledger gates (harness error)", False)
+    print("  ", _vn_e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)
