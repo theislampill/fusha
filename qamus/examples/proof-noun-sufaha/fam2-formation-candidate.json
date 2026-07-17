@@ -1,0 +1,569 @@
+{
+  "canonical_occurrence": {
+    "card_id": "fam2:1ffcc554ec44",
+    "entry_id": "1ffcc554ec44",
+    "occurrence_id": "quran:2:13:12",
+    "quran_loc": "2:13:12",
+    "surface": "سُفَهَاء",
+    "surface_length": 8,
+    "wbw_loc": "wbw:2:13:12"
+  },
+  "contract_id": "fam2:lexical:2:13:12",
+  "contract_version": "1.0.0",
+  "facts": [
+    {
+      "certification": {
+        "reason": "Entry form pair is source-addressed for calibration only.",
+        "status": "candidate"
+      },
+      "contradiction_records": [],
+      "defeaters": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "entry:1ffcc554ec44:usage[0].forms[2]",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:1ffcc554ec44:usage[0].forms[1]",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "registry:fam2-lexical:pattern:broken.fa3il_to_fu3alaa",
+            "source_kind": "review_artifact"
+          }
+        ]
+      },
+      "dependent_fact_ids": [
+        "sha256:d476c85b659d7e33b33c2efee1250be91b591eab98f04d179b3db7df078c97d4"
+      ],
+      "dependent_projection_ids": [
+        "fam2.lexical.2.13.12.v1"
+      ],
+      "derivation_chain": [],
+      "evidence": {
+        "confidence": "high",
+        "evidence_ids": [
+          "entry:1ffcc554ec44:usage[0].forms[2]",
+          "entry:1ffcc554ec44:usage[0].forms[1]"
+        ],
+        "status": "source_addressed_candidate",
+        "summary": "The supplied Qamus entry contains the exact singular and plural written forms."
+      },
+      "evidence_mode": "direct_source_attestation",
+      "fact_id": "sha256:c8a1e7da8b9dc2d0dc8ab1de3e93bf862e2551cb4271aa13ad977395434f7aab",
+      "fact_type": "entry_form_pair",
+      "fact_value": {
+        "entry_id": "1ffcc554ec44",
+        "entry_plural_surface": "سُفَهَاء",
+        "entry_singular_surface": "سَفِيهًا",
+        "occurrence": {
+          "loc": "2:13:12",
+          "surface": "سُفَهَاء"
+        },
+        "pair_role": "entry_backed_singular_plural",
+        "plural_surface": "سُفَهَاء",
+        "singular_surface": "سَفِيه",
+        "source_fields": [
+          "entry:1ffcc554ec44:usage[0].forms[2]",
+          "entry:1ffcc554ec44:usage[0].forms[1]"
+        ]
+      },
+      "guards": [
+        {
+          "guard_id": "fam2.entry_lookup_exact",
+          "reason": "Both forms are read from one caller-supplied entry."
+        },
+        {
+          "guard_id": "fam2.surface_span_exact",
+          "reason": "The full written occurrence span is retained without repainting."
+        },
+        {
+          "guard_id": "fam2.candidate_only",
+          "reason": "The record cannot authorize whitelist or renderer mutation."
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fam2-lexical-formation",
+          "owner_type": "producer"
+        },
+        "secondary": [
+          {
+            "owner_id": "qamus-entry-source",
+            "owner_type": "source_owner"
+          },
+          {
+            "owner_id": "sarf-formation-registry",
+            "owner_type": "rule_owner"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.fam2_lexical_producer",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "sarf.fam2.lexical_formation.v1",
+        "rule_id": "fam2.entry_form_pair",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "entry:1ffcc554ec44",
+        "source_kind": "qamus_entry_field"
+      },
+      "source_address": {
+        "address": "entry:1ffcc554ec44:usage[0].forms[2]",
+        "source_kind": "qamus_entry_field"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "entry:1ffcc554ec44:usage[0].forms[2]",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:1ffcc554ec44:usage[0].forms[1]",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "registry:fam2-lexical:pattern:broken.fa3il_to_fu3alaa",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "entry_id": "1ffcc554ec44",
+          "source_fields": [
+            "entry:1ffcc554ec44:usage[0].forms[2]",
+            "entry:1ffcc554ec44:usage[0].forms[1]"
+          ],
+          "source_record_id": "fam2:occurrence:2:13:12"
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 8,
+          "role": "lexical_formation_occurrence",
+          "span_id": "occurrence",
+          "start": 0,
+          "surface": "سُفَهَاء"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "Named pattern match remains a calibration candidate pending owner review.",
+        "status": "candidate"
+      },
+      "contradiction_records": [],
+      "defeaters": [],
+      "dependencies": {
+        "fact_ids": [
+          "sha256:c8a1e7da8b9dc2d0dc8ab1de3e93bf862e2551cb4271aa13ad977395434f7aab"
+        ],
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "entry:1ffcc554ec44:usage[0].forms[2]",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:1ffcc554ec44:usage[0].forms[1]",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "registry:fam2-lexical:pattern:broken.fa3il_to_fu3alaa",
+            "source_kind": "review_artifact"
+          }
+        ]
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "fam2.lexical.2.13.12.v1"
+      ],
+      "derivation_chain": [
+        {
+          "input_fact_ids": [
+            "sha256:c8a1e7da8b9dc2d0dc8ab1de3e93bf862e2551cb4271aa13ad977395434f7aab"
+          ],
+          "input_source_addresses": [
+            {
+              "address": "quran:2:13:12",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "entry:1ffcc554ec44:usage[0].forms[2]",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:1ffcc554ec44:usage[0].forms[1]",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "registry:fam2-lexical:pattern:broken.fa3il_to_fu3alaa",
+              "source_kind": "review_artifact"
+            }
+          ],
+          "operation": "apply_named_pattern_to_entry_backed_pair",
+          "output": "formation_evidence:broken.fa3il_to_fu3alaa:سُفَهَاء",
+          "step_id": "fam2.formation.from.entry_pair"
+        }
+      ],
+      "evidence": {
+        "confidence": "high",
+        "evidence_ids": [
+          "sha256:c8a1e7da8b9dc2d0dc8ab1de3e93bf862e2551cb4271aa13ad977395434f7aab",
+          "registry:broken.fa3il_to_fu3alaa"
+        ],
+        "status": "source_addressed_candidate",
+        "summary": "The named pattern reconstructs the entry-backed pair; no English gloss or morphline participates."
+      },
+      "evidence_mode": "paired_form_inference",
+      "fact_id": "sha256:d476c85b659d7e33b33c2efee1250be91b591eab98f04d179b3db7df078c97d4",
+      "fact_type": "formation_evidence",
+      "fact_value": {
+        "entry_id": "1ffcc554ec44",
+        "occurrence": {
+          "loc": "2:13:12",
+          "surface": "سُفَهَاء"
+        },
+        "pattern_id": "broken.fa3il_to_fu3alaa",
+        "pattern_pair": {
+          "name": "فَعِيل → فُعَلَاء",
+          "plural": "فُعَلَاء",
+          "singular": "فَعِيل"
+        },
+        "plural_surface": "سُفَهَاء",
+        "reconstruction_proof": {
+          "algorithm": "entry_form_pair_then_named_pattern_match",
+          "input_surface": "سُفَهَاء",
+          "output_surface": "سُفَهَاء",
+          "passed": true,
+          "source_addresses": [
+            {
+              "address": "quran:2:13:12",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "entry:1ffcc554ec44:usage[0].forms[2]",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:1ffcc554ec44:usage[0].forms[1]",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "registry:fam2-lexical:pattern:broken.fa3il_to_fu3alaa",
+              "source_kind": "review_artifact"
+            }
+          ],
+          "steps": [
+            {
+              "operation": "read_entry_form",
+              "source_address": "entry:1ffcc554ec44:usage[0].forms[2]",
+              "step_id": "lookup_singular"
+            },
+            {
+              "operation": "read_entry_form",
+              "source_address": "entry:1ffcc554ec44:usage[0].forms[1]",
+              "step_id": "lookup_plural"
+            },
+            {
+              "operation": "match_registered_pattern",
+              "pattern_id": "broken.fa3il_to_fu3alaa",
+              "step_id": "named_pattern"
+            },
+            {
+              "operation": "retain_exact_written_span",
+              "step_id": "bind_occurrence",
+              "surface_span_id": "occurrence"
+            }
+          ]
+        },
+        "singular_surface": "سَفِيه",
+        "source_fields": [
+          "entry:1ffcc554ec44:usage[0].forms[2]",
+          "entry:1ffcc554ec44:usage[0].forms[1]"
+        ],
+        "sub_shape": "broken_plural",
+        "written_span": {
+          "end": 8,
+          "start": 0,
+          "surface": "سُفَهَاء"
+        }
+      },
+      "guards": [
+        {
+          "guard_id": "fam2.entry_backed_singular",
+          "reason": "The singular is present in the same entry as the observed plural."
+        },
+        {
+          "guard_id": "fam2.named_pattern_pair",
+          "reason": "The pattern id and written pair are matched by the registered projector."
+        },
+        {
+          "guard_id": "fam2.exact_written_orthography",
+          "reason": "Hamza seats, tāʾ marbūṭa, and defective spellings are not normalized."
+        },
+        {
+          "guard_id": "fam2.no_label_inference",
+          "reason": "A label alone cannot create this typed fact."
+        },
+        {
+          "guard_id": "fam2.candidate_only",
+          "reason": "No public materialization or live mutation is authorized."
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "fam2-lexical-formation",
+          "owner_type": "producer"
+        },
+        "secondary": [
+          {
+            "owner_id": "qamus-entry-source",
+            "owner_type": "source_owner"
+          },
+          {
+            "owner_id": "sarf-formation-registry",
+            "owner_type": "rule_owner"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.fam2_lexical_producer",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "sarf.fam2.lexical_formation.v1",
+        "rule_id": "fam2.pattern.broken.fa3il_to_fu3alaa",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "registry:fam2-lexical:pattern:broken.fa3il_to_fu3alaa",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "registry:fam2-lexical:pattern:broken.fa3il_to_fu3alaa",
+        "source_kind": "review_artifact"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "quran:2:13:12",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "entry:1ffcc554ec44:usage[0].forms[2]",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:1ffcc554ec44:usage[0].forms[1]",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "registry:fam2-lexical:pattern:broken.fa3il_to_fu3alaa",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "entry_id": "1ffcc554ec44",
+          "source_fields": [
+            "entry:1ffcc554ec44:usage[0].forms[2]",
+            "entry:1ffcc554ec44:usage[0].forms[1]"
+          ],
+          "source_record_id": "fam2:occurrence:2:13:12"
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 8,
+          "role": "lexical_formation_occurrence",
+          "span_id": "occurrence",
+          "start": 0,
+          "surface": "سُفَهَاء"
+        }
+      ],
+      "unresolved_blockers": []
+    }
+  ],
+  "projection": {
+    "claim": {
+      "fact_bindings": [
+        {
+          "fact_field": "fact_value.sub_shape",
+          "fact_id": "sha256:d476c85b659d7e33b33c2efee1250be91b591eab98f04d179b3db7df078c97d4",
+          "surface_span_ids": [
+            "occurrence"
+          ]
+        },
+        {
+          "fact_field": "fact_value.pattern_id",
+          "fact_id": "sha256:d476c85b659d7e33b33c2efee1250be91b591eab98f04d179b3db7df078c97d4",
+          "surface_span_ids": [
+            "occurrence"
+          ]
+        },
+        {
+          "fact_field": "fact_value.pattern_pair.name",
+          "fact_id": "sha256:d476c85b659d7e33b33c2efee1250be91b591eab98f04d179b3db7df078c97d4",
+          "surface_span_ids": [
+            "occurrence"
+          ]
+        },
+        {
+          "fact_field": "fact_value.reconstruction_proof.output_surface",
+          "fact_id": "sha256:d476c85b659d7e33b33c2efee1250be91b591eab98f04d179b3db7df078c97d4",
+          "surface_span_ids": [
+            "occurrence"
+          ]
+        }
+      ],
+      "language": "en",
+      "text": "This formation claim is bound to an entry-backed pair and a named registered pattern."
+    },
+    "learner_statement": "Ṣarf — how this piece forms the word: The entry-backed singular is paired by the named broken.fa3il_to_fu3alaa formation rule. Naḥw — what this piece does here: This exact lexical piece functions as the broken plural in this occurrence.",
+    "learner_visible": true,
+    "materialization_target": {
+      "artifact": "qamus/examples/fam2-lexical/calibration-sample.jsonl",
+      "field": "formation",
+      "live_mutation_allowed": false,
+      "public_materialization_allowed": false
+    },
+    "projection_id": "fam2.lexical.2.13.12.v1",
+    "public_payload": {
+      "authorization_state": "pre_apply_not_authorized",
+      "formation_fact_id": "sha256:d476c85b659d7e33b33c2efee1250be91b591eab98f04d179b3db7df078c97d4",
+      "learner_copy": {
+        "compact_view": {
+          "payload_id": "fd.fam2.payload:89de2ab47ad9a0170b0249bd",
+          "surface": "سُفَهَاء",
+          "text": "Ṣarf — how this piece forms the word: The entry-backed singular is paired by the named broken.fa3il_to_fu3alaa formation rule. Naḥw — what this piece does here: This exact lexical piece functions as the broken plural in this occurrence."
+        },
+        "expanded_view": {
+          "formation": {
+            "entry_id": "1ffcc554ec44",
+            "occurrence": {
+              "loc": "2:13:12",
+              "surface": "سُفَهَاء"
+            },
+            "pattern_id": "broken.fa3il_to_fu3alaa",
+            "pattern_pair": {
+              "name": "فَعِيل → فُعَلَاء",
+              "plural": "فُعَلَاء",
+              "singular": "فَعِيل"
+            },
+            "plural_surface": "سُفَهَاء",
+            "reconstruction_proof": {
+              "algorithm": "entry_form_pair_then_named_pattern_match",
+              "input_surface": "سُفَهَاء",
+              "output_surface": "سُفَهَاء",
+              "passed": true,
+              "source_addresses": [
+                {
+                  "address": "quran:2:13:12",
+                  "source_kind": "quran_token"
+                },
+                {
+                  "address": "entry:1ffcc554ec44:usage[0].forms[2]",
+                  "source_kind": "qamus_entry_field"
+                },
+                {
+                  "address": "entry:1ffcc554ec44:usage[0].forms[1]",
+                  "source_kind": "qamus_entry_field"
+                },
+                {
+                  "address": "registry:fam2-lexical:pattern:broken.fa3il_to_fu3alaa",
+                  "source_kind": "review_artifact"
+                }
+              ],
+              "steps": [
+                {
+                  "operation": "read_entry_form",
+                  "source_address": "entry:1ffcc554ec44:usage[0].forms[2]",
+                  "step_id": "lookup_singular"
+                },
+                {
+                  "operation": "read_entry_form",
+                  "source_address": "entry:1ffcc554ec44:usage[0].forms[1]",
+                  "step_id": "lookup_plural"
+                },
+                {
+                  "operation": "match_registered_pattern",
+                  "pattern_id": "broken.fa3il_to_fu3alaa",
+                  "step_id": "named_pattern"
+                },
+                {
+                  "operation": "retain_exact_written_span",
+                  "step_id": "bind_occurrence",
+                  "surface_span_id": "occurrence"
+                }
+              ]
+            },
+            "singular_surface": "سَفِيه",
+            "source_fields": [
+              "entry:1ffcc554ec44:usage[0].forms[2]",
+              "entry:1ffcc554ec44:usage[0].forms[1]"
+            ],
+            "sub_shape": "broken_plural",
+            "written_span": {
+              "end": 8,
+              "start": 0,
+              "surface": "سُفَهَاء"
+            }
+          },
+          "nahw": "Naḥw — what this piece does here: This exact lexical piece functions as the broken plural in this occurrence.",
+          "payload_id": "fd.fam2.payload:89de2ab47ad9a0170b0249bd",
+          "sarf": "Ṣarf — how this piece forms the word: The entry-backed singular is paired by the named broken.fa3il_to_fu3alaa formation rule.",
+          "surface": "سُفَهَاء"
+        },
+        "generated_from_facts": true,
+        "learner_complete": true,
+        "learner_explanation": "Ṣarf — how this piece forms the word: The entry-backed singular is paired by the named broken.fa3il_to_fu3alaa formation rule. Naḥw — what this piece does here: This exact lexical piece functions as the broken plural in this occurrence.",
+        "n_lang_clean": true,
+        "nahw": "Naḥw — what this piece does here: This exact lexical piece functions as the broken plural in this occurrence.",
+        "nahw_text": "Naḥw — what this piece does here: This exact lexical piece functions as the broken plural in this occurrence.",
+        "payload_id": "fd.fam2.payload:89de2ab47ad9a0170b0249bd",
+        "reconstruction_passed": true,
+        "sarf": "Ṣarf — how this piece forms the word: The entry-backed singular is paired by the named broken.fa3il_to_fu3alaa formation rule.",
+        "sarf_text": "Ṣarf — how this piece forms the word: The entry-backed singular is paired by the named broken.fa3il_to_fu3alaa formation rule.",
+        "segments": [
+          {
+            "label": "LEXICAL FORMATION",
+            "nahw_note": "Naḥw — what this piece does here: This exact lexical piece functions as the broken plural in this occurrence.",
+            "role": "lexical_host",
+            "sarf_note": "Ṣarf — how this piece forms the word: The entry-backed singular is paired by the named broken.fa3il_to_fu3alaa formation rule.",
+            "segment_index": 0,
+            "surface": "سُفَهَاء"
+          }
+        ],
+        "surface": "سُفَهَاء"
+      },
+      "segments": [
+        {
+          "role": "lexical_host",
+          "surface": "سُفَهَاء"
+        }
+      ],
+      "surface": "سُفَهَاء",
+      "surface_preserved": true
+    },
+    "status": "candidate",
+    "unresolved_status": null
+  },
+  "record_type": "projection_input",
+  "schema": "qamus.typed_claim_contract.v1"
+}

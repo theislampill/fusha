@@ -1,0 +1,30 @@
+{
+  "comparison": {
+    "introduced": [
+      "ا",
+      "ء"
+    ],
+    "plural": {
+      "pattern": "فُعَلَاء",
+      "span_note": "lexical body without final ُ",
+      "surface": "سُفَهَاء"
+    },
+    "removed": "ي",
+    "retained_radicals": [
+      "س",
+      "ف",
+      "ه"
+    ],
+    "root": "س ف ه",
+    "singular": {
+      "pattern": "فَعِيل",
+      "span_note": "paired source form",
+      "surface": "سَفِيه"
+    }
+  },
+  "label": "Ṣarf — how this piece forms the word",
+  "n_lang_clean": true,
+  "payload_id": "proofn.payload.sufaha.v1:ba3b758e79f88bf5505c638645ca79f17431404ced04270437b4ac73d6324c8c",
+  "schema": "qamus.proofn.expanded_sarf.v1",
+  "text": "Ṣarf — how this piece forms the word: The root س ف ه is retained. The singular سَفِيه follows فَعِيل; the plural body سُفَهَاء follows فُعَلَاء. The paired certified augment inventories name ي for the singular and ا + ء for the plural, so the plural has no ي."
+}

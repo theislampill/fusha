@@ -1,0 +1,18 @@
+{
+  "schema": "qamus.proofn.render_proof.v1",
+  "status": "measured_local",
+  "font_check": true,
+  "exact_reconstruction": true,
+  "compact_present": true,
+  "expanded_present": true,
+  "same_payload_identity": true,
+  "appearance_parity": true,
+  "live_mutation_allowed": false,
+  "readback_target_status": "declared_not_measured",
+  "screenshot_path": "local-only: proofn-card.png",
+  "png_policy": "local-only-not-tracked",
+  "viewport": {
+    "width": 1440,
+    "height": 1100
+  }
+}
