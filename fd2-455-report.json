@@ -1,0 +1,152 @@
+{
+  "candidate_only": true,
+  "flag_matrix": {},
+  "input_artifacts": {
+    "corpus": "rh_live_01_beta_whitelist.jsonl",
+    "entries": "entries.jsonl",
+    "stratification": "strat-455.jsonl",
+    "verdicts": "v575-verdicts.jsonl"
+  },
+  "input_verdict_count": 575,
+  "live_mutation_allowed": false,
+  "metric_definitions": {
+    "newly discovered producer defects": "Producer exceptions or positive records that violate their typed-output contract; guarded abstentions are not defects.",
+    "projection conflicts": "Rows where a generated producer/view surface conflicts with the canonical source surface.",
+    "reconstruction failures": "Rows with failed source or typed-producer reconstruction.",
+    "rows generating at-rest projection": "Rows whose source segments are owned and concatenate exactly to the canonical surface.",
+    "rows generating both compact and expanded views": "Rows with a fact-derived payload exposing one payload identity through compact and expanded views.",
+    "rows generating rich Naḥw": "Rows with a positive typed local/F-C naḥw view that is N-LANG-clean.",
+    "rows generating rich Ṣarf": "Rows with a positive F-B fact-derived Ṣarf view that is N-LANG-clean.",
+    "rows with both": "Rows satisfying both complete-fact predicates after the bounded merge.",
+    "rows with complete morphology facts": "Rows with an existing structured morphology carrier or a positive guarded F-B clitic-composition fact.",
+    "rows with complete naḥw facts": "Rows with an existing structured naḥw carrier or a positive guarded F-C dependency fact.",
+    "rows with repeated-appearance parity": "Rows whose exact location has a unique merged occurrence record with two or more appearances and a stable projection hash.",
+    "source/scholar queues": "Source and scholar queue counts; all verified candidate rows remain scholar-routed, while source counts identify input/producer/structural follow-up.",
+    "unresolved rows by exact blocker": "Counts of row blockers by exact stable blocker code or producer selector reason."
+  },
+  "metrics": {
+    "newly discovered producer defects": {
+      "count": 0,
+      "items": []
+    },
+    "projection conflicts": 0,
+    "reconstruction failures": 0,
+    "rows generating at-rest projection": 455,
+    "rows generating both compact and expanded views": 247,
+    "rows generating rich Naḥw": 247,
+    "rows generating rich Ṣarf": 201,
+    "rows with both": 126,
+    "rows with complete morphology facts": 213,
+    "rows with complete naḥw facts": 168,
+    "rows with repeated-appearance parity": 455,
+    "source/scholar queues": {
+      "both": 324,
+      "routes": {
+        "source/scholar": 455
+      },
+      "scholar": 455,
+      "source": 324
+    },
+    "unresolved rows by exact blocker": {
+      "fb1.function_ambiguity": 5,
+      "fb1.idgham_D_ambiguous_boundary": 28,
+      "fc:no source-addressable naḥw note is present": 256,
+      "fc:source notes do not identify a safe exact dependency pair": 40,
+      "learner_language_missing": 178,
+      "morphology_facts_missing": 242,
+      "nahw_facts_missing": 287
+    }
+  },
+  "movement": {
+    "after": {
+      "rows lacking learner-language": 178,
+      "rows needing F-B": 242,
+      "rows needing F-C": 287,
+      "rows with repeated-appearance coverage": 455
+    },
+    "before": {
+      "rows lacking learner-language": 383,
+      "rows needing F-B": 437,
+      "rows needing F-C": 437,
+      "rows with repeated-appearance coverage": 0
+    },
+    "delta": {
+      "rows lacking learner-language": -205,
+      "rows needing F-B": -195,
+      "rows needing F-C": -150,
+      "rows with repeated-appearance coverage": 455
+    },
+    "interpretation": "Movement measures this calibrated 455-row candidate rerun only; it is not corpus-wide certification or live coverage."
+  },
+  "occurrence_index": {
+    "external_paths_embedded": false,
+    "locations": 34323,
+    "stats": {
+      "distinct_entry_relationships": 1448,
+      "entry_example_appearances": 21794,
+      "entry_id_resolved_rows": 20888,
+      "entry_id_unresolved_rows": 906,
+      "entry_signal_rows": 21794,
+      "entry_store_ayah_refs": 7684,
+      "entry_store_entries": 2092,
+      "entry_store_exact_loc_refs": 0,
+      "entry_store_examples": 7700,
+      "entry_store_matched_refs": 4382,
+      "entry_store_unresolved_refs": 3318,
+      "occurrences_with_entry_relationships": 20888,
+      "reader_appearances": 34323,
+      "source": "merged occurrence index built in memory from explicit corpus and entries paths",
+      "total_appearances": 56117,
+      "total_entry_relationships": 20888,
+      "unique_occurrences": 34323,
+      "whitelist_rows": 34323
+    }
+  },
+  "primary_blocker_counts": {
+    "fb1.function_ambiguity": 4,
+    "fc:source notes do not identify a safe exact dependency pair": 5,
+    "learner_language_missing": 178,
+    "morphology_facts_missing": 64,
+    "nahw_facts_missing": 87,
+    "source_scholar_review": 117
+  },
+  "producer_lineage": {
+    "F-B": "tools.build_clitic_pronoun_producer@1.0.0",
+    "F-C": "tools.fc_nahw_producer@1.0.0",
+    "compiler": "tools.fd_compiler@FD2",
+    "projector": "fd.shared_candidate_projection.v1"
+  },
+  "producer_reach": {
+    "F-B": {
+      "candidate": 201,
+      "not_applicable": 221,
+      "unresolved": 33
+    },
+    "F-C": {
+      "candidate": 159,
+      "withheld": 296
+    },
+    "family_counts": {
+      "broken_plurals": 1,
+      "clitic_pronoun_compositions": 234,
+      "derived_verbs": 3,
+      "finite_verbs": 12,
+      "function_tokens": 26,
+      "lexical_nouns_adjectives": 121,
+      "number_words": 57,
+      "proper_names": 1
+    },
+    "rows": 455
+  },
+  "report_version": "1.0.0",
+  "schema": "qamus.fd2.455_rerun_report.v1",
+  "scope": {
+    "morphology_family": "F-B applies only to clitic_pronoun_compositions",
+    "nahw_condition": "F-C applies only when its exact source-evidence selector and strict contract builder accept",
+    "other_families": "prior state retained; no scope creep",
+    "row_source": "strat-455.jsonl + v575-verdicts.jsonl"
+  },
+  "verdicts_artifact": "fd2-455-verdicts.jsonl",
+  "verdicts_meta_artifact": "fd2-455-verdicts.meta.json",
+  "verified_row_count": 455
+}

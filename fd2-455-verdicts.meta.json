@@ -1,0 +1,10 @@
+{
+  "artifact": "fd2-455-verdicts.jsonl",
+  "candidate_only": true,
+  "count": 455,
+  "generator": "tools.fd2_rerun",
+  "live_mutation_allowed": false,
+  "record_type": "row_verdicts",
+  "schema": "qamus.fd2.455_rerun_verdict_meta.v1",
+  "scope": "bounded FD2 455-row candidate rerun"
+}

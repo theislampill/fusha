@@ -1,0 +1,91 @@
+# FD2 455-Row Producer-Aware Rerun
+
+This is a bounded candidate rerun of the 455 `verified` rows with the calibrated F-B and F-C producers active.
+
+## Scope and producer reach
+
+- Verified rows compiled: **455**.
+- F-B applies only to `clitic_pronoun_compositions` rows; F-C applies only when its exact source-evidence selector and strict contract builder accept.
+- Other families retain their prior state.  Guarded abstention is a queue/blocker, not a producer defect.
+- Occurrence parity uses the merged occurrence index supplied or built in memory from the explicitly passed corpus and entries paths.
+
+| Producer | Reach/status |
+|---|---:|
+| F-B | candidate=201, not_applicable=221, unresolved=33 |
+| F-C | candidate=159, withheld=296 |
+
+| Calibrated input family | Rows |
+|---|---:|
+| `broken_plurals` | 1 |
+| `clitic_pronoun_compositions` | 234 |
+| `derived_verbs` | 3 |
+| `finite_verbs` | 12 |
+| `function_tokens` | 26 |
+| `lexical_nouns_adjectives` | 121 |
+| `number_words` | 57 |
+| `proper_names` | 1 |
+
+## Owner metrics
+
+| Metric | Result |
+|---|---:|
+| rows with complete morphology facts | `213` |
+| rows with complete naḥw facts | `168` |
+| rows with both | `126` |
+| rows generating at-rest projection | `455` |
+| rows generating rich Ṣarf | `201` |
+| rows generating rich Naḥw | `247` |
+| rows generating both compact and expanded views | `247` |
+| rows with repeated-appearance parity | `455` |
+| unresolved rows by exact blocker | `{"fb1.function_ambiguity":5,"fb1.idgham_D_ambiguous_boundary":28,"fc:no source-addressable naḥw note is present":256,"fc:source notes do not identify a safe exact dependency pair":40,"learner_language_missing":178,"morphology_facts_missing":242,"nahw_facts_missing":287}` |
+| source/scholar queues | `{"both":324,"routes":{"source/scholar":455},"scholar":455,"source":324}` |
+| reconstruction failures | `0` |
+| projection conflicts | `0` |
+| newly discovered producer defects | `{"count":0,"items":[]}` |
+
+## Before → after movement
+
+| Baseline metric | Before | After | Delta |
+|---|---:|---:|---:|
+| rows needing F-B | 437 | 242 | -195 |
+| rows needing F-C | 437 | 287 | -150 |
+| rows lacking learner-language | 383 | 178 | -205 |
+| rows with repeated-appearance coverage | 0 | 455 | +455 |
+
+Movement measures this calibrated 455-row candidate rerun only; it is not corpus-wide certification or live coverage.
+
+## Exact blocker and queue routes
+
+| Primary blocker | Rows |
+|---|---:|
+| `fb1.function_ambiguity` | 4 |
+| `fc:source notes do not identify a safe exact dependency pair` | 5 |
+| `learner_language_missing` | 178 |
+| `morphology_facts_missing` | 64 |
+| `nahw_facts_missing` | 87 |
+| `source_scholar_review` | 117 |
+
+| Queue | Rows |
+|---|---:|
+| source | 324 |
+| scholar | 455 |
+| both | 324 |
+
+## Newly discovered producer defects
+
+None discovered in this bounded rerun.
+
+## EXACT NONCLAIMS
+
+- **No scholarly certification:** `verified` is the supplied structural input state; this rerun does not certify tafsīr, grammar, morphology, or scholarship.
+- **Calibration-scope only:** F-B is restricted to the calibrated clitic-pronoun family, and F-C is restricted to rows meeting its calibrated evidence conditions; no scope expansion is claimed.
+- **No live effect:** this run performs no whitelist append, restart, publication, deployment, push, release, or live/runtime mutation.
+- **No corpus-wide claim:** the movement table describes these 455 verified rows only.
+- **Repeated-appearance parity is an index witness:** it proves reuse of a canonical generated payload identity against the merged occurrence index, not live rendered-page coverage.
+
+## Artifacts
+
+- `fd2-455-report.json`
+- `fd2-455-verdicts.jsonl`
+- `fd2-455-verdicts.meta.json`
+- `FD2-REPORT.md`

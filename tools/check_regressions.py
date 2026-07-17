@@ -5213,6 +5213,24 @@ except Exception as _fd_compiler_e:
     check("F-D shared compiler gates (harness error)", False)
     print("  ", _fd_compiler_e)
 
+# F-D2: producer-aware 455-row rerun.  This gate validates only the committed
+# report/verdict fixtures; the external corpus is supplied explicitly to the
+# operational runner and is never a harness default or a repository input.
+try:
+    _fd2_rerun_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_fd2_rerun.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "F-D2 producer-aware 455 rerun committed-fixture gate passes",
+        _fd2_rerun_self.returncode == 0
+        and "FD2 RERUN SELF-TEST PASS" in (_fd2_rerun_self.stdout or ""),
+    )
+except Exception as _fd2_rerun_e:
+    check("F-D2 producer-aware rerun gate (harness error)", False)
+    print("  ", _fd2_rerun_e)
+
 # F-C1: bounded naḥw dependency producer.  The fixture and packet validators
 # are repo-self-contained; external corpus paths are intentionally not part of
 # this gate and are supplied only when the calibration packet is regenerated.
