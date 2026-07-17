@@ -5194,6 +5194,47 @@ except Exception as _fam2_e:
     check("FAM2 lexical formation producer gates (harness error)", False)
     print("  ", _fam2_e)
 
+# FAM3: bounded number-word formation producer. The fixture gate covers
+# number-specific rule carriers, homograph/orthography abstentions, and the
+# committed 57-row candidate packet without accessing the caller corpus.
+try:
+    _fam3_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_fam3_numbers.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "FAM3 number formation producer self-test and red-first fixtures pass",
+        _fam3_self.returncode == 0
+        and "FAM3 NUMBER PRODUCER SELF-TEST PASS" in (_fam3_self.stdout or ""),
+    )
+    _fam3_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_fam3_number_producer",
+        "-q",
+    ], timeout=120)
+    check(
+        "FAM3 focused typed-fact unit tests pass",
+        _fam3_unit.returncode == 0
+        and "OK" in ((_fam3_unit.stdout or "") + (_fam3_unit.stderr or "")),
+    )
+    _fam3_packet = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_fam3_numbers.py"),
+        "--fixtures",
+        os.path.join(ROOT, "qamus", "examples", "fam3-numbers"),
+    ], timeout=120)
+    check(
+        "FAM3 committed 57-row calibration packet validates (typed output, zero public mutation)",
+        _fam3_packet.returncode == 0
+        and "FAM3 NUMBER PRODUCER FIXTURES PASS" in (_fam3_packet.stdout or ""),
+    )
+except Exception as _fam3_e:
+    check("FAM3 number formation producer gates (harness error)", False)
+    print("  ", _fam3_e)
+
 # FB1: bounded clitic-pronoun producer calibration. The self-test is the
 # producer gate; the fixture and committed sample validators prove that the
 # packet remains F-A governed, >=40 rows, and repo-self-contained.

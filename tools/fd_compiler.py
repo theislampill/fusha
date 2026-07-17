@@ -1249,12 +1249,12 @@ def build_fact_derived_views(
 
 
 def build_formation_learner_view(record: dict[str, Any]) -> dict[str, Any]:
-    """Compile an FAM2 formation fact into the shared learner-view shape.
+    """Compile a lexical-family formation fact into the shared learner-view shape.
 
-    FAM2 owns the typed entry/pattern facts; this shared compiler owns the
-    learner-facing copy and its exact-surface reconstruction check.  Arabic
-    source forms stay in the typed payload and source spans, not in learner
-    prose, so the copy remains N-LANG clean.
+    The family producer owns typed entry/pattern facts; this shared compiler
+    owns learner-facing copy and exact-surface reconstruction. Arabic source
+    forms stay in the typed payload and source spans, not in learner prose, so
+    the copy remains N-LANG clean.
     """
 
     occurrence = record.get("canonical_occurrence") or {}
@@ -1273,6 +1273,14 @@ def build_formation_learner_view(record: dict[str, Any]) -> dict[str, Any]:
         "dual": "dual",
         "nisba_adjective": "nisba adjective",
         "elative": "elative",
+        "bare_cardinal": "bare cardinal",
+        "gender_polarity_cardinal": "gender-polarity cardinal",
+        "ordinals": "ordinal",
+        "compound_11_19": "compound number (11–19)",
+        "tens": "tens form",
+        "fractions": "fraction",
+        "first_last_edge": "first/last edge word",
+        "other_number_form": "other number form",
     }
     shape_label = shape_labels.get(str(value.get("sub_shape")), "lexical formation")
     pattern_id = str(value.get("pattern_id") or "named pattern")
@@ -1301,7 +1309,11 @@ def build_formation_learner_view(record: dict[str, Any]) -> dict[str, Any]:
         shape_label,
         pattern_id,
     ])
-    payload_id = "fd.fam2.payload:" + _sha256({
+    artifact = str(
+        ((record.get("projection") or {}).get("materialization_target") or {}).get("artifact") or ""
+    )
+    payload_namespace = "fd.fam3" if "fam3-numbers" in artifact else "fd.fam2"
+    payload_id = payload_namespace + ".payload:" + _sha256({
         "surface": surface,
         "formation_fact_id": formation_facts[0].get("fact_id"),
         "sarf": sarf_text,
