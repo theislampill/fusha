@@ -5275,6 +5275,48 @@ except Exception as _fam4_e:
     check("FAM4 finite-verb producer gates (harness error)", False)
     print("  ", _fam4_e)
 
+# FAM5: bounded derived-verb producer calibration. The harness intentionally
+# runs only repository-owned fixtures and the committed seven-row packet; the
+# packet itself was generated from caller-supplied lane inputs and read-only
+# corpus records.
+try:
+    _fam5_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_fam5_derived_verbs.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "FAM5 derived-verb producer self-test and red-first fixtures pass",
+        _fam5_self.returncode == 0
+        and "FAM5 DERIVED-VERB PRODUCER SELF-TEST PASS" in (_fam5_self.stdout or ""),
+    )
+    _fam5_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_fam5_derived_verb_producer",
+        "-q",
+    ], timeout=120)
+    check(
+        "FAM5 focused typed-fact unit tests pass",
+        _fam5_unit.returncode == 0
+        and "OK" in ((_fam5_unit.stdout or "") + (_fam5_unit.stderr or "")),
+    )
+    _fam5_packet = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_fam5_derived_verbs.py"),
+        "--fixtures",
+        os.path.join(ROOT, "qamus", "examples", "fam5-derived-verbs"),
+    ], timeout=120)
+    check(
+        "FAM5 committed seven-row calibration packet validates (typed output, zero public mutation)",
+        _fam5_packet.returncode == 0
+        and "FAM5 DERIVED-VERB PRODUCER FIXTURES PASS" in (_fam5_packet.stdout or ""),
+    )
+except Exception as _fam5_e:
+    check("FAM5 derived-verb producer gates (harness error)", False)
+    print("  ", _fam5_e)
+
 # FB1: bounded clitic-pronoun producer calibration. The self-test is the
 # producer gate; the fixture and committed sample validators prove that the
 # packet remains F-A governed, >=40 rows, and repo-self-contained.
