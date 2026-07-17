@@ -1,0 +1,71 @@
+{
+  "candidate_count": 8,
+  "candidate_mode": "pre_apply_not_authorized",
+  "family": "number_words",
+  "family_population": 57,
+  "materialization": "none",
+  "sample_size": 57,
+  "source_inputs": "caller-supplied stratified rows, verdict rows, whitelist rows, and entry records",
+  "source_survey": {
+    "entry_evidence_availability": {
+      "hosting_entry_only": 5,
+      "joinable_entry_with_usable_forms": 52
+    },
+    "entry_id_semantics": "whitelist entry_id is a verse-context edge; exact observed-surface match is required before base use",
+    "exact_surface_entry_match_rows": 16,
+    "family_rows": 57,
+    "joined_entry_ambiguity_rows": 14,
+    "orthography_near_miss_rows": 10,
+    "rows_without_exact_entry_surface_match": 31,
+    "whitelist_rows_with_joined_entry_id": 57
+  },
+  "sub_shape_populations": {
+    "bare_cardinal": {
+      "abstention_count": 5,
+      "candidate_count": 4,
+      "population": 9
+    },
+    "compound_11_19": {
+      "abstention_count": 4,
+      "candidate_count": 0,
+      "population": 4
+    },
+    "first_last_edge": {
+      "abstention_count": 0,
+      "candidate_count": 0,
+      "population": 0
+    },
+    "fractions": {
+      "abstention_count": 0,
+      "candidate_count": 0,
+      "population": 0
+    },
+    "gender_polarity_cardinal": {
+      "abstention_count": 6,
+      "candidate_count": 0,
+      "population": 6
+    },
+    "ordinals": {
+      "abstention_count": 1,
+      "candidate_count": 0,
+      "population": 1
+    },
+    "other_number_form": {
+      "abstention_count": 8,
+      "candidate_count": 2,
+      "population": 10
+    },
+    "tens": {
+      "abstention_count": 4,
+      "candidate_count": 2,
+      "population": 6
+    },
+    "unclassified": {
+      "abstention_count": 21,
+      "candidate_count": 0,
+      "population": 21
+    }
+  },
+  "unresolved_count": 49,
+  "verdict_coverage": "57/57 exact locations present"
+}

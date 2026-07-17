@@ -196,6 +196,7 @@ class RegistryTests(unittest.TestCase):
                 fact_projectors.TRANCHE1_SARF_PROJECTOR_ID,
                 fact_projectors.TRANCHE1_NAHW_PROJECTOR_ID,
                 fact_projectors.FAM2_LEXICAL_PROJECTOR_ID,
+                fact_projectors.FAM3_NUMBER_PROJECTOR_ID,
             },
             {item["projector_id"] for item in contracts},
         )
@@ -203,6 +204,33 @@ class RegistryTests(unittest.TestCase):
             self.assertEqual([], fact_projectors.validate_projector_record(contract))
             self.assertTrue(contract["defeater_checks"])
             self.assertIn(contract["gate_tier"], fact_projectors.load_gate_tiers())
+
+    def test_fam3_number_projector_reuses_registered_pattern_and_abstains(self):
+        from tools import fam3_number_producer
+
+        registry = fam3_number_producer.load_pattern_registry(
+            ROOT / "qamus" / "examples" / "fam3-numbers" / "pattern-registry.jsonl"
+        )
+        candidate = fact_projectors.REGISTRY.run(
+            fact_projectors.FAM3_NUMBER_PROJECTOR_ID,
+            base_surface="أَلْف",
+            observed_surface="أُلُوف",
+            pattern_id="cardinal.base_to_number_form",
+            context={"entry_direct": True},
+            pattern_registry=registry,
+        )
+        self.assertEqual("candidate", candidate["status"])
+        self.assertEqual("formation_evidence", candidate["candidate"]["fact_type"])
+        abstained = fact_projectors.REGISTRY.run(
+            fact_projectors.FAM3_NUMBER_PROJECTOR_ID,
+            base_surface="أَلْف",
+            observed_surface="أُلُوف",
+            pattern_id="cardinal.base_to_number_form",
+            context={"entry_direct": False},
+            pattern_registry=registry,
+        )
+        self.assertEqual("abstained", abstained["status"])
+        self.assertFalse(abstained["materialization_allowed"])
 
     def test_missing_defeater_list_and_unregistered_projector_fail_closed(self):
         contract = copy.deepcopy(fact_projectors.REGISTRY.list_contracts()[0])

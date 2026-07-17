@@ -137,6 +137,48 @@ class FAM3NumberProducerTests(unittest.TestCase):
             },
         )
 
+    def test_exact_entry_variant_uses_registered_number_rule(self) -> None:
+        fixture = self._fixture("thousands-plural-entry-variant")
+        record = self.producer.produce_record(
+            fixture["row"], entries=self.entries, pattern_registry=self.patterns
+        )
+        self.assertEqual("candidate", record["projection"]["status"])
+        formation = next(fact for fact in record["facts"] if fact["fact_type"] == "formation_evidence")
+        self.assertEqual("cardinal.base_to_number_form", formation["fact_value"]["pattern_id"])
+
+    def test_number_learner_payload_has_family_namespace_and_shape_copy(self) -> None:
+        fixture = self._fixture("tens-fourty")
+        record = self.producer.produce_record(
+            fixture["row"], entries=self.entries, pattern_registry=self.patterns
+        )
+        learner_copy = record["projection"]["public_payload"]["learner_copy"]
+        self.assertTrue(learner_copy["payload_id"].startswith("fd.fam3.payload:"))
+        self.assertIn("tens form", learner_copy["nahw"])
+
+    def test_fixture_boundary_validator_is_clean(self) -> None:
+        from tools import validate_fam3_numbers
+
+        self.assertEqual([], validate_fam3_numbers.validate_fixture_boundary(FIXTURES))
+
+    def test_report_builder_emits_full_calibration_sections(self) -> None:
+        from tempfile import TemporaryDirectory
+        from tools import build_fam3_report
+
+        with TemporaryDirectory() as directory:
+            output = Path(directory) / "FAM3-REPORT.md"
+            build_fam3_report.build_report(FIXTURES / "generated", output)
+            report = output.read_text(encoding="utf-8")
+        self.assertIn("Precision + abstention by sub-shape", report)
+        self.assertIn("Per-row outcome table", report)
+        self.assertIn("Exact nonclaims", report)
+        self.assertIn("Compounding Impact", report)
+        self.assertEqual(57, report.count("| quran:"))
+
+    def test_quranic_number_spelling_is_classified_before_abstention(self) -> None:
+        self.assertEqual("tens", self.producer.classify_sub_shape({"surface": "ثَمَٰنِينَ"}))
+        self.assertEqual("tens", self.producer.classify_sub_shape({"surface": "ثَلَٰثُونَ"}))
+        self.assertEqual("other_number_form", self.producer.classify_sub_shape({"surface": "ٱثْنَيْنِ"}))
+
 
 if __name__ == "__main__":
     unittest.main()
