@@ -1,0 +1,3677 @@
+{
+  "candidate_mode": "pre_apply_not_authorized",
+  "canonical_occurrence": {
+    "occurrence_id": "quran:19:43:10",
+    "quran_loc": "19:43:10",
+    "surface": "فَٱتَّبِعْنِىٓ",
+    "surface_length": 14,
+    "wbw_loc": "wbw:19:43:10"
+  },
+  "facts": [
+    {
+      "certification": {
+        "reason": "The whitelist row is a candidate input, not a linguistic certification transition.",
+        "status": "candidate"
+      },
+      "contradiction_records": [],
+      "defeaters": [
+        {
+          "defeater_id": "proofv.candidate_only",
+          "fact_ids": [],
+          "reason": "candidate mode remains active"
+        }
+      ],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": []
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "proofv.verb.19.43.10.v1"
+      ],
+      "derivation_chain": [],
+      "evidence": {
+        "confidence": "high",
+        "evidence_ids": [
+          "quran:19:43:10",
+          "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+          "occurrence-appearances:19:43:10:appearances[0]",
+          "entry:5d89e690256d:root",
+          "entry:5d89e690256d:senses[0].ar",
+          "crosswalk:forward:28:50:12",
+          "crosswalk:reverse:5d89e690256d"
+        ],
+        "status": "source_addressed_candidate",
+        "summary": "The exact target surface and source address are preserved from the read-only whitelist packet."
+      },
+      "evidence_mode": "direct_source_attestation",
+      "fact_id": "sha256:cdb599226d0e0438bccddc4e85b81c98398e26be9058843fe0fec56c6783d06f",
+      "fact_type": "proofv_surface_observation",
+      "fact_value": {
+        "quran_loc": "19:43:10",
+        "source_fact": {
+          "source_fields": [
+            "surface",
+            "morphline",
+            "segments"
+          ],
+          "source_kind": "corpus_record"
+        },
+        "source_fields_present": [
+          "surface",
+          "loc",
+          "quran_loc",
+          "morphline",
+          "segments"
+        ],
+        "source_row_hash": "sha256:ff761e39d0f008d749bcdf02a26e5588abe623e8b04bca9f1287e5b29bc9f749",
+        "source_row_line": 31349,
+        "surface": "فَٱتَّبِعْنِىٓ"
+      },
+      "guards": [
+        {
+          "guard_id": "proofv.surface_byte_exact",
+          "reason": "the source surface is retained without normalization"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofv-verb-owner",
+          "owner_type": "producer"
+        },
+        "secondary": [
+          {
+            "owner_id": "fam4-finite-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "fam5-derived-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "proofv-candidate-scope",
+            "owner_type": "scope"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofv_verb_producer",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "sarf.proofv.verb.v1",
+        "rule_id": "proofv.verb.letter_evidence",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_address": {
+        "address": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "quran:19:43:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "occurrence-appearances:19:43:10:appearances[0]",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "entry:5d89e690256d:root",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:5d89e690256d:senses[0].ar",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "crosswalk:forward:28:50:12",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "crosswalk:reverse:5d89e690256d",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "source_fields": [
+            "surface",
+            "morphline",
+            "segments"
+          ],
+          "source_kind": "corpus_record"
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 14,
+          "role": "verb_occurrence",
+          "span_id": "span:occurrence",
+          "start": 0,
+          "surface": "فَٱتَّبِعْنِىٓ"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "The same-lexeme chain is deterministic in EDGES, but it is not a direct target occurrence edge.",
+        "status": "candidate"
+      },
+      "contradiction_records": [],
+      "defeaters": [
+        {
+          "defeater_id": "proofv.candidate_only",
+          "fact_ids": [],
+          "reason": "candidate mode remains active"
+        }
+      ],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": []
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "proofv.verb.19.43.10.v1"
+      ],
+      "derivation_chain": [],
+      "evidence": {
+        "confidence": "high",
+        "evidence_ids": [
+          "quran:19:43:10",
+          "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+          "occurrence-appearances:19:43:10:appearances[0]",
+          "entry:5d89e690256d:root",
+          "entry:5d89e690256d:senses[0].ar",
+          "crosswalk:forward:28:50:12",
+          "crosswalk:reverse:5d89e690256d"
+        ],
+        "status": "source_addressed_candidate",
+        "summary": "A nearest card-selected same-lexeme chain is present; the target occurrence link remains a source gap."
+      },
+      "evidence_mode": "cross_source_corroboration",
+      "fact_id": "sha256:66ccb2fd6ec19173d99f75c8f2f207e3e3ad33c884838ef233496eb5678d82e1",
+      "fact_type": "proofv_lexeme_crosswalk",
+      "fact_value": {
+        "card_id": "card:5d89e690256d:u1:x12",
+        "entry_id": "5d89e690256d",
+        "nearest_same_lexeme": {
+          "card_id": "card:5d89e690256d:u1:x12",
+          "chain_edge_ids": [
+            "edge:305bd5063c6b5238851779d7",
+            "edge:75c0b3c7c9002a26541bd3bf",
+            "edge:783f0da0e458bb80a91093c2",
+            "edge:7a9d4c3b9930ab82d2b91116",
+            "edge:b42dc7572cb59ef0f9523c9a",
+            "edge:b6a9a8d196e8564b439a2d15",
+            "edge:cdb7d1c81992edc5a9302a92",
+            "edge:e8f9b82aee5cf71ddfaa5e29"
+          ],
+          "crosswalk_edge_ids": [
+            "edge:305bd5063c6b5238851779d7",
+            "edge:477f501af0b457f6d356fe39",
+            "edge:7a9d4c3b9930ab82d2b91116",
+            "edge:b42dc7572cb59ef0f9523c9a",
+            "edge:c5626decad9ce88115e8ab4d",
+            "edge:c60ef14adc040a7de3996509",
+            "edge:e8f9b82aee5cf71ddfaa5e29"
+          ],
+          "crosswalk_status": "deterministic_exact",
+          "entry_id": "5d89e690256d",
+          "entry_surface": "اِتَّبَعَ",
+          "entry_surface_address": "entry:5d89e690256d:senses[0].ar",
+          "occurrence_id": "28:50:12",
+          "root": "ت ب ع",
+          "selected_word_id": "selected-word:5d89e690256d:s1:u1:f1:c28:50:x12:o28:50:12",
+          "sense_id": "sense:5d89e690256d:s1"
+        },
+        "occurrence_id": "28:50:12",
+        "root": [
+          "ت",
+          "ب",
+          "ع"
+        ],
+        "selected_word_id": "selected-word:5d89e690256d:s1:u1:f1:c28:50:x12:o28:50:12",
+        "sense_id": "sense:5d89e690256d:s1",
+        "source_fact": {
+          "crosswalk_status": "deterministic_exact",
+          "target_occurrence_direct_edge": false
+        },
+        "target_occurrence_link_status": "source_gap"
+      },
+      "guards": [
+        {
+          "guard_id": "proofv.page_context_never_lexeme",
+          "reason": "the target whitelist entry_id is not consumed as a lexeme edge"
+        },
+        {
+          "guard_id": "proofv.nearest_crosswalk_reciprocal",
+          "reason": "the nearest forward/reverse crosswalk witness is deterministic"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofv-verb-owner",
+          "owner_type": "producer"
+        },
+        "secondary": [
+          {
+            "owner_id": "fam4-finite-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "fam5-derived-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "proofv-candidate-scope",
+            "owner_type": "scope"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofv_verb_producer",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "sarf.proofv.verb.v1",
+        "rule_id": "proofv.verb.letter_evidence",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_address": {
+        "address": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "quran:19:43:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "occurrence-appearances:19:43:10:appearances[0]",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "entry:5d89e690256d:root",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:5d89e690256d:senses[0].ar",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "crosswalk:forward:28:50:12",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "crosswalk:reverse:5d89e690256d",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "crosswalk_status": "deterministic_exact",
+          "target_occurrence_direct_edge": false
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 14,
+          "role": "verb_occurrence",
+          "span_id": "span:occurrence",
+          "start": 0,
+          "surface": "فَٱتَّبِعْنِىٓ"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "Letter ownership is a candidate reconstruction from the closed pattern and local source packet.",
+        "status": "candidate"
+      },
+      "contradiction_records": [],
+      "defeaters": [
+        {
+          "defeater_id": "proofv.candidate_only",
+          "fact_ids": [],
+          "reason": "candidate mode remains active"
+        }
+      ],
+      "dependencies": {
+        "fact_ids": [
+          "sha256:cdb599226d0e0438bccddc4e85b81c98398e26be9058843fe0fec56c6783d06f",
+          "sha256:66ccb2fd6ec19173d99f75c8f2f207e3e3ad33c884838ef233496eb5678d82e1"
+        ],
+        "source_addresses": [
+          {
+            "address": "quran:19:43:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "occurrence-appearances:19:43:10:appearances[0]",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "entry:5d89e690256d:root",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:5d89e690256d:senses[0].ar",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "crosswalk:forward:28:50:12",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "crosswalk:reverse:5d89e690256d",
+            "source_kind": "review_artifact"
+          }
+        ]
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "proofv.verb.19.43.10.v1"
+      ],
+      "derivation_chain": [
+        {
+          "input_fact_ids": [
+            "sha256:cdb599226d0e0438bccddc4e85b81c98398e26be9058843fe0fec56c6783d06f",
+            "sha256:66ccb2fd6ec19173d99f75c8f2f207e3e3ad33c884838ef233496eb5678d82e1"
+          ],
+          "input_source_addresses": [
+            {
+              "address": "quran:19:43:10",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+              "source_kind": "corpus_record"
+            },
+            {
+              "address": "occurrence-appearances:19:43:10:appearances[0]",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "entry:5d89e690256d:root",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:5d89e690256d:senses[0].ar",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "crosswalk:forward:28:50:12",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:5d89e690256d",
+              "source_kind": "review_artifact"
+            }
+          ],
+          "operation": "apply_candidate_form_viii_pattern_to_exact_target_surface",
+          "output": "one primary display class per written base letter",
+          "step_id": "proofv.step.letter-ownership"
+        }
+      ],
+      "evidence": {
+        "confidence": "medium",
+        "evidence_ids": [
+          "quran:19:43:10",
+          "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+          "occurrence-appearances:19:43:10:appearances[0]",
+          "entry:5d89e690256d:root",
+          "entry:5d89e690256d:senses[0].ar",
+          "crosswalk:forward:28:50:12",
+          "crosswalk:reverse:5d89e690256d"
+        ],
+        "status": "source_addressed_candidate",
+        "summary": "Every written base letter has one primary display owner; the shared letter keeps secondary internal roles only."
+      },
+      "evidence_mode": "cross_source_corroboration",
+      "fact_id": "sha256:3074d017dd960531a80e4e8aa738c99b869791d397bae5e0d1e5d3d51954775b",
+      "fact_type": "proofv_letter_ownership",
+      "fact_value": {
+        "base_letter_count": 7,
+        "diacritics_policy": "hover_only",
+        "letter_ownership": [
+          {
+            "base_letter_index": 0,
+            "display_class": "qg-result-fa",
+            "end": 2,
+            "marks": [
+              "َ"
+            ],
+            "nahw_role": "linking_or_result_fa",
+            "owner_class": "linking_result_fa",
+            "primary_display": true,
+            "primary_plane": "nahw",
+            "role": "linking_result_fa",
+            "start": 0,
+            "surface": "فَ",
+            "written_letter": "ف"
+          },
+          {
+            "base_letter_index": 1,
+            "display_class": "qg-verb-prefix",
+            "end": 3,
+            "hamzat_al_wasl_class": "hamzat_al_wasl",
+            "marks": [],
+            "owner_class": "hamzat_al_wasl",
+            "primary_display": true,
+            "primary_plane": "sarf",
+            "role": "hamzat_al_wasl",
+            "start": 2,
+            "surface": "ٱ",
+            "written_letter": "ٱ"
+          },
+          {
+            "base_letter_index": 2,
+            "display_class": "qg-root-radical",
+            "end": 6,
+            "marks": [
+              "ّ",
+              "َ"
+            ],
+            "owner_class": "root_radical",
+            "primary_display": true,
+            "primary_plane": "sarf",
+            "role": "root_radical_shared_with_derivative_infix",
+            "secondary_internal_class": "qg-derivative-prefix",
+            "shared_roles": [
+              "root_radical_1",
+              "derivative_infix"
+            ],
+            "start": 3,
+            "surface": "تَّ",
+            "written_letter": "ت"
+          },
+          {
+            "base_letter_index": 3,
+            "display_class": "qg-root-radical",
+            "end": 8,
+            "marks": [
+              "ِ"
+            ],
+            "owner_class": "root_radical",
+            "primary_display": true,
+            "primary_plane": "sarf",
+            "role": "root_radical",
+            "start": 6,
+            "surface": "بِ",
+            "written_letter": "ب"
+          },
+          {
+            "base_letter_index": 4,
+            "display_class": "qg-root-radical",
+            "end": 10,
+            "marks": [
+              "ْ"
+            ],
+            "owner_class": "root_radical",
+            "primary_display": true,
+            "primary_plane": "sarf",
+            "role": "root_radical",
+            "start": 8,
+            "surface": "عْ",
+            "written_letter": "ع"
+          },
+          {
+            "base_letter_index": 5,
+            "display_class": "qg-protective-nun",
+            "end": 12,
+            "marks": [
+              "ِ"
+            ],
+            "owner_class": "protective_nun",
+            "particle": false,
+            "primary_display": true,
+            "primary_plane": "sarf",
+            "role": "protective_nun",
+            "start": 10,
+            "surface": "نِ",
+            "typed_kind": "sarf.protective_nun",
+            "written_letter": "ن"
+          },
+          {
+            "base_letter_index": 6,
+            "display_class": "qg-object-pronoun",
+            "end": 14,
+            "marks": [
+              "ٓ"
+            ],
+            "owner_class": "object_pronoun",
+            "primary_display": true,
+            "primary_plane": "sarf",
+            "pronoun_letter": "ي",
+            "pronoun_number": "singular",
+            "pronoun_person": "1",
+            "role": "object_pronoun_1cs",
+            "start": 12,
+            "surface": "ىٓ",
+            "written_letter": "ى"
+          }
+        ],
+        "nahw_colour_policy": "overt_letters_only",
+        "root": [
+          "ت",
+          "ب",
+          "ع"
+        ],
+        "source_fact": {
+          "carrier_affix_count": 14,
+          "pattern_id": "proofv.form_viii.imperative_active.2ms_object_1cs",
+          "weak_defeater_count": 4
+        },
+        "surface": "فَٱتَّبِعْنِىٓ"
+      },
+      "guards": [
+        {
+          "guard_id": "proofv.letter_owner_totality",
+          "reason": "all seven written base letters are owned exactly once"
+        },
+        {
+          "guard_id": "proofv.hamzat_al_wasl_governed",
+          "reason": "hamzat al-waṣl is a separate governed class"
+        },
+        {
+          "guard_id": "proofv.protective_nun_typed",
+          "reason": "protective nūn is not a particle"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofv-verb-owner",
+          "owner_type": "producer"
+        },
+        "secondary": [
+          {
+            "owner_id": "fam4-finite-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "fam5-derived-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "proofv-candidate-scope",
+            "owner_type": "scope"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofv_verb_producer",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "sarf.proofv.verb.v1",
+        "rule_id": "proofv.verb.letter_evidence",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_address": {
+        "address": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "quran:19:43:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "occurrence-appearances:19:43:10:appearances[0]",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "entry:5d89e690256d:root",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:5d89e690256d:senses[0].ar",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "crosswalk:forward:28:50:12",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "crosswalk:reverse:5d89e690256d",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "carrier_affix_count": 14,
+          "pattern_id": "proofv.form_viii.imperative_active.2ms_object_1cs",
+          "weak_defeater_count": 4
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 2,
+          "role": "linking_result_fa",
+          "span_id": "span:base-letter-0",
+          "start": 0,
+          "surface": "فَ"
+        },
+        {
+          "end": 3,
+          "role": "hamzat_al_wasl",
+          "span_id": "span:base-letter-1",
+          "start": 2,
+          "surface": "ٱ"
+        },
+        {
+          "end": 6,
+          "role": "root_radical_shared_with_derivative_infix",
+          "span_id": "span:base-letter-2",
+          "start": 3,
+          "surface": "تَّ"
+        },
+        {
+          "end": 8,
+          "role": "root_radical",
+          "span_id": "span:base-letter-3",
+          "start": 6,
+          "surface": "بِ"
+        },
+        {
+          "end": 10,
+          "role": "root_radical",
+          "span_id": "span:base-letter-4",
+          "start": 8,
+          "surface": "عْ"
+        },
+        {
+          "end": 12,
+          "role": "protective_nun",
+          "span_id": "span:base-letter-5",
+          "start": 10,
+          "surface": "نِ"
+        },
+        {
+          "end": 14,
+          "role": "object_pronoun_1cs",
+          "span_id": "span:base-letter-6",
+          "start": 12,
+          "surface": "ىٓ"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "This is the requested candidate proof; it is not a certified publication fact.",
+        "status": "candidate"
+      },
+      "contradiction_records": [],
+      "defeaters": [
+        {
+          "defeater_id": "proofv.candidate_only",
+          "fact_ids": [],
+          "reason": "candidate mode remains active"
+        }
+      ],
+      "dependencies": {
+        "fact_ids": [
+          "sha256:cdb599226d0e0438bccddc4e85b81c98398e26be9058843fe0fec56c6783d06f",
+          "sha256:66ccb2fd6ec19173d99f75c8f2f207e3e3ad33c884838ef233496eb5678d82e1",
+          "sha256:3074d017dd960531a80e4e8aa738c99b869791d397bae5e0d1e5d3d51954775b"
+        ],
+        "source_addresses": [
+          {
+            "address": "quran:19:43:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "occurrence-appearances:19:43:10:appearances[0]",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "entry:5d89e690256d:root",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:5d89e690256d:senses[0].ar",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "crosswalk:forward:28:50:12",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "crosswalk:reverse:5d89e690256d",
+            "source_kind": "review_artifact"
+          }
+        ]
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "proofv.verb.19.43.10.v1"
+      ],
+      "derivation_chain": [
+        {
+          "input_fact_ids": [
+            "sha256:cdb599226d0e0438bccddc4e85b81c98398e26be9058843fe0fec56c6783d06f",
+            "sha256:66ccb2fd6ec19173d99f75c8f2f207e3e3ad33c884838ef233496eb5678d82e1",
+            "sha256:3074d017dd960531a80e4e8aa738c99b869791d397bae5e0d1e5d3d51954775b"
+          ],
+          "input_source_addresses": [
+            {
+              "address": "quran:19:43:10",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+              "source_kind": "corpus_record"
+            },
+            {
+              "address": "occurrence-appearances:19:43:10:appearances[0]",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "entry:5d89e690256d:root",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:5d89e690256d:senses[0].ar",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "crosswalk:forward:28:50:12",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:5d89e690256d",
+              "source_kind": "review_artifact"
+            }
+          ],
+          "operation": "apply_proofv_candidate_form_viii_pattern",
+          "output": "form, voice, person, mood, derivational infix, shared gemination, and suffix ownership",
+          "step_id": "proofv.step.derived-verb"
+        }
+      ],
+      "evidence": {
+        "confidence": "medium",
+        "evidence_ids": [
+          "quran:19:43:10",
+          "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+          "occurrence-appearances:19:43:10:appearances[0]",
+          "entry:5d89e690256d:root",
+          "entry:5d89e690256d:senses[0].ar",
+          "crosswalk:forward:28:50:12",
+          "crosswalk:reverse:5d89e690256d"
+        ],
+        "status": "source_addressed_candidate",
+        "summary": "The source packet and same-lexeme chain support a visible candidate reconstruction with explicit gates."
+      },
+      "evidence_mode": "cross_source_corroboration",
+      "fact_id": "sha256:ff32c6e4995c02dca9fd8eac9b6a3bcd5239063e7df7ddd95ccbced19fde665a",
+      "fact_type": "derived_verb_evidence",
+      "fact_value": {
+        "derivational_additions": [
+          {
+            "base_letter_indices": [
+              2
+            ],
+            "class": "derivative_infix",
+            "marker_class": "derivative_infix_form_viii_t",
+            "role": "derivative_infix",
+            "surface": "تَّ"
+          }
+        ],
+        "form": "VIII",
+        "gemination": {
+          "idgham_classification": "B_shared_letter_clean_split",
+          "present": true,
+          "reason": "The infix ت and root ت share one shadda-bearing written base letter; no naive split is displayed.",
+          "shared_roles": [
+            "derivative_infix",
+            "root_radical_1"
+          ],
+          "split_authorized": false,
+          "split_tone": false,
+          "treatment": "C_shared_written_letter",
+          "written_base_letter_index": 2
+        },
+        "gender": "masculine",
+        "hamzat_al_wasl": {
+          "class": "hamzat_al_wasl",
+          "governed": true,
+          "present": true,
+          "surface": "ٱ"
+        },
+        "letter_ownership": [
+          {
+            "base_letter_index": 0,
+            "display_class": "qg-result-fa",
+            "end": 2,
+            "marks": [
+              "َ"
+            ],
+            "nahw_role": "linking_or_result_fa",
+            "owner_class": "linking_result_fa",
+            "primary_display": true,
+            "primary_plane": "nahw",
+            "role": "linking_result_fa",
+            "start": 0,
+            "surface": "فَ",
+            "written_letter": "ف"
+          },
+          {
+            "base_letter_index": 1,
+            "display_class": "qg-verb-prefix",
+            "end": 3,
+            "hamzat_al_wasl_class": "hamzat_al_wasl",
+            "marks": [],
+            "owner_class": "hamzat_al_wasl",
+            "primary_display": true,
+            "primary_plane": "sarf",
+            "role": "hamzat_al_wasl",
+            "start": 2,
+            "surface": "ٱ",
+            "written_letter": "ٱ"
+          },
+          {
+            "base_letter_index": 2,
+            "display_class": "qg-root-radical",
+            "end": 6,
+            "marks": [
+              "ّ",
+              "َ"
+            ],
+            "owner_class": "root_radical",
+            "primary_display": true,
+            "primary_plane": "sarf",
+            "role": "root_radical_shared_with_derivative_infix",
+            "secondary_internal_class": "qg-derivative-prefix",
+            "shared_roles": [
+              "root_radical_1",
+              "derivative_infix"
+            ],
+            "start": 3,
+            "surface": "تَّ",
+            "written_letter": "ت"
+          },
+          {
+            "base_letter_index": 3,
+            "display_class": "qg-root-radical",
+            "end": 8,
+            "marks": [
+              "ِ"
+            ],
+            "owner_class": "root_radical",
+            "primary_display": true,
+            "primary_plane": "sarf",
+            "role": "root_radical",
+            "start": 6,
+            "surface": "بِ",
+            "written_letter": "ب"
+          },
+          {
+            "base_letter_index": 4,
+            "display_class": "qg-root-radical",
+            "end": 10,
+            "marks": [
+              "ْ"
+            ],
+            "owner_class": "root_radical",
+            "primary_display": true,
+            "primary_plane": "sarf",
+            "role": "root_radical",
+            "start": 8,
+            "surface": "عْ",
+            "written_letter": "ع"
+          },
+          {
+            "base_letter_index": 5,
+            "display_class": "qg-protective-nun",
+            "end": 12,
+            "marks": [
+              "ِ"
+            ],
+            "owner_class": "protective_nun",
+            "particle": false,
+            "primary_display": true,
+            "primary_plane": "sarf",
+            "role": "protective_nun",
+            "start": 10,
+            "surface": "نِ",
+            "typed_kind": "sarf.protective_nun",
+            "written_letter": "ن"
+          },
+          {
+            "base_letter_index": 6,
+            "display_class": "qg-object-pronoun",
+            "end": 14,
+            "marks": [
+              "ٓ"
+            ],
+            "owner_class": "object_pronoun",
+            "primary_display": true,
+            "primary_plane": "sarf",
+            "pronoun_letter": "ي",
+            "pronoun_number": "singular",
+            "pronoun_person": "1",
+            "role": "object_pronoun_1cs",
+            "start": 12,
+            "surface": "ىٓ",
+            "written_letter": "ى"
+          }
+        ],
+        "mood": "imperative",
+        "number": "singular",
+        "pattern_id": "proofv.form_viii.imperative_active.2ms_object_1cs",
+        "person": "2",
+        "reconstruction_proof": {
+          "base_letter_indices_complete": true,
+          "each_written_base_letter_exactly_one_class": true,
+          "joined_surface": "فَٱتَّبِعْنِىٓ",
+          "no_naive_geminate_split": true,
+          "passed": true
+        },
+        "root": [
+          "ت",
+          "ب",
+          "ع"
+        ],
+        "root_radicals": [
+          {
+            "base_letter_index": 2,
+            "index": 1,
+            "radical": "ت",
+            "shared_written_letter": true
+          },
+          {
+            "base_letter_index": 3,
+            "index": 2,
+            "radical": "ب"
+          },
+          {
+            "base_letter_index": 4,
+            "index": 3,
+            "radical": "ع"
+          }
+        ],
+        "source_fact": {
+          "entry_root_source": "5d89e690256d",
+          "target_occurrence_direct_form_edge": false,
+          "whitelist_morphline_present": true
+        },
+        "surface": "فَٱتَّبِعْنِىٓ",
+        "template": "ifta3ala_assimilated_first_radical",
+        "tense_aspect": "imperative",
+        "typed_kind": "proofv.derived_verb_evidence",
+        "voice": "active",
+        "weak_root_defeater": {
+          "registry_route": "weak_root_pattern_unresolved",
+          "root_shape": "sound",
+          "status": "none_triggered"
+        }
+      },
+      "guards": [
+        {
+          "guard_id": "proofv.shared_fam4_affix_registry",
+          "reason": "the shared FAM4 affix carrier is loaded before projection"
+        },
+        {
+          "guard_id": "proofv.shared_fam5_registry",
+          "reason": "the shared FAM5 derived-verb carrier is loaded before projection"
+        },
+        {
+          "guard_id": "proofv.weak_root_defeater_registry",
+          "reason": "weak-root defeaters are checked and none triggers for ت ب ع"
+        },
+        {
+          "guard_id": "proofv.treatment_c_gemination",
+          "reason": "the shared written letter remains one display span"
+        },
+        {
+          "guard_id": "proofv.candidate_only",
+          "reason": "pre_apply_not_authorized remains true"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofv-verb-owner",
+          "owner_type": "producer"
+        },
+        "secondary": [
+          {
+            "owner_id": "fam4-finite-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "fam5-derived-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "proofv-candidate-scope",
+            "owner_type": "scope"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofv_verb_producer",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "sarf.proofv.verb.v1",
+        "rule_id": "proofv.verb.letter_evidence",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_address": {
+        "address": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "quran:19:43:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "occurrence-appearances:19:43:10:appearances[0]",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "entry:5d89e690256d:root",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:5d89e690256d:senses[0].ar",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "crosswalk:forward:28:50:12",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "crosswalk:reverse:5d89e690256d",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "entry_root_source": "5d89e690256d",
+          "target_occurrence_direct_form_edge": false,
+          "whitelist_morphline_present": true
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 2,
+          "role": "linking_result_fa",
+          "span_id": "span:base-letter-0",
+          "start": 0,
+          "surface": "فَ"
+        },
+        {
+          "end": 3,
+          "role": "hamzat_al_wasl",
+          "span_id": "span:base-letter-1",
+          "start": 2,
+          "surface": "ٱ"
+        },
+        {
+          "end": 6,
+          "role": "root_radical_shared_with_derivative_infix",
+          "span_id": "span:base-letter-2",
+          "start": 3,
+          "surface": "تَّ"
+        },
+        {
+          "end": 8,
+          "role": "root_radical",
+          "span_id": "span:base-letter-3",
+          "start": 6,
+          "surface": "بِ"
+        },
+        {
+          "end": 10,
+          "role": "root_radical",
+          "span_id": "span:base-letter-4",
+          "start": 8,
+          "surface": "عْ"
+        },
+        {
+          "end": 12,
+          "role": "protective_nun",
+          "span_id": "span:base-letter-5",
+          "start": 10,
+          "surface": "نِ"
+        },
+        {
+          "end": 14,
+          "role": "object_pronoun_1cs",
+          "span_id": "span:base-letter-6",
+          "start": 12,
+          "surface": "ىٓ"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "The protective-nūn class is carried as a candidate typed fact.",
+        "status": "candidate"
+      },
+      "contradiction_records": [],
+      "defeaters": [
+        {
+          "defeater_id": "proofv.candidate_only",
+          "fact_ids": [],
+          "reason": "candidate mode remains active"
+        }
+      ],
+      "dependencies": {
+        "fact_ids": [
+          "sha256:3074d017dd960531a80e4e8aa738c99b869791d397bae5e0d1e5d3d51954775b"
+        ],
+        "source_addresses": [
+          {
+            "address": "quran:19:43:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "occurrence-appearances:19:43:10:appearances[0]",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "entry:5d89e690256d:root",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:5d89e690256d:senses[0].ar",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "crosswalk:forward:28:50:12",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "crosswalk:reverse:5d89e690256d",
+            "source_kind": "review_artifact"
+          }
+        ]
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "proofv.verb.19.43.10.v1"
+      ],
+      "derivation_chain": [],
+      "evidence": {
+        "confidence": "medium",
+        "evidence_ids": [
+          "quran:19:43:10",
+          "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+          "occurrence-appearances:19:43:10:appearances[0]",
+          "entry:5d89e690256d:root",
+          "entry:5d89e690256d:senses[0].ar",
+          "crosswalk:forward:28:50:12",
+          "crosswalk:reverse:5d89e690256d"
+        ],
+        "status": "source_addressed_candidate",
+        "summary": "The nūn is kept in the sarf protective-nūn class and is never emitted as a particle."
+      },
+      "evidence_mode": "direct_source_attestation",
+      "fact_id": "sha256:036c9569061115f2a4a37deb96a020ea3f7fb640a90ab6b3f65c8aa3f80f3f09",
+      "fact_type": "protective_nun",
+      "fact_value": {
+        "class": "qg-protective-nun",
+        "particle": false,
+        "role": "protective_nun",
+        "source_fact": {
+          "boundary": "explicit_target_suffix"
+        },
+        "surface": "نِ",
+        "typed_kind": "sarf.protective_nun"
+      },
+      "guards": [
+        {
+          "guard_id": "proofv.protective_nun_never_particle",
+          "reason": "qg-protective-nun is not a particle class"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofv-verb-owner",
+          "owner_type": "producer"
+        },
+        "secondary": [
+          {
+            "owner_id": "fam4-finite-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "fam5-derived-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "proofv-candidate-scope",
+            "owner_type": "scope"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofv_verb_producer",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "sarf.proofv.verb.v1",
+        "rule_id": "proofv.verb.letter_evidence",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_address": {
+        "address": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "quran:19:43:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "occurrence-appearances:19:43:10:appearances[0]",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "entry:5d89e690256d:root",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:5d89e690256d:senses[0].ar",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "crosswalk:forward:28:50:12",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "crosswalk:reverse:5d89e690256d",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "boundary": "explicit_target_suffix"
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 12,
+          "role": "protective_nun",
+          "span_id": "span:base-letter-5",
+          "start": 10,
+          "surface": "نِ"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "The attached 1cs object-pronoun class is a candidate typed fact.",
+        "status": "candidate"
+      },
+      "contradiction_records": [],
+      "defeaters": [
+        {
+          "defeater_id": "proofv.candidate_only",
+          "fact_ids": [],
+          "reason": "candidate mode remains active"
+        }
+      ],
+      "dependencies": {
+        "fact_ids": [
+          "sha256:3074d017dd960531a80e4e8aa738c99b869791d397bae5e0d1e5d3d51954775b"
+        ],
+        "source_addresses": [
+          {
+            "address": "quran:19:43:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "occurrence-appearances:19:43:10:appearances[0]",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "entry:5d89e690256d:root",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:5d89e690256d:senses[0].ar",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "crosswalk:forward:28:50:12",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "crosswalk:reverse:5d89e690256d",
+            "source_kind": "review_artifact"
+          }
+        ]
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "proofv.verb.19.43.10.v1"
+      ],
+      "derivation_chain": [],
+      "evidence": {
+        "confidence": "medium",
+        "evidence_ids": [
+          "quran:19:43:10",
+          "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+          "occurrence-appearances:19:43:10:appearances[0]",
+          "entry:5d89e690256d:root",
+          "entry:5d89e690256d:senses[0].ar",
+          "crosswalk:forward:28:50:12",
+          "crosswalk:reverse:5d89e690256d"
+        ],
+        "status": "source_addressed_candidate",
+        "summary": "The final written suffix is kept as an attached 1cs object pronoun; exact syntax is separately pending."
+      },
+      "evidence_mode": "direct_source_attestation",
+      "fact_id": "sha256:e397512e6c994d1b70cecec58361885d41c677341b9defa32205930739623878",
+      "fact_type": "object_pronoun",
+      "fact_value": {
+        "number": "singular",
+        "person": "1",
+        "pronoun_letter": "ي",
+        "role": "attached_object_pronoun",
+        "source_fact": {
+          "source_field": "morphline_object_pronoun"
+        },
+        "surface": "ىٓ",
+        "typed_kind": "sarf.object_pronoun",
+        "written_letter": "ى"
+      },
+      "guards": [
+        {
+          "guard_id": "proofv.object_pronoun_attached",
+          "reason": "the final suffix has an explicit object-pronoun class"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofv-verb-owner",
+          "owner_type": "producer"
+        },
+        "secondary": [
+          {
+            "owner_id": "fam4-finite-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "fam5-derived-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "proofv-candidate-scope",
+            "owner_type": "scope"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofv_verb_producer",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "sarf.proofv.verb.v1",
+        "rule_id": "proofv.verb.letter_evidence",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_address": {
+        "address": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "quran:19:43:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "occurrence-appearances:19:43:10:appearances[0]",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "entry:5d89e690256d:root",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:5d89e690256d:senses[0].ar",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "crosswalk:forward:28:50:12",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "crosswalk:reverse:5d89e690256d",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "source_field": "morphline_object_pronoun"
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 14,
+          "role": "object_pronoun_1cs",
+          "span_id": "span:base-letter-6",
+          "start": 12,
+          "surface": "ىٓ"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "The required source fact is not present in the repo packets.",
+        "status": "pending"
+      },
+      "contradiction_records": [],
+      "defeaters": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": []
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "proofv.verb.19.43.10.v1"
+      ],
+      "derivation_chain": [],
+      "evidence": {
+        "confidence": "unknown",
+        "evidence_ids": [
+          "quran:19:43:10",
+          "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+          "occurrence-appearances:19:43:10:appearances[0]",
+          "entry:5d89e690256d:root",
+          "entry:5d89e690256d:senses[0].ar",
+          "crosswalk:forward:28:50:12",
+          "crosswalk:reverse:5d89e690256d"
+        ],
+        "status": "unknown",
+        "summary": "The repo packet does not contain an exact source-addressed governor/object relation for this target occurrence."
+      },
+      "evidence_mode": "unresolved",
+      "fact_id": "sha256:2c60fdf8d71b84dd8ea7fe7fe4fac1fede543ae12d541c9d54ffe24b4c0ad77e",
+      "fact_type": "nahw_dependency",
+      "fact_value": {
+        "case_or_mood": {
+          "reason": "exact governor is absent",
+          "status": "unresolved",
+          "value": null
+        },
+        "governed_occurrence": {
+          "occurrence_id": "quran:19:43:10",
+          "surface": "فَٱتَّبِعْنِىٓ"
+        },
+        "governor": null,
+        "quran_loc": "19:43:10",
+        "reason": "The repo packet does not contain an exact source-addressed governor/object relation for this target occurrence.",
+        "relationship": {
+          "relationship": "object_of",
+          "role": "object",
+          "status": "unresolved"
+        },
+        "route": "scholar-packet:nahw-governor-object:19:43:10",
+        "source_fact": {
+          "governor_present": false,
+          "source_fields": []
+        },
+        "status": "unresolved",
+        "surface": "فَٱتَّبِعْنِىٓ"
+      },
+      "guards": [
+        {
+          "guard_id": "proofv.no_fact_invention",
+          "reason": "missing facts remain typed unresolved"
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofv-verb-owner",
+          "owner_type": "producer"
+        },
+        "secondary": [
+          {
+            "owner_id": "fam4-finite-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "fam5-derived-verb-carrier",
+            "owner_type": "carrier"
+          },
+          {
+            "owner_id": "proofv-candidate-scope",
+            "owner_type": "scope"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofv_verb_producer",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "sarf.proofv.verb.v1",
+        "rule_id": "proofv.verb.letter_evidence",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_address": {
+        "address": "quran:19:43:10",
+        "source_kind": "quran_token"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "quran:19:43:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "source_kind": "corpus_record"
+          },
+          {
+            "address": "occurrence-appearances:19:43:10:appearances[0]",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "entry:5d89e690256d:root",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "entry:5d89e690256d:senses[0].ar",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "crosswalk:forward:28:50:12",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "crosswalk:reverse:5d89e690256d",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "blocker": "proofv.nahw_exact_governor_missing",
+          "route": "scholar-packet:nahw-governor-object:19:43:10"
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 14,
+          "role": "verb_occurrence",
+          "span_id": "span:occurrence",
+          "start": 0,
+          "surface": "فَٱتَّبِعْنِىٓ"
+        }
+      ],
+      "unresolved_blockers": [
+        {
+          "blocker_id": "proofv.nahw_exact_governor_missing",
+          "reason": "The repo packet does not contain an exact source-addressed governor/object relation for this target occurrence."
+        }
+      ]
+    }
+  ],
+  "materialization_allowed": false,
+  "record": {
+    "canonical_occurrence": {
+      "occurrence_id": "quran:19:43:10",
+      "quran_loc": "19:43:10",
+      "surface": "فَٱتَّبِعْنِىٓ",
+      "surface_length": 14,
+      "wbw_loc": "wbw:19:43:10"
+    },
+    "contract_id": "proofv:verb:19:43:10",
+    "contract_version": "1.0.0",
+    "facts": [
+      {
+        "certification": {
+          "reason": "The whitelist row is a candidate input, not a linguistic certification transition.",
+          "status": "candidate"
+        },
+        "contradiction_records": [],
+        "defeaters": [
+          {
+            "defeater_id": "proofv.candidate_only",
+            "fact_ids": [],
+            "reason": "candidate mode remains active"
+          }
+        ],
+        "dependencies": {
+          "fact_ids": [],
+          "source_addresses": []
+        },
+        "dependent_fact_ids": [],
+        "dependent_projection_ids": [
+          "proofv.verb.19.43.10.v1"
+        ],
+        "derivation_chain": [],
+        "evidence": {
+          "confidence": "high",
+          "evidence_ids": [
+            "quran:19:43:10",
+            "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "occurrence-appearances:19:43:10:appearances[0]",
+            "entry:5d89e690256d:root",
+            "entry:5d89e690256d:senses[0].ar",
+            "crosswalk:forward:28:50:12",
+            "crosswalk:reverse:5d89e690256d"
+          ],
+          "status": "source_addressed_candidate",
+          "summary": "The exact target surface and source address are preserved from the read-only whitelist packet."
+        },
+        "evidence_mode": "direct_source_attestation",
+        "fact_id": "sha256:cdb599226d0e0438bccddc4e85b81c98398e26be9058843fe0fec56c6783d06f",
+        "fact_type": "proofv_surface_observation",
+        "fact_value": {
+          "quran_loc": "19:43:10",
+          "source_fact": {
+            "source_fields": [
+              "surface",
+              "morphline",
+              "segments"
+            ],
+            "source_kind": "corpus_record"
+          },
+          "source_fields_present": [
+            "surface",
+            "loc",
+            "quran_loc",
+            "morphline",
+            "segments"
+          ],
+          "source_row_hash": "sha256:ff761e39d0f008d749bcdf02a26e5588abe623e8b04bca9f1287e5b29bc9f749",
+          "source_row_line": 31349,
+          "surface": "فَٱتَّبِعْنِىٓ"
+        },
+        "guards": [
+          {
+            "guard_id": "proofv.surface_byte_exact",
+            "reason": "the source surface is retained without normalization"
+          }
+        ],
+        "ownership": {
+          "primary": {
+            "owner_id": "proofv-verb-owner",
+            "owner_type": "producer"
+          },
+          "secondary": [
+            {
+              "owner_id": "fam4-finite-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "fam5-derived-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "proofv-candidate-scope",
+              "owner_type": "scope"
+            }
+          ]
+        },
+        "producer": {
+          "id": "tools.proofv_verb_producer",
+          "version": "1.0.0"
+        },
+        "rule_projector": {
+          "projector_id": "sarf.proofv.verb.v1",
+          "rule_id": "proofv.verb.letter_evidence",
+          "version": "1.0.0"
+        },
+        "source": {
+          "source_id": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_address": {
+          "address": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_evidence": {
+          "source_addresses": [
+            {
+              "address": "quran:19:43:10",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+              "source_kind": "corpus_record"
+            },
+            {
+              "address": "occurrence-appearances:19:43:10:appearances[0]",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "entry:5d89e690256d:root",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:5d89e690256d:senses[0].ar",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "crosswalk:forward:28:50:12",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:5d89e690256d",
+              "source_kind": "review_artifact"
+            }
+          ],
+          "structured_source_fact": {
+            "source_fields": [
+              "surface",
+              "morphline",
+              "segments"
+            ],
+            "source_kind": "corpus_record"
+          }
+        },
+        "surface_spans": [
+          {
+            "end": 14,
+            "role": "verb_occurrence",
+            "span_id": "span:occurrence",
+            "start": 0,
+            "surface": "فَٱتَّبِعْنِىٓ"
+          }
+        ],
+        "unresolved_blockers": []
+      },
+      {
+        "certification": {
+          "reason": "The same-lexeme chain is deterministic in EDGES, but it is not a direct target occurrence edge.",
+          "status": "candidate"
+        },
+        "contradiction_records": [],
+        "defeaters": [
+          {
+            "defeater_id": "proofv.candidate_only",
+            "fact_ids": [],
+            "reason": "candidate mode remains active"
+          }
+        ],
+        "dependencies": {
+          "fact_ids": [],
+          "source_addresses": []
+        },
+        "dependent_fact_ids": [],
+        "dependent_projection_ids": [
+          "proofv.verb.19.43.10.v1"
+        ],
+        "derivation_chain": [],
+        "evidence": {
+          "confidence": "high",
+          "evidence_ids": [
+            "quran:19:43:10",
+            "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "occurrence-appearances:19:43:10:appearances[0]",
+            "entry:5d89e690256d:root",
+            "entry:5d89e690256d:senses[0].ar",
+            "crosswalk:forward:28:50:12",
+            "crosswalk:reverse:5d89e690256d"
+          ],
+          "status": "source_addressed_candidate",
+          "summary": "A nearest card-selected same-lexeme chain is present; the target occurrence link remains a source gap."
+        },
+        "evidence_mode": "cross_source_corroboration",
+        "fact_id": "sha256:66ccb2fd6ec19173d99f75c8f2f207e3e3ad33c884838ef233496eb5678d82e1",
+        "fact_type": "proofv_lexeme_crosswalk",
+        "fact_value": {
+          "card_id": "card:5d89e690256d:u1:x12",
+          "entry_id": "5d89e690256d",
+          "nearest_same_lexeme": {
+            "card_id": "card:5d89e690256d:u1:x12",
+            "chain_edge_ids": [
+              "edge:305bd5063c6b5238851779d7",
+              "edge:75c0b3c7c9002a26541bd3bf",
+              "edge:783f0da0e458bb80a91093c2",
+              "edge:7a9d4c3b9930ab82d2b91116",
+              "edge:b42dc7572cb59ef0f9523c9a",
+              "edge:b6a9a8d196e8564b439a2d15",
+              "edge:cdb7d1c81992edc5a9302a92",
+              "edge:e8f9b82aee5cf71ddfaa5e29"
+            ],
+            "crosswalk_edge_ids": [
+              "edge:305bd5063c6b5238851779d7",
+              "edge:477f501af0b457f6d356fe39",
+              "edge:7a9d4c3b9930ab82d2b91116",
+              "edge:b42dc7572cb59ef0f9523c9a",
+              "edge:c5626decad9ce88115e8ab4d",
+              "edge:c60ef14adc040a7de3996509",
+              "edge:e8f9b82aee5cf71ddfaa5e29"
+            ],
+            "crosswalk_status": "deterministic_exact",
+            "entry_id": "5d89e690256d",
+            "entry_surface": "اِتَّبَعَ",
+            "entry_surface_address": "entry:5d89e690256d:senses[0].ar",
+            "occurrence_id": "28:50:12",
+            "root": "ت ب ع",
+            "selected_word_id": "selected-word:5d89e690256d:s1:u1:f1:c28:50:x12:o28:50:12",
+            "sense_id": "sense:5d89e690256d:s1"
+          },
+          "occurrence_id": "28:50:12",
+          "root": [
+            "ت",
+            "ب",
+            "ع"
+          ],
+          "selected_word_id": "selected-word:5d89e690256d:s1:u1:f1:c28:50:x12:o28:50:12",
+          "sense_id": "sense:5d89e690256d:s1",
+          "source_fact": {
+            "crosswalk_status": "deterministic_exact",
+            "target_occurrence_direct_edge": false
+          },
+          "target_occurrence_link_status": "source_gap"
+        },
+        "guards": [
+          {
+            "guard_id": "proofv.page_context_never_lexeme",
+            "reason": "the target whitelist entry_id is not consumed as a lexeme edge"
+          },
+          {
+            "guard_id": "proofv.nearest_crosswalk_reciprocal",
+            "reason": "the nearest forward/reverse crosswalk witness is deterministic"
+          }
+        ],
+        "ownership": {
+          "primary": {
+            "owner_id": "proofv-verb-owner",
+            "owner_type": "producer"
+          },
+          "secondary": [
+            {
+              "owner_id": "fam4-finite-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "fam5-derived-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "proofv-candidate-scope",
+              "owner_type": "scope"
+            }
+          ]
+        },
+        "producer": {
+          "id": "tools.proofv_verb_producer",
+          "version": "1.0.0"
+        },
+        "rule_projector": {
+          "projector_id": "sarf.proofv.verb.v1",
+          "rule_id": "proofv.verb.letter_evidence",
+          "version": "1.0.0"
+        },
+        "source": {
+          "source_id": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_address": {
+          "address": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_evidence": {
+          "source_addresses": [
+            {
+              "address": "quran:19:43:10",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+              "source_kind": "corpus_record"
+            },
+            {
+              "address": "occurrence-appearances:19:43:10:appearances[0]",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "entry:5d89e690256d:root",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:5d89e690256d:senses[0].ar",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "crosswalk:forward:28:50:12",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:5d89e690256d",
+              "source_kind": "review_artifact"
+            }
+          ],
+          "structured_source_fact": {
+            "crosswalk_status": "deterministic_exact",
+            "target_occurrence_direct_edge": false
+          }
+        },
+        "surface_spans": [
+          {
+            "end": 14,
+            "role": "verb_occurrence",
+            "span_id": "span:occurrence",
+            "start": 0,
+            "surface": "فَٱتَّبِعْنِىٓ"
+          }
+        ],
+        "unresolved_blockers": []
+      },
+      {
+        "certification": {
+          "reason": "Letter ownership is a candidate reconstruction from the closed pattern and local source packet.",
+          "status": "candidate"
+        },
+        "contradiction_records": [],
+        "defeaters": [
+          {
+            "defeater_id": "proofv.candidate_only",
+            "fact_ids": [],
+            "reason": "candidate mode remains active"
+          }
+        ],
+        "dependencies": {
+          "fact_ids": [
+            "sha256:cdb599226d0e0438bccddc4e85b81c98398e26be9058843fe0fec56c6783d06f",
+            "sha256:66ccb2fd6ec19173d99f75c8f2f207e3e3ad33c884838ef233496eb5678d82e1"
+          ],
+          "source_addresses": [
+            {
+              "address": "quran:19:43:10",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+              "source_kind": "corpus_record"
+            },
+            {
+              "address": "occurrence-appearances:19:43:10:appearances[0]",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "entry:5d89e690256d:root",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:5d89e690256d:senses[0].ar",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "crosswalk:forward:28:50:12",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:5d89e690256d",
+              "source_kind": "review_artifact"
+            }
+          ]
+        },
+        "dependent_fact_ids": [],
+        "dependent_projection_ids": [
+          "proofv.verb.19.43.10.v1"
+        ],
+        "derivation_chain": [
+          {
+            "input_fact_ids": [
+              "sha256:cdb599226d0e0438bccddc4e85b81c98398e26be9058843fe0fec56c6783d06f",
+              "sha256:66ccb2fd6ec19173d99f75c8f2f207e3e3ad33c884838ef233496eb5678d82e1"
+            ],
+            "input_source_addresses": [
+              {
+                "address": "quran:19:43:10",
+                "source_kind": "quran_token"
+              },
+              {
+                "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+                "source_kind": "corpus_record"
+              },
+              {
+                "address": "occurrence-appearances:19:43:10:appearances[0]",
+                "source_kind": "review_artifact"
+              },
+              {
+                "address": "entry:5d89e690256d:root",
+                "source_kind": "qamus_entry_field"
+              },
+              {
+                "address": "entry:5d89e690256d:senses[0].ar",
+                "source_kind": "qamus_entry_field"
+              },
+              {
+                "address": "crosswalk:forward:28:50:12",
+                "source_kind": "review_artifact"
+              },
+              {
+                "address": "crosswalk:reverse:5d89e690256d",
+                "source_kind": "review_artifact"
+              }
+            ],
+            "operation": "apply_candidate_form_viii_pattern_to_exact_target_surface",
+            "output": "one primary display class per written base letter",
+            "step_id": "proofv.step.letter-ownership"
+          }
+        ],
+        "evidence": {
+          "confidence": "medium",
+          "evidence_ids": [
+            "quran:19:43:10",
+            "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "occurrence-appearances:19:43:10:appearances[0]",
+            "entry:5d89e690256d:root",
+            "entry:5d89e690256d:senses[0].ar",
+            "crosswalk:forward:28:50:12",
+            "crosswalk:reverse:5d89e690256d"
+          ],
+          "status": "source_addressed_candidate",
+          "summary": "Every written base letter has one primary display owner; the shared letter keeps secondary internal roles only."
+        },
+        "evidence_mode": "cross_source_corroboration",
+        "fact_id": "sha256:3074d017dd960531a80e4e8aa738c99b869791d397bae5e0d1e5d3d51954775b",
+        "fact_type": "proofv_letter_ownership",
+        "fact_value": {
+          "base_letter_count": 7,
+          "diacritics_policy": "hover_only",
+          "letter_ownership": [
+            {
+              "base_letter_index": 0,
+              "display_class": "qg-result-fa",
+              "end": 2,
+              "marks": [
+                "َ"
+              ],
+              "nahw_role": "linking_or_result_fa",
+              "owner_class": "linking_result_fa",
+              "primary_display": true,
+              "primary_plane": "nahw",
+              "role": "linking_result_fa",
+              "start": 0,
+              "surface": "فَ",
+              "written_letter": "ف"
+            },
+            {
+              "base_letter_index": 1,
+              "display_class": "qg-verb-prefix",
+              "end": 3,
+              "hamzat_al_wasl_class": "hamzat_al_wasl",
+              "marks": [],
+              "owner_class": "hamzat_al_wasl",
+              "primary_display": true,
+              "primary_plane": "sarf",
+              "role": "hamzat_al_wasl",
+              "start": 2,
+              "surface": "ٱ",
+              "written_letter": "ٱ"
+            },
+            {
+              "base_letter_index": 2,
+              "display_class": "qg-root-radical",
+              "end": 6,
+              "marks": [
+                "ّ",
+                "َ"
+              ],
+              "owner_class": "root_radical",
+              "primary_display": true,
+              "primary_plane": "sarf",
+              "role": "root_radical_shared_with_derivative_infix",
+              "secondary_internal_class": "qg-derivative-prefix",
+              "shared_roles": [
+                "root_radical_1",
+                "derivative_infix"
+              ],
+              "start": 3,
+              "surface": "تَّ",
+              "written_letter": "ت"
+            },
+            {
+              "base_letter_index": 3,
+              "display_class": "qg-root-radical",
+              "end": 8,
+              "marks": [
+                "ِ"
+              ],
+              "owner_class": "root_radical",
+              "primary_display": true,
+              "primary_plane": "sarf",
+              "role": "root_radical",
+              "start": 6,
+              "surface": "بِ",
+              "written_letter": "ب"
+            },
+            {
+              "base_letter_index": 4,
+              "display_class": "qg-root-radical",
+              "end": 10,
+              "marks": [
+                "ْ"
+              ],
+              "owner_class": "root_radical",
+              "primary_display": true,
+              "primary_plane": "sarf",
+              "role": "root_radical",
+              "start": 8,
+              "surface": "عْ",
+              "written_letter": "ع"
+            },
+            {
+              "base_letter_index": 5,
+              "display_class": "qg-protective-nun",
+              "end": 12,
+              "marks": [
+                "ِ"
+              ],
+              "owner_class": "protective_nun",
+              "particle": false,
+              "primary_display": true,
+              "primary_plane": "sarf",
+              "role": "protective_nun",
+              "start": 10,
+              "surface": "نِ",
+              "typed_kind": "sarf.protective_nun",
+              "written_letter": "ن"
+            },
+            {
+              "base_letter_index": 6,
+              "display_class": "qg-object-pronoun",
+              "end": 14,
+              "marks": [
+                "ٓ"
+              ],
+              "owner_class": "object_pronoun",
+              "primary_display": true,
+              "primary_plane": "sarf",
+              "pronoun_letter": "ي",
+              "pronoun_number": "singular",
+              "pronoun_person": "1",
+              "role": "object_pronoun_1cs",
+              "start": 12,
+              "surface": "ىٓ",
+              "written_letter": "ى"
+            }
+          ],
+          "nahw_colour_policy": "overt_letters_only",
+          "root": [
+            "ت",
+            "ب",
+            "ع"
+          ],
+          "source_fact": {
+            "carrier_affix_count": 14,
+            "pattern_id": "proofv.form_viii.imperative_active.2ms_object_1cs",
+            "weak_defeater_count": 4
+          },
+          "surface": "فَٱتَّبِعْنِىٓ"
+        },
+        "guards": [
+          {
+            "guard_id": "proofv.letter_owner_totality",
+            "reason": "all seven written base letters are owned exactly once"
+          },
+          {
+            "guard_id": "proofv.hamzat_al_wasl_governed",
+            "reason": "hamzat al-waṣl is a separate governed class"
+          },
+          {
+            "guard_id": "proofv.protective_nun_typed",
+            "reason": "protective nūn is not a particle"
+          }
+        ],
+        "ownership": {
+          "primary": {
+            "owner_id": "proofv-verb-owner",
+            "owner_type": "producer"
+          },
+          "secondary": [
+            {
+              "owner_id": "fam4-finite-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "fam5-derived-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "proofv-candidate-scope",
+              "owner_type": "scope"
+            }
+          ]
+        },
+        "producer": {
+          "id": "tools.proofv_verb_producer",
+          "version": "1.0.0"
+        },
+        "rule_projector": {
+          "projector_id": "sarf.proofv.verb.v1",
+          "rule_id": "proofv.verb.letter_evidence",
+          "version": "1.0.0"
+        },
+        "source": {
+          "source_id": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_address": {
+          "address": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_evidence": {
+          "source_addresses": [
+            {
+              "address": "quran:19:43:10",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+              "source_kind": "corpus_record"
+            },
+            {
+              "address": "occurrence-appearances:19:43:10:appearances[0]",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "entry:5d89e690256d:root",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:5d89e690256d:senses[0].ar",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "crosswalk:forward:28:50:12",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:5d89e690256d",
+              "source_kind": "review_artifact"
+            }
+          ],
+          "structured_source_fact": {
+            "carrier_affix_count": 14,
+            "pattern_id": "proofv.form_viii.imperative_active.2ms_object_1cs",
+            "weak_defeater_count": 4
+          }
+        },
+        "surface_spans": [
+          {
+            "end": 2,
+            "role": "linking_result_fa",
+            "span_id": "span:base-letter-0",
+            "start": 0,
+            "surface": "فَ"
+          },
+          {
+            "end": 3,
+            "role": "hamzat_al_wasl",
+            "span_id": "span:base-letter-1",
+            "start": 2,
+            "surface": "ٱ"
+          },
+          {
+            "end": 6,
+            "role": "root_radical_shared_with_derivative_infix",
+            "span_id": "span:base-letter-2",
+            "start": 3,
+            "surface": "تَّ"
+          },
+          {
+            "end": 8,
+            "role": "root_radical",
+            "span_id": "span:base-letter-3",
+            "start": 6,
+            "surface": "بِ"
+          },
+          {
+            "end": 10,
+            "role": "root_radical",
+            "span_id": "span:base-letter-4",
+            "start": 8,
+            "surface": "عْ"
+          },
+          {
+            "end": 12,
+            "role": "protective_nun",
+            "span_id": "span:base-letter-5",
+            "start": 10,
+            "surface": "نِ"
+          },
+          {
+            "end": 14,
+            "role": "object_pronoun_1cs",
+            "span_id": "span:base-letter-6",
+            "start": 12,
+            "surface": "ىٓ"
+          }
+        ],
+        "unresolved_blockers": []
+      },
+      {
+        "certification": {
+          "reason": "This is the requested candidate proof; it is not a certified publication fact.",
+          "status": "candidate"
+        },
+        "contradiction_records": [],
+        "defeaters": [
+          {
+            "defeater_id": "proofv.candidate_only",
+            "fact_ids": [],
+            "reason": "candidate mode remains active"
+          }
+        ],
+        "dependencies": {
+          "fact_ids": [
+            "sha256:cdb599226d0e0438bccddc4e85b81c98398e26be9058843fe0fec56c6783d06f",
+            "sha256:66ccb2fd6ec19173d99f75c8f2f207e3e3ad33c884838ef233496eb5678d82e1",
+            "sha256:3074d017dd960531a80e4e8aa738c99b869791d397bae5e0d1e5d3d51954775b"
+          ],
+          "source_addresses": [
+            {
+              "address": "quran:19:43:10",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+              "source_kind": "corpus_record"
+            },
+            {
+              "address": "occurrence-appearances:19:43:10:appearances[0]",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "entry:5d89e690256d:root",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:5d89e690256d:senses[0].ar",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "crosswalk:forward:28:50:12",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:5d89e690256d",
+              "source_kind": "review_artifact"
+            }
+          ]
+        },
+        "dependent_fact_ids": [],
+        "dependent_projection_ids": [
+          "proofv.verb.19.43.10.v1"
+        ],
+        "derivation_chain": [
+          {
+            "input_fact_ids": [
+              "sha256:cdb599226d0e0438bccddc4e85b81c98398e26be9058843fe0fec56c6783d06f",
+              "sha256:66ccb2fd6ec19173d99f75c8f2f207e3e3ad33c884838ef233496eb5678d82e1",
+              "sha256:3074d017dd960531a80e4e8aa738c99b869791d397bae5e0d1e5d3d51954775b"
+            ],
+            "input_source_addresses": [
+              {
+                "address": "quran:19:43:10",
+                "source_kind": "quran_token"
+              },
+              {
+                "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+                "source_kind": "corpus_record"
+              },
+              {
+                "address": "occurrence-appearances:19:43:10:appearances[0]",
+                "source_kind": "review_artifact"
+              },
+              {
+                "address": "entry:5d89e690256d:root",
+                "source_kind": "qamus_entry_field"
+              },
+              {
+                "address": "entry:5d89e690256d:senses[0].ar",
+                "source_kind": "qamus_entry_field"
+              },
+              {
+                "address": "crosswalk:forward:28:50:12",
+                "source_kind": "review_artifact"
+              },
+              {
+                "address": "crosswalk:reverse:5d89e690256d",
+                "source_kind": "review_artifact"
+              }
+            ],
+            "operation": "apply_proofv_candidate_form_viii_pattern",
+            "output": "form, voice, person, mood, derivational infix, shared gemination, and suffix ownership",
+            "step_id": "proofv.step.derived-verb"
+          }
+        ],
+        "evidence": {
+          "confidence": "medium",
+          "evidence_ids": [
+            "quran:19:43:10",
+            "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "occurrence-appearances:19:43:10:appearances[0]",
+            "entry:5d89e690256d:root",
+            "entry:5d89e690256d:senses[0].ar",
+            "crosswalk:forward:28:50:12",
+            "crosswalk:reverse:5d89e690256d"
+          ],
+          "status": "source_addressed_candidate",
+          "summary": "The source packet and same-lexeme chain support a visible candidate reconstruction with explicit gates."
+        },
+        "evidence_mode": "cross_source_corroboration",
+        "fact_id": "sha256:ff32c6e4995c02dca9fd8eac9b6a3bcd5239063e7df7ddd95ccbced19fde665a",
+        "fact_type": "derived_verb_evidence",
+        "fact_value": {
+          "derivational_additions": [
+            {
+              "base_letter_indices": [
+                2
+              ],
+              "class": "derivative_infix",
+              "marker_class": "derivative_infix_form_viii_t",
+              "role": "derivative_infix",
+              "surface": "تَّ"
+            }
+          ],
+          "form": "VIII",
+          "gemination": {
+            "idgham_classification": "B_shared_letter_clean_split",
+            "present": true,
+            "reason": "The infix ت and root ت share one shadda-bearing written base letter; no naive split is displayed.",
+            "shared_roles": [
+              "derivative_infix",
+              "root_radical_1"
+            ],
+            "split_authorized": false,
+            "split_tone": false,
+            "treatment": "C_shared_written_letter",
+            "written_base_letter_index": 2
+          },
+          "gender": "masculine",
+          "hamzat_al_wasl": {
+            "class": "hamzat_al_wasl",
+            "governed": true,
+            "present": true,
+            "surface": "ٱ"
+          },
+          "letter_ownership": [
+            {
+              "base_letter_index": 0,
+              "display_class": "qg-result-fa",
+              "end": 2,
+              "marks": [
+                "َ"
+              ],
+              "nahw_role": "linking_or_result_fa",
+              "owner_class": "linking_result_fa",
+              "primary_display": true,
+              "primary_plane": "nahw",
+              "role": "linking_result_fa",
+              "start": 0,
+              "surface": "فَ",
+              "written_letter": "ف"
+            },
+            {
+              "base_letter_index": 1,
+              "display_class": "qg-verb-prefix",
+              "end": 3,
+              "hamzat_al_wasl_class": "hamzat_al_wasl",
+              "marks": [],
+              "owner_class": "hamzat_al_wasl",
+              "primary_display": true,
+              "primary_plane": "sarf",
+              "role": "hamzat_al_wasl",
+              "start": 2,
+              "surface": "ٱ",
+              "written_letter": "ٱ"
+            },
+            {
+              "base_letter_index": 2,
+              "display_class": "qg-root-radical",
+              "end": 6,
+              "marks": [
+                "ّ",
+                "َ"
+              ],
+              "owner_class": "root_radical",
+              "primary_display": true,
+              "primary_plane": "sarf",
+              "role": "root_radical_shared_with_derivative_infix",
+              "secondary_internal_class": "qg-derivative-prefix",
+              "shared_roles": [
+                "root_radical_1",
+                "derivative_infix"
+              ],
+              "start": 3,
+              "surface": "تَّ",
+              "written_letter": "ت"
+            },
+            {
+              "base_letter_index": 3,
+              "display_class": "qg-root-radical",
+              "end": 8,
+              "marks": [
+                "ِ"
+              ],
+              "owner_class": "root_radical",
+              "primary_display": true,
+              "primary_plane": "sarf",
+              "role": "root_radical",
+              "start": 6,
+              "surface": "بِ",
+              "written_letter": "ب"
+            },
+            {
+              "base_letter_index": 4,
+              "display_class": "qg-root-radical",
+              "end": 10,
+              "marks": [
+                "ْ"
+              ],
+              "owner_class": "root_radical",
+              "primary_display": true,
+              "primary_plane": "sarf",
+              "role": "root_radical",
+              "start": 8,
+              "surface": "عْ",
+              "written_letter": "ع"
+            },
+            {
+              "base_letter_index": 5,
+              "display_class": "qg-protective-nun",
+              "end": 12,
+              "marks": [
+                "ِ"
+              ],
+              "owner_class": "protective_nun",
+              "particle": false,
+              "primary_display": true,
+              "primary_plane": "sarf",
+              "role": "protective_nun",
+              "start": 10,
+              "surface": "نِ",
+              "typed_kind": "sarf.protective_nun",
+              "written_letter": "ن"
+            },
+            {
+              "base_letter_index": 6,
+              "display_class": "qg-object-pronoun",
+              "end": 14,
+              "marks": [
+                "ٓ"
+              ],
+              "owner_class": "object_pronoun",
+              "primary_display": true,
+              "primary_plane": "sarf",
+              "pronoun_letter": "ي",
+              "pronoun_number": "singular",
+              "pronoun_person": "1",
+              "role": "object_pronoun_1cs",
+              "start": 12,
+              "surface": "ىٓ",
+              "written_letter": "ى"
+            }
+          ],
+          "mood": "imperative",
+          "number": "singular",
+          "pattern_id": "proofv.form_viii.imperative_active.2ms_object_1cs",
+          "person": "2",
+          "reconstruction_proof": {
+            "base_letter_indices_complete": true,
+            "each_written_base_letter_exactly_one_class": true,
+            "joined_surface": "فَٱتَّبِعْنِىٓ",
+            "no_naive_geminate_split": true,
+            "passed": true
+          },
+          "root": [
+            "ت",
+            "ب",
+            "ع"
+          ],
+          "root_radicals": [
+            {
+              "base_letter_index": 2,
+              "index": 1,
+              "radical": "ت",
+              "shared_written_letter": true
+            },
+            {
+              "base_letter_index": 3,
+              "index": 2,
+              "radical": "ب"
+            },
+            {
+              "base_letter_index": 4,
+              "index": 3,
+              "radical": "ع"
+            }
+          ],
+          "source_fact": {
+            "entry_root_source": "5d89e690256d",
+            "target_occurrence_direct_form_edge": false,
+            "whitelist_morphline_present": true
+          },
+          "surface": "فَٱتَّبِعْنِىٓ",
+          "template": "ifta3ala_assimilated_first_radical",
+          "tense_aspect": "imperative",
+          "typed_kind": "proofv.derived_verb_evidence",
+          "voice": "active",
+          "weak_root_defeater": {
+            "registry_route": "weak_root_pattern_unresolved",
+            "root_shape": "sound",
+            "status": "none_triggered"
+          }
+        },
+        "guards": [
+          {
+            "guard_id": "proofv.shared_fam4_affix_registry",
+            "reason": "the shared FAM4 affix carrier is loaded before projection"
+          },
+          {
+            "guard_id": "proofv.shared_fam5_registry",
+            "reason": "the shared FAM5 derived-verb carrier is loaded before projection"
+          },
+          {
+            "guard_id": "proofv.weak_root_defeater_registry",
+            "reason": "weak-root defeaters are checked and none triggers for ت ب ع"
+          },
+          {
+            "guard_id": "proofv.treatment_c_gemination",
+            "reason": "the shared written letter remains one display span"
+          },
+          {
+            "guard_id": "proofv.candidate_only",
+            "reason": "pre_apply_not_authorized remains true"
+          }
+        ],
+        "ownership": {
+          "primary": {
+            "owner_id": "proofv-verb-owner",
+            "owner_type": "producer"
+          },
+          "secondary": [
+            {
+              "owner_id": "fam4-finite-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "fam5-derived-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "proofv-candidate-scope",
+              "owner_type": "scope"
+            }
+          ]
+        },
+        "producer": {
+          "id": "tools.proofv_verb_producer",
+          "version": "1.0.0"
+        },
+        "rule_projector": {
+          "projector_id": "sarf.proofv.verb.v1",
+          "rule_id": "proofv.verb.letter_evidence",
+          "version": "1.0.0"
+        },
+        "source": {
+          "source_id": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_address": {
+          "address": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_evidence": {
+          "source_addresses": [
+            {
+              "address": "quran:19:43:10",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+              "source_kind": "corpus_record"
+            },
+            {
+              "address": "occurrence-appearances:19:43:10:appearances[0]",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "entry:5d89e690256d:root",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:5d89e690256d:senses[0].ar",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "crosswalk:forward:28:50:12",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:5d89e690256d",
+              "source_kind": "review_artifact"
+            }
+          ],
+          "structured_source_fact": {
+            "entry_root_source": "5d89e690256d",
+            "target_occurrence_direct_form_edge": false,
+            "whitelist_morphline_present": true
+          }
+        },
+        "surface_spans": [
+          {
+            "end": 2,
+            "role": "linking_result_fa",
+            "span_id": "span:base-letter-0",
+            "start": 0,
+            "surface": "فَ"
+          },
+          {
+            "end": 3,
+            "role": "hamzat_al_wasl",
+            "span_id": "span:base-letter-1",
+            "start": 2,
+            "surface": "ٱ"
+          },
+          {
+            "end": 6,
+            "role": "root_radical_shared_with_derivative_infix",
+            "span_id": "span:base-letter-2",
+            "start": 3,
+            "surface": "تَّ"
+          },
+          {
+            "end": 8,
+            "role": "root_radical",
+            "span_id": "span:base-letter-3",
+            "start": 6,
+            "surface": "بِ"
+          },
+          {
+            "end": 10,
+            "role": "root_radical",
+            "span_id": "span:base-letter-4",
+            "start": 8,
+            "surface": "عْ"
+          },
+          {
+            "end": 12,
+            "role": "protective_nun",
+            "span_id": "span:base-letter-5",
+            "start": 10,
+            "surface": "نِ"
+          },
+          {
+            "end": 14,
+            "role": "object_pronoun_1cs",
+            "span_id": "span:base-letter-6",
+            "start": 12,
+            "surface": "ىٓ"
+          }
+        ],
+        "unresolved_blockers": []
+      },
+      {
+        "certification": {
+          "reason": "The protective-nūn class is carried as a candidate typed fact.",
+          "status": "candidate"
+        },
+        "contradiction_records": [],
+        "defeaters": [
+          {
+            "defeater_id": "proofv.candidate_only",
+            "fact_ids": [],
+            "reason": "candidate mode remains active"
+          }
+        ],
+        "dependencies": {
+          "fact_ids": [
+            "sha256:3074d017dd960531a80e4e8aa738c99b869791d397bae5e0d1e5d3d51954775b"
+          ],
+          "source_addresses": [
+            {
+              "address": "quran:19:43:10",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+              "source_kind": "corpus_record"
+            },
+            {
+              "address": "occurrence-appearances:19:43:10:appearances[0]",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "entry:5d89e690256d:root",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:5d89e690256d:senses[0].ar",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "crosswalk:forward:28:50:12",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:5d89e690256d",
+              "source_kind": "review_artifact"
+            }
+          ]
+        },
+        "dependent_fact_ids": [],
+        "dependent_projection_ids": [
+          "proofv.verb.19.43.10.v1"
+        ],
+        "derivation_chain": [],
+        "evidence": {
+          "confidence": "medium",
+          "evidence_ids": [
+            "quran:19:43:10",
+            "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "occurrence-appearances:19:43:10:appearances[0]",
+            "entry:5d89e690256d:root",
+            "entry:5d89e690256d:senses[0].ar",
+            "crosswalk:forward:28:50:12",
+            "crosswalk:reverse:5d89e690256d"
+          ],
+          "status": "source_addressed_candidate",
+          "summary": "The nūn is kept in the sarf protective-nūn class and is never emitted as a particle."
+        },
+        "evidence_mode": "direct_source_attestation",
+        "fact_id": "sha256:036c9569061115f2a4a37deb96a020ea3f7fb640a90ab6b3f65c8aa3f80f3f09",
+        "fact_type": "protective_nun",
+        "fact_value": {
+          "class": "qg-protective-nun",
+          "particle": false,
+          "role": "protective_nun",
+          "source_fact": {
+            "boundary": "explicit_target_suffix"
+          },
+          "surface": "نِ",
+          "typed_kind": "sarf.protective_nun"
+        },
+        "guards": [
+          {
+            "guard_id": "proofv.protective_nun_never_particle",
+            "reason": "qg-protective-nun is not a particle class"
+          }
+        ],
+        "ownership": {
+          "primary": {
+            "owner_id": "proofv-verb-owner",
+            "owner_type": "producer"
+          },
+          "secondary": [
+            {
+              "owner_id": "fam4-finite-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "fam5-derived-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "proofv-candidate-scope",
+              "owner_type": "scope"
+            }
+          ]
+        },
+        "producer": {
+          "id": "tools.proofv_verb_producer",
+          "version": "1.0.0"
+        },
+        "rule_projector": {
+          "projector_id": "sarf.proofv.verb.v1",
+          "rule_id": "proofv.verb.letter_evidence",
+          "version": "1.0.0"
+        },
+        "source": {
+          "source_id": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_address": {
+          "address": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_evidence": {
+          "source_addresses": [
+            {
+              "address": "quran:19:43:10",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+              "source_kind": "corpus_record"
+            },
+            {
+              "address": "occurrence-appearances:19:43:10:appearances[0]",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "entry:5d89e690256d:root",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:5d89e690256d:senses[0].ar",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "crosswalk:forward:28:50:12",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:5d89e690256d",
+              "source_kind": "review_artifact"
+            }
+          ],
+          "structured_source_fact": {
+            "boundary": "explicit_target_suffix"
+          }
+        },
+        "surface_spans": [
+          {
+            "end": 12,
+            "role": "protective_nun",
+            "span_id": "span:base-letter-5",
+            "start": 10,
+            "surface": "نِ"
+          }
+        ],
+        "unresolved_blockers": []
+      },
+      {
+        "certification": {
+          "reason": "The attached 1cs object-pronoun class is a candidate typed fact.",
+          "status": "candidate"
+        },
+        "contradiction_records": [],
+        "defeaters": [
+          {
+            "defeater_id": "proofv.candidate_only",
+            "fact_ids": [],
+            "reason": "candidate mode remains active"
+          }
+        ],
+        "dependencies": {
+          "fact_ids": [
+            "sha256:3074d017dd960531a80e4e8aa738c99b869791d397bae5e0d1e5d3d51954775b"
+          ],
+          "source_addresses": [
+            {
+              "address": "quran:19:43:10",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+              "source_kind": "corpus_record"
+            },
+            {
+              "address": "occurrence-appearances:19:43:10:appearances[0]",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "entry:5d89e690256d:root",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:5d89e690256d:senses[0].ar",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "crosswalk:forward:28:50:12",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:5d89e690256d",
+              "source_kind": "review_artifact"
+            }
+          ]
+        },
+        "dependent_fact_ids": [],
+        "dependent_projection_ids": [
+          "proofv.verb.19.43.10.v1"
+        ],
+        "derivation_chain": [],
+        "evidence": {
+          "confidence": "medium",
+          "evidence_ids": [
+            "quran:19:43:10",
+            "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "occurrence-appearances:19:43:10:appearances[0]",
+            "entry:5d89e690256d:root",
+            "entry:5d89e690256d:senses[0].ar",
+            "crosswalk:forward:28:50:12",
+            "crosswalk:reverse:5d89e690256d"
+          ],
+          "status": "source_addressed_candidate",
+          "summary": "The final written suffix is kept as an attached 1cs object pronoun; exact syntax is separately pending."
+        },
+        "evidence_mode": "direct_source_attestation",
+        "fact_id": "sha256:e397512e6c994d1b70cecec58361885d41c677341b9defa32205930739623878",
+        "fact_type": "object_pronoun",
+        "fact_value": {
+          "number": "singular",
+          "person": "1",
+          "pronoun_letter": "ي",
+          "role": "attached_object_pronoun",
+          "source_fact": {
+            "source_field": "morphline_object_pronoun"
+          },
+          "surface": "ىٓ",
+          "typed_kind": "sarf.object_pronoun",
+          "written_letter": "ى"
+        },
+        "guards": [
+          {
+            "guard_id": "proofv.object_pronoun_attached",
+            "reason": "the final suffix has an explicit object-pronoun class"
+          }
+        ],
+        "ownership": {
+          "primary": {
+            "owner_id": "proofv-verb-owner",
+            "owner_type": "producer"
+          },
+          "secondary": [
+            {
+              "owner_id": "fam4-finite-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "fam5-derived-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "proofv-candidate-scope",
+              "owner_type": "scope"
+            }
+          ]
+        },
+        "producer": {
+          "id": "tools.proofv_verb_producer",
+          "version": "1.0.0"
+        },
+        "rule_projector": {
+          "projector_id": "sarf.proofv.verb.v1",
+          "rule_id": "proofv.verb.letter_evidence",
+          "version": "1.0.0"
+        },
+        "source": {
+          "source_id": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_address": {
+          "address": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_evidence": {
+          "source_addresses": [
+            {
+              "address": "quran:19:43:10",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+              "source_kind": "corpus_record"
+            },
+            {
+              "address": "occurrence-appearances:19:43:10:appearances[0]",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "entry:5d89e690256d:root",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:5d89e690256d:senses[0].ar",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "crosswalk:forward:28:50:12",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:5d89e690256d",
+              "source_kind": "review_artifact"
+            }
+          ],
+          "structured_source_fact": {
+            "source_field": "morphline_object_pronoun"
+          }
+        },
+        "surface_spans": [
+          {
+            "end": 14,
+            "role": "object_pronoun_1cs",
+            "span_id": "span:base-letter-6",
+            "start": 12,
+            "surface": "ىٓ"
+          }
+        ],
+        "unresolved_blockers": []
+      },
+      {
+        "certification": {
+          "reason": "The required source fact is not present in the repo packets.",
+          "status": "pending"
+        },
+        "contradiction_records": [],
+        "defeaters": [],
+        "dependencies": {
+          "fact_ids": [],
+          "source_addresses": []
+        },
+        "dependent_fact_ids": [],
+        "dependent_projection_ids": [
+          "proofv.verb.19.43.10.v1"
+        ],
+        "derivation_chain": [],
+        "evidence": {
+          "confidence": "unknown",
+          "evidence_ids": [
+            "quran:19:43:10",
+            "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+            "occurrence-appearances:19:43:10:appearances[0]",
+            "entry:5d89e690256d:root",
+            "entry:5d89e690256d:senses[0].ar",
+            "crosswalk:forward:28:50:12",
+            "crosswalk:reverse:5d89e690256d"
+          ],
+          "status": "unknown",
+          "summary": "The repo packet does not contain an exact source-addressed governor/object relation for this target occurrence."
+        },
+        "evidence_mode": "unresolved",
+        "fact_id": "sha256:2c60fdf8d71b84dd8ea7fe7fe4fac1fede543ae12d541c9d54ffe24b4c0ad77e",
+        "fact_type": "nahw_dependency",
+        "fact_value": {
+          "case_or_mood": {
+            "reason": "exact governor is absent",
+            "status": "unresolved",
+            "value": null
+          },
+          "governed_occurrence": {
+            "occurrence_id": "quran:19:43:10",
+            "surface": "فَٱتَّبِعْنِىٓ"
+          },
+          "governor": null,
+          "quran_loc": "19:43:10",
+          "reason": "The repo packet does not contain an exact source-addressed governor/object relation for this target occurrence.",
+          "relationship": {
+            "relationship": "object_of",
+            "role": "object",
+            "status": "unresolved"
+          },
+          "route": "scholar-packet:nahw-governor-object:19:43:10",
+          "source_fact": {
+            "governor_present": false,
+            "source_fields": []
+          },
+          "status": "unresolved",
+          "surface": "فَٱتَّبِعْنِىٓ"
+        },
+        "guards": [
+          {
+            "guard_id": "proofv.no_fact_invention",
+            "reason": "missing facts remain typed unresolved"
+          }
+        ],
+        "ownership": {
+          "primary": {
+            "owner_id": "proofv-verb-owner",
+            "owner_type": "producer"
+          },
+          "secondary": [
+            {
+              "owner_id": "fam4-finite-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "fam5-derived-verb-carrier",
+              "owner_type": "carrier"
+            },
+            {
+              "owner_id": "proofv-candidate-scope",
+              "owner_type": "scope"
+            }
+          ]
+        },
+        "producer": {
+          "id": "tools.proofv_verb_producer",
+          "version": "1.0.0"
+        },
+        "rule_projector": {
+          "projector_id": "sarf.proofv.verb.v1",
+          "rule_id": "proofv.verb.letter_evidence",
+          "version": "1.0.0"
+        },
+        "source": {
+          "source_id": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_address": {
+          "address": "quran:19:43:10",
+          "source_kind": "quran_token"
+        },
+        "source_evidence": {
+          "source_addresses": [
+            {
+              "address": "quran:19:43:10",
+              "source_kind": "quran_token"
+            },
+            {
+              "address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+              "source_kind": "corpus_record"
+            },
+            {
+              "address": "occurrence-appearances:19:43:10:appearances[0]",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "entry:5d89e690256d:root",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "entry:5d89e690256d:senses[0].ar",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "crosswalk:forward:28:50:12",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:5d89e690256d",
+              "source_kind": "review_artifact"
+            }
+          ],
+          "structured_source_fact": {
+            "blocker": "proofv.nahw_exact_governor_missing",
+            "route": "scholar-packet:nahw-governor-object:19:43:10"
+          }
+        },
+        "surface_spans": [
+          {
+            "end": 14,
+            "role": "verb_occurrence",
+            "span_id": "span:occurrence",
+            "start": 0,
+            "surface": "فَٱتَّبِعْنِىٓ"
+          }
+        ],
+        "unresolved_blockers": [
+          {
+            "blocker_id": "proofv.nahw_exact_governor_missing",
+            "reason": "The repo packet does not contain an exact source-addressed governor/object relation for this target occurrence."
+          }
+        ]
+      }
+    ],
+    "projection": {
+      "claim": {
+        "fact_bindings": [
+          {
+            "fact_field": "fact_value.reconstruction_proof",
+            "fact_id": "sha256:ff32c6e4995c02dca9fd8eac9b6a3bcd5239063e7df7ddd95ccbced19fde665a",
+            "surface_span_ids": [
+              "span:base-letter-0",
+              "span:base-letter-1",
+              "span:base-letter-2",
+              "span:base-letter-3",
+              "span:base-letter-4",
+              "span:base-letter-5",
+              "span:base-letter-6"
+            ]
+          }
+        ],
+        "language": "en",
+        "text": "This candidate preserves the requested written verb structure while source review remains open."
+      },
+      "learner_statement": "This word remains a candidate while two source routes are open.",
+      "learner_visible": true,
+      "materialization_target": {
+        "artifact": "qamus/examples/proof-verb/canonical-facts.json",
+        "field": "proofv_verb",
+        "live_mutation_allowed": false,
+        "public_materialization_allowed": false
+      },
+      "projection_id": "proofv.verb.19.43.10.v1",
+      "public_payload": {
+        "authorization_state": "pre_apply_not_authorized",
+        "live_mutation_allowed": false,
+        "public_materialization_allowed": false,
+        "segments": [
+          {
+            "role": "linking_result_fa",
+            "span_id": "span:base-letter-0",
+            "surface": "فَ"
+          },
+          {
+            "role": "hamzat_al_wasl",
+            "span_id": "span:base-letter-1",
+            "surface": "ٱ"
+          },
+          {
+            "role": "root_radical_shared_with_derivative_infix",
+            "span_id": "span:base-letter-2",
+            "surface": "تَّ"
+          },
+          {
+            "role": "root_radical",
+            "span_id": "span:base-letter-3",
+            "surface": "بِ"
+          },
+          {
+            "role": "root_radical",
+            "span_id": "span:base-letter-4",
+            "surface": "عْ"
+          },
+          {
+            "role": "protective_nun",
+            "span_id": "span:base-letter-5",
+            "surface": "نِ"
+          },
+          {
+            "role": "object_pronoun_1cs",
+            "span_id": "span:base-letter-6",
+            "surface": "ىٓ"
+          }
+        ],
+        "status": "candidate_with_source_gaps",
+        "surface": "فَٱتَّبِعْنِىٓ",
+        "surface_preserved": true,
+        "uncertainty_routes": [
+          "scholar-packet:proofv.target-lexeme-occurrence-link",
+          "scholar-packet:nahw-governor-object:19:43:10"
+        ]
+      },
+      "status": "candidate",
+      "unresolved_status": null
+    },
+    "record_type": "projection_input",
+    "schema": "qamus.typed_claim_contract.v1",
+    "tension_records": [
+      {
+        "fact_ids": [
+          "sha256:66ccb2fd6ec19173d99f75c8f2f207e3e3ad33c884838ef233496eb5678d82e1",
+          "sha256:2c60fdf8d71b84dd8ea7fe7fe4fac1fede543ae12d541c9d54ffe24b4c0ad77e"
+        ],
+        "resolution_requirement": "Attach a scholar packet with both exact source facts before any publication transition.",
+        "statement": "The target surface is exact, but its direct lexeme occurrence link and exact governor/object relation are not source-certified in the repo packets.",
+        "status": "unresolved",
+        "tension_id": "proofv.target-link-and-nahw"
+      }
+    ]
+  },
+  "sarf": {
+    "derivational_infix": {
+      "base_letter_index": 2,
+      "class": "derivative_infix_form_viii_t",
+      "surface": "تَّ"
+    },
+    "form": "VIII",
+    "gemination": {
+      "idgham_classification": "B_shared_letter_clean_split",
+      "present": true,
+      "reason": "The infix ت and root ت share one shadda-bearing written base letter; no naive split is displayed.",
+      "shared_roles": [
+        "derivative_infix",
+        "root_radical_1"
+      ],
+      "split_authorized": false,
+      "split_tone": false,
+      "treatment": "C_shared_written_letter",
+      "written_base_letter_index": 2
+    },
+    "gender": "masculine",
+    "hamzat_al_wasl": {
+      "class": "hamzat_al_wasl",
+      "governed": true,
+      "surface": "ٱ"
+    },
+    "letter_ownership": [
+      {
+        "base_letter_index": 0,
+        "display_class": "qg-result-fa",
+        "end": 2,
+        "marks": [
+          "َ"
+        ],
+        "nahw_role": "linking_or_result_fa",
+        "owner_class": "linking_result_fa",
+        "primary_display": true,
+        "primary_plane": "nahw",
+        "role": "linking_result_fa",
+        "start": 0,
+        "surface": "فَ",
+        "written_letter": "ف"
+      },
+      {
+        "base_letter_index": 1,
+        "display_class": "qg-verb-prefix",
+        "end": 3,
+        "hamzat_al_wasl_class": "hamzat_al_wasl",
+        "marks": [],
+        "owner_class": "hamzat_al_wasl",
+        "primary_display": true,
+        "primary_plane": "sarf",
+        "role": "hamzat_al_wasl",
+        "start": 2,
+        "surface": "ٱ",
+        "written_letter": "ٱ"
+      },
+      {
+        "base_letter_index": 2,
+        "display_class": "qg-root-radical",
+        "end": 6,
+        "marks": [
+          "ّ",
+          "َ"
+        ],
+        "owner_class": "root_radical",
+        "primary_display": true,
+        "primary_plane": "sarf",
+        "role": "root_radical_shared_with_derivative_infix",
+        "secondary_internal_class": "qg-derivative-prefix",
+        "shared_roles": [
+          "root_radical_1",
+          "derivative_infix"
+        ],
+        "start": 3,
+        "surface": "تَّ",
+        "written_letter": "ت"
+      },
+      {
+        "base_letter_index": 3,
+        "display_class": "qg-root-radical",
+        "end": 8,
+        "marks": [
+          "ِ"
+        ],
+        "owner_class": "root_radical",
+        "primary_display": true,
+        "primary_plane": "sarf",
+        "role": "root_radical",
+        "start": 6,
+        "surface": "بِ",
+        "written_letter": "ب"
+      },
+      {
+        "base_letter_index": 4,
+        "display_class": "qg-root-radical",
+        "end": 10,
+        "marks": [
+          "ْ"
+        ],
+        "owner_class": "root_radical",
+        "primary_display": true,
+        "primary_plane": "sarf",
+        "role": "root_radical",
+        "start": 8,
+        "surface": "عْ",
+        "written_letter": "ع"
+      },
+      {
+        "base_letter_index": 5,
+        "display_class": "qg-protective-nun",
+        "end": 12,
+        "marks": [
+          "ِ"
+        ],
+        "owner_class": "protective_nun",
+        "particle": false,
+        "primary_display": true,
+        "primary_plane": "sarf",
+        "role": "protective_nun",
+        "start": 10,
+        "surface": "نِ",
+        "typed_kind": "sarf.protective_nun",
+        "written_letter": "ن"
+      },
+      {
+        "base_letter_index": 6,
+        "display_class": "qg-object-pronoun",
+        "end": 14,
+        "marks": [
+          "ٓ"
+        ],
+        "owner_class": "object_pronoun",
+        "primary_display": true,
+        "primary_plane": "sarf",
+        "pronoun_letter": "ي",
+        "pronoun_number": "singular",
+        "pronoun_person": "1",
+        "role": "object_pronoun_1cs",
+        "start": 12,
+        "surface": "ىٓ",
+        "written_letter": "ى"
+      }
+    ],
+    "mood": "imperative",
+    "number": "singular",
+    "object_pronoun": {
+      "number": "singular",
+      "person": "1",
+      "pronoun_letter": "ي",
+      "role": "attached_object_pronoun",
+      "source_fact": {
+        "source_field": "morphline_object_pronoun"
+      },
+      "surface": "ىٓ",
+      "typed_kind": "sarf.object_pronoun",
+      "written_letter": "ى"
+    },
+    "person": "2",
+    "protective_nun": {
+      "class": "qg-protective-nun",
+      "particle": false,
+      "role": "protective_nun",
+      "source_fact": {
+        "boundary": "explicit_target_suffix"
+      },
+      "surface": "نِ",
+      "typed_kind": "sarf.protective_nun"
+    },
+    "root": [
+      "ت",
+      "ب",
+      "ع"
+    ],
+    "template": "ifta3ala_assimilated_first_radical",
+    "voice": "active",
+    "weak_root_defeater": {
+      "registry_route": "weak_root_pattern_unresolved",
+      "root_shape": "sound",
+      "status": "none_triggered"
+    }
+  },
+  "schema": "qamus.proofv.verb_facts.v1",
+  "status": "candidate_with_source_gaps",
+  "uncertainty": {
+    "display": "PENDING — source review required before a learner gloss is eligible.",
+    "routes": [
+      "scholar-packet:proofv.target-lexeme-occurrence-link",
+      "scholar-packet:nahw-governor-object:19:43:10"
+    ],
+    "source_gap": [
+      {
+        "blocker_id": "proofv.target_lexeme_occurrence_link",
+        "reason": "The chosen reader occurrence has no direct lexeme edge; the nearest same-lexeme chain is shown instead."
+      },
+      {
+        "blocker_id": "proofv.nahw_exact_governor_missing",
+        "reason": "The exact governor/object relation is not present in the repo packets."
+      }
+    ],
+    "status": "source_gap"
+  }
+}

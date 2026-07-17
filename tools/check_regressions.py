@@ -5317,6 +5317,45 @@ except Exception as _fam5_e:
     check("FAM5 derived-verb producer gates (harness error)", False)
     print("  ", _fam5_e)
 
+# PROOF-V §11: one real end-to-end verb proof. The packet is candidate-only;
+# this gate verifies the source survey, typed graph chain, shared compiler
+# payload, uncertainty display, and local readback without authorizing writes.
+try:
+    _proofv_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_proofv_verb.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "PROOF-V real verb proof packet self-test passes",
+        _proofv_self.returncode == 0
+        and "PROOF-V VALIDATION PASS" in (_proofv_self.stdout or ""),
+    )
+    _proofv_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_proofv_verb",
+        "-q",
+    ], timeout=120)
+    check(
+        "PROOF-V producer/compiler focused tests pass",
+        _proofv_unit.returncode == 0
+        and "OK" in ((_proofv_unit.stdout or "") + (_proofv_unit.stderr or "")),
+    )
+    _proofv_packet = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_proofv_verb.py"),
+    ], timeout=120)
+    check(
+        "PROOF-V committed candidate packet readback passes",
+        _proofv_packet.returncode == 0
+        and "PROOF-V VALIDATION PASS" in (_proofv_packet.stdout or ""),
+    )
+except Exception as _proofv_e:
+    check("PROOF-V real verb proof gates (harness error)", False)
+    print("  ", _proofv_e)
+
 # FB1: bounded clitic-pronoun producer calibration. The self-test is the
 # producer gate; the fixture and committed sample validators prove that the
 # packet remains F-A governed, >=40 rows, and repo-self-contained.

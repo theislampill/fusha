@@ -1,0 +1,34 @@
+{
+  "gloss_fields_excluded": true,
+  "loc": "19:43:10",
+  "morphology_assertions": [
+    "form_viii",
+    "imperative",
+    "2ms",
+    "object_1cs"
+  ],
+  "owner_surface_requested": "فَٱتَّبِعْنِي",
+  "quran_loc": "quran:19:43:10",
+  "read_only": true,
+  "schema": "qamus.proofv.source_occurrence.v1",
+  "segments": [
+    {
+      "class": "qg-verb-stem",
+      "role": "",
+      "segment_index": 0,
+      "surface": "فَٱتَّبِعْنِىٓ"
+    }
+  ],
+  "source_address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=19:43:10",
+  "source_fields_present": [
+    "surface",
+    "loc",
+    "quran_loc",
+    "morphline",
+    "segments"
+  ],
+  "source_line": 31349,
+  "source_row_hash": "sha256:ad645169252bcb87eb2a9c8b08eafe53a9db086e058416df8116d5b47aba6761",
+  "surface": "فَٱتَّبِعْنِىٓ",
+  "surface_match_key": "فاتبعني"
+}

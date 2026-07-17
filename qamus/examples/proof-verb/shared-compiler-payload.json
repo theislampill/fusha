@@ -1,0 +1,329 @@
+{
+  "at_rest": {
+    "exact_reconstruction": {
+      "base_letter_indices_complete": true,
+      "expected_surface": "فَٱتَّبِعْنِىٓ",
+      "joined_surface": "فَٱتَّبِعْنِىٓ",
+      "passed": true,
+      "span_count": 7
+    },
+    "spans": [
+      {
+        "display_class": "qg-result-fa",
+        "end": 2,
+        "marks_hover_only": [
+          "َ"
+        ],
+        "primary_plane": "nahw",
+        "role": "linking_result_fa",
+        "span_id": "span:base-letter-0",
+        "start": 0,
+        "surface": "فَ"
+      },
+      {
+        "display_class": "qg-verb-prefix",
+        "end": 3,
+        "marks_hover_only": [],
+        "primary_plane": "sarf",
+        "role": "hamzat_al_wasl",
+        "span_id": "span:base-letter-1",
+        "start": 2,
+        "surface": "ٱ"
+      },
+      {
+        "display_class": "qg-root-radical",
+        "end": 6,
+        "marks_hover_only": [
+          "ّ",
+          "َ"
+        ],
+        "primary_plane": "sarf",
+        "role": "root_radical_shared_with_derivative_infix",
+        "span_id": "span:base-letter-2",
+        "start": 3,
+        "surface": "تَّ"
+      },
+      {
+        "display_class": "qg-root-radical",
+        "end": 8,
+        "marks_hover_only": [
+          "ِ"
+        ],
+        "primary_plane": "sarf",
+        "role": "root_radical",
+        "span_id": "span:base-letter-3",
+        "start": 6,
+        "surface": "بِ"
+      },
+      {
+        "display_class": "qg-root-radical",
+        "end": 10,
+        "marks_hover_only": [
+          "ْ"
+        ],
+        "primary_plane": "sarf",
+        "role": "root_radical",
+        "span_id": "span:base-letter-4",
+        "start": 8,
+        "surface": "عْ"
+      },
+      {
+        "display_class": "qg-protective-nun",
+        "end": 12,
+        "marks_hover_only": [
+          "ِ"
+        ],
+        "primary_plane": "sarf",
+        "role": "protective_nun",
+        "span_id": "span:base-letter-5",
+        "start": 10,
+        "surface": "نِ"
+      },
+      {
+        "display_class": "qg-object-pronoun",
+        "end": 14,
+        "marks_hover_only": [
+          "ٓ"
+        ],
+        "primary_plane": "sarf",
+        "role": "object_pronoun_1cs",
+        "span_id": "span:base-letter-6",
+        "start": 12,
+        "surface": "ىٓ"
+      }
+    ],
+    "surface": "فَٱتَّبِعْنِىٓ"
+  },
+  "authorization_state": "pre_apply_not_authorized",
+  "candidate_status": "candidate_with_source_gaps",
+  "canonical_occurrence": {
+    "occurrence_id": "quran:19:43:10",
+    "quran_loc": "19:43:10",
+    "surface": "فَٱتَّبِعْنِىٓ",
+    "surface_length": 14,
+    "wbw_loc": "wbw:19:43:10"
+  },
+  "compact": {
+    "payload_id": "proofv.payload:4549b483c12bc2960cbe9392",
+    "surface": "فَٱتَّبِعْنِىٓ",
+    "text": "PENDING — the learner gloss is held while the exact relations are checked.",
+    "uncertainty": {
+      "display": "PENDING — source review required before a learner gloss is eligible.",
+      "routes": [
+        "scholar-packet:proofv.target-lexeme-occurrence-link",
+        "scholar-packet:nahw-governor-object:19:43:10"
+      ],
+      "source_gap": [
+        {
+          "blocker_id": "proofv.target_lexeme_occurrence_link",
+          "reason": "The chosen reader occurrence has no direct lexeme edge; the nearest same-lexeme chain is shown instead."
+        },
+        {
+          "blocker_id": "proofv.nahw_exact_governor_missing",
+          "reason": "The exact governor/object relation is not present in the repo packets."
+        }
+      ],
+      "status": "source_gap"
+    }
+  },
+  "compiler": {
+    "adapter": "proofv.shared_compiler.v1",
+    "id": "tools.fd_compiler.build_fact_derived_views",
+    "input_fact_ids": [
+      "sha256:036c9569061115f2a4a37deb96a020ea3f7fb640a90ab6b3f65c8aa3f80f3f09",
+      "sha256:2c60fdf8d71b84dd8ea7fe7fe4fac1fede543ae12d541c9d54ffe24b4c0ad77e",
+      "sha256:3074d017dd960531a80e4e8aa738c99b869791d397bae5e0d1e5d3d51954775b",
+      "sha256:66ccb2fd6ec19173d99f75c8f2f207e3e3ad33c884838ef233496eb5678d82e1",
+      "sha256:cdb599226d0e0438bccddc4e85b81c98398e26be9058843fe0fec56c6783d06f",
+      "sha256:e397512e6c994d1b70cecec58361885d41c677341b9defa32205930739623878",
+      "sha256:ff32c6e4995c02dca9fd8eac9b6a3bcd5239063e7df7ddd95ccbced19fde665a"
+    ],
+    "input_fact_types": [
+      "derived_verb_evidence",
+      "nahw_dependency",
+      "object_pronoun",
+      "proofv_letter_ownership",
+      "proofv_lexeme_crosswalk",
+      "proofv_surface_observation",
+      "protective_nun"
+    ],
+    "version": "FD2-carrier-1.0.0"
+  },
+  "expanded": {
+    "nahw": {
+      "label": "Naḥw — what this piece does here",
+      "route": "scholar-packet:nahw-governor-object:19:43:10",
+      "status": "unresolved",
+      "text": "The exact governor and object relation are still being checked."
+    },
+    "payload_id": "proofv.payload:4549b483c12bc2960cbe9392",
+    "sarf": {
+      "facts": [
+        "derived_verb_evidence",
+        "proofv_letter_ownership",
+        "protective_nun",
+        "object_pronoun"
+      ],
+      "label": "Ṣarf — how this piece forms the word",
+      "segments": [
+        {
+          "display_class": "qg-result-fa",
+          "marks_hover_only": [
+            "َ"
+          ],
+          "nahw_text": "Naḥw — what this piece does here: A linking/result fāʾ occupies its overt written span.",
+          "primary_display": true,
+          "role": "linking_result_fa",
+          "sarf_text": "Ṣarf — how this piece forms the word: A linking/result fāʾ.",
+          "segment_index": 0,
+          "surface": "فَ"
+        },
+        {
+          "display_class": "qg-verb-prefix",
+          "marks_hover_only": [],
+          "nahw_text": "Naḥw — what this piece does here: The governed hamzat al-waṣl onset occupies its overt written span.",
+          "primary_display": true,
+          "role": "hamzat_al_wasl",
+          "sarf_text": "Ṣarf — how this piece forms the word: The governed hamzat al-waṣl onset.",
+          "segment_index": 1,
+          "surface": "ٱ"
+        },
+        {
+          "display_class": "qg-root-radical",
+          "marks_hover_only": [
+            "ّ",
+            "َ"
+          ],
+          "nahw_text": "Naḥw — what this piece does here: The shared root-first-radical and form-viii infix letter occupies its overt written span.",
+          "primary_display": true,
+          "role": "root_radical_shared_with_derivative_infix",
+          "sarf_text": "Ṣarf — how this piece forms the word: The shared root-first-radical and form-viii infix letter.",
+          "segment_index": 2,
+          "surface": "تَّ"
+        },
+        {
+          "display_class": "qg-root-radical",
+          "marks_hover_only": [
+            "ِ"
+          ],
+          "nahw_text": "Naḥw — what this piece does here: A root radical occupies its overt written span.",
+          "primary_display": true,
+          "role": "root_radical",
+          "sarf_text": "Ṣarf — how this piece forms the word: A root radical.",
+          "segment_index": 3,
+          "surface": "بِ"
+        },
+        {
+          "display_class": "qg-root-radical",
+          "marks_hover_only": [
+            "ْ"
+          ],
+          "nahw_text": "Naḥw — what this piece does here: A root radical occupies its overt written span.",
+          "primary_display": true,
+          "role": "root_radical",
+          "sarf_text": "Ṣarf — how this piece forms the word: A root radical.",
+          "segment_index": 4,
+          "surface": "عْ"
+        },
+        {
+          "display_class": "qg-protective-nun",
+          "marks_hover_only": [
+            "ِ"
+          ],
+          "nahw_text": "Naḥw — what this piece does here: The protective nūn, not a particle occupies its overt written span.",
+          "primary_display": true,
+          "role": "protective_nun",
+          "sarf_text": "Ṣarf — how this piece forms the word: The protective nūn, not a particle.",
+          "segment_index": 5,
+          "surface": "نِ"
+        },
+        {
+          "display_class": "qg-object-pronoun",
+          "marks_hover_only": [
+            "ٓ"
+          ],
+          "nahw_text": "Naḥw — what this piece does here: The attached first-person singular object pronoun occupies its overt written span.",
+          "primary_display": true,
+          "role": "object_pronoun_1cs",
+          "sarf_text": "Ṣarf — how this piece forms the word: The attached first-person singular object pronoun.",
+          "segment_index": 6,
+          "surface": "ىٓ"
+        }
+      ],
+      "text": "The written pieces preserve the Form VIII pattern, the governed onset, the shared-letter gemination, and the attached pronoun pieces."
+    },
+    "surface": "فَٱتَّبِعْنِىٓ",
+    "uncertainty": {
+      "display": "PENDING — source review required before a learner gloss is eligible.",
+      "routes": [
+        "scholar-packet:proofv.target-lexeme-occurrence-link",
+        "scholar-packet:nahw-governor-object:19:43:10"
+      ],
+      "source_gap": [
+        {
+          "blocker_id": "proofv.target_lexeme_occurrence_link",
+          "reason": "The chosen reader occurrence has no direct lexeme edge; the nearest same-lexeme chain is shown instead."
+        },
+        {
+          "blocker_id": "proofv.nahw_exact_governor_missing",
+          "reason": "The exact governor/object relation is not present in the repo packets."
+        }
+      ],
+      "status": "source_gap"
+    }
+  },
+  "hover": {
+    "kind": "authored",
+    "lang": "en",
+    "src": "qamus",
+    "status": "pending",
+    "text": "PENDING — source review required before a learner gloss is eligible."
+  },
+  "live_mutation_allowed": false,
+  "payload_id": "proofv.payload:4549b483c12bc2960cbe9392",
+  "per_appearance": [
+    {
+      "appearance_index": 1,
+      "payload_id": "proofv.payload:4549b483c12bc2960cbe9392",
+      "same_payload_identity": true,
+      "surface": "فَٱتَّبِعْنِىٓ",
+      "surface_kind": "reader"
+    }
+  ],
+  "public_materialization_allowed": false,
+  "readback": {
+    "compact_payload_id": "proofv.payload:4549b483c12bc2960cbe9392",
+    "exact_reconstruction": true,
+    "expanded_payload_id": "proofv.payload:4549b483c12bc2960cbe9392",
+    "per_appearance_payload_ids": [
+      "proofv.payload:4549b483c12bc2960cbe9392"
+    ],
+    "reconstructed_surface": "فَٱتَّبِعْنِىٓ",
+    "same_payload_identity": true,
+    "surface": "فَٱتَّبِعْنِىٓ"
+  },
+  "schema": "qamus.proofv.shared_compiler_payload.v1",
+  "shared_carrier_view": {
+    "generated_from_facts": true,
+    "n_lang_clean": true,
+    "payload_id": "fd2.payload:8d0f7a491668f4b28334a3a2"
+  },
+  "uncertainty": {
+    "display": "PENDING — source review required before a learner gloss is eligible.",
+    "routes": [
+      "scholar-packet:proofv.target-lexeme-occurrence-link",
+      "scholar-packet:nahw-governor-object:19:43:10"
+    ],
+    "source_gap": [
+      {
+        "blocker_id": "proofv.target_lexeme_occurrence_link",
+        "reason": "The chosen reader occurrence has no direct lexeme edge; the nearest same-lexeme chain is shown instead."
+      },
+      {
+        "blocker_id": "proofv.nahw_exact_governor_missing",
+        "reason": "The exact governor/object relation is not present in the repo packets."
+      }
+    ],
+    "status": "source_gap"
+  }
+}

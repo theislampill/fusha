@@ -1,0 +1,18 @@
+{
+  "browser_render": {
+    "reason": "No browser screenshot is committed; the payload/readback gate is durable and local-only.",
+    "status": "not_run"
+  },
+  "compact_present": true,
+  "exact_reconstruction": true,
+  "expanded_present": true,
+  "font_check": null,
+  "live_mutation_allowed": false,
+  "png_local_only": true,
+  "public_materialization_allowed": false,
+  "render_mode": "fixture_payload_readback",
+  "same_payload_identity": true,
+  "schema": "qamus.proofv.render_proof.v1",
+  "tracked_png": false,
+  "uncertainty_visible": true
+}

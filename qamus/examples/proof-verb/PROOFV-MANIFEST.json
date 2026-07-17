@@ -1,0 +1,147 @@
+{
+  "artifact_owner": "PROOF-V / §11",
+  "authorization_state": "pre_apply_not_authorized",
+  "candidate_mode": true,
+  "chain": {
+    "card": "card:5d89e690256d:u1:x12",
+    "crosswalk_forward": "crosswalk-forward.json",
+    "crosswalk_reverse": "crosswalk-reverse.json",
+    "entry": "entry:5d89e690256d",
+    "facts": "canonical-facts.json",
+    "nearest_occurrence": "occurrence:28:50:12",
+    "payload": "shared-compiler-payload.json",
+    "selected_word": "selected-word:5d89e690256d:s1:u1:f1:c28:50:x12:o28:50:12",
+    "sense": "sense:5d89e690256d:s1",
+    "target_appearance": "appearance:19:43:10:1",
+    "target_occurrence": "occurrence:19:43:10"
+  },
+  "edge_enumeration": [
+    {
+      "edge_id": "edge:305bd5063c6b5238851779d7",
+      "edge_type": "canonical_occurrence_edge",
+      "from": "selected-word:5d89e690256d:s1:u1:f1:c28:50:x12:o28:50:12",
+      "status": "deterministic_exact",
+      "to": "occurrence:28:50:12"
+    },
+    {
+      "edge_id": "edge:6e938632ebaf41b5aaeffe9b",
+      "edge_type": "decision_evidence_edge",
+      "from": "occurrence:19:43:10",
+      "status": "source_gap",
+      "to": "selected-word:5d89e690256d:s1:u1:f1:c28:50:x12:o28:50:12"
+    },
+    {
+      "edge_id": "edge:75c0b3c7c9002a26541bd3bf",
+      "edge_type": "rendered_appearance_edge",
+      "from": "occurrence:28:50:12",
+      "status": "deterministic_exact",
+      "to": "appearance:28:50:12:1"
+    },
+    {
+      "edge_id": "edge:783f0da0e458bb80a91093c2",
+      "edge_type": "selected_example_edge",
+      "from": "card:5d89e690256d:u1:x12",
+      "status": "deterministic_exact",
+      "to": "occurrence:28:50:12"
+    },
+    {
+      "edge_id": "edge:7a9d4c3b9930ab82d2b91116",
+      "edge_type": "form_entry_edge",
+      "from": "selected-word:5d89e690256d:s1:u1:f1:c28:50:x12:o28:50:12",
+      "status": "deterministic_exact",
+      "to": "entry:5d89e690256d"
+    },
+    {
+      "edge_id": "edge:b42dc7572cb59ef0f9523c9a",
+      "edge_type": "lexeme_entry_edge",
+      "from": "selected-word:5d89e690256d:s1:u1:f1:c28:50:x12:o28:50:12",
+      "status": "deterministic_exact",
+      "to": "entry:5d89e690256d"
+    },
+    {
+      "edge_id": "edge:b6a9a8d196e8564b439a2d15",
+      "edge_type": "rendered_appearance_edge",
+      "from": "occurrence:28:50:12",
+      "status": "deterministic_exact",
+      "to": "appearance:28:50:12:2"
+    },
+    {
+      "edge_id": "edge:cdb7d1c81992edc5a9302a92",
+      "edge_type": "sense_entry_edge",
+      "from": "sense:5d89e690256d:s1",
+      "status": "deterministic_exact",
+      "to": "entry:5d89e690256d"
+    },
+    {
+      "edge_id": "edge:d19691960e5e9f6f7144a702",
+      "edge_type": "rendered_appearance_edge",
+      "from": "occurrence:19:43:10",
+      "status": "deterministic_exact",
+      "to": "appearance:19:43:10:1"
+    },
+    {
+      "edge_id": "edge:e8f9b82aee5cf71ddfaa5e29",
+      "edge_type": "source_card_edge",
+      "from": "selected-word:5d89e690256d:s1:u1:f1:c28:50:x12:o28:50:12",
+      "status": "deterministic_exact",
+      "to": "card:5d89e690256d:u1:x12"
+    }
+  ],
+  "fact_enumeration": {
+    "derived_verb_evidence": [
+      "sha256:ff32c6e4995c02dca9fd8eac9b6a3bcd5239063e7df7ddd95ccbced19fde665a"
+    ],
+    "nahw_dependency": [
+      "sha256:2c60fdf8d71b84dd8ea7fe7fe4fac1fede543ae12d541c9d54ffe24b4c0ad77e"
+    ],
+    "object_pronoun": [
+      "sha256:e397512e6c994d1b70cecec58361885d41c677341b9defa32205930739623878"
+    ],
+    "proofv_letter_ownership": [
+      "sha256:3074d017dd960531a80e4e8aa738c99b869791d397bae5e0d1e5d3d51954775b"
+    ],
+    "proofv_lexeme_crosswalk": [
+      "sha256:66ccb2fd6ec19173d99f75c8f2f207e3e3ad33c884838ef233496eb5678d82e1"
+    ],
+    "proofv_surface_observation": [
+      "sha256:cdb599226d0e0438bccddc4e85b81c98398e26be9058843fe0fec56c6783d06f"
+    ],
+    "protective_nun": [
+      "sha256:036c9569061115f2a4a37deb96a020ea3f7fb640a90ab6b3f65c8aa3f80f3f09"
+    ]
+  },
+  "generated_by": "tools.build_proofv_verb.py",
+  "limits": [
+    "No live MCP lookup was available; missing exact facts remain source gaps.",
+    "No whitelist, entry corpus, EDGES artifact, renderer, or deployment surface was mutated.",
+    "Candidate output is not a certified linguistic fact and is not publication-ready."
+  ],
+  "live_mutation_allowed": false,
+  "local_only": {
+    "browser_screenshot_committed": false,
+    "png": true,
+    "tracked_png": false
+  },
+  "manifest_version": "1.0.0",
+  "payload_descriptors": {
+    "at_rest": true,
+    "candidate_status": "candidate_with_source_gaps",
+    "compact": true,
+    "expanded_nahw": true,
+    "expanded_sarf": true,
+    "hover": true,
+    "payload_id": "proofv.payload:4549b483c12bc2960cbe9392",
+    "per_appearance": true,
+    "readback": true
+  },
+  "public_materialization_allowed": false,
+  "read_only_inputs": [
+    "../../data/entries.jsonl",
+    "../../data/rh_live_01_beta_whitelist.jsonl",
+    "../EDGES/full-artifacts/typed-edge-graph.jsonl",
+    "../EDGES/full-artifacts/lexeme-entry-crosswalk.forward.jsonl",
+    "../EDGES/full-artifacts/lexeme-entry-crosswalk.reverse.jsonl"
+  ],
+  "schema": "qamus.proofv.manifest.v1",
+  "selection_artifact": "source-selection.json"
+}
