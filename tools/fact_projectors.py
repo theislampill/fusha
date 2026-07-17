@@ -36,6 +36,7 @@ SARF_GENERATED_PROJECTOR_ID = "sarf.paradigm_generated.v1"
 TRANCHE1_SARF_PROJECTOR_ID = "sarf.tranche1_fixture_projection.v1"
 TRANCHE1_NAHW_PROJECTOR_ID = "nahw.tranche1_fixture_projection.v1"
 FAM2_LEXICAL_PROJECTOR_ID = "sarf.fam2.lexical_formation.v1"
+FAM3_NUMBER_PROJECTOR_ID = "sarf.fam3.number_formation.v1"
 FAM4_FINITE_VERB_PROJECTOR_ID = "sarf.fam4.finite_verb.v1"
 
 
@@ -276,6 +277,56 @@ def project_fam2_lexical_pattern(
             "sub_shape": matched["sub_shape"],
             "singular_surface": matched["singular_surface"],
             "plural_surface": matched["plural_surface"],
+            "evidence_mode": "paired_form_inference",
+        },
+        "materialization_allowed": False,
+    }
+
+
+def fam3_number_orthography_guard(*_args: Any, **_kwargs: Any) -> None:
+    """Named registration guard; FAM3 performs exact matching in its registry."""
+
+    return None
+
+
+def project_fam3_number_pattern(
+    *,
+    contract: Dict[str, Any],
+    base_surface: str,
+    observed_surface: str,
+    pattern_id: str,
+    context: Optional[Dict[str, Any]] = None,
+    pattern_registry: Any = None,
+) -> Dict[str, Any]:
+    """Run the registered FAM3 number projector in candidate mode only."""
+
+    from tools.fam3_number_producer import match_registered_number_pattern
+
+    matched = match_registered_number_pattern(
+        base_surface,
+        observed_surface,
+        pattern_id,
+        context=context,
+        registry=pattern_registry,
+    )
+    if matched is None:
+        return {
+            "projector_id": contract["projector_id"],
+            "status": "abstained",
+            "route": "pattern_unresolved",
+            "candidate": None,
+            "materialization_allowed": False,
+        }
+    return {
+        "projector_id": contract["projector_id"],
+        "status": "candidate",
+        "route": "entry_backed_registered_number_pattern",
+        "candidate": {
+            "fact_type": "formation_evidence",
+            "pattern_id": matched["pattern_id"],
+            "sub_shape": matched["sub_shape"],
+            "base_surface": matched["base_surface"],
+            "observed_surface": matched["observed_surface"],
             "evidence_mode": "paired_form_inference",
         },
         "materialization_allowed": False,
@@ -812,6 +863,24 @@ FAM2_LEXICAL_CONTRACT = {
     "resolution_method": "entry_backed_named_pattern_match",
 }
 
+FAM3_NUMBER_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "producer": "tools.fam3_number_producer",
+    "projector_id": FAM3_NUMBER_PROJECTOR_ID,
+    "fact_family": "sarf",
+    "input_fact_types": ["entry_base_attestation"],
+    "output_fact_type": "formation_evidence",
+    "compatibility_class": (
+        "entry-backed number-word bases whose exact written surface and local context match one named FAM3 number pattern; "
+        "labels, context-only joins, orthographic variants, and ambiguous homographs abstain"
+    ),
+    "defeater_checks": ["fam3_number_orthography_guard"],
+    "gate_tier": "two_vote_required",
+    "version": "1.0.0",
+    "resolution_method": "entry_backed_registered_number_pattern",
+}
+
 FAM4_FINITE_VERB_CONTRACT = {
     "schema": "qamus.projector_record.v1",
     "record_type": "registry_entry",
@@ -837,6 +906,7 @@ REGISTRY.register(SARF_GENERATED_CONTRACT, project_sarf_paradigm_generated)
 REGISTRY.register(TRANCHE1_SARF_CONTRACT, project_tranche1_fixture)
 REGISTRY.register(TRANCHE1_NAHW_CONTRACT, project_tranche1_fixture)
 REGISTRY.register(FAM2_LEXICAL_CONTRACT, project_fam2_lexical_pattern)
+REGISTRY.register(FAM3_NUMBER_CONTRACT, project_fam3_number_pattern)
 REGISTRY.register(FAM4_FINITE_VERB_CONTRACT, project_fam4_finite_verb_pattern)
 
 
