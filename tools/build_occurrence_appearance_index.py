@@ -133,21 +133,30 @@ def _entry_resolver(entries):
     return by_id, by_source
 
 
+def _resolve_entry_candidate(value, by_id, by_source):
+    """Resolve an entry id or source-key alias against the typed entry index."""
+
+    candidate = str(value or "").strip()
+    if not candidate:
+        return None
+    if candidate in by_id:
+        return candidate
+    identity = _source_identity(candidate)
+    if identity in by_source:
+        return by_source[identity]
+    return candidate
+
+
 def resolve_entry_id(row, by_id, by_source):
     """Resolve the entry id carried by a whitelist row, if any."""
 
     direct = str(row.get("entry_id") or "").strip()
     if direct:
-        if direct in by_id:
-            return direct
-        direct_identity = _source_identity(direct)
-        if direct_identity in by_source:
-            return by_source[direct_identity]
-        return direct
+        return _resolve_entry_candidate(direct, by_id, by_source)
 
     url_path = _url_path(row.get("entry_url"))
     if url_path.startswith("e/") and url_path[2:]:
-        return url_path[2:]
+        return _resolve_entry_candidate(url_path[2:], by_id, by_source)
 
     for candidate in (row.get("source_key"), url_path):
         identity = _source_identity(candidate)

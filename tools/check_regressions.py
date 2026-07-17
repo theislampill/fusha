@@ -5692,6 +5692,26 @@ except Exception as _edges_e:
     check("EDGES typed graph gates (harness error)", False)
     print("  ", _edges_e)
 
+# REPAIR1: reusable graph-repair families and occurrence-entry resolver fixtures.
+# This remains fixture-only so a fresh clone never depends on lane-side corpora.
+try:
+    _repair1_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_repair1_graph_families",
+        "tools.test_occurrence_appearance_index",
+        "-q",
+    ], timeout=120)
+    check(
+        "REPAIR1 graph-repair/resolver red-first fixtures pass",
+        _repair1_unit.returncode == 0
+        and "OK" in ((_repair1_unit.stdout or "") + (_repair1_unit.stderr or "")),
+    )
+except Exception as _repair1_e:
+    check("REPAIR1 graph-repair gates (harness error)", False)
+    print("  ", _repair1_e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

@@ -77,6 +77,48 @@ class OccurrenceAppearanceIndexTests(unittest.TestCase):
 
         self.assertEqual(result.records[0]["entry_relationships"], ["entry-book"])
 
+    def test_e_url_source_key_alias_resolves_to_typed_entry_id(self):
+        source = row(
+            "1:1:3",
+            "كِتَابٌ",
+            "book",
+            source_key="n0002",
+            entry_url="https://qamus.dawah.wiki/e/n0002",
+        )
+        entries = [{
+            "id": "entry-book",
+            "source_keys": ["n2"],
+            "usage": [],
+        }]
+
+        result = build_index([source], entries)
+
+        self.assertEqual(result.records[0]["entry_relationships"], ["entry-book"])
+
+    def test_six_e_url_source_key_aliases_reciprocate_to_canonical_entries(self):
+        aliases = ["v516", "v521", "v526", "v526", "v528", "v539"]
+        locations = ["1:1:1", "1:1:2", "1:1:3", "1:1:4", "1:1:5", "1:1:6"]
+        rows = [
+            row(
+                loc,
+                "كِتَابٌ",
+                "fixture",
+                entry_url=f"https://qamus.dawah.wiki/e/{alias}",
+            )
+            for loc, alias in zip(locations, aliases)
+        ]
+        entries = [
+            {"id": f"entry-{alias}", "source_keys": [alias], "usage": []}
+            for alias in sorted(set(aliases))
+        ]
+
+        result = build_index(rows, entries)
+
+        self.assertEqual(
+            [record["entry_relationships"] for record in result.records],
+            [[f"entry-{alias}"] for alias in aliases],
+        )
+
     def test_same_surface_different_locations_are_allowed(self):
         first = row("39:63:3", "السَّمَاوَاتِ", "segmented")
         second = row("22:18:9", "ٱلسَّمَٰوَٰتِ", "fused")
