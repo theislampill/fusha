@@ -1,0 +1,2 @@
+{"appearance_count":2,"appearances":[{"surface_kind":"reader"},{"entry_id":"entry-v001","surface_kind":"entry_example"}],"entry_relationships":["entry-v001"],"loc":"1:1:1","projection_hash":"a82616bf74bfe6a789cc876cfbbb4988dfd7dc68135036f0b1fbfa017a0d4604","unique":true}
+{"appearance_count":2,"appearances":[{"surface_kind":"reader"},{"entry_id":"entry-n0001","surface_kind":"entry_example"}],"entry_relationships":["entry-n0001"],"loc":"2:3:2","projection_hash":"e9bb9ba7554b45a6515d78fd7b3a62e32682251930e3145d0ba781622935d781","unique":true}
