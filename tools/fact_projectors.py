@@ -39,6 +39,7 @@ FAM2_LEXICAL_PROJECTOR_ID = "sarf.fam2.lexical_formation.v1"
 FAM3_NUMBER_PROJECTOR_ID = "sarf.fam3.number_formation.v1"
 FAM4_FINITE_VERB_PROJECTOR_ID = "sarf.fam4.finite_verb.v1"
 FAM5_DERIVED_VERB_PROJECTOR_ID = "sarf.fam5.derived_verb.v1"
+PROOFV_VERB_PROJECTOR_ID = "sarf.proofv.verb.v1"
 
 
 class ProjectorValidationError(ValueError):
@@ -198,6 +199,38 @@ def fam5_derived_verb_evidence_guard(*_args: Any, **_kwargs: Any) -> None:
     """Named registry guard; FAM5 performs source and ownership checks itself."""
 
     return None
+
+
+def proofv_verb_evidence_guard(*_args: Any, **_kwargs: Any) -> None:
+    """Named registry guard; PROOF-V keeps source gaps explicit."""
+
+    return None
+
+
+def project_proofv_verb(
+    *,
+    contract: Dict[str, Any],
+    source_row: Dict[str, Any],
+    nearest: Dict[str, Any] | None,
+) -> Dict[str, Any]:
+    """Run the bounded PROOF-V producer without enabling materialization."""
+
+    from tools import proofv_verb_producer
+
+    proof = proofv_verb_producer.build_verb_facts(source_row, nearest=nearest)
+    candidate = proof.get("status") == "candidate_with_source_gaps"
+    return {
+        "projector_id": contract["projector_id"],
+        "status": "candidate" if candidate else "abstained",
+        "route": proof.get("status"),
+        "candidate": {
+            "fact_type": "proofv_verb_evidence",
+            "fact_ids": [fact.get("fact_id") for fact in proof.get("facts", []) if fact.get("fact_type") == "derived_verb_evidence"],
+            "candidate_status": proof.get("status"),
+            "evidence_mode": "cross_source_corroboration",
+        } if candidate else None,
+        "materialization_allowed": False,
+    }
 
 
 def project_fam4_finite_verb_pattern(
@@ -981,6 +1014,24 @@ FAM5_DERIVED_VERB_CONTRACT = {
     "resolution_method": "entry_backed_closed_derived_form_letter_reconstruction",
 }
 
+PROOFV_VERB_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "producer": "tools.proofv_verb_producer",
+    "projector_id": PROOFV_VERB_PROJECTOR_ID,
+    "fact_family": "sarf",
+    "input_fact_types": ["entry_form_attestation", "lexeme_entry_edge"],
+    "output_fact_type": "proofv_verb_evidence",
+    "compatibility_class": (
+        "the one surveyed PROOF-V target occurrence with a caller-supplied same-lexeme crosswalk witness; "
+        "direct target gaps remain visible and no candidate enables materialization"
+    ),
+    "defeater_checks": ["proofv_verb_evidence_guard"],
+    "gate_tier": "two_vote_required",
+    "version": "1.0.0",
+    "resolution_method": "bounded_same_lexeme_crosswalk_candidate",
+}
+
 REGISTRY = ProjectorRegistry()
 REGISTRY.register(SARF_CONTRACT, project_sarf_documented_forms)
 REGISTRY.register(NAHW_CONTRACT, project_nahw_particle_functions)
@@ -991,6 +1042,7 @@ REGISTRY.register(FAM2_LEXICAL_CONTRACT, project_fam2_lexical_pattern)
 REGISTRY.register(FAM3_NUMBER_CONTRACT, project_fam3_number_pattern)
 REGISTRY.register(FAM4_FINITE_VERB_CONTRACT, project_fam4_finite_verb_pattern)
 REGISTRY.register(FAM5_DERIVED_VERB_CONTRACT, project_fam5_derived_verb_pattern)
+REGISTRY.register(PROOFV_VERB_CONTRACT, project_proofv_verb)
 
 
 def main(argv: Optional[List[str]] = None) -> int:

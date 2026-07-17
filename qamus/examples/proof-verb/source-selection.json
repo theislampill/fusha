@@ -1,0 +1,121 @@
+{
+  "chosen_loc": "19:43:10",
+  "chosen_occurrence_chain": {
+    "direct_card_edge": false,
+    "direct_form_edge": false,
+    "direct_lexeme_edge": false,
+    "direct_selected_word_edge": false,
+    "rendered_appearance_edge": true,
+    "status": "reader_only_source_gap"
+  },
+  "chosen_occurrence_is_card_selected": false,
+  "chosen_surface": "فَٱتَّبِعْنِىٓ",
+  "fallback_comparison": {
+    "normalized_match_key": "توكلت",
+    "occurrence_count": 7,
+    "occurrences": [
+      {
+        "card_ref": "10:71",
+        "has_page_context_entry_id": true,
+        "loc": "10:71:19",
+        "morphline_present": true,
+        "quran_loc": "quran:10:71:19",
+        "source_address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=10:71:19",
+        "source_entry_id": "fbd04177b8dd",
+        "surface": "تَوَكَّلْتُ"
+      },
+      {
+        "card_ref": "11:56",
+        "has_page_context_entry_id": true,
+        "loc": "11:56:2",
+        "morphline_present": true,
+        "quran_loc": "quran:11:56:2",
+        "source_address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=11:56:2",
+        "source_entry_id": "ecfc082ac2c5",
+        "surface": "تَوَكَّلْتُ"
+      },
+      {
+        "card_ref": "11:88",
+        "has_page_context_entry_id": true,
+        "loc": "11:88:33",
+        "morphline_present": true,
+        "quran_loc": "quran:11:88:33",
+        "source_address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=11:88:33",
+        "source_entry_id": "4d22dd9db001",
+        "surface": "تَوَكَّلْتُ"
+      },
+      {
+        "card_ref": "12:67",
+        "has_page_context_entry_id": true,
+        "loc": "12:67:24",
+        "morphline_present": true,
+        "quran_loc": "quran:12:67:24",
+        "source_address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=12:67:24",
+        "source_entry_id": "f80e6f80783a",
+        "surface": "تَوَكَّلْتُ"
+      },
+      {
+        "card_ref": "13:30",
+        "has_page_context_entry_id": true,
+        "loc": "13:30:26",
+        "morphline_present": true,
+        "quran_loc": "quran:13:30:26",
+        "source_address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=13:30:26",
+        "source_entry_id": "3d82e28ccae0",
+        "surface": "تَوَكَّلْتُ"
+      },
+      {
+        "card_ref": "42:10",
+        "has_page_context_entry_id": true,
+        "loc": "42:10:13",
+        "morphline_present": true,
+        "quran_loc": "quran:42:10:13",
+        "source_address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=42:10:13",
+        "source_entry_id": "da61fd38733f",
+        "surface": "تَوَكَّلْتُ"
+      },
+      {
+        "card_ref": "9:129",
+        "has_page_context_entry_id": true,
+        "loc": "9:129:11",
+        "morphline_present": true,
+        "quran_loc": "quran:9:129:11",
+        "source_address": "corpus:rh_live_01_beta_whitelist.jsonl#loc=9:129:11",
+        "source_entry_id": "10e7e3a74184",
+        "surface": "تَوَكَّلْتُ"
+      }
+    ],
+    "surface": "تَوَكَّلْتُ"
+  },
+  "nearest_card_selected_same_lexeme": {
+    "card_id": "card:5d89e690256d:u1:x12",
+    "crosswalk_status": "deterministic_exact",
+    "entry_id": "5d89e690256d",
+    "forward_crosswalk_edge_ids": [
+      "edge:305bd5063c6b5238851779d7",
+      "edge:7a9d4c3b9930ab82d2b91116",
+      "edge:b42dc7572cb59ef0f9523c9a",
+      "edge:c5626decad9ce88115e8ab4d",
+      "edge:e8f9b82aee5cf71ddfaa5e29"
+    ],
+    "occurrence_id": "28:50:12",
+    "reverse_crosswalk_edge_ids": [
+      "edge:477f501af0b457f6d356fe39",
+      "edge:7a9d4c3b9930ab82d2b91116",
+      "edge:b42dc7572cb59ef0f9523c9a",
+      "edge:c60ef14adc040a7de3996509"
+    ],
+    "selected_word_id": "selected-word:5d89e690256d:s1:u1:f1:c28:50:x12:o28:50:12",
+    "sense_id": "sense:5d89e690256d:s1"
+  },
+  "owner_preference": "فَٱتَّبِعْنِي",
+  "owner_surface_match_key": "فاتبعني",
+  "reasoning": [
+    "Surface matching found exactly one target occurrence; no whitelist index was trusted.",
+    "The target is reader-only and has only a rendered appearance edge, so its page-context gap is not promoted to a lexeme edge.",
+    "The nearest same-lexeme card-selected occurrence is 28:50:12, with deterministic forward/reverse crosswalk rows, documented-form evidence, and a canonical occurrence edge.",
+    "The fallback surface has seven whitelist occurrences with page-context entry ids, but the selected-word crosswalk witness does not backlink any of those seven occurrences; it therefore does not materially improve the target's occurrence chain.",
+    "The owner-preferred target is retained and its missing direct target link plus missing exact Naḥw relation are shown as source gaps."
+  ],
+  "schema": "qamus.proofv.selection.v1"
+}

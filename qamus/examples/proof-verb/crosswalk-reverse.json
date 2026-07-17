@@ -1,0 +1,17 @@
+{
+  "edge_ids": [
+    "edge:477f501af0b457f6d356fe39",
+    "edge:7a9d4c3b9930ab82d2b91116",
+    "edge:b42dc7572cb59ef0f9523c9a",
+    "edge:c60ef14adc040a7de3996509"
+  ],
+  "entry_id": "5d89e690256d",
+  "occurrence_ids": [
+    "28:50:12"
+  ],
+  "schema": "qamus.lexeme_entry_crosswalk.reverse.v1",
+  "selected_word_ids": [
+    "selected-word:5d89e690256d:s1:u1:f1:c28:50:x12:o28:50:12",
+    "selected-word:5d89e690256d:s2:u2:f1:c44:37:x1"
+  ]
+}

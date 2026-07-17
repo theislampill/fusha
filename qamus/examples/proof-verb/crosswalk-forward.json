@@ -1,0 +1,21 @@
+{
+  "card_id": "card:5d89e690256d:u1:x12",
+  "crosswalk_status": "deterministic_exact",
+  "edge_ids": [
+    "edge:305bd5063c6b5238851779d7",
+    "edge:7a9d4c3b9930ab82d2b91116",
+    "edge:b42dc7572cb59ef0f9523c9a",
+    "edge:c5626decad9ce88115e8ab4d",
+    "edge:e8f9b82aee5cf71ddfaa5e29"
+  ],
+  "lexeme_form_status_counts": {
+    "deterministic_exact": 2
+  },
+  "matched_entry_ids": [
+    "5d89e690256d"
+  ],
+  "occurrence_id": "28:50:12",
+  "schema": "qamus.lexeme_entry_crosswalk.forward.v1",
+  "selected_word_id": "selected-word:5d89e690256d:s1:u1:f1:c28:50:x12:o28:50:12",
+  "source_entry_id": "5d89e690256d"
+}
