@@ -5153,6 +5153,47 @@ except Exception as _fa_contract_e:
     check("F-A typed-claim contract gates (harness error)", False)
     print("  ", _fa_contract_e)
 
+# FB1: bounded clitic-pronoun producer calibration. The self-test is the
+# producer gate; the fixture and committed sample validators prove that the
+# packet remains F-A governed, >=40 rows, and repo-self-contained.
+try:
+    _fb1_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "build_clitic_pronoun_producer.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "FB1 clitic-pronoun producer self-test and red-first fixtures pass",
+        _fb1_self.returncode == 0
+        and "FB1 CLITIC PRONOUN PRODUCER SELF-TEST PASS" in (_fb1_self.stdout or ""),
+    )
+    _fb1_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_clitic_pronoun_producer",
+        "-q",
+    ], timeout=120)
+    check(
+        "FB1 producer focused typed-fact unit tests pass",
+        _fb1_unit.returncode == 0
+        and "OK" in ((_fb1_unit.stdout or "") + (_fb1_unit.stderr or "")),
+    )
+    _fb1_packet = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_clitic_pronoun_calibration.py"),
+        "--fixtures",
+        os.path.join(ROOT, "qamus", "examples", "fb1-clitic-pronoun"),
+    ], timeout=120)
+    check(
+        "FB1 calibration packet validates (>=40, typed output, zero public mutation)",
+        _fb1_packet.returncode == 0
+        and "FB1 CALIBRATION PACKET VALIDATION PASS" in (_fb1_packet.stdout or ""),
+    )
+except Exception as _fb1_e:
+    check("FB1 clitic-pronoun producer gates (harness error)", False)
+    print("  ", _fb1_e)
+
 # F-D: shared evidence compiler — the checked-in contract, normalized payload,
 # generated HTML proof, registered projector, and 455-row candidate matrix must
 # all validate together. This gate is fixture-only and never mutates data/ or a

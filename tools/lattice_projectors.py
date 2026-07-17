@@ -123,6 +123,18 @@ def pred_c5_enclitic(row: Dict[str, Any]) -> bool:
     return False
 
 
+def pred_fb1_clitic_pronoun(row: Dict[str, Any]) -> bool:
+    """Recognize the bounded FB1 family without reading gloss or morphline text."""
+    family = row.get("morphology_family", row.get("family"))
+    if family is not None:
+        return family == "clitic_pronoun_compositions"
+    segments = row.get("segments") or []
+    return len(segments) >= 2 and any(
+        any(token in str(segment.get("role", "")) for token in _ENCLITIC_ROLE_TOKENS)
+        for segment in segments
+    )
+
+
 def pred_any_candidate(row: Dict[str, Any]) -> bool:  # negative-meta placeholder
     return True
 
@@ -138,6 +150,7 @@ def pred_tranche1_syntax(policy: Dict[str, Any]) -> bool:
 NAMED_PREDICATES: Dict[str, Callable[[Dict[str, Any]], bool]] = {
     "pred_c1_impf": pred_c1_impf,
     "pred_c5_enclitic": pred_c5_enclitic,
+    "pred_fb1_clitic_pronoun": pred_fb1_clitic_pronoun,
     "pred_any_candidate": pred_any_candidate,
     "pred_tranche1_morphology": pred_tranche1_morphology,
     "pred_tranche1_syntax": pred_tranche1_syntax,
@@ -249,6 +262,64 @@ def tranche1_typed_status(ctx: Dict[str, Any]) -> Optional[Dict[str, str]]:
     return None
 
 
+def fb1_closed_class_function_word(ctx: Dict[str, Any]) -> Optional[Dict[str, str]]:
+    source = ctx.get("source_row") or {}
+    segments = source.get("segments") or []
+    function_classes = {
+        "qg-article", "qg-conjunction", "qg-emphasis", "qg-lam", "qg-negation",
+        "qg-particle", "qg-preposition", "qg-question", "qg-result-fa",
+    }
+    function_roles = {
+        "condition_answer_fa", "conjunction", "definite_article", "emphasis_particle",
+        "exception_particle", "inna_particle", "interrogative_hamza", "lam_prefix",
+        "linking_fa", "negation_particle", "preposition", "prefix_conjunction",
+        "prefix_preposition", "prefix_result_fa", "prefix_result_or_conjunction",
+        "question_particle", "subordinating_particle",
+    }
+    closed = bool(segments) and all(
+        str(segment.get("class", "")) in function_classes
+        or str(segment.get("role", "")) in function_roles
+        or "pronoun" in str(segment.get("role", ""))
+        for segment in segments
+    )
+    morphline = str(source.get("morphline", ""))
+    if closed and re.search(r"(?:^|[·;])\s*root\s+", morphline, flags=re.IGNORECASE):
+        return {"resolution": "blocked", "detail": "closed-class function word carries an unverified root claim"}
+    return None
+
+
+def fb1_surface_byte_exact(ctx: Dict[str, Any]) -> Optional[Dict[str, str]]:
+    source = ctx.get("source_row") or {}
+    surface = str(source.get("surface", ""))
+    segments = source.get("segments") or []
+    joined = "".join(str(segment.get("surface", "")) for segment in sorted(segments, key=lambda s: int(s.get("segment_index", 0))))
+    if joined != surface or joined.encode("utf-8") != surface.encode("utf-8"):
+        return {"resolution": "blocked", "detail": "FB1 source segments do not reconstruct exact UTF-8 surface"}
+    return None
+
+
+def fb1_idgham_boundary(ctx: Dict[str, Any]) -> Optional[Dict[str, str]]:
+    source = ctx.get("source_row") or {}
+    metadata = source.get("idgham_boundary") or source.get("idgham")
+    if isinstance(metadata, dict) and metadata.get("boundary_class") in {"C_fused_boundary", "D_ambiguous_boundary"}:
+        return {"resolution": "route_two_vote", "detail": "FB1 idgham C/D boundary requires explicit owner review"}
+    if isinstance(metadata, dict) and metadata.get("boundary_class") in {"A_clean_split", "B_shared_letter_clean_split"} and metadata.get("byte_clean") is not True:
+        return {"resolution": "blocked", "detail": "FB1 idgham A/B split is not byte clean"}
+    return None
+
+
+def fb1_protective_nun_not_particle(ctx: Dict[str, Any]) -> Optional[Dict[str, str]]:
+    source = ctx.get("source_row") or {}
+    for segment in source.get("segments") or []:
+        role = str(segment.get("role", ""))
+        klass = str(segment.get("class", ""))
+        if (role == "protective_nun" or klass == "qg-protective-nun") and (
+            role in {"particle", "negation_particle"} or klass in {"qg-particle", "qg-negation"}
+        ):
+            return {"resolution": "blocked", "detail": "protective nūn cannot be classified as a particle"}
+    return None
+
+
 NAMED_GUARDS: Dict[str, Callable[[Dict[str, Any]], Optional[Dict[str, str]]]] = {
     "homograph_surface_ambiguity": homograph_surface_ambiguity,
     "surface_byte_exact": surface_byte_exact,
@@ -256,6 +327,10 @@ NAMED_GUARDS: Dict[str, Callable[[Dict[str, Any]], Optional[Dict[str, str]]]] = 
     "construction_match": construction_match,
     "tranche1_exact_surface": tranche1_exact_surface,
     "tranche1_typed_status": tranche1_typed_status,
+    "fb1_closed_class_function_word": fb1_closed_class_function_word,
+    "fb1_surface_byte_exact": fb1_surface_byte_exact,
+    "fb1_idgham_boundary": fb1_idgham_boundary,
+    "fb1_protective_nun_not_particle": fb1_protective_nun_not_particle,
 }
 
 
