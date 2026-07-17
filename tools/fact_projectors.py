@@ -35,6 +35,7 @@ NAHW_PROJECTOR_ID = "nahw.particle_function.v1"
 SARF_GENERATED_PROJECTOR_ID = "sarf.paradigm_generated.v1"
 TRANCHE1_SARF_PROJECTOR_ID = "sarf.tranche1_fixture_projection.v1"
 TRANCHE1_NAHW_PROJECTOR_ID = "nahw.tranche1_fixture_projection.v1"
+FAM2_LEXICAL_PROJECTOR_ID = "sarf.fam2.lexical_formation.v1"
 
 
 class ProjectorValidationError(ValueError):
@@ -176,6 +177,54 @@ def construction_context_mismatch(
     if any(actual.get(key) != value for key, value in required.items()):
         return "occurrence context does not match the documented construction pattern"
     return None
+
+
+def fam2_lexical_orthography_guard(*_args: Any, **_kwargs: Any) -> None:
+    """Named registration guard; FAM2 performs the exact pair check itself."""
+
+    return None
+
+
+def project_fam2_lexical_pattern(
+    *,
+    contract: Dict[str, Any],
+    singular_surface: str,
+    plural_surface: str,
+    pattern_id: str,
+    pattern_registry: Any = None,
+) -> Dict[str, Any]:
+    """Run the registered FAM2 pattern projector in candidate mode only."""
+
+    from tools.fam2_lexical_producer import match_registered_pattern
+
+    matched = match_registered_pattern(
+        singular_surface,
+        plural_surface,
+        pattern_id,
+        pattern_registry,
+    )
+    if matched is None:
+        return {
+            "projector_id": contract["projector_id"],
+            "status": "abstained",
+            "route": "pattern_unresolved",
+            "candidate": None,
+            "materialization_allowed": False,
+        }
+    return {
+        "projector_id": contract["projector_id"],
+        "status": "candidate",
+        "route": "entry_backed_named_pattern_match",
+        "candidate": {
+            "fact_type": "formation_evidence",
+            "pattern_id": matched["pattern_id"],
+            "sub_shape": matched["sub_shape"],
+            "singular_surface": matched["singular_surface"],
+            "plural_surface": matched["plural_surface"],
+            "evidence_mode": "paired_form_inference",
+        },
+        "materialization_allowed": False,
+    }
 
 
 def _source_gate(
@@ -690,12 +739,31 @@ TRANCHE1_NAHW_CONTRACT = {
     "resolution_method": "fixture_policy_projection",
 }
 
+FAM2_LEXICAL_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "producer": "tools.fam2_lexical_producer",
+    "projector_id": FAM2_LEXICAL_PROJECTOR_ID,
+    "fact_family": "sarf",
+    "input_fact_types": ["entry_form_pair"],
+    "output_fact_type": "formation_evidence",
+    "compatibility_class": (
+        "entry-backed lexical noun/adjective pairs whose exact written forms match one named FAM2 formation pattern; "
+        "label-only, orthographic-variant, and unresolved pairs abstain"
+    ),
+    "defeater_checks": ["fam2_lexical_orthography_guard"],
+    "gate_tier": "two_vote_required",
+    "version": "1.0.0",
+    "resolution_method": "entry_backed_named_pattern_match",
+}
+
 REGISTRY = ProjectorRegistry()
 REGISTRY.register(SARF_CONTRACT, project_sarf_documented_forms)
 REGISTRY.register(NAHW_CONTRACT, project_nahw_particle_functions)
 REGISTRY.register(SARF_GENERATED_CONTRACT, project_sarf_paradigm_generated)
 REGISTRY.register(TRANCHE1_SARF_CONTRACT, project_tranche1_fixture)
 REGISTRY.register(TRANCHE1_NAHW_CONTRACT, project_tranche1_fixture)
+REGISTRY.register(FAM2_LEXICAL_CONTRACT, project_fam2_lexical_pattern)
 
 
 def main(argv: Optional[List[str]] = None) -> int:
