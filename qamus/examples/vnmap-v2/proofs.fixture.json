@@ -1,0 +1,5 @@
+[
+  {"name":"sufaha 2:13:12","entry_id":"entry-v001","source_key":"v001","target_occurrence":"2:13:12","status":"candidate_deploy_shaped","artifact":"qamus/examples/proof-noun-sufaha/PROOFN-MANIFEST.json"},
+  {"name":"fattabini 19:43:10","entry_id":"entry-v048","source_key":"v048","target_occurrence":"19:43:10","status":"candidate_deploy_shaped","artifact":"qamus/examples/proof-verb/PROOFV-MANIFEST.json"},
+  {"name":"ma 2:284:10","entry_id":"entry-p099","source_key":"p099","target_occurrence":"2:284:10","status":"candidate_deploy_shaped","artifact":"qamus/examples/proof-particle/PROOFP-MANIFEST.json"}
+]
