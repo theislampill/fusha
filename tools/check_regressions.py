@@ -5172,6 +5172,35 @@ except Exception as _fd_compiler_e:
     check("F-D shared compiler gates (harness error)", False)
     print("  ", _fd_compiler_e)
 
+# F-C1: bounded naḥw dependency producer.  The fixture and packet validators
+# are repo-self-contained; external corpus paths are intentionally not part of
+# this gate and are supplied only when the calibration packet is regenerated.
+try:
+    _fc1_nahw_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_fc1_nahw_producer.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "F-C1 naḥw producer self-test and red-first fixtures pass",
+        _fc1_nahw_self.returncode == 0
+        and "FC1 NAHW PRODUCER SELF-TEST PASS" in (_fc1_nahw_self.stdout or ""),
+    )
+    _fc1_nahw_fixtures = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_fc1_nahw_producer.py"),
+        "--fixtures",
+        os.path.join(ROOT, "qamus", "examples", "fc1-nahw"),
+    ], timeout=120)
+    check(
+        "F-C1 committed naḥw calibration packet validates",
+        _fc1_nahw_fixtures.returncode == 0
+        and "FC1 NAHW PRODUCER FIXTURES PASS" in (_fc1_nahw_fixtures.stdout or ""),
+    )
+except Exception as _fc1_nahw_e:
+    check("F-C1 naḥw producer gates (harness error)", False)
+    print("  ", _fc1_nahw_e)
+
 # F-B/F-C: canonical occurrence-to-appearance index.  The self-test is red-first
 # (same-loc fork must fail; same-surface different-loc pair is allowed) and the
 # real check binds the committed index to the sibling read-only whitelist.
