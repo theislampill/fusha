@@ -1,0 +1,11 @@
+{
+  "case_ending": "ُ",
+  "governor": "آمَنَ",
+  "label": "Naḥw — what this piece does here",
+  "lexical_body": "سُفَهَاء",
+  "n_lang_clean": true,
+  "payload_id": "proofn.payload.sufaha.v1:ba3b758e79f88bf5505c638645ca79f17431404ced04270437b4ac73d6324c8c",
+  "schema": "qamus.proofn.expanded_nahw.v1",
+  "subject_relation": "explicit subject",
+  "text": "Naḥw — what this piece does here: The body سُفَهَاء is the explicit subject of آمَنَ in the كما clause. Therefore the final ḍammah ُ is the visible nominative ending; it is separated from the lexical body."
+}

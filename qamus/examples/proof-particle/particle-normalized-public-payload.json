@@ -1,0 +1,213 @@
+{
+  "at_rest": {
+    "letter_ownership": [
+      {
+        "class": "function_particle",
+        "index": 0,
+        "qg_class": "qg-relative",
+        "root": null,
+        "surface": "م"
+      },
+      {
+        "class": "function_particle",
+        "index": 1,
+        "qg_class": "qg-relative",
+        "root": null,
+        "surface": "َ"
+      },
+      {
+        "class": "function_particle",
+        "index": 2,
+        "qg_class": "qg-relative",
+        "root": null,
+        "surface": "ا"
+      }
+    ],
+    "reconstruction": {
+      "exact": true,
+      "surface": "مَا"
+    },
+    "segments": [
+      {
+        "gloss_contribution": "what / that which",
+        "letter_ownership_class": "function_particle",
+        "qg_class": "qg-relative",
+        "role": "relative_particle",
+        "root": null,
+        "root_status": "function_only_no_root",
+        "segment_index": 0,
+        "surface": "مَا"
+      }
+    ],
+    "surface": "مَا"
+  },
+  "candidate_status": "candidate",
+  "compact": {
+    "gloss": "what / that which",
+    "parse_key": {
+      "key": "MA:REL:OBJ",
+      "summary": "relative mā as a direct object"
+    },
+    "segment_classes": [
+      "qg-relative"
+    ],
+    "surface": "مَا"
+  },
+  "decision_routes": {
+    "chosen": {
+      "function": "relative",
+      "status": "source_certified_for_this_occurrence"
+    },
+    "public": false,
+    "unresolved": [
+      {
+        "function": "negation",
+        "route": "nahw/procedures/ma-function-decision.md"
+      },
+      {
+        "function": "interrogative",
+        "route": "nahw/procedures/relative-interrogative.md"
+      },
+      {
+        "function": "masdariyya",
+        "route": "nahw/procedures/ma-function-decision.md"
+      },
+      {
+        "function": "conditional",
+        "route": "nahw/procedures/particle-function-decision.md"
+      },
+      {
+        "function": "preventive",
+        "route": "nahw/procedures/ma-function-decision.md"
+      }
+    ]
+  },
+  "entry_linkage": {
+    "forward": {
+      "entry_id": "b8e480aebafe",
+      "occurrence_id": "quran:2:284:10",
+      "selected_word_id": "selected-word:b8e480aebafe:s1:u1:f1:c2:284:x1",
+      "source_occurrence_id": "",
+      "status": "candidate"
+    },
+    "reciprocity_status": "candidate_exact_addressed_trace",
+    "reverse": {
+      "entry_id": "b8e480aebafe",
+      "occurrence_ids": [
+        "quran:2:284:10"
+      ],
+      "selected_word_ids": [
+        "selected-word:b8e480aebafe:s1:u1:f1:c2:284:x1"
+      ],
+      "status": "candidate"
+    }
+  },
+  "expanded": {
+    "nahw": {
+      "alternatives": [
+        {
+          "function": "negation",
+          "status": "unresolved"
+        },
+        {
+          "function": "interrogative",
+          "status": "unresolved"
+        },
+        {
+          "function": "masdariyya",
+          "status": "unresolved"
+        },
+        {
+          "function": "conditional",
+          "status": "unresolved"
+        },
+        {
+          "function": "preventive",
+          "status": "unresolved"
+        }
+      ],
+      "explanation": "Here مَا means what / that which. It is the object of disclose, and the following phrase identifies what is within yourselves.",
+      "function": "relative",
+      "function_status": "source_certified_for_this_occurrence",
+      "label": "Naḥw — what this piece does here",
+      "scope": {
+        "describing_clause": "within yourselves",
+        "governor": "disclose",
+        "relation": "direct_object"
+      },
+      "status": "candidate"
+    },
+    "sarf": {
+      "explanation": "مَا is one built function-word piece here; it is not assigned a lexical root.",
+      "label": "Ṣarf — how this piece forms the word",
+      "segments": [
+        {
+          "composition": "single function-word piece",
+          "root": null,
+          "root_status": "function_only_no_root",
+          "surface": "مَا"
+        }
+      ],
+      "status": "candidate"
+    }
+  },
+  "hover": {
+    "learner_explanation": "Here مَا names what is disclosed; the following phrase identifies what is within yourselves.",
+    "nahw_label": "Naḥw — what this piece does here",
+    "phrase_gloss": "what is within yourselves",
+    "public_boundary": {
+      "kind": "authored",
+      "lang": "en",
+      "src": "qamus"
+    },
+    "sarf_label": "Ṣarf — how this piece forms the word",
+    "segments": [
+      {
+        "class": "qg-relative",
+        "gloss": "what / that which",
+        "role": "relative_particle",
+        "root": null,
+        "surface": "مَا"
+      }
+    ],
+    "title": "مَا",
+    "token_contribution_gloss": "what / that which"
+  },
+  "identity": {
+    "card_id": "card:b8e480aebafe:u1:x1",
+    "entry_id": "b8e480aebafe",
+    "occurrence_id": "quran:2:284:10",
+    "projection_id": "proofp.ma.2-284-10.v1",
+    "quran_loc": "2:284:10",
+    "selected_word_id": "selected-word:b8e480aebafe:s1:u1:f1:c2:284:x1",
+    "surface": "مَا",
+    "wbw_loc": "wbw:2:284:10"
+  },
+  "live_mutation_allowed": false,
+  "owner_section": "12",
+  "payload_identity": "proofp.ma.2-284-10.v1",
+  "per_appearance": [
+    {
+      "appearance_id": "appearance:2:284:10:1",
+      "exact_reconstruction": true,
+      "occurrence_id": "quran:2:284:10",
+      "payload_identity": "proofp.ma.2-284-10.v1",
+      "status": "candidate",
+      "surface": "مَا"
+    }
+  ],
+  "public_materialization_allowed": false,
+  "readback": {
+    "live_mutation_allowed": false,
+    "live_runtime_readback": "not_run",
+    "render_proof": "qamus/examples/proof-particle/render-proof.json",
+    "required_predeploy_checks": [
+      "load candidate payload",
+      "verify exact surface reconstruction",
+      "verify both hover panels",
+      "owner-gated certification before any live write"
+    ],
+    "status": "measured_local_render"
+  },
+  "schema": "qamus.proof_particle.normalized_public_payload.v1"
+}
