@@ -1,0 +1,738 @@
+{
+  "appearance_parity": {
+    "appearance_count": 2,
+    "appearances": [
+      {
+        "appearance_index": 1,
+        "node_id": "appearance:2:13:12:1",
+        "payload_id": "proofn.payload.sufaha.v1:ba3b758e79f88bf5505c638645ca79f17431404ced04270437b4ac73d6324c8c",
+        "readback_target": "declared_not_measured",
+        "same_payload_id": true,
+        "source_address": "input:qamus/indexes/occurrence-appearances.jsonl#loc=2:13:12#appearance=1",
+        "status": "candidate"
+      },
+      {
+        "appearance_index": 2,
+        "node_id": "appearance:2:13:12:2",
+        "payload_id": "proofn.payload.sufaha.v1:ba3b758e79f88bf5505c638645ca79f17431404ced04270437b4ac73d6324c8c",
+        "readback_target": "declared_not_measured",
+        "same_payload_id": true,
+        "source_address": "input:qamus/indexes/occurrence-appearances.jsonl#loc=2:13:12#appearance=2",
+        "status": "candidate"
+      }
+    ],
+    "occurrence_id": "2:13:12",
+    "parity": true,
+    "payload_id": "proofn.payload.sufaha.v1:ba3b758e79f88bf5505c638645ca79f17431404ced04270437b4ac73d6324c8c",
+    "projection_hash": "176322781dfae01c0277b9456a1e3b03f25d7fdfba0d61ce24ea1ec21c06e051",
+    "readback_status": "declared_not_measured"
+  },
+  "at_rest_spans": [
+    {
+      "end": 2,
+      "owner_fact_ids": [
+        "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841"
+      ],
+      "role": "definite_article",
+      "span_id": "article",
+      "start": 0,
+      "surface": "ال",
+      "visual_equivalent": "[ART]"
+    },
+    {
+      "end": 11,
+      "owner_fact_ids": [
+        "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+        "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+        "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+        "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+        "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+        "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+        "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+        "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+        "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+        "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+      ],
+      "role": "lexical_body",
+      "span_id": "lexical-body",
+      "start": 2,
+      "surface": "سُّفَهَاء",
+      "visual_equivalent": "[LEX]"
+    },
+    {
+      "end": 12,
+      "owner_fact_ids": [
+        "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+        "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+      ],
+      "role": "case_ending",
+      "span_id": "case-ending",
+      "start": 11,
+      "surface": "ُ",
+      "visual_equivalent": "[CASE:NOM]"
+    }
+  ],
+  "authorization_state": "pre_apply_not_authorized",
+  "canonical_identity": {
+    "card_id": "card:repair:sufaha:2:13:12",
+    "entry_id": "1ffcc554ec44",
+    "quran_loc": "2:13:12",
+    "surface": "السُّفَهَاءُ",
+    "wbw_loc": "wbw:2:13:12"
+  },
+  "compact_view": {
+    "at_rest_spans": [
+      {
+        "end": 2,
+        "owner_fact_ids": [
+          "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841"
+        ],
+        "role": "definite_article",
+        "span_id": "article",
+        "start": 0,
+        "surface": "ال",
+        "visual_equivalent": "[ART]"
+      },
+      {
+        "end": 11,
+        "owner_fact_ids": [
+          "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+          "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+          "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+          "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+          "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+          "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+          "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+          "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+          "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+          "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+        ],
+        "role": "lexical_body",
+        "span_id": "lexical-body",
+        "start": 2,
+        "surface": "سُّفَهَاء",
+        "visual_equivalent": "[LEX]"
+      },
+      {
+        "end": 12,
+        "owner_fact_ids": [
+          "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+          "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+        ],
+        "role": "case_ending",
+        "span_id": "case-ending",
+        "start": 11,
+        "surface": "ُ",
+        "visual_equivalent": "[CASE:NOM]"
+      }
+    ],
+    "gloss": "the foolish ones",
+    "learner_explanation": "The article, plural body, and final nominative mark are separate visible spans.",
+    "payload_id": "proofn.payload.sufaha.v1:ba3b758e79f88bf5505c638645ca79f17431404ced04270437b4ac73d6324c8c",
+    "public_labels": [
+      "Ṣarf — how this piece forms the word",
+      "Naḥw — what this piece does here"
+    ],
+    "surface": "السُّفَهَاءُ"
+  },
+  "comparison": {
+    "introduced": [
+      "ا",
+      "ء"
+    ],
+    "plural": {
+      "pattern": "فُعَلَاء",
+      "span_note": "lexical body without final ُ",
+      "surface": "سُفَهَاء"
+    },
+    "removed": "ي",
+    "retained_radicals": [
+      "س",
+      "ف",
+      "ه"
+    ],
+    "root": "س ف ه",
+    "singular": {
+      "pattern": "فَعِيل",
+      "span_note": "paired source form",
+      "surface": "سَفِيه"
+    }
+  },
+  "compiled_from": {
+    "contract_id": "fd:sufaha:2:13:12",
+    "fact_ids": [
+      "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+      "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+      "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+      "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+      "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+      "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+      "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+      "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+      "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+      "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+      "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+    ],
+    "producer_id": "tools.fd_compiler",
+    "projector_id": "fd.shared_candidate_projection.v1",
+    "projector_version": "1.0.0"
+  },
+  "components": [
+    {
+      "component_id": "article",
+      "fact_ids": [
+        "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841"
+      ],
+      "label": "Article",
+      "learner_text": "ال marks the noun as definite.",
+      "nahw": "Naḥw — what this piece does here: the article marks definiteness on the noun.",
+      "sarf": "Ṣarf — how this piece forms the word: definite article; it has no lexical root.",
+      "span_ids": [
+        "article"
+      ],
+      "surface": "ال",
+      "visual_equivalent": "[ART]"
+    },
+    {
+      "component_id": "lexical-body",
+      "fact_ids": [
+        "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+        "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+        "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+        "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+        "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+        "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+        "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+        "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+        "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+      ],
+      "label": "Noun stem",
+      "learner_text": "سُفَهَاء is the plural body; it keeps the root letters and changes the pattern from فَعِيل to فُعَلَاء.",
+      "nahw": "Naḥw — what this piece does here: this lexical body is the explicit subject (فاعل) of آمَنَ in the كما clause.",
+      "sarf": "Ṣarf — how this piece forms the word: the plural body is a broken plural on فُعَلَاء from root س ف ه. It compares with singular سَفِيه on فَعِيل; the retained radicals are س ف ه. The singular augment inventory includes ي, while the plural introduces ا + ء, so ي is removed in this paired form.",
+      "span_ids": [
+        "lexical-body"
+      ],
+      "surface": "سُّفَهَاء",
+      "visual_equivalent": "[LEX]"
+    },
+    {
+      "component_id": "case-ending",
+      "fact_ids": [
+        "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+        "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+      ],
+      "label": "Case ending",
+      "learner_text": "The final ُ is a nominative case ending because the noun is the subject of آمَنَ.",
+      "nahw": "Naḥw — what this piece does here: the final ḍammah ُ is nominative (مرفوع) because the word is the subject of آمَنَ; it is the visible ending mark, not part of سُفَهَاء.",
+      "sarf": "Ṣarf — how this piece forms the word: this final mark is outside the lexical body and is not part of plural formation.",
+      "span_ids": [
+        "case-ending"
+      ],
+      "surface": "ُ",
+      "visual_equivalent": "[CASE:NOM]"
+    }
+  ],
+  "entry_linkage": {
+    "entry_address": "entry:1ffcc554ec44:usage.forms",
+    "entry_id": "1ffcc554ec44",
+    "entry_to_occurrence": true,
+    "occurrence_id": "quran:2:13:12",
+    "occurrence_to_entry": true,
+    "reverse_edge": {
+      "entry_id": "1ffcc554ec44",
+      "occurrence_id": "quran:2:13:12"
+    }
+  },
+  "exact_reconstruction": {
+    "expected_surface": "السُّفَهَاءُ",
+    "passed": true,
+    "reconstructed_surface": "السُّفَهَاءُ",
+    "span_order": [
+      "article",
+      "lexical-body",
+      "case-ending"
+    ]
+  },
+  "expanded_view": {
+    "at_rest_spans": [
+      {
+        "end": 2,
+        "owner_fact_ids": [
+          "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841"
+        ],
+        "role": "definite_article",
+        "span_id": "article",
+        "start": 0,
+        "surface": "ال",
+        "visual_equivalent": "[ART]"
+      },
+      {
+        "end": 11,
+        "owner_fact_ids": [
+          "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+          "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+          "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+          "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+          "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+          "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+          "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+          "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+          "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+          "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+        ],
+        "role": "lexical_body",
+        "span_id": "lexical-body",
+        "start": 2,
+        "surface": "سُّفَهَاء",
+        "visual_equivalent": "[LEX]"
+      },
+      {
+        "end": 12,
+        "owner_fact_ids": [
+          "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+          "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+        ],
+        "role": "case_ending",
+        "span_id": "case-ending",
+        "start": 11,
+        "surface": "ُ",
+        "visual_equivalent": "[CASE:NOM]"
+      }
+    ],
+    "comparison": {
+      "introduced": [
+        "ا",
+        "ء"
+      ],
+      "plural": {
+        "pattern": "فُعَلَاء",
+        "span_note": "lexical body without final ُ",
+        "surface": "سُفَهَاء"
+      },
+      "removed": "ي",
+      "retained_radicals": [
+        "س",
+        "ف",
+        "ه"
+      ],
+      "root": "س ف ه",
+      "singular": {
+        "pattern": "فَعِيل",
+        "span_note": "paired source form",
+        "surface": "سَفِيه"
+      }
+    },
+    "nahw": "Naḥw — what this piece does here: The body سُفَهَاء is the explicit subject of آمَنَ in the كما clause. Therefore the final ḍammah ُ is the visible nominative ending; it is separated from the lexical body.",
+    "payload_id": "proofn.payload.sufaha.v1:ba3b758e79f88bf5505c638645ca79f17431404ced04270437b4ac73d6324c8c",
+    "public_labels": [
+      "Ṣarf — how this piece forms the word",
+      "Naḥw — what this piece does here"
+    ],
+    "sarf": "Ṣarf — how this piece forms the word: The root س ف ه is retained. The singular سَفِيه follows فَعِيل; the plural body سُفَهَاء follows فُعَلَاء. The paired certified augment inventories name ي for the singular and ا + ء for the plural, so the plural has no ي.",
+    "surface": "السُّفَهَاءُ"
+  },
+  "font_proof": {
+    "assertion": "document.fonts.check('32px \\\"Kawkab Mono Qamus\\\"')",
+    "asset": "assets/KawkabMono-Regular.woff2",
+    "expected": true,
+    "font_family": "Kawkab Mono Qamus",
+    "runtime_status": "pending_until_render"
+  },
+  "kind": "authored",
+  "lang": "en",
+  "live_mutation_allowed": false,
+  "materialization": {
+    "live_mutation_allowed": false,
+    "public_materialization_allowed": false,
+    "reason": "deploy-shaped proof artifact only; no live deployment",
+    "status": "candidate"
+  },
+  "payload_id": "proofn.payload.sufaha.v1:ba3b758e79f88bf5505c638645ca79f17431404ced04270437b4ac73d6324c8c",
+  "payload_version": "1.0.0",
+  "proof_points": [
+    {
+      "id": "canonical_identity",
+      "status": "PASS",
+      "witness": {
+        "card_id": "card:repair:sufaha:2:13:12",
+        "entry_id": "1ffcc554ec44",
+        "quran_loc": "2:13:12",
+        "surface": "السُّفَهَاءُ",
+        "wbw_loc": "wbw:2:13:12"
+      }
+    },
+    {
+      "id": "at_rest_rich_projection",
+      "status": "PASS",
+      "witness": [
+        {
+          "end": 2,
+          "owner_fact_ids": [
+            "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841"
+          ],
+          "role": "definite_article",
+          "span_id": "article",
+          "start": 0,
+          "surface": "ال",
+          "visual_equivalent": "[ART]"
+        },
+        {
+          "end": 11,
+          "owner_fact_ids": [
+            "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+            "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+            "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+            "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+            "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+            "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+            "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+            "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+            "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+            "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+          ],
+          "role": "lexical_body",
+          "span_id": "lexical-body",
+          "start": 2,
+          "surface": "سُّفَهَاء",
+          "visual_equivalent": "[LEX]"
+        },
+        {
+          "end": 12,
+          "owner_fact_ids": [
+            "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+            "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+          ],
+          "role": "case_ending",
+          "span_id": "case-ending",
+          "start": 11,
+          "surface": "ُ",
+          "visual_equivalent": "[CASE:NOM]"
+        }
+      ]
+    },
+    {
+      "id": "rich_sarf_explanation",
+      "status": "PASS",
+      "witness": "The root س ف ه is retained. The singular سَفِيه follows فَعِيل; the plural body سُفَهَاء follows فُعَلَاء. The paired certified augment inventories name ي for the singular and ا + ء for the plural, so the plural has no ي."
+    },
+    {
+      "id": "rich_nahw_explanation",
+      "status": "PASS",
+      "witness": "The body سُفَهَاء is the explicit subject of آمَنَ in the كما clause. Therefore the final ḍammah ُ is the visible nominative ending; it is separated from the lexical body."
+    },
+    {
+      "id": "singular_plural_comparison",
+      "status": "PASS",
+      "witness": {
+        "introduced": [
+          "ا",
+          "ء"
+        ],
+        "plural": {
+          "pattern": "فُعَلَاء",
+          "span_note": "lexical body without final ُ",
+          "surface": "سُفَهَاء"
+        },
+        "removed": "ي",
+        "retained_radicals": [
+          "س",
+          "ف",
+          "ه"
+        ],
+        "root": "س ف ه",
+        "singular": {
+          "pattern": "فَعِيل",
+          "span_note": "paired source form",
+          "surface": "سَفِيه"
+        }
+      }
+    },
+    {
+      "id": "root_s_f_h",
+      "status": "PASS",
+      "witness": "س ف ه"
+    },
+    {
+      "id": "singular_pattern_fa_iil",
+      "status": "PASS",
+      "witness": "فَعِيل"
+    },
+    {
+      "id": "plural_pattern_fu_alaa",
+      "status": "PASS",
+      "witness": "فُعَلَاء"
+    },
+    {
+      "id": "retained_radicals",
+      "status": "PASS",
+      "witness": "س ف ه"
+    },
+    {
+      "id": "removed_ya",
+      "status": "PASS",
+      "witness": "ي"
+    },
+    {
+      "id": "introduced_alif_hamza",
+      "status": "PASS",
+      "witness": "ا + ء"
+    },
+    {
+      "id": "lexical_body",
+      "status": "PASS",
+      "witness": "سُفَهَاء"
+    },
+    {
+      "id": "lexical_body_vs_case",
+      "status": "PASS",
+      "witness": "سُفَهَاء + ُ"
+    },
+    {
+      "id": "nominative_reason",
+      "status": "PASS",
+      "witness": "final ُ is a nominative ending"
+    },
+    {
+      "id": "exact_governor",
+      "status": "PASS",
+      "witness": "subject of آمَنَ in the كما clause"
+    },
+    {
+      "id": "non_colour_equivalents",
+      "status": "PASS",
+      "witness": "badges, brackets, and labels"
+    },
+    {
+      "id": "kawkab_mono_font",
+      "status": "RUNTIME_ASSERTION",
+      "witness": {
+        "assertion": "document.fonts.check('32px \\\"Kawkab Mono Qamus\\\"')",
+        "asset": "assets/KawkabMono-Regular.woff2",
+        "expected": true,
+        "font_family": "Kawkab Mono Qamus",
+        "runtime_status": "pending_until_render"
+      }
+    },
+    {
+      "id": "exact_reconstruction",
+      "status": "PASS",
+      "witness": {
+        "expected_surface": "السُّفَهَاءُ",
+        "passed": true,
+        "reconstructed_surface": "السُّفَهَاءُ",
+        "span_order": [
+          "article",
+          "lexical-body",
+          "case-ending"
+        ]
+      }
+    },
+    {
+      "id": "repeated_appearance_parity",
+      "status": "PASS",
+      "witness": {
+        "confirmed_repeated_page_appearances": [],
+        "coverage_count": 0,
+        "family_id": "sufaha-safih-family",
+        "family_members_observed": [
+          {
+            "payload_family_id": "fd.family.sufaha.v1",
+            "quran_loc": "2:13:12",
+            "same_payload_consumption": true,
+            "surface": "السُّفَهَاءُ"
+          },
+          {
+            "payload_family_id": "fd.family.sufaha.v1",
+            "quran_loc": "2:142:2",
+            "same_payload_consumption": true,
+            "surface": "ٱلسُّفَهَآءُ"
+          },
+          {
+            "payload_family_id": "fd.family.sufaha.v1",
+            "quran_loc": "2:282:40",
+            "same_payload_consumption": true,
+            "surface": "سَفِيهًا"
+          },
+          {
+            "payload_family_id": "fd.family.sufaha.v1",
+            "quran_loc": "7:155:21",
+            "same_payload_consumption": true,
+            "surface": "ٱلسُّفَهَآءُ"
+          }
+        ],
+        "page_trace_available": false,
+        "page_trace_inferred": false,
+        "same_family_payload_id": true
+      }
+    },
+    {
+      "id": "entry_reciprocity",
+      "status": "PASS",
+      "witness": {
+        "entry_address": "entry:1ffcc554ec44:usage.forms",
+        "entry_id": "1ffcc554ec44",
+        "entry_to_occurrence": true,
+        "occurrence_id": "quran:2:13:12",
+        "occurrence_to_entry": true,
+        "reverse_edge": {
+          "entry_id": "1ffcc554ec44",
+          "occurrence_id": "quran:2:13:12"
+        }
+      }
+    },
+    {
+      "id": "provenance_projector",
+      "status": "PASS",
+      "witness": {
+        "contract_id": "fd:sufaha:2:13:12",
+        "entry_address": "entry:1ffcc554ec44:usage.forms",
+        "evidence_mode_counts": {
+          "cross_source_corroboration": 1,
+          "direct_source_attestation": 8,
+          "normalized_lexical_body": 1,
+          "paired_form_inference": 1
+        },
+        "fact_ids": [
+          "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+          "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+          "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+          "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+          "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+          "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+          "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+          "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+          "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+          "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+          "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+        ],
+        "producer_id": "tools.fd_compiler",
+        "projector_id": "fd.shared_candidate_projection.v1",
+        "projector_version": "1.0.0",
+        "source_address": "quran:2:13:12",
+        "typed_fact_count": 11
+      }
+    },
+    {
+      "id": "unresolved_jamid_mushtaq",
+      "status": "UNRESOLVED",
+      "witness": {
+        "learner_text": "The jām id/mushtaq classification remains unresolved; it is not used to certify the card's root, pattern, or case explanation.",
+        "status": "unresolved",
+        "tension_id": "tension:fd:sufaha-jamid-mushtaq",
+        "visual_equivalent": "[UNRESOLVED]"
+      }
+    }
+  ],
+  "provenance": {
+    "contract_id": "fd:sufaha:2:13:12",
+    "entry_address": "entry:1ffcc554ec44:usage.forms",
+    "evidence_mode_counts": {
+      "cross_source_corroboration": 1,
+      "direct_source_attestation": 8,
+      "normalized_lexical_body": 1,
+      "paired_form_inference": 1
+    },
+    "fact_ids": [
+      "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+      "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+      "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+      "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+      "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+      "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+      "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+      "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+      "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+      "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+      "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+    ],
+    "producer_id": "tools.fd_compiler",
+    "projector_id": "fd.shared_candidate_projection.v1",
+    "projector_version": "1.0.0",
+    "source_address": "quran:2:13:12",
+    "typed_fact_count": 11
+  },
+  "readback_target": {
+    "reason": "candidate pre-deploy artifact; no live deployment",
+    "route": "public hover target",
+    "status": "declared_not_measured",
+    "target_id": "public-readback:quran:2:13:12"
+  },
+  "repeated_appearance_parity": {
+    "confirmed_repeated_page_appearances": [],
+    "coverage_count": 0,
+    "family_id": "sufaha-safih-family",
+    "family_members_observed": [
+      {
+        "payload_family_id": "fd.family.sufaha.v1",
+        "quran_loc": "2:13:12",
+        "same_payload_consumption": true,
+        "surface": "السُّفَهَاءُ"
+      },
+      {
+        "payload_family_id": "fd.family.sufaha.v1",
+        "quran_loc": "2:142:2",
+        "same_payload_consumption": true,
+        "surface": "ٱلسُّفَهَآءُ"
+      },
+      {
+        "payload_family_id": "fd.family.sufaha.v1",
+        "quran_loc": "2:282:40",
+        "same_payload_consumption": true,
+        "surface": "سَفِيهًا"
+      },
+      {
+        "payload_family_id": "fd.family.sufaha.v1",
+        "quran_loc": "7:155:21",
+        "same_payload_consumption": true,
+        "surface": "ٱلسُّفَهَآءُ"
+      }
+    ],
+    "page_trace_available": false,
+    "page_trace_inferred": false,
+    "same_family_payload_id": true
+  },
+  "rich_explanations": {
+    "nahw": "Naḥw — what this piece does here: The body سُفَهَاء is the explicit subject of آمَنَ in the كما clause. Therefore the final ḍammah ُ is the visible nominative ending; it is separated from the lexical body.",
+    "sarf": "Ṣarf — how this piece forms the word: The root س ف ه is retained. The singular سَفِيه follows فَعِيل; the plural body سُفَهَاء follows فُعَلَاء. The paired certified augment inventories name ي for the singular and ا + ء for the plural, so the plural has no ي."
+  },
+  "rich_hover": {
+    "gloss": "the foolish ones",
+    "learner_explanation": "The plural body سُفَهَاء follows فُعَلَاء and keeps the root س ف ه; the final ُ is a nominative ending because the noun is the subject of آمَنَ.",
+    "n_lang_clean": true,
+    "nahw": "Naḥw — what this piece does here: The body سُفَهَاء is the explicit subject of آمَنَ in the كما clause. Therefore the final ḍammah ُ is the visible nominative ending; it is separated from the lexical body.",
+    "payload_id": "proofn.payload.sufaha.v1:ba3b758e79f88bf5505c638645ca79f17431404ced04270437b4ac73d6324c8c",
+    "public_labels": [
+      "Ṣarf — how this piece forms the word",
+      "Naḥw — what this piece does here"
+    ],
+    "sarf": "Ṣarf — how this piece forms the word: The root س ف ه is retained. The singular سَفِيه follows فَعِيل; the plural body سُفَهَاء follows فُعَلَاء. The paired certified augment inventories name ي for the singular and ا + ء for the plural, so the plural has no ي.",
+    "surface": "السُّفَهَاءُ",
+    "typed_fact_ids": [
+      "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+      "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+      "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+      "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+      "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+      "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+      "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+      "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+      "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+      "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+      "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+    ]
+  },
+  "schema": "qamus.fd.normalized_public_payload.v1",
+  "source_identity_split": {
+    "lexical_entry_id": "1ffcc554ec44",
+    "page_context_entry_id": "c59a0161fac8",
+    "page_context_retained_separately": true
+  },
+  "src": "qamus",
+  "unresolved_tension": {
+    "learner_text": "The jām id/mushtaq classification remains unresolved; it is not used to certify the card's root, pattern, or case explanation.",
+    "status": "unresolved",
+    "tension_id": "tension:fd:sufaha-jamid-mushtaq",
+    "visual_equivalent": "[UNRESOLVED]"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "at_rest_span_ids": [
+    "article",
+    "lexical-body",
+    "case-ending"
+  ],
+  "diagnostic_source_row_entry_id": "c59a0161fac8",
+  "entry_reciprocity": {
+    "entry_id": "1ffcc554ec44",
+    "entry_to_occurrence": true,
+    "occurrence_id": "quran:2:13:12",
+    "occurrence_to_entry": true
+  },
+  "exact_reconstruction_passed": true,
+  "live_mutation_allowed": false,
+  "reconstructed_surface": "السُّفَهَاءُ",
+  "repeated_appearance_parity": {
+    "coverage_count": 0,
+    "family_member_count": 4,
+    "page_trace_inferred": false,
+    "same_family_payload_id": true
+  },
+  "same_payload_consumption": {
+    "members": [
+      "2:13:12",
+      "2:142:2",
+      "2:282:40",
+      "7:155:21"
+    ],
+    "payload_id": "fd.family.sufaha.v1",
+    "same_family_payload_id": true
+  },
+  "schema": "qamus.fd.sufaha.parity_fixture.v1",
+  "surface": "السُّفَهَاءُ"
+}

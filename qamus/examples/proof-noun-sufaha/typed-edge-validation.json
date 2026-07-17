@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "errors": [],
+      "name": "no_page_context_to_lexeme_promotion",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "name": "selected_word_exact_card_backlink",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "name": "certified_occurrence_reverse_entry_reciprocity",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "name": "form_edges_cite_documented_evidence",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "name": "sense_edges_cite_sense_identity",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "name": "ambiguous_duplicate_surface_abstention",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "name": "display_local_exact_canonical_surface",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "name": "canonical_correction_reaches_repeated_appearances",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "name": "no_orphaned_typed_fact_or_projection",
+      "ok": true
+    },
+    {
+      "errors": [],
+      "name": "exact_reconstruction_valid",
+      "ok": true
+    }
+  ],
+  "errors": [],
+  "ok": true
+}

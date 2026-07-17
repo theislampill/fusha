@@ -5432,6 +5432,24 @@ except Exception as _fd_compiler_e:
     check("F-D shared compiler gates (harness error)", False)
     print("  ", _fd_compiler_e)
 
+# PROOF-N: real noun end-to-end proof for السُّفَهَاءُ.  This is a bounded
+# fixture gate over committed deploy-shaped artifacts; it never reads or
+# mutates the external corpus, whitelist, renderer, or a live surface.
+try:
+    _proofn_noun = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_proofn_noun_sufaha.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "PROOF-N real noun proof chain and all validators pass",
+        _proofn_noun.returncode == 0
+        and "PROOFN NOUN PROOF PASS" in (_proofn_noun.stdout or ""),
+    )
+except Exception as _proofn_e:
+    check("PROOF-N noun proof gate (harness error)", False)
+    print("  ", _proofn_e)
+
 # F-D2: producer-aware 455-row rerun.  This gate validates only the committed
 # report/verdict fixtures; the external corpus is supplied explicitly to the
 # operational runner and is never a harness default or a repository input.

@@ -1,0 +1,26 @@
+{
+  "gloss": "the foolish ones",
+  "learner_explanation": "The plural body سُفَهَاء follows فُعَلَاء and keeps the root س ف ه; the final ُ is a nominative ending because the noun is the subject of آمَنَ.",
+  "n_lang_clean": true,
+  "nahw": "Naḥw — what this piece does here: The body سُفَهَاء is the explicit subject of آمَنَ in the كما clause. Therefore the final ḍammah ُ is the visible nominative ending; it is separated from the lexical body.",
+  "payload_id": "proofn.payload.sufaha.v1:ba3b758e79f88bf5505c638645ca79f17431404ced04270437b4ac73d6324c8c",
+  "public_labels": [
+    "Ṣarf — how this piece forms the word",
+    "Naḥw — what this piece does here"
+  ],
+  "sarf": "Ṣarf — how this piece forms the word: The root س ف ه is retained. The singular سَفِيه follows فَعِيل; the plural body سُفَهَاء follows فُعَلَاء. The paired certified augment inventories name ي for the singular and ا + ء for the plural, so the plural has no ي.",
+  "surface": "السُّفَهَاءُ",
+  "typed_fact_ids": [
+    "sha256:d2e0f3d61e12feee36bac1d48efc1113b479909e901f2ee6dc61bf179d273841",
+    "sha256:332b75a17a28838a33e347a9aa7a82cce1b492af596ac4c62e8057e8ef704d57",
+    "sha256:41954e2c9c855ccde26af0a9568f65544ecf5497fe60ba321c17635557e8d87b",
+    "sha256:dce878184739f98d0109dd694e1d5e0603eccad8ae0fbb50237f48b50edf63d2",
+    "sha256:ed198b1d681bf3fa6dfd5d864262fe38354d10658e4bc77c0d074d2636cb940b",
+    "sha256:89684ad5b7f94d06072f8d1e3b539ea9cd01972940f7363a0e49930581f25058",
+    "sha256:cd38b5ffc2edb4cb13445631ccc144ce322fddb6675ba473e4eff455ef9eea70",
+    "sha256:6eb51557a8fcae8f31db171ef0b65a2561c7c23d44acbcdd51cd2aadbb781243",
+    "sha256:f9e7a68588be3be85ef513b4a822924bc2da932202012114fd8ee686ac383e1e",
+    "sha256:6814a502403dadfbacd12979d9aeb66c351ee0d92678853eb40ddf0ad0a95d33",
+    "sha256:d9d0198f438aa7f913d02cee93dd801a928b033b264aa4e33ca86933398ef89d"
+  ]
+}

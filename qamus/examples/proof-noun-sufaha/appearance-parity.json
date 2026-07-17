@@ -1,0 +1,28 @@
+{
+  "appearance_count": 2,
+  "appearances": [
+    {
+      "appearance_index": 1,
+      "node_id": "appearance:2:13:12:1",
+      "payload_id": "proofn.payload.sufaha.v1:ba3b758e79f88bf5505c638645ca79f17431404ced04270437b4ac73d6324c8c",
+      "readback_target": "declared_not_measured",
+      "same_payload_id": true,
+      "source_address": "input:qamus/indexes/occurrence-appearances.jsonl#loc=2:13:12#appearance=1",
+      "status": "candidate"
+    },
+    {
+      "appearance_index": 2,
+      "node_id": "appearance:2:13:12:2",
+      "payload_id": "proofn.payload.sufaha.v1:ba3b758e79f88bf5505c638645ca79f17431404ced04270437b4ac73d6324c8c",
+      "readback_target": "declared_not_measured",
+      "same_payload_id": true,
+      "source_address": "input:qamus/indexes/occurrence-appearances.jsonl#loc=2:13:12#appearance=2",
+      "status": "candidate"
+    }
+  ],
+  "occurrence_id": "2:13:12",
+  "parity": true,
+  "payload_id": "proofn.payload.sufaha.v1:ba3b758e79f88bf5505c638645ca79f17431404ced04270437b4ac73d6324c8c",
+  "projection_hash": "176322781dfae01c0277b9456a1e3b03f25d7fdfba0d61ce24ea1ec21c06e051",
+  "readback_status": "declared_not_measured"
+}

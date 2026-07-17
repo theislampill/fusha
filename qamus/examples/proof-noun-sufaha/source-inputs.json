@@ -1,0 +1,42 @@
+{
+  "addresses": {
+    "appearances": "input:qamus/indexes/occurrence-appearances.jsonl#line=115#loc=2:13:12",
+    "edge_summary": "input:lanes/EDGES/edge-closure-summary.json#sufaha",
+    "edges_report": "input:lanes/EDGES/EDGES-REPORT.md#sufaha",
+    "evidence": [
+      "input:canary-sufaha/sufaha-evidence.jsonl#line=1#fact=1",
+      "input:canary-sufaha/sufaha-evidence.jsonl#line=2#fact=2",
+      "input:canary-sufaha/sufaha-evidence.jsonl#line=3#fact=3",
+      "input:canary-sufaha/sufaha-evidence.jsonl#line=4#fact=4",
+      "input:canary-sufaha/sufaha-evidence.jsonl#line=5#fact=5",
+      "input:canary-sufaha/sufaha-evidence.jsonl#line=6#fact=6",
+      "input:canary-sufaha/sufaha-evidence.jsonl#line=7#fact=7",
+      "input:canary-sufaha/sufaha-evidence.jsonl#line=8#fact=8",
+      "input:canary-sufaha/sufaha-evidence.jsonl#line=9#fact=9",
+      "input:canary-sufaha/sufaha-evidence.jsonl#line=10#fact=10",
+      "input:canary-sufaha/sufaha-evidence.jsonl#line=11#fact=11"
+    ],
+    "lexical_entry": "input:data/entries.jsonl#line=265#id=1ffcc554ec44",
+    "repair_edges": [
+      "input:lanes/EDGES/full-artifacts/sufaha-graph-repair-edges.jsonl#line=1#record=1",
+      "input:lanes/EDGES/full-artifacts/sufaha-graph-repair-edges.jsonl#line=2#record=2",
+      "input:lanes/EDGES/full-artifacts/sufaha-graph-repair-edges.jsonl#line=3#record=3",
+      "input:lanes/EDGES/full-artifacts/sufaha-graph-repair-edges.jsonl#line=4#record=4",
+      "input:lanes/EDGES/full-artifacts/sufaha-graph-repair-edges.jsonl#line=5#record=5",
+      "input:lanes/EDGES/full-artifacts/sufaha-graph-repair-edges.jsonl#line=6#record=6",
+      "input:lanes/EDGES/full-artifacts/sufaha-graph-repair-edges.jsonl#line=7#record=7",
+      "input:lanes/EDGES/full-artifacts/sufaha-graph-repair-edges.jsonl#line=8#record=8",
+      "input:lanes/EDGES/full-artifacts/sufaha-graph-repair-edges.jsonl#line=9#record=9"
+    ],
+    "whitelist_row": "input:data/rh_live_01_beta_whitelist.jsonl#line=1364#loc=2:13:12"
+  },
+  "hashes": {
+    "appearances": "8906bc5656b5fbb06f9f4e91c61e3b44def888e9fed9b63228e96e88aa00b801",
+    "edge_summary": "328818a4501ca917a1938ab22b681b45ec827ce1d9c6601b910073800c00d42f",
+    "edges_report": "490bfed5d337447dfbcb8ee30c65b87b757ee003dd65765e19879b74aafae340",
+    "entries": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d",
+    "evidence": "c9867e8fd9527a5a0dc55f440218b67d42103de8c3dcd560b6441cdc7261b007",
+    "repair_edges": "2bd5d3e7200c6ebcd9b2ee86f880cbc62666169317d0cae80fc8a0645da953dd",
+    "whitelist": "5805cc9f3b3c98f5e2b6209871f106d708dc42848b135e780531cc8b2e38ac6e"
+  }
+}
