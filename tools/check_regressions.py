@@ -5618,6 +5618,50 @@ except Exception as _vn_e:
     check("VNMAP ledger gates (harness error)", False)
     print("  ", _vn_e)
 
+# VNREGEN: owner-rules readiness v2 builder, schema validator, and committed
+# fixture artifacts. The full-corpus lane outputs remain outside the repo;
+# this gate must pass from repository contents alone.
+try:
+    _vnregen_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_vn_readiness_v2",
+        "tools.test_vn_readiness_v2_validator",
+        "-q",
+    ], timeout=120)
+    check(
+        "VNREGEN v2 builder/validator focused tests pass",
+        _vnregen_unit.returncode == 0
+        and "OK" in ((_vnregen_unit.stdout or "") + (_vnregen_unit.stderr or "")),
+    )
+    _vnregen_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_vn_readiness_v2.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "VNREGEN v2 validator red-first self-test passes",
+        _vnregen_self.returncode == 0
+        and "VN READINESS V2 SELF-TEST PASS" in (_vnregen_self.stdout or ""),
+    )
+    _vnregen_artifacts = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_vn_readiness_v2.py"),
+        "--ledger",
+        os.path.join(ROOT, "qamus", "examples", "vnmap-v2", "vn-ledger-v2.fixture.jsonl"),
+        "--matrix",
+        os.path.join(ROOT, "qamus", "examples", "vnmap-v2", "vn-readiness-v2.fixture.json"),
+    ], timeout=120)
+    check(
+        "VNREGEN v2 committed fixture structure gate passes",
+        _vnregen_artifacts.returncode == 0
+        and "VN READINESS V2 VALIDATION PASS" in (_vnregen_artifacts.stdout or ""),
+    )
+except Exception as _vnregen_e:
+    check("VNREGEN v2 gates (harness error)", False)
+    print("  ", _vnregen_e)
+
 # EDGES: typed graph, guarded lexeme crosswalk, and red-first validator suite.
 # This gate is deliberately fixture-only; full corpus measurement is an
 # explicit lane command and never a fresh-clone harness dependency.
