@@ -5167,6 +5167,38 @@ try:
         _fb1_self.returncode == 0
         and "FB1 CLITIC PRONOUN PRODUCER SELF-TEST PASS" in (_fb1_self.stdout or ""),
     )
+    _fb1_predicate_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "lattice_projectors.py"),
+        "self-test",
+    ], timeout=120)
+    check(
+        "FB1 predicate-v2 lattice self-test and fixture matrix pass",
+        _fb1_predicate_self.returncode == 0
+        and '"t24_fb1_predicate_v2_fixture_matrix": true' in (_fb1_predicate_self.stdout or ""),
+    )
+    _fb1_predicate_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_lattice_projectors",
+        "-q",
+    ], timeout=120)
+    check(
+        "FB1 predicate-v2 focused lattice unit tests pass",
+        _fb1_predicate_unit.returncode == 0
+        and "OK" in ((_fb1_predicate_unit.stdout or "") + (_fb1_predicate_unit.stderr or "")),
+    )
+    _fb1_measure_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "measure_fb1_predicate_v2.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "FB1 predicate-v2 measurement self-test pass",
+        _fb1_measure_self.returncode == 0
+        and "FB1 PREDICATE V2 MEASUREMENT SELF-TEST PASS" in (_fb1_measure_self.stdout or ""),
+    )
     _fb1_unit = run_text([
         sys.executable,
         "-m",

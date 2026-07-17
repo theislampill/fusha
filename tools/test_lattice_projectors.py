@@ -16,6 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+PREDV2_FIXTURES = ROOT / "qamus" / "examples" / "fb1-predicate-v2" / "predicate-fixtures.jsonl"
 
 from tools import lattice_projectors as L  # noqa: E402
 
@@ -40,6 +41,7 @@ class RegistryTests(unittest.TestCase):
                 "sarf.c1_impf_segmentation.v1",
                 "sarf.c5_enclitic_segmentation.v1",
                 "sarf.fb1_clitic_pronoun_composition.v1",
+                "sarf.fb1_clitic_pronoun_composition.v2",
                 "sarf.meta_form56_ta_negative.v1",
                 "sarf.root_inherit_transclusion.v1",
                 "sarf.note_normalize.v1",
@@ -65,6 +67,14 @@ class RegistryTests(unittest.TestCase):
 
 
 class ClassPredicateTests(unittest.TestCase):
+    def test_fb1_predicate_v2_fixture_matrix_proves_v1_delta(self):
+        fixtures = [json.loads(line) for line in PREDV2_FIXTURES.read_text(encoding="utf-8").splitlines() if line]
+        self.assertEqual(12, len(fixtures))
+        for fixture in fixtures:
+            with self.subTest(fixture=fixture["fixture_id"]):
+                self.assertEqual(fixture["expected_v1"], L.pred_fb1_clitic_pronoun(fixture))
+                self.assertEqual(fixture["expected_v2"], L.pred_fb1_clitic_pronoun_v2(fixture))
+
     def test_c1_requires_imperfect_prefix_and_stem(self):
         self.assertTrue(L.pred_c1_impf(wl("1:1:1", "يَفْعَلُ", IMPF, "root f C l · Form I imperfect active")))
         self.assertFalse(L.pred_c1_impf(wl("1:1:1", "فَعَلَ", IMPF, "root f C l · Form I perfect active")))
