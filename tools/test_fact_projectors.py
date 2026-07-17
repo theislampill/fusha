@@ -196,6 +196,7 @@ class RegistryTests(unittest.TestCase):
                 fact_projectors.TRANCHE1_SARF_PROJECTOR_ID,
                 fact_projectors.TRANCHE1_NAHW_PROJECTOR_ID,
                 fact_projectors.FAM2_LEXICAL_PROJECTOR_ID,
+                fact_projectors.FAM4_FINITE_VERB_PROJECTOR_ID,
             },
             {item["projector_id"] for item in contracts},
         )

@@ -5194,6 +5194,47 @@ except Exception as _fam2_e:
     check("FAM2 lexical formation producer gates (harness error)", False)
     print("  ", _fam2_e)
 
+# FAM4: bounded finite-verb producer calibration. The harness intentionally
+# runs only the repository-owned fixture and committed packet gates; the live
+# 12-row packet is generated with explicit caller-supplied corpus arguments.
+try:
+    _fam4_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_fam4_finite_verbs.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "FAM4 finite-verb producer self-test and red-first fixtures pass",
+        _fam4_self.returncode == 0
+        and "FAM4 FINITE-VERB PRODUCER SELF-TEST PASS" in (_fam4_self.stdout or ""),
+    )
+    _fam4_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_fam4_finite_verb_producer",
+        "-q",
+    ], timeout=120)
+    check(
+        "FAM4 focused typed-fact unit tests pass",
+        _fam4_unit.returncode == 0
+        and "OK" in ((_fam4_unit.stdout or "") + (_fam4_unit.stderr or "")),
+    )
+    _fam4_packet = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_fam4_finite_verbs.py"),
+        "--fixtures",
+        os.path.join(ROOT, "qamus", "examples", "fam4-finite-verbs"),
+    ], timeout=120)
+    check(
+        "FAM4 committed 12-row calibration packet validates (typed output, zero public mutation)",
+        _fam4_packet.returncode == 0
+        and "FAM4 FINITE-VERB PRODUCER FIXTURES PASS" in (_fam4_packet.stdout or ""),
+    )
+except Exception as _fam4_e:
+    check("FAM4 finite-verb producer gates (harness error)", False)
+    print("  ", _fam4_e)
+
 # FB1: bounded clitic-pronoun producer calibration. The self-test is the
 # producer gate; the fixture and committed sample validators prove that the
 # packet remains F-A governed, >=40 rows, and repo-self-contained.
