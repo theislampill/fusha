@@ -65,7 +65,17 @@ class FAM2LexicalProducerTests(unittest.TestCase):
                 continue
             record = fam2_lexical_producer.produce_record(fixture["row"], entries=self.entries)
             self.assertEqual("unresolved_projection", record["record_type"], fixture["fixture_id"])
-            self.assertEqual(fixture["expected_blocker"], record["projection"]["status"], fixture["fixture_id"])
+            blockers = {
+                blocker["blocker_id"]
+                for fact in record["facts"]
+                for blocker in fact["unresolved_blockers"]
+            }
+            self.assertIn(fixture["expected_blocker"], blockers, fixture["fixture_id"])
+            self.assertIn(
+                record["projection"]["status"],
+                {"source_gap", "producer_pending", "blocked"},
+                fixture["fixture_id"],
+            )
             self.assertIsNone(record["projection"]["claim"], fixture["fixture_id"])
             self.assertEqual([], fam2_lexical_producer.validate_formation_record(record), fixture["fixture_id"])
 
@@ -79,7 +89,12 @@ class FAM2LexicalProducerTests(unittest.TestCase):
     def test_sufaha_canary_label_without_entry_singular_abstains(self) -> None:
         fixture = next(item for item in self.fixtures if item["fixture_id"] == "sufaha-label-only-canary")
         record = fam2_lexical_producer.produce_record(fixture["row"], entries=self.entries)
-        self.assertEqual("entry_lookup_missing", record["projection"]["status"])
+        blockers = {
+            blocker["blocker_id"]
+            for fact in record["facts"]
+            for blocker in fact["unresolved_blockers"]
+        }
+        self.assertIn("entry_lookup_missing", blockers)
         self.assertFalse(any(fact["fact_type"] == "formation_evidence" for fact in record["facts"]))
 
     def test_pattern_matcher_rejects_orthography_variants(self) -> None:

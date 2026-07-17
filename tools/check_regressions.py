@@ -5153,6 +5153,47 @@ except Exception as _fa_contract_e:
     check("F-A typed-claim contract gates (harness error)", False)
     print("  ", _fa_contract_e)
 
+# FAM2: bounded lexical noun/adjective formation producer.  The committed
+# fixture gate is repo-self-contained; the operational calibration packet is
+# generated only when the caller supplies the read-only corpus explicitly.
+try:
+    _fam2_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_fam2_lexical.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "FAM2 lexical formation producer self-test and red-first fixtures pass",
+        _fam2_self.returncode == 0
+        and "FAM2 LEXICAL PRODUCER SELF-TEST PASS" in (_fam2_self.stdout or ""),
+    )
+    _fam2_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_fam2_lexical_producer",
+        "-q",
+    ], timeout=120)
+    check(
+        "FAM2 focused typed-fact unit tests pass",
+        _fam2_unit.returncode == 0
+        and "OK" in ((_fam2_unit.stdout or "") + (_fam2_unit.stderr or "")),
+    )
+    _fam2_packet = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_fam2_lexical.py"),
+        "--fixtures",
+        os.path.join(ROOT, "qamus", "examples", "fam2-lexical"),
+    ], timeout=120)
+    check(
+        "FAM2 committed calibration packet validates (>=40, typed output, zero public mutation)",
+        _fam2_packet.returncode == 0
+        and "FAM2 LEXICAL PRODUCER FIXTURES PASS" in (_fam2_packet.stdout or ""),
+    )
+except Exception as _fam2_e:
+    check("FAM2 lexical formation producer gates (harness error)", False)
+    print("  ", _fam2_e)
+
 # FB1: bounded clitic-pronoun producer calibration. The self-test is the
 # producer gate; the fixture and committed sample validators prove that the
 # packet remains F-A governed, >=40 rows, and repo-self-contained.
