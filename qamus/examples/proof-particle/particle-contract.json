@@ -1,0 +1,1472 @@
+{
+  "canonical_occurrence": {
+    "card_id": "card:b8e480aebafe:u1:x1",
+    "entry_id": "b8e480aebafe",
+    "occurrence_id": "quran:2:284:10",
+    "quran_loc": "2:284:10",
+    "surface": "مَا",
+    "surface_length": 3,
+    "wbw_loc": "wbw:2:284:10"
+  },
+  "contract_id": "proofp:ma:2:284:10",
+  "contract_version": "1.0.0",
+  "facts": [
+    {
+      "certification": {
+        "reason": "The canonical entry is the p099 particle entry headed مَا and carries no lexical root.",
+        "status": "certified"
+      },
+      "contradiction_records": [],
+      "defeaters": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "entry:b8e480aebafe:headword",
+            "source_kind": "qamus_entry_field"
+          }
+        ]
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "proofp.ma.2-284-10.v1"
+      ],
+      "derivation_chain": [],
+      "evidence": {
+        "confidence": "high",
+        "evidence_ids": [
+          "entries.jsonl#id=b8e480aebafe"
+        ],
+        "status": "certified",
+        "summary": "The canonical entry is the p099 particle entry headed مَا and carries no lexical root."
+      },
+      "evidence_mode": "direct_source_attestation",
+      "fact_id": "sha256:e28b3d7549fc118d492331ede61375599ba2352ae84819b7c71b28e0d8adee39",
+      "fact_type": "particle_entry",
+      "fact_value": {
+        "entry_id": "b8e480aebafe",
+        "headword": "مَا",
+        "root": null,
+        "root_status": "function_only_no_root",
+        "section": "particle",
+        "source_key": "p099"
+      },
+      "guards": [
+        {
+          "guard_id": "candidate_only",
+          "reason": "This fact can feed only the candidate proof; it cannot authorize a live write."
+        },
+        {
+          "guard_id": "closed_class_no_root",
+          "reason": "The function-word segment carries no lexical root claim."
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofp-particle-owner",
+          "owner_type": "lane_owner_section_12"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.proofp_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofp_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "proofp.shared_candidate_projection.v1",
+        "rule_id": "proofp.ma.entry-identity",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "entries.jsonl#id=b8e480aebafe",
+        "source_kind": "qamus_entry_field"
+      },
+      "source_address": {
+        "address": "entry:b8e480aebafe:headword",
+        "source_kind": "qamus_entry_field"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "entry:b8e480aebafe:headword",
+            "source_kind": "qamus_entry_field"
+          }
+        ],
+        "structured_source_fact": {
+          "entry": {
+            "headword": "مَا",
+            "id": "b8e480aebafe",
+            "root": "",
+            "section": "particle",
+            "source_keys": [
+              "p099"
+            ]
+          }
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 3,
+          "role": "function_particle",
+          "span_id": "particle",
+          "start": 0,
+          "surface": "مَا"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "Sense 1 is the entry sense used by the selected 2:284 example card.",
+        "status": "certified"
+      },
+      "contradiction_records": [],
+      "defeaters": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "entry:b8e480aebafe:senses[0]",
+            "source_kind": "qamus_entry_field"
+          }
+        ]
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "proofp.ma.2-284-10.v1"
+      ],
+      "derivation_chain": [],
+      "evidence": {
+        "confidence": "high",
+        "evidence_ids": [
+          "entries.jsonl#id=b8e480aebafe:sense=1"
+        ],
+        "status": "certified",
+        "summary": "Sense 1 is the entry sense used by the selected 2:284 example card."
+      },
+      "evidence_mode": "direct_source_attestation",
+      "fact_id": "sha256:8b7b87d0966e09d5dc4bc09568df00709b7406abb917a17f67a0ea1e04e30760",
+      "fact_type": "particle_sense",
+      "fact_value": {
+        "arabic": "مَا",
+        "entry_gloss": "what, whatever, that or who",
+        "entry_id": "b8e480aebafe",
+        "sense_number": 1
+      },
+      "guards": [
+        {
+          "guard_id": "candidate_only",
+          "reason": "This fact can feed only the candidate proof; it cannot authorize a live write."
+        },
+        {
+          "guard_id": "closed_class_no_root",
+          "reason": "The function-word segment carries no lexical root claim."
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofp-particle-owner",
+          "owner_type": "lane_owner_section_12"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.proofp_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofp_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "proofp.shared_candidate_projection.v1",
+        "rule_id": "proofp.ma.sense-card-identity",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "entries.jsonl#id=b8e480aebafe:sense=1",
+        "source_kind": "qamus_entry_field"
+      },
+      "source_address": {
+        "address": "entry:b8e480aebafe:senses[0]",
+        "source_kind": "qamus_entry_field"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "entry:b8e480aebafe:senses[0]",
+            "source_kind": "qamus_entry_field"
+          }
+        ],
+        "structured_source_fact": {
+          "selected_card": {
+            "card_ref": "2:284",
+            "example_index": 1,
+            "forms": [
+              "مَا"
+            ],
+            "sense": 1,
+            "text": "لله ما في السماوات وما في الأرض",
+            "usage_index": 1
+          },
+          "sense": {
+            "ar": "مَا",
+            "gloss": "what, whatever, that or who",
+            "n": 1,
+            "translit": "ma"
+          }
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 3,
+          "role": "function_particle",
+          "span_id": "particle",
+          "start": 0,
+          "surface": "مَا"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "The selected-word card edge is exact and its lexical entry match is the singleton p099 entry; its occurrence slot remains empty in the source crosswalk.",
+        "status": "certified"
+      },
+      "contradiction_records": [],
+      "defeaters": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "crosswalk:forward:selected-word=b8e480aebafe:s1:u1:f1:c2:284:x1",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "entry:b8e480aebafe:headword",
+            "source_kind": "qamus_entry_field"
+          }
+        ]
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "proofp.ma.2-284-10.v1"
+      ],
+      "derivation_chain": [],
+      "evidence": {
+        "confidence": "high",
+        "evidence_ids": [
+          "lexeme-entry-crosswalk.forward.jsonl#selected-word=b8e480aebafe:s1:u1:f1:c2:284:x1"
+        ],
+        "status": "certified",
+        "summary": "The selected-word card edge is exact and its lexical entry match is the singleton p099 entry; its occurrence slot remains empty in the source crosswalk."
+      },
+      "evidence_mode": "direct_source_attestation",
+      "fact_id": "sha256:530967a6ea071ea490415a16f04b16c5d925eadcd3d3cbf667f8b760c7772c80",
+      "fact_type": "selected_word_edge",
+      "fact_value": {
+        "card_id": "card:b8e480aebafe:u1:x1",
+        "card_ref": "2:284",
+        "crosswalk_status": "deterministic_exact",
+        "entry_id": "b8e480aebafe",
+        "matched_entry_ids": [
+          "b8e480aebafe"
+        ],
+        "occurrence_id": "",
+        "selected_word_id": "selected-word:b8e480aebafe:s1:u1:f1:c2:284:x1",
+        "surface": "مَا"
+      },
+      "guards": [
+        {
+          "guard_id": "candidate_only",
+          "reason": "This fact can feed only the candidate proof; it cannot authorize a live write."
+        },
+        {
+          "guard_id": "closed_class_no_root",
+          "reason": "The function-word segment carries no lexical root claim."
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofp-particle-owner",
+          "owner_type": "lane_owner_section_12"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.proofp_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofp_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "proofp.shared_candidate_projection.v1",
+        "rule_id": "proofp.ma.selected-word-edge",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "lexeme-entry-crosswalk.forward.jsonl#selected-word=b8e480aebafe:s1:u1:f1:c2:284:x1",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "crosswalk:forward:selected-word=b8e480aebafe:s1:u1:f1:c2:284:x1",
+        "source_kind": "review_artifact"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "crosswalk:forward:selected-word=b8e480aebafe:s1:u1:f1:c2:284:x1",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "entry:b8e480aebafe:headword",
+            "source_kind": "qamus_entry_field"
+          }
+        ],
+        "structured_source_fact": {
+          "forward_crosswalk": {
+            "card_id": "card:b8e480aebafe:u1:x1",
+            "crosswalk_status": "deterministic_exact",
+            "edge_ids": [
+              "edge:038166aee98874fd50b06927",
+              "edge:52d98220391951f2eaf665e7",
+              "edge:c942702014659bc723c21252",
+              "edge:de10e5ddad2b023a73244550"
+            ],
+            "lexeme_form_status_counts": {
+              "deterministic_exact": 2
+            },
+            "matched_entry_ids": [
+              "b8e480aebafe"
+            ],
+            "occurrence_id": "",
+            "schema": "qamus.lexeme_entry_crosswalk.forward.v1",
+            "selected_word_id": "selected-word:b8e480aebafe:s1:u1:f1:c2:284:x1",
+            "source_entry_id": "b8e480aebafe"
+          }
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 3,
+          "role": "function_particle",
+          "span_id": "particle",
+          "start": 0,
+          "surface": "مَا"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "The exact source-addressed occurrence is مَا at 2:284:10, with a byte-preserved surface and WBW address.",
+        "status": "certified"
+      },
+      "contradiction_records": [],
+      "defeaters": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "quran:2:284:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10",
+            "source_kind": "review_artifact"
+          }
+        ]
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "proofp.ma.2-284-10.v1"
+      ],
+      "derivation_chain": [],
+      "evidence": {
+        "confidence": "high",
+        "evidence_ids": [
+          "rh_live_01_beta_whitelist.jsonl#loc=2:284:10"
+        ],
+        "status": "certified",
+        "summary": "The exact source-addressed occurrence is مَا at 2:284:10, with a byte-preserved surface and WBW address."
+      },
+      "evidence_mode": "direct_source_attestation",
+      "fact_id": "sha256:6b6156732c350507a26b7a83f85d2b6d878700bea0c6aea07707bd1d158aee72",
+      "fact_type": "canonical_occurrence",
+      "fact_value": {
+        "card_ref": "2:284",
+        "card_text": "لله ما في السماوات وما في الأرض",
+        "occurrence_id": "quran:2:284:10",
+        "quran_loc": "2:284:10",
+        "surface": "مَا",
+        "wbw_loc": "wbw:2:284:10"
+      },
+      "guards": [
+        {
+          "guard_id": "candidate_only",
+          "reason": "This fact can feed only the candidate proof; it cannot authorize a live write."
+        },
+        {
+          "guard_id": "closed_class_no_root",
+          "reason": "The function-word segment carries no lexical root claim."
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofp-particle-owner",
+          "owner_type": "lane_owner_section_12"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.proofp_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofp_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "proofp.shared_candidate_projection.v1",
+        "rule_id": "proofp.ma.canonical-occurrence",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10",
+        "source_kind": "quran_token"
+      },
+      "source_address": {
+        "address": "quran:2:284:10",
+        "source_kind": "quran_token"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "quran:2:284:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "whitelist_row": {
+            "card_ref": "2:284",
+            "loc": "2:284:10",
+            "quran_loc": "quran:2:284:10",
+            "surface": "مَا",
+            "wbw_loc": "wbw:2:284:10"
+          }
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 3,
+          "role": "function_particle",
+          "span_id": "particle",
+          "start": 0,
+          "surface": "مَا"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "This exact occurrence is source-described as relative mā and not as a generic uncontextualized particle label.",
+        "status": "certified"
+      },
+      "contradiction_records": [],
+      "defeaters": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "quran:2:284:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10",
+            "source_kind": "review_artifact"
+          }
+        ]
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "proofp.ma.2-284-10.v1"
+      ],
+      "derivation_chain": [],
+      "evidence": {
+        "confidence": "high",
+        "evidence_ids": [
+          "rh_live_01_beta_whitelist.jsonl#loc=2:284:10:function"
+        ],
+        "status": "certified",
+        "summary": "This exact occurrence is source-described as relative mā and not as a generic uncontextualized particle label."
+      },
+      "evidence_mode": "direct_source_attestation",
+      "fact_id": "sha256:c5e69dacd4fc11ac763ceeacedb01124021b5aa334e408ffab6848e989f00927",
+      "fact_type": "contextual_function",
+      "fact_value": {
+        "decision_status": "source_certified_for_this_occurrence",
+        "function": "relative",
+        "morphline": "relative noun, accusative as direct object",
+        "qg_class": "qg-relative",
+        "role": "relative_particle"
+      },
+      "guards": [
+        {
+          "guard_id": "candidate_only",
+          "reason": "This fact can feed only the candidate proof; it cannot authorize a live write."
+        },
+        {
+          "guard_id": "closed_class_no_root",
+          "reason": "The function-word segment carries no lexical root claim."
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofp-particle-owner",
+          "owner_type": "lane_owner_section_12"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.proofp_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofp_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "proofp.shared_candidate_projection.v1",
+        "rule_id": "proofp.ma.relative-context",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10:function",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10:function",
+        "source_kind": "review_artifact"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "quran:2:284:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "learner_explanation": "Here 'mā' is the relative 'what/that which' — 'whether you disclose what is in yourselves' — functioning as the object of 'disclose.'",
+          "morphline": "relative noun, accusative as direct object",
+          "segment": {
+            "class": "qg-relative",
+            "gloss_contribution": "what / that which",
+            "label": "",
+            "nahw_note": "",
+            "role": "",
+            "sarf_note": "",
+            "segment_index": 0,
+            "surface": "مَا"
+          }
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 3,
+          "role": "function_particle",
+          "span_id": "particle",
+          "start": 0,
+          "surface": "مَا"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "The source explanation identifies the relative item as the object of disclose and supplies the within-yourself scope.",
+        "status": "certified"
+      },
+      "contradiction_records": [],
+      "defeaters": [],
+      "dependencies": {
+        "fact_ids": [],
+        "source_addresses": [
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:9",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:11",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:12",
+            "source_kind": "review_artifact"
+          }
+        ]
+      },
+      "dependent_fact_ids": [],
+      "dependent_projection_ids": [
+        "proofp.ma.2-284-10.v1"
+      ],
+      "derivation_chain": [],
+      "evidence": {
+        "confidence": "high",
+        "evidence_ids": [
+          "rh_live_01_beta_whitelist.jsonl#loc=2:284:10:scope"
+        ],
+        "status": "certified",
+        "summary": "The source explanation identifies the relative item as the object of disclose and supplies the within-yourself scope."
+      },
+      "evidence_mode": "direct_source_attestation",
+      "fact_id": "sha256:eb2cc4873ec10083033a0ac43be3ba455f4b49f896b0edff0147dc9b898b960a",
+      "fact_type": "governed_scope",
+      "fact_value": {
+        "describing_clause": {
+          "addresses": [
+            "quran:2:284:11",
+            "quran:2:284:12"
+          ],
+          "gloss": "within yourselves",
+          "surface": "فِى أَنفُسِكُمْ"
+        },
+        "governor": {
+          "address": "quran:2:284:9",
+          "gloss": "disclose",
+          "surface": "تُبْدُوا۟"
+        },
+        "relation": "direct_object",
+        "scope_statement": "مَا names what is disclosed; the following prepositional phrase identifies what is within yourselves."
+      },
+      "guards": [
+        {
+          "guard_id": "candidate_only",
+          "reason": "This fact can feed only the candidate proof; it cannot authorize a live write."
+        },
+        {
+          "guard_id": "closed_class_no_root",
+          "reason": "The function-word segment carries no lexical root claim."
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofp-particle-owner",
+          "owner_type": "lane_owner_section_12"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.proofp_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofp_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "proofp.shared_candidate_projection.v1",
+        "rule_id": "proofp.ma.relative-object-scope",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10:scope",
+        "source_kind": "review_artifact"
+      },
+      "source_address": {
+        "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10:scope",
+        "source_kind": "review_artifact"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:9",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:11",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:12",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "context_rows": {
+            "2:284:11": {
+              "morphline": "preposition fī · no lexical root: function token",
+              "surface": "فِىٓ"
+            },
+            "2:284:12": {
+              "morphline": "your own selves",
+              "surface": "أَنفُسِكُمْ"
+            },
+            "2:284:9": {
+              "morphline": "imperfect verb (2nd person plural), jussive as the conditional verb, with plural subject 'wāw'",
+              "surface": "تُبْدُوا۟"
+            }
+          },
+          "selected_row": {
+            "learner_explanation": "Here 'mā' is the relative 'what/that which' — 'whether you disclose what is in yourselves' — functioning as the object of 'disclose.'",
+            "morphline": "relative noun, accusative as direct object"
+          }
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 3,
+          "role": "function_particle",
+          "span_id": "particle",
+          "start": 0,
+          "surface": "مَا"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "The token gloss is source-addressed; the shorter phrase gloss is an authored composition of the certified function and scope facts.",
+        "status": "candidate"
+      },
+      "contradiction_records": [],
+      "defeaters": [],
+      "dependencies": {
+        "fact_ids": [
+          "sha256:c5e69dacd4fc11ac763ceeacedb01124021b5aa334e408ffab6848e989f00927",
+          "sha256:eb2cc4873ec10083033a0ac43be3ba455f4b49f896b0edff0147dc9b898b960a"
+        ],
+        "source_addresses": [
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "quran:2:284:10",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "dependent_fact_ids": [
+        "sha256:c5e69dacd4fc11ac763ceeacedb01124021b5aa334e408ffab6848e989f00927",
+        "sha256:eb2cc4873ec10083033a0ac43be3ba455f4b49f896b0edff0147dc9b898b960a"
+      ],
+      "dependent_projection_ids": [
+        "proofp.ma.2-284-10.v1"
+      ],
+      "derivation_chain": [
+        {
+          "input_fact_ids": [
+            "sha256:c5e69dacd4fc11ac763ceeacedb01124021b5aa334e408ffab6848e989f00927",
+            "sha256:eb2cc4873ec10083033a0ac43be3ba455f4b49f896b0edff0147dc9b898b960a"
+          ],
+          "input_source_addresses": [
+            {
+              "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "quran:2:284:10",
+              "source_kind": "quran_token"
+            }
+          ],
+          "operation": "compose the token contribution with the certified direct-object scope",
+          "output": "what is within yourselves",
+          "step_id": "proofp.ma.compose-contextual-gloss"
+        }
+      ],
+      "evidence": {
+        "confidence": "medium",
+        "evidence_ids": [
+          "proofp:ma:contextual-gloss"
+        ],
+        "status": "source_addressed_candidate",
+        "summary": "The token gloss is source-addressed; the shorter phrase gloss is an authored composition of the certified function and scope facts."
+      },
+      "evidence_mode": "deterministic_derivation_from_certified_facts",
+      "fact_id": "sha256:4c3881c19eb21b0b363e688682650178e5348dc4e3dbc9b7756a9a32c2dbb6f6",
+      "fact_type": "contextual_gloss",
+      "fact_value": {
+        "phrase_gloss": "what is within yourselves",
+        "phrase_gloss_status": "authored_candidate_from_context",
+        "token_contribution_gloss": "what / that which"
+      },
+      "guards": [
+        {
+          "guard_id": "candidate_only",
+          "reason": "This fact can feed only the candidate proof; it cannot authorize a live write."
+        },
+        {
+          "guard_id": "closed_class_no_root",
+          "reason": "The function-word segment carries no lexical root claim."
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofp-particle-owner",
+          "owner_type": "lane_owner_section_12"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.proofp_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofp_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "proofp.shared_candidate_projection.v1",
+        "rule_id": "proofp.ma.contextual-gloss",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "proofp:ma:contextual-gloss",
+        "source_kind": "construction"
+      },
+      "source_address": {
+        "address": "proofp:ma:contextual-gloss",
+        "source_kind": "construction"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "quran:2:284:10",
+            "source_kind": "quran_token"
+          }
+        ],
+        "structured_source_fact": {
+          "authored_phrase_gloss": "what is within yourselves",
+          "composition_inputs": [
+            "relative function",
+            "direct-object scope"
+          ],
+          "source_token_gloss": "what / that which"
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 3,
+          "role": "function_particle",
+          "span_id": "particle",
+          "start": 0,
+          "surface": "مَا"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "The compiler maps the one function-word segment to qg-relative and preserves root silence for every owned character.",
+        "status": "certified"
+      },
+      "contradiction_records": [],
+      "defeaters": [],
+      "dependencies": {
+        "fact_ids": [
+          "sha256:e28b3d7549fc118d492331ede61375599ba2352ae84819b7c71b28e0d8adee39",
+          "sha256:c5e69dacd4fc11ac763ceeacedb01124021b5aa334e408ffab6848e989f00927"
+        ],
+        "source_addresses": [
+          {
+            "address": "entry:b8e480aebafe:headword",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10",
+            "source_kind": "review_artifact"
+          }
+        ]
+      },
+      "dependent_fact_ids": [
+        "sha256:e28b3d7549fc118d492331ede61375599ba2352ae84819b7c71b28e0d8adee39",
+        "sha256:c5e69dacd4fc11ac763ceeacedb01124021b5aa334e408ffab6848e989f00927"
+      ],
+      "dependent_projection_ids": [
+        "proofp.ma.2-284-10.v1"
+      ],
+      "derivation_chain": [
+        {
+          "input_fact_ids": [
+            "sha256:e28b3d7549fc118d492331ede61375599ba2352ae84819b7c71b28e0d8adee39",
+            "sha256:c5e69dacd4fc11ac763ceeacedb01124021b5aa334e408ffab6848e989f00927"
+          ],
+          "input_source_addresses": [
+            {
+              "address": "entry:b8e480aebafe:headword",
+              "source_kind": "qamus_entry_field"
+            },
+            {
+              "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10",
+              "source_kind": "review_artifact"
+            }
+          ],
+          "operation": "map the certified function segment to the closed qamus palette and apply the no-root guard",
+          "output": "one qg-relative function segment with function_only_no_root root status",
+          "step_id": "proofp.ma.compile-function-colour"
+        }
+      ],
+      "evidence": {
+        "confidence": "high",
+        "evidence_ids": [
+          "proofp:ma:closed-class-colour"
+        ],
+        "status": "certified",
+        "summary": "The compiler maps the one function-word segment to qg-relative and preserves root silence for every owned character."
+      },
+      "evidence_mode": "deterministic_derivation_from_certified_facts",
+      "fact_id": "sha256:72811be821a36c517d94a9de74ae76e697d6e1830c302021b79e5d9d871ca3e8",
+      "fact_type": "function_word_colour",
+      "fact_value": {
+        "letter_ownership": [
+          {
+            "class": "function_particle",
+            "index": 0,
+            "root": null,
+            "surface": "م"
+          },
+          {
+            "class": "function_particle",
+            "index": 1,
+            "root": null,
+            "surface": "َ"
+          },
+          {
+            "class": "function_particle",
+            "index": 2,
+            "root": null,
+            "surface": "ا"
+          }
+        ],
+        "letter_ownership_class": "function_particle",
+        "qg_class": "qg-relative",
+        "root": null,
+        "root_status": "function_only_no_root"
+      },
+      "guards": [
+        {
+          "guard_id": "candidate_only",
+          "reason": "This fact can feed only the candidate proof; it cannot authorize a live write."
+        },
+        {
+          "guard_id": "closed_class_no_root",
+          "reason": "The function-word segment carries no lexical root claim."
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofp-particle-owner",
+          "owner_type": "lane_owner_section_12"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.proofp_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofp_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "proofp.shared_candidate_projection.v1",
+        "rule_id": "proofp.ma.closed-class-no-root",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "proofp:ma:closed-class-colour",
+        "source_kind": "construction"
+      },
+      "source_address": {
+        "address": "proofp:ma:closed-class-colour",
+        "source_kind": "construction"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "entry:b8e480aebafe:headword",
+            "source_kind": "qamus_entry_field"
+          },
+          {
+            "address": "rh_live_01_beta_whitelist.jsonl#loc=2:284:10",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "closed_class_guard": "function_only_no_root",
+          "entry_root": "",
+          "source_segment": {
+            "class": "qg-relative",
+            "gloss_contribution": "what / that which",
+            "label": "",
+            "nahw_note": "",
+            "role": "",
+            "sarf_note": "",
+            "segment_index": 0,
+            "surface": "مَا"
+          }
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 3,
+          "role": "function_particle",
+          "span_id": "particle",
+          "start": 0,
+          "surface": "مَا"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "The generated graph carries the exact selected-word→occurrence and occurrence→entry traces, while retaining the source crosswalk's empty occurrence field as a candidate limitation.",
+        "status": "candidate"
+      },
+      "contradiction_records": [],
+      "defeaters": [],
+      "dependencies": {
+        "fact_ids": [
+          "sha256:530967a6ea071ea490415a16f04b16c5d925eadcd3d3cbf667f8b760c7772c80",
+          "sha256:6b6156732c350507a26b7a83f85d2b6d878700bea0c6aea07707bd1d158aee72"
+        ],
+        "source_addresses": [
+          {
+            "address": "crosswalk:forward:selected-word=b8e480aebafe:s1:u1:f1:c2:284:x1",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "crosswalk:reverse:entry=b8e480aebafe",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "quran:2:284:10",
+            "source_kind": "quran_token"
+          }
+        ]
+      },
+      "dependent_fact_ids": [
+        "sha256:530967a6ea071ea490415a16f04b16c5d925eadcd3d3cbf667f8b760c7772c80",
+        "sha256:6b6156732c350507a26b7a83f85d2b6d878700bea0c6aea07707bd1d158aee72"
+      ],
+      "dependent_projection_ids": [
+        "proofp.ma.2-284-10.v1"
+      ],
+      "derivation_chain": [
+        {
+          "input_fact_ids": [
+            "sha256:530967a6ea071ea490415a16f04b16c5d925eadcd3d3cbf667f8b760c7772c80",
+            "sha256:6b6156732c350507a26b7a83f85d2b6d878700bea0c6aea07707bd1d158aee72"
+          ],
+          "input_source_addresses": [
+            {
+              "address": "crosswalk:forward:selected-word=b8e480aebafe:s1:u1:f1:c2:284:x1",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "crosswalk:reverse:entry=b8e480aebafe",
+              "source_kind": "review_artifact"
+            },
+            {
+              "address": "quran:2:284:10",
+              "source_kind": "quran_token"
+            }
+          ],
+          "operation": "join the selected-word edge to the explicit source-addressed occurrence and emit the reverse entry trace",
+          "output": "candidate exact-addressed forward and reverse trace",
+          "step_id": "proofp.ma.build-reciprocal-trace"
+        }
+      ],
+      "evidence": {
+        "confidence": "medium",
+        "evidence_ids": [
+          "proofp:ma:entry-occurrence-reciprocity"
+        ],
+        "status": "source_addressed_candidate",
+        "summary": "The generated graph carries the exact selected-word→occurrence and occurrence→entry traces, while retaining the source crosswalk's empty occurrence field as a candidate limitation."
+      },
+      "evidence_mode": "deterministic_derivation_from_certified_facts",
+      "fact_id": "sha256:764625cd9e07adb9832322ce6fd29b9b74dd8a550ddffd6b20d5778789e59ba0",
+      "fact_type": "entry_occurrence_reciprocity",
+      "fact_value": {
+        "entry_id": "b8e480aebafe",
+        "forward_status": "candidate",
+        "occurrence_id": "quran:2:284:10",
+        "reciprocity_status": "candidate_exact_addressed_trace",
+        "reverse_status": "candidate",
+        "selected_word_id": "selected-word:b8e480aebafe:s1:u1:f1:c2:284:x1",
+        "source_crosswalk_occurrence_gap": true
+      },
+      "guards": [
+        {
+          "guard_id": "candidate_only",
+          "reason": "This fact can feed only the candidate proof; it cannot authorize a live write."
+        },
+        {
+          "guard_id": "closed_class_no_root",
+          "reason": "The function-word segment carries no lexical root claim."
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofp-particle-owner",
+          "owner_type": "lane_owner_section_12"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.proofp_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofp_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "proofp.shared_candidate_projection.v1",
+        "rule_id": "proofp.ma.entry-occurrence-reciprocity",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "proofp:ma:entry-occurrence-reciprocity",
+        "source_kind": "construction"
+      },
+      "source_address": {
+        "address": "proofp:typed-graph:entry-occurrence-reciprocity",
+        "source_kind": "construction"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "crosswalk:forward:selected-word=b8e480aebafe:s1:u1:f1:c2:284:x1",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "crosswalk:reverse:entry=b8e480aebafe",
+            "source_kind": "review_artifact"
+          },
+          {
+            "address": "quran:2:284:10",
+            "source_kind": "quran_token"
+          }
+        ],
+        "structured_source_fact": {
+          "forward_crosswalk": {
+            "occurrence_id": "",
+            "selected_word_id": "selected-word:b8e480aebafe:s1:u1:f1:c2:284:x1"
+          },
+          "reverse_crosswalk": {
+            "entry_id": "b8e480aebafe",
+            "occurrence_ids": []
+          }
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 3,
+          "role": "function_particle",
+          "span_id": "particle",
+          "start": 0,
+          "surface": "مَا"
+        }
+      ],
+      "unresolved_blockers": []
+    },
+    {
+      "certification": {
+        "reason": "The bare surface is multi-function in the entry; unselected readings are kept as unresolved routes, not silently rejected.",
+        "status": "pending"
+      },
+      "contradiction_records": [],
+      "defeaters": [],
+      "dependencies": {
+        "fact_ids": [
+          "sha256:c5e69dacd4fc11ac763ceeacedb01124021b5aa334e408ffab6848e989f00927"
+        ],
+        "source_addresses": [
+          {
+            "address": "quran:2:284:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "nahw:ma-function-decision:2:284:10",
+            "source_kind": "review_artifact"
+          }
+        ]
+      },
+      "dependent_fact_ids": [
+        "sha256:c5e69dacd4fc11ac763ceeacedb01124021b5aa334e408ffab6848e989f00927"
+      ],
+      "dependent_projection_ids": [
+        "proofp.ma.2-284-10.v1"
+      ],
+      "derivation_chain": [],
+      "evidence": {
+        "confidence": "medium",
+        "evidence_ids": [
+          "proofp:ma:function-alternative-routes"
+        ],
+        "status": "source_addressed_candidate",
+        "summary": "The bare surface is multi-function in the entry; unselected readings are kept as unresolved routes, not silently rejected."
+      },
+      "evidence_mode": "unresolved",
+      "fact_id": "sha256:3982166a6221db95ed7fdf2f894d5d46a8f504f1f458fa525e2801deaac203c3",
+      "fact_type": "alternative_function_routes",
+      "fact_value": {
+        "alternatives": [
+          {
+            "function": "negation",
+            "route": "nahw/procedures/ma-function-decision.md",
+            "status": "unresolved"
+          },
+          {
+            "function": "interrogative",
+            "route": "nahw/procedures/relative-interrogative.md",
+            "status": "unresolved"
+          },
+          {
+            "function": "masdariyya",
+            "route": "nahw/procedures/ma-function-decision.md",
+            "status": "unresolved"
+          },
+          {
+            "function": "conditional",
+            "route": "nahw/procedures/particle-function-decision.md",
+            "status": "unresolved"
+          },
+          {
+            "function": "preventive",
+            "route": "nahw/procedures/ma-function-decision.md",
+            "status": "unresolved"
+          }
+        ],
+        "chosen": "relative",
+        "discipline": "Only the relative choice is source-certified for this occurrence; the other labels remain routed unresolved rather than being declared excluded without separate evidence."
+      },
+      "guards": [
+        {
+          "guard_id": "candidate_only",
+          "reason": "This fact can feed only the candidate proof; it cannot authorize a live write."
+        },
+        {
+          "guard_id": "closed_class_no_root",
+          "reason": "The function-word segment carries no lexical root claim."
+        }
+      ],
+      "ownership": {
+        "primary": {
+          "owner_id": "proofp-particle-owner",
+          "owner_type": "lane_owner_section_12"
+        },
+        "secondary": [
+          {
+            "owner_id": "tools.proofp_compiler",
+            "owner_type": "compiler"
+          }
+        ]
+      },
+      "producer": {
+        "id": "tools.proofp_compiler",
+        "version": "1.0.0"
+      },
+      "rule_projector": {
+        "projector_id": "proofp.shared_candidate_projection.v1",
+        "rule_id": "proofp.ma.alternative-function-discipline",
+        "version": "1.0.0"
+      },
+      "source": {
+        "source_id": "proofp:ma:function-alternative-routes",
+        "source_kind": "construction"
+      },
+      "source_address": {
+        "address": "proofp:ma:function-alternative-routes",
+        "source_kind": "construction"
+      },
+      "source_evidence": {
+        "source_addresses": [
+          {
+            "address": "quran:2:284:10",
+            "source_kind": "quran_token"
+          },
+          {
+            "address": "nahw:ma-function-decision:2:284:10",
+            "source_kind": "review_artifact"
+          }
+        ],
+        "structured_source_fact": {
+          "selected_function": "relative",
+          "unresolved_routes": [
+            "negation",
+            "interrogative",
+            "masdariyya",
+            "conditional",
+            "preventive"
+          ]
+        }
+      },
+      "surface_spans": [
+        {
+          "end": 3,
+          "role": "function_particle",
+          "span_id": "particle",
+          "start": 0,
+          "surface": "مَا"
+        }
+      ],
+      "unresolved_blockers": [
+        {
+          "blocker_id": "context_alternative_readings_pending",
+          "reason": "No separate source-certified exclusion packet was supplied for every unselected mā function."
+        }
+      ]
+    }
+  ],
+  "projection": {
+    "claim": {
+      "fact_bindings": [
+        {
+          "fact_field": "fact_value.entry_id",
+          "fact_id": "sha256:e28b3d7549fc118d492331ede61375599ba2352ae84819b7c71b28e0d8adee39",
+          "surface_span_ids": [
+            "particle"
+          ]
+        },
+        {
+          "fact_field": "fact_value.sense_number",
+          "fact_id": "sha256:8b7b87d0966e09d5dc4bc09568df00709b7406abb917a17f67a0ea1e04e30760",
+          "surface_span_ids": [
+            "particle"
+          ]
+        },
+        {
+          "fact_field": "fact_value.selected_word_id",
+          "fact_id": "sha256:530967a6ea071ea490415a16f04b16c5d925eadcd3d3cbf667f8b760c7772c80",
+          "surface_span_ids": [
+            "particle"
+          ]
+        },
+        {
+          "fact_field": "fact_value.occurrence_id",
+          "fact_id": "sha256:6b6156732c350507a26b7a83f85d2b6d878700bea0c6aea07707bd1d158aee72",
+          "surface_span_ids": [
+            "particle"
+          ]
+        },
+        {
+          "fact_field": "fact_value.function",
+          "fact_id": "sha256:c5e69dacd4fc11ac763ceeacedb01124021b5aa334e408ffab6848e989f00927",
+          "surface_span_ids": [
+            "particle"
+          ]
+        },
+        {
+          "fact_field": "fact_value.relation",
+          "fact_id": "sha256:eb2cc4873ec10083033a0ac43be3ba455f4b49f896b0edff0147dc9b898b960a",
+          "surface_span_ids": [
+            "particle"
+          ]
+        },
+        {
+          "fact_field": "fact_value.token_contribution_gloss",
+          "fact_id": "sha256:4c3881c19eb21b0b363e688682650178e5348dc4e3dbc9b7756a9a32c2dbb6f6",
+          "surface_span_ids": [
+            "particle"
+          ]
+        },
+        {
+          "fact_field": "fact_value.root_status",
+          "fact_id": "sha256:72811be821a36c517d94a9de74ae76e697d6e1830c302021b79e5d9d871ca3e8",
+          "surface_span_ids": [
+            "particle"
+          ]
+        },
+        {
+          "fact_field": "fact_value.reciprocity_status",
+          "fact_id": "sha256:764625cd9e07adb9832322ce6fd29b9b74dd8a550ddffd6b20d5778789e59ba0",
+          "surface_span_ids": [
+            "particle"
+          ]
+        },
+        {
+          "fact_field": "fact_value.alternatives[0].status",
+          "fact_id": "sha256:3982166a6221db95ed7fdf2f894d5d46a8f504f1f458fa525e2801deaac203c3",
+          "surface_span_ids": [
+            "particle"
+          ]
+        }
+      ],
+      "language": "en",
+      "text": "The candidate identifies p099 sense 1, the exact selected-word card edge, the source-certified relative function of مَا at 2:284:10, its direct-object scope, its authored contextual gloss, its function-word colour, and reciprocal candidate trace."
+    },
+    "learner_statement": "Here مَا is the relative function word meaning what / that which; the candidate keeps the surrounding scope visible and makes no lexical-root claim.",
+    "learner_visible": true,
+    "materialization_target": {
+      "artifact": "qamus/examples/proof-particle/particle-normalized-public-payload.json",
+      "field": "hover",
+      "live_mutation_allowed": false,
+      "public_materialization_allowed": false
+    },
+    "projection_id": "proofp.ma.2-284-10.v1",
+    "public_payload": {
+      "segments": [
+        {
+          "gloss": "what / that which",
+          "qg_class": "qg-relative",
+          "role": "relative_particle",
+          "surface": "مَا"
+        }
+      ]
+    },
+    "status": "candidate",
+    "unresolved_status": null
+  },
+  "record_type": "projection_input",
+  "schema": "qamus.typed_claim_contract.v1",
+  "tension_records": [
+    {
+      "fact_ids": [
+        "sha256:c5e69dacd4fc11ac763ceeacedb01124021b5aa334e408ffab6848e989f00927",
+        "sha256:3982166a6221db95ed7fdf2f894d5d46a8f504f1f458fa525e2801deaac203c3"
+      ],
+      "resolution_requirement": "nahw_contextual_function_review",
+      "statement": "The surface مَا has multiple entry functions; this occurrence is certified as relative, while separate exclusion evidence for every unselected reading is not present in this lane.",
+      "status": "unresolved",
+      "tension_id": "proofp:ma:unselected-functions"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "edge_ids": [
+    "edge:ba8aceb53a3713816375e6f5",
+    "edge:e6f652bcbe408e35feb7b591",
+    "edge:2831a279ad2a5a84113ba2bd",
+    "edge:ddb440e2ba1e137442d0c098",
+    "edge:db498615864f9b668fdf5ab8",
+    "edge:620b7de6ad2f47d73c12a7c3",
+    "edge:d5788e6354e4b3af474e1704"
+  ],
+  "entry_id": "b8e480aebafe",
+  "occurrence_ids": [
+    "quran:2:284:10"
+  ],
+  "reason": "Reverse lookup is emitted from the typed graph and keeps the source reverse row's empty occurrence_ids visible.",
+  "reciprocity": {
+    "forward_occurrence_in_reverse": true,
+    "reverse_entry_matches_forward": true,
+    "selected_word_matches": true,
+    "status": "candidate_exact_addressed_trace"
+  },
+  "schema": "qamus.proof_particle.entry_occurrence_reverse.v1",
+  "selected_word_ids": [
+    "selected-word:b8e480aebafe:s1:u1:f1:c2:284:x1"
+  ],
+  "source_reverse_occurrence_ids": [],
+  "surface": "مَا",
+  "trace_status": "candidate"
+}

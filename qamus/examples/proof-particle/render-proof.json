@@ -1,0 +1,19 @@
+{
+  "schema": "qamus.proof_particle.render_proof.v1",
+  "status": "measured",
+  "payload_identity": "proofp.ma.2-284-10.v1",
+  "font_check": true,
+  "exact_reconstruction": true,
+  "compact_present": true,
+  "expanded_present": true,
+  "same_payload_identity": true,
+  "live_mutation_allowed": false,
+  "screenshot_path": "particle-card.png",
+  "screenshot_local_only": true,
+  "viewport": {
+    "width": 1280,
+    "height": 900,
+    "device_scale_factor": 1
+  },
+  "observed_token_surface": "مَا"
+}
