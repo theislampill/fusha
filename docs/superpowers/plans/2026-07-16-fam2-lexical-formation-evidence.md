@@ -101,6 +101,6 @@
 - [x] **Step 1: Add the fixture-only harness block.** The harness runs the FAM2 self-test, focused unit tests, and packet validation with repo contents only.
 - [x] **Step 2: Run the explicit-input calibration.** The caller-supplied read-only corpus and entries paths were passed explicitly; only packet artifacts were written.
 - [x] **Step 3: Run targeted checks.** FAM2, projector, shared compiler, and packet checks pass.
-- [ ] **Step 4: Run the full harness and hygiene checks.** Run `python tools/check_regressions.py` and `git diff --check`; expected final marker is `ALL REGRESSION CHECKS PASS`.
-- [ ] **Step 5: Review staged scope.** Confirm only FAM2 code, registry, fixtures, docs, report, and harness files are changed; confirm no `*.png`, external corpus, whitelist, renderer, or production path/identifier is staged.
-- [ ] **Step 6: Commit without pushing.** Commit remaining changes with `fam2: wire lexical producer calibration gate`.
+- [x] **Step 4: Run the full harness and hygiene checks.** `python tools/check_regressions.py` returned `ALL REGRESSION CHECKS PASS`; `git diff --check` is clean.
+- [x] **Step 5: Review staged scope.** The target checkout contains only FAM2 code, registry, fixtures, packet artifacts, docs, tests, and the harness hook; no PNG, external corpus, whitelist, renderer, or production path is staged.
+- [x] **Step 6: Commit without pushing.** Completed with `fam2:` commits; branch remains local and unpushed.
