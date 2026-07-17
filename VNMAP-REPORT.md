@@ -32,14 +32,14 @@ The D4 sum-check is unique occurrences plus repeated appearances equals total ap
 |---|---:|
 | `edge_join_rows_total` | 7,740 |
 | `forward_trace_complete_rows` | 675 |
-| `reverse_trace_complete_rows` | 1,057 |
+| `reverse_trace_complete_rows` | 1,063 |
 | `quran_wbw_trace_complete_rows` | 1,063 |
 | `canonical_occurrence_trace_complete_rows` | 1,066 |
 | `appearance_index_complete_rows` | 1,066 |
 | `rows_needing_source_address_crosswalk` | 6,677 |
 | `orphan_typed_fact_rows` | 487 |
 | `orphan_payload_rows` | 33,377 |
-| `entry_occurrence_reciprocity_failures` | 9 |
+| `entry_occurrence_reciprocity_failures` | 3 |
 | `appearance_projection_parity_failures` | 0 |
 | `manual_probe_count` | 0 |
 

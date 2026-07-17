@@ -1,0 +1,6 @@
+{"loc":"1:1:1","surface":"كِتَابٌ","segments":[{"surface":"كِتَابٌ","role":"noun_stem"}],"card_ref":"1:1","source_key":"v0002","entry_id":"entry-page","entry_url":"entry-page","flags":{"entry_example_scope_only":true},"quran_loc":"1:1:1","wbw_loc":"1:1:1"}
+{"loc":"1:2:1","surface":"مَكْتُوبٌ","segments":[{"surface":"مَكْتُوبٌ","role":"noun_stem"}],"card_ref":"1:2","source_key":"v0001","entry_id":"entry-root","entry_url":"entry-root","flags":{"entry_example_scope_only":true},"quran_loc":"1:2:1","wbw_loc":"1:2:1"}
+{"loc":"2:1:1","surface":"مَلِكٌ","segments":[{"surface":"مَلِكٌ","role":"noun_stem"}],"card_ref":"2:1","source_key":"v0002","entry_id":"entry-page","entry_url":"entry-page","flags":{"entry_example_scope_only":true},"quran_loc":"2:1:1","wbw_loc":"2:1:1"}
+{"loc":"3:1:1","surface":"عَيْنٌ","segments":[{"surface":"عَيْنٌ","role":"noun_stem"}],"card_ref":"3:1","quran_loc":"3:1:1","wbw_loc":"3:1:1"}
+{"loc":"4:1:1","surface":"سُفَهَاءُ","segments":[{"surface":"سُفَهَاءُ","role":"noun_stem"}],"card_ref":"4:1","quran_loc":"4:1:1","wbw_loc":"4:1:1"}
+{"loc":"1:1:2","surface":"كِتَابٌ","segments":[{"surface":"كِتَابٌ","role":"noun_stem"}],"card_ref":"1:1","quran_loc":"1:1:2","wbw_loc":"1:1:2"}

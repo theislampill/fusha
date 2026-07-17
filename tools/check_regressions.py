@@ -5561,6 +5561,36 @@ except Exception as _vn_e:
     check("VNMAP ledger gates (harness error)", False)
     print("  ", _vn_e)
 
+# EDGES: typed graph, guarded lexeme crosswalk, and red-first validator suite.
+# This gate is deliberately fixture-only; full corpus measurement is an
+# explicit lane command and never a fresh-clone harness dependency.
+try:
+    _edges_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_typed_edge_graph",
+        "-q",
+    ], timeout=120)
+    check(
+        "EDGES typed graph/crosswalk red-first unit fixtures pass",
+        _edges_unit.returncode == 0
+        and "OK" in ((_edges_unit.stdout or "") + (_edges_unit.stderr or "")),
+    )
+    _edges_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_typed_edge_graph.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "EDGES typed graph named validators self-test passes",
+        _edges_self.returncode == 0
+        and "TYPED EDGE GRAPH SELF-TEST PASS" in (_edges_self.stdout or ""),
+    )
+except Exception as _edges_e:
+    check("EDGES typed graph gates (harness error)", False)
+    print("  ", _edges_e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

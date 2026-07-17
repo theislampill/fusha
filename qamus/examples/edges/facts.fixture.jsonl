@@ -1,0 +1,3 @@
+{"fact_id":"fact-book-morphology","loc":"1:1:1","entry_id":"entry-book","selected_surface":"كِتَابٌ","status":"certified","kind":"morphology","evidence":[{"address":"fixture:entry-book:usage[0].forms[0]","method":"certified_morphology"}]}
+{"fact_id":"fact-saf-morphology","loc":"4:1:1","entry_id":"entry-saf","selected_surface":"سُفَهَاءُ","status":"certified","kind":"morphology","evidence":[{"address":"fixture:entry-saf:usage[0].forms[1]","method":"certified_morphology"}]}
+{"fact_id":"fact-orphan","loc":"9:9:9","entry_id":"entry-book","selected_surface":"مَكْتُوبٌ","status":"certified","kind":"morphology","evidence":[{"address":"fixture:orphan","method":"certified_morphology"}]}

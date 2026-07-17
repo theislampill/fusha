@@ -138,6 +138,11 @@ def resolve_entry_id(row, by_id, by_source):
 
     direct = str(row.get("entry_id") or "").strip()
     if direct:
+        if direct in by_id:
+            return direct
+        direct_identity = _source_identity(direct)
+        if direct_identity in by_source:
+            return by_source[direct_identity]
         return direct
 
     url_path = _url_path(row.get("entry_url"))
