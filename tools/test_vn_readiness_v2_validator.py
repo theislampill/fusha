@@ -23,17 +23,17 @@ class VnReadinessV2ValidatorTests(unittest.TestCase):
         report = validate_artifacts(self.ledger, self.matrix)
         self.assertTrue(report.ok, report.errors)
 
-    def test_conflict_scalar_mutation_is_rejected(self):
+    def test_staging_claim_cannot_override_documented_membership(self):
         ledger = [dict(row) for row in self.ledger]
-        conflict = next(row for row in ledger if row["source_key"] == "v048")
-        conflict["vn_tranche"] = "VN-01"
+        dual_claim = next(row for row in ledger if row["source_key"] == "v048")
+        dual_claim["vn_tranche_authoritative"] = "VN-00"
         report = validate_artifacts(ledger, self.matrix)
         self.assertFalse(report.ok)
-        self.assertTrue(any("historical conflict" in error for error in report.errors))
+        self.assertTrue(any("provenance" in error or "documented" in error for error in report.errors))
 
     def test_graph_count_mutation_is_rejected(self):
         matrix = json.loads(json.dumps(self.matrix))
-        tranche = next(row for row in matrix["views"]["authoritative_partition"]["tranches"] if row["label"] == "VN-02")
+        tranche = next(row for row in matrix["views"]["primary"]["tranches"] if row["label"] == "VN-03")
         tranche["graph_complete_rows"] += 1
         report = validate_artifacts(self.ledger, matrix)
         self.assertFalse(report.ok)

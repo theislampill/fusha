@@ -37,33 +37,42 @@ class VnReadinessV2Tests(unittest.TestCase):
             read_json(FIXTURE_ROOT / "proofs.fixture.json"),
         )
 
-    def test_owner_schema_keeps_conflict_null_and_staging_separate(self):
+    def test_ratified_schema_resolves_documented_membership_and_separates_history(self):
         result = build_v2(*self.inputs)
         conflict = next(row for row in result.ledger if row["source_key"] == "v048")
-        self.assertIsNone(conflict["vn_tranche"])
-        self.assertEqual(conflict["vn_tranche_status"], "historical_conflict")
-        self.assertEqual(conflict["vn_tranche_claims"], ["VN-00", "VN-01"])
-        self.assertTrue(conflict["vn00_staging_member"])
-        row = result.matrix["views"]["authoritative_partition"]["tranches"][1]
-        self.assertEqual(row["historical_conflict_entries"], 1)
+        self.assertEqual(conflict["vn_tranche_authoritative"], "VN-01")
+        self.assertEqual(conflict["vn_tranche_status"], "authoritative")
+        self.assertEqual(conflict["vn_staging_history_claims"], ["vn00_staging_history"])
+        self.assertNotIn("vn_tranche", conflict)
+        self.assertNotIn("vn00_staging_member", conflict)
+        self.assertEqual(conflict["vn_assignment_provenance"]["vn_tranche_authoritative"]["value"], "VN-01")
+        row = next(row for row in result.matrix["views"]["primary"]["tranches"] if row["label"] == "VN-01")
+        self.assertEqual(row["historical_conflict_entries"], 0)
 
-    def test_both_proposal_namespaces_and_graph_status_split_are_explicit(self):
+    def test_historical_plan_is_primary_and_balanced_partition_is_comparison_only(self):
         result = build_v2(*self.inputs)
         proposed = next(row for row in result.ledger if row["source_key"] == "v150")
-        self.assertEqual(proposed["vn_tranche"], "proposed:vn-partition-proposal.v1:VN-02")
-        self.assertEqual(proposed["vn_tranche_plan_table_proposal"], "proposed:vn-plan-table.v1:VN-03")
-        self.assertNotIn("partition_label", proposed)
-        self.assertNotIn("plan_table_label", proposed)
-        self.assertNotIn("proposal_vn_tranche", proposed)
-        row = result.matrix["views"]["authoritative_partition"]["tranches"][2]
+        self.assertIsNone(proposed["vn_tranche_authoritative"])
+        self.assertEqual(proposed["vn_tranche_status"], "planning_only")
+        self.assertEqual(proposed["vn_planning_assignment"], "VN-03")
+        self.assertEqual(proposed["vn_staging_history_claims"], [])
+        self.assertNotIn("vn_tranche_partition_proposal", proposed)
+        self.assertNotIn("vn_tranche_plan_table_proposal", proposed)
+        row = next(row for row in result.matrix["views"]["primary"]["tranches"] if row["label"] == "VN-03")
         self.assertEqual(row["graph_complete_deterministic_exact_rows"], 1)
         self.assertEqual(row["graph_complete_candidate_rows"], 1)
+        comparison = result.matrix["comparison_artifacts"]["vn-partition-proposal.v1"]
+        self.assertFalse(comparison["authoritative"])
+        self.assertFalse(comparison["planning_role"])
 
     def test_particle_is_unplanned_in_plan_table_and_proofs_are_named(self):
         result = build_v2(*self.inputs)
         particle = next(row for row in result.ledger if row["source_key"] == "p099")
-        self.assertEqual(particle["vn_matrix_view_plan_table"], "UNPLANNED_PARTICLES")
+        self.assertEqual(particle["vn_tranche_status"], "unassigned")
+        self.assertIsNone(particle["vn_planning_assignment"])
+        self.assertEqual(particle["architecture_proof_status"], "architecture_proof_candidate")
         self.assertEqual(result.matrix["proofs"]["count"], 3)
+        self.assertEqual(result.matrix["proofs"]["status"], "architecture_proof_candidate")
         self.assertEqual(
             result.matrix["proofs"]["names"],
             ["fattabini 19:43:10", "ma 2:284:10", "sufaha 2:13:12"],
@@ -99,10 +108,10 @@ class VnReadinessV2Tests(unittest.TestCase):
             read_jsonl(FIXTURE_ROOT / "conflicts.fixture.jsonl"),
         )
         assignment = _assignment_for_key("v150", claims, evidence, doc_sets, staging)
-        self.assertEqual(assignment["vn_tranche_status"], "authoritative")
-        self.assertEqual(assignment["vn_tranche"], "VN-00")
-        self.assertTrue(assignment["vn00_staging_member"])
-        self.assertEqual(assignment["vn_matrix_view_authoritative_partition"], "VN-00-STAGING")
+        self.assertEqual(assignment["vn_tranche_status"], "planning_only")
+        self.assertIsNone(assignment["vn_tranche_authoritative"])
+        self.assertEqual(assignment["vn_planning_assignment"], "VN-03")
+        self.assertEqual(assignment["vn_staging_history_claims"], ["vn00_staging_history"])
 
 
 if __name__ == "__main__":

@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Build the owner-rules VN readiness v2 matrix and selected-word ledger.
+"""Build the ratified, candidate-only VN readiness v2 artifacts.
 
-The builder is offline and candidate-only.  Every input is supplied through an
-explicit CLI argument; the repo contains only the builder and a small fixture
-subset, while the full corpus run can consume lane-owned read-only artifacts.
+The builder keeps three different facts in three different lanes:
+
+* documented VN-00/01/02 contracts are authoritative membership;
+* cumulative rollout snapshots are deployment-history evidence in the
+  ``vn00_staging_history`` namespace; and
+* the historical VN-03..VN-23 table is the planning baseline.
+
+The balanced partition proposal remains available as comparison data only.
+All inputs are explicit CLI arguments and all outputs are candidate-mode.
 """
 
 from __future__ import annotations
@@ -30,9 +36,15 @@ from tools.build_typed_edge_crosswalk import selected_word_node  # noqa: E402
 
 
 PRIMARY_LABELS = tuple(f"VN-{index:02d}" for index in range(21))
-PLAN_EXTRA_LABELS = ("VN-21", "VN-22", "VN-23")
+TAIL_LABELS = ("VN-21", "VN-22", "VN-23")
 FROZEN_LABELS = ("VN-00", "VN-01", "VN-02")
-SPECIAL_LABELS = ("VN-00-STAGING", "HISTORICAL_CONFLICT", "UNPLANNED_PARTICLES", "UNASSIGNED")
+PLANNING_LABELS = tuple(f"VN-{index:02d}" for index in range(3, 24))
+SPECIAL_LABELS = (
+    "vn00_staging_history",
+    "historical_conflict",
+    "unplanned_particles",
+    "unassigned",
+)
 USABLE_CROSSWALK_STATUSES = frozenset({"deterministic_exact", "candidate"})
 PROOF_NAMES = (
     "sufaha 2:13:12",
@@ -40,6 +52,8 @@ PROOF_NAMES = (
     "ma 2:284:10",
 )
 PROOF_NAME_SET = frozenset(PROOF_NAMES)
+ARCHITECTURE_PROOF_STATUS = "architecture_proof_candidate"
+STAGING_NAMESPACE = "vn00_staging_history"
 
 OWNER_SCHOLAR_FAMILY = "source/scholar required"
 OWNER_POLICY_FAMILIES = frozenset({"divine-name policy", "proper noun"})
@@ -60,9 +74,34 @@ FROZEN_SCOPE_TEXT = {
     "VN-02": "v095–v141 + n0091–n0135",
 }
 FROZEN_SCOPE_CITATIONS = {
-    "VN-00": "VNREC/VNREC-REPORT.md §Recovered authoritative scope; recorded CLOSED-FROZEN",
-    "VN-01": "VNREC/VNREC-REPORT.md §Recovered authoritative scope; recorded CLOSED-FROZEN",
-    "VN-02": "VNREC/VNREC-REPORT.md §Recovered authoritative scope; recorded CLOSED-FROZEN",
+    label: f"VNREC/VNREC-REPORT.md §Recovered authoritative scope; recorded CLOSED-FROZEN ({label})"
+    for label in FROZEN_LABELS
+}
+
+# This is the historical plan table, copied as an explicit identifier table so
+# the planner never silently regenerates it from the balanced comparison.
+PLAN_WINDOWS = {
+    "VN-03": {"v": (142, 188), "n": (136, 180), "status_note": "measured 69.38%, worklist 3,280 (OBSERVED)"},
+    "VN-04": {"v": (189, 235), "n": (181, 225), "status_note": "pattern-only"},
+    "VN-05": {"v": (236, 282), "n": (226, 270), "status_note": "pattern-only"},
+    "VN-06": {"v": (283, 329), "n": (271, 315), "status_note": "pattern-only"},
+    "VN-07": {"v": (330, 376), "n": (316, 360), "status_note": "pattern-only"},
+    "VN-08": {"v": (377, 423), "n": (361, 405), "status_note": "pattern-only"},
+    "VN-09": {"v": (424, 470), "n": (406, 450), "status_note": "pattern-only"},
+    "VN-10": {"v": (471, 517), "n": (451, 495), "status_note": "pattern-only"},
+    "VN-11": {"v": (518, 564), "n": (496, 540), "status_note": "pattern-only"},
+    "VN-12": {"v": (565, 611), "n": (541, 585), "status_note": "pattern-only"},
+    "VN-13": {"v": (612, 658), "n": (586, 630), "status_note": "pattern-only"},
+    "VN-14": {"v": (659, 705), "n": (631, 675), "status_note": "pattern-only"},
+    "VN-15": {"v": (706, 752), "n": (676, 720), "status_note": "pattern-only"},
+    "VN-16": {"v": (753, 799), "n": (721, 765), "status_note": "pattern-only"},
+    "VN-17": {"v": (800, 846), "n": (766, 810), "status_note": "pattern-only"},
+    "VN-18": {"v": (847, 893), "n": (811, 855), "status_note": "pattern-only"},
+    "VN-19": {"v": (894, 940), "n": (856, 900), "status_note": "last full-shape window"},
+    "VN-20": {"v": (941, 947), "n": (901, 945), "status_note": "stub v-side"},
+    "VN-21": {"v": None, "n": (946, 990), "status_note": "beyond the titled program"},
+    "VN-22": {"v": None, "n": (991, 1035), "status_note": "beyond the titled program"},
+    "VN-23": {"v": None, "n": (1036, 1045), "status_note": "stub"},
 }
 
 SOURCE_KEY_RE = re.compile(r"^(?P<prefix>[vnp])0*(?P<number>\d+)$", re.IGNORECASE)
@@ -98,6 +137,26 @@ def _read_jsonl(path):
                 raise ValueError(f"expected JSON object at {path}:{line_no}")
             rows.append(value)
     return rows
+
+
+def _read_receipts(path):
+    """Read either a JSON receipt list or the line-oriented backup listing."""
+
+    if not path:
+        return []
+    if str(path).lower().endswith((".json", ".jsonl")):
+        payload = _read_json(path) if str(path).lower().endswith(".json") else _read_jsonl(path)
+        if isinstance(payload, dict):
+            payload = payload.get("receipts") or payload.get("items") or []
+        result = []
+        for item in payload or []:
+            if isinstance(item, str):
+                result.append(item.strip())
+            elif isinstance(item, dict):
+                result.append(_clean(item.get("receipt_id") or item.get("name") or item.get("identifier")))
+        return [value for value in result if value]
+    with open(path, encoding="utf-8") as handle:
+        return [line.strip() for line in handle if line.strip()]
 
 
 def _write_json(value, path):
@@ -136,10 +195,7 @@ def _source_key(entry):
 
 
 def _range_keys(prefix, start, end, width=3):
-    return {
-        f"{prefix}{number:0{width}d}"
-        for number in range(start, end + 1)
-    }
+    return {f"{prefix}{number:0{width}d}" for number in range(start, end + 1)}
 
 
 def _partition_ranges():
@@ -160,21 +216,14 @@ def _partition_ranges():
 
 
 def _plan_ranges():
-    ranges = {
-        "VN-00": _range_keys("v", 1, 47) | _range_keys("n", 1, 45, 4),
-        "VN-01": _range_keys("v", 48, 94) | _range_keys("n", 46, 90, 4),
-        "VN-02": _range_keys("v", 95, 141) | _range_keys("n", 91, 135, 4),
-        "VN-20": _range_keys("v", 941, 947) | _range_keys("n", 901, 945, 4),
-        "VN-21": _range_keys("n", 946, 990, 4),
-        "VN-22": _range_keys("n", 991, 1035, 4),
-        "VN-23": _range_keys("n", 1036, 1045, 4),
-    }
-    for label in range(3, 20):
-        verb_start = 142 + (label - 3) * 47
-        noun_start = 136 + (label - 3) * 45
-        ranges[f"VN-{label:02d}"] = _range_keys("v", verb_start, verb_start + 46) | _range_keys(
-            "n", noun_start, noun_start + 44, 4
-        )
+    ranges = {}
+    for label, window in PLAN_WINDOWS.items():
+        keys = set()
+        if window["v"]:
+            keys |= _range_keys("v", window["v"][0], window["v"][1])
+        if window["n"]:
+            keys |= _range_keys("n", window["n"][0], window["n"][1], 4)
+        ranges[label] = keys
     return ranges
 
 
@@ -191,6 +240,8 @@ def _label_for_key(source_key, ranges):
 
 
 def _proposal_string(proposal_id, label):
+    """Retained for comparison metadata; never emitted as a ledger assignment."""
+
     return f"proposed:{proposal_id}:{label}" if label else None
 
 
@@ -218,11 +269,33 @@ def _append_evidence(target, values):
             target.append(rendered)
 
 
-def _membership_claims(membership, conflicts):
-    claims = defaultdict(set)
-    evidence = defaultdict(list)
+def _snapshot_map(payload):
+    if not payload:
+        return {}
+    if isinstance(payload, dict) and isinstance(payload.get("snapshots"), dict):
+        payload = payload["snapshots"]
+    if not isinstance(payload, dict):
+        return {}
+    result = {}
+    for name, values in payload.items():
+        if isinstance(values, list):
+            result[_clean(name)] = {_canonical_source_key(value) for value in values if _clean(value)}
+    return {name: values for name, values in result.items() if name}
+
+
+def _backup_key(receipt):
+    match = re.search(r"(?<![a-z])([vnp]\d{1,4})(?!\d)", _clean(receipt), re.IGNORECASE)
+    return _canonical_source_key(match.group(1)) if match else None
+
+
+def _membership_context(membership, conflicts, staging_snapshots=None, deployment_receipts=None):
+    """Return documented authority and separate deployment-history evidence."""
+
     doc_sets = {label: set() for label in FROZEN_LABELS}
-    staging = set()
+    documented_by_key = defaultdict(set)
+    evidence = defaultdict(list)
+    staging_from_membership = set()
+    staging_metadata = membership.get("staging_metadata") or {}
 
     for label, details in (membership.get("vn") or {}).items():
         for record in details.get("authoritative_sets") or []:
@@ -231,113 +304,248 @@ def _membership_claims(membership, conflicts):
             if kind == "documented_window_contract" and label in FROZEN_LABELS:
                 doc_sets[label].update(keys)
                 for key in keys:
-                    claims[key].add(label)
+                    documented_by_key[key].add(label)
                     _append_evidence(evidence[key], record.get("evidence"))
             elif kind == "deployed_rollout_staging_cumulative_snapshot":
-                staging.update(keys)
+                staging_from_membership.update(keys)
                 for key in keys:
-                    # Preserve the recovered single VN-00 staging claim while
-                    # keeping the deployment surface separate in its own
-                    # boolean/view namespace below.
-                    claims[key].add("VN-00")
                     _append_evidence(evidence[key], record.get("evidence"))
 
+    snapshots = _snapshot_map(staging_snapshots)
+    if not snapshots and staging_from_membership:
+        snapshot_name = _clean(staging_metadata.get("final_snapshot")) or "staging-final-cumulative"
+        snapshots[snapshot_name] = set(staging_from_membership)
+    elif staging_from_membership:
+        final_name = _clean(staging_metadata.get("final_snapshot"))
+        if final_name and final_name not in snapshots:
+            snapshots[final_name] = set(staging_from_membership)
+
+    staging = set(staging_from_membership)
+    for values in snapshots.values():
+        staging.update(values)
+
+    backup_receipts = [value for value in (deployment_receipts or []) if _clean(value)]
+    backup_by_key = defaultdict(list)
+    for receipt in backup_receipts:
+        key = _backup_key(receipt)
+        if key:
+            backup_by_key[key].append(receipt)
+
+    unresolved = {}
     for record in conflicts:
         if record.get("record_type") != "source_key_conflict":
             continue
         key = _canonical_source_key(record.get("source_key"))
-        labels = {_clean(value) for value in record.get("historical_authoritative_labels") or []}
-        if labels:
-            claims[key] = labels
+        labels = {_clean(value) for value in record.get("historical_authoritative_labels") or [] if _clean(value)}
+        if not labels:
+            continue
         _append_evidence(evidence[key], record.get("evidence"))
         evidence[key].append(f"VNREC/vnrec-conflicts.jsonl:source_key={key}")
+        documented = documented_by_key.get(key, set())
+        # The old conflict file encoded a documented label plus a synthetic
+        # VN-00 staging label. Once staging is separated, a single documented
+        # label controls. Any other shape remains genuinely irreconcilable.
+        # A lone VN-00 claim is also a synthetic staging-membership claim, not
+        # a second membership authority; the cumulative snapshots are the
+        # only surface that can preserve it as deployment history.
+        if labels == {"VN-00"}:
+            continue
+        if len(documented) == 1 and documented.issubset(labels) and labels - documented <= {"VN-00"} and key in staging:
+            continue
+        if labels == documented and len(documented) == 1:
+            continue
+        if len(documented) > 1 or not documented or labels - documented:
+            unresolved[key] = sorted(labels)
 
     for key in list(evidence):
         evidence[key] = sorted(set(value for value in evidence[key] if value))
-    return claims, evidence, doc_sets, staging
-
-
-def _assignment_for_key(source_key, claims, evidence, doc_sets, staging):
-    source_key = _canonical_source_key(source_key)
-    historical_claims = sorted(claims.get(source_key, set()))
-    partition_label = _label_for_key(source_key, PARTITION_RANGES)
-    plan_label = _label_for_key(source_key, PLAN_RANGES)
-    row_evidence = list(evidence.get(source_key, []))
-
-    if len(historical_claims) > 1:
-        scalar = None
-        status = "historical_conflict"
-        partition_proposal = None
-        plan_proposal = None
-    elif len(historical_claims) == 1:
-        scalar = historical_claims[0]
-        status = "authoritative"
-        partition_proposal = None
-        plan_proposal = None
-    elif partition_label:
-        scalar = _proposal_string("vn-partition-proposal.v1", partition_label)
-        status = "proposed"
-        partition_proposal = scalar
-        plan_proposal = _proposal_string("vn-plan-table.v1", plan_label)
-        if not row_evidence:
-            row_evidence.append(f"VNREC/vnrec-authoritative-membership.json:source_key={source_key}:no_historical_claim")
-    else:
-        scalar = None
-        status = "unassigned"
-        partition_proposal = None
-        plan_proposal = None
-
-    if source_key in doc_sets["VN-00"]:
-        authority_surface = "documented_window"
-    elif source_key in doc_sets["VN-01"]:
-        authority_surface = "documented_window"
-    elif source_key in doc_sets["VN-02"]:
-        authority_surface = "documented_window"
-    elif source_key in staging:
-        authority_surface = "deployed_staging"
-    elif len(historical_claims) > 1:
-        authority_surface = "historical_multi_claim"
-    else:
-        authority_surface = "none"
-
-    if not historical_claims and plan_label:
-        row_evidence.append(f"VNREC/VNREC-REPORT.md:future-plan-table:{plan_label}")
-    if not historical_claims and partition_label:
-        row_evidence.append(f"VNREC/vnrec-conflicts.jsonl:source_key={source_key}:proposal-only")
-    row_evidence = sorted(set(row_evidence))
-
-    def matrix_view(kind):
-        if source_key in doc_sets["VN-00"]:
-            return "VN-00"
-        if source_key in doc_sets["VN-01"]:
-            return "VN-01"
-        if source_key in doc_sets["VN-02"]:
-            return "VN-02"
-        if source_key in staging:
-            return "VN-00-STAGING"
-        if kind == "authoritative_partition":
-            return partition_label or "UNASSIGNED"
-        if plan_label:
-            return plan_label
-        if source_key.startswith("p"):
-            return "UNPLANNED_PARTICLES"
-        return "UNASSIGNED"
 
     return {
-        "vn_tranche": scalar,
+        "doc_sets": doc_sets,
+        "documented_by_key": documented_by_key,
+        "evidence": evidence,
+        "staging": staging,
+        "snapshots": snapshots,
+        "backup_receipts": backup_receipts,
+        "backup_by_key": {key: sorted(values) for key, values in backup_by_key.items()},
+        "unresolved": unresolved,
+    }
+
+
+def _membership_claims(membership, conflicts):
+    """Compatibility helper returning only documented claims and staging keys."""
+
+    context = _membership_context(membership, conflicts)
+    return (
+        context["documented_by_key"],
+        context["evidence"],
+        context["doc_sets"],
+        context["staging"],
+    )
+
+
+def _provenance(value, evidence, **extra):
+    result = {"value": value, "evidence": sorted(set(evidence or []))}
+    if not result["evidence"]:
+        result["evidence"] = ["no recoverable value-specific evidence; value remains empty"]
+    result.update(extra)
+    return result
+
+
+def _assignment_for_key(
+    source_key,
+    claims,
+    evidence,
+    doc_sets,
+    staging,
+    staging_snapshots=None,
+    backup_receipts=None,
+    unresolved=None,
+):
+    source_key = _canonical_source_key(source_key)
+    documented_claims = sorted(claims.get(source_key, set()))
+    unresolved = unresolved or {}
+    unresolved_claims = sorted(unresolved.get(source_key, []))
+    plan_label = _label_for_key(source_key, PLAN_RANGES)
+    comparison_label = _label_for_key(source_key, PARTITION_RANGES)
+    row_evidence = sorted(set(evidence.get(source_key, [])))
+    snapshots = staging_snapshots or {}
+    snapshot_hits = sorted(name for name, values in snapshots.items() if source_key in values)
+    if source_key in staging and not snapshot_hits:
+        snapshot_hits = ["staging-final-cumulative"]
+    history_claims = [STAGING_NAMESPACE] if source_key in staging else []
+
+    if unresolved_claims:
+        authoritative = None
+        status = "historical_conflict"
+    elif len(documented_claims) == 1:
+        authoritative = documented_claims[0]
+        status = "authoritative"
+    elif plan_label:
+        authoritative = None
+        status = "planning_only"
+    else:
+        authoritative = None
+        status = "unassigned"
+
+    if authoritative:
+        primary_view = authoritative
+        authority_evidence = row_evidence
+        if history_claims:
+            authority_evidence = authority_evidence + [
+                "owner ratification: documented CLOSED-FROZEN contract controls staging history"
+            ]
+    elif status == "historical_conflict":
+        primary_view = "historical_conflict"
+        authority_evidence = row_evidence + [
+            f"irreconcilable historical claims: {','.join(unresolved_claims)}"
+        ]
+    elif plan_label in PRIMARY_LABELS:
+        primary_view = plan_label
+        authority_evidence = []
+    elif plan_label in TAIL_LABELS:
+        primary_view = None
+        authority_evidence = []
+    elif source_key.startswith("p"):
+        primary_view = "unplanned_particles"
+        authority_evidence = []
+    else:
+        primary_view = "unassigned"
+        authority_evidence = []
+    tail_view = plan_label if plan_label in TAIL_LABELS else None
+
+    planning_assignment = plan_label if plan_label else None
+    planning_evidence = []
+    if planning_assignment:
+        planning_evidence = [
+            f"VNREC/inputs/14-VN-FLYWHEEL-AND-TRANCHE-PLAN.md:§4.1 window table:{planning_assignment}",
+            f"historical plan identifier={planning_assignment}; source-key window={_plan_window_text(planning_assignment)}",
+        ]
+
+    history_evidence = [
+        f"VNREC/inputs/staging-sourcekeys-full.json:{snapshot}:source_key={source_key}"
+        for snapshot in snapshot_hits
+    ]
+    if source_key in staging and not history_evidence:
+        history_evidence = [
+            f"VNREC/vnrec-authoritative-membership.json:staging_metadata.final_source_key_count=1302:source_key={source_key}"
+        ]
+    receipt_ids = [f"staging_snapshot:{snapshot}" for snapshot in snapshot_hits]
+    source_backups = sorted((backup_receipts or {}).get(source_key, []))
+    receipt_ids.extend(f"backup_listing:{receipt}" for receipt in source_backups)
+    receipt_ids = sorted(set(receipt_ids))
+    receipt_evidence = list(history_evidence)
+    receipt_evidence.extend(
+        f"VNREC/inputs/backups-vn-listing.txt:source_key-specific receipt={receipt}"
+        for receipt in source_backups
+    )
+    if not receipt_ids:
+        receipt_evidence = [
+            "VNREC/inputs/backups-vn-listing.txt:global listing is not key-addressable for this source_key",
+            "no key-specific staging snapshot receipt was recovered",
+        ]
+
+    provenance = {
+        "vn_tranche_authoritative": _provenance(
+            authoritative,
+            authority_evidence or [
+                f"no documented CLOSED-FROZEN membership for source_key={source_key}"
+            ],
+            unresolved_claims=unresolved_claims,
+        ),
+        "vn_tranche_status": _provenance(
+            status,
+            authority_evidence
+            or planning_evidence
+            or [f"no documented or historical plan assignment for source_key={source_key}"],
+        ),
+        "vn_planning_assignment": _provenance(
+            planning_assignment,
+            planning_evidence or ["not in the historical VN-03→VN-23 plan-table windows"],
+        ),
+        "vn_staging_history_claims": _provenance(
+            history_claims,
+            history_evidence or ["source_key absent from supplied cumulative staging snapshots"],
+            namespace=STAGING_NAMESPACE,
+            snapshots=snapshot_hits,
+        ),
+        "vn_deployment_receipts": _provenance(receipt_ids, receipt_evidence, receipts=receipt_ids),
+    }
+    return {
+        "vn_tranche_authoritative": authoritative,
         "vn_tranche_status": status,
-        "vn_tranche_claims": historical_claims,
-        "vn_tranche_evidence": row_evidence,
-        "evidence": row_evidence,
-        "vn00_staging_member": source_key in staging,
-        "vn00_documented_window_member": source_key in doc_sets["VN-00"],
-        "vn_authority_surface": authority_surface,
-        "vn_tranche_partition_proposal": partition_proposal,
-        "vn_tranche_plan_table_proposal": plan_proposal,
-        "vn_matrix_view_authoritative_partition": matrix_view("authoritative_partition"),
-        "vn_matrix_view_plan_table": matrix_view("plan_table"),
-        "partition_label": partition_label,
-        "plan_table_label": plan_label,
+        "vn_planning_assignment": planning_assignment,
+        "vn_staging_history_claims": history_claims,
+        "vn_deployment_receipts": receipt_ids,
+        "vn_assignment_provenance": provenance,
+        # Internal routing metadata is removed before a row is serialized.
+        "_primary_view": primary_view,
+        "_tail_view": tail_view,
+        "_comparison_label": comparison_label,
+        "_snapshot_hits": snapshot_hits,
+    }
+
+
+def _plan_window_text(label):
+    window = PLAN_WINDOWS[label]
+    v = f"v{window['v'][0]:03d}–v{window['v'][1]:03d}" if window["v"] else "—"
+    n = f"n{window['n'][0]:04d}–n{window['n'][1]:04d}" if window["n"] else "—"
+    return f"{v}+{n}" if v != "—" else n
+
+
+def _plan_window_record(label):
+    window = PLAN_WINDOWS[label]
+    v_window = f"v{window['v'][0]:03d}–v{window['v'][1]:03d}" if window["v"] else "—"
+    n_window = f"n{window['n'][0]:04d}–n{window['n'][1]:04d}" if window["n"] else "—"
+    return {
+        "identifier": label,
+        "v_window": v_window,
+        "n_window": n_window,
+        "source_key_range": _plan_window_text(label),
+        "status_note": window["status_note"],
+        "authoritative": True,
+        "planning_role": True,
+        "evidence": ["VNREC/inputs/14-VN-FLYWHEEL-AND-TRANCHE-PLAN.md:§4.1 window table"],
     }
 
 
@@ -378,7 +586,8 @@ def _make_cards(entries):
     for entry in entries:
         entry_id = _clean(entry.get("id"))
         for usage_index, usage in enumerate(entry.get("usage") or [], 1):
-            for example_index, _example in enumerate((usage.get("examples") or []) if isinstance(usage, dict) else [], 1):
+            examples = (usage.get("examples") or []) if isinstance(usage, dict) else []
+            for example_index, _example in enumerate(examples, 1):
                 cards.append(
                     {
                         "card_key": _card_key(entry_id, usage_index, example_index),
@@ -404,7 +613,9 @@ def _proofs_by_view(proof_rows, entry_by_id, assignment_by_key, view_kind):
         if entry_id not in entry_by_id:
             raise ValueError(f"proof {name!r} entry_id is absent from entries: {entry_id!r}")
         key = entry_by_id[entry_id]
-        result[assignment_by_key[key][f"vn_matrix_view_{view_kind}"]].append(name)
+        label = assignment_by_key[key].get(f"_{view_kind}_view")
+        if label:
+            result[label].append(name)
     return result
 
 
@@ -417,8 +628,9 @@ def _family_view_counts(family_rows, entry_by_id, whitelist_by_loc, assignment_b
         if entry_id not in entry_by_id:
             continue
         key = entry_by_id[entry_id]
-        label = assignment_by_key[key][f"vn_matrix_view_{view_kind}"]
-        counts[label] += 1
+        label = assignment_by_key[key].get(f"_{view_kind}_view")
+        if label:
+            counts[label] += 1
     return counts
 
 
@@ -433,93 +645,63 @@ def _debt_bucket_counts(debt_counter):
 
 
 def _next_action(label, stats):
-    debt = stats["debt_rows"]
-    owner = stats["owner_scholar_rows"]
-    repair = stats["source_crosswalk_repair_rows"]
     if label in FROZEN_LABELS:
-        if stats["historical_conflict_entries"]:
-            return (
-                f"Preserve the recorded CLOSED-FROZEN {label} scope; owner-ratify "
-                f"{stats['historical_conflict_entries']} historical conflict entries while keeping scalar null; "
-                "do not re-verify live."
-            )
-        return f"No live action: preserve recorded CLOSED-FROZEN {label}; route only candidate source/crosswalk repairs."
-    if label == "VN-00-STAGING":
-        return "Keep the 1,302-key staging namespace separate; owner-ratify its relationship to documented windows before any planning or live action."
-    if label == "HISTORICAL_CONFLICT":
-        return "Preserve every historical claim and keep vn_tranche null until the owner ratifies the conflicting surfaces."
-    if label == "UNPLANNED_PARTICLES":
-        return "Define and owner-ratify a particle plan; p-pages remain outside the documented future table and candidate-only."
-    if label == "UNASSIGNED":
-        return "Provide a source-owned assignment or stop; no provisional label is available."
-    if label in PLAN_EXTRA_LABELS:
-        plan_action = f"Owner-ratify the future plan row {label}; do not convert it into historical closure."
-    else:
-        plan_action = f"Owner-ratify the selected planning namespace for {label}; keep both proposals visible."
-    if owner and repair:
-        return f"{plan_action} Route {owner} source/scholar rows, then apply {repair} source/crosswalk repairs in candidate mode."
-    if owner:
-        return f"{plan_action} Route {owner} source/scholar rows for owner evidence; remain candidate-only."
-    if repair:
-        return f"{plan_action} Apply {repair} source/crosswalk repairs after evidence review; remain candidate-only."
-    if debt:
-        return f"{plan_action} Resolve the remaining {debt} classified debt rows before promotion."
-    return f"{plan_action} Start with the graph-complete rows and retain the candidate boundary."
+        return f"Preserve recorded CLOSED-FROZEN {label}; candidate graph/source work remains non-live."
+    if label == STAGING_NAMESPACE:
+        return "Retain deployment-history evidence separately; never use it as membership."
+    if label == "historical_conflict":
+        return "Route each irreconcilable historical claim for explicit owner adjudication."
+    if label == "unplanned_particles":
+        return "Keep p-pages unplanned and candidate-only until a documented plan exists."
+    if label == "unassigned":
+        return "No documented membership or historical plan is available; retain unassigned."
+    if label in TAIL_LABELS:
+        return f"Keep documented tail {label} explicit; do not merge it into VN-00→VN-20."
+    if label in PLANNING_LABELS:
+        return f"Use the historical plan-table {label} baseline; candidate evidence only."
+    return "Retain candidate boundary and provenance."
 
 
-def _stats_for_label(
-    label,
-    view_kind,
-    entries,
-    cards,
-    ledger,
-    assignment_by_key,
-    entry_by_id,
-    debt_by_id,
-    proof_by_view,
-    family_counts,
-    doc_sets,
-    claims,
-):
-    entry_ids = {
+def _rows_for_assignment(ledger, assignment_by_key, view_kind, label):
+    private_key = f"_{view_kind}_view"
+    return [row for row in ledger if assignment_by_key.get(row.get("source_key"), {}).get(private_key) == label]
+
+
+def _entry_ids_for_assignment(entries, entry_by_id, assignment_by_key, view_kind, label):
+    private_key = f"_{view_kind}_view"
+    return {
         entry["id"]
         for entry in entries
-        if assignment_by_key[entry_by_id[entry["id"]]][f"vn_matrix_view_{view_kind}"] == label
+        if assignment_by_key.get(entry_by_id[entry["id"]], {}).get(private_key) == label
     }
+
+
+def _metric_row(label, view_kind, rows, entry_ids, cards, proof_by_view, family_count, debt_counter, scope_evidence=None):
     card_rows = [card for card in cards if card["entry_id"] in entry_ids]
-    rows = [
-        row
-        for row in ledger
-        if row[f"vn_matrix_view_{view_kind}"] == label
-    ]
-    occurrences = {row.get("occurrence_id") for row in rows if row.get("occurrence_id")}
     status_counts = Counter(row.get("crosswalk_status") or "unavailable" for row in rows)
-    usable_det = sum(row.get("crosswalk_status") == "deterministic_exact" for row in rows)
-    usable_candidate = sum(row.get("crosswalk_status") == "candidate" for row in rows)
-    debt_counter = Counter(row["debt_repair_family"] for row in rows if row.get("debt_repair_family"))
-    debt_buckets = _debt_bucket_counts(debt_counter)
-
-    historical_conflict_entries = 0
-    historical_conflict_rows = 0
-    already_live_entries = 0
-    already_live_cards = 0
-    already_live_rows = 0
-    assigned_entries = 0
+    det = status_counts.get("deterministic_exact", 0)
+    candidate = status_counts.get("candidate", 0)
+    occurrences = {row.get("occurrence_id") for row in rows if row.get("occurrence_id")}
+    proof_names = sorted(proof_by_view.get(label, []))
     if label in FROZEN_LABELS:
-        scope_keys = doc_sets[label]
-        scope_entry_ids = {
-            entry_id for entry_id, key in entry_by_id.items() if key in scope_keys
-        }
-        scope_cards = [card for card in cards if card["entry_id"] in scope_entry_ids]
-        scope_rows = [row for row in ledger if row.get("source_key") in scope_keys]
-        historical_conflict_entries = sum(len(claims.get(key, set())) > 1 for key in scope_keys)
-        historical_conflict_rows = sum(len(claims.get(row.get("source_key"), set())) > 1 for row in scope_rows)
-        already_live_entries = len(scope_entry_ids)
-        already_live_cards = len(scope_cards)
-        already_live_rows = len(scope_rows)
-        assigned_entries = sum(len(claims.get(key, set())) == 1 for key in scope_keys)
-
-    stats = {
+        live_state = "recorded CLOSED-FROZEN scope; not live-reverified"
+        live_entries, live_cards, live_rows = len(entry_ids), len(card_rows), len(rows)
+        assigned = len(entry_ids)
+        scope_status = "CLOSED-FROZEN (recorded evidence)"
+        scope_range = FROZEN_SCOPE_TEXT[label]
+    elif label in PLANNING_LABELS:
+        live_state = "not applicable; planning baseline only"
+        live_entries = live_cards = live_rows = 0
+        assigned = 0
+        scope_status = "authoritative historical planning baseline; not historical closure"
+        scope_range = _plan_window_text(label)
+    else:
+        live_state = "not applicable"
+        live_entries = live_cards = live_rows = 0
+        assigned = 0
+        scope_status = "candidate-only sidecar"
+        scope_range = None
+    return {
         "label": label,
         "view": view_kind,
         "entries": len(entry_ids),
@@ -527,106 +709,80 @@ def _stats_for_label(
         "displayed_selected_words": len(rows),
         "unique_canonical_occurrences": len(occurrences),
         "crosswalk_status_counts": _counter_dict(status_counts),
-        "graph_complete_rows": usable_det + usable_candidate,
-        "graph_complete_deterministic_exact_rows": usable_det,
-        "graph_complete_candidate_rows": usable_candidate,
+        "graph_complete_rows": det + candidate,
+        "graph_complete_deterministic_exact_rows": det,
+        "graph_complete_candidate_rows": candidate,
         "source_certified_rows": 0,
         "source_certification_state": "0; candidate-only lane has no source certification",
-        "fully_rich_generated_rows": len(proof_by_view.get(label, [])),
-        "fully_rich_generated_proof_names": sorted(proof_by_view.get(label, [])),
-        "already_live_noop_entries": already_live_entries,
-        "already_live_noop_cards": already_live_cards,
-        "already_live_noop_selected_word_rows": already_live_rows,
-        "already_live_noop_state": "recorded CLOSED-FROZEN scope; not live-reverified" if label in FROZEN_LABELS else "not applicable",
-        "historical_conflict_entries": historical_conflict_entries,
-        "historical_conflict_selected_word_rows": historical_conflict_rows,
-        "authoritative_assigned_entries": assigned_entries,
-        "debt_rows": sum(debt_counter.values()),
-        "debt_family_counts": _counter_dict(debt_counter),
-        **debt_buckets,
-        "calibrated_family_candidate_rows": family_counts.get(label, 0),
-        "candidate_only": True,
-    }
-    if label in FROZEN_LABELS:
-        stats["scope_source_key_range"] = FROZEN_SCOPE_TEXT[label]
-        stats["scope_status"] = "CLOSED-FROZEN (recorded evidence)"
-        stats["scope_evidence"] = [FROZEN_SCOPE_CITATIONS[label]]
-    elif label == "VN-00-STAGING":
-        stats["scope_source_key_range"] = "1,302 sparse cumulative staging source keys"
-        stats["scope_status"] = "separate preserved staging namespace"
-        stats["scope_evidence"] = ["VNREC/vnrec-authoritative-membership.json:staging_metadata.final_source_key_count=1302"]
-    elif label == "HISTORICAL_CONFLICT":
-        stats["scope_status"] = "scalar null; claims preserved"
-        stats["scope_evidence"] = ["VNREC/vnrec-conflicts.jsonl:164 historical-conflict source keys"]
-    elif label == "UNPLANNED_PARTICLES":
-        stats["scope_status"] = "outside future plan"
-        stats["scope_evidence"] = ["VNREC/VNREC-REPORT.md:future plan leaves p001–p100 unplanned"]
-    else:
-        range_keys = (PLAN_RANGES if view_kind == "plan_table" else PARTITION_RANGES).get(label, set())
-        stats["scope_source_key_count"] = len(range_keys)
-        stats["scope_status"] = "planning-only; no historical closure assignment"
-        stats["scope_evidence"] = [
-            "VNREC/VNREC-REPORT.md:future-plan table",
-            "VNREC/vnrec-authoritative-membership.json:proposal-only boundary",
-        ]
-    stats["next_action"] = _next_action(label, stats)
-    return stats
-
-
-def _special_stats(label, view_kind, entries, cards, ledger, assignment_by_key, entry_by_id, proof_by_view, claims):
-    if label == "HISTORICAL_CONFLICT":
-        rows = [row for row in ledger if row.get("vn_tranche_status") == "historical_conflict"]
-        conflict_keys = {key for key, values in claims.items() if len(values) > 1}
-        entry_ids = {
-            entry["id"]
-            for entry in entries
-            if entry_by_id[entry["id"]] in conflict_keys
-        }
-    else:
-        rows = [row for row in ledger if row[f"vn_matrix_view_{view_kind}"] == label]
-        entry_ids = {
-            entry["id"]
-            for entry in entries
-            if assignment_by_key[entry_by_id[entry["id"]]][f"vn_matrix_view_{view_kind}"] == label
-        }
-    card_keys = {card["card_key"] for card in cards if card["entry_id"] in entry_ids}
-    status_counts = Counter(row.get("crosswalk_status") or "unavailable" for row in rows)
-    debt_counter = Counter(row["debt_repair_family"] for row in rows if row.get("debt_repair_family"))
-    result = {
-        "label": label,
-        "view": view_kind,
-        "entries": len(entry_ids),
-        "cards": len(card_keys),
-        "displayed_selected_words": len(rows),
-        "unique_canonical_occurrences": len({row.get("occurrence_id") for row in rows if row.get("occurrence_id")}),
-        "crosswalk_status_counts": _counter_dict(status_counts),
-        "graph_complete_rows": sum(row.get("crosswalk_status") in USABLE_CROSSWALK_STATUSES for row in rows),
-        "graph_complete_deterministic_exact_rows": sum(row.get("crosswalk_status") == "deterministic_exact" for row in rows),
-        "graph_complete_candidate_rows": sum(row.get("crosswalk_status") == "candidate" for row in rows),
-        "source_certified_rows": 0,
-        "fully_rich_generated_rows": len(proof_by_view.get(label, [])),
-        "fully_rich_generated_proof_names": sorted(proof_by_view.get(label, [])),
-        "already_live_noop_entries": 0,
-        "already_live_noop_cards": 0,
-        "already_live_noop_selected_word_rows": 0,
-        "historical_conflict_entries": len(entry_ids) if label == "HISTORICAL_CONFLICT" else 0,
-        "historical_conflict_selected_word_rows": len(rows) if label == "HISTORICAL_CONFLICT" else 0,
-        "authoritative_assigned_entries": 0,
+        "fully_rich_generated_rows": len(proof_names),
+        "fully_rich_generated_proof_names": proof_names,
+        "already_live_noop_entries": live_entries,
+        "already_live_noop_cards": live_cards,
+        "already_live_noop_selected_word_rows": live_rows,
+        "already_live_noop_state": live_state,
+        "historical_conflict_entries": len({row["entry_id"] for row in rows if row.get("vn_tranche_status") == "historical_conflict"}),
+        "historical_conflict_selected_word_rows": sum(row.get("vn_tranche_status") == "historical_conflict" for row in rows),
+        "authoritative_assigned_entries": assigned,
         "debt_rows": sum(debt_counter.values()),
         "debt_family_counts": _counter_dict(debt_counter),
         **_debt_bucket_counts(debt_counter),
+        "calibrated_family_candidate_rows": family_count,
+        "scope_source_key_range": scope_range,
+        "scope_status": scope_status,
+        "scope_evidence": sorted(set(scope_evidence or [])),
+        "next_action": _next_action(label, {"debt_rows": sum(debt_counter.values())}),
         "candidate_only": True,
-        "scope_status": "scalar null; claims preserved" if label == "HISTORICAL_CONFLICT" else "separate namespace",
     }
-    result["next_action"] = _next_action(label, result)
+
+
+def _special_metric(label, view_kind, entries, cards, ledger, assignment_by_key, entry_by_id, proof_by_view):
+    if label == STAGING_NAMESPACE:
+        rows = [row for row in ledger if row.get("vn_staging_history_claims")]
+        entry_ids = {
+            entry["id"]
+            for entry in entries
+            if assignment_by_key[entry_by_id[entry["id"]]].get("vn_staging_history_claims")
+        }
+        sidecar = True
+        scope_evidence = [
+            "VNREC/vnrec-authoritative-membership.json:staging_metadata.final_source_key_count=1302",
+            "VNREC/inputs/staging-sourcekeys-full.json:complete cumulative per-snapshot source_key sets",
+        ]
+    elif label == "historical_conflict":
+        rows = [row for row in ledger if row.get("vn_tranche_status") == "historical_conflict"]
+        entry_ids = {row["entry_id"] for row in rows}
+        sidecar = False
+        scope_evidence = ["VNREC/vnrec-conflicts.jsonl:irreconcilable historical claims only"]
+    else:
+        rows = [row for row in ledger if assignment_by_key.get(row.get("source_key"), {}).get(f"_{view_kind}_view") == label]
+        entry_ids = _entry_ids_for_assignment(entries, entry_by_id, assignment_by_key, view_kind, label)
+        sidecar = False
+        scope_evidence = []
+    debt_counter = Counter(row["debt_repair_family"] for row in rows if row.get("debt_repair_family"))
+    result = _metric_row(
+        label,
+        view_kind,
+        rows,
+        entry_ids,
+        cards,
+        proof_by_view,
+        0,
+        debt_counter,
+        scope_evidence,
+    )
+    result["sidecar_only"] = sidecar
+    result["namespace"] = STAGING_NAMESPACE if label == STAGING_NAMESPACE else None
+    if label == STAGING_NAMESPACE:
+        result["source_key_count"] = len({row["source_key"] for row in rows})
+        result["matrix_accounting"] = "sidecar_only; overlaps are not added to primary or tail totals"
     return result
 
 
 def _matrix_totals(tranches, special_rows):
     included = list(tranches)
-    for label, row in special_rows.items():
-        if label in {"VN-00-STAGING", "UNPLANNED_PARTICLES"}:
-            included.append(row)
+    for label in ("historical_conflict", "unplanned_particles", "unassigned"):
+        if label in special_rows:
+            included.append(special_rows[label])
     return {
         "entries": sum(row["entries"] for row in included),
         "cards": sum(row["cards"] for row in included),
@@ -646,11 +802,12 @@ def _card_completeness(ledger, cards, partition_label_for_entry, field):
         rows_by_card[key].append(row)
     grouped = Counter()
     for card in cards:
-        if partition_label_for_entry.get(card["entry_id"]) is None:
+        label = partition_label_for_entry.get(card["entry_id"])
+        if label is None:
             continue
         rows = rows_by_card.get(card["card_key"], [])
         if rows and all(bool(row.get(field)) for row in rows):
-            grouped[partition_label_for_entry[card["entry_id"]]] += 1
+            grouped[label] += 1
     return grouped
 
 
@@ -661,26 +818,23 @@ def _material_delta(ledger, cards, baseline_matrix, entry_by_id):
         if label:
             baseline_rows[label] = {
                 "selected": int(row.get("displayed_selected_words") or 0),
-                "complete": int(row.get("displayed_selected_words") or 0) - int(row.get("graph_crosswalk_gap_rows") or 0),
+                "complete": int(row.get("displayed_selected_words") or 0)
+                - int(row.get("graph_crosswalk_gap_rows") or 0),
             }
-    partition_by_entry = {entry_id: _label_for_key(key, PARTITION_RANGES) for entry_id, key in entry_by_id.items()}
+    partition_by_entry = {
+        entry_id: _label_for_key(key, PARTITION_RANGES) for entry_id, key in entry_by_id.items()
+    }
     before_cards = _card_completeness(ledger, cards, partition_by_entry, "crosswalk_flag")
     after_cards = Counter()
     rows_by_entry = defaultdict(list)
     after_by_label = defaultdict(Counter)
-    before_by_label = defaultdict(Counter)
     for row in ledger:
         label = partition_by_entry.get(row["entry_id"])
         if not label:
             continue
         status = row.get("crosswalk_status")
-        if status == "deterministic_exact":
-            after_by_label[label]["deterministic_exact"] += 1
-        elif status == "candidate":
-            after_by_label[label]["candidate"] += 1
-        if row.get("crosswalk_flag"):
-            before_by_label[label]["usable"] += 1
         if status in USABLE_CROSSWALK_STATUSES:
+            after_by_label[label][status] += 1
             rows_by_entry[row["entry_id"]].append(row)
     for card in cards:
         label = partition_by_entry.get(card["entry_id"])
@@ -698,32 +852,45 @@ def _material_delta(ledger, cards, baseline_matrix, entry_by_id):
         ]
         if card_rows and all(row.get("crosswalk_status") in USABLE_CROSSWALK_STATUSES for row in card_rows):
             after_cards[label] += 1
-    before_entries = Counter()
-    after_entries = Counter()
-    for row in ledger:
-        label = partition_by_entry.get(row["entry_id"])
-        if not label:
-            continue
-        if row.get("crosswalk_flag"):
-            before_entries[label] += 1
-    before_entries = Counter({label: len({row["entry_id"] for row in ledger if partition_by_entry.get(row["entry_id"]) == label and row.get("crosswalk_flag")}) for label in PRIMARY_LABELS})
-    after_entries = Counter({label: len({entry_id for entry_id, rows in rows_by_entry.items() if partition_by_entry.get(entry_id) == label and rows}) for label in PRIMARY_LABELS})
-
+    before_entries = Counter(
+        {
+            label: len(
+                {
+                    row["entry_id"]
+                    for row in ledger
+                    if partition_by_entry.get(row["entry_id"]) == label and row.get("crosswalk_flag")
+                }
+            )
+            for label in PRIMARY_LABELS
+        }
+    )
+    after_entries = Counter(
+        {
+            label: len(
+                {
+                    entry_id
+                    for entry_id, rows in rows_by_entry.items()
+                    if partition_by_entry.get(entry_id) == label and rows
+                }
+            )
+            for label in PRIMARY_LABELS
+        }
+    )
     rows = []
     for label in PRIMARY_LABELS:
         before = baseline_rows.get(label, {"selected": 0, "complete": 0})
-        after_det = after_by_label[label].get("deterministic_exact", 0)
-        after_candidate = after_by_label[label].get("candidate", 0)
-        after_usable = after_det + after_candidate
+        det = after_by_label[label].get("deterministic_exact", 0)
+        candidate = after_by_label[label].get("candidate", 0)
+        usable = det + candidate
         rows.append(
             {
                 "label": label,
                 "baseline_selected_word_rows": before["selected"],
                 "baseline_usable_selected_word_rows": before["complete"],
-                "after_deterministic_exact_rows": after_det,
-                "after_candidate_rows": after_candidate,
-                "after_usable_selected_word_rows": after_usable,
-                "delta_usable_selected_word_rows": after_usable - before["complete"],
+                "after_deterministic_exact_rows": det,
+                "after_candidate_rows": candidate,
+                "after_usable_selected_word_rows": usable,
+                "delta_usable_selected_word_rows": usable - before["complete"],
                 "baseline_cards_completable": before_cards.get(label, 0),
                 "after_cards_completable": after_cards.get(label, 0),
                 "delta_cards_completable": after_cards.get(label, 0) - before_cards.get(label, 0),
@@ -733,8 +900,8 @@ def _material_delta(ledger, cards, baseline_matrix, entry_by_id):
             }
         )
     return {
-        "basis": "stable VN-00..VN-20 partition identity; historical scope remapping is not mixed into this delta",
-        "before_source": "pre-crosswalk vn-readiness-matrix.json",
+        "basis": "stable VN-00..VN-20 balanced comparison identity; authority remapping is not mixed into this delta",
+        "before_source": "pre-ratification vn-readiness-matrix.json",
         "after_source": "EDGES/full-artifacts/lexeme-entry-crosswalk.forward.jsonl",
         "rows": rows,
         "totals": {
@@ -757,6 +924,10 @@ def _input_evidence():
         "vnrec_report": "VNREC/VNREC-REPORT.md",
         "vnrec_membership": "VNREC/vnrec-authoritative-membership.json",
         "vnrec_conflicts": "VNREC/vnrec-conflicts.jsonl",
+        "staging_snapshots": "VNREC/inputs/staging-sourcekeys-full.json",
+        "staging_listing": "VNREC/inputs/staging-listing.txt",
+        "backup_listing": "VNREC/inputs/backups-vn-listing.txt",
+        "plan_table": "VNREC/inputs/14-VN-FLYWHEEL-AND-TRANCHE-PLAN.md §4.1",
         "edge_summary": "EDGES/edge-closure-summary.json",
         "crosswalk": "EDGES/full-artifacts/lexeme-entry-crosswalk.forward.jsonl",
         "debt": "EDGES/full-artifacts/debt-classification.jsonl",
@@ -765,124 +936,222 @@ def _input_evidence():
     }
 
 
-def _render_report(matrix):
+def _staging_investigation(doc_sets, snapshots, backup_by_key):
+    missing = sorted(doc_sets["VN-00"] - set().union(*snapshots.values()) if snapshots else doc_sets["VN-00"])
+    rows = []
+    for key in missing:
+        hits = sorted(name for name, values in snapshots.items() if key in values)
+        backups = sorted(backup_by_key.get(key, []))
+        if hits:
+            classification = "possible missing deployment-readback record; final snapshot does not retain an earlier observed key"
+        else:
+            classification = "staging-history coverage gap / snapshot incompleteness; possible missing deployment-readback record is not distinguishable"
+        rows.append(
+            {
+                "source_key": key,
+                "documented_membership": "VN-00",
+                "final_staging_present": False,
+                "cumulative_snapshot_hits": hits,
+                "key_specific_backup_receipts": backups,
+                "classification": classification,
+                "evidence": [
+                    "VNREC/vnrec-authoritative-membership.json:VN-00 documented_window_contract",
+                    "VNREC/inputs/staging-sourcekeys-full.json:vn00-pages-061-070-c through vn00-pages-161-170-c",
+                    "VNREC/inputs/backups-vn-listing.txt:lines 1-5",
+                ],
+            }
+        )
+    return rows
+
+
+def _comparison_artifact(ledger, entries, entry_by_id, assignment_by_key, cards):
+    tranches = []
+    for label in PRIMARY_LABELS:
+        entry_ids = {
+            entry["id"]
+            for entry in entries
+            if assignment_by_key[entry_by_id[entry["id"]]]["_comparison_label"] == label
+        }
+        rows = [row for row in ledger if assignment_by_key[row["source_key"]]["_comparison_label"] == label]
+        status = Counter(row.get("crosswalk_status") or "unavailable" for row in rows)
+        tranches.append(
+            {
+                "label": label,
+                "source_key_count": len(PARTITION_RANGES.get(label, set())),
+                "entries": len(entry_ids),
+                "cards": len({card["card_key"] for card in cards if card["entry_id"] in entry_ids}),
+                "displayed_selected_words": len(rows),
+                "graph_complete_rows": sum(status.get(value, 0) for value in USABLE_CROSSWALK_STATUSES),
+                "crosswalk_status_counts": _counter_dict(status),
+                "authoritative": False,
+                "planning_role": False,
+            }
+        )
+    return {
+        "artifact_id": "vn-partition-proposal.v1",
+        "authoritative": False,
+        "planning_role": False,
+        "role": "versioned_non_authoritative_comparison_artifact",
+        "source_key_rule": "existing balanced partition proposal; retained for comparison only",
+        "tranches": tranches,
+    }
+
+
+def _render_matrix_table(view):
     lines = [
-        "# VNREGEN v2 Report",
+        "| label | entries | cards | selected words | unique occurrences | graph complete (det/cand) | source-certified | architecture proofs | live/no-op rows | owner/scholar | source/crosswalk repair |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
+    ]
+    for row in view["tranches"]:
+        lines.append(
+            f"| `{row['label']}` | {row['entries']:,} | {row['cards']:,} | {row['displayed_selected_words']:,} | {row['unique_canonical_occurrences']:,} | {row['graph_complete_deterministic_exact_rows']:,}/{row['graph_complete_candidate_rows']:,} | {row['source_certified_rows']} | {', '.join(row['fully_rich_generated_proof_names']) or '0'} | {row['already_live_noop_selected_word_rows']:,} | {row['owner_scholar_rows']:,} | {row['source_crosswalk_repair_rows']:,} |"
+        )
+    return lines
+
+
+def _render_report(matrix):
+    delta = matrix["material_improvement_delta"]["totals"]
+    lines = [
+        "# VNREGEN v2 Ratified Report",
         "",
         "Generated by `tools/build_vn_readiness_v2.py` from explicit input files.",
         "All rows are candidate-mode. No live mutation, deployment, source certification, public readback, or push is claimed.",
         "",
         "## Outcome",
         "",
-        "The readiness ledger now carries recovered VNREC authority and conflict claims, a separate staging namespace, both provisional planning namespaces, and EDGES usable-crosswalk yield. The historical CLOSED-FROZEN state is recorded evidence only; this lane did not re-verify it live.",
+        "Documented CLOSED-FROZEN VN-00/01/02 contracts are the only historical membership authority. Cumulative rollout snapshots are preserved as the separate `vn00_staging_history` deployment-history namespace. The historical plan table is the planning baseline for VN-03→VN-23; the balanced partition remains comparison-only.",
         "",
         "## Denominators",
         "",
         "| unit | count |",
         "|---|---:|",
+        f"| D1 entries | {matrix['denominators']['D1_entries']:,} |",
+        f"| D2 cards | {matrix['denominators']['D2_listed_quran_example_cards']:,} |",
+        f"| D3 displayed selected-word rows | {matrix['denominators']['D3_displayed_selected_word_rows']:,} |",
+        f"| D4 unique canonical occurrences | {matrix['denominators']['D4_unique_canonical_occurrences']:,} |",
+        f"| D4 total appearances | {matrix['denominators']['D4_total_appearances']:,} |",
+        f"| D4 repeated appearances | {matrix['denominators']['D4_repeated_appearances']:,} |",
+        "",
+        "## Ratified schema and authority boundary",
+        "",
+        "- Ledger VN authority fields are `vn_tranche_authoritative`, `vn_tranche_status`, `vn_planning_assignment`, `vn_staging_history_claims`, `vn_deployment_receipts`, and `vn_assignment_provenance`; no legacy scalar or staging-membership field is emitted.",
+        "- A staging-history claim never overrides documented membership. The same row may carry `vn_tranche_authoritative=VN-01` (or another documented tranche) and `vn_staging_history_claims=[\"vn00_staging_history\"]`.",
+        "- `vn_tranche_status` is `authoritative`, `planning_only`, or `unassigned` for this full run. `historical_conflict` is reserved for genuinely irreconcilable claims and would list every unresolved claim in provenance.",
+        f"- The three architecture proofs are marked `{ARCHITECTURE_PROOF_STATUS}`; they prove canonical path + compiler shape in candidate mode, not public tranche closure.",
+        "",
+        "## Matrix — primary VN-00→VN-20",
+        "",
     ]
-    denom = matrix["denominators"]
-    for key, label in (
-        ("D1_entries", "D1 entries"),
-        ("D2_listed_quran_example_cards", "D2 cards"),
-        ("D3_displayed_selected_word_rows", "D3 displayed selected-word rows"),
-        ("D4_unique_canonical_occurrences", "D4 unique canonical occurrences"),
-        ("D4_total_appearances", "D4 total appearances"),
-        ("D4_repeated_appearances", "D4 repeated appearances"),
-    ):
-        lines.append(f"| {label} | {denom[key]:,} |")
+    lines.extend(_render_matrix_table(matrix["views"]["primary"]))
     lines.extend(
         [
             "",
-            "## Authority and namespace rules",
+            f"Primary totals: entries={matrix['views']['primary']['totals']['entries']:,}, cards={matrix['views']['primary']['totals']['cards']:,}, selected words={matrix['views']['primary']['totals']['displayed_selected_words']:,}.",
             "",
-            "- `vn_tranche` follows the VNREC scalar contract: authoritative single claims remain scalar, 164 multi-claim historical conflicts remain null, and only no-claim rows receive a `proposed:` partition value.",
-            "- `vn_tranche_partition_proposal` and `vn_tranche_plan_table_proposal` are emitted side-by-side only on no-claim rows. The two proposal IDs are never silently collapsed.",
-            "- `VN-00-STAGING` is a separate matrix namespace. `vn00_staging_member=true` is retained on ledger rows and does not change the documented VN-00 window label.",
-            "- Source certification is exactly zero. The three fully-rich rows are candidate deploy-shaped proof rows only: `sufaha 2:13:12`, `fattabini 19:43:10`, and `ma 2:284:10`.",
-            "",
-            "## EDGES yield",
-            "",
-            f"Usable full-corpus forward crosswalk rows: **{matrix['crosswalk_status_counts'].get('deterministic_exact', 0) + matrix['crosswalk_status_counts'].get('candidate', 0):,}**; deterministic_exact={matrix['crosswalk_status_counts'].get('deterministic_exact', 0):,}, candidate={matrix['crosswalk_status_counts'].get('candidate', 0):,}; ambiguous={matrix['crosswalk_status_counts'].get('ambiguous', 0):,} remains incomplete.",
+            "## Matrix — explicit documented tail VN-21→VN-23",
             "",
         ]
     )
-    for view_name, view in (("authoritative + partition", matrix["views"]["authoritative_partition"]), ("plan table", matrix["views"]["plan_table"])):
-        lines.extend(
-            [
-                f"## Matrix — {view_name}",
-                "",
-                "| label | entries | cards | selected words | unique occurrences | graph complete (det/cand) | source-certified | fully-rich proofs | live/no-op rows | owner/scholar | source/crosswalk repair | next action |",
-                "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|",
-            ]
-        )
-        for row in view["tranches"]:
-            action = row["next_action"].replace("|", "/")
-            lines.append(
-                f"| `{row['label']}` | {row['entries']:,} | {row['cards']:,} | {row['displayed_selected_words']:,} | {row['unique_canonical_occurrences']:,} | {row['graph_complete_deterministic_exact_rows']:,}/{row['graph_complete_candidate_rows']:,} | {row['source_certified_rows']:,} | {row['fully_rich_generated_rows']:,} | {row['already_live_noop_selected_word_rows']:,} | {row['owner_scholar_rows']:,} | {row['source_crosswalk_repair_rows']:,} | {action} |"
-            )
-        lines.append("")
-        lines.append(
-            f"View totals: entries={view['totals']['entries']:,}, cards={view['totals']['cards']:,}, selected words={view['totals']['displayed_selected_words']:,}, summed unique occurrences={view['totals']['unique_canonical_occurrences']:,}."
-        )
-        lines.append("")
-        for special_label in ("VN-00-STAGING", "HISTORICAL_CONFLICT", "UNPLANNED_PARTICLES"):
-            special = view["special_rows"].get(special_label)
-            if not special:
-                continue
-            lines.append(
-                f"- `{special_label}`: entries={special['entries']:,}, cards={special['cards']:,}, selected words={special['displayed_selected_words']:,}, graph complete={special['graph_complete_rows']:,}; {special['next_action']}"
-            )
-        lines.append("")
-
-    delta = matrix["material_improvement_delta"]
+    lines.extend(_render_matrix_table(matrix["views"]["documented_tail"]))
     lines.extend(
         [
-            "## Material-improvement delta vs the pre-crosswalk matrix",
             "",
-            "The delta uses the stable old partition identity so scope recovery does not masquerade as graph improvement. Before counts are the v1 matrix's selected-word rows minus its graph-crosswalk gaps; after counts are the EDGES forward artifact's usable statuses.",
+            f"Tail totals: entries={matrix['views']['documented_tail']['totals']['entries']:,}, cards={matrix['views']['documented_tail']['totals']['cards']:,}, selected words={matrix['views']['documented_tail']['totals']['displayed_selected_words']:,}.",
+            "The tail is not merged into VN-00→VN-20. Unplanned particles remain an explicit primary sidecar.",
+            "",
+            "### Separate history and unplanned sidecars",
+            "",
+            f"- `vn00_staging_history`: {matrix['scope_summary']['staging_history_namespace']['source_key_count']:,} source keys; {matrix['scope_summary']['staging_history_namespace']['history_only_source_key_count']:,} history-only keys; {matrix['scope_summary']['staging_history_namespace']['overlap_authoritative_source_key_count']:,} overlap documented authority. This sidecar is not added to primary/tail denominators.",
+            f"- `unplanned_particles`: {matrix['views']['primary']['special_rows']['unplanned_particles']['entries']:,} entries / {matrix['views']['primary']['special_rows']['unplanned_particles']['displayed_selected_words']:,} selected-word rows; no planning assignment.",
+            "",
+            "## Four-key VN-00 staging-history investigation",
+            "",
+            "The four documented VN-00 keys below remain authoritative members. They are absent from the final staging snapshot and from every supplied cumulative snapshot. That is a staging-history coverage discrepancy, not a membership deletion; the supplied evidence cannot distinguish snapshot incompleteness from a missing deployment-readback record.",
+            "",
+            "| source key | documented membership | final staging | cumulative snapshot hits | key-specific backup receipt | classification |",
+            "|---|---|---|---|---|---|",
+        ]
+    )
+    for item in matrix["staging_investigation"]:
+        lines.append(
+            f"| `{item['source_key']}` | `{item['documented_membership']}` | absent | {', '.join(item['cumulative_snapshot_hits']) or 'none'} | {', '.join(item['key_specific_backup_receipts']) or 'none'} | {item['classification']} |"
+        )
+    lines.extend(
+        [
+            "",
+            "Evidence for each row: `VNREC/vnrec-authoritative-membership.json` documented window, `VNREC/inputs/staging-sourcekeys-full.json` cumulative snapshots, and `VNREC/inputs/backups-vn-listing.txt` backup listing. No four-key row is removed or downgraded.",
+            "",
+            "## Material-improvement delta vs pre-ratification output",
+            "",
+            "The delta remains on the stable balanced-partition identity so authority remapping is not misreported as graph improvement:",
             "",
             "| yield unit | before | after | delta |",
             "|---|---:|---:|---:|",
-            f"| selected-word rows with usable edges | {delta['totals']['baseline_usable_selected_word_rows']:,} | {delta['totals']['after_usable_selected_word_rows']:,} | {delta['totals']['delta_usable_selected_word_rows']:+,} |",
-            f"| cards completable by usable selected-word edges | {delta['totals']['baseline_cards_completable']:,} | {delta['totals']['after_cards_completable']:,} | {delta['totals']['delta_cards_completable']:+,} |",
-            f"| entries with a usable edge | {delta['totals']['baseline_entries_with_usable_edge']:,} | {delta['totals']['after_entries_with_usable_edge']:,} | {delta['totals']['delta_entries_with_usable_edge']:+,} |",
+            f"| selected-word rows with usable edges | {delta['baseline_usable_selected_word_rows']:,} | {delta['after_usable_selected_word_rows']:,} | {delta['delta_usable_selected_word_rows']:+,} |",
+            f"| cards completable by usable selected-word edges | {delta['baseline_cards_completable']:,} | {delta['after_cards_completable']:,} | {delta['delta_cards_completable']:+,} |",
+            f"| entries with a usable edge | {delta['baseline_entries_with_usable_edge']:,} | {delta['after_entries_with_usable_edge']:,} | {delta['delta_entries_with_usable_edge']:+,} |",
             "",
-            "The three proof rows are additive candidate deploy-shaped evidence, not extra corpus selected-word denominator rows and not source-certified rows.",
+            "This restates the material improvement from the pre-ratification output: the graph-yield delta is unchanged by the authority repair, while the final matrix no longer treats staging history as membership and no longer calls dual documented/staging rows historical conflicts.",
             "",
-            "## Debt classification",
+            "## Comparison artifact",
             "",
-            "| family | rows |",
-            "|---|---:|",
-        ]
-    )
-    for family, count in matrix["debt_family_counts"].items():
-        lines.append(f"| {family} | {count:,} |")
-    lines.extend(
-        [
-            "",
-            "The owner/scholar headline is `source/scholar required`; divine-name policy and proper-noun rows remain separately visible, as do function-word and duplicate-surface routes.",
+            "`vn-partition-proposal.v1` is retained under `comparison_artifacts` as versioned non-authoritative comparison data. It has `authoritative=false` and `planning_role=false`; it does not populate `vn_planning_assignment` and does not determine the primary or tail matrix.",
             "",
             "## Compounding Impact",
             "",
-            f"The EDGES crosswalk changes {matrix['material_improvement_delta']['totals']['delta_usable_selected_word_rows']:+,} stable-partition selected-word rows into usable graph routes, with {matrix['material_improvement_delta']['totals']['after_cards_completable']:,} cards and {matrix['material_improvement_delta']['totals']['after_entries_with_usable_edge']:,} entries now represented by usable edges. Each usable selected-word route can reuse its canonical occurrence and its {denom['D4_total_appearances']:,} indexed appearance surface without copying or rewriting occurrence history.",
-            f"FAMWIDE contributes {matrix['family_rows']:,} verified family rows as candidate routing evidence, not source certification. The proof packets add exactly {matrix['proofs']['count']} named candidate deploy-shaped rows and preserve their repeated-appearance/readback limits.",
+            f"EDGES contributes {matrix['compounding_impact']['usable_selected_word_rows']:,} usable selected-word routes, representing {matrix['compounding_impact']['usable_cards_after']:,} cards and {matrix['compounding_impact']['usable_entries_after']:,} entries after the crosswalk. The ledger preserves {matrix['compounding_impact']['indexed_total_appearances']:,} indexed appearances and exactly {matrix['compounding_impact']['proof_candidate_rows']} architecture-proof candidates. These are candidate routing facts, not source certification or public closure.",
             "",
-            "## Evidence and honest limits",
+            "## Honest limits and reproduction",
             "",
-            "- Scope and claims: `VNREC/VNREC-REPORT.md`, `VNREC/vnrec-authoritative-membership.json`, and `VNREC/vnrec-conflicts.jsonl`.",
-            "- Graph yield: `EDGES/edge-closure-summary.json`, `EDGES/full-artifacts/lexeme-entry-crosswalk.forward.jsonl`, and `EDGES/full-artifacts/debt-classification.jsonl`.",
-            "- Calibrated family input: `FAMWIDE/famwide-strat.jsonl`.",
-            "- Baseline: the pre-crosswalk `vn-readiness-matrix.json`.",
-            "- Proof evidence: `qamus/examples/proof-noun-sufaha/`, `qamus/examples/proof-verb/`, and `qamus/examples/proof-particle/`.",
-            "- No source-certified row, live deployment, live readback, browser probe, whitelist append, restart, push, or release is claimed.",
+            "- CLOSED-FROZEN status is recorded evidence and was not live-reverified.",
+            "- No live mutation, whitelist append, restart, deployment, public readback, source certification, push, or release is claimed.",
+            "- Reproduce with `python tools/build_vn_readiness_v2.py` and explicit corpus, VNREC, staging-snapshot, receipt, EDGES, FAMWIDE, baseline, proof, and output paths. The committed `qamus/examples/vnmap-v2/` subset is the repo-self-contained harness gate.",
             "",
-            "## Reproduction",
-            "",
-            "Run `python tools/build_vn_readiness_v2.py` with explicit `--entries`, `--whitelist`, `--appearance-index`, `--family`, `--membership`, `--conflicts`, `--edge-summary`, `--crosswalk-forward`, `--debt-classification`, `--baseline-matrix`, `--proofs`, and output arguments. The committed `qamus/examples/vnmap-v2/` subset is the repo-self-contained harness gate.",
         ]
     )
-    return "\n".join(lines) + "\n"
+    return "\n".join(lines)
+
+
+def _build_view(view_kind, labels, entries, cards, ledger, assignment_by_key, entry_by_id, proof_by_view, family_counts_by_view):
+    tranches = []
+    for label in labels:
+        rows = _rows_for_assignment(ledger, assignment_by_key, view_kind, label)
+        entry_ids = _entry_ids_for_assignment(entries, entry_by_id, assignment_by_key, view_kind, label)
+        debt_counter = Counter(row["debt_repair_family"] for row in rows if row.get("debt_repair_family"))
+        evidence = []
+        if label in FROZEN_LABELS:
+            evidence = [FROZEN_SCOPE_CITATIONS[label]]
+        elif label in PLANNING_LABELS:
+            evidence = [
+                "VNREC/inputs/14-VN-FLYWHEEL-AND-TRANCHE-PLAN.md:§4.1 window table",
+                f"historical plan identifier={label}; source-key window={_plan_window_text(label)}",
+            ]
+        tranches.append(
+            _metric_row(
+                label,
+                view_kind,
+                rows,
+                entry_ids,
+                cards,
+                proof_by_view[view_kind],
+                family_counts_by_view[view_kind].get(label, 0),
+                debt_counter,
+                evidence,
+            )
+        )
+    special = {
+        label: _special_metric(label, view_kind, entries, cards, ledger, assignment_by_key, entry_by_id, proof_by_view[view_kind])
+        for label in SPECIAL_LABELS
+    }
+    return {
+        "schema": "vn-readiness-v2/view@2",
+        "view_kind": view_kind,
+        "tranches": tranches,
+        "special_rows": special,
+        "sidecar_only_special_rows": [STAGING_NAMESPACE],
+        "totals": _matrix_totals(tranches, special),
+        "candidate_only": True,
+    }
 
 
 def build_v2(
@@ -897,6 +1166,8 @@ def build_v2(
     debt_rows,
     baseline_matrix,
     proof_rows,
+    staging_snapshots=None,
+    deployment_receipts=None,
 ):
     if not isinstance(entries, list) or not isinstance(whitelist, list) or not isinstance(appearances, list):
         raise ValueError("entries, whitelist, and appearances must be lists")
@@ -906,14 +1177,25 @@ def build_v2(
         if not entry_id or entry_id in entry_by_id:
             raise ValueError(f"duplicate or missing entry id: {entry_id!r}")
         entry_by_id[entry_id] = _source_key(entry)
-    claims, evidence, doc_sets, staging = _membership_claims(membership, conflicts)
-    assignment_by_key = {
-        key: _assignment_for_key(key, claims, evidence, doc_sets, staging)
-        for key in set(entry_by_id.values())
-    }
+
+    context = _membership_context(membership, conflicts, staging_snapshots, deployment_receipts)
+    assignment_by_key = {}
+    for key in set(entry_by_id.values()):
+        assignment_by_key[key] = _assignment_for_key(
+            key,
+            context["documented_by_key"],
+            context["evidence"],
+            context["doc_sets"],
+            context["staging"],
+            context["snapshots"],
+            context["backup_by_key"],
+            context["unresolved"],
+        )
+        assignment_by_key[key]["_primary_view"] = assignment_by_key[key].pop("_primary_view")
+        assignment_by_key[key]["_tail_view"] = assignment_by_key[key].pop("_tail_view")
+        assignment_by_key[key]["_comparison_label"] = assignment_by_key[key].pop("_comparison_label")
 
     base = build_ledger(entries, whitelist, appearances, family_rows)
-    ledger = []
     forward_by_id = {}
     for record in crosswalk_rows:
         selected_id = _clean(record.get("selected_word_id"))
@@ -927,6 +1209,14 @@ def build_v2(
         if selected_id:
             debt_by_id[selected_id] = record
 
+    proof_by_entry_id = {}
+    proof_names = sorted(_clean(row.get("name")) for row in proof_rows)
+    if proof_names != sorted(PROOF_NAME_SET):
+        raise ValueError(f"proof fixture must contain exactly {sorted(PROOF_NAME_SET)}")
+    for proof in proof_rows:
+        proof_by_entry_id[_clean(proof.get("entry_id"))] = _clean(proof.get("name"))
+
+    ledger = []
     for base_row in base.ledger:
         row = dict(base_row)
         raw_source_key = _clean(row.get("source_key"))
@@ -944,12 +1234,34 @@ def build_v2(
         row["crosswalk_edge_ids"] = sorted(forward.get("edge_ids") or [])
         row["crosswalk_edge_usable"] = row["crosswalk_status"] in USABLE_CROSSWALK_STATUSES
         row["debt_repair_family"] = _clean(debt_by_id.get(selected_id, {}).get("repair_family")) or None
-        row.update(assignment)
-        # The v1 ledger carried derived labels whose names could be mistaken
-        # for recovered authority. v2 exposes only the explicit scalar,
-        # status, claims, and proposal fields below.
-        for legacy_label_field in ("partition_label", "plan_table_label", "proposal_vn_tranche"):
-            row.pop(legacy_label_field, None)
+        row.update(
+            {
+                key: value
+                for key, value in assignment.items()
+                if not key.startswith("_")
+            }
+        )
+        row["architecture_proof_status"] = ARCHITECTURE_PROOF_STATUS if row.get("entry_id") in proof_by_entry_id else None
+        for legacy_label_field in (
+            "partition_label",
+            "plan_table_label",
+            "proposal_vn_tranche",
+            "vn_tranche",
+            "vn_tranche_claims",
+            "vn_tranche_evidence",
+            "evidence",
+            "vn00_staging_member",
+            "vn00_documented_window_member",
+            "vn_authority_surface",
+            "vn_tranche_partition_proposal",
+            "vn_tranche_plan_table_proposal",
+            "vn_matrix_view_authoritative_partition",
+            "vn_matrix_view_plan_table",
+        ):
+            if legacy_label_field not in {
+                "evidence",
+            }:
+                row.pop(legacy_label_field, None)
         ledger.append(row)
     ledger.sort(
         key=lambda row: (
@@ -960,85 +1272,71 @@ def build_v2(
         )
     )
 
-    assignment_by_key = {key: assignment_by_key[key] for key in assignment_by_key}
     cards = _make_cards(entries)
     whitelist_by_loc = {
         _clean(row.get("loc")): _clean(row.get("entry_id"))
         for row in whitelist
         if _clean(row.get("loc")) and _clean(row.get("entry_id"))
     }
-    proof_by_view = {}
-    family_counts_by_view = {}
-    for view_kind in ("authoritative_partition", "plan_table"):
-        proof_by_view[view_kind] = _proofs_by_view(proof_rows, entry_by_id, assignment_by_key, view_kind)
-        family_counts_by_view[view_kind] = _family_view_counts(
-            family_rows, entry_by_id, whitelist_by_loc, assignment_by_key, view_kind
-        )
+    proof_by_view = {
+        "primary": _proofs_by_view(proof_rows, entry_by_id, assignment_by_key, "primary"),
+        "tail": _proofs_by_view(proof_rows, entry_by_id, assignment_by_key, "tail"),
+    }
+    family_counts_by_view = {
+        "primary": _family_view_counts(family_rows, entry_by_id, whitelist_by_loc, assignment_by_key, "primary"),
+        "tail": _family_view_counts(family_rows, entry_by_id, whitelist_by_loc, assignment_by_key, "tail"),
+    }
 
-    views = {}
-    for view_kind in ("authoritative_partition", "plan_table"):
-        labels = list(PRIMARY_LABELS)
-        if view_kind == "plan_table":
-            labels.extend(PLAN_EXTRA_LABELS)
-        tranches = [
-            _stats_for_label(
-                label,
-                view_kind,
-                entries,
-                cards,
-                ledger,
-                assignment_by_key,
-                entry_by_id,
-                debt_by_id,
-                proof_by_view[view_kind],
-                family_counts_by_view[view_kind],
-                doc_sets,
-                claims,
-            )
-            for label in labels
-        ]
-        special_rows = {
-            label: _special_stats(
-                label,
-                view_kind,
-                entries,
-                cards,
-                ledger,
-                assignment_by_key,
-                entry_by_id,
-                proof_by_view[view_kind],
-                claims,
-            )
-            for label in SPECIAL_LABELS
-        }
-        views[view_kind] = {
-            "schema": "vn-readiness-v2/view@1",
-            "view_kind": view_kind,
-            "tranches": tranches,
-            "special_rows": special_rows,
-            "totals": _matrix_totals(tranches, special_rows),
-            "candidate_only": True,
-        }
-
+    primary_view = _build_view(
+        "primary", PRIMARY_LABELS, entries, cards, ledger, assignment_by_key, entry_by_id, proof_by_view, family_counts_by_view
+    )
+    tail_view = _build_view(
+        "tail", TAIL_LABELS, entries, cards, ledger, assignment_by_key, entry_by_id, proof_by_view, family_counts_by_view
+    )
     status_counts = Counter(row.get("crosswalk_status") or "unavailable" for row in ledger)
     debt_counts = Counter(row["debt_repair_family"] for row in ledger if row.get("debt_repair_family"))
-    entry_by_id_for_delta = entry_by_id
-    delta = _material_delta(ledger, cards, baseline_matrix, entry_by_id_for_delta)
-    all_usable = status_counts.get("deterministic_exact", 0) + status_counts.get("candidate", 0)
-    proof_names = sorted(_clean(row.get("name")) for row in proof_rows)
-    if proof_names != sorted(PROOF_NAME_SET):
-        raise ValueError(f"proof fixture must contain exactly {sorted(PROOF_NAME_SET)}")
-    family_mapping = base.matrix.get("clitic_family_northstar") or {
-        "family_rows": len(family_rows),
-        "calibrated_verified_rows": sum(_clean(row.get("_fb1_verdict")) == "verified" for row in family_rows),
-        "candidate_only": True,
-        "source_certified_count": 0,
+    delta = _material_delta(ledger, cards, baseline_matrix, entry_by_id)
+    comparison = _comparison_artifact(ledger, entries, entry_by_id, assignment_by_key, cards)
+    staging_set = context["staging"]
+    documented_overlap = set().union(*(context["doc_sets"][label] for label in FROZEN_LABELS)) & staging_set
+    staging_history_namespace = {
+        "namespace": STAGING_NAMESPACE,
+        "source_key_count": len(staging_set),
+        "history_only_source_key_count": len(staging_set - documented_overlap),
+        "overlap_authoritative_source_key_count": len(documented_overlap),
+        "final_snapshot": _clean((membership.get("staging_metadata") or {}).get("final_snapshot")) or None,
+        "matrix_accounting": "sidecar_only; deployment history is never membership",
+        "evidence": [
+            "VNREC/vnrec-authoritative-membership.json:staging_metadata.final_source_key_count=1302",
+            "VNREC/inputs/staging-sourcekeys-full.json:complete cumulative per-snapshot source_key sets",
+        ],
     }
+    plan_baseline = {label: _plan_window_record(label) for label in PLANNING_LABELS}
+    investigation = _staging_investigation(context["doc_sets"], context["snapshots"], context["backup_by_key"])
+    all_usable = status_counts.get("deterministic_exact", 0) + status_counts.get("candidate", 0)
+    proof_records = []
+    for proof in sorted(proof_rows, key=lambda row: _clean(row.get("name"))):
+        proof_records.append(
+            {
+                "name": _clean(proof.get("name")),
+                "entry_id": _clean(proof.get("entry_id")),
+                "source_key": _canonical_source_key(proof.get("source_key")),
+                "target_occurrence": _clean(proof.get("target_occurrence") or proof.get("target_loc")),
+                "status": ARCHITECTURE_PROOF_STATUS,
+                "candidate_only": True,
+                "evidence": [
+                    _clean(proof.get("artifact")) or value
+                    for value in (proof.get("evidence") or [])
+                    if _clean(proof.get("artifact")) or _clean(value)
+                ],
+            }
+        )
     matrix = {
         "schema": "vn-readiness-v2@1",
         "candidate_only": True,
-        "assignment_mode": "vnrec_authority_with_two_explicit_proposals",
+        "assignment_mode": "vnrec_documented_authority_with_historical_plan_baseline",
         "proposal_ids": ["vn-partition-proposal.v1", "vn-plan-table.v1"],
+        "planning_assignment_id": "vn-plan-table.v1",
         "denominators": {
             "D1_entries": base.metrics["denominators"]["D1_entries"],
             "D2_listed_quran_example_cards": base.metrics["denominators"]["D2_listed_quran_example_cards"],
@@ -1047,26 +1345,31 @@ def build_v2(
             "D4_total_appearances": base.metrics["denominators"]["D4_total_appearances"],
             "D4_repeated_appearances": base.metrics["denominators"]["D4_repeated_appearances"],
         },
-        "views": views,
+        "views": {"primary": primary_view, "documented_tail": tail_view},
         "scope_summary": {
             "documented_windows": {
                 label: {
                     "source_key_range": FROZEN_SCOPE_TEXT[label],
-                    "entries": len(doc_sets[label]),
+                    "entries": len(context["doc_sets"][label]),
                     "status": "CLOSED-FROZEN (recorded evidence)",
                     "evidence": [FROZEN_SCOPE_CITATIONS[label]],
                 }
                 for label in FROZEN_LABELS
             },
-            "staging_namespace": {
-                "source_key_count": len(staging),
-                "entries_resolved": sum(_canonical_source_key(value) in entry_by_id.values() for value in staging),
-                "field": "vn00_staging_member",
-                "matrix_label": "VN-00-STAGING",
-                "evidence": ["VNREC/vnrec-authoritative-membership.json:staging_metadata.final_source_key_count=1302"],
-            },
-            "historical_conflict_source_keys": sum(len(value) > 1 for value in claims.values()),
+            "staging_history_namespace": staging_history_namespace,
+            "historical_conflict_source_keys": len(context["unresolved"]),
+            "historical_conflict_keys": sorted(context["unresolved"]),
         },
+        "planning_baseline": {
+            "artifact_id": "vn-plan-table.v1",
+            "authoritative": True,
+            "planning_role": True,
+            "identifier_policy": "preserve historical VN-03→VN-23 identifiers exactly",
+            "tranches": plan_baseline,
+            "evidence": ["VNREC/inputs/14-VN-FLYWHEEL-AND-TRANCHE-PLAN.md:§4.1 window table"],
+        },
+        "comparison_artifacts": {"vn-partition-proposal.v1": comparison},
+        "staging_investigation": investigation,
         "crosswalk_status_counts": _counter_dict(status_counts),
         "usable_crosswalk_status_counts": {
             "deterministic_exact": status_counts.get("deterministic_exact", 0),
@@ -1075,15 +1378,23 @@ def build_v2(
         "edge_summary_input": edge_summary,
         "debt_family_counts": _counter_dict(debt_counts),
         "family_rows": len(family_rows),
-        "family_mapping": family_mapping,
+        "family_mapping": base.matrix.get("clitic_family_northstar")
+        or {
+            "family_rows": len(family_rows),
+            "calibrated_verified_rows": sum(_clean(row.get("_fb1_verdict")) == "verified" for row in family_rows),
+            "candidate_only": True,
+            "source_certified_count": 0,
+        },
         "proofs": {
             "count": len(proof_rows),
             "names": proof_names,
+            "status": ARCHITECTURE_PROOF_STATUS,
             "candidate_only": True,
             "source_certified_count": 0,
+            "rows": proof_records,
             "by_view": {
-                view_kind: {label: sorted(names) for label, names in proof_by_view[view_kind].items()}
-                for view_kind in proof_by_view
+                "primary": {label: sorted(names) for label, names in proof_by_view["primary"].items()},
+                "tail": {label: sorted(names) for label, names in proof_by_view["tail"].items()},
             },
         },
         "material_improvement_delta": delta,
@@ -1096,6 +1407,14 @@ def build_v2(
             "family_candidate_rows": len(family_rows),
             "proof_candidate_rows": len(proof_rows),
             "candidate_only": True,
+        },
+        "deployment_receipt_summary": {
+            "receipt_count": len(context["backup_receipts"]),
+            "key_specific_receipt_count": sum(len(value) for value in context["backup_by_key"].values()),
+            "unscoped_receipts": [
+                receipt for receipt in context["backup_receipts"] if not _backup_key(receipt)
+            ],
+            "evidence": ["VNREC/inputs/backups-vn-listing.txt:lines 1-5"],
         },
         "input_evidence": _input_evidence(),
     }
@@ -1122,6 +1441,8 @@ def main(argv=None):
         "report-output",
     ):
         parser.add_argument(f"--{name}", required=True)
+    parser.add_argument("--staging-snapshots")
+    parser.add_argument("--deployment-receipts")
     args = parser.parse_args(argv)
     result = build_v2(
         _read_jsonl(args.entries),
@@ -1135,6 +1456,8 @@ def main(argv=None):
         _read_jsonl(args.debt_classification),
         _read_json(args.baseline_matrix),
         _read_json(args.proofs),
+        _read_json(args.staging_snapshots) if args.staging_snapshots else None,
+        _read_receipts(args.deployment_receipts) if args.deployment_receipts else None,
     )
     _write_json(result.matrix, args.matrix_output)
     _write_jsonl(result.ledger, args.ledger_output)
