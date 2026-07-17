@@ -150,6 +150,44 @@
       }
     },
     {
+      "projector_id": "sarf.fb1_clitic_pronoun_composition.v3",
+      "kind": "calibration_packet",
+      "producer": "tools.build_clitic_pronoun_producer",
+      "skill_rule_ids": [
+        "sarf-clitic-and-host-morphology",
+        "nahw-attached-pronouns-change-wording-but-head-sense-let",
+        "sarf-morphology-candidate-lattice",
+        "nahw-expose-particle-function-host-plus-attached-plural-pronoun"
+      ],
+      "class_predicate": "pred_fb1_clitic_pronoun_v3",
+      "guards": [
+        "fb1_closed_class_function_word",
+        "fb1_surface_byte_exact",
+        "fb1_idgham_boundary",
+        "fb1_protective_nun_not_particle"
+      ],
+      "target_population_note": "FB1 candidate-only v3 comparison: v2 exact attached roles plus an empirical exact previous role+class governor/host registry for generic pronoun-family names; v1 and v2 remain runnable and the owner selects any deploy boundary.",
+      "registry_entry": {
+        "schema": "qamus.projector_record.v1",
+        "record_type": "registry_entry",
+        "producer": "tools.build_clitic_pronoun_producer",
+        "projector_id": "sarf.fb1_clitic_pronoun_composition.v3",
+        "fact_family": "sarf",
+        "input_fact_types": ["surface_observation"],
+        "output_fact_type": "clitic_pronoun_composition",
+        "compatibility_class": "source-addressed clitic/pronoun segment rows with UTF-8 exact reconstruction; only v2 attached-role evidence or exact empirical generic-role governor/host evidence may become candidate facts",
+        "defeater_checks": [
+          "fb1_closed_class_function_word",
+          "fb1_surface_byte_exact",
+          "fb1_idgham_boundary",
+          "fb1_protective_nun_not_particle"
+        ],
+        "gate_tier": "two_vote_required",
+        "version": "3.0.0",
+        "resolution_method": "fa_typed_fact_byte_exact_clitic_calibration_v3"
+      }
+    },
+    {
       "projector_id": "sarf.meta_form56_ta_negative.v1",
       "kind": "negative_meta",
       "skill_rule_ids": [

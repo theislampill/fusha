@@ -21,7 +21,7 @@ Segment ordering is by numeric `segment_index`; leading segments never satisfy a
 
 The PREDV2 drop set contains 440 generic-role rows across 39 distinct previous `(role, class)` shapes. The v3 implementation records all shapes in three reusable registries: 32 governor/host pairs (396 rows), 3 conjunction-only/result-fā pairs (34 rows), and 4 ambiguous pairs (10 rows). The measurement CLI derives the counts and evidence table from the supplied corpus and PREDV2 drop set; the committed predicate registry is the reviewed exact-shape contract used by downstream F-C dependency producers.
 
-The ambiguous registry includes the proper-noun-labeled host shape, emphatic lām, the interrogative noun, and the question hamza. They remain excluded even where a local row may look host-like, because the previous segment shape is not sufficiently specific for this family predicate.
+The ambiguous registry includes the proper-noun-labeled host shape, emphatic lām, the interrogative noun, and the question hamza. They remain excluded even where a local row may look host-like, because the previous segment shape is not sufficiently specific for this family predicate. No separate suffix or resumption predecessor shape occurred in the 440 generic drop events, so v3 does not invent an unobserved admission.
 
 ## Files and data flow
 

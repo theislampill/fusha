@@ -130,7 +130,7 @@ Expected: both commands pass, including the unchanged v2 matrix.
 - Modify: `tools/check_regressions.py` in the FB1 harness block
 
 **Interfaces:**
-- Consumes: `--corpus`, `--strat`, `--out-dropped`, `--out-readmitted`, `--out-fp-sample`, `--report`, `--seed`, `--expected-v1`, and optional hand-check JSONL paths.
+- Consumes: `--corpus`, `--strat`, `--v2-report`, `--v2-dropped`, `--out-dropped`, `--out-readmitted`, `--out-fp-sample`, `--report`, `--seed`, `--expected-v1`, and optional hand-check JSONL paths.
 - Produces: v1/v2/v3 population counts, exact v1−v3 drop rows, exact v2→v3 re-admission rows, 40-row outside-STRAT sample, 12-row new-admission sample, and the report.
 
 - [ ] **Step 1: Add CLI loaders and deterministic helpers.**
@@ -169,7 +169,7 @@ Add `tools/measure_fb1_predicate_v3.py --self-test` to `tools/check_regressions.
 
 - [ ] **Step 1: Identify the supplied STRAT packet without copying the corpus.**
 
-Use the existing repository/path conventions from the PREDV2 measurement invocation and verify its row count and SHA-256 before measuring. If no explicit STRAT input can be located, report the exact blocker instead of fabricating overlap data.
+Use the existing repository/path conventions from the PREDV2 measurement invocation and verify the PREDV2 report, PREDV2 drop set, and STRAT packet paths plus SHA-256 before measuring. If no explicit STRAT input can be located, report the exact blocker instead of fabricating overlap data.
 
 - [ ] **Step 2: Run the v3 measurement with seed 20260718.**
 

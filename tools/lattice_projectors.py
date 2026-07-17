@@ -144,6 +144,70 @@ FB1_ATTACHED_ROLE_REGISTRY = frozenset({
 })
 _FB1_TYPED_SUBJECT_PREDECESSOR_CLASSES = frozenset({"qg-verb-stem"})
 
+# V3's generic-role fallback is deliberately an exact predecessor-shape
+# contract.  The pairs below were derived from every generic-role row in the
+# PREDV2 drop set: 32 governor/host shapes, 396 corpus rows.  The companion
+# registries preserve the rejected shape taxonomy for downstream producers and
+# report generation; neither rejected registry is admitted by the predicate.
+FB1_GENERIC_NON_ATTACHED_ROLE_MARKERS = frozenset({
+    "independent",
+    "detached",
+    "demonstrative",
+    "relative",
+    "interrogative",
+    "conditional",
+    "attention",
+    "addressee",
+    "speaker",
+    "concealed",
+    "hidden",
+})
+FB1_GENERIC_GOVERNOR_HOST_REGISTRY = frozenset({
+    ("an", "qg-preposition"),
+    ("ba", "qg-preposition"),
+    ("bound_preposition_ala", "qg-preposition"),
+    ("fi", "qg-preposition"),
+    ("prefix_preposition", "qg-preposition"),
+    ("prefix_preposition_ba", "qg-preposition"),
+    ("prefix_preposition_bi", "qg-preposition"),
+    ("preposition", "qg-preposition"),
+    ("preposition_ba", "qg-preposition"),
+    ("preposition_fi", "qg-preposition"),
+    ("relation_adverb", "qg-preposition"),
+    ("relation_preposition", "qg-preposition"),
+    ("with", "qg-preposition"),
+    ("lam", "qg-lam"),
+    ("lam_relation", "qg-lam"),
+    ("prefix_lam", "qg-lam"),
+    ("prefix_lam_preposition", "qg-lam"),
+    ("prefix_preposition", "qg-lam"),
+    ("prepositional_lam", "qg-lam"),
+    ("emphasis_particle", "qg-emphasis"),
+    ("emphatic_particle", "qg-emphasis"),
+    ("particle", "qg-emphasis"),
+    ("subordinating_particle", "qg-emphasis"),
+    ("emphatic_particle", "qg-particle"),
+    ("inna", "qg-particle"),
+    ("wish_particle", "qg-particle"),
+    ("nominal_host", "qg-noun-stem"),
+    ("noun_stem", "qg-noun-stem"),
+    ("relation_word", "qg-noun-stem"),
+    ("verb_stem", "qg-verb-stem"),
+    ("stem", "qg-segment"),
+    ("token", "qg-segment"),
+})
+FB1_GENERIC_CONJUNCTION_ONLY_REGISTRY = frozenset({
+    ("circumstantial_conjunction", "qg-conjunction"),
+    ("prefix_conjunction", "qg-conjunction"),
+    ("prefix_result_fa", "qg-result-fa"),
+})
+FB1_GENERIC_AMBIGUOUS_PREVIOUS_REGISTRY = frozenset({
+    ("emphatic_lam", "qg-lam"),
+    ("interrogative_noun", "qg-interrogative"),
+    ("proper_noun", "qg-proper-noun"),
+    ("question_hamza", "qg-question"),
+})
+
 
 class LatticeError(ValueError):
     """Raised when registration or projection fails closed."""
@@ -260,6 +324,36 @@ def pred_fb1_clitic_pronoun_v2(row: Dict[str, Any]) -> bool:
     return False
 
 
+def pred_fb1_clitic_pronoun_v3(row: Dict[str, Any]) -> bool:
+    """Match v2 attached roles plus empirical generic-role host shapes.
+
+    The generic fallback is intentionally narrower than the v1 substring
+    vocabulary: explicit non-attached role names remain excluded, and only an
+    exact previous ``(role, class)`` pair from the reusable governor/host
+    registry can admit a generic pronoun-family segment.
+    """
+    family = row.get("morphology_family", row.get("family"))
+    if family is not None:
+        return family == "clitic_pronoun_compositions"
+    if pred_fb1_clitic_pronoun_v2(row):
+        return True
+    segments = sorted(row.get("segments") or [], key=lambda s: int(s.get("segment_index", 0)))
+    for position, segment in enumerate(segments):
+        if position == 0:
+            continue
+        role = str(segment.get("role", ""))
+        lowered = role.lower()
+        if not any(token in lowered for token in _ENCLITIC_ROLE_TOKENS):
+            continue
+        if any(marker in lowered for marker in FB1_GENERIC_NON_ATTACHED_ROLE_MARKERS):
+            continue
+        previous = segments[position - 1]
+        previous_shape = (str(previous.get("role", "")), str(previous.get("class", "")))
+        if previous_shape in FB1_GENERIC_GOVERNOR_HOST_REGISTRY:
+            return True
+    return False
+
+
 def pred_any_candidate(row: Dict[str, Any]) -> bool:  # negative-meta placeholder
     return True
 
@@ -277,6 +371,7 @@ NAMED_PREDICATES: Dict[str, Callable[[Dict[str, Any]], bool]] = {
     "pred_c5_enclitic": pred_c5_enclitic,
     "pred_fb1_clitic_pronoun": pred_fb1_clitic_pronoun,
     "pred_fb1_clitic_pronoun_v2": pred_fb1_clitic_pronoun_v2,
+    "pred_fb1_clitic_pronoun_v3": pred_fb1_clitic_pronoun_v3,
     "pred_any_candidate": pred_any_candidate,
     "pred_tranche1_morphology": pred_tranche1_morphology,
     "pred_tranche1_syntax": pred_tranche1_syntax,
@@ -2093,6 +2188,22 @@ def self_test() -> int:
             pred_fb1_clitic_pronoun(fixture) == fixture["expected_v1"]
             and pred_fb1_clitic_pronoun_v2(fixture) == fixture["expected_v2"]
             for fixture in fixture_rows
+        )
+    )
+
+    # T25: the v3 red-first shapes admit generic pronouns only after empirical
+    # governors/hosts, while pure prefix conjunction remains excluded.
+    fixture_v3_path = ROOT / "qamus" / "examples" / "fb1-predicate-v3" / "predicate-fixtures.jsonl"
+    fixture_v3_rows = [
+        json.loads(line) for line in fixture_v3_path.read_text(encoding="utf-8").splitlines() if line
+    ]
+    results["t25_fb1_predicate_v3_fixture_matrix"] = (
+        len(fixture_v3_rows) == 4
+        and all(
+            pred_fb1_clitic_pronoun(fixture) == fixture["expected_v1"]
+            and pred_fb1_clitic_pronoun_v2(fixture) == fixture["expected_v2"]
+            and pred_fb1_clitic_pronoun_v3(fixture) == fixture["expected_v3"]
+            for fixture in fixture_v3_rows
         )
     )
 

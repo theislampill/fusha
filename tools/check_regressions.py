@@ -5173,9 +5173,10 @@ try:
         "self-test",
     ], timeout=120)
     check(
-        "FB1 predicate-v2 lattice self-test and fixture matrix pass",
+        "FB1 predicate-v2/v3 lattice self-test and fixture matrix pass",
         _fb1_predicate_self.returncode == 0
-        and '"t24_fb1_predicate_v2_fixture_matrix": true' in (_fb1_predicate_self.stdout or ""),
+        and '"t24_fb1_predicate_v2_fixture_matrix": true' in (_fb1_predicate_self.stdout or "")
+        and '"t25_fb1_predicate_v3_fixture_matrix": true' in (_fb1_predicate_self.stdout or ""),
     )
     _fb1_predicate_unit = run_text([
         sys.executable,
@@ -5198,6 +5199,28 @@ try:
         "FB1 predicate-v2 measurement self-test pass",
         _fb1_measure_self.returncode == 0
         and "FB1 PREDICATE V2 MEASUREMENT SELF-TEST PASS" in (_fb1_measure_self.stdout or ""),
+    )
+    _fb1_measure_v3_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "measure_fb1_predicate_v3.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "FB1 predicate-v3 measurement self-test pass",
+        _fb1_measure_v3_self.returncode == 0
+        and "FB1 PREDICATE V3 MEASUREMENT SELF-TEST PASS" in (_fb1_measure_v3_self.stdout or ""),
+    )
+    _fb1_measure_v3_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_measure_fb1_predicate_v3",
+        "-q",
+    ], timeout=120)
+    check(
+        "FB1 predicate-v3 focused measurement unit test pass",
+        _fb1_measure_v3_unit.returncode == 0
+        and "OK" in ((_fb1_measure_v3_unit.stdout or "") + (_fb1_measure_v3_unit.stderr or "")),
     )
     _fb1_unit = run_text([
         sys.executable,
