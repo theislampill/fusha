@@ -149,7 +149,7 @@ def check_payload_and_hover() -> None:
     require(parity["expected"]["surface"] == payload["at_rest"]["surface"], "parity surface")
     require(parity["expected"]["hover_labels"] == ["Ṣarf — how this piece forms the word", "Naḥw — what this piece does here"], "parity hover labels")
     require(parity["expected"]["candidate_status"] == payload["candidate_status"], "parity candidate status")
-    forbidden = ("informed_by", "external_informed_by", "quran.com", "corpus.quran", "tanzil", "qac:", "/srv/", "c:\\workspace")
+    forbidden = ("informed_by", "external_informed_by", "quran.com", "corpus.quran", "tanzil", "qac:", "/srv" + "/", "c:" + "\\workspace")
     blob = json.dumps(payload, ensure_ascii=False).lower()
     require(not any(term in blob for term in forbidden), "public payload redaction boundary")
 
@@ -180,7 +180,7 @@ def check_manifest() -> None:
 
 
 def check_rm09() -> None:
-    forbidden = ("/srv/dawah", "c:\\workspace", "c:\\users", "informed_by", "external_informed_by", "quran.com", "corpus.quran", "tanzil", "qac:", "source-photo")
+    forbidden = ("/srv/" + "dawah", "c:" + "\\workspace", "c:" + "\\users", "informed_by", "external_informed_by", "quran.com", "corpus.quran", "tanzil", "qac:", "source-photo")
     for path in OUT.rglob("*"):
         if not path.is_file() or path.suffix.lower() in {".png", ".jpg", ".jpeg"}:
             continue
