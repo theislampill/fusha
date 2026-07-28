@@ -5489,6 +5489,25 @@ except Exception as _proofn_e:
     check("PROOF-N noun proof gate (harness error)", False)
     print("  ", _proofn_e)
 
+# PROOF-P: real particle end-to-end proof for مَا (2:284:10).  This is a
+# bounded fixture gate over committed candidate artifacts and their manifest
+# checksums; it never reads or mutates the external corpus, whitelist,
+# renderer, or a live surface.
+try:
+    _proofp_particle = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "proofp_harness.py"),
+        "--full",
+    ], timeout=120)
+    check(
+        "PROOF-P real particle proof harness and manifest checksums pass",
+        _proofp_particle.returncode == 0
+        and "PROOFP FULL HARNESS ALL PASS" in (_proofp_particle.stdout or ""),
+    )
+except Exception as _proofp_e:
+    check("PROOF-P particle proof gate (harness error)", False)
+    print("  ", _proofp_e)
+
 # F-D2: producer-aware 455-row rerun.  This gate validates only the committed
 # report/verdict fixtures; the external corpus is supplied explicitly to the
 # operational runner and is never a harness default or a repository input.
