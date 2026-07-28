@@ -8,42 +8,42 @@
     {
       "committed": true,
       "path": "qamus/examples/proof-particle/particle-contract.json",
-      "sha256": "84ce078e8ad406a62f7481b06eaaa889243857712c7c75fae1480116a928e96b"
+      "sha256": "ff3a2ec567003d37c6a230b821e55e3ac4aade10f29dc96856bfb8bb1c47d6fe"
     },
     {
       "committed": true,
       "path": "qamus/examples/proof-particle/particle-graph-edges.jsonl",
-      "sha256": "d373527f03926792046686b180b2816d2ecf201c2ab8efb2a85d783738595bab"
+      "sha256": "73725ecf6ab33fe2513095b1c4376d150218ed701f6ca23c6fe977cde5591cb6"
     },
     {
       "committed": true,
       "path": "qamus/examples/proof-particle/particle-crosswalk-forward.json",
-      "sha256": "c76c18fa6e6961f65296fef668ed9467fe362b579967266e3ad966009abc4558"
+      "sha256": "f68c6add5d3930c3e83af29cb959f4a6fd831da11124394dce241f46da75f565"
     },
     {
       "committed": true,
       "path": "qamus/examples/proof-particle/particle-crosswalk-reverse.json",
-      "sha256": "7a4c73e2b28fd792875d74de6b90d237111c7ee31585aad3cc1923094816d80f"
+      "sha256": "987a70f077c7b4afc53a098a818be7a56f23d7bddff350cadd42377df9014a9b"
     },
     {
       "committed": true,
       "path": "qamus/examples/proof-particle/particle-normalized-public-payload.json",
-      "sha256": "25c91d2e4c075129c4f75d9d45894fbd5d31e500548e61eb5c7abe7412ad45fc"
+      "sha256": "134a5186d582dfbe7b496c031ff043b289f6011fc211ab59024c09845ffb9d3d"
     },
     {
       "committed": true,
       "path": "qamus/examples/proof-particle/particle-rich-hover-candidate.jsonl",
-      "sha256": "157424e27c214cf87d1d8bfbec35a16097ede33bbb82b7d2d5bdde8a74540144"
+      "sha256": "def18cf6e4648071b20cc90d3c87522ab57a5469e08c6d6f1a402e7ea53dd6bf"
     },
     {
       "committed": true,
       "path": "qamus/examples/proof-particle/particle-parity-fixture.json",
-      "sha256": "f18268eac7f2602977ffb56eba2cc12177636f5bd5366eb48653f2ae8ed11b24"
+      "sha256": "b6e0c07b0b2cf79e0dfb0018f65bfc0bc838bc88925cfe10e2902d10252cc2d4"
     },
     {
       "committed": true,
       "path": "qamus/examples/proof-particle/particle-card.html",
-      "sha256": "4332d33a1b7e9abd3f6a3fdb3c96a6e5da462affb535a5d51327c301117c9a55"
+      "sha256": "7d12a14c1a13ff9e77c68136941b7530caf7c472018c323902a50a294ac78eb8"
     },
     {
       "committed": true,
@@ -53,7 +53,7 @@
     {
       "committed": true,
       "path": "qamus/examples/proof-particle/source/proofp-source-facts.json",
-      "sha256": "ccfe234e9104adc0f50886a1e68df94a9bb0e642d6313efb34578d7dad17b1d1"
+      "sha256": "188977bc50f91ae594990e209558bffd4a56bccd192284368ea00c6623802871"
     }
   ],
   "candidate_only": true,
