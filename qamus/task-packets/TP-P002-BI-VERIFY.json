@@ -1,0 +1,146 @@
+{
+  "schema": "qamus.task_packet.v1",
+  "packet_id": "TP-P002-BI-VERIFY",
+  "title": "bi- (p002) pre-family gate: verify entry id, senses, and candidate population before any family work opens",
+  "model_class": "standard",
+  "scope": {
+    "summary": "Execute the owner's pre-family gate for the next P-family candidate bi- (source key p002, entry 2fcbd8198aa6): verify the entry id and its committed sense inventory against the entry store, verify the 2,492-row candidate population slice of the particle-occurrence matrix (dedupe, loc validity, surface plausibility, homograph flags), and produce a verification report that either OPENS the family for p007-machinery reuse or lists the blockers. Per the owner scale steer (section 13 / scale-out decision line): 'Next P-family: bi- candidate only after its entry id/senses/population verified; must reuse p007 machinery and report measured reuse.' This packet is the verification, NOT the family work.",
+    "entry_id": "2fcbd8198aa6",
+    "family": "P002_BI_PRE_FAMILY_GATE",
+    "tranche": "verification",
+    "out_of_scope": [
+      "any certification of bi- occurrences (that is the family work, gated on this packet's PASS)",
+      "any edit to the entry, its senses, the matrix, or any classification file",
+      "building a bi- population partition (report recommended partition sizes only)"
+    ]
+  },
+  "inputs": {
+    "input_files": [
+      "qamus/lattice/particle-occurrence-matrix.jsonl",
+      "qamus/lattice/particle-occurrence-matrix.meta.json",
+      "qamus/lattice/example-ayah-universe.occurrences.jsonl",
+      "qamus/indexes/quran-loc-surface/index.jsonl",
+      "qamus/lattice/p007-population-classification.meta.json",
+      "qamus/examples/p007-li-pilot/README.md",
+      "docs/qamus/particle-projection-contract.md"
+    ],
+    "permitted_write_files": [
+      "qamus/reports/p002-bi-pre-family-gate.md",
+      "qamus/reports/p002-bi-pre-family-gate.findings.jsonl"
+    ],
+    "prohibited_files": [
+      "qamus/data/",
+      "qamus/lattice/",
+      "qamus/indexes/",
+      "qamus/examples/",
+      "qamus/certification/",
+      "docs/INDEX.md",
+      "docs/architecture/",
+      "docs/subsystems/",
+      "qamus/work-queues/",
+      "tools/"
+    ]
+  },
+  "tools_required": [
+    "python3",
+    "mcp__tafsir__analyze_word + mcp__tafsir__fetch_ayah (bounded spot-check budget: max 30 calls; warm up with fetch_ayah(1,1))"
+  ],
+  "commands": [
+    {
+      "purpose": "Extract and tally the p002 matrix slice: row count, dedupe by occurrence_id, appearance totals, blocker tallies, match_kind/match_basis distribution, sense inventory as carried on matrix rows",
+      "run": "python - (inline script over qamus/lattice/particle-occurrence-matrix.jsonl filtering matrix_id prefix 'p002:'; emit tallies to qamus/reports/p002-bi-pre-family-gate.findings.jsonl)",
+      "expect": "2,492 rows expected (matrix meta); any other count is itself a finding"
+    },
+    {
+      "purpose": "Verify entry identity: every p002 row's candidate_entry must equal 2fcbd8198aa6 and the candidate_senses list must be identical across rows (single sense inventory: 5 senses, bi- prepositional family)",
+      "run": "python - (inline consistency scan; record any row with a different entry id or sense list as a finding)",
+      "expect": "0 divergent rows, or each divergence recorded"
+    },
+    {
+      "purpose": "Population sanity: every canonical_loc resolves in the quran-loc-surface index and the row surface is compatible with the indexed surface (NFC; loose normalization allowed only as recorded)",
+      "run": "python - (inline join against qamus/indexes/quran-loc-surface/index.jsonl; findings row per mismatch)",
+      "expect": "mismatches enumerated, not summarized away"
+    },
+    {
+      "purpose": "Homograph/defeater sweep: flag rows where the bi- reading collides with a lexical-initial ba' or another particle claim (multi_particle_claims flags; the bukm class), and rows whose host would be a verb (outside jarr-clitic grammar)",
+      "run": "python - (inline scan; every flagged row becomes a findings row with its flag class)",
+      "expect": "flagged subset enumerated with counts per class"
+    },
+    {
+      "purpose": "Bounded MCP spot-check: 20 stratified rows (fused/plain/pronoun-host/flagged) verified by surface-matched analyze_word; verbatim capture into the findings file",
+      "run": "python - (inline; <= 30 MCP calls total; record verbatim responses + sha256 per call)",
+      "expect": "20/20 spot rows resolved as jarr-confirmed / rejected / ambiguous with evidence"
+    }
+  ],
+  "candidate_population": {
+    "universe_size": 2492,
+    "this_packet_size": 2492,
+    "selection_rule": "The entire p002 slice of qamus/lattice/particle-occurrence-matrix.jsonl (matrix_id prefix 'p002:'), verified in full by deterministic scans; only the 20-row MCP spot-check samples, stratified: 5 fused-orthography, 5 plain noun host, 5 pronoun host, 5 flagged/homograph rows, each stratum in canonical loc order taking the first 5.",
+    "population_source": "qamus/lattice/particle-occurrence-matrix.jsonl"
+  },
+  "expected_outputs": [
+    {"path": "qamus/reports/p002-bi-pre-family-gate.findings.jsonl", "description": "machine-readable findings: tallies, divergences, index mismatches, homograph classes, spot-check evidence (verbatim + sha256)"},
+    {"path": "qamus/reports/p002-bi-pre-family-gate.md", "description": "the gate report: PASS (family may open, with recommended partition plan reusing the p007 four-way split) or FAIL (blockers enumerated); measured-reuse section stating exactly which p007 tools/scripts apply unchanged"}
+  ],
+  "evidence_policy": {
+    "statement": "Verification claims are mechanical scans over committed files plus a bounded verbatim MCP spot-check. No linguistic conclusion is certified by this packet; the spot-check records what the source says, it does not adjudicate. The gate verdict cites row counts and findings rows, never impressions.",
+    "verbatim_required": true,
+    "fabrication_rule": "A failed or non-surface-matching MCP call is recorded as evidence_gap for that spot row; the gate never counts an unverified spot row as confirmed. Findings are enumerated per row — a summary without its underlying rows is invalid."
+  },
+  "guards": [
+    "The p007 METHOD transfers to bi-; no p007 linguistic conclusion does — bi- rows get their own evidence when the family opens.",
+    "This packet READS everything and CERTIFIES nothing; its only outputs are the two report files.",
+    "The gate verdict is binary and honest: a PASS with unresolved blockers is invalid; blockers block.",
+    "Entry-store facts (senses) are verified against committed repo artifacts only; if the committed sense inventory cannot be located in-repo, that is a FAIL finding (custody rule: continuation must not depend on undocumented server-only files, docs/evidence-custody.md section 3).",
+    "No private corpus names or server paths in outputs (FORBIDDEN_LABELS / RM-09)."
+  ],
+  "defeaters": [
+    "Lexical-initial ba': the token's first letter is a root radical, not the clitic (model class: bukm at p002:2:18:2, which also carries a rival particle claim) — such rows are population INFLATION and must be flagged, never counted as clean candidates.",
+    "Same-span multi-particle claims (multi_particle_claims flag): one span claimed by two particle entries; count once per candidate edge and flag for the family lane.",
+    "Segmentation multiplicity: fused orthography rows where the clitic carve is unverified (blocker clitic_host_segmentation_unverified) — they stay candidates; the gate reports the blocker tally, it does not resolve them.",
+    "Oath bi- (qasam) vs plain jarr bi-: a sense-level split the family lane must handle; the gate only verifies the sense inventory covers it, it does not assign senses to rows."
+  ],
+  "canaries": {
+    "positive": [
+      {"id": "p002:1:1:1", "surface": "بِسْمِ", "expectation": "present in the slice, entry 2fcbd8198aa6, clean jarr-clitic candidate on a noun host; the spot-check (if sampled) confirms harf jarr", "source": "qamus/lattice/particle-occurrence-matrix.jsonl"},
+      {"id": "matrix-meta-count", "surface": null, "expectation": "the slice tally equals the matrix meta's p002 count (2,492); equality is the packet's own arithmetic check", "source": "qamus/lattice/particle-occurrence-matrix.meta.json"}
+    ],
+    "adversarial": [
+      {"id": "p002:2:18:2", "surface": "بُكْمٌ", "expectation": "MUST be flagged as homograph/inflation (lexical ba', rival claim), never counted as a clean candidate; a gate report that counts it clean is FAILED", "source": "qamus/lattice/particle-occurrence-matrix.jsonl + dawahwiki:packets/PARTICLE-DENOMINATOR-CALIBRATION-2026-07-29.md"}
+    ]
+  },
+  "acceptance_tests": [
+    {"name": "findings re-run determinism", "run": "re-run the deterministic scans (all commands except the MCP spot-check) into a temp file and diff", "pass_condition": "byte-identical findings for the deterministic sections"},
+    {"name": "arithmetic closure", "run": "python - (inline: sum of clean + flagged + mismatch rows == total slice rows)", "pass_condition": "partition of the slice is exhaustive and non-overlapping"},
+    {"name": "no unauthorized writes", "run": "git status --porcelain", "pass_condition": "changes only under qamus/reports/p002-bi-pre-family-gate.*"}
+  ],
+  "non_deployment": {
+    "status": "NOT_DEPLOYED",
+    "statement": "A verification report only: no live surface, entry, matrix, classification, or certification store is created or mutated. Opening the bi- family remains an owner decision taken on this report, not an effect of it."
+  },
+  "escalation_trigger": {
+    "conditions": [
+      "the slice count diverges from the matrix meta by more than 0 (data drift between matrix and meta)",
+      "any p002 row carries a different candidate_entry than 2fcbd8198aa6, or sense inventories diverge across rows",
+      "the committed sense inventory for entry 2fcbd8198aa6 cannot be verified from in-repo artifacts",
+      "more than 2 of the 20 MCP spot rows come back rejected or ambiguous (population quality below family-open threshold)"
+    ],
+    "route": "publish the gate report as FAIL with the blocker list and hand back to the Fusha certifier lane; the family-open decision escalates to the owner per the scale-steer pre-family gate"
+  },
+  "definition_of_done": [
+    "both report files committed; findings file enumerates every non-clean row",
+    "gate verdict stated as PASS or FAIL with the measured-reuse section (which p007 scripts/tools apply unchanged, which need porting)",
+    "spot-check evidence verbatim with sha256 per call, max 30 calls",
+    "all three acceptance tests pass; zero writes outside permitted paths"
+  ],
+  "provenance": {
+    "authored_by": "institutionalization lane D (feat/task-packets-and-tutorial)",
+    "date": "2026-07-29",
+    "cites": [
+      "owner decision ledger, scale-out decisions 2026-07-29: 'Next P-family: bi- candidate only after its entry id/senses/population verified; must reuse p007 machinery and report measured reuse' (the pre-family gate, owner scale steer section 13)",
+      "dawahwiki:packets/PARTICLE-MEMBERSHIP-P00-P03-2026-07-28.md (p002 = 2fcbd8198aa6, P-00, jarr clitic bi-)",
+      "dawahwiki:packets/PARTICLE-DENOMINATOR-CALIBRATION-2026-07-29.md (bi- denominator caveats: segmentation multiplicity, same-span homograph inflation)",
+      "qamus/examples/p007-li-pilot/README.md (the machinery this gate clears for reuse)"
+    ]
+  }
+}

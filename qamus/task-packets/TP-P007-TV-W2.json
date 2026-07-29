@@ -1,0 +1,168 @@
+{
+  "schema": "qamus.task_packet.v1",
+  "packet_id": "TP-P007-TV-W2",
+  "title": "P007 two-vote wave 2: next 50 of the 290-row backlog + re-vote of the 6 convention rows under the shibh-jumla-mahall rule",
+  "model_class": "certifier",
+  "scope": {
+    "summary": "Run the p007 two-vote process (entry b10a1ee04666) on the next 50 rows of the 340-row two-vote-required partition in canonical loc order, plus re-vote the 6 wave-1 convention-disagreement rows (2:130:17, 2:145:31, 2:198:25, 2:252:8, 3:164:23, 4:157:21) under the NEW worklist convention: when a non-governing lam sits on a bare-harf host whose shibh al-jumla carries a khabar role, encode the shibh al-jumla's MAHALL (raf3 under inna / nasb under kana) plus the nasikh governor — replacing wave-1's host-only rule (value none / governor null).",
+    "entry_id": "b10a1ee04666",
+    "family": "P007_TWO_VOTE",
+    "tranche": "two-vote-wave-2",
+    "out_of_scope": [
+      "the 2 substantive-arbitration rows from wave 1 (2:203:18 لِمَنِ attachment; 3:81:6 لَمَآ) — those await arbitration, NOT a re-vote",
+      "the 2 scholar-queue rows (38:8:13, 86:4:4)",
+      "adopting the 22 wave-1 registry-key candidates (owner review)",
+      "any live-surface mutation or committed entry-state change"
+    ]
+  },
+  "inputs": {
+    "input_files": [
+      "qamus/lattice/p007-population-classification.jsonl",
+      "qamus/schemas/two-vote-artifact.schema.json",
+      "tools/validate_two_vote_artifacts.py",
+      "tools/certify_typed_fact.py",
+      "qamus/skills/reason-key-registry.jsonl",
+      "qamus/examples/p007-li-pilot/reviewer-b-worklist.json",
+      "qamus/examples/p007-li-pilot/two-vote-artifacts.v1_1.jsonl",
+      "docs/certification-authority.md"
+    ],
+    "permitted_write_files": [
+      "qamus/certification/p007-twovote-w2/",
+      "qamus/reports/p007-twovote-w2.md"
+    ],
+    "prohibited_files": [
+      "qamus/data/",
+      "qamus/lattice/",
+      "qamus/skills/reason-key-registry.jsonl",
+      "qamus/examples/",
+      "docs/INDEX.md",
+      "docs/architecture/",
+      "docs/subsystems/",
+      "qamus/work-queues/",
+      "tools/"
+    ]
+  },
+  "tools_required": [
+    "python3",
+    "mcp__tafsir__analyze_word (both vote lanes; independent call budgets, ~50+56 calls, cap 120)",
+    "a genuinely independent reviewer-B lane (separately spawned subagent that sees ONLY the sanitized worklist, the rows, the schema, and the registry — never reviewer-A's votes or this packet's expectations)",
+    "tools/validate_two_vote_artifacts.py (repo copy, invoked as the artifact gate)",
+    "tools/certify_typed_fact.py"
+  ],
+  "commands": [
+    {
+      "purpose": "Derive the wave-2 worklist: first 50 rows in canonical loc order of the 340-row two-vote-required partition not covered by wave 1 (coverage manifest ref below), plus the 6 named convention re-vote rows",
+      "run": "python qamus/certification/p007-twovote-w2/helpers/select_tv_wave.py --classification qamus/lattice/p007-population-classification.jsonl --partition two-vote-required --exclude-manifest dawahwiki:packets/p007-twovote-w1/w1-rows.json --take 50 --add-revotes 2:130:17,2:145:31,2:198:25,2:252:8,3:164:23,4:157:21 --out qamus/certification/p007-twovote-w2/w2-rows.json",
+      "expect": "exactly 56 rows (50 fresh + 6 re-votes); missing exclusion manifest => STOP (escalation trigger 1)"
+    },
+    {
+      "purpose": "Author the wave-2 sanitized reviewer-B worklist: wave-1 shared_convention UPDATED with the shibh-jumla-mahall rule; rival-symmetric; controlled vocabulary only",
+      "run": "python qamus/certification/p007-twovote-w2/helpers/build_worklist.py --rows qamus/certification/p007-twovote-w2/w2-rows.json --base qamus/examples/p007-li-pilot/reviewer-b-worklist.json --out qamus/certification/p007-twovote-w2/reviewer-b-worklist-w2.json",
+      "expect": "worklist carries the new convention text under shared_convention.governor_rule and case_or_mood_rule; the old host-only rule is removed, not left ambiguous"
+    },
+    {
+      "purpose": "Vote lane A: independent votes with own MCP evidence",
+      "run": "python qamus/certification/p007-twovote-w2/helpers/build_votes_a.py",
+      "expect": "votes-a.jsonl + votes-a-mcp-calls.jsonl, one vote per row"
+    },
+    {
+      "purpose": "Vote lane B: spawn the independent reviewer with ONLY the sanitized worklist + rows + schema + registry",
+      "run": "run the reviewer-B lane per the worklist; collect votes-b.jsonl + votes-b-mcp-calls.jsonl",
+      "expect": "reviewer-B provenance records a distinct engine/reviewer id; zero exposure to lane-A votes"
+    },
+    {
+      "purpose": "Assemble v1.1 bundles, recompute agreement on conclusion + reason_key (never gloss text), then gate through the validator",
+      "run": "python qamus/certification/p007-twovote-w2/helpers/assemble_artifacts.py && python tools/validate_two_vote_artifacts.py qamus/certification/p007-twovote-w2/two-vote-artifacts.jsonl",
+      "expect": "0 validator errors; disagreements become arbitration packets, never silent drops"
+    },
+    {
+      "purpose": "Certify verified bundles' token-layer facts",
+      "run": "python qamus/certification/p007-twovote-w2/helpers/certify_w2.py && python tools/certify_typed_fact.py --validate qamus/certification/p007-twovote-w2",
+      "expect": "facts certified only for two_vote_verified bundles; event trail valid"
+    }
+  ],
+  "candidate_population": {
+    "universe_size": 290,
+    "this_packet_size": 56,
+    "selection_rule": "Sort the 340 two-vote-required rows by canonical loc (surah, ayah, word integers ascending); exclude the 50 wave-1 rows per the coverage manifest; take the first 50 remaining; append the 6 named convention re-vote rows (which stay counted against wave 1, not the 290). Deterministic and re-runnable.",
+    "population_source": "qamus/lattice/p007-population-classification.jsonl"
+  },
+  "expected_outputs": [
+    {"path": "qamus/certification/p007-twovote-w2/w2-rows.json", "description": "56-row worklist (50 fresh + 6 re-votes, marked)"},
+    {"path": "qamus/certification/p007-twovote-w2/reviewer-b-worklist-w2.json", "description": "sanitized rival-symmetric worklist carrying the NEW shibh-jumla-mahall convention"},
+    {"path": "qamus/certification/p007-twovote-w2/votes-a.jsonl", "description": "lane-A votes + lane-A MCP evidence (votes-a-mcp-calls.jsonl)"},
+    {"path": "qamus/certification/p007-twovote-w2/votes-b.jsonl", "description": "independent lane-B votes + lane-B MCP evidence (votes-b-mcp-calls.jsonl)"},
+    {"path": "qamus/certification/p007-twovote-w2/two-vote-artifacts.jsonl", "description": "assembled bundles", "schema": "qamus.two_vote_artifact.v1.1"},
+    {"path": "qamus/certification/p007-twovote-w2/two-vote-diff-report.json", "description": "agreement diff; every disagreement gets an arbitration packet row"},
+    {"path": "qamus/certification/p007-twovote-w2/events.jsonl", "description": "hash-chained certification events for verified bundles"},
+    {"path": "qamus/reports/p007-twovote-w2.md", "description": "wave report: verified/disagreement counts split FRESH vs RE-VOTE, remaining backlog (290 - fresh-verified), convention-rule effectiveness (did the 6 re-votes converge?)"}
+  ],
+  "evidence_policy": {
+    "statement": "Token-layer i'rab conclusions certify ONLY through the two-vote artifact bundle (certification-authority ladder rung 4): two independent votes, distinct engines and reviewer ids, agreement computed on conclusion + reason_key, never on gloss text. Each lane gathers its own surface-matched MCP evidence. The re-vote rows must record that they are re-votes under a changed convention, citing the wave-1 arbitration packets.",
+    "verbatim_required": true,
+    "fabrication_rule": "Votes are never fabricated, copied between lanes, or backfilled (votes_fabricated must be false and true in fact). A missing lane-B vote leaves the row two_vote_claimed_unverified at best — it never certifies. Evidence gaps are recorded, not papered over."
+  },
+  "guards": [
+    "The METHOD transfers; conclusions never do: reviewer-B's worklist states conventions and controlled vocabulary, never expected answers; the 6 re-vote rows must not be told wave-1's vote contents beyond the published convention change.",
+    "The new shibh-jumla-mahall rule is an ENCODING convention, not a grammatical verdict: it changes how agreed grammar is written into compared fields (mahall + nasikh governor instead of none/null); any row where the reviewers disagree on the GRAMMAR still routes to arbitration.",
+    "Agreement is computed on conclusion + reason_key with gloss_text_used_for_agreement false — a gloss-text match proves nothing.",
+    "Candidate lane mode: new files under qamus/certification/p007-twovote-w2/ only.",
+    "No private corpus names or server paths in any output (FORBIDDEN_LABELS / RM-09)."
+  ],
+  "defeaters": [
+    "Convention-encoding mismatch (the wave-1 6-row class): identical lam identity + reason_key + attachment_key but divergent case/governor encoding on a bare-harf host in a khabar-role shibh al-jumla — under this packet the mahall encoding is the rule; a residual mismatch after the rule is applied is a REAL disagreement and routes to arbitration.",
+    "Substantive attachment divergence (model: 2:203:18): reviewers disagree on what the lam attaches to — arbitration packet, never averaged.",
+    "Muwatti'a/shart lam (model: 3:81:6 لَمَآ): host-mahall scope rule is still OPEN (wave-1 defect 5.3); rows of this shape route to arbitration with the question recorded, they are not voted through.",
+    "Registry-key gap: a needed function/attachment/reason key missing from reason-key-registry.jsonl is recorded as a registry-extension candidate; the registry file itself is never edited by this packet."
+  ],
+  "canaries": {
+    "positive": [
+      {"id": "quran:2:284:1", "surface": "لِّلَّهِ", "expectation": "two independent votes converge on harf-jarr-lam-fused with matching reason_key; bundle reaches two_vote_verified (this exact bundle exists as a committed canary)", "source": "qamus/examples/two_vote_artifact_v11_canaries.jsonl"},
+      {"id": "quran:2:130:17", "surface": "(convention re-vote row)", "expectation": "under the new mahall rule both lanes now encode the shibh al-jumla's mahall + nasikh governor and the row converges to two_vote_verified — this is the rule's acceptance proof", "source": "dawahwiki:packets/p007-twovote-w1/arbitration-packets.jsonl (convention class)"}
+    ],
+    "adversarial": [
+      {"id": "quran:3:81:6", "surface": "لَمَآ", "expectation": "MUST NOT be re-voted or certified by this packet (substantive + open scope rule); if it appears in the worklist selection is broken — STOP and escalate", "source": "dawahwiki:packets/P007-TWOVOTE-W1-2026-07-29.md section 5.3"},
+      {"id": "quran:2:203:18", "surface": "لِمَنِ", "expectation": "MUST NOT be re-voted (substantive attachment arbitration pending); appearing in the worklist is a selection defect — STOP and escalate", "source": "dawahwiki:packets/p007-twovote-w1/arbitration-packets.jsonl"}
+    ]
+  },
+  "acceptance_tests": [
+    {"name": "worklist determinism + exclusions", "run": "re-run selection to a temp file; diff; grep for 3:81:6 and 2:203:18", "pass_condition": "byte-identical re-run; neither arbitration row present"},
+    {"name": "artifact gate", "run": "python tools/validate_two_vote_artifacts.py qamus/certification/p007-twovote-w2/two-vote-artifacts.jsonl", "pass_condition": "exit 0, 0 errors, one bundle per worklist row"},
+    {"name": "independence audit", "run": "python qamus/certification/p007-twovote-w2/helpers/audit_independence.py", "pass_condition": "distinct reviewer ids + engines on every bundle; lane-B MCP calls disjoint from lane-A logs"},
+    {"name": "event trail valid", "run": "python tools/certify_typed_fact.py --validate qamus/certification/p007-twovote-w2", "pass_condition": "exit 0 and 'OK: certification event trail is valid'"},
+    {"name": "no unauthorized writes", "run": "git status --porcelain", "pass_condition": "changes only under the two permitted paths"}
+  ],
+  "non_deployment": {
+    "status": "NOT_DEPLOYED",
+    "statement": "Candidate lane mode throughout: bundles and certifications live in the wave-2 lane store only; no live surface, whitelist row, committed entry state, or registry file is mutated. Deploy of any resulting fact is a separate owner-gated decision."
+  },
+  "escalation_trigger": {
+    "conditions": [
+      "the wave-1 coverage manifest or arbitration packets are unavailable (selection and re-vote context cannot be established)",
+      "either adversarial canary row appears in the generated worklist",
+      "a re-vote row still disagrees after the mahall rule is applied (rule insufficient — needs arbitration, possibly owner)",
+      "reviewer-B independence is compromised in any way (shared context, seen votes, same engine identity)",
+      "more than 10 of the 50 fresh rows disagree (systematic convention gap like wave 1's — stop and fix the worklist before burning MCP budget)"
+    ],
+    "route": "STOP the wave; write the stop-report into qamus/reports/p007-twovote-w2.md and emit arbitration packet rows into the lane store; hand back to the Fusha certifier lane / owner arbitration process"
+  },
+  "definition_of_done": [
+    "56-row worklist committed (50 fresh + 6 marked re-votes), deterministic",
+    "wave-2 reviewer-B worklist committed carrying the explicit shibh-jumla-mahall convention",
+    "two vote files + two MCP evidence files committed, independence auditable",
+    "all bundles pass tools/validate_two_vote_artifacts.py; diff report + arbitration packets committed",
+    "verified bundles certified; event trail validates",
+    "wave report separates fresh vs re-vote outcomes and states the remaining backlog (290 - fresh rows completed)",
+    "all five acceptance tests pass; zero writes outside permitted paths"
+  ],
+  "provenance": {
+    "authored_by": "institutionalization lane D (feat/task-packets-and-tutorial)",
+    "date": "2026-07-29",
+    "cites": [
+      "dawahwiki:packets/P007-TWOVOTE-W1-2026-07-29.md (wave-1 method; 42/50 verified; 8 disagreements = 6 convention + 2 substantive; backlog 290; section 5.2 recommends adopting the shibh-jumla-mahall encoding for wave 2)",
+      "dawahwiki:packets/p007-twovote-w1/arbitration-packets.jsonl (the 6 convention rows and the identical arbiter question on each)",
+      "qamus/examples/p007-li-pilot/ (pilot two-vote discipline: sanitized worklist, independent reviewer-B, v1.1 governed enums)",
+      "docs/certification-authority.md section 2 rung 4 (two-vote required for i'rab-bearing conclusions)"
+    ]
+  }
+}

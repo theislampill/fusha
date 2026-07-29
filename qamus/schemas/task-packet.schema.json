@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/task-packet.schema.json",
+  "title": "Qamus delegable task packet v1",
+  "description": "A self-contained work order that a weaker/cheaper model can execute WITHOUT chat context. Every packet fixes: what population it covers, which files it may read and write, which files are PROHIBITED, the exact commands to run, the evidence policy, the guards and defeaters that bound the linguistic method, positive and adversarial canaries the executor must pass before touching the real population, machine-checkable acceptance tests, the NOT-DEPLOYED status statement, the trigger that forces escalation back to the certifier lane, and the definition of done. A packet transfers METHOD, never linguistic conclusions: any packet that pre-writes a gloss/function conclusion for the executor to copy is invalid by construction (guards must state this).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "packet_id",
+    "title",
+    "model_class",
+    "scope",
+    "inputs",
+    "tools_required",
+    "commands",
+    "candidate_population",
+    "expected_outputs",
+    "evidence_policy",
+    "guards",
+    "defeaters",
+    "canaries",
+    "acceptance_tests",
+    "non_deployment",
+    "escalation_trigger",
+    "definition_of_done"
+  ],
+  "properties": {
+    "schema": {"const": "qamus.task_packet.v1"},
+    "packet_id": {
+      "type": "string",
+      "pattern": "^TP-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Unique across qamus/task-packets/. Convention: TP-<programme>-<lane>-<wave>, e.g. TP-P007-DS-W2."
+    },
+    "title": {"type": "string", "minLength": 8},
+    "model_class": {
+      "type": "string",
+      "enum": ["certifier", "standard", "deterministic", "cheap"],
+      "description": "Minimum executor class. 'deterministic' packets must be re-runnable with identical output; 'cheap' packets must contain zero linguistic judgment calls."
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "entry_id", "family", "tranche"],
+      "properties": {
+        "summary": {"type": "string", "minLength": 20},
+        "entry_id": {
+          "oneOf": [{"type": "string", "minLength": 4}, {"type": "null"}],
+          "description": "Qamus entry id this packet is anchored to, or null for cross-entry packets."
+        },
+        "family": {
+          "oneOf": [{"type": "string", "minLength": 2}, {"type": "null"}],
+          "description": "Family predicate name (e.g. P007_LI_NOUN_HOST) or null."
+        },
+        "tranche": {
+          "oneOf": [{"type": "string", "minLength": 2}, {"type": "null"}],
+          "description": "Wave/tranche label within the family (e.g. direct-source-wave-2)."
+        },
+        "out_of_scope": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 4},
+          "description": "Explicit exclusions, so the executor never 'helpfully' expands scope."
+        }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["input_files", "permitted_write_files", "prohibited_files"],
+      "properties": {
+        "input_files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/repo_path"},
+          "description": "Read-only inputs the executor MUST consume (repo-relative, forward slashes)."
+        },
+        "permitted_write_files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/repo_path"},
+          "description": "The ONLY paths (or path prefixes ending in /) the executor may create or modify."
+        },
+        "prohibited_files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/repo_path"},
+          "description": "Paths the executor must never write; reading may also be forbidden where stated. Overlap with permitted_write_files is a validator error."
+        }
+      }
+    },
+    "tools_required": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 2},
+      "description": "Named tools (scripts, MCP servers, validators) the packet depends on. If a tool is unavailable the packet must NOT be attempted (see escalation_trigger)."
+    },
+    "commands": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["purpose", "run"],
+        "properties": {
+          "purpose": {"type": "string", "minLength": 8},
+          "run": {"type": "string", "minLength": 4, "description": "Exact command line, runnable from the repo root."},
+          "expect": {"type": "string", "description": "What success looks like (exit code, output marker)."}
+        }
+      }
+    },
+    "candidate_population": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["universe_size", "this_packet_size", "selection_rule", "population_source"],
+      "properties": {
+        "universe_size": {
+          "oneOf": [{"type": "integer", "minimum": 0}, {"type": "null"}],
+          "description": "Total remaining population in the lane (null only for non-population packets such as doc checks)."
+        },
+        "this_packet_size": {
+          "oneOf": [{"type": "integer", "minimum": 1}, {"type": "null"}],
+          "description": "How many items THIS packet covers."
+        },
+        "selection_rule": {"type": "string", "minLength": 10, "description": "Deterministic rule that picks this packet's items from the universe (ordering + slice), so two executors select identically."},
+        "population_source": {"$ref": "#/$defs/repo_path"}
+      }
+    },
+    "expected_outputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "description"],
+        "properties": {
+          "path": {"$ref": "#/$defs/repo_path"},
+          "description": {"type": "string", "minLength": 8},
+          "schema": {"type": "string", "description": "Governing schema id for the output rows, when one exists."}
+        }
+      }
+    },
+    "evidence_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "verbatim_required", "fabrication_rule"],
+      "properties": {
+        "statement": {"type": "string", "minLength": 20},
+        "verbatim_required": {"type": "boolean", "description": "Whether per-item verbatim source evidence (e.g. MCP records) is mandatory."},
+        "fabrication_rule": {"type": "string", "minLength": 20, "description": "What the executor must do when evidence cannot be obtained (never invent; mark and stop or skip per rule)."}
+      }
+    },
+    "guards": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 10},
+      "description": "Standing rules that bound the method (e.g. 'method transfers, conclusions never do')."
+    },
+    "defeaters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 10},
+      "description": "Known look-alike traps that DEFEAT membership/classification, each with its tell (e.g. lexical lam in لِبَاسٌ is not the clitic)."
+    },
+    "canaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["positive", "adversarial"],
+      "properties": {
+        "positive": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/canary"},
+          "description": "Items the executor must classify/process CORRECTLY (known-good) before the real population."
+        },
+        "adversarial": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/canary"},
+          "description": "Trap items the executor must REJECT or route to escalation; silently 'passing' one voids the run."
+        }
+      }
+    },
+    "acceptance_tests": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "run", "pass_condition"],
+        "properties": {
+          "name": {"type": "string", "minLength": 4},
+          "run": {"type": "string", "minLength": 4},
+          "pass_condition": {"type": "string", "minLength": 8}
+        }
+      }
+    },
+    "non_deployment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "statement"],
+      "properties": {
+        "status": {"const": "NOT_DEPLOYED"},
+        "statement": {"type": "string", "minLength": 20, "description": "Explicit statement that nothing in this packet mutates a live surface and outputs are candidate-mode."}
+      }
+    },
+    "escalation_trigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conditions", "route"],
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 10}
+        },
+        "route": {"type": "string", "minLength": 10, "description": "Where the executor stops and hands back (file to write the stop-report to, and who adjudicates)."}
+      }
+    },
+    "definition_of_done": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 10}
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "authored_by": {"type": "string"},
+        "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "cites": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Rulings/precedents the packet method relies on, cited by repo path or ruling name."
+        }
+      }
+    }
+  },
+  "$defs": {
+    "repo_path": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[^\\\\]*$",
+      "description": "Repo-relative path with forward slashes. Absolute paths and server paths are forbidden (RM-09)."
+    },
+    "canary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "expectation"],
+      "properties": {
+        "id": {"type": "string", "minLength": 4, "description": "Occurrence id / file / item the canary tests (e.g. quran:16:11:9)."},
+        "surface": {"type": "string"},
+        "expectation": {"type": "string", "minLength": 10, "description": "Exactly what the correct handling is, stated as an outcome the harness can check."},
+        "source": {"type": "string", "description": "Where the canary's ground truth is recorded (repo path)."}
+      }
+    }
+  }
+}
