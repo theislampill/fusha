@@ -3,6 +3,10 @@
 **Status:** adopted 2026-07-04. Machine-enforced by `qamus/schemas/certified-lemma.schema.json` +
 `tools/validate_certified_lemma_fanout.py` (self-test + fixtures wired into `tools/check_regressions.py`).
 This doc is the human statement of the policy those files enforce.
+The fact-level layer beneath both layers named here — who/what may assign `source_certified`
+to an individual typed fact, evidence-mode sufficiency, revocation — is specified in
+`docs/certification-authority.md` (proposed 2026-07-28), which also adopts the reconstructible
+two-vote artifact contract (`qamus/schemas/two-vote-artifact.schema.json`).
 
 ## 0. Two distinct certification layers — do not conflate
 - **Token-level two-vote certification** — per-occurrence hover-decision rows (`decision_state:
