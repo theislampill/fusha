@@ -1,0 +1,58 @@
+{
+  "schema": "qamus.vn_compounding_impact_report.v1",
+  "report_id": "vn-impact:vn02.20260707",
+  "tranche": "VN-02",
+  "window": "v095-v141 + n0091-n0135",
+  "generated_utc": "2026-07-07T20:00:00Z",
+  "acceleration_claimed": true,
+  "content_outcomes": {
+    "entries": {"value": 92, "measurement_basis": "measured", "unit": "entries", "evidence": "window definition: 47 verb pages (v095-v141) + 45 noun pages (n0091-n0135), one entry per page on the source_key ordering"},
+    "cards": {"value": null, "measurement_basis": "not_measured", "evidence": "per-entry card count for the window was not recorded"},
+    "selected_words": {"value": null, "measurement_basis": "not_measured"},
+    "context_words": {"value": null, "measurement_basis": "not_measured"},
+    "canonical_occurrences": {"value": 12185, "measurement_basis": "measured", "unit": "rendered_qword_spans", "evidence": "live-matrix denominator; every VN row's display loc is canonical (docs/vn-tranche-completion-playbook.md section 8)"},
+    "fully_rich_rows": {"value": 12185, "measurement_basis": "measured", "unit": "rows", "evidence": "VN-02 frozen at 100.00% (12,185/12,185) (docs/STATUS.md)"},
+    "source_certified_rows": {"value": null, "measurement_basis": "not_measured", "evidence": "source-certified subset was not tallied separately from rich rows during the run"},
+    "unresolved": {"value": 0, "measurement_basis": "measured", "unit": "rows", "evidence": "regression freeze asserts flat 0 / pending 0 / every disposition 0"},
+    "readback_verified_rows": {"value": null, "measurement_basis": "not_measured", "evidence": "per-appended-loc readback ran on every deploy batch but the cumulative count was not preserved"}
+  },
+  "graph_outcomes": {
+    "edges_created": {"value": null, "measurement_basis": "not_measured"},
+    "crosswalks_repaired": {"value": 905, "measurement_basis": "measured", "unit": "rows", "evidence": "905 source_crosswalk rows retested against the direct canonical question and resolved (905 to 245 to 0), playbook section 10"},
+    "forward_trace_rate": {"value": null, "measurement_basis": "not_measured"},
+    "reverse_trace_rate": {"value": null, "measurement_basis": "not_measured"},
+    "orphans": {"value": null, "measurement_basis": "not_measured"},
+    "reciprocity_violations": {"value": null, "measurement_basis": "not_measured"}
+  },
+  "skill_outcomes": {
+    "sarf_rules": {"value": null, "measurement_basis": "not_measured", "evidence": "no sarf rule additions were attributed specifically to VN-02 at the time"},
+    "nahw_rules": {"value": null, "measurement_basis": "not_measured"},
+    "fixtures": {"value": 5, "measurement_basis": "measured", "unit": "jsonl_rows", "evidence": "qamus/examples/dogfood_vn02_production_bug_lesson.sample.jsonl"},
+    "projectors": {"value": null, "measurement_basis": "not_measured", "evidence": "durable assembler lesson (vn02_assemble) was recorded as a rule, not counted as a projector at the time"},
+    "validators": {"value": null, "measurement_basis": "not_measured"},
+    "promotions": {"value": null, "measurement_basis": "not_measured"}
+  },
+  "automation_outcomes": {
+    "compiler_generated_rows": {"value": null, "measurement_basis": "not_measured", "evidence": "per-wave (seed/auto-seed/multi-seg/cross-proof) row split was not preserved"},
+    "hand_authored_rows": {"value": null, "measurement_basis": "not_measured"},
+    "review_reduction_pct": {"value": 72.93, "measurement_basis": "measured", "unit": "percent", "evidence": "660 of 905 crosswalk-gated rows (72.93%) never entered manual packet review after the canonical-question retest, playbook section 10"},
+    "rows_unlocked": {"value": 660, "measurement_basis": "measured", "unit": "rows", "evidence": "905 to 245 after the content lane"},
+    "fast_paths": {"value": 6, "measurement_basis": "estimated", "unit": "reusable_lessons", "evidence": "six section-10 scaled-authoring lessons (durable assembler, single-seg surface-drop, contextual-collapse recovery, harvest-then-stop, crosswalk retest, idempotent incremental deploy)"}
+  },
+  "pedagogy_outcomes": {
+    "at_rest_improvements": {"value": null, "measurement_basis": "not_measured"},
+    "hover_improvements": {"value": 4610, "measurement_basis": "estimated", "unit": "spans", "evidence": "12,185 spans at freeze minus roughly 7,575 rich at the 62.17% start; start percentage measured, delta derived"},
+    "pattern_demos": {"value": null, "measurement_basis": "not_measured"},
+    "governor_explanations": {"value": null, "measurement_basis": "not_measured"},
+    "curriculum_additions": {"value": 2, "measurement_basis": "measured", "unit": "files", "evidence": "curriculum/dark-mode-accessibility-pedagogy.md and curriculum/visual-grammar-legend.md from the D7 colour-key ANDON in the same flywheel"}
+  },
+  "evidence_paths": [
+    "docs/vn-tranche-completion-playbook.md",
+    "docs/STATUS.md",
+    "docs/VN-OPERATIONS.md",
+    "qamus/examples/dogfood_vn02_production_bug_lesson.sample.jsonl",
+    "curriculum/dark-mode-accessibility-pedagogy.md",
+    "curriculum/visual-grammar-legend.md"
+  ],
+  "notes": "Retrofit of the 2026-07-07 VN-02 run from committed repo evidence only. The acceleration claim cites the measured review_reduction_pct, not row counts. Sections history did not instrument (graph traces, per-wave automation split, at-rest pedagogy) are null/not_measured so the gap is visible and future tranches must fill it."
+}

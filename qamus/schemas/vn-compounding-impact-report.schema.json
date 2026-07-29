@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/vn-compounding-impact-report.schema.json",
+  "title": "Qamus VN compounding-impact report v1",
+  "description": "Per-tranche compounding-impact report contract: what a VN tranche returned to the system across five outcome sections (content, graph, skill, automation, pedagogy). Every leaf metric carries a measurement_basis so honesty is structural. A report may set acceleration_claimed=true only when at least one non-rowcount metric (review reduction, trace/coverage rates) has measurement_basis=measured; enforced by tools/validate_acceleration_ledgers.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "report_id",
+    "tranche",
+    "window",
+    "generated_utc",
+    "acceleration_claimed",
+    "content_outcomes",
+    "graph_outcomes",
+    "skill_outcomes",
+    "automation_outcomes",
+    "pedagogy_outcomes",
+    "evidence_paths"
+  ],
+  "properties": {
+    "schema": {"const": "qamus.vn_compounding_impact_report.v1"},
+    "report_id": {
+      "type": "string",
+      "pattern": "^vn-impact:[a-z0-9][a-z0-9._:-]*$"
+    },
+    "tranche": {
+      "type": "string",
+      "pattern": "^(VN-[0-9]{2}|[a-z0-9][a-z0-9_-]*)$"
+    },
+    "window": {"type": "string", "minLength": 1},
+    "generated_utc": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "acceleration_claimed": {"type": "boolean"},
+    "content_outcomes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entries",
+        "cards",
+        "selected_words",
+        "context_words",
+        "canonical_occurrences",
+        "fully_rich_rows",
+        "source_certified_rows",
+        "unresolved",
+        "readback_verified_rows"
+      ],
+      "properties": {
+        "entries": {"$ref": "#/$defs/metric"},
+        "cards": {"$ref": "#/$defs/metric"},
+        "selected_words": {"$ref": "#/$defs/metric"},
+        "context_words": {"$ref": "#/$defs/metric"},
+        "canonical_occurrences": {"$ref": "#/$defs/metric"},
+        "fully_rich_rows": {"$ref": "#/$defs/metric"},
+        "source_certified_rows": {"$ref": "#/$defs/metric"},
+        "unresolved": {"$ref": "#/$defs/metric"},
+        "readback_verified_rows": {"$ref": "#/$defs/metric"}
+      }
+    },
+    "graph_outcomes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "edges_created",
+        "crosswalks_repaired",
+        "forward_trace_rate",
+        "reverse_trace_rate",
+        "orphans",
+        "reciprocity_violations"
+      ],
+      "properties": {
+        "edges_created": {"$ref": "#/$defs/metric"},
+        "crosswalks_repaired": {"$ref": "#/$defs/metric"},
+        "forward_trace_rate": {"$ref": "#/$defs/metric"},
+        "reverse_trace_rate": {"$ref": "#/$defs/metric"},
+        "orphans": {"$ref": "#/$defs/metric"},
+        "reciprocity_violations": {"$ref": "#/$defs/metric"}
+      }
+    },
+    "skill_outcomes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sarf_rules",
+        "nahw_rules",
+        "fixtures",
+        "projectors",
+        "validators",
+        "promotions"
+      ],
+      "properties": {
+        "sarf_rules": {"$ref": "#/$defs/metric"},
+        "nahw_rules": {"$ref": "#/$defs/metric"},
+        "fixtures": {"$ref": "#/$defs/metric"},
+        "projectors": {"$ref": "#/$defs/metric"},
+        "validators": {"$ref": "#/$defs/metric"},
+        "promotions": {"$ref": "#/$defs/metric"}
+      }
+    },
+    "automation_outcomes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compiler_generated_rows",
+        "hand_authored_rows",
+        "review_reduction_pct",
+        "rows_unlocked",
+        "fast_paths"
+      ],
+      "properties": {
+        "compiler_generated_rows": {"$ref": "#/$defs/metric"},
+        "hand_authored_rows": {"$ref": "#/$defs/metric"},
+        "review_reduction_pct": {"$ref": "#/$defs/metric"},
+        "rows_unlocked": {"$ref": "#/$defs/metric"},
+        "fast_paths": {"$ref": "#/$defs/metric"}
+      }
+    },
+    "pedagogy_outcomes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "at_rest_improvements",
+        "hover_improvements",
+        "pattern_demos",
+        "governor_explanations",
+        "curriculum_additions"
+      ],
+      "properties": {
+        "at_rest_improvements": {"$ref": "#/$defs/metric"},
+        "hover_improvements": {"$ref": "#/$defs/metric"},
+        "pattern_demos": {"$ref": "#/$defs/metric"},
+        "governor_explanations": {"$ref": "#/$defs/metric"},
+        "curriculum_additions": {"$ref": "#/$defs/metric"}
+      }
+    },
+    "evidence_paths": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^(qamus|nahw|sarf|tools|docs|curriculum|fusha|drills)/[A-Za-z0-9._/-]+$"
+      }
+    },
+    "notes": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "measurement_basis"],
+      "properties": {
+        "value": {"type": ["number", "null"]},
+        "measurement_basis": {
+          "type": "string",
+          "enum": ["measured", "estimated", "not_measured"]
+        },
+        "unit": {"type": "string", "minLength": 1},
+        "evidence": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
