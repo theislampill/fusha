@@ -1,0 +1,183 @@
+{
+ "schema": "qamus.website_projection_payload.v1",
+ "schema_version": "1.0.0",
+ "payload_kind": "occurrence_projection",
+ "occurrence_id": "quran:2:34:5",
+ "artifact_id": "artifact:p007:2:34:5",
+ "appearance": {
+  "appearance_id": "6e35cbb25054:u0:x0:w4",
+  "page_id": "entry:b10a1ee04666",
+  "page_kind": "entry",
+  "page_local": {
+   "selected_highlight": true,
+   "entry_relationship": "own-entry-example",
+   "focus": "example-card",
+   "navigation": []
+  }
+ },
+ "projection": {
+  "occurrence_id": "quran:2:34:5",
+  "surface": "لِءَادَمَ",
+  "normalization": "NFC",
+  "kind": "particle_clitic_word",
+  "segments": [
+   {
+    "segment_index": 0,
+    "surface": "لِ",
+    "char_start": 0,
+    "char_end": 2,
+    "semantic_class": "jarr_clitic_lam",
+    "renderer_class": "qg-particle-jarr-clitic",
+    "gloss": "for / to",
+    "sarf_note": "Sarf - how this piece forms or attaches: an indeclinable tool word written joined to its host; the host keeps its own letters.",
+    "nahw_note": "Nahw - what this piece does here: it governs the next word, pulling it into the jarr (genitive) state, whose sign here is a fatha because the name does not take tanwin."
+   },
+   {
+    "segment_index": 1,
+    "surface": "ءَادَمَ",
+    "char_start": 2,
+    "char_end": 9,
+    "semantic_class": "proper_name_majrur",
+    "renderer_class": "qg-proper-noun",
+    "gloss": "Adam",
+    "sarf_note": null,
+    "nahw_note": null
+   }
+  ],
+  "whole_word_gloss": "to Adam",
+  "learner_explanation": "The little lam means 'to'; the rest of the word is the name Adam.",
+  "entry_links": [
+   {
+    "entry_id": "b10a1ee04666",
+    "sense_id": "li-sense-2",
+    "relation_kind": "clitic_component_of_entry",
+    "segment_index": 0
+   }
+  ],
+  "entry_link_state": "linked",
+  "morpheme_spans": [
+   {
+    "morpheme_occurrence_id": "morph:p007:2:34:5:li",
+    "segment_index": 0,
+    "char_start": 0,
+    "char_end": 2
+   }
+  ],
+  "root": null,
+  "rootless_pedagogy": "This little lam is not built from a three-letter root - it is an indeclinable tool word (a particle). It attaches to the word after it.",
+  "hover_cards": [
+   {
+    "component_surface": "لِ",
+    "contextual_gloss": "to Adam",
+    "particle_identity": {
+     "headword": "لَـ / لِـ",
+     "entry_id": "b10a1ee04666",
+     "sense": "li-sense-2"
+    },
+    "contextual_function": "preposition (jarr) - marks 'for / to / belonging to' on the following noun",
+    "sarf_note": "Sarf - how this piece forms or attaches: an indeclinable tool word written joined to its host; the host keeps its own letters.",
+    "nahw_note": "Nahw - what this piece does here: it governs the next word, pulling it into the jarr (genitive) state, whose sign here is a fatha because the name does not take tanwin.",
+    "governor": {
+     "loc": "quran:2:34:4",
+     "surface": "اسجدوا",
+     "relation": "muta-alliq"
+    },
+    "governed_expression": "آدم",
+    "scope": null,
+    "attachment": {
+     "host": "ءادم",
+     "boundary": "clitic letter لِ | host"
+    },
+    "alternatives": [],
+    "reason": "both independent reviewers agreed on the jarr reading and its sign (agreement key: jarr-clitic-li-majrur-fatha-diptote)",
+    "unresolved": null,
+    "entry_link": "/qamus/entry/b10a1ee04666"
+   }
+  ],
+  "unresolved": null,
+  "certification": {
+   "status": "certified",
+   "plane": {
+    "segmentation": "certified",
+    "function": "certified",
+    "governor": "certified",
+    "case": "certified"
+   }
+  },
+  "evidence_refs": [
+   "fact:p00slice:2_34_5:seg",
+   "fact:p00slice:2_34_5:func",
+   "fact:p00slice:2_34_5:gov",
+   "fact:p00slice:2_34_5:case",
+   "two-vote-artifact:quran_2_34_5:p00slice-li-jarr"
+  ]
+ },
+ "projection_hash": "14f634f266c07e77d279ee6afc71c07aac582ba372e48806fd4776ca390a376b",
+ "reverse_links": {
+  "occurrence_to_appearances": [
+   {
+    "appearance_id": "4211cb1f5355:u0:x4:w4",
+    "page_id": "reader:2:34",
+    "page_kind": "reader",
+    "projection_hash": "14f634f266c07e77d279ee6afc71c07aac582ba372e48806fd4776ca390a376b"
+   },
+   {
+    "appearance_id": "430015446b77:u0:x1:w4",
+    "page_id": "example:430015446b77",
+    "page_kind": "example_card",
+    "projection_hash": "14f634f266c07e77d279ee6afc71c07aac582ba372e48806fd4776ca390a376b"
+   },
+   {
+    "appearance_id": "6e35cbb25054:u0:x0:w4",
+    "page_id": "entry:b10a1ee04666",
+    "page_kind": "entry",
+    "projection_hash": "14f634f266c07e77d279ee6afc71c07aac582ba372e48806fd4776ca390a376b"
+   },
+   {
+    "appearance_id": "720e26330d5f:u1:x1:w4",
+    "page_id": "example:720e26330d5f",
+    "page_kind": "example_card",
+    "projection_hash": "14f634f266c07e77d279ee6afc71c07aac582ba372e48806fd4776ca390a376b"
+   },
+   {
+    "appearance_id": "e0e500c4b7a5:u2:x1:w4",
+    "page_id": "example:e0e500c4b7a5",
+    "page_kind": "example_card",
+    "projection_hash": "14f634f266c07e77d279ee6afc71c07aac582ba372e48806fd4776ca390a376b"
+   }
+  ],
+  "entry_to_occurrences": [
+   {
+    "entry_id": "b10a1ee04666",
+    "occurrences": [
+     {
+      "occurrence_id": "quran:2:34:5",
+      "surface": "لِءَادَمَ",
+      "loc": "2:34:5",
+      "page_refs": [
+       "reader:2:34",
+       "entry:b10a1ee04666"
+      ]
+     },
+     {
+      "occurrence_id": "quran:12:31:24",
+      "surface": "لِلَّهِ",
+      "loc": "12:31:24",
+      "page_refs": [
+       "reader:12:31",
+       "entry:b10a1ee04666"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "provenance": {
+  "provenance_class": "certified",
+  "built_by": "packets.website-handoff.sample-builder v1 (2026-07-29)",
+  "source_refs": [
+   "packet:p00-vertical-slice:projections#quran:2:34:5",
+   "typed-fact-store:events#p00slice:2_34_5"
+  ]
+ }
+}

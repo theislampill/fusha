@@ -5893,6 +5893,56 @@ except Exception as _pedges_e:
     check("PEDGES particle projection gates (harness error)", False)
     print("  ", _pedges_e)
 
+# WEBHANDOFF: website-agent handoff contract (owner steer §11) — the
+# renderer-facing payload shape the separate website agent consumes.
+# Red-first validator (missing entry links, i'rab prose leak, hash fork,
+# non-whitelist page-local metadata, segment-reconstruction failure) plus
+# six committed green samples. Fixture-only: a fresh clone never depends on
+# lane-side corpora or live pages.
+try:
+    _webh_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_website_payload.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "WEBHANDOFF website payload red-first self-test passes",
+        _webh_self.returncode == 0
+        and "WEBSITE PAYLOAD SELF-TEST PASS" in (_webh_self.stdout or ""),
+    )
+    _webh_samples = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_website_payload.py"),
+    ], timeout=120)
+    check(
+        "WEBHANDOFF committed website payload samples validate (6 samples)",
+        _webh_samples.returncode == 0
+        and "WEBSITE PAYLOAD VALIDATION PASS" in (_webh_samples.stdout or "")
+        and (_webh_samples.stdout or "").count("ok   ") >= 6,
+    )
+    check(
+        "WEBHANDOFF handoff contract committed",
+        os.path.exists(os.path.join(
+            _R, "docs", "qamus", "website-handoff",
+            "WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md")),
+    )
+    for _webh_sample in (
+            "p007_li_adam_clean.payload.json",
+            "p007_lillahi_fused.payload.json",
+            "verb_ituni_12_59_5.payload.json",
+            "noun_libuulatihinna_24_31_23.payload.json",
+            "unresolved_ma_2_284_2.payload.json",
+            "no_entry_link_17_78_3.payload.json",
+    ):
+        check(
+            "WEBHANDOFF sample payload committed: %s" % _webh_sample,
+            os.path.exists(os.path.join(
+                _R, "qamus", "examples", "website-payloads", _webh_sample)),
+        )
+except Exception as _webh_e:
+    check("WEBHANDOFF website payload gates (harness error)", False)
+    print("  ", _webh_e)
+
 # P007PILOT: P007_LI_NOUN_HOST_PILOT vertical-slice closure (12 certified
 # morpheme occurrences of the jarr clitic li- on noun hosts / 78 appearances /
 # 49 typed facts).  Durable repository machinery for the P00 slice: 12-location
