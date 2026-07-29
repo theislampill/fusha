@@ -1,0 +1,166 @@
+{
+ "schema": "qamus.website_projection_payload.v1",
+ "schema_version": "1.0.0",
+ "payload_kind": "occurrence_projection",
+ "occurrence_id": "quran:12:59:5",
+ "artifact_id": "artifact:fb1:12:59:5",
+ "appearance": {
+  "appearance_id": "app:wbw:12:59:5",
+  "page_id": "wbw:12:59",
+  "page_kind": "wbw_hover",
+  "page_local": {
+   "selected_highlight": false,
+   "entry_relationship": "reader",
+   "focus": null,
+   "navigation": []
+  }
+ },
+ "projection": {
+  "occurrence_id": "quran:12:59:5",
+  "surface": "ٱئْتُونِى",
+  "normalization": "NFC",
+  "kind": "verb_word",
+  "segments": [
+   {
+    "segment_index": 0,
+    "surface": "ٱئْتُو",
+    "char_start": 0,
+    "char_end": 6,
+    "semantic_class": "verb_stem_imperative",
+    "renderer_class": "qg-verb-stem",
+    "gloss": "bring (you all)",
+    "sarf_note": "Sarf - how this piece forms: Form I imperative of the root أ ت ي, addressed to a group; the long waw at the end is the plural 'you' built into the verb.",
+    "nahw_note": "Nahw - what this piece does here: it is the command itself; the group being addressed is its doer."
+   },
+   {
+    "segment_index": 1,
+    "surface": "نِ",
+    "char_start": 6,
+    "char_end": 8,
+    "semantic_class": "protective_nun",
+    "renderer_class": "qg-protective-nun",
+    "gloss": "(links the verb to 'me')",
+    "sarf_note": "Sarf - this nun is a protective letter: it keeps the verb's final vowel safe when the little pronoun 'me' attaches. It adds no meaning of its own.",
+    "nahw_note": null
+   },
+   {
+    "segment_index": 2,
+    "surface": "ى",
+    "char_start": 8,
+    "char_end": 9,
+    "semantic_class": "object_pronoun_1s",
+    "renderer_class": "qg-object-pronoun",
+    "gloss": "me",
+    "sarf_note": "Sarf - the shortened attached pronoun 'me', written as a bare ya here.",
+    "nahw_note": "Nahw - what this piece does here: it is the one the bringing is done to - the verb's object."
+   }
+  ],
+  "whole_word_gloss": "bring to me",
+  "learner_explanation": "One written word carrying three pieces: the command 'bring (you all)', a small protective nun, and the pronoun 'me'.",
+  "entry_links": [
+   {
+    "entry_id": "9d550cb9c295",
+    "sense_id": null,
+    "relation_kind": "candidate_entry",
+    "segment_index": 0
+   }
+  ],
+  "entry_link_state": "linked",
+  "morpheme_spans": [
+   {
+    "morpheme_occurrence_id": "morph:fb1:12:59:5:stem",
+    "segment_index": 0,
+    "char_start": 0,
+    "char_end": 6
+   },
+   {
+    "morpheme_occurrence_id": "morph:fb1:12:59:5:nun",
+    "segment_index": 1,
+    "char_start": 6,
+    "char_end": 8
+   },
+   {
+    "morpheme_occurrence_id": "morph:fb1:12:59:5:obj1s",
+    "segment_index": 2,
+    "char_start": 8,
+    "char_end": 9
+   }
+  ],
+  "root": "أ ت ي",
+  "rootless_pedagogy": null,
+  "hover_cards": [
+   {
+    "component_surface": "ٱئْتُونِى",
+    "contextual_gloss": "bring to me",
+    "particle_identity": null,
+    "contextual_function": "imperative verb with an attached object pronoun",
+    "sarf_note": "Sarf - Form I imperative from the root أ ت ي; the plural 'you' lives in the final waw of the stem, a protective nun guards the join, and 'me' attaches at the end.",
+    "nahw_note": "Nahw - a command addressed to a group; 'me' is the object of the bringing.",
+    "governor": null,
+    "governed_expression": null,
+    "scope": null,
+    "attachment": {
+     "host": "ٱئْتُو",
+     "boundary": "verb stem | protective nun | object pronoun"
+    },
+    "alternatives": [],
+    "reason": "segment structure follows the typed source segmentation with byte-exact written spans; certification is pending independent review",
+    "unresolved": null,
+    "entry_link": "/qamus/entry/9d550cb9c295"
+   }
+  ],
+  "unresolved": null,
+  "certification": {
+   "status": "candidate",
+   "plane": {
+    "segmentation": "candidate",
+    "function": "candidate"
+   }
+  },
+  "evidence_refs": [
+   "fact:fb1:059a7458205dc0d8",
+   "corpus:fb1-fixtures#loc=12:59:5"
+  ]
+ },
+ "projection_hash": "8c786e5a39c56b4010451a8f79e809939e8c687a67f63f9b98d5e99178d84468",
+ "reverse_links": {
+  "occurrence_to_appearances": [
+   {
+    "appearance_id": "app:wbw:12:59:5",
+    "page_id": "wbw:12:59",
+    "page_kind": "wbw_hover",
+    "projection_hash": "8c786e5a39c56b4010451a8f79e809939e8c687a67f63f9b98d5e99178d84468"
+   },
+   {
+    "appearance_id": "app:entry:9d550cb9c295:x0",
+    "page_id": "entry:9d550cb9c295",
+    "page_kind": "entry",
+    "projection_hash": "8c786e5a39c56b4010451a8f79e809939e8c687a67f63f9b98d5e99178d84468"
+   }
+  ],
+  "entry_to_occurrences": [
+   {
+    "entry_id": "9d550cb9c295",
+    "occurrences": [
+     {
+      "occurrence_id": "quran:12:59:5",
+      "surface": "ٱئْتُونِى",
+      "loc": "12:59:5",
+      "page_refs": [
+       "wbw:12:59",
+       "entry:9d550cb9c295"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "provenance": {
+  "provenance_class": "illustrative-from-live",
+  "built_by": "packets.website-handoff.sample-builder v1 (2026-07-29)",
+  "source_refs": [
+   "corpus:fb1-fixtures#loc=12:59:5",
+   "qamus/examples/fb1-clitic-pronoun/calibrated-output.jsonl#contract=fa:fb1:12:59:5"
+  ]
+ }
+}
