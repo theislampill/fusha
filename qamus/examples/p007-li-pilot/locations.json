@@ -1,0 +1,1182 @@
+{
+ "entry_id": "b10a1ee04666",
+ "exceptions": [
+  {
+   "detail": "Repo lattice surfaces store vowel-before-shadda; the live rich whitelist stores shadda-before-vowel. NFC-equivalent — every span/parity comparison MUST NFC-normalize first.",
+   "id": "nfc-shadda-vowel-order",
+   "locs": [
+    "quran:12:31:24",
+    "quran:24:35:44",
+    "quran:24:31:23"
+   ]
+  },
+  {
+   "detail": "لِلَّهِ: the wasla alif of the Name is elided in the rasm after the clitic; the host segment starts inside the fused writing (char_start -1 sentinel in the projection); the clitic letter owns the first lam.",
+   "id": "fused-wasla-elision",
+   "locs": [
+    "quran:12:31:24"
+   ]
+  },
+  {
+   "detail": "لِءَادَمَ: jarr sign is fatha because the name is ممنوع من الصرف; reason key jarr-clitic-li-majrur-fatha-diptote.",
+   "id": "diptote-jarr-sign-fatha",
+   "locs": [
+    "quran:2:34:5"
+   ]
+  },
+  {
+   "detail": "Identical surface لِلنَّاسِ at two occurrences stays two distinct canonical artifacts (particle-projection-contract §2.3); live even carves the two differently — the exact per-surface fork the contract kills.",
+   "id": "same-surface-distinct-artifacts",
+   "locs": [
+    "quran:24:35:44",
+    "quran:2:187:63"
+   ]
+  },
+  {
+   "detail": "For fronted-predicate rows the case governor is the preposition itself (relation preposition-governs-majrur); governor null with a case claim is validator-invalid. Both reviewers re-voted and endorsed the representation.",
+   "id": "fronted-predicate-governor-representation",
+   "locs": [
+    "quran:9:120:3",
+    "quran:4:11:5"
+   ]
+  }
+ ],
+ "not_deployed": true,
+ "occurrences": [
+  {
+   "appearance_count": 8,
+   "appearance_ids": [
+    "0135b6be178e:u0:x0:w2",
+    "4211cb1f5355:u0:x1:w24",
+    "99f8d3c2cad5:u5:x0:w24",
+    "a6de8fd64244:u4:x2:w24",
+    "d82582d4c8e6:u0:x2:w24",
+    "e0e500c4b7a5:u0:x14:w24",
+    "e7fa3fadaf4a:u0:x0:w24",
+    "fbd04177b8dd:u0:x26:w24"
+   ],
+   "host_visible": "له",
+   "lattice_preselection": {
+    "entry_candidates": [
+     {
+      "entry_id": "b10a1ee04666",
+      "headword": "لَـ / لِـ",
+      "sense_n": 2
+     }
+    ],
+    "function_candidates": [
+     {
+      "id": "fn.jarr_clitic_li_noun",
+      "label": "jarr clitic li- on noun host"
+     },
+     {
+      "id": "fn.lam_taalil_verb",
+      "label": "lam of ta'lil + mudari' (implied an)"
+     },
+     {
+      "id": "fn.lam_ibtida",
+      "label": "lam al-ibtida' (emphasis, la-)"
+     },
+     {
+      "id": "fn.lexical_lam",
+      "label": "lexical word-initial lam (no particle)"
+     }
+    ],
+    "resolution": "in_family",
+    "segmentation_candidates": [
+     {
+      "carve": "لِ | host",
+      "id": "seg.clitic_carve",
+      "status": "candidate"
+     },
+     {
+      "carve": "no carve — lam is a root letter",
+      "id": "seg.lexical_initial",
+      "status": "candidate"
+     }
+    ]
+   },
+   "matrix_id": "p007:12:31:24",
+   "morpheme": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "morpheme_occurrence_id": "mocc:p007:12:31:24"
+   },
+   "occurrence_id": "quran:12:31:24",
+   "page_appearances": {
+    "context_on_n": 2,
+    "context_on_v": 6
+   },
+   "segments": [
+    {
+     "char_end": 2,
+     "char_start": 0,
+     "colour_class": "qg-particle-jarr-clitic",
+     "role": "jarr_clitic_lam",
+     "surface": "لِ"
+    },
+    {
+     "char_end": 4,
+     "char_start": -1,
+     "colour_class": "qg-proper-noun",
+     "role": "proper_name_majrur",
+     "surface": "لَّهِ"
+    }
+   ],
+   "surface": "لِلَّهِ"
+  },
+  {
+   "appearance_count": 5,
+   "appearance_ids": [
+    "4211cb1f5355:u0:x4:w2",
+    "430015446b77:u0:x1:w2",
+    "6e35cbb25054:u0:x0:w2",
+    "720e26330d5f:u1:x1:w2",
+    "e0e500c4b7a5:u2:x1:w2"
+   ],
+   "host_visible": "لملائكه",
+   "lattice_preselection": {
+    "entry_candidates": [
+     {
+      "entry_id": "b10a1ee04666",
+      "headword": "لَـ / لِـ",
+      "sense_n": 2
+     }
+    ],
+    "function_candidates": [
+     {
+      "id": "fn.jarr_clitic_li_noun",
+      "label": "jarr clitic li- on noun host"
+     },
+     {
+      "id": "fn.lam_taalil_verb",
+      "label": "lam of ta'lil + mudari' (implied an)"
+     },
+     {
+      "id": "fn.lam_ibtida",
+      "label": "lam al-ibtida' (emphasis, la-)"
+     },
+     {
+      "id": "fn.lexical_lam",
+      "label": "lexical word-initial lam (no particle)"
+     }
+    ],
+    "resolution": "in_family",
+    "segmentation_candidates": [
+     {
+      "carve": "لِ | host",
+      "id": "seg.clitic_carve",
+      "status": "candidate"
+     },
+     {
+      "carve": "no carve — lam is a root letter",
+      "id": "seg.lexical_initial",
+      "status": "candidate"
+     }
+    ]
+   },
+   "matrix_id": "p007:2:34:3",
+   "morpheme": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "morpheme_occurrence_id": "mocc:p007:2:34:3"
+   },
+   "occurrence_id": "quran:2:34:3",
+   "page_appearances": {
+    "context_on_n": 2,
+    "context_on_v": 3
+   },
+   "segments": [
+    {
+     "char_end": 2,
+     "char_start": 0,
+     "colour_class": "qg-particle-jarr-clitic",
+     "role": "jarr_clitic_lam",
+     "surface": "لِ"
+    },
+    {
+     "char_end": 4,
+     "char_start": 2,
+     "colour_class": "qg-article",
+     "role": "definite_article_assimilated",
+     "surface": "لْ"
+    },
+    {
+     "char_end": 16,
+     "char_start": 4,
+     "colour_class": "qg-noun-stem",
+     "role": "noun_host_majrur",
+     "surface": "مَلَٰٓئِكَةِ"
+    }
+   ],
+   "surface": "لِلْمَلَٰٓئِكَةِ"
+  },
+  {
+   "appearance_count": 5,
+   "appearance_ids": [
+    "4211cb1f5355:u0:x4:w4",
+    "430015446b77:u0:x1:w4",
+    "6e35cbb25054:u0:x0:w4",
+    "720e26330d5f:u1:x1:w4",
+    "e0e500c4b7a5:u2:x1:w4"
+   ],
+   "host_visible": "ءادم",
+   "lattice_preselection": {
+    "entry_candidates": [
+     {
+      "entry_id": "b10a1ee04666",
+      "headword": "لَـ / لِـ",
+      "sense_n": 2
+     }
+    ],
+    "function_candidates": [
+     {
+      "id": "fn.jarr_clitic_li_noun",
+      "label": "jarr clitic li- on noun host"
+     },
+     {
+      "id": "fn.lam_taalil_verb",
+      "label": "lam of ta'lil + mudari' (implied an)"
+     },
+     {
+      "id": "fn.lam_ibtida",
+      "label": "lam al-ibtida' (emphasis, la-)"
+     },
+     {
+      "id": "fn.lexical_lam",
+      "label": "lexical word-initial lam (no particle)"
+     }
+    ],
+    "resolution": "in_family",
+    "segmentation_candidates": [
+     {
+      "carve": "لِ | host",
+      "id": "seg.clitic_carve",
+      "status": "candidate"
+     },
+     {
+      "carve": "no carve — lam is a root letter",
+      "id": "seg.lexical_initial",
+      "status": "candidate"
+     }
+    ]
+   },
+   "matrix_id": "p007:2:34:5",
+   "morpheme": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "morpheme_occurrence_id": "mocc:p007:2:34:5"
+   },
+   "occurrence_id": "quran:2:34:5",
+   "page_appearances": {
+    "context_on_n": 2,
+    "context_on_v": 3
+   },
+   "segments": [
+    {
+     "char_end": 2,
+     "char_start": 0,
+     "colour_class": "qg-particle-jarr-clitic",
+     "role": "jarr_clitic_lam",
+     "surface": "لِ"
+    },
+    {
+     "char_end": 9,
+     "char_start": 2,
+     "colour_class": "qg-proper-noun",
+     "role": "proper_name_majrur",
+     "surface": "ءَادَمَ"
+    }
+   ],
+   "surface": "لِءَادَمَ"
+  },
+  {
+   "appearance_count": 10,
+   "appearance_ids": [
+    "0c0e1edc8c65:u0:x1:w50",
+    "2d66a735c5e2:u0:x0:w50",
+    "52d3bb9863f6:u1:x1:w50",
+    "61b224b183f1:u0:x4:w50",
+    "68e87fcb398a:u0:x1:w50",
+    "6d380979b61a:u0:x0:w50",
+    "8679e622012c:u1:x0:w50",
+    "8f4b5c2d0a9a:u2:x0:w50",
+    "c94d92f4fca0:u0:x3:w50",
+    "f1643f45edbf:u0:x3:w50"
+   ],
+   "host_visible": "لناس",
+   "lattice_preselection": {
+    "entry_candidates": [
+     {
+      "entry_id": "b10a1ee04666",
+      "headword": "لَـ / لِـ",
+      "sense_n": 2
+     }
+    ],
+    "function_candidates": [
+     {
+      "id": "fn.jarr_clitic_li_noun",
+      "label": "jarr clitic li- on noun host"
+     },
+     {
+      "id": "fn.lam_taalil_verb",
+      "label": "lam of ta'lil + mudari' (implied an)"
+     },
+     {
+      "id": "fn.lam_ibtida",
+      "label": "lam al-ibtida' (emphasis, la-)"
+     },
+     {
+      "id": "fn.lexical_lam",
+      "label": "lexical word-initial lam (no particle)"
+     }
+    ],
+    "resolution": "in_family",
+    "segmentation_candidates": [
+     {
+      "carve": "لِ | host",
+      "id": "seg.clitic_carve",
+      "status": "candidate"
+     },
+     {
+      "carve": "no carve — lam is a root letter",
+      "id": "seg.lexical_initial",
+      "status": "candidate"
+     }
+    ]
+   },
+   "matrix_id": "p007:24:35:44",
+   "morpheme": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "morpheme_occurrence_id": "mocc:p007:24:35:44"
+   },
+   "occurrence_id": "quran:24:35:44",
+   "page_appearances": {
+    "context_on_n": 3,
+    "context_on_v": 7
+   },
+   "segments": [
+    {
+     "char_end": 2,
+     "char_start": 0,
+     "colour_class": "qg-particle-jarr-clitic",
+     "role": "jarr_clitic_lam",
+     "surface": "لِ"
+    },
+    {
+     "char_end": 3,
+     "char_start": 2,
+     "colour_class": "qg-article",
+     "role": "definite_article_assimilated",
+     "surface": "ل"
+    },
+    {
+     "char_end": 5,
+     "char_start": -1,
+     "colour_class": "qg-noun-stem",
+     "role": "noun_host_majrur",
+     "surface": "نَّاسِ"
+    }
+   ],
+   "surface": "لِلنَّاسِ"
+  },
+  {
+   "appearance_count": 9,
+   "appearance_ids": [
+    "1773d3fc1e63:u1:x0:w70",
+    "177fb17bf61b:u0:x1:w70",
+    "2495957025c6:u0:x0:w70",
+    "55dd18892bf9:u1:x5:w70",
+    "6471f74ceb4e:u0:x2:w70",
+    "7b8ccbd754e3:u0:x3:w70",
+    "7cfa6fd795af:u0:x0:w70",
+    "90d6ab43d466:u0:x3:w70",
+    "a6de8fd64244:u3:x0:w70"
+   ],
+   "host_visible": "لناس",
+   "lattice_preselection": {
+    "entry_candidates": [
+     {
+      "entry_id": "b10a1ee04666",
+      "headword": "لَـ / لِـ",
+      "sense_n": 2
+     }
+    ],
+    "function_candidates": [
+     {
+      "id": "fn.jarr_clitic_li_noun",
+      "label": "jarr clitic li- on noun host"
+     },
+     {
+      "id": "fn.lam_taalil_verb",
+      "label": "lam of ta'lil + mudari' (implied an)"
+     },
+     {
+      "id": "fn.lam_ibtida",
+      "label": "lam al-ibtida' (emphasis, la-)"
+     },
+     {
+      "id": "fn.lexical_lam",
+      "label": "lexical word-initial lam (no particle)"
+     }
+    ],
+    "resolution": "in_family",
+    "segmentation_candidates": [
+     {
+      "carve": "لِ | host",
+      "id": "seg.clitic_carve",
+      "status": "candidate"
+     },
+     {
+      "carve": "no carve — lam is a root letter",
+      "id": "seg.lexical_initial",
+      "status": "candidate"
+     }
+    ]
+   },
+   "matrix_id": "p007:2:187:63",
+   "morpheme": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "morpheme_occurrence_id": "mocc:p007:2:187:63"
+   },
+   "occurrence_id": "quran:2:187:63",
+   "page_appearances": {
+    "context_on_n": 2,
+    "context_on_v": 7
+   },
+   "segments": [
+    {
+     "char_end": 2,
+     "char_start": 0,
+     "colour_class": "qg-particle-jarr-clitic",
+     "role": "jarr_clitic_lam",
+     "surface": "لِ"
+    },
+    {
+     "char_end": 3,
+     "char_start": 2,
+     "colour_class": "qg-article",
+     "role": "definite_article_assimilated",
+     "surface": "ل"
+    },
+    {
+     "char_end": 5,
+     "char_start": -1,
+     "colour_class": "qg-noun-stem",
+     "role": "noun_host_majrur",
+     "surface": "نَّاسِ"
+    }
+   ],
+   "surface": "لِلنَّاسِ"
+  },
+  {
+   "appearance_count": 10,
+   "appearance_ids": [
+    "1cabc12cf11c:u1:x0:w8",
+    "275437dcb0c2:u0:x2:w8",
+    "4f666d15bb7e:u0:x1:w8",
+    "727d20168f33:u0:x0:w8",
+    "780df10f872a:u1:x0:w8",
+    "98259aa98c96:u0:x0:w8",
+    "ba7a639a9fac:u0:x0:w8",
+    "dcf75e7f4b79:u0:x8:w8",
+    "eebe688acf55:u0:x0:w8",
+    "efa9daeebae2:u0:x0:w8"
+   ],
+   "host_visible": "غير",
+   "lattice_preselection": {
+    "entry_candidates": [
+     {
+      "entry_id": "b10a1ee04666",
+      "headword": "لَـ / لِـ",
+      "sense_n": 2
+     }
+    ],
+    "function_candidates": [
+     {
+      "id": "fn.jarr_clitic_li_noun",
+      "label": "jarr clitic li- on noun host"
+     },
+     {
+      "id": "fn.lam_taalil_verb",
+      "label": "lam of ta'lil + mudari' (implied an)"
+     },
+     {
+      "id": "fn.lam_ibtida",
+      "label": "lam al-ibtida' (emphasis, la-)"
+     },
+     {
+      "id": "fn.lexical_lam",
+      "label": "lexical word-initial lam (no particle)"
+     }
+    ],
+    "resolution": "in_family",
+    "segmentation_candidates": [
+     {
+      "carve": "لِ | host",
+      "id": "seg.clitic_carve",
+      "status": "candidate"
+     },
+     {
+      "carve": "no carve — lam is a root letter",
+      "id": "seg.lexical_initial",
+      "status": "candidate"
+     }
+    ]
+   },
+   "matrix_id": "p007:5:3:9",
+   "morpheme": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "morpheme_occurrence_id": "mocc:p007:5:3:9"
+   },
+   "occurrence_id": "quran:5:3:9",
+   "page_appearances": {
+    "context_on_n": 2,
+    "context_on_v": 8
+   },
+   "segments": [
+    {
+     "char_end": 2,
+     "char_start": 0,
+     "colour_class": "qg-particle-jarr-clitic",
+     "role": "jarr_clitic_lam",
+     "surface": "لِ"
+    },
+    {
+     "char_end": 8,
+     "char_start": 2,
+     "colour_class": "qg-noun-stem",
+     "role": "noun_host_majrur",
+     "surface": "غَيْرِ"
+    }
+   ],
+   "surface": "لِغَيْرِ"
+  },
+  {
+   "appearance_count": 7,
+   "appearance_ids": [
+    "1da89a32d7fc:u0:x3:w2",
+    "259fe620e117:u3:x0:w2",
+    "3fe10eef5951:u0:x1:w2",
+    "85136ba00e1e:u0:x0:w2",
+    "b309f86b564e:u0:x4:w2",
+    "cd8d7c16fff0:u0:x0:w2",
+    "eb1198782b49:u0:x1:w2"
+   ],
+   "host_visible": "أهل",
+   "lattice_preselection": {
+    "entry_candidates": [
+     {
+      "entry_id": "b10a1ee04666",
+      "headword": "لَـ / لِـ",
+      "sense_n": 2
+     }
+    ],
+    "function_candidates": [
+     {
+      "id": "fn.jarr_clitic_li_noun",
+      "label": "jarr clitic li- on noun host"
+     },
+     {
+      "id": "fn.lam_taalil_verb",
+      "label": "lam of ta'lil + mudari' (implied an)"
+     },
+     {
+      "id": "fn.lam_ibtida",
+      "label": "lam al-ibtida' (emphasis, la-)"
+     },
+     {
+      "id": "fn.lexical_lam",
+      "label": "lexical word-initial lam (no particle)"
+     }
+    ],
+    "resolution": "in_family",
+    "segmentation_candidates": [
+     {
+      "carve": "لِ | host",
+      "id": "seg.clitic_carve",
+      "status": "candidate"
+     },
+     {
+      "carve": "no carve — lam is a root letter",
+      "id": "seg.lexical_initial",
+      "status": "candidate"
+     }
+    ]
+   },
+   "matrix_id": "p007:9:120:3",
+   "morpheme": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "morpheme_occurrence_id": "mocc:p007:9:120:3"
+   },
+   "occurrence_id": "quran:9:120:3",
+   "page_appearances": {
+    "context_on_n": 1,
+    "context_on_v": 6
+   },
+   "segments": [
+    {
+     "char_end": 2,
+     "char_start": 0,
+     "colour_class": "qg-particle-jarr-clitic",
+     "role": "jarr_clitic_lam",
+     "surface": "لِ"
+    },
+    {
+     "char_end": 8,
+     "char_start": 2,
+     "colour_class": "qg-noun-stem",
+     "role": "noun_host_majrur",
+     "surface": "أَهْلِ"
+    }
+   ],
+   "surface": "لِأَهْلِ"
+  },
+  {
+   "appearance_count": 5,
+   "appearance_ids": [
+    "02b666ee363c:u0:x1:w2",
+    "16dc0a87056e:u0:x14:w2",
+    "4d0d3186b472:u0:x0:w2",
+    "5c9c180859bc:u0:x0:w2",
+    "6fe9ada37a9b:u0:x5:w2"
+   ],
+   "host_visible": "دلوك",
+   "lattice_preselection": {
+    "entry_candidates": [
+     {
+      "entry_id": "b10a1ee04666",
+      "headword": "لَـ / لِـ",
+      "sense_n": 2
+     }
+    ],
+    "function_candidates": [
+     {
+      "id": "fn.jarr_clitic_li_noun",
+      "label": "jarr clitic li- on noun host"
+     },
+     {
+      "id": "fn.lam_taalil_verb",
+      "label": "lam of ta'lil + mudari' (implied an)"
+     },
+     {
+      "id": "fn.lam_ibtida",
+      "label": "lam al-ibtida' (emphasis, la-)"
+     },
+     {
+      "id": "fn.lexical_lam",
+      "label": "lexical word-initial lam (no particle)"
+     }
+    ],
+    "resolution": "in_family",
+    "segmentation_candidates": [
+     {
+      "carve": "لِ | host",
+      "id": "seg.clitic_carve",
+      "status": "candidate"
+     },
+     {
+      "carve": "no carve — lam is a root letter",
+      "id": "seg.lexical_initial",
+      "status": "candidate"
+     }
+    ]
+   },
+   "matrix_id": "p007:17:78:3",
+   "morpheme": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "morpheme_occurrence_id": "mocc:p007:17:78:3"
+   },
+   "occurrence_id": "quran:17:78:3",
+   "page_appearances": {
+    "context_on_n": 3,
+    "context_on_v": 2
+   },
+   "segments": [
+    {
+     "char_end": 2,
+     "char_start": 0,
+     "colour_class": "qg-particle-jarr-clitic",
+     "role": "jarr_clitic_lam",
+     "surface": "لِ"
+    },
+    {
+     "char_end": 9,
+     "char_start": 2,
+     "colour_class": "qg-noun-stem",
+     "role": "noun_host_majrur",
+     "surface": "دُلُوكِ"
+    }
+   ],
+   "surface": "لِدُلُوكِ"
+  },
+  {
+   "appearance_count": 5,
+   "appearance_ids": [
+    "1975a28c061a:u0:x0:w0",
+    "445f9e047a5b:u0:x4:w5",
+    "7aa81aa90341:u0:x3:w5",
+    "9dbe7f045ea8:u0:x1:w5",
+    "d6a4f976cb61:u0:x7:w5"
+   ],
+   "host_visible": "لذكر",
+   "lattice_preselection": {
+    "entry_candidates": [
+     {
+      "entry_id": "b10a1ee04666",
+      "headword": "لَـ / لِـ",
+      "sense_n": 2
+     }
+    ],
+    "function_candidates": [
+     {
+      "id": "fn.jarr_clitic_li_noun",
+      "label": "jarr clitic li- on noun host"
+     },
+     {
+      "id": "fn.lam_taalil_verb",
+      "label": "lam of ta'lil + mudari' (implied an)"
+     },
+     {
+      "id": "fn.lam_ibtida",
+      "label": "lam al-ibtida' (emphasis, la-)"
+     },
+     {
+      "id": "fn.lexical_lam",
+      "label": "lexical word-initial lam (no particle)"
+     }
+    ],
+    "resolution": "in_family",
+    "segmentation_candidates": [
+     {
+      "carve": "لِ | host",
+      "id": "seg.clitic_carve",
+      "status": "candidate"
+     },
+     {
+      "carve": "no carve — lam is a root letter",
+      "id": "seg.lexical_initial",
+      "status": "candidate"
+     }
+    ]
+   },
+   "matrix_id": "p007:4:11:5",
+   "morpheme": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "morpheme_occurrence_id": "mocc:p007:4:11:5"
+   },
+   "occurrence_id": "quran:4:11:5",
+   "page_appearances": {
+    "context_on_n": 2,
+    "context_on_v": 3
+   },
+   "segments": [
+    {
+     "char_end": 2,
+     "char_start": 0,
+     "colour_class": "qg-particle-jarr-clitic",
+     "role": "jarr_clitic_lam",
+     "surface": "لِ"
+    },
+    {
+     "char_end": 3,
+     "char_start": 2,
+     "colour_class": "qg-article",
+     "role": "definite_article_assimilated",
+     "surface": "ل"
+    },
+    {
+     "char_end": 6,
+     "char_start": -1,
+     "colour_class": "qg-noun-stem",
+     "role": "noun_host_majrur",
+     "surface": "ذَّكَرِ"
+    }
+   ],
+   "surface": "لِلذَّكَرِ"
+  },
+  {
+   "appearance_count": 5,
+   "appearance_ids": [
+    "31e79b908386:u0:x1:w51",
+    "7f416e8c42c3:u0:x5:w2",
+    "89f4baadb89a:u2:x0:w51",
+    "beae77dd607f:u0:x4:w51",
+    "d099cdaad3b9:u1:x5:w51"
+   ],
+   "host_visible": "قلوبكم",
+   "lattice_preselection": {
+    "entry_candidates": [
+     {
+      "entry_id": "b10a1ee04666",
+      "headword": "لَـ / لِـ",
+      "sense_n": 2
+     }
+    ],
+    "function_candidates": [
+     {
+      "id": "fn.jarr_clitic_li_noun",
+      "label": "jarr clitic li- on noun host"
+     },
+     {
+      "id": "fn.lam_taalil_verb",
+      "label": "lam of ta'lil + mudari' (implied an)"
+     },
+     {
+      "id": "fn.lam_ibtida",
+      "label": "lam al-ibtida' (emphasis, la-)"
+     },
+     {
+      "id": "fn.lexical_lam",
+      "label": "lexical word-initial lam (no particle)"
+     }
+    ],
+    "resolution": "in_family",
+    "segmentation_candidates": [
+     {
+      "carve": "لِ | host",
+      "id": "seg.clitic_carve",
+      "status": "candidate"
+     },
+     {
+      "carve": "no carve — lam is a root letter",
+      "id": "seg.lexical_initial",
+      "status": "candidate"
+     }
+    ]
+   },
+   "matrix_id": "p007:33:53:48",
+   "morpheme": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "morpheme_occurrence_id": "mocc:p007:33:53:48"
+   },
+   "occurrence_id": "quran:33:53:48",
+   "page_appearances": {
+    "context_on_n": 1,
+    "context_on_v": 4
+   },
+   "segments": [
+    {
+     "char_end": 2,
+     "char_start": 0,
+     "colour_class": "qg-particle-jarr-clitic",
+     "role": "jarr_clitic_lam",
+     "surface": "لِ"
+    },
+    {
+     "char_end": 9,
+     "char_start": 2,
+     "colour_class": "qg-noun-stem",
+     "role": "noun_host_majrur",
+     "surface": "قُلُوبِ"
+    },
+    {
+     "char_end": 13,
+     "char_start": 9,
+     "colour_class": "qg-possessive-pronoun",
+     "role": "attached_pronoun_mudaf_ilayh",
+     "surface": "كُمْ"
+    }
+   ],
+   "surface": "لِقُلُوبِكُمْ"
+  },
+  {
+   "appearance_count": 5,
+   "appearance_ids": [
+    "3f72628fa1ec:u1:x0:w24",
+    "4cb26045b5b7:u0:x4:w24",
+    "5d89e690256d:u0:x8:w24",
+    "896fc440f451:u0:x1:w4",
+    "eade5d4df22b:u0:x1:w4"
+   ],
+   "host_visible": "بعولتهن",
+   "lattice_preselection": {
+    "entry_candidates": [
+     {
+      "entry_id": "b10a1ee04666",
+      "headword": "لَـ / لِـ",
+      "sense_n": 2
+     }
+    ],
+    "function_candidates": [
+     {
+      "id": "fn.jarr_clitic_li_noun",
+      "label": "jarr clitic li- on noun host"
+     },
+     {
+      "id": "fn.lam_taalil_verb",
+      "label": "lam of ta'lil + mudari' (implied an)"
+     },
+     {
+      "id": "fn.lam_ibtida",
+      "label": "lam al-ibtida' (emphasis, la-)"
+     },
+     {
+      "id": "fn.lexical_lam",
+      "label": "lexical word-initial lam (no particle)"
+     }
+    ],
+    "resolution": "in_family",
+    "segmentation_candidates": [
+     {
+      "carve": "لِ | host",
+      "id": "seg.clitic_carve",
+      "status": "candidate"
+     },
+     {
+      "carve": "no carve — lam is a root letter",
+      "id": "seg.lexical_initial",
+      "status": "candidate"
+     }
+    ]
+   },
+   "matrix_id": "p007:24:31:23",
+   "morpheme": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "morpheme_occurrence_id": "mocc:p007:24:31:23"
+   },
+   "occurrence_id": "quran:24:31:23",
+   "page_appearances": {
+    "context_on_n": 1,
+    "context_on_p": 1,
+    "context_on_v": 3
+   },
+   "segments": [
+    {
+     "char_end": 2,
+     "char_start": 0,
+     "colour_class": "qg-particle-jarr-clitic",
+     "role": "jarr_clitic_lam",
+     "surface": "لِ"
+    },
+    {
+     "char_end": 11,
+     "char_start": 2,
+     "colour_class": "qg-noun-stem",
+     "role": "noun_host_majrur",
+     "surface": "بُعُولَتِ"
+    },
+    {
+     "char_end": 4,
+     "char_start": -1,
+     "colour_class": "qg-possessive-pronoun",
+     "role": "attached_pronoun_mudaf_ilayh",
+     "surface": "هِنَّ"
+    }
+   ],
+   "surface": "لِبُعُولَتِهِنَّ"
+  },
+  {
+   "appearance_count": 4,
+   "appearance_ids": [
+    "01133eb5431b:u0:x1:w3",
+    "3041d6f44a27:u11:x1:w3",
+    "65d3d5c51f24:u0:x2:w3",
+    "7f1f8b8e29e6:u0:x0:w3"
+   ],
+   "host_visible": "قومه",
+   "lattice_preselection": {
+    "entry_candidates": [
+     {
+      "entry_id": "b10a1ee04666",
+      "headword": "لَـ / لِـ",
+      "sense_n": 2
+     }
+    ],
+    "function_candidates": [
+     {
+      "id": "fn.jarr_clitic_li_noun",
+      "label": "jarr clitic li- on noun host"
+     },
+     {
+      "id": "fn.lam_taalil_verb",
+      "label": "lam of ta'lil + mudari' (implied an)"
+     },
+     {
+      "id": "fn.lam_ibtida",
+      "label": "lam al-ibtida' (emphasis, la-)"
+     },
+     {
+      "id": "fn.lexical_lam",
+      "label": "lexical word-initial lam (no particle)"
+     }
+    ],
+    "resolution": "in_family",
+    "segmentation_candidates": [
+     {
+      "carve": "لِ | host",
+      "id": "seg.clitic_carve",
+      "status": "candidate"
+     },
+     {
+      "carve": "no carve — lam is a root letter",
+      "id": "seg.lexical_initial",
+      "status": "candidate"
+     }
+    ]
+   },
+   "matrix_id": "p007:61:5:4",
+   "morpheme": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "morpheme_occurrence_id": "mocc:p007:61:5:4"
+   },
+   "occurrence_id": "quran:61:5:4",
+   "page_appearances": {
+    "context_on_n": 1,
+    "context_on_p": 1,
+    "context_on_v": 2
+   },
+   "segments": [
+    {
+     "char_end": 2,
+     "char_start": 0,
+     "colour_class": "qg-particle-jarr-clitic",
+     "role": "jarr_clitic_lam",
+     "surface": "لِ"
+    },
+    {
+     "char_end": 8,
+     "char_start": 2,
+     "colour_class": "qg-noun-stem",
+     "role": "noun_host_majrur",
+     "surface": "قَوْمِ"
+    },
+    {
+     "char_end": 11,
+     "char_start": 8,
+     "colour_class": "qg-possessive-pronoun",
+     "role": "attached_pronoun_mudaf_ilayh",
+     "surface": "هِۦ"
+    }
+   ],
+   "surface": "لِقَوْمِهِۦ"
+  }
+ ],
+ "population": {
+  "appearances": 78,
+  "false_candidates_examined": 3,
+  "occurrences": 12,
+  "page_class_appearances": {
+   "context_on_n": 22,
+   "context_on_p": 2,
+   "context_on_v": 54
+  }
+ },
+ "rejected_false_candidates": [
+  {
+   "defeater": "lexical-initial lam: MCP sarf reads whole token لِبَاسٌ as noun, wazn فِعَال, madda لبس; MCP irab has NO jarr-harf clause (خبر مرفوع). Clitic carve rejected.",
+   "mcp_evidence_ref": "mcp-evidence.jsonl#analyze_word:2:187:9",
+   "occurrence_id": "quran:2:187:9",
+   "surface": "لِبَاسٌۭ"
+  },
+  {
+   "defeater": "lam + VERB (lam of ta'lil over implied أن): MCP irab reads lam as jarr harf but host يَغِيظَ is a mudari' mansub b-'an mudmara — host is not a noun; outside the noun-host family; function rival retained on p007 lattice.",
+   "mcp_evidence_ref": "mcp-evidence.jsonl#analyze_word:48:29:42",
+   "occurrence_id": "quran:48:29:42",
+   "surface": "لِيَغِيظَ"
+  },
+  {
+   "defeater": "free li + attached pronoun (ya' al-mutakallim): genuine jarr lam but host is a pronoun, not a noun; outside the noun-host family.",
+   "mcp_evidence_ref": "mcp-evidence.jsonl#analyze_word:31:14:14",
+   "occurrence_id": "quran:31:14:14",
+   "surface": "لِى"
+  }
+ ],
+ "schema": "qamus.p007_li_pilot.locations.v1",
+ "scope": "P007_LI_NOUN_HOST_PILOT",
+ "sense_n": 2,
+ "source_key": "p007"
+}

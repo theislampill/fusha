@@ -5893,6 +5893,52 @@ except Exception as _pedges_e:
     check("PEDGES particle projection gates (harness error)", False)
     print("  ", _pedges_e)
 
+# P007PILOT: P007_LI_NOUN_HOST_PILOT vertical-slice closure (12 certified
+# morpheme occurrences of the jarr clitic li- on noun hosts / 78 appearances /
+# 49 typed facts).  Durable repository machinery for the P00 slice: 12-location
+# integrity, 49-fact completeness against the hash-chained certification store,
+# entry+sense transclusion closure on every certified morpheme occurrence
+# (a generic 'preposition' class without the entry/sense edge does NOT satisfy
+# transclusion), parity hash stability (NFC lesson), reverse-trace closure and
+# the NOT-DEPLOYED production-difference honesty gate.  Red-first self-test +
+# committed green pilot; fixture-only, no lane-side corpora, no live reads.
+try:
+    _p007_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_p007_pilot.py"),
+        "--self-test",
+    ], timeout=300)
+    check(
+        "P007PILOT li-pilot red-first self-test passes",
+        _p007_self.returncode == 0
+        and "P007 PILOT SELF-TEST PASS" in (_p007_self.stdout or ""),
+    )
+    _p007_green = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_p007_pilot.py"),
+    ], timeout=300)
+    check(
+        "P007PILOT committed pilot validates (12 occ / 78 app / 49 facts)",
+        _p007_green.returncode == 0
+        and "P007 PILOT VALIDATION PASS" in (_p007_green.stdout or ""),
+    )
+    for _p007_art in (
+            "qamus/examples/p007-li-pilot/locations.json",
+            "qamus/examples/p007-li-pilot/typed-facts.jsonl",
+            "qamus/examples/p007-li-pilot/certification/events.jsonl",
+            "qamus/examples/p007-li-pilot/transclusion-edges.jsonl",
+            "qamus/examples/p007-li-pilot/entry-reverse-index.json",
+            "qamus/examples/p007-li-pilot/two-vote-artifacts.v1.jsonl",
+            "qamus/examples/p007-li-pilot/two-vote-artifacts.v1_1.jsonl",
+            "qamus/examples/p007-li-pilot/production-difference.json",
+            "tools/build_p007_li_pilot.py",
+    ):
+        check("P007PILOT artifact committed: " + _p007_art,
+              os.path.exists(os.path.join(_R, *_p007_art.split("/"))))
+except Exception as _p007_e:
+    check("P007PILOT li-pilot gates (harness error)", False)
+    print("  ", _p007_e)
+
 # REPAIR1: reusable graph-repair families and occurrence-entry resolver fixtures.
 # This remains fixture-only so a fresh clone never depends on lane-side corpora.
 try:
@@ -6032,6 +6078,66 @@ try:
 except Exception as _gr_e:
     check("GRAPHREPAIR gates (harness error)", False)
     print("  ", _gr_e)
+
+# ENTRYGRAPH: entry-transclusion ontology (owner steer §3-§4, §15, §16).
+# Every p/v/n entry is a first-class knowledge node over the ONE canonical
+# qamus.graph_edge.v1 vocabulary (+ particle extension) — the 12 executable
+# transclusion invariants run red-first against corrupted fixtures, and the
+# 12-state entry completion ladder is emitted HONESTLY (candidate-only
+# artifacts never claim certification-dependent states).
+try:
+    _eg_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_entry_transclusion_invariants",
+        "-q",
+    ], timeout=240)
+    check(
+        "ENTRYGRAPH 12 transclusion invariants pass red-first (test_entry_transclusion_invariants)",
+        _eg_unit.returncode == 0
+        and "OK" in ((_eg_unit.stdout or "") + (_eg_unit.stderr or "")),
+    )
+    _eg_builder = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "build_entry_completion_state.py"),
+        "--self-test",
+    ], timeout=180)
+    check(
+        "ENTRYGRAPH completion-state builder red-first self-test passes",
+        _eg_builder.returncode == 0
+        and "ENTRY COMPLETION SELF-TEST PASS" in (_eg_builder.stdout or ""),
+    )
+    for _eg_art in (
+            "qamus/schemas/entry-completion-states.schema.json",
+            "qamus/reports/entry-completion-states.pilot.json",
+    ):
+        check("ENTRYGRAPH artifact exists: %s" % _eg_art,
+              os.path.exists(os.path.join(_R, _eg_art)))
+    try:
+        with io.open(os.path.join(_R, "qamus", "reports",
+                                  "entry-completion-states.pilot.json"),
+                     encoding="utf-8") as _eg_fh:
+            _eg_pilot = json.load(_eg_fh)
+        _eg_rows = _eg_pilot.get("entries") or []
+        check(
+            "ENTRYGRAPH pilot report is honest (3 p/v/n entries, honest=true, "
+            "no certified-links claim without a certified trail)",
+            len(_eg_rows) == 3
+            and sorted(row.get("entry_kind") for row in _eg_rows) == ["n", "p", "v"]
+            and all(row.get("honest") is True for row in _eg_rows)
+            and all(
+                not next((s for s in row.get("states") or []
+                          if s.get("state") == "occurrence_links_certified"),
+                         {}).get("reached")
+                for row in _eg_rows
+            ),
+        )
+    except Exception:
+        check("ENTRYGRAPH pilot completion-state report readable", False)
+except Exception as _eg_e:
+    check("ENTRYGRAPH gates (harness error)", False)
+    print("  ", _eg_e)
 
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
