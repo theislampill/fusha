@@ -1,0 +1,1350 @@
+{
+  "schema": "qamus.coverage_manifest.v1",
+  "manifest_id": "tp-p007-ds-w1-covered-locs",
+  "title": "P007 direct-source wave-1 coverage manifest (public-safe: canonical locs + per-loc evidence sha256 only)",
+  "entry_id": "b10a1ee04666",
+  "wave": "p007-direct-source-w1",
+  "date": "2026-07-29",
+  "produced_by_lane": "docs/cold-review-repairs (cold-review repair 3; derived read-only from the wave-1 owner-packet artifacts)",
+  "purpose": "Make TP-P007-DS-W2 selection cold-startable from the public repo: this file is the deterministic exclusion set (the 260 canonical locs certified in wave 1) for the wave-2 selection rule. It carries locs and hashes only - no source prose, no filesystem paths (RM-09).",
+  "custody": {
+    "policy": "docs/evidence-custody.md section 2 (manifest + hash + reconstruction for out-of-git evidence)",
+    "out_of_git_evidence": [
+      {
+        "what": "wave-1 worklist (fresh 200 + presampled 60 rows with route/matrix metadata)",
+        "source_kind": "lane worklist",
+        "opaque_ref": "dawahwiki:packets/p007-direct-source-w1/wave1-worklist.json",
+        "record_count": 260,
+        "file_sha256": "fb51c7de9c6951dc81015f754c1476481cd86339d577bcf6242d1d8158d604a2"
+      },
+      {
+        "what": "wave-1 fresh-200 verbatim MCP evidence (one JSONL row per loc, irab/sarf verbatim + per-aspect sha256)",
+        "source_kind": "MCP call record",
+        "opaque_ref": "dawahwiki:packets/p007-direct-source-w1/mcp-evidence-w1.jsonl",
+        "record_count": 200,
+        "file_sha256": "e54f24064b7f0a34240faa76ebe632c741dae7762df0459a36534fcd3c7113fb"
+      },
+      {
+        "what": "wave-1 sample-60 verbatim MCP evidence (one JSONL row per loc, lam-clause + host-clause verbatim)",
+        "source_kind": "MCP call record",
+        "opaque_ref": "dawahwiki:packets/p007-direct-source-w1/sample60-evidence.jsonl",
+        "record_count": 60,
+        "file_sha256": "bc0b3a36c39a4e31ed62f4703ac06c1312c65294cab492870e7ef84e4fef18fe"
+      }
+    ],
+    "reconstruction": "The loc set is re-derivable deterministically: sort the 866 partition == direct-source-attested-function rows of qamus/lattice/p007-population-classification.jsonl by canonical loc (surah, ayah, word as integers, ascending); the sample60 cohort is the wave-1 pre-sampled list (archival selection) and the fresh200 cohort is the first 200 remaining rows after excluding it. The per-loc evidence rows are one-time MCP captures: archival, custody in the private workspace under the opaque refs above; the committed sha256 values are the byte-exact identity check for any custody transfer or rematerialization.",
+    "hash_rule": "evidence_sha256 = sha256 of the byte-exact JSONL evidence line for this loc in the named out-of-git artifact (line content without the trailing newline). fresh200 rows hash lines of mcp-evidence-w1.jsonl; sample60 rows hash lines of sample60-evidence.jsonl."
+  },
+  "verification": {
+    "partition_check": "All 260 locs carry partition == direct-source-attested-function in qamus/lattice/p007-population-classification.jsonl (checked at derivation time).",
+    "disjointness": "fresh200 and sample60 cohorts are disjoint; 200 + 60 = 260 unique locs.",
+    "wave1_verdict": "260/260 jarr_confirmed per the wave-1 report card (dawahwiki:packets/P007-DIRECT-SOURCE-W1-2026-07-29.md)."
+  },
+  "covered_loc_count": 260,
+  "cohorts": {
+    "fresh200": 200,
+    "sample60": 60
+  },
+  "covered_locs": [
+    {
+      "loc": "2:11:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "89a3d5e45b47dfb2a5acc8c133aebcab45fa74e5112b4b7d43136105acd76f89"
+    },
+    {
+      "loc": "2:13:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "982d2759439fe92b28218b3d3450c66d170a9a08e8b5d11bcb95eadde88ed9cc"
+    },
+    {
+      "loc": "2:20:7",
+      "cohort": "fresh200",
+      "evidence_sha256": "6476d9f1d5ff7ee4923a25e4bd4b77b4d2f9671470ac154379d28a2d1673c310"
+    },
+    {
+      "loc": "2:22:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "040f5b22b2d8fd2a184c6c26480adb842aab5f4fe5c6c08a5af270a040abf60b"
+    },
+    {
+      "loc": "2:22:17",
+      "cohort": "sample60",
+      "evidence_sha256": "96be15e25132f7ef393beab6057b8603c9328c20beb6727c6038bcd9a385b94e"
+    },
+    {
+      "loc": "2:25:7",
+      "cohort": "fresh200",
+      "evidence_sha256": "f518a72d9de1f53dd08a998a7596d02a81de9d981da64658543867aeb2c6c4cd"
+    },
+    {
+      "loc": "2:29:4",
+      "cohort": "fresh200",
+      "evidence_sha256": "8049b86ee5c13c826681f59d83dfa82cf4eadfa1a7102e650f6e8c217754de7a"
+    },
+    {
+      "loc": "2:30:22",
+      "cohort": "fresh200",
+      "evidence_sha256": "6c2e0167620f0feae2d3ac6b676882cb95e3a5dcbe45b7272cabee28853aa861"
+    },
+    {
+      "loc": "2:54:18",
+      "cohort": "fresh200",
+      "evidence_sha256": "423e4e0389f650a38888795aab4cee213457723d4b6925bf6a65b7e401ea9c41"
+    },
+    {
+      "loc": "2:58:17",
+      "cohort": "fresh200",
+      "evidence_sha256": "9efc5f05c19a38a0cfc2d64f604e519303def02d088d3f23a9319fe8485b2e8a"
+    },
+    {
+      "loc": "2:59:8",
+      "cohort": "fresh200",
+      "evidence_sha256": "0082578a6ca56690093b7a8eaa16101ddf7beb9c0d514fe38e876cd2d8565ca1"
+    },
+    {
+      "loc": "2:61:10",
+      "cohort": "fresh200",
+      "evidence_sha256": "72a8f77511d8257950b6371b85e2d4d77cddd771220ac5c662add172e9c71107"
+    },
+    {
+      "loc": "2:61:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "e8ceef494774d962bf2b69310aea11cde55fd1bb8d335108adfb92787f63c569"
+    },
+    {
+      "loc": "2:61:34",
+      "cohort": "fresh200",
+      "evidence_sha256": "1388ee0fdc49decc0e89d56527370df37906be305db90d9d0b07a6477df4345e"
+    },
+    {
+      "loc": "2:68:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "63bf86259cddd2bee4d2aa0fdafaab62417e1ff53c0aee96b569e09f463d2108"
+    },
+    {
+      "loc": "2:68:6",
+      "cohort": "fresh200",
+      "evidence_sha256": "1f12b278dde68ca03f94c818c12b400f4f90df0a30edf2d5de407186b4d3d08d"
+    },
+    {
+      "loc": "2:69:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "5a0c875c4ab3edf8d7d9638e3e53ad4af338671b4b19466be28151f91385f0ba"
+    },
+    {
+      "loc": "2:69:6",
+      "cohort": "sample60",
+      "evidence_sha256": "900ac022e5d46b4f3bffabd20aabf4301045efcbfc73c6434ac0d0842f1dd956"
+    },
+    {
+      "loc": "2:70:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "af322e6ca8e2b688636918e86aa5c4c5df85b69513193153c1bfc3a48e640ae8"
+    },
+    {
+      "loc": "2:70:6",
+      "cohort": "fresh200",
+      "evidence_sha256": "2300d74710aa7c54ede2955d7fc400af9119a04cbabec27c54d5a0cbf9a3e734"
+    },
+    {
+      "loc": "2:75:4",
+      "cohort": "fresh200",
+      "evidence_sha256": "1178d30511438f4967f0eec2410232c1a5cb5ece8266f9670d0103040bc94a1a"
+    },
+    {
+      "loc": "2:94:4",
+      "cohort": "fresh200",
+      "evidence_sha256": "cd8b77fc45fe89099d4bbe4ef2babd1bdf3b90887943be340ff057a0b4a5ef96"
+    },
+    {
+      "loc": "2:102:62",
+      "cohort": "fresh200",
+      "evidence_sha256": "373196c9dcab7dbf5ad94536a123a41febc549e0a5dab76cb25f4909d9e5d28e"
+    },
+    {
+      "loc": "2:107:5",
+      "cohort": "fresh200",
+      "evidence_sha256": "2a085b202a8064ab44164880916694febdcc6b92f171cc0e5e0423934918c953"
+    },
+    {
+      "loc": "2:107:10",
+      "cohort": "fresh200",
+      "evidence_sha256": "b34c9be0d5200d3d498e244f517d642ad5aef32837f9ba0242b6e3cddd4c4954"
+    },
+    {
+      "loc": "2:109:20",
+      "cohort": "fresh200",
+      "evidence_sha256": "9b910054d0acdd9fef76e624cf1c1641f26e06f738e9feee4c5447ca36dc5b37"
+    },
+    {
+      "loc": "2:114:17",
+      "cohort": "fresh200",
+      "evidence_sha256": "2e8b3132c4eb3f3d89cef2924ccd8bd97336f4d18e168b143b37865a32b97674"
+    },
+    {
+      "loc": "2:114:22",
+      "cohort": "fresh200",
+      "evidence_sha256": "176aad3d1abe537658e5adebf2945c056120f704734b85374fa85ea78387b66d"
+    },
+    {
+      "loc": "2:116:7",
+      "cohort": "fresh200",
+      "evidence_sha256": "e4344a0e2c7dbddf982229608442c51b9afaa4f889690a1c7b821c8eed1efa04"
+    },
+    {
+      "loc": "2:116:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "8f2012f22443b05b03e29dab04f2c51ba30d8c2c41438cebe1ad86361abf7019"
+    },
+    {
+      "loc": "2:120:25",
+      "cohort": "fresh200",
+      "evidence_sha256": "d7af7f712296f59cbd4edc16e3f4bb5464b3e0664b5a0015e4dbfa0f325b2050"
+    },
+    {
+      "loc": "2:128:4",
+      "cohort": "fresh200",
+      "evidence_sha256": "fdf78e3520468e48a6dd21cf0e02db0de8ca2685d1b36aa47767151e6b294e55"
+    },
+    {
+      "loc": "2:128:9",
+      "cohort": "fresh200",
+      "evidence_sha256": "2f65ca6f1835435cde0459deaeac906b5b56939709241d8e2f959eacca777924"
+    },
+    {
+      "loc": "2:131:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "05aeee8456212f2e239e7b69e9bcfa57271cc969b5768038ca07f1c2a2f09fa9"
+    },
+    {
+      "loc": "2:132:10",
+      "cohort": "fresh200",
+      "evidence_sha256": "853799b773f6acc33d07b804da7ac38f2267a3d23472298ccc44e57e15079164"
+    },
+    {
+      "loc": "2:134:5",
+      "cohort": "fresh200",
+      "evidence_sha256": "92a50e86b490882f6e38aba3faba44206e374650d644f30b956f6626990d7bf9"
+    },
+    {
+      "loc": "2:138:9",
+      "cohort": "fresh200",
+      "evidence_sha256": "3ebf2d502daf4f0af1ed1ed74532aa5d937ee284528e9c8499b8e2e47116b618"
+    },
+    {
+      "loc": "2:152:4",
+      "cohort": "fresh200",
+      "evidence_sha256": "01316a9017da9a39c684f6b0364487ecc945bb6d6f006f92cb18fce4be37a5c4"
+    },
+    {
+      "loc": "2:167:6",
+      "cohort": "fresh200",
+      "evidence_sha256": "f1e80fc19c8b1254ff645a2e30ccdafd48300caadee6756b90018b6143bbafde"
+    },
+    {
+      "loc": "2:168:14",
+      "cohort": "fresh200",
+      "evidence_sha256": "20ff883a0c4aec8e55d7f696db43fbb268803495e365c74155f48aefb679e2c5"
+    },
+    {
+      "loc": "2:178:17",
+      "cohort": "fresh200",
+      "evidence_sha256": "aed24d9edd787a30cea55f268ce71dbd747622be40c24010a1fede5a2a8294c7"
+    },
+    {
+      "loc": "2:184:25",
+      "cohort": "fresh200",
+      "evidence_sha256": "2f235bda2aa5ad1386844a783f764e4ce9a29cb41e1ca1da15a81243aacf9055"
+    },
+    {
+      "loc": "2:184:29",
+      "cohort": "sample60",
+      "evidence_sha256": "8458a2e065cd2981f276abbada97b7b1ad6c89ea4236dd51514e8e363e992e2a"
+    },
+    {
+      "loc": "2:186:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "a36b1707a25c5d37b0610d952bc06631d4ef37d466bbf561fa0c2537f68d550b"
+    },
+    {
+      "loc": "2:187:2",
+      "cohort": "fresh200",
+      "evidence_sha256": "de1802d11b0171a86100d99f81c05c437a731d669cf955c1208c698c611e8cc6"
+    },
+    {
+      "loc": "2:187:10",
+      "cohort": "fresh200",
+      "evidence_sha256": "a5d933377ce6179e979d9d501ed3a35bedcf22e2f26acb8ef023c2785d60396d"
+    },
+    {
+      "loc": "2:187:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "76371b87c22640e427c8a51639be83c1df80a2d409277db3893318a7e74b430c"
+    },
+    {
+      "loc": "2:187:30",
+      "cohort": "fresh200",
+      "evidence_sha256": "db48d3ce58958bcb4f0beb987a4ccf6ed2bffbce76f5e5875e7b0784e57747f2"
+    },
+    {
+      "loc": "2:187:35",
+      "cohort": "sample60",
+      "evidence_sha256": "2aa2ce52b44388bca8e2c3aadfbd45c56f2354cd2ef76218b17d857ca4073a0b"
+    },
+    {
+      "loc": "2:202:2",
+      "cohort": "fresh200",
+      "evidence_sha256": "0c14ce3292b3d18308b0bf8f5195eb1a5059ae517516ad117b524d6aa87c40f8"
+    },
+    {
+      "loc": "2:208:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "888df07ff634ec99553463c485c8b3c7b829cc863793328ccc277933ff1ff29a"
+    },
+    {
+      "loc": "2:212:2",
+      "cohort": "fresh200",
+      "evidence_sha256": "236fee7469ef5c019fa581dc6596b89814f3da07534262683f552859674c89c2"
+    },
+    {
+      "loc": "2:216:6",
+      "cohort": "fresh200",
+      "evidence_sha256": "d100b5ac6d25688604c2f6fe82c8b6899bd7010425db2a24ee6fd09e0ed97294"
+    },
+    {
+      "loc": "2:216:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "f2ccda3dad74651d400782b1f974c44b88c66ea570207dbc26398021c9d14ca5"
+    },
+    {
+      "loc": "2:216:20",
+      "cohort": "fresh200",
+      "evidence_sha256": "5349728b30fb9a16fbce746e8e4cb1bd6cf8f4bb687701fb4d1a1633cc3428f7"
+    },
+    {
+      "loc": "2:219:23",
+      "cohort": "fresh200",
+      "evidence_sha256": "d6e7ade339f0020dc060694dd7ffaf57a3f0afe4429c2313dd424103005f0498"
+    },
+    {
+      "loc": "2:220:9",
+      "cohort": "fresh200",
+      "evidence_sha256": "f80f5481158c1f6480e34fcf2731772645b9e21ab8031941f81456f1cedd1bef"
+    },
+    {
+      "loc": "2:223:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "96f2889040742e035ca396311cf6d1bf515e49d855f0d35c15a05c9559934902"
+    },
+    {
+      "loc": "2:226:1",
+      "cohort": "fresh200",
+      "evidence_sha256": "a0fbe624b4df77d30e6aa541a2f77f6a60ba817403482b76b4b2b24400c49147"
+    },
+    {
+      "loc": "2:229:10",
+      "cohort": "fresh200",
+      "evidence_sha256": "dbc6b70b09351b5e20460512b18999f605e2722b9f5c5024775286cdfd00d80e"
+    },
+    {
+      "loc": "2:230:5",
+      "cohort": "fresh200",
+      "evidence_sha256": "da8a5b557028abc6d3d9077c748230a599344358680f0d39f5f84cfc14ef3a91"
+    },
+    {
+      "loc": "2:232:27",
+      "cohort": "fresh200",
+      "evidence_sha256": "550fb45e07cff599849f6618f95a1afc04c9efb0bdda1091e604eb60ce87dad8"
+    },
+    {
+      "loc": "2:233:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "b69b19d4a17685b2024e9da8141ea528cbe059046d2da2851ceb04a9f74f19ea"
+    },
+    {
+      "loc": "2:233:28",
+      "cohort": "fresh200",
+      "evidence_sha256": "8efd62d0a15c7707d2afcf383ae1af9a0a4fc680ec027deb124d4f5546a0b3a5"
+    },
+    {
+      "loc": "2:236:12",
+      "cohort": "fresh200",
+      "evidence_sha256": "255d01cb31973fe254399d07fd5b27f90174564b876d0242d74a4cd3eb68602b"
+    },
+    {
+      "loc": "2:237:9",
+      "cohort": "fresh200",
+      "evidence_sha256": "81bdfa665ae66f2acae56a25323b4f31a0dd14029fbd2eb1d450f62030d04cc4"
+    },
+    {
+      "loc": "2:242:4",
+      "cohort": "fresh200",
+      "evidence_sha256": "b0255bec421da7912d87246e5333889cec8de880899b6f7dbbf82c9d71aef114"
+    },
+    {
+      "loc": "2:243:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "ace05c29e75b6fb5dd929056348ba0808cb2e4ed90e47999adc5f7e62e6449b1"
+    },
+    {
+      "loc": "2:245:9",
+      "cohort": "fresh200",
+      "evidence_sha256": "1fb5986e9d8361e046bfb27de6be833f5e54483665a77486d0fd24309dc6b8b2"
+    },
+    {
+      "loc": "2:246:14",
+      "cohort": "fresh200",
+      "evidence_sha256": "4821c04bf80a7ffcab6f5c7d2e5ee4fbdc79363447df15d6a5d5da4232bec1e9"
+    },
+    {
+      "loc": "2:246:16",
+      "cohort": "fresh200",
+      "evidence_sha256": "d26d0038447b90a33e5c0e76ffee6bf59346e97239c471998223826ae7cdb301"
+    },
+    {
+      "loc": "2:246:33",
+      "cohort": "fresh200",
+      "evidence_sha256": "f4fd1176f0b61001c0d304120add5b863973feff1ce9cc288cb3ea03f3335628"
+    },
+    {
+      "loc": "2:247:2",
+      "cohort": "fresh200",
+      "evidence_sha256": "9e1c146af8b808090b15c56eb523e97f99e5e58e89e9fbbe7981b5a6b08c98b7"
+    },
+    {
+      "loc": "2:247:8",
+      "cohort": "fresh200",
+      "evidence_sha256": "e91300086327a5019ad8f4d262298cb7eafa57f63540fc42e6ed9ba335f0a04b"
+    },
+    {
+      "loc": "2:247:14",
+      "cohort": "fresh200",
+      "evidence_sha256": "3adb881334e920852112ba6b2d7729fd14ced12c63d84b94a7c517e5fd7a7082"
+    },
+    {
+      "loc": "2:248:2",
+      "cohort": "fresh200",
+      "evidence_sha256": "5230a355114dd9a0adc314df5929419c6d9f6fffb74a6f732b0fb767d8e2d2f8"
+    },
+    {
+      "loc": "2:248:27",
+      "cohort": "fresh200",
+      "evidence_sha256": "29d95987a34f50f2d1d94a6baf5badbdf873dcd9fad43baf5a2df3ed7d3e0a88"
+    },
+    {
+      "loc": "2:249:39",
+      "cohort": "fresh200",
+      "evidence_sha256": "573e024a2ce83006d5cad2089b3b3c37c0f9a1cb272e184dc791de8362e7d77a"
+    },
+    {
+      "loc": "2:255:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "9253c2206ca5658b8b6583e13b9e8a915221520140460838f737ddd5d07f5dfa"
+    },
+    {
+      "loc": "2:256:21",
+      "cohort": "fresh200",
+      "evidence_sha256": "214295ca67c9526467c0139a91e3040034bd6222cf0bab43c16f7cdb86fac2e0"
+    },
+    {
+      "loc": "2:259:59",
+      "cohort": "fresh200",
+      "evidence_sha256": "94940e310386ab55d4df31d03f08f8547904fa8cc1f9d13f3a40fcadcb0e6d6f"
+    },
+    {
+      "loc": "2:262:15",
+      "cohort": "fresh200",
+      "evidence_sha256": "dc4b6ef684cbdd5464e881d8282c1799c22e67cdc3037116ec5939f974e769bc"
+    },
+    {
+      "loc": "2:266:5",
+      "cohort": "fresh200",
+      "evidence_sha256": "30793c7b90ad00d369aa7cd51639d210a296c0e1039c7d9ebf02a40b4284cb6b"
+    },
+    {
+      "loc": "2:266:14",
+      "cohort": "fresh200",
+      "evidence_sha256": "aa285786685b2920225246724c37af8cc66fd16374a68a84c357978ad792615c"
+    },
+    {
+      "loc": "2:266:32",
+      "cohort": "fresh200",
+      "evidence_sha256": "600a522996e750c96c6d82856b40307027e4730afde98c90b96ff1a54cad51b5"
+    },
+    {
+      "loc": "2:267:11",
+      "cohort": "fresh200",
+      "evidence_sha256": "2f29e7cbf9a6b791f914d117d758251ad6dfac2746e6de5629ef4f71f2a7c5eb"
+    },
+    {
+      "loc": "2:280:11",
+      "cohort": "fresh200",
+      "evidence_sha256": "b67a62fedf1f51cbf5d8f89ca07ea492c0a0932293f42bc14cbbca70acbac328"
+    },
+    {
+      "loc": "2:286:7",
+      "cohort": "fresh200",
+      "evidence_sha256": "11f69b054d28acef4c0a07268d418570576d465d6a550e0651c019e0a464b582"
+    },
+    {
+      "loc": "2:286:37",
+      "cohort": "fresh200",
+      "evidence_sha256": "b1ab13c857718c5abc3ce3c93a0649ef857fcb463072d913e6527d8d9dd9949d"
+    },
+    {
+      "loc": "2:286:42",
+      "cohort": "fresh200",
+      "evidence_sha256": "f242c95eb70fae7d37fcb37ef74188539d1882df56ca275a8f3e872c534c5a7c"
+    },
+    {
+      "loc": "3:4:12",
+      "cohort": "fresh200",
+      "evidence_sha256": "e88dfad7f7f12fb6c23f4e09876dc606277ff364f94d7ecb1d3a2a77ad0f994c"
+    },
+    {
+      "loc": "3:8:9",
+      "cohort": "fresh200",
+      "evidence_sha256": "817246f378cd66a878ad013a18d89cceb440c145966dbbe18179cdb5d3dc6480"
+    },
+    {
+      "loc": "3:13:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "a639517007e64a7702809cfeda065577cbeeba35fb5559c17994129070f919e5"
+    },
+    {
+      "loc": "3:15:6",
+      "cohort": "fresh200",
+      "evidence_sha256": "0139eca97ce7979d2585f8a18055a62f5314446243c98a66df5748f69dba1727"
+    },
+    {
+      "loc": "3:16:7",
+      "cohort": "fresh200",
+      "evidence_sha256": "69f75623e7159a68aed3f32dcd589c131e9c0d432434d459717df10733f2df1c"
+    },
+    {
+      "loc": "3:22:9",
+      "cohort": "fresh200",
+      "evidence_sha256": "3712e39fc2594b9979425345853e77b5358700839fa434fa3c2d14bf52f0344b"
+    },
+    {
+      "loc": "3:31:10",
+      "cohort": "fresh200",
+      "evidence_sha256": "4882c87c65a7c6e7f97a8548f12854ac1819b71d48f3b59e9218439f4a300df4"
+    },
+    {
+      "loc": "3:35:8",
+      "cohort": "fresh200",
+      "evidence_sha256": "98bb6fd6a8d90ced398854bac5d60b92b6555ae6fcae35a32b8f195c53da8290"
+    },
+    {
+      "loc": "3:37:21",
+      "cohort": "fresh200",
+      "evidence_sha256": "93f7f7e2a1019a81305860b7f8fdd1be2f2f18697041387d9caac98f50e87ec0"
+    },
+    {
+      "loc": "3:38:8",
+      "cohort": "fresh200",
+      "evidence_sha256": "ab4af30d951bc02fe6eb829f5a3ad672d56712fc3b78a48166efde919e6f6a25"
+    },
+    {
+      "loc": "3:40:5",
+      "cohort": "fresh200",
+      "evidence_sha256": "72bb3d07bbddcf755602cad26a2c2875fd4d95b14b4883dad57bc6ab25582e3f"
+    },
+    {
+      "loc": "3:41:4",
+      "cohort": "fresh200",
+      "evidence_sha256": "164bad0777151b068f864b677f8849c881ae9fb968ac321b4e3a90e46ae79fce"
+    },
+    {
+      "loc": "3:47:5",
+      "cohort": "fresh200",
+      "evidence_sha256": "48687024583d792d8374eeb972796f78acf34f1e281f1d3fdf775100cb713073"
+    },
+    {
+      "loc": "3:47:21",
+      "cohort": "fresh200",
+      "evidence_sha256": "170c7796904b1772917c57b8c547815b9a2a4ea6ccd3acb97b1f9081f4f8f233"
+    },
+    {
+      "loc": "3:49:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "7f82af155bef7b901a1f91d096c4d71e47379bdc916ad5a09d91c3553e15c3cd"
+    },
+    {
+      "loc": "3:49:42",
+      "cohort": "fresh200",
+      "evidence_sha256": "eeccefe87970ff39524e324bd448c9459af904f9112a8468e07d91a83b348149"
+    },
+    {
+      "loc": "3:50:8",
+      "cohort": "fresh200",
+      "evidence_sha256": "2d542c18729b8bdea94507f0ae9bfc467175680fb4dbb2670cd36c5ea2c132f0"
+    },
+    {
+      "loc": "3:59:13",
+      "cohort": "sample60",
+      "evidence_sha256": "355041bc0e262118db90586efff25663fbf51e6aedf617b09e276b638bed51fc"
+    },
+    {
+      "loc": "3:66:5",
+      "cohort": "fresh200",
+      "evidence_sha256": "60afd950bd9ee306cf5f927f98a04ebf205ebd65aade96dffdeec1e730463496"
+    },
+    {
+      "loc": "3:66:12",
+      "cohort": "fresh200",
+      "evidence_sha256": "08fa3cc73e21a32fbae0279f8b510ee06b388a47ad19a8b05f4def5e343c1bb7"
+    },
+    {
+      "loc": "3:77:12",
+      "cohort": "fresh200",
+      "evidence_sha256": "6a3654779b05b81b56c5f78472ddb51d2629c4834fee6fc0367237ebb6f9f1e3"
+    },
+    {
+      "loc": "3:79:15",
+      "cohort": "fresh200",
+      "evidence_sha256": "da380a6b8a48cc42943bce0b2eeb90ad352fcfbd6490b7b1a3e0dd2e43170409"
+    },
+    {
+      "loc": "3:91:18",
+      "cohort": "fresh200",
+      "evidence_sha256": "c1d95c31cdd1530c7891ec68fdcac33c31fa17964bdf2260dce1d27220c00884"
+    },
+    {
+      "loc": "3:91:22",
+      "cohort": "fresh200",
+      "evidence_sha256": "9a62f9ae89779c8bf5cec743fd2aaa7230bd9707927c2571afbda9fdecc5bfaa"
+    },
+    {
+      "loc": "3:103:31",
+      "cohort": "fresh200",
+      "evidence_sha256": "1bf16117db8231397cf9bc9a243abfcf65d0d1ccb73fe3ae72bc4130f2fc893c"
+    },
+    {
+      "loc": "3:105:12",
+      "cohort": "fresh200",
+      "evidence_sha256": "e0e994bbf540647a4d9644a187c90d897b921f4f5ca340fd44c21e368d6bca96"
+    },
+    {
+      "loc": "3:110:19",
+      "cohort": "sample60",
+      "evidence_sha256": "c090e510946f5cef3e3644bc40655b4d65d1650f479c08dfb31c49e9f30a3808"
+    },
+    {
+      "loc": "3:118:26",
+      "cohort": "fresh200",
+      "evidence_sha256": "de21bbc9efc067fd17b1e09520d3b528fa183d6daaebf12666a48c32e1c69ae9"
+    },
+    {
+      "loc": "3:126:6",
+      "cohort": "fresh200",
+      "evidence_sha256": "b21fc0a6c86d9c46c68b15a02c96db7aa501c58a1f401d24edbd9faa6ca3b1f3"
+    },
+    {
+      "loc": "3:147:9",
+      "cohort": "fresh200",
+      "evidence_sha256": "2cdc2305fb71f4afe860910aceecbbedff039fe1fb7df06568408738b0a96336"
+    },
+    {
+      "loc": "3:154:24",
+      "cohort": "fresh200",
+      "evidence_sha256": "a7a8c4cdafef484abdea8ec148715f6d76c27afbdb1d6506f8cd03aeee2f3ffe"
+    },
+    {
+      "loc": "3:154:40",
+      "cohort": "fresh200",
+      "evidence_sha256": "1baf67d8f0bbe6ebba469708ea037690db472650c1c96e3c05563184adbd2791"
+    },
+    {
+      "loc": "3:154:44",
+      "cohort": "fresh200",
+      "evidence_sha256": "6b643a6937922f2631f0f663df49bedc50a8a6e9a6e410d6dc22fc5260a25500"
+    },
+    {
+      "loc": "3:159:6",
+      "cohort": "fresh200",
+      "evidence_sha256": "084c1dc8583a9cea167d4779f15dbda8444c970e1b315fec46f7f5fa12007532"
+    },
+    {
+      "loc": "3:159:18",
+      "cohort": "fresh200",
+      "evidence_sha256": "f55dc185889773d187f526e88ed2cf090b6fac27c853b5db8e5470b3b6caafba"
+    },
+    {
+      "loc": "3:160:6",
+      "cohort": "sample60",
+      "evidence_sha256": "b0cd0aca89a892bde0eee5985a9a33e27707f2eff97546c14473f9eeb299304f"
+    },
+    {
+      "loc": "3:167:5",
+      "cohort": "fresh200",
+      "evidence_sha256": "cf7fcbc26b89a4419f33649132b2b597aab8347eeaffe81c4e1b3f1d4e71d445"
+    },
+    {
+      "loc": "3:173:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "974b970854cc27f21dde23271d09bfcbd67a87a8a765abbf48a2d480aa2d0af4"
+    },
+    {
+      "loc": "3:173:9",
+      "cohort": "fresh200",
+      "evidence_sha256": "97e858113a4655bce071a55d52c0bc4177131f9d414912a887382221e5ca068c"
+    },
+    {
+      "loc": "3:176:16",
+      "cohort": "fresh200",
+      "evidence_sha256": "c1a6b2c95bd64f635f8f1b77b02e80a3855ea946de172a4bd572ab92207352df"
+    },
+    {
+      "loc": "3:180:12",
+      "cohort": "fresh200",
+      "evidence_sha256": "af66e76404f29b5fd7f4958cbb9641286970f19230251d49bd5b7c01b3c673db"
+    },
+    {
+      "loc": "3:180:16",
+      "cohort": "fresh200",
+      "evidence_sha256": "fee477b37c66e2ad05469c7023459f699ce21b9495c6c0b2fa18a783abe1600b"
+    },
+    {
+      "loc": "3:193:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "7ca09d2affe8c884aa973e26223a3f8e6bad4f0c384f3d8c790ce50344eb36a1"
+    },
+    {
+      "loc": "3:195:2",
+      "cohort": "fresh200",
+      "evidence_sha256": "17325a8015576bb33d40abf504da2ef10e82dfc2f359815d7bcf8929026044f9"
+    },
+    {
+      "loc": "3:199:23",
+      "cohort": "fresh200",
+      "evidence_sha256": "0cd1ecad76b4f8505174ccad24e6a3e0142a125722659b7f43f3b6a7b75fd44f"
+    },
+    {
+      "loc": "4:3:10",
+      "cohort": "fresh200",
+      "evidence_sha256": "dd6fb8fed4acf748c9f06424c08cc7306f94106a99899deabf65b9338195d07e"
+    },
+    {
+      "loc": "4:4:7",
+      "cohort": "fresh200",
+      "evidence_sha256": "c73c34a1d68bc92559df80051de0f21d895c2aff4a2a749af0dea6cd4626c2f2"
+    },
+    {
+      "loc": "4:8:11",
+      "cohort": "fresh200",
+      "evidence_sha256": "e0bb4c5ab8b18fcea07ae53f190e4ae6b79f9611e483bfb900309daa9271852c"
+    },
+    {
+      "loc": "4:11:32",
+      "cohort": "sample60",
+      "evidence_sha256": "4fc05a20b014ea13544c912dc52f838bcea380ef69f88b84dc55d6f9073b8a44"
+    },
+    {
+      "loc": "4:11:37",
+      "cohort": "fresh200",
+      "evidence_sha256": "0c1b9b31cc6a18cb8f759073395a8c14e988bf99526c71679713e590278bcf4d"
+    },
+    {
+      "loc": "4:11:45",
+      "cohort": "fresh200",
+      "evidence_sha256": "8d6fc3180f37ec2e466368550bcfb9c455119c314714d543edcac8fbe705803a"
+    },
+    {
+      "loc": "4:11:62",
+      "cohort": "fresh200",
+      "evidence_sha256": "ee637e833f35c02769a8d7873b86b45bd8c91d7d9edada7d1832b6cda8ad72bd"
+    },
+    {
+      "loc": "4:12:9",
+      "cohort": "fresh200",
+      "evidence_sha256": "a48592f5437377e45fbb6798507dd8b7803bd11d28991c668bc46972122556ab"
+    },
+    {
+      "loc": "4:12:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "c9c517b66befc9efe3fc7530761ed25ce94b9f48ae331057bffdbc351a3aa1a1"
+    },
+    {
+      "loc": "4:12:33",
+      "cohort": "fresh200",
+      "evidence_sha256": "1a46bebc37c08a97d8abafa6bd795845458c30f31a11fff79b2e0778cae83002"
+    },
+    {
+      "loc": "4:12:37",
+      "cohort": "fresh200",
+      "evidence_sha256": "556f12e18d71679bb69b2d8f9346afabb2d1c34163e16f5b4ab7a675bf2c4acf"
+    },
+    {
+      "loc": "4:17:5",
+      "cohort": "fresh200",
+      "evidence_sha256": "3f83e80ee34406fee70b3808f7c937c33bc6ef6cb7b1bf5b2993c8d0134a62af"
+    },
+    {
+      "loc": "4:19:6",
+      "cohort": "fresh200",
+      "evidence_sha256": "2b08f06ee9e2362dada281450ee6b51f39e22b1984791e363987d2f991e65265"
+    },
+    {
+      "loc": "4:24:12",
+      "cohort": "fresh200",
+      "evidence_sha256": "edcc7c0e00a6728618356ffb353c1cc9155ae6b1fa953c65dd923511c20ed334"
+    },
+    {
+      "loc": "4:25:55",
+      "cohort": "fresh200",
+      "evidence_sha256": "34a25ef31503610b00ee86fca802b12cfbf73c0f5eb616f153442221055347b1"
+    },
+    {
+      "loc": "4:46:29",
+      "cohort": "fresh200",
+      "evidence_sha256": "8b99ccd322d8ac7ac0489baa5c72a118f803b6f4c8539f2f64b562c1881fd602"
+    },
+    {
+      "loc": "4:51:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "cff1b57480df4ce526cf4fe21e8163b582aa216a32a484235d19bd18a14fb68f"
+    },
+    {
+      "loc": "4:52:10",
+      "cohort": "fresh200",
+      "evidence_sha256": "f0e5edf11a4d0480e3c0f9f01084f7df1dd4f9a98e9ba44e096a73b3d0b0cb8b"
+    },
+    {
+      "loc": "4:53:2",
+      "cohort": "sample60",
+      "evidence_sha256": "24354f2d82f48b0b9b014932682666c892b6324b8c6030390cc374900b2ec4eb"
+    },
+    {
+      "loc": "4:57:14",
+      "cohort": "fresh200",
+      "evidence_sha256": "315a3e912b88397577bdc948cf92849e50bb153ea0a393a44e4818e04e5e7d67"
+    },
+    {
+      "loc": "4:61:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "3ef4576b20b2c7dcbbafeaedbeafc5a270bae8384c9fac46bfbc6e98192d294d"
+    },
+    {
+      "loc": "4:63:12",
+      "cohort": "sample60",
+      "evidence_sha256": "b8e2a3657f53f6ab495a708db48262e0e7da09056205a611b3e65cec68152a8b"
+    },
+    {
+      "loc": "4:66:25",
+      "cohort": "fresh200",
+      "evidence_sha256": "c5ea6285bb182d32e4df36c0dfdbd4542b8b2de8f079e707a73315f262029b17"
+    },
+    {
+      "loc": "4:77:6",
+      "cohort": "fresh200",
+      "evidence_sha256": "838b8ff197c3588900f54b895e56833d7cbab3f959ec72a24dc7e19a981c5996"
+    },
+    {
+      "loc": "4:85:6",
+      "cohort": "fresh200",
+      "evidence_sha256": "a04e020731e672820fe1eba774c2288caf0037713ec3b9770f122463204103a8"
+    },
+    {
+      "loc": "4:85:14",
+      "cohort": "sample60",
+      "evidence_sha256": "a70d1c4d4dd35ccb61c421797302d94846846b4c0a0c19473fa7a682a1399de8"
+    },
+    {
+      "loc": "4:90:34",
+      "cohort": "fresh200",
+      "evidence_sha256": "5cfe483aa3956d420954b8e7d0a230ec6f31d4552dbe8c3aa279323d8b66a6b3"
+    },
+    {
+      "loc": "4:92:28",
+      "cohort": "fresh200",
+      "evidence_sha256": "14b65a8b88fcad60335130d640b6ec9d9ec8c7993e07d9641ec947991354d61f"
+    },
+    {
+      "loc": "4:93:14",
+      "cohort": "fresh200",
+      "evidence_sha256": "471b709ef8bf15d366030645fdd20c6aef3f9a4efc9481ad56558d3cada19090"
+    },
+    {
+      "loc": "4:101:21",
+      "cohort": "fresh200",
+      "evidence_sha256": "ee7767bd736e71bbe5ad4f7c0c31837581c746177d58e840dea79c17ebd67c92"
+    },
+    {
+      "loc": "4:102:5",
+      "cohort": "fresh200",
+      "evidence_sha256": "7a0b865d0c16f55fa5642b99d62a5f7f85f3634e69d644ef95840d2fb36dc060"
+    },
+    {
+      "loc": "4:115:8",
+      "cohort": "sample60",
+      "evidence_sha256": "de3af13b8b87a49a3414688c10ce6c1a45b711956d34808a5764007580c53bb0"
+    },
+    {
+      "loc": "4:123:14",
+      "cohort": "fresh200",
+      "evidence_sha256": "1964fce8653ae5fdcb0687e952e522cb7262066829bc04a3d2ed66dccf4744ee"
+    },
+    {
+      "loc": "4:127:21",
+      "cohort": "fresh200",
+      "evidence_sha256": "54121bb8b57bce1f221b4ac641376fbe96a47f3e7578302c14ef9917f8ba1acd"
+    },
+    {
+      "loc": "4:137:17",
+      "cohort": "fresh200",
+      "evidence_sha256": "928e23863e72f1f84c26da09a13bd873a2fac352d9c3df4982371ca5dcbd2736"
+    },
+    {
+      "loc": "4:141:6",
+      "cohort": "fresh200",
+      "evidence_sha256": "426d15e59eb0a55918d8cf8164c22456e0611b2e457f59c1d0cfb1317fda9fff"
+    },
+    {
+      "loc": "4:145:10",
+      "cohort": "sample60",
+      "evidence_sha256": "052c9481b7d1bc3d043ebd9e52df6eec8b0bbec6e37433e6ec8b99abd24cfcd2"
+    },
+    {
+      "loc": "4:154:6",
+      "cohort": "fresh200",
+      "evidence_sha256": "b9fd52ea9029102487b3614f621c7eb0ff66a29b5a6ea9b9573e7c6bcfe6d3d5"
+    },
+    {
+      "loc": "4:154:11",
+      "cohort": "fresh200",
+      "evidence_sha256": "d4aaf600309591c52b6372a169875e2b6bba3a00b641a1394114974ff269f4a1"
+    },
+    {
+      "loc": "4:157:16",
+      "cohort": "fresh200",
+      "evidence_sha256": "1a02612deb4764e22635462f897c9e4c265c70fff268ce261d87a3ba6225a268"
+    },
+    {
+      "loc": "4:157:25",
+      "cohort": "fresh200",
+      "evidence_sha256": "7c28c3be7aede478fbbd4bb1a8ce6ada7b20bd47118ed631071750e2934393ce"
+    },
+    {
+      "loc": "4:160:9",
+      "cohort": "fresh200",
+      "evidence_sha256": "17a21959fd4f866346f418932dc0547949c9175691a67bb4b434547acb5cc6f9"
+    },
+    {
+      "loc": "4:173:20",
+      "cohort": "fresh200",
+      "evidence_sha256": "26394b52dc66f8a459dc745080db038b657692301d660cde38473e0e5f6f9016"
+    },
+    {
+      "loc": "4:176:11",
+      "cohort": "fresh200",
+      "evidence_sha256": "2ffa5498b9187cea798ab1eb4c42e91e81bf1190ebe7b81ef3004f0d3ccda1e4"
+    },
+    {
+      "loc": "4:176:24",
+      "cohort": "fresh200",
+      "evidence_sha256": "c5884ef9216455c41708bed94a3a610625f12b3c5ace338eaa940905d49286d8"
+    },
+    {
+      "loc": "4:176:44",
+      "cohort": "fresh200",
+      "evidence_sha256": "bd513b8278373044e229131a7ad276a04f8f29dceeb83dfb184591ffe6de3537"
+    },
+    {
+      "loc": "5:1:11",
+      "cohort": "fresh200",
+      "evidence_sha256": "6b4ffce2f8d024c3df11cf5ed8e81543226e41bde32fc3e1b8a8b588fd20f01a"
+    },
+    {
+      "loc": "5:3:42",
+      "cohort": "fresh200",
+      "evidence_sha256": "b785a0654f71b7e242cf691656c0025ce2920f442a5f96a4748dd87be3d07bfc"
+    },
+    {
+      "loc": "5:3:48",
+      "cohort": "fresh200",
+      "evidence_sha256": "c16e04d0ab67f1420fcc619b218b17ec694f8ffb3f2828f2713fbfe22498af8d"
+    },
+    {
+      "loc": "5:4:4",
+      "cohort": "fresh200",
+      "evidence_sha256": "ab5f35edd1ccbdee1c3beb5d0700a2ddf21d6b910fa202646a63dd37a8850252"
+    },
+    {
+      "loc": "5:4:7",
+      "cohort": "fresh200",
+      "evidence_sha256": "30d93adde01086458717fbbc40a774eb87af21b4862dbf5c77801f6c956d5cd8"
+    },
+    {
+      "loc": "5:5:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "b51ad4735f2af6a87020e63f63635c0492534a0d190758d6621727b71c1a991e"
+    },
+    {
+      "loc": "5:5:10",
+      "cohort": "fresh200",
+      "evidence_sha256": "6e66b18ce8a7e2f88c357849bf47f2d23d48c5739c60cddda82773009d23ba18"
+    },
+    {
+      "loc": "5:5:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "f13a83499623395dd4d5e263f76eab7ec8e016d76ceb3f1b44ed9cb0889ae69a"
+    },
+    {
+      "loc": "5:19:7",
+      "cohort": "fresh200",
+      "evidence_sha256": "fb3e7ed330efa3fe5e7e360438eb6d6dd098dbc63d8d1658ba7e0f22a3f40a74"
+    },
+    {
+      "loc": "5:21:8",
+      "cohort": "fresh200",
+      "evidence_sha256": "755c04d1d8cfcfeeb550ad33080e4c80db3ed8b380116c5a1610cb91d810d6d9"
+    },
+    {
+      "loc": "5:30:2",
+      "cohort": "fresh200",
+      "evidence_sha256": "f5c723a56f1c0a27d1d38c36dad38bcc819f767f3f17be807332c2b79150b06c"
+    },
+    {
+      "loc": "5:33:26",
+      "cohort": "fresh200",
+      "evidence_sha256": "7d4c7309c3e15539849a9937b594d9d3e8ac836a236aed13ad2ef656d5bf1777"
+    },
+    {
+      "loc": "5:36:6",
+      "cohort": "fresh200",
+      "evidence_sha256": "94a8b9b3685db7e291ce37a25616813155ce2cf863d805e80a4bf04cff87ca2d"
+    },
+    {
+      "loc": "5:41:47",
+      "cohort": "fresh200",
+      "evidence_sha256": "77164d19c335775c942fd98e121d085f23033793cce305f5239482b39c441544"
+    },
+    {
+      "loc": "5:41:59",
+      "cohort": "fresh200",
+      "evidence_sha256": "1b2163a52fcd95ce45c14ec4a02535f72626a6c1e2a5f34a015c21c853987b79"
+    },
+    {
+      "loc": "5:44:12",
+      "cohort": "fresh200",
+      "evidence_sha256": "c335108bfa7384242b45dc15057ffdd3b23a24f6d44ec9215f7c8191a350fd61"
+    },
+    {
+      "loc": "5:45:22",
+      "cohort": "fresh200",
+      "evidence_sha256": "820d7d348771a18e00d5ad2a653e06c6ca297773778bb55f532ffcffd9d379c9"
+    },
+    {
+      "loc": "5:75:20",
+      "cohort": "fresh200",
+      "evidence_sha256": "d325b1c574855d3c3d9cdf809f60b6e7f8ef96676aa61672e1dd15f21186782d"
+    },
+    {
+      "loc": "5:76:9",
+      "cohort": "fresh200",
+      "evidence_sha256": "94886e92d2932c08ff588af59b45c58eb3ceebdcc9db25b7c2bc6f7f88ef9100"
+    },
+    {
+      "loc": "5:80:10",
+      "cohort": "fresh200",
+      "evidence_sha256": "b9aba40f300b41e877b08a3215a3fc6683fc3bcc38b97dd528a72569ef66fddd"
+    },
+    {
+      "loc": "5:82:5",
+      "cohort": "fresh200",
+      "evidence_sha256": "db752efa9abdbe7bafd38a7fd00584fb5d931f3e8cd429712455ed70f6d73f52"
+    },
+    {
+      "loc": "5:82:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "3e00d94ca7af1e0cf5a36a53b50fd786322f4ac2fd744d091de8d369b9cd0393"
+    },
+    {
+      "loc": "5:89:42",
+      "cohort": "fresh200",
+      "evidence_sha256": "51491978cfc956fd8cbe76742369b4402ba8025f68aeacb84aab1ed161428fdd"
+    },
+    {
+      "loc": "5:96:2",
+      "cohort": "fresh200",
+      "evidence_sha256": "9b245a88c93af1a33c665e6c22e77a7da640b19c4a05b9038ca1787336c24222"
+    },
+    {
+      "loc": "5:96:7",
+      "cohort": "fresh200",
+      "evidence_sha256": "7e3f49d38142425c6cdf9609ac3010d805e0e780fa2105db0e7ce7df8b6a6d7c"
+    },
+    {
+      "loc": "5:104:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "d013e2e626295c3592897736f837b21cc0daa966c7174530a9b66d4535062475"
+    },
+    {
+      "loc": "5:114:13",
+      "cohort": "fresh200",
+      "evidence_sha256": "e5e5d13ba7e46f2a6d5be6ec3d7b0bb40d602b2a30730bf129d06b72498d4b92"
+    },
+    {
+      "loc": "5:116:20",
+      "cohort": "fresh200",
+      "evidence_sha256": "dcb8c1b7bc8129829afbd178f759e568030fb5e3d31f3919513fd0c2ae2a0896"
+    },
+    {
+      "loc": "5:116:25",
+      "cohort": "fresh200",
+      "evidence_sha256": "7a90357009942d86964c0a25084660e9df874b7f9dd92be0d16dc9896edd337b"
+    },
+    {
+      "loc": "5:117:3",
+      "cohort": "fresh200",
+      "evidence_sha256": "33af415079cdfcd785cac6d5e7f453ac9c5cb8c23b704ff8bf44a59ec7c7c4fe"
+    },
+    {
+      "loc": "5:119:8",
+      "cohort": "sample60",
+      "evidence_sha256": "158e0c72bcc257b46ce8dfcd393b2cc5228f4c1846863a1ff32a8ab7fdff2be5"
+    },
+    {
+      "loc": "6:6:15",
+      "cohort": "fresh200",
+      "evidence_sha256": "193c79badc32237a73b408161d3c7e796fc087b980b28820b06ecf1c6cef39d2"
+    },
+    {
+      "loc": "6:17:7",
+      "cohort": "fresh200",
+      "evidence_sha256": "430ef1561c4230343ca9ccfed8908d51d8f929f4e80d7ad3fd8c5fd57d4cc581"
+    },
+    {
+      "loc": "7:65:10",
+      "cohort": "sample60",
+      "evidence_sha256": "6d4845beac6f3e3521e637b574c928136dfb0a05243a64da8a5c5b37989bd4a7"
+    },
+    {
+      "loc": "7:138:15",
+      "cohort": "sample60",
+      "evidence_sha256": "c09c73a298eb174d35ad81c8fb7898f5b7d9208a7066de4400873a94c3ef34e4"
+    },
+    {
+      "loc": "7:148:10",
+      "cohort": "sample60",
+      "evidence_sha256": "590264c6db082ded4f5b49335f3325bf9c11ac297c2a73f3a5c6b19a176c984c"
+    },
+    {
+      "loc": "8:29:8",
+      "cohort": "sample60",
+      "evidence_sha256": "08c66f36fed518eeb3285849f0c1c38fbb1afaf32e282bcfac70d56265e3d790"
+    },
+    {
+      "loc": "8:48:15",
+      "cohort": "sample60",
+      "evidence_sha256": "8625df1a2035d3310043c5bc137941a8b548862e4cf1270d275176e39008a9d9"
+    },
+    {
+      "loc": "9:38:8",
+      "cohort": "sample60",
+      "evidence_sha256": "93d9f9c9b435dced0db8a67f411c4931585015d9cc49dfe1c6e68fc5152e6bd2"
+    },
+    {
+      "loc": "9:100:15",
+      "cohort": "sample60",
+      "evidence_sha256": "9755bd8d126b2993556454740251e755d3f906520c44f7d17a2dbdc706261394"
+    },
+    {
+      "loc": "9:111:9",
+      "cohort": "sample60",
+      "evidence_sha256": "d5de8c5ba53d9cbf5d3fb99961b1b835527b765e693c6abfa221e9ca39dbd3b4"
+    },
+    {
+      "loc": "10:2:16",
+      "cohort": "sample60",
+      "evidence_sha256": "16bdfb59eab891e6af93aaf5f4b7b9122fe8adf084f5c45953f652281f72672a"
+    },
+    {
+      "loc": "10:15:20",
+      "cohort": "sample60",
+      "evidence_sha256": "8921a4a85bdddbcc2c0d0d4edbf509137689fe5d36d7a8716be9b3caff017bc3"
+    },
+    {
+      "loc": "12:80:29",
+      "cohort": "sample60",
+      "evidence_sha256": "4c934a762f7149765c01e8d21cff5f0ec87dc23b5e54d8240424e92187ec019c"
+    },
+    {
+      "loc": "12:97:4",
+      "cohort": "sample60",
+      "evidence_sha256": "ba45293730a360cc32cdb578b1326981c8954743bb9b4d3377d4029757074e3c"
+    },
+    {
+      "loc": "13:33:27",
+      "cohort": "sample60",
+      "evidence_sha256": "60b80c77263789c7526d01f3e35c799839e9012d6300862a5a537f047554f33e"
+    },
+    {
+      "loc": "13:33:37",
+      "cohort": "sample60",
+      "evidence_sha256": "50071d36ca5cf61ba761c80d04f09fc697a1d4cb98357f17ab18fa5bf1634f0d"
+    },
+    {
+      "loc": "17:9:5",
+      "cohort": "sample60",
+      "evidence_sha256": "967275cd41fa0677491c15c875d7dc56f0e186a5b28da16f5cca672b86cabe18"
+    },
+    {
+      "loc": "17:91:3",
+      "cohort": "sample60",
+      "evidence_sha256": "e44b15bd9da13d41e19e3b499449bfe5147dd95cb17f9a0a5fee0455a49a1bc1"
+    },
+    {
+      "loc": "18:16:16",
+      "cohort": "sample60",
+      "evidence_sha256": "eaa014b1ec0cbbbf2654cb257403eb73e41646bfc88164da79e01918ec9a2e51"
+    },
+    {
+      "loc": "18:90:12",
+      "cohort": "sample60",
+      "evidence_sha256": "847f172f85e0097b3d38916a2a422f61816d94b550f4dc2b233c3cabaae36ab5"
+    },
+    {
+      "loc": "18:97:7",
+      "cohort": "sample60",
+      "evidence_sha256": "d3ecd22030d21732c4df082986430d3874f58e71af1e9407e2c4bbfee05b790a"
+    },
+    {
+      "loc": "20:73:5",
+      "cohort": "sample60",
+      "evidence_sha256": "71d99f177848b9c1e53cde84bdc3f85f54123dc3d445dab3c3f54493f56edcdc"
+    },
+    {
+      "loc": "20:96:15",
+      "cohort": "sample60",
+      "evidence_sha256": "2b12832e00c1963721ef37ce7b47d3e196a3ad278653e923a6e2bd63389943a4"
+    },
+    {
+      "loc": "21:72:2",
+      "cohort": "sample60",
+      "evidence_sha256": "f4c5f28afd69d5b701c00cd54c17db50ef24ff3085b696ff7d127fb4ae1b62c9"
+    },
+    {
+      "loc": "22:9:7",
+      "cohort": "sample60",
+      "evidence_sha256": "9d9410a00adb3ae616872dbea2986a28f0942138e8997868eb9ea00ac135e237"
+    },
+    {
+      "loc": "22:46:6",
+      "cohort": "sample60",
+      "evidence_sha256": "3ba535d73de9d02ee25849d7700a34f9fe82d609dc72df684229ee72f7630762"
+    },
+    {
+      "loc": "22:73:18",
+      "cohort": "sample60",
+      "evidence_sha256": "aa37258272c7ef75fa15373dddffed6365a61615441b6a858ee553a436551401"
+    },
+    {
+      "loc": "24:58:45",
+      "cohort": "sample60",
+      "evidence_sha256": "afd4644bb297c51a43984f65e54d3cbb60cfc16eed04aadf8fada8555a01ffb4"
+    },
+    {
+      "loc": "25:15:11",
+      "cohort": "sample60",
+      "evidence_sha256": "a89484f5243a53ab8b97d67ffb58cf66314fa8486687b9b27f76c1d3121b9bca"
+    },
+    {
+      "loc": "28:6:2",
+      "cohort": "sample60",
+      "evidence_sha256": "9ae9ce45881e7af082f4db478de802cbfb79af86573e680aa96a2d6f8bba5823"
+    },
+    {
+      "loc": "28:68:8",
+      "cohort": "sample60",
+      "evidence_sha256": "9588863dd3119c0cabe334e9601789e6a191fe55d886d6fbec73ebe69aabffc8"
+    },
+    {
+      "loc": "31:32:8",
+      "cohort": "sample60",
+      "evidence_sha256": "75d9a70570b8d6bd389fe69cd9e9d1cd00a62c0a656c97a56ab12d87cdb88a10"
+    },
+    {
+      "loc": "33:53:52",
+      "cohort": "sample60",
+      "evidence_sha256": "3691c63803613ab22937cc457aeaa06822d59456b7e155f5e22181cd2b2490b5"
+    },
+    {
+      "loc": "34:10:11",
+      "cohort": "sample60",
+      "evidence_sha256": "91e556ce8babc010ae07acb02596e9318170fda760bfc830829a0b61363a5fa4"
+    },
+    {
+      "loc": "34:37:15",
+      "cohort": "sample60",
+      "evidence_sha256": "65d0320f89d2189d0f3a0efefed79d8f1372836f96a7934ef66bebcf93253503"
+    },
+    {
+      "loc": "36:40:4",
+      "cohort": "sample60",
+      "evidence_sha256": "2fa5bfbab813f540685892d481d74dbc0354d3e64e8609be502f5c208f5b83c5"
+    },
+    {
+      "loc": "36:69:6",
+      "cohort": "sample60",
+      "evidence_sha256": "6909515bbe1f22245db0c2e7e9ad0bb95777b16f407c774fe8dd5b4965899cd6"
+    },
+    {
+      "loc": "39:71:13",
+      "cohort": "sample60",
+      "evidence_sha256": "d7053e048c0810943ce3ce3484a2aa09f3ce96206937aba02cf0462d0bf216cc"
+    },
+    {
+      "loc": "40:29:2",
+      "cohort": "sample60",
+      "evidence_sha256": "31755867440e4d817f9456690946d517b2ede18ff5c2b55584b12ad1b0cc69a5"
+    },
+    {
+      "loc": "40:33:14",
+      "cohort": "sample60",
+      "evidence_sha256": "aab2e00edf66addb66b98fa85817003703bd62636029d90a2629f323bd6d1214"
+    },
+    {
+      "loc": "42:22:16",
+      "cohort": "sample60",
+      "evidence_sha256": "75d479ab9fc073688de054aa9241bb119073c462ec4542a79202fbb37ada540d"
+    },
+    {
+      "loc": "47:25:14",
+      "cohort": "sample60",
+      "evidence_sha256": "2fd183f01a8f8819c2a0a61ca7702288dfcf1abfbb3b10c852d3ca14a097babe"
+    },
+    {
+      "loc": "57:16:3",
+      "cohort": "sample60",
+      "evidence_sha256": "c4b325d572e0d35019ba3e9f233f2859f27687d9d6aa20e12fd648dc94d1d5ff"
+    },
+    {
+      "loc": "65:6:31",
+      "cohort": "sample60",
+      "evidence_sha256": "4e4ba7d461084b9d57ab86debdcf273ebd8ca083704a7dd7e514895b162bfb6c"
+    },
+    {
+      "loc": "66:2:4",
+      "cohort": "sample60",
+      "evidence_sha256": "5986ab6ed0ee09e43ddf859f77647d6b8915b2b103b7c3bb005cb6f55d6724d6"
+    },
+    {
+      "loc": "69:12:2",
+      "cohort": "sample60",
+      "evidence_sha256": "e3a3f002c89dff34f15ff384abb0f5da7f90a957381d6028df23af9f9ecf38fc"
+    },
+    {
+      "loc": "71:9:6",
+      "cohort": "sample60",
+      "evidence_sha256": "b14b60583888ad87c28c8efd7772c24402d37c0b489b414563940bb2e7709c94"
+    },
+    {
+      "loc": "99:5:4",
+      "cohort": "sample60",
+      "evidence_sha256": "9a5d01407f7342d6444ae77ac72d3a80aea8ce129e0f7cadc38de4f1cb76e6ac"
+    }
+  ]
+}

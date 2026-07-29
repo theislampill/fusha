@@ -21,6 +21,7 @@
       "qamus/lattice/p007-population-classification.meta.json",
       "qamus/lattice/particle-occurrence-matrix.jsonl",
       "qamus/lattice/p007-mcp-evidence-refs.jsonl",
+      "qamus/task-packets/tp-p007-ds-w1-covered-locs.json",
       "qamus/indexes/quran-loc-surface/index.jsonl",
       "tools/certify_typed_fact.py",
       "docs/certification-authority.md",
@@ -49,9 +50,9 @@
   ],
   "commands": [
     {
-      "purpose": "Derive the wave-2 worklist: all 866 direct-source rows in canonical loc order, minus the 260 covered by wave 1 (coverage manifest ref below), first 200 of the remainder",
-      "run": "python qamus/certification/p007-direct-source-w2/helpers/select_ds_wave.py --classification qamus/lattice/p007-population-classification.jsonl --partition direct-source-attested-function --exclude-manifest dawahwiki:packets/p007-direct-source-w1/wave1-worklist.json --take 200 --out qamus/certification/p007-direct-source-w2/wave2-worklist.json",
-      "expect": "exactly 200 rows; if the exclusion manifest is not provided to the lane, STOP (escalation trigger 1) — never guess wave-1 coverage"
+      "purpose": "Derive the wave-2 worklist: all 866 direct-source rows in canonical loc order, minus the 260 covered by wave 1 (committed coverage manifest), first 200 of the remainder",
+      "run": "python qamus/certification/p007-direct-source-w2/helpers/select_ds_wave.py --classification qamus/lattice/p007-population-classification.jsonl --partition direct-source-attested-function --exclude-manifest qamus/task-packets/tp-p007-ds-w1-covered-locs.json --take 200 --out qamus/certification/p007-direct-source-w2/wave2-worklist.json",
+      "expect": "exactly 200 rows; the exclusion set is the committed manifest's 260 covered_locs — never guess wave-1 coverage"
     },
     {
       "purpose": "Per row: one MCP analyze_word(aspects=['irab','sarf']) call; loose-normalize the returned word against the row surface; record verbatim to the evidence file with sha256",
@@ -72,7 +73,7 @@
   "candidate_population": {
     "universe_size": 606,
     "this_packet_size": 200,
-    "selection_rule": "Sort the 866 rows with partition == direct-source-attested-function by canonical loc (surah, ayah, word as integers, ascending). Remove every canonical_loc present in the wave-1 coverage manifest (260 rows: the wave-1 fresh-200 worklist plus the sample-60). Take the first 200 remaining. Deterministic: two executors given the same inputs must produce the identical worklist.",
+    "selection_rule": "Sort the 866 rows with partition == direct-source-attested-function by canonical loc (surah, ayah, word as integers, ascending). Remove every canonical_loc present in the committed wave-1 coverage manifest qamus/task-packets/tp-p007-ds-w1-covered-locs.json (260 rows: the wave-1 fresh-200 worklist plus the sample-60). Take the first 200 remaining. Deterministic: two executors given the same inputs must produce the identical worklist.",
     "population_source": "qamus/lattice/p007-population-classification.jsonl"
   },
   "expected_outputs": [
@@ -122,7 +123,7 @@
   },
   "escalation_trigger": {
     "conditions": [
-      "the wave-1 coverage manifest (dawahwiki:packets/p007-direct-source-w1/wave1-worklist.json + sample60 list) is not available to the lane — selection cannot be made deterministic without it",
+      "the committed wave-1 coverage manifest qamus/task-packets/tp-p007-ds-w1-covered-locs.json is missing, fails to parse, or does not carry exactly 260 covered_locs — selection cannot be made deterministic without it (RESOLVED for the normal case by the committed manifest; this trigger now guards corruption, not absence)",
       "any adversarial canary row appears in the generated worklist",
       "more than 5 index mismatches or more than 5 MCP failures in a single batch (systematic source problem)",
       "any row where the source states a function OTHER than harf jarr (reroute candidate: report, do not certify, do not re-partition unilaterally)",
@@ -145,7 +146,7 @@
       "dawahwiki:packets/P007-DIRECT-SOURCE-W1-2026-07-29.md (wave-1 method + report card; 260/260 jarr-confirmed, 520 facts, backlog 606)",
       "owner decision ledger, Rate-limit handoff rulings 2026-07-29: function-certification rung ANSWERED (surface-matched harf-jarr statement certifies contextual_function via direct_source_attestation; governor/case/scope excluded)",
       "docs/certification-authority.md sections 2-3 (evidence modes, non-substitution rule)",
-      "docs/evidence-custody.md section 2 (manifest+hash rule for the out-of-git wave-1 coverage manifest)"
+      "docs/evidence-custody.md section 2 (manifest+hash rule; satisfied by the committed qamus/task-packets/tp-p007-ds-w1-covered-locs.json coverage manifest)"
     ]
   }
 }

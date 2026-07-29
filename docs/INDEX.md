@@ -139,6 +139,8 @@ Example: `index.html` — static demo page, not gated, still shows a coarse
 | `skills/registry/skill-rule-registry.json` | Installable skill-rule registry. |
 | `qamus/registry/qg-class-reconciliation.{json,md}`, `palette-collision-matrix.{json,md}`, `palette-source-snapshot.css` | Generated display-class/palette reconciliation outputs. |
 | `qamus/lattice/registered-projectors.json` | The projector registry (gate tiers, guards, compatibility classes). |
+| `qamus/task-packets/TP-*.json` | **Public executable task packets** — one per `qamus/work-queues/next-actions.jsonl` queue head (`repo_packet` field) plus the doc-linkcheck packet; schema `qamus/schemas/task-packet.schema.json`, gated by `tools/validate_task_packets.py`. Start here to execute a queue head cold. |
+| `qamus/task-packets/tp-p007-ds-w1-covered-locs.json` | Wave-1 coverage manifest (260 covered canonical locs + per-loc evidence sha256; evidence-custody §2 rows) — the deterministic exclusion set for TP-P007-DS-W2. |
 
 ### 4.6 Generated / batch-run reports (`qamus/reports/`, grouped by glob)
 

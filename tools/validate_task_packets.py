@@ -397,7 +397,13 @@ def main(argv):
         return self_test()
     paths = [Path(a) for a in argv if not a.startswith("--")]
     if not paths:
-        paths = sorted(PACKETS_DIR.glob("*.json"))
+        # Task packets are the uppercase TP-*.json files. Other artifacts in
+        # the directory (e.g. the tp-p007-ds-w1-covered-locs.json coverage
+        # manifest, schema qamus.coverage_manifest.v1) are packet INPUTS,
+        # not packets, and carry their own schemas. The startswith check is
+        # case-sensitive on purpose (glob is case-insensitive on Windows).
+        paths = sorted(p for p in PACKETS_DIR.glob("*.json")
+                       if p.name.startswith("TP-"))
         if not paths:
             print("no packets found in %s" % PACKETS_DIR)
             return 1
