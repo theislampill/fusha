@@ -136,6 +136,37 @@
     },
     {
       "details": {
+        "evidence_bundle_ref": "fact-ledger:selftest06",
+        "evidence_mode": "direct_source_attestation",
+        "fact_id": "sha256:selftest06",
+        "occurrence_id": "quran:2:284:10",
+        "surface": "مَا"
+      },
+      "edge_id": "edge:dddddddddddd",
+      "edge_type": "coordination_edge",
+      "evidence": [
+        {
+          "address": "quran:2:284:10",
+          "method": "explicit_occurrence_address"
+        }
+      ],
+      "from_node_id": "occurrence:2:284:10",
+      "from_node_type": "occurrence",
+      "guards": [
+        "surface_exact",
+        "occurrence_address_exact"
+      ],
+      "producer": {
+        "id": "tools.validate_particle_projection_parity.selftest",
+        "version": "1"
+      },
+      "schema": "qamus.graph_edge.v1",
+      "status": "certified",
+      "to_node_id": "occurrence:2:284:2",
+      "to_node_type": "occurrence"
+    },
+    {
+      "details": {
         "component_surface": "مَا",
         "evidence_mode": "direct_source_attestation",
         "fact_id": "sha256:selftest03",
@@ -168,7 +199,8 @@
   ],
   "lattices": [
     {
-      "candidates": [
+      "compatible_functions": [],
+      "mutually_exclusive_candidates": [
         {
           "candidate_id": "cand:mawsula",
           "contextual_gloss": "what(ever)",
@@ -201,9 +233,6 @@
       "entry_id": "b8e480aebafe",
       "lattice_id": "lattice:ma:2:284:10",
       "occurrence_id": "quran:2:284:10",
-      "overlap": {
-        "supported": false
-      },
       "schema": "qamus.particle_function_lattice.v1",
       "surface": "مَا"
     }
