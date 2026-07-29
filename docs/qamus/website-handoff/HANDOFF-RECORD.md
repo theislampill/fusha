@@ -24,7 +24,7 @@ between the two agents.
   non-load-bearing slots per §9 (neutral render + report).
 - The validator accepts major 1 only; hash semantics are unchanged.
 
-### 1.2 Sample inventory (9 payloads, all green under the executable twin)
+### 1.2 Sample inventory (11 payloads, all green under the executable twin)
 
 All in `qamus/examples/website-payloads/`:
 
@@ -39,12 +39,22 @@ All in `qamus/examples/website-payloads/`:
 | 7 | `multi_entry_liqawmihi_61_5_4.payload.json` | **multi-entry token** لِقَوْمِهِ (quran:61:5:4): THREE entry-link rows with distinct relation kinds — clitic → p007 `b10a1ee04666` (`clitic_component_of_entry`), written form → n912 `65d3d5c51f24` (`candidate_entry`), shared root → v005 `3041d6f44a27` (`root_family_of_entry`); `schema_version` 1.1.0 | illustrative-from-live | candidate |
 | 8 | `verb_qamu_2_20_13.payload.json` | verb word قَامُوا (quran:2:20:13): hollow-root stem + built-in subject suffix; root + lexeme attachment certified in the vn-entry-canaries lane store (fact ids cited in `evidence_refs`) | certified | certified (segmentation/function candidate in plane map) |
 | 9 | `noun_rajulayni_2_282_59.payload.json` | noun word رَجُلَيْنِ (quran:2:282:59): stem + dual ending; form attestation + lexeme attachment certified in the lane store; root and case honestly candidate | certified | certified (root/case candidate in plane map) |
+| 10 | `ma_relative_2_284_10.payload.json` | **same-surface pair, leg 1**: مَا (quran:2:284:10) certified RELATIVE function (`qg-relative`) — PROOF-P `contextual_function` fact `sha256:c5e69dac…` via `direct_source_attestation` | certified | certified (function; segmentation/gloss candidate in plane map) |
+| 11 | `ma_nafiya_93_3_1.payload.json` | **same-surface pair, leg 2**: مَا (quran:93:3:1) certified NAFIYA function (`qg-negation`) — two-vote bundle `two-vote-artifact:quran_93_3_1:v11`, agreement on conclusion+reason key | certified | certified (function; segmentation/gloss candidate in plane map) |
 
 Provenance honesty notes:
 
 - Samples 3–4 re-express already-rich live/candidate rows and are kept
   alongside the canary-derived samples 7–9 deliberately: the renderer must
   handle both provenance classes.
+- Samples 10–11 are the **same-surface / different-analysis** requirement
+  (steer §19): one entry (`b8e480aebafe`), one written surface مَا, two
+  occurrences with two DIFFERENT certified functions, each certified by its
+  own occurrence-level evidence (fact id / two-vote artifact id in
+  `evidence_refs`, provenance-marked). The renderer must key everything on
+  `occurrence_id` + `projection_hash` — never on surface text — and the two
+  payloads must never share a cache entry. Sample 5 (`unresolved_ma_2_284_2`)
+  is the honest third leg of the same surface: unresolved, neutral render.
 - Sample 7 is honest about its rungs: the p007 morpheme row is a rung-1
   deterministic **candidate** (attachment geometry), the jarr governor fact
   was engine-REFUSED pending a two-vote bundle, and only the occurrence's
@@ -106,6 +116,10 @@ The website agent reads this repository. Standing locations:
 - Contract (spec): `docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md`
 - Executable twin: `tools/validate_website_payload.py`
 - Sample payloads: `qamus/examples/website-payloads/*.payload.json`
+- Response format: `docs/qamus/website-handoff/RESPONSE-TEMPLATE.md`
+  (supported fields / unsupported fields / renderer assumptions / parity
+  results / open questions / adoption blockers — one response per adoption
+  round, filed into §3 below).
 - Coordination point: **this file** (`docs/qamus/website-handoff/HANDOFF-RECORD.md`).
   Questions, defect reports, and contract-change requests from the website
   agent are recorded in §3 below; Fable answers here and, where needed,

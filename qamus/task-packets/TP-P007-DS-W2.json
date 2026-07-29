@@ -1,0 +1,151 @@
+{
+  "schema": "qamus.task_packet.v1",
+  "packet_id": "TP-P007-DS-W2",
+  "title": "P007 direct-source function certification, wave 2 (next 200 of the 606-row backlog)",
+  "model_class": "standard",
+  "scope": {
+    "summary": "Certify occurrence-level particle identity and contextual function for the next 200 rows of the p007 (entry b10a1ee04666) direct-source-attested-function partition, reusing the wave-1 method unchanged: one surface-matched Tafsir MCP analyze_word call per row, verbatim evidence capture, typed-fact certification via the repo certifier in candidate lane mode.",
+    "entry_id": "b10a1ee04666",
+    "family": "P007_DIRECT_SOURCE_FUNCTION",
+    "tranche": "direct-source-wave-2",
+    "out_of_scope": [
+      "governor_relation, governed_expression, case/mood, attachment, scope: these stay review_required and route to the two-vote queue exactly as in wave 1",
+      "the 442-row geometry-wave function queue (separate tranche)",
+      "any live-surface mutation, entry-store write, or whitelist change",
+      "re-classification of the 2,999-row population (the partition file is input, never output)"
+    ]
+  },
+  "inputs": {
+    "input_files": [
+      "qamus/lattice/p007-population-classification.jsonl",
+      "qamus/lattice/p007-population-classification.meta.json",
+      "qamus/lattice/particle-occurrence-matrix.jsonl",
+      "qamus/lattice/p007-mcp-evidence-refs.jsonl",
+      "qamus/indexes/quran-loc-surface/index.jsonl",
+      "tools/certify_typed_fact.py",
+      "docs/certification-authority.md",
+      "qamus/examples/p007-li-pilot/locations.json"
+    ],
+    "permitted_write_files": [
+      "qamus/certification/p007-direct-source-w2/",
+      "qamus/reports/p007-direct-source-w2.md"
+    ],
+    "prohibited_files": [
+      "qamus/data/",
+      "qamus/lattice/p007-population-classification.jsonl",
+      "qamus/lattice/particle-occurrence-matrix.jsonl",
+      "qamus/examples/",
+      "docs/INDEX.md",
+      "docs/architecture/",
+      "docs/subsystems/",
+      "qamus/work-queues/",
+      "tools/"
+    ]
+  },
+  "tools_required": [
+    "python3",
+    "mcp__tafsir__analyze_word (Tafsir MCP; warm up with fetch_ayah(1,1) first)",
+    "tools/certify_typed_fact.py (imported read-only, repo copy)"
+  ],
+  "commands": [
+    {
+      "purpose": "Derive the wave-2 worklist: all 866 direct-source rows in canonical loc order, minus the 260 covered by wave 1 (coverage manifest ref below), first 200 of the remainder",
+      "run": "python qamus/certification/p007-direct-source-w2/helpers/select_ds_wave.py --classification qamus/lattice/p007-population-classification.jsonl --partition direct-source-attested-function --exclude-manifest dawahwiki:packets/p007-direct-source-w1/wave1-worklist.json --take 200 --out qamus/certification/p007-direct-source-w2/wave2-worklist.json",
+      "expect": "exactly 200 rows; if the exclusion manifest is not provided to the lane, STOP (escalation trigger 1) — never guess wave-1 coverage"
+    },
+    {
+      "purpose": "Per row: one MCP analyze_word(aspects=['irab','sarf']) call; loose-normalize the returned word against the row surface; record verbatim to the evidence file with sha256",
+      "run": "python qamus/certification/p007-direct-source-w2/helpers/record_evidence.py qamus/certification/p007-direct-source-w2/batchNN.tsv",
+      "expect": "one verbatim JSONL evidence row per call in mcp-evidence-w2.jsonl; surface mismatch => row marked index_mismatch and NOT certified"
+    },
+    {
+      "purpose": "Build typed facts and certify: particle_identity + contextual_function per row on direct_source_attestation; governor_relation registered review_required",
+      "run": "python qamus/certification/p007-direct-source-w2/helpers/build_and_certify.py --worklist qamus/certification/p007-direct-source-w2/wave2-worklist.json --evidence qamus/certification/p007-direct-source-w2/mcp-evidence-w2.jsonl --store qamus/certification/p007-direct-source-w2/",
+      "expect": "up to 400 certified facts (2 per confirmed row); certifier refusals are recorded, never bypassed"
+    },
+    {
+      "purpose": "Validate the event trail and count",
+      "run": "python tools/certify_typed_fact.py --validate qamus/certification/p007-direct-source-w2 && python tools/certify_typed_fact.py --count qamus/certification/p007-direct-source-w2",
+      "expect": "OK: certification event trail is valid; count == 2 x jarr-confirmed rows"
+    }
+  ],
+  "candidate_population": {
+    "universe_size": 606,
+    "this_packet_size": 200,
+    "selection_rule": "Sort the 866 rows with partition == direct-source-attested-function by canonical loc (surah, ayah, word as integers, ascending). Remove every canonical_loc present in the wave-1 coverage manifest (260 rows: the wave-1 fresh-200 worklist plus the sample-60). Take the first 200 remaining. Deterministic: two executors given the same inputs must produce the identical worklist.",
+    "population_source": "qamus/lattice/p007-population-classification.jsonl"
+  },
+  "expected_outputs": [
+    {"path": "qamus/certification/p007-direct-source-w2/wave2-worklist.json", "description": "the 200-row worklist with per-row loc/surface/route/matrix_id and the exclusion audit (input hashes)"},
+    {"path": "qamus/certification/p007-direct-source-w2/mcp-evidence-w2.jsonl", "description": "verbatim MCP evidence, one row per call, sha256 per row", "schema": "qamus.p007_mcp_evidence_ref.v1 (ref rows) + verbatim capture"},
+    {"path": "qamus/certification/p007-direct-source-w2/typed-facts-w2.jsonl", "description": "typed facts (particle_identity, contextual_function per confirmed row; governor_relation review_required)"},
+    {"path": "qamus/certification/p007-direct-source-w2/events.jsonl", "description": "append-only hash-chained certification event trail"},
+    {"path": "qamus/reports/p007-direct-source-w2.md", "description": "wave report card mirroring the wave-1 sections: counts, reroutes, index mismatches, MCP budget, defects, remaining backlog (must compute 606-minus-confirmed)"}
+  ],
+  "evidence_policy": {
+    "statement": "Per-row verbatim MCP evidence is mandatory before any certification. The returned word is loose-normalized and surface-matched against the row surface; index positions are never trusted. Function certification relies on the owner's function-certification rung ruling (Rate-limit handoff rulings 2026-07-29, handoff-steer section 20/26, recorded in the owner decision ledger): an exact, surface-matched source statement of harf jarr MAY certify occurrence-level contextual_function via direct_source_attestation — it does NOT auto-certify governor/governed/attachment/case sign/scope/sense nuance, which keep their own policies (two-vote queue).",
+    "verbatim_required": true,
+    "fabrication_rule": "If an MCP call fails after 3 bounded retries, or the returned word does not surface-match, the row is marked evidence_gap/index_mismatch and skipped — never certified, never filled from memory. Fabricating or paraphrasing source content voids the whole wave."
+  },
+  "guards": [
+    "The METHOD of wave 1 transfers; its linguistic conclusions do not — every row gets its own MCP evidence and its own per-row predicate check (the initial la/li is a prepositional clitic governing jarr on the attached host).",
+    "The typed fact never exceeds the source: certify only what the source states at this exact occurrence.",
+    "Certifier refusals are the system working: a refused fact stays refused and is reported, never re-worded to pass.",
+    "Candidate lane mode throughout: the lane store is new files under qamus/certification/p007-direct-source-w2/ only; committed entry states and live surfaces are untouched.",
+    "No private corpus names or server paths in any output (FORBIDDEN_LABELS / RM-09); evidence refs use opaque packet designations."
+  ],
+  "defeaters": [
+    "Lexical-initial lam: the whole token is a noun whose first radical letter is lam (model: surface libas at quran:2:187:9 — MCP sarf reads the whole token as a noun, wazn fi3al, no jarr-harf clause). Clitic carve REJECTED, row rerouted rejected-false-candidate.",
+    "Lam of ta'lil over a verb host (model: quran:48:29:42 — jarr harf but host is mudari' mansub over implied 'an): outside this packet's noun/pronoun/mawsul host routes; reroute, do not certify.",
+    "Index mismatch: MCP word at the requested index differs from the row surface — resolve by surface search within the ayah or mark index_mismatch (wave-1 precedent: 5:1:11).",
+    "Multi-particle claim flags (e.g. multi_particle_claims on the row): certify only the p007 lam edge; never let one MCP call certify a second particle's claim."
+  ],
+  "canaries": {
+    "positive": [
+      {"id": "quran:2:11:3", "surface": "لَهُمْ", "expectation": "jarr-la-allomorph-pronoun-host route; MCP irab states harf jarr; both facts certify on direct_source_attestation; governor stays review_required", "source": "qamus/lattice/p007-population-classification.jsonl (row p007:2:11:3) + wave-1 report card"},
+      {"id": "quran:1:2:2", "surface": "لِلَّهِ", "expectation": "already geometry-certified fused clitic; if selected for spot-comparison the method must reproduce the pilot's jarr reading exactly", "source": "qamus/examples/p007-li-pilot/locations.json"}
+    ],
+    "adversarial": [
+      {"id": "quran:2:187:9", "surface": "لِبَاسٌۭ", "expectation": "MUST be rejected (lexical-initial lam, not a clitic). It is not in the direct-source partition; if it appears in any generated worklist the selection step is broken — STOP and escalate", "source": "qamus/examples/p007-li-pilot/locations.json (rejected_false_candidates)"},
+      {"id": "quran:48:29:42", "surface": "لِيَغِيظَ", "expectation": "MUST NOT be certified under this packet (verb host, lam ta'lil). Appearing in the worklist means the partition filter was ignored — STOP and escalate", "source": "qamus/examples/p007-li-pilot/locations.json (rejected_false_candidates)"}
+    ]
+  },
+  "acceptance_tests": [
+    {"name": "worklist determinism", "run": "re-run the selection command into a temp file and diff against wave2-worklist.json", "pass_condition": "byte-identical worklist on re-run"},
+    {"name": "event trail valid", "run": "python tools/certify_typed_fact.py --validate qamus/certification/p007-direct-source-w2", "pass_condition": "exit 0 and 'OK: certification event trail is valid'"},
+    {"name": "evidence completeness", "run": "python qamus/certification/p007-direct-source-w2/helpers/check_evidence_coverage.py qamus/certification/p007-direct-source-w2", "pass_condition": "every certified fact's occurrence has a verbatim evidence row with matching surface and sha256"},
+    {"name": "no unauthorized writes", "run": "git status --porcelain", "pass_condition": "changes only under qamus/certification/p007-direct-source-w2/ and qamus/reports/p007-direct-source-w2.md"}
+  ],
+  "non_deployment": {
+    "status": "NOT_DEPLOYED",
+    "statement": "Candidate mode throughout: nothing in this packet mutates any live surface, committed entry state, whitelist row, or the population classification. Outputs are a lane-local certification store and a report; any deploy of resulting facts is a separate owner-gated decision."
+  },
+  "escalation_trigger": {
+    "conditions": [
+      "the wave-1 coverage manifest (dawahwiki:packets/p007-direct-source-w1/wave1-worklist.json + sample60 list) is not available to the lane — selection cannot be made deterministic without it",
+      "any adversarial canary row appears in the generated worklist",
+      "more than 5 index mismatches or more than 5 MCP failures in a single batch (systematic source problem)",
+      "any row where the source states a function OTHER than harf jarr (reroute candidate: report, do not certify, do not re-partition unilaterally)",
+      "the certifier refuses a fact the packet expects to certify (policy drift — needs certifier-lane review)"
+    ],
+    "route": "STOP the affected batch; write a stop-report to qamus/reports/p007-direct-source-w2.md (defects section) and hand back to the Fusha certifier lane; the arbitration/decision authority is the owner decision ledger process, never this packet's executor"
+  },
+  "definition_of_done": [
+    "200-row worklist committed with deterministic selection audit",
+    "per-row verbatim evidence committed (or explicit evidence_gap/index_mismatch marks)",
+    "typed facts + hash-chained events validate with tools/certify_typed_fact.py",
+    "wave report card committed with the same section structure as wave 1, including remaining-backlog arithmetic (606 - confirmed)",
+    "all four acceptance tests pass",
+    "zero writes outside the permitted paths"
+  ],
+  "provenance": {
+    "authored_by": "institutionalization lane D (feat/task-packets-and-tutorial)",
+    "date": "2026-07-29",
+    "cites": [
+      "dawahwiki:packets/P007-DIRECT-SOURCE-W1-2026-07-29.md (wave-1 method + report card; 260/260 jarr-confirmed, 520 facts, backlog 606)",
+      "owner decision ledger, Rate-limit handoff rulings 2026-07-29: function-certification rung ANSWERED (surface-matched harf-jarr statement certifies contextual_function via direct_source_attestation; governor/case/scope excluded)",
+      "docs/certification-authority.md sections 2-3 (evidence modes, non-substitution rule)",
+      "docs/evidence-custody.md section 2 (manifest+hash rule for the out-of-git wave-1 coverage manifest)"
+    ]
+  }
+}

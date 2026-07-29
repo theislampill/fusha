@@ -1,0 +1,143 @@
+{
+  "schema": "qamus.task_packet.v1",
+  "packet_id": "TP-VN00-NOTE-NORM-W1",
+  "title": "VN-00 note-normalize recompile, first wave: deterministic boilerplate-note replacement candidates from the causal inventory",
+  "model_class": "deterministic",
+  "scope": {
+    "summary": "Run the registered deterministic projector sarf.note_normalize.v1 over the VN-00 causal-inventory note-normalize population (the top-yield deterministic lane of the VN-00 norm@1 causal inventory: boilerplate sarf/nahw notes recompiled to per-role pedagogy notes) and emit CANDIDATE projection records for the first wave. Purely mechanical: the projector's per-role templates and guards decide every row; the executor exercises zero linguistic judgment.",
+    "entry_id": null,
+    "family": "VN00_NOTE_NORMALIZE",
+    "tranche": "wave-1",
+    "out_of_scope": [
+      "any note requiring authoring (stem/TOK rows without a completed P-ROOT-INHERIT chain are left untouched, exactly as the projector specifies)",
+      "any live whitelist mutation or deploy (projector output is candidate records for the gated merge seam + two-vote flow)",
+      "editing the projector, its registry entry, or its templates"
+    ]
+  },
+  "inputs": {
+    "input_files": [
+      "qamus/lattice/registered-projectors.json",
+      "tools/lattice_projectors.py",
+      "tools/test_lattice_projectors.py",
+      "qamus/lattice/root-inheritance-ledger.jsonl",
+      "qamus/reports/root-inheritance-instrumentation.json",
+      "docs/qamus/RICH-HOVER-NORMALIZATION-CONTRACT.md"
+    ],
+    "permitted_write_files": [
+      "qamus/lattice/note-normalize-w1.candidates.jsonl",
+      "qamus/lattice/note-normalize-w1.instrumentation.json",
+      "qamus/reports/vn00-note-normalize-w1.md"
+    ],
+    "prohibited_files": [
+      "qamus/data/",
+      "qamus/lattice/registered-projectors.json",
+      "qamus/lattice/root-inheritance-ledger.jsonl",
+      "qamus/lattice/projection-ledger.jsonl",
+      "qamus/examples/",
+      "docs/INDEX.md",
+      "docs/architecture/",
+      "docs/subsystems/",
+      "qamus/work-queues/",
+      "tools/"
+    ]
+  },
+  "tools_required": [
+    "python3",
+    "tools/lattice_projectors.py (repo copy, run as-is; --self-test must pass before the wave)",
+    "the whitelist snapshot input designated by the custody plan (see evidence_policy; NOT a repo file)"
+  ],
+  "commands": [
+    {
+      "purpose": "Prove the projector toolchain is green before touching the population",
+      "run": "python tools/lattice_projectors.py --self-test && python tools/test_lattice_projectors.py",
+      "expect": "exit 0 on both; a red self-test stops the wave before any output"
+    },
+    {
+      "purpose": "Run the note-normalize projector over the designated whitelist snapshot, restricted to the VN-00 causal-inventory note-normalize population, writing candidate records + instrumentation",
+      "run": "python tools/lattice_projectors.py project --whitelist <custody:whitelist-snapshot> --corpus <custody:corpus-fixture> --out-ledger qamus/lattice/note-normalize-w1.candidates.jsonl --out-instrumentation qamus/lattice/note-normalize-w1.instrumentation.json",
+      "expect": "only sarf.note_normalize.v1 records are kept for this wave (filter by projector_id); every record carries certification_state candidate and gate_tier two_vote_required"
+    },
+    {
+      "purpose": "Wave report: population reached, replaced, left-for-authoring, guard blocks, per-role breakdown; reconciliation against the committed snapshot instrumentation",
+      "run": "python - (inline tally over the two output files, cross-checked against qamus/reports/root-inheritance-instrumentation.json note_normalization_projectors)",
+      "expect": "arithmetic closure: reachable == replaced + needs-root-chain + no-safe-template + guard-blocked"
+    }
+  ],
+  "candidate_population": {
+    "universe_size": 1559,
+    "this_packet_size": 1559,
+    "selection_rule": "The full note-normalize recompile population identified by the VN-00 causal inventory (the 1,559-row deterministic recompile lane; committed snapshot instrumentation shows the projector's class predicate pred_boilerplate_note selecting boilerplate-note segments). The projector's own predicate IS the selection — the executor never hand-picks rows. If the causal-inventory row list is unavailable, the predicate over the designated whitelist snapshot is the authoritative selection and the count difference is reported.",
+    "population_source": "qamus/lattice/registered-projectors.json"
+  },
+  "expected_outputs": [
+    {"path": "qamus/lattice/note-normalize-w1.candidates.jsonl", "description": "candidate projection records, one per replaced note", "schema": "qamus.lattice.projection_record.v1"},
+    {"path": "qamus/lattice/note-normalize-w1.instrumentation.json", "description": "projector instrumentation: reachable/replaced/blocked tallies with per-role breakdown"},
+    {"path": "qamus/reports/vn00-note-normalize-w1.md", "description": "wave report with arithmetic closure and the two-vote handoff list (every candidate rides gate_tier two_vote_required)"}
+  ],
+  "evidence_policy": {
+    "statement": "Deterministic derivation: every output note follows mechanically from the segment's attested role (+ inherited root via the certified P-ROOT-INHERIT chain where required), per the registered projector sarf.note_normalize.v1 and its defeater checks (stem_note_requires_inherited_root_chain, no_morphology_beyond_attested_role_or_inherited_root). The whitelist snapshot input is out-of-git private custody: the lane must record the snapshot's designation and sha256 in the wave report per docs/evidence-custody.md section 2 (manifest + hash + reconstruction) — a wave run against an undesignated snapshot is invalid.",
+    "verbatim_required": false,
+    "fabrication_rule": "A row with no safe template, a missing root chain, or a firing guard is LEFT UNTOUCHED and tallied — never filled in by hand. Hand-editing any output record voids the wave (determinism is the packet's entire warrant)."
+  },
+  "guards": [
+    "The METHOD is the projector; no conclusion transfers by hand — the executor may not write or edit a single note text; only the projector emits them.",
+    "Never asserts morphology beyond the segment's own attested role + inherited root (registered defeater check, quoted from the projector registration).",
+    "divine_name_exclusion guard: divine-name tokens are excluded by the projector; a divine-name row in the output is a hard failure.",
+    "Read-only over the whitelist: projectors never write the whitelist; outputs are candidate records for the gated merge seam and the two-vote flow (gate_tier two_vote_required on every record).",
+    "No private corpus names or server paths in any output (FORBIDDEN_LABELS / RM-09): the whitelist snapshot is cited by custody designation + sha256, never by path."
+  ],
+  "defeaters": [
+    "Boilerplate look-alike: a note that resembles boilerplate but carries entry-specific content — the class predicate pred_boilerplate_note decides membership; the executor never overrides it in either direction.",
+    "Stem/TOK lexical head without a completed root chain: needs-root-chain, left for authoring (wave-1 snapshot precedent: 1 of 27 reachable).",
+    "Tanwin-noun/particle roles with no safe template: left untouched, never fabricated (snapshot precedent: the untouched remainder of the 27).",
+    "Homograph surfaces: route to two-vote by the projector's standing invariant; never auto-projected."
+  ],
+  "canaries": {
+    "positive": [
+      {"id": "36:70:4", "surface": "الكافرين (definite article + participle stem)", "expectation": "boilerplate notes replaced deterministically per role (committed precedent record exists); re-running the wave must reproduce the committed record's note text exactly", "source": "qamus/lattice/root-inheritance-ledger.jsonl (projector_id sarf.note_normalize.v1)"},
+      {"id": "30:38:4", "surface": "حقه", "expectation": "same as above — byte-identical reproduction of the committed candidate record", "source": "qamus/lattice/root-inheritance-ledger.jsonl"}
+    ],
+    "adversarial": [
+      {"id": "divine-name-class", "surface": "any divine-name token", "expectation": "MUST be absent from the output (divine_name_exclusion guard); one present row fails the wave", "source": "qamus/lattice/registered-projectors.json (guards)"},
+      {"id": "stem-without-root-chain", "surface": "the snapshot's needs-root-chain stem row", "expectation": "MUST appear in the untouched/needs-root-chain tally, NOT in the candidates file with an invented root", "source": "qamus/reports/root-inheritance-instrumentation.json (stem_segments_needing_root_chain: 1)"}
+    ]
+  },
+  "acceptance_tests": [
+    {"name": "determinism", "run": "run the projector twice into temp files and diff", "pass_condition": "byte-identical candidates + instrumentation on re-run"},
+    {"name": "arithmetic closure", "run": "python - (inline: reachable == replaced + needs-root-chain + no-safe-template + guard-blocked)", "pass_condition": "closure holds exactly"},
+    {"name": "gate tier universal", "run": "python - (inline: every candidate record has certification_state candidate and gate_tier two_vote_required)", "pass_condition": "no exceptions"},
+    {"name": "toolchain self-test", "run": "python tools/lattice_projectors.py --self-test", "pass_condition": "exit 0"},
+    {"name": "no unauthorized writes", "run": "git status --porcelain", "pass_condition": "changes only under the three permitted output paths"}
+  ],
+  "non_deployment": {
+    "status": "NOT_DEPLOYED",
+    "statement": "Candidate projection records only: the whitelist is read-only, no live surface changes, and every record requires the two-vote flow plus the owner-gated merge seam before any deploy. The wave measures and stages; it never ships."
+  },
+  "escalation_trigger": {
+    "conditions": [
+      "the designated whitelist snapshot is unavailable or has no custody designation + sha256 (evidence-custody section 3: continuation must not depend on undocumented server-only files)",
+      "the projector self-test or unit tests fail",
+      "a committed-precedent canary record is NOT reproduced byte-identically (projector drift)",
+      "the reached population diverges from the causal-inventory count (1,559) by more than 10% in either direction (inventory drift — re-baseline needed before proceeding)",
+      "any divine-name row or hand-authored note is found in the output"
+    ],
+    "route": "STOP; write the stop-report to qamus/reports/vn00-note-normalize-w1.md and hand back to the Fusha certifier lane; snapshot/custody questions route to the custody plan owner process"
+  },
+  "definition_of_done": [
+    "candidates + instrumentation + wave report committed",
+    "snapshot designation + sha256 recorded in the report (custody rule satisfied)",
+    "arithmetic closure holds; per-role breakdown present",
+    "both committed-precedent canaries reproduced byte-identically",
+    "all five acceptance tests pass; zero writes outside permitted paths"
+  ],
+  "provenance": {
+    "authored_by": "institutionalization lane D (feat/task-packets-and-tutorial)",
+    "date": "2026-07-29",
+    "cites": [
+      "VN-00 causal inventory (dawahwiki packet round 2026-07-29): deterministic lanes reach 83.3% norm@1 (+27.9pp); note_normalize recompile 1,559 rows FIRST — the top-yield deterministic lane",
+      "qamus/lattice/registered-projectors.json: sarf.note_normalize.v1 registration (class predicate, guards, defeater checks, gate_tier two_vote_required)",
+      "docs/qamus/RICH-HOVER-NORMALIZATION-CONTRACT.md clause N-LANG-01 (the boilerplate/meta-language defect class this projector repairs)",
+      "qamus/reports/ROOT-INHERITANCE-JOIN.md, P-NOTE-NORMALIZE section (snapshot precedent: 27 reachable / 7 replaced / 1 needs-root-chain)"
+    ]
+  }
+}

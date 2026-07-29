@@ -1,0 +1,134 @@
+{
+  "schema": "qamus.task_packet.v1",
+  "packet_id": "TP-DOC-LINKCHECK",
+  "title": "Documentation consistency check: every repo path cited in the governing docs must exist, and every doc-stated count must match the committed artifact",
+  "model_class": "cheap",
+  "scope": {
+    "summary": "Mechanically verify the governing documentation set for (a) dead repo-path references (a doc cites qamus/... or tools/... or docs/... that does not exist in the tree), (b) stale counts (a doc states a row/sample/entry count that disagrees with the committed file it describes), and (c) schema-id drift (a doc names a schema id that no file under qamus/schemas/ declares). Output is a findings report; NOTHING is repaired by this packet.",
+    "entry_id": null,
+    "family": "DOC_CONSISTENCY",
+    "tranche": "linkcheck-wave-1",
+    "out_of_scope": [
+      "editing any documentation or artifact (findings only — repairs are separate, owner/lane-routed work)",
+      "external URLs (network is out of scope; repo-relative paths only)",
+      "judging linguistic content, wording, or style"
+    ]
+  },
+  "inputs": {
+    "input_files": [
+      "docs/qamus/website-handoff/HANDOFF-RECORD.md",
+      "docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md",
+      "docs/certification-authority.md",
+      "docs/certification-policy.md",
+      "docs/evidence-custody.md",
+      "docs/tutorials/p007-end-to-end.md",
+      "docs/architecture/visual-references.md",
+      "qamus/examples/p007-li-pilot/README.md",
+      "qamus/README.md",
+      "README.md"
+    ],
+    "permitted_write_files": [
+      "qamus/reports/doc-linkcheck-w1.md",
+      "qamus/reports/doc-linkcheck-w1.findings.jsonl"
+    ],
+    "prohibited_files": [
+      "docs/",
+      "qamus/data/",
+      "qamus/examples/",
+      "qamus/lattice/",
+      "qamus/schemas/",
+      "tools/",
+      "docs/INDEX.md",
+      "docs/architecture/",
+      "docs/subsystems/",
+      "qamus/work-queues/"
+    ]
+  },
+  "tools_required": [
+    "python3",
+    "git (git ls-files as the existence oracle — the INDEX, not the working tree, defines what is committed)"
+  ],
+  "commands": [
+    {
+      "purpose": "Extract candidate repo-path references from each input doc (regex over backtick-quoted and bare paths matching (docs|qamus|tools|curriculum)/...), then test each against git ls-files",
+      "run": "python - (inline: for each input doc, extract paths, normalize, check membership in `git ls-files` output; directory refs pass if any tracked file has the prefix; emit one findings row per dead ref)",
+      "expect": "findings rows with doc, line number, cited path, and failure kind dead_path"
+    },
+    {
+      "purpose": "Verify doc-stated counts against committed artifacts for the enumerated claim set: HANDOFF-RECORD sample inventory count vs actual qamus/examples/website-payloads/*.payload.json file count; pilot README's 12 occurrences / 78 appearances / 49 typed facts vs qamus/examples/p007-li-pilot/ artifact row counts; p007 partition sizes in qamus/lattice/p007-population-classification.meta.json vs recomputed tallies from the jsonl",
+      "run": "python - (inline recount; emit one findings row per mismatch with stated vs actual)",
+      "expect": "count claims verified by recomputation, never by trusting a second doc"
+    },
+    {
+      "purpose": "Schema-id drift: every `qamus.*.v*` schema id named in the input docs must be declared by a file under qamus/schemas/ or emitted by a committed tool/sample (grep over qamus/schemas/ + qamus/examples/)",
+      "run": "python - (inline: collect schema ids from docs; search declarations; emit findings rows for orphans)",
+      "expect": "orphan schema ids enumerated with the doc+line that cites them"
+    }
+  ],
+  "candidate_population": {
+    "universe_size": null,
+    "this_packet_size": null,
+    "selection_rule": "Not an occurrence-population packet: the population is the fixed 10-file governing-doc list in input_files, checked exhaustively.",
+    "population_source": "qamus/task-packets/TP-DOC-LINKCHECK.json"
+  },
+  "expected_outputs": [
+    {"path": "qamus/reports/doc-linkcheck-w1.findings.jsonl", "description": "one row per finding: {doc, line, kind: dead_path|stale_count|orphan_schema_id, cited, actual}"},
+    {"path": "qamus/reports/doc-linkcheck-w1.md", "description": "summary: files checked, refs checked, findings per class, zero-findings statement if clean; explicit list of checks NOT performed (external URLs, prose accuracy)"}
+  ],
+  "evidence_policy": {
+    "statement": "Every finding is mechanically reproducible from committed files: the finding row carries the doc line and the recomputed actual value. No linguistic or editorial judgment is involved anywhere in this packet.",
+    "verbatim_required": false,
+    "fabrication_rule": "A path that cannot be classified confidently (ambiguous prose, template placeholder like batchNN.tsv or <custody:...>) is recorded as kind=skipped_ambiguous with the reason — never guessed into a dead_path finding and never silently dropped."
+  },
+  "guards": [
+    "Findings only — the METHOD (mechanical checks) is the whole packet; no conclusion about what a doc SHOULD say transfers to the executor, and no repair is attempted.",
+    "The existence oracle is git ls-files (committed state), not the working tree — untracked scratch must not mask a dead ref.",
+    "Counts are verified by recomputation from the primary artifact, never by cross-quoting another document.",
+    "Placeholder/template path shapes (angle brackets, NN batch numbers, glob stars, opaque dawahwiki: refs) are structurally exempt and logged as skipped_ambiguous."
+  ],
+  "defeaters": [
+    "Opaque out-of-git refs (dawahwiki:packets/..., custody designations): NOT dead paths — they are custody refs per docs/evidence-custody.md section 2; flagging one as dead_path is a false positive that voids the findings class.",
+    "Historical/quoted paths inside changelog-style prose (a doc quoting a former state): record as skipped_ambiguous unless the doc presents the path as currently existing.",
+    "Glob and prefix references (qamus/examples/website-payloads/*.payload.json): pass if the glob matches at least one tracked file."
+  ],
+  "canaries": {
+    "positive": [
+      {"id": "docs/qamus/website-handoff/HANDOFF-RECORD.md#samples", "expectation": "the sample-inventory table row count equals the tracked *.payload.json count under qamus/examples/website-payloads/ (11 after the same-surface pair landed); a mismatch here proves the counter works", "source": "qamus/examples/website-payloads/"},
+      {"id": "qamus/examples/p007-li-pilot/README.md#gate", "expectation": "its cited tools/validate_p007_pilot.py resolves in git ls-files", "source": "tools/validate_p007_pilot.py"}
+    ],
+    "adversarial": [
+      {"id": "self-injected dead ref", "expectation": "before the real run, the executor plants a fake citation (e.g. qamus/examples/DOES-NOT-EXIST.jsonl) in a COPY of one input doc under the scratch area and confirms the checker flags it; a checker that passes the planted ref is broken — STOP", "source": "qamus/task-packets/TP-DOC-LINKCHECK.json (red-first discipline)"},
+      {"id": "dawahwiki:packets/P007-DIRECT-SOURCE-W1-2026-07-29.md", "expectation": "MUST be classified as an opaque custody ref, NOT a dead path", "source": "docs/evidence-custody.md section 2"}
+    ]
+  },
+  "acceptance_tests": [
+    {"name": "determinism", "run": "run the full check twice and diff the findings files", "pass_condition": "byte-identical findings"},
+    {"name": "red-first sanity", "run": "the self-injected dead-ref canary procedure", "pass_condition": "planted ref detected; real run contains no planted artifacts"},
+    {"name": "no unauthorized writes", "run": "git status --porcelain", "pass_condition": "changes only under qamus/reports/doc-linkcheck-w1.*"}
+  ],
+  "non_deployment": {
+    "status": "NOT_DEPLOYED",
+    "statement": "Read-only audit with a two-file report output; no documentation, artifact, schema, or live surface is modified. Repairs are separate routed work."
+  },
+  "escalation_trigger": {
+    "conditions": [
+      "any input doc is missing from the tree (the governing-doc list itself is stale — packet needs re-issue)",
+      "more than 25 dead-path findings in one doc (likely a systematic move/rename — route to the owning lane rather than enumerating noise)",
+      "the red-first planted ref is NOT detected"
+    ],
+    "route": "STOP; write the partial findings + stop reason to qamus/reports/doc-linkcheck-w1.md and hand back to the Fusha certifier lane for packet re-issue or lane routing"
+  },
+  "definition_of_done": [
+    "both report files committed; every findings row carries doc+line+kind+cited+actual",
+    "red-first planted-ref check performed and documented",
+    "all three acceptance tests pass; zero writes outside permitted paths"
+  ],
+  "provenance": {
+    "authored_by": "institutionalization lane D (feat/task-packets-and-tutorial)",
+    "date": "2026-07-29",
+    "cites": [
+      "docs/evidence-custody.md section 2 (opaque custody refs are not dead paths)",
+      "tools/check_regressions.py fixture-first discipline (committed state is the oracle)"
+    ]
+  }
+}

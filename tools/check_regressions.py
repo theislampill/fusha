@@ -5915,10 +5915,10 @@ try:
         os.path.join(ROOT, "tools", "validate_website_payload.py"),
     ], timeout=120)
     check(
-        "WEBHANDOFF committed website payload samples validate (9 samples)",
+        "WEBHANDOFF committed website payload samples validate (11 samples)",
         _webh_samples.returncode == 0
         and "WEBSITE PAYLOAD VALIDATION PASS" in (_webh_samples.stdout or "")
-        and (_webh_samples.stdout or "").count("ok   ") >= 9,
+        and (_webh_samples.stdout or "").count("ok   ") >= 11,
     )
     check(
         "WEBHANDOFF handoff contract committed",
@@ -5936,6 +5936,10 @@ try:
             "multi_entry_liqawmihi_61_5_4.payload.json",
             "verb_qamu_2_20_13.payload.json",
             "noun_rajulayni_2_282_59.payload.json",
+            # same-surface/different-analysis pair (steer §19): one surface,
+            # two occurrences, two different certified functions.
+            "ma_relative_2_284_10.payload.json",
+            "ma_nafiya_93_3_1.payload.json",
     ):
         check(
             "WEBHANDOFF sample payload committed: %s" % _webh_sample,
@@ -5945,6 +5949,75 @@ try:
 except Exception as _webh_e:
     check("WEBHANDOFF website payload gates (harness error)", False)
     print("  ", _webh_e)
+
+# TASKPACKET: delegable task packets (institutionalization lane D, steer §14).
+# qamus.task_packet.v1 — self-contained work orders a weaker model executes
+# without chat context. Red-first validator (id collisions, write-scope
+# conflicts, RM-09 server-path leak, missing adversarial canaries, missing
+# method-not-conclusion guard, non-deployment honesty) plus the committed
+# packet set. Companion institutionalization docs are presence-gated so the
+# tutorial / custody / visual-reference contracts cannot silently vanish.
+try:
+    _tp_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_task_packets.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "TASKPACKET validator red-first self-test passes",
+        _tp_self.returncode == 0
+        and "TASK PACKET SELF-TEST PASS" in (_tp_self.stdout or ""),
+    )
+    _tp_run = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_task_packets.py"),
+    ], timeout=120)
+    check(
+        "TASKPACKET committed packets validate (5 packets)",
+        _tp_run.returncode == 0
+        and "TASK PACKET VALIDATION PASS" in (_tp_run.stdout or "")
+        and (_tp_run.stdout or "").count("ok   ") >= 5,
+    )
+    check(
+        "TASKPACKET schema committed",
+        os.path.exists(os.path.join(
+            _R, "qamus", "schemas", "task-packet.schema.json")),
+    )
+    for _tp_name in (
+            "TP-P007-DS-W2",
+            "TP-P007-TV-W2",
+            "TP-P002-BI-VERIFY",
+            "TP-VN00-NOTE-NORM-W1",
+            "TP-DOC-LINKCHECK",
+    ):
+        check(
+            "TASKPACKET packet committed: %s" % _tp_name,
+            os.path.exists(os.path.join(
+                _R, "qamus", "task-packets", _tp_name + ".json")),
+        )
+    for _instd_doc, _instd_needle in (
+            (os.path.join(_R, "docs", "tutorials", "p007-end-to-end.md"),
+             "Step 18"),
+            (os.path.join(_R, "docs", "evidence-custody.md"),
+             "must not depend on undocumented server-only files"),
+            (os.path.join(_R, "docs", "architecture", "visual-references.md"),
+             "document.fonts.ready"),
+            (os.path.join(_R, "docs", "qamus", "website-handoff",
+                          "RESPONSE-TEMPLATE.md"),
+             "Adoption blockers"),
+    ):
+        try:
+            with io.open(_instd_doc, encoding="utf-8") as _instd_fh:
+                _instd_text = _instd_fh.read()
+            check("INSTD doc present + load-bearing section: "
+                  + os.path.basename(_instd_doc),
+                  _instd_needle in _instd_text)
+        except Exception:
+            check("INSTD doc present + load-bearing section: "
+                  + os.path.basename(_instd_doc), False)
+except Exception as _tp_e:
+    check("TASKPACKET gates (harness error)", False)
+    print("  ", _tp_e)
 
 # P007PILOT: P007_LI_NOUN_HOST_PILOT vertical-slice closure (12 certified
 # morpheme occurrences of the jarr clitic li- on noun hosts / 78 appearances /
