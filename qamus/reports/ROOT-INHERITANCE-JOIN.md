@@ -104,3 +104,32 @@ python3 tools/lattice_projectors.py join --whitelist <rh_live_01_beta_whitelist.
   --out-edges qamus/lattice/lexeme-join-edges.jsonl \
   --out-entry-occurrences qamus/lattice/entry-occurrence-edges.jsonl
 ```
+
+## Addendum — 2026-07-28 full-corpus join re-run (GRAPH-BACKLINK-REPAIR lanes O1+O2)
+
+`qamus/lattice/entry-occurrence-edges.jsonl` is now regenerated from the **full corpus token
+index** (`qamus/indexes/quran-loc-surface/index.jsonl`, 77,881 tokens) instead of the
+34,318-row live-hover whitelist, plus a join-key-layer hamza-seat strict rescue
+(`normalize_ar.norm_strict` secondary key, applied only where the deployed `wbw_norm` key
+dies under `_MIN_JOIN_LEN`; `wbw_norm` itself is unchanged — server parity preserved).
+
+- Orphan entries: **352 → 80** (covered 1,740 → 2,012 of 2,092).
+- Gained: 274 entries (251 whitelist-coverage-gap + join-miss, lane O1; 23 hamza-seat
+  `strict_rescue`, lane O2 — 110 entries carry at least one strict-rescue edge overall).
+- Lost vs the whitelist join: 2 entries (`p096` اللَّذَانِ, `p098` اللَّاتِي) whose Qurʾānic
+  spelling is the single-lām shadda orthography (وَٱلَّٰتِى / وَٱلَّذَانِ) — lane O3
+  orthography-folding residue, out of scope for this deterministic re-run.
+- Instrumentation: `qamus/reports/lexeme-join-corpus-instrumentation.json`
+  (`inputs.row_source = full_corpus_token_index`).
+- `qamus/lattice/lexeme-join-edges.jsonl` (24,391 whitelist-based typed edges above) is
+  UNCHANGED: its row/segment/root relations require the whitelist input, which is not a
+  committed repo artifact. The counts in the body of this report describe that historical
+  whitelist run.
+
+```bash
+python3 tools/lattice_projectors.py join \
+  --corpus qamus/indexes/quran-loc-surface/index.jsonl \
+  --entries qamus/data/current/entries.jsonl \
+  --out-instrumentation qamus/reports/lexeme-join-corpus-instrumentation.json \
+  --out-entry-occurrences qamus/lattice/entry-occurrence-edges.jsonl
+```
