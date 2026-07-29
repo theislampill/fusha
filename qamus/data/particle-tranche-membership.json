@@ -1,0 +1,957 @@
+{
+ "date": "2026-07-28",
+ "membership": [
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "0528e564b97f",
+   "function_family": "interrogative hamza (istifhām/taswiya)",
+   "headword": "أَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p001",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "2fcbd8198aa6",
+   "function_family": "jarr clitic bi-",
+   "headword": "بِـ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p002",
+   "tranche": "P-00"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "0bc805efc648",
+   "function_family": "oath-jarr ta- (qasam)",
+   "headword": "تَـ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p003",
+   "tranche": "P-00"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "e5ecfefbc304",
+   "function_family": "future tanfīs sa-",
+   "headword": "سَـ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p004",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "9fd16940c1ca",
+   "function_family": "connective fa- (ʿaṭf/result)",
+   "headword": "فَـ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p005",
+   "tranche": "P-00"
+  },
+  {
+   "dual_family_tension": "stays P-00 (jarr ka-) though the pronoun-suffix homoform belongs to P-03 material",
+   "entry_id": "967098527388",
+   "function_family": "jarr ka- (+ pronoun-suffix homoform)",
+   "headword": "كَـ / ـكَ / ـكِ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p006",
+   "tranche": "P-00"
+  },
+  {
+   "dual_family_tension": "stays P-00 though lām splits jarr li- vs taʿlīl/amr lām (P-01 material)",
+   "entry_id": "b10a1ee04666",
+   "function_family": "jarr/lām li-/la-",
+   "headword": "لَـ / لِـ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p007",
+   "tranche": "P-00"
+  },
+  {
+   "dual_family_tension": "P-01 by verb-mood interaction (tawkīd nūn); suffix-shaped, sarf-lane material",
+   "entry_id": "83653c56158f",
+   "function_family": "emphatic nūn (tawkīd, verb mood)",
+   "headword": "نَّ / نْ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p008",
+   "tranche": "P-01"
+  },
+  {
+   "entry_id": "a23a0c853dd8",
+   "function_family": "connective wa- (ʿaṭf/oath/ḥāl)",
+   "headword": "وَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p009",
+   "tranche": "P-00"
+  },
+  {
+   "entry_id": "5935ecfb1ec5",
+   "function_family": "definite article al-",
+   "headword": "الْ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p010",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "4318e2561011",
+   "function_family": "naṣb governor (anna, inna-sisters)",
+   "headword": "أَنَّ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p011",
+   "tranche": "P-01"
+  },
+  {
+   "entry_id": "08b05deced53",
+   "function_family": "naṣb governor (inna)",
+   "headword": "إِنَّ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p012",
+   "tranche": "P-01"
+  },
+  {
+   "entry_id": "632fbb107c44",
+   "function_family": "naṣb/maṣdarī governor (an)",
+   "headword": "أَنْ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p013",
+   "tranche": "P-01"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-01 (condition/jazm frame; in-family collision wins)",
+   "entry_id": "71ced968e7f8",
+   "function_family": "homograph: in (condition / negation / mukhaffafa)",
+   "headword": "إِنْ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p014",
+   "tranche": "P-02"
+  },
+  {
+   "entry_id": "e042319a89e3",
+   "function_family": "exception governor (illā)",
+   "headword": "إِلَّا",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p015",
+   "tranche": "P-01"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-01 (temporal governor; idh/idhā family wins)",
+   "entry_id": "7f1f8b8e29e6",
+   "function_family": "homograph: idh (temporal / taʿlīl)",
+   "headword": "إِذْ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p016",
+   "tranche": "P-02"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-01 (condition; idhā/idhan pair wins)",
+   "entry_id": "cc6e15fd47bf",
+   "function_family": "homograph: idhā (condition-temporal / fujāʾiyya)",
+   "headword": "إِذَا",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p017",
+   "tranche": "P-02"
+  },
+  {
+   "entry_id": "a22616256978",
+   "function_family": "homograph: idhan (result/inferential vs idhā)",
+   "headword": "إِذًا",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p018",
+   "tranche": "P-02"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-01 (taḥqīq governor; qad/qudda collision wins)",
+   "entry_id": "4aeb20b7beca",
+   "function_family": "homograph: qad (taḥqīq/taqlīl vs qudda)",
+   "headword": "قَدْ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p019",
+   "tranche": "P-02"
+  },
+  {
+   "entry_id": "d04ce63e31af",
+   "function_family": "vocative yā",
+   "headword": "يَا",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p020",
+   "tranche": "P-03"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-00 (conjunction; thumma/thamma pair wins)",
+   "entry_id": "a6cc21000bae",
+   "function_family": "homograph: thumma (conj) vs thamma",
+   "headword": "ثُمَّ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p021",
+   "tranche": "P-02"
+  },
+  {
+   "entry_id": "fd8d287473fa",
+   "function_family": "disjunctive connective aw",
+   "headword": "أَوْ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p022",
+   "tranche": "P-00"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-01 (jazm lammā; ḥīniyya/not-yet split wins)",
+   "entry_id": "3c0edd60b334",
+   "function_family": "homograph: lammā (ḥīniyya / jazm not-yet)",
+   "headword": "لَمَّا",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p023",
+   "tranche": "P-02"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-00 (istidrāk connective; lākin/lakunnā collision wins)",
+   "entry_id": "76874561dea3",
+   "function_family": "homograph: lākin (istidrāk vs la+kunnā)",
+   "headword": "لَكِنْ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p024",
+   "tranche": "P-02"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-00 (ka+mā connective; mā-function split wins)",
+   "entry_id": "d5a538513041",
+   "function_family": "homograph: ka+mā function split",
+   "headword": "كَمَا",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p025",
+   "tranche": "P-02"
+  },
+  {
+   "entry_id": "11c3e06d2c3a",
+   "function_family": "conditional-detail ammā",
+   "headword": "أَمَّا",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p026",
+   "tranche": "P-01"
+  },
+  {
+   "entry_id": "c6aaf597187e",
+   "function_family": "conditional/disjunctive immā",
+   "headword": "إِمَّا",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p027",
+   "tranche": "P-01"
+  },
+  {
+   "entry_id": "890aeddb5fb9",
+   "function_family": "future tanfīs sawfa",
+   "headword": "سَوْفَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p028",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "790e8c848efc",
+   "function_family": "naṣb governor (ka-anna)",
+   "headword": "كَأَنَّ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p029",
+   "tranche": "P-01"
+  },
+  {
+   "entry_id": "d93bddaa1e1e",
+   "function_family": "naṣb/purpose governor kay",
+   "headword": "كَيْ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p030",
+   "tranche": "P-01"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "df1fc22384e9",
+   "function_family": "kam-khabariyya analogue ka-ayyin",
+   "headword": "كَأَيِّن",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p031",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "3f58762b5232",
+   "function_family": "taqlīl/takthīr rubbamā",
+   "headword": "رُبَّمَا",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p032",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "f76f4be5e5e7",
+   "function_family": "condition/jazm mahmā",
+   "headword": "مَهْمَا",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p033",
+   "tranche": "P-01"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-00 (flagship jarr; homograph rule wins)",
+   "entry_id": "5c405be976bd",
+   "function_family": "homograph: min (jarr) vs man",
+   "headword": "مِنْ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p034",
+   "tranche": "P-02"
+  },
+  {
+   "entry_id": "a1feead9300b",
+   "function_family": "jarr fī",
+   "headword": "فِي",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p035",
+   "tranche": "P-00"
+  },
+  {
+   "entry_id": "b7570549e851",
+   "function_family": "jarr ʿalā",
+   "headword": "عَلَى",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p036",
+   "tranche": "P-00"
+  },
+  {
+   "entry_id": "1f50dcf7931c",
+   "function_family": "jarr ilā",
+   "headword": "إِلَى",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p037",
+   "tranche": "P-00"
+  },
+  {
+   "entry_id": "157442d7e625",
+   "function_family": "jarr ʿan",
+   "headword": "عَنْ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p038",
+   "tranche": "P-00"
+  },
+  {
+   "dogfood_zero_row": true,
+   "dual_family_tension": "stays P-00 though ḥattā is multi-function (jarr/ghāya/ibtidāʾ)",
+   "entry_id": "2313b955bef3",
+   "function_family": "jarr/ghāya ḥattā (multi-function)",
+   "headword": "حَتَّى",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p039",
+   "tranche": "P-00"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-03 (interrogative ʿaṭf; am/umm collision wins)",
+   "entry_id": "d8b8169ae3d3",
+   "function_family": "homograph: am (ʿaṭf-istifhām vs umm)",
+   "headword": "أَمْ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p040",
+   "tranche": "P-02"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-03 (interrogative; hal function-load wins)",
+   "entry_id": "90f56fb15ef5",
+   "function_family": "homograph: hal (istifhām, function-load)",
+   "headword": "هَلْ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p041",
+   "tranche": "P-02"
+  },
+  {
+   "entry_id": "b5a5f9be6fc3",
+   "function_family": "interrogative kayfa",
+   "headword": "كَيْفَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p042",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "12ed817accf5",
+   "function_family": "interrogative/relative ayy",
+   "headword": "أَيّ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p043",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "3717eb1806bc",
+   "function_family": "interrogative annā",
+   "headword": "أَنَّى",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p044",
+   "tranche": "P-03"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-03 (interrogative; mā+dhā split wins)",
+   "entry_id": "fc2cbc5b8380",
+   "function_family": "homograph: mādhā (mā+dhā split)",
+   "headword": "مَاذَا",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p045",
+   "tranche": "P-02"
+  },
+  {
+   "entry_id": "1ab446228cab",
+   "function_family": "interrogative/khabariyya kam",
+   "headword": "كَمْ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p046",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "d84692e8d2c8",
+   "function_family": "interrogative ayna",
+   "headword": "أَيْنَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p047",
+   "tranche": "P-03"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-03 (interrogative; lam/lima collision wins)",
+   "entry_id": "9389cc128849",
+   "function_family": "homograph: lima (li+mā vs lam)",
+   "headword": "لِمَ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p048",
+   "tranche": "P-02"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "5891b51869cc",
+   "function_family": "interrogative matā",
+   "headword": "مَتَى",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p049",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "90b371e02b8e",
+   "function_family": "interrogative ayyāna",
+   "headword": "أَيَّانَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p050",
+   "tranche": "P-03"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-03 (response/iḍrāb; bal function wins)",
+   "entry_id": "8ce3f76e3e4c",
+   "function_family": "homograph: bal (iḍrāb/istidrāk)",
+   "headword": "بَلْ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p051",
+   "tranche": "P-02"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-03 (response; kallā/kull collision wins)",
+   "entry_id": "98e0a4f33c1a",
+   "function_family": "homograph: kallā (radʿ vs kull)",
+   "headword": "كَلَّا",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p052",
+   "tranche": "P-02"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "056715c742d4",
+   "function_family": "response balā",
+   "headword": "بَلَى",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p053",
+   "tranche": "P-03"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-03 (response; naʿam/niʿma collision wins)",
+   "entry_id": "22d7a04ec920",
+   "function_family": "homograph: naʿam (response vs niʿma)",
+   "headword": "نَعَمْ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p054",
+   "tranche": "P-02"
+  },
+  {
+   "entry_id": "4c2384d96aa6",
+   "function_family": "response ī (oath-assent)",
+   "headword": "إِي",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p055",
+   "tranche": "P-03"
+  },
+  {
+   "dual_family_tension": "stays P-01 though lā is multi-function (nāfiya/nāhiya/genus; P-RICH-04 lane)",
+   "entry_id": "19de33871698",
+   "function_family": "negation lā (nāfiya/nāhiya/genus)",
+   "headword": "لَا",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p056",
+   "tranche": "P-01"
+  },
+  {
+   "dual_family_tension": "stays P-01 (jazm) though bare surface لم collides with p048 lima — pair split across P-01/P-02, 2-vote must see both",
+   "entry_id": "afe866d4f423",
+   "function_family": "jazm negation lam",
+   "headword": "لَمْ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p057",
+   "tranche": "P-01"
+  },
+  {
+   "entry_id": "ae033affe174",
+   "function_family": "naṣb negation lan",
+   "headword": "لَنْ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p058",
+   "tranche": "P-01"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "81cf69e52dd9",
+   "function_family": "negation lāta",
+   "headword": "لَاتَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p059",
+   "tranche": "P-01"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-01 (condition; law multi-function wins)",
+   "entry_id": "cee928fb679c",
+   "function_family": "homograph: law (condition / tamannī / maṣdarī)",
+   "headword": "لَوْ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p060",
+   "tranche": "P-02"
+  },
+  {
+   "entry_id": "7bb317131add",
+   "function_family": "tarajjī governor laʿalla",
+   "headword": "لَعَلَّ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p061",
+   "tranche": "P-01"
+  },
+  {
+   "entry_id": "d768c574ae8f",
+   "function_family": "tarajjī ʿasā",
+   "headword": "عَسَى",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p062",
+   "tranche": "P-01"
+  },
+  {
+   "entry_id": "ecc843ac7693",
+   "function_family": "tamannī governor layta",
+   "headword": "لَيْتَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p063",
+   "tranche": "P-01"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "616dbd6dffcc",
+   "function_family": "demonstrative hādhā",
+   "headword": "هَذَا",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p064",
+   "tranche": "P-03"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "dfbc7a29f6fe",
+   "function_family": "demonstrative hādhihi",
+   "headword": "هَذِهِ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p065",
+   "tranche": "P-03"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "07e9e2cce5df",
+   "function_family": "demonstrative hādhāni",
+   "headword": "هَذَانِ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p066",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "0cf17016b97c",
+   "function_family": "demonstrative hātayni",
+   "headword": "هَاتَيْنِ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p067",
+   "tranche": "P-03"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "bd3bb7a4c17f",
+   "function_family": "demonstrative hāʾulāʾi",
+   "headword": "هَؤُلَاءِ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p068",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "56df186084e2",
+   "function_family": "demonstrative ulāʾi",
+   "headword": "أُولَاءِ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p069",
+   "tranche": "P-03"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "34baf82d4a6e",
+   "function_family": "demonstrative ulāʾika",
+   "headword": "أُولَئِكَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p070",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "ca5dd7eb89ec",
+   "function_family": "demonstrative dhālika",
+   "headword": "ذَٰلِكَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p071",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "b00eef6e0665",
+   "function_family": "demonstrative tilka",
+   "headword": "تِلْكَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p072",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "dbbc876bd82f",
+   "function_family": "demonstrative dhā",
+   "headword": "ذَا",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p073",
+   "tranche": "P-03"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "7066540a5818",
+   "function_family": "demonstrative dhānika",
+   "headword": "ذَانِكَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p074",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "1de20b3fcc60",
+   "function_family": "locative demonstrative hāhunā",
+   "headword": "هَاهُنَا",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p075",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "e1fb0c3b8390",
+   "function_family": "locative demonstrative hunālika",
+   "headword": "هُنَالِكَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p076",
+   "tranche": "P-03"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-03 (demonstrative; pair with p021)",
+   "entry_id": "e8da25fd56d5",
+   "function_family": "homograph: thamma (locative dem) vs thumma",
+   "headword": "ثَمَّ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p077",
+   "tranche": "P-02"
+  },
+  {
+   "entry_id": "ba6c4a322d27",
+   "function_family": "pronoun huwa",
+   "headword": "هُوَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p078",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "61198bcd902f",
+   "function_family": "pronoun hiya",
+   "headword": "هِيَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p079",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "7f25d6c3e392",
+   "function_family": "pronoun humā",
+   "headword": "هُمَا",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p080",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "b851675d8484",
+   "function_family": "pronoun hum",
+   "headword": "هُمْ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p081",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "896fc440f451",
+   "function_family": "pronoun hunna",
+   "headword": "هُنَّ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p082",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "b8f4d87cff23",
+   "function_family": "pronoun anta",
+   "headword": "أَنْتَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p083",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "419d2133c7fb",
+   "function_family": "pronoun antumā",
+   "headword": "أَنْتُمَا",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p084",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "05b7e99ba847",
+   "function_family": "pronoun antum",
+   "headword": "أَنْتُمْ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p085",
+   "tranche": "P-03"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-03 (pronoun; anā/annā collision wins)",
+   "entry_id": "cf8aa5040b5a",
+   "function_family": "homograph: anā (pronoun) vs annā",
+   "headword": "أَنَا",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p086",
+   "tranche": "P-02"
+  },
+  {
+   "entry_id": "79844337cc9d",
+   "function_family": "pronoun naḥnu",
+   "headword": "نَحْنُ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p087",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "5ae407f4780a",
+   "function_family": "object pronoun iyyāhu",
+   "headword": "إِيَّاهُ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p088",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "32dbdef93c77",
+   "function_family": "object pronoun iyyāhum",
+   "headword": "إِيَّاهُمْ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p089",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "affa6a9b1f6c",
+   "function_family": "object pronoun iyyāka",
+   "headword": "إِيَّاكَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p090",
+   "tranche": "P-03"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "f78fe97adcff",
+   "function_family": "object pronoun iyyākum",
+   "headword": "إِيَّاكُمْ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p091",
+   "tranche": "P-03"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "8e0f13de3bc7",
+   "function_family": "object pronoun iyyāya",
+   "headword": "إِيَّايَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p092",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "4eff1fbda4c3",
+   "function_family": "object pronoun iyyānā",
+   "headword": "إِيَّانَا",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p093",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "557361a66a43",
+   "function_family": "relative alladhī",
+   "headword": "الَّذِي",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p094",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "b6d22cb3df4e",
+   "function_family": "relative allatī",
+   "headword": "الَّتِي",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p095",
+   "tranche": "P-03"
+  },
+  {
+   "dogfood_zero_row": true,
+   "entry_id": "9e1478d4f36a",
+   "function_family": "relative alladhāni",
+   "headword": "اللَّذَانِ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p096",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "91a3a5a825a1",
+   "function_family": "relative alladhīna",
+   "headword": "الَّذِينَ",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p097",
+   "tranche": "P-03"
+  },
+  {
+   "entry_id": "678d3700e770",
+   "function_family": "relative allātī",
+   "headword": "اللَّاتِي",
+   "homograph": false,
+   "scholar_two_vote_required": false,
+   "source_key": "p098",
+   "tranche": "P-03"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-03 (relative section; mā multi-function wins)",
+   "entry_id": "b8e480aebafe",
+   "function_family": "homograph: mā (relative/negation/istifhām/maṣdarī)",
+   "headword": "مَا",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p099",
+   "tranche": "P-02"
+  },
+  {
+   "dual_family_tension": "P-02 vs P-03 (relative section; man/min collision wins)",
+   "entry_id": "e7c05664fd33",
+   "function_family": "homograph: man (relative/istifhām/condition) vs min",
+   "headword": "مَنْ",
+   "homograph": true,
+   "scholar_two_vote_required": true,
+   "source_key": "p100",
+   "tranche": "P-02"
+  }
+ ],
+ "schema": "qamus.particle_tranche_membership.v1",
+ "source": "Owner-approved P-00..P-03 function-family assignment for p001-p100 (PARTICLE-MEMBERSHIP-P00-P03-2026-07-28 owner packet; candidate-mode planning artifact). Tranche semantics: P-00 prepositions/jarr + conjunctions/connectives; P-01 nasb/jazm/negation/condition + governing particles; P-02 contextual-homograph and function-disambiguation hard cases (homograph-capable particles land here even when they also fit another family); P-03 pronouns/demonstratives/relatives + remaining families.",
+ "tranche_sizes": {
+  "P-00": 12,
+  "P-01": 17,
+  "P-02": 22,
+  "P-03": 49
+ }
+}

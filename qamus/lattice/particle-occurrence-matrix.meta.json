@@ -1,0 +1,731 @@
+{
+ "affix_not_discoverable": [
+  "p001",
+  "p008"
+ ],
+ "builder": {
+  "id": "build_particle_occurrence_matrix",
+  "version": "1.0.0"
+ },
+ "inputs": {
+  "entries": "qamus/data/current/entries.jsonl",
+  "funcword_rules": "nahw/rules/funcword-homograph-prepass-rules.json",
+  "membership": "qamus/data/particle-tranche-membership.json",
+  "universe": "qamus/lattice/example-ayah-universe.jsonl"
+ },
+ "notes": [
+  "CANDIDATE lattice only: no row is certified; function_candidates is a list, never a winner; clitic-vs-free is a heuristic candidate classification pending segmentation evidence.",
+  "Candidate scope is the example-ayah universe (displayed words on all 2,092 entry pages), NOT the whole corpus and NOT only the 984 rendered particle-page context spans.",
+  "p001 (interrogative hamza) and p008 (emphatic nun) are affix-shaped and not strict-prefix discoverable; they surface as free matches only (discovery gap recorded)."
+ ],
+ "per_particle": {
+  "p001": {
+   "occurrences": 0
+  },
+  "p002": {
+   "context_on_n": 692,
+   "context_on_p": 27,
+   "context_on_v": 4716,
+   "occurrences": 2492
+  },
+  "p003": {
+   "context_on_n": 379,
+   "context_on_p": 35,
+   "context_on_v": 3360,
+   "occurrences": 1648
+  },
+  "p004": {
+   "context_on_n": 247,
+   "context_on_p": 11,
+   "context_on_v": 1198,
+   "occurrences": 657
+  },
+  "p005": {
+   "context_on_n": 938,
+   "context_on_p": 44,
+   "context_on_v": 6476,
+   "occurrences": 3288
+  },
+  "p006": {
+   "context_on_n": 422,
+   "context_on_p": 38,
+   "context_on_v": 2757,
+   "occurrences": 1530
+  },
+  "p007": {
+   "context_on_n": 711,
+   "context_on_p": 55,
+   "context_on_v": 5456,
+   "occurrences": 2999,
+   "selected_on_p": 1
+  },
+  "p008": {
+   "context_on_n": 18,
+   "context_on_p": 1,
+   "context_on_v": 145,
+   "occurrences": 80
+  },
+  "p009": {
+   "context_on_n": 2128,
+   "context_on_p": 96,
+   "context_on_v": 12712,
+   "occurrences": 6586
+  },
+  "p010": {
+   "context_on_n": 1876,
+   "context_on_p": 113,
+   "context_on_v": 12611,
+   "occurrences": 6634
+  },
+  "p011": {
+   "context_on_n": 487,
+   "context_on_p": 49,
+   "context_on_v": 4159,
+   "occurrences": 2291,
+   "selected_on_p": 6
+  },
+  "p012": {
+   "context_on_n": 370,
+   "context_on_p": 27,
+   "context_on_v": 3475,
+   "occurrences": 1903,
+   "selected_on_p": 5
+  },
+  "p013": {
+   "context_on_n": 210,
+   "context_on_p": 18,
+   "context_on_v": 1961,
+   "occurrences": 1049,
+   "selected_on_p": 2
+  },
+  "p014": {
+   "context_on_n": 250,
+   "context_on_p": 17,
+   "context_on_v": 2488,
+   "occurrences": 1268,
+   "selected_on_p": 1
+  },
+  "p015": {
+   "context_on_n": 136,
+   "context_on_p": 13,
+   "context_on_v": 1201,
+   "occurrences": 610,
+   "selected_on_p": 2
+  },
+  "p016": {
+   "context_on_n": 37,
+   "context_on_p": 4,
+   "context_on_v": 303,
+   "occurrences": 147
+  },
+  "p017": {
+   "context_on_n": 61,
+   "context_on_p": 3,
+   "context_on_v": 635,
+   "occurrences": 313,
+   "selected_on_p": 2
+  },
+  "p018": {
+   "context_on_n": 61,
+   "context_on_p": 4,
+   "context_on_v": 635,
+   "occurrences": 313,
+   "selected_on_p": 1
+  },
+  "p019": {
+   "context_on_n": 46,
+   "context_on_p": 2,
+   "context_on_v": 374,
+   "occurrences": 238,
+   "selected_on_p": 1
+  },
+  "p020": {
+   "context_on_n": 12,
+   "context_on_v": 236,
+   "occurrences": 110,
+   "selected_on_p": 1
+  },
+  "p021": {
+   "context_on_n": 35,
+   "context_on_p": 3,
+   "context_on_v": 344,
+   "occurrences": 205,
+   "selected_on_p": 3
+  },
+  "p022": {
+   "context_on_n": 68,
+   "context_on_p": 1,
+   "context_on_v": 541,
+   "occurrences": 204,
+   "selected_on_p": 1
+  },
+  "p023": {
+   "context_on_n": 34,
+   "context_on_p": 2,
+   "context_on_v": 322,
+   "occurrences": 141,
+   "selected_on_p": 1
+  },
+  "p024": {
+   "context_on_v": 7,
+   "occurrences": 5
+  },
+  "p025": {
+   "context_on_n": 6,
+   "context_on_v": 107,
+   "occurrences": 51,
+   "selected_on_p": 2
+  },
+  "p026": {
+   "context_on_n": 11,
+   "context_on_p": 2,
+   "context_on_v": 55,
+   "occurrences": 40
+  },
+  "p027": {
+   "context_on_n": 6,
+   "context_on_p": 4,
+   "context_on_v": 63,
+   "occurrences": 39
+  },
+  "p028": {
+   "context_on_v": 34,
+   "occurrences": 20,
+   "selected_on_p": 1
+  },
+  "p029": {
+   "context_on_n": 69,
+   "context_on_p": 3,
+   "context_on_v": 429,
+   "occurrences": 229,
+   "selected_on_p": 2
+  },
+  "p030": {
+   "context_on_n": 1,
+   "context_on_v": 28,
+   "occurrences": 9,
+   "selected_on_p": 2
+  },
+  "p031": {
+   "context_on_n": 1,
+   "context_on_p": 1,
+   "context_on_v": 5,
+   "occurrences": 3
+  },
+  "p032": {
+   "occurrences": 1,
+   "selected_on_p": 1
+  },
+  "p033": {
+   "occurrences": 1,
+   "selected_on_p": 1
+  },
+  "p034": {
+   "context_on_n": 733,
+   "context_on_p": 30,
+   "context_on_v": 4783,
+   "occurrences": 2481,
+   "selected_on_p": 5
+  },
+  "p035": {
+   "context_on_n": 369,
+   "context_on_p": 15,
+   "context_on_v": 1938,
+   "occurrences": 1087,
+   "selected_on_p": 7
+  },
+  "p036": {
+   "context_on_n": 279,
+   "context_on_p": 12,
+   "context_on_v": 1907,
+   "occurrences": 953,
+   "selected_on_p": 3
+  },
+  "p037": {
+   "context_on_n": 113,
+   "context_on_p": 7,
+   "context_on_v": 902,
+   "occurrences": 488,
+   "selected_on_p": 5
+  },
+  "p038": {
+   "context_on_n": 50,
+   "context_on_p": 5,
+   "context_on_v": 549,
+   "occurrences": 286,
+   "selected_on_p": 2
+  },
+  "p039": {
+   "context_on_n": 24,
+   "context_on_v": 245,
+   "occurrences": 101,
+   "selected_on_p": 2
+  },
+  "p040": {
+   "context_on_n": 17,
+   "context_on_p": 1,
+   "context_on_v": 107,
+   "occurrences": 82,
+   "selected_on_p": 2
+  },
+  "p041": {
+   "context_on_n": 8,
+   "context_on_p": 1,
+   "context_on_v": 88,
+   "occurrences": 56,
+   "selected_on_p": 2
+  },
+  "p042": {
+   "context_on_n": 3,
+   "context_on_p": 2,
+   "context_on_v": 71,
+   "occurrences": 45,
+   "selected_on_p": 2
+  },
+  "p043": {
+   "context_on_n": 6,
+   "context_on_p": 2,
+   "context_on_v": 31,
+   "occurrences": 23,
+   "selected_on_p": 4
+  },
+  "p044": {
+   "context_on_n": 26,
+   "context_on_v": 175,
+   "occurrences": 107,
+   "selected_on_p": 2
+  },
+  "p045": {
+   "context_on_n": 3,
+   "context_on_p": 1,
+   "context_on_v": 23,
+   "occurrences": 19,
+   "selected_on_p": 2
+  },
+  "p046": {
+   "context_on_n": 86,
+   "context_on_p": 9,
+   "context_on_v": 543,
+   "occurrences": 274,
+   "selected_on_p": 1
+  },
+  "p047": {
+   "context_on_n": 1,
+   "context_on_p": 2,
+   "context_on_v": 21,
+   "occurrences": 12,
+   "selected_on_p": 1
+  },
+  "p048": {
+   "context_on_n": 31,
+   "context_on_p": 7,
+   "context_on_v": 358,
+   "occurrences": 165
+  },
+  "p049": {
+   "context_on_v": 1,
+   "occurrences": 1,
+   "selected_on_p": 1
+  },
+  "p050": {
+   "context_on_v": 6,
+   "occurrences": 3,
+   "selected_on_p": 1
+  },
+  "p051": {
+   "context_on_n": 8,
+   "context_on_p": 1,
+   "context_on_v": 105,
+   "occurrences": 71
+  },
+  "p052": {
+   "context_on_n": 15,
+   "context_on_p": 3,
+   "context_on_v": 29,
+   "occurrences": 30,
+   "selected_on_p": 2
+  },
+  "p053": {
+   "context_on_v": 12,
+   "occurrences": 11,
+   "selected_on_p": 1
+  },
+  "p054": {
+   "context_on_n": 6,
+   "context_on_v": 23,
+   "occurrences": 13,
+   "selected_on_p": 1
+  },
+  "p055": {
+   "context_on_n": 1,
+   "context_on_v": 5,
+   "occurrences": 4,
+   "selected_on_p": 1
+  },
+  "p056": {
+   "context_on_n": 430,
+   "context_on_p": 34,
+   "context_on_v": 3526,
+   "occurrences": 1781,
+   "selected_on_p": 4
+  },
+  "p057": {
+   "context_on_n": 47,
+   "context_on_p": 8,
+   "context_on_v": 466,
+   "occurrences": 238,
+   "selected_on_p": 5
+  },
+  "p058": {
+   "context_on_n": 15,
+   "context_on_v": 122,
+   "occurrences": 70,
+   "selected_on_p": 1
+  },
+  "p059": {
+   "context_on_n": 1,
+   "context_on_p": 1,
+   "context_on_v": 1,
+   "occurrences": 2
+  },
+  "p060": {
+   "context_on_n": 31,
+   "context_on_p": 4,
+   "context_on_v": 316,
+   "occurrences": 174,
+   "selected_on_p": 1
+  },
+  "p061": {
+   "context_on_n": 16,
+   "context_on_p": 1,
+   "context_on_v": 150,
+   "occurrences": 80,
+   "selected_on_p": 2
+  },
+  "p062": {
+   "context_on_n": 4,
+   "context_on_p": 2,
+   "context_on_v": 37,
+   "occurrences": 20
+  },
+  "p063": {
+   "context_on_n": 1,
+   "context_on_v": 3,
+   "occurrences": 2
+  },
+  "p064": {
+   "context_on_n": 19,
+   "context_on_p": 1,
+   "context_on_v": 185,
+   "occurrences": 110,
+   "selected_on_p": 1
+  },
+  "p065": {
+   "context_on_n": 9,
+   "context_on_p": 1,
+   "context_on_v": 45,
+   "occurrences": 28,
+   "selected_on_p": 1
+  },
+  "p066": {
+   "context_on_v": 2,
+   "occurrences": 1
+  },
+  "p067": {
+   "context_on_n": 1,
+   "context_on_v": 3,
+   "occurrences": 1,
+   "selected_on_p": 1
+  },
+  "p068": {
+   "context_on_n": 3,
+   "context_on_p": 2,
+   "context_on_v": 31,
+   "occurrences": 22,
+   "selected_on_p": 1
+  },
+  "p069": {
+   "context_on_p": 1,
+   "context_on_v": 10,
+   "occurrences": 10,
+   "selected_on_p": 1
+  },
+  "p070": {
+   "context_on_n": 16,
+   "context_on_v": 161,
+   "occurrences": 87,
+   "selected_on_p": 2
+  },
+  "p071": {
+   "context_on_n": 82,
+   "context_on_p": 2,
+   "context_on_v": 586,
+   "occurrences": 295
+  },
+  "p072": {
+   "context_on_n": 10,
+   "context_on_v": 59,
+   "occurrences": 25,
+   "selected_on_p": 4
+  },
+  "p073": {
+   "context_on_n": 7,
+   "context_on_p": 1,
+   "context_on_v": 28,
+   "occurrences": 14
+  },
+  "p074": {
+   "context_on_n": 1,
+   "context_on_p": 1,
+   "context_on_v": 2,
+   "occurrences": 1
+  },
+  "p075": {
+   "context_on_v": 1,
+   "occurrences": 2,
+   "selected_on_p": 1
+  },
+  "p076": {
+   "context_on_n": 1,
+   "context_on_v": 7,
+   "occurrences": 6,
+   "selected_on_p": 1
+  },
+  "p077": {
+   "context_on_n": 35,
+   "context_on_p": 5,
+   "context_on_v": 344,
+   "occurrences": 205,
+   "selected_on_p": 1
+  },
+  "p078": {
+   "context_on_n": 70,
+   "context_on_p": 7,
+   "context_on_v": 517,
+   "occurrences": 290
+  },
+  "p079": {
+   "context_on_n": 7,
+   "context_on_p": 4,
+   "context_on_v": 75,
+   "occurrences": 43
+  },
+  "p080": {
+   "context_on_n": 4,
+   "context_on_v": 32,
+   "occurrences": 11,
+   "selected_on_p": 1
+  },
+  "p081": {
+   "context_on_n": 98,
+   "context_on_p": 7,
+   "context_on_v": 857,
+   "occurrences": 522
+  },
+  "p082": {
+   "context_on_n": 16,
+   "context_on_p": 1,
+   "context_on_v": 85,
+   "occurrences": 25,
+   "selected_on_p": 1
+  },
+  "p083": {
+   "context_on_n": 6,
+   "context_on_p": 1,
+   "context_on_v": 59,
+   "occurrences": 41,
+   "selected_on_p": 1
+  },
+  "p084": {
+   "occurrences": 1,
+   "selected_on_p": 1
+  },
+  "p085": {
+   "context_on_n": 20,
+   "context_on_p": 3,
+   "context_on_v": 150,
+   "occurrences": 81
+  },
+  "p086": {
+   "context_on_n": 30,
+   "context_on_p": 4,
+   "context_on_v": 256,
+   "occurrences": 172,
+   "selected_on_p": 2
+  },
+  "p087": {
+   "context_on_n": 14,
+   "context_on_p": 3,
+   "context_on_v": 68,
+   "occurrences": 47,
+   "selected_on_p": 1
+  },
+  "p088": {
+   "context_on_p": 1,
+   "context_on_v": 9,
+   "occurrences": 5,
+   "selected_on_p": 1
+  },
+  "p089": {
+   "context_on_n": 1,
+   "context_on_p": 1,
+   "context_on_v": 4,
+   "occurrences": 1
+  },
+  "p090": {
+   "context_on_p": 1,
+   "context_on_v": 4,
+   "occurrences": 2,
+   "selected_on_p": 1
+  },
+  "p091": {
+   "context_on_p": 1,
+   "context_on_v": 3,
+   "occurrences": 2
+  },
+  "p092": {
+   "context_on_n": 3,
+   "context_on_p": 1,
+   "context_on_v": 5,
+   "occurrences": 5
+  },
+  "p093": {
+   "context_on_v": 2,
+   "occurrences": 2,
+   "selected_on_p": 1
+  },
+  "p094": {
+   "context_on_n": 48,
+   "context_on_p": 2,
+   "context_on_v": 368,
+   "occurrences": 174,
+   "selected_on_p": 2
+  },
+  "p095": {
+   "context_on_n": 20,
+   "context_on_v": 102,
+   "occurrences": 47,
+   "selected_on_p": 2
+  },
+  "p096": {
+   "occurrences": 0
+  },
+  "p097": {
+   "context_on_n": 119,
+   "context_on_p": 5,
+   "context_on_v": 1132,
+   "occurrences": 628,
+   "selected_on_p": 2
+  },
+  "p098": {
+   "occurrences": 0
+  },
+  "p099": {
+   "context_on_n": 309,
+   "context_on_p": 34,
+   "context_on_v": 2643,
+   "occurrences": 1486,
+   "selected_on_p": 6
+  },
+  "p100": {
+   "context_on_n": 635,
+   "context_on_p": 29,
+   "context_on_v": 3960,
+   "occurrences": 2088,
+   "selected_on_p": 1
+  }
+ },
+ "per_tranche": {
+  "P-00": {
+   "context_on_n": 6173,
+   "context_on_p": 335,
+   "context_on_v": 41559,
+   "occurrences": 21662,
+   "selected_on_p": 21
+  },
+  "P-01": {
+   "context_on_n": 1822,
+   "context_on_p": 163,
+   "context_on_v": 15821,
+   "occurrences": 8444,
+   "selected_on_p": 32
+  },
+  "P-02": {
+   "context_on_n": 2391,
+   "context_on_p": 155,
+   "context_on_v": 18250,
+   "occurrences": 9723,
+   "selected_on_p": 36
+  },
+  "P-03": {
+   "context_on_n": 2834,
+   "context_on_p": 187,
+   "context_on_v": 19541,
+   "occurrences": 10434,
+   "selected_on_p": 44
+  }
+ },
+ "schema": "qamus.particle_occurrence_matrix.v1",
+ "totals": {
+  "candidate_appearances": 109364,
+  "matrix_rows": 50263,
+  "page_class_appearances": {
+   "context_on_n": 13220,
+   "context_on_p": 840,
+   "context_on_v": 95171,
+   "selected_on_p": 133
+  },
+  "particles": 100,
+  "unaligned_candidate_appearances": 396
+ },
+ "unaligned_candidates_by_particle": {
+  "p002": 16,
+  "p003": 11,
+  "p004": 6,
+  "p005": 20,
+  "p006": 11,
+  "p007": 24,
+  "p009": 35,
+  "p010": 100,
+  "p011": 8,
+  "p012": 6,
+  "p013": 2,
+  "p014": 1,
+  "p015": 1,
+  "p016": 1,
+  "p017": 6,
+  "p018": 6,
+  "p019": 2,
+  "p020": 22,
+  "p021": 2,
+  "p022": 4,
+  "p023": 3,
+  "p034": 15,
+  "p035": 11,
+  "p036": 5,
+  "p037": 1,
+  "p038": 2,
+  "p043": 10,
+  "p045": 1,
+  "p046": 1,
+  "p051": 3,
+  "p055": 1,
+  "p056": 9,
+  "p060": 1,
+  "p063": 1,
+  "p066": 1,
+  "p069": 2,
+  "p070": 1,
+  "p077": 2,
+  "p078": 1,
+  "p081": 5,
+  "p086": 3,
+  "p087": 1,
+  "p094": 1,
+  "p096": 1,
+  "p097": 2,
+  "p098": 4,
+  "p099": 11,
+  "p100": 13
+ }
+}

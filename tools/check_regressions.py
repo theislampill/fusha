@@ -5649,6 +5649,48 @@ except Exception as _vn_e:
     check("VNMAP ledger gates (harness error)", False)
     print("  ", _vn_e)
 
+# UNIVERSE: example-ayah occurrence universe + particle-occurrence matrix.
+# Repo-self-contained: builders read only committed artifacts; the gates run
+# the focused tests, the red-first validator self-test, and the committed
+# artifact validation (membership exactly-once coverage, selected/context
+# denominators, unique-occurrence vs appearance preservation, wbw parity
+# extension, candidate-only matrix contract).
+try:
+    _uni_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_example_ayah_universe",
+        "-q",
+    ], timeout=120)
+    check(
+        "UNIVERSE builder focused tests pass",
+        _uni_unit.returncode == 0
+        and "OK" in ((_uni_unit.stdout or "") + (_uni_unit.stderr or "")),
+    )
+    _uni_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_example_universe.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "UNIVERSE validator red-first self-test passes",
+        _uni_self.returncode == 0
+        and "UNIVERSE SELF-TEST PASS" in (_uni_self.stdout or ""),
+    )
+    _uni_real = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_example_universe.py"),
+    ], timeout=600)
+    check(
+        "UNIVERSE committed universe/matrix/membership artifacts validate",
+        _uni_real.returncode == 0
+        and "UNIVERSE VALIDATION PASS" in (_uni_real.stdout or ""),
+    )
+except Exception as _uni_e:
+    check("UNIVERSE gates (harness error)", False)
+    print("  ", _uni_e)
+
 # VNREGEN: owner-rules readiness v2 builder, schema validator, and committed
 # fixture artifacts. The full-corpus lane outputs remain outside the repo;
 # this gate must pass from repository contents alone.
