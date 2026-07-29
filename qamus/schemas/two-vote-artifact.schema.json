@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/theIslampill/fusha/qamus/schemas/two-vote-artifact.schema.json",
-  "title": "Qamus two-vote artifact bundle v1",
-  "description": "Reconstructible evidence contract behind any two_vote / bulk_two_vote_certified claim: two independent vote records plus agreement computed on conclusion AND grammatical reason, never on gloss text. Historical claims without artifacts are representable only as two_vote_claimed_unverified and are never fabricated.",
+  "title": "Qamus two-vote artifact bundle v1 / v1.1",
+  "description": "Reconstructible evidence contract behind any two_vote / bulk_two_vote_certified claim: two independent vote records plus agreement computed on conclusion AND grammatical reason, never on gloss text. Historical claims without artifacts are representable only as two_vote_claimed_unverified and are never fabricated. v1.1 replaces free-prose comparison with governed vocabulary: case_or_mood.value/sign are closed enums; conclusion.function, conclusion.attachment_key and reason_key must be ids from qamus/skills/reason-key-registry.jsonl; case_or_mood.mood_basis (governed|tajarrud|default) gates the governor requirement (raf' by tajarrud is valid with governor null; tajarrud/default only license raf3); governed_expression means 'the expression THIS token governs (null if none)' with governed_by_scope for what governs this token; segment surfaces are recorded as displayed in the mushaf token including shadda from assimilation (e.g. لِّ) with normalized_segment / governor.normalized_surface carrying the dictionary-normalized form (normalized wins in comparison); lexical_target declares whether the vote's lexical identity addresses the clitic entry or the whole fused token, and root_label_suppressed marks public root-label suppression (root must then be null). Prose stays in contextual_function/attachment/referent/grammatical_reason, uncompared.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -17,7 +17,7 @@
     "votes_fabricated"
   ],
   "properties": {
-    "schema": {"const": "qamus.two_vote_artifact.v1"},
+    "schema": {"enum": ["qamus.two_vote_artifact.v1", "qamus.two_vote_artifact.v1.1"]},
     "artifact_id": {
       "type": "string",
       "pattern": "^two-vote-artifact:quran_[0-9]{1,3}_[0-9]{1,3}_[0-9]{1,3}(:[A-Za-z0-9._-]+)?$"
@@ -53,6 +53,33 @@
     },
     "votes_fabricated": {"const": false}
   },
+  "allOf": [
+    {
+      "if": {"properties": {"schema": {"const": "qamus.two_vote_artifact.v1.1"}}},
+      "then": {
+        "properties": {
+          "votes": {
+            "items": {
+              "required": ["lexical_target"],
+              "properties": {
+                "conclusion": {
+                  "required": ["function"],
+                  "properties": {
+                    "case_or_mood": {
+                      "properties": {
+                        "value": {"enum": ["raf3", "nasb", "jarr", "jazm", "none"]},
+                        "sign": {"enum": ["fatha", "damma", "kasra", "sukun", "thubut_nun", "hadhf_nun", "hadhf_harf_illa", "alif", "waw", "ya", "none"]}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
   "$defs": {
     "vote_record": {
       "type": "object",
@@ -96,8 +123,9 @@
             "additionalProperties": false,
             "required": ["segment_surface", "role"],
             "properties": {
-              "segment_surface": {"type": "string", "minLength": 1},
-              "role": {"type": "string", "pattern": "^[a-z][a-z0-9_:-]*$"}
+              "segment_surface": {"type": "string", "minLength": 1, "description": "Recorded as displayed inside the mushaf token, including shadda arising from assimilation (e.g. لِّ)."},
+              "role": {"type": "string", "pattern": "^[a-z][a-z0-9_:-]*$"},
+              "normalized_segment": {"type": "string", "minLength": 1, "description": "v1.1: dictionary-normalized form of the segment (e.g. لِ for displayed لِّ)."}
             }
           }
         },
@@ -112,9 +140,18 @@
         },
         "root": {"type": ["string", "null"], "minLength": 1},
         "form": {"type": ["string", "null"], "minLength": 1},
+        "lexical_target": {
+          "type": "string",
+          "enum": ["clitic_entry", "whole_token"],
+          "description": "v1.1 (required there): what the vote's lexical_identity/root addresses on a fused token — the clitic's own dictionary entry, or the whole orthographic token."
+        },
+        "root_label_suppressed": {
+          "type": "boolean",
+          "description": "v1.1 policy flag: true when the public root label is deliberately suppressed; root must then be null, so null-vs-attested root is a policy difference, not a comparison miss."
+        },
         "conclusion": {"$ref": "#/$defs/conclusion"},
         "grammatical_reason": {"type": "string", "minLength": 1},
-        "reason_key": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "reason_key": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "v1: free lowercase-hyphen token. v1.1: must be an id of kind reason_key in qamus/skills/reason-key-registry.jsonl; votes cite the id here and elaborate freely in grammatical_reason."},
         "gloss": {"type": "string"},
         "unresolved_points": {
           "type": "array",
@@ -145,7 +182,12 @@
         "referent"
       ],
       "properties": {
-        "contextual_function": {"type": "string", "minLength": 1},
+        "contextual_function": {"type": "string", "minLength": 1, "description": "Prose. Compared in v1; uncompared elaboration in v1.1 (function carries the compared value)."},
+        "function": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "description": "v1.1 (required there): governed function key — an id of kind function in qamus/skills/reason-key-registry.jsonl. Compared instead of contextual_function prose."
+        },
         "governor": {
           "oneOf": [
             {
@@ -154,26 +196,39 @@
               "required": ["surface", "relation"],
               "properties": {
                 "loc": {"type": ["string", "null"], "pattern": "^(quran|wbw):[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}$"},
-                "surface": {"type": "string", "minLength": 1},
-                "relation": {"type": "string", "minLength": 1}
+                "surface": {"type": "string", "minLength": 1, "description": "As displayed, including shadda from assimilation for token-internal governors (e.g. لِّ)."},
+                "normalized_surface": {"type": "string", "minLength": 1, "description": "v1.1: dictionary-normalized surface (e.g. لِ); wins over surface in v1.1 comparison."},
+                "relation": {"type": "string", "minLength": 1, "description": "Prose. Compared in v1; uncompared elaboration in v1.1."}
               }
             },
             {"type": "null"}
-          ]
+          ],
+          "description": "The operator governing THIS token. v1.1: required only when case_or_mood.mood_basis=governed; null is valid for raf' by tajarrud/default."
         },
-        "governed_expression": {"type": ["string", "null"], "minLength": 1},
+        "governed_expression": {"type": ["string", "null"], "minLength": 1, "description": "v1.1 semantics (fixed): the expression THIS token governs — null if it governs nothing. What governs this token belongs in governed_by_scope / governor."},
+        "governed_by_scope": {"type": ["string", "null"], "minLength": 1, "description": "v1.1 (optional): what governs this token, as prose scope info. Uncompared."},
         "case_or_mood": {
           "type": "object",
           "additionalProperties": false,
           "required": ["value", "sign", "sign_visibility"],
           "properties": {
-            "value": {"type": ["string", "null"], "minLength": 1},
-            "sign": {"type": ["string", "null"], "minLength": 1},
-            "sign_visibility": {"type": "string", "enum": ["visible", "estimated", "not_applicable"]}
+            "value": {"type": ["string", "null"], "minLength": 1, "description": "v1: free prose. v1.1: enum raf3|nasb|jarr|jazm|none."},
+            "sign": {"type": ["string", "null"], "minLength": 1, "description": "v1: free prose. v1.1: enum fatha|damma|kasra|sukun|thubut_nun|hadhf_nun|hadhf_harf_illa|alif|waw|ya|none."},
+            "sign_visibility": {"type": "string", "enum": ["visible", "estimated", "not_applicable"]},
+            "mood_basis": {
+              "type": ["string", "null"],
+              "enum": ["governed", "tajarrud", "default", null],
+              "description": "v1.1 (required for inflected values, null when value=none): governed = an operator assigns the case/mood (governor required); tajarrud = raf' by absence of nasib/jazim; default = mood by default. tajarrud/default only license raf3."
+            }
           }
         },
-        "attachment": {"type": ["string", "null"], "minLength": 1},
-        "referent": {"type": ["string", "null"], "minLength": 1}
+        "attachment": {"type": ["string", "null"], "minLength": 1, "description": "Prose. Compared in v1; uncompared elaboration in v1.1 (attachment_key carries the compared value)."},
+        "attachment_key": {
+          "type": ["string", "null"],
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "description": "v1.1: governed attachment key — an id of kind attachment in qamus/skills/reason-key-registry.jsonl (null if no attachment claim)."
+        },
+        "referent": {"type": ["string", "null"], "minLength": 1, "description": "Prose. Compared in v1; uncompared elaboration in v1.1."}
       }
     },
     "agreement": {
