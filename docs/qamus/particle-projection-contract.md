@@ -1,6 +1,7 @@
 # Particle two-surface projection & pedagogy contract
 
-**Status:** proposed 2026-07-29 (owner steer §6, PARTICLE-CONTRACTS lane).
+**Status:** proposed 2026-07-29 (owner steer §6, PARTICLE-CONTRACTS lane);
+design flags A–E owner-decided 2026-07-29 (steer decision §8) — recorded in §5.
 **Scope:** every rendered appearance of a particle/clitic occurrence, on every
 page class (reader, entry card, example card, WBW hover, dogfood review).
 **Extends, never forks:**
@@ -66,6 +67,9 @@ The hover for a particle/clitic component presents, in order:
 8. **Scope** — from `scope_edge` / `negation_scope_edge` / `condition_edge` /
    `coordination_edge` as applicable.
 9. **Attachment** — host token and boundary (from `clitic_host_edge`).
+   Rung-1 certification of `clitic_host_edge` certifies ATTACHMENT GEOMETRY
+   ONLY (§5, flag C) — never the clitic's lexical identity, function,
+   governor, or scope.
 10. **Alternatives** — the surviving non-winning candidates from the function
     lattice, each with its guards, presented as live alternatives, not noise.
 11. **Reason** — why the winning analysis wins (the discriminating guard /
@@ -156,9 +160,15 @@ distinct or keeps the gap explicit).
   requires the evidence bundle + two-vote artifact per
   `docs/certification-authority.md` §2 rung 4 (structural in
   `particle-edge-ontology.schema.json`).
-- Genuine functional overlap (two functions simultaneously true, evidenced) is
-  representable — `overlap.supported: true` with its own evidence bundle — and
-  then, and only then, may the hover teach a dual function.
+- The lattice's single-winner rule is scoped to MUTUALLY EXCLUSIVE candidate
+  analyses (§5, flag E): at most one member of `mutually_exclusive_candidates`
+  may ever be certified, unconditionally. Genuine layered functions —
+  zero-or-more compatible typed function facts WITHIN the winning analysis —
+  live in `compatible_functions`, and each certifies only with (a) explicit
+  source support for coexistence (`coexistence_source_support`), (b) an
+  independent review (`review_ref`), and (c) no contradiction in the typed
+  relation set (a layered function may never duplicate an exclusive-candidate
+  label). Then, and only then, may the hover teach a layered function.
 - An `unresolved` evidence mode can never certify, so an unresolved occurrence
   always renders §1.2's item 12 honestly.
 
@@ -170,3 +180,45 @@ distinct or keeps the gap explicit).
 - Non-particle tokens (nouns/verbs have their own richer ṣarf plane; the
   parity invariant §2 is written per-occurrence and is expected to generalize,
   but only the particle plane is normative here).
+
+## 5. Owner-decided design flags (2026-07-29 steer, decision §8)
+
+The five PR #115 design flags are OWNER-DECIDED. Reversing any of them is an
+owner decision recorded here — never a schema- or validator-side convenience.
+
+- **Flag A — presentation whitelist (OWNER-DECIDED).** The permitted
+  presentation-metadata whitelist is exactly the four keys of §2.2
+  (`selected_highlight`, `entry_relationship`, `focus`, `navigation`).
+  Extension of the whitelist is an owner decision recorded in this doc.
+- **Flag B — coordination reclassification (OWNER-DECIDED).** Coordination is
+  a typed Naḥw RELATION edge, not itself an iʿrāb class. `coordination_edge`
+  is removed from the iʿrāb-bearing set (schema
+  `$defs/irab_bearing_edge_type` + validator `IRAB_BEARING_EDGE_TYPES`): a
+  certified coordination edge requires the evidence bundle (bundle rung) but
+  NOT a token-layer two-vote artifact. The COORDINATED ELEMENTS'
+  case/mood/agreement/attachment facts remain iʿrāb-bearing through their own
+  edges (governor / governed-expression / scope …), which keep the two-vote
+  requirement. The vocabulary-drift gate fails if `coordination_edge`
+  re-enters either iʿrāb-bearing set.
+- **Flag C — clitic-host scope (OWNER-DECIDED).** Rung-1 certification of
+  `clitic_host_edge` certifies ATTACHMENT GEOMETRY ONLY: which sub-token
+  component attaches to which host, at which boundary. It does NOT certify
+  the clitic's lexical identity, contextual function, governor, or scope —
+  those travel on their own edges with their own evidence.
+- **Flag D — node-type guidance (OWNER-DECIDED).** Nodes exist only for
+  identity-bearing objects: token occurrence, morpheme occurrence, entry,
+  sense analysis, evidence artifact, public appearance. Relations are typed
+  edges, never nodes. Per owner model §7 the ontology carries
+  morpheme-occurrence-level identity: the `morpheme-occurrence` node type and
+  the minimal `qamus.particle_morpheme_occurrence.v1` object
+  (`morpheme_occurrence_id` + base-letter span + host token occurrence) in
+  `particle-edge-ontology.schema.json`.
+- **Flag E — dual-function allowance (OWNER-DECIDED).** The lattice's
+  `maxContains: 1` applies only ACROSS MUTUALLY EXCLUSIVE candidate analyses
+  (`mutually_exclusive_candidates`), unconditionally — the former
+  `overlap.supported` escape hatch is removed. Zero-or-more compatible typed
+  function/relation facts WITHIN the winning analysis live in
+  `compatible_functions`; a certified layered function requires (a) explicit
+  source support for coexistence, (b) independent review, (c) no
+  contradiction in the typed relation set (§3).
+
