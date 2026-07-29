@@ -1,0 +1,16 @@
+{
+ "schema": "qamus.p007_li_pilot.store_sanitization.v1",
+ "scope": "P007_LI_NOUN_HOST_PILOT",
+ "sanitized_on": "2026-07-29",
+ "sanitized_by": {"id": "tools.build_p007_li_pilot", "version": "1"},
+ "reason": "RM-09 (no operator/server absolute paths in tracked files): 36 certification events referenced the lane packet's two-vote bundle by operator absolute path.",
+ "rewrite": {
+  "field": "evidence_bundle_ref.two_vote_bundle",
+  "events_affected": 36,
+  "from": "<operator-absolute lane packet path>/two-vote-artifacts.jsonl",
+  "to": "qamus/examples/p007-li-pilot/two-vote-artifacts.v1.jsonl"
+ },
+ "rechained": true,
+ "rechain_note": "The event trail hash chain is over the canonical serialization of each event, so the path rewrite required recomputing prev_event_sha256 for all 147 events (same algorithm as tools/certify_typed_fact.py: sha256 over sorted-keys compact JSON, 'sha256:' prefix, genesis first). Event substance (actors, timestamps, fact payloads, transitions, evidence bundles) is otherwise byte-identical to the lane store; the pre-sanitization chain lives in the lane packet P00-VERTICAL-SLICE-2026-07-29.",
+ "validated_after": "tools/certify_typed_fact.py --validate -> OK; --count -> 49"
+}

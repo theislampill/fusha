@@ -1,0 +1,613 @@
+{
+ "not_deployed": true,
+ "rows": [
+  {
+   "affected_appearance_count": 8,
+   "affected_pages": [
+    "0135b6be178e",
+    "4211cb1f5355",
+    "99f8d3c2cad5",
+    "a6de8fd64244",
+    "d82582d4c8e6",
+    "e0e500c4b7a5",
+    "e7fa3fadaf4a",
+    "fbd04177b8dd"
+   ],
+   "boundary_match_nfc": true,
+   "candidate_carve": [
+    "لِ",
+    "لَّهِ"
+   ],
+   "candidate_colour_classes": [
+    "qg-particle-jarr-clitic",
+    "qg-proper-noun"
+   ],
+   "candidate_role_labels": [
+    "jarr_clitic_lam",
+    "proper_name_majrur"
+   ],
+   "current_colour_classes": [
+    "qg-lam",
+    "qg-proper-noun"
+   ],
+   "current_public_carve": [
+    "لِ",
+    "لَّهِ"
+   ],
+   "current_role_labels": [
+    "prefix_lam",
+    "proper_noun"
+   ],
+   "deltas": [
+    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'",
+    "diacritic-order only: repo matrix surface stores vowel-before-shadda; live whitelist stores shadda-before-vowel (NFC-equivalent). Carve identical."
+   ],
+   "deployed": false,
+   "occurrence_id": "quran:12:31:24",
+   "required_change": "replace the live rich-whitelist row for quran:12:31:24 with the certified canonical projection (hash see projections.jsonl…)",
+   "rollback_unit": "live rich-whitelist row for quran:12:31:24 (single-row revert)",
+   "surface": "لِلَّهِ",
+   "verdict": "legacy-coarse",
+   "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
+  },
+  {
+   "affected_appearance_count": 5,
+   "affected_pages": [
+    "4211cb1f5355",
+    "430015446b77",
+    "6e35cbb25054",
+    "720e26330d5f",
+    "e0e500c4b7a5"
+   ],
+   "boundary_match_nfc": true,
+   "candidate_carve": [
+    "لِ",
+    "لْ",
+    "مَلَٰٓئِكَةِ"
+   ],
+   "candidate_colour_classes": [
+    "qg-particle-jarr-clitic",
+    "qg-article",
+    "qg-noun-stem"
+   ],
+   "candidate_role_labels": [
+    "jarr_clitic_lam",
+    "definite_article_assimilated",
+    "noun_host_majrur"
+   ],
+   "current_colour_classes": [
+    "qg-lam",
+    "qg-article",
+    "qg-noun-stem"
+   ],
+   "current_public_carve": [
+    "لِ",
+    "لْ",
+    "مَلَٰٓئِكَةِ"
+   ],
+   "current_role_labels": [
+    "preposition",
+    "definite_article",
+    "noun_stem"
+   ],
+   "deltas": [
+    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+   ],
+   "deployed": false,
+   "occurrence_id": "quran:2:34:3",
+   "required_change": "replace the live rich-whitelist row for quran:2:34:3 with the certified canonical projection (hash see projections.jsonl…)",
+   "rollback_unit": "live rich-whitelist row for quran:2:34:3 (single-row revert)",
+   "surface": "لِلْمَلَٰٓئِكَةِ",
+   "verdict": "legacy-coarse",
+   "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
+  },
+  {
+   "affected_appearance_count": 5,
+   "affected_pages": [
+    "4211cb1f5355",
+    "430015446b77",
+    "6e35cbb25054",
+    "720e26330d5f",
+    "e0e500c4b7a5"
+   ],
+   "boundary_match_nfc": true,
+   "candidate_carve": [
+    "لِ",
+    "ءَادَمَ"
+   ],
+   "candidate_colour_classes": [
+    "qg-particle-jarr-clitic",
+    "qg-proper-noun"
+   ],
+   "candidate_role_labels": [
+    "jarr_clitic_lam",
+    "proper_name_majrur"
+   ],
+   "current_colour_classes": [
+    "qg-lam",
+    "qg-proper-noun"
+   ],
+   "current_public_carve": [
+    "لِ",
+    "ءَادَمَ"
+   ],
+   "current_role_labels": [
+    "prepositional_lam",
+    "proper_noun"
+   ],
+   "deltas": [
+    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+   ],
+   "deployed": false,
+   "occurrence_id": "quran:2:34:5",
+   "required_change": "replace the live rich-whitelist row for quran:2:34:5 with the certified canonical projection (hash see projections.jsonl…)",
+   "rollback_unit": "live rich-whitelist row for quran:2:34:5 (single-row revert)",
+   "surface": "لِءَادَمَ",
+   "verdict": "legacy-coarse",
+   "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
+  },
+  {
+   "affected_appearance_count": 10,
+   "affected_pages": [
+    "0c0e1edc8c65",
+    "2d66a735c5e2",
+    "52d3bb9863f6",
+    "61b224b183f1",
+    "68e87fcb398a",
+    "6d380979b61a",
+    "8679e622012c",
+    "8f4b5c2d0a9a",
+    "c94d92f4fca0",
+    "f1643f45edbf"
+   ],
+   "boundary_match_nfc": true,
+   "candidate_carve": [
+    "لِ",
+    "ل",
+    "نَّاسِ"
+   ],
+   "candidate_colour_classes": [
+    "qg-particle-jarr-clitic",
+    "qg-article",
+    "qg-noun-stem"
+   ],
+   "candidate_role_labels": [
+    "jarr_clitic_lam",
+    "definite_article_assimilated",
+    "noun_host_majrur"
+   ],
+   "current_colour_classes": [
+    "qg-lam",
+    "qg-article",
+    "qg-noun-stem"
+   ],
+   "current_public_carve": [
+    "لِ",
+    "ل",
+    "نَّاسِ"
+   ],
+   "current_role_labels": [
+    "lam_preposition",
+    "assimilated_definite_article",
+    "noun_host"
+   ],
+   "deltas": [
+    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'",
+    "diacritic-order only: repo matrix surface stores vowel-before-shadda; live whitelist stores shadda-before-vowel (NFC-equivalent). Carve identical."
+   ],
+   "deployed": false,
+   "occurrence_id": "quran:24:35:44",
+   "required_change": "replace the live rich-whitelist row for quran:24:35:44 with the certified canonical projection (hash see projections.jsonl…)",
+   "rollback_unit": "live rich-whitelist row for quran:24:35:44 (single-row revert)",
+   "surface": "لِلنَّاسِ",
+   "verdict": "legacy-coarse",
+   "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
+  },
+  {
+   "affected_appearance_count": 9,
+   "affected_pages": [
+    "1773d3fc1e63",
+    "177fb17bf61b",
+    "2495957025c6",
+    "55dd18892bf9",
+    "6471f74ceb4e",
+    "7b8ccbd754e3",
+    "7cfa6fd795af",
+    "90d6ab43d466",
+    "a6de8fd64244"
+   ],
+   "boundary_match_nfc": false,
+   "candidate_carve": [
+    "لِ",
+    "ل",
+    "نَّاسِ"
+   ],
+   "candidate_colour_classes": [
+    "qg-particle-jarr-clitic",
+    "qg-article",
+    "qg-noun-stem"
+   ],
+   "candidate_role_labels": [
+    "jarr_clitic_lam",
+    "definite_article_assimilated",
+    "noun_host_majrur"
+   ],
+   "current_colour_classes": [
+    "qg-lam",
+    "qg-noun-stem"
+   ],
+   "current_public_carve": [
+    "لِ",
+    "لنَّاسِ"
+   ],
+   "current_role_labels": [
+    "lam_preposition",
+    "noun_stem"
+   ],
+   "deltas": [
+    "segment boundaries differ: live ['لِ', 'لنَّاسِ'] vs projection ['لِ', 'ل', 'نَّاسِ']",
+    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+   ],
+   "deployed": false,
+   "occurrence_id": "quran:2:187:63",
+   "required_change": "replace the live rich-whitelist row for quran:2:187:63 with the certified canonical projection (hash see projections.jsonl…)",
+   "rollback_unit": "live rich-whitelist row for quran:2:187:63 (single-row revert)",
+   "surface": "لِلنَّاسِ",
+   "verdict": "wrong",
+   "verdict_reason": "live folds the assimilated article into the host (لِ | لنَّاسِ); the candidate carve separates clitic | article | host"
+  },
+  {
+   "affected_appearance_count": 10,
+   "affected_pages": [
+    "1cabc12cf11c",
+    "275437dcb0c2",
+    "4f666d15bb7e",
+    "727d20168f33",
+    "780df10f872a",
+    "98259aa98c96",
+    "ba7a639a9fac",
+    "dcf75e7f4b79",
+    "eebe688acf55",
+    "efa9daeebae2"
+   ],
+   "boundary_match_nfc": true,
+   "candidate_carve": [
+    "لِ",
+    "غَيْرِ"
+   ],
+   "candidate_colour_classes": [
+    "qg-particle-jarr-clitic",
+    "qg-noun-stem"
+   ],
+   "candidate_role_labels": [
+    "jarr_clitic_lam",
+    "noun_host_majrur"
+   ],
+   "current_colour_classes": [
+    "qg-preposition",
+    "qg-noun-stem"
+   ],
+   "current_public_carve": [
+    "لِ",
+    "غَيْرِ"
+   ],
+   "current_role_labels": [
+    "",
+    ""
+   ],
+   "deltas": [
+    "clitic colour class: live 'qg-preposition' vs projection 'qg-particle-jarr-clitic'",
+    "live clitic role label empty"
+   ],
+   "deployed": false,
+   "occurrence_id": "quran:5:3:9",
+   "required_change": "replace the live rich-whitelist row for quran:5:3:9 with the certified canonical projection (hash see projections.jsonl…)",
+   "rollback_unit": "live rich-whitelist row for quran:5:3:9 (single-row revert)",
+   "surface": "لِغَيْرِ",
+   "verdict": "incomplete",
+   "verdict_reason": "live clitic and host role labels are EMPTY; colour class qg-preposition is legacy-coarse"
+  },
+  {
+   "affected_appearance_count": 7,
+   "affected_pages": [
+    "1da89a32d7fc",
+    "259fe620e117",
+    "3fe10eef5951",
+    "85136ba00e1e",
+    "b309f86b564e",
+    "cd8d7c16fff0",
+    "eb1198782b49"
+   ],
+   "boundary_match_nfc": true,
+   "candidate_carve": [
+    "لِ",
+    "أَهْلِ"
+   ],
+   "candidate_colour_classes": [
+    "qg-particle-jarr-clitic",
+    "qg-noun-stem"
+   ],
+   "candidate_role_labels": [
+    "jarr_clitic_lam",
+    "noun_host_majrur"
+   ],
+   "current_colour_classes": [
+    "qg-preposition",
+    "qg-noun-stem"
+   ],
+   "current_public_carve": [
+    "لِ",
+    "أَهْلِ"
+   ],
+   "current_role_labels": [
+    "",
+    ""
+   ],
+   "deltas": [
+    "clitic colour class: live 'qg-preposition' vs projection 'qg-particle-jarr-clitic'",
+    "live clitic role label empty"
+   ],
+   "deployed": false,
+   "occurrence_id": "quran:9:120:3",
+   "required_change": "replace the live rich-whitelist row for quran:9:120:3 with the certified canonical projection (hash see projections.jsonl…)",
+   "rollback_unit": "live rich-whitelist row for quran:9:120:3 (single-row revert)",
+   "surface": "لِأَهْلِ",
+   "verdict": "incomplete",
+   "verdict_reason": "live clitic and host role labels are EMPTY; colour class qg-preposition is legacy-coarse"
+  },
+  {
+   "affected_appearance_count": 5,
+   "affected_pages": [
+    "02b666ee363c",
+    "16dc0a87056e",
+    "4d0d3186b472",
+    "5c9c180859bc",
+    "6fe9ada37a9b"
+   ],
+   "boundary_match_nfc": true,
+   "candidate_carve": [
+    "لِ",
+    "دُلُوكِ"
+   ],
+   "candidate_colour_classes": [
+    "qg-particle-jarr-clitic",
+    "qg-noun-stem"
+   ],
+   "candidate_role_labels": [
+    "jarr_clitic_lam",
+    "noun_host_majrur"
+   ],
+   "current_colour_classes": [
+    "qg-lam",
+    "qg-noun-stem"
+   ],
+   "current_public_carve": [
+    "لِ",
+    "دُلُوكِ"
+   ],
+   "current_role_labels": [
+    "prefix_lam_preposition",
+    "noun_stem"
+   ],
+   "deltas": [
+    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+   ],
+   "deployed": false,
+   "occurrence_id": "quran:17:78:3",
+   "required_change": "replace the live rich-whitelist row for quran:17:78:3 with the certified canonical projection (hash see projections.jsonl…)",
+   "rollback_unit": "live rich-whitelist row for quran:17:78:3 (single-row revert)",
+   "surface": "لِدُلُوكِ",
+   "verdict": "legacy-coarse",
+   "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
+  },
+  {
+   "affected_appearance_count": 5,
+   "affected_pages": [
+    "1975a28c061a",
+    "445f9e047a5b",
+    "7aa81aa90341",
+    "9dbe7f045ea8",
+    "d6a4f976cb61"
+   ],
+   "boundary_match_nfc": false,
+   "candidate_carve": [
+    "لِ",
+    "ل",
+    "ذَّكَرِ"
+   ],
+   "candidate_colour_classes": [
+    "qg-particle-jarr-clitic",
+    "qg-article",
+    "qg-noun-stem"
+   ],
+   "candidate_role_labels": [
+    "jarr_clitic_lam",
+    "definite_article_assimilated",
+    "noun_host_majrur"
+   ],
+   "current_colour_classes": [
+    "qg-lam",
+    "qg-noun-stem"
+   ],
+   "current_public_carve": [
+    "لِ",
+    "لذَّكَرِ"
+   ],
+   "current_role_labels": [
+    "prefix_lam",
+    "noun_or_adjective_stem"
+   ],
+   "deltas": [
+    "segment boundaries differ: live ['لِ', 'لذَّكَرِ'] vs projection ['لِ', 'ل', 'ذَّكَرِ']",
+    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+   ],
+   "deployed": false,
+   "occurrence_id": "quran:4:11:5",
+   "required_change": "replace the live rich-whitelist row for quran:4:11:5 with the certified canonical projection (hash see projections.jsonl…)",
+   "rollback_unit": "live rich-whitelist row for quran:4:11:5 (single-row revert)",
+   "surface": "لِلذَّكَرِ",
+   "verdict": "wrong",
+   "verdict_reason": "live folds the assimilated article into the host (لِ | لذَّكَرِ); the candidate carve separates clitic | article | host"
+  },
+  {
+   "affected_appearance_count": 5,
+   "affected_pages": [
+    "31e79b908386",
+    "7f416e8c42c3",
+    "89f4baadb89a",
+    "beae77dd607f",
+    "d099cdaad3b9"
+   ],
+   "boundary_match_nfc": true,
+   "candidate_carve": [
+    "لِ",
+    "قُلُوبِ",
+    "كُمْ"
+   ],
+   "candidate_colour_classes": [
+    "qg-particle-jarr-clitic",
+    "qg-noun-stem",
+    "qg-possessive-pronoun"
+   ],
+   "candidate_role_labels": [
+    "jarr_clitic_lam",
+    "noun_host_majrur",
+    "attached_pronoun_mudaf_ilayh"
+   ],
+   "current_colour_classes": [
+    "qg-lam",
+    "qg-segment",
+    "qg-possessive-pronoun"
+   ],
+   "current_public_carve": [
+    "لِ",
+    "قُلُوبِ",
+    "كُمْ"
+   ],
+   "current_role_labels": [
+    "prefix_lam",
+    "host_stem",
+    "suffix_pronoun"
+   ],
+   "deltas": [
+    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+   ],
+   "deployed": false,
+   "occurrence_id": "quran:33:53:48",
+   "required_change": "replace the live rich-whitelist row for quran:33:53:48 with the certified canonical projection (hash see projections.jsonl…)",
+   "rollback_unit": "live rich-whitelist row for quran:33:53:48 (single-row revert)",
+   "surface": "لِقُلُوبِكُمْ",
+   "verdict": "legacy-coarse",
+   "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
+  },
+  {
+   "affected_appearance_count": 5,
+   "affected_pages": [
+    "3f72628fa1ec",
+    "4cb26045b5b7",
+    "5d89e690256d",
+    "896fc440f451",
+    "eade5d4df22b"
+   ],
+   "boundary_match_nfc": true,
+   "candidate_carve": [
+    "لِ",
+    "بُعُولَتِ",
+    "هِنَّ"
+   ],
+   "candidate_colour_classes": [
+    "qg-particle-jarr-clitic",
+    "qg-noun-stem",
+    "qg-possessive-pronoun"
+   ],
+   "candidate_role_labels": [
+    "jarr_clitic_lam",
+    "noun_host_majrur",
+    "attached_pronoun_mudaf_ilayh"
+   ],
+   "current_colour_classes": [
+    "qg-lam",
+    "qg-noun-stem",
+    "qg-possessive-pronoun"
+   ],
+   "current_public_carve": [
+    "لِ",
+    "بُعُولَتِ",
+    "هِنَّ"
+   ],
+   "current_role_labels": [
+    "prefix_lam",
+    "noun_or_adjective_stem",
+    "possessive_pronoun_3fp"
+   ],
+   "deltas": [
+    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'",
+    "diacritic-order only: repo matrix surface stores vowel-before-shadda; live whitelist stores shadda-before-vowel (NFC-equivalent). Carve identical."
+   ],
+   "deployed": false,
+   "occurrence_id": "quran:24:31:23",
+   "required_change": "replace the live rich-whitelist row for quran:24:31:23 with the certified canonical projection (hash see projections.jsonl…)",
+   "rollback_unit": "live rich-whitelist row for quran:24:31:23 (single-row revert)",
+   "surface": "لِبُعُولَتِهِنَّ",
+   "verdict": "legacy-coarse",
+   "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
+  },
+  {
+   "affected_appearance_count": 4,
+   "affected_pages": [
+    "01133eb5431b",
+    "3041d6f44a27",
+    "65d3d5c51f24",
+    "7f1f8b8e29e6"
+   ],
+   "boundary_match_nfc": true,
+   "candidate_carve": [
+    "لِ",
+    "قَوْمِ",
+    "هِۦ"
+   ],
+   "candidate_colour_classes": [
+    "qg-particle-jarr-clitic",
+    "qg-noun-stem",
+    "qg-possessive-pronoun"
+   ],
+   "candidate_role_labels": [
+    "jarr_clitic_lam",
+    "noun_host_majrur",
+    "attached_pronoun_mudaf_ilayh"
+   ],
+   "current_colour_classes": [
+    "qg-lam",
+    "qg-noun-stem",
+    "qg-possessive-pronoun"
+   ],
+   "current_public_carve": [
+    "لِ",
+    "قَوْمِ",
+    "هِۦ"
+   ],
+   "current_role_labels": [
+    "lam_preposition",
+    "noun_stem",
+    "possessive_pronoun"
+   ],
+   "deltas": [
+    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+   ],
+   "deployed": false,
+   "occurrence_id": "quran:61:5:4",
+   "required_change": "replace the live rich-whitelist row for quran:61:5:4 with the certified canonical projection (hash see projections.jsonl…)",
+   "rollback_unit": "live rich-whitelist row for quran:61:5:4 (single-row revert)",
+   "surface": "لِقَوْمِهِۦ",
+   "verdict": "legacy-coarse",
+   "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
+  }
+ ],
+ "schema": "qamus.p007_li_pilot.production_difference.v1",
+ "scope": "P007_LI_NOUN_HOST_PILOT",
+ "summary": {
+  "carve_forks": 2,
+  "colour_class_deltas": 12,
+  "rows": 12
+ }
+}
