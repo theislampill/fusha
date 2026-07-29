@@ -5165,6 +5165,41 @@ except Exception as _fa_contract_e:
     check("F-A typed-claim contract gates (harness error)", False)
     print("  ", _fa_contract_e)
 
+# FACTCERT: fact-level certification transition engine (consumption-map hops
+# 1-3). Red-first self-test covers: certify without a bundle, deterministic
+# derivation over candidate inputs, same-family "corroboration", two-vote rung
+# without a validate_two_vote_artifacts-passing bundle, revoke without cascade,
+# and event-trail gaps/tampering. The sufaha demo is read-only over committed
+# artifacts: the committed packet is honestly refused (its MCP verbatim
+# evidence file is not committed in-repo) and the full transition + revocation
+# cascade runs only on a temp fixture copy.
+try:
+    _factcert_self = run_text([sys.executable,
+                               os.path.join(ROOT, "tools", "certify_typed_fact.py"),
+                               "--self-test"], timeout=120)
+    check("FACTCERT typed-fact certifier red-first self-test passes",
+          _factcert_self.returncode == 0 and
+          "CERTIFY TYPED FACT SELF-TEST PASS" in (_factcert_self.stdout or ""))
+    if _factcert_self.returncode != 0:
+        print("  ", ((_factcert_self.stdout or "") + (_factcert_self.stderr or "")).strip().splitlines()[-1:])
+    _factcert_demo = run_text([sys.executable,
+                               os.path.join(ROOT, "tools", "certify_typed_fact.py"),
+                               "--demo-sufaha"], timeout=120)
+    check("FACTCERT sufaha canary demo (honest refusal + fixture-copy transitions + cascade) passes",
+          _factcert_demo.returncode == 0 and
+          "SUFAHA CERTIFIER DEMO PASS" in (_factcert_demo.stdout or "") and
+          "leg A (committed packet): 0/11 certified" in (_factcert_demo.stdout or ""))
+    if _factcert_demo.returncode != 0:
+        print("  ", ((_factcert_demo.stdout or "") + (_factcert_demo.stderr or "")).strip().splitlines()[-1:])
+    _factcert_count = run_text([sys.executable,
+                                os.path.join(ROOT, "tools", "certify_typed_fact.py"),
+                                "--count"], timeout=120)
+    check("FACTCERT default event-trail store count is ledger-derived and readable",
+          _factcert_count.returncode == 0 and (_factcert_count.stdout or "").strip().isdigit())
+except Exception as _factcert_e:
+    check("FACTCERT typed-fact certifier gates (harness error)", False)
+    print("  ", _factcert_e)
+
 # FAM2: bounded lexical noun/adjective formation producer.  The committed
 # fixture gate is repo-self-contained; the operational calibration packet is
 # generated only when the caller supplies the read-only corpus explicitly.

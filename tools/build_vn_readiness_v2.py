@@ -33,6 +33,32 @@ if ROOT not in sys.path:
 
 from tools.build_entry_card_word_ledger import build_ledger  # noqa: E402
 from tools.build_typed_edge_crosswalk import selected_word_node  # noqa: E402
+from tools.certify_typed_fact import count_certified as _count_certified_typed_facts  # noqa: E402
+
+
+_SOURCE_CERTIFIED_CACHE = None
+
+
+def source_certified_ledger_count():
+    """Ledger-derived count of certified typed facts.
+
+    Read from the typed-fact certification event trail
+    (tools/certify_typed_fact.py DEFAULT_STORE_DIR); an absent store means
+    zero. This replaces the former hardcoded zero so the readiness matrix
+    reports the certification layer instead of asserting its absence.
+    """
+
+    global _SOURCE_CERTIFIED_CACHE
+    if _SOURCE_CERTIFIED_CACHE is None:
+        _SOURCE_CERTIFIED_CACHE = _count_certified_typed_facts()
+    return _SOURCE_CERTIFIED_CACHE
+
+
+def source_certification_state_text():
+    count = source_certified_ledger_count()
+    if count == 0:
+        return "0; candidate-only lane has no source certification"
+    return "%d; counted from the typed-fact certification event trail" % count
 
 
 PRIMARY_LABELS = tuple(f"VN-{index:02d}" for index in range(21))
@@ -712,8 +738,8 @@ def _metric_row(label, view_kind, rows, entry_ids, cards, proof_by_view, family_
         "graph_complete_rows": det + candidate,
         "graph_complete_deterministic_exact_rows": det,
         "graph_complete_candidate_rows": candidate,
-        "source_certified_rows": 0,
-        "source_certification_state": "0; candidate-only lane has no source certification",
+        "source_certified_rows": source_certified_ledger_count(),
+        "source_certification_state": source_certification_state_text(),
         "fully_rich_generated_rows": len(proof_names),
         "fully_rich_generated_proof_names": proof_names,
         "already_live_noop_entries": live_entries,
@@ -1383,14 +1409,14 @@ def build_v2(
             "family_rows": len(family_rows),
             "calibrated_verified_rows": sum(_clean(row.get("_fb1_verdict")) == "verified" for row in family_rows),
             "candidate_only": True,
-            "source_certified_count": 0,
+            "source_certified_count": source_certified_ledger_count(),
         },
         "proofs": {
             "count": len(proof_rows),
             "names": proof_names,
             "status": ARCHITECTURE_PROOF_STATUS,
             "candidate_only": True,
-            "source_certified_count": 0,
+            "source_certified_count": source_certified_ledger_count(),
             "rows": proof_records,
             "by_view": {
                 "primary": {label: sorted(names) for label, names in proof_by_view["primary"].items()},
