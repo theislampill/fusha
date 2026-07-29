@@ -5,7 +5,8 @@
   "description": "EXTENDS the canonical qamus.graph_edge.v1 vocabulary (tools/build_typed_edge_crosswalk.py EDGE_TYPES / PARTICLE_EDGE_TYPES) with particle-specific edge kinds. One edge vocabulary, one row shape — this is NOT a parallel graph. Evidence modes are reused verbatim from qamus/schemas/typed-claim-contract.schema.json $defs/evidence_mode per docs/certification-authority.md (no fork, no new enum values). Candidate-vs-certified separation is structural: a certified edge REQUIRES a reconstructible evidence-bundle reference, and every iʿrāb-bearing certified edge additionally REQUIRES a two-vote artifact reference (certification-authority §2 rung 4). Executable enforcement: tools/validate_particle_projection_parity.py (self-tested, red-first, gated in tools/check_regressions.py).",
   "oneOf": [
     { "$ref": "#/$defs/particle_edge" },
-    { "$ref": "#/$defs/particle_function_lattice" }
+    { "$ref": "#/$defs/particle_function_lattice" },
+    { "$ref": "#/$defs/particle_morpheme_occurrence" }
   ],
   "$defs": {
     "evidence_mode": {
@@ -39,8 +40,40 @@
       "enum": ["deterministic_exact", "candidate", "ambiguous", "source_gap", "owner_or_scholar_required", "rejected"]
     },
     "node_type": {
+      "description": "Nodes exist only for identity-bearing objects (owner decision, flag D, 2026-07-29 steer §8): token occurrence, morpheme occurrence, entry, sense analysis, evidence artifact, public appearance. Relations are typed edges, never nodes. morpheme-occurrence carries morpheme-occurrence-level identity per owner model §7 (see $defs/particle_morpheme_occurrence).",
       "type": "string",
-      "enum": ["entry", "sense", "card", "selected-word", "occurrence", "appearance", "source", "decision"]
+      "enum": ["entry", "sense", "card", "selected-word", "occurrence", "morpheme-occurrence", "appearance", "source", "decision"]
+    },
+    "particle_morpheme_occurrence": {
+      "description": "Morpheme-occurrence-level identity node (owner model §7; flag D, 2026-07-29 steer §8). A particle morpheme occurrence is an identity-bearing object distinct from its host TOKEN occurrence: stable id + exact base-letter span within the host + the host token occurrence address. Minimal by design — analysis facts (identity, function, governor, scope) attach via typed edges, never inline here.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "morpheme_occurrence_id", "host_occurrence_id", "base_letter_span", "component_surface"],
+      "properties": {
+        "schema": { "const": "qamus.particle_morpheme_occurrence.v1" },
+        "morpheme_occurrence_id": { "type": "string", "minLength": 1 },
+        "host_occurrence_id": {
+          "description": "Canonical host token occurrence address, e.g. quran:2:284:10.",
+          "type": "string",
+          "pattern": "^[a-z]+:[0-9]+:[0-9]+:[0-9]+$"
+        },
+        "base_letter_span": {
+          "description": "Base-letter (rasm-letter) span of the morpheme within the host token, 0-based half-open [start, end).",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["start", "end"],
+          "properties": {
+            "start": { "type": "integer", "minimum": 0 },
+            "end": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "component_surface": {
+          "description": "Exact rendered surface of the morpheme component, diacritics intact.",
+          "type": "string",
+          "minLength": 1
+        },
+        "producer": { "$ref": "#/$defs/producer" }
+      }
     },
     "particle_edge_type": {
       "description": "The particle-specific members of the ONE canonical edge vocabulary (PARTICLE_EDGE_TYPES in tools/build_typed_edge_crosswalk.py).",
@@ -67,14 +100,13 @@
       ]
     },
     "irab_bearing_edge_type": {
-      "description": "Edge kinds whose certified surfacing to a learner is an iʿrāb-bearing conclusion → token-layer two-vote artifact REQUIRED for certification (certification-authority §2 rung 4).",
+      "description": "Edge kinds whose certified surfacing to a learner is an iʿrāb-bearing conclusion → token-layer two-vote artifact REQUIRED for certification (certification-authority §2 rung 4). coordination_edge is DELIBERATELY ABSENT (owner decision, flag B, 2026-07-29 steer §8): coordination is a typed Naḥw RELATION edge, not itself an iʿrāb class — it stays certifiable at the bundle rung, while the coordinated elements' case/mood/agreement/attachment facts remain iʿrāb-bearing through their own edges.",
       "type": "string",
       "enum": [
         "particle_function_edge",
         "governor_edge",
         "governed_expression_edge",
         "scope_edge",
-        "coordination_edge",
         "condition_edge",
         "negation_scope_edge",
         "relative_antecedent_edge",
@@ -258,7 +290,7 @@
           }
         },
         {
-          "description": "clitic_host_edge names the exact clitic component surface and joins the clitic occurrence to its host.",
+          "description": "clitic_host_edge names the exact clitic component surface and joins the clitic occurrence to its host. SCOPE (owner decision, flag C, 2026-07-29 steer §8): rung-1 certification of this edge certifies ATTACHMENT GEOMETRY ONLY — which sub-token component attaches to which host, at which boundary. It does NOT certify the clitic's lexical identity, contextual function, governor, or scope; those travel on their own edges with their own evidence.",
           "if": { "properties": { "edge_type": { "const": "clitic_host_edge" } } },
           "then": {
             "properties": { "details": { "required": ["component_surface"] } }
@@ -333,63 +365,68 @@
         }
       ]
     },
-    "particle_function_lattice": {
-      "description": "Homograph candidate lattice: one particle occurrence carrying MULTIPLE candidate function analyses (مَا: negative / relative / interrogative / maṣdariyya …), each with its own guards and defeaters. At most ONE candidate may be certified unless genuine functional overlap is itself evidenced (tawjīh overlap), in which case the overlap carries its own evidence bundle.",
+    "compatible_function": {
+      "description": "A certified genuine LAYERED function coexisting with the winning analysis (owner decision, flag E, 2026-07-29 steer §8). Permitted only when (a) explicit source support for coexistence (coexistence_source_support), (b) independent review (review_ref), and (c) no contradiction in the typed relation set — a compatible function may never duplicate a function_label of the mutually exclusive candidate array.",
       "type": "object",
-      "required": ["schema", "lattice_id", "occurrence_id", "surface", "entry_id", "candidates", "overlap"],
+      "required": ["function_id", "function_label", "contextual_gloss", "status", "evidence_mode"],
+      "properties": {
+        "function_id": { "type": "string", "minLength": 1 },
+        "function_label": { "type": "string", "minLength": 1 },
+        "contextual_gloss": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["candidate", "rejected", "certified"] },
+        "evidence_mode": { "$ref": "#/$defs/evidence_mode" },
+        "evidence_bundle_ref": { "type": "string", "minLength": 1 },
+        "review_ref": {
+          "description": "Independent-review artifact id (condition (b)).",
+          "type": "string",
+          "minLength": 1
+        },
+        "coexistence_source_support": {
+          "description": "Explicit source support that BOTH functions genuinely coexist here (condition (a)) — not merely support for the layered function alone.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "description": "A certified layered function requires its own evidence bundle + independent review + explicit coexistence source support; unresolved may never certify.",
+          "if": { "properties": { "status": { "const": "certified" } } },
+          "then": {
+            "required": ["evidence_bundle_ref", "review_ref", "coexistence_source_support"],
+            "properties": { "evidence_mode": { "not": { "const": "unresolved" } } }
+          }
+        }
+      ]
+    },
+    "particle_function_lattice": {
+      "description": "Homograph candidate lattice: one particle occurrence carrying MULTIPLE mutually exclusive candidate function analyses (مَا: negative / relative / interrogative / maṣdariyya …), each with its own guards and defeaters. maxContains:1 applies ONLY across the mutually exclusive candidate analyses: at most ONE member of mutually_exclusive_candidates may ever be certified, with no escape hatch. Zero-or-more COMPATIBLE typed function facts within the winning analysis live in compatible_functions (flag E, 2026-07-29 steer §8), each certified only with its own evidence bundle, independent review, and explicit coexistence source support.",
+      "type": "object",
+      "required": ["schema", "lattice_id", "occurrence_id", "surface", "entry_id", "mutually_exclusive_candidates"],
       "properties": {
         "schema": { "const": "qamus.particle_function_lattice.v1" },
         "lattice_id": { "type": "string", "minLength": 1 },
         "occurrence_id": { "type": "string", "pattern": "^[a-z]+:[0-9]+:[0-9]+:[0-9]+$" },
         "surface": { "type": "string", "minLength": 1 },
         "entry_id": { "type": "string", "minLength": 1 },
-        "candidates": {
+        "mutually_exclusive_candidates": {
+          "description": "Mutually exclusive candidate analyses — at most one certified winner, unconditionally.",
           "type": "array",
           "minItems": 1,
-          "items": { "$ref": "#/$defs/function_candidate" }
+          "items": { "$ref": "#/$defs/function_candidate" },
+          "contains": {
+            "properties": { "status": { "const": "certified" } },
+            "required": ["status"]
+          },
+          "minContains": 0,
+          "maxContains": 1
         },
-        "overlap": {
-          "type": "object",
-          "required": ["supported"],
-          "properties": {
-            "supported": { "type": "boolean" },
-            "evidence_bundle_ref": { "type": "string", "minLength": 1 },
-            "note": { "type": "string" }
-          }
+        "compatible_functions": {
+          "description": "Zero-or-more compatible typed function/relation facts WITHIN the winning analysis — never alternatives to it.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/compatible_function" }
         },
         "producer": { "$ref": "#/$defs/producer" }
-      },
-      "allOf": [
-        {
-          "description": "Unless genuine overlap is evidenced, at most one candidate may hold status certified.",
-          "if": {
-            "properties": {
-              "overlap": {
-                "properties": { "supported": { "const": true } },
-                "required": ["supported"]
-              }
-            },
-            "required": ["overlap"]
-          },
-          "then": {
-            "properties": {
-              "overlap": { "required": ["evidence_bundle_ref"] }
-            }
-          },
-          "else": {
-            "properties": {
-              "candidates": {
-                "contains": {
-                  "properties": { "status": { "const": "certified" } },
-                  "required": ["status"]
-                },
-                "minContains": 0,
-                "maxContains": 1
-              }
-            }
-          }
-        }
-      ]
+      }
     }
   }
 }

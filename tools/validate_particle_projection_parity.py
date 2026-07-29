@@ -55,12 +55,16 @@ PERMITTED_PRESENTATION_KEYS = frozenset({
 
 # Certified surfacing of these kinds is iʿrāb-bearing → two-vote required
 # (docs/certification-authority.md §2 rung 4).
+# coordination_edge is DELIBERATELY ABSENT (owner decision, flag B,
+# 2026-07-29 steer §8): coordination is a typed Naḥw RELATION edge, not
+# itself an iʿrāb class — it certifies at the bundle rung, while the
+# COORDINATED ELEMENTS' case/mood/agreement/attachment facts remain
+# iʿrāb-bearing through their own edges.
 IRAB_BEARING_EDGE_TYPES = frozenset({
     "particle_function_edge",
     "governor_edge",
     "governed_expression_edge",
     "scope_edge",
-    "coordination_edge",
     "condition_edge",
     "negation_scope_edge",
     "relative_antecedent_edge",
@@ -205,9 +209,9 @@ def check_lattices(bundle, errors):
         if lattice.get("schema") != LATTICE_SCHEMA:
             errors.append("lattice_shape: %s has schema %r, expected %r"
                           % (lid, lattice.get("schema"), LATTICE_SCHEMA))
-        candidates = lattice.get("candidates") or []
+        candidates = lattice.get("mutually_exclusive_candidates") or []
         if not candidates:
-            errors.append("lattice_shape: %s has no candidates" % lid)
+            errors.append("lattice_shape: %s has no mutually_exclusive_candidates" % lid)
         certified = []
         for cand in candidates:
             cid = cand.get("candidate_id")
@@ -231,17 +235,47 @@ def check_lattices(bundle, errors):
                     errors.append(
                         "lattice_certified_unresolved: %s candidate %s is certified with "
                         "evidence_mode unresolved" % (lid, cid))
-        overlap = lattice.get("overlap") or {}
         if len(certified) > 1:
-            if not overlap.get("supported"):
+            # Flag E (owner-decided): maxContains:1 applies ACROSS mutually
+            # exclusive candidate analyses, unconditionally — layered functions
+            # never live in this array.
+            errors.append(
+                "lattice_single_winner: %s has %d certified mutually exclusive "
+                "candidates — at most one winner, unconditionally; genuine layered "
+                "functions belong in compatible_functions" % (lid, len(certified)))
+        exclusive_labels = {c.get("function_label") for c in candidates}
+        for compat in lattice.get("compatible_functions") or []:
+            fid = compat.get("function_id")
+            if compat.get("function_label") in exclusive_labels:
                 errors.append(
-                    "lattice_single_winner: %s has %d certified functions without "
-                    "evidenced overlap — at most one winner unless genuine overlap is "
-                    "evidenced" % (lid, len(certified)))
-            elif not overlap.get("evidence_bundle_ref"):
+                    "lattice_compatible_contradiction: %s compatible function %s "
+                    "duplicates mutually exclusive candidate label %r — a layered "
+                    "function may not contradict the exclusive candidate set"
+                    % (lid, fid, compat.get("function_label")))
+            if compat.get("status") != "certified":
+                continue
+            if len(certified) != 1:
                 errors.append(
-                    "lattice_overlap_bundle: %s claims functional overlap without an "
-                    "overlap evidence_bundle_ref" % lid)
+                    "lattice_compatible_requires_winner: %s compatible function %s "
+                    "is certified without exactly one certified winning analysis to "
+                    "layer on" % (lid, fid))
+            if not compat.get("evidence_bundle_ref"):
+                errors.append(
+                    "lattice_compatible_bundle: %s compatible function %s is certified "
+                    "without its own evidence_bundle_ref" % (lid, fid))
+            if not compat.get("review_ref"):
+                errors.append(
+                    "lattice_compatible_review: %s compatible function %s is certified "
+                    "without an independent review_ref (flag E condition b)" % (lid, fid))
+            if not compat.get("coexistence_source_support"):
+                errors.append(
+                    "lattice_compatible_coexistence: %s compatible function %s is "
+                    "certified without explicit coexistence_source_support (flag E "
+                    "condition a)" % (lid, fid))
+            if compat.get("evidence_mode") == "unresolved":
+                errors.append(
+                    "lattice_compatible_unresolved: %s compatible function %s is "
+                    "certified with evidence_mode unresolved" % (lid, fid))
 
 
 def check_edges(bundle, errors):
@@ -314,6 +348,12 @@ def check_vocabulary_sync(errors):
     if set(irab_enum) != set(IRAB_BEARING_EDGE_TYPES):
         errors.append(
             "vocabulary_sync: iʿrāb-bearing kind set diverges between schema and validator")
+    if "coordination_edge" in set(irab_enum) | set(IRAB_BEARING_EDGE_TYPES):
+        errors.append(
+            "vocabulary_sync: coordination_edge re-entered the iʿrāb-bearing set — "
+            "owner decision flag B (2026-07-29 steer §8) classes coordination as a "
+            "typed relation edge, certifiable at the bundle rung; reversing this is "
+            "an owner decision, not a validator/schema edit")
 
 
 def validate_bundle(bundle: dict) -> list[str]:
@@ -418,6 +458,15 @@ def _green_bundle() -> dict:
                           "fact_id": "sha256:selftest02",
                           "evidence_bundle_ref": "fact-ledger:selftest02",
                           "two_vote_artifact_ref": "two-vote:selftest02"}),
+            dict(edge_base, edge_id="edge:dddddddddddd",
+                 edge_type="coordination_edge",
+                 from_node_id="occurrence:2:284:10", from_node_type="occurrence",
+                 to_node_id="occurrence:2:284:2", to_node_type="occurrence",
+                 status="certified",
+                 details={"occurrence_id": "quran:2:284:10", "surface": "مَا",
+                          "evidence_mode": "direct_source_attestation",
+                          "fact_id": "sha256:selftest06",
+                          "evidence_bundle_ref": "fact-ledger:selftest06"}),
             dict(edge_base, edge_id="edge:cccccccccccc",
                  edge_type="clitic_host_edge",
                  from_node_id="occurrence:2:284:10", from_node_type="occurrence",
@@ -432,8 +481,8 @@ def _green_bundle() -> dict:
             {"schema": LATTICE_SCHEMA, "lattice_id": "lattice:ma:2:284:10",
              "occurrence_id": "quran:2:284:10", "surface": "مَا",
              "entry_id": "b8e480aebafe",
-             "overlap": {"supported": False},
-             "candidates": [
+             "compatible_functions": [],
+             "mutually_exclusive_candidates": [
                  {"candidate_id": "cand:mawsula", "function_label": "mawsula",
                   "contextual_gloss": "what(ever)",
                   "guards": ["followed_by_locative_phrase"],
@@ -527,44 +576,88 @@ def _self_test() -> int:
     expect_red("red: Arabic iʿrāb formula in the teaching plane",
                bad, "no_irab_prose")
 
-    # red 9 — two certified lattice functions without evidenced overlap
+    # red 9 — two certified mutually exclusive candidates (flag E: unconditional)
     bad = _green_bundle()
-    bad["lattices"][0]["candidates"][1].update({
+    bad["lattices"][0]["mutually_exclusive_candidates"][1].update({
         "status": "certified",
         "evidence_bundle_ref": "fact-ledger:selftest05",
         "two_vote_artifact_ref": "two-vote:selftest05",
     })
-    expect_red("red: two certified functions without evidenced overlap",
+    expect_red("red: two certified mutually exclusive candidates always fail",
                bad, "lattice_single_winner")
 
-    # green 9b — evidenced overlap legitimizes a dual function
+    # green 9b — a valid layered pair: certified winner + compatible function
+    # with evidence bundle, independent review, and coexistence source support
     good = _green_bundle()
-    good["lattices"][0]["candidates"][1].update({
+    good["lattices"][0]["compatible_functions"] = [{
+        "function_id": "compat:tawkid",
+        "function_label": "tawkid (emphatic layering)",
+        "contextual_gloss": "adds emphasis alongside the relative reading",
         "status": "certified",
-        "evidence_bundle_ref": "fact-ledger:selftest05",
-        "two_vote_artifact_ref": "two-vote:selftest05",
-    })
-    good["lattices"][0]["overlap"] = {
-        "supported": True,
-        "evidence_bundle_ref": "fact-ledger:overlap01",
-    }
-    expect_green("green: evidenced overlap permits a dual certified function", good)
+        "evidence_mode": "direct_source_attestation",
+        "evidence_bundle_ref": "fact-ledger:compat01",
+        "review_ref": "review:compat01",
+        "coexistence_source_support": "tawjih source states both functions hold here",
+    }]
+    expect_green("green: valid layered pair via compatible_functions", good)
+
+    # red 9c — layered function without coexistence source support
+    bad = _green_bundle()
+    bad["lattices"][0]["compatible_functions"] = [{
+        "function_id": "compat:tawkid",
+        "function_label": "tawkid (emphatic layering)",
+        "contextual_gloss": "adds emphasis alongside the relative reading",
+        "status": "certified",
+        "evidence_mode": "direct_source_attestation",
+        "evidence_bundle_ref": "fact-ledger:compat01",
+        "review_ref": "review:compat01",
+    }]
+    expect_red("red: layered function without coexistence source support",
+               bad, "lattice_compatible_coexistence")
+
+    # red 9d — layered function contradicting the exclusive candidate set
+    bad = _green_bundle()
+    bad["lattices"][0]["compatible_functions"] = [{
+        "function_id": "compat:nafiya",
+        "function_label": "nafiya",
+        "contextual_gloss": "not",
+        "status": "certified",
+        "evidence_mode": "direct_source_attestation",
+        "evidence_bundle_ref": "fact-ledger:compat02",
+        "review_ref": "review:compat02",
+        "coexistence_source_support": "claimed",
+    }]
+    expect_red("red: layered function duplicating an exclusive candidate label",
+               bad, "lattice_compatible_contradiction")
 
     # red 10 — certified lattice winner without two-vote artifact
     bad = _green_bundle()
-    bad["lattices"][0]["candidates"][0].pop("two_vote_artifact_ref")
+    bad["lattices"][0]["mutually_exclusive_candidates"][0].pop("two_vote_artifact_ref")
     expect_red("red: certified function without two-vote artifact",
                bad, "lattice_certified_two_vote")
 
     # red 11 — candidate without defeaters
     bad = _green_bundle()
-    bad["lattices"][0]["candidates"][1]["defeaters"] = []
+    bad["lattices"][0]["mutually_exclusive_candidates"][1]["defeaters"] = []
     expect_red("red: lattice candidate without defeaters", bad, "lattice_defeaters")
 
     # red 12 — certified iʿrāb-bearing edge without two-vote artifact
     bad = _green_bundle()
     bad["edges"][1]["details"].pop("two_vote_artifact_ref")
     expect_red("red: certified governor edge without two-vote artifact",
+               bad, "edge_irab_two_vote")
+
+    # green 12b / red 12c — flag B reclassification: a certified coordination
+    # edge (relation rung) certifies WITHOUT a two-vote artifact (the green
+    # bundle's edge:dddddddddddd carries none), while a governed-case edge
+    # still requires it.
+    good = _green_bundle()
+    assert "two_vote_artifact_ref" not in good["edges"][2]["details"]
+    expect_green("green: certified coordination edge without two-vote artifact",
+                 good)
+    bad = _green_bundle()
+    bad["edges"][2]["edge_type"] = "governed_expression_edge"
+    expect_red("red: governed-case edge still requires the two-vote artifact",
                bad, "edge_irab_two_vote")
 
     # red 13 — certified edge without evidence bundle
@@ -588,7 +681,7 @@ def _self_test() -> int:
 
     # red 16 — clitic edge without the exact component surface
     bad = _green_bundle()
-    bad["edges"][2]["details"].pop("component_surface")
+    bad["edges"][3]["details"].pop("component_surface")
     expect_red("red: clitic_host_edge without component surface",
                bad, "edge_clitic_component")
 
