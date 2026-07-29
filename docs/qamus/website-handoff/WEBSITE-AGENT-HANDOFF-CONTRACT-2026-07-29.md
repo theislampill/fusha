@@ -18,7 +18,7 @@ disagree, the validator is the bug and this doc is the spec.
   ladder. Nothing in a website payload can create, upgrade, or imply
   certification.
 
-Sample payloads: `qamus/examples/website-payloads/*.payload.json` (six
+Sample payloads: `qamus/examples/website-payloads/*.payload.json` (nine
 committed samples, all validated green by the executable twin).
 
 ---
@@ -152,7 +152,19 @@ honesty is not an expanded-only luxury.
   `certified_entry` (certified to the entry, sense pending),
   `candidate_entry` (candidate link; renderer must present as tentative),
   `clitic_component_of_entry` (a sub-token component links to a particle
-  entry).
+  entry),
+  `root_family_of_entry` (added `1.1.0`, additive per §9: the occurrence
+  shares the entry's root family — a root-agreement relation ONLY, never a
+  lexeme/entry-membership claim; guard `root_agreement_never_lexeme_edge`.
+  The renderer presents it as a "same root" cross-reference, not as "this
+  word belongs to this entry").
+
+One occurrence may carry SEVERAL entry-link rows with distinct
+`relation_kind`s — e.g. لِقَوْمِهِ (quran:61:5:4) links its clitic to the
+particle entry, its written form to the noun entry, and its stem (by shared
+root only) to the verb entry. Multi-entry membership is a fact-plane state,
+not a renderer conflict; the renderer shows each relation in its own
+register.
 - `segment_index` — which segment carries the link, or `null` for the whole
   word.
 
@@ -315,8 +327,19 @@ All in `qamus/examples/website-payloads/`, all green under
 | `noun_libuulatihinna_24_31_23.payload.json` | noun word لِبُعُولَتِهِنَّ: clitic + rooted stem + possessive pronoun | illustrative-from-live |
 | `unresolved_ma_2_284_2.payload.json` | honest unresolved state, neutral colour, live alternatives | illustrative-constructed |
 | `no_entry_link_17_78_3.payload.json` | `entry_link_state: none_yet` (§7 W5 board requirement 6) | illustrative-from-live |
+| `multi_entry_liqawmihi_61_5_4.payload.json` | multi-entry token لِقَوْمِهِ (quran:61:5:4): three entry-link rows with distinct relation kinds (clitic → p007, form → n912 candidate, shared root → v005 `root_family_of_entry`); `schema_version` 1.1.0 | illustrative-from-live |
+| `verb_qamu_2_20_13.payload.json` | verb word قَامُوا (quran:2:20:13): hollow-root stem + built-in subject suffix; root + lexeme attachment certified in the vn-entry-canaries lane store | certified |
+| `noun_rajulayni_2_282_59.payload.json` | noun word رَجُلَيْنِ (quran:2:282:59): stem + dual ending; form attestation + lexeme attachment certified in the vn-entry-canaries lane store, root honestly candidate | certified |
 
 The pilot-derived samples re-express `packets/p00-vertical-slice/`
 projection artifacts in this contract's shape; their fact content is
 unchanged (segment spans corrected to the §3.1 tiling rule, which the pilot
 shape predates).
+
+The canary-derived samples (`multi_entry_*`, `verb_qamu_*`,
+`noun_rajulayni_*`) re-express `packets/vn-entry-canaries/` two-surface
+projections and lane typed-fact-store certification events in this
+contract's shape. Certified provenance there cites lane-store fact ids;
+it never claims committed-repo entry-state promotion (the canary
+completion-state report keeps that boundary explicit), and refused/two-vote
+facts (jarr governor, case) stay candidate in the per-fact plane map.

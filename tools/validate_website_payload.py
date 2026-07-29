@@ -53,6 +53,10 @@ PROJECTION_KINDS = frozenset({
 RELATION_KINDS = frozenset({
     "certified_sense", "certified_entry", "candidate_entry",
     "clitic_component_of_entry",
+    # Added 1.1.0 (additive within major 1, contract §9): a root-agreement
+    # relation ONLY — the occurrence shares the entry's root family; never a
+    # lexeme/entry-membership claim (guard: root_agreement_never_lexeme_edge).
+    "root_family_of_entry",
 })
 ENTRY_LINK_STATES = frozenset({"linked", "none_yet"})
 PROVENANCE_CLASSES = frozenset({

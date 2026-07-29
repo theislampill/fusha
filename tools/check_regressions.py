@@ -5897,7 +5897,7 @@ except Exception as _pedges_e:
 # renderer-facing payload shape the separate website agent consumes.
 # Red-first validator (missing entry links, i'rab prose leak, hash fork,
 # non-whitelist page-local metadata, segment-reconstruction failure) plus
-# six committed green samples. Fixture-only: a fresh clone never depends on
+# nine committed green samples. Fixture-only: a fresh clone never depends on
 # lane-side corpora or live pages.
 try:
     _webh_self = run_text([
@@ -5915,10 +5915,10 @@ try:
         os.path.join(ROOT, "tools", "validate_website_payload.py"),
     ], timeout=120)
     check(
-        "WEBHANDOFF committed website payload samples validate (6 samples)",
+        "WEBHANDOFF committed website payload samples validate (9 samples)",
         _webh_samples.returncode == 0
         and "WEBSITE PAYLOAD VALIDATION PASS" in (_webh_samples.stdout or "")
-        and (_webh_samples.stdout or "").count("ok   ") >= 6,
+        and (_webh_samples.stdout or "").count("ok   ") >= 9,
     )
     check(
         "WEBHANDOFF handoff contract committed",
@@ -5933,6 +5933,9 @@ try:
             "noun_libuulatihinna_24_31_23.payload.json",
             "unresolved_ma_2_284_2.payload.json",
             "no_entry_link_17_78_3.payload.json",
+            "multi_entry_liqawmihi_61_5_4.payload.json",
+            "verb_qamu_2_20_13.payload.json",
+            "noun_rajulayni_2_282_59.payload.json",
     ):
         check(
             "WEBHANDOFF sample payload committed: %s" % _webh_sample,
