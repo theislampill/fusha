@@ -29,6 +29,7 @@ from tools.build_vn_readiness_v2 import (
     _label_for_key,
     PARTITION_RANGES,
     PLAN_RANGES,
+    source_certified_ledger_count,
 )
 STATUS_VALUES = {"authoritative", "planning_only", "unassigned", "historical_conflict"}
 VN_FIELDS = {
@@ -245,7 +246,7 @@ def _metric_counts(rows):
         "graph_complete_rows": sum(statuses.get(status, 0) for status in USABLE_CROSSWALK_STATUSES),
         "graph_complete_deterministic_exact_rows": statuses.get("deterministic_exact", 0),
         "graph_complete_candidate_rows": statuses.get("candidate", 0),
-        "source_certified_rows": 0,
+        "source_certified_rows": source_certified_ledger_count(),
     }
 
 
@@ -279,8 +280,11 @@ def _validate_metric_row(row, expected_rows, label, errors):
         errors.append(f"matrix {label}.crosswalk_status_counts does not match ledger")
     if row.get("graph_complete_rows") != row.get("graph_complete_deterministic_exact_rows", 0) + row.get("graph_complete_candidate_rows", 0):
         errors.append(f"matrix {label}.graph_complete_rows does not equal deterministic/candidate split")
-    if row.get("source_certified_rows") != 0:
-        errors.append(f"matrix {label}.source_certified_rows must remain zero")
+    if row.get("source_certified_rows") != source_certified_ledger_count():
+        errors.append(
+            f"matrix {label}.source_certified_rows must equal the typed-fact "
+            f"certification ledger count ({source_certified_ledger_count()})"
+        )
     proof_names = row.get("fully_rich_generated_proof_names")
     if not isinstance(proof_names, list) or proof_names != sorted(set(proof_names)) or not set(proof_names).issubset(PROOF_NAME_SET):
         errors.append(f"matrix {label}.fully_rich_generated_proof_names is invalid")
@@ -477,8 +481,11 @@ def validate_artifacts(ledger, matrix):
     else:
         if proofs.get("count") != 3 or proofs.get("names") != sorted(PROOF_NAME_SET):
             errors.append("proofs must name exactly the three architecture proof candidates")
-        if proofs.get("source_certified_count") != 0:
-            errors.append("proofs source_certified_count must remain zero")
+        if proofs.get("source_certified_count") != source_certified_ledger_count():
+            errors.append(
+                "proofs source_certified_count must equal the typed-fact "
+                f"certification ledger count ({source_certified_ledger_count()})"
+            )
         if not isinstance(proofs.get("rows"), list) or len(proofs["rows"]) != 3 or any(row.get("status") != ARCHITECTURE_PROOF_STATUS for row in proofs["rows"]):
             errors.append("proof rows must each be architecture_proof_candidate")
     expected_proof_entry_ids = {
