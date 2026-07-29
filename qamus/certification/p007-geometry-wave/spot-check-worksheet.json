@@ -1,0 +1,610 @@
+{
+ "note": "codepoint worksheet for the 20-row manual spot check; the reviewed verdicts live in spot-check.json",
+ "rows": [
+  {
+   "canonical_loc": "1:2:2",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0644",
+    "064E",
+    "0651",
+    "0647",
+    "0650"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "host_base_letter_count": 2,
+    "host_remainder_surface": "لَّهِ"
+   },
+   "surface_nfc": "لِلَّهِ"
+  },
+  {
+   "canonical_loc": "2:2:7",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0651",
+    "0644",
+    "0652",
+    "0645",
+    "064F",
+    "062A",
+    "064E",
+    "0651",
+    "0642",
+    "0650",
+    "064A",
+    "0646",
+    "064E"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 3,
+     "start": 0
+    },
+    "component_surface": "لِّ",
+    "host_base_letter_count": 6,
+    "host_remainder_surface": "لْمُتَّقِينَ"
+   },
+   "surface_nfc": "لِّلْمُتَّقِينَ"
+  },
+  {
+   "canonical_loc": "2:34:5",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0640",
+    "064E",
+    "0654",
+    "0627",
+    "062F",
+    "064E",
+    "0645",
+    "064E"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "host_base_letter_count": 4,
+    "host_remainder_surface": "ـَٔادَمَ"
+   },
+   "surface_nfc": "لِـَٔادَمَ"
+  },
+  {
+   "canonical_loc": "2:118:23",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0642",
+    "064E",
+    "0648",
+    "0652",
+    "0645",
+    "064D"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "host_base_letter_count": 3,
+    "host_remainder_surface": "قَوْمٍ"
+   },
+   "surface_nfc": "لِقَوْمٍ"
+  },
+  {
+   "canonical_loc": "2:187:63",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0644",
+    "0646",
+    "064E",
+    "0651",
+    "0627",
+    "0633",
+    "0650"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "host_base_letter_count": 4,
+    "host_remainder_surface": "لنَّاسِ"
+   },
+   "surface_nfc": "لِلنَّاسِ"
+  },
+  {
+   "canonical_loc": "3:138:3",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0651",
+    "0644",
+    "0646",
+    "064E",
+    "0651",
+    "0627",
+    "0633",
+    "0650"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 3,
+     "start": 0
+    },
+    "component_surface": "لِّ",
+    "host_base_letter_count": 4,
+    "host_remainder_surface": "لنَّاسِ"
+   },
+   "surface_nfc": "لِّلنَّاسِ"
+  },
+  {
+   "canonical_loc": "4:11:5",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0644",
+    "0630",
+    "064E",
+    "0651",
+    "0643",
+    "064E",
+    "0631",
+    "0650"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "host_base_letter_count": 4,
+    "host_remainder_surface": "لذَّكَرِ"
+   },
+   "surface_nfc": "لِلذَّكَرِ"
+  },
+  {
+   "canonical_loc": "5:3:9",
+   "codepoints": [
+    "0644",
+    "0650",
+    "063A",
+    "064E",
+    "064A",
+    "0652",
+    "0631",
+    "0650"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "host_base_letter_count": 3,
+    "host_remainder_surface": "غَيْرِ"
+   },
+   "surface_nfc": "لِغَيْرِ"
+  },
+  {
+   "canonical_loc": "7:11:9",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0640",
+    "064E",
+    "0654",
+    "0627",
+    "062F",
+    "064E",
+    "0645",
+    "064E"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "host_base_letter_count": 4,
+    "host_remainder_surface": "ـَٔادَمَ"
+   },
+   "surface_nfc": "لِـَٔادَمَ"
+  },
+  {
+   "canonical_loc": "9:120:3",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0623",
+    "064E",
+    "0647",
+    "0652",
+    "0644",
+    "0650"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "host_base_letter_count": 3,
+    "host_remainder_surface": "أَهْلِ"
+   },
+   "surface_nfc": "لِأَهْلِ"
+  },
+  {
+   "canonical_loc": "12:62:2",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0641",
+    "0650",
+    "062A",
+    "0652",
+    "064A",
+    "064E",
+    "0670",
+    "0646",
+    "0650",
+    "0647",
+    "0650"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "host_base_letter_count": 5,
+    "host_remainder_surface": "فِتْيَٰنِهِ"
+   },
+   "surface_nfc": "لِفِتْيَٰنِهِ"
+  },
+  {
+   "canonical_loc": "17:78:3",
+   "codepoints": [
+    "0644",
+    "0650",
+    "062F",
+    "064F",
+    "0644",
+    "064F",
+    "0648",
+    "0643",
+    "0650"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "host_base_letter_count": 4,
+    "host_remainder_surface": "دُلُوكِ"
+   },
+   "surface_nfc": "لِدُلُوكِ"
+  },
+  {
+   "canonical_loc": "20:14:11",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0630",
+    "0650",
+    "0643",
+    "0652",
+    "0631",
+    "0650",
+    "0649",
+    "0653"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "host_base_letter_count": 4,
+    "host_remainder_surface": "ذِكْرِىٓ"
+   },
+   "surface_nfc": "لِذِكْرِىٓ"
+  },
+  {
+   "canonical_loc": "23:20:9",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0651",
+    "0644",
+    "0652",
+    "0640",
+    "064E",
+    "0654",
+    "0627",
+    "0643",
+    "0650",
+    "0644",
+    "0650",
+    "064A",
+    "0646",
+    "064E"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 3,
+     "start": 0
+    },
+    "component_surface": "لِّ",
+    "host_base_letter_count": 7,
+    "host_remainder_surface": "لْـَٔاكِلِينَ"
+   },
+   "surface_nfc": "لِّلْـَٔاكِلِينَ"
+  },
+  {
+   "canonical_loc": "24:35:44",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0644",
+    "0646",
+    "064E",
+    "0651",
+    "0627",
+    "0633",
+    "0650"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "host_base_letter_count": 4,
+    "host_remainder_surface": "لنَّاسِ"
+   },
+   "surface_nfc": "لِلنَّاسِ"
+  },
+  {
+   "canonical_loc": "33:5:2",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0640",
+    "064E",
+    "0654",
+    "0627",
+    "0628",
+    "064E",
+    "0622",
+    "0626",
+    "0650",
+    "0647",
+    "0650",
+    "0645",
+    "0652"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 2,
+     "start": 0
+    },
+    "component_surface": "لِ",
+    "host_base_letter_count": 7,
+    "host_remainder_surface": "ـَٔابَآئِهِمْ"
+   },
+   "surface_nfc": "لِـَٔابَآئِهِمْ"
+  },
+  {
+   "canonical_loc": "37:46:3",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0651",
+    "0644",
+    "0634",
+    "064E",
+    "0651",
+    "0670",
+    "0631",
+    "0650",
+    "0628",
+    "0650",
+    "064A",
+    "0646",
+    "064E"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 3,
+     "start": 0
+    },
+    "component_surface": "لِّ",
+    "host_base_letter_count": 6,
+    "host_remainder_surface": "لشَّٰرِبِينَ"
+   },
+   "surface_nfc": "لِّلشَّٰرِبِينَ"
+  },
+  {
+   "canonical_loc": "43:56:4",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0651",
+    "0644",
+    "0652",
+    "0640",
+    "064E",
+    "0654",
+    "0627",
+    "062E",
+    "0650",
+    "0631",
+    "0650",
+    "064A",
+    "0646",
+    "064E"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 3,
+     "start": 0
+    },
+    "component_surface": "لِّ",
+    "host_base_letter_count": 7,
+    "host_remainder_surface": "لْـَٔاخِرِينَ"
+   },
+   "surface_nfc": "لِّلْـَٔاخِرِينَ"
+  },
+  {
+   "canonical_loc": "64:16:9",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0651",
+    "0623",
+    "064E",
+    "0646",
+    "0641",
+    "064F",
+    "0633",
+    "0650",
+    "0643",
+    "064F",
+    "0645",
+    "0652"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 3,
+     "start": 0
+    },
+    "component_surface": "لِّ",
+    "host_base_letter_count": 6,
+    "host_remainder_surface": "أَنفُسِكُمْ"
+   },
+   "surface_nfc": "لِّأَنفُسِكُمْ"
+  },
+  {
+   "canonical_loc": "70:16:2",
+   "codepoints": [
+    "0644",
+    "0650",
+    "0651",
+    "0644",
+    "0634",
+    "064E",
+    "0651",
+    "0648",
+    "064E",
+    "0649",
+    "0670"
+   ],
+   "computed": {
+    "base_letter_span": {
+     "end": 1,
+     "start": 0
+    },
+    "char_span": {
+     "end": 3,
+     "start": 0
+    },
+    "component_surface": "لِّ",
+    "host_base_letter_count": 4,
+    "host_remainder_surface": "لشَّوَىٰ"
+   },
+   "surface_nfc": "لِّلشَّوَىٰ"
+  }
+ ],
+ "schema": "qamus.p007_geometry_spot_worksheet.v1",
+ "scope": "P007_GEOMETRY_WAVE"
+}

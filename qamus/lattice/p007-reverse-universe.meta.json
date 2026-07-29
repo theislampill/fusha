@@ -1,0 +1,86 @@
+{
+ "appearances_by_page_class": {
+  "N": 711,
+  "P": 56,
+  "V": 5456
+ },
+ "appearances_total": 6223,
+ "builder": {
+  "id": "tools.build_p007_geometry_wave",
+  "version": "1"
+ },
+ "honesty": [
+  "Geometry certification is NOT entry/sense/function certification: entry-level certified stays at the pilot 12.",
+  "Every tally above is recomputed (never trusted) by tools/validate_p007_universe.py.",
+  "The pilot 12 are a subset of the 454 geometry rows; queue tallies subtract them exactly once."
+ ],
+ "inputs": {
+  "ayah_universe": "qamus/lattice/example-ayah-universe.jsonl",
+  "classification": "qamus/lattice/p007-population-classification.jsonl",
+  "geometry_store": "qamus/certification/p007-geometry-wave/events.jsonl",
+  "loc_surface_index": "qamus/indexes/quran-loc-surface/index.jsonl",
+  "matrix": "qamus/lattice/particle-occurrence-matrix.jsonl",
+  "mcp_evidence_refs": "qamus/lattice/p007-mcp-evidence-refs.jsonl",
+  "pilot": "qamus/examples/p007-li-pilot/"
+ },
+ "mode": "candidate — no live mutation; geometry certification only",
+ "rows": 2999,
+ "schema": "qamus.p007_reverse_universe_meta.v1",
+ "scope": "P007_GEOMETRY_WAVE",
+ "state_tallies": {
+  "P007_CANDIDATES_DISPOSITIONED": {
+   "complete": true,
+   "partitions": {
+    "deterministic-attachment-geometry": 454,
+    "direct-source-attested-function": 866,
+    "rejected-false-candidate": 1337,
+    "scholar-required": 2,
+    "two-vote-required": 340
+   },
+   "rows": 2999
+  },
+  "P007_DIRECT_SOURCE_FUNCTION_QUEUE": {
+   "components": {
+    "deterministic-attachment-geometry function queue": 442,
+    "direct-source-attested-function": 866
+   },
+   "rows": 1308
+  },
+  "P007_ENTRY_LINKS_CERTIFIED": {
+   "basis": "P007_LI_NOUN_HOST_PILOT entry edges — nothing else at entry level",
+   "rows": 12
+  },
+  "P007_FUNCTION_CERTIFIED": {
+   "basis": "pilot contextual_function facts",
+   "rows": 12
+  },
+  "P007_GEOMETRY_CERTIFIED": {
+   "basis": "mechanical attachment geometry / reconstruction / boundary ONLY — not identity, function or sense",
+   "facts": 1362,
+   "rows": 454,
+   "wave": "P007_GEOMETRY_WAVE"
+  },
+  "P007_GOVERNOR_CASE_CERTIFIED": {
+   "basis": "pilot governor/case facts (two-vote rung)",
+   "rows": 12
+  },
+  "P007_OCCURRENCES_DISCOVERED": {
+   "basis": "all p007 matrix rows carried into the reverse universe",
+   "complete": true,
+   "rows": 2999
+  },
+  "P007_REJECTED_CLOSED": {
+   "rows": 1337
+  },
+  "P007_SCHOLAR_QUEUE": {
+   "rows": 2
+  },
+  "P007_SENSE_EDGES_CERTIFIED": {
+   "basis": "P007_LI_NOUN_HOST_PILOT sense-2 edges",
+   "rows": 12
+  },
+  "P007_TWO_VOTE_QUEUE": {
+   "rows": 340
+  }
+ }
+}
