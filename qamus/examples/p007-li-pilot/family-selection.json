@@ -1,0 +1,353 @@
+{
+ "schema": "p00.family_selection.v1",
+ "session": "P00-VERTICAL-SLICE-2026-07-29",
+ "particle": {
+  "source_key": "p007",
+  "entry_id": "b10a1ee04666",
+  "headword": "لَـ / لِـ",
+  "clitic_sense": {
+   "n": 2,
+   "ar": "لِـ",
+   "gloss": "for, belongs to, let, so that"
+  }
+ },
+ "family_predicate": "jarr clitic li- (kasra) attached to a NOUN host, unambiguous carve per the iʿrāb source ((اللَّامُ) حَرْفُ جَرٍّ + host اسْمٌ مَجْرُورٌ), drawn from the P-00 particle-occurrence matrix",
+ "counts": {
+  "p007_matrix_rows": 2999,
+  "p007_li_kasra_prefix_rows": 609,
+  "family_occurrences": 12,
+  "family_appearances_total": 78,
+  "family_page_class_appearances": {
+   "context_on_n": 22,
+   "context_on_v": 54,
+   "context_on_p": 2
+  },
+  "false_candidates_examined": 3
+ },
+ "selection_criteria": {
+  "unambiguous_carve": "all 12 confirmed by verbatim MCP iʿrāb: (اللَّامُ) حَرْفُ جَرٍّ مَبْنِيٌّ عَلَى الْكَسْرِ + host اسم مجرور",
+  "page_class_spread": "every occurrence appears on >=2 page classes in the example-ayah universe; 24:31:23 and 61:5:4 additionally appear on a particle page (context_on_p)",
+  "fused_case": "12:31:24 لِلَّهِ (li + Allah, alif-wasla elided in the rasm per MCP rasm_note); plus assimilated-article cases لِلنَّاسِ/لِلذَّكَرِ (li + al+noun with article alif elided)",
+  "live_rich_baseline": "zero p007 rows are rich on the live app today (12 rich rows total live; none li-initial). Nearest live parity baseline: 2:178:22 بِٱلْمَعْرُوفِ (p002 jarr clitic + article + noun, case genitive) — establishes the deployed rich segmentation shape. All 12 family rows render flat live => whole family is the candidate upgrade set.",
+  "diptote_case": "2:34:5 لِءَادَمَ jarr sign = fatha (mamnu' min al-sarf) — exercises the non-kasra jarr sign lane",
+  "pronoun_mudaf_ilayh": "33:53:48 / 24:31:23 / 61:5:4 exercise noun host + attached pronoun (mudaf ilayh) inside the majrur expression"
+ },
+ "occurrences": [
+  {
+   "matrix_id": "p007:12:31:24",
+   "occurrence_id": "quran:12:31:24",
+   "surface": "لِلَّهِ",
+   "host_visible": "له",
+   "appearance_count": 8,
+   "page_appearances": {
+    "context_on_n": 2,
+    "context_on_v": 6
+   },
+   "appearance_ids": [
+    "0135b6be178e:u0:x0:w2",
+    "4211cb1f5355:u0:x1:w24",
+    "99f8d3c2cad5:u5:x0:w24",
+    "a6de8fd64244:u4:x2:w24",
+    "d82582d4c8e6:u0:x2:w24",
+    "e0e500c4b7a5:u0:x14:w24",
+    "e7fa3fadaf4a:u0:x0:w24",
+    "fbd04177b8dd:u0:x26:w24"
+   ],
+   "blockers_at_selection": [
+    "clitic_host_segmentation_unverified",
+    "match_basis_normalized_requires_diacritic_check"
+   ],
+   "certified_at_selection": "none"
+  },
+  {
+   "matrix_id": "p007:2:34:3",
+   "occurrence_id": "quran:2:34:3",
+   "surface": "لِلْمَلَٰٓئِكَةِ",
+   "host_visible": "لملائكه",
+   "appearance_count": 5,
+   "page_appearances": {
+    "context_on_n": 2,
+    "context_on_v": 3
+   },
+   "appearance_ids": [
+    "4211cb1f5355:u0:x4:w2",
+    "430015446b77:u0:x1:w2",
+    "6e35cbb25054:u0:x0:w2",
+    "720e26330d5f:u1:x1:w2",
+    "e0e500c4b7a5:u2:x1:w2"
+   ],
+   "blockers_at_selection": [
+    "clitic_host_segmentation_unverified",
+    "match_basis_normalized_requires_diacritic_check"
+   ],
+   "certified_at_selection": "none"
+  },
+  {
+   "matrix_id": "p007:2:34:5",
+   "occurrence_id": "quran:2:34:5",
+   "surface": "لِءَادَمَ",
+   "host_visible": "ءادم",
+   "appearance_count": 5,
+   "page_appearances": {
+    "context_on_n": 2,
+    "context_on_v": 3
+   },
+   "appearance_ids": [
+    "4211cb1f5355:u0:x4:w4",
+    "430015446b77:u0:x1:w4",
+    "6e35cbb25054:u0:x0:w4",
+    "720e26330d5f:u1:x1:w4",
+    "e0e500c4b7a5:u2:x1:w4"
+   ],
+   "blockers_at_selection": [
+    "clitic_host_segmentation_unverified",
+    "match_basis_normalized_requires_diacritic_check"
+   ],
+   "certified_at_selection": "none"
+  },
+  {
+   "matrix_id": "p007:24:35:44",
+   "occurrence_id": "quran:24:35:44",
+   "surface": "لِلنَّاسِ",
+   "host_visible": "لناس",
+   "appearance_count": 10,
+   "page_appearances": {
+    "context_on_n": 3,
+    "context_on_v": 7
+   },
+   "appearance_ids": [
+    "0c0e1edc8c65:u0:x1:w50",
+    "2d66a735c5e2:u0:x0:w50",
+    "52d3bb9863f6:u1:x1:w50",
+    "61b224b183f1:u0:x4:w50",
+    "68e87fcb398a:u0:x1:w50",
+    "6d380979b61a:u0:x0:w50",
+    "8679e622012c:u1:x0:w50",
+    "8f4b5c2d0a9a:u2:x0:w50",
+    "c94d92f4fca0:u0:x3:w50",
+    "f1643f45edbf:u0:x3:w50"
+   ],
+   "blockers_at_selection": [
+    "clitic_host_segmentation_unverified",
+    "match_basis_normalized_requires_diacritic_check"
+   ],
+   "certified_at_selection": "none"
+  },
+  {
+   "matrix_id": "p007:2:187:63",
+   "occurrence_id": "quran:2:187:63",
+   "surface": "لِلنَّاسِ",
+   "host_visible": "لناس",
+   "appearance_count": 9,
+   "page_appearances": {
+    "context_on_n": 2,
+    "context_on_v": 7
+   },
+   "appearance_ids": [
+    "1773d3fc1e63:u1:x0:w70",
+    "177fb17bf61b:u0:x1:w70",
+    "2495957025c6:u0:x0:w70",
+    "55dd18892bf9:u1:x5:w70",
+    "6471f74ceb4e:u0:x2:w70",
+    "7b8ccbd754e3:u0:x3:w70",
+    "7cfa6fd795af:u0:x0:w70",
+    "90d6ab43d466:u0:x3:w70",
+    "a6de8fd64244:u3:x0:w70"
+   ],
+   "blockers_at_selection": [
+    "clitic_host_segmentation_unverified",
+    "match_basis_normalized_requires_diacritic_check"
+   ],
+   "certified_at_selection": "none"
+  },
+  {
+   "matrix_id": "p007:5:3:9",
+   "occurrence_id": "quran:5:3:9",
+   "surface": "لِغَيْرِ",
+   "host_visible": "غير",
+   "appearance_count": 10,
+   "page_appearances": {
+    "context_on_n": 2,
+    "context_on_v": 8
+   },
+   "appearance_ids": [
+    "1cabc12cf11c:u1:x0:w8",
+    "275437dcb0c2:u0:x2:w8",
+    "4f666d15bb7e:u0:x1:w8",
+    "727d20168f33:u0:x0:w8",
+    "780df10f872a:u1:x0:w8",
+    "98259aa98c96:u0:x0:w8",
+    "ba7a639a9fac:u0:x0:w8",
+    "dcf75e7f4b79:u0:x8:w8",
+    "eebe688acf55:u0:x0:w8",
+    "efa9daeebae2:u0:x0:w8"
+   ],
+   "blockers_at_selection": [
+    "clitic_host_segmentation_unverified",
+    "match_basis_normalized_requires_diacritic_check"
+   ],
+   "certified_at_selection": "none"
+  },
+  {
+   "matrix_id": "p007:9:120:3",
+   "occurrence_id": "quran:9:120:3",
+   "surface": "لِأَهْلِ",
+   "host_visible": "أهل",
+   "appearance_count": 7,
+   "page_appearances": {
+    "context_on_n": 1,
+    "context_on_v": 6
+   },
+   "appearance_ids": [
+    "1da89a32d7fc:u0:x3:w2",
+    "259fe620e117:u3:x0:w2",
+    "3fe10eef5951:u0:x1:w2",
+    "85136ba00e1e:u0:x0:w2",
+    "b309f86b564e:u0:x4:w2",
+    "cd8d7c16fff0:u0:x0:w2",
+    "eb1198782b49:u0:x1:w2"
+   ],
+   "blockers_at_selection": [
+    "clitic_host_segmentation_unverified",
+    "match_basis_normalized_requires_diacritic_check"
+   ],
+   "certified_at_selection": "none"
+  },
+  {
+   "matrix_id": "p007:17:78:3",
+   "occurrence_id": "quran:17:78:3",
+   "surface": "لِدُلُوكِ",
+   "host_visible": "دلوك",
+   "appearance_count": 5,
+   "page_appearances": {
+    "context_on_n": 3,
+    "context_on_v": 2
+   },
+   "appearance_ids": [
+    "02b666ee363c:u0:x1:w2",
+    "16dc0a87056e:u0:x14:w2",
+    "4d0d3186b472:u0:x0:w2",
+    "5c9c180859bc:u0:x0:w2",
+    "6fe9ada37a9b:u0:x5:w2"
+   ],
+   "blockers_at_selection": [
+    "clitic_host_segmentation_unverified",
+    "match_basis_normalized_requires_diacritic_check"
+   ],
+   "certified_at_selection": "none"
+  },
+  {
+   "matrix_id": "p007:4:11:5",
+   "occurrence_id": "quran:4:11:5",
+   "surface": "لِلذَّكَرِ",
+   "host_visible": "لذكر",
+   "appearance_count": 5,
+   "page_appearances": {
+    "context_on_n": 2,
+    "context_on_v": 3
+   },
+   "appearance_ids": [
+    "1975a28c061a:u0:x0:w0",
+    "445f9e047a5b:u0:x4:w5",
+    "7aa81aa90341:u0:x3:w5",
+    "9dbe7f045ea8:u0:x1:w5",
+    "d6a4f976cb61:u0:x7:w5"
+   ],
+   "blockers_at_selection": [
+    "clitic_host_segmentation_unverified",
+    "match_basis_normalized_requires_diacritic_check"
+   ],
+   "certified_at_selection": "none"
+  },
+  {
+   "matrix_id": "p007:33:53:48",
+   "occurrence_id": "quran:33:53:48",
+   "surface": "لِقُلُوبِكُمْ",
+   "host_visible": "قلوبكم",
+   "appearance_count": 5,
+   "page_appearances": {
+    "context_on_n": 1,
+    "context_on_v": 4
+   },
+   "appearance_ids": [
+    "31e79b908386:u0:x1:w51",
+    "7f416e8c42c3:u0:x5:w2",
+    "89f4baadb89a:u2:x0:w51",
+    "beae77dd607f:u0:x4:w51",
+    "d099cdaad3b9:u1:x5:w51"
+   ],
+   "blockers_at_selection": [
+    "clitic_host_segmentation_unverified",
+    "match_basis_normalized_requires_diacritic_check"
+   ],
+   "certified_at_selection": "none"
+  },
+  {
+   "matrix_id": "p007:24:31:23",
+   "occurrence_id": "quran:24:31:23",
+   "surface": "لِبُعُولَتِهِنَّ",
+   "host_visible": "بعولتهن",
+   "appearance_count": 5,
+   "page_appearances": {
+    "context_on_n": 1,
+    "context_on_p": 1,
+    "context_on_v": 3
+   },
+   "appearance_ids": [
+    "3f72628fa1ec:u1:x0:w24",
+    "4cb26045b5b7:u0:x4:w24",
+    "5d89e690256d:u0:x8:w24",
+    "896fc440f451:u0:x1:w4",
+    "eade5d4df22b:u0:x1:w4"
+   ],
+   "blockers_at_selection": [
+    "clitic_host_segmentation_unverified",
+    "match_basis_normalized_requires_diacritic_check"
+   ],
+   "certified_at_selection": "none"
+  },
+  {
+   "matrix_id": "p007:61:5:4",
+   "occurrence_id": "quran:61:5:4",
+   "surface": "لِقَوْمِهِۦ",
+   "host_visible": "قومه",
+   "appearance_count": 4,
+   "page_appearances": {
+    "context_on_n": 1,
+    "context_on_p": 1,
+    "context_on_v": 2
+   },
+   "appearance_ids": [
+    "01133eb5431b:u0:x1:w3",
+    "3041d6f44a27:u11:x1:w3",
+    "65d3d5c51f24:u0:x2:w3",
+    "7f1f8b8e29e6:u0:x0:w3"
+   ],
+   "blockers_at_selection": [
+    "clitic_host_segmentation_unverified",
+    "match_basis_normalized_requires_diacritic_check"
+   ],
+   "certified_at_selection": "none"
+  }
+ ],
+ "false_candidates_rejected": [
+  {
+   "matrix_id": "p007:2:187:9",
+   "surface": "لِبَاسٌۭ",
+   "canonical_loc": "2:187:9",
+   "reason": "lexical-initial lam: MCP sarf reads whole token لِبَاسٌ as noun, wazn فِعَال, madda لبس; MCP irab has NO jarr-harf clause (خبر مرفوع). Clitic carve rejected."
+  },
+  {
+   "matrix_id": "p007:48:29:42",
+   "surface": "لِيَغِيظَ",
+   "canonical_loc": "48:29:42",
+   "reason": "lam + VERB (lam of ta'lil over implied أن): MCP irab reads lam as jarr harf but host يَغِيظَ is a mudari' mansub b-'an mudmara — host is not a noun; outside the noun-host family; function rival retained on p007 lattice."
+  },
+  {
+   "matrix_id": "p007:31:14:14",
+   "surface": "لِى",
+   "canonical_loc": "31:14:14",
+   "reason": "free li + attached pronoun (ya' al-mutakallim): genuine jarr lam but host is a pronoun, not a noun; outside the noun-host family."
+  }
+ ]
+}

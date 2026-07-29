@@ -1,0 +1,59 @@
+{
+ "schema": "p00.vn_unlock.v1",
+ "family_direct": {
+  "occurrences": 12,
+  "appearances": 78,
+  "appearances_by_tranche": {
+   "VN-00": 15,
+   "VN-04": 9,
+   "VN-05": 9,
+   "VN-01": 8,
+   "VN-02": 8,
+   "VN-06": 5,
+   "VN-03": 4,
+   "VN-11": 4,
+   "VN-17": 3,
+   "VN-13": 3,
+   "VN-07": 2,
+   "VN-09": 1,
+   "VN-16": 1,
+   "VN-19": 1,
+   "VN-14": 1,
+   "P-03": 1,
+   "VN-12": 1,
+   "VN-18": 1,
+   "P-02": 1
+  }
+ },
+ "pattern_ceiling_li_kasra_clitic": {
+  "matrix_rows": 580,
+  "appearances": 1266,
+  "appearances_by_tranche": {
+   "VN-02": 266,
+   "VN-03": 181,
+   "VN-01": 168,
+   "VN-00": 163,
+   "VN-04": 144,
+   "VN-05": 93,
+   "VN-06": 67,
+   "VN-11": 44,
+   "VN-07": 36,
+   "VN-17": 18,
+   "VN-12": 18,
+   "VN-09": 12,
+   "VN-19": 10,
+   "VN-18": 9,
+   "VN-10": 8,
+   "VN-16": 7,
+   "VN-15": 5,
+   "P-03": 3,
+   "VN-13": 3,
+   "VN-08": 3,
+   "P-01": 2,
+   "P-02": 2,
+   "VN-14": 2,
+   "P-00": 2
+  },
+  "note": "ceiling only: each row still needs per-occurrence host-noun evidence before the certified template applies (lam+verb ta'lil and lexical-lam rivals excluded per-occurrence, cf. 48:29:42 and 2:187:9 rejections)"
+ }
+}

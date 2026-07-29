@@ -1,0 +1,266 @@
+[
+ {
+  "projection_id": "proj:p00slice:12_31_24",
+  "renders_from_facts": [
+   "fact:p00slice:12_31_24:seg",
+   "fact:p00slice:12_31_24:func",
+   "fact:p00slice:12_31_24:gov",
+   "fact:p00slice:12_31_24:case",
+   "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "facts_certified_by": "typed-fact-store/events.jsonl (hash-chained; validate with tools/certify_typed_fact.py --validate)",
+  "two_vote_artifact": "two-vote-artifacts.jsonl#two-vote-artifact:quran_12_31_24:p00slice-li-jarr",
+  "votes": [
+   "votes-a.jsonl",
+   "votes-b.jsonl (independent lane)"
+  ],
+  "mcp_evidence": [
+   "mcp-evidence.jsonl#analyze_word:12:31:24",
+   "votes-b-mcp-calls.jsonl"
+  ],
+  "canonical_occurrence": "qamus/lattice/particle-occurrence-matrix.jsonl#p007:12:31:24",
+  "live_row": "live-rh-rows-raw.jsonl#12:31:24 (read-only capture of rh_live_01_beta_whitelist.jsonl on the server)"
+ },
+ {
+  "projection_id": "proj:p00slice:2_34_3",
+  "renders_from_facts": [
+   "fact:p00slice:2_34_3:seg",
+   "fact:p00slice:2_34_3:func",
+   "fact:p00slice:2_34_3:gov",
+   "fact:p00slice:2_34_3:case",
+   "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "facts_certified_by": "typed-fact-store/events.jsonl (hash-chained; validate with tools/certify_typed_fact.py --validate)",
+  "two_vote_artifact": "two-vote-artifacts.jsonl#two-vote-artifact:quran_2_34_3:p00slice-li-jarr",
+  "votes": [
+   "votes-a.jsonl",
+   "votes-b.jsonl (independent lane)"
+  ],
+  "mcp_evidence": [
+   "mcp-evidence.jsonl#analyze_word:2:34:3",
+   "votes-b-mcp-calls.jsonl"
+  ],
+  "canonical_occurrence": "qamus/lattice/particle-occurrence-matrix.jsonl#p007:2:34:3",
+  "live_row": "live-rh-rows-raw.jsonl#2:34:3 (read-only capture of rh_live_01_beta_whitelist.jsonl on the server)"
+ },
+ {
+  "projection_id": "proj:p00slice:2_34_5",
+  "renders_from_facts": [
+   "fact:p00slice:2_34_5:seg",
+   "fact:p00slice:2_34_5:func",
+   "fact:p00slice:2_34_5:gov",
+   "fact:p00slice:2_34_5:case",
+   "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "facts_certified_by": "typed-fact-store/events.jsonl (hash-chained; validate with tools/certify_typed_fact.py --validate)",
+  "two_vote_artifact": "two-vote-artifacts.jsonl#two-vote-artifact:quran_2_34_5:p00slice-li-jarr",
+  "votes": [
+   "votes-a.jsonl",
+   "votes-b.jsonl (independent lane)"
+  ],
+  "mcp_evidence": [
+   "mcp-evidence.jsonl#analyze_word:2:34:5",
+   "votes-b-mcp-calls.jsonl"
+  ],
+  "canonical_occurrence": "qamus/lattice/particle-occurrence-matrix.jsonl#p007:2:34:5",
+  "live_row": "live-rh-rows-raw.jsonl#2:34:5 (read-only capture of rh_live_01_beta_whitelist.jsonl on the server)"
+ },
+ {
+  "projection_id": "proj:p00slice:24_35_44",
+  "renders_from_facts": [
+   "fact:p00slice:24_35_44:seg",
+   "fact:p00slice:24_35_44:func",
+   "fact:p00slice:24_35_44:gov",
+   "fact:p00slice:24_35_44:case",
+   "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "facts_certified_by": "typed-fact-store/events.jsonl (hash-chained; validate with tools/certify_typed_fact.py --validate)",
+  "two_vote_artifact": "two-vote-artifacts.jsonl#two-vote-artifact:quran_24_35_44:p00slice-li-jarr",
+  "votes": [
+   "votes-a.jsonl",
+   "votes-b.jsonl (independent lane)"
+  ],
+  "mcp_evidence": [
+   "mcp-evidence.jsonl#analyze_word:24:35:44",
+   "votes-b-mcp-calls.jsonl"
+  ],
+  "canonical_occurrence": "qamus/lattice/particle-occurrence-matrix.jsonl#p007:24:35:44",
+  "live_row": "live-rh-rows-raw.jsonl#24:35:44 (read-only capture of rh_live_01_beta_whitelist.jsonl on the server)"
+ },
+ {
+  "projection_id": "proj:p00slice:2_187_63",
+  "renders_from_facts": [
+   "fact:p00slice:2_187_63:seg",
+   "fact:p00slice:2_187_63:func",
+   "fact:p00slice:2_187_63:gov",
+   "fact:p00slice:2_187_63:case",
+   "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "facts_certified_by": "typed-fact-store/events.jsonl (hash-chained; validate with tools/certify_typed_fact.py --validate)",
+  "two_vote_artifact": "two-vote-artifacts.jsonl#two-vote-artifact:quran_2_187_63:p00slice-li-jarr",
+  "votes": [
+   "votes-a.jsonl",
+   "votes-b.jsonl (independent lane)"
+  ],
+  "mcp_evidence": [
+   "mcp-evidence.jsonl#analyze_word:2:187:63",
+   "votes-b-mcp-calls.jsonl"
+  ],
+  "canonical_occurrence": "qamus/lattice/particle-occurrence-matrix.jsonl#p007:2:187:63",
+  "live_row": "live-rh-rows-raw.jsonl#2:187:63 (read-only capture of rh_live_01_beta_whitelist.jsonl on the server)"
+ },
+ {
+  "projection_id": "proj:p00slice:5_3_9",
+  "renders_from_facts": [
+   "fact:p00slice:5_3_9:seg",
+   "fact:p00slice:5_3_9:func",
+   "fact:p00slice:5_3_9:gov",
+   "fact:p00slice:5_3_9:case",
+   "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "facts_certified_by": "typed-fact-store/events.jsonl (hash-chained; validate with tools/certify_typed_fact.py --validate)",
+  "two_vote_artifact": "two-vote-artifacts.jsonl#two-vote-artifact:quran_5_3_9:p00slice-li-jarr",
+  "votes": [
+   "votes-a.jsonl",
+   "votes-b.jsonl (independent lane)"
+  ],
+  "mcp_evidence": [
+   "mcp-evidence.jsonl#analyze_word:5:3:9",
+   "votes-b-mcp-calls.jsonl"
+  ],
+  "canonical_occurrence": "qamus/lattice/particle-occurrence-matrix.jsonl#p007:5:3:9",
+  "live_row": "live-rh-rows-raw.jsonl#5:3:9 (read-only capture of rh_live_01_beta_whitelist.jsonl on the server)"
+ },
+ {
+  "projection_id": "proj:p00slice:9_120_3",
+  "renders_from_facts": [
+   "fact:p00slice:9_120_3:seg",
+   "fact:p00slice:9_120_3:func",
+   "fact:p00slice:9_120_3:gov",
+   "fact:p00slice:9_120_3:case",
+   "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "facts_certified_by": "typed-fact-store/events.jsonl (hash-chained; validate with tools/certify_typed_fact.py --validate)",
+  "two_vote_artifact": "two-vote-artifacts.jsonl#two-vote-artifact:quran_9_120_3:p00slice-li-jarr",
+  "votes": [
+   "votes-a.jsonl",
+   "votes-b.jsonl (independent lane)"
+  ],
+  "mcp_evidence": [
+   "mcp-evidence.jsonl#analyze_word:9:120:3",
+   "votes-b-mcp-calls.jsonl"
+  ],
+  "canonical_occurrence": "qamus/lattice/particle-occurrence-matrix.jsonl#p007:9:120:3",
+  "live_row": "live-rh-rows-raw.jsonl#9:120:3 (read-only capture of rh_live_01_beta_whitelist.jsonl on the server)"
+ },
+ {
+  "projection_id": "proj:p00slice:17_78_3",
+  "renders_from_facts": [
+   "fact:p00slice:17_78_3:seg",
+   "fact:p00slice:17_78_3:func",
+   "fact:p00slice:17_78_3:gov",
+   "fact:p00slice:17_78_3:case",
+   "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "facts_certified_by": "typed-fact-store/events.jsonl (hash-chained; validate with tools/certify_typed_fact.py --validate)",
+  "two_vote_artifact": "two-vote-artifacts.jsonl#two-vote-artifact:quran_17_78_3:p00slice-li-jarr",
+  "votes": [
+   "votes-a.jsonl",
+   "votes-b.jsonl (independent lane)"
+  ],
+  "mcp_evidence": [
+   "mcp-evidence.jsonl#analyze_word:17:78:3",
+   "votes-b-mcp-calls.jsonl"
+  ],
+  "canonical_occurrence": "qamus/lattice/particle-occurrence-matrix.jsonl#p007:17:78:3",
+  "live_row": "live-rh-rows-raw.jsonl#17:78:3 (read-only capture of rh_live_01_beta_whitelist.jsonl on the server)"
+ },
+ {
+  "projection_id": "proj:p00slice:4_11_5",
+  "renders_from_facts": [
+   "fact:p00slice:4_11_5:seg",
+   "fact:p00slice:4_11_5:func",
+   "fact:p00slice:4_11_5:gov",
+   "fact:p00slice:4_11_5:case",
+   "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "facts_certified_by": "typed-fact-store/events.jsonl (hash-chained; validate with tools/certify_typed_fact.py --validate)",
+  "two_vote_artifact": "two-vote-artifacts.jsonl#two-vote-artifact:quran_4_11_5:p00slice-li-jarr",
+  "votes": [
+   "votes-a.jsonl",
+   "votes-b.jsonl (independent lane)"
+  ],
+  "mcp_evidence": [
+   "mcp-evidence.jsonl#analyze_word:4:11:5",
+   "votes-b-mcp-calls.jsonl"
+  ],
+  "canonical_occurrence": "qamus/lattice/particle-occurrence-matrix.jsonl#p007:4:11:5",
+  "live_row": "live-rh-rows-raw.jsonl#4:11:5 (read-only capture of rh_live_01_beta_whitelist.jsonl on the server)"
+ },
+ {
+  "projection_id": "proj:p00slice:33_53_48",
+  "renders_from_facts": [
+   "fact:p00slice:33_53_48:seg",
+   "fact:p00slice:33_53_48:func",
+   "fact:p00slice:33_53_48:gov",
+   "fact:p00slice:33_53_48:case",
+   "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "facts_certified_by": "typed-fact-store/events.jsonl (hash-chained; validate with tools/certify_typed_fact.py --validate)",
+  "two_vote_artifact": "two-vote-artifacts.jsonl#two-vote-artifact:quran_33_53_48:p00slice-li-jarr",
+  "votes": [
+   "votes-a.jsonl",
+   "votes-b.jsonl (independent lane)"
+  ],
+  "mcp_evidence": [
+   "mcp-evidence.jsonl#analyze_word:33:53:48",
+   "votes-b-mcp-calls.jsonl"
+  ],
+  "canonical_occurrence": "qamus/lattice/particle-occurrence-matrix.jsonl#p007:33:53:48",
+  "live_row": "live-rh-rows-raw.jsonl#33:53:48 (read-only capture of rh_live_01_beta_whitelist.jsonl on the server)"
+ },
+ {
+  "projection_id": "proj:p00slice:24_31_23",
+  "renders_from_facts": [
+   "fact:p00slice:24_31_23:seg",
+   "fact:p00slice:24_31_23:func",
+   "fact:p00slice:24_31_23:gov",
+   "fact:p00slice:24_31_23:case",
+   "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "facts_certified_by": "typed-fact-store/events.jsonl (hash-chained; validate with tools/certify_typed_fact.py --validate)",
+  "two_vote_artifact": "two-vote-artifacts.jsonl#two-vote-artifact:quran_24_31_23:p00slice-li-jarr",
+  "votes": [
+   "votes-a.jsonl",
+   "votes-b.jsonl (independent lane)"
+  ],
+  "mcp_evidence": [
+   "mcp-evidence.jsonl#analyze_word:24:31:23",
+   "votes-b-mcp-calls.jsonl"
+  ],
+  "canonical_occurrence": "qamus/lattice/particle-occurrence-matrix.jsonl#p007:24:31:23",
+  "live_row": "live-rh-rows-raw.jsonl#24:31:23 (read-only capture of rh_live_01_beta_whitelist.jsonl on the server)"
+ },
+ {
+  "projection_id": "proj:p00slice:61_5_4",
+  "renders_from_facts": [
+   "fact:p00slice:61_5_4:seg",
+   "fact:p00slice:61_5_4:func",
+   "fact:p00slice:61_5_4:gov",
+   "fact:p00slice:61_5_4:case",
+   "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "facts_certified_by": "typed-fact-store/events.jsonl (hash-chained; validate with tools/certify_typed_fact.py --validate)",
+  "two_vote_artifact": "two-vote-artifacts.jsonl#two-vote-artifact:quran_61_5_4:p00slice-li-jarr",
+  "votes": [
+   "votes-a.jsonl",
+   "votes-b.jsonl (independent lane)"
+  ],
+  "mcp_evidence": [
+   "mcp-evidence.jsonl#analyze_word:61:5:4",
+   "votes-b-mcp-calls.jsonl"
+  ],
+  "canonical_occurrence": "qamus/lattice/particle-occurrence-matrix.jsonl#p007:61:5:4",
+  "live_row": "live-rh-rows-raw.jsonl#61:5:4 (read-only capture of rh_live_01_beta_whitelist.jsonl on the server)"
+ }
+]

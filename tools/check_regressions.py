@@ -5865,6 +5865,52 @@ except Exception as _pedges_e:
     check("PEDGES particle projection gates (harness error)", False)
     print("  ", _pedges_e)
 
+# P007PILOT: P007_LI_NOUN_HOST_PILOT vertical-slice closure (12 certified
+# morpheme occurrences of the jarr clitic li- on noun hosts / 78 appearances /
+# 49 typed facts).  Durable repository machinery for the P00 slice: 12-location
+# integrity, 49-fact completeness against the hash-chained certification store,
+# entry+sense transclusion closure on every certified morpheme occurrence
+# (a generic 'preposition' class without the entry/sense edge does NOT satisfy
+# transclusion), parity hash stability (NFC lesson), reverse-trace closure and
+# the NOT-DEPLOYED production-difference honesty gate.  Red-first self-test +
+# committed green pilot; fixture-only, no lane-side corpora, no live reads.
+try:
+    _p007_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_p007_pilot.py"),
+        "--self-test",
+    ], timeout=300)
+    check(
+        "P007PILOT li-pilot red-first self-test passes",
+        _p007_self.returncode == 0
+        and "P007 PILOT SELF-TEST PASS" in (_p007_self.stdout or ""),
+    )
+    _p007_green = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_p007_pilot.py"),
+    ], timeout=300)
+    check(
+        "P007PILOT committed pilot validates (12 occ / 78 app / 49 facts)",
+        _p007_green.returncode == 0
+        and "P007 PILOT VALIDATION PASS" in (_p007_green.stdout or ""),
+    )
+    for _p007_art in (
+            "qamus/examples/p007-li-pilot/locations.json",
+            "qamus/examples/p007-li-pilot/typed-facts.jsonl",
+            "qamus/examples/p007-li-pilot/certification/events.jsonl",
+            "qamus/examples/p007-li-pilot/transclusion-edges.jsonl",
+            "qamus/examples/p007-li-pilot/entry-reverse-index.json",
+            "qamus/examples/p007-li-pilot/two-vote-artifacts.v1.jsonl",
+            "qamus/examples/p007-li-pilot/two-vote-artifacts.v1_1.jsonl",
+            "qamus/examples/p007-li-pilot/production-difference.json",
+            "tools/build_p007_li_pilot.py",
+    ):
+        check("P007PILOT artifact committed: " + _p007_art,
+              os.path.exists(os.path.join(_R, *_p007_art.split("/"))))
+except Exception as _p007_e:
+    check("P007PILOT li-pilot gates (harness error)", False)
+    print("  ", _p007_e)
+
 # REPAIR1: reusable graph-repair families and occurrence-entry resolver fixtures.
 # This remains fixture-only so a fresh clone never depends on lane-side corpora.
 try:

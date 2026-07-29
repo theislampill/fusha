@@ -1,0 +1,59 @@
+{
+ "certification_consumed": "two-vote-artifacts.v1.jsonl (the hash-chained certification store consumed the v1 bundles; the v1.1 file is the governed-vocabulary migration of the same votes)",
+ "field_decisions": [
+  {
+   "field": "votes[*].lexical_target",
+   "reason": "every vote's lexical_identity addresses the clitic's own dictionary entry b10a1ee04666 (لِـ), never the whole fused token",
+   "value": "clitic_entry"
+  },
+  {
+   "field": "votes[*].conclusion.function",
+   "reason": "registered function key for the token-internal preposition lam fused with its majrur; matches both votes' contextual_function prose 'jarr-clitic-li-preposition-on-noun-host' (kept verbatim as uncompared elaboration)",
+   "value": "harf-jarr-lam-fused"
+  },
+  {
+   "field": "votes[*].conclusion.attachment_key",
+   "reason": "no registered attachment key exactly matches every row's attachment claim (muta'alliq-to-verb / muta'alliq-to-exclamative / khabar-kana-muqaddam / khabar-muqaddam); rather than force a near-miss key, attachment stays prose-only (uncompared in v1.1) — the v1 file retains the compared-prose agreement",
+   "value": null
+  },
+  {
+   "field": "votes[*].conclusion.case_or_mood.mood_basis",
+   "reason": "every case claim is jarr assigned by the preposition (an operator) — mood_basis governed; the governor field was already non-null on all 12 rows",
+   "value": "governed"
+  }
+ ],
+ "from_file": "two-vote-artifacts.v1.jsonl",
+ "from_schema": "qamus.two_vote_artifact.v1",
+ "migrated_by": {
+  "id": "tools.build_p007_li_pilot",
+  "version": "1"
+ },
+ "migrated_on": "2026-07-29",
+ "registry_keys_added": [
+  "jarr-clitic-li-majrur-visible-kasra",
+  "jarr-clitic-li-majrur-fatha-diptote"
+ ],
+ "schema": "qamus.p007_li_pilot.two_vote_migration.v1",
+ "scope": "P007_LI_NOUN_HOST_PILOT",
+ "substance_untouched": true,
+ "to_file": "two-vote-artifacts.v1_1.jsonl",
+ "to_schema": "qamus.two_vote_artifact.v1.1",
+ "value_mappings": [
+  {
+   "artifact_id": "two-vote-artifact:quran_2_34_5:p00slice-li-jarr",
+   "field": "conclusion.case_or_mood.sign",
+   "from": "fatha-mamnu-min-sarf",
+   "reason": "v1.1 governed sign enum; the diptote rationale is carried by reason_key jarr-clitic-li-majrur-fatha-diptote and the grammatical_reason prose",
+   "to": "fatha",
+   "vote_id": "vote:reviewer-a:2_34_5:p00slice:20260728"
+  },
+  {
+   "artifact_id": "two-vote-artifact:quran_2_34_5:p00slice-li-jarr",
+   "field": "conclusion.case_or_mood.sign",
+   "from": "fatha-mamnu-min-sarf",
+   "reason": "v1.1 governed sign enum; the diptote rationale is carried by reason_key jarr-clitic-li-majrur-fatha-diptote and the grammatical_reason prose",
+   "to": "fatha",
+   "vote_id": "vote:reviewer-b:2_34_5:p00slice:20260728"
+  }
+ ]
+}

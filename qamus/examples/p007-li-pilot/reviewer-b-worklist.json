@@ -1,0 +1,146 @@
+{
+ "schema": "p00.reviewer_b_worklist.v1",
+ "session": "P00-VERTICAL-SLICE-2026-07-29",
+ "instructions": {
+  "role": "You are reviewer-B, an INDEPENDENT iʿrāb reviewer. For each row, analyze the token yourself using the Tafsir MCP only. Do not consult any reviewer-A material (none is included here).",
+  "mcp": "Load tools via ToolSearch 'select:mcp__tafsir__fetch_ayah,mcp__tafsir__analyze_word'. Warm up with fetch_ayah(1,1). For each row call fetch_ayah(surah,ayah) and analyze_word(surah,ayah,word_no). SURFACE-MATCH: accept word_no only if the returned `word` equals the row surface with diacritics stripped. Record every call verbatim in your output file.",
+  "schema_ref": "qamus/schemas/two-vote-artifact.schema.json#/$defs/vote_record",
+  "identity": {
+   "reviewer_id": "reviewer-b-independent-lane-20260728",
+   "engine": "claude-agent-subprocess-independent-lane",
+   "model": "claude-fable-5",
+   "lane": "reviewer-b"
+  },
+  "output": "Write ONE file: <lane-packet-dir>/votes-b.jsonl — one vote_record JSON object per line, in worklist order, schema-conformant (fields: vote_id, reviewer, timestamp, occurrence, segmentation, lexical_identity, root, form, conclusion, grammatical_reason, reason_key, gloss, unresolved_points). vote_id pattern: vote:reviewer-b:S_A_W:p00slice:20260728. Also write votes-b-mcp-calls.jsonl with your verbatim MCP call records.",
+  "timestamp": "use 2026-07-28T19:00:00Z",
+  "lexical_identity_rule": "if you conclude the token contains the particle entry, use entry_id b10a1ee04666, lemma_ar لِـ; if you conclude lexical (no clitic), use entry_id null and the host lemma. root/form: null for a particle vote; host root goes in grammatical_reason."
+ },
+ "shared_convention": {
+  "purpose": "Exact-match agreement per tools/validate_two_vote_artifacts.py compares compacted strings of every conclusion field. Free prose can never match across independent reviewers, so conclusion fields are restricted to this closed vocabulary. The vocabulary covers ALL rival analyses symmetrically and encodes no preferred answer. Nuance, evidence quotes and dissent go in grammatical_reason / unresolved_points (free text, never compared).",
+  "contextual_function_menu": [
+   "jarr-clitic-li-preposition-on-noun-host",
+   "jarr-clitic-li-preposition-on-pronoun-host",
+   "lam-taalil-implied-an-on-verb",
+   "lam-ibtida-emphasis",
+   "lam-amr-jussive",
+   "lexical-initial-lam-no-clitic"
+  ],
+  "governor_rule": "governor = the single sentence word the jarr-phrase attaches to (muta'alliq), as {loc: 'quran:S:A:W', surface: word exactly as written in fetch_ayah text at that position (simple rasm), relation: 'muta-alliq'}. If the jarr-phrase itself serves as a fronted predicate (khabar muqaddam, incl. khabar of kana), set governor to null and choose the matching attachment value.",
+  "governed_expression_rule": "the majrur host expression in simple rasm without diacritics, exactly as the analyze_word `word` field renders it minus the initial clitic lam (e.g. للملائكة -> لملائكة is WRONG; write الملائكة restoring the elided article/wasla alif; fused لله -> الله; include attached pronoun letters, e.g. قلوبكم).",
+  "case_or_mood_rule": {
+   "value": "jarr",
+   "sign_menu": [
+    "kasra",
+    "fatha-mamnu-min-sarf",
+    "ya",
+    "estimated"
+   ],
+   "sign_visibility": "visible|estimated|not_applicable"
+  },
+  "attachment_menu": [
+   "muta-alliq-to-verb",
+   "muta-alliq-to-ism-tafdil",
+   "muta-alliq-to-exclamative",
+   "khabar-muqaddam",
+   "khabar-kana-muqaddam",
+   "not-applicable"
+  ],
+  "referent_rule": "always null; pronoun referents are recorded in grammatical_reason only.",
+  "reason_key_menu": [
+   "jarr-clitic-li-majrur-visible-kasra",
+   "jarr-clitic-li-majrur-fatha-diptote",
+   "jarr-clitic-li-pronoun-object",
+   "lam-taalil-nasb-implied-an",
+   "lexical-lam-root-initial-no-clitic",
+   "lam-ibtida-no-government",
+   "lam-amr-jazm"
+  ],
+  "reason_key_rule": "pick the one menu key matching your winning analysis + jarr sign; if none fits, coin a lowercase-hyphen key and flag it in unresolved_points.",
+  "segmentation_roles": [
+   "jarr_clitic_lam",
+   "definite_article_assimilated",
+   "noun_host_majrur",
+   "proper_name_majrur",
+   "attached_pronoun_mudaf_ilayh",
+   "plural_marker",
+   "whole_token_no_carve",
+   "verb_host_mansub",
+   "pronoun_host"
+  ],
+  "honesty": "If your independent analysis does not fit the menus, answer OUTSIDE the menu and say so — honest disagreement beats forced agreement. Do not guess word_no: surface-match the analyze_word `word` against the listed surface before accepting it."
+ },
+ "rows": [
+  {
+   "n": 1,
+   "quran_loc": "quran:12:31:24",
+   "wbw_loc": "wbw:12:31:24",
+   "surface": "لِلَّهِ"
+  },
+  {
+   "n": 2,
+   "quran_loc": "quran:2:34:3",
+   "wbw_loc": "wbw:2:34:3",
+   "surface": "لِلْمَلَٰٓئِكَةِ"
+  },
+  {
+   "n": 3,
+   "quran_loc": "quran:2:34:5",
+   "wbw_loc": "wbw:2:34:5",
+   "surface": "لِءَادَمَ"
+  },
+  {
+   "n": 4,
+   "quran_loc": "quran:24:35:44",
+   "wbw_loc": "wbw:24:35:44",
+   "surface": "لِلنَّاسِ"
+  },
+  {
+   "n": 5,
+   "quran_loc": "quran:2:187:63",
+   "wbw_loc": "wbw:2:187:63",
+   "surface": "لِلنَّاسِ"
+  },
+  {
+   "n": 6,
+   "quran_loc": "quran:5:3:9",
+   "wbw_loc": "wbw:5:3:9",
+   "surface": "لِغَيْرِ"
+  },
+  {
+   "n": 7,
+   "quran_loc": "quran:9:120:3",
+   "wbw_loc": "wbw:9:120:3",
+   "surface": "لِأَهْلِ"
+  },
+  {
+   "n": 8,
+   "quran_loc": "quran:17:78:3",
+   "wbw_loc": "wbw:17:78:3",
+   "surface": "لِدُلُوكِ"
+  },
+  {
+   "n": 9,
+   "quran_loc": "quran:4:11:5",
+   "wbw_loc": "wbw:4:11:5",
+   "surface": "لِلذَّكَرِ"
+  },
+  {
+   "n": 10,
+   "quran_loc": "quran:33:53:48",
+   "wbw_loc": "wbw:33:53:48",
+   "surface": "لِقُلُوبِكُمْ"
+  },
+  {
+   "n": 11,
+   "quran_loc": "quran:24:31:23",
+   "wbw_loc": "wbw:24:31:23",
+   "surface": "لِبُعُولَتِهِنَّ"
+  },
+  {
+   "n": 12,
+   "quran_loc": "quran:61:5:4",
+   "wbw_loc": "wbw:61:5:4",
+   "surface": "لِقَوْمِهِۦ"
+  }
+ ]
+}
