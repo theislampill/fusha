@@ -3611,6 +3611,10 @@ try:
         # RM-25 step 1 (reviewed connector): public-domain Tanzil corpus acquisition,
         # sha-pinned + re-fetch-reproducible; the built index is the committed artifact.
         "tools/build_quran_loc_surface_index.py",
+        # GRAPHREPAIR §3a (reviewed connector): standing public-origin readback —
+        # GET-only over the PUBLIC entry pages, same throttle/UA contract as
+        # crawl_qamus_public_entries.py; emits candidate rendered-span edges.
+        "tools/build_public_readback_edges.py",
     }
     _network_import_offenders = set()
     for _scan_dir in ("tools", "scripts"):
@@ -3629,12 +3633,12 @@ try:
                         if _network_import_re.match(_line):
                             _network_import_offenders.add(_rel)
                             break
-    check("RM-08 import-scan lint: urllib/http.client/socket only in the 9 enumerated connectors",
+    check("RM-08 import-scan lint: urllib/http.client/socket only in the 10 enumerated connectors",
           not _network_import_offenders)
     for _rel in sorted(_network_import_offenders):
         print("  ", _rel)
 except Exception as _e:
-    check("RM-08 import-scan lint: urllib/http.client/socket only in the 9 enumerated connectors", False)
+    check("RM-08 import-scan lint: urllib/http.client/socket only in the 10 enumerated connectors", False)
     print("  ", _e)
 
 try:
@@ -5776,6 +5780,88 @@ try:
 except Exception as _accel_e:
     check("ACCEL acceleration-ledger gates (harness error)", False)
     print("  ", _accel_e)
+
+# GRAPHREPAIR: deterministic graph/backlink repairs (GRAPH-BACKLINK-REPAIR-PREP
+# lanes O1/O2, §1/§2 citation-display re-typing, §3a public readback, §5
+# reciprocity attribution, VNREC reconstruction). Fixture/self-test + committed
+# artifact structure only; the public-origin crawl is never a harness dependency.
+try:
+    _gr_lattice = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "lattice_projectors.py"),
+        "self-test",
+    ], timeout=180)
+    check(
+        "GRAPHREPAIR lattice O1/O2 red-first fixtures pass (corpus join + hamza-seat strict rescue)",
+        _gr_lattice.returncode == 0
+        and '"t26_hamza_seat_strict_rescue": true' in (_gr_lattice.stdout or "")
+        and '"t27_full_corpus_join_covers_outside_whitelist": true' in (_gr_lattice.stdout or ""),
+    )
+    _gr_reconcile = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "reconcile_vn_ledger_appearances.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "GRAPHREPAIR vn-ledger appearance reconciliation self-test passes",
+        _gr_reconcile.returncode == 0
+        and "SELF-TEST PASS" in (_gr_reconcile.stdout or ""),
+    )
+    _gr_readback = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "build_public_readback_edges.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "GRAPHREPAIR public-readback builder offline self-test passes",
+        _gr_readback.returncode == 0
+        and "PUBLIC READBACK SELF-TEST PASS" in (_gr_readback.stdout or ""),
+    )
+    for _gr_art in (
+            "qamus/lattice/entry-occurrence-edges.jsonl",
+            "qamus/lattice/citation-display-edges.jsonl",
+            "qamus/lattice/citation-display-edges.meta.json",
+            "qamus/lattice/crosswalk-attach-queue.jsonl",
+            "qamus/lattice/crosswalk-attach-queue.meta.json",
+            "qamus/lattice/rendered-span-edges.vn00-pilot.jsonl",
+            "qamus/reports/public-readback-manifest.vn00-pilot.json",
+            "qamus/reports/lexeme-join-corpus-instrumentation.json",
+            "qamus/reports/vnrec/README.md",
+            "qamus/reports/vnrec/vnrec-authoritative-membership.reconstruction.json",
+            "qamus/reports/vnrec/vnrec-conflicts.partial-reconstruction.jsonl",
+    ):
+        check("GRAPHREPAIR artifact exists: %s" % _gr_art,
+              os.path.exists(os.path.join(_R, _gr_art)))
+    _gr_guard = run_text([
+        sys.executable,
+        "-c",
+        (
+            "import json,sys; sys.path.insert(0, %r); "
+            "from tools.build_typed_edge_crosswalk import citation_guard_violations; "
+            "edges=[json.loads(l) for l in open(%r, encoding='utf-8') if l.strip()]; "
+            "v=citation_guard_violations(edges); "
+            "print('CITATION GUARD ' + ('PASS' if not v else 'FAIL: ' + v[0])); "
+            "sys.exit(0 if not v else 1)"
+        ) % (ROOT, os.path.join(ROOT, "qamus", "lattice", "citation-display-edges.jsonl")),
+    ], timeout=180)
+    check(
+        "GRAPHREPAIR committed citation-display edges satisfy no_canonical_loc_guard",
+        _gr_guard.returncode == 0 and "CITATION GUARD PASS" in (_gr_guard.stdout or ""),
+    )
+    try:
+        with io.open(os.path.join(_R, "qamus", "reports", "vnrec",
+                                  "vnrec-authoritative-membership.reconstruction.json"),
+                     encoding="utf-8") as _gr_fh:
+            _gr_member = json.load(_gr_fh)
+        check(
+            "GRAPHREPAIR vnrec reconstruction is honestly stamped (reconstruction+original_lost)",
+            _gr_member.get("reconstruction") is True and _gr_member.get("original_lost") is True,
+        )
+    except Exception:
+        check("GRAPHREPAIR vnrec reconstruction readable", False)
+except Exception as _gr_e:
+    check("GRAPHREPAIR gates (harness error)", False)
+    print("  ", _gr_e)
 
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
