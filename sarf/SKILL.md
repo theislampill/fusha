@@ -587,3 +587,47 @@ PERFECT verb — the exact defect the six D-3 rows carried.
 ح ق ق · jussive/naṣb morphology committed in the morphline. Legacy coarse rows that
 render the whole verb as one unit remain LEGACY-VALID; a substantive repair of this
 token must meet the rich shape.
+
+## 21. ṣarf@2.4 — CANDIDATE increment (P00-vertical-slice pilot dogfood) — NOT released; does not amend @2
+
+These rules are **candidate** (drafted forward from the first complete source-grounded particle
+family — the p007 jarr clitic **لِـ** on noun hosts, 12 occurrences taken discovery → evidence →
+independent two-vote → fact-level certification → projection → live reverse-check — plus the
+particle-denominator calibration; Fable adjudicates). They encode the pilot's clitic/host
+morphology and fused-token segmentation lessons. Each carries an explicit CONDITION, PROJECTION,
+GUARDS, DEFEATERS. Machine-readable rows (with `projector` blocks + source-addressed evidence +
+red-first fixtures) are in
+[`qamus/skills/rule-registry-increment-24.jsonl`](../qamus/skills/rule-registry-increment-24.jsonl);
+discriminators in [`tools/skill_fixtures/skill_rules_increment24.py`](../tools/skill_fixtures/skill_rules_increment24.py);
+notes in [`impl-records/skill-evolution/INCREMENT-24-NOTES.md`](../impl-records/skill-evolution/INCREMENT-24-NOTES.md).
+
+**لِ clitic/host segmentation (projector-ready):**
+- **`sarf-li-kasra-noun-host-clitic-carve`** — CONDITION strict لِ+kasra prefix candidate →
+  PROJECT route by HOST, never by surface shape: nominal host ⇒ jarr-clitic carve candidate;
+  lexical-initial-lām host ⇒ reject; pronoun host ⇒ pronoun-host family; muḍāriʿ host ⇒
+  lām-taʿlīl rival (nahw types it). The calibration measured the blanket لِ stripper's
+  lexical-radical stratum at 16.7% precision; the pilot's 3 rejected false candidates
+  (لِبَاسٌ، لِيَغِيظَ، لِى) are the fixture set. GUARD rivals stay on the lattice.
+- **`sarf-lexical-initial-lam-madda-guard`** — CONDITION candidate clitic lām over a host whose
+  مادة begins with ل → PROJECT reject the carve (لِبَاسٌ is ONE noun, wazn فِعَال, مادة ل ب س)
+  UNLESS the per-occurrence iʿrāb attests the jarr clause (لِّلَّذِينَ — a real jarr lām over a
+  lexical-lām-initial host). Shape never decides; the مادة + iʿrāb pair does.
+- **`sarf-li-pronoun-host-outside-noun-family`** — CONDITION jarr lām whose GOVERNED host is a
+  mabnī pronoun (لِى) → PROJECT the pronoun-host family: both segments rootless
+  (`function_only_no_root`; the per-occurrence ṣarf evidence reads `(اللَّامُ): حَرْفٌ مَبْنِيٌّ`), no noun-host
+  template or noun-host reason key. GUARD a pronoun that is merely muḍāf-ilayh inside a nominal
+  host (لِقَوْمِهِۦ، لِقُلُوبِكُمْ) leaves the row in the NOUN-host family.
+- **`sarf-fused-lil-exact-letter-ownership`** — CONDITION لِ over an ال-bearing host → PROJECT
+  the written-form-keyed canonical carve with **exact base-letter span ownership**: fused rasm
+  لِلَّهِ carves `لِ ∣ لَّهِ` (the clitic owns exactly its lām+kasra; the fused writing of the
+  Name owns the rest — rasm note evidenced); a written assimilated article gets its own span
+  (لِ ∣ ل ∣ نَّاسِ); a bare host carves two spans (لِ ∣ غَيْرِ). Spans concatenate byte-exact,
+  each base letter carries its own trailing combining marks, and the SAME surface carves the
+  SAME way at every occurrence — the live plane carved للناس two different ways at its two
+  occurrences (24:35:44 vs 2:187:63), the per-surface fork the projection contract kills.
+- **`sarf-nfc-normalize-before-span-parity`** — CONDITION span/boundary parity comparison across
+  planes whose surfaces may differ in combining-mark ORDER (repo matrix: vowel-before-shadda;
+  live whitelist: shadda-before-vowel — canonically equivalent under NFC) → PROJECT
+  NFC-normalize BOTH sides before comparing (comparison key only — public bytes never mutated);
+  a difference that survives NFC is a TRUE carve fork and must be reported. Hit at 12:31:24,
+  24:35:44, 24:31:23 in the pilot's matrix↔live comparison.

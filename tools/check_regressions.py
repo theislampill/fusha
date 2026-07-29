@@ -5140,6 +5140,34 @@ try:
             pass
     check("SKILL-RELEASE gate 14: released + @2.1 + @2.2 + @2.3 increment registry validates merged (0 dup / 0 dangling)",
           _merged23_ok)
+
+    # Gate 15: INCREMENT-24 @2.4 candidate fixtures (9 rules: 5 sarf + 4 nahw) — the P00-vertical-slice
+    # pilot dogfood increment (لِ clitic/host routing, lexical-lām + pronoun-host guards, fused لِلَّهِ
+    # letter ownership, NFC span parity, preposition-governor, khabar-muqaddam notation, tajarrud mood
+    # basis, lām typing by host POS): red-first + non-constant-discriminator guard + builder
+    # regeneration-clean + every @2.4 registry id covered + NFC pairs verified canonically equivalent.
+    _sr_inc24 = run_text([sys.executable, os.path.join(ROOT, "tools", "skill_fixtures",
+                                                       "test_skill_fixtures_increment24.py")], timeout=120)
+    check("SKILL-RELEASE gate 15: @2.4 increment red-first + non-constant-discriminator fixtures pass",
+          _sr_inc24.returncode == 0 and "PASS" in (_sr_inc24.stdout or ""))
+    # Gate 15: the @2.4 increment MERGED with the released + @2.1 + @2.2 + @2.3 registries validates.
+    _inc24 = os.path.join(ROOT, "qamus", "skills", "rule-registry-increment-24.jsonl")
+    _merged24_ok = False
+    try:
+        _m24fd, _m24path = _tmp.mkstemp(suffix="-merged24-registry.jsonl")
+        with os.fdopen(_m24fd, "w", encoding="utf-8", newline="\n") as _m24f:
+            for _p in (_base, _inc, _inc22, _inc23, _inc24):
+                _m24f.write(open(_p, encoding="utf-8").read().replace("\r\n", "\n").replace("\r", "\n"))
+        _sr_merged24 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_skill_registry.py"),
+                                 "--registry", _m24path], timeout=120)
+        _merged24_ok = _sr_merged24.returncode == 0 and ", 0 errors" in (_sr_merged24.stdout or "")
+    finally:
+        try:
+            os.remove(_m24path)
+        except Exception:
+            pass
+    check("SKILL-RELEASE gate 15: released + @2.1 + @2.2 + @2.3 + @2.4 increment registry validates merged (0 dup / 0 dangling)",
+          _merged24_ok)
 except Exception as _sr_e:
     check("SKILL-RELEASE skill-release candidate gates (harness error)", False)
     print("  ", _sr_e)
