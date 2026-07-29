@@ -5739,6 +5739,44 @@ except Exception as _repair1_e:
     check("REPAIR1 graph-repair gates (harness error)", False)
     print("  ", _repair1_e)
 
+# ACCEL: dogfood acceleration instrumentation (event ledger + acceleration
+# ledger + compounding-impact report). Honesty is structural: every metric
+# carries measurement_basis, and an acceleration claim must cite at least one
+# measured NON-rowcount metric — never row counts alone.
+try:
+    for _accel_art in (
+            "qamus/schemas/dogfood-event-ledger.schema.json",
+            "qamus/schemas/acceleration-ledger.schema.json",
+            "qamus/schemas/vn-compounding-impact-report.schema.json",
+            "tools/validate_acceleration_ledgers.py",
+            "qamus/examples/dogfood_event_ledger_vn01_crosswalk_false_gate.sample.jsonl",
+            "qamus/examples/acceleration_ledger_vn02.sample.jsonl",
+            "qamus/examples/vn_compounding_impact_report_vn02.sample.json",
+    ):
+        check("ACCEL artifact exists: %s" % _accel_art, os.path.exists(os.path.join(_R, _accel_art)))
+    _accel_self = run_text([
+        sys.executable,
+        os.path.join(_R, "tools", "validate_acceleration_ledgers.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "ACCEL ledger validator self-test (red-first: rowcount-only acceleration claims rejected)",
+        _accel_self.returncode == 0
+        and "PASS" in (_accel_self.stdout or ""),
+    )
+    _accel_samples = run_text([
+        sys.executable,
+        os.path.join(_R, "tools", "validate_acceleration_ledgers.py"),
+    ], timeout=120)
+    check(
+        "ACCEL committed samples validate (VN-01 false-gate event chain, VN-02 acceleration + impact)",
+        _accel_samples.returncode == 0
+        and "PASS" in (_accel_samples.stdout or ""),
+    )
+except Exception as _accel_e:
+    check("ACCEL acceleration-ledger gates (harness error)", False)
+    print("  ", _accel_e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)

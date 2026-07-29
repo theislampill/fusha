@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/acceleration-ledger.schema.json",
+  "title": "Qamus acceleration ledger row v1",
+  "description": "Per-tranche/family acceleration metrics with structural honesty: every metric carries a measurement_basis (measured | estimated | not_measured); not_measured metrics must have a null value and measured metrics must have a non-null value. A row may set acceleration_claimed=true only if at least one NON-rowcount metric (rates, times, coverage reach) has measurement_basis=measured — acceleration is never claimed from row counts alone. That cross-metric rule is enforced by tools/validate_acceleration_ledgers.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "ledger_id",
+    "tranche",
+    "family",
+    "window",
+    "acceleration_claimed",
+    "metrics",
+    "evidence_paths"
+  ],
+  "properties": {
+    "schema": {"const": "qamus.acceleration_ledger.v1"},
+    "ledger_id": {
+      "type": "string",
+      "pattern": "^acceleration:[a-z0-9][a-z0-9._:-]*$"
+    },
+    "tranche": {
+      "type": "string",
+      "pattern": "^(VN-[0-9]{2}|[a-z0-9][a-z0-9_-]*)$"
+    },
+    "family": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_]*$"
+    },
+    "window": {"type": "string", "minLength": 1},
+    "acceleration_claimed": {"type": "boolean"},
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_population",
+        "certified_population",
+        "manual_reviews",
+        "review_minutes",
+        "two_vote_rate",
+        "abstention_rate",
+        "false_projection_rate",
+        "projector_generated_rows",
+        "hand_authored_rows",
+        "rules_added",
+        "fixtures_added",
+        "later_rows_unlocked",
+        "blockers_converted_to_fast_path",
+        "candidate_to_certified_conversion_time",
+        "compiler_reach_before",
+        "compiler_reach_after",
+        "public_regressions_prevented"
+      ],
+      "properties": {
+        "candidate_population": {"$ref": "#/$defs/metric"},
+        "certified_population": {"$ref": "#/$defs/metric"},
+        "manual_reviews": {"$ref": "#/$defs/metric"},
+        "review_minutes": {"$ref": "#/$defs/metric"},
+        "two_vote_rate": {"$ref": "#/$defs/metric"},
+        "abstention_rate": {"$ref": "#/$defs/metric"},
+        "false_projection_rate": {"$ref": "#/$defs/metric"},
+        "projector_generated_rows": {"$ref": "#/$defs/metric"},
+        "hand_authored_rows": {"$ref": "#/$defs/metric"},
+        "rules_added": {"$ref": "#/$defs/metric"},
+        "fixtures_added": {"$ref": "#/$defs/metric"},
+        "later_rows_unlocked": {"$ref": "#/$defs/metric"},
+        "blockers_converted_to_fast_path": {"$ref": "#/$defs/metric"},
+        "candidate_to_certified_conversion_time": {"$ref": "#/$defs/metric"},
+        "compiler_reach_before": {"$ref": "#/$defs/metric"},
+        "compiler_reach_after": {"$ref": "#/$defs/metric"},
+        "public_regressions_prevented": {"$ref": "#/$defs/metric"}
+      }
+    },
+    "evidence_paths": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^(qamus|nahw|sarf|tools|docs|curriculum|fusha|drills)/[A-Za-z0-9._/-]+$"
+      }
+    },
+    "notes": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "measurement_basis"],
+      "properties": {
+        "value": {"type": ["number", "null"]},
+        "measurement_basis": {
+          "type": "string",
+          "enum": ["measured", "estimated", "not_measured"]
+        },
+        "unit": {"type": "string", "minLength": 1},
+        "evidence": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
