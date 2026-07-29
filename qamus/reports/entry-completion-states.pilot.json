@@ -1,0 +1,369 @@
+{
+  "entries": [
+    {
+      "blockers": [
+        "occurrence links are candidate-only; certification requires the evidence-bundle rung (and two-vote for i'rab-bearing conclusions) in tools/certify_typed_fact.py",
+        "full transclusion requires certified links, projected appearances, a published reverse index and teaching assets"
+      ],
+      "current_state": "occurrence_links_candidate",
+      "entry_id": "b10a1ee04666",
+      "entry_kind": "p",
+      "honest": true,
+      "schema": "qamus.entry_completion_state.v1",
+      "source_key": "p007",
+      "states": [
+        {
+          "evidence": [
+            {
+              "address": "entry:b10a1ee04666",
+              "method": "entry_store_row"
+            }
+          ],
+          "reached": true,
+          "state": "entry_registered"
+        },
+        {
+          "evidence": [
+            {
+              "address": "qamus/data/particle-tranche-membership.json#p007",
+              "method": "owner_approved_particle_membership"
+            }
+          ],
+          "reached": true,
+          "state": "entry_membership_known"
+        },
+        {
+          "evidence": [
+            {
+              "address": "entry:b10a1ee04666:usage[*].forms",
+              "method": "documented_entry_form"
+            },
+            {
+              "address": "entry:b10a1ee04666:headword",
+              "method": "entry_headword"
+            }
+          ],
+          "reached": true,
+          "state": "forms_documented"
+        },
+        {
+          "evidence": [
+            {
+              "address": "entry:b10a1ee04666:senses",
+              "method": "entry_sense_identity"
+            }
+          ],
+          "reached": true,
+          "state": "senses_enumerated"
+        },
+        {
+          "evidence": [
+            {
+              "address": "entry:b10a1ee04666:root",
+              "method": "rootless_by_design_vacuous"
+            }
+          ],
+          "note": "particle entry has no root; root-family relation not applicable",
+          "reached": true,
+          "state": "root_family_mapped"
+        },
+        {
+          "evidence": [
+            {
+              "address": "qamus/lattice/entry-occurrence-edges.jsonl#b10a1ee04666",
+              "method": "entry_occurrence_edge_rows"
+            },
+            {
+              "address": "qamus/lattice/particle-occurrence-matrix.jsonl#b10a1ee04666",
+              "method": "particle_candidate_matrix_rows"
+            }
+          ],
+          "note": "990 occurrence-edge row(s), 2999 candidate matrix row(s)",
+          "reached": true,
+          "state": "occurrences_discovered"
+        },
+        {
+          "evidence": [
+            {
+              "address": "qamus/lattice/lexeme-join-edges.jsonl#b10a1ee04666",
+              "method": "lexeme_join_candidate_rows"
+            },
+            {
+              "address": "qamus/lattice/particle-occurrence-matrix.jsonl#b10a1ee04666",
+              "method": "particle_candidate_matrix_rows"
+            }
+          ],
+          "note": "candidate-only; nothing here is a certification",
+          "reached": true,
+          "state": "occurrence_links_candidate"
+        },
+        {
+          "note": "no certified occurrence linkage in the committed fact trail",
+          "reached": false,
+          "state": "occurrence_links_certified"
+        },
+        {
+          "note": "no per-entry canonical projection consumption recorded yet",
+          "reached": false,
+          "state": "appearances_projected"
+        },
+        {
+          "note": "entry page does not yet publish a certified reverse occurrence list",
+          "reached": false,
+          "state": "reverse_index_published"
+        },
+        {
+          "note": "no rules/drills cite certified occurrences of this entry yet",
+          "reached": false,
+          "state": "teaching_assets_derived"
+        },
+        {
+          "reached": false,
+          "state": "fully_transcluded"
+        }
+      ]
+    },
+    {
+      "blockers": [
+        "occurrence links are candidate-only; certification requires the evidence-bundle rung (and two-vote for i'rab-bearing conclusions) in tools/certify_typed_fact.py",
+        "full transclusion requires certified links, projected appearances, a published reverse index and teaching assets"
+      ],
+      "current_state": "occurrence_links_candidate",
+      "entry_id": "00107b99a50e",
+      "entry_kind": "v",
+      "honest": true,
+      "schema": "qamus.entry_completion_state.v1",
+      "states": [
+        {
+          "evidence": [
+            {
+              "address": "entry:00107b99a50e",
+              "method": "entry_store_row"
+            }
+          ],
+          "reached": true,
+          "state": "entry_registered"
+        },
+        {
+          "evidence": [
+            {
+              "address": "entry:00107b99a50e:section",
+              "method": "entry_store_section"
+            }
+          ],
+          "note": "section=verb",
+          "reached": true,
+          "state": "entry_membership_known"
+        },
+        {
+          "evidence": [
+            {
+              "address": "entry:00107b99a50e:usage[*].forms",
+              "method": "documented_entry_form"
+            },
+            {
+              "address": "entry:00107b99a50e:headword",
+              "method": "entry_headword"
+            }
+          ],
+          "reached": true,
+          "state": "forms_documented"
+        },
+        {
+          "evidence": [
+            {
+              "address": "entry:00107b99a50e:senses",
+              "method": "entry_sense_identity"
+            }
+          ],
+          "reached": true,
+          "state": "senses_enumerated"
+        },
+        {
+          "evidence": [
+            {
+              "address": "entry:00107b99a50e:root",
+              "method": "root_agreement_only"
+            }
+          ],
+          "note": "0 other entries share this root; relation only, never identity",
+          "reached": true,
+          "state": "root_family_mapped"
+        },
+        {
+          "evidence": [
+            {
+              "address": "qamus/lattice/entry-occurrence-edges.jsonl#00107b99a50e",
+              "method": "entry_occurrence_edge_rows"
+            }
+          ],
+          "note": "4 occurrence-edge row(s), 0 candidate matrix row(s)",
+          "reached": true,
+          "state": "occurrences_discovered"
+        },
+        {
+          "evidence": [
+            {
+              "address": "qamus/lattice/lexeme-join-edges.jsonl#00107b99a50e",
+              "method": "lexeme_join_candidate_rows"
+            }
+          ],
+          "note": "candidate-only; nothing here is a certification",
+          "reached": true,
+          "state": "occurrence_links_candidate"
+        },
+        {
+          "note": "no certified occurrence linkage in the committed fact trail",
+          "reached": false,
+          "state": "occurrence_links_certified"
+        },
+        {
+          "note": "no per-entry canonical projection consumption recorded yet",
+          "reached": false,
+          "state": "appearances_projected"
+        },
+        {
+          "note": "entry page does not yet publish a certified reverse occurrence list",
+          "reached": false,
+          "state": "reverse_index_published"
+        },
+        {
+          "note": "no rules/drills cite certified occurrences of this entry yet",
+          "reached": false,
+          "state": "teaching_assets_derived"
+        },
+        {
+          "reached": false,
+          "state": "fully_transcluded"
+        }
+      ]
+    },
+    {
+      "blockers": [
+        "occurrence links are candidate-only; certification requires the evidence-bundle rung (and two-vote for i'rab-bearing conclusions) in tools/certify_typed_fact.py",
+        "full transclusion requires certified links, projected appearances, a published reverse index and teaching assets"
+      ],
+      "current_state": "occurrence_links_candidate",
+      "entry_id": "001242c409ae",
+      "entry_kind": "n",
+      "honest": true,
+      "schema": "qamus.entry_completion_state.v1",
+      "states": [
+        {
+          "evidence": [
+            {
+              "address": "entry:001242c409ae",
+              "method": "entry_store_row"
+            }
+          ],
+          "reached": true,
+          "state": "entry_registered"
+        },
+        {
+          "evidence": [
+            {
+              "address": "entry:001242c409ae:section",
+              "method": "entry_store_section"
+            }
+          ],
+          "note": "section=noun",
+          "reached": true,
+          "state": "entry_membership_known"
+        },
+        {
+          "evidence": [
+            {
+              "address": "entry:001242c409ae:usage[*].forms",
+              "method": "documented_entry_form"
+            },
+            {
+              "address": "entry:001242c409ae:headword",
+              "method": "entry_headword"
+            }
+          ],
+          "reached": true,
+          "state": "forms_documented"
+        },
+        {
+          "evidence": [
+            {
+              "address": "entry:001242c409ae:senses",
+              "method": "entry_sense_identity"
+            }
+          ],
+          "reached": true,
+          "state": "senses_enumerated"
+        },
+        {
+          "evidence": [
+            {
+              "address": "entry:001242c409ae:root",
+              "method": "rootless_by_design_vacuous"
+            }
+          ],
+          "note": "particle entry has no root; root-family relation not applicable",
+          "reached": true,
+          "state": "root_family_mapped"
+        },
+        {
+          "evidence": [
+            {
+              "address": "qamus/lattice/entry-occurrence-edges.jsonl#001242c409ae",
+              "method": "entry_occurrence_edge_rows"
+            }
+          ],
+          "note": "1 occurrence-edge row(s), 0 candidate matrix row(s)",
+          "reached": true,
+          "state": "occurrences_discovered"
+        },
+        {
+          "evidence": [
+            {
+              "address": "qamus/lattice/lexeme-join-edges.jsonl#001242c409ae",
+              "method": "lexeme_join_candidate_rows"
+            }
+          ],
+          "note": "candidate-only; nothing here is a certification",
+          "reached": true,
+          "state": "occurrence_links_candidate"
+        },
+        {
+          "note": "no certified occurrence linkage in the committed fact trail",
+          "reached": false,
+          "state": "occurrence_links_certified"
+        },
+        {
+          "note": "no per-entry canonical projection consumption recorded yet",
+          "reached": false,
+          "state": "appearances_projected"
+        },
+        {
+          "note": "entry page does not yet publish a certified reverse occurrence list",
+          "reached": false,
+          "state": "reverse_index_published"
+        },
+        {
+          "note": "no rules/drills cite certified occurrences of this entry yet",
+          "reached": false,
+          "state": "teaching_assets_derived"
+        },
+        {
+          "reached": false,
+          "state": "fully_transcluded"
+        }
+      ]
+    }
+  ],
+  "generated_from": [
+    "qamus/data/current/entries.jsonl",
+    "qamus/data/particle-tranche-membership.json",
+    "qamus/lattice/entry-occurrence-edges.jsonl",
+    "qamus/lattice/lexeme-join-edges.jsonl",
+    "qamus/lattice/particle-occurrence-matrix.jsonl"
+  ],
+  "producer": {
+    "id": "tools.build_entry_completion_state",
+    "version": "1.0.0"
+  },
+  "schema": "qamus.entry_completion_state_report.v1"
+}
