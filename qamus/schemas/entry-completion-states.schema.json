@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/entry-completion-states.schema.json",
+  "title": "Entry transclusion completion states (owner steer §16)",
+  "description": "The 12 completion states of one p/v/n entry as a first-class knowledge node. States form an ordered ladder; a report is HONEST by construction: every reached state must cite evidence addresses in committed artifacts, current_state is the highest state whose whole prefix is reached, and certification-dependent states may never be claimed from candidate-only artifacts. Extends the existing ontology (qamus.graph_edge.v1 vocabulary, particle-edge-ontology extension) — state names refer to those edge kinds and never introduce a parallel vocabulary. Producer: tools/build_entry_completion_state.py. Gated in tools/check_regressions.py via tools/test_entry_transclusion_invariants.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "generated_from", "producer", "entries"],
+  "properties": {
+    "schema": { "const": "qamus.entry_completion_state_report.v1" },
+    "generated_from": {
+      "description": "Committed artifact paths this report was computed from.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "producer": { "$ref": "#/$defs/producer" },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/entry_state" }
+    }
+  },
+  "$defs": {
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "state_id": {
+      "description": "The 12 completion states, in ladder order. 1-4 are entry-store facts; 5 is the root-family relation (root sharing NEVER entails entry identity); 6-8 are the occurrence transclusion ladder with structural candidate/certified separation; 9-10 are the public projection/appearance and reverse-listing states; 11 is teaching-asset derivation (rules/drills citing certified occurrences); 12 is full transclusion closure.",
+      "type": "string",
+      "enum": [
+        "entry_registered",
+        "entry_membership_known",
+        "forms_documented",
+        "senses_enumerated",
+        "root_family_mapped",
+        "occurrences_discovered",
+        "occurrence_links_candidate",
+        "occurrence_links_certified",
+        "appearances_projected",
+        "reverse_index_published",
+        "teaching_assets_derived",
+        "fully_transcluded"
+      ]
+    },
+    "evidence_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["address", "method"],
+      "properties": {
+        "address": { "type": "string", "minLength": 1 },
+        "method": { "type": "string", "minLength": 1 }
+      }
+    },
+    "state_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "reached"],
+      "properties": {
+        "state": { "$ref": "#/$defs/state_id" },
+        "reached": { "type": "boolean" },
+        "evidence": {
+          "description": "REQUIRED (non-empty) whenever reached is true — a reached state without evidence is dishonest and must fail validation.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidence_item" }
+        },
+        "note": { "type": "string" }
+      },
+      "if": { "properties": { "reached": { "const": true } } },
+      "then": { "required": ["state", "reached", "evidence"], "properties": { "evidence": { "minItems": 1 } } }
+    },
+    "entry_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "entry_id", "entry_kind", "honest", "states", "current_state"],
+      "properties": {
+        "schema": { "const": "qamus.entry_completion_state.v1" },
+        "entry_id": { "type": "string", "minLength": 1 },
+        "entry_kind": {
+          "description": "p = particle, v = verb, n = noun — every kind is a first-class knowledge node with the same state ladder.",
+          "type": "string",
+          "enum": ["p", "v", "n"]
+        },
+        "source_key": {
+          "description": "Optional human key (e.g. p007 from qamus/data/particle-tranche-membership.json).",
+          "type": "string"
+        },
+        "honest": {
+          "description": "Structural honesty marker: must be literally true; the builder emits the CURRENT state, never the aspirational one.",
+          "const": true
+        },
+        "states": {
+          "description": "Exactly the 12 ladder states, in ladder order.",
+          "type": "array",
+          "minItems": 12,
+          "maxItems": 12,
+          "items": { "$ref": "#/$defs/state_row" }
+        },
+        "current_state": {
+          "description": "The highest state whose entire ladder prefix is reached.",
+          "$ref": "#/$defs/state_id"
+        },
+        "blockers": {
+          "description": "What honestly prevents the next state (free text, e.g. 'occurrence links are candidate-only; certification requires the two-vote rung').",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}
