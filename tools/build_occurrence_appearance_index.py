@@ -19,6 +19,12 @@ import os
 import re
 import sys
 
+_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _REPO_ROOT not in sys.path:
+    sys.path.insert(0, _REPO_ROOT)
+
+from tools.normalize_ar import norm_strict  # noqa: E402
+
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -242,6 +248,8 @@ def build_index(whitelist_rows, entries):
         "entry_store_ayah_refs": 0,
         "entry_store_matched_refs": 0,
         "entry_store_unresolved_refs": 0,
+        "entry_store_selected_token_matched_refs": 0,
+        "entry_store_selected_token_ambiguous_refs": 0,
     })
 
     for row in whitelist_rows:
@@ -256,6 +264,7 @@ def build_index(whitelist_rows, entries):
             "appearances": [],
             "entry_ids": set(),
             "source_entry_id": None,
+            "surface": str(row.get("surface") or "").strip(),
         })
         state["hashes"].add(current_hash)
         if state["hashes"] != {state["projection_hash"]}:
@@ -302,6 +311,35 @@ def build_index(whitelist_rows, entries):
                         if states[loc]["source_entry_id"] == entry_source_id
                         or entry_source_id in states[loc]["entry_ids"]
                     ]
+                    if not candidate_locs:
+                        # Per-selected-token attribution (GRAPH-BACKLINK-REPAIR
+                        # §5): on a two-lexeme āyah, two sibling entries cite the
+                        # same āyah, and the row-carried signal credits only one
+                        # of them.  Match THIS entry's own selected forms (the
+                        # usage's forms) against the āyah's token surfaces with
+                        # the hamza-seat-preserving strict key; a unique token
+                        # position attributes the entry_example there.  Multiple
+                        # matching positions abstain (ambiguous).  This allows
+                        # multiple entry_relationships per loc by construction.
+                        form_keys = {
+                            norm_strict(part.strip())
+                            for form in (usage or {}).get("forms") or []
+                            for part in str(form).split("/")
+                            if part.strip()
+                        }
+                        form_keys.discard("")
+                        token_locs = sorted(
+                            {
+                                loc for loc in by_ayah.get(parsed, [])
+                                if form_keys and norm_strict(states[loc].get("surface") or "") in form_keys
+                            },
+                            key=_loc_parts,
+                        )
+                        if len(token_locs) == 1:
+                            candidate_locs = token_locs
+                            stats["entry_store_selected_token_matched_refs"] += 1
+                        elif len(token_locs) > 1:
+                            stats["entry_store_selected_token_ambiguous_refs"] += 1
                 if not candidate_locs:
                     stats["entry_store_unresolved_refs"] += 1
                     continue
@@ -346,6 +384,51 @@ def build_index(whitelist_rows, entries):
     return BuildResult(records=records, stats=dict(stats))
 
 
+def repair_reciprocity(index_records, ledger_rows, corpus_surfaces):
+    """Offline, ledger-anchored per-selected-token reciprocity repair.
+
+    For every ledger row whose forward join deterministically resolved its own
+    selected token to a canonical loc (``join_method`` exact/strict unique) but
+    whose entry is missing from that loc's ``entry_relationships``, verify the
+    selected surface strict-matches the corpus token at the loc and add the
+    missing ``entry_example`` appearance + relationship.  This is the offline
+    subset of the per-selected-token attribution now built into
+    ``build_index`` (which needs the whitelist input for a full regeneration).
+    Never removes an existing appearance or relationship.
+    """
+
+    by_loc = {record["loc"]: record for record in index_records}
+    stats = Counter({"ledger_rows": len(ledger_rows), "repaired": 0,
+                     "already_present": 0, "surface_mismatch_skipped": 0})
+    repaired = []
+    for row in ledger_rows:
+        loc = str(row.get("occurrence_id") or "").strip()
+        entry_id = str(row.get("entry_id") or "").strip()
+        if not loc or not entry_id or loc not in by_loc:
+            continue
+        if row.get("join_method") not in ("exact_unique", "strict_unique"):
+            continue
+        record = by_loc[loc]
+        if entry_id in (record.get("entry_relationships") or []):
+            stats["already_present"] += 1
+            continue
+        selected = str(row.get("selected_surface") or "").strip()
+        token = str(corpus_surfaces.get(loc) or "").strip()
+        if not selected or not token or norm_strict(selected) != norm_strict(token):
+            stats["surface_mismatch_skipped"] += 1
+            continue
+        appearance = _appearance("entry_example", entry_id=entry_id)
+        if appearance not in record["appearances"]:
+            record["appearances"] = sorted(
+                record["appearances"] + [appearance], key=_appearance_sort_key
+            )
+            record["appearance_count"] = len(record["appearances"])
+        record["entry_relationships"] = sorted(set(record["entry_relationships"]) | {entry_id})
+        stats["repaired"] += 1
+        repaired.append({"loc": loc, "entry_id": entry_id, "selected_surface": selected})
+    return dict(stats), repaired
+
+
 def write_jsonl(records, output_path):
     os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
     with open(output_path, "w", encoding="utf-8", newline="\n") as handle:
@@ -364,7 +447,26 @@ def main(argv=None):
     parser.add_argument("--whitelist", default=DEFAULT_WHITELIST)
     parser.add_argument("--entries", default=DEFAULT_ENTRIES)
     parser.add_argument("--output", default=DEFAULT_OUTPUT)
+    parser.add_argument("--repair-reciprocity", action="store_true",
+                        help="offline ledger-anchored per-selected-token repair of an "
+                             "EXISTING index (no whitelist input needed)")
+    parser.add_argument("--index", help="existing occurrence-appearances JSONL (repair mode)")
+    parser.add_argument("--ledger", help="vn-ledger JSONL (repair mode)")
+    parser.add_argument("--corpus", help="quran-loc-surface index JSONL (repair mode)")
     args = parser.parse_args(argv)
+
+    if args.repair_reciprocity:
+        if not (args.index and args.ledger and args.corpus):
+            parser.error("--repair-reciprocity requires --index, --ledger and --corpus")
+        records = list(_read_jsonl(args.index))
+        ledger = list(_read_jsonl(args.ledger))
+        corpus = {row["loc"]: row.get("surface", "") for row in _read_jsonl(args.corpus)}
+        stats, repaired = repair_reciprocity(records, ledger, corpus)
+        write_jsonl(records, args.output)
+        print("occurrence appearance index reciprocity repair complete")
+        print(json.dumps({"stats": stats, "repaired": repaired}, ensure_ascii=False, sort_keys=True))
+        print(f"output={os.path.abspath(args.output)}")
+        return 0
 
     result = build_index(_read_jsonl(args.whitelist), _read_jsonl(args.entries))
     write_jsonl(result.records, args.output)

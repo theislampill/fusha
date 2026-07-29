@@ -162,5 +162,104 @@ class OccurrenceAppearanceIndexTests(unittest.TestCase):
         self.assertTrue(any("appearance" in error for error in report.errors))
 
 
+class TwoLexemeAyahReciprocityTests(unittest.TestCase):
+    """GRAPH-BACKLINK-REPAIR §5: per-selected-token attribution on two-lexeme āyāt."""
+
+    def _two_lexeme_fixture(self):
+        # 7:40-shaped āyah: token 17 الْجَمَلُ, token 19 الْخِيَاطِ.  The whitelist
+        # rows were authored under the خيط entry page, so BOTH rows carry the
+        # khayt entry context; the jamal entry cites the same āyah ayah-only.
+        camel = row("7:40:17", "ٱلْجَمَلُ", "camel", entry_id="entry-khayt")
+        needle = row("7:40:19", "ٱلْخِيَاطِ", "needle", entry_id="entry-khayt")
+        entries = [
+            {
+                "id": "entry-khayt",
+                "source_keys": ["n819"],
+                "usage": [{"forms": ["الْخِيَاطِ"], "examples": [{"ref": "7:40"}]}],
+            },
+            {
+                "id": "entry-jamal",
+                "source_keys": ["n704"],
+                "usage": [{"forms": ["الْجَمَلُ"], "examples": [{"ref": "7:40"}]}],
+            },
+        ]
+        return [camel, needle], entries
+
+    def test_sibling_entry_attributes_at_its_own_selected_token(self):
+        rows, entries = self._two_lexeme_fixture()
+        result = build_index(rows, entries)
+        by_loc = {record["loc"]: record for record in result.records}
+        # The jamal entry must be credited at ITS token (7:40:17) even though the
+        # row-carried page context credits only khayt there.
+        self.assertIn("entry-jamal", by_loc["7:40:17"]["entry_relationships"])
+        # Multi-entry entry_relationships per loc are allowed: the row-carried
+        # khayt attribution is not removed.
+        self.assertIn("entry-khayt", by_loc["7:40:17"]["entry_relationships"])
+        self.assertEqual(
+            result.stats.get("entry_store_selected_token_matched_refs"), 1
+        )
+
+    def test_ambiguous_multi_position_match_abstains(self):
+        rows, entries = self._two_lexeme_fixture()
+        # A second جمل token in the same āyah makes the selected-token match
+        # ambiguous; the builder must abstain, never guess a position.
+        rows.append(row("7:40:21", "ٱلْجَمَلُ", "camel", entry_id="entry-khayt"))
+        result = build_index(rows, entries)
+        by_loc = {record["loc"]: record for record in result.records}
+        self.assertNotIn("entry-jamal", by_loc["7:40:17"]["entry_relationships"])
+        self.assertNotIn("entry-jamal", by_loc["7:40:21"]["entry_relationships"])
+        self.assertEqual(
+            result.stats.get("entry_store_selected_token_ambiguous_refs"), 1
+        )
+
+    def test_offline_ledger_anchored_repair_closes_reciprocity(self):
+        from tools.build_occurrence_appearance_index import repair_reciprocity
+
+        record = {
+            "loc": "7:40:17",
+            "unique": True,
+            "appearances": [
+                {"surface_kind": "reader"},
+                {"entry_id": "entry-khayt", "surface_kind": "entry_example"},
+            ],
+            "appearance_count": 2,
+            "entry_relationships": ["entry-khayt"],
+            "projection_hash": "0" * 64,
+        }
+        ledger_rows = [
+            {
+                "occurrence_id": "7:40:17",
+                "entry_id": "entry-jamal",
+                "join_method": "strict_unique",
+                "selected_surface": "الْجَمَلُ",
+            },
+            {  # non-deterministic join methods must never repair
+                "occurrence_id": "7:40:17",
+                "entry_id": "entry-wrong",
+                "join_method": "ayah_fallback",
+                "selected_surface": "الْجَمَلُ",
+            },
+            {  # surface mismatch must never repair
+                "occurrence_id": "7:40:17",
+                "entry_id": "entry-mismatch",
+                "join_method": "strict_unique",
+                "selected_surface": "النَّخْلَةِ",
+            },
+        ]
+        stats, repaired = repair_reciprocity(
+            [record], ledger_rows, {"7:40:17": "ٱلْجَمَلُ"}
+        )
+        self.assertEqual(stats["repaired"], 1)
+        self.assertEqual(stats["surface_mismatch_skipped"], 1)
+        self.assertEqual(
+            record["entry_relationships"], ["entry-jamal", "entry-khayt"]
+        )
+        self.assertEqual(record["appearance_count"], 3)
+        self.assertEqual(
+            repaired,
+            [{"loc": "7:40:17", "entry_id": "entry-jamal", "selected_surface": "الْجَمَلُ"}],
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
