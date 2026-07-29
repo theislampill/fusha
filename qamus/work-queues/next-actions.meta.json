@@ -1,0 +1,11 @@
+{
+  "honesty": [
+    "Rows are QUEUE HEADS: each points to its full packet; the packet (or the referenced repo queue file) is the working detail, never this summary.",
+    "full_packet paths under 'dawahwiki packets/' live in the owner's private workspace, not in this public repo — the repo-side queue_source is always sufficient to reconstruct the row set.",
+    "Nothing here authorizes deployment; deploy packets are owner-gated (see docs/decision-ledger.md)."
+  ],
+  "maintained_by": "hand-curated at handoff; update when a wave closes and cite the closing report",
+  "row_file": "qamus/work-queues/next-actions.jsonl",
+  "schema": "qamus.next_actions_meta.v1",
+  "validated_by": "tools/check_regressions.py (LANEC continuation-machinery block)"
+}

@@ -6362,6 +6362,113 @@ except Exception as _eg_e:
     check("ENTRYGRAPH gates (harness error)", False)
     print("  ", _eg_e)
 
+# ---------------------------------------------------------------------------
+# LANEC — continuation machinery (START-HERE entry point, machine-readable
+# state, P/V/N rollout map, work queues, sanitized decision ledger).
+# Red-first: every check below fails when its artifact is missing, stale, or
+# leaks private infrastructure into the public decision-ledger copy.
+try:
+    _lc_root = _R
+    for _lc_art in (
+            "START-HERE-FOR-CONTINUATION.md",
+            "docs/current-state.yaml",
+            "docs/blockers.yaml",
+            "docs/decision-ledger.md",
+            "docs/golden-commands.md",
+            "docs/model-routing-guide.md",
+            "qamus/work-queues/next-actions.jsonl",
+            "qamus/work-queues/next-actions.meta.json",
+            "qamus/reports/pvn-rollout-map.jsonl",
+            "qamus/reports/pvn-rollout-map.meta.json",
+    ):
+        check("LANEC artifact exists: %s" % _lc_art,
+              os.path.exists(os.path.join(_lc_root, _lc_art)))
+
+    with io.open(os.path.join(_lc_root, "START-HERE-FOR-CONTINUATION.md"),
+                 encoding="utf-8") as _lc_fh:
+        _lc_start = _lc_fh.read()
+    _lc_start_flat = " ".join(_lc_start.split())
+    check(
+        "LANEC START-HERE carries thesis, strata warning, glossary and "
+        "prohibitions",
+        "canonical anchor" in _lc_start_flat
+        and "facts ≠ occurrences ≠ entries ≠ appearances" in _lc_start_flat
+        and "## 12. Glossary" in _lc_start
+        and "No live mutation" in _lc_start
+        and "P007_LI_NOUN_HOST_PILOT" in _lc_start
+        and "12 morpheme occurrences / 78 appearances / 49" in _lc_start_flat,
+    )
+
+    # sanitization gate on the public decision-ledger copy (RM-09):
+    with io.open(os.path.join(_lc_root, "docs", "decision-ledger.md"),
+                 encoding="utf-8") as _lc_fh:
+        _lc_ledger = _lc_fh.read()
+    import re as _lc_re
+    check(
+        "LANEC decision-ledger copy is sanitized (no /srv paths, IPs, key "
+        "fingerprints, ssh targets)",
+        "/srv" not in _lc_ledger
+        and "SHA256:" not in _lc_ledger
+        and "ssh " not in _lc_ledger.lower()
+        and not _lc_re.search(r"\b\d{1,3}(?:\.\d{1,3}){3}\b", _lc_ledger),
+    )
+
+    _lc_cs = run_text([sys.executable,
+                       os.path.join(_lc_root, "tools", "build_current_state.py"),
+                       "--check"], timeout=300)
+    check("LANEC current-state.yaml fresh (build_current_state --check)",
+          _lc_cs.returncode == 0
+          and "CURRENT STATE FRESH" in (_lc_cs.stdout or ""))
+
+    _lc_rm = run_text([sys.executable,
+                       os.path.join(_lc_root, "tools", "build_pvn_rollout_map.py"),
+                       "--check"], timeout=600)
+    check("LANEC pvn-rollout-map fresh (build_pvn_rollout_map --check)",
+          _lc_rm.returncode == 0
+          and "PVN ROLLOUT MAP FRESH" in (_lc_rm.stdout or ""))
+    _lc_rt = run_text([sys.executable,
+                       os.path.join(_lc_root, "tools", "build_pvn_rollout_map.py"),
+                       "--self-test"], timeout=600)
+    check("LANEC pvn-rollout-map invariants (self-test)",
+          _lc_rt.returncode == 0
+          and "PVN ROLLOUT SELF-TEST PASS" in (_lc_rt.stdout or ""))
+
+    _lc_qrows = []
+    with io.open(os.path.join(_lc_root, "qamus", "work-queues",
+                              "next-actions.jsonl"), encoding="utf-8") as _lc_fh:
+        for _lc_line in _lc_fh:
+            if _lc_line.strip():
+                _lc_qrows.append(json.loads(_lc_line))
+    check(
+        "LANEC next-actions queue heads schema-shaped (4 rows, required keys, "
+        "packet + queue_source pointers)",
+        len(_lc_qrows) == 4
+        and all(r.get("schema") == "qamus.next_action.v1" for r in _lc_qrows)
+        and all(
+            all(k in r for k in ("queue_id", "lane", "title", "scope",
+                                 "queue_source", "full_packet", "model_tier",
+                                 "guards", "expected_outputs", "blocking"))
+            for r in _lc_qrows)
+        and all("no live mutation" in " ".join(r["guards"]).lower()
+                for r in _lc_qrows),
+    )
+
+    # blockers.yaml: parse-light structural gate (no yaml dep in the harness)
+    with io.open(os.path.join(_lc_root, "docs", "blockers.yaml"),
+                 encoding="utf-8") as _lc_fh:
+        _lc_blockers = _lc_fh.read()
+    check(
+        "LANEC blockers.yaml carries arbitration/scholar/owner_windows "
+        "sections and the non-blocking rule",
+        "arbitration:" in _lc_blockers
+        and "scholar:" in _lc_blockers
+        and "owner_windows:" in _lc_blockers
+        and "NON-BLOCKING" in _lc_blockers,
+    )
+except Exception as _lc_e:
+    check("LANEC continuation-machinery gates (harness error)", False)
+    print("  ", _lc_e)
+
 if fails:
     print("\n%d CHECK(S) FAILED" % len(fails))
     sys.exit(1)
