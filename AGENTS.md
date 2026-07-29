@@ -1,8 +1,34 @@
 # AGENTS.md — rules for agents working in the Fusha repo
 
 This is the **portable language-intelligence** repo for the Qamus project. It is **public** and it is **not** the
-live app. Read `provenance/source-boundaries.md`, then `sarf/SKILL.md` + `nahw/SKILL.md` before authoring or
-classifying any Arabic gloss.
+live app. **No chat context? Start at `START-HERE-FOR-CONTINUATION.md`.** Read
+`provenance/source-boundaries.md`, then `sarf/SKILL.md` + `nahw/SKILL.md` before authoring or classifying any
+Arabic gloss.
+
+## NorthStar
+The Qurʾān is the canonical anchor; Classical Arabic is the generative engine; transclusion preserves
+provenance; the lattice preserves structured possibility; meta-projection governs reuse; the flywheel turns
+reviewed Qamus occurrences into progressively stronger machinery. Every task serves that loop: evidence-backed,
+fact-level certified, letter-level rich analysis of each Qurʾānic occurrence, reused with provenance everywhere
+it appears — and nothing reaches the public surface without certification and an owner-gated deploy.
+
+## Controlling invariants (never violate, never re-litigate)
+- same colour ≠ same entry · letter resemblance ≠ morpheme identity · surface match NEVER authorizes reuse
+- root-sharing NEVER implies entry identity (occurrence_instantiates_lexeme ≠ realizes_form ≠ shares_root ≠
+  root_family_member — different edges)
+- facts ≠ occurrences ≠ entries ≠ appearances (four denominators; never conflate)
+- candidate ≠ certified (only `tools/certify_typed_fact.py` certifies; evidence bundle or nothing)
+- span-live ≠ rich · fully rich ≠ deployed (deploys are owner-gated; this repo never mutates live)
+- VNPROP-xx ≠ VN-xx (proposal namespace vs contract window); generic colour class without an entry/sense edge
+  does NOT satisfy transclusion
+- no source prose in public output; no page-context laundering; no root→identity inference
+
+## Verify before trusting
+`git rev-parse HEAD && python tools/check_regressions.py` (must end ALL PASS). Recompute tallies via
+validators; never quote prose numbers. State: `docs/current-state.yaml` · queues:
+`qamus/work-queues/next-actions.jsonl` · blockers: `docs/blockers.yaml` · commands:
+`docs/golden-commands.md` · tiers/escalation: `docs/model-routing-guide.md` · owner decisions:
+`docs/decision-ledger.md` (nothing there is open).
 
 ## Hard rules (non-negotiable)
 1. **No live-site mutation from this repo.** Never write to qamus.dawah.wiki, the live app repo, entry data, or

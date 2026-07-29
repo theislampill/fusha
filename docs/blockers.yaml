@@ -1,0 +1,59 @@
+# docs/blockers.yaml — items that CANNOT be closed by an agent alone.
+# Hand-curated at handoff; every row cites where its evidence lives.
+# Rule: blocked items must never block unrelated lanes (owner ruling).
+schema: qamus.blockers.v1
+arbitration:  # substantive two-vote disagreements — need arbitration, not re-runs
+  - id: arb-3-81-6
+    loc: "3:81:6"
+    surface: "لَمَآ"
+    summary: substantive reviewer disagreement from p007 two-vote wave-1
+      (one of 8 disagreements; 6 were convention-class and go to re-vote,
+      2 are substantive)
+    evidence: dawahwiki packets/P007-TWOVOTE-W1-2026-07-29.md (private workspace)
+    status: open
+  - id: arb-twovote-w1-second
+    summary: second substantive disagreement from the same wave
+      (see the wave-1 packet for the row)
+    evidence: dawahwiki packets/P007-TWOVOTE-W1-2026-07-29.md (private workspace)
+    status: open
+scholar:  # genuine scholarly questions — packets exist; must not block other lanes
+  - id: scholar-38-8-13
+    loc: "38:8:13"
+    summary: evidence-resolved as unitary lammā jāzima; scholar confirmation queued
+    evidence: dawahwiki packets/SCHOLAR-AND-LINGUISTIC-PACKETS-2026-07-29.md
+    status: open
+  - id: scholar-86-4-4
+    loc: "86:4:4"
+    summary: qirāʾāt-bifurcated reading — needs per-reading annotation,
+      no single winner may be fabricated
+    evidence: dawahwiki packets/SCHOLAR-AND-LINGUISTIC-PACKETS-2026-07-29.md
+    status: open
+owner_windows:  # actions that require an explicit owner window / decision
+  - id: owner-deploy-packet
+    summary: first bounded deploy packet (12 pilot upgrades + 454 rung-1
+      geometry + class remap). NOT one uniformly certified payload — separate
+      strata; a deployment proposal exists only when every included public fact
+      has its required evidence AND the website agent confirms contract
+      compatibility.
+    status: awaiting owner window
+  - id: owner-rule-adjudication
+    summary: sarf/nahw @2.1–@2.4 candidate rules — rule-by-rule (bounded-family)
+      adjudication; only architecture-encoding rules auto-ratify; the owner is
+      never asked to guess linguistic answers.
+    status: awaiting owner adjudication
+  - id: owner-ma-92-3-1
+    summary: مَا 92:3:1 attributed-unresolved 3-way/4-alternative split;
+      7 certifiable peripherals may proceed independently.
+    evidence: dawahwiki packets/linguistic-ma-92-3-1.json
+    status: awaiting owner routing
+  - id: owner-entry-store-n225-n912
+    summary: n225/n912 root adoption (مادة رجل/قوم directly attested) —
+      candidate root; certify only after corroboration/review; entry-store
+      mutation needs an owner window.
+    evidence: dawahwiki packets/entry-root-n225-n912.json
+    status: awaiting owner window
+notes:
+  - arbitration and scholar rows are NON-BLOCKING for every other lane by
+    standing owner ruling.
+  - the VN-03 namespace question is CLOSED (owner ruling 2026-07-29, applied in
+    PR '#127' — VNPROP-xx renamed); do not re-open.
