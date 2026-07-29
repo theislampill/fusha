@@ -80,31 +80,33 @@ DERIVED PROPOSAL: order the supplied entries by source key in v, n, p order and 
 
 The proposal tranche labels below are analysis-only. They do not populate the ledger's `vn_tranche` field and do not authorize rollout.
 
+Proposal labels use the `VNPROP-xx` namespace (renamed from the former bare `VN-xx` spelling) so they can never collide with the contract window identifiers `VN-00`–`VN-23`; per the 2026-07-29 owner ruling the proposal population (e.g. former proposal `VN-03` = v196–v296) is NOT the contract window of the same name (evidence: VN-UNLOCK-PROOF-2026-07-29 Finding 0).
+
 ## VN readiness matrix (derived proposal)
 
 | tranche | entries | cards | selected words | occurrences | clitic candidates | source-certified | unresolved | graph gaps | expected candidate rows | appearances affected | projected gain |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
-| `VN-00` | 1 | 1 | 3 | 1 | 1 | 0 | 3 | 1 | 1 | 2 | 1 occurrences (50.0000%) |
-| `VN-01` | 1 | 1 | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-02` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-03` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-04` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-05` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-06` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-07` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-08` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-09` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-10` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-11` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-12` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-13` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-14` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-15` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-16` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-17` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-18` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-19` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-20` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-00` | 1 | 1 | 3 | 1 | 1 | 0 | 3 | 1 | 1 | 2 | 1 occurrences (50.0000%) |
+| `VNPROP-01` | 1 | 1 | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-02` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-03` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-04` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-05` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-06` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-07` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-08` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-09` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-10` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-11` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-12` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-13` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-14` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-15` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-16` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-17` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-18` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-19` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-20` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 occurrences (0.0000%) |
 
 Source-certified is intentionally zero pending owner certification. `expected candidate rows` and `projected gain` are conditional projections after clitic certification; they are not rich-at-rest, rich-hover, rendered-span, or public-readback facts.
 

@@ -19,7 +19,10 @@ Extends — does not replace — the existing machinery:
 * VN tranche labels reuse the VNMAP derived proposal map
   (``tools/build_entry_card_word_ledger._proposal_tranche_map``); particle
   entries take their owner-approved P-00..P-03 label from
-  ``qamus/data/particle-tranche-membership.json``.
+  ``qamus/data/particle-tranche-membership.json``. The VN-side labels are the
+  balanced-partition DERIVED PROPOSAL in the ``VNPROP-xx`` namespace (renamed
+  from bare ``VN-xx`` per the 2026-07-29 owner ruling, VN-UNLOCK-PROOF
+  Finding 0); they are NOT the contract window ids ``VN-00``..``VN-23``.
 
 All inputs are committed, public-safe repo artifacts; no network, no live
 mutation.  Reproducible: same inputs -> byte-identical outputs.

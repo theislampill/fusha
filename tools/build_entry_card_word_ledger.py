@@ -68,7 +68,28 @@ SOURCE_SPACE_LIMITS = {
     "nouns": ("n", 1, 1045),
 }
 SOURCE_SPACE_ORDER = {prefix: index for index, prefix in enumerate(("v", "n", "p"))}
-TRANCHE_LABELS = tuple(f"VN-{index:02d}" for index in range(21))
+# Proposal-namespace tranche labels. These label the balanced-partition
+# DERIVED PROPOSAL only (vn-partition-proposal.v1) and are deliberately
+# spelled ``VNPROP-xx`` so they can never collide with the contract window
+# identifiers ``VN-00``..``VN-23`` (frozen VN-00/01/02 + PLAN_WINDOWS in
+# tools/build_vn_readiness_v2.py). Renamed from the former bare ``VN-xx``
+# spelling per the 2026-07-29 owner ruling (VN-UNLOCK-PROOF-2026-07-29
+# Finding 0: the proposal's "VN-03" = v196-v296 is NOT the contract VN-03 =
+# v142-v188 + n0136-n0180).
+TRANCHE_LABELS = tuple(f"VNPROP-{index:02d}" for index in range(21))
+# Contract window identifiers that proposal labels must never collide with.
+CONTRACT_WINDOW_IDS = frozenset(f"VN-{index:02d}" for index in range(24))
+PROPOSAL_LABEL_NAMESPACE_NOTE = {
+    "namespace": "vn-partition-proposal.v1",
+    "labels": "VNPROP-00..VNPROP-20",
+    "renamed_from": "VN-00..VN-20 (bare labels, retired for proposal use)",
+    "reason": (
+        "owner ruling 2026-07-29: contract window ids VN-00..VN-23 are reserved for "
+        "documented/plan windows; the balanced-partition proposal population (e.g. former "
+        "proposal 'VN-03' = v196-v296) must not share the contract spelling"
+    ),
+    "evidence": ["packets/VN-UNLOCK-PROOF-2026-07-29.md:Finding 0 (dawahwiki packets)"],
+}
 
 
 @dataclass
@@ -662,9 +683,9 @@ def _proposal_tranche_map(entries):
             identity = _source_identity(_entry_source_key(entry))
             prefix, number = identity if identity else ("", -1)
             if (prefix == "v" and 1 <= number <= 47) or (prefix == "n" and 1 <= number <= 45):
-                mapping[_clean(entry.get("id"))] = "VN-00"
+                mapping[_clean(entry.get("id"))] = "VNPROP-00"
             elif (prefix == "v" and 48 <= number <= 94) or (prefix == "n" and 46 <= number <= 90):
-                mapping[_clean(entry.get("id"))] = "VN-01"
+                mapping[_clean(entry.get("id"))] = "VNPROP-01"
             else:
                 remaining.append(entry)
         base, remainder = divmod(len(remaining), 19)
@@ -672,7 +693,7 @@ def _proposal_tranche_map(entries):
         for tranche_index in range(2, 21):
             size = base + (1 if tranche_index - 2 < remainder else 0)
             for entry in remaining[cursor : cursor + size]:
-                mapping[_clean(entry.get("id"))] = f"VN-{tranche_index:02d}"
+                mapping[_clean(entry.get("id"))] = f"VNPROP-{tranche_index:02d}"
             cursor += size
         return mapping
 
@@ -919,6 +940,7 @@ def _readiness_matrix(entries, cards, ledger, family_resolved, appearances_by_lo
         "schema": "vnmap/readiness-matrix@1",
         "assignment_mode": "derived_proposal_requires_owner_confirmation",
         "authoritative_vn_assignment_source": None,
+        "proposal_label_namespace": dict(PROPOSAL_LABEL_NAMESPACE_NOTE),
         "proposal_rule": _proposal_rule(entries),
         "tranches": graph_metrics,
         "totals": totals,
@@ -1126,6 +1148,8 @@ def _render_report(metrics, matrix):
             matrix["proposal_rule"],
             "",
             "The proposal tranche labels below are analysis-only. They do not populate the ledger's `vn_tranche` field and do not authorize rollout.",
+            "",
+            "Proposal labels use the `VNPROP-xx` namespace (renamed from the former bare `VN-xx` spelling) so they can never collide with the contract window identifiers `VN-00`–`VN-23`; per the 2026-07-29 owner ruling the proposal population (e.g. former proposal `VN-03` = v196–v296) is NOT the contract window of the same name (evidence: VN-UNLOCK-PROOF-2026-07-29 Finding 0).",
             "",
             "## VN readiness matrix (derived proposal)",
             "",

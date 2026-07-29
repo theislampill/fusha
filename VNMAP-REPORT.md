@@ -80,31 +80,33 @@ DERIVED PROPOSAL: order entries by observed source key v001-v947, n001-n1045, p0
 
 The proposal tranche labels below are analysis-only. They do not populate the ledger's `vn_tranche` field and do not authorize rollout.
 
+Proposal labels use the `VNPROP-xx` namespace (renamed from the former bare `VN-xx` spelling) so they can never collide with the contract window identifiers `VN-00`–`VN-23`; per the 2026-07-29 owner ruling the proposal population (e.g. former proposal `VN-03` = v196–v296) is NOT the contract window of the same name (evidence: VN-UNLOCK-PROOF-2026-07-29 Finding 0).
+
 ## VN readiness matrix (derived proposal)
 
 | tranche | entries | cards | selected words | occurrences | clitic candidates | source-certified | unresolved | graph gaps | expected candidate rows | appearances affected | projected gain |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
-| `VN-00` | 92 | 974 | 816 | 147 | 1,517 | 0 | 816 | 742 | 1,517 | 3,034 | 1,517 occurrences (4.4198%) |
-| `VN-01` | 92 | 802 | 294 | 57 | 544 | 0 | 294 | 235 | 544 | 1,088 | 544 occurrences (1.5849%) |
-| `VN-02` | 101 | 1,139 | 577 | 57 | 672 | 0 | 577 | 514 | 672 | 1,344 | 672 occurrences (1.9579%) |
-| `VN-03` | 101 | 835 | 1,036 | 100 | 304 | 0 | 1,036 | 941 | 304 | 608 | 304 occurrences (0.8857%) |
-| `VN-04` | 101 | 620 | 619 | 48 | 105 | 0 | 619 | 573 | 105 | 210 | 105 occurrences (0.3059%) |
-| `VN-05` | 101 | 450 | 505 | 45 | 201 | 0 | 505 | 465 | 201 | 402 | 201 occurrences (0.5856%) |
-| `VN-06` | 101 | 365 | 322 | 20 | 110 | 0 | 322 | 303 | 110 | 220 | 110 occurrences (0.3205%) |
-| `VN-07` | 101 | 270 | 285 | 18 | 29 | 0 | 285 | 285 | 29 | 58 | 29 occurrences (0.0845%) |
-| `VN-08` | 101 | 190 | 216 | 12 | 17 | 0 | 216 | 216 | 17 | 34 | 17 occurrences (0.0495%) |
-| `VN-09` | 101 | 110 | 112 | 28 | 63 | 0 | 112 | 109 | 63 | 126 | 63 occurrences (0.1836%) |
-| `VN-10` | 100 | 109 | 145 | 9 | 14 | 0 | 145 | 136 | 14 | 28 | 14 occurrences (0.0408%) |
-| `VN-11` | 100 | 204 | 484 | 66 | 66 | 0 | 484 | 393 | 66 | 132 | 66 occurrences (0.1923%) |
-| `VN-12` | 100 | 238 | 443 | 62 | 10 | 0 | 443 | 368 | 10 | 20 | 10 occurrences (0.0291%) |
-| `VN-13` | 100 | 194 | 253 | 60 | 10 | 0 | 253 | 192 | 10 | 20 | 10 occurrences (0.0291%) |
-| `VN-14` | 100 | 114 | 122 | 60 | 17 | 0 | 122 | 89 | 17 | 34 | 17 occurrences (0.0495%) |
-| `VN-15` | 100 | 136 | 172 | 7 | 6 | 0 | 172 | 165 | 6 | 12 | 6 occurrences (0.0175%) |
-| `VN-16` | 100 | 140 | 221 | 2 | 6 | 0 | 221 | 221 | 6 | 12 | 6 occurrences (0.0175%) |
-| `VN-17` | 100 | 149 | 231 | 60 | 30 | 0 | 231 | 231 | 30 | 60 | 30 occurrences (0.0874%) |
-| `VN-18` | 100 | 215 | 289 | 87 | 44 | 0 | 289 | 289 | 44 | 88 | 44 occurrences (0.1282%) |
-| `VN-19` | 100 | 210 | 332 | 0 | 0 | 0 | 332 | 332 | 0 | 0 | 0 occurrences (0.0000%) |
-| `VN-20` | 100 | 236 | 266 | 1 | 19 | 0 | 266 | 266 | 19 | 38 | 19 occurrences (0.0554%) |
+| `VNPROP-00` | 92 | 974 | 816 | 147 | 1,517 | 0 | 816 | 742 | 1,517 | 3,034 | 1,517 occurrences (4.4198%) |
+| `VNPROP-01` | 92 | 802 | 294 | 57 | 544 | 0 | 294 | 235 | 544 | 1,088 | 544 occurrences (1.5849%) |
+| `VNPROP-02` | 101 | 1,139 | 577 | 57 | 672 | 0 | 577 | 514 | 672 | 1,344 | 672 occurrences (1.9579%) |
+| `VNPROP-03` | 101 | 835 | 1,036 | 100 | 304 | 0 | 1,036 | 941 | 304 | 608 | 304 occurrences (0.8857%) |
+| `VNPROP-04` | 101 | 620 | 619 | 48 | 105 | 0 | 619 | 573 | 105 | 210 | 105 occurrences (0.3059%) |
+| `VNPROP-05` | 101 | 450 | 505 | 45 | 201 | 0 | 505 | 465 | 201 | 402 | 201 occurrences (0.5856%) |
+| `VNPROP-06` | 101 | 365 | 322 | 20 | 110 | 0 | 322 | 303 | 110 | 220 | 110 occurrences (0.3205%) |
+| `VNPROP-07` | 101 | 270 | 285 | 18 | 29 | 0 | 285 | 285 | 29 | 58 | 29 occurrences (0.0845%) |
+| `VNPROP-08` | 101 | 190 | 216 | 12 | 17 | 0 | 216 | 216 | 17 | 34 | 17 occurrences (0.0495%) |
+| `VNPROP-09` | 101 | 110 | 112 | 28 | 63 | 0 | 112 | 109 | 63 | 126 | 63 occurrences (0.1836%) |
+| `VNPROP-10` | 100 | 109 | 145 | 9 | 14 | 0 | 145 | 136 | 14 | 28 | 14 occurrences (0.0408%) |
+| `VNPROP-11` | 100 | 204 | 484 | 66 | 66 | 0 | 484 | 393 | 66 | 132 | 66 occurrences (0.1923%) |
+| `VNPROP-12` | 100 | 238 | 443 | 62 | 10 | 0 | 443 | 368 | 10 | 20 | 10 occurrences (0.0291%) |
+| `VNPROP-13` | 100 | 194 | 253 | 60 | 10 | 0 | 253 | 192 | 10 | 20 | 10 occurrences (0.0291%) |
+| `VNPROP-14` | 100 | 114 | 122 | 60 | 17 | 0 | 122 | 89 | 17 | 34 | 17 occurrences (0.0495%) |
+| `VNPROP-15` | 100 | 136 | 172 | 7 | 6 | 0 | 172 | 165 | 6 | 12 | 6 occurrences (0.0175%) |
+| `VNPROP-16` | 100 | 140 | 221 | 2 | 6 | 0 | 221 | 221 | 6 | 12 | 6 occurrences (0.0175%) |
+| `VNPROP-17` | 100 | 149 | 231 | 60 | 30 | 0 | 231 | 231 | 30 | 60 | 30 occurrences (0.0874%) |
+| `VNPROP-18` | 100 | 215 | 289 | 87 | 44 | 0 | 289 | 289 | 44 | 88 | 44 occurrences (0.1282%) |
+| `VNPROP-19` | 100 | 210 | 332 | 0 | 0 | 0 | 332 | 332 | 0 | 0 | 0 occurrences (0.0000%) |
+| `VNPROP-20` | 100 | 236 | 266 | 1 | 19 | 0 | 266 | 266 | 19 | 38 | 19 occurrences (0.0554%) |
 
 Source-certified is intentionally zero pending owner certification. `expected candidate rows` and `projected gain` are conditional projections after clitic certification; they are not rich-at-rest, rich-hover, rendered-span, or public-readback facts.
 

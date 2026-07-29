@@ -64,6 +64,12 @@ FROZEN_WINDOWS = {
 
 _SOURCE_KEY_RE = re.compile(r"^([vnp])0*(\d+)$", re.IGNORECASE)
 
+# The ledger's proposal claims now use the VNPROP-xx proposal namespace
+# (renamed from bare VN-xx per the 2026-07-29 owner ruling; VN-UNLOCK-PROOF
+# Finding 0). Divergence against a documented/plan window is a POPULATION
+# question, so compare through the legacy-equivalent contract spelling.
+_PROPOSAL_LEGACY_EQUIVALENT = {f"VNPROP-{i:02d}": f"VN-{i:02d}" for i in range(21)}
+
 
 def _identity(source_key):
     match = _SOURCE_KEY_RE.fullmatch(str(source_key or "").strip())
@@ -202,9 +208,12 @@ def build_conflicts(ledger_rows):
             continue
         window = _window_label(identity)
         claim_set = sorted(proposals[source_key])
+        comparable_claims = {
+            _PROPOSAL_LEGACY_EQUIVALENT.get(claim, claim) for claim in claim_set
+        }
         divergent = (
             window not in ("unplanned_particles", "unassigned")
-            and set(claim_set) != {window}
+            and comparable_claims != {window}
         )
         if len(claim_set) > 1 or divergent:
             conflicts.append({

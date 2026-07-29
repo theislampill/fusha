@@ -20,6 +20,7 @@ if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
 from tools.build_entry_card_word_ledger import (  # noqa: E402
+    CONTRACT_WINDOW_IDS,
     OWNER_EDGE_ORDER,
     OWNER_MISSING_EDGE_CLASSES,
     TRANCHE_LABELS,
@@ -48,6 +49,25 @@ def _int_metric(metrics, key, errors):
         errors.append(f"metric {key} must be a non-negative integer")
         return 0
     return value
+
+
+def _check_proposal_label(value, where, errors):
+    """Namespace-collision guard (owner ruling 2026-07-29, VN-UNLOCK-PROOF Finding 0).
+
+    A proposal-namespace tranche label must never collide with a contract
+    window identifier (VN-00..VN-23): the proposal population behind e.g.
+    the former proposal "VN-03" (v196-v296) is NOT the contract VN-03
+    window (v142-v188 + n0136-n0180).
+    """
+
+    if value in CONTRACT_WINDOW_IDS:
+        errors.append(
+            f"{where}: proposal-namespace tranche label {value!r} collides with a "
+            "contract window id (VN-00..VN-23); proposal labels must use the "
+            "VNPROP-xx namespace"
+        )
+    elif value is not None and value not in TRANCHE_LABELS:
+        errors.append(f"{where}: unknown proposal tranche label {value!r}")
 
 
 def validate_artifacts(ledger, metrics, matrix):
@@ -86,6 +106,7 @@ def validate_artifacts(ledger, metrics, matrix):
         seen_rows.add(row_key)
         if row.get("vn_tranche") is not None:
             errors.append(f"ledger row {index} has a non-null candidate vn_tranche")
+        _check_proposal_label(row.get("proposal_vn_tranche"), f"ledger row {index}", errors)
         missing_edges = row.get("missing_edges")
         if not isinstance(missing_edges, list):
             errors.append(f"ledger row {index} missing_edges is not a list")
@@ -128,6 +149,8 @@ def validate_artifacts(ledger, metrics, matrix):
         values = denominators.get(key)
         if not isinstance(values, dict) or set(values) != set(TRANCHE_LABELS) or sum(values.values()) != expected:
             errors.append(f"{key} does not contain all 21 tranches or does not sum to its denominator")
+        for label in values if isinstance(values, dict) else ():
+            _check_proposal_label(label, f"metrics {key}", errors)
 
     for key in (
         "edge_join_rows_total",
@@ -154,8 +177,13 @@ def validate_artifacts(ledger, metrics, matrix):
         errors.append("missing_edge_counts does not equal ledger owner-edge counts")
 
     tranches = matrix.get("tranches")
-    if not isinstance(tranches, list) or [row.get("proposal_vn_tranche") for row in tranches] != list(TRANCHE_LABELS):
-        errors.append("matrix does not contain the ordered VN-00 through VN-20 proposal rows")
+    if not isinstance(tranches, list):
+        tranches = []
+    for row_index, row in enumerate(tranches):
+        if isinstance(row, dict):
+            _check_proposal_label(row.get("proposal_vn_tranche"), f"matrix tranche {row_index}", errors)
+    if not tranches or [row.get("proposal_vn_tranche") for row in tranches] != list(TRANCHE_LABELS):
+        errors.append("matrix does not contain the ordered VNPROP-00 through VNPROP-20 proposal rows")
         tranches = []
     matrix_totals = matrix.get("totals") if isinstance(matrix.get("totals"), dict) else {}
     for key in ("entries", "cards", "displayed_selected_words", "unique_occurrences", "appearances_affected"):
@@ -226,6 +254,17 @@ def self_test():
         print("FAIL vnmap missing-edge enum mutation was not rejected")
         return 1
     print("ok   vnmap missing-edge enum mutation rejected")
+
+    # Namespace-collision hazard (red-first): a proposal row relabelled with a
+    # bare contract window id (the pre-ruling "VN-03" spelling) must FAIL.
+    mutated_matrix = json.loads(json.dumps(matrix))
+    collided = mutated_matrix.get("tranches") or [{}]
+    collided[3 if len(collided) > 3 else 0]["proposal_vn_tranche"] = "VN-03"
+    failed_collision = validate_artifacts(ledger, metrics, mutated_matrix)
+    if failed_collision.ok or not any("collides with a" in error for error in failed_collision.errors):
+        print("FAIL vnmap proposal/contract namespace collision was not rejected")
+        return 1
+    print("ok   vnmap proposal/contract namespace collision rejected")
     print("VNMAP LEDGER SELF-TEST PASS")
     return 0
 

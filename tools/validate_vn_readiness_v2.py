@@ -18,9 +18,11 @@ if ROOT not in sys.path:
 
 from tools.build_vn_readiness_v2 import (
     ARCHITECTURE_PROOF_STATUS,
+    CONTRACT_WINDOW_IDS,
     FROZEN_LABELS,
     PRIMARY_LABELS,
     PROOF_NAME_SET,
+    PROPOSAL_LABELS,
     STAGING_NAMESPACE,
     TAIL_LABELS,
     USABLE_CROSSWALK_STATUSES,
@@ -378,6 +380,18 @@ def _validate_planning_and_comparison(matrix, errors):
     else:
         if comparison.get("authoritative") is not False or comparison.get("planning_role") is not False:
             errors.append("balanced partition must be non-authoritative and have no planning role")
+        comparison_labels = [
+            row.get("label") for row in comparison.get("tranches") or [] if isinstance(row, dict)
+        ]
+        for label in comparison_labels:
+            if label in CONTRACT_WINDOW_IDS:
+                errors.append(
+                    f"comparison artifact: proposal-namespace tranche label {label!r} collides "
+                    "with a contract window id (VN-00..VN-23); proposal labels must use the "
+                    "VNPROP-xx namespace"
+                )
+        if comparison_labels != list(PROPOSAL_LABELS):
+            errors.append("comparison artifact must carry the ordered VNPROP-00..VNPROP-20 labels")
 
 
 def _validate_delta(ledger, matrix, errors):
@@ -386,9 +400,15 @@ def _validate_delta(ledger, matrix, errors):
         errors.append("material_improvement_delta must be an object")
         return
     rows = delta.get("rows")
-    if not isinstance(rows, list) or [row.get("label") for row in rows if isinstance(row, dict)] != list(PRIMARY_LABELS):
-        errors.append("material improvement delta must contain VN-00 through VN-20 rows")
+    if not isinstance(rows, list) or [row.get("label") for row in rows if isinstance(row, dict)] != list(PROPOSAL_LABELS):
+        errors.append("material improvement delta must contain VNPROP-00 through VNPROP-20 rows")
         rows = []
+    for row in rows:
+        if isinstance(row, dict) and row.get("label") in CONTRACT_WINDOW_IDS:
+            errors.append(
+                f"material delta: proposal-namespace label {row.get('label')!r} collides with a "
+                "contract window id (VN-00..VN-23)"
+            )
     for row in rows:
         label = row.get("label")
         for field in (
@@ -557,6 +577,17 @@ def self_test():
         print("FAIL v2 graph mutation was not rejected")
         return 1
     print("ok   graph mutation rejected")
+
+    # Namespace-collision hazard (red-first): a comparison tranche relabelled
+    # with a bare contract window id (pre-ruling "VN-03") must FAIL.
+    mutated_matrix = copy.deepcopy(matrix)
+    comparison = mutated_matrix["comparison_artifacts"]["vn-partition-proposal.v1"]
+    comparison["tranches"][3]["label"] = "VN-03"
+    failed = validate_artifacts(ledger, mutated_matrix)
+    if failed.ok or not any("collides" in error for error in failed.errors):
+        print("FAIL v2 proposal/contract namespace collision was not rejected")
+        return 1
+    print("ok   v2 proposal/contract namespace collision rejected")
     print("VN READINESS V2 SELF-TEST PASS")
     return 0
 

@@ -36,7 +36,7 @@ set.
 | `parity-report.json` | cross-page parity proof + read-only live deltas |
 | `reverse-trace.json` | projection → facts → events → two-vote → votes → MCP → matrix → live row |
 | `live-rows.jsonl` | read-only capture of the 12 live rich-whitelist rows |
-| `vn-unlock.json` | VN tranche unlock measurement (direct 78; pattern ceiling 1,266) |
+| `vn-unlock.json` | VN tranche unlock measurement (direct 78; pattern ceiling 1,266). Tranche keys use the `VNPROP-xx` proposal namespace (the universe's balanced-partition labels, renamed from bare `VN-xx` per the 2026-07-29 owner ruling): they are NOT contract window ids — VN-UNLOCK-PROOF-2026-07-29 Finding 0 proved the former proposal "VN-03" (v196–v296) shares no page with the contract VN-03 worklist window (v142–v188 + n0136–n0180) |
 
 ## Derived artifacts (regenerate with `python tools/build_p007_li_pilot.py`)
 
