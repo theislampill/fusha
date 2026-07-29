@@ -63,6 +63,13 @@ def source_certification_state_text():
 
 PRIMARY_LABELS = tuple(f"VN-{index:02d}" for index in range(21))
 TAIL_LABELS = ("VN-21", "VN-22", "VN-23")
+# Proposal-namespace labels for the balanced partition comparison artifact
+# (vn-partition-proposal.v1). Deliberately spelled ``VNPROP-xx`` so the
+# comparison population can never collide with the contract window ids
+# VN-00..VN-23 (owner ruling 2026-07-29; VN-UNLOCK-PROOF-2026-07-29 Finding 0:
+# the proposal's former "VN-03" = v196-v296 is NOT the contract VN-03 window).
+PROPOSAL_LABELS = tuple(f"VNPROP-{index:02d}" for index in range(21))
+CONTRACT_WINDOW_IDS = frozenset(f"VN-{index:02d}" for index in range(24))
 FROZEN_LABELS = ("VN-00", "VN-01", "VN-02")
 PLANNING_LABELS = tuple(f"VN-{index:02d}" for index in range(3, 24))
 SPECIAL_LABELS = (
@@ -225,19 +232,21 @@ def _range_keys(prefix, start, end, width=3):
 
 
 def _partition_ranges():
+    """Balanced-partition proposal ranges, keyed by VNPROP-xx proposal labels."""
+
     ranges = {
-        "VN-00": _range_keys("v", 1, 47) | _range_keys("n", 1, 45, 4),
-        "VN-01": _range_keys("v", 48, 94) | _range_keys("n", 46, 90, 4),
-        "VN-02": _range_keys("v", 95, 195),
-        "VN-10": _range_keys("v", 903, 947) | _range_keys("n", 91, 145, 4),
-        "VN-20": _range_keys("p", 1, 100),
+        "VNPROP-00": _range_keys("v", 1, 47) | _range_keys("n", 1, 45, 4),
+        "VNPROP-01": _range_keys("v", 48, 94) | _range_keys("n", 46, 90, 4),
+        "VNPROP-02": _range_keys("v", 95, 195),
+        "VNPROP-10": _range_keys("v", 903, 947) | _range_keys("n", 91, 145, 4),
+        "VNPROP-20": _range_keys("p", 1, 100),
     }
     for label in range(3, 10):
         verb_start = 196 + (label - 3) * 101
-        ranges[f"VN-{label:02d}"] = _range_keys("v", verb_start, verb_start + 100)
+        ranges[f"VNPROP-{label:02d}"] = _range_keys("v", verb_start, verb_start + 100)
     for label in range(11, 20):
         noun_start = 146 + (label - 11) * 100
-        ranges[f"VN-{label:02d}"] = _range_keys("n", noun_start, noun_start + 99, 4)
+        ranges[f"VNPROP-{label:02d}"] = _range_keys("n", noun_start, noun_start + 99, 4)
     return ranges
 
 
@@ -887,7 +896,7 @@ def _material_delta(ledger, cards, baseline_matrix, entry_by_id):
                     if partition_by_entry.get(row["entry_id"]) == label and row.get("crosswalk_flag")
                 }
             )
-            for label in PRIMARY_LABELS
+            for label in PROPOSAL_LABELS
         }
     )
     after_entries = Counter(
@@ -899,11 +908,11 @@ def _material_delta(ledger, cards, baseline_matrix, entry_by_id):
                     if partition_by_entry.get(entry_id) == label and rows
                 }
             )
-            for label in PRIMARY_LABELS
+            for label in PROPOSAL_LABELS
         }
     )
     rows = []
-    for label in PRIMARY_LABELS:
+    for label in PROPOSAL_LABELS:
         before = baseline_rows.get(label, {"selected": 0, "complete": 0})
         det = after_by_label[label].get("deterministic_exact", 0)
         candidate = after_by_label[label].get("candidate", 0)
@@ -926,7 +935,7 @@ def _material_delta(ledger, cards, baseline_matrix, entry_by_id):
             }
         )
     return {
-        "basis": "stable VN-00..VN-20 balanced comparison identity; authority remapping is not mixed into this delta",
+        "basis": "stable VNPROP-00..VNPROP-20 balanced comparison identity (proposal namespace; formerly bare VN-xx); authority remapping is not mixed into this delta",
         "before_source": "pre-ratification vn-readiness-matrix.json",
         "after_source": "EDGES/full-artifacts/lexeme-entry-crosswalk.forward.jsonl",
         "rows": rows,
@@ -992,7 +1001,7 @@ def _staging_investigation(doc_sets, snapshots, backup_by_key):
 
 def _comparison_artifact(ledger, entries, entry_by_id, assignment_by_key, cards):
     tranches = []
-    for label in PRIMARY_LABELS:
+    for label in PROPOSAL_LABELS:
         entry_ids = {
             entry["id"]
             for entry in entries
@@ -1019,6 +1028,16 @@ def _comparison_artifact(ledger, entries, entry_by_id, assignment_by_key, cards)
         "planning_role": False,
         "role": "versioned_non_authoritative_comparison_artifact",
         "source_key_rule": "existing balanced partition proposal; retained for comparison only",
+        "label_namespace": {
+            "labels": "VNPROP-00..VNPROP-20",
+            "renamed_from": "VN-00..VN-20 (bare labels, retired for proposal use)",
+            "reason": (
+                "owner ruling 2026-07-29: contract window ids VN-00..VN-23 are reserved; the "
+                "proposal population (e.g. former proposal 'VN-03' = v196-v296) is not the "
+                "contract window of the same name"
+            ),
+            "evidence": ["packets/VN-UNLOCK-PROOF-2026-07-29.md:Finding 0 (dawahwiki packets)"],
+        },
         "tranches": tranches,
     }
 
@@ -1121,7 +1140,7 @@ def _render_report(matrix):
             "",
             "## Comparison artifact",
             "",
-            "`vn-partition-proposal.v1` is retained under `comparison_artifacts` as versioned non-authoritative comparison data. It has `authoritative=false` and `planning_role=false`; it does not populate `vn_planning_assignment` and does not determine the primary or tail matrix.",
+            "`vn-partition-proposal.v1` is retained under `comparison_artifacts` as versioned non-authoritative comparison data. It has `authoritative=false` and `planning_role=false`; it does not populate `vn_planning_assignment` and does not determine the primary or tail matrix. Its tranche labels use the proposal namespace `VNPROP-00`–`VNPROP-20` (renamed from the former bare `VN-xx` spelling per the 2026-07-29 owner ruling) so a proposal label can never collide with a contract window identifier.",
             "",
             "## Compounding Impact",
             "",

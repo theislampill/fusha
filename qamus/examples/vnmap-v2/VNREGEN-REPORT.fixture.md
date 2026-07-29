@@ -93,7 +93,7 @@ This restates the material improvement from the pre-ratification output: the gra
 
 ## Comparison artifact
 
-`vn-partition-proposal.v1` is retained under `comparison_artifacts` as versioned non-authoritative comparison data. It has `authoritative=false` and `planning_role=false`; it does not populate `vn_planning_assignment` and does not determine the primary or tail matrix.
+`vn-partition-proposal.v1` is retained under `comparison_artifacts` as versioned non-authoritative comparison data. It has `authoritative=false` and `planning_role=false`; it does not populate `vn_planning_assignment` and does not determine the primary or tail matrix. Its tranche labels use the proposal namespace `VNPROP-00`–`VNPROP-20` (renamed from the former bare `VN-xx` spelling per the 2026-07-29 owner ruling) so a proposal label can never collide with a contract window identifier.
 
 ## Compounding Impact
 

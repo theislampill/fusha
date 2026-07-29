@@ -105,7 +105,7 @@ class UniverseBuildTests(unittest.TestCase):
     def build(self):
         return build_universe(
             _mini_entries(), _mini_ayat(), [], {"membership": []},
-            {"vvv111": "VN-00"})
+            {"vvv111": "VNPROP-00"})
 
     def test_selected_vs_context_and_denominators(self):
         rows, occurrences, meta = self.build()
@@ -150,7 +150,7 @@ class MatrixBuildTests(unittest.TestCase):
     def build(self):
         entries = _mini_entries()
         universe_rows, _occ, _meta = build_universe(
-            entries, _mini_ayat(), [], {"membership": []}, {"vvv111": "VN-00"})
+            entries, _mini_ayat(), [], {"membership": []}, {"vvv111": "VNPROP-00"})
         entries_by_id = {e["id"]: e for e in entries}
         # Fixture membership entries that don't exist need stub entries.
         for row in _mini_membership()["membership"]:

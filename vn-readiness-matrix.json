@@ -22,6 +22,15 @@
     },
     "source_certified_count": 0
   },
+  "proposal_label_namespace": {
+    "evidence": [
+      "packets/VN-UNLOCK-PROOF-2026-07-29.md:Finding 0 (dawahwiki packets)"
+    ],
+    "labels": "VNPROP-00..VNPROP-20",
+    "namespace": "vn-partition-proposal.v1",
+    "reason": "owner ruling 2026-07-29: contract window ids VN-00..VN-23 are reserved for documented/plan windows; the balanced-partition proposal population (e.g. former proposal 'VN-03' = v196-v296) must not share the contract spelling",
+    "renamed_from": "VN-00..VN-20 (bare labels, retired for proposal use)"
+  },
   "proposal_rule": "DERIVED PROPOSAL: order entries by observed source key v001-v947, n001-n1045, p001-p100 (the noun keys use three-digit padding below 1,000 and four digits thereafter); preserve the documented numeric VN-00 (v001-v047 plus n0001-n0045) and VN-01 (v048-v094 plus n0046-n0090) boundaries; split the remaining 1,908 entries into 19 contiguous balanced groups (first 8 groups 101 entries, remaining 11 groups 100 entries).",
   "schema": "vnmap/readiness-matrix@1",
   "totals": {
@@ -72,7 +81,7 @@
         "unique_occurrence_percentage_of_D4": 4.4198,
         "unique_occurrence_rows": 1517
       },
-      "proposal_vn_tranche": "VN-00",
+      "proposal_vn_tranche": "VNPROP-00",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 147,
@@ -112,7 +121,7 @@
         "unique_occurrence_percentage_of_D4": 1.5849,
         "unique_occurrence_rows": 544
       },
-      "proposal_vn_tranche": "VN-01",
+      "proposal_vn_tranche": "VNPROP-01",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 57,
@@ -152,7 +161,7 @@
         "unique_occurrence_percentage_of_D4": 1.9579,
         "unique_occurrence_rows": 672
       },
-      "proposal_vn_tranche": "VN-02",
+      "proposal_vn_tranche": "VNPROP-02",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 57,
@@ -192,7 +201,7 @@
         "unique_occurrence_percentage_of_D4": 0.8857,
         "unique_occurrence_rows": 304
       },
-      "proposal_vn_tranche": "VN-03",
+      "proposal_vn_tranche": "VNPROP-03",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 100,
@@ -231,7 +240,7 @@
         "unique_occurrence_percentage_of_D4": 0.3059,
         "unique_occurrence_rows": 105
       },
-      "proposal_vn_tranche": "VN-04",
+      "proposal_vn_tranche": "VNPROP-04",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 48,
@@ -269,7 +278,7 @@
         "unique_occurrence_percentage_of_D4": 0.5856,
         "unique_occurrence_rows": 201
       },
-      "proposal_vn_tranche": "VN-05",
+      "proposal_vn_tranche": "VNPROP-05",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 45,
@@ -308,7 +317,7 @@
         "unique_occurrence_percentage_of_D4": 0.3205,
         "unique_occurrence_rows": 110
       },
-      "proposal_vn_tranche": "VN-06",
+      "proposal_vn_tranche": "VNPROP-06",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 20,
@@ -345,7 +354,7 @@
         "unique_occurrence_percentage_of_D4": 0.0845,
         "unique_occurrence_rows": 29
       },
-      "proposal_vn_tranche": "VN-07",
+      "proposal_vn_tranche": "VNPROP-07",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 18,
@@ -382,7 +391,7 @@
         "unique_occurrence_percentage_of_D4": 0.0495,
         "unique_occurrence_rows": 17
       },
-      "proposal_vn_tranche": "VN-08",
+      "proposal_vn_tranche": "VNPROP-08",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 12,
@@ -421,7 +430,7 @@
         "unique_occurrence_percentage_of_D4": 0.1836,
         "unique_occurrence_rows": 63
       },
-      "proposal_vn_tranche": "VN-09",
+      "proposal_vn_tranche": "VNPROP-09",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 28,
@@ -460,7 +469,7 @@
         "unique_occurrence_percentage_of_D4": 0.0408,
         "unique_occurrence_rows": 14
       },
-      "proposal_vn_tranche": "VN-10",
+      "proposal_vn_tranche": "VNPROP-10",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 9,
@@ -500,7 +509,7 @@
         "unique_occurrence_percentage_of_D4": 0.1923,
         "unique_occurrence_rows": 66
       },
-      "proposal_vn_tranche": "VN-11",
+      "proposal_vn_tranche": "VNPROP-11",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 66,
@@ -540,7 +549,7 @@
         "unique_occurrence_percentage_of_D4": 0.0291,
         "unique_occurrence_rows": 10
       },
-      "proposal_vn_tranche": "VN-12",
+      "proposal_vn_tranche": "VNPROP-12",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 62,
@@ -579,7 +588,7 @@
         "unique_occurrence_percentage_of_D4": 0.0291,
         "unique_occurrence_rows": 10
       },
-      "proposal_vn_tranche": "VN-13",
+      "proposal_vn_tranche": "VNPROP-13",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 60,
@@ -618,7 +627,7 @@
         "unique_occurrence_percentage_of_D4": 0.0495,
         "unique_occurrence_rows": 17
       },
-      "proposal_vn_tranche": "VN-14",
+      "proposal_vn_tranche": "VNPROP-14",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 60,
@@ -655,7 +664,7 @@
         "unique_occurrence_percentage_of_D4": 0.0175,
         "unique_occurrence_rows": 6
       },
-      "proposal_vn_tranche": "VN-15",
+      "proposal_vn_tranche": "VNPROP-15",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 7,
@@ -692,7 +701,7 @@
         "unique_occurrence_percentage_of_D4": 0.0175,
         "unique_occurrence_rows": 6
       },
-      "proposal_vn_tranche": "VN-16",
+      "proposal_vn_tranche": "VNPROP-16",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 2,
@@ -730,7 +739,7 @@
         "unique_occurrence_percentage_of_D4": 0.0874,
         "unique_occurrence_rows": 30
       },
-      "proposal_vn_tranche": "VN-17",
+      "proposal_vn_tranche": "VNPROP-17",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 60,
@@ -769,7 +778,7 @@
         "unique_occurrence_percentage_of_D4": 0.1282,
         "unique_occurrence_rows": 44
       },
-      "proposal_vn_tranche": "VN-18",
+      "proposal_vn_tranche": "VNPROP-18",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 87,
@@ -806,7 +815,7 @@
         "unique_occurrence_percentage_of_D4": 0.0,
         "unique_occurrence_rows": 0
       },
-      "proposal_vn_tranche": "VN-19",
+      "proposal_vn_tranche": "VNPROP-19",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 0,
@@ -842,7 +851,7 @@
         "unique_occurrence_percentage_of_D4": 0.0554,
         "unique_occurrence_rows": 19
       },
-      "proposal_vn_tranche": "VN-20",
+      "proposal_vn_tranche": "VNPROP-20",
       "source_certification_state": "pending_owner_certification",
       "source_certified_count": 0,
       "unique_occurrences": 1,

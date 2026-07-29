@@ -5992,6 +5992,57 @@ except Exception as _p007_e:
     check("P007PILOT li-pilot gates (harness error)", False)
     print("  ", _p007_e)
 
+# HAZARD: executable fixtures for the hazards proven live by
+# VN-UNLOCK-PROOF-2026-07-29 (wbw loc-aliasing + surface/loc double-match
+# guard, proposal/contract namespace collision, la-allomorph expansion note,
+# the two live carve forks, diptote-fatha jarr sign) plus citations of the
+# classes already covered by PR #123 (increment-24) and PR #121 (invariant 7).
+try:
+    _hazard_guard = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "apply_surface_guard.py"),
+    ], timeout=120)
+    check(
+        "HAZARD apply-surface-guard red-first self-test passes",
+        _hazard_guard.returncode == 0
+        and "APPLY SURFACE GUARD SELF-TEST PASS" in (_hazard_guard.stdout or ""),
+    )
+    _hazard_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_hazard_fixtures",
+        "-q",
+    ], timeout=240)
+    check(
+        "HAZARD fixture suite passes (loc-aliasing guard / namespace collision / la-allomorph / carve forks / diptote)",
+        _hazard_unit.returncode == 0
+        and "OK" in ((_hazard_unit.stdout or "") + (_hazard_unit.stderr or "")),
+    )
+    _hazard_discovery = run_text([
+        sys.executable,
+        os.path.join(ROOT, "qamus", "scripts", "find_li_noun_host_rows.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "HAZARD discovery classifier carries the la-allomorph expansion note (self-test)",
+        _hazard_discovery.returncode == 0
+        and "self-test OK" in (_hazard_discovery.stdout or ""),
+    )
+    for _hazard_art in (
+            "qamus/examples/hazards/wbw-loc-aliasing.fixture.jsonl",
+            "qamus/examples/hazards/live-carve-forks.fixture.jsonl",
+            "qamus/examples/hazards/allomorph-la-family.fixture.jsonl",
+            "qamus/examples/hazards/diptote-fatha-jarr.fixture.jsonl",
+            "tools/apply_surface_guard.py",
+            "tools/test_hazard_fixtures.py",
+    ):
+        check("HAZARD artifact committed: " + _hazard_art,
+              os.path.exists(os.path.join(_R, *_hazard_art.split("/"))))
+except Exception as _hazard_e:
+    check("HAZARD fixture gates (harness error)", False)
+    print("  ", _hazard_e)
+
 # P007UNIVERSE: P007_GEOMETRY_WAVE — the authoritative full p007 reverse
 # universe (2,999 rows) + geometry-only certification of the 454
 # deterministic-attachment-geometry rows (454 x 3 = 1,362 typed facts in a

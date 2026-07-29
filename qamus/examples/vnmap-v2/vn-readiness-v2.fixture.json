@@ -5,6 +5,14 @@
     "vn-partition-proposal.v1": {
       "artifact_id": "vn-partition-proposal.v1",
       "authoritative": false,
+      "label_namespace": {
+        "evidence": [
+          "packets/VN-UNLOCK-PROOF-2026-07-29.md:Finding 0 (dawahwiki packets)"
+        ],
+        "labels": "VNPROP-00..VNPROP-20",
+        "reason": "owner ruling 2026-07-29: contract window ids VN-00..VN-23 are reserved; the proposal population (e.g. former proposal 'VN-03' = v196-v296) is not the contract window of the same name",
+        "renamed_from": "VN-00..VN-20 (bare labels, retired for proposal use)"
+      },
       "planning_role": false,
       "role": "versioned_non_authoritative_comparison_artifact",
       "source_key_rule": "existing balanced partition proposal; retained for comparison only",
@@ -18,7 +26,7 @@
           "displayed_selected_words": 1,
           "entries": 1,
           "graph_complete_rows": 0,
-          "label": "VN-00",
+          "label": "VNPROP-00",
           "planning_role": false,
           "source_key_count": 92
         },
@@ -31,7 +39,7 @@
           "displayed_selected_words": 1,
           "entries": 1,
           "graph_complete_rows": 1,
-          "label": "VN-01",
+          "label": "VNPROP-01",
           "planning_role": false,
           "source_key_count": 92
         },
@@ -45,7 +53,7 @@
           "displayed_selected_words": 2,
           "entries": 1,
           "graph_complete_rows": 2,
-          "label": "VN-02",
+          "label": "VNPROP-02",
           "planning_role": false,
           "source_key_count": 101
         },
@@ -56,7 +64,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-03",
+          "label": "VNPROP-03",
           "planning_role": false,
           "source_key_count": 101
         },
@@ -67,7 +75,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-04",
+          "label": "VNPROP-04",
           "planning_role": false,
           "source_key_count": 101
         },
@@ -78,7 +86,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-05",
+          "label": "VNPROP-05",
           "planning_role": false,
           "source_key_count": 101
         },
@@ -89,7 +97,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-06",
+          "label": "VNPROP-06",
           "planning_role": false,
           "source_key_count": 101
         },
@@ -100,7 +108,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-07",
+          "label": "VNPROP-07",
           "planning_role": false,
           "source_key_count": 101
         },
@@ -111,7 +119,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-08",
+          "label": "VNPROP-08",
           "planning_role": false,
           "source_key_count": 101
         },
@@ -122,7 +130,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-09",
+          "label": "VNPROP-09",
           "planning_role": false,
           "source_key_count": 101
         },
@@ -133,7 +141,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-10",
+          "label": "VNPROP-10",
           "planning_role": false,
           "source_key_count": 100
         },
@@ -144,7 +152,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-11",
+          "label": "VNPROP-11",
           "planning_role": false,
           "source_key_count": 100
         },
@@ -155,7 +163,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-12",
+          "label": "VNPROP-12",
           "planning_role": false,
           "source_key_count": 100
         },
@@ -166,7 +174,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-13",
+          "label": "VNPROP-13",
           "planning_role": false,
           "source_key_count": 100
         },
@@ -177,7 +185,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-14",
+          "label": "VNPROP-14",
           "planning_role": false,
           "source_key_count": 100
         },
@@ -188,7 +196,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-15",
+          "label": "VNPROP-15",
           "planning_role": false,
           "source_key_count": 100
         },
@@ -199,7 +207,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-16",
+          "label": "VNPROP-16",
           "planning_role": false,
           "source_key_count": 100
         },
@@ -210,7 +218,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-17",
+          "label": "VNPROP-17",
           "planning_role": false,
           "source_key_count": 100
         },
@@ -221,7 +229,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-18",
+          "label": "VNPROP-18",
           "planning_role": false,
           "source_key_count": 100
         },
@@ -232,7 +240,7 @@
           "displayed_selected_words": 0,
           "entries": 0,
           "graph_complete_rows": 0,
-          "label": "VN-19",
+          "label": "VNPROP-19",
           "planning_role": false,
           "source_key_count": 100
         },
@@ -245,7 +253,7 @@
           "displayed_selected_words": 1,
           "entries": 1,
           "graph_complete_rows": 1,
-          "label": "VN-20",
+          "label": "VNPROP-20",
           "planning_role": false,
           "source_key_count": 100
         }
@@ -343,7 +351,7 @@
   },
   "material_improvement_delta": {
     "after_source": "EDGES/full-artifacts/lexeme-entry-crosswalk.forward.jsonl",
-    "basis": "stable VN-00..VN-20 balanced comparison identity; authority remapping is not mixed into this delta",
+    "basis": "stable VNPROP-00..VNPROP-20 balanced comparison identity (proposal namespace; formerly bare VN-xx); authority remapping is not mixed into this delta",
     "before_source": "pre-ratification vn-readiness-matrix.json",
     "proof_candidate_rows_added_separately": 3,
     "rows": [
@@ -360,7 +368,7 @@
         "delta_cards_completable": -1,
         "delta_entries_with_usable_edge": -1,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-00"
+        "label": "VNPROP-00"
       },
       {
         "after_candidate_rows": 0,
@@ -375,7 +383,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 1,
-        "label": "VN-01"
+        "label": "VNPROP-01"
       },
       {
         "after_candidate_rows": 1,
@@ -390,7 +398,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 2,
-        "label": "VN-02"
+        "label": "VNPROP-02"
       },
       {
         "after_candidate_rows": 0,
@@ -405,7 +413,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-03"
+        "label": "VNPROP-03"
       },
       {
         "after_candidate_rows": 0,
@@ -420,7 +428,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-04"
+        "label": "VNPROP-04"
       },
       {
         "after_candidate_rows": 0,
@@ -435,7 +443,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-05"
+        "label": "VNPROP-05"
       },
       {
         "after_candidate_rows": 0,
@@ -450,7 +458,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-06"
+        "label": "VNPROP-06"
       },
       {
         "after_candidate_rows": 0,
@@ -465,7 +473,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-07"
+        "label": "VNPROP-07"
       },
       {
         "after_candidate_rows": 0,
@@ -480,7 +488,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-08"
+        "label": "VNPROP-08"
       },
       {
         "after_candidate_rows": 0,
@@ -495,7 +503,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-09"
+        "label": "VNPROP-09"
       },
       {
         "after_candidate_rows": 0,
@@ -510,7 +518,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-10"
+        "label": "VNPROP-10"
       },
       {
         "after_candidate_rows": 0,
@@ -525,7 +533,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-11"
+        "label": "VNPROP-11"
       },
       {
         "after_candidate_rows": 0,
@@ -540,7 +548,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-12"
+        "label": "VNPROP-12"
       },
       {
         "after_candidate_rows": 0,
@@ -555,7 +563,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-13"
+        "label": "VNPROP-13"
       },
       {
         "after_candidate_rows": 0,
@@ -570,7 +578,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-14"
+        "label": "VNPROP-14"
       },
       {
         "after_candidate_rows": 0,
@@ -585,7 +593,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-15"
+        "label": "VNPROP-15"
       },
       {
         "after_candidate_rows": 0,
@@ -600,7 +608,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-16"
+        "label": "VNPROP-16"
       },
       {
         "after_candidate_rows": 0,
@@ -615,7 +623,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-17"
+        "label": "VNPROP-17"
       },
       {
         "after_candidate_rows": 0,
@@ -630,7 +638,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-18"
+        "label": "VNPROP-18"
       },
       {
         "after_candidate_rows": 0,
@@ -645,7 +653,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-19"
+        "label": "VNPROP-19"
       },
       {
         "after_candidate_rows": 0,
@@ -660,7 +668,7 @@
         "delta_cards_completable": 0,
         "delta_entries_with_usable_edge": 0,
         "delta_usable_selected_word_rows": 0,
-        "label": "VN-20"
+        "label": "VNPROP-20"
       }
     ],
     "totals": {

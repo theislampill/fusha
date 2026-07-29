@@ -15,6 +15,12 @@ Three invariant families (the UNIVERSE gates):
 3. Appearance-parity extension — every universe row claiming ``wbw_present``
    points at a loc that exists in the canonical occurrence-appearance index,
    and every matrix row's occurrence exists in the universe rollup.
+4. Proposal/contract namespace guard — a universe row whose ``tranche_kind``
+   is ``VN`` carries a proposal-namespace label (``VNPROP-xx``); it must
+   never collide with a contract window identifier (``VN-00``..``VN-23``).
+   The universe tranche field is the balanced-partition DERIVED PROPOSAL,
+   not the contract windows (owner ruling 2026-07-29;
+   VN-UNLOCK-PROOF-2026-07-29 Finding 0).
 
 ``--self-test`` is red-first: each invariant is first shown to FAIL on a
 corrupted fixture, then to pass on the clean fixture.
@@ -45,6 +51,8 @@ DEFAULT_APPEARANCE_INDEX = os.path.join(
     REPO_ROOT, "qamus", "indexes", "occurrence-appearances.jsonl")
 
 EXPECTED_TRANCHE_SIZES = {"P-00": 12, "P-01": 17, "P-02": 22, "P-03": 49}
+CONTRACT_WINDOW_IDS = frozenset(f"VN-{i:02d}" for i in range(24))
+PROPOSAL_VN_LABELS = frozenset(f"VNPROP-{i:02d}" for i in range(21))
 
 
 def _read_jsonl(path):
@@ -97,6 +105,16 @@ def validate_universe(universe_rows, occurrence_rows, meta, errors,
             counts["pause_marks"] += 1
             continue
         counts["words"] += 1
+        if row.get("tranche_kind") == "VN":
+            tranche = row.get("tranche")
+            if tranche in CONTRACT_WINDOW_IDS:
+                errors.append(
+                    f"{appearance_id}: proposal-namespace tranche label {tranche!r} "
+                    "collides with a contract window id (VN-00..VN-23); universe "
+                    "VN tranches must use the VNPROP-xx proposal namespace")
+            elif tranche not in PROPOSAL_VN_LABELS:
+                errors.append(
+                    f"{appearance_id}: unknown VN proposal tranche label {tranche!r}")
         if row.get("selected") is True:
             counts["selected"] += 1
         elif row.get("selected") is False:
@@ -306,6 +324,22 @@ def self_test():
     errors = []
     validate_universe(rows, occurrences, meta, errors, appearance_locs=set())
     expect("red: wbw_present without index loc rejected", bool(errors))
+
+    # 4) namespace guard: a VN-kind row with a bare contract window id must
+    # fail (red), the VNPROP proposal spelling must pass (green).
+    collided_rows = [dict(row) for row in rows]
+    collided_rows[0].update({"tranche_kind": "VN", "tranche": "VN-03"})
+    errors = []
+    validate_universe(collided_rows, occurrences, meta, errors,
+                      appearance_locs={"1:1:2"})
+    expect("red: proposal/contract namespace collision rejected",
+           any("collides with a contract window id" in error for error in errors))
+    renamed_rows = [dict(row) for row in rows]
+    renamed_rows[0].update({"tranche_kind": "VN", "tranche": "VNPROP-03"})
+    errors = []
+    validate_universe(renamed_rows, occurrences, meta, errors,
+                      appearance_locs={"1:1:2"})
+    expect("green: VNPROP proposal label accepted", not errors)
 
     # 4) matrix: certified must stay 'none'; P-02 must carry blocker.
     membership = _fixture_membership()

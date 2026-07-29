@@ -43,7 +43,17 @@ REPO = os.path.dirname(os.path.dirname(HERE))
 MATRIX = os.path.join(REPO, "qamus", "lattice", "particle-occurrence-matrix.jsonl")
 
 KASRA = "ِ"
+FATHA = "َ"
 LAM = "ل"
+
+# ALLOMORPH EXPANSION NOTE (VN-UNLOCK-PROOF-2026-07-29 §6.1): the strict
+# لِ+kasra prefix filter structurally MISSES the لَـ allomorph + pronoun-host
+# family (لَهُمْ / لَكُمْ / لَنَا ...) — the direct-source bulk of the corrected
+# VN window populations. Any discovery/classification over this query must
+# carry the لَـ rows forward explicitly (flag below) instead of silently
+# merging or dropping them. Hazard fixture:
+# qamus/examples/hazards/allomorph-la-family.fixture.jsonl.
+ALLOMORPH_LA_FLAG = "allomorph_la_family_requires_expansion"
 
 # Closed-class pronoun hosts of لِ (visible-host forms as the matrix records them, bare skeleton).
 PRONOUN_HOSTS = {"ي", "ى", "ه", "ها", "هم", "هن", "هما", "كم", "كن", "كما", "ك", "نا"}
@@ -81,6 +91,10 @@ def classify(row):
         or (len(surface) > 1 and surface[1] == KASRA)
     if not strict_li:
         flags.append("non_kasra_lam_needs_diacritic_check")
+        if len(surface) > 1 and surface[1] == FATHA:
+            # لَـ allomorph (لَهُمْ / لَكُمْ / لَنَا class): NOT a strict لِ+kasra row,
+            # but a genuine family member — carry the expansion note forward.
+            flags.append(ALLOMORPH_LA_FLAG)
 
     # pronoun-host family
     if bare_host in PRONOUN_HOSTS:
@@ -160,13 +174,22 @@ def self_test():
           "function_candidates": []}, "noun_host_candidate"),
         ({"particle_source_key": "p007", "surface": "لِقَوْمِهِ", "host_visible": "قومه",
           "function_candidates": []}, "noun_host_candidate"),
+        # لَـ allomorph family: pronoun-host route + MANDATORY expansion flag.
+        ({"particle_source_key": "p007", "surface": "لَهُمْ", "host_visible": "هم",
+          "function_candidates": []}, "pronoun_host"),
+        ({"particle_source_key": "p007", "surface": "لَكُمْ", "host_visible": "كم",
+          "function_candidates": []}, "pronoun_host"),
     ]
     fails = []
     for row, want in fx:
-        got, _flags = classify(row)
-        tag = "ok  " if got == want else "FAIL"
-        print("%s %-12s -> %-24s (want %s)" % (tag, row["surface"], got, want))
-        if got != want:
+        got, flags = classify(row)
+        needs_allomorph = len(row["surface"]) > 1 and row["surface"][1] == FATHA
+        flag_ok = (ALLOMORPH_LA_FLAG in flags) == needs_allomorph
+        tag = "ok  " if got == want and flag_ok else "FAIL"
+        print("%s %-12s -> %-24s (want %s%s)" % (
+            tag, row["surface"], got, want,
+            "; +" + ALLOMORPH_LA_FLAG if needs_allomorph else ""))
+        if got != want or not flag_ok:
             fails.append(row["surface"])
     if fails:
         print("SELF-TEST FAIL: %s" % ", ".join(fails))
