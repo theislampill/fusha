@@ -1,0 +1,58 @@
+{
+ "builder": {
+  "id": "build_example_ayah_universe",
+  "version": "1.0.0"
+ },
+ "card_alignment_basis": {
+  "ambiguous_exact": 3,
+  "ambiguous_strict": 1,
+  "contiguous_exact": 1942,
+  "contiguous_loose": 122,
+  "contiguous_strict": 5402,
+  "per_word_fallback": 214,
+  "ref_unparsed": 16
+ },
+ "derived_fields": {
+  "crosswalk": "'resolved' == display_local_to_canonical crosswalk present; 'missing' == display_local_to_canonical_crosswalk_missing",
+  "occurrence_id": "'quran:' + canonical_loc (aligned rows only)",
+  "rendered_span_target": "'rendered-span:' + (source_key or entry_id) + ':' + display_local_loc + ':' + canonical_loc (aligned rows only)",
+  "wbw_loc": "canonical_loc when wbw_present is true"
+ },
+ "inputs": {
+  "appearance_index": "qamus/indexes/occurrence-appearances.jsonl",
+  "entries": "qamus/data/current/entries.jsonl",
+  "loc_surface": "qamus/indexes/quran-loc-surface/index.jsonl",
+  "particle_membership": "qamus/data/particle-tranche-membership.json"
+ },
+ "notes": [
+  "One row per displayed-token appearance; pause-mark tokens carry word_class=pause_mark and are excluded from word/occurrence denominators.",
+  "The occurrence rollup (.occurrences.jsonl) preserves the unique-occurrence grain; unique_occurrences and appearances_at_occurrences are DIFFERENT denominators by design.",
+  "loose/loose_word_unique bases are recall-tier candidates only; they are never a certification basis.",
+  "The displayed fragment text is addressable via source_card_backlink into the committed entry store; displayed_fragment_hash = sha256(ar)[:12]."
+ ],
+ "schema": "qamus.example_ayah_universe.v1",
+ "totals": {
+  "aligned_words": 109018,
+  "appearances_at_occurrences": 109018,
+  "cards": 7700,
+  "context_words": 105062,
+  "displayed_tokens": 117117,
+  "displayed_words": 109471,
+  "entries": 2092,
+  "pages_with_cards": 2091,
+  "pause_mark_tokens": 7646,
+  "selected_words": 4409,
+  "unaligned_words": 453,
+  "unique_occurrences": 50041
+ },
+ "word_match_basis": {
+  "ambiguous": 82,
+  "exact": 95416,
+  "loose": 135,
+  "loose_word_unique": 42,
+  "ref_unparsed": 139,
+  "strict": 12795,
+  "strict_word_unique": 630,
+  "unaligned": 232
+ }
+}
