@@ -111,8 +111,12 @@ deployment without owner window + website-agent confirmation".
 `qamus/work-queues/next-actions.jsonl` — 4 queue heads (direct-source w2,
 two-vote w2 incl. the 6 convention re-votes, بِـ pre-flight verification,
 VN-00 note-normalize wave), each pointing at its full packet and repo queue
-source. Blockers that only the owner/arbitration/scholars can close:
-`docs/blockers.yaml`.
+source. **The public, executable task packets live in `qamus/task-packets/`**
+(one `TP-*.json` per queue head, validated by
+`tools/validate_task_packets.py`); each queue row's `repo_packet` field names
+its committed packet — the `full_packet` owner packets are private-workspace
+supplements, not prerequisites. Blockers that only the
+owner/arbitration/scholars can close: `docs/blockers.yaml`.
 
 ## 7. Exact commands
 
@@ -140,6 +144,15 @@ where no command exists yet. Do not invent alternative invocations.
 
 ## 9. Verification requirements
 
+- **Workspace hygiene before baseline** (discovered by the 2026-07-29 cold
+  trial): the baseline harness requires a normalized, generated-artifact-clean
+  tree — a long-lived checkout can fail up to 7 checks spuriously from
+  (a) tracked files checked out before the `.gitattributes` `eol=lf` rules
+  landed (fix: `git rm --cached -r -q . && git reset --hard HEAD`) and
+  (b) stale git-ignored generated files — dist/ packs, caches, installs
+  (fix: `git clean -fdX`; all ignored files are regenerable by repo
+  convention). Prefer a fresh clone/worktree for baseline verification; if
+  using an existing checkout, run both commands first.
 - Run `python tools/check_regressions.py` before and after any change; a PR
   is mergeable only on ALL PASS.
 - Recompute, never trust: tallies come from validators
@@ -173,6 +186,9 @@ Head of `qamus/work-queues/next-actions.jsonl`: **p007 direct-source function
 certification wave 2** (bounded Tafsir MCP + triangulation per row over the
 remaining direct-source queue, under the decided function-certification rung).
 It is tier-2, non-blocking, fully specified, and its machinery already exists.
+Its committed executable packet is `qamus/task-packets/TP-P007-DS-W2.json`
+(the wave-1 exclusion set is the committed coverage manifest
+`qamus/task-packets/tp-p007-ds-w1-covered-locs.json`).
 
 ## 12. Glossary (controlling senses)
 

@@ -1,3 +1,7 @@
+<!-- SUPERSEDED: near-duplicate of docs/VN-OPERATIONS.md (the authoritative copy, per docs/INDEX.md §4.3). Kept as history; consult VN-OPERATIONS.md for the current method. -->
+
+> **⚠ SUPERSEDED** — this playbook is a superseded near-duplicate; the authoritative VN tranche completion method is **`docs/VN-OPERATIONS.md`** (per `docs/INDEX.md` §4.3). Kept for history; do not port instructions from here.
+
 # VN-00 → VN-20 tranche completion playbook
 
 The reusable, tested method that took Qamus **VN-00, VN-01, and VN-02 to 100%** rich-hover, with all three frozen by regression gates; it is the template for any future VN tranche.

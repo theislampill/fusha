@@ -1,3 +1,7 @@
+<!-- HISTORICAL: point-in-time record. The "live 60.01%" figure below is historical and long superseded. Current coverage authority: docs/STATUS.md (98.72% as of its own dating). Per docs/INDEX.md §4.6, coverage truth lives only in docs/STATUS.md. -->
+
+> **⚠ HISTORICAL** — point-in-time record; the **"live 60.01%"** figure in the title and body is historical, not current. The current authority for live glossed coverage is **`docs/STATUS.md`** (98.72% at its as-of date). Do not cite this file for current coverage.
+
 # Hover-token terminal matrix (qamus-highlight, live 60.01%)
 
 Every one of the **49,900** rendered Qurʾān usage-āyah tokens has exactly one terminal state — **no silent

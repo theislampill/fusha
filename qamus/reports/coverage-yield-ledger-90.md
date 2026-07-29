@@ -1,3 +1,7 @@
+<!-- HISTORICAL: point-in-time record. The Phase-B "path to 90%" figures below are historical. Current coverage authority: docs/STATUS.md. Per docs/INDEX.md §4.6, coverage truth lives only in docs/STATUS.md. -->
+
+> **⚠ HISTORICAL** — point-in-time record; the coverage figures and the "path to 90%" plan below reflect when this landed and are superseded. Current coverage authority: **`docs/STATUS.md`**.
+
 # Coverage-yield ledger — path to 90% (Phase B)
 
 Computed from the live artifact (read-only). **Do not chase one-off tokens** — this ranks the path by safe resolved-token yield.
