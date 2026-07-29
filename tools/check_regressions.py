@@ -5684,6 +5684,48 @@ except Exception as _vn_e:
     check("VNMAP ledger gates (harness error)", False)
     print("  ", _vn_e)
 
+# UNIVERSE: example-ayah occurrence universe + particle-occurrence matrix.
+# Repo-self-contained: builders read only committed artifacts; the gates run
+# the focused tests, the red-first validator self-test, and the committed
+# artifact validation (membership exactly-once coverage, selected/context
+# denominators, unique-occurrence vs appearance preservation, wbw parity
+# extension, candidate-only matrix contract).
+try:
+    _uni_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_example_ayah_universe",
+        "-q",
+    ], timeout=120)
+    check(
+        "UNIVERSE builder focused tests pass",
+        _uni_unit.returncode == 0
+        and "OK" in ((_uni_unit.stdout or "") + (_uni_unit.stderr or "")),
+    )
+    _uni_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_example_universe.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "UNIVERSE validator red-first self-test passes",
+        _uni_self.returncode == 0
+        and "UNIVERSE SELF-TEST PASS" in (_uni_self.stdout or ""),
+    )
+    _uni_real = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_example_universe.py"),
+    ], timeout=600)
+    check(
+        "UNIVERSE committed universe/matrix/membership artifacts validate",
+        _uni_real.returncode == 0
+        and "UNIVERSE VALIDATION PASS" in (_uni_real.stdout or ""),
+    )
+except Exception as _uni_e:
+    check("UNIVERSE gates (harness error)", False)
+    print("  ", _uni_e)
+
 # VNREGEN: owner-rules readiness v2 builder, schema validator, and committed
 # fixture artifacts. The full-corpus lane outputs remain outside the repo;
 # this gate must pass from repository contents alone.
@@ -5757,6 +5799,43 @@ try:
 except Exception as _edges_e:
     check("EDGES typed graph gates (harness error)", False)
     print("  ", _edges_e)
+
+# PEDGES: particle typed-edge kinds (qamus.graph_edge.v1 extension, one
+# vocabulary) + two-surface projection-hash parity + homograph function
+# lattice.  Red-first self-test + committed green sample; fixture-only so a
+# fresh clone never depends on lane-side corpora.
+try:
+    _pedges_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_particle_projection_parity.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "PEDGES particle projection parity red-first self-test passes",
+        _pedges_self.returncode == 0
+        and "PARTICLE PROJECTION PARITY SELF-TEST PASS" in (_pedges_self.stdout or ""),
+    )
+    _pedges_sample = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_particle_projection_parity.py"),
+        os.path.join(_R, "qamus", "examples", "particle_projection_parity.sample.json"),
+    ], timeout=120)
+    check(
+        "PEDGES committed parity sample validates",
+        _pedges_sample.returncode == 0
+        and "PARTICLE PROJECTION PARITY VALIDATION PASS" in (_pedges_sample.stdout or ""),
+    )
+    check(
+        "PEDGES particle edge ontology schema committed",
+        os.path.exists(os.path.join(_R, "qamus", "schemas", "particle-edge-ontology.schema.json")),
+    )
+    check(
+        "PEDGES particle projection contract committed",
+        os.path.exists(os.path.join(_R, "docs", "qamus", "particle-projection-contract.md")),
+    )
+except Exception as _pedges_e:
+    check("PEDGES particle projection gates (harness error)", False)
+    print("  ", _pedges_e)
 
 # REPAIR1: reusable graph-repair families and occurrence-entry resolver fixtures.
 # This remains fixture-only so a fresh clone never depends on lane-side corpora.
