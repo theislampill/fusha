@@ -44,6 +44,7 @@ EDGE_TYPES = [
     "source_photo_edge",
     "rendered_appearance_edge",
     "decision_evidence_edge",
+    "citation_form_display_edge",
 ]
 EDGE_TYPE_SET = set(EDGE_TYPES)
 STATUSES = [
@@ -1146,6 +1147,277 @@ def build_graph(
     }
 
 
+# --------------------------------------------------------------------------- #
+# citation_form_display_edge emission (GRAPH-BACKLINK-REPAIR-PREP-2026-07-29 §1/§2)
+#
+# 4,930 of the 6,677 crosswalk-missing selected-word rows are dictionary
+# citation forms rendered display-locally: the entry page shows a lemma that is
+# NOT a token of the cited āyah.  Forcing a display_local_to_canonical crosswalk
+# for them would assert a FALSE canonical loc.  This mode re-types them with a
+# truthful lexeme-level edge (selected-word -> entry) that NEVER carries a
+# canonical loc (``no_canonical_loc_guard``); Qurʾānic witnesses elsewhere are
+# recorded as recall evidence only.  The remaining 1,747 attachable rows are
+# emitted as a deterministic authoring queue (Queue A), 2-vote-routed for the
+# ambiguous multi-position cases.
+# --------------------------------------------------------------------------- #
+CITATION_PRODUCER = {"id": "citation_form_display.v1", "version": "1"}
+CITATION_RETIRES_SATISFIED_BY_DESIGN = [
+    "display_local_to_canonical_crosswalk_missing",
+    "missing_quran_wbw_edge",
+    "canonical_occurrence_appearance_missing",
+]
+_CROSSWALK_MISSING = "display_local_to_canonical_crosswalk_missing"
+_MAX_WITNESS_EVIDENCE = 3
+
+
+def _nfc(value: str) -> str:
+    import unicodedata
+
+    return unicodedata.normalize("NFC", _text(value))
+
+
+def _card_refs(row: dict):
+    refs = []
+    for ref in row.get("source_card_refs") or []:
+        parts = str(ref).split(":")
+        if len(parts) == 2 and all(part.isdigit() for part in parts):
+            refs.append((int(parts[0]), int(parts[1])))
+    return refs
+
+
+def classify_attachability(row, by_ayah, strict_corpus, lenient_corpus):
+    """Classify one crosswalk-missing row per the §2 sweep method.
+
+    Returns (klass, payload) where klass is one of: multiword, attach_exact,
+    attach_norm, ambiguous, cite_elsewhere_strict, cite_lenient, cite_never,
+    empty.
+    """
+
+    from tools.normalize_ar import norm, norm_strict
+
+    selected = _nfc(row.get("selected_surface"))
+    if not selected:
+        return "empty", {}
+    if " " in selected:
+        return "multiword", {}
+    tokens = [
+        (loc, surface)
+        for ref in _card_refs(row)
+        for loc, surface in by_ayah.get(ref, [])
+    ]
+    exact_locs = sorted({loc for loc, surface in tokens if _nfc(surface) == selected})
+    if exact_locs:
+        if len(exact_locs) == 1:
+            return "attach_exact", {"attach_locs": exact_locs}
+        return "ambiguous", {"attach_locs": exact_locs, "tier": "exact"}
+    strict_key = norm_strict(selected)
+    strict_locs = sorted({loc for loc, surface in tokens if norm_strict(surface) == strict_key})
+    if strict_locs:
+        if len(strict_locs) == 1:
+            return "attach_norm", {"attach_locs": strict_locs}
+        return "ambiguous", {"attach_locs": strict_locs, "tier": "strict_normalized"}
+    witness = strict_corpus.get(strict_key) or []
+    if witness:
+        return "cite_elsewhere_strict", {"witness_locs": sorted(witness)}
+    lenient_witness = lenient_corpus.get(norm(selected)) or []
+    if lenient_witness:
+        return "cite_lenient", {"witness_locs": sorted(lenient_witness)}
+    return "cite_never", {}
+
+
+def _citation_status(selected: str, entry: dict, exact_index) -> tuple[str, str]:
+    """Packet §1 rule 3: reuse the status vocabulary, never extend it."""
+
+    own_surfaces = {_nfc(form["surface"]) for form in _iter_entry_forms(entry or {})}
+    collision_ids = sorted({item["entry_id"] for item in exact_index.get(bare(selected), [])})
+    if len(collision_ids) > 1:
+        return "ambiguous", ",".join(collision_ids)
+    if _nfc(selected) in own_surfaces:
+        return "deterministic_exact", ""
+    return "candidate", ""
+
+
+def build_citation_display(entries, ledger_rows, corpus_rows):
+    """Emit citation-display edges (Queue B) + the attachable queue (Queue A)."""
+
+    from tools.normalize_ar import norm, norm_strict
+
+    entries = list(entries or [])
+    entries_by_id, exact_index, _strict_index, _roots = _entry_indexes(entries)
+    by_ayah = defaultdict(list)
+    strict_corpus = defaultdict(list)
+    lenient_corpus = defaultdict(list)
+    for token in corpus_rows or []:
+        loc = _text(token.get("loc"))
+        surface = _text(token.get("surface"))
+        parts = loc.split(":")
+        if len(parts) != 3:
+            continue
+        by_ayah[(int(parts[0]), int(parts[1]))].append((loc, surface))
+        strict_corpus[norm_strict(surface)].append(loc)
+        lenient_corpus[norm(surface)].append(loc)
+
+    display_basis_by_class = {
+        "multiword": "multiword_phrase",
+        "cite_elsewhere_strict": "corpus_witness_elsewhere",
+        "cite_lenient": "corpus_witness_elsewhere",
+        "cite_never": "never_a_corpus_token",
+    }
+    witness_method_by_class = {
+        "cite_elsewhere_strict": "surface_match_strict_witness_only",
+        "cite_lenient": "surface_match_lenient_witness_only",
+    }
+    edges = []
+    queue = []
+    seen = set()
+    counts = Counter()
+    guard_blocked = 0
+    for row in ledger_rows or []:
+        if _CROSSWALK_MISSING not in (row.get("missing_edges") or []):
+            continue
+        counts["crosswalk_missing_rows"] += 1
+        klass, payload = classify_attachability(row, by_ayah, strict_corpus, lenient_corpus)
+        counts[klass] += 1
+        entry_id = _entry_id(row.get("entry_id"))
+        if not entry_id:
+            counts["skipped_no_entry_id"] += 1
+            continue
+        selected_id = _selected_id_for_row(row)
+        selected = _nfc(row.get("selected_surface"))
+        base = {
+            "entry_id": entry_id,
+            "source_key": _text(row.get("source_key")),
+            "proposal_vn_tranche": _text(row.get("proposal_vn_tranche")),
+            "selected_surface": selected,
+            "selected_word_id": selected_id,
+            "card_refs": [f"{s}:{a}" for s, a in _card_refs(row)],
+        }
+        if klass in ("attach_exact", "attach_norm", "ambiguous"):
+            tier = payload.get("tier") or (
+                "exact" if klass == "attach_exact" else "strict_normalized"
+            )
+            status = "ambiguous" if klass == "ambiguous" else "candidate"
+            review_route = (
+                "two_vote_disambiguation"
+                if klass == "ambiguous"
+                else ("none_deterministic_prefill" if klass == "attach_exact"
+                      else "orthography_guard_then_two_vote")
+            )
+            queue.append({
+                "schema": "qamus.crosswalk_attach_queue.v1",
+                **base,
+                "match_tier": tier,
+                "attach_locs": payload["attach_locs"],
+                "status": status,
+                "review_route": review_route,
+                "proposed_edge_type": "display_local_to_canonical_crosswalk_edge",
+                "producer": dict(CITATION_PRODUCER),
+            })
+            continue
+        if klass in ("empty",):
+            continue
+        # Queue B: citation_form_display_edge.  no_canonical_loc_guard: a row
+        # that still carries a canonical loc claim may not be re-typed here.
+        if _text(row.get("occurrence_id")) or _text(row.get("canonical_quran_loc")):
+            guard_blocked += 1
+            counts["no_canonical_loc_guard_blocked"] += 1
+            continue
+        status, collision = _citation_status(selected, entries_by_id.get(entry_id), exact_index)
+        usage_index = int(row.get("usage_index") or 1)
+        example_index = _card_example_index(row)
+        evidence = [{
+            "address": f"qamus:{entry_id}#field=usage[{usage_index - 1}].examples[{example_index - 1}]",
+            "method": "display_local_render",
+        }]
+        witness_locs = payload.get("witness_locs") or []
+        for loc in witness_locs[:_MAX_WITNESS_EVIDENCE]:
+            evidence.append({
+                "address": f"quran:{loc}",
+                "method": witness_method_by_class[klass],
+            })
+        details = {
+            **base,
+            "display_basis": display_basis_by_class[klass],
+            "witness_tier": {"cite_elsewhere_strict": "strict",
+                             "cite_lenient": "lenient"}.get(klass),
+            "witness_loc_count": len(witness_locs),
+            "collision_set": collision or None,
+            "retires_as_satisfied_by_design": list(CITATION_RETIRES_SATISFIED_BY_DESIGN),
+        }
+        details = {key: value for key, value in details.items() if value not in (None, "")}
+        item = make_edge(
+            "citation_form_display_edge",
+            selected_id,
+            entry_node(entry_id),
+            status,
+            evidence=evidence,
+            guards=["no_canonical_loc_guard", "orthography_guard_v1"],
+            details=details,
+            producer_id=CITATION_PRODUCER["id"],
+            producer_version=CITATION_PRODUCER["version"],
+        )
+        item["display_basis"] = display_basis_by_class[klass]
+        if item["edge_id"] not in seen:
+            seen.add(item["edge_id"])
+            edges.append(item)
+
+    violations = citation_guard_violations(edges)
+    if violations:
+        raise ValueError("no_canonical_loc_guard violated: " + "; ".join(violations[:5]))
+    metrics = {
+        "schema": "qamus.citation_form_display.metrics.v1",
+        "producer": dict(CITATION_PRODUCER),
+        "classification_counts": dict(sorted(counts.items())),
+        "queue_a_rows": len(queue),
+        "queue_b_edges": len(edges),
+        "queue_b_status_counts": dict(sorted(Counter(item["status"] for item in edges).items())),
+        "queue_b_display_basis_counts": dict(sorted(Counter(item["display_basis"] for item in edges).items())),
+        "queue_a_status_counts": dict(sorted(Counter(item["status"] for item in queue).items())),
+        "no_canonical_loc_guard_blocked": guard_blocked,
+        "retires_as_satisfied_by_design": list(CITATION_RETIRES_SATISFIED_BY_DESIGN),
+        "candidate_only": True,
+    }
+    return {"edges": edges, "queue": queue, "metrics": metrics}
+
+
+def citation_guard_violations(edges) -> list[str]:
+    """no_canonical_loc_guard: a citation edge may not target/carry a canonical
+    loc, and the stream may not co-emit a canonical_occurrence_edge for the same
+    selected-word node."""
+
+    violations = []
+    citation_nodes = set()
+    for item in edges or []:
+        if item.get("edge_type") != "citation_form_display_edge":
+            continue
+        citation_nodes.add(item.get("from_node_id"))
+        if item.get("to_node_type") not in {"entry", "sense"}:
+            violations.append(f"citation edge targets non-lexeme node: {item.get('edge_id')}")
+        details = item.get("details") or {}
+        for key in ("loc", "occurrence_id", "canonical_quran_loc", "attach_locs"):
+            if details.get(key):
+                violations.append(f"citation edge carries canonical loc claim: {item.get('edge_id')}")
+        for ev in item.get("evidence") or []:
+            method = _text(ev.get("method"))
+            if _text(ev.get("address")).startswith("quran:") and "witness_only" not in method:
+                violations.append(f"citation witness evidence is not witness-only: {item.get('edge_id')}")
+        if "no_canonical_loc_guard" not in (item.get("guards") or []):
+            violations.append(f"citation edge missing no_canonical_loc_guard: {item.get('edge_id')}")
+    for item in edges or []:
+        if item.get("edge_type") == "canonical_occurrence_edge" and item.get("from_node_id") in citation_nodes:
+            violations.append(
+                f"canonical_occurrence_edge co-emitted for citation node: {item.get('edge_id')}"
+            )
+    return violations
+
+
+def _write_pretty_json(path: Path, value: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
+        json.dump(value, handle, ensure_ascii=False, indent=2, sort_keys=True)
+        handle.write("\n")
+
+
 def _write_bundle(bundle: dict, output_dir: Path) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     write_jsonl(output_dir / "typed-edge-graph.jsonl", bundle["edges"])
@@ -1183,12 +1455,55 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--entries", required=True)
     parser.add_argument("--ledger", required=True)
-    parser.add_argument("--whitelist", required=True)
-    parser.add_argument("--appearances", required=True)
+    parser.add_argument("--whitelist")
+    parser.add_argument("--appearances")
     parser.add_argument("--fact", action="append", default=[])
     parser.add_argument("--predicate-v3", action="append", default=[])
     parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--emit-citation-display", action="store_true",
+                        help="emit citation_form_display_edge stream (Queue B) + "
+                             "the attachable crosswalk queue (Queue A) from the "
+                             "crosswalk-missing ledger rows")
+    parser.add_argument("--corpus",
+                        help="quran-loc-surface index JSONL (citation-display mode)")
     args = parser.parse_args(argv)
+    if args.emit_citation_display:
+        if not args.corpus:
+            parser.error("--emit-citation-display requires --corpus")
+        result = build_citation_display(
+            read_jsonl(args.entries),
+            read_jsonl(args.ledger),
+            read_jsonl(args.corpus),
+        )
+        output_dir = Path(args.output_dir)
+        write_jsonl(output_dir / "citation-display-edges.jsonl", result["edges"])
+        write_jsonl(output_dir / "crosswalk-attach-queue.jsonl", result["queue"])
+        _write_pretty_json(
+            output_dir / "citation-display-edges.meta.json",
+            {**result["metrics"],
+             "artifact": "citation-display-edges.jsonl",
+             "regenerate": ("python tools/build_typed_edge_crosswalk.py --emit-citation-display "
+                            "--entries qamus/data/current/entries.jsonl --ledger vn-ledger.jsonl "
+                            "--corpus qamus/indexes/quran-loc-surface/index.jsonl "
+                            "--output-dir qamus/lattice")},
+        )
+        _write_pretty_json(
+            output_dir / "crosswalk-attach-queue.meta.json",
+            {"schema": "qamus.crosswalk_attach_queue.meta.v1",
+             "artifact": "crosswalk-attach-queue.jsonl",
+             "rows": len(result["queue"]),
+             "status_counts": result["metrics"]["queue_a_status_counts"],
+             "producer": dict(CITATION_PRODUCER),
+             "candidate_only": True,
+             "regenerate": ("python tools/build_typed_edge_crosswalk.py --emit-citation-display "
+                            "--entries qamus/data/current/entries.jsonl --ledger vn-ledger.jsonl "
+                            "--corpus qamus/indexes/quran-loc-surface/index.jsonl "
+                            "--output-dir qamus/lattice")},
+        )
+        print(json.dumps(result["metrics"], ensure_ascii=False, sort_keys=True))
+        return 0
+    if not (args.whitelist and args.appearances):
+        parser.error("--whitelist and --appearances are required outside citation-display mode")
     bundle = build_from_paths(args)
     print(json.dumps(bundle["metrics"], ensure_ascii=False, sort_keys=True))
     return 0

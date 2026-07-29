@@ -1,0 +1,41 @@
+{
+  "artifact": "citation-display-edges.jsonl",
+  "candidate_only": true,
+  "classification_counts": {
+    "ambiguous": 83,
+    "attach_exact": 745,
+    "attach_norm": 919,
+    "cite_elsewhere_strict": 3250,
+    "cite_lenient": 184,
+    "cite_never": 1300,
+    "crosswalk_missing_rows": 6677,
+    "multiword": 196
+  },
+  "no_canonical_loc_guard_blocked": 0,
+  "producer": {
+    "id": "citation_form_display.v1",
+    "version": "1"
+  },
+  "queue_a_rows": 1747,
+  "queue_a_status_counts": {
+    "ambiguous": 83,
+    "candidate": 1664
+  },
+  "queue_b_display_basis_counts": {
+    "corpus_witness_elsewhere": 3434,
+    "multiword_phrase": 196,
+    "never_a_corpus_token": 1300
+  },
+  "queue_b_edges": 4930,
+  "queue_b_status_counts": {
+    "ambiguous": 371,
+    "deterministic_exact": 4559
+  },
+  "regenerate": "python tools/build_typed_edge_crosswalk.py --emit-citation-display --entries qamus/data/current/entries.jsonl --ledger vn-ledger.jsonl --corpus qamus/indexes/quran-loc-surface/index.jsonl --output-dir qamus/lattice",
+  "retires_as_satisfied_by_design": [
+    "display_local_to_canonical_crosswalk_missing",
+    "missing_quran_wbw_edge",
+    "canonical_occurrence_appearance_missing"
+  ],
+  "schema": "qamus.citation_form_display.metrics.v1"
+}
