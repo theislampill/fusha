@@ -5992,6 +5992,52 @@ except Exception as _p007_e:
     check("P007PILOT li-pilot gates (harness error)", False)
     print("  ", _p007_e)
 
+# P007UNIVERSE: P007_GEOMETRY_WAVE — the authoritative full p007 reverse
+# universe (2,999 rows) + geometry-only certification of the 454
+# deterministic-attachment-geometry rows (454 x 3 = 1,362 typed facts in a
+# hash-chained store).  OWNER BOUNDARY enforced red-first: the wave certifies
+# mechanics only (attachment geometry, base-letter span, NFC reconstruction,
+# token/host boundary) and the validator FAILS if any geometry-wave fact
+# claims identity, function, sense, governor, case or meaning.  The 11 P007_*
+# state tallies in the meta sidecar are recomputed, never asserted.
+try:
+    _p007u_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_p007_universe.py"),
+        "--self-test",
+    ], timeout=600)
+    check(
+        "P007UNIVERSE reverse-universe red-first self-test passes (owner-boundary reds)",
+        _p007u_self.returncode == 0
+        and "P007 UNIVERSE SELF-TEST PASS" in (_p007u_self.stdout or ""),
+    )
+    _p007u_green = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_p007_universe.py"),
+    ], timeout=300)
+    check(
+        "P007UNIVERSE committed universe validates (2,999 rows / 454 geometry rows / 1,362 facts)",
+        _p007u_green.returncode == 0
+        and "P007 UNIVERSE VALIDATION PASS" in (_p007u_green.stdout or ""),
+    )
+    for _p007u_art in (
+            "qamus/lattice/p007-reverse-universe.jsonl",
+            "qamus/lattice/p007-reverse-universe.meta.json",
+            "qamus/lattice/p007-population-classification.jsonl",
+            "qamus/lattice/p007-population-classification.meta.json",
+            "qamus/lattice/p007-mcp-evidence-refs.jsonl",
+            "qamus/certification/p007-geometry-wave/typed-facts.jsonl",
+            "qamus/certification/p007-geometry-wave/events.jsonl",
+            "qamus/certification/p007-geometry-wave/spot-check.json",
+            "qamus/certification/p007-geometry-wave/spot-check-worksheet.json",
+            "tools/build_p007_geometry_wave.py",
+    ):
+        check("P007UNIVERSE artifact committed: " + _p007u_art,
+              os.path.exists(os.path.join(_R, *_p007u_art.split("/"))))
+except Exception as _p007u_e:
+    check("P007UNIVERSE reverse-universe gates (harness error)", False)
+    print("  ", _p007u_e)
+
 # REPAIR1: reusable graph-repair families and occurrence-entry resolver fixtures.
 # This remains fixture-only so a fresh clone never depends on lane-side corpora.
 try:
