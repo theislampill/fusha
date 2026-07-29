@@ -144,6 +144,15 @@ where no command exists yet. Do not invent alternative invocations.
 
 ## 9. Verification requirements
 
+- **Workspace hygiene before baseline** (discovered by the 2026-07-29 cold
+  trial): the baseline harness requires a normalized, generated-artifact-clean
+  tree — a long-lived checkout can fail up to 7 checks spuriously from
+  (a) tracked files checked out before the `.gitattributes` `eol=lf` rules
+  landed (fix: `git rm --cached -r -q . && git reset --hard HEAD`) and
+  (b) stale git-ignored generated files — dist/ packs, caches, installs
+  (fix: `git clean -fdX`; all ignored files are regenerable by repo
+  convention). Prefer a fresh clone/worktree for baseline verification; if
+  using an existing checkout, run both commands first.
 - Run `python tools/check_regressions.py` before and after any change; a PR
   is mergeable only on ALL PASS.
 - Recompute, never trust: tallies come from validators
