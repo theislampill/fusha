@@ -1,0 +1,26 @@
+{
+ "schema": "qamus.p007_population_classification_meta.v1",
+ "source_packet": "dawahwiki:packets/p007-full-population/p007-classification.jsonl (P007 full-population disposition lane, 2026-07-29)",
+ "imported_unchanged": true,
+ "rows": 2999,
+ "row_schema": "qamus.p007_population_classification.v1",
+ "mode": "candidate — dispositions and queue routing only; no row is a certification",
+ "partitions": {
+  "deterministic-attachment-geometry": 454,
+  "direct-source-attested-function": 866,
+  "two-vote-required": 340,
+  "scholar-required": 2,
+  "rejected-false-candidate": 1337
+ },
+ "inputs_of_the_lane": {
+  "matrix": "qamus/lattice/particle-occurrence-matrix.jsonl",
+  "loc_surface_index": "qamus/indexes/quran-loc-surface/index.jsonl",
+  "qac": "out/hover_stage/qac-tokroots.tsv (lane-side; not a repo dependency)",
+  "pilot": "qamus/examples/p007-li-pilot/"
+ },
+ "mcp_evidence_refs": "qamus/lattice/p007-mcp-evidence-refs.jsonl (90 verbatim-call refs: 60 sample + 30 spot-check; records live in the dawahwiki packet)",
+ "notes": [
+  "Committed so tools/validate_p007_universe.py can recompute partition-consistency on a fresh clone (RM-09: no operator absolute paths; the packet is cited by relative dawahwiki address).",
+  "The classification is the CANDIDATE disposition of all 2,999 p007 matrix rows; certification lives only in hash-chained typed-fact stores."
+ ]
+}
