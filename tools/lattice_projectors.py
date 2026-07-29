@@ -1660,6 +1660,49 @@ def wbw_norm(s: str) -> str:
 
 _MIN_JOIN_LEN = 3  # expand.py MIN_FORM_LEN: ignore very short forms (particles/clitics)
 
+# JOIN-KEY-LAYER hamza-seat rescue (lane O2, GRAPH-BACKLINK-REPAIR-PREP-2026-07-29 §4).
+# ``wbw_norm`` (vendored verbatim from the deployed pipeline -- NEVER edited here)
+# drops hamza seats entirely, so hamza-carrying lexemes lose a radical and can fall
+# under ``_MIN_JOIN_LEN`` (أُمَّة -> 'مه', أَمَّا -> 'ما'). The rescue is an ADDITIVE,
+# namespaced secondary key derived with the hamza-seat-preserving ``norm_strict``
+# and applied ONLY where the deployed key died under ``_MIN_JOIN_LEN``: because the
+# extra folds from strict->wbw are monotone, any pair equal under strict is equal
+# under wbw, so the strict pass can never add a match the deployed key would have
+# rejected for any reason other than the MIN_JOIN_LEN death. Deployed normalizer
+# semantics are unchanged (server-parity constraint).
+_STRICT_KEY_NS = "strict:"
+
+
+def _strict_content_key(surface: str) -> str:
+    """Hamza-seat-preserving content key (normalize_ar.norm_strict, space-folded)."""
+    try:
+        from tools.normalize_ar import norm_strict
+    except ImportError:
+        sys.path.insert(0, str(ROOT))
+        from tools.normalize_ar import norm_strict  # type: ignore
+    return norm_strict(surface).replace(" ", "")
+
+
+def _strict_rescue_keys(surface: str) -> set:
+    """Namespaced strict keys for a surface whose deployed wbw key (or its
+    de-proclitic remainder) dies under ``_MIN_JOIN_LEN``. Additive recall tier:
+    matches found only via these route through the existing multi-root 2-vote
+    behavior and are labeled ``join_key_basis=strict_rescue`` on edges."""
+    keys: set = set()
+    wbw = wbw_norm(surface)
+    strict = _strict_content_key(surface)
+    if len(wbw) < _MIN_JOIN_LEN and len(strict) >= _MIN_JOIN_LEN:
+        keys.add(_STRICT_KEY_NS + strict)
+    # de-proclitic layer: the stripped wbw remainder may die even when the full
+    # key survives (وَأَمَّا -> wbw 'وما' lives, remainder 'ما' dies; strict 'أما' lives)
+    for pfx in ("وال", "فال", "بال", "كال", "لل", "ال", "و", "ف", "ب", "ك", "ل", "ت", "س"):
+        if strict.startswith(pfx):
+            strict_rem = strict[len(pfx):]
+            wbw_rem = wbw[len(pfx):] if wbw.startswith(pfx) else wbw_norm(strict_rem)
+            if len(wbw_rem) < _MIN_JOIN_LEN and len(strict_rem) >= _MIN_JOIN_LEN:
+                keys.add(_STRICT_KEY_NS + strict_rem)
+    return keys
+
 
 def _deproclitic_keys(nsurface: str) -> set:
     """Deterministic proclitic-stripped candidate keys on a NORMALIZED surface
@@ -1713,14 +1756,22 @@ def build_lexeme_index(entries: Iterable[Dict[str, Any]]) -> Dict[str, List[Dict
                 pairs.append((ar, "sense"))
         for surface, etype in pairs:
             key = wbw_norm(surface)
-            if len(key) < _MIN_JOIN_LEN:
-                continue
-            dedup = (key, eid, etype)
-            if dedup in seen:
-                continue
-            seen.add(dedup)
-            index[key].append({"entry_id": eid, "root": root, "section": section,
-                               "category": cat, "edge_type": etype, "form": surface})
+            if len(key) >= _MIN_JOIN_LEN:
+                candidate_keys = [(key, "wbw")]
+            else:
+                # O2 hamza-seat rescue: the deployed key died under MIN_JOIN_LEN;
+                # index the strict secondary key instead (namespaced -- it can
+                # never collide with a deployed wbw key because rescue keys keep
+                # at least one hamza seat the wbw key dropped).
+                candidate_keys = [(k, "strict_rescue") for k in _strict_rescue_keys(surface)]
+            for idx_key, basis in candidate_keys:
+                dedup = (idx_key, eid, etype)
+                if dedup in seen:
+                    continue
+                seen.add(dedup)
+                index[idx_key].append({"entry_id": eid, "root": root, "section": section,
+                                       "category": cat, "edge_type": etype, "form": surface,
+                                       "join_key_basis": basis})
     return index
 
 
@@ -1756,10 +1807,20 @@ def build_lexeme_join(
         for k in list(direct_keys):
             derived_keys |= _deproclitic_keys(k)
         derived_keys -= direct_keys
+        # O2 hamza-seat rescue lookups (namespaced; only rescue-indexed forms match)
+        strict_keys: set = {k for k in _strict_rescue_keys(norm(r.get("surface", "")))}
+        for s in (r.get("segments") or []):
+            if is_lexical_head(s):
+                strict_keys |= _strict_rescue_keys(norm(s.get("surface", "")))
         rank = {"headword": 4, "form": 3, "sense": 2, "derived": 1}
         hits: Dict[str, Dict[str, Any]] = {}
-        for k, is_derived in [(k, False) for k in direct_keys] + [(k, True) for k in derived_keys]:
-            if len(k) < _MIN_JOIN_LEN:
+        lookups = (
+            [(k, False) for k in direct_keys]
+            + [(k, True) for k in derived_keys]
+            + [(k, False) for k in strict_keys]
+        )
+        for k, is_derived in lookups:
+            if not k.startswith(_STRICT_KEY_NS) and len(k) < _MIN_JOIN_LEN:
                 continue
             for e in index.get(k, ()):
                 etype = "derived" if is_derived else e["edge_type"]
@@ -1778,6 +1839,7 @@ def build_lexeme_join(
                 "loc": loc,
                 "entry_id": eid,
                 "edge_type": e["edge_type"],
+                "join_key_basis": e.get("join_key_basis", "wbw"),
                 "section": e["section"],
                 "entry_root": e["root"],
                 "row_root": row_root,
@@ -1821,7 +1883,7 @@ def build_lexeme_join(
     instrumentation = {
         "schema": "qamus.lattice.lexeme_join.v1",
         "normalizer": "vendored services/qamus_wbw/normalize.py::norm (content-word key)",
-        "inputs": {"whitelist_rows": n_rows, "entries": len(entries),
+        "inputs": {"occurrence_rows": n_rows, "entries": len(entries),
                    "lexeme_index_keys": len(index)},
         "occurrence_to_entry": {
             "rows_matching_at_least_one_entry": matched_rows,
@@ -1845,6 +1907,9 @@ def build_lexeme_join(
         "edge_count": len(edges),
         "edge_types": dict(Counter(e["edge_type"] for e in edges)),
         "relation_counts": dict(Counter(e["relation"] for e in edges)),
+        "join_key_basis_counts": dict(Counter(e["join_key_basis"] for e in edges)),
+        "strict_rescue_entries": len({e["entry_id"] for e in edges
+                                      if e["join_key_basis"] == "strict_rescue"}),
     }
     return {"instrumentation": instrumentation, "edges": edges,
             "entry_occurrences": {k: sorted(v, key=_loc_key) for k, v in entry_occurrences.items()}}
@@ -2207,6 +2272,43 @@ def self_test() -> int:
         )
     )
 
+    # t26 (lane O2, أُمَّة-class red-first): the deployed wbw key drops the hamza
+    # seat and dies under _MIN_JOIN_LEN (أُمَّة -> 'مه'), so the entry orphans under
+    # the primary key. The join-key-layer strict rescue must recover it WITHOUT
+    # touching wbw_norm itself (server-parity: wbw_norm('أُمَّة') stays 'مه').
+    umma_entry = entry("j-umma", "أ م م", "أُمَّة", ["أُمَّة", "أُمَم"], category="Nouns")
+    umma_entry["source_keys"] = ["n0740"]
+    umma_rows = [rootless_row("2:128:8", "أُمَّةً", [("أُمَّةً", "TOK", "token")])]
+    red_primary_key_dies = len(wbw_norm("أُمَّة")) < _MIN_JOIN_LEN and wbw_norm("أُمَّة") == "مه"
+    jr26 = build_lexeme_join(umma_rows, [umma_entry])
+    ji26 = jr26["instrumentation"]
+    results["t26_hamza_seat_strict_rescue"] = (
+        red_primary_key_dies
+        and ji26["entry_to_occurrence"]["orphan_entries_no_occurrence"] == 0
+        and jr26["entry_occurrences"].get("j-umma") == ["2:128:8"]
+        and all(e["join_key_basis"] == "strict_rescue" for e in jr26["edges"])
+        and ji26["strict_rescue_entries"] == 1
+        and wbw_norm("أُمَّة") == "مه"  # deployed normalizer semantics unchanged
+    )
+
+    # t27 (lane O1, whitelist-coverage-gap red-first): an entry whose only corpus
+    # witness sits OUTSIDE the whitelist orphans under the whitelist-only join;
+    # the same join over the full corpus token index (surface-only rows, no
+    # segments/morphline) must cover it.
+    wild_entry = entry("j-wild", "و ح ش", "وُحُوش", ["وُحُوش"], category="Animals & Birds")
+    wild_entry["source_keys"] = ["n0741"]
+    whitelist_rows_27 = []  # 81:5:2 is not a live-hover whitelist row
+    corpus_rows_27 = [{"loc": "81:5:2", "surface": "ٱلْوُحُوشُ"}]  # full corpus token
+    jr27_wl = build_lexeme_join(whitelist_rows_27, [wild_entry])
+    jr27_corpus = build_lexeme_join(corpus_rows_27, [wild_entry])
+    results["t27_full_corpus_join_covers_outside_whitelist"] = (
+        jr27_wl["instrumentation"]["entry_to_occurrence"]["orphan_entries_no_occurrence"] == 1
+        and jr27_corpus["instrumentation"]["entry_to_occurrence"]["orphan_entries_no_occurrence"] == 0
+        and jr27_corpus["entry_occurrences"].get("j-wild") == ["81:5:2"]
+        and all(e["relation"] == "linkage_only" or e["entry_root"]
+                for e in jr27_corpus["edges"])
+    )
+
     ok = all(v is True for k, v in results.items() if k.startswith("t"))
     print(json.dumps({"ok": ok, "results": results}, ensure_ascii=False, indent=2))
     return 0 if ok else 1
@@ -2230,7 +2332,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     inh.add_argument("--out-ledger", type=Path)
     inh.add_argument("--max-ledger", type=int, default=0, help="cap ledger rows written (0 = all)")
     jn = sub.add_parser("join", help="global bidirectional occurrence<->entry lexeme join + edges")
-    jn.add_argument("--whitelist", required=True, type=Path)
+    jn.add_argument("--whitelist", type=Path,
+                    help="deployed hover whitelist rows (segments/morphline-bearing)")
+    jn.add_argument("--corpus", type=Path,
+                    help="full corpus token index (qamus/indexes/quran-loc-surface/index.jsonl); "
+                         "joins EVERY corpus token, not just the live-hover whitelist (lane O1)")
     jn.add_argument("--entries", type=Path, default=ENTRIES_DEFAULT)
     jn.add_argument("--out-instrumentation", type=Path)
     jn.add_argument("--out-edges", type=Path)
@@ -2295,24 +2401,31 @@ def main(argv: Optional[List[str]] = None) -> int:
         print(json.dumps(summary, ensure_ascii=False, indent=2))
         return 0
     if args.command == "join":
-        rows = load_whitelist(args.whitelist)
+        if bool(args.whitelist) == bool(args.corpus):
+            parser.error("join requires exactly one of --whitelist or --corpus")
+        source_path = args.whitelist or args.corpus
+        rows = load_whitelist(source_path)
         entries = load_entries(args.entries)
         result = build_lexeme_join(rows, entries)
         instr = result["instrumentation"]
-        instr["inputs"]["whitelist_sha256_16"] = hashlib.sha256(args.whitelist.read_bytes()).hexdigest()[:16]
+        instr["inputs"]["row_source"] = (
+            "whitelist" if args.whitelist else "full_corpus_token_index"
+        )
+        instr["inputs"]["row_source_sha256_16"] = hashlib.sha256(source_path.read_bytes()).hexdigest()[:16]
         if args.out_edges:
             args.out_edges.parent.mkdir(parents=True, exist_ok=True)
-            with args.out_edges.open("w", encoding="utf-8") as handle:
+            with args.out_edges.open("w", encoding="utf-8", newline="\n") as handle:
                 for e in result["edges"]:
                     handle.write(json.dumps(e, ensure_ascii=False) + "\n")
         if args.out_entry_occurrences:
             args.out_entry_occurrences.parent.mkdir(parents=True, exist_ok=True)
-            with args.out_entry_occurrences.open("w", encoding="utf-8") as handle:
+            with args.out_entry_occurrences.open("w", encoding="utf-8", newline="\n") as handle:
                 for eid, locs in sorted(result["entry_occurrences"].items()):
                     handle.write(json.dumps({"entry_id": eid, "occurrences": locs}, ensure_ascii=False) + "\n")
         if args.out_instrumentation:
             args.out_instrumentation.parent.mkdir(parents=True, exist_ok=True)
-            args.out_instrumentation.write_text(json.dumps(instr, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            with args.out_instrumentation.open("w", encoding="utf-8", newline="\n") as handle:
+                handle.write(json.dumps(instr, ensure_ascii=False, indent=2) + "\n")
         print(json.dumps(instr, ensure_ascii=False, indent=2))
         return 0
     parser.error("a command is required")

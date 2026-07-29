@@ -1,0 +1,970 @@
+{
+  "candidate_only": true,
+  "crawled_at": "2026-07-29T01:22:20Z",
+  "misses": [
+    {
+      "basis": "sweep_attach",
+      "entry_id": "3041d6f44a27",
+      "expected_loc": "33:13:8",
+      "source_key": "v005"
+    },
+    {
+      "basis": "sweep_attach",
+      "entry_id": "3041d6f44a27",
+      "expected_loc": "9:7:16",
+      "source_key": "v005"
+    },
+    {
+      "basis": "ledger_canonical",
+      "entry_id": "a988d51ee485",
+      "expected_loc": "3:132:5",
+      "source_key": "v014"
+    },
+    {
+      "basis": "ledger_canonical",
+      "entry_id": "a988d51ee485",
+      "expected_loc": "7:151:10",
+      "source_key": "v014"
+    }
+  ],
+  "origin_note": "public entry pages only; GET-only, throttled, identifying UA",
+  "pages": [
+    {
+      "error": null,
+      "id": "02037b48cfda",
+      "payload_sha256": "991905dd17823358c049f86a4505e5b10e7c33f8d2d1abde4531c7d661bc0cb5",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 11,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/02037b48cfda"
+    },
+    {
+      "error": null,
+      "id": "03164a6bcd54",
+      "payload_sha256": "6d3d2bdf3464216a085241c6272c584f6cd34b5fe938ff11115bee4a076d5977",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 39,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/03164a6bcd54"
+    },
+    {
+      "error": null,
+      "id": "049756ecbbf9",
+      "payload_sha256": "a13d08b344807d959f8157187bd06037f6ef19f371640aee60f97a39fee9ca5c",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 135,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/049756ecbbf9"
+    },
+    {
+      "error": null,
+      "id": "06fc0ada60e9",
+      "payload_sha256": "c194e7a8ac9ef4b445bd8c25ff8ede6e6441e17b35ac1059a5e60dcd62a47b25",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 174,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/06fc0ada60e9"
+    },
+    {
+      "error": null,
+      "id": "0a48df03174d",
+      "payload_sha256": "353c3fbc6a84b66ca67f5f7975d08b7e5f9cf0a0596187141cde51eea1ad666a",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 4,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/0a48df03174d"
+    },
+    {
+      "error": null,
+      "id": "0f79975eb71d",
+      "payload_sha256": "6d5eb6654e3f1e674945b20f2385ff954050f33029af6965aa03772c5b070bfc",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 541,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/0f79975eb71d"
+    },
+    {
+      "error": null,
+      "id": "110a94ede2c1",
+      "payload_sha256": "c85a7f11275ee9de285eccc145fe217fba98c17364d9c640f31db2b6327f770d",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 28,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/110a94ede2c1"
+    },
+    {
+      "error": null,
+      "id": "118bc59f6f66",
+      "payload_sha256": "b7b166630fa2564ff45e5ee366ab957f8f49e73ea8067a48276c280f5a32f571",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 36,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/118bc59f6f66"
+    },
+    {
+      "error": null,
+      "id": "141cbc3bd2bd",
+      "payload_sha256": "553f5a1ab3d6760352774c9aeb1aae4c6396e0488d38ebf70157b49584d01537",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 1009,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/141cbc3bd2bd"
+    },
+    {
+      "error": null,
+      "id": "164c9dc1a38b",
+      "payload_sha256": "948707f28cfffcbc7daa4211b497fd4e844158c8644439f1456e8524f3470226",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 22,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/164c9dc1a38b"
+    },
+    {
+      "error": null,
+      "id": "1c0e586d8885",
+      "payload_sha256": "20bed6544e066fa0ac1446fd293239f49977245ff6ad2290cbd247b04bebcd3c",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 9,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/1c0e586d8885"
+    },
+    {
+      "error": null,
+      "id": "1c5f7c9c8e05",
+      "payload_sha256": "5bbc0f6c63a12fed5a2a332890f3e4a68cd32b49eda620e3a88d200358635d24",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 58,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/1c5f7c9c8e05"
+    },
+    {
+      "error": null,
+      "id": "1fd424ee1e74",
+      "payload_sha256": "311b366a579a2a87739d95da5381a57b7ebecc3689e9630640e64542106e1ffd",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 85,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/1fd424ee1e74"
+    },
+    {
+      "error": null,
+      "id": "21d0c74b634d",
+      "payload_sha256": "1b892ad7beb62fb951533f4c44db22caa86b539587d4f98caf09a91c0ed77660",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 428,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/21d0c74b634d"
+    },
+    {
+      "error": null,
+      "id": "2a3995a72aca",
+      "payload_sha256": "63cdece522da12f407535afff618cf19169c4968f97edf15273ccee871a7e091",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 11,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/2a3995a72aca"
+    },
+    {
+      "error": null,
+      "id": "2c4791a3c397",
+      "payload_sha256": "242d0e8e617cb941aee78b82f186a2127022e55f1cbd7fa03199a82f23615ba6",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 42,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/2c4791a3c397"
+    },
+    {
+      "error": null,
+      "id": "2f4151b667e5",
+      "payload_sha256": "4d7fb4a549582b447b4199d6b0aabff4fce244c8585a56782288e7ea0ab33515",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 24,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/2f4151b667e5"
+    },
+    {
+      "error": null,
+      "id": "3041d6f44a27",
+      "payload_sha256": "e204096814df3830da304b7c6263adbb344f2e1b47fd370e3123ae24686a65cd",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 133,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/3041d6f44a27"
+    },
+    {
+      "error": null,
+      "id": "30f45f08fa14",
+      "payload_sha256": "d9ca69a3ceb772d6e0239631ce3c2bd7bf46d0a479a2b1657c8ab6cb28d55a14",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 12,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/30f45f08fa14"
+    },
+    {
+      "error": null,
+      "id": "33787ee8c0c1",
+      "payload_sha256": "c0d4291bc2d215a73511e2d3fd16778ca25d34022437e17b703b219e8995a261",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 94,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/33787ee8c0c1"
+    },
+    {
+      "error": null,
+      "id": "3575d87778cd",
+      "payload_sha256": "004e85028f2aa81d9dab278a8815c1361f80d8f3680b560922c28e037761e58e",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 52,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/3575d87778cd"
+    },
+    {
+      "error": null,
+      "id": "37ecb412b9e6",
+      "payload_sha256": "de6fdd19cf2905047f2e876f4c4fee741c80b1df3bf43372db94ade0ce464e3c",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 8,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/37ecb412b9e6"
+    },
+    {
+      "error": null,
+      "id": "381c9c362e3b",
+      "payload_sha256": "b94c37aa5301ce86eb41e812eca43abeb784175b4aebcdabd466fc3c9d7b8e41",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 5,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/381c9c362e3b"
+    },
+    {
+      "error": null,
+      "id": "385725d86a5b",
+      "payload_sha256": "83c501edfdfa5e19a9a08fbdefe3f34eb2e7b74976e2cb6e61c0fd73937ca9d8",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 37,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/385725d86a5b"
+    },
+    {
+      "error": null,
+      "id": "388bbd38acf6",
+      "payload_sha256": "33434baa7b700376697f3104e6c22dab51380544996a6ee6053dbd7f3b80ada6",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 185,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/388bbd38acf6"
+    },
+    {
+      "error": null,
+      "id": "395b2c042e21",
+      "payload_sha256": "48fcc10e02019b49ad38f019228f373fbd576470700b9cd5de6cb54de0f41ae0",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 74,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/395b2c042e21"
+    },
+    {
+      "error": null,
+      "id": "39694183496a",
+      "payload_sha256": "f43333212a10a02b9b4c71d580061502538d494b56f767d7c2568112502216db",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 8,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/39694183496a"
+    },
+    {
+      "error": null,
+      "id": "3f3f15cb27c2",
+      "payload_sha256": "c87879774ece7a901ce2485226fd35a9165248b4c9b729ce6041b8a6ba4eb4cc",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 266,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/3f3f15cb27c2"
+    },
+    {
+      "error": null,
+      "id": "4211cb1f5355",
+      "payload_sha256": "acd342ce3c8a65cc051d6b8a60c670cb15727bfc3ef12bf8aa346eadb688d448",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 174,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/4211cb1f5355"
+    },
+    {
+      "error": null,
+      "id": "422a6ef523c0",
+      "payload_sha256": "5107f18e86d15ad17762a6719c0c57888adced20f8c7942271f9ae1eb2eba186",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 2,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/422a6ef523c0"
+    },
+    {
+      "error": null,
+      "id": "430015446b77",
+      "payload_sha256": "4e74374b52a319c7536ddd7dc74074379a0c322756507feb2796aad7d7f7a0e7",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 87,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/430015446b77"
+    },
+    {
+      "error": null,
+      "id": "43302ae0ee3a",
+      "payload_sha256": "25bed6815f300d29c70a450f6a79c22beb4a138cb40485aed7d37c7d2835aa23",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 33,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/43302ae0ee3a"
+    },
+    {
+      "error": null,
+      "id": "4842b8b6892b",
+      "payload_sha256": "68e85d56196873dad62be50e38784e8f4be8b71d9a8bf70f7867423b8c8b7254",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 11,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/4842b8b6892b"
+    },
+    {
+      "error": null,
+      "id": "484b4fb9beba",
+      "payload_sha256": "50ec89a3b246cd26c45108f8ae3c44d0ac410625b252c086e901d479962c3ae4",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 214,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/484b4fb9beba"
+    },
+    {
+      "error": null,
+      "id": "49fa7dfe6d04",
+      "payload_sha256": "976efd1c98e90768ba2bd4a60da7486e22b8b1cc6bbd894b724f3408402e0ddd",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 195,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/49fa7dfe6d04"
+    },
+    {
+      "error": null,
+      "id": "4ca491391b4f",
+      "payload_sha256": "49bd5638af91ec5a47e9150b3cb21add597b23e10193bf19adc310e54ef68b90",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 37,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/4ca491391b4f"
+    },
+    {
+      "error": null,
+      "id": "4d22dd9db001",
+      "payload_sha256": "dec2ba1315a420bad9deebee278cf7e80d52b96d2d73ae4792846d59c619e549",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 304,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/4d22dd9db001"
+    },
+    {
+      "error": null,
+      "id": "4e7ead35510e",
+      "payload_sha256": "6dedf9aeceed71e67785b8761a5dce94ba1c84e20e1bd8e79f85e99ceadb6661",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 83,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/4e7ead35510e"
+    },
+    {
+      "error": null,
+      "id": "50634b339290",
+      "payload_sha256": "58088988a4e5a84b002ac79fd8637f0ee630a8f501ed9c18ba9439ca79b71ef9",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 40,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/50634b339290"
+    },
+    {
+      "error": null,
+      "id": "543da5bcc248",
+      "payload_sha256": "8704827f204f3d17fc61ff9345f426cc1331ff90480e9a58b1a9625211c2bdfe",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 525,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/543da5bcc248"
+    },
+    {
+      "error": null,
+      "id": "55dd18892bf9",
+      "payload_sha256": "cd3b957d4c158f7b50a7baab39fcf9aa7dbe9be0989aad747d55ad5a3e31821e",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 473,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/55dd18892bf9"
+    },
+    {
+      "error": null,
+      "id": "56d447209801",
+      "payload_sha256": "bfa130ddca852a4cc5e55a0ffc7d5a5cc443d360d4d2056478413584ae8b4ded",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 415,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/56d447209801"
+    },
+    {
+      "error": null,
+      "id": "587a88633a87",
+      "payload_sha256": "c1a443eac125b816773f2579767b5a6cedbc4006abfa62c4b42c51684c2d23a6",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 6,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/587a88633a87"
+    },
+    {
+      "error": null,
+      "id": "5bddb8a95c8f",
+      "payload_sha256": "7c0ea4311e65e90bc9fa3c805d31a7c32e5087811946b7acd403e54a860e72b6",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 49,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/5bddb8a95c8f"
+    },
+    {
+      "error": null,
+      "id": "5d89e690256d",
+      "payload_sha256": "7c77a3aaeb5e363cdf474f6a44456d9dd14819fe8d3dbb6c5ea3dee2d9aac1be",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 403,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/5d89e690256d"
+    },
+    {
+      "error": null,
+      "id": "605fbc3b8307",
+      "payload_sha256": "02ec7eaf6b18bfebb1fb1583cb243a5f8d39ac9e851d92d10292717af489800a",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 75,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/605fbc3b8307"
+    },
+    {
+      "error": null,
+      "id": "60fa5302aa68",
+      "payload_sha256": "d1409e8b7e6e133f0b6005999c639a2b4dda77ff082459b2242ea9e2ea6315bd",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 59,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/60fa5302aa68"
+    },
+    {
+      "error": null,
+      "id": "65c6db0170cd",
+      "payload_sha256": "6bb5bfe3a9225c4d679ecbad701bf5b6fa21cabd53bebe8cee935a529e8eece5",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 176,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/65c6db0170cd"
+    },
+    {
+      "error": null,
+      "id": "65daebe73c35",
+      "payload_sha256": "b919f30b6c9d5c45cbcf80a58d42b8c12aabca077fc26c639475de53e1136f7a",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 304,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/65daebe73c35"
+    },
+    {
+      "error": null,
+      "id": "68e87fcb398a",
+      "payload_sha256": "9590fe3a99baed485f207afd7c8b9de1288046a8376cd333959575c917616c61",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 167,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/68e87fcb398a"
+    },
+    {
+      "error": null,
+      "id": "68fbbd2981cf",
+      "payload_sha256": "4e1797f96dfb369ede71494b784f2540ff83f8c13ef86660b7fcd8eb188190a8",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 220,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/68fbbd2981cf"
+    },
+    {
+      "error": null,
+      "id": "6e35cbb25054",
+      "payload_sha256": "9c89b6d56bd07edd1b240e781d0fee498290b45fab43c3728bdedf634025f031",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 13,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/6e35cbb25054"
+    },
+    {
+      "error": null,
+      "id": "6f0aad787a8d",
+      "payload_sha256": "e5ceeff09d1046552020fe83feae882c2d1f071e61ea2a9c40683820f654a0f4",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 16,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/6f0aad787a8d"
+    },
+    {
+      "error": null,
+      "id": "7172a5394a7b",
+      "payload_sha256": "be628736b2044c934454a03ca6dec75475d35f6fe2206e88be159fe3e4666d47",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 93,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/7172a5394a7b"
+    },
+    {
+      "error": null,
+      "id": "73d08c30e902",
+      "payload_sha256": "5b584e739e61f36fafe81f89da671a6242468d4c5b55dbbf38a76ec852d203b2",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 7,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/73d08c30e902"
+    },
+    {
+      "error": null,
+      "id": "761cf07d3f03",
+      "payload_sha256": "3cef503507d335ba21b1853cfced10f6c4735d554facffac459ec6636aa490b7",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 2,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/761cf07d3f03"
+    },
+    {
+      "error": null,
+      "id": "76ae70642fdb",
+      "payload_sha256": "9526d0bfcc57dd1b561cdd5baae68cc522ce7c0ee7b64c3f0236dfaa0878a81c",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 159,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/76ae70642fdb"
+    },
+    {
+      "error": null,
+      "id": "7947580aed3e",
+      "payload_sha256": "b41aa50f92a8a9104a993d16cd4c075a8e9caefd8207a66cfbb421d0569a142f",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 112,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/7947580aed3e"
+    },
+    {
+      "error": null,
+      "id": "822e9401c876",
+      "payload_sha256": "02ceda83b49333eeaa10a0e42150741c07c1b0252cd421b73a9585e5929d3464",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 27,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/822e9401c876"
+    },
+    {
+      "error": null,
+      "id": "83e64ea698d5",
+      "payload_sha256": "3a8596af335c90a8076b6df7afeb6cfe52b84d15a5a45f5650c1001809533f72",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 287,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/83e64ea698d5"
+    },
+    {
+      "error": null,
+      "id": "89b84aad9a90",
+      "payload_sha256": "459e261604a102ac8a41456750895d87ef2227ecaa249d00476ae5478df361b9",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 28,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/89b84aad9a90"
+    },
+    {
+      "error": null,
+      "id": "89f4baadb89a",
+      "payload_sha256": "2879bddc03e15243887a2f228e6f67ff0bbabd6fa7e567508da12211fdb6eabf",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 551,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/89f4baadb89a"
+    },
+    {
+      "error": null,
+      "id": "8b243839d1c4",
+      "payload_sha256": "849ab74a9d6e49c489a5d38b61e50a7ec058884b95b9c81796058f3d68e09663",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 11,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/8b243839d1c4"
+    },
+    {
+      "error": null,
+      "id": "8c534b1833df",
+      "payload_sha256": "71a53173e0b9605f10ce440f3506bca1bfcf01c769c9923f51a0b6e9519699ef",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 17,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/8c534b1833df"
+    },
+    {
+      "error": null,
+      "id": "8f8d49c8fd17",
+      "payload_sha256": "261b5e547f3ef080113a8ee5cb8296dd71d2b16c200982178cce2915d3608905",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 119,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/8f8d49c8fd17"
+    },
+    {
+      "error": null,
+      "id": "920fc8e9bca2",
+      "payload_sha256": "e32965f6d0839879317dbfb9316322188dab5b3ac2a9700b2602cdb29542650a",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 3,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/920fc8e9bca2"
+    },
+    {
+      "error": null,
+      "id": "9355ada290e6",
+      "payload_sha256": "817dce0e1e766ce612578f97ef9ed2a6391feb80686624713f673937a8537d6d",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 12,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/9355ada290e6"
+    },
+    {
+      "error": null,
+      "id": "9a5697f988a8",
+      "payload_sha256": "32417bf660537d91b0813d44d151e19e0a69851cbb46aec364cc2c829a47a872",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 74,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/9a5697f988a8"
+    },
+    {
+      "error": null,
+      "id": "9dc32ec87331",
+      "payload_sha256": "79fa8d187186bbd331b5476a1752ad4015e1d1801c06a2c4d79d1df62da39906",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 62,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/9dc32ec87331"
+    },
+    {
+      "error": null,
+      "id": "9f7581b5c1ac",
+      "payload_sha256": "d3ace92796f419d57d6bbaa9b7f9a659ab1fdbc189571918c9db76807121a4eb",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 34,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/9f7581b5c1ac"
+    },
+    {
+      "error": null,
+      "id": "a988d51ee485",
+      "payload_sha256": "35bfae400469a5c5a25b95f7ed9154b4922428418fe69dcb86793e918a9d3c0f",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 48,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/a988d51ee485"
+    },
+    {
+      "error": null,
+      "id": "b4144b892cc7",
+      "payload_sha256": "46c4f2d2a65aa203fe5f62f576cc1a369ed3a5486f533c4402a5657929b2f42f",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 260,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/b4144b892cc7"
+    },
+    {
+      "error": null,
+      "id": "b7d9b133ac5b",
+      "payload_sha256": "d822cceda5f2880cf52b04918b26bce15697af42d1f403bcb6d4a60035a81db5",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 8,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/b7d9b133ac5b"
+    },
+    {
+      "error": null,
+      "id": "c2a34f6384c5",
+      "payload_sha256": "aa223975e35dd75e07b5d5b4140b45afd79dc394809e0f0e7646a484d89c106c",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 7,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/c2a34f6384c5"
+    },
+    {
+      "error": null,
+      "id": "c59a0161fac8",
+      "payload_sha256": "7064b895740e4fee2e83ad0b35597266f9aa821cc102e81e1ef7ae71058acc53",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 213,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/c59a0161fac8"
+    },
+    {
+      "error": null,
+      "id": "c64baccb7f7a",
+      "payload_sha256": "7f71c032e3dc8ce97c83e2c415aa053a727de18ba6a6a975a412c045e2d29d32",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 175,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/c64baccb7f7a"
+    },
+    {
+      "error": null,
+      "id": "c8190204f5ad",
+      "payload_sha256": "d781403a16fd633f207dbae4339f87a86bd0945a0e17d40bd1a9ba2ee842f9db",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 382,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/c8190204f5ad"
+    },
+    {
+      "error": null,
+      "id": "c95f44b0d662",
+      "payload_sha256": "4342dbec80986c76766eba5b1e26bca28bed5b1d789d49cff4633331ddb62076",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 10,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/c95f44b0d662"
+    },
+    {
+      "error": null,
+      "id": "ca43414f9b01",
+      "payload_sha256": "33b39e8dc745090919d319c465a8eb809b3987f426c12b82baee14d83f50c499",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 87,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/ca43414f9b01"
+    },
+    {
+      "error": null,
+      "id": "d21801089cc2",
+      "payload_sha256": "aac0263e615100e1b065532cd90fad1bea888432b79be94810a808b0d6863601",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 10,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/d21801089cc2"
+    },
+    {
+      "error": null,
+      "id": "d3559a102a61",
+      "payload_sha256": "9d7d05ca840e7993f8f3ca21be112ca60e5b0016c28577e1e3d9b0b291b5d807",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 255,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/d3559a102a61"
+    },
+    {
+      "error": null,
+      "id": "d5ac66156b8e",
+      "payload_sha256": "c433e3ddc8ed71a1c66cfa2829e0271c932e046bee8702f26b003e64bbee1b20",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 496,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/d5ac66156b8e"
+    },
+    {
+      "error": null,
+      "id": "da61fd38733f",
+      "payload_sha256": "9fc059ce30280bbbcdebf9342980ee3e91c04baf92a5c3994071c76b9a3edbae",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 469,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/da61fd38733f"
+    },
+    {
+      "error": null,
+      "id": "df6af97d5e93",
+      "payload_sha256": "886ff3fca7d3951fded422b5e76f08b0c2e6a847794bbd64426408caeeb4d05d",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 53,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/df6af97d5e93"
+    },
+    {
+      "error": null,
+      "id": "e0e500c4b7a5",
+      "payload_sha256": "c4b9845aec699b7039c709074ef0c614c576b7cde1ecd67ed5be0111e482c3fc",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 359,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/e0e500c4b7a5"
+    },
+    {
+      "error": null,
+      "id": "e2ec64be83a8",
+      "payload_sha256": "5c29878825960ae0a0231380789729e0b745d7f3e87c856544631e9c94862d4c",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 2,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/e2ec64be83a8"
+    },
+    {
+      "error": null,
+      "id": "e5cd4e0cbb1f",
+      "payload_sha256": "a8980cc8f568435566895d8b453e0afd08f4e4dd32837fd1beaf8bc3b7b1e28d",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 28,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/e5cd4e0cbb1f"
+    },
+    {
+      "error": null,
+      "id": "ecfc082ac2c5",
+      "payload_sha256": "b8b37463e63e0f6fa6d6d89d2cd1440ef0af1efb6b3d3cd73d128cfeed58a0f7",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 511,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/ecfc082ac2c5"
+    },
+    {
+      "error": null,
+      "id": "efabb1fe868b",
+      "payload_sha256": "42770185a7da0f7d5206ad00a0e9e362a918463abe7b4de11bf0a5a9cfdc487a",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 15,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/efabb1fe868b"
+    },
+    {
+      "error": null,
+      "id": "f7345eda41d2",
+      "payload_sha256": "a6dff72f7a6ecb9347f2d0fe048c4b18a985ef58a3e65578ca2ba790f3241788",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 12,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/f7345eda41d2"
+    },
+    {
+      "error": null,
+      "id": "f958e6e21ac1",
+      "payload_sha256": "dc794650c83af7a55842f8dfc25c89af981d7d9d35996f5d4429c6367ca36f0f",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 150,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/f958e6e21ac1"
+    },
+    {
+      "error": null,
+      "id": "fe3f85ee652c",
+      "payload_sha256": "29f9ac1c911662e76bc439443133dba87db6912813fe34d65c485f14afd34240",
+      "render_error": false,
+      "spans_pending": 0,
+      "spans_total": 16,
+      "status": 200,
+      "url": "https://qamus.dawah.wiki/e/fe3f85ee652c"
+    }
+  ],
+  "producer": {
+    "id": "public_readback_spans.v1",
+    "version": "1"
+  },
+  "schema": "qamus.public_readback_manifest.v1",
+  "summary": {
+    "ledger_rows_on_fetched_pages": 816,
+    "pages": 92,
+    "pages_http_200": 92,
+    "pages_render_error": 0,
+    "rendered_span_closed": 269,
+    "rendered_span_closed_glossed": 269,
+    "rendered_span_missing": 4,
+    "rows_with_expected_loc": 273,
+    "rows_without_expected_loc": 543,
+    "spans_harvested": 12775
+  }
+}

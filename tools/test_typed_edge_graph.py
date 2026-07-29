@@ -211,5 +211,120 @@ class TypedEdgeGraphTests(unittest.TestCase):
         self.assertEqual(delta[0]["status"], "candidate")
 
 
+class CitationFormDisplayTests(unittest.TestCase):
+    """Red-first fixtures for the citation_form_display_edge extension (§1/§2)."""
+
+    CORPUS = [
+        {"loc": "2:187:10", "surface": "ٱلْخَيْطُ"},
+        {"loc": "2:187:14", "surface": "قُلْتُمْ"},
+        {"loc": "7:40:17", "surface": "ٱلْجَمَلُ"},
+        {"loc": "7:40:21", "surface": "ٱلْجَمَلُ"},
+    ]
+    ENTRIES = [
+        {
+            "id": "entry-qala",
+            "headword": "قَالَ",
+            "usage": [{"forms": ["قَالَ"], "examples": [{"ref": "2:187"}], "sense": 1}],
+        },
+        {
+            "id": "entry-khayt",
+            "headword": "خَيْط",
+            "usage": [{"forms": ["الْخَيْطُ"], "examples": [{"ref": "2:187"}], "sense": 1}],
+        },
+    ]
+
+    @staticmethod
+    def ledger_row(entry_id, surface, card_ref, **extra):
+        row = {
+            "entry_id": entry_id,
+            "selected_surface": surface,
+            "source_card_refs": [card_ref],
+            "source_card_ref": card_ref,
+            "sense_index": 1,
+            "usage_index": 1,
+            "form_index": 1,
+            "missing_edges": ["display_local_to_canonical_crosswalk_missing"],
+            "display_local_address": {"entry_example_index": 1},
+        }
+        row.update(extra)
+        return row
+
+    def build(self, rows):
+        from tools.build_typed_edge_crosswalk import build_citation_display
+
+        return build_citation_display(self.ENTRIES, rows, self.CORPUS)
+
+    def test_citation_form_gets_display_edge_never_a_canonical_loc(self):
+        # قَالَ rendered under a card whose āyah contains قُلْتُمْ: NOT a token of
+        # the cited āyah, but a corpus... rather a citation form. It must be
+        # re-typed as citation_form_display_edge, never given a canonical loc.
+        rows = [self.ledger_row("entry-qala", "قَالَ", "2:187")]
+        result = self.build(rows)
+        self.assertEqual(len(result["queue"]), 0)
+        self.assertEqual(len(result["edges"]), 1)
+        item = result["edges"][0]
+        self.assertEqual(item["edge_type"], "citation_form_display_edge")
+        self.assertEqual(item["to_node_id"], "entry:entry-qala")
+        self.assertEqual(item["display_basis"], "never_a_corpus_token")
+        self.assertEqual(item["status"], "deterministic_exact")
+        self.assertIn("no_canonical_loc_guard", item["guards"])
+        self.assertNotIn("attach_locs", item.get("details", {}))
+
+    def test_witness_elsewhere_recorded_as_evidence_only(self):
+        # الْخَيْطُ cited under 7:40 (whose tokens are ٱلْجَمَلُ...): the surface IS
+        # a Qurʾān token at 2:187:10 — witness evidence only, no attachment.
+        rows = [self.ledger_row("entry-khayt", "الْخَيْطُ", "7:40")]
+        result = self.build(rows)
+        self.assertEqual(len(result["edges"]), 1)
+        item = result["edges"][0]
+        self.assertEqual(item["display_basis"], "corpus_witness_elsewhere")
+        witness = [ev for ev in item["evidence"] if ev["address"].startswith("quran:")]
+        self.assertTrue(witness)
+        self.assertTrue(all(ev["method"] == "surface_match_strict_witness_only" for ev in witness))
+
+    def test_attachable_row_routes_to_queue_a_not_edge(self):
+        rows = [self.ledger_row("entry-khayt", "الْخَيْطُ", "2:187")]
+        result = self.build(rows)
+        self.assertEqual(len(result["edges"]), 0)
+        self.assertEqual(len(result["queue"]), 1)
+        item = result["queue"][0]
+        self.assertEqual(item["attach_locs"], ["2:187:10"])
+        self.assertEqual(item["status"], "candidate")
+
+    def test_multi_position_attach_is_two_vote_ambiguous(self):
+        rows = [self.ledger_row("entry-khayt", "ٱلْجَمَلُ", "7:40")]
+        result = self.build(rows)
+        self.assertEqual(len(result["queue"]), 1)
+        item = result["queue"][0]
+        self.assertEqual(item["status"], "ambiguous")
+        self.assertEqual(item["review_route"], "two_vote_disambiguation")
+        self.assertEqual(item["attach_locs"], ["7:40:17", "7:40:21"])
+
+    def test_no_canonical_loc_guard_blocks_loc_bearing_rows_and_streams(self):
+        from tools.build_typed_edge_crosswalk import citation_guard_violations
+
+        # A row still carrying a canonical loc claim may not be re-typed.
+        rows = [self.ledger_row("entry-qala", "قَالَ", "2:187", occurrence_id="2:187:14")]
+        result = self.build(rows)
+        self.assertEqual(len(result["edges"]), 0)
+        self.assertEqual(result["metrics"]["no_canonical_loc_guard_blocked"], 1)
+
+        # Red: a doctored citation edge carrying an attach loc must be caught.
+        clean = self.build([self.ledger_row("entry-qala", "قَالَ", "2:187")])["edges"]
+        doctored = [dict(clean[0], details={**clean[0]["details"], "attach_locs": ["2:187:14"]})]
+        self.assertTrue(citation_guard_violations(doctored))
+        # Red: a co-emitted canonical_occurrence_edge for the same node must be caught.
+        from tools.build_typed_edge_crosswalk import make_edge
+
+        co = make_edge(
+            "canonical_occurrence_edge",
+            clean[0]["from_node_id"],
+            "occurrence:2:187:14",
+            "deterministic_exact",
+        )
+        self.assertTrue(citation_guard_violations(clean + [co]))
+        self.assertEqual(citation_guard_violations(clean), [])
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,15 @@
+{
+  "artifact": "crosswalk-attach-queue.jsonl",
+  "candidate_only": true,
+  "producer": {
+    "id": "citation_form_display.v1",
+    "version": "1"
+  },
+  "regenerate": "python tools/build_typed_edge_crosswalk.py --emit-citation-display --entries qamus/data/current/entries.jsonl --ledger vn-ledger.jsonl --corpus qamus/indexes/quran-loc-surface/index.jsonl --output-dir qamus/lattice",
+  "rows": 1747,
+  "schema": "qamus.crosswalk_attach_queue.meta.v1",
+  "status_counts": {
+    "ambiguous": 83,
+    "candidate": 1664
+  }
+}

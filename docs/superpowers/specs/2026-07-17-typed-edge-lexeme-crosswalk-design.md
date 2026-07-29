@@ -133,3 +133,33 @@ Completion requires the committed tools, fixtures, tests, and harness hook to
 pass from repository contents alone; the lane-side full-input artifacts and
 `EDGES-REPORT.md` to contain the measured counts and blocker classifications;
 `git diff --check` to pass; and a local `edges:` commit with no push.
+
+## Extension (2026-07-28): `citation_form_display_edge`
+
+Per GRAPH-BACKLINK-REPAIR-PREP-2026-07-29 §1: 4,930 of the 6,677 crosswalk-missing
+selected-word rows are dictionary **citation forms rendered display-locally** — the entry
+page shows a lemma that is *not a token of the cited āyah*. Forcing a
+`display_local_to_canonical_crosswalk_edge` for them would assert a false canonical loc.
+One new `edge_type` is added to `qamus.graph_edge.v1` (schema string unchanged; the
+edge-type vocabulary is extended, statuses/nodes are reused, never extended):
+
+- `edge_type: citation_form_display_edge`, `from: selected-word`, `to: entry` (or `sense`).
+- `display_basis`: `corpus_witness_elsewhere` (surface IS a Qurʾān token, just not in the
+  cited āyah — witness locs recorded as **evidence only**, methods
+  `surface_match_strict_witness_only` / `surface_match_lenient_witness_only`),
+  `never_a_corpus_token`, or `multiword_phrase`.
+- Guards: `no_canonical_loc_guard` (the edge may not carry, and the builder may not
+  co-emit, any canonical-loc assertion for the same selected-word node; enforced by
+  `citation_guard_violations`) + `orthography_guard_v1`.
+- Status vocabulary reused: `deterministic_exact` (display surface byte-matches its own
+  entry's headword/usage-form/sense surface), `ambiguous` (surface collides across >1
+  entry — existing collision-abstain), `candidate` otherwise.
+- Debt semantics: a row carrying this edge retires
+  `display_local_to_canonical_crosswalk_missing`, `missing_quran_wbw_edge`, and
+  `canonical_occurrence_appearance_missing` **as satisfied-by-design**
+  (`details.retires_as_satisfied_by_design`).
+- Builder mode: `tools/build_typed_edge_crosswalk.py --emit-citation-display` →
+  `qamus/lattice/citation-display-edges.jsonl` (Queue B, 4,930) and
+  `qamus/lattice/crosswalk-attach-queue.jsonl` (Queue A, 1,747 attachable rows —
+  deterministic pre-fill, `two_vote_disambiguation` for the 83 multi-position ambiguous).
+- All candidate-plane; nothing touches certification or the live site.
