@@ -46,6 +46,34 @@ EDGE_TYPES = [
     "decision_evidence_edge",
     "citation_form_display_edge",
 ]
+
+# Particle-specific typed edge kinds (PARTICLE-CONTRACTS lane, 2026-07-29).
+# Same vocabulary, same qamus.graph_edge.v1 row shape — NOT a parallel graph.
+# Per-kind required-field and certification constraints live in
+# qamus/schemas/particle-edge-ontology.schema.json and are enforced by
+# tools/validate_particle_projection_parity.py (which also asserts this list
+# and the schema enum never drift apart).
+PARTICLE_EDGE_TYPES = [
+    "particle_entry_candidate_edge",
+    "particle_entry_certified_edge",
+    "particle_sense_candidate_edge",
+    "particle_sense_certified_edge",
+    "particle_function_edge",
+    "clitic_host_edge",
+    "governor_edge",
+    "governed_expression_edge",
+    "scope_edge",
+    "coordination_edge",
+    "condition_edge",
+    "negation_scope_edge",
+    "relative_antecedent_edge",
+    "pronoun_referent_edge",
+    "particle_occurrence_appearance_edge",
+    "particle_entry_reverse_occurrence_edge",
+    "source_evidence_edge",
+    "decision_or_two_vote_edge",
+]
+EDGE_TYPES = EDGE_TYPES + PARTICLE_EDGE_TYPES
 EDGE_TYPE_SET = set(EDGE_TYPES)
 STATUSES = [
     "certified",
@@ -57,7 +85,9 @@ STATUSES = [
     "rejected",
 ]
 STATUS_SET = set(STATUSES)
-NODE_TYPES = ["entry", "sense", "card", "selected-word", "occurrence", "appearance"]
+# "source" (evidence address nodes) and "decision" (two-vote / adjudication
+# artifact nodes) added for the particle edge kinds; membership-only, additive.
+NODE_TYPES = ["entry", "sense", "card", "selected-word", "occurrence", "appearance", "source", "decision"]
 NODE_TYPE_SET = set(NODE_TYPES)
 _SOURCE_KEY_RE = re.compile(r"^([A-Za-z]+)0*(\d+)$")
 

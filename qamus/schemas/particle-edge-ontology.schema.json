@@ -1,0 +1,395 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/particle-edge-ontology.schema.json",
+  "title": "Qamus particle typed edges + homograph function lattice (qamus.graph_edge.v1 extension)",
+  "description": "EXTENDS the canonical qamus.graph_edge.v1 vocabulary (tools/build_typed_edge_crosswalk.py EDGE_TYPES / PARTICLE_EDGE_TYPES) with particle-specific edge kinds. One edge vocabulary, one row shape — this is NOT a parallel graph. Evidence modes are reused verbatim from qamus/schemas/typed-claim-contract.schema.json $defs/evidence_mode per docs/certification-authority.md (no fork, no new enum values). Candidate-vs-certified separation is structural: a certified edge REQUIRES a reconstructible evidence-bundle reference, and every iʿrāb-bearing certified edge additionally REQUIRES a two-vote artifact reference (certification-authority §2 rung 4). Executable enforcement: tools/validate_particle_projection_parity.py (self-tested, red-first, gated in tools/check_regressions.py).",
+  "oneOf": [
+    { "$ref": "#/$defs/particle_edge" },
+    { "$ref": "#/$defs/particle_function_lattice" }
+  ],
+  "$defs": {
+    "evidence_mode": {
+      "description": "Verbatim copy of qamus/schemas/typed-claim-contract.schema.json $defs/evidence_mode — reused, never forked (docs/certification-authority.md §1).",
+      "type": "string",
+      "enum": [
+        "direct_source_attestation",
+        "cross_source_corroboration",
+        "deterministic_derivation_from_certified_facts",
+        "paired_form_inference",
+        "normalized_lexical_body",
+        "owner_or_scholar_adjudication",
+        "unresolved"
+      ]
+    },
+    "edge_status": {
+      "description": "Verbatim copy of the canonical STATUSES list in tools/build_typed_edge_crosswalk.py.",
+      "type": "string",
+      "enum": [
+        "certified",
+        "deterministic_exact",
+        "candidate",
+        "ambiguous",
+        "source_gap",
+        "owner_or_scholar_required",
+        "rejected"
+      ]
+    },
+    "non_certified_status": {
+      "type": "string",
+      "enum": ["deterministic_exact", "candidate", "ambiguous", "source_gap", "owner_or_scholar_required", "rejected"]
+    },
+    "node_type": {
+      "type": "string",
+      "enum": ["entry", "sense", "card", "selected-word", "occurrence", "appearance", "source", "decision"]
+    },
+    "particle_edge_type": {
+      "description": "The particle-specific members of the ONE canonical edge vocabulary (PARTICLE_EDGE_TYPES in tools/build_typed_edge_crosswalk.py).",
+      "type": "string",
+      "enum": [
+        "particle_entry_candidate_edge",
+        "particle_entry_certified_edge",
+        "particle_sense_candidate_edge",
+        "particle_sense_certified_edge",
+        "particle_function_edge",
+        "clitic_host_edge",
+        "governor_edge",
+        "governed_expression_edge",
+        "scope_edge",
+        "coordination_edge",
+        "condition_edge",
+        "negation_scope_edge",
+        "relative_antecedent_edge",
+        "pronoun_referent_edge",
+        "particle_occurrence_appearance_edge",
+        "particle_entry_reverse_occurrence_edge",
+        "source_evidence_edge",
+        "decision_or_two_vote_edge"
+      ]
+    },
+    "irab_bearing_edge_type": {
+      "description": "Edge kinds whose certified surfacing to a learner is an iʿrāb-bearing conclusion → token-layer two-vote artifact REQUIRED for certification (certification-authority §2 rung 4).",
+      "type": "string",
+      "enum": [
+        "particle_function_edge",
+        "governor_edge",
+        "governed_expression_edge",
+        "scope_edge",
+        "coordination_edge",
+        "condition_edge",
+        "negation_scope_edge",
+        "relative_antecedent_edge",
+        "pronoun_referent_edge"
+      ]
+    },
+    "evidence_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["address", "method"],
+      "properties": {
+        "address": { "type": "string", "minLength": 1 },
+        "method": { "type": "string", "minLength": 1 }
+      }
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "edge_details": {
+      "type": "object",
+      "required": ["occurrence_id", "surface", "evidence_mode", "fact_id"],
+      "properties": {
+        "occurrence_id": {
+          "description": "Canonical occurrence address, e.g. quran:2:284:10.",
+          "type": "string",
+          "pattern": "^[a-z]+:[0-9]+:[0-9]+:[0-9]+$"
+        },
+        "surface": {
+          "description": "Exact rendered surface of the occurrence token (diacritics intact).",
+          "type": "string",
+          "minLength": 1
+        },
+        "component_surface": {
+          "description": "Exact surface of the sub-token component the edge is about (e.g. the clitic within a host token). Required for clitic_host_edge.",
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_mode": { "$ref": "#/$defs/evidence_mode" },
+        "fact_id": { "type": "string", "minLength": 1 },
+        "evidence_bundle_ref": {
+          "description": "Reference to the reconstructible evidence bundle (typed-claim contract row / fact-ledger id). REQUIRED whenever status is certified.",
+          "type": "string",
+          "minLength": 1
+        },
+        "two_vote_artifact_ref": {
+          "description": "qamus.two_vote_artifact.v1 artifact_id. REQUIRED for certified iʿrāb-bearing edges.",
+          "type": "string",
+          "minLength": 1
+        },
+        "adjudication_artifact_ref": {
+          "description": "Owner/scholar adjudication artifact id, when evidence_mode is owner_or_scholar_adjudication.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "particle_edge": {
+      "type": "object",
+      "required": [
+        "schema",
+        "edge_id",
+        "edge_type",
+        "from_node_id",
+        "from_node_type",
+        "to_node_id",
+        "to_node_type",
+        "status",
+        "guards",
+        "evidence",
+        "details",
+        "producer"
+      ],
+      "properties": {
+        "schema": { "const": "qamus.graph_edge.v1" },
+        "edge_id": { "type": "string", "pattern": "^edge:[0-9a-f]{8,}$" },
+        "edge_type": { "$ref": "#/$defs/particle_edge_type" },
+        "from_node_id": { "type": "string", "minLength": 1 },
+        "from_node_type": { "$ref": "#/$defs/node_type" },
+        "to_node_id": { "type": "string", "minLength": 1 },
+        "to_node_type": { "$ref": "#/$defs/node_type" },
+        "status": { "$ref": "#/$defs/edge_status" },
+        "guards": {
+          "description": "Names of the guards satisfied when the edge was emitted; an edge with no satisfied guard is not emittable.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidence_item" }
+        },
+        "details": { "$ref": "#/$defs/edge_details" },
+        "producer": { "$ref": "#/$defs/producer" }
+      },
+      "allOf": [
+        {
+          "description": "Structural candidate/certified separation: *_candidate_edge kinds may NEVER carry status certified and may NEVER carry certification refs.",
+          "if": {
+            "properties": {
+              "edge_type": {
+                "enum": ["particle_entry_candidate_edge", "particle_sense_candidate_edge"]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": { "$ref": "#/$defs/non_certified_status" },
+              "details": {
+                "not": {
+                  "anyOf": [
+                    { "required": ["evidence_bundle_ref"] },
+                    { "required": ["two_vote_artifact_ref"] }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "description": "*_certified_edge kinds MUST be status certified.",
+          "if": {
+            "properties": {
+              "edge_type": {
+                "enum": ["particle_entry_certified_edge", "particle_sense_certified_edge"]
+              }
+            }
+          },
+          "then": {
+            "properties": { "status": { "const": "certified" } }
+          }
+        },
+        {
+          "description": "ANY certified edge requires the reconstructible evidence bundle and a resolving evidence mode (certification-authority §3: assignment invalid without the bundle; unresolved may never certify).",
+          "if": { "properties": { "status": { "const": "certified" } } },
+          "then": {
+            "properties": {
+              "details": {
+                "required": ["evidence_bundle_ref"],
+                "properties": {
+                  "evidence_mode": {
+                    "not": { "const": "unresolved" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "description": "Certified iʿrāb-bearing edges additionally require the two-vote artifact reference (rung 4: a declared gate string is not proof).",
+          "if": {
+            "properties": {
+              "status": { "const": "certified" },
+              "edge_type": { "$ref": "#/$defs/irab_bearing_edge_type" }
+            }
+          },
+          "then": {
+            "properties": {
+              "details": { "required": ["evidence_bundle_ref", "two_vote_artifact_ref"] }
+            }
+          }
+        },
+        {
+          "description": "evidence_mode unresolved forces a non-certified status on every kind.",
+          "if": {
+            "properties": {
+              "details": {
+                "properties": { "evidence_mode": { "const": "unresolved" } },
+                "required": ["evidence_mode"]
+              }
+            }
+          },
+          "then": {
+            "properties": { "status": { "$ref": "#/$defs/non_certified_status" } }
+          }
+        },
+        {
+          "description": "clitic_host_edge names the exact clitic component surface and joins the clitic occurrence to its host.",
+          "if": { "properties": { "edge_type": { "const": "clitic_host_edge" } } },
+          "then": {
+            "properties": { "details": { "required": ["component_surface"] } }
+          }
+        },
+        {
+          "description": "source_evidence_edge targets a source node; decision_or_two_vote_edge targets a decision node.",
+          "if": { "properties": { "edge_type": { "const": "source_evidence_edge" } } },
+          "then": { "properties": { "to_node_type": { "const": "source" } } }
+        },
+        {
+          "if": { "properties": { "edge_type": { "const": "decision_or_two_vote_edge" } } },
+          "then": { "properties": { "to_node_type": { "const": "decision" } } }
+        },
+        {
+          "description": "Occurrence↔appearance reciprocity plumbing: appearance edge goes occurrence→appearance; reverse edge goes entry→occurrence.",
+          "if": { "properties": { "edge_type": { "const": "particle_occurrence_appearance_edge" } } },
+          "then": {
+            "properties": {
+              "from_node_type": { "const": "occurrence" },
+              "to_node_type": { "const": "appearance" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "edge_type": { "const": "particle_entry_reverse_occurrence_edge" } } },
+          "then": {
+            "properties": {
+              "from_node_type": { "const": "entry" },
+              "to_node_type": { "const": "occurrence" }
+            }
+          }
+        }
+      ]
+    },
+    "function_candidate": {
+      "type": "object",
+      "required": ["candidate_id", "function_label", "contextual_gloss", "guards", "defeaters", "status", "evidence_mode"],
+      "properties": {
+        "candidate_id": { "type": "string", "minLength": 1 },
+        "function_label": {
+          "description": "The candidate contextual function, e.g. nafiya (negative), mawsula (relative), istifhamiyya (interrogative), masdariyya, shartiyya, zaida.",
+          "type": "string",
+          "minLength": 1
+        },
+        "contextual_gloss": { "type": "string", "minLength": 1 },
+        "guards": {
+          "description": "Conditions that must hold for this candidate to be viable in this occurrence.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "defeaters": {
+          "description": "What would falsify this candidate — every candidate must be falsifiable.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "status": { "type": "string", "enum": ["candidate", "rejected", "certified"] },
+        "evidence_mode": { "$ref": "#/$defs/evidence_mode" },
+        "evidence_bundle_ref": { "type": "string", "minLength": 1 },
+        "two_vote_artifact_ref": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "description": "A certified winning function is an iʿrāb-bearing conclusion: evidence bundle + two-vote artifact required; unresolved may never certify.",
+          "if": { "properties": { "status": { "const": "certified" } } },
+          "then": {
+            "required": ["evidence_bundle_ref", "two_vote_artifact_ref"],
+            "properties": { "evidence_mode": { "not": { "const": "unresolved" } } }
+          }
+        }
+      ]
+    },
+    "particle_function_lattice": {
+      "description": "Homograph candidate lattice: one particle occurrence carrying MULTIPLE candidate function analyses (مَا: negative / relative / interrogative / maṣdariyya …), each with its own guards and defeaters. At most ONE candidate may be certified unless genuine functional overlap is itself evidenced (tawjīh overlap), in which case the overlap carries its own evidence bundle.",
+      "type": "object",
+      "required": ["schema", "lattice_id", "occurrence_id", "surface", "entry_id", "candidates", "overlap"],
+      "properties": {
+        "schema": { "const": "qamus.particle_function_lattice.v1" },
+        "lattice_id": { "type": "string", "minLength": 1 },
+        "occurrence_id": { "type": "string", "pattern": "^[a-z]+:[0-9]+:[0-9]+:[0-9]+$" },
+        "surface": { "type": "string", "minLength": 1 },
+        "entry_id": { "type": "string", "minLength": 1 },
+        "candidates": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/function_candidate" }
+        },
+        "overlap": {
+          "type": "object",
+          "required": ["supported"],
+          "properties": {
+            "supported": { "type": "boolean" },
+            "evidence_bundle_ref": { "type": "string", "minLength": 1 },
+            "note": { "type": "string" }
+          }
+        },
+        "producer": { "$ref": "#/$defs/producer" }
+      },
+      "allOf": [
+        {
+          "description": "Unless genuine overlap is evidenced, at most one candidate may hold status certified.",
+          "if": {
+            "properties": {
+              "overlap": {
+                "properties": { "supported": { "const": true } },
+                "required": ["supported"]
+              }
+            },
+            "required": ["overlap"]
+          },
+          "then": {
+            "properties": {
+              "overlap": { "required": ["evidence_bundle_ref"] }
+            }
+          },
+          "else": {
+            "properties": {
+              "candidates": {
+                "contains": {
+                  "properties": { "status": { "const": "certified" } },
+                  "required": ["status"]
+                },
+                "minContains": 0,
+                "maxContains": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
