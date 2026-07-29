@@ -5200,6 +5200,34 @@ except Exception as _factcert_e:
     check("FACTCERT typed-fact certifier gates (harness error)", False)
     print("  ", _factcert_e)
 
+# STOREREC: certification store reconciliation (consumption-map hop: token-layer
+# fact_ledger stores vs typed-claim plane, docs/certification-store-reconciliation.md).
+# Red-first self-test covers: unlabeled/cross-plane certified tallies
+# (double-count), reconciler-minted imported_certified / unverified
+# mapped_verified (auto-promotion), conflict auto-win, unmapped fact types,
+# and tampered worked-family evidence. --check regenerates the 2,619-row
+# mapping report deterministically and diffs it against the committed artifact.
+try:
+    _storerec_self = run_text([sys.executable,
+                               os.path.join(ROOT, "tools", "reconcile_certification_stores.py"),
+                               "--self-test"], timeout=240)
+    check("STOREREC store-reconciliation red-first self-test passes",
+          _storerec_self.returncode == 0 and
+          "STORE RECONCILIATION SELF-TEST PASS" in (_storerec_self.stdout or ""))
+    if _storerec_self.returncode != 0:
+        print("  ", ((_storerec_self.stdout or "") + (_storerec_self.stderr or "")).strip().splitlines()[-1:])
+    _storerec_check = run_text([sys.executable,
+                                os.path.join(ROOT, "tools", "reconcile_certification_stores.py"),
+                                "--check"], timeout=240)
+    check("STOREREC committed reconciliation report matches a deterministic re-run",
+          _storerec_check.returncode == 0 and
+          "matches a deterministic re-run" in (_storerec_check.stdout or ""))
+    if _storerec_check.returncode != 0:
+        print("  ", ((_storerec_check.stdout or "") + (_storerec_check.stderr or "")).strip().splitlines()[-1:])
+except Exception as _storerec_e:
+    check("STOREREC store-reconciliation gates (harness error)", False)
+    print("  ", _storerec_e)
+
 # FAM2: bounded lexical noun/adjective formation producer.  The committed
 # fixture gate is repo-self-contained; the operational calibration packet is
 # generated only when the caller supplies the read-only corpus explicitly.

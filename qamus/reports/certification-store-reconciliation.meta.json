@@ -1,0 +1,89 @@
+{
+  "canonical_plane": "typed_claim",
+  "certified_counts_labeled": [
+    {
+      "count": 491,
+      "migration_statuses": [
+        "mapped_unverified"
+      ],
+      "plane": "token_layer",
+      "state_field": "certification_state",
+      "stores": [
+        "c2-decidable"
+      ]
+    },
+    {
+      "count": 894,
+      "migration_statuses": [
+        "mapped_unverified",
+        "mapped_verified"
+      ],
+      "plane": "token_layer",
+      "state_field": "certification_state",
+      "stores": [
+        "funcword-cert"
+      ]
+    },
+    {
+      "count": 1234,
+      "migration_statuses": [
+        "mapped_unverified"
+      ],
+      "plane": "token_layer",
+      "state_field": "certification_state",
+      "stores": [
+        "rebind-cert"
+      ]
+    },
+    {
+      "count": 0,
+      "migration_statuses": [
+        "n/a"
+      ],
+      "plane": "token_layer",
+      "state_field": "certification_state",
+      "stores": [
+        "rm20-morphline"
+      ]
+    },
+    {
+      "count": 0,
+      "migration_statuses": [
+        "imported_certified"
+      ],
+      "plane": "typed_claim",
+      "state_field": "certification.status",
+      "stores": [
+        "qamus/certification/typed-fact-store"
+      ]
+    }
+  ],
+  "conflict_rows": 0,
+  "contract": "docs/certification-store-reconciliation.md",
+  "duplicate_rows": 0,
+  "input_hashes": {
+    "c2-decidable/ledger.jsonl": "sha256:8932735eeb116e1014517ee4bf77dd95aef7a096ae783df671f71eb10920788a",
+    "funcword-cert/ledger.jsonl": "sha256:72ed6be0d31643f2c62242c342c6ebd91dcabc638ddfcf039015abd7d6288e16",
+    "rebind-cert/ledger.jsonl": "sha256:a873ab38aec92d78188ff11cd5b68c8d7e4a38218ab99db6e457d45705bc1b93",
+    "rm20-morphline/ledger.jsonl": "sha256:520af4389e2cfe8e5cd7bb708e43f57eed873d56f85bd8b724ac8f061c7dbe02"
+  },
+  "mapping_rows": 2619,
+  "migration_status_counts": {
+    "mapped_unverified": 2611,
+    "mapped_verified": 8
+  },
+  "no_double_count_rule": "a certified count must name its plane/store and migration status; sums across planes are refused",
+  "schema": "qamus.cert_store_reconciliation_meta.v1",
+  "token_layer_role": "historical evidence store; importable, never auto-promoted",
+  "worked_family": {
+    "family": "funcword-cert:entry:014e23727379",
+    "rows": 8,
+    "verdict": "recorded evidence meets rung-4 recorded-shape checks; import-eligible pending qamus.two_vote_artifact.v1 bundle conversion",
+    "verified_fail": 0,
+    "verified_pass": 8
+  },
+  "writers": {
+    "token_layer": "tools/fact_ledger.py (legacy store authority; frozen for new certifications)",
+    "typed_claim_certified": "tools/certify_typed_fact.py (only writer)"
+  }
+}
