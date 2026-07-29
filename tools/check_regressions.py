@@ -5723,6 +5723,43 @@ except Exception as _edges_e:
     check("EDGES typed graph gates (harness error)", False)
     print("  ", _edges_e)
 
+# PEDGES: particle typed-edge kinds (qamus.graph_edge.v1 extension, one
+# vocabulary) + two-surface projection-hash parity + homograph function
+# lattice.  Red-first self-test + committed green sample; fixture-only so a
+# fresh clone never depends on lane-side corpora.
+try:
+    _pedges_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_particle_projection_parity.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "PEDGES particle projection parity red-first self-test passes",
+        _pedges_self.returncode == 0
+        and "PARTICLE PROJECTION PARITY SELF-TEST PASS" in (_pedges_self.stdout or ""),
+    )
+    _pedges_sample = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "validate_particle_projection_parity.py"),
+        os.path.join(_R, "qamus", "examples", "particle_projection_parity.sample.json"),
+    ], timeout=120)
+    check(
+        "PEDGES committed parity sample validates",
+        _pedges_sample.returncode == 0
+        and "PARTICLE PROJECTION PARITY VALIDATION PASS" in (_pedges_sample.stdout or ""),
+    )
+    check(
+        "PEDGES particle edge ontology schema committed",
+        os.path.exists(os.path.join(_R, "qamus", "schemas", "particle-edge-ontology.schema.json")),
+    )
+    check(
+        "PEDGES particle projection contract committed",
+        os.path.exists(os.path.join(_R, "docs", "qamus", "particle-projection-contract.md")),
+    )
+except Exception as _pedges_e:
+    check("PEDGES particle projection gates (harness error)", False)
+    print("  ", _pedges_e)
+
 # REPAIR1: reusable graph-repair families and occurrence-entry resolver fixtures.
 # This remains fixture-only so a fresh clone never depends on lane-side corpora.
 try:

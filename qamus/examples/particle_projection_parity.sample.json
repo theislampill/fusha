@@ -1,0 +1,280 @@
+{
+  "appearances": [
+    {
+      "appearance_id": "app:reader:2:284:10",
+      "artifact_id": "artifact:ma-2-284-10",
+      "occurrence_id": "quran:2:284:10",
+      "page_id": "reader:2:284",
+      "projection": {
+        "alternatives": [
+          "masdariyya (rejected: no following verbal clause)"
+        ],
+        "attachment": null,
+        "component_surface": "مَا",
+        "contextual_function": "mawsula (relative)",
+        "contextual_gloss": "what(ever) — introducing everything in the heavens",
+        "entry_link": "entry:b8e480aebafe",
+        "entry_relationship": "reader",
+        "focus": null,
+        "governed": "مَا فِي السَّمَاوَاتِ",
+        "governor": "implied predicate of لله",
+        "kind": "particle",
+        "nahw_note": "It stands for the things owned — the whole phrase that follows describes it.",
+        "navigation": [],
+        "particle_identity": "ma (entry b8e480aebafe)",
+        "reason": "a following locative phrase and resumptive sense select the relative reading",
+        "root": null,
+        "rootless_pedagogy": "This particle has no root: it is a tool word, complete as it is.",
+        "sarf_note": "This particle is not built from a root — it is an indeclinable tool word that stands alone.",
+        "scope": "the following prepositional phrase",
+        "segmentation": [
+          "مَا"
+        ],
+        "selected_highlight": false,
+        "unresolved": []
+      }
+    },
+    {
+      "appearance_id": "app:entry:p-ma:x1",
+      "artifact_id": "artifact:ma-2-284-10",
+      "occurrence_id": "quran:2:284:10",
+      "page_id": "entry:b8e480aebafe",
+      "projection": {
+        "alternatives": [
+          "masdariyya (rejected: no following verbal clause)"
+        ],
+        "attachment": null,
+        "component_surface": "مَا",
+        "contextual_function": "mawsula (relative)",
+        "contextual_gloss": "what(ever) — introducing everything in the heavens",
+        "entry_link": "entry:b8e480aebafe",
+        "entry_relationship": "own-entry-example",
+        "focus": "example-card",
+        "governed": "مَا فِي السَّمَاوَاتِ",
+        "governor": "implied predicate of لله",
+        "kind": "particle",
+        "nahw_note": "It stands for the things owned — the whole phrase that follows describes it.",
+        "navigation": [
+          "entry:b8e480aebafe"
+        ],
+        "particle_identity": "ma (entry b8e480aebafe)",
+        "reason": "a following locative phrase and resumptive sense select the relative reading",
+        "root": null,
+        "rootless_pedagogy": "This particle has no root: it is a tool word, complete as it is.",
+        "sarf_note": "This particle is not built from a root — it is an indeclinable tool word that stands alone.",
+        "scope": "the following prepositional phrase",
+        "segmentation": [
+          "مَا"
+        ],
+        "selected_highlight": true,
+        "unresolved": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "details": {
+        "evidence_mode": "cross_source_corroboration",
+        "fact_id": "sha256:selftest01",
+        "occurrence_id": "quran:2:284:10",
+        "surface": "مَا"
+      },
+      "edge_id": "edge:aaaaaaaaaaaa",
+      "edge_type": "particle_entry_candidate_edge",
+      "evidence": [
+        {
+          "address": "quran:2:284:10",
+          "method": "explicit_occurrence_address"
+        }
+      ],
+      "from_node_id": "occurrence:2:284:10",
+      "from_node_type": "occurrence",
+      "guards": [
+        "surface_exact",
+        "occurrence_address_exact"
+      ],
+      "producer": {
+        "id": "tools.validate_particle_projection_parity.selftest",
+        "version": "1"
+      },
+      "schema": "qamus.graph_edge.v1",
+      "status": "candidate",
+      "to_node_id": "entry:b8e480aebafe",
+      "to_node_type": "entry"
+    },
+    {
+      "details": {
+        "evidence_bundle_ref": "fact-ledger:selftest02",
+        "evidence_mode": "direct_source_attestation",
+        "fact_id": "sha256:selftest02",
+        "occurrence_id": "quran:2:284:10",
+        "surface": "مَا",
+        "two_vote_artifact_ref": "two-vote:selftest02"
+      },
+      "edge_id": "edge:bbbbbbbbbbbb",
+      "edge_type": "governor_edge",
+      "evidence": [
+        {
+          "address": "quran:2:284:10",
+          "method": "explicit_occurrence_address"
+        }
+      ],
+      "from_node_id": "occurrence:2:284:10",
+      "from_node_type": "occurrence",
+      "guards": [
+        "surface_exact",
+        "occurrence_address_exact"
+      ],
+      "producer": {
+        "id": "tools.validate_particle_projection_parity.selftest",
+        "version": "1"
+      },
+      "schema": "qamus.graph_edge.v1",
+      "status": "certified",
+      "to_node_id": "occurrence:2:284:1",
+      "to_node_type": "occurrence"
+    },
+    {
+      "details": {
+        "component_surface": "مَا",
+        "evidence_mode": "direct_source_attestation",
+        "fact_id": "sha256:selftest03",
+        "occurrence_id": "quran:2:284:10",
+        "surface": "مَا"
+      },
+      "edge_id": "edge:cccccccccccc",
+      "edge_type": "clitic_host_edge",
+      "evidence": [
+        {
+          "address": "quran:2:284:10",
+          "method": "explicit_occurrence_address"
+        }
+      ],
+      "from_node_id": "occurrence:2:284:10",
+      "from_node_type": "occurrence",
+      "guards": [
+        "surface_exact",
+        "occurrence_address_exact"
+      ],
+      "producer": {
+        "id": "tools.validate_particle_projection_parity.selftest",
+        "version": "1"
+      },
+      "schema": "qamus.graph_edge.v1",
+      "status": "deterministic_exact",
+      "to_node_id": "occurrence:2:284:10",
+      "to_node_type": "occurrence"
+    }
+  ],
+  "lattices": [
+    {
+      "candidates": [
+        {
+          "candidate_id": "cand:mawsula",
+          "contextual_gloss": "what(ever)",
+          "defeaters": [
+            "a following finite verbal clause would select masdariyya"
+          ],
+          "evidence_bundle_ref": "fact-ledger:selftest04",
+          "evidence_mode": "direct_source_attestation",
+          "function_label": "mawsula",
+          "guards": [
+            "followed_by_locative_phrase"
+          ],
+          "status": "certified",
+          "two_vote_artifact_ref": "two-vote:selftest04"
+        },
+        {
+          "candidate_id": "cand:nafiya",
+          "contextual_gloss": "not",
+          "defeaters": [
+            "no negatable clause follows here"
+          ],
+          "evidence_mode": "direct_source_attestation",
+          "function_label": "nafiya",
+          "guards": [
+            "clause_initial_negation_context"
+          ],
+          "status": "rejected"
+        }
+      ],
+      "entry_id": "b8e480aebafe",
+      "lattice_id": "lattice:ma:2:284:10",
+      "occurrence_id": "quran:2:284:10",
+      "overlap": {
+        "supported": false
+      },
+      "schema": "qamus.particle_function_lattice.v1",
+      "surface": "مَا"
+    }
+  ],
+  "occurrences": [
+    {
+      "artifact_id": "artifact:ma-2-284-10",
+      "occurrence_id": "quran:2:284:10",
+      "projection": {
+        "alternatives": [
+          "masdariyya (rejected: no following verbal clause)"
+        ],
+        "attachment": null,
+        "component_surface": "مَا",
+        "contextual_function": "mawsula (relative)",
+        "contextual_gloss": "what(ever) — introducing everything in the heavens",
+        "entry_link": "entry:b8e480aebafe",
+        "entry_relationship": "reader",
+        "focus": null,
+        "governed": "مَا فِي السَّمَاوَاتِ",
+        "governor": "implied predicate of لله",
+        "kind": "particle",
+        "nahw_note": "It stands for the things owned — the whole phrase that follows describes it.",
+        "navigation": [],
+        "particle_identity": "ma (entry b8e480aebafe)",
+        "reason": "a following locative phrase and resumptive sense select the relative reading",
+        "root": null,
+        "rootless_pedagogy": "This particle has no root: it is a tool word, complete as it is.",
+        "sarf_note": "This particle is not built from a root — it is an indeclinable tool word that stands alone.",
+        "scope": "the following prepositional phrase",
+        "segmentation": [
+          "مَا"
+        ],
+        "selected_highlight": false,
+        "unresolved": []
+      },
+      "surface": "مَا"
+    },
+    {
+      "artifact_id": "artifact:ma-2-284-2",
+      "occurrence_id": "quran:2:284:2",
+      "projection": {
+        "alternatives": [
+          "masdariyya (rejected: no following verbal clause)"
+        ],
+        "attachment": null,
+        "component_surface": "مَا",
+        "contextual_function": "mawsula (relative)",
+        "contextual_gloss": "what(ever) — everything in the earth",
+        "entry_link": "entry:b8e480aebafe",
+        "entry_relationship": "reader",
+        "focus": null,
+        "governed": "مَا فِي الْأَرْضِ",
+        "governor": "implied predicate of لله",
+        "kind": "particle",
+        "nahw_note": "It stands for the things owned — the whole phrase that follows describes it.",
+        "navigation": [],
+        "particle_identity": "ma (entry b8e480aebafe)",
+        "reason": "a following locative phrase and resumptive sense select the relative reading",
+        "root": null,
+        "rootless_pedagogy": "This particle has no root: it is a tool word, complete as it is.",
+        "sarf_note": "This particle is not built from a root — it is an indeclinable tool word that stands alone.",
+        "scope": "the following prepositional phrase",
+        "segmentation": [
+          "مَا"
+        ],
+        "selected_highlight": false,
+        "unresolved": []
+      },
+      "surface": "مَا"
+    }
+  ],
+  "schema": "qamus.particle_projection_parity_input.v1"
+}
