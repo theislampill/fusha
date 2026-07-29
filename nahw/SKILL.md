@@ -446,3 +446,43 @@ evidence in [`impl-records/WINDOW-1-2026-07-16-WAVE-RECORD.md`](../impl-records/
   numeric index: 96:1:2 ٱللَّهِ→"the name", 96:1:5 ٱقْرَأْ→"He created") → PROJECT flag the binding corruption;
   re-resolve the gloss against the surface's own index; block publish until they agree. GUARD a gloss that
   lexically matches its own surface is a valid translation, not a skew (8 corrupt W1 rows).
+
+## naḥw@2.4 — CANDIDATE increment (P00-vertical-slice pilot dogfood) — NOT released; does not amend @2
+
+These rules are **candidate** (drafted forward from the p007 لِـ noun-host family pilot — 12
+occurrences through independent two-vote review and fact-level certification — plus the
+two-vote canary run; Fable adjudicates). They fix the exact government/attachment/mood defects
+the pilot's machinery caught for real. Machine-readable rows (with `projector` blocks +
+source-addressed evidence + red-first fixtures) are in
+[`qamus/skills/rule-registry-increment-24.jsonl`](../qamus/skills/rule-registry-increment-24.jsonl);
+discriminators in [`tools/skill_fixtures/skill_rules_increment24.py`](../tools/skill_fixtures/skill_rules_increment24.py);
+notes in [`impl-records/skill-evolution/INCREMENT-24-NOTES.md`](../impl-records/skill-evolution/INCREMENT-24-NOTES.md).
+Function/reason-key vocabulary: [`qamus/skills/particle-function-registry.jsonl`](../qamus/skills/particle-function-registry.jsonl).
+
+**government + attachment + mood basis (projector-ready):**
+- **`nahw-preposition-governs-majrur-governor`** — CONDITION iʿrāb jarr claim on a preposition's
+  majrūr with a null (or attachment-derived) governor → PROJECT the governor is the PREPOSITION
+  ITSELF (`preposition-governs-majrur`) — always, including fronted-predicate rows; attachment
+  (mutaʿalliq/khabar plane) is a separate field and never a reason to null the governor. The
+  pilot's governor:null convention on 9:120:3 / 4:11:5 was rejected by the validator and the
+  preposition-as-governor repair was independently endorsed by reviewer-B — naḥw-correct AND
+  validator-compatible.
+- **`nahw-khabar-muqaddam-two-notations-one-analysis`** — CONDITION two reviews of a
+  fronted-predicate jarr-majrūr differ only between "khabar muqaddam" and "mutaʿalliq to an
+  elided fronted khabar" → PROJECT ONE analysis under ONE reason key
+  (`khabar-muqaddam-shibh-jumla`); compute agreement over the key, never the prose. GUARD a
+  genuinely different attachment head (ṣifa/ḥāl/verb) stays a real disagreement (canary 3;
+  pilot rows 9:120:3, 4:11:5).
+- **`nahw-mood-basis-tajarrud-governor-exemption`** — CONDITION verb-mood rafʿ claim whose basis
+  is the ABSENCE of any nāṣib/jāzim (li-tajarrudihi ʿan al-nāṣib wa-l-jāzim) → PROJECT accept
+  `mood_basis=tajarrud` with NO overt governor; the "case value + visible sign ⇒ governor
+  required" rule is a NOMINAL iʿrāb rule and mislabels default-mood verbs (canary 1,
+  quran:2:91:23 تَقْتُلُونَ, sign thubūt al-nūn — both independent votes correct, the validator's
+  FAIL was a contract bug). GUARD nominal case claims keep the full governor requirement; a
+  visible nāṣib/jāzim in range defeats a tajarrud claim.
+- **`nahw-lam-talil-vs-jarr-host-pos`** — CONDITION token-initial لِ with a classified host →
+  PROJECT type the lām by HOST POS+mood before any gloss or government: nominal host ⇒ لام الجر
+  (jarr); muḍāriʿ manṣūb بأن مضمرة ⇒ لام التعليل (subjunctive — NOT jarr, no jarr reason key);
+  muḍāriʿ majzūm ⇒ لام الأمر (jussive). The pilot's rejected rival لِيَغِيظَ (48:29:42) is the
+  canonical taʿlīl catch; لِدُلُوكِ (17:78:3) is the temporal jarr reading over a noun. GUARD a
+  fatḥa-lām emphasis frame (لام الابتداء/التوكيد) is a fourth type outside the kasra scope.

@@ -49,9 +49,10 @@ ALLOWED_TRANSITIONS = {
     ("2.1", "candidate"), ("2.1", "blocked"),
     ("2.2", "candidate"), ("2.2", "blocked"),
     ("2.3", "candidate"), ("2.3", "blocked"),
+    ("2.4", "candidate"), ("2.4", "blocked"),
 }
 # Recognized version suffixes (the part after '@'), per skill.
-VERSION_SUFFIXES = ("1", "2", "2.1", "2.2", "2.3")
+VERSION_SUFFIXES = ("1", "2", "2.1", "2.2", "2.3", "2.4")
 
 
 def _err(errors, code, rid, msg):
@@ -274,6 +275,11 @@ def self_test():
     # 5e. invalid_state_transition  (@2.3 increment cannot be accepted)
     expect("invalid_state_transition (@2.3 accepted)",
            [_row(skill_rule_id="so-inc23-acc", skill_version="sarf@2.3", status="accepted",
+                 gate="x", evidence_addresses=["a"])],
+           "invalid_state_transition")
+    # 5f. invalid_state_transition  (@2.4 increment cannot be accepted)
+    expect("invalid_state_transition (@2.4 accepted)",
+           [_row(skill_rule_id="so-inc24-acc", skill_version="sarf@2.4", status="accepted",
                  gate="x", evidence_addresses=["a"])],
            "invalid_state_transition")
     # 6. missing_skill_version
