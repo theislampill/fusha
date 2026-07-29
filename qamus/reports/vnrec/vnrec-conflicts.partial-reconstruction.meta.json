@@ -1,0 +1,24 @@
+{
+  "candidate_only": true,
+  "conflict_kind_counts": {
+    "window_vs_balanced_proposal_divergence": 1681
+  },
+  "null_tranche_rows": 7740,
+  "original_dual_claim_family": {
+    "description": "the original vnrec-conflicts.jsonl recorded 164 dual-claim rows between documented CLOSED-FROZEN window contracts and the vn00 rollout staging-history snapshots",
+    "reason": "staging snapshots are server-side inputs, absent from this repo",
+    "recoverable_from_repo": false,
+    "recovered_row_count": 0
+  },
+  "original_lost": true,
+  "partial": true,
+  "reconstructed_from": [
+    "vn-ledger.jsonl (7,740 rows; vn_tranche=null throughout, preserved proposal_vn_tranche claims)",
+    "tools/build_vn_readiness_v2.py::PLAN_WINDOWS + FROZEN_SCOPE_TEXT"
+  ],
+  "reconstruction": true,
+  "reconstruction_date": "2026-07-28",
+  "reconstruction_note": "Rebuilt from committed repo inputs after the originals were found missing on every surveyed host (SERVER-CORPORA-CUSTODY-PLAN-2026-07-29 §1 Area 2 discrepancy + addendum). NOT the original artifact; never cite it as such.",
+  "rows": 1681,
+  "schema": "vnrec-conflicts-reconstruction.meta@1"
+}

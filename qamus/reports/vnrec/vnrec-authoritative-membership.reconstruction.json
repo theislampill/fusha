@@ -1,0 +1,560 @@
+{
+  "candidate_only": true,
+  "corpus": {
+    "entries": 2092,
+    "unique_source_key_identities": 2092
+  },
+  "original_lost": true,
+  "read_only_recovery": true,
+  "reconstructed_from": [
+    "tools/build_vn_readiness_v2.py::PLAN_WINDOWS + FROZEN_SCOPE_TEXT",
+    "qamus/data/current/entries.jsonl (source_keys)"
+  ],
+  "reconstruction": true,
+  "reconstruction_date": "2026-07-28",
+  "reconstruction_note": "Rebuilt from committed repo inputs after the originals were found missing on every surveyed host (SERVER-CORPORA-CUSTODY-PLAN-2026-07-29 §1 Area 2 discrepancy + addendum). NOT the original artifact; never cite it as such.",
+  "schema": "vnrec-authoritative-membership@1",
+  "staging_metadata": {
+    "available": false,
+    "note": "vn00 rollout staging snapshots are server-side artifacts, not repo inputs; the original membership's staging namespace (final_source_key_count=1302 per v2 evidence strings) is NOT reconstructible here."
+  },
+  "vn": {
+    "VN-00": {
+      "authoritative_sets": [
+        {
+          "count": 92,
+          "evidence": [
+            {
+              "artifact": "tools/build_vn_readiness_v2.py",
+              "claim": "ratified CLOSED-FROZEN window contract (in-repo mirror)",
+              "locator": "FROZEN_SCOPE_TEXT['VN-00'] = 'v001–v047 + n0001–n0045'"
+            },
+            {
+              "artifact": "impl-records/VNREC-RECONCILIATION-2026-07-17.md",
+              "claim": "original recorded contract — cited, not reproduced",
+              "locator": "Recovered authoritative scope (private custody; not in this repo)"
+            }
+          ],
+          "kind": "documented_window_contract",
+          "set_id": "reconstructed-vn-00-window",
+          "source_keys": [
+            "n0001",
+            "n0002",
+            "n0003",
+            "n0004",
+            "n0005",
+            "n0006",
+            "n0007",
+            "n0008",
+            "n0009",
+            "n0010",
+            "n0011",
+            "n0012",
+            "n0013",
+            "n0014",
+            "n0015",
+            "n0016",
+            "n0017",
+            "n0018",
+            "n0019",
+            "n0020",
+            "n0021",
+            "n0022",
+            "n0023",
+            "n0024",
+            "n0025",
+            "n0026",
+            "n0027",
+            "n0028",
+            "n0029",
+            "n0030",
+            "n0031",
+            "n0032",
+            "n0033",
+            "n0034",
+            "n0035",
+            "n0036",
+            "n0037",
+            "n0038",
+            "n0039",
+            "n0040",
+            "n0041",
+            "n0042",
+            "n0043",
+            "n0044",
+            "n0045",
+            "v001",
+            "v002",
+            "v003",
+            "v004",
+            "v005",
+            "v006",
+            "v007",
+            "v008",
+            "v009",
+            "v010",
+            "v011",
+            "v012",
+            "v013",
+            "v014",
+            "v015",
+            "v016",
+            "v017",
+            "v018",
+            "v019",
+            "v020",
+            "v021",
+            "v022",
+            "v023",
+            "v024",
+            "v025",
+            "v026",
+            "v027",
+            "v028",
+            "v029",
+            "v030",
+            "v031",
+            "v032",
+            "v033",
+            "v034",
+            "v035",
+            "v036",
+            "v037",
+            "v038",
+            "v039",
+            "v040",
+            "v041",
+            "v042",
+            "v043",
+            "v044",
+            "v045",
+            "v046",
+            "v047"
+          ]
+        }
+      ],
+      "historical_status": "reconstructed_closed_frozen_window_contract"
+    },
+    "VN-01": {
+      "authoritative_sets": [
+        {
+          "count": 92,
+          "evidence": [
+            {
+              "artifact": "tools/build_vn_readiness_v2.py",
+              "claim": "ratified CLOSED-FROZEN window contract (in-repo mirror)",
+              "locator": "FROZEN_SCOPE_TEXT['VN-01'] = 'v048–v094 + n0046–n0090'"
+            },
+            {
+              "artifact": "impl-records/VNREC-RECONCILIATION-2026-07-17.md",
+              "claim": "original recorded contract — cited, not reproduced",
+              "locator": "Recovered authoritative scope (private custody; not in this repo)"
+            }
+          ],
+          "kind": "documented_window_contract",
+          "set_id": "reconstructed-vn-01-window",
+          "source_keys": [
+            "n0046",
+            "n0047",
+            "n0048",
+            "n0049",
+            "n0050",
+            "n0051",
+            "n0052",
+            "n0053",
+            "n0054",
+            "n0055",
+            "n0056",
+            "n0057",
+            "n0058",
+            "n0059",
+            "n0060",
+            "n0061",
+            "n0062",
+            "n0063",
+            "n0064",
+            "n0065",
+            "n0066",
+            "n0067",
+            "n0068",
+            "n0069",
+            "n0070",
+            "n0071",
+            "n0072",
+            "n0073",
+            "n0074",
+            "n0075",
+            "n0076",
+            "n0077",
+            "n0078",
+            "n0079",
+            "n0080",
+            "n0081",
+            "n0082",
+            "n0083",
+            "n0084",
+            "n0085",
+            "n0086",
+            "n0087",
+            "n0088",
+            "n0089",
+            "n0090",
+            "v048",
+            "v049",
+            "v050",
+            "v051",
+            "v052",
+            "v053",
+            "v054",
+            "v055",
+            "v056",
+            "v057",
+            "v058",
+            "v059",
+            "v060",
+            "v061",
+            "v062",
+            "v063",
+            "v064",
+            "v065",
+            "v066",
+            "v067",
+            "v068",
+            "v069",
+            "v070",
+            "v071",
+            "v072",
+            "v073",
+            "v074",
+            "v075",
+            "v076",
+            "v077",
+            "v078",
+            "v079",
+            "v080",
+            "v081",
+            "v082",
+            "v083",
+            "v084",
+            "v085",
+            "v086",
+            "v087",
+            "v088",
+            "v089",
+            "v090",
+            "v091",
+            "v092",
+            "v093",
+            "v094"
+          ]
+        }
+      ],
+      "historical_status": "reconstructed_closed_frozen_window_contract"
+    },
+    "VN-02": {
+      "authoritative_sets": [
+        {
+          "count": 92,
+          "evidence": [
+            {
+              "artifact": "tools/build_vn_readiness_v2.py",
+              "claim": "ratified CLOSED-FROZEN window contract (in-repo mirror)",
+              "locator": "FROZEN_SCOPE_TEXT['VN-02'] = 'v095–v141 + n0091–n0135'"
+            },
+            {
+              "artifact": "impl-records/VNREC-RECONCILIATION-2026-07-17.md",
+              "claim": "original recorded contract — cited, not reproduced",
+              "locator": "Recovered authoritative scope (private custody; not in this repo)"
+            }
+          ],
+          "kind": "documented_window_contract",
+          "set_id": "reconstructed-vn-02-window",
+          "source_keys": [
+            "n0091",
+            "n0092",
+            "n0093",
+            "n0094",
+            "n0095",
+            "n0096",
+            "n0097",
+            "n0098",
+            "n0099",
+            "n0100",
+            "n0101",
+            "n0102",
+            "n0103",
+            "n0104",
+            "n0105",
+            "n0106",
+            "n0107",
+            "n0108",
+            "n0109",
+            "n0110",
+            "n0111",
+            "n0112",
+            "n0113",
+            "n0114",
+            "n0115",
+            "n0116",
+            "n0117",
+            "n0118",
+            "n0119",
+            "n0120",
+            "n0121",
+            "n0122",
+            "n0123",
+            "n0124",
+            "n0125",
+            "n0126",
+            "n0127",
+            "n0128",
+            "n0129",
+            "n0130",
+            "n0131",
+            "n0132",
+            "n0133",
+            "n0134",
+            "n0135",
+            "v095",
+            "v096",
+            "v097",
+            "v098",
+            "v099",
+            "v100",
+            "v101",
+            "v102",
+            "v103",
+            "v104",
+            "v105",
+            "v106",
+            "v107",
+            "v108",
+            "v109",
+            "v110",
+            "v111",
+            "v112",
+            "v113",
+            "v114",
+            "v115",
+            "v116",
+            "v117",
+            "v118",
+            "v119",
+            "v120",
+            "v121",
+            "v122",
+            "v123",
+            "v124",
+            "v125",
+            "v126",
+            "v127",
+            "v128",
+            "v129",
+            "v130",
+            "v131",
+            "v132",
+            "v133",
+            "v134",
+            "v135",
+            "v136",
+            "v137",
+            "v138",
+            "v139",
+            "v140",
+            "v141"
+          ]
+        }
+      ],
+      "historical_status": "reconstructed_closed_frozen_window_contract"
+    },
+    "VN-03": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v142–v188 + n0136–n0180",
+        "status_note": "measured 69.38%, worklist 3,280 (OBSERVED)"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-04": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v189–v235 + n0181–n0225",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-05": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v236–v282 + n0226–n0270",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-06": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v283–v329 + n0271–n0315",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-07": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v330–v376 + n0316–n0360",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-08": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v377–v423 + n0361–n0405",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-09": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v424–v470 + n0406–n0450",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-10": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v471–v517 + n0451–n0495",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-11": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v518–v564 + n0496–n0540",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-12": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v565–v611 + n0541–n0585",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-13": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v612–v658 + n0586–n0630",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-14": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v659–v705 + n0631–n0675",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-15": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v706–v752 + n0676–n0720",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-16": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v753–v799 + n0721–n0765",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-17": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v800–v846 + n0766–n0810",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-18": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v847–v893 + n0811–n0855",
+        "status_note": "pattern-only"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-19": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 92,
+        "source_key_range": "v894–v940 + n0856–n0900",
+        "status_note": "last full-shape window"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-20": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 52,
+        "source_key_range": "v941–v947 + n0901–n0945",
+        "status_note": "stub v-side"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-21": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 45,
+        "source_key_range": "n0946–n0990",
+        "status_note": "beyond the titled program"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-22": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 45,
+        "source_key_range": "n0991–n1035",
+        "status_note": "beyond the titled program"
+      },
+      "historical_status": "planning_baseline_window"
+    },
+    "VN-23": {
+      "authoritative_sets": [],
+      "future_definition_only": {
+        "count": 10,
+        "source_key_range": "n1036–n1045",
+        "status_note": "stub"
+      },
+      "historical_status": "planning_baseline_window"
+    }
+  }
+}
