@@ -33,6 +33,7 @@ exit 0 with the stated terminal line.
 | 22 | Artifact ergonomics | `python tools/check_artifact_ergonomics.py` |
 | 23 | Public-boundary scan | `python tools/scan_public_boundary.py` |
 | 24 | Deploy-packet prep | **GAP / LOCKED — owner-gated.** No command exists in this repo by design; a deploy packet is proposed only in an owner window after strata-complete evidence + website-agent contract confirmation (see `docs/decision-ledger.md`) |
+| 25 | Task-packet validation | `python tools/validate_task_packets.py` |
 
 ## Details per operation
 
@@ -95,6 +96,13 @@ exit 0 with the stated terminal line.
 22. **Ergonomics** — pretty JSON/JSONL+meta rules; gated by the harness.
 23. **Public-boundary scan** — leak scan for private paths/sources; run before
     committing anything derived from private material.
+25. **Task-packet validation** — executable twin of
+    `qamus/schemas/task-packet.schema.json` (`qamus.task_packet.v1`). Inputs:
+    `qamus/task-packets/*.json` (or explicit paths; red-first `--self-test`).
+    Named checks: packet shape, id collision, write-scope conflict,
+    server-path leak (RM-09), canary classes, method-not-conclusion,
+    non-deployment, self-containment. Mutation: none. Exit:
+    `TASK PACKET VALIDATION PASS`; wired into `tools/check_regressions.py`.
 
 ## Rules
 

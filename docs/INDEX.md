@@ -60,6 +60,7 @@ there. Coverage truth lives only in `docs/STATUS.md`.
 | `provenance/source-boundaries.md` | The enforceable numbered source-boundary rules (read first). |
 | `provenance/public-runnability.md` | Which tools run on a fresh public clone (gated by `tools/validate_public_runnability.py`). |
 | `docs/INDEX.md` | This index. |
+| `START-HERE-FOR-CONTINUATION.md` | The single zero-chat-context entry point: thesis, verified milestones, prohibitions, queues, glossary (continuation-machinery lane). |
 
 ### 4.2 Canonical architecture docs (authoritative — precedence tier 4)
 
@@ -71,6 +72,7 @@ there. Coverage truth lives only in `docs/STATUS.md`.
 | `docs/architecture/evidence-and-certification.md` | Evidence-mode ladder, MCP operational discipline + index hazards, two-vote v1.1, adjudication, revocation; 2026-07-29 §20 rulings recorded. |
 | `docs/architecture/dogfood-flywheel.md` | The dogfood loop and per-family compounding-impact accounting requirements. |
 | `docs/architecture/translation-projection.md` | Translation as a downstream lattice consumer; forbidden inferences; the 5 required future fixture types. |
+| `docs/architecture/visual-references.md` | The two controlling reference images (live v003 rich-at-rest/hover; conceptual lattice sketch) with verbatim owner captions and locked visual constraints; images live owner-side, not in-repo. |
 
 ### 4.3 Policy and contract docs (authoritative)
 
@@ -188,6 +190,29 @@ Committed worked evidence, never policy: the p007 pilot
 (`qamus/examples/hazards/`), per-family FAM/FB/FC/FD lanes, and the
 `*.sample.*` files named by `qamus/reports/artifact-taxonomy.md`.
 
+### 4.9 Continuation machinery, subsystem maps and task packets (lanes B/C/D, adopted 2026-07-29)
+
+Authored in the parallel institutionalization lanes off 637d7da and merged
+2026-07-29 (PRs #128–#131); indexed here by the handoff-stitch pass.
+
+| Path | Role |
+|---|---|
+| `docs/current-state.yaml` | **Generated** machine-readable programme state (`tools/build_current_state.py`; `--check` freshness is harness-gated). Never hand-edit. |
+| `docs/decision-ledger.md` | Public-safe copy of the owner decision ledger (precedence tier 2 mirror); nothing listed there is open. |
+| `docs/blockers.yaml` | Hand-curated rows only the owner/arbitration/scholars can close (`qamus.blockers.v1`); blocked items never block unrelated lanes. |
+| `docs/golden-commands.md` | One canonical command per operation (inputs, outputs, mutation scope, exit expectations); GAP-marked where no command exists. |
+| `docs/model-routing-guide.md` | Capability-tier routing: which model class may do which task class; route down on doubt; abstain-and-packetize. |
+| `docs/evidence-custody.md` | Where evidence lives (public in-repo vs private custody) and what out-of-git evidence must carry before anything relies on it. |
+| `docs/tutorials/p007-end-to-end.md` | Worked vertical-slice tutorial: how to run the next family/wave by copying the p007 METHOD (conclusions never transfer). |
+| `docs/subsystems/sarf-executable-map.md` | As-built audit of the sarf subsystem (file:line-cited; GAPs in §8). |
+| `docs/subsystems/nahw-executable-map.md` | As-built audit of the nahw subsystem (file:line-cited; GAPs marked). |
+| `docs/subsystems/largelexicon-as-built.md` | As-built audit of largelexicon (validators smoke-run; GAPs in §8). |
+| `docs/subsystems/parser-and-tutor.md` | Parser/tutor as consumers: what exists with tests vs GAP-marked target vision. |
+| `docs/subsystems/corpus-adapter-design.md` | DESIGN ONLY adapter contract for later corpora (Nawawī 40, Ṣaḥīḥayn); no ingestion authorized. |
+| `qamus/task-packets/*.json` (5) | Self-contained work orders for cheaper-model execution (`qamus.task_packet.v1`); executable twin `tools/validate_task_packets.py` (harness-gated). |
+| `qamus/work-queues/next-actions.jsonl` (+ `.meta.json`) | The 4 dependency-ready queue heads, each pointing at its packet and repo queue source (harness-gated shape). |
+| `qamus/reports/pvn-rollout-map.jsonl` (+ `.meta.json`) | **Generated** per-entry P/V/N rollout state (`tools/build_pvn_rollout_map.py`; `--check` + `--self-test` harness-gated). Never hand-edit. |
+
 ## 5. Reading order for a cold model
 
 1. `README.md` → `AGENTS.md` → `provenance/source-boundaries.md`
@@ -201,7 +226,9 @@ Committed worked evidence, never policy: the p007 pilot
 5. Run `python tools/check_regressions.py` before and after any change
 
 ---
-Verified against: commit 637d7da (origin/main, 2026-07-29); inventory audited
+Verified against: commit 637d7da (origin/main, 2026-07-29); §4.9 stitched and
+link-checked against commit c93de0a (origin/main, 2026-07-29, PRs #128–#131
+merged) with `tools/check_regressions.py` ALL PASS at that commit; inventory audited
 over `docs/`, `docs/parser/`, `docs/qamus/`, `docs/superpowers/`,
 `qamus/reports/` (159 .md), `qamus/schemas/` (87 schemas), `qamus/skills/`,
 `qamus/examples/`, `provenance/`; harness `tools/check_regressions.py`
