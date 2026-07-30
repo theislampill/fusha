@@ -479,8 +479,8 @@ def test_fact_id_is_content_addressed_over_the_claim() -> None:
     stale["form-source"] = "9" * 64
     check("stale carried-table digest moves the fact id", one(dependency_hashes=stale) != base)
     check("typed-graph digest change moves the fact id",
-          one(typed_graph_meta={"bundles": [], "eligible_edge_count": 0, "eligible_loc_count": 0,
-                                "typed_graph_sha256": "e" * 64}) != base)
+          one(typed_graph_meta=bridge.fixture_graph_meta(
+              {LOC: [bridge.fixture_typed_edge("1ec0de000001")]}, sha256="e" * 64)) != base)
     check("canonical-index digest change moves the fact id",
           one(loc_surface_meta=dict(bridge.FIXTURE_LOC_INDEX_META, sha256="c" * 64)) != base)
     check("lexeme-lattice digest change moves the fact id",
@@ -615,7 +615,8 @@ def test_authority_binding_is_carried_into_facts_and_scan() -> None:
     inputs = make_inputs()
     binding = inputs.authority_binding()
     check("binding names every authority",
-          set(binding) == {"canonical_loc_index", "carried_tables", "lexeme_join_lattice", "typed_graph"})
+          set(binding) == {"canonical_loc_index", "carried_tables", "lexeme_join_lattice", "typed_graph", "verified"})
+    check("the consumed authority object is verified", binding["verified"] is True)
     check("authority digest is a sha256", len(inputs.authority_digest()) == 64)
     fact = candidates_of(bridge.bridge_row(crosswalk_row(), inputs))[0]
     check("candidate binds the typed-graph digest",
@@ -625,6 +626,7 @@ def test_authority_binding_is_carried_into_facts_and_scan() -> None:
         payload = json.loads(scan.read_text(encoding="utf-8"))
         upstream = payload["upstream_binding"]
         check("scan binds every authority", set(upstream["authorities"]) == set(binding))
+        check("scan authority is verified", upstream["authorities"]["verified"] is True)
         for name in ("canonical_loc_index", "lexeme_join_lattice"):
             check(name + " is hashed into the scan",
                   len(str(upstream["authorities"][name]["sha256"])) == 64)
@@ -643,8 +645,7 @@ def test_abstention_ids_bind_semantics_and_provenance() -> None:
     check("carried-table digest moves the abstention id",
           abstention(dependency_hashes=dict(bridge.FIXTURE_DEPENDENCY_HASHES, **{"form-source": "9" * 64})) != base)
     check("typed-graph digest moves the abstention id",
-          abstention(typed_graph_meta={"bundles": [], "eligible_edge_count": 0, "eligible_loc_count": 0,
-                                       "typed_graph_sha256": "e" * 64}) != base)
+          abstention(typed_graph_meta=bridge.fixture_graph_meta({}, sha256="e" * 64)) != base)
     check("canonical-index digest moves the abstention id",
           abstention(loc_surface_meta=dict(bridge.FIXTURE_LOC_INDEX_META, sha256="c" * 64)) != base)
     check("lexeme-lattice digest moves the abstention id",
@@ -737,6 +738,137 @@ def test_full_carried_table_output_refuses_tracked_paths() -> None:
     check("the authorized ignored root is accepted",
           promoter.assert_ignored_output_root(promoter.DEFAULT_CARRIED_DIR).is_relative_to(
               (promoter.ROOT / "out").resolve()))
+
+
+# --------------------------------------------------------------------------- #
+# defect-round-3 repairs: no forged or bypassed authority binding
+# --------------------------------------------------------------------------- #
+def test_forged_zero_bundle_metadata_is_refused() -> None:
+    """Counterexample A: edges supplied, metadata claiming zero bundles/edges."""
+
+    forged = {"bundles": [], "eligible_edge_count": 0, "eligible_loc_count": 0,
+              "typed_graph_sha256": "f" * 64}
+    try:
+        make_inputs(typed_graph_meta=forged)
+    except bridge.BridgeError as error:
+        message = str(error)
+        check("forged zero-bundle metadata fails closed", "failed closed" in message)
+        check("the refusal names the unaccounted edges", "no present bundle accounts for them" in message)
+    else:
+        raise AssertionError("FAILED: forged zero-bundle metadata was admitted")
+
+    understated = bridge.fixture_graph_meta({LOC: [bridge.fixture_typed_edge("1ec0de000001")]})
+    understated["bundles"][0]["eligible_edge_count"] = 0
+    try:
+        make_inputs(typed_graph_meta=understated)
+    except bridge.BridgeError as error:
+        check("understated bundle counts fail closed", "bundles declare 0 eligible edges" in str(error))
+    else:
+        raise AssertionError("FAILED: understated bundle counts were admitted")
+
+    overstated = bridge.fixture_graph_meta({LOC: [bridge.fixture_typed_edge("1ec0de000001")]})
+    overstated["eligible_loc_count"] = 99
+    try:
+        make_inputs(typed_graph_meta=overstated)
+    except bridge.BridgeError as error:
+        check("overstated loc counts fail closed", "eligible_loc_count" in str(error))
+    else:
+        raise AssertionError("FAILED: overstated loc counts were admitted")
+
+
+def test_partial_dependency_family_is_refused() -> None:
+    """Counterexample B: only form-source, omitting the rest of the carried family."""
+
+    try:
+        make_inputs(dependency_hashes={"form-source": "a" * 64})
+    except bridge.BridgeError as error:
+        message = str(error)
+        check("partial dependency family fails closed", "failed closed" in message)
+        for family in ("lemma-source", "qword-crosswalk", "qword-denominator", "stem-source"):
+            check("the refusal names missing " + family, family in message)
+    else:
+        raise AssertionError("FAILED: a partial dependency family was admitted")
+
+    complete = dict(bridge.FIXTURE_DEPENDENCY_HASHES)
+    check("the complete family is accepted", bridge.dependency_family_errors(complete) == [])
+    for family in sorted(bridge.REQUIRED_DEPENDENCY_FAMILIES):
+        dropped = {name: digest for name, digest in complete.items() if name != family}
+        check("dropping " + family + " is refused",
+              any("missing" in problem for problem in bridge.dependency_family_errors(dropped)))
+        blanked = dict(complete, **{family: ""})
+        check("blank " + family + " digest is refused",
+              any("not a sha256" in problem for problem in bridge.dependency_family_errors(blanked)))
+        malformed = dict(complete, **{family: "not-a-digest"})
+        check("malformed " + family + " digest is refused",
+              any("not a sha256" in problem for problem in bridge.dependency_family_errors(malformed)))
+    extra = dict(complete, **{"invented-source": "9" * 64})
+    check("an extra dependency family is refused",
+          any("not recognised" in problem for problem in bridge.dependency_family_errors(extra)))
+    check("an empty dependency map is refused", bridge.dependency_family_errors({}) != [])
+
+
+def test_no_validation_bypass_can_return_a_candidate() -> None:
+    """Counterexample C: the old validate_rows=False escape hatch is gone."""
+
+    import inspect
+
+    signature = inspect.signature(bridge.BridgeInputs.__init__)
+    check("BridgeInputs exposes no validation bypass flag", "validate_rows" not in signature.parameters)
+    check("BridgeInputs is candidate capable", bridge.BridgeInputs.candidate_capable is True)
+    check("DiagnosticInputs is structurally candidate incapable",
+          bridge.DiagnosticInputs.candidate_capable is False)
+
+    diagnostic = bridge.DiagnosticInputs(
+        crosswalk=[],
+        lemmas=[lemma_row("1ec0de000001", SURFACE)],
+        forms=[form_row("1ec0de000001", SURFACE)],
+        stems=[stem_row("1ec0de000001", SURFACE)],
+        dependency_hashes={},
+        typed_edges={LOC: [bridge.fixture_typed_edge("1ec0de000001")]},
+        typed_graph_meta={},
+        loc_surface={},
+    )
+    check("diagnostic construction records why it is unverified", diagnostic.input_errors != [])
+    check("diagnostic authority is not verified", diagnostic.authority["verified"] is False)
+    record = bridge.bridge_row(crosswalk_row(), diagnostic)
+    assert_valid(record, "diagnostic abstention")
+    check("diagnostic inputs emit no candidate", candidates_of(record) == [])
+    check("diagnostic inputs abstain", record["projection"]["status"] == "blocked")
+    check("diagnostic inputs name their blocker",
+          blockers_of(record) == {"unverified_diagnostic_inputs"})
+
+    result = fact_projectors.REGISTRY.run(
+        fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID,
+        crosswalk_row=crosswalk_row(),
+        inputs=diagnostic,
+    )
+    check("the projector wrapper cannot return a candidate from diagnostic inputs",
+          result["status"] == "abstained" and result["candidate"] is None)
+    check("the diagnostic wrapper is not certification capable",
+          result["certification_allowed"] is False and result["materialization_allowed"] is False)
+
+
+def test_verified_authority_is_bound_into_ids_and_scan() -> None:
+    inputs = make_inputs()
+    check("the consumed authority is verified", inputs.authority_binding()["verified"] is True)
+    check("counts are derived, never asserted",
+          inputs.authority_binding()["typed_graph"]["eligible_edge_count"] == 1)
+    check("the complete dependency family is bound",
+          set(inputs.authority_binding()["carried_tables"]) == set(bridge.REQUIRED_DEPENDENCY_FAMILIES))
+
+    base = candidates_of(bridge.bridge_row(crosswalk_row(), inputs))[0]["fact_id"]
+    for family in sorted(bridge.REQUIRED_DEPENDENCY_FAMILIES):
+        moved = dict(bridge.FIXTURE_DEPENDENCY_HASHES, **{family: "9" * 64})
+        other = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs(dependency_hashes=moved)))[0]
+        check("mutating " + family + " moves the fact id", other["fact_id"] != base)
+
+    scan = Path(__file__).resolve().parents[1] / "qamus" / "examples" / "largelexicon-fact-bridge" / "real-data-scan.meta.json"
+    if scan.exists():
+        payload = json.loads(scan.read_text(encoding="utf-8"))
+        authorities = payload["upstream_binding"]["authorities"]
+        check("the scan binds a verified authority", authorities["verified"] is True)
+        check("the scan binds the complete dependency family",
+              set(authorities["carried_tables"]) == set(bridge.REQUIRED_DEPENDENCY_FAMILIES))
 
 
 if __name__ == "__main__":

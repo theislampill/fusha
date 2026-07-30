@@ -14,6 +14,7 @@
     "root_family_relation_not_lexeme_identity",
     "typed_edge_identity_disagreement",
     "unresolved_canonical_loc",
+    "unverified_diagnostic_inputs",
     "wbw_loc_disagreement"
   ],
   "certified_records": 0,
@@ -22,7 +23,7 @@
   "note": "in-memory behavioural fixtures; no committed table row is reproduced here",
   "projector_id": "largelexicon.carried_lexeme_candidate.v1",
   "public_boundary_clean": true,
-  "row_count": 16,
+  "row_count": 17,
   "scenarios": [
     {
       "blockers": [],
@@ -149,8 +150,16 @@
       "preserved_candidates": 0,
       "projection_status": "blocked",
       "scenario": "wbw_loc_disagreement"
+    },
+    {
+      "blockers": [
+        "unverified_diagnostic_inputs"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "unverified_diagnostic_inputs"
     }
   ],
   "schema": "qamus/largelexicon-fact-bridge-fixtures-meta@1",
-  "sha256": "9a0f05e8c1066e2747724ed8198724ff8ec7b03ee665bfc27bb1fb607a13932d"
+  "sha256": "ab902f6e6ea17c1fe73310776908607ca68b06096793cfed3a2a7b9e09620bb2"
 }

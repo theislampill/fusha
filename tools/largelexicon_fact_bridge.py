@@ -33,6 +33,7 @@ or validation-red target release invalidates it mechanically.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import re
@@ -103,6 +104,7 @@ MATERIALIZATION_TARGET = {
 # projection status it maps to. Nothing here is ever "resolved by picking one".
 BLOCKER_STATUS = {
     "quarantined_or_flagged_source_row": "blocked",
+    "unverified_diagnostic_inputs": "blocked",
     "missing_dependency_release": "blocked",
     "norm_only_surface_match": "blocked",
     "loc_not_in_canonical_index": "blocked",
@@ -121,6 +123,10 @@ BLOCKER_STATUS = {
 
 BLOCKER_REASONS = {
     "quarantined_or_flagged_source_row": "the crosswalk row did not carry onto the target schema",
+    "unverified_diagnostic_inputs": (
+        "these inputs were built for diagnostics and were never verified, so they are "
+        "structurally unable to support a candidate"
+    ),
     "missing_dependency_release": "the crosswalk row lacks its qword-denominator and source-card dependencies",
     "norm_only_surface_match": "only a normalized surface match exists; norm() never certifies identity",
     "unresolved_canonical_loc": "no canonical quran loc; a diagnostic binding key is never reuse authority",
@@ -307,55 +313,137 @@ def load_lexeme_join_edges(path: Path | None = None) -> tuple[dict[str, list[dic
     }
 
 
-def authority_errors(
-    *,
-    dependency_hashes: dict[str, str],
-    typed_graph_meta: dict[str, Any],
-    loc_surface: dict[str, str],
-    loc_surface_meta: dict[str, Any],
-    lexeme_join_meta: dict[str, Any],
-) -> list[str]:
-    """Every authority consumed by candidate admission must be complete and bound.
+REQUIRED_DEPENDENCY_FAMILIES = frozenset(
+    {"form-source", "lemma-source", "qword-crosswalk", "qword-denominator", "stem-source"}
+)
 
-    Candidate admission may never fail OPEN: an empty canonical index, omitted or
-    ``unbound`` typed-graph metadata, or a malformed dependency digest all make
-    identity unprovable, so they are refused rather than silently tolerated.
+
+def dependency_family_errors(dependency_hashes: dict[str, str]) -> list[str]:
+    """The carried dependency family must be exactly complete and well formed.
+
+    A partial binding (for example ``form-source`` alone) cannot invalidate a
+    record when the crosswalk, denominator, lemma or stem table drifts, so a
+    candidate resting on it would be unfalsifiable. Missing, extra, empty and
+    malformed families are all refused.
     """
 
     problems: list[str] = []
-    if not loc_surface:
-        problems.append("the canonical loc-surface index is empty; candidate admission has no loc authority")
-    for name, meta in (("canonical_loc_index", loc_surface_meta), ("lexeme_join_lattice", lexeme_join_meta)):
-        if not isinstance(meta, dict) or not meta.get("present"):
-            problems.append(f"{name}: authority binding is missing")
-            continue
-        if not re.fullmatch(r"[0-9a-f]{64}", str(meta.get("sha256"))):
-            problems.append(f"{name}: authority digest is missing or malformed")
-    if not isinstance(typed_graph_meta, dict):
-        problems.append("typed_graph: metadata is missing")
-    else:
-        digest = str(typed_graph_meta.get("typed_graph_sha256"))
-        if digest == "unbound" or not re.fullmatch(r"[0-9a-f]{64}", digest):
-            problems.append("typed_graph: digest is unbound, missing or malformed")
-        if not isinstance(typed_graph_meta.get("bundles"), list):
-            problems.append("typed_graph: bundle list is missing")
-        for index, bundle in enumerate(typed_graph_meta.get("bundles") or []):
-            if bundle.get("present") and not re.fullmatch(r"[0-9a-f]{64}", str(bundle.get("sha256"))):
-                problems.append(f"typed_graph: bundle[{index}] digest is malformed")
-    if not dependency_hashes:
-        problems.append("carried-table dependency hashes are required")
+    if not isinstance(dependency_hashes, dict) or not dependency_hashes:
+        return ["carried-table dependency hashes are required"]
+    supplied = set(dependency_hashes)
+    missing = sorted(REQUIRED_DEPENDENCY_FAMILIES - supplied)
+    extra = sorted(supplied - REQUIRED_DEPENDENCY_FAMILIES)
+    if missing:
+        problems.append("carried dependency families are missing: " + ",".join(missing))
+    if extra:
+        problems.append("carried dependency families are not recognised: " + ",".join(extra))
     for family, digest in sorted(dependency_hashes.items()):
         if not re.fullmatch(r"[0-9a-f]{64}", str(digest)):
             problems.append(f"dependency hash for {family} is not a sha256 digest")
     return problems
 
 
-_TARGET_SCHEMA_CONST = {
-    "qword-crosswalk": "qamus/largelexicon-qword-crosswalk@2",
-    "lemma-source": "fusha/largelexicon/lemma-source@2",
-    "form-source": "fusha/largelexicon/form-source@2",
-    "stem-source": "fusha/largelexicon/stem-source@2",
-}
+def verify_authority(
+    *,
+    dependency_hashes: dict[str, str],
+    typed_edges: dict[str, list[dict[str, Any]]],
+    typed_graph_meta: dict[str, Any],
+    loc_surface: dict[str, str],
+    loc_surface_meta: dict[str, Any],
+    lexeme_join: dict[str, list[dict[str, Any]]],
+    lexeme_join_meta: dict[str, Any],
+) -> tuple[dict[str, Any], list[str]]:
+    """Derive the VERIFIED authority object, reconciled against the supplied data.
+
+    Candidate admission consumes this object, never the caller's parallel
+    assertions: counts are recomputed from the rows, edges and index actually
+    supplied, and any caller-declared count that disagrees is a refusal. Metadata
+    claiming zero bundles or zero eligible edges while edges are supplied is
+    therefore rejected instead of believed.
+    """
+
+    problems: list[str] = dependency_family_errors(dependency_hashes)
+
+    if not loc_surface:
+        problems.append("the canonical loc-surface index is empty; candidate admission has no loc authority")
+    derived_index_rows = len(loc_surface)
+    derived_lattice_rows = sum(len(rows) for rows in (lexeme_join or {}).values())
+    derived_edges = sum(len(edges) for edges in (typed_edges or {}).values())
+    derived_locs = len(typed_edges or {})
+
+    def _meta(name: str, meta: dict[str, Any], derived_rows: int) -> dict[str, Any]:
+        if not isinstance(meta, dict) or not meta.get("present"):
+            problems.append(f"{name}: authority binding is missing")
+            return {"path": None, "present": False, "row_count": derived_rows, "sha256": None}
+        if not re.fullmatch(r"[0-9a-f]{64}", str(meta.get("sha256"))):
+            problems.append(f"{name}: authority digest is missing or malformed")
+        if "row_count" in meta and meta.get("row_count") != derived_rows:
+            problems.append(
+                "%s: declared row_count %r disagrees with the %d supplied rows"
+                % (name, meta.get("row_count"), derived_rows)
+            )
+        return {
+            "path": meta.get("path"),
+            "present": True,
+            "row_count": derived_rows,
+            "sha256": meta.get("sha256"),
+        }
+
+    index_binding = _meta("canonical_loc_index", loc_surface_meta, derived_index_rows)
+    lattice_binding = _meta("lexeme_join_lattice", lexeme_join_meta, derived_lattice_rows)
+
+    bundles: list[dict[str, Any]] = []
+    if not isinstance(typed_graph_meta, dict):
+        problems.append("typed_graph: metadata is missing")
+        typed_graph_meta = {}
+    digest = str(typed_graph_meta.get("typed_graph_sha256"))
+    if digest == "unbound" or not re.fullmatch(r"[0-9a-f]{64}", digest):
+        problems.append("typed_graph: digest is unbound, missing or malformed")
+    declared_bundles = typed_graph_meta.get("bundles")
+    if not isinstance(declared_bundles, list):
+        problems.append("typed_graph: bundle list is missing")
+        declared_bundles = []
+    declared_eligible = sum(
+        int(bundle.get("eligible_edge_count") or 0)
+        for bundle in declared_bundles
+        if isinstance(bundle, dict)
+    )
+    for index, bundle in enumerate(declared_bundles):
+        if not isinstance(bundle, dict):
+            problems.append(f"typed_graph: bundle[{index}] is not a record")
+            continue
+        if bundle.get("present") and not re.fullmatch(r"[0-9a-f]{64}", str(bundle.get("sha256"))):
+            problems.append(f"typed_graph: bundle[{index}] digest is malformed")
+        bundles.append(bundle)
+    if derived_edges and not [item for item in bundles if item.get("present")]:
+        problems.append(
+            "typed_graph: %d eligible edges were supplied but no present bundle accounts for them"
+            % derived_edges
+        )
+    if bundles and declared_eligible != derived_edges:
+        problems.append(
+            "typed_graph: bundles declare %d eligible edges but %d were supplied"
+            % (declared_eligible, derived_edges)
+        )
+    for key in ("eligible_edge_count", "eligible_loc_count"):
+        declared = typed_graph_meta.get(key)
+        actual = derived_edges if key == "eligible_edge_count" else derived_locs
+        if declared is not None and declared != actual:
+            problems.append(f"typed_graph: declared {key} {declared!r} disagrees with the supplied edges ({actual})")
+
+    authority = {
+        "canonical_loc_index": index_binding,
+        "carried_tables": dict(sorted((dependency_hashes or {}).items())),
+        "lexeme_join_lattice": lattice_binding,
+        "typed_graph": {
+            "bundles": bundles,
+            "eligible_edge_count": derived_edges,
+            "eligible_loc_count": derived_locs,
+            "typed_graph_sha256": typed_graph_meta.get("typed_graph_sha256"),
+        },
+        "verified": not problems,
+    }
+    return authority, problems
 
 
 def _edge_key_errors(typed_edges: dict[str, list[dict[str, Any]]]) -> list[str]:
@@ -371,6 +459,14 @@ def _edge_key_errors(typed_edges: dict[str, list[dict[str, Any]]]) -> list[str]:
                     % (loc, index, encoded)
                 )
     return problems
+
+
+_TARGET_SCHEMA_CONST = {
+    "qword-crosswalk": "qamus/largelexicon-qword-crosswalk@2",
+    "lemma-source": "fusha/largelexicon/lemma-source@2",
+    "form-source": "fusha/largelexicon/form-source@2",
+    "stem-source": "fusha/largelexicon/stem-source@2",
+}
 
 
 def _input_errors(
@@ -418,7 +514,15 @@ def _input_errors(
 
 
 class BridgeInputs:
-    """Carried target-schema rows plus canonical typed graph evidence, gate-checked."""
+    """Carried target-schema rows plus canonical typed graph evidence, gate-checked.
+
+    Constructing this class IS the gate: rows, edge-map keys, the carried
+    dependency family and every authority are verified, and a failure raises.
+    ``DiagnosticInputs`` is the only non-validating variant and it is structurally
+    unable to yield a candidate.
+    """
+
+    candidate_capable = True
 
     def __init__(
         self,
@@ -434,32 +538,36 @@ class BridgeInputs:
         loc_surface: dict[str, str] | None = None,
         loc_surface_meta: dict[str, Any] | None = None,
         lexeme_join_meta: dict[str, Any] | None = None,
-        validate_rows: bool = True,
     ) -> None:
         crosswalk, lemmas, forms, stems = list(crosswalk), list(lemmas), list(forms), list(stems)
         loc_surface = dict(loc_surface or {})
         typed_graph_meta = dict(typed_graph_meta or {})
         loc_surface_meta = dict(loc_surface_meta or {})
         lexeme_join_meta = dict(lexeme_join_meta or {})
-        if validate_rows:
-            errors = _input_errors(crosswalk, lemmas, forms, stems, dependency_hashes, typed_edges or {})
-            errors.extend(
-                authority_errors(
-                    dependency_hashes=dependency_hashes,
-                    typed_graph_meta=typed_graph_meta,
-                    loc_surface=loc_surface,
-                    loc_surface_meta=loc_surface_meta,
-                    lexeme_join_meta=lexeme_join_meta,
-                )
-            )
-            errors.extend(_edge_key_errors(typed_edges or {}))
-            if errors:
-                raise BridgeError("bridge inputs failed closed: " + "; ".join(errors[:5]))
+        # There is NO validation bypass on a candidate-capable path. Every input set
+        # that can return a candidate is row-validated, edge-key checked, and reduced
+        # to a VERIFIED authority object derived from the supplied data.
+        errors = _input_errors(crosswalk, lemmas, forms, stems, dependency_hashes, typed_edges or {})
+        errors.extend(_edge_key_errors(typed_edges or {}))
+        authority, authority_problems = verify_authority(
+            dependency_hashes=dependency_hashes,
+            typed_edges=typed_edges or {},
+            typed_graph_meta=typed_graph_meta,
+            loc_surface=loc_surface,
+            loc_surface_meta=loc_surface_meta,
+            lexeme_join=graph_edges or {},
+            lexeme_join_meta=lexeme_join_meta,
+        )
+        errors.extend(authority_problems)
+        if errors and self.candidate_capable:
+            raise BridgeError("bridge inputs failed closed: " + "; ".join(errors[:5]))
+        self.input_errors = errors
+        self.authority = authority
         self.typed_edges = dict(typed_edges or {})
-        self.typed_graph_meta = typed_graph_meta
+        self.typed_graph_meta = authority["typed_graph"]
         self.loc_surface = loc_surface
-        self.loc_surface_meta = loc_surface_meta
-        self.lexeme_join_meta = lexeme_join_meta
+        self.loc_surface_meta = authority["canonical_loc_index"]
+        self.lexeme_join_meta = authority["lexeme_join_lattice"]
         self.crosswalk = list(crosswalk)
         self.lemmas = {str(row["entry_id"]): row for row in lemmas}
         self.forms = list(forms)
@@ -499,14 +607,9 @@ class BridgeInputs:
         )
 
     def authority_binding(self) -> dict[str, Any]:
-        """Every consumed index, lattice, graph bundle and carried table, hashed."""
+        """The VERIFIED authority object: every consumed index, lattice, bundle and table."""
 
-        return {
-            "canonical_loc_index": self.loc_surface_meta,
-            "carried_tables": dict(sorted(self.dependency_hashes.items())),
-            "lexeme_join_lattice": self.lexeme_join_meta,
-            "typed_graph": self.typed_graph_meta,
-        }
+        return copy.deepcopy(self.authority)
 
     def authority_digest(self) -> str:
         return hashlib.sha256(_canonical(self.authority_binding()).encode("utf-8")).hexdigest()
@@ -539,6 +642,18 @@ class BridgeInputs:
 
     def stem_for(self, entry_id: str, surface: str) -> dict[str, Any] | None:
         return self._stems_by_key.get((entry_id, surface))
+
+
+class DiagnosticInputs(BridgeInputs):
+    """Non-validating inputs for diagnostics ONLY.
+
+    ``candidate_capable`` is False, so construction never raises on bad inputs and
+    :func:`bridge_row` short-circuits to an abstention carrying
+    ``unverified_diagnostic_inputs``. There is no code path from this class to a
+    candidate fact or a candidate projector wrapper.
+    """
+
+    candidate_capable = False
 
 
 def _source_evidence(structured: dict[str, Any], addresses: list[dict[str, str]]) -> dict[str, Any]:
@@ -846,6 +961,26 @@ def bridge_row(row: dict[str, Any], inputs: BridgeInputs, *, carried: bool = Tru
     """Bridge one crosswalk row into exactly one typed-claim contract record."""
 
     hashes = inputs.dependency_hashes
+    if not getattr(inputs, "candidate_capable", False):
+        # Diagnostic inputs are never verified, so they can only ever abstain.
+        return _record(
+            row=row,
+            loc=None,
+            surface=str(row.get("visible_surface") or ""),
+            facts=[
+                _abstention_fact(
+                    row=row,
+                    blockers=["unverified_diagnostic_inputs"],
+                    hashes=hashes,
+                    loc=None,
+                    graph_edges=[],
+                    observed={"input_errors": list(getattr(inputs, "input_errors", []))[:5]},
+                    authority_binding=inputs.authority_binding(),
+                )
+            ],
+            status="blocked",
+            unresolved="blocked",
+        )
     loc_value = row.get("canonical_quran_loc")
     loc = str(loc_value) if is_canonical_loc(loc_value) else None
     graph_edges = inputs.graph_edges.get(loc or "", [])
@@ -1124,6 +1259,7 @@ FIXTURE_DEPENDENCY_HASHES = {
     "qword-denominator": "d" * 64,
     "stem-source": "e" * 64,
 }
+assert set(FIXTURE_DEPENDENCY_HASHES) == set(REQUIRED_DEPENDENCY_FAMILIES)
 
 
 def fixture_crosswalk_row(**overrides: Any) -> dict[str, Any]:
@@ -1243,15 +1379,36 @@ def fixture_typed_edge(
 FIXTURE_LOC_INDEX_META = {
     "path": "fixture://quran-loc-surface",
     "present": True,
-    "row_count": 1,
     "sha256": "a" * 64,
 }
 FIXTURE_LEXEME_JOIN_META = {
     "path": "fixture://lexeme-join-edges",
     "present": True,
-    "row_count": 0,
     "sha256": "b" * 64,
 }
+
+
+def fixture_graph_meta(
+    typed_edges: dict[str, list[dict[str, Any]]] | None, *, sha256: str = "f" * 64
+) -> dict[str, Any]:
+    """Bundle metadata that honestly accounts for the edges actually supplied."""
+
+    supplied = sum(len(edges) for edges in (typed_edges or {}).values())
+    return {
+        "bundles": [
+            {
+                "eligible_edge_count": supplied,
+                "path": "fixture://typed-edges",
+                "present": True,
+                "row_count": supplied,
+                "schema": TYPED_GRAPH_SCHEMA,
+                "sha256": sha256,
+            }
+        ],
+        "eligible_edge_count": supplied,
+        "eligible_loc_count": len(typed_edges or {}),
+        "typed_graph_sha256": sha256,
+    }
 
 
 def fixture_inputs(
@@ -1288,15 +1445,7 @@ def fixture_inputs(
         dependency_hashes=dict(FIXTURE_DEPENDENCY_HASHES) if dependency_hashes is None else dependency_hashes,
         graph_edges=graph_edges or {},
         typed_edges=typed_edges,
-        typed_graph_meta={
-            "bundles": [
-                {"path": "fixture://typed-edges", "schema": TYPED_GRAPH_SCHEMA, "sha256": "f" * 64,
-                 "row_count": 1, "eligible_edge_count": 1, "present": True}
-            ],
-            "eligible_edge_count": 1,
-            "eligible_loc_count": 1,
-            "typed_graph_sha256": "f" * 64,
-        } if typed_graph_meta is None else typed_graph_meta,
+        typed_graph_meta=fixture_graph_meta(typed_edges) if typed_graph_meta is None else typed_graph_meta,
         loc_surface={FIXTURE_LOC: FIXTURE_SURFACE} if loc_surface is None else loc_surface,
         loc_surface_meta=dict(FIXTURE_LOC_INDEX_META) if loc_surface_meta is None else loc_surface_meta,
         lexeme_join_meta=dict(FIXTURE_LEXEME_JOIN_META) if lexeme_join_meta is None else lexeme_join_meta,
@@ -1392,6 +1541,21 @@ def fixture_scenarios() -> list[tuple[str, dict[str, Any], BridgeInputs, bool]]:
             True,
         ),
         ("wbw_loc_disagreement", fixture_crosswalk_row(canonical_wbw_loc="9:9:9"), fixture_inputs(), True),
+        (
+            "unverified_diagnostic_inputs",
+            fixture_crosswalk_row(),
+            DiagnosticInputs(
+                crosswalk=[],
+                lemmas=[fixture_lemma_row("1ec0de000001", FIXTURE_SURFACE)],
+                forms=[fixture_form_row("1ec0de000001", FIXTURE_SURFACE)],
+                stems=[fixture_stem_row("1ec0de000001", FIXTURE_SURFACE)],
+                dependency_hashes={},
+                typed_edges={FIXTURE_LOC: [fixture_typed_edge("1ec0de000001")]},
+                typed_graph_meta={},
+                loc_surface={},
+            ),
+            True,
+        ),
     ]
 
 

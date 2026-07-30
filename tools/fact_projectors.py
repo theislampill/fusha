@@ -228,13 +228,21 @@ def project_largelexicon_carried_lexeme(
 
     from tools import largelexicon_fact_bridge as bridge
 
+    # A candidate wrapper may only ever be built from verified, candidate-capable
+    # inputs. Diagnostic inputs abstain by construction and can never reach here
+    # with a candidate attached.
+    candidate_capable = bool(getattr(inputs, "candidate_capable", False))
     record = bridge.bridge_row(crosswalk_row, inputs, carried=carried)
     errors = bridge.validate_records([record])
     if errors:
         raise ProjectorValidationError("bridge record is not a valid typed claim: " + "; ".join(errors[:3]))
     projection = record["projection"]
     candidates = [fact for fact in record["facts"] if fact["fact_type"] == "largelexicon_lexeme_candidate"]
-    resolved = projection["status"] == "candidate"
+    resolved = projection["status"] == "candidate" and candidate_capable
+    if projection["status"] == "candidate" and not candidate_capable:
+        raise ProjectorValidationError(
+            "unverified inputs produced a candidate projection; the bridge gate is broken"
+        )
     # The wrapper must never relabel the enclosed fact: it reports the evidence
     # mode the fact actually carries, and refuses to emit a disagreeing summary.
     modes = sorted({fact["evidence_mode"] for fact in candidates})

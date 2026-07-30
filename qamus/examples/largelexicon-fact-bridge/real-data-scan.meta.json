@@ -87,9 +87,10 @@
         "eligible_edge_count": 2,
         "eligible_loc_count": 1,
         "typed_graph_sha256": "e2fa82f586bb52a4c7abec7db8aea249a3330c922700df0261a16b15d7362133"
-      }
+      },
+      "verified": true
     },
-    "authority_digest": "f886d21fff5bbd17c22d3841a4fa77024a02cbc72060a78060c08448da3e6853",
+    "authority_digest": "c374b92b9fde904abf1b66a21486906e786db51a74605dfc822f9be5cdc04c09",
     "carried_table_sha256": {
       "form-source": "82944f9950d318d1f1beccaf366d0cf19b9548f97c07263beb29681118064d45",
       "lemma-source": "3fd9b85c2cab9ed033b3b0715304fe090c94c3622aba4da66f268177f0fac3ec",
