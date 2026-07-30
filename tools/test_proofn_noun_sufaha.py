@@ -5,7 +5,9 @@ from __future__ import annotations
 import copy
 import json
 from pathlib import Path
+import tempfile
 import unittest
+from unittest import mock
 
 from tools import proofn_noun_sufaha as proofn
 from tools.validate_proofn_noun_sufaha import validate_proof
@@ -20,6 +22,32 @@ def load_committed_proof() -> dict:
 
 
 class ProofNNounSufahaTests(unittest.TestCase):
+    def test_json_writer_pins_lf_newline_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir) / "nested" / "review.json"
+            with mock.patch.object(Path, "write_text", autospec=True) as write_text:
+                proofn._write_json(output, {})
+            write_text.assert_called_once_with(
+                output,
+                "{}\n",
+                encoding="utf-8",
+                newline="\n",
+            )
+
+    def test_json_writer_emits_lf_bytes(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir) / "nested" / "review.json"
+            proofn._write_json(output, {"surface": "سُفَهَاء", "status": "candidate"})
+            self.assertEqual(
+                (
+                    '{\n'
+                    '  "status": "candidate",\n'
+                    '  "surface": "سُفَهَاء"\n'
+                    '}\n'
+                ).encode("utf-8"),
+                output.read_bytes(),
+            )
+
     def test_committed_proof_passes(self) -> None:
         proof = load_committed_proof()
         self.assertEqual([], validate_proof(proof))
