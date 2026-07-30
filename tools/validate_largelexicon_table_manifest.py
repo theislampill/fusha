@@ -464,6 +464,80 @@ def run_self_test() -> int:
     return 0
 
 
+def validate_generated_ledgers() -> list[str]:
+    """Prove the GENERATED full ledgers under out/ match TARGET-RELEASE.json exactly.
+
+    A consumer of the residue population must never read a row before this passes:
+    the tracked artifacts are bounded samples, and the full ledgers are regenerated
+    outputs whose only authority is the release digest.
+    """
+
+    errors: list[str] = []
+    try:
+        release = promoter.read_release()
+    except promoter.PromotionError as error:
+        return [str(error)]
+    for disposition, entry in sorted((release.get("ledgers") or {}).items()):
+        relative = str(entry.get("full_output_path") or "")
+        if not relative.startswith("out/"):
+            errors.append(f"{disposition}: full ledger path is not under the gitignored out/ tree")
+            continue
+        path = ROOT / relative
+        if not path.exists():
+            errors.append(
+                f"{disposition}: generated ledger is absent — run "
+                "`python tools/promote_largelexicon_target_schema.py --write` first"
+            )
+            continue
+        digest = _sha256_file(path)
+        if digest != entry.get("sha256"):
+            errors.append(f"{disposition}: generated ledger sha256 disagrees with TARGET-RELEASE.json")
+            continue
+        rows = _read_jsonl_rows(path)
+        if len(rows) != entry.get("row_count"):
+            errors.append(f"{disposition}: generated ledger row count disagrees with the release")
+        families = Counter(str(row.get("family")) for row in rows)
+        if dict(sorted(families.items())) != entry.get("family_counts"):
+            errors.append(f"{disposition}: generated ledger family counts disagree with the release")
+    return errors
+
+
+def validate_triage(triage_path: Path) -> list[str]:
+    """Prove a triage output covers the generated residue exactly, once and terminally."""
+
+    errors = validate_generated_ledgers()
+    if errors:
+        return errors
+    release = promoter.read_release()
+    expected: set[tuple[str, str]] = set()
+    for disposition, entry in sorted((release.get("ledgers") or {}).items()):
+        for row in _read_jsonl_rows(ROOT / str(entry["full_output_path"])):
+            expected.add((str(row["family"]), str(row["identity"])))
+    if not triage_path.exists():
+        return [f"triage output is absent: {triage_path}"]
+    if ROOT in triage_path.resolve().parents and not triage_path.resolve().is_relative_to((ROOT / "out").resolve()):
+        errors.append("the FULL triage output must live under the gitignored out/ tree")
+    seen: set[tuple[str, str]] = set()
+    for line_no, row in _iter_jsonl(triage_path):
+        key = (str(row.get("family")), str(row.get("identity")))
+        if key in seen:
+            errors.append(f"triage:{line_no}: duplicate triage row for {key[0]}/{key[1]}")
+        seen.add(key)
+        if key not in expected:
+            errors.append(f"triage:{line_no}: {key[0]}/{key[1]} is not a residue identity")
+        state = row.get("triage_state")
+        if not state:
+            errors.append(f"triage:{line_no}: no terminal triage state")
+        elif state == "carried":
+            errors.append(f"triage:{line_no}: carried is not a triage state; only the promoter assigns dispositions")
+    missing = sorted(expected - seen)[:3]
+    if missing:
+        errors.append(f"triage output omits residue identities, e.g. {missing}")
+    if len(seen) != len(expected):
+        errors.append(f"triage output covers {len(seen)} of {len(expected)} residue identities")
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate sharded largelexicon qword denominator storage.")
     parser.add_argument("--manifest", default=str(MANIFEST))
@@ -473,10 +547,25 @@ def main() -> int:
         action="store_true",
         help="re-validate the derived target-schema release against the unchanged schemas",
     )
+    parser.add_argument(
+        "--validate-generated-ledgers",
+        action="store_true",
+        help="prove the regenerated full ledgers under out/ match TARGET-RELEASE.json",
+    )
+    parser.add_argument(
+        "--validate-triage",
+        metavar="PATH",
+        help="prove a triage output covers the generated residue exactly",
+    )
     args = parser.parse_args()
     if args.self_test:
         return run_self_test()
-    errors = validate_target_release() if args.target_release else validate(Path(args.manifest))
+    if args.validate_triage:
+        errors = validate_triage(Path(args.validate_triage))
+    elif args.validate_generated_ledgers:
+        errors = validate_generated_ledgers()
+    else:
+        errors = validate_target_release() if args.target_release else validate(Path(args.manifest))
     print(json.dumps({"ok": not errors, "errors": errors}, ensure_ascii=False, indent=2, sort_keys=True))
     return 1 if errors else 0
 

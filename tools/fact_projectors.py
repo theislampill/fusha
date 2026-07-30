@@ -235,6 +235,12 @@ def project_largelexicon_carried_lexeme(
     projection = record["projection"]
     candidates = [fact for fact in record["facts"] if fact["fact_type"] == "largelexicon_lexeme_candidate"]
     resolved = projection["status"] == "candidate"
+    # The wrapper must never relabel the enclosed fact: it reports the evidence
+    # mode the fact actually carries, and refuses to emit a disagreeing summary.
+    modes = sorted({fact["evidence_mode"] for fact in candidates})
+    if resolved and len(modes) != 1:
+        raise ProjectorValidationError("bridge candidates disagree on evidence_mode: " + ",".join(modes))
+    evidence_mode = modes[0] if modes else "unresolved"
     return {
         "projector_id": contract["projector_id"],
         "status": "candidate" if resolved else "abstained",
@@ -243,7 +249,7 @@ def project_largelexicon_carried_lexeme(
             "fact_type": contract["output_fact_type"],
             "fact_ids": [fact["fact_id"] for fact in candidates],
             "candidates_preserved": len(candidates),
-            "evidence_mode": "normalized_lexical_body",
+            "evidence_mode": evidence_mode,
         }
         if resolved
         else None,
@@ -255,6 +261,7 @@ def project_largelexicon_carried_lexeme(
                 for blocker in fact.get("unresolved_blockers") or []
             }
         ),
+        "evidence_mode": evidence_mode,
         "typed_claim_record": record,
         "certification_allowed": False,
         "materialization_allowed": False,

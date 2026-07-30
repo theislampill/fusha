@@ -258,34 +258,96 @@ def load_typed_graph(paths: Iterable[str] | None = None) -> tuple[dict[str, list
     }
 
 
-def load_loc_surface_index(path: Path | None = None) -> dict[str, str]:
-    """The committed canonical loc → written-surface index."""
+def _file_digest(path: Path) -> str | None:
+    return hashlib.sha256(path.read_bytes()).hexdigest() if path.exists() else None
+
+
+def load_loc_surface_index(path: Path | None = None) -> tuple[dict[str, str], dict[str, Any]]:
+    """The committed canonical loc → written-surface index, plus its binding."""
 
     source = path or LOC_SURFACE_INDEX
     index: dict[str, str] = {}
-    if not source.exists():
-        return index
-    with source.open("r", encoding="utf-8") as handle:
-        for line in handle:
-            if line.strip():
-                row = json.loads(line)
-                index[str(row["loc"])] = str(row["surface"])
-    return index
+    if source.exists():
+        with source.open("r", encoding="utf-8") as handle:
+            for line in handle:
+                if line.strip():
+                    row = json.loads(line)
+                    index[str(row["loc"])] = str(row["surface"])
+    return index, {
+        "path": source.relative_to(ROOT).as_posix() if source.is_relative_to(ROOT) else str(source),
+        "present": source.exists(),
+        "row_count": len(index),
+        "sha256": _file_digest(source),
+    }
 
 
-def load_lexeme_join_edges(path: Path | None = None) -> dict[str, list[dict[str, Any]]]:
-    """Index the candidate lexeme-join lattice by loc. Candidate edges only."""
+def load_lexeme_join_edges(path: Path | None = None) -> tuple[dict[str, list[dict[str, Any]]], dict[str, Any]]:
+    """Index the candidate lexeme-join lattice by loc, plus its binding.
+
+    These are CANDIDATE edges only; the lattice never supports identity. It is
+    still hashed into the authority binding because it steers abstention routing,
+    so lattice drift must invalidate downstream records.
+    """
 
     source = path or LEXEME_JOIN_EDGES
     edges: dict[str, list[dict[str, Any]]] = {}
-    if not source.exists():
-        return edges
-    with source.open("r", encoding="utf-8") as handle:
-        for line in handle:
-            if line.strip():
-                row = json.loads(line)
-                edges.setdefault(str(row.get("loc")), []).append(row)
-    return edges
+    rows = 0
+    if source.exists():
+        with source.open("r", encoding="utf-8") as handle:
+            for line in handle:
+                if line.strip():
+                    row = json.loads(line)
+                    rows += 1
+                    edges.setdefault(str(row.get("loc")), []).append(row)
+    return edges, {
+        "path": source.relative_to(ROOT).as_posix() if source.is_relative_to(ROOT) else str(source),
+        "present": source.exists(),
+        "row_count": rows,
+        "sha256": _file_digest(source),
+    }
+
+
+def authority_errors(
+    *,
+    dependency_hashes: dict[str, str],
+    typed_graph_meta: dict[str, Any],
+    loc_surface: dict[str, str],
+    loc_surface_meta: dict[str, Any],
+    lexeme_join_meta: dict[str, Any],
+) -> list[str]:
+    """Every authority consumed by candidate admission must be complete and bound.
+
+    Candidate admission may never fail OPEN: an empty canonical index, omitted or
+    ``unbound`` typed-graph metadata, or a malformed dependency digest all make
+    identity unprovable, so they are refused rather than silently tolerated.
+    """
+
+    problems: list[str] = []
+    if not loc_surface:
+        problems.append("the canonical loc-surface index is empty; candidate admission has no loc authority")
+    for name, meta in (("canonical_loc_index", loc_surface_meta), ("lexeme_join_lattice", lexeme_join_meta)):
+        if not isinstance(meta, dict) or not meta.get("present"):
+            problems.append(f"{name}: authority binding is missing")
+            continue
+        if not re.fullmatch(r"[0-9a-f]{64}", str(meta.get("sha256"))):
+            problems.append(f"{name}: authority digest is missing or malformed")
+    if not isinstance(typed_graph_meta, dict):
+        problems.append("typed_graph: metadata is missing")
+    else:
+        digest = str(typed_graph_meta.get("typed_graph_sha256"))
+        if digest == "unbound" or not re.fullmatch(r"[0-9a-f]{64}", digest):
+            problems.append("typed_graph: digest is unbound, missing or malformed")
+        if not isinstance(typed_graph_meta.get("bundles"), list):
+            problems.append("typed_graph: bundle list is missing")
+        for index, bundle in enumerate(typed_graph_meta.get("bundles") or []):
+            if bundle.get("present") and not re.fullmatch(r"[0-9a-f]{64}", str(bundle.get("sha256"))):
+                problems.append(f"typed_graph: bundle[{index}] digest is malformed")
+    if not dependency_hashes:
+        problems.append("carried-table dependency hashes are required")
+    for family, digest in sorted(dependency_hashes.items()):
+        if not re.fullmatch(r"[0-9a-f]{64}", str(digest)):
+            problems.append(f"dependency hash for {family} is not a sha256 digest")
+    return problems
 
 
 _TARGET_SCHEMA_CONST = {
@@ -294,6 +356,21 @@ _TARGET_SCHEMA_CONST = {
     "form-source": "fusha/largelexicon/form-source@2",
     "stem-source": "fusha/largelexicon/stem-source@2",
 }
+
+
+def _edge_key_errors(typed_edges: dict[str, list[dict[str, Any]]]) -> list[str]:
+    """The edge-map key must equal the loc encoded in every edge it holds."""
+
+    problems: list[str] = []
+    for loc, edges in sorted(typed_edges.items()):
+        for index, edge in enumerate(edges):
+            encoded = occurrence_loc_of(edge.get("from_node_id"))
+            if encoded != loc:
+                problems.append(
+                    "typed edge %s[%d]: map key disagrees with the loc encoded in from_node_id (%r)"
+                    % (loc, index, encoded)
+                )
+    return problems
 
 
 def _input_errors(
@@ -355,15 +432,34 @@ class BridgeInputs:
         typed_edges: dict[str, list[dict[str, Any]]] | None = None,
         typed_graph_meta: dict[str, Any] | None = None,
         loc_surface: dict[str, str] | None = None,
+        loc_surface_meta: dict[str, Any] | None = None,
+        lexeme_join_meta: dict[str, Any] | None = None,
         validate_rows: bool = True,
     ) -> None:
+        crosswalk, lemmas, forms, stems = list(crosswalk), list(lemmas), list(forms), list(stems)
+        loc_surface = dict(loc_surface or {})
+        typed_graph_meta = dict(typed_graph_meta or {})
+        loc_surface_meta = dict(loc_surface_meta or {})
+        lexeme_join_meta = dict(lexeme_join_meta or {})
         if validate_rows:
             errors = _input_errors(crosswalk, lemmas, forms, stems, dependency_hashes, typed_edges or {})
+            errors.extend(
+                authority_errors(
+                    dependency_hashes=dependency_hashes,
+                    typed_graph_meta=typed_graph_meta,
+                    loc_surface=loc_surface,
+                    loc_surface_meta=loc_surface_meta,
+                    lexeme_join_meta=lexeme_join_meta,
+                )
+            )
+            errors.extend(_edge_key_errors(typed_edges or {}))
             if errors:
                 raise BridgeError("bridge inputs failed closed: " + "; ".join(errors[:5]))
         self.typed_edges = dict(typed_edges or {})
-        self.typed_graph_meta = dict(typed_graph_meta or {"typed_graph_sha256": "unbound", "bundles": []})
-        self.loc_surface = dict(loc_surface or {})
+        self.typed_graph_meta = typed_graph_meta
+        self.loc_surface = loc_surface
+        self.loc_surface_meta = loc_surface_meta
+        self.lexeme_join_meta = lexeme_join_meta
         self.crosswalk = list(crosswalk)
         self.lemmas = {str(row["entry_id"]): row for row in lemmas}
         self.forms = list(forms)
@@ -386,25 +482,48 @@ class BridgeInputs:
         if locs is not None:
             crosswalk = [row for row in crosswalk if str(row.get("canonical_quran_loc")) in locs]
         typed_edges, typed_graph_meta = load_typed_graph()
+        graph_edges, lexeme_join_meta = load_lexeme_join_edges()
+        loc_surface, loc_surface_meta = load_loc_surface_index()
         return cls(
             crosswalk=crosswalk,
             lemmas=tables.carried("lemma-source"),
             forms=tables.carried("form-source"),
             stems=tables.carried("stem-source"),
             dependency_hashes=tables.dependency_hashes(),
-            graph_edges=load_lexeme_join_edges(),
+            graph_edges=graph_edges,
             typed_edges=typed_edges,
             typed_graph_meta=typed_graph_meta,
-            loc_surface=load_loc_surface_index(),
+            loc_surface=loc_surface,
+            loc_surface_meta=loc_surface_meta,
+            lexeme_join_meta=lexeme_join_meta,
         )
 
+    def authority_binding(self) -> dict[str, Any]:
+        """Every consumed index, lattice, graph bundle and carried table, hashed."""
+
+        return {
+            "canonical_loc_index": self.loc_surface_meta,
+            "carried_tables": dict(sorted(self.dependency_hashes.items())),
+            "lexeme_join_lattice": self.lexeme_join_meta,
+            "typed_graph": self.typed_graph_meta,
+        }
+
+    def authority_digest(self) -> str:
+        return hashlib.sha256(_canonical(self.authority_binding()).encode("utf-8")).hexdigest()
+
     def accepted_typed_edges(self, loc: str, surface: str) -> list[dict[str, Any]]:
-        """Accepted typed edges at this loc whose written surface agrees exactly."""
+        """Accepted typed edges at this loc whose written surface agrees exactly.
+
+        The edge-map key, the occurrence loc encoded in ``from_node_id``, and the
+        candidate occurrence loc must all agree: a map keyed at one location whose
+        edge encodes another is a mis-binding, never support.
+        """
 
         return [
             edge
             for edge in self.typed_edges.get(loc, [])
             if str((edge.get("details") or {}).get("surface")) == surface
+            and occurrence_loc_of(edge.get("from_node_id")) == loc
         ]
 
     def exact_surface_forms(self, surface: str) -> list[dict[str, Any]]:
@@ -450,6 +569,7 @@ def _candidate_fact(
     graph_edges: list[dict[str, Any]],
     typed_edges: list[dict[str, Any]],
     typed_graph_meta: dict[str, Any],
+    authority_binding: dict[str, Any],
     hashes: dict[str, str],
     candidate_count: int,
     loc: str,
@@ -512,13 +632,16 @@ def _candidate_fact(
     # form, stem, a typed edge, a dependency digest, or the projector identity all
     # change the fact id.
     core = {
+        "authority_binding": authority_binding,
         "canonical_loc": loc,
         "dependency_digests": dict(sorted(hashes.items())),
         "fact_type": "largelexicon_lexeme_candidate",
         "form_realization": fact_value["form_realization"],
         "lexeme_candidate": fact_value["lexeme_candidate"],
+        "occurrence": fact_value["occurrence"],
         "plane": "typed_claim",
         "producer": {"id": PRODUCER_ID, "version": PRODUCER_VERSION},
+        "root_family_relations": fact_value["root_family_relations"],
         "rule_projector": {"projector_id": PROJECTOR_ID, "rule_id": RULE_ID, "version": PRODUCER_VERSION},
         "stem_segmentation": fact_value["stem_segmentation"],
         "surface": surface,
@@ -623,15 +746,27 @@ def _abstention_fact(
     loc: str | None,
     graph_edges: list[dict[str, Any]],
     observed: dict[str, Any],
+    authority_binding: dict[str, Any],
 ) -> dict[str, Any]:
     surface = str(row.get("visible_surface") or "")
     address = f"largelexicon:qword-crosswalk@2:{row.get('row_id')}"
     core = {
+        "authority_binding": authority_binding,
         "blockers": sorted(blockers),
+        "canonical_loc": loc,
+        "dependency_digests": dict(sorted(hashes.items())),
         "fact_type": "largelexicon_bridge_abstention",
+        "graph_evidence": [
+            {"entry_id": str(edge.get("entry_id")), "relation": str(edge.get("relation"))}
+            for edge in graph_edges
+        ],
+        "observed": observed,
         "plane": "typed_claim",
-        "producer": PRODUCER_ID,
+        "producer": {"id": PRODUCER_ID, "version": PRODUCER_VERSION},
         "row_id": str(row.get("row_id")),
+        "rule_projector": {"projector_id": PROJECTOR_ID, "rule_id": RULE_ID, "version": PRODUCER_VERSION},
+        "source_address": address,
+        "surface": surface,
     }
     fact_value = {
         "abstained": True,
@@ -785,7 +920,13 @@ def bridge_row(row: dict[str, Any], inputs: BridgeInputs, *, carried: bool = Tru
 
     if blockers:
         fact = _abstention_fact(
-            row=row, blockers=blockers, hashes=hashes, loc=loc, graph_edges=graph_edges, observed=observed
+            row=row,
+            blockers=blockers,
+            hashes=hashes,
+            loc=loc,
+            graph_edges=graph_edges,
+            observed=observed,
+            authority_binding=inputs.authority_binding(),
         )
         status = _worst_status(blockers)
         return _record(row=row, loc=loc, surface=surface, facts=[fact], status=status, unresolved=status)
@@ -799,6 +940,7 @@ def bridge_row(row: dict[str, Any], inputs: BridgeInputs, *, carried: bool = Tru
             graph_edges=graph_edges,
             typed_edges=supported[str(form["entry_id"])],
             typed_graph_meta=inputs.typed_graph_meta,
+            authority_binding=inputs.authority_binding(),
             hashes=hashes,
             candidate_count=len(exact),
             loc=str(loc),
@@ -872,28 +1014,41 @@ def _record(
     return record
 
 
-def public_fixture_errors(node: Any, path: str = "$") -> list[str]:
-    """Recursively reject prohibited public classes in a committed fixture."""
+def _public_string_errors(text: str, path: str) -> list[str]:
+    """Forbidden-label, URL and absolute/private-path checks for one public string."""
 
     from largelexicon_common import FORBIDDEN_PUBLIC_SUBSTRINGS, match_forbidden_labels
+
+    problems: list[str] = []
+    for pattern in PROHIBITED_VALUE_PATTERNS:
+        if pattern.search(text):
+            problems.append(f"{path}: prohibited URL or absolute/private path in a public fixture")
+            break
+    labels = match_forbidden_labels(text.lower(), FORBIDDEN_PUBLIC_SUBSTRINGS)
+    if labels:
+        problems.append(f"{path}: external source label(s) {sorted(labels)} in a public fixture")
+    if text.lower() in PROHIBITED_FIXTURE_KEYS:
+        problems.append(f"{path}: prohibited field class name in a committed public fixture")
+    return problems
+
+
+def public_fixture_errors(node: Any, path: str = "$") -> list[str]:
+    """Recursively reject prohibited public classes in a committed fixture."""
 
     problems: list[str] = []
     if isinstance(node, dict):
         for key, value in node.items():
             if str(key).lower() in PROHIBITED_FIXTURE_KEYS:
                 problems.append(f"{path}.{key}: prohibited field class in a committed public fixture")
+            # Keys are public payload too: run the SAME forbidden-label, URL and
+            # path logic over every key at every depth, not just over values.
+            problems.extend(_public_string_errors(str(key), f"{path}.{key}<key>"))
             problems.extend(public_fixture_errors(value, f"{path}.{key}"))
     elif isinstance(node, list):
         for index, value in enumerate(node):
             problems.extend(public_fixture_errors(value, f"{path}[{index}]"))
     elif isinstance(node, str):
-        for pattern in PROHIBITED_VALUE_PATTERNS:
-            if pattern.search(node):
-                problems.append(f"{path}: prohibited URL or absolute/private path in a public fixture")
-                break
-        labels = match_forbidden_labels(node.lower(), FORBIDDEN_PUBLIC_SUBSTRINGS)
-        if labels:
-            problems.append(f"{path}: external source label(s) {sorted(labels)} in a public fixture")
+        problems.extend(_public_string_errors(node, path))
     return problems
 
 
@@ -1085,8 +1240,32 @@ def fixture_typed_edge(
     }
 
 
+FIXTURE_LOC_INDEX_META = {
+    "path": "fixture://quran-loc-surface",
+    "present": True,
+    "row_count": 1,
+    "sha256": "a" * 64,
+}
+FIXTURE_LEXEME_JOIN_META = {
+    "path": "fixture://lexeme-join-edges",
+    "present": True,
+    "row_count": 0,
+    "sha256": "b" * 64,
+}
+
+
 def fixture_inputs(
-    *, forms=None, lemmas=None, stems=None, graph_edges=None, typed_edges=None, loc_surface=None
+    *,
+    forms=None,
+    lemmas=None,
+    stems=None,
+    graph_edges=None,
+    typed_edges=None,
+    loc_surface=None,
+    typed_graph_meta=None,
+    loc_surface_meta=None,
+    lexeme_join_meta=None,
+    dependency_hashes=None,
 ) -> BridgeInputs:
     entry = "1ec0de000001"
     form_rows = [fixture_form_row(entry, FIXTURE_SURFACE)] if forms is None else forms
@@ -1106,7 +1285,7 @@ def fixture_inputs(
         lemmas=[fixture_lemma_row(entry, FIXTURE_SURFACE)] if lemmas is None else lemmas,
         forms=form_rows,
         stems=[fixture_stem_row(entry, FIXTURE_SURFACE)] if stems is None else stems,
-        dependency_hashes=FIXTURE_DEPENDENCY_HASHES,
+        dependency_hashes=dict(FIXTURE_DEPENDENCY_HASHES) if dependency_hashes is None else dependency_hashes,
         graph_edges=graph_edges or {},
         typed_edges=typed_edges,
         typed_graph_meta={
@@ -1117,8 +1296,10 @@ def fixture_inputs(
             "eligible_edge_count": 1,
             "eligible_loc_count": 1,
             "typed_graph_sha256": "f" * 64,
-        },
+        } if typed_graph_meta is None else typed_graph_meta,
         loc_surface={FIXTURE_LOC: FIXTURE_SURFACE} if loc_surface is None else loc_surface,
+        loc_surface_meta=dict(FIXTURE_LOC_INDEX_META) if loc_surface_meta is None else loc_surface_meta,
+        lexeme_join_meta=dict(FIXTURE_LEXEME_JOIN_META) if lexeme_join_meta is None else lexeme_join_meta,
     )
 
 
@@ -1302,6 +1483,8 @@ def scan_report() -> dict[str, Any]:
     release = promoter.read_release()
     return {
         "upstream_binding": {
+            "authorities": inputs.authority_binding(),
+            "authority_digest": inputs.authority_digest(),
             "carried_table_sha256": dict(sorted(inputs.dependency_hashes.items())),
             "target_release_sha256": hashlib.sha256(
                 promoter.release_path().read_bytes()

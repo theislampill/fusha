@@ -665,8 +665,7 @@ def write_artifacts(target_dir: Path, artifacts: dict[str, bytes]) -> None:
 def emit_ledgers(directory: Path, result: dict[str, Any]) -> dict[str, str]:
     """Write the FULL ledgers under gitignored out/ and return their digests."""
 
-    if not directory.resolve().is_relative_to((ROOT / "out").resolve()):
-        raise PromotionError("full ledgers may only be written under the gitignored out/ tree")
+    directory = assert_ignored_output_root(directory)
     directory.mkdir(parents=True, exist_ok=True)
     written: dict[str, str] = {}
     for disposition in ("flagged", "quarantined"):
@@ -676,7 +675,23 @@ def emit_ledgers(directory: Path, result: dict[str, Any]) -> dict[str, str]:
     return written
 
 
+def assert_ignored_output_root(directory: Path) -> Path:
+    """Full generated tables and ledgers may only land under the gitignored out/.
+
+    ``resolve()`` collapses ``..`` traversal and follows symlinks, so an escape
+    attempt is refused rather than written into a tracked path.
+    """
+
+    resolved = Path(directory).resolve()
+    if not resolved.is_relative_to((ROOT / "out").resolve()):
+        raise PromotionError(
+            "full output may only be written under the gitignored out/ tree: " + str(directory)
+        )
+    return resolved
+
+
 def emit_carried(directory: Path, carried: dict[str, list[dict[str, Any]]]) -> dict[str, str]:
+    directory = assert_ignored_output_root(directory)
     directory.mkdir(parents=True, exist_ok=True)
     written: dict[str, str] = {}
     for family_name, rows in sorted(carried.items()):

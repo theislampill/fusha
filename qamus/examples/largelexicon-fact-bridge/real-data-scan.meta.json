@@ -29,6 +29,67 @@
     "record_count": 2000
   },
   "upstream_binding": {
+    "authorities": {
+      "canonical_loc_index": {
+        "path": "qamus/indexes/quran-loc-surface/index.jsonl",
+        "present": true,
+        "row_count": 77881,
+        "sha256": "97efbaca345d5f23d9e9c699eef155f5bf4e06bb725e430729a8962b1573d227"
+      },
+      "carried_tables": {
+        "form-source": "82944f9950d318d1f1beccaf366d0cf19b9548f97c07263beb29681118064d45",
+        "lemma-source": "3fd9b85c2cab9ed033b3b0715304fe090c94c3622aba4da66f268177f0fac3ec",
+        "qword-crosswalk": "85c0415d74efd24d741a5ebcc9c1714150d7c4941ea367591944cfe4b1fb66f0",
+        "qword-denominator": "9d8f109d66f5317400d2437e8e5d1ab7d6f8150b85e47917c6b6de7f2deeadc5",
+        "stem-source": "fae45d7a4e83ee988605cc1d83d2fcee4ae86447003087e1680fb6bc671eed8b"
+      },
+      "lexeme_join_lattice": {
+        "path": "qamus/lattice/lexeme-join-edges.jsonl",
+        "present": true,
+        "row_count": 24391,
+        "sha256": "d41a81248445d531348f40600279118b22aa62024534ccc4635609c487bb4eef"
+      },
+      "typed_graph": {
+        "bundles": [
+          {
+            "eligible_edge_count": 0,
+            "path": "qamus/examples/p007-li-pilot/transclusion-edges.jsonl",
+            "present": true,
+            "row_count": 72,
+            "schema": "qamus.graph_edge.v1",
+            "sha256": "db24f0f7c01fc5239fc24cc8f75fbaa633b5b728482ea65d8eff839158c98b69"
+          },
+          {
+            "eligible_edge_count": 0,
+            "path": "qamus/examples/proof-noun-sufaha/typed-edge-graph.jsonl",
+            "present": true,
+            "row_count": 35,
+            "schema": "qamus.graph_edge.v1",
+            "sha256": "3c4ae4d8006dd4a691d2a0fd0697eda3d2fc44ae19e4ece2ddff71590ce16825"
+          },
+          {
+            "eligible_edge_count": 0,
+            "path": "qamus/examples/proof-particle/particle-graph-edges.jsonl",
+            "present": true,
+            "row_count": 9,
+            "schema": "qamus.graph_edge.v1",
+            "sha256": "73725ecf6ab33fe2513095b1c4376d150218ed701f6ca23c6fe977cde5591cb6"
+          },
+          {
+            "eligible_edge_count": 2,
+            "path": "qamus/examples/proof-verb/typed-edge-graph.jsonl",
+            "present": true,
+            "row_count": 10,
+            "schema": "qamus.graph_edge.v1",
+            "sha256": "0163917ba9b0b0fb75bb5e1538d88b19e248613870ae21e394f9727837eca81b"
+          }
+        ],
+        "eligible_edge_count": 2,
+        "eligible_loc_count": 1,
+        "typed_graph_sha256": "e2fa82f586bb52a4c7abec7db8aea249a3330c922700df0261a16b15d7362133"
+      }
+    },
+    "authority_digest": "f886d21fff5bbd17c22d3841a4fa77024a02cbc72060a78060c08448da3e6853",
     "carried_table_sha256": {
       "form-source": "82944f9950d318d1f1beccaf366d0cf19b9548f97c07263beb29681118064d45",
       "lemma-source": "3fd9b85c2cab9ed033b3b0715304fe090c94c3622aba4da66f268177f0fac3ec",

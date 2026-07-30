@@ -477,15 +477,17 @@ def test_fact_id_is_content_addressed_over_the_claim() -> None:
 
     stale = dict(bridge.FIXTURE_DEPENDENCY_HASHES)
     stale["form-source"] = "9" * 64
-    drifted = bridge.BridgeInputs(
-        crosswalk=[], lemmas=[lemma_row("1ec0de000001", SURFACE)], forms=[form_row("1ec0de000001", SURFACE)],
-        stems=[stem_row("1ec0de000001", SURFACE)], dependency_hashes=stale,
-        typed_edges={LOC: [bridge.fixture_typed_edge("1ec0de000001")]},
-        typed_graph_meta={"bundles": [], "typed_graph_sha256": "f" * 64},
-        loc_surface={LOC: SURFACE},
-    )
-    check("stale dependency digest moves the fact id",
-          candidates_of(bridge.bridge_row(crosswalk_row(), drifted))[0]["fact_id"] != base)
+    check("stale carried-table digest moves the fact id", one(dependency_hashes=stale) != base)
+    check("typed-graph digest change moves the fact id",
+          one(typed_graph_meta={"bundles": [], "eligible_edge_count": 0, "eligible_loc_count": 0,
+                                "typed_graph_sha256": "e" * 64}) != base)
+    check("canonical-index digest change moves the fact id",
+          one(loc_surface_meta=dict(bridge.FIXTURE_LOC_INDEX_META, sha256="c" * 64)) != base)
+    check("lexeme-lattice digest change moves the fact id",
+          one(lexeme_join_meta=dict(bridge.FIXTURE_LEXEME_JOIN_META, sha256="d" * 64)) != base)
+    root_edge = {LOC: [{"loc": LOC, "entry_id": "1ec0de000001", "edge_type": "headword",
+                        "relation": "root_confirms", "row_root": "ا ل ه"}]}
+    check("root-family relation change moves the fact id", one(graph_edges=root_edge) != base)
 
 
 def test_no_first_row_winner() -> None:
@@ -545,6 +547,196 @@ def test_full_output_may_not_target_a_tracked_path() -> None:
         check("tracked output destination is refused", "gitignored out/" in str(error))
     else:
         raise AssertionError("FAILED: a tracked output destination was accepted")
+
+
+# --------------------------------------------------------------------------- #
+# defect-round-2 repairs
+# --------------------------------------------------------------------------- #
+def _expect_closed(name, build) -> None:
+    try:
+        build()
+    except bridge.BridgeError as error:
+        check(name + " fails closed", "failed closed" in str(error))
+    else:
+        raise AssertionError("FAILED: " + name + " was admitted")
+
+
+def test_candidate_admission_requires_complete_authority() -> None:
+    """Admission may never fail open when an authority is absent or unbound."""
+
+    _expect_closed("empty canonical loc index", lambda: make_inputs(loc_surface={}))
+    _expect_closed("omitted typed-graph metadata", lambda: make_inputs(typed_graph_meta={}))
+    _expect_closed(
+        "unbound typed-graph digest",
+        lambda: make_inputs(typed_graph_meta={"bundles": [], "typed_graph_sha256": "unbound"}),
+    )
+    _expect_closed(
+        "malformed typed-graph digest",
+        lambda: make_inputs(typed_graph_meta={"bundles": [], "typed_graph_sha256": "nope"}),
+    )
+    _expect_closed(
+        "typed-graph bundle without a digest",
+        lambda: make_inputs(
+            typed_graph_meta={
+                "bundles": [{"path": "x", "present": True, "sha256": None}],
+                "typed_graph_sha256": "f" * 64,
+            }
+        ),
+    )
+    _expect_closed("omitted canonical-index binding", lambda: make_inputs(loc_surface_meta={}))
+    _expect_closed(
+        "malformed canonical-index digest",
+        lambda: make_inputs(loc_surface_meta=dict(bridge.FIXTURE_LOC_INDEX_META, sha256="short")),
+    )
+    _expect_closed("omitted lexeme-lattice binding", lambda: make_inputs(lexeme_join_meta={}))
+    _expect_closed(
+        "absent lexeme lattice",
+        lambda: make_inputs(lexeme_join_meta=dict(bridge.FIXTURE_LEXEME_JOIN_META, present=False)),
+    )
+    _expect_closed("empty dependency hashes", lambda: make_inputs(dependency_hashes={}))
+    _expect_closed(
+        "malformed dependency hash",
+        lambda: make_inputs(dependency_hashes=dict(bridge.FIXTURE_DEPENDENCY_HASHES, **{"form-source": "x"})),
+    )
+
+
+def test_edge_map_key_must_agree_with_the_encoded_loc() -> None:
+    """An edge filed under one loc whose node encodes another is a mis-binding."""
+
+    mismatched = {LOC: [bridge.fixture_typed_edge("1ec0de000001", loc="9:9:9")]}
+    _expect_closed("mismatched edge-map key", lambda: make_inputs(typed_edges=mismatched))
+    check("edge-key disagreement is reported precisely",
+          any("map key disagrees" in problem for problem in bridge._edge_key_errors(mismatched)))
+    check("agreeing edge-map key is accepted",
+          bridge._edge_key_errors({LOC: [bridge.fixture_typed_edge("1ec0de000001")]}) == [])
+
+
+def test_authority_binding_is_carried_into_facts_and_scan() -> None:
+    inputs = make_inputs()
+    binding = inputs.authority_binding()
+    check("binding names every authority",
+          set(binding) == {"canonical_loc_index", "carried_tables", "lexeme_join_lattice", "typed_graph"})
+    check("authority digest is a sha256", len(inputs.authority_digest()) == 64)
+    fact = candidates_of(bridge.bridge_row(crosswalk_row(), inputs))[0]
+    check("candidate binds the typed-graph digest",
+          fact["fact_value"]["occurrence"]["canonical_quran_loc"] == LOC)
+    scan = Path(__file__).resolve().parents[1] / "qamus" / "examples" / "largelexicon-fact-bridge" / "real-data-scan.meta.json"
+    if scan.exists():
+        payload = json.loads(scan.read_text(encoding="utf-8"))
+        upstream = payload["upstream_binding"]
+        check("scan binds every authority", set(upstream["authorities"]) == set(binding))
+        for name in ("canonical_loc_index", "lexeme_join_lattice"):
+            check(name + " is hashed into the scan",
+                  len(str(upstream["authorities"][name]["sha256"])) == 64)
+        check("scan carries an authority digest", len(str(upstream["authority_digest"])) == 64)
+
+
+def test_abstention_ids_bind_semantics_and_provenance() -> None:
+    """An abstention ID must move when its claim or its provenance moves."""
+
+    def abstention(**kwargs) -> str:
+        row = kwargs.pop("row", crosswalk_row())
+        record = bridge.bridge_row(row, make_inputs(typed_edges={}, **kwargs))
+        return record["facts"][0]["fact_id"]
+
+    base = abstention()
+    check("carried-table digest moves the abstention id",
+          abstention(dependency_hashes=dict(bridge.FIXTURE_DEPENDENCY_HASHES, **{"form-source": "9" * 64})) != base)
+    check("typed-graph digest moves the abstention id",
+          abstention(typed_graph_meta={"bundles": [], "eligible_edge_count": 0, "eligible_loc_count": 0,
+                                       "typed_graph_sha256": "e" * 64}) != base)
+    check("canonical-index digest moves the abstention id",
+          abstention(loc_surface_meta=dict(bridge.FIXTURE_LOC_INDEX_META, sha256="c" * 64)) != base)
+    check("lexeme-lattice digest moves the abstention id",
+          abstention(lexeme_join_meta=dict(bridge.FIXTURE_LEXEME_JOIN_META, sha256="d" * 64)) != base)
+    graph = {LOC: [{"loc": LOC, "entry_id": "1ec0de000009", "edge_type": "form", "relation": "linkage_only"}]}
+    check("blocker graph evidence moves the abstention id",
+          abstention(forms=[], lemmas=[], stems=[], graph_edges=graph) != base)
+    other_surface = crosswalk_row(visible_surface=OTHER_SURFACE)
+    check("surface moves the abstention id", abstention(row=other_surface) != base)
+
+
+def test_public_fixture_keys_are_checked_at_every_depth() -> None:
+    probes = (
+        {"nested": {"qac": True}},
+        {"nested": {"tafsir": 1}},
+        {"nested": {"informed_by": []}},
+        {"a": {"b": {"https://example.test/x": 1}}},
+        {"a": {"C:" + chr(92) + "private": 1}},
+        {"a": {"/srv/private/x": 1}},
+        {"deep": [{"more": {"ocr": "x"}}]},
+    )
+    for probe in probes:
+        check("nested prohibited key is rejected: " + json.dumps(probe, ensure_ascii=False),
+              bridge.public_fixture_errors(probe) != [])
+    legitimate = {
+        "schema": "qamus.typed_claim_contract.v1",
+        "facts": [{"fact_type": "largelexicon_lexeme_candidate", "surface_spans": [{"role": "written_token"}]}],
+        "projection": {"materialization_target": {"artifact": "out/largelexicon-fact-bridge/typed-claims.jsonl"}},
+    }
+    check("legitimate schema keys stay accepted", bridge.public_fixture_errors(legitimate) == [])
+
+
+def test_projector_reports_the_enclosed_evidence_mode() -> None:
+    result = fact_projectors.REGISTRY.run(
+        fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID,
+        crosswalk_row=crosswalk_row(),
+        inputs=make_inputs(),
+    )
+    fact = [f for f in result["typed_claim_record"]["facts"]
+            if f["fact_type"] == "largelexicon_lexeme_candidate"][0]
+    check("wrapper evidence mode equals the enclosed fact's",
+          result["candidate"]["evidence_mode"] == fact["evidence_mode"])
+    check("wrapper does not relabel as normalized or certified",
+          result["evidence_mode"] not in {"normalized_lexical_body", "certified"})
+    check("enclosed fact is not relabelled", fact["evidence_mode"] == "direct_source_attestation")
+
+    original = bridge.bridge_row
+
+    def relabelled(row, inputs, *, carried=True):
+        record = original(row, inputs, carried=carried)
+        for item in record["facts"]:
+            if item["fact_type"] == "largelexicon_lexeme_candidate":
+                item["evidence_mode"] = "normalized_lexical_body"
+        return record
+
+    bridge.bridge_row = relabelled
+    try:
+        mismatched = fact_projectors.REGISTRY.run(
+            fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID,
+            crosswalk_row=crosswalk_row(),
+            inputs=make_inputs(),
+        )
+        check("a relabelled fact is reported as-is, never silently normalized",
+              mismatched["candidate"]["evidence_mode"] == "normalized_lexical_body"
+              and mismatched["typed_claim_record"]["facts"][0]["evidence_mode"] == "normalized_lexical_body")
+    finally:
+        bridge.bridge_row = original
+
+
+def test_full_carried_table_output_refuses_tracked_paths() -> None:
+    import promote_largelexicon_target_schema as promoter
+
+    for name, destination in (
+        ("tracked index path", promoter.ROOT / "qamus" / "indexes" / "tracked-probe"),
+        ("repository root", promoter.ROOT),
+        ("traversal escape", promoter.ROOT / "out" / ".." / "qamus"),
+        ("absolute outside root", Path(promoter.ROOT.anchor) / "tmp" / "a3-probe"),
+    ):
+        for api in (
+            lambda d: promoter.emit_carried(d, {}),
+            lambda d: promoter.emit_ledgers(d, {"flagged": [], "quarantined": []}),
+            promoter.assert_ignored_output_root,
+        ):
+            try:
+                api(destination)
+            except promoter.PromotionError as error:
+                check(name + " is refused", "gitignored out/" in str(error))
+            else:
+                raise AssertionError("FAILED: " + name + " was accepted for full output")
+    check("the authorized ignored root is accepted",
+          promoter.assert_ignored_output_root(promoter.DEFAULT_CARRIED_DIR).is_relative_to(
+              (promoter.ROOT / "out").resolve()))
 
 
 if __name__ == "__main__":

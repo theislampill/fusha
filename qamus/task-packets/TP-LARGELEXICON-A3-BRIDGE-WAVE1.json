@@ -1,20 +1,106 @@
 {
-  "schema": "qamus.task_packet.v1",
-  "packet_id": "TP-LARGELEXICON-A3-BRIDGE-WAVE1",
-  "title": "First bounded consumption wave for the largelexicon typed bridge candidates",
-  "model_class": "standard",
-  "scope": {
-    "summary": "The A3 bridge emits candidate-or-unresolved typed-claim records from carried target-schema rows, loc-first, abstaining on collisions, page-context-only rows, root-only relations, normalized-only matches and unaccepted crosswalk addresses. This packet consumes one bounded wave of its CANDIDATE records: it checks each candidate against the sarf evidence ladder and routes it to two-vote, source-gap or rejected. It never certifies from the bridge output itself.",
-    "entry_id": "not-entry-scoped",
-    "family": "LARGELEXICON_BRIDGE_CANDIDATE_CONSUMPTION",
-    "tranche": "a3-bridge-wave-1",
-    "out_of_scope": [
-      "certifying a lexeme, form, sense or root edge from a bridge candidate: the bridge projector is registered never_auto_resolve and has no certification path",
-      "resolving a lexical_collision_requires_context record by picking a candidate",
-      "consuming any abstained record as if it were a candidate",
-      "any live-surface mutation, entry-store write, or public materialization"
+  "acceptance_tests": [
+    {
+      "name": "bridge behaviour holds",
+      "pass_condition": "ok is true and all adversarial mutation tests pass",
+      "run": "python tools/test_largelexicon_fact_bridge.py"
+    },
+    {
+      "name": "scan is fresh and candidate-free",
+      "pass_condition": "exit 0; summary.certified_records is 0, summary.learner_visible_records is 0, and the reported candidate count matches the committed scan",
+      "run": "python tools/largelexicon_fact_bridge.py --check-scan"
+    },
+    {
+      "name": "harness stays green",
+      "pass_condition": "ALL REGRESSION CHECKS PASS",
+      "run": "python tools/check_regressions.py"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "any diff that loosens typed-graph, loc-surface or authority checks fails the packet",
+        "id": "canary-no-guard-relaxation"
+      },
+      {
+        "expectation": "a report claiming any nonzero candidate count without new typed-graph evidence fails the acceptance test",
+        "id": "canary-no-candidate-inflation"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "a missing_typed_graph_evidence row is reported with its canonical loc, written surface and the four authority digests",
+        "id": "canary-gap-row-cites-loc-and-authorities"
+      },
+      {
+        "expectation": "the report states 0 candidate records among 2,000, matching real-data-scan.meta.json exactly",
+        "id": "canary-zero-candidates-reported-honestly"
+      }
     ]
   },
+  "candidate_population": {
+    "population_source": "python tools/largelexicon_fact_bridge.py --check-scan",
+    "selection_rule": "the 95 rows of the first 2,000 carried crosswalk rows that reached the typed-graph gate and abstained with missing_typed_graph_evidence, as counted in qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json; all other abstentions are out of scope",
+    "this_packet_size": 95,
+    "universe_size": 115638
+  },
+  "commands": [
+    {
+      "purpose": "read the current machine truth: 0 candidates, 2,000 abstentions, and the authority bindings",
+      "run": "python tools/largelexicon_fact_bridge.py --check-scan"
+    },
+    {
+      "purpose": "re-prove the bridge behaviour before changing any input",
+      "run": "python tools/test_largelexicon_fact_bridge.py"
+    },
+    {
+      "purpose": "regenerate the full typed-claim output into the gitignored out/ tree for inspection",
+      "run": "python tools/largelexicon_fact_bridge.py --limit 2000"
+    }
+  ],
+  "defeaters": [
+    "a proposed change that weakens the typed-graph, loc-surface or authority-binding requirement",
+    "a gap row that treats a bridge abstention as certified or candidate evidence",
+    "a gap row whose canonical loc does not match the bridge record it cites",
+    "any claim that GAP-L3 is closed while the typed-graph evidence is still missing"
+  ],
+  "definition_of_done": [
+    "every missing_typed_graph_evidence occurrence in the bounded window has an exact required-edge description",
+    "no bridge guard was weakened and no abstention was reported as a candidate",
+    "the authority digests the gap was computed against are recorded so the wave can be invalidated mechanically",
+    "GAP-L3 is only declared closed when the bridge yields candidates from real accepted typed edges"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "a collision needs occurrence context that no committed artifact supplies",
+      "a candidate would require an iʿrāb-bearing judgement to route",
+      "the carried-table dependency hashes changed mid-wave"
+    ],
+    "route": "two-vote queue for iʿrāb-bearing routes; source-gap packet for missing context; rerun the wave from a fresh release if the dependency hashes moved"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If the evidence ladder does not reach the rung a route needs, record source_gap with the precise missing evidence. Prefer pending over wrong.",
+    "statement": "Every gap row cites the bridge record's contract_id, its canonical quran loc and written surface, and the authority digests it was computed against. A carried-table lookup is source-addressed candidate evidence about a written surface; it is never, by itself, evidence of lexeme identity, sense, or function.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "one row per missing_typed_graph_evidence occurrence with the exact typed edge that would be required",
+      "path": "qamus/reports/largelexicon-bridge-wave1/typed-graph-gap.jsonl"
+    },
+    {
+      "description": "generator, counts, and the authority digests (carried tables, typed graph, canonical index, lexeme lattice) the gap was computed against",
+      "path": "qamus/reports/largelexicon-bridge-wave1/typed-graph-gap.meta.json"
+    }
+  ],
+  "guards": [
+    "the METHOD of this gap analysis transfers to later waves; the linguistic conclusion about any single occurrence never transfers to another occurrence or surface",
+    "the bridge currently yields ZERO candidates: no report may present an abstention as a candidate",
+    "the crosswalk entry_id is the page that displays the word: it is page context and may never become a lexeme, form or sense edge",
+    "a root-family relation is never a lexeme identity, and a candidate-status graph edge is never accepted support",
+    "a normalized-only surface match is a never_auto_resolve trigger and must stay blocked",
+    "the bridge projector is registered never_auto_resolve; certification remains solely with tools/certify_typed_fact.py on its own evidence bundle"
+  ],
   "inputs": {
     "input_files": [
       "tools/largelexicon_fact_bridge.py",
@@ -42,115 +128,29 @@
       "fusha/morphology/data/"
     ]
   },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "This packet produces candidate dispositions and review routes only. No bridge record may be materialized publicly, shown to a learner, or written to the live site; certification stays with the owner-gated certifier on its own evidence bundle.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-LARGELEXICON-A3-BRIDGE-WAVE1",
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": "not-entry-scoped",
+    "family": "LARGELEXICON_BRIDGE_CANDIDATE_CONSUMPTION",
+    "out_of_scope": [
+      "relaxing the typed-graph requirement, the loc-surface agreement check or any bridge guard so that more rows pass",
+      "certifying a lexeme, form, sense or root edge from a bridge candidate: the projector is registered never_auto_resolve and has no certification path",
+      "resolving a lexical_collision_requires_context record by picking a candidate",
+      "any live-surface mutation, entry-store write, or public materialization"
+    ],
+    "summary": "The A3 bridge is executable and abstention-first, but identity requires an accepted canonical typed lexeme/form edge agreeing on occurrence loc, written surface and entry, and the public repository supplies only 2 eligible edges at 1 occurrence loc. The repaired real-data scan therefore records 0 candidate records among 2,000 carried crosswalk rows, with 95 rows reaching the typed-graph gate and abstaining as missing_typed_graph_evidence. This packet closes that evidence gap: it produces the missing canonical typed lexeme/form edges for a bounded occurrence set through the existing typed-edge builder, then re-runs the bridge. It does not relax the bridge's evidence requirement.",
+    "tranche": "a3-bridge-wave-1"
+  },
+  "title": "Close the A3 typed-graph evidence gap that leaves the bridge at zero candidates",
   "tools_required": [
     "python3",
     "tools/largelexicon_fact_bridge.py",
     "tools/test_largelexicon_fact_bridge.py"
-  ],
-  "commands": [
-    {
-      "purpose": "produce the bounded wave of typed-claim records for review",
-      "run": "python tools/largelexicon_fact_bridge.py --limit 2000 --out out/largelexicon-bridge-wave1/typed-claims.jsonl"
-    },
-    {
-      "purpose": "re-prove the bridge behaviour before consuming anything it emitted",
-      "run": "python tools/test_largelexicon_fact_bridge.py"
-    },
-    {
-      "purpose": "re-prove the committed fixtures and the real-data scan are fresh",
-      "run": "python tools/largelexicon_fact_bridge.py --check-fixtures"
-    }
-  ],
-  "candidate_population": {
-    "universe_size": 115638,
-    "this_packet_size": 90,
-    "selection_rule": "the CANDIDATE-status records of the first 2,000 carried crosswalk rows in manifest order, as counted in qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json; abstained records are input context only",
-    "population_source": "tools/largelexicon_fact_bridge.py --limit 2000"
-  },
-  "expected_outputs": [
-    {
-      "path": "qamus/reports/largelexicon-bridge-wave1/dispositions.jsonl",
-      "description": "one row per consumed candidate with its ladder rung, route and exact reason"
-    },
-    {
-      "path": "qamus/reports/largelexicon-bridge-wave1/dispositions.meta.json",
-      "description": "generator, counts per route, and the carried-table dependency hashes the wave was computed against"
-    }
-  ],
-  "evidence_policy": {
-    "statement": "Every disposition cites the bridge record's contract_id, its canonical quran loc, and the carried form row address it depends on. A carried-table lookup is source-addressed candidate evidence about a written surface; it is never, by itself, evidence of lexeme identity, sense, or function.",
-    "verbatim_required": false,
-    "fabrication_rule": "If the evidence ladder does not reach the rung a route needs, record source_gap with the precise missing evidence. Prefer pending over wrong."
-  },
-  "guards": [
-    "the METHOD of this consumption wave transfers to later waves; the linguistic conclusion about any single occurrence never transfers to another occurrence or surface",
-    "the crosswalk entry_id is the page that displays the word: it is page context and may never become a lexeme, form or sense edge",
-    "a root-family relation is never a lexeme identity, and a candidate graph edge is never a certified edge",
-    "a normalized-only surface match is a never_auto_resolve trigger and must stay blocked",
-    "collision records keep every preserved candidate: no route may select one and drop the others",
-    "the bridge projector is registered never_auto_resolve; certification remains solely with tools/certify_typed_fact.py on its own evidence bundle"
-  ],
-  "defeaters": [
-    "a disposition that treats a bridge candidate as certified evidence",
-    "a disposition that resolves a collision without new context evidence",
-    "a disposition derived from an abstained record",
-    "any output row whose canonical loc does not match the bridge record it cites"
-  ],
-  "canaries": {
-    "positive": [
-      {
-        "id": "canary-single-candidate-routes-to-ladder",
-        "expectation": "a single-candidate record routes to a named sarf ladder rung with its form-source address cited"
-      },
-      {
-        "id": "canary-abstention-context-only",
-        "expectation": "an abstained record appears only as context and produces no disposition row"
-      }
-    ],
-    "adversarial": [
-      {
-        "id": "canary-collision-not-resolved",
-        "expectation": "a lexical_collision_requires_context record must not produce a single-winner disposition; it routes to context review with all candidates intact"
-      },
-      {
-        "id": "canary-page-context-not-lexical",
-        "expectation": "a page_context_only_no_lexical_edge record must never produce a lexeme edge for the displaying entry"
-      }
-    ]
-  },
-  "acceptance_tests": [
-    {
-      "name": "bridge behaviour holds",
-      "run": "python tools/test_largelexicon_fact_bridge.py",
-      "pass_condition": "ok is true and every mutation test passes"
-    },
-    {
-      "name": "bridge output is candidate-only",
-      "run": "python tools/largelexicon_fact_bridge.py --check-scan",
-      "pass_condition": "summary.certified_records is 0 and summary.learner_visible_records is 0"
-    },
-    {
-      "name": "harness stays green",
-      "run": "python tools/check_regressions.py",
-      "pass_condition": "ALL REGRESSION CHECKS PASS"
-    }
-  ],
-  "non_deployment": {
-    "status": "NOT_DEPLOYED",
-    "statement": "This packet produces candidate dispositions and review routes only. No bridge record may be materialized publicly, shown to a learner, or written to the live site; certification stays with the owner-gated certifier on its own evidence bundle."
-  },
-  "escalation_trigger": {
-    "conditions": [
-      "a collision needs occurrence context that no committed artifact supplies",
-      "a candidate would require an iʿrāb-bearing judgement to route",
-      "the carried-table dependency hashes changed mid-wave"
-    ],
-    "route": "two-vote queue for iʿrāb-bearing routes; source-gap packet for missing context; rerun the wave from a fresh release if the dependency hashes moved"
-  },
-  "definition_of_done": [
-    "every candidate record in the bounded wave has exactly one disposition with an exact reason",
-    "no collision record was resolved by selection",
-    "no bridge record was certified, materialized publicly, or made learner-visible",
-    "the carried-table dependency hashes are recorded so the wave can be invalidated mechanically"
   ]
 }
