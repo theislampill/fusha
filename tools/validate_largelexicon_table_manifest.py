@@ -195,22 +195,81 @@ def validate(manifest_path: Path = MANIFEST) -> list[str]:
     return errors
 
 
-def _ledger_rows(path: Path, disposition: str) -> tuple[list[dict], list[str]]:
+def _read_jsonl_rows(path: Path) -> list[dict]:
+    return [row for _line_no, row in _iter_jsonl(path)]
+
+
+def _validate_ledger_custody(
+    target_dir: Path, release: dict, expected: dict[str, list[dict]]
+) -> list[str]:
+    """Bind committed samples and full-ledger digests to the recomputed ledgers.
+
+    The full ledgers are large regenerable outputs kept under gitignored ``out/``;
+    what is tracked is a bounded deterministic sample plus the canonical digest of
+    the complete ledger. This reconstructs the complete ledgers from the immutable
+    source rows, compares the digests independently, and proves each committed
+    sample is exactly the deterministic sample of that reconstruction.
+    """
+
     errors: list[str] = []
-    if not path.exists():
-        return [], [f"missing {disposition} ledger: {path.relative_to(ROOT).as_posix()}"]
-    rows = []
-    for line_no, row in _iter_jsonl(path):
-        label = f"{path.relative_to(ROOT).as_posix()}:{line_no}"
-        if row.get("disposition") != disposition:
-            errors.append(f"{label}: ledger row is not {disposition}")
-        for field in ("family", "identity", "source_locator", "source_row_sha256", "reasons"):
-            if not row.get(field):
-                errors.append(f"{label}: {disposition} row lacks {field}")
-        if not re.fullmatch(r"[0-9a-f]{64}", str(row.get("source_row_sha256", ""))):
-            errors.append(f"{label}: source_row_sha256 is not a sha256 digest")
-        rows.append(row)
-    return rows, errors
+    declared = release.get("ledgers") or {}
+    if set(declared) != {"flagged", "quarantined"}:
+        errors.append("release must declare custody for exactly the flagged and quarantined ledgers")
+    for disposition in ("flagged", "quarantined"):
+        rows = expected[disposition]
+        entry = declared.get(disposition) or {}
+        expected_entry = promoter.ledger_release_entry(disposition, rows)
+        for field in sorted(expected_entry):
+            if entry.get(field) != expected_entry[field]:
+                errors.append(f"{disposition} ledger custody field {field!r} does not match the recomputation")
+
+        full_path = ROOT / str(entry.get("full_output_path") or "")
+        if "out/" not in str(entry.get("full_output_path") or ""):
+            errors.append(f"{disposition} full ledger must live under the gitignored out/ tree")
+        tracked = target_dir / f"{disposition}-identities.jsonl"
+        if tracked.exists():
+            errors.append(f"{tracked.relative_to(ROOT).as_posix()}: full ledger must not be committed")
+
+        sample_path = target_dir / f"{disposition}-identities.sample.jsonl"
+        meta_path = target_dir / f"{disposition}-identities.sample.meta.json"
+        expected_sample = promoter.deterministic_sample(rows)
+        if not sample_path.exists():
+            errors.append(f"missing committed {disposition} sample: {sample_path.relative_to(ROOT).as_posix()}")
+        else:
+            actual_sample = _read_jsonl_rows(sample_path)
+            if promoter.ledger_bytes(actual_sample) != promoter.ledger_bytes(expected_sample):
+                errors.append(f"{disposition} committed sample is not the deterministic sample of the reconstruction")
+            errors.extend(
+                promoter.bind_ledger_records(
+                    actual_sample,
+                    {(row["family"], row["identity"]): row for row in rows},
+                    label=f"{disposition} sample",
+                )
+            )
+        if not meta_path.exists():
+            errors.append(f"missing {disposition} sample sidecar")
+        else:
+            expected_meta = promoter.review_json(promoter.ledger_meta(rows, disposition, promoter.ledger_bytes(rows)))
+            if meta_path.read_text(encoding="utf-8") != expected_meta:
+                errors.append(f"{disposition} sample sidecar is stale or non-deterministic")
+
+        # If the regenerated full ledger is present under out/, bind it too.
+        if full_path.exists():
+            actual_full = _read_jsonl_rows(full_path)
+            if promoter.ledger_bytes(actual_full) != promoter.ledger_bytes(rows):
+                errors.append(f"{disposition} full ledger under out/ does not match the reconstruction")
+            errors.extend(
+                promoter.bind_ledger_records(
+                    actual_full,
+                    {(row["family"], row["identity"]): row for row in rows},
+                    label=f"{disposition} full ledger",
+                )
+            )
+        for index, row in enumerate(rows):
+            if not re.fullmatch(r"[0-9a-f]{64}", str(row.get("source_row_sha256", ""))):
+                errors.append(f"{disposition}[{index}]: source_row_sha256 is not a sha256 digest")
+                break
+    return errors
 
 
 def validate_target_release(target_dir: Path | None = None) -> list[str]:
@@ -225,14 +284,25 @@ def validate_target_release(target_dir: Path | None = None) -> list[str]:
 
     errors.extend(promoter.release_blockers(release))
 
-    flagged, flagged_errors = _ledger_rows(target_dir / "flagged-identities.jsonl", "flagged")
-    quarantined, quarantined_errors = _ledger_rows(target_dir / "quarantined-identities.jsonl", "quarantined")
-    errors.extend(flagged_errors)
-    errors.extend(quarantined_errors)
-    ledger_identities = Counter((row.get("family"), row.get("identity")) for row in flagged + quarantined)
+    # Recompute the complete expected ledgers from the immutable source rows. This
+    # is the independent authority; committed samples and out/ ledgers are bound
+    # to it rather than trusted.
+    expected: dict[str, list[dict]] = {"flagged": [], "quarantined": []}
+    for family in rows_validator.FAMILIES:
+        identity_field = promoter.IDENTITY_FIELDS[family.name]
+        for _source, carried, accounting in promoter.iter_family_dispositions(family):
+            if carried is None:
+                expected[accounting["disposition"]].append(
+                    promoter.ledger_record(family.name, identity_field, accounting)
+                )
+    flagged, quarantined = expected["flagged"], expected["quarantined"]
+
+    ledger_identities = Counter((row["family"], row["identity"]) for row in flagged + quarantined)
     for key, count in sorted(ledger_identities.items()):
         if count != 1:
             errors.append(f"{key[0]}/{key[1]}: identity appears {count} times across the disposition ledgers")
+
+    errors.extend(_validate_ledger_custody(target_dir, release, expected))
 
     ledger_counts: Counter[tuple[str, str]] = Counter()
     for row in flagged + quarantined:
@@ -332,7 +402,12 @@ def run_self_test() -> int:
         "tables": {
             name: {
                 "carried_row_count": 5,
-                "provenance": {"boundary_constants": dict(promoter.CANONICAL_BOUNDARY)},
+                "provenance": {
+                    "boundary_constants": {
+                        field: {"coverage": "all_rows", "rows_present": 5, "rows_total": 5, "value": value}
+                        for field, value in promoter.CANONICAL_BOUNDARY.items()
+                    }
+                },
                 "target_row_schema": promoter.target_row_schema(
                     next(item for item in rows_validator.FAMILIES if item.name == name)
                 ),
@@ -349,10 +424,10 @@ def run_self_test() -> int:
         (lambda r: r["tables"][families[0]]["validation"].update({"violation_rows": 1}), "validation-red"),
         (lambda r: r["tables"][families[0]].update({"target_schema_sha256": "other"}), "target schema changed"),
         (lambda r: r["tables"][families[0]].update({"target_row_schema": "fusha/bogus@9"}), "released target row schema is stale"),
-        (lambda r: r["tables"][families[0]]["provenance"].update({"boundary_constants": {}}), "boundary provenance is missing"),
+        (lambda r: r["tables"][families[0]]["provenance"].update({"boundary_constants": {}}), "declare all four safety constants"),
         (
-            lambda r: r["tables"][families[0]]["provenance"]["boundary_constants"].update(
-                {"public_boundary": {"kind": "imported", "lang": "en", "src": "external"}}
+            lambda r: r["tables"][families[0]]["provenance"]["boundary_constants"]["public_boundary"].update(
+                {"value": {"kind": "imported", "lang": "en", "src": "external"}}
             ),
             "is not canonical",
         ),

@@ -293,6 +293,56 @@
     "live_mutation_allowed": false,
     "target_schemas_modified": false
   },
+  "ledgers": {
+    "flagged": {
+      "committed_sample_path": "qamus/indexes/largelexicon/target-schema/flagged-identities.sample.jsonl",
+      "defect_family_counts": {
+        "additional_property": 1479
+      },
+      "disposition": "flagged",
+      "family_counts": {
+        "qword-crosswalk": 1479
+      },
+      "full_output_path": "out/largelexicon-target-schema/flagged-identities.jsonl",
+      "full_output_policy": "large regenerable output; the full ledger is written under gitignored out/ by --write or --emit-carried, and is bound here by canonical digest",
+      "reason_counts": {
+        "structural migration blocker: additional_property": 1479
+      },
+      "row_count": 1479,
+      "row_schema": "qamus/largelexicon-target-disposition-row@1",
+      "sample_row_count": 5,
+      "sample_rule": "first 5 records of each family in canonical order",
+      "sample_sha256": "e6ed4fce0afa2d241f09c55e4aefd9e4564c7a87d33836be1013194e1806c707",
+      "sha256": "faca6c9e517314e69966fd980d901d26be6d82080948ca1fd487a2b9bc7cf54f",
+      "sha256_scope": "canonical compact JSONL bytes of the complete ledger in family/manifest order"
+    },
+    "quarantined": {
+      "committed_sample_path": "qamus/indexes/largelexicon/target-schema/quarantined-identities.sample.jsonl",
+      "defect_family_counts": {
+        "risk_flags": 9502,
+        "root_shape_or_reason": 611
+      },
+      "disposition": "quarantined",
+      "family_counts": {
+        "form-source": 4394,
+        "lemma-source": 1279,
+        "stem-source": 4394
+      },
+      "full_output_path": "out/largelexicon-target-schema/quarantined-identities.jsonl",
+      "full_output_policy": "large regenerable output; the full ledger is written under gitignored out/ by --write or --emit-carried, and is bound here by canonical digest",
+      "reason_counts": {
+        "semantic review required: risk_flags": 9502,
+        "semantic review required: root_shape_or_reason": 611
+      },
+      "row_count": 10067,
+      "row_schema": "qamus/largelexicon-target-disposition-row@1",
+      "sample_row_count": 15,
+      "sample_rule": "first 5 records of each family in canonical order",
+      "sample_sha256": "34c3ce882a632032ee5ee30528cee259c5af6b954472ce90ac49c8769a4bff79",
+      "sha256": "ccea51541d252b73c23280fc36189bbcd5ff7eb33c843690a1fe7a80706980e2",
+      "sha256_scope": "canonical compact JSONL bytes of the complete ledger in family/manifest order"
+    }
+  },
   "losslessness": {
     "accounted_row_count": 253292,
     "disposition_counts": {
@@ -321,12 +371,34 @@
       "identity_field": "form_id",
       "provenance": {
         "boundary_constants": {
-          "public_boundary": {
-            "kind": "authored",
-            "lang": "en",
-            "src": "qamus"
+          "live_mutation_allowed": {
+            "coverage": "absent_from_family",
+            "rows_present": 0,
+            "rows_total": 8483,
+            "value": null
           },
-          "source_status": "qamus_current_authored"
+          "public_boundary": {
+            "coverage": "all_rows",
+            "rows_present": 8483,
+            "rows_total": 8483,
+            "value": {
+              "kind": "authored",
+              "lang": "en",
+              "src": "qamus"
+            }
+          },
+          "source": {
+            "coverage": "absent_from_family",
+            "rows_present": 0,
+            "rows_total": 8483,
+            "value": null
+          },
+          "source_status": {
+            "coverage": "all_rows",
+            "rows_present": 8483,
+            "rows_total": 8483,
+            "value": "qamus_current_authored"
+          }
         },
         "derivation_variants": [
           {
@@ -369,12 +441,34 @@
       "identity_field": "entry_id",
       "provenance": {
         "boundary_constants": {
-          "public_boundary": {
-            "kind": "authored",
-            "lang": "en",
-            "src": "qamus"
+          "live_mutation_allowed": {
+            "coverage": "absent_from_family",
+            "rows_present": 0,
+            "rows_total": 2092,
+            "value": null
           },
-          "source_status": "qamus_current_authored"
+          "public_boundary": {
+            "coverage": "all_rows",
+            "rows_present": 2092,
+            "rows_total": 2092,
+            "value": {
+              "kind": "authored",
+              "lang": "en",
+              "src": "qamus"
+            }
+          },
+          "source": {
+            "coverage": "absent_from_family",
+            "rows_present": 0,
+            "rows_total": 2092,
+            "value": null
+          },
+          "source_status": {
+            "coverage": "all_rows",
+            "rows_present": 2092,
+            "rows_total": 2092,
+            "value": "qamus_current_authored"
+          }
         },
         "derivation_variants": [
           {
@@ -417,11 +511,33 @@
       "identity_field": "row_id",
       "provenance": {
         "boundary_constants": {
-          "live_mutation_allowed": false,
+          "live_mutation_allowed": {
+            "coverage": "all_rows",
+            "rows_present": 117117,
+            "rows_total": 117117,
+            "value": false
+          },
           "public_boundary": {
-            "kind": "authored",
-            "lang": "en",
-            "src": "qamus"
+            "coverage": "all_rows",
+            "rows_present": 117117,
+            "rows_total": 117117,
+            "value": {
+              "kind": "authored",
+              "lang": "en",
+              "src": "qamus"
+            }
+          },
+          "source": {
+            "coverage": "absent_from_family",
+            "rows_present": 0,
+            "rows_total": 117117,
+            "value": null
+          },
+          "source_status": {
+            "coverage": "absent_from_family",
+            "rows_present": 0,
+            "rows_total": 117117,
+            "value": null
           }
         },
         "derivation_variants": [
@@ -489,13 +605,34 @@
       "identity_field": "row_id",
       "provenance": {
         "boundary_constants": {
-          "live_mutation_allowed": false,
-          "public_boundary": {
-            "kind": "authored",
-            "lang": "en",
-            "src": "qamus"
+          "live_mutation_allowed": {
+            "coverage": "all_rows",
+            "rows_present": 117117,
+            "rows_total": 117117,
+            "value": false
           },
-          "source_status": "qamus_current_authored"
+          "public_boundary": {
+            "coverage": "all_rows",
+            "rows_present": 117117,
+            "rows_total": 117117,
+            "value": {
+              "kind": "authored",
+              "lang": "en",
+              "src": "qamus"
+            }
+          },
+          "source": {
+            "coverage": "absent_from_family",
+            "rows_present": 0,
+            "rows_total": 117117,
+            "value": null
+          },
+          "source_status": {
+            "coverage": "all_rows",
+            "rows_present": 117117,
+            "rows_total": 117117,
+            "value": "qamus_current_authored"
+          }
         },
         "derivation_variants": [
           {
@@ -536,13 +673,34 @@
       "identity_field": "stem_id",
       "provenance": {
         "boundary_constants": {
-          "public_boundary": {
-            "kind": "authored",
-            "lang": "en",
-            "src": "qamus"
+          "live_mutation_allowed": {
+            "coverage": "absent_from_family",
+            "rows_present": 0,
+            "rows_total": 8483,
+            "value": null
           },
-          "source": "qamus_current_authored",
-          "source_status": "qamus_current_authored"
+          "public_boundary": {
+            "coverage": "all_rows",
+            "rows_present": 8483,
+            "rows_total": 8483,
+            "value": {
+              "kind": "authored",
+              "lang": "en",
+              "src": "qamus"
+            }
+          },
+          "source": {
+            "coverage": "all_rows",
+            "rows_present": 8483,
+            "rows_total": 8483,
+            "value": "qamus_current_authored"
+          },
+          "source_status": {
+            "coverage": "all_rows",
+            "rows_present": 8483,
+            "rows_total": 8483,
+            "value": "qamus_current_authored"
+          }
         },
         "derivation_variants": [
           {

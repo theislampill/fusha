@@ -3,31 +3,88 @@
   "note": "bounded run over the first 2000 carried crosswalk rows in manifest order; no row content is reproduced, only counts",
   "projector_id": "largelexicon.carried_lexeme_candidate.v1",
   "scan_limit": 2000,
-  "schema": "qamus/largelexicon-fact-bridge-scan@1",
+  "schema": "qamus/largelexicon-fact-bridge-scan@2",
   "summary": {
     "blocker_counts": {
       "crosswalk_packet_not_accepted": 420,
-      "lexical_collision_requires_context": 10,
-      "no_carried_lexical_support": 444,
-      "non_certified_graph_edge_only": 642,
-      "norm_only_surface_match": 181,
-      "root_family_relation_not_lexeme_identity": 218,
+      "loc_surface_disagreement": 192,
+      "missing_typed_graph_evidence": 95,
+      "no_carried_lexical_support": 409,
+      "non_certified_graph_edge_only": 527,
+      "norm_only_surface_match": 165,
+      "root_family_relation_not_lexeme_identity": 192,
       "unresolved_canonical_loc": 420
     },
     "certified_records": 0,
     "learner_visible_records": 0,
     "preserved_candidate_histogram": {
-      "0": 1905,
-      "1": 90,
-      "2": 5
+      "0": 2000
     },
     "projection_status_counts": {
-      "blocked": 181,
-      "candidate": 90,
-      "producer_pending": 444,
-      "source_gap": 420,
-      "unresolved": 865
+      "blocked": 357,
+      "producer_pending": 409,
+      "source_gap": 515,
+      "unresolved": 719
     },
     "record_count": 2000
+  },
+  "upstream_binding": {
+    "carried_table_sha256": {
+      "form-source": "82944f9950d318d1f1beccaf366d0cf19b9548f97c07263beb29681118064d45",
+      "lemma-source": "3fd9b85c2cab9ed033b3b0715304fe090c94c3622aba4da66f268177f0fac3ec",
+      "qword-crosswalk": "85c0415d74efd24d741a5ebcc9c1714150d7c4941ea367591944cfe4b1fb66f0",
+      "qword-denominator": "9d8f109d66f5317400d2437e8e5d1ab7d6f8150b85e47917c6b6de7f2deeadc5",
+      "stem-source": "fae45d7a4e83ee988605cc1d83d2fcee4ae86447003087e1680fb6bc671eed8b"
+    },
+    "target_release_sha256": "576a1361b45b0c7fb301b6db7832e1f229ad7cee17bf4d5d173303ae97764f79",
+    "typed_graph": {
+      "bundles": [
+        {
+          "eligible_edge_count": 0,
+          "path": "qamus/examples/p007-li-pilot/transclusion-edges.jsonl",
+          "present": true,
+          "row_count": 72,
+          "schema": "qamus.graph_edge.v1",
+          "sha256": "db24f0f7c01fc5239fc24cc8f75fbaa633b5b728482ea65d8eff839158c98b69"
+        },
+        {
+          "eligible_edge_count": 0,
+          "path": "qamus/examples/proof-noun-sufaha/typed-edge-graph.jsonl",
+          "present": true,
+          "row_count": 35,
+          "schema": "qamus.graph_edge.v1",
+          "sha256": "3c4ae4d8006dd4a691d2a0fd0697eda3d2fc44ae19e4ece2ddff71590ce16825"
+        },
+        {
+          "eligible_edge_count": 0,
+          "path": "qamus/examples/proof-particle/particle-graph-edges.jsonl",
+          "present": true,
+          "row_count": 9,
+          "schema": "qamus.graph_edge.v1",
+          "sha256": "73725ecf6ab33fe2513095b1c4376d150218ed701f6ca23c6fe977cde5591cb6"
+        },
+        {
+          "eligible_edge_count": 2,
+          "path": "qamus/examples/proof-verb/typed-edge-graph.jsonl",
+          "present": true,
+          "row_count": 10,
+          "schema": "qamus.graph_edge.v1",
+          "sha256": "0163917ba9b0b0fb75bb5e1538d88b19e248613870ae21e394f9727837eca81b"
+        }
+      ],
+      "eligible_edge_count": 2,
+      "eligible_loc_count": 1,
+      "typed_graph_sha256": "e2fa82f586bb52a4c7abec7db8aea249a3330c922700df0261a16b15d7362133"
+    },
+    "typed_release_losslessness": {
+      "accounted_row_count": 253292,
+      "disposition_counts": {
+        "carried": 241746,
+        "flagged": 1479,
+        "quarantined": 10067
+      },
+      "silent_drop_count": 0,
+      "source_row_count": 253292
+    }
   }
 }

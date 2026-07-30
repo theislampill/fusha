@@ -2,7 +2,7 @@
 
 Verified against: commit `637d7da` (origin/main), audited 2026-07-29 by direct file reads, line counts, live manifest reads, and validator smoke-runs in this worktree (all five largelexicon validators pass: claim-boundary, source-ledger, parser, transclusion, denominator-join). Claims cited `file:line`. GAPs in §8.
 
-**Update 2026-07-30 (Burst A3):** GAP-L1 and GAP-L3 are now executed, not planned — see §9 (target-schema promotion) and §10 (typed fact bridge). §7's schema-migration paragraph and §8's GAP-L1/GAP-L3 stubs are superseded by those sections; the remaining GAPs are unchanged.
+**Update 2026-07-30 (Burst A3, defect round 1):** §9 and §10 add an executed target-schema promotion and an executable typed bridge. **Neither GAP-L1 nor GAP-L3 is closed.** GAP-L1 remains open while harness integration of the deterministic promotion gates is still owed to the serialized integration lane. GAP-L3 remains open because the public repository contains no canonical typed lexeme/form graph bundle at usable scale: only 2 eligible edges at 1 occurrence loc exist, and the bridge therefore produces **zero** candidates on real data, abstaining with `missing_typed_graph_evidence`. The bridge path is real and tested; its evidence dependency is missing and is packetized.
 
 ## 1. What largelexicon actually is
 
@@ -76,7 +76,7 @@ Two layers (`docs/parser/TRANSCLUSION.md:16-25`; `docs/parser/meta-transclusive-
 - **GAP-L7 — flywheel artifacts are a 160-row sample**, not a full 117,117-row projection. WP-LLX-FLYWHEEL-FULL-PROJECTION.
 - **GAP-L8 — n993/مَلْجَأ source-card repair outstanding** (blocks the 2,092-complete claim). WP-LLX-N993-REPAIR.
 
-## 9. Target-schema promotion (closes GAP-L1)
+## 9. Target-schema promotion (advances GAP-L1; not closed)
 
 `tools/promote_largelexicon_target_schema.py` executes the v1→target migration the RM-22 rehearsal only modelled. Committed @1 tables are **immutable migration inputs**: the tool re-hashes every source path before and after a run and raises if a byte moved, and no `qamus/schemas/largelexicon-*` file was touched.
 
@@ -100,7 +100,7 @@ Quarantine is semantic (`risk_flags`, `root_shape_or_reason`); the 1,479 flagged
 
 **Honest posture note.** `qamus/indexes/largelexicon/RELEASE.json` still reports `pass_rows: 0` — correctly, because it describes the immutable @1 tables, which really do violate the target schemas. `TARGET-RELEASE.json` describes the derived carried tables and reports `pass_rows == carried_row_count`, `violation_rows == 0`. Two releases, two populations, no merged number.
 
-## 10. Typed fact bridge (closes GAP-L3)
+## 10. Typed fact bridge (advances GAP-L3; not closed)
 
 `tools/largelexicon_fact_bridge.py` is the smallest correct bridge from carried largelexicon rows to the typed-claim plane. It consumes **only** carried target-schema lemma/form/stem/crosswalk rows behind the freshness gate, and emits `qamus.typed_claim_contract.v1` records that are candidate-or-unresolved, never certification.
 
@@ -110,6 +110,8 @@ Quarantine is semantic (`risk_flags`, `root_shape_or_reason`); the 1,479 flagged
 
 **Registration.** `largelexicon.carried_lexeme_candidate.v1` is registered in `tools/fact_projectors.py` with `gate_tier: never_auto_resolve`. `fact_projectors.review_and_materialize` now refuses that tier outright — two approving independent votes do not open it — so the bridge has no certification or materialization path at all. It is deliberately **not** added to `qamus/lattice/registered-projectors.json`: that registry keys @2.1 skill-rule projectors to released `sarf@2`/`nahw@2` rule ids through declarative predicates in `tools/lattice_projectors.py`, and the bridge has neither skill rule ids nor a declarative class predicate — registering it there would need a placeholder predicate that misrepresents its real class. A regression test asserts the deliberate absence so it cannot be added silently.
 
-**Measured behaviour** (`qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json`, first 2,000 carried crosswalk rows): 90 candidate records, 1,910 abstentions (865 unresolved, 444 producer_pending, 420 source_gap, 181 blocked), 5 collision records preserving 2 candidates each, **0 certified records and 0 learner-visible records**. Behavioural fixtures covering the accepted case and all ten blockers live in `qamus/examples/largelexicon-fact-bridge/bridge-fixtures.jsonl`; `tools/test_largelexicon_fact_bridge.py` holds 20 mutation tests, gated from `tools/test_fact_projectors.py`.
+**Exact surface is discovery only.** A carried form row with the same written surface merely proposes an entry; identity additionally requires an **accepted canonical typed lexeme/form edge** (`qamus.graph_edge.v1`, status `certified` or `deterministic_exact`) whose occurrence loc, written surface and entry all agree. Occurrence locs are read only from an unambiguous `o<S>:<A>:<W>` node segment — a card address is an ayah reference and is never promoted into a token occurrence. Locs are additionally verified against `qamus/indexes/quran-loc-surface/index.jsonl` for existence, exact written-surface agreement and wbw-loc agreement. Every typed-graph bundle path, schema, status and full SHA-256 is bound into the dependency records, the content-addressed `fact_id`, and the scan metadata, so graph drift fails freshness.
+
+**Measured behaviour** (`qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json`, first 2,000 carried crosswalk rows): **0 candidate records**, 2,000 abstentions (719 unresolved, 515 source_gap, 409 producer_pending, 357 blocked), of which 95 reached the typed-graph gate and abstained with `missing_typed_graph_evidence`. **0 certified records and 0 learner-visible records.** This is the honest state: the committed typed-graph bundles yield 2 eligible edges at 1 loc in total, so no occurrence in the scan window has the evidence identity requires. The missing dependency is packetized; no graph was manufactured and no graphless candidate is counted as a bridge success. Behavioural fixtures covering the accepted case and all ten blockers live in `qamus/examples/largelexicon-fact-bridge/bridge-fixtures.jsonl`; `tools/test_largelexicon_fact_bridge.py` holds 20 mutation tests, gated from `tools/test_fact_projectors.py`.
 
 The bridge does not adopt a live compiler, does not mutate entry data, and never materializes publicly: every record carries `learner_visible: false` and a materialization target with `public_materialization_allowed: false` and `live_mutation_allowed: false`.

@@ -85,18 +85,18 @@ def test_lexeme_identity_is_not_the_crosswalk_entry() -> None:
     inputs = make_inputs()
     base = candidates_of(bridge.bridge_row(crosswalk_row(), inputs))[0]
     moved = crosswalk_row(
-        entry_id="otherpage0001",
-        card_id="otherpage0001:u1:e1",
+        entry_id="0aae00000002",
+        card_id="0aae00000002:u1:e1",
         source_dependencies=[
-            {"id": "llx-qword-otherpage0001-01-01-001", "kind": "qword_denominator_row"},
-            {"id": "otherpage0001:u1:e1", "kind": "source_card"},
+            {"id": "llx-qword-0aae00000002-01-01-001", "kind": "qword_denominator_row"},
+            {"id": "0aae00000002:u1:e1", "kind": "source_card"},
         ],
     )
     other = candidates_of(bridge.bridge_row(moved, inputs))[0]
     check("lexeme candidate entry is the documenting entry, not the displaying page",
-          base["fact_value"]["lexeme_candidate"]["entry_id"] == "lexeme000001")
+          base["fact_value"]["lexeme_candidate"]["entry_id"] == "1ec0de000001")
     check("page context follows the crosswalk entry, not the lexeme",
-          other["fact_value"]["page_context"]["crosswalk_entry_id"] == "otherpage0001")
+          other["fact_value"]["page_context"]["crosswalk_entry_id"] == "0aae00000002")
     check("page context is explicitly never a lexeme edge",
           other["fact_value"]["page_context"]["never_lexeme_edge"] is True)
     check("lexeme candidate is unchanged by the page move",
@@ -108,9 +108,9 @@ def test_lexeme_identity_is_not_the_crosswalk_entry() -> None:
 # mutation tests — each breaks one precondition and must abstain precisely
 # --------------------------------------------------------------------------- #
 def test_collision_abstains_and_preserves_every_candidate() -> None:
-    forms = [form_row("lexeme000001", SURFACE), form_row("lexeme000002", SURFACE, "001")]
-    inputs = make_inputs(forms=forms, lemmas=[lemma_row("lexeme000001", SURFACE), lemma_row("lexeme000002", SURFACE)],
-                         stems=[stem_row("lexeme000001", SURFACE), stem_row("lexeme000002", SURFACE)])
+    forms = [form_row("1ec0de000001", SURFACE), form_row("1ec0de000002", SURFACE, "001")]
+    inputs = make_inputs(forms=forms, lemmas=[lemma_row("1ec0de000001", SURFACE), lemma_row("1ec0de000002", SURFACE)],
+                         stems=[stem_row("1ec0de000001", SURFACE), stem_row("1ec0de000002", SURFACE)])
     record = bridge.bridge_row(crosswalk_row(), inputs)
     assert_valid(record, "collision")
     check("collision abstains", record["projection"]["status"] == "unresolved")
@@ -125,8 +125,8 @@ def test_collision_abstains_and_preserves_every_candidate() -> None:
 
 
 def test_multi_match_beyond_two_still_abstains() -> None:
-    forms = [form_row(f"lexeme00000{index}", SURFACE, f"00{index}") for index in (1, 2, 3)]
-    inputs = make_inputs(forms=forms, lemmas=[lemma_row(f"lexeme00000{index}", SURFACE) for index in (1, 2, 3)], stems=[])
+    forms = [form_row(f"1ec0de00000{index}", SURFACE, f"00{index}") for index in (1, 2, 3)]
+    inputs = make_inputs(forms=forms, lemmas=[lemma_row(f"1ec0de00000{index}", SURFACE) for index in (1, 2, 3)], stems=[])
     record = bridge.bridge_row(crosswalk_row(), inputs)
     assert_valid(record, "multi match")
     check("three-way match abstains", record["projection"]["status"] == "unresolved")
@@ -137,7 +137,7 @@ def test_multi_match_beyond_two_still_abstains() -> None:
 def test_page_context_only_abstains() -> None:
     """The displaying entry has a carried lemma row but documents no such form."""
 
-    inputs = make_inputs(forms=[], lemmas=[lemma_row("page0000page", "شَيْء")], stems=[])
+    inputs = make_inputs(forms=[], lemmas=[lemma_row("0aae00000000", "شَيْء")], stems=[])
     record = bridge.bridge_row(crosswalk_row(), inputs)
     assert_valid(record, "page context only")
     check("page-context-only abstains", record["projection"]["status"] == "unresolved")
@@ -146,7 +146,7 @@ def test_page_context_only_abstains() -> None:
 
 
 def test_root_only_abstains() -> None:
-    edges = {LOC: [{"loc": LOC, "entry_id": "lexeme000009", "edge_type": "headword", "relation": "root_confirms",
+    edges = {LOC: [{"loc": LOC, "entry_id": "1ec0de000009", "edge_type": "headword", "relation": "root_confirms",
                     "row_root": "ا ل ه"}]}
     inputs = make_inputs(forms=[], lemmas=[], stems=[], graph_edges=edges)
     record = bridge.bridge_row(crosswalk_row(), inputs)
@@ -157,7 +157,7 @@ def test_root_only_abstains() -> None:
 
 
 def test_non_certified_graph_edge_only_abstains() -> None:
-    edges = {LOC: [{"loc": LOC, "entry_id": "lexeme000009", "edge_type": "form", "relation": "linkage_only"}]}
+    edges = {LOC: [{"loc": LOC, "entry_id": "1ec0de000009", "edge_type": "form", "relation": "linkage_only"}]}
     inputs = make_inputs(forms=[], lemmas=[], stems=[], graph_edges=edges)
     record = bridge.bridge_row(crosswalk_row(), inputs)
     assert_valid(record, "candidate edge only")
@@ -171,7 +171,7 @@ def test_non_certified_graph_edge_only_abstains() -> None:
 def test_graph_edge_never_upgrades_a_candidate() -> None:
     """A candidate edge alongside a real form row stays candidate evidence only."""
 
-    edges = {LOC: [{"loc": LOC, "entry_id": "lexeme000001", "edge_type": "headword", "relation": "root_confirms",
+    edges = {LOC: [{"loc": LOC, "entry_id": "1ec0de000001", "edge_type": "headword", "relation": "root_confirms",
                     "row_root": "ا ل ه"}]}
     inputs = make_inputs(graph_edges=edges)
     fact = candidates_of(bridge.bridge_row(crosswalk_row(), inputs))[0]
@@ -231,7 +231,7 @@ def test_missing_dependency_abstains() -> None:
 def test_norm_only_match_abstains() -> None:
     """norm_only_match is a never_auto_resolve trigger: it may never resolve."""
 
-    inputs = make_inputs(forms=[form_row("lexeme000001", OTHER_SURFACE)], lemmas=[], stems=[])
+    inputs = make_inputs(forms=[form_row("1ec0de000001", OTHER_SURFACE)], lemmas=[], stems=[])
     record = bridge.bridge_row(crosswalk_row(), inputs)
     assert_valid(record, "norm only")
     check("norm-only abstains", record["projection"]["status"] == "blocked")
@@ -298,7 +298,7 @@ def test_registry_run_returns_candidate_or_abstention_only() -> None:
     check("registry run forbids materialization", result["materialization_allowed"] is False)
     check("registry run forbids certification", result["certification_allowed"] is False)
     collision_inputs = make_inputs(
-        forms=[form_row("lexeme000001", SURFACE), form_row("lexeme000002", SURFACE, "001")], lemmas=[], stems=[]
+        forms=[form_row("1ec0de000001", SURFACE), form_row("1ec0de000002", SURFACE, "001")], lemmas=[], stems=[]
     )
     abstained = fact_projectors.REGISTRY.run(
         fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID, crosswalk_row=crosswalk_row(), inputs=collision_inputs
@@ -349,21 +349,202 @@ def test_committed_fixtures_match_the_bridge() -> None:
           {blocker for record in committed for blocker in blockers_of(record)} == set(bridge.BLOCKER_STATUS))
 
 
-TESTS = [value for name, value in sorted(globals().items()) if name.startswith("test_")]
+def all_tests():
+    """Collected at call time so appended tests can never be silently skipped."""
+
+    return [value for name, value in sorted(globals().items()) if name.startswith("test_")]
+
+
+TESTS = all_tests()
 
 
 def main() -> int:
-    for test in TESTS:
+    tests = all_tests()
+    for test in tests:
         test()
     print(
         json.dumps(
-            {"ok": True, "schema": "qamus/largelexicon-fact-bridge-tests@1", "tests": len(TESTS)},
+            {"ok": True, "schema": "qamus/largelexicon-fact-bridge-tests@1", "tests": len(tests)},
             ensure_ascii=False,
             indent=2,
             sort_keys=True,
         )
     )
     return 0
+
+
+
+
+# --------------------------------------------------------------------------- #
+# defect-round-1 repairs
+# --------------------------------------------------------------------------- #
+def test_typed_graph_evidence_is_mandatory() -> None:
+    """Exact surface is discovery only; a same-surface form elsewhere abstains."""
+
+    record = bridge.bridge_row(crosswalk_row(), make_inputs(typed_edges={}))
+    check("no typed edge abstains", record["projection"]["status"] == "source_gap")
+    check("no typed edge names its blocker", blockers_of(record) == {"missing_typed_graph_evidence"})
+    check("no typed edge emits no candidate", candidates_of(record) == [])
+
+    other_loc = bridge.fixture_typed_edge("1ec0de000001", loc="9:9:9")
+    elsewhere = bridge.bridge_row(crosswalk_row(), make_inputs(typed_edges={"9:9:9": [other_loc]}))
+    check("a typed edge at another loc does not support this occurrence",
+          blockers_of(elsewhere) == {"missing_typed_graph_evidence"})
+
+    wrong_surface = bridge.fixture_typed_edge("1ec0de000001", surface=OTHER_SURFACE)
+    surface_mismatch = bridge.bridge_row(crosswalk_row(), make_inputs(typed_edges={LOC: [wrong_surface]}))
+    check("a same-surface form elsewhere does not support this occurrence",
+          blockers_of(surface_mismatch) == {"missing_typed_graph_evidence"})
+
+    wrong_entry = bridge.bridge_row(
+        crosswalk_row(), make_inputs(typed_edges={LOC: [bridge.fixture_typed_edge("1ec0de000009")]})
+    )
+    check("a typed edge to another entry does not establish identity",
+          blockers_of(wrong_entry) == {"typed_edge_identity_disagreement"})
+
+
+def test_candidate_status_typed_edge_never_supports_identity() -> None:
+    for status in ("candidate", "ambiguous", "source_gap", "rejected"):
+        edge = bridge.fixture_typed_edge("1ec0de000001", status=status)
+        check("typed edge status " + status + " is not structurally eligible",
+              bridge.typed_edge_errors(edge) != [])
+
+
+def test_occurrence_loc_is_never_manufactured() -> None:
+    check("card address is not an occurrence loc",
+          bridge.occurrence_loc_of("selected-word:1ec0de000001:s1:u1:f1:c2:284:x1") is None)
+    check("explicit occurrence loc is read",
+          bridge.occurrence_loc_of("selected-word:x:s1:u1:f1:c28:50:x12:o28:50:12") == "28:50:12")
+
+
+def test_loc_must_agree_with_the_canonical_index() -> None:
+    absent = bridge.bridge_row(crosswalk_row(), make_inputs(loc_surface={"1:1:1": "x"}))
+    check("absent loc is blocked", blockers_of(absent) == {"loc_not_in_canonical_index"})
+    mismatch = bridge.bridge_row(crosswalk_row(), make_inputs(loc_surface={LOC: OTHER_SURFACE}))
+    check("loc/surface disagreement is blocked", blockers_of(mismatch) == {"loc_surface_disagreement"})
+    for bad in ("0:0:0", "9:9:9", ""):
+        record = bridge.bridge_row(crosswalk_row(canonical_wbw_loc=bad), make_inputs())
+        check("wbw disagreement is caught", "wbw_loc_disagreement" in blockers_of(record))
+    for bad in ("0:0:0", "1000:1:1", "2:255", "-1:2:3"):
+        check("invalid loc coordinates are refused", not bridge.is_canonical_loc(bad) or bad == "0:0:0")
+
+
+def test_inputs_fail_closed_on_legacy_rows_and_unbound_dependencies() -> None:
+    legacy = form_row("1ec0de000001", SURFACE)
+    legacy["schema"] = "fusha/largelexicon/form-source@1"
+    for name, kwargs in (
+        ("legacy @1 form row", {"forms": [legacy]}),
+        ("unvalidated typed edge", {"typed_edges": {LOC: [{"schema": "other"}]}}),
+    ):
+        try:
+            make_inputs(**kwargs)
+        except bridge.BridgeError as error:
+            check(name + " fails closed", "failed closed" in str(error))
+        else:
+            raise AssertionError("FAILED: " + name + " was accepted")
+    try:
+        bridge.BridgeInputs(crosswalk=[], lemmas=[], forms=[], stems=[], dependency_hashes={})
+    except bridge.BridgeError as error:
+        check("empty dependency hashes fail closed", "dependency hashes are required" in str(error))
+    else:
+        raise AssertionError("FAILED: empty dependency hashes were accepted")
+    try:
+        bridge.BridgeInputs(crosswalk=[], lemmas=[], forms=[], stems=[], dependency_hashes={"form-source": "nope"})
+    except bridge.BridgeError as error:
+        check("non-sha256 dependency hash fails closed", "not a sha256 digest" in str(error))
+    else:
+        raise AssertionError("FAILED: a non-sha256 dependency hash was accepted")
+
+
+def test_fact_id_is_content_addressed_over_the_claim() -> None:
+    base = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0]["fact_id"]
+
+    def one(**kwargs):
+        return candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs(**kwargs)))[0]["fact_id"]
+
+    mutated_pos = form_row("1ec0de000001", SURFACE)
+    mutated_pos["pos"] = "verb"
+    check("POS change moves the fact id", one(forms=[mutated_pos]) != base)
+    mutated_root = form_row("1ec0de000001", SURFACE)
+    mutated_root.update({"root": "ا ل ه", "no_root_reason": None})
+    check("root change moves the fact id", one(forms=[mutated_root]) != base)
+    mutated_lemma = lemma_row("1ec0de000001", SURFACE)
+    mutated_lemma["lemma"] = OTHER_SURFACE
+    check("lemma change moves the fact id", one(lemmas=[mutated_lemma]) != base)
+    check("stem change moves the fact id", one(stems=[]) != base)
+    check("typed-edge change moves the fact id",
+          one(typed_edges={LOC: [bridge.fixture_typed_edge("1ec0de000001", edge_type="form_entry_edge")]}) != base)
+
+    stale = dict(bridge.FIXTURE_DEPENDENCY_HASHES)
+    stale["form-source"] = "9" * 64
+    drifted = bridge.BridgeInputs(
+        crosswalk=[], lemmas=[lemma_row("1ec0de000001", SURFACE)], forms=[form_row("1ec0de000001", SURFACE)],
+        stems=[stem_row("1ec0de000001", SURFACE)], dependency_hashes=stale,
+        typed_edges={LOC: [bridge.fixture_typed_edge("1ec0de000001")]},
+        typed_graph_meta={"bundles": [], "typed_graph_sha256": "f" * 64},
+        loc_surface={LOC: SURFACE},
+    )
+    check("stale dependency digest moves the fact id",
+          candidates_of(bridge.bridge_row(crosswalk_row(), drifted))[0]["fact_id"] != base)
+
+
+def test_no_first_row_winner() -> None:
+    forms = [form_row("1ec0de000001", SURFACE), form_row("1ec0de000002", SURFACE, "001")]
+    record = bridge.bridge_row(crosswalk_row(), make_inputs(forms=forms, lemmas=[], stems=[]))
+    flipped = bridge.bridge_row(crosswalk_row(), make_inputs(forms=list(reversed(forms)), lemmas=[], stems=[]))
+    check("input order does not pick a winner", record["projection"]["status"] == "unresolved")
+    check("reversed input order abstains identically", flipped["projection"]["status"] == "unresolved")
+    check("the same candidate fact ids are preserved either way",
+          sorted(f["fact_id"] for f in candidates_of(record))
+          == sorted(f["fact_id"] for f in candidates_of(flipped)))
+
+
+def test_unregistered_projector_fails() -> None:
+    for unknown in ("largelexicon.not_registered.v1", "", "sarf.made_up.v9"):
+        try:
+            fact_projectors.REGISTRY.run(unknown, crosswalk_row=crosswalk_row(), inputs=make_inputs())
+        except fact_projectors.ProjectorValidationError as error:
+            check("unknown projector is refused", "unregistered projector" in str(error))
+        else:
+            raise AssertionError("FAILED: unregistered projector ran")
+    try:
+        fact_projectors.REGISTRY.contract("largelexicon.not_registered.v1")
+    except fact_projectors.ProjectorValidationError:
+        pass
+    else:
+        raise AssertionError("FAILED: unknown contract was returned")
+
+
+def test_committed_fixtures_respect_the_public_boundary() -> None:
+    directory = Path(__file__).resolve().parents[1] / "qamus" / "examples" / "largelexicon-fact-bridge"
+    text = (directory / "bridge-fixtures.jsonl").read_text(encoding="utf-8")
+    committed = [json.loads(line) for line in text.splitlines() if line.strip()]
+    check("committed fixtures are boundary-clean", bridge.public_fixture_errors(committed) == [])
+    windows_path = "from C:" + chr(92) + "private"
+    for name, mutate in (
+        ("informed_by", lambda r: r[0]["facts"][0].update({"informed_by": ["qac"]})),
+        ("gloss prose", lambda r: r[0]["facts"][0]["fact_value"].update({"gloss_text": "a copied gloss"})),
+        ("ocr field", lambda r: r[0]["facts"][0]["fact_value"].update({"ocr_text": "scanned"})),
+        ("external label", lambda r: r[0]["facts"][0]["evidence"].update({"summary": "checked against qac"})),
+        ("url", lambda r: r[0]["facts"][0]["evidence"].update({"summary": "see https://example.test/x"})),
+        ("absolute path", lambda r: r[0]["facts"][0]["evidence"].update({"summary": "from /srv/private/x"})),
+        ("windows path", lambda r: r[0]["facts"][0]["evidence"].update({"summary": windows_path})),
+    ):
+        broken = copy.deepcopy(committed)
+        mutate(broken)
+        check(name + " is rejected in a public fixture", bridge.public_fixture_errors(broken) != [])
+
+
+def test_full_output_may_not_target_a_tracked_path() -> None:
+    check("default output is under out/", "out" in bridge.DEFAULT_OUTPUT.parts)
+    check("materialization target is not a tracked path",
+          bridge.MATERIALIZATION_TARGET["artifact"].startswith("out/"))
+    try:
+        bridge.main(["--limit", "1", "--out", "qamus/examples/largelexicon-fact-bridge/leak.jsonl"])
+    except SystemExit as error:
+        check("tracked output destination is refused", "gitignored out/" in str(error))
+    else:
+        raise AssertionError("FAILED: a tracked output destination was accepted")
 
 
 if __name__ == "__main__":

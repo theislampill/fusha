@@ -35,6 +35,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any, Iterable
@@ -51,6 +52,23 @@ from tools import typed_claim_contract  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 LEXEME_JOIN_EDGES = ROOT / "qamus" / "lattice" / "lexeme-join-edges.jsonl"
+LOC_SURFACE_INDEX = ROOT / "qamus" / "indexes" / "quran-loc-surface" / "index.jsonl"
+# Committed bundles that may carry canonical typed lexeme/form edges. Membership is
+# declared, never discovered, and every bundle is hashed into the dependency record.
+TYPED_GRAPH_BUNDLES = (
+    "qamus/examples/proof-verb/typed-edge-graph.jsonl",
+    "qamus/examples/proof-noun-sufaha/typed-edge-graph.jsonl",
+    "qamus/examples/proof-particle/particle-graph-edges.jsonl",
+    "qamus/examples/p007-li-pilot/transclusion-edges.jsonl",
+)
+TYPED_GRAPH_SCHEMA = "qamus.graph_edge.v1"
+LEXICAL_EDGE_TYPES = frozenset({"lexeme_entry_edge", "form_entry_edge"})
+# A candidate edge is not a certified edge: only these statuses may support identity.
+ACCEPTED_EDGE_STATUSES = frozenset({"certified", "deterministic_exact"})
+# An occurrence loc is read ONLY from an unambiguous o<S>:<A>:<W> segment. A card
+# address (c<S>:<A>) is an ayah reference, not a token occurrence, and is never
+# promoted into one.
+OCCURRENCE_LOC_RE = re.compile(r"(?:^|:)o(\d{1,3}):(\d{1,3}):(\d{1,3})(?::|$)")
 PRODUCER_ID = "tools/largelexicon_fact_bridge.py"
 PRODUCER_VERSION = "1.0.0"
 PROJECTOR_ID = "largelexicon.carried_lexeme_candidate.v1"
@@ -61,8 +79,21 @@ ACCEPTED_TRANSCLUSION_ROUTE = "entry_card_qword_to_canonical_crosswalk_accepted"
 FORBIDDEN_BINDING_PREFIXES = ("missing-loc|", "sarf:surface:")
 REQUIRED_DEPENDENCY_KINDS = frozenset({"qword_denominator_row", "source_card"})
 
+DEFAULT_OUTPUT = ROOT / "out" / "largelexicon-fact-bridge" / "typed-claims.jsonl"
+# Prohibited classes for committed public fixtures: internal provenance labels,
+# source/gloss prose carriers, OCR fields, external source names, URLs and paths.
+PROHIBITED_FIXTURE_KEYS = (
+    "informed_by", "source_prose", "gloss_text", "source_text", "translation",
+    "tafsir", "ocr", "ocr_text", "scan_text", "source_quotation", "external_source",
+)
+PROHIBITED_VALUE_PATTERNS = (
+    re.compile(r"https?://", re.IGNORECASE),
+    re.compile(r"(?:/srv/|/var/www/|/home/[a-z]/)", re.IGNORECASE),
+    re.compile(r"[A-Za-z]:\\"),
+)
+
 MATERIALIZATION_TARGET = {
-    "artifact": "qamus/examples/largelexicon-fact-bridge/typed-claims.jsonl",
+    "artifact": "out/largelexicon-fact-bridge/typed-claims.jsonl",
     "field": "facts",
     "live_mutation_allowed": False,
     "public_materialization_allowed": False,
@@ -74,12 +105,17 @@ BLOCKER_STATUS = {
     "quarantined_or_flagged_source_row": "blocked",
     "missing_dependency_release": "blocked",
     "norm_only_surface_match": "blocked",
+    "loc_not_in_canonical_index": "blocked",
+    "loc_surface_disagreement": "blocked",
+    "wbw_loc_disagreement": "blocked",
     "unresolved_canonical_loc": "source_gap",
     "crosswalk_packet_not_accepted": "source_gap",
+    "missing_typed_graph_evidence": "source_gap",
     "no_carried_lexical_support": "producer_pending",
     "page_context_only_no_lexical_edge": "unresolved",
     "root_family_relation_not_lexeme_identity": "unresolved",
     "non_certified_graph_edge_only": "unresolved",
+    "typed_edge_identity_disagreement": "unresolved",
     "lexical_collision_requires_context": "unresolved",
 }
 
@@ -94,6 +130,14 @@ BLOCKER_REASONS = {
     "root_family_relation_not_lexeme_identity": "support is root agreement only; root sharing never implies entry identity",
     "non_certified_graph_edge_only": "support is a candidate graph edge only; a candidate edge is not a certified edge",
     "lexical_collision_requires_context": "more than one entry documents this exact surface; context must decide",
+    "missing_typed_graph_evidence": (
+        "no canonical typed lexeme/form edge with accepted status agrees with this occurrence loc, "
+        "written surface and entry; exact surface is discovery only"
+    ),
+    "typed_edge_identity_disagreement": "a typed edge exists at this loc but its surface or entry does not agree",
+    "loc_not_in_canonical_index": "the canonical loc is absent from the committed quran loc-surface index",
+    "loc_surface_disagreement": "the written surface disagrees with the canonical loc-surface index",
+    "wbw_loc_disagreement": "the canonical wbw loc does not agree with the canonical quran loc",
 }
 
 GUARD_REASONS = {
@@ -115,6 +159,10 @@ def _canonical(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
+def canonical_line_bytes(value: Any) -> bytes:
+    return _canonical(value).encode("utf-8") + b"\n"
+
+
 def _fact_id(core: dict[str, Any]) -> str:
     return "sha256:" + hashlib.sha256(_canonical(core).encode("utf-8")).hexdigest()
 
@@ -128,6 +176,101 @@ def is_canonical_loc(value: Any) -> bool:
         return False
     parts = value.split(":")
     return len(parts) == 3 and all(part.isdigit() and 1 <= len(part) <= 3 and int(part) >= 0 for part in parts)
+
+
+GUARD_REASONS.update(
+    {
+        "canonical_typed_edge_required": "identity required an accepted canonical typed lexeme/form edge, not a surface match",
+        "canonical_loc_surface_verified": "the loc and its written surface were verified against the committed canonical index",
+        "typed_graph_digest_bound": "the typed-graph bundle digests are recorded so graph drift fails freshness",
+    }
+)
+
+
+def occurrence_loc_of(node_id: str) -> str | None:
+    """Read an unambiguous occurrence loc from a node id, or nothing."""
+
+    match = OCCURRENCE_LOC_RE.search(str(node_id or ""))
+    return ":".join(match.groups()) if match else None
+
+
+def typed_edge_errors(edge: dict[str, Any]) -> list[str]:
+    """Closed structural contract for an eligible canonical typed lexeme/form edge."""
+
+    problems: list[str] = []
+    if edge.get("schema") != TYPED_GRAPH_SCHEMA:
+        problems.append("schema is not " + TYPED_GRAPH_SCHEMA)
+    if edge.get("edge_type") not in LEXICAL_EDGE_TYPES:
+        problems.append("edge_type is not a lexeme/form identity edge")
+    if edge.get("status") not in ACCEPTED_EDGE_STATUSES:
+        problems.append("status is not an accepted (non-candidate) status")
+    if edge.get("to_node_type") != "entry" or not str(edge.get("to_node_id", "")).startswith("entry:"):
+        problems.append("edge does not terminate on an entry node")
+    if not str((edge.get("details") or {}).get("surface") or ""):
+        problems.append("edge carries no written surface")
+    if not edge.get("from_node_id"):
+        problems.append("edge carries no source node")
+    return problems
+
+
+def load_typed_graph(paths: Iterable[str] | None = None) -> tuple[dict[str, list[dict[str, Any]]], dict[str, Any]]:
+    """Index accepted canonical typed lexeme/form edges by occurrence loc.
+
+    Only edges that pass the closed contract AND carry an unambiguous occurrence
+    loc are eligible. Nothing is inferred: a card-level address is not turned into
+    a token occurrence, and a candidate-status edge never becomes support.
+    """
+
+    index: dict[str, list[dict[str, Any]]] = {}
+    bundles: list[dict[str, Any]] = []
+    for relative in sorted(paths if paths is not None else TYPED_GRAPH_BUNDLES):
+        path = ROOT / relative
+        entry = {
+            "eligible_edge_count": 0,
+            "path": relative,
+            "present": path.exists(),
+            "row_count": 0,
+            "schema": TYPED_GRAPH_SCHEMA,
+            "sha256": None,
+        }
+        if path.exists():
+            payload = path.read_bytes()
+            entry["sha256"] = hashlib.sha256(payload).hexdigest()
+            for line in payload.decode("utf-8").splitlines():
+                if not line.strip():
+                    continue
+                edge = json.loads(line)
+                entry["row_count"] += 1
+                if typed_edge_errors(edge):
+                    continue
+                loc = occurrence_loc_of(edge.get("from_node_id"))
+                if loc is None:
+                    continue
+                index.setdefault(loc, []).append(edge)
+                entry["eligible_edge_count"] += 1
+        bundles.append(entry)
+    digest = hashlib.sha256(_canonical(bundles).encode("utf-8")).hexdigest()
+    return index, {
+        "bundles": bundles,
+        "eligible_edge_count": sum(item["eligible_edge_count"] for item in bundles),
+        "eligible_loc_count": len(index),
+        "typed_graph_sha256": digest,
+    }
+
+
+def load_loc_surface_index(path: Path | None = None) -> dict[str, str]:
+    """The committed canonical loc → written-surface index."""
+
+    source = path or LOC_SURFACE_INDEX
+    index: dict[str, str] = {}
+    if not source.exists():
+        return index
+    with source.open("r", encoding="utf-8") as handle:
+        for line in handle:
+            if line.strip():
+                row = json.loads(line)
+                index[str(row["loc"])] = str(row["surface"])
+    return index
 
 
 def load_lexeme_join_edges(path: Path | None = None) -> dict[str, list[dict[str, Any]]]:
@@ -145,8 +288,60 @@ def load_lexeme_join_edges(path: Path | None = None) -> dict[str, list[dict[str,
     return edges
 
 
+_TARGET_SCHEMA_CONST = {
+    "qword-crosswalk": "qamus/largelexicon-qword-crosswalk@2",
+    "lemma-source": "fusha/largelexicon/lemma-source@2",
+    "form-source": "fusha/largelexicon/form-source@2",
+    "stem-source": "fusha/largelexicon/stem-source@2",
+}
+
+
+def _input_errors(
+    crosswalk: Iterable[dict[str, Any]],
+    lemmas: Iterable[dict[str, Any]],
+    forms: Iterable[dict[str, Any]],
+    stems: Iterable[dict[str, Any]],
+    dependency_hashes: dict[str, str],
+    typed_edges: dict[str, list[dict[str, Any]]],
+) -> list[str]:
+    """Fail closed on legacy rows, empty dependency hashes and unvalidated edges.
+
+    Direct invocation and the registry path share this gate, so a caller cannot
+    slip an @1 row or an unhashed dependency in through the projector registry.
+    """
+
+    import validate_largelexicon_rows as rows_validator
+
+    errors: list[str] = []
+    schemas = {family.name: rows_validator.read_json(ROOT / family.schema_path) for family in rows_validator.FAMILIES}
+    for family_name, rows in (
+        ("qword-crosswalk", crosswalk),
+        ("lemma-source", lemmas),
+        ("form-source", forms),
+        ("stem-source", stems),
+    ):
+        for index, row in enumerate(rows):
+            if row.get("schema") != _TARGET_SCHEMA_CONST[family_name]:
+                errors.append(f"{family_name}[{index}]: row is not {_TARGET_SCHEMA_CONST[family_name]}")
+                continue
+            row_errors = rows_validator.schema_errors(row, schemas[family_name])
+            if row_errors:
+                errors.append(f"{family_name}[{index}]: row fails the target schema ({row_errors[0]['defect_family']})")
+    if not dependency_hashes:
+        errors.append("dependency hashes are required; an unbound consumer cannot be invalidated")
+    for family_name, digest in sorted(dependency_hashes.items()):
+        if not re.fullmatch(r"[0-9a-f]{64}", str(digest)):
+            errors.append(f"dependency hash for {family_name} is not a sha256 digest")
+    for loc, edges in sorted(typed_edges.items()):
+        for index, edge in enumerate(edges):
+            problems = typed_edge_errors(edge)
+            if problems:
+                errors.append(f"typed edge {loc}[{index}]: {problems[0]}")
+    return errors
+
+
 class BridgeInputs:
-    """Carried target-schema rows plus candidate graph evidence, gate-checked."""
+    """Carried target-schema rows plus canonical typed graph evidence, gate-checked."""
 
     def __init__(
         self,
@@ -157,7 +352,18 @@ class BridgeInputs:
         stems: Iterable[dict[str, Any]],
         dependency_hashes: dict[str, str],
         graph_edges: dict[str, list[dict[str, Any]]] | None = None,
+        typed_edges: dict[str, list[dict[str, Any]]] | None = None,
+        typed_graph_meta: dict[str, Any] | None = None,
+        loc_surface: dict[str, str] | None = None,
+        validate_rows: bool = True,
     ) -> None:
+        if validate_rows:
+            errors = _input_errors(crosswalk, lemmas, forms, stems, dependency_hashes, typed_edges or {})
+            if errors:
+                raise BridgeError("bridge inputs failed closed: " + "; ".join(errors[:5]))
+        self.typed_edges = dict(typed_edges or {})
+        self.typed_graph_meta = dict(typed_graph_meta or {"typed_graph_sha256": "unbound", "bundles": []})
+        self.loc_surface = dict(loc_surface or {})
         self.crosswalk = list(crosswalk)
         self.lemmas = {str(row["entry_id"]): row for row in lemmas}
         self.forms = list(forms)
@@ -179,6 +385,7 @@ class BridgeInputs:
         crosswalk = tables.carried("qword-crosswalk")
         if locs is not None:
             crosswalk = [row for row in crosswalk if str(row.get("canonical_quran_loc")) in locs]
+        typed_edges, typed_graph_meta = load_typed_graph()
         return cls(
             crosswalk=crosswalk,
             lemmas=tables.carried("lemma-source"),
@@ -186,7 +393,19 @@ class BridgeInputs:
             stems=tables.carried("stem-source"),
             dependency_hashes=tables.dependency_hashes(),
             graph_edges=load_lexeme_join_edges(),
+            typed_edges=typed_edges,
+            typed_graph_meta=typed_graph_meta,
+            loc_surface=load_loc_surface_index(),
         )
+
+    def accepted_typed_edges(self, loc: str, surface: str) -> list[dict[str, Any]]:
+        """Accepted typed edges at this loc whose written surface agrees exactly."""
+
+        return [
+            edge
+            for edge in self.typed_edges.get(loc, [])
+            if str((edge.get("details") or {}).get("surface")) == surface
+        ]
 
     def exact_surface_forms(self, surface: str) -> list[dict[str, Any]]:
         return sorted(
@@ -229,6 +448,8 @@ def _candidate_fact(
     lemma: dict[str, Any] | None,
     stem: dict[str, Any] | None,
     graph_edges: list[dict[str, Any]],
+    typed_edges: list[dict[str, Any]],
+    typed_graph_meta: dict[str, Any],
     hashes: dict[str, str],
     candidate_count: int,
     loc: str,
@@ -276,13 +497,33 @@ def _candidate_fact(
             "visible_segment_count": len(stem.get("visible_segments") or []),
         },
     }
+    fact_value["typed_graph_evidence"] = [
+        {
+            "edge_id": edge.get("edge_id"),
+            "edge_type": edge["edge_type"],
+            "from_node_id": edge["from_node_id"],
+            "status": edge["status"],
+            "surface": (edge.get("details") or {}).get("surface"),
+            "to_node_id": edge["to_node_id"],
+        }
+        for edge in typed_edges
+    ]
+    # Content-addressed over the whole semantic claim: mutating POS, root, lemma,
+    # form, stem, a typed edge, a dependency digest, or the projector identity all
+    # change the fact id.
     core = {
+        "canonical_loc": loc,
+        "dependency_digests": dict(sorted(hashes.items())),
         "fact_type": "largelexicon_lexeme_candidate",
-        "form_id": str(form["form_id"]),
-        "loc": loc,
+        "form_realization": fact_value["form_realization"],
+        "lexeme_candidate": fact_value["lexeme_candidate"],
         "plane": "typed_claim",
-        "producer": PRODUCER_ID,
+        "producer": {"id": PRODUCER_ID, "version": PRODUCER_VERSION},
+        "rule_projector": {"projector_id": PROJECTOR_ID, "rule_id": RULE_ID, "version": PRODUCER_VERSION},
+        "stem_segmentation": fact_value["stem_segmentation"],
         "surface": surface,
+        "typed_graph_evidence": fact_value["typed_graph_evidence"],
+        "typed_graph_sha256": typed_graph_meta.get("typed_graph_sha256"),
     }
     return {
         "certification": {
@@ -296,6 +537,14 @@ def _candidate_fact(
             [
                 {"address": f"largelexicon:qword-crosswalk@2:{row['row_id']}", "source_kind": "corpus_record"},
                 {"address": f"largelexicon:form-source@2:{form['form_id']}", "source_kind": "corpus_record"},
+                *[
+                    {
+                        "address": "%s#%s@sha256:%s" % (item["path"], TYPED_GRAPH_SCHEMA, item["sha256"]),
+                        "source_kind": "corpus_record",
+                    }
+                    for item in typed_graph_meta.get("bundles", [])
+                    if item.get("sha256")
+                ],
             ],
         ),
         "dependent_fact_ids": [],
@@ -305,9 +554,14 @@ def _candidate_fact(
             "confidence": "unknown",
             "evidence_ids": [f"llx-form-{form['form_id']}", f"llx-crosswalk-{row['row_id']}"],
             "status": "source_addressed_candidate",
-            "summary": "a carried target-schema form row documents this exact written surface for this entry",
+            "summary": (
+                "a carried target-schema form row documents this exact written surface and an accepted "
+                "canonical typed lexeme/form edge agrees at this occurrence loc"
+            ),
         },
-        "evidence_mode": "normalized_lexical_body",
+        # Honest mode: there is no certified lexical input and no derivation chain
+        # here, so this is a source-addressed candidate, not a normalized lexical body.
+        "evidence_mode": "direct_source_attestation",
         "fact_id": _fact_id(core),
         "fact_type": "largelexicon_lexeme_candidate",
         "fact_value": fact_value,
@@ -320,6 +574,9 @@ def _candidate_fact(
                 "root_family_never_lexeme_edge",
                 "candidate_edge_never_certified",
                 "release_dependency_bound",
+                "canonical_typed_edge_required",
+                "canonical_loc_surface_verified",
+                "typed_graph_digest_bound",
             ]
         ),
         "ownership": {
@@ -474,6 +731,17 @@ def bridge_row(row: dict[str, Any], inputs: BridgeInputs, *, carried: bool = Tru
     exact = [] if blockers else inputs.exact_surface_forms(surface)
     entry_ids = sorted({str(form["entry_id"]) for form in exact})
 
+    # The canonical loc must exist and agree with the committed index on the exact
+    # written surface, and the wbw loc must agree with the quran loc.
+    if loc is not None and inputs.loc_surface:
+        canonical_surface = inputs.loc_surface.get(loc)
+        if canonical_surface is None:
+            blockers.append("loc_not_in_canonical_index")
+        elif canonical_surface != surface:
+            blockers.append("loc_surface_disagreement")
+    if loc is not None and str(row.get("canonical_wbw_loc") or "") != loc:
+        blockers.append("wbw_loc_disagreement")
+
     if not blockers and not exact:
         norm_only = inputs.norm_only_forms(surface, norm_strict) if norm_strict else []
         if norm_only:
@@ -489,9 +757,29 @@ def bridge_row(row: dict[str, Any], inputs: BridgeInputs, *, carried: bool = Tru
         else:
             blockers.append("no_carried_lexical_support")
 
+    # Exact surface is DISCOVERY ONLY. Identity additionally requires an accepted
+    # canonical typed lexeme/form edge agreeing on loc, written surface and entry.
+    typed_edges: list[dict[str, Any]] = []
+    supported: dict[str, list[dict[str, Any]]] = {}
+    if not blockers and exact:
+        typed_edges = inputs.accepted_typed_edges(str(loc), surface)
+        for edge in typed_edges:
+            entry = str(edge["to_node_id"]).split(":", 1)[1]
+            if entry in entry_ids:
+                supported.setdefault(entry, []).append(edge)
+        if not typed_edges:
+            blockers.append("missing_typed_graph_evidence")
+        elif not supported:
+            blockers.append("typed_edge_identity_disagreement")
+        else:
+            exact = [form for form in exact if str(form["entry_id"]) in supported]
+            entry_ids = sorted(supported)
+
     observed = {
+        "accepted_typed_edge_count": len(typed_edges),
         "exact_surface_entry_ids": entry_ids,
         "graph_edge_count": len(graph_edges),
+        "typed_graph_sha256": inputs.typed_graph_meta.get("typed_graph_sha256"),
         "visible_surface": surface,
     }
 
@@ -509,6 +797,8 @@ def bridge_row(row: dict[str, Any], inputs: BridgeInputs, *, carried: bool = Tru
             lemma=inputs.lemmas.get(str(form["entry_id"])),
             stem=inputs.stem_for(str(form["entry_id"]), str(form["surface"])),
             graph_edges=graph_edges,
+            typed_edges=supported[str(form["entry_id"])],
+            typed_graph_meta=inputs.typed_graph_meta,
             hashes=hashes,
             candidate_count=len(exact),
             loc=str(loc),
@@ -580,6 +870,31 @@ def _record(
     if tension is not None:
         record["tension_records"] = [tension]
     return record
+
+
+def public_fixture_errors(node: Any, path: str = "$") -> list[str]:
+    """Recursively reject prohibited public classes in a committed fixture."""
+
+    from largelexicon_common import FORBIDDEN_PUBLIC_SUBSTRINGS, match_forbidden_labels
+
+    problems: list[str] = []
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if str(key).lower() in PROHIBITED_FIXTURE_KEYS:
+                problems.append(f"{path}.{key}: prohibited field class in a committed public fixture")
+            problems.extend(public_fixture_errors(value, f"{path}.{key}"))
+    elif isinstance(node, list):
+        for index, value in enumerate(node):
+            problems.extend(public_fixture_errors(value, f"{path}[{index}]"))
+    elif isinstance(node, str):
+        for pattern in PROHIBITED_VALUE_PATTERNS:
+            if pattern.search(node):
+                problems.append(f"{path}: prohibited URL or absolute/private path in a public fixture")
+                break
+        labels = match_forbidden_labels(node.lower(), FORBIDDEN_PUBLIC_SUBSTRINGS)
+        if labels:
+            problems.append(f"{path}: external source label(s) {sorted(labels)} in a public fixture")
+    return problems
 
 
 def validate_records(records: Iterable[dict[str, Any]]) -> list[str]:
@@ -661,11 +976,11 @@ def fixture_crosswalk_row(**overrides: Any) -> dict[str, Any]:
 
     row = {
         "schema": "qamus/largelexicon-qword-crosswalk@2",
-        "row_id": "llx-crosswalk-llx-qword-page0000page-01-01-001",
-        "qword_row_id": "llx-qword-page0000page-01-01-001",
-        "entry_id": "page0000page",
+        "row_id": "llx-crosswalk-llx-qword-0aae00000000-01-01-001",
+        "qword_row_id": "llx-qword-0aae00000000-01-01-001",
+        "entry_id": "0aae00000000",
         "source_keys": ["n001"],
-        "card_id": "page0000page:u1:e1",
+        "card_id": "0aae00000000:u1:e1",
         "usage_index": 1,
         "example_index": 1,
         "qword_index": 1,
@@ -681,9 +996,9 @@ def fixture_crosswalk_row(**overrides: Any) -> dict[str, Any]:
         "terminal_gate_code": None,
         "transclusion_route": ACCEPTED_TRANSCLUSION_ROUTE,
         "source_dependencies": [
-            {"id": "llx-qword-page0000page-01-01-001", "kind": "qword_denominator_row"},
-            {"id": "page0000page", "kind": "entry"},
-            {"id": "page0000page:u1:e1", "kind": "source_card"},
+            {"id": "llx-qword-0aae00000000-01-01-001", "kind": "qword_denominator_row"},
+            {"id": "0aae00000000", "kind": "entry"},
+            {"id": "0aae00000000:u1:e1", "kind": "source_card"},
         ],
     }
     row.update(overrides)
@@ -746,22 +1061,71 @@ def fixture_stem_row(entry_id: str, surface: str) -> dict[str, Any]:
     }
 
 
-def fixture_inputs(*, forms=None, lemmas=None, stems=None, graph_edges=None) -> BridgeInputs:
-    entry = "lexeme000001"
+def fixture_typed_edge(
+    entry_id: str,
+    *,
+    surface: str = FIXTURE_SURFACE,
+    loc: str = FIXTURE_LOC,
+    status: str = "deterministic_exact",
+    edge_type: str = "lexeme_entry_edge",
+) -> dict[str, Any]:
+    """A schema-shaped canonical typed lexeme/form edge carrying an occurrence loc."""
+
+    return {
+        "schema": TYPED_GRAPH_SCHEMA,
+        "edge_id": f"edge:fixture:{entry_id}:{loc}",
+        "edge_type": edge_type,
+        "from_node_id": f"selected-word:{entry_id}:s1:u1:f1:o{loc}",
+        "from_node_type": "selected-word",
+        "to_node_id": f"entry:{entry_id}",
+        "to_node_type": "entry",
+        "status": status,
+        "details": {"surface": surface},
+        "producer": {"id": "fixture", "version": "1.0.0"},
+    }
+
+
+def fixture_inputs(
+    *, forms=None, lemmas=None, stems=None, graph_edges=None, typed_edges=None, loc_surface=None
+) -> BridgeInputs:
+    entry = "1ec0de000001"
+    form_rows = [fixture_form_row(entry, FIXTURE_SURFACE)] if forms is None else forms
+    if typed_edges is None:
+        # Default: one accepted typed edge per documenting entry, so the accepted
+        # and collision fixtures exercise the typed-graph join rather than skip it.
+        typed_edges = {
+            FIXTURE_LOC: [
+                fixture_typed_edge(entry_id)
+                for entry_id in sorted({str(row["entry_id"]) for row in form_rows})
+            ]
+        }
+        if not typed_edges[FIXTURE_LOC]:
+            typed_edges = {}
     return BridgeInputs(
         crosswalk=[],
         lemmas=[fixture_lemma_row(entry, FIXTURE_SURFACE)] if lemmas is None else lemmas,
-        forms=[fixture_form_row(entry, FIXTURE_SURFACE)] if forms is None else forms,
+        forms=form_rows,
         stems=[fixture_stem_row(entry, FIXTURE_SURFACE)] if stems is None else stems,
         dependency_hashes=FIXTURE_DEPENDENCY_HASHES,
         graph_edges=graph_edges or {},
+        typed_edges=typed_edges,
+        typed_graph_meta={
+            "bundles": [
+                {"path": "fixture://typed-edges", "schema": TYPED_GRAPH_SCHEMA, "sha256": "f" * 64,
+                 "row_count": 1, "eligible_edge_count": 1, "present": True}
+            ],
+            "eligible_edge_count": 1,
+            "eligible_loc_count": 1,
+            "typed_graph_sha256": "f" * 64,
+        },
+        loc_surface={FIXTURE_LOC: FIXTURE_SURFACE} if loc_surface is None else loc_surface,
     )
 
 
 def fixture_scenarios() -> list[tuple[str, dict[str, Any], BridgeInputs, bool]]:
     """``(scenario, crosswalk_row, inputs, carried)`` covering every closed blocker."""
 
-    twin = [fixture_form_row("lexeme000001", FIXTURE_SURFACE), fixture_form_row("lexeme000002", FIXTURE_SURFACE, "001")]
+    twin = [fixture_form_row("1ec0de000001", FIXTURE_SURFACE), fixture_form_row("1ec0de000002", FIXTURE_SURFACE, "001")]
     return [
         ("accepted_single_candidate", fixture_crosswalk_row(), fixture_inputs(), True),
         (
@@ -769,15 +1133,15 @@ def fixture_scenarios() -> list[tuple[str, dict[str, Any], BridgeInputs, bool]]:
             fixture_crosswalk_row(),
             fixture_inputs(
                 forms=twin,
-                lemmas=[fixture_lemma_row("lexeme000001", FIXTURE_SURFACE), fixture_lemma_row("lexeme000002", FIXTURE_SURFACE)],
-                stems=[fixture_stem_row("lexeme000001", FIXTURE_SURFACE)],
+                lemmas=[fixture_lemma_row("1ec0de000001", FIXTURE_SURFACE), fixture_lemma_row("1ec0de000002", FIXTURE_SURFACE)],
+                stems=[fixture_stem_row("1ec0de000001", FIXTURE_SURFACE)],
             ),
             True,
         ),
         (
             "page_context_only_no_lexical_edge",
             fixture_crosswalk_row(),
-            fixture_inputs(forms=[], lemmas=[fixture_lemma_row("page0000page", "شَيْء")], stems=[]),
+            fixture_inputs(forms=[], lemmas=[fixture_lemma_row("0aae00000000", "شَيْء")], stems=[]),
             True,
         ),
         (
@@ -789,7 +1153,7 @@ def fixture_scenarios() -> list[tuple[str, dict[str, Any], BridgeInputs, bool]]:
                 stems=[],
                 graph_edges={
                     FIXTURE_LOC: [
-                        {"loc": FIXTURE_LOC, "entry_id": "lexeme000009", "edge_type": "headword", "relation": "root_confirms", "row_root": "ا ل ه"}
+                        {"loc": FIXTURE_LOC, "entry_id": "1ec0de000009", "edge_type": "headword", "relation": "root_confirms", "row_root": "ا ل ه"}
                     ]
                 },
             ),
@@ -803,7 +1167,7 @@ def fixture_scenarios() -> list[tuple[str, dict[str, Any], BridgeInputs, bool]]:
                 lemmas=[],
                 stems=[],
                 graph_edges={
-                    FIXTURE_LOC: [{"loc": FIXTURE_LOC, "entry_id": "lexeme000009", "edge_type": "form", "relation": "linkage_only"}]
+                    FIXTURE_LOC: [{"loc": FIXTURE_LOC, "entry_id": "1ec0de000009", "edge_type": "form", "relation": "linkage_only"}]
                 },
             ),
             True,
@@ -823,10 +1187,30 @@ def fixture_scenarios() -> list[tuple[str, dict[str, Any], BridgeInputs, bool]]:
         (
             "norm_only_surface_match",
             fixture_crosswalk_row(),
-            fixture_inputs(forms=[fixture_form_row("lexeme000001", FIXTURE_NORM_TWIN)], lemmas=[], stems=[]),
+            fixture_inputs(forms=[fixture_form_row("1ec0de000001", FIXTURE_NORM_TWIN)], lemmas=[], stems=[]),
             True,
         ),
         ("no_carried_lexical_support", fixture_crosswalk_row(), fixture_inputs(forms=[], lemmas=[], stems=[]), True),
+        ("missing_typed_graph_evidence", fixture_crosswalk_row(), fixture_inputs(typed_edges={}), True),
+        (
+            "typed_edge_identity_disagreement",
+            fixture_crosswalk_row(),
+            fixture_inputs(typed_edges={FIXTURE_LOC: [fixture_typed_edge("1ec0de000009")]}),
+            True,
+        ),
+        (
+            "loc_not_in_canonical_index",
+            fixture_crosswalk_row(),
+            fixture_inputs(loc_surface={"1:1:1": "بِسْمِ"}),
+            True,
+        ),
+        (
+            "loc_surface_disagreement",
+            fixture_crosswalk_row(),
+            fixture_inputs(loc_surface={FIXTURE_LOC: FIXTURE_NORM_TWIN}),
+            True,
+        ),
+        ("wbw_loc_disagreement", fixture_crosswalk_row(canonical_wbw_loc="9:9:9"), fixture_inputs(), True),
     ]
 
 
@@ -857,6 +1241,9 @@ def build_fixtures() -> tuple[list[dict[str, Any]], dict[str, Any]]:
     errors = validate_records(records)
     if errors:
         raise BridgeError("fixture records are invalid: " + "; ".join(errors[:3]))
+    boundary = public_fixture_errors(records)
+    if boundary:
+        raise BridgeError("fixture records breach the public boundary: " + "; ".join(boundary[:3]))
     payload = b"".join(_canonical(record).encode("utf-8") + b"\n" for record in records)
     meta = {
         "blocker_vocabulary": sorted(BLOCKER_STATUS),
@@ -865,6 +1252,7 @@ def build_fixtures() -> tuple[list[dict[str, Any]], dict[str, Any]]:
         "learner_visible_records": 0,
         "note": "in-memory behavioural fixtures; no committed table row is reproduced here",
         "projector_id": PROJECTOR_ID,
+        "public_boundary_clean": True,
         "row_count": len(records),
         "scenarios": scenarios,
         "schema": "qamus/largelexicon-fact-bridge-fixtures-meta@1",
@@ -904,9 +1292,23 @@ SCAN_LIMIT = 2000
 def scan_report() -> dict[str, Any]:
     """A bounded, deterministic run over real committed rows (evidence, not fixtures)."""
 
-    result = run(limit=SCAN_LIMIT)
-    summary = result["summary"]
+    inputs = BridgeInputs.from_release()
+    rows = inputs.crosswalk[:SCAN_LIMIT]
+    records = [bridge_row(row, inputs) for row in rows]
+    errors = validate_records(records)
+    if errors:
+        raise BridgeError("bridge emitted invalid typed-claim records: " + "; ".join(errors[:5]))
+    summary = summarize(records)
+    release = promoter.read_release()
     return {
+        "upstream_binding": {
+            "carried_table_sha256": dict(sorted(inputs.dependency_hashes.items())),
+            "target_release_sha256": hashlib.sha256(
+                promoter.release_path().read_bytes()
+            ).hexdigest(),
+            "typed_graph": inputs.typed_graph_meta,
+            "typed_release_losslessness": release["losslessness"],
+        },
         "generator": PRODUCER_ID + " --write-scan",
         "note": (
             "bounded run over the first %d carried crosswalk rows in manifest order; "
@@ -914,7 +1316,7 @@ def scan_report() -> dict[str, Any]:
         ),
         "projector_id": PROJECTOR_ID,
         "scan_limit": SCAN_LIMIT,
-        "schema": "qamus/largelexicon-fact-bridge-scan@1",
+        "schema": "qamus/largelexicon-fact-bridge-scan@2",
         "summary": summary,
     }
 
@@ -947,10 +1349,12 @@ def main(argv: Iterable[str] | None = None) -> int:
         problems = check_fixtures()
         print(review_json({"ok": not problems, "problems": problems}), end="")
         return 1 if problems else 0
+    destination = args.out or DEFAULT_OUTPUT
+    if not destination.resolve().is_relative_to((ROOT / "out").resolve()):
+        raise SystemExit("full typed-claim output must be written under the gitignored out/ tree")
     result = run(locs=set(args.locs) if args.locs else None, limit=args.limit)
-    if args.out is not None:
-        args.out.parent.mkdir(parents=True, exist_ok=True)
-        args.out.write_bytes(b"".join(_canonical(record).encode("utf-8") + b"\n" for record in result["records"]))
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_bytes(b"".join(canonical_line_bytes(r) for r in result["records"]))
     print(review_json(result["summary"]), end="")
     return 0
 

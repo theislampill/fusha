@@ -172,12 +172,20 @@ def validate_target_release_boundary(allowed: dict[str, dict]) -> list[str]:
         errors.append("target-schema release must declare the @1 sources byte-untouched")
     for family_name, table in sorted((release.get("tables") or {}).items()):
         boundary = ((table.get("provenance") or {}).get("boundary_constants")) or {}
-        if not boundary:
-            errors.append(f"{family_name}: target release carries no manifest-level boundary provenance")
-        for field, value in sorted(boundary.items()):
-            if field not in promoter.CANONICAL_BOUNDARY:
+        if set(boundary) != set(promoter.CANONICAL_BOUNDARY):
+            errors.append(
+                f"{family_name}: target release must declare all four safety constants explicitly"
+            )
+        for field, entry in sorted(boundary.items()):
+            if field not in promoter.CANONICAL_BOUNDARY or not isinstance(entry, dict):
                 errors.append(f"{family_name}: unknown hoisted boundary constant {field}")
-            elif value != promoter.CANONICAL_BOUNDARY[field]:
+                continue
+            coverage = entry.get("coverage")
+            if coverage == "absent_from_family":
+                continue
+            if coverage != "all_rows" or entry.get("rows_present") != entry.get("rows_total"):
+                errors.append(f"{family_name}: boundary constant {field} is only partially covered")
+            elif entry.get("value") != promoter.CANONICAL_BOUNDARY[field]:
                 errors.append(f"{family_name}: hoisted boundary constant {field} weakens the source boundary")
         variants = ((table.get("provenance") or {}).get("derivation_variants")) or []
         if not variants:

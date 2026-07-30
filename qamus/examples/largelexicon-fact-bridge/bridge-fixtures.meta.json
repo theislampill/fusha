@@ -2,21 +2,27 @@
   "blocker_vocabulary": [
     "crosswalk_packet_not_accepted",
     "lexical_collision_requires_context",
+    "loc_not_in_canonical_index",
+    "loc_surface_disagreement",
     "missing_dependency_release",
+    "missing_typed_graph_evidence",
     "no_carried_lexical_support",
     "non_certified_graph_edge_only",
     "norm_only_surface_match",
     "page_context_only_no_lexical_edge",
     "quarantined_or_flagged_source_row",
     "root_family_relation_not_lexeme_identity",
-    "unresolved_canonical_loc"
+    "typed_edge_identity_disagreement",
+    "unresolved_canonical_loc",
+    "wbw_loc_disagreement"
   ],
   "certified_records": 0,
   "generator": "tools/largelexicon_fact_bridge.py --write-fixtures",
   "learner_visible_records": 0,
   "note": "in-memory behavioural fixtures; no committed table row is reproduced here",
   "projector_id": "largelexicon.carried_lexeme_candidate.v1",
-  "row_count": 11,
+  "public_boundary_clean": true,
+  "row_count": 16,
   "scenarios": [
     {
       "blockers": [],
@@ -103,8 +109,48 @@
       "preserved_candidates": 0,
       "projection_status": "producer_pending",
       "scenario": "no_carried_lexical_support"
+    },
+    {
+      "blockers": [
+        "missing_typed_graph_evidence"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "source_gap",
+      "scenario": "missing_typed_graph_evidence"
+    },
+    {
+      "blockers": [
+        "typed_edge_identity_disagreement"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "unresolved",
+      "scenario": "typed_edge_identity_disagreement"
+    },
+    {
+      "blockers": [
+        "loc_not_in_canonical_index"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "loc_not_in_canonical_index"
+    },
+    {
+      "blockers": [
+        "loc_surface_disagreement"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "loc_surface_disagreement"
+    },
+    {
+      "blockers": [
+        "wbw_loc_disagreement"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "wbw_loc_disagreement"
     }
   ],
   "schema": "qamus/largelexicon-fact-bridge-fixtures-meta@1",
-  "sha256": "661c7d1f10b2c453b4e69bc7d1aafc6a559f74745b65ea32efe8b1e5b9d4108c"
+  "sha256": "d678d53195864e4d7cf65f938c51e144f72fd4f9c4b6afd3b22fd3664e616c75"
 }

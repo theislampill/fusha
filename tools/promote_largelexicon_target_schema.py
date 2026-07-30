@@ -61,6 +61,10 @@ LEDGER_META_SCHEMA = "qamus/largelexicon-target-disposition-meta@1"
 SAMPLE_ROW_SCHEMA = "qamus/largelexicon-target-carried-sample@1"
 DEFAULT_CARRIED_DIR = ROOT / "out" / "largelexicon-target-schema"
 SAMPLE_PER_FAMILY = 4
+# Bounded committed sample per (disposition, family). The FULL ledgers are large
+# regenerable outputs and live under gitignored out/ per the sample-plus-generator
+# rule; the release carries their canonical digests so nothing is unverifiable.
+LEDGER_SAMPLE_PER_FAMILY = 5
 
 DISPOSITIONS = ("carried", "flagged", "quarantined")
 
@@ -140,6 +144,75 @@ def provenance_variant(source: dict[str, Any]) -> tuple[str, dict[str, Any]]:
         return "pv-none", payload
     digest = hashlib.sha256(canonical_text(payload).encode("utf-8")).hexdigest()
     return "pv-" + digest[:16], payload
+
+
+def ledger_record(family_name: str, identity_field: str, accounting: dict[str, Any]) -> dict[str, Any]:
+    """The canonical disposition record for one non-carried identity."""
+
+    return {
+        "defect_families": accounting["defect_families"],
+        "disposition": accounting["disposition"],
+        "family": family_name,
+        "identity": accounting[identity_field],
+        "identity_field": identity_field,
+        "provenance_variant_id": accounting["provenance_variant_id"],
+        "reasons": accounting["reasons"],
+        "schema": LEDGER_ROW_SCHEMA,
+        "source_locator": accounting["source_locator"],
+        "source_row_sha256": accounting["source_row_sha256"],
+    }
+
+
+def deterministic_sample(rows: list[dict[str, Any]], per_family: int = LEDGER_SAMPLE_PER_FAMILY) -> list[dict[str, Any]]:
+    """The first ``per_family`` rows of each family in canonical order. Deterministic."""
+
+    seen: Counter[str] = Counter()
+    sample: list[dict[str, Any]] = []
+    for row in rows:
+        family = str(row["family"])
+        if seen[family] < per_family:
+            seen[family] += 1
+            sample.append(row)
+    return sample
+
+
+def bind_ledger_records(
+    actual: list[dict[str, Any]], expected: dict[tuple[str, str], dict[str, Any]], *, label: str
+) -> list[str]:
+    """Bind ledger records to the recomputed expectation, field by field.
+
+    Counts and duplicate checks are not enough: a substituted identity, a tampered
+    source-row hash, a rewritten reason and a swapped provenance variant can all
+    keep counts intact. Every record is matched by (family, identity) and then
+    compared field-for-field against the value recomputed from the immutable
+    source rows.
+    """
+
+    problems: list[str] = []
+    seen: set[tuple[str, str]] = set()
+    for index, row in enumerate(actual):
+        key = (str(row.get("family")), str(row.get("identity")))
+        if key in seen:
+            problems.append(f"{label}[{index}]: duplicate ledger record for {key[0]}/{key[1]}")
+            continue
+        seen.add(key)
+        want = expected.get(key)
+        if want is None:
+            problems.append(
+                f"{label}[{index}]: {key[0]}/{key[1]} is not a recomputed non-carried identity (extra or substituted)"
+            )
+            continue
+        for field in sorted(want):
+            if row.get(field) != want[field]:
+                problems.append(
+                    "%s[%d]: %s/%s field %r does not match the recomputation" % (label, index, key[0], key[1], field)
+                )
+        if set(row) != set(want):
+            problems.append(
+                "%s[%d]: %s/%s carries unexpected or missing fields %s"
+                % (label, index, key[0], key[1], sorted(set(row) ^ set(want)))
+            )
+    return problems
 
 
 def boundary_divergences(source: dict[str, Any]) -> list[str]:
@@ -353,6 +426,7 @@ def promote(*, carried_sink: dict[str, Any] | None = None) -> dict[str, Any]:
         variants: dict[str, dict[str, Any]] = {}
         variant_counts: Counter[str] = Counter()
         boundary_seen: dict[str, Any] = {}
+        boundary_present: Counter[str] = Counter()
         counts: Counter[str] = Counter()
         reason_counts: Counter[str] = Counter()
         carried_digest = hashlib.sha256()
@@ -368,8 +442,9 @@ def promote(*, carried_sink: dict[str, Any] | None = None) -> dict[str, Any]:
             if variant_id not in variants:
                 variants[variant_id] = provenance_variant(source)[1]
             for field in BOUNDARY_CONSTANT_FIELDS:
-                if field in source and field not in boundary_seen:
-                    boundary_seen[field] = source[field]
+                if field in source:
+                    boundary_present[field] += 1
+                    boundary_seen.setdefault(field, source[field])
             counts[accounting["disposition"]] += 1
             reason_counts.update(accounting["reasons"])
             if carried is not None:
@@ -381,32 +456,43 @@ def promote(*, carried_sink: dict[str, Any] | None = None) -> dict[str, Any]:
                 if sink is not None:
                     sink.append(carried)
             else:
-                record = {
-                    "defect_families": accounting["defect_families"],
-                    "disposition": accounting["disposition"],
-                    "family": family.name,
-                    "identity": accounting[identity_field],
-                    "identity_field": identity_field,
-                    "provenance_variant_id": variant_id,
-                    "reasons": accounting["reasons"],
-                    "schema": LEDGER_ROW_SCHEMA,
-                    "source_locator": accounting["source_locator"],
-                    "source_row_sha256": accounting["source_row_sha256"],
-                }
+                record = ledger_record(family.name, identity_field, accounting)
                 (flagged if accounting["disposition"] == "flagged" else quarantined).append(record)
 
         assert_single_source_version(family.name, source_versions)
         assert_single_carried_version(family.name, carried_versions, target)
         assert_lossless_accounting(source_ids, accounted, identity_field)
 
-        hoisted_boundary = {
-            field: boundary_seen[field] for field in BOUNDARY_CONSTANT_FIELDS if field in boundary_seen
-        }
-        for field, value in hoisted_boundary.items():
-            if value != CANONICAL_BOUNDARY[field]:
+        # Exact per-family coverage: every one of the four safety constants is
+        # declared present-on-every-row or explicitly absent from the family. A
+        # partially present constant is a migration defect, not a silent subset.
+        row_total = len(source_ids)
+        hoisted_boundary: dict[str, Any] = {}
+        for field in BOUNDARY_CONSTANT_FIELDS:
+            present = boundary_present.get(field, 0)
+            if present == 0:
+                hoisted_boundary[field] = {
+                    "coverage": "absent_from_family",
+                    "rows_present": 0,
+                    "rows_total": row_total,
+                    "value": None,
+                }
+                continue
+            if present != row_total:
+                raise PromotionError(
+                    "boundary constant %s is present on only %d of %d %s rows"
+                    % (field, present, row_total, family.name)
+                )
+            if boundary_seen[field] != CANONICAL_BOUNDARY[field]:
                 raise PromotionError(
                     "manifest-level boundary constant %s for %s is not canonical" % (field, family.name)
                 )
+            hoisted_boundary[field] = {
+                "coverage": "all_rows",
+                "rows_present": present,
+                "rows_total": row_total,
+                "value": boundary_seen[field],
+            }
 
         current = current_release["tables"][family.name]
         tables[family.name] = {
@@ -453,6 +539,10 @@ def promote(*, carried_sink: dict[str, Any] | None = None) -> dict[str, Any]:
             "full_output_policy": "regenerable; write with --emit-carried into gitignored out/ (sample + generator rule)",
             "generator": TOOL_PATH,
         },
+        "ledgers": {
+            name: ledger_release_entry(name, rows)
+            for name, rows in (("flagged", flagged), ("quarantined", quarantined))
+        },
         "determinism": {"stable_input_order": True, "stable_json_keys": True, "timestamps_omitted": True},
         "immutability": {
             "committed_sources_byte_untouched": True,
@@ -483,16 +573,54 @@ def ledger_bytes(rows: list[dict[str, Any]]) -> bytes:
     return b"".join(canonical_line(row) for row in rows)
 
 
-def ledger_meta(rows: list[dict[str, Any]], disposition: str, serialized: bytes) -> dict[str, Any]:
+def ledger_release_entry(disposition: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Canonical custody record: full-ledger digest plus the bounded sample digest."""
+
+    sample = deterministic_sample(rows)
     return {
+        "committed_sample_path": f"qamus/indexes/largelexicon/target-schema/{disposition}-identities.sample.jsonl",
+        "defect_family_counts": dict(
+            sorted(Counter(name for row in rows for name in row["defect_families"]).items())
+        ),
         "disposition": disposition,
         "family_counts": dict(sorted(Counter(row["family"] for row in rows).items())),
-        "generator": TOOL_PATH,
+        "full_output_path": f"out/largelexicon-target-schema/{disposition}-identities.jsonl",
+        "full_output_policy": (
+            "large regenerable output; the full ledger is written under gitignored out/ by "
+            "--write or --emit-carried, and is bound here by canonical digest"
+        ),
         "reason_counts": dict(sorted(Counter(reason for row in rows for reason in row["reasons"]).items())),
         "row_count": len(rows),
         "row_schema": LEDGER_ROW_SCHEMA,
+        "sample_rule": f"first {LEDGER_SAMPLE_PER_FAMILY} records of each family in canonical order",
+        "sample_row_count": len(sample),
+        "sample_sha256": hashlib.sha256(ledger_bytes(sample)).hexdigest(),
+        "sha256": hashlib.sha256(ledger_bytes(rows)).hexdigest(),
+        "sha256_scope": "canonical compact JSONL bytes of the complete ledger in family/manifest order",
+    }
+
+
+def ledger_meta(rows: list[dict[str, Any]], disposition: str, serialized: bytes) -> dict[str, Any]:
+    """Pretty sidecar for the COMMITTED bounded sample, hash-bound to the full ledger."""
+
+    sample = deterministic_sample(rows)
+    sample_bytes = ledger_bytes(sample)
+    return {
+        "disposition": disposition,
+        "full_ledger_row_count": len(rows),
+        "full_ledger_sha256": hashlib.sha256(serialized).hexdigest(),
+        "full_output_path": f"out/largelexicon-target-schema/{disposition}-identities.jsonl",
+        "generator": TOOL_PATH,
+        "note": (
+            "bounded committed sample; the complete ledger is a large regenerable output kept under "
+            "gitignored out/ and bound by full_ledger_sha256"
+        ),
+        "row_count": len(sample),
+        "row_schema": LEDGER_ROW_SCHEMA,
+        "sample_family_counts": dict(sorted(Counter(row["family"] for row in sample).items())),
+        "sample_rule": f"first {LEDGER_SAMPLE_PER_FAMILY} records of each family in canonical order",
         "schema": LEDGER_META_SCHEMA,
-        "sha256": hashlib.sha256(serialized).hexdigest(),
+        "sha256": hashlib.sha256(sample_bytes).hexdigest(),
     }
 
 
@@ -509,28 +637,43 @@ def sample_meta(samples: list[dict[str, Any]], serialized: bytes) -> dict[str, A
 
 
 def rendered_artifacts(result: dict[str, Any]) -> dict[str, bytes]:
-    flagged_bytes = ledger_bytes(result["flagged"])
-    quarantined_bytes = ledger_bytes(result["quarantined"])
-    sample_bytes = ledger_bytes(result["samples"])
-    return {
-        RELEASE_NAME: review_json(result["release"]).encode("utf-8"),
-        "flagged-identities.jsonl": flagged_bytes,
-        "flagged-identities.meta.json": review_json(
-            ledger_meta(result["flagged"], "flagged", flagged_bytes)
-        ).encode("utf-8"),
-        "quarantined-identities.jsonl": quarantined_bytes,
-        "quarantined-identities.meta.json": review_json(
-            ledger_meta(result["quarantined"], "quarantined", quarantined_bytes)
-        ).encode("utf-8"),
-        "carried-rows.sample.jsonl": sample_bytes,
-        "carried-rows.sample.meta.json": review_json(sample_meta(result["samples"], sample_bytes)).encode("utf-8"),
-    }
+    """Only bounded, reviewable artifacts are tracked. Full ledgers go to out/."""
+
+    artifacts: dict[str, bytes] = {RELEASE_NAME: review_json(result["release"]).encode("utf-8")}
+    for disposition in ("flagged", "quarantined"):
+        rows = result[disposition]
+        full_bytes = ledger_bytes(rows)
+        sample_bytes = ledger_bytes(deterministic_sample(rows))
+        artifacts[f"{disposition}-identities.sample.jsonl"] = sample_bytes
+        artifacts[f"{disposition}-identities.sample.meta.json"] = review_json(
+            ledger_meta(rows, disposition, full_bytes)
+        ).encode("utf-8")
+    carried_sample_bytes = ledger_bytes(result["samples"])
+    artifacts["carried-rows.sample.jsonl"] = carried_sample_bytes
+    artifacts["carried-rows.sample.meta.json"] = review_json(
+        sample_meta(result["samples"], carried_sample_bytes)
+    ).encode("utf-8")
+    return artifacts
 
 
 def write_artifacts(target_dir: Path, artifacts: dict[str, bytes]) -> None:
     target_dir.mkdir(parents=True, exist_ok=True)
     for name, payload in artifacts.items():
         (target_dir / name).write_bytes(payload)
+
+
+def emit_ledgers(directory: Path, result: dict[str, Any]) -> dict[str, str]:
+    """Write the FULL ledgers under gitignored out/ and return their digests."""
+
+    if not directory.resolve().is_relative_to((ROOT / "out").resolve()):
+        raise PromotionError("full ledgers may only be written under the gitignored out/ tree")
+    directory.mkdir(parents=True, exist_ok=True)
+    written: dict[str, str] = {}
+    for disposition in ("flagged", "quarantined"):
+        payload = ledger_bytes(result[disposition])
+        (directory / f"{disposition}-identities.jsonl").write_bytes(payload)
+        written[disposition] = hashlib.sha256(payload).hexdigest()
+    return written
 
 
 def emit_carried(directory: Path, carried: dict[str, list[dict[str, Any]]]) -> dict[str, str]:
@@ -583,11 +726,25 @@ def release_blockers(release: dict[str, Any], *, snapshot: dict[str, str] | None
         if validation.get("pass_rows") != item.get("carried_row_count"):
             blockers.append(f"{family.name}: pass_rows does not equal the carried row count")
         boundary = (item.get("provenance") or {}).get("boundary_constants") or {}
-        if not boundary:
-            blockers.append(f"{family.name}: manifest-level boundary provenance is missing")
-        for field, value in boundary.items():
-            if field not in CANONICAL_BOUNDARY or value != CANONICAL_BOUNDARY[field]:
-                blockers.append(f"{family.name}: hoisted boundary constant {field} is not canonical")
+        if set(boundary) != set(CANONICAL_BOUNDARY):
+            blockers.append(
+                f"{family.name}: boundary provenance must declare all four safety constants explicitly"
+            )
+        for field, entry in sorted(boundary.items()):
+            if field not in CANONICAL_BOUNDARY or not isinstance(entry, dict):
+                blockers.append(f"{family.name}: boundary constant {field} is not a declared coverage record")
+                continue
+            coverage = entry.get("coverage")
+            if coverage == "absent_from_family":
+                if entry.get("rows_present") != 0 or entry.get("value") is not None:
+                    blockers.append(f"{family.name}: boundary constant {field} claims absence inconsistently")
+            elif coverage == "all_rows":
+                if entry.get("value") != CANONICAL_BOUNDARY[field]:
+                    blockers.append(f"{family.name}: hoisted boundary constant {field} is not canonical")
+                if entry.get("rows_present") != entry.get("rows_total") or not entry.get("rows_total"):
+                    blockers.append(f"{family.name}: boundary constant {field} is only partially covered")
+            else:
+                blockers.append(f"{family.name}: boundary constant {field} has an unknown coverage {coverage!r}")
     released_sources = (release.get("baseline") or {}).get("source_sha256") or {}
     for path, digest in sorted(released_sources.items()):
         if current.get(path) != digest:
@@ -740,7 +897,12 @@ def run_self_test() -> int:
     healthy_tables = {
         name: {
             "carried_row_count": 3,
-            "provenance": {"boundary_constants": dict(CANONICAL_BOUNDARY)},
+            "provenance": {
+                "boundary_constants": {
+                    field: {"coverage": "all_rows", "rows_present": 3, "rows_total": 3, "value": value}
+                    for field, value in CANONICAL_BOUNDARY.items()
+                }
+            },
             "target_row_schema": target_row_schema(
                 next(item for item in validator.FAMILIES if item.name == name)
             ),
@@ -777,7 +939,7 @@ def run_self_test() -> int:
     assertions[0] += 1
 
     weakened = json.loads(json.dumps(healthy))
-    weakened["tables"][fake_family_names[0]]["provenance"]["boundary_constants"]["live_mutation_allowed"] = True
+    weakened["tables"][fake_family_names[0]]["provenance"]["boundary_constants"]["live_mutation_allowed"]["value"] = True
     assert any("is not canonical" in item for item in release_blockers(weakened, snapshot=healthy_snapshot))
     assertions[0] += 1
 
@@ -795,6 +957,98 @@ def run_self_test() -> int:
     assertions[0] += 1
 
     _expect_error(lambda: assert_release_usable(red, snapshot=healthy_snapshot), "validation-red", assertions)
+
+    # --- ledger records must bind field-for-field to the recomputation ---
+    truth = [
+        {
+            "defect_families": ["risk_flags"],
+            "disposition": "quarantined",
+            "family": "lemma-source",
+            "identity": "aaaaaaaaaaaa",
+            "identity_field": "entry_id",
+            "provenance_variant_id": "pv-none",
+            "reasons": ["semantic review required: risk_flags"],
+            "schema": LEDGER_ROW_SCHEMA,
+            "source_locator": "fusha/lexicon/largelexicon/lemma-source.full.jsonl:7",
+            "source_row_sha256": "1" * 64,
+        },
+        {
+            "defect_families": ["additional_property"],
+            "disposition": "flagged",
+            "family": "qword-crosswalk",
+            "identity": "llx-crosswalk-row-b",
+            "identity_field": "row_id",
+            "provenance_variant_id": "pv-abc",
+            "reasons": ["structural migration blocker: additional_property"],
+            "schema": LEDGER_ROW_SCHEMA,
+            "source_locator": "qamus/indexes/largelexicon/qword-crosswalk/x.jsonl:3",
+            "source_row_sha256": "2" * 64,
+        },
+    ]
+    expected_map = {(row["family"], row["identity"]): row for row in truth}
+    assert bind_ledger_records(copy.deepcopy(truth), expected_map, label="ledger") == []
+    assertions[0] += 1
+
+    tampers = (
+        ("identity substitution", 0, "identity", "bbbbbbbbbbbb", "not a recomputed non-carried identity"),
+        ("source-hash tamper", 0, "source_row_sha256", "9" * 64, "field 'source_row_sha256' does not match"),
+        ("reason tamper", 0, "reasons", ["semantic review required: nothing"], "field 'reasons' does not match"),
+        ("provenance tamper", 1, "provenance_variant_id", "pv-zzz", "field 'provenance_variant_id' does not match"),
+        ("disposition tamper", 1, "disposition", "carried", "field 'disposition' does not match"),
+        ("defect tamper", 1, "defect_families", ["risk_flags"], "field 'defect_families' does not match"),
+        ("locator tamper", 0, "source_locator", "elsewhere:1", "field 'source_locator' does not match"),
+    )
+    for name, index, field, value, expected_message in tampers:
+        rows = copy.deepcopy(truth)
+        rows[index][field] = value
+        problems = bind_ledger_records(rows, expected_map, label="ledger")
+        assert any(expected_message in problem for problem in problems), (name, problems)
+        assertions[0] += 1
+
+    missing = bind_ledger_records(copy.deepcopy(truth[:1]), expected_map, label="ledger")
+    assert missing == [], "bind reports per-record problems; absence is caught by count/digest binding"
+    extra = copy.deepcopy(truth) + [dict(truth[0], identity="cccccccccccc")]
+    assert any("extra or substituted" in problem for problem in bind_ledger_records(extra, expected_map, label="ledger"))
+    assertions[0] += 1
+    duplicated = copy.deepcopy(truth) + [copy.deepcopy(truth[0])]
+    assert any("duplicate ledger record" in problem for problem in bind_ledger_records(duplicated, expected_map, label="ledger"))
+    assertions[0] += 1
+    dropped_field = copy.deepcopy(truth)
+    dropped_field[0].pop("provenance_variant_id")
+    assert any("unexpected or missing fields" in problem for problem in bind_ledger_records(dropped_field, expected_map, label="ledger"))
+    assertions[0] += 1
+
+    # --- the bounded sample rule is deterministic and family-bounded ---
+    many = [dict(truth[0], identity=f"id{index:03d}") for index in range(12)]
+    sample = deterministic_sample(many)
+    assert len(sample) == LEDGER_SAMPLE_PER_FAMILY
+    assert sample == deterministic_sample(many)
+    assert [row["identity"] for row in sample] == [f"id{index:03d}" for index in range(LEDGER_SAMPLE_PER_FAMILY)]
+    assertions[0] += 1
+
+    # --- full ledgers may never be written into a tracked path ---
+    _expect_error(
+        lambda: emit_ledgers(ROOT / "qamus" / "indexes", {"flagged": [], "quarantined": []}),
+        "only be written under the gitignored out/ tree",
+        assertions,
+    )
+
+    # --- boundary coverage must be exact per family ---
+    partial = json.loads(json.dumps(healthy))
+    partial["tables"][fake_family_names[0]]["provenance"]["boundary_constants"]["source"] = {
+        "coverage": "all_rows",
+        "rows_present": 2,
+        "rows_total": 5,
+        "value": CANONICAL_BOUNDARY["source"],
+    }
+    assert any("partially covered" in item for item in release_blockers(partial, snapshot=healthy_snapshot))
+    assertions[0] += 1
+    incomplete = json.loads(json.dumps(healthy))
+    incomplete["tables"][fake_family_names[0]]["provenance"]["boundary_constants"].pop("source")
+    assert any(
+        "declare all four safety constants" in item for item in release_blockers(incomplete, snapshot=healthy_snapshot)
+    )
+    assertions[0] += 1
 
     print(
         review_json(
@@ -827,6 +1081,7 @@ def main(argv: Iterable[str] | None = None) -> int:
 
     if args.write:
         write_artifacts(args.target_dir, artifacts)
+        emit_ledgers(DEFAULT_CARRIED_DIR, result)
     if args.check:
         drift = [
             name
