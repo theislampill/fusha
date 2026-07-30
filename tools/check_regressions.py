@@ -3446,6 +3446,172 @@ try:
     check("A1 eval coverage strict for sarf (no dark sarf bank; every sarf bank dispositioned)",
           _a1d.returncode == 0)
 
+    # --- Burst A2: the naḥw rule consumers and eval banks are gated the same way — existence is not evidence,
+    #     so every consumer self-test, the behavioural mutation suite and the whole eval runner are EXECUTED,
+    #     and the runner's machine-readable result is asserted against the measured counts. A no-op consumer,
+    #     a growing quarantine, malformed/trailing JSON, a weakened gate or a false ownership claim all fail
+    #     here. Nothing below promotes a candidate rule, certifies a fact, or materialises a public surface. ---
+    for _art in ("tools/fusha_nahw_particle_rules.py", "tools/fusha_nahw_context_rules.py",
+                 "tools/fusha_nahw_gate_rules.py", "tools/run_nahw_evals.py",
+                 "tools/test_nahw_behavioural_gates.py"):
+        check("A2 artifact exists: %s" % _art, os.path.exists(os.path.join(ROOT, _art)))
+    for _mod, _marker, _what in (
+            ("fusha_nahw_particle_rules",
+             "PASS — particle/negation/state-transition consumer self-test",
+             "7 homograph discriminators; observation artifacts occurrence-bound; forbidden-collision table"),
+            ("fusha_nahw_context_rules",
+             "PASS — context/referent/preposition-pronoun consumer self-test",
+             "rivals preserved; quarantines enforced; closed referent classes; attachment by host POS"),
+            ("fusha_nahw_gate_rules",
+             "PASS — gate consumer self-test",
+             "iʿrāb tiers never auto_safe; SSOT reconciliation strengthens only")):
+        _a2 = run_text([sys.executable, os.path.join(ROOT, "tools", _mod + ".py"), "--self-test"])
+        check("A2 consumer self-test: %s (%s)" % (_mod, _what),
+              _a2.returncode == 0 and _marker in (_a2.stdout or ""))
+    _a2b = run_text([sys.executable, os.path.join(ROOT, "tools", "test_nahw_behavioural_gates.py")])
+    check("A2 behavioural gates (wrong conclusion, wrong/absent reason, absent governor, lost rival, unsafe "
+          "auto-resolution, two-vote conclusion+reason, occurrence replay, quarantine forgery, runner no-op)",
+          _a2b.returncode == 0 and "PASS — naḥw behavioural gates hold" in (_a2b.stdout or ""))
+    _a2c = run_text([sys.executable, os.path.join(ROOT, "tools", "run_nahw_evals.py")])
+    check("A2 naḥw eval runner all-bank mode (every non-quarantined row bound; ablation and mark-stripping "
+          "mutations run; quarantines carry typed packet authority)",
+          _a2c.returncode == 0 and "PASS —" in (_a2c.stdout or ""))
+
+    # The runner's --json mode must be exactly ONE parseable document (a trailing prose line is a defect), and
+    # the measured counts are asserted, not summarised: a neutered consumer collapses them to zero.
+    _a2j = run_text([sys.executable, os.path.join(ROOT, "tools", "run_nahw_evals.py"), "--json"])
+    try:
+        _a2p = json.loads(_a2j.stdout or "")
+    except Exception:
+        _a2p = None
+    # ROUND-7: `ok` missing or False with a rc-1 subprocess and an empty `errors` list used to PASS here.
+    # A successful result now requires ALL THREE: ok is exactly True, rc is exactly 0, errors is exactly [].
+    check("A2 eval runner --json is exactly one parseable JSON document AND a truly successful result "
+          "(ok is True, return code 0, errors == [])",
+          isinstance(_a2p, dict) and _a2p.get("ok") is True and _a2j.returncode == 0
+          and _a2p.get("errors") == [])
+    _a2s = (_a2p or {}).get("stats") or {}
+
+    def _a2stat(bank, key):
+        return ((_a2s.get(bank) or {}).get(key))
+
+    # measured BEHAVIOURAL counts (nonzero, exact); a no-op consumer drives every one of these to 0
+    check("A2 measured consumer decisions: state-machine identity 15 + ablations 13",
+          _a2stat("state-machine", "identity_compared") == 15 and _a2stat("state-machine", "ablated") == 13)
+    check("A2 measured consumer decisions: hover-context bound 8 + harakāt-stripping mutations 5",
+          _a2stat("hover-context", "bound") == 8 and _a2stat("hover-context", "mutated") == 5)
+    check("A2 measured consumer decisions: llx routed 3, public-boundary 6 leak + 4 clean, "
+          "particle-function homograph cross-checks 6",
+          _a2stat("llx-collision", "routed") == 3 and _a2stat("public-boundary", "leaks") == 6
+          and _a2stat("public-boundary", "clean") == 4
+          and _a2stat("function-polysemy", "pf_homograph_checked") == 6)
+    check("A2 six banks / 314 rows measured",
+          sum(v for s in _a2s.values() for k, v in s.items()
+              if (k == "cases" or k.endswith("_cases")) and isinstance(v, int)) == 314
+          and len(_a2s) == 6)
+    # EXACT quarantine totals: a quarantine that grows silently is a regression, not coverage
+    check("A2 quarantine totals exactly 9 state-machine + 12 hover-context (21 rows, excluded from closure)",
+          _a2stat("state-machine", "quarantined") == 9 and _a2stat("hover-context", "quarantined") == 12)
+    # honest dispositions: the two fixture-only banks and the two unowned axes must stay declared as such
+    check("A2 honest dispositions: wrong-reasoning + state-machine stay fixture-only; gloss_if_safe has no "
+          "production owner; key selection has no production authority",
+          _a2stat("wrong-reasoning", "classification") == "fixture_only"
+          and _a2stat("state-machine", "state_comparison") == "fixture_only"
+          and _a2stat("hover-context", "bank_gloss_if_safe_axis")
+          == "committed_binding_only_no_production_owner"
+          and _a2stat("hover-context", "key_selection") == "no_production_authority")
+
+    # ROUND-7: the invoked contract result must carry the EXACT A2 artifact set, row denominators,
+    # disposition map and consumer ownership — a runner that claims an unrelated bank, duplicates an item,
+    # renames a consumer or changes a disposition fails here.
+    try:
+        sys.path.insert(0, ROOT)
+        from tools import run_nahw_evals as _A2R
+        _a2res = _A2R.run_all(ROOT)
+        _a2banks = [b["bank"] for b in _a2res["banks"]]
+        _a2exp = _A2R.A2_ARTIFACT_OWNERSHIP
+        _a2ok = (_a2res.get("schema") == _A2R.NAHW_RUNNER_SCHEMA and _a2res.get("exit_code") == 0
+                 and not _a2res.get("failures")
+                 and len(_a2banks) == len(set(_a2banks)) == len(_a2exp)
+                 and set(_a2banks) == set(_a2exp)
+                 and all(b["disposition"] == _a2exp[b["bank"]]["disposition"] for b in _a2res["banks"])
+                 and all(b["behavioral_consumer"] == _a2exp[b["bank"]]["consumer"]
+                         for b in _a2res["banks"]))
+        check("A2 runner result carries the exact 7 A2 artifacts with unique items, the exact disposition map "
+              "and the exact consumer ownership", _a2ok)
+        _a2rows = {b["bank"]: b["rows"] for b in _a2res["banks"]}
+        check("A2 runner row denominators are the independently counted rows (314 across 7 artifacts)",
+              sum(_a2rows.values()) == 314
+              and _a2rows["nahw/evals/public-boundary-scanner-eval.jsonl"] == 10
+              and _a2rows["nahw/evals/hover-context-eval.json"] == 20
+              and _a2rows["nahw/evals/nahw-state-machine-eval.json"] == 24
+              and all(r == _A2R._bank_rows(ROOT, k) for k, r in _a2rows.items()))
+        # observed consumer calls are counted at the allow-listed callable, never copied from `checked`
+        _pb = next(b for b in _a2res["banks"] if b["bank"].endswith("public-boundary-scanner-eval.jsonl"))
+        check("A2 consumer calls are OBSERVED at the allow-listed callable (public-boundary: 10 real "
+              "LEAK_RE.search calls over 10 rows)",
+              (_pb["metrics"]["consumer_calls"] or {}).get("tools/leak_sot.py:LEAK_RE.search") == 10
+              and _pb["checked"] == 10)
+        check("A2 behavioural row credit is limited to the 2 fully consumed artifacts (13 rows); the "
+              "fixture-only, quarantined and unowned artifacts get none",
+              _a2res["behavioral_rows"] == 13 and _a2res["quarantined_rows"] == 21)
+    except Exception:
+        check("A2 runner contract-result assertions (error)", False)
+
+    # Every quarantined row must be authorised by a TYPED QUARANTINE-BINDING inside a real, NOT_DEPLOYED packet
+    # that names its bank, status and exact row id. Substring/prose authorisation is not accepted.
+    try:
+        sys.path.insert(0, ROOT)
+        from tools import run_nahw_evals as _A2RUN
+        _A2RUN._PACKET_BINDINGS.clear()
+        _a2q, _a2qerr = [], []
+        for _bank, _rel in (("state-machine", "nahw/evals/nahw-state-machine-eval.json"),
+                            ("hover-context", "nahw/evals/hover-context-eval.json")):
+            with io.open(os.path.join(ROOT, _rel), encoding="utf-8") as _fh:
+                for _row in (json.load(_fh).get("cases") or []):
+                    if not _row.get("contract_status"):
+                        continue
+                    _a2q.append((_bank, _row["id"]))
+                    if _row["contract_status"] not in _A2RUN.QUARANTINE_STATUSES:
+                        _a2qerr.append("%s:%s status" % (_bank, _row["id"]))
+                        continue
+                    _bind, _perr = _A2RUN.packet_quarantine_bindings(_row.get("packet") or "")
+                    _hit = _bind.get((_bank, _row["id"]))
+                    if _perr or _hit is None or _hit["status"] != _row["contract_status"] \
+                            or _hit["disposition"] not in _A2RUN.QUARANTINE_DISPOSITIONS:
+                        _a2qerr.append("%s:%s binding" % (_bank, _row["id"]))
+        check("A2 all 21 quarantined rows carry typed QUARANTINE-BINDING authority (bank + row id + status + "
+              "permitted disposition) in a NOT_DEPLOYED packet",
+              len(_a2q) == 21 and not _a2qerr)
+        _a2_expected_packets = {"TP-NAHW-A2-STATE-VOCAB", "TP-NAHW-A2-HOVER-KEY-SEAT",
+                                "TP-NAHW-A2-TYPED-STATE-CONSUMER", "TP-NAHW-A2-TYPED-WR-BANK",
+                                "TP-NAHW-A2-OBSERVATION-PRODUCER"}
+        _a2_on_disk = {f[:-len(".json")] for f in os.listdir(os.path.join(ROOT, "qamus", "task-packets"))
+                       if f.startswith("TP-NAHW-A2-") and f.endswith(".json")}
+        check("A2 packet set is EXACTLY the five named packets (no extra, no missing)",
+              _a2_on_disk == _a2_expected_packets)
+    except Exception:
+        check("A2 quarantine authority check (error)", False)
+
+    # The coverage reporter must take A2 execution from the INVOKED runner result, and must keep the
+    # fixture-only banks and the quarantined rows visibly uncovered.
+    try:
+        from tools import fusha_eval_coverage as _A2COV
+        _a2rep = _A2COV.report(ROOT)
+        _a2items = {i["bank"]: i for i in _a2rep["items"]}
+        _a2cov_ok = (
+            _a2items["nahw/evals/public-boundary-scanner-eval.jsonl"]["has_behavioral_runner"]
+            and _a2items["nahw/evals/largelexicon-function-collision-safety.jsonl"]["has_behavioral_runner"]
+            and not _a2items["nahw/evals/hover-context-eval.json"]["has_behavioral_runner"]
+            and not _a2items["nahw/evals/nahw-state-machine-eval.json"]["has_behavioral_runner"]
+            and not _a2items["nahw/evals/grammar-wrong-reasoning-cases.jsonl"]["has_behavioral_runner"]
+            and _a2items["nahw/evals/hover-context-eval.json"]["quarantined_rows"] == 12
+            and _a2items["nahw/evals/nahw-state-machine-eval.json"]["quarantined_rows"] == 9)
+        check("A2 eval coverage registers only INVOKED-runner behaviour (2 banks behavioural; the 2 fixture-only "
+              "banks and all 21 quarantined rows stay visibly uncovered)", _a2cov_ok)
+    except Exception:
+        check("A2 eval coverage integration (error)", False)
+
     # Packet totals are DERIVED from the committed inventory, never from a prose count: every packet file on disk
     # must parse, be self-named, and validate, and the A1 follow-on set must be exactly the set the sarf contract
     # points at. A packet added or deleted without updating the contract fails here.

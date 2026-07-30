@@ -1,0 +1,173 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "hover-context bank green",
+      "pass_condition": "exits 0 with no failure lines",
+      "run": "python tools/run_nahw_evals.py --bank hover-context"
+    },
+    {
+      "name": "behavioural gates still hold",
+      "pass_condition": "exits 0 with no failure lines",
+      "run": "python tools/test_nahw_behavioural_gates.py"
+    },
+    {
+      "name": "full harness green",
+      "pass_condition": "ends with ALL REGRESSION CHECKS PASS and no FAIL line",
+      "run": "python tools/check_regressions.py"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "setting any row's norm_key to a value matching no key function must FAIL tools/run_nahw_evals.py --bank hover-context",
+        "id": "CAN-ADV-FAKEKEY"
+      },
+      {
+        "expectation": "flipping either quarantined row to safe=true must FAIL the runner's gate-consistency check",
+        "id": "CAN-ADV-SAFEFLIP"
+      },
+      {
+        "expectation": "removing the packet reference from a contract_status row must FAIL the runner, so a quarantine can never become invisible",
+        "id": "CAN-ADV-DROPPACKET"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "man_bare_unsafe stays green throughout: surface 'من' collides with مَن/مِنْ/مَنَّ under norm and remains safe=false at never_auto_resolve",
+        "id": "CAN-POS-MAN-BARE"
+      },
+      {
+        "expectation": "the three key_fn=norm_strict rows (inna_strict_seat_safe, in_conditional_referent_free_safe, ilayna_not_root_layn_safe) keep matching norm_strict(surface) exactly",
+        "id": "CAN-POS-KEYFN"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "nahw/evals/hover-context-eval.json#cases, measured by tools/run_nahw_evals.py --bank hover-context --json (stats.hover-context.quarantined)",
+    "selection_rule": "rows in nahw/evals/hover-context-eval.json whose pending_reason is a key-collision reason (homograph_haraka | seat_collapsed) and whose same_key_surfaces share the declared key under no normalize_ar key function | QUARANTINE-BINDING bank=hover-context; status=pending_norm_seat_semantics; rows=an_vs_inna_norm_collapses_seat_unsafe,umm_vs_am_unsafe; property=key_collision_family; disposition=excuse_semantic_consumer",
+    "this_packet_size": 2,
+    "universe_size": 20
+  },
+  "commands": [
+    {
+      "expect": "no key function collides the declared families; norm of a hamza-initial token drops the seat",
+      "purpose": "Reproduce the defect: print every key function output for both quarantined rows",
+      "run": "python -c \"import sys,json,io;sys.stdout.reconfigure(encoding='utf-8');sys.path.insert(0,'.');from tools import normalize_ar as N;d=json.load(io.open('nahw/evals/hover-context-eval.json',encoding='utf-8'));print(json.dumps([{'id':c['id'],'norm':N.norm(c['surface']),'norm_strict':N.norm_strict(c['surface']),'bare':N.bare(c['surface']),'siblings':[[N.norm(s),N.norm_strict(s)] for s in c.get('same_key_surfaces') or []]} for c in d['cases'] if c.get('contract_status')=='pending_norm_seat_semantics'],ensure_ascii=True,indent=2))\""
+    },
+    {
+      "expect": "a counted consumer list; a cross-subsystem count means option B leaves this lane",
+      "purpose": "Measure the blast radius of any proposed normalize_ar change",
+      "run": "python -c \"import subprocess,sys;out=subprocess.run(['git','grep','-l','normalize_ar','--','tools'],capture_output=True,text=True).stdout;print(len([l for l in out.splitlines() if l.strip()]))\""
+    },
+    {
+      "expect": "exit 0; the quarantine count reflects the decision taken",
+      "purpose": "Re-run the bank after the decision is applied",
+      "run": "python tools/run_nahw_evals.py --bank hover-context"
+    },
+    {
+      "expect": "exit 0",
+      "purpose": "Confirm the wider lane is still green",
+      "run": "python tools/test_nahw_behavioural_gates.py"
+    }
+  ],
+  "defeaters": [
+    "Option A would require deleting a sibling surface that the row exists to warn about — the repair destroys the teaching point; escalate.",
+    "The measured consumer count for norm() shows the ṣarf or certifier lane depends on the current hamza deletion — option B is cross-subsystem and leaves this lane.",
+    "A re-armed row would become safe=true under some key function — the repair inverted the verdict; reject it."
+  ],
+  "definition_of_done": [
+    "both rows either re-armed with a real collision under a declared key_fn, or left quarantined with a filed, measured change request",
+    "qamus/reports/nahw-hover-key-seat-findings.md contains only measured key outputs and a counted consumer list",
+    "tools/run_nahw_evals.py --bank hover-context exits 0",
+    "no row's safe/gate verdict weakened"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "the only correct repair is a change to tools/normalize_ar.py hamza handling",
+      "the measured norm() consumer set spans the ṣarf, matching or certification lanes",
+      "either row's teaching point cannot be preserved under any declared key function"
+    ],
+    "route": "owner/architecture review for the normalize_ar contract; file the change request and leave both rows quarantined"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "Do not invent a sibling surface to manufacture a collision. If a row's teaching point cannot survive option A, leave it quarantined and escalate.",
+    "statement": "Every claim in the findings report must be produced by running tools/normalize_ar.py against the surfaces in the bank; no key behaviour may be asserted from memory or from documentation prose.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "the two seat rows either re-armed so the collision property holds under a declared key_fn, or left quarantined with the packet reference intact",
+      "path": "nahw/evals/hover-context-eval.json"
+    },
+    {
+      "description": "measured per-surface key outputs, the two resolution options, and a counted consumer list for any proposed normalize_ar change",
+      "path": "qamus/reports/nahw-hover-key-seat-findings.md"
+    },
+    {
+      "description": "GAP-N4 hover status reconciled to the measured result",
+      "path": "docs/subsystems/nahw-executable-map.md"
+    }
+  ],
+  "guards": [
+    "The METHOD (recompute the key, require a real collision, quarantine rather than guess) transfers to any surface-keyed bank; the specific readings of أَنْ/أَنَّ/إِنَّ/إِنْ and أُمّ/أَمْ/إِمَّا are linguistic conclusions that never transfer to another occurrence.",
+    "norm() is recall-only and may never certify a reading (provenance/source-boundaries.md §5); a repair that makes a hover SAFER is acceptable, one that makes it safe is not.",
+    "Both rows must remain safe=false at never_auto_resolve regardless of the option chosen — the fail-closed verdict is already correct and is not what this packet is fixing.",
+    "Any proposed change to tools/normalize_ar.py leaves this packet as a written change request; it is never applied here."
+  ],
+  "inputs": {
+    "input_files": [
+      "nahw/evals/hover-context-eval.json",
+      "tools/normalize_ar.py",
+      "nahw/rules/particle-context-rules.json",
+      "provenance/source-boundaries.md",
+      "docs/subsystems/nahw-executable-map.md"
+    ],
+    "permitted_write_files": [
+      "nahw/evals/hover-context-eval.json",
+      "qamus/reports/nahw-hover-key-seat-findings.md",
+      "docs/subsystems/nahw-executable-map.md"
+    ],
+    "prohibited_files": [
+      "tools/normalize_ar.py",
+      "tools/check_regressions.py",
+      "nahw/rules/",
+      "qamus/data/",
+      "sarf/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "This packet edits an internal eval bank and writes a findings report. It certifies nothing, publishes no hover, and never touches the live site or the entry store; all outcomes stay candidate-mode inside this repository.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-NAHW-A2-HOVER-KEY-SEAT",
+  "provenance": {
+    "authored_by": "burst-a2-nahw lane (Opus 5 implementation worker)",
+    "cites": [
+      "docs/subsystems/nahw-executable-map.md",
+      "nahw/evals/grammar-decision-gates.json",
+      "qamus/skills/reason-key-registry.jsonl",
+      "qamus/schemas/dependency-candidate-lattice.schema.json",
+      "tools/run_nahw_evals.py",
+      "integrated A2 base commit 4d13fd2731d94f02be2f0e31b679eccf598606bd on branch codex/burst-a2-nahw-wiring"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "NAHW_EVAL_CONTRACT",
+    "out_of_scope": [
+      "changing tools/normalize_ar.py without a separate cross-subsystem impact review — norm() is consumed by the ṣarf lane, the matching lane and the certifier",
+      "changing any row's `safe`, `gate` or `pending_reason` (both rows are already never_auto_resolve, the correct fail-closed answer)",
+      "certifying any Qurʾānic gloss"
+    ],
+    "summary": "tools/run_nahw_evals.py --bank hover-context recomputes every row's key and requires a collision-reason row to actually collide with at least one listed sibling. Two rows cannot: an_vs_inna_norm_collapses_seat_unsafe (surface 'ان', siblings أَنْ/أَنَّ/إِنَّ/إِنْ) and umm_vs_am_unsafe (surface 'ام', siblings أُمّ/أَمْ/إِمَّا). The cause is measurable, not editorial: tools/normalize_ar.py norm() maps أ/إ/ء to the EMPTY string, so norm('أَنْ')='ن' while norm('ان')='ان'; norm_strict keeps the seat so 'أن' != 'ان'; bare() likewise. No key function in the repo makes the declared families collide. Repairing this requires either changing norm()'s hamza handling (repo-wide blast radius, owned by no naḥw lane) or re-specifying the rows' surfaces — a choice the repository does not determine, so A2 quarantined both rows with contract_status=pending_norm_seat_semantics rather than guess.",
+    "tranche": "burst-a2-followon"
+  },
+  "title": "hover-context-eval: two seat-collapse rows list sibling surfaces that collide under no repository key function, because norm() deletes the hamza seat instead of folding it to alif",
+  "tools_required": [
+    "python3",
+    "python tools/run_nahw_evals.py --bank hover-context (the executable oracle for this packet)"
+  ]
+}

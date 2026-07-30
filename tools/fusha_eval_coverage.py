@@ -62,7 +62,14 @@ RUNNER_ENTRYPOINTS = (
      "callable": "run_all"},
     {"module": "tools/run_grammar_evals.py", "import": "tools.run_grammar_evals", "kind": "declared_bank_constant",
      "attr": "EVAL"},
+    # A2 (Burst A2 naḥw lane). Same architecture, its own result schema. Registered because the runner is
+    # INVOKED and its per-bank rows carry decided-row and observed-consumer-call counts; nothing here is
+    # inferred from a filename, a comment, a declared disposition or a failed run.
+    {"module": "tools/run_nahw_evals.py", "import": "tools.run_nahw_evals", "kind": "invoked_contract_runner",
+     "callable": "run_all", "result_schema": "qamus.nahw_eval_runner_contract.v1"},
 )
+# Entrypoints whose invoked result may establish BEHAVIOURAL coverage, each under its own result schema.
+BEHAVIORAL_ENTRYPOINTS = ("tools/run_sarf_evals.py", "tools/run_nahw_evals.py")
 # Object-form eval artifacts keep their rows under one of these array keys. A *.json under an eval dir that has
 # NEITHER key is configuration (a gate SSOT, a matrix), not a bank, and is surfaced separately rather than counted.
 ROW_KEYS = ("cases", "assertions")
@@ -171,7 +178,8 @@ def result_is_usable(rep, ep):
     missing = [k for k in RESULT_REQUIRED_KEYS if k not in rep]
     if missing:
         return False, "runner result is missing %s" % missing
-    if rep.get("schema") != RESULT_SCHEMA_ID:
+    expected_schema = ep.get("result_schema", RESULT_SCHEMA_ID)
+    if rep.get("schema") != expected_schema:
         return False, "runner result schema is %r" % rep.get("schema")
     if rep.get("exit_code") != 0:
         return False, "runner exited %r" % rep.get("exit_code")
@@ -225,6 +233,10 @@ def runner_results(repo_root=_REPO, invoke=None):
                     "declared_disposition": item.get("disposition"),
                     "declared_consumer": primary,
                     "observed_consumer_calls": calls.get(primary, 0) if primary else 0,
+                    # A2: quarantined rows and unowned axes stay VISIBLE instead of being folded into coverage
+                    "quarantined_rows": (item.get("metrics") or {}).get("quarantined", 0),
+                    "unowned_axes": (item.get("metrics") or {}).get("unowned_axes") or {},
+                    "runner_bank": (item.get("metrics") or {}).get("runner_bank"),
                 }
         elif ep["kind"] == "declared_bank_constant":
             value = getattr(mod, ep["attr"], None)
@@ -237,13 +249,14 @@ def runner_results(repo_root=_REPO, invoke=None):
     return out
 
 
-def behavioral_coverage(result, expected_entrypoint="tools/run_sarf_evals.py"):
+def behavioral_coverage(result, expected_entrypoint=BEHAVIORAL_ENTRYPOINTS):
     """True only when a SUCCESSFUL invoked result proves the bank's rows were decided by its declared consumer."""
+    allowed = (expected_entrypoint,) if isinstance(expected_entrypoint, str) else tuple(expected_entrypoint)
     if not result or not result.get("invoked"):
         return False
     if not result.get("runner_ok"):
         return False
-    if result.get("entrypoint") != expected_entrypoint:
+    if result.get("entrypoint") not in allowed:
         return False
     if result.get("declared_disposition") != "implemented_and_consumed":
         return False
@@ -286,6 +299,8 @@ def report(repo_root=_REPO):
             "has_behavioral_runner": behavioral_coverage(results.get(rel)),
             "runner_status": (results.get(rel) or {}).get("runner_status"),
             "decided_rows": (results.get(rel) or {}).get("decided_rows", 0),
+            "quarantined_rows": (results.get(rel) or {}).get("quarantined_rows", 0),
+            "unowned_axes": (results.get(rel) or {}).get("unowned_axes") or {},
             "disposition": (results.get(rel) or {}).get("declared_disposition"),
             "empty": counts["rows"] == 0,
         })

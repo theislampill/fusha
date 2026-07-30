@@ -84,6 +84,133 @@ def _covered_by(path, prefixes):
     return False
 
 
+# ---------------------------------------------------------------------------
+# canonical JSON Schema validation (round-7)
+# ---------------------------------------------------------------------------
+# ROUND-7 defect: this validator checked TRUTHINESS (`if not pass_condition`) instead of the canonical schema,
+# so twelve `acceptance_tests[].pass_condition` values of "exit 0" passed while violating the schema's own
+# `minLength: 8`. Packets are now validated against qamus/schemas/task-packet.schema.json itself.
+#
+# The repo style is a hand-rolled validator with no third-party dependency, so this implements exactly the
+# Draft 2020-12 keyword subset the schema actually uses — measured, not assumed:
+#   $defs, $ref, additionalProperties, const, enum, items, minItems, minLength, minimum, oneOf, pattern,
+#   properties, required, type
+# An unknown keyword is reported rather than ignored, so the schema cannot silently outgrow the validator.
+SCHEMA_PATH = ROOT / "qamus" / "schemas" / "task-packet.schema.json"
+_SUPPORTED_KEYWORDS = frozenset({
+    "$schema", "$id", "$defs", "$ref", "title", "description", "examples", "default",
+    "type", "enum", "const", "pattern", "required", "properties", "additionalProperties",
+    "items", "minItems", "minLength", "minimum",
+    "oneOf",
+})
+_TYPE_CHECKS = {
+    "object": lambda v: isinstance(v, dict),
+    "array": lambda v: isinstance(v, list),
+    "string": lambda v: isinstance(v, str),
+    "boolean": lambda v: isinstance(v, bool),
+    "integer": lambda v: isinstance(v, int) and not isinstance(v, bool),
+    "number": lambda v: isinstance(v, (int, float)) and not isinstance(v, bool),
+    "null": lambda v: v is None,
+}
+
+
+def _resolve_ref(ref, root_schema):
+    if not ref.startswith("#/"):
+        raise ValueError("unsupported $ref %r (only local #/ pointers)" % ref)
+    node = root_schema
+    for part in ref[2:].split("/"):
+        part = part.replace("~1", "/").replace("~0", "~")
+        node = node[part]
+    return node
+
+
+def _schema_validate(value, schema, root_schema, path, errors):
+    if not isinstance(schema, dict):
+        return
+    unknown = set(schema) - _SUPPORTED_KEYWORDS
+    if unknown:
+        errors.append("%s: schema uses keyword(s) this validator does not implement: %s"
+                      % (path, sorted(unknown)))
+    if "$ref" in schema:
+        _schema_validate(value, _resolve_ref(schema["$ref"], root_schema), root_schema, path, errors)
+        return
+    if "type" in schema:
+        types = schema["type"] if isinstance(schema["type"], list) else [schema["type"]]
+        if not any(_TYPE_CHECKS.get(t, lambda _v: False)(value) for t in types):
+            errors.append("%s: expected type %s, got %s" % (path, schema["type"], type(value).__name__))
+            return
+    if "enum" in schema and value not in schema["enum"]:
+        errors.append("%s: %r is not one of %s" % (path, value, schema["enum"]))
+    if "const" in schema and value != schema["const"]:
+        errors.append("%s: %r != const %r" % (path, value, schema["const"]))
+    if isinstance(value, str):
+        if "minLength" in schema and len(value) < schema["minLength"]:
+            errors.append("%s: string length %d is below minLength %d (%r)"
+                          % (path, len(value), schema["minLength"], value))
+        if "pattern" in schema and not re.search(schema["pattern"], value):
+            errors.append("%s: %r does not match /%s/" % (path, value, schema["pattern"]))
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        if "minimum" in schema and value < schema["minimum"]:
+            errors.append("%s: %r is below minimum %r" % (path, value, schema["minimum"]))
+    if isinstance(value, list):
+        if "minItems" in schema and len(value) < schema["minItems"]:
+            errors.append("%s: %d item(s) is below minItems %d" % (path, len(value), schema["minItems"]))
+        if "items" in schema:
+            for i, item in enumerate(value):
+                _schema_validate(item, schema["items"], root_schema, "%s[%d]" % (path, i), errors)
+    if isinstance(value, dict):
+        props = schema.get("properties", {})
+        for req in schema.get("required", []):
+            if req not in value:
+                errors.append("%s: missing required property %r" % (path, req))
+        if schema.get("additionalProperties") is False:
+            for k in value:
+                if k not in props:
+                    errors.append("%s: additional property %r is not allowed" % (path, k))
+        for k, sub in props.items():
+            if k in value:
+                _schema_validate(value[k], sub, root_schema, "%s.%s" % (path, k), errors)
+    if "oneOf" in schema:
+        matched = 0
+        for sub in schema["oneOf"]:
+            probe = []
+            _schema_validate(value, sub, root_schema, path, probe)
+            if not probe:
+                matched += 1
+        if matched != 1:
+            errors.append("%s: matched %d oneOf branches (exactly 1 required)" % (path, matched))
+
+
+def canonical_schema_errors(packet):
+    """Validate a packet against the canonical repository schema. Empty list == valid."""
+    with open(str(SCHEMA_PATH), encoding="utf-8") as fh:
+        root_schema = json.load(fh)
+    errors = []
+    _schema_validate(packet, root_schema, root_schema, "$", errors)
+    return errors
+
+
+# Canonical validation is a HARD gate for the packets this lane owns (TP-NAHW-A2-*). For packets owned by
+# other lanes it is reported as a WARNING, because this lane may not edit them: enabling it globally would fail
+# the harness on a pre-existing violation in a file outside this ownership set. The warnings are printed so the
+# owning lane can act on them; they are never silently dropped.
+CANONICAL_HARD_PREFIX = "TP-NAHW-A2-"
+CANONICAL_WARNINGS = []
+
+
+def check_canonical_schema(packet, errors):
+    problems = canonical_schema_errors(packet)
+    if not problems:
+        return
+    pid = str(packet.get("packet_id") or "")
+    if pid.startswith(CANONICAL_HARD_PREFIX):
+        for e in problems:
+            errors.append("canonical_schema: %s" % e)
+    else:
+        for e in problems:
+            CANONICAL_WARNINGS.append("%s: %s" % (pid or "<unnamed packet>", e))
+
+
 def check_packet_shape(packet, errors):
     for key in REQUIRED_TOP:
         if key not in packet:
@@ -232,6 +359,7 @@ def check_non_deployment(packet, errors):
 
 
 CHECKS = (
+    check_canonical_schema,
     check_packet_shape,
     check_write_scope,
     check_server_paths,
@@ -418,6 +546,8 @@ def main(argv):
                 print("  - " + e)
         else:
             print("ok   " + str(path))
+    for _w in CANONICAL_WARNINGS:
+        print("warn canonical_schema (packet owned by another lane, not editable here): " + _w)
     print("TASK PACKET VALIDATION " + ("PASS" if ok else "FAIL"))
     return 0 if ok else 1
 

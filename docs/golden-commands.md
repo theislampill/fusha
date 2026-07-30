@@ -37,8 +37,23 @@ exit 0 with the stated terminal line.
 | 26 | Ṣarf eval banks (all-bank run) | `python tools/run_sarf_evals.py --all --strict` (one bank: `--bank <path>`; machine-readable: `--json`) |
 | 27 | Ṣarf eval runner gates | `python tools/run_sarf_evals.py --self-test` then `python -m unittest tools.test_run_sarf_evals` |
 | 28 | Eval-bank coverage report | `python tools/fusha_eval_coverage.py` (Ṣarf gate: `--strict-sarf`; all banks incl. Naḥw: `--strict`) |
+| 29 | Naḥw eval banks (all-bank run) | `python tools/run_nahw_evals.py` (one bank: `--bank <name>`; machine-readable, exactly one JSON document: `--json`) |
+| 30 | Naḥw behavioural + mutation gates | `python tools/test_nahw_behavioural_gates.py` |
+| 31 | Naḥw rule-consumer self-tests | `python tools/fusha_nahw_particle_rules.py --self-test` · `python tools/fusha_nahw_context_rules.py --self-test` · `python tools/fusha_nahw_gate_rules.py --self-test` |
+| 32 | Naḥw consumption inventory | `python tools/fusha_nahw_particle_rules.py --status` (context/gate: same flag) · gate divergences: `python tools/fusha_nahw_gate_rules.py --divergences` |
 
 ## Details per operation
+
+### 29–32 · Naḥw consumers and eval banks (Burst A2)
+
+`python tools/run_nahw_evals.py` replays 6 banks / 314 rows. It reports what a REAL consumer decided
+separately from what is only structurally checked: 52 consumer decisions, 21 rows quarantined
+(9 state-machine + 12 hover-context) under typed `QUARANTINE-BINDING` packet authority, and 2 banks whose
+semantic comparison is honestly fixture-only. `--json` emits exactly one JSON document and a matching exit
+code — a trailing prose line is a defect. Coverage is registered in `tools/fusha_eval_coverage.py` only from
+the INVOKED runner result, so the fixture-only banks and every quarantined row stay visibly uncovered, and
+the unowned axes (`gloss_if_safe`, production key selection) are reported, never counted.
+
 
 1. **Environment / repo verify** — inputs: checkout. Outputs: HEAD sha +
    harness verdict. Exit: `ALL REGRESSION CHECKS PASS`. Report: stdout.
