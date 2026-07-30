@@ -1,0 +1,179 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "resolver suite",
+      "pass_condition": "unittest OK including the pending-is-a-pass and mutation cases",
+      "run": "python -m unittest tools.test_fusha_key_resolver"
+    },
+    {
+      "name": "sarf eval runner all-bank mode",
+      "pass_condition": "exit 0 with SARF EVAL RUNNER PASS and decided_rows > 0 for both banks",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    },
+    {
+      "name": "sarf eval runner unit suite",
+      "pass_condition": "unittest OK",
+      "run": "python -m unittest tools.test_run_sarf_evals"
+    },
+    {
+      "name": "full regression harness",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "candidate/public boundary",
+      "pass_condition": "the report line reads 'candidate/projector/public boundary: verified'",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "with the key alone the resolver MUST return pending, never the commoner reading",
+        "id": "mulk-vs-malik",
+        "source": "sarf/evals/qamus-regression-eval.json"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "with the shadda present the resolver returns the Form II reading, not pending",
+        "id": "nazzala-form-II-cited",
+        "source": "sarf/evals/qamus-regression-eval.json"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "sarf/evals/sarf-state-machine-eval.json",
+    "selection_rule": "all 26 state-machine cases then all 11 regression assertions, in file order",
+    "this_packet_size": 37,
+    "universe_size": 37
+  },
+  "commands": [
+    {
+      "expect": "exit 0; decided_rows 0; disposition candidate_no_consumer",
+      "purpose": "show that both banks currently decide zero rows",
+      "run": "python tools/run_sarf_evals.py --bank sarf/evals/qamus-regression-eval.json --json"
+    },
+    {
+      "expect": "failure before implementation",
+      "purpose": "red-first: the resolver suite must fail before the resolver exists",
+      "run": "python -m unittest tools.test_fusha_key_resolver"
+    },
+    {
+      "expect": "SARF EVAL RUNNER PASS with decided_rows > 0",
+      "purpose": "re-run both banks after the adapters consume the resolver",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    }
+  ],
+  "defeaters": [
+    "A shadda dropped by the key separates Form II from Form I; resolving without it is a fabricated form.",
+    "A hamza seat dropped by a lenient key merges distinct lemmas; the strict key must be used.",
+    "A case-marking tanwin-alif is an ending, not a stem letter, and never a pronoun.",
+    "A ta marbuta may be part of the lemma rather than a suffix; treating it as a suffix mints a wrong lemma."
+  ],
+  "definition_of_done": [
+    "every one of the 37 rows is decided or explicitly pending with a typed reason",
+    "both bank rows carry measured pins and their uncovered-row count drops to zero",
+    "no abstention became weaker and the full harness is green"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "a case cannot be resolved or refuted without a scholar-level judgement",
+      "resolving a row would require weakening the pending contract",
+      "the two banks disagree about the same key"
+    ],
+    "route": "stop and hand the case back to the sarf lane owner with the measured evidence; do not decide the Arabic"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "When the key drops the deciding signal and no other evidence is present, the resolver MUST emit pending with the matching typed reason. Never emit the commoner reading.",
+    "statement": "Evidence is the repository normalizers, the decision-gate ladder and the banks' own declared signals. No external corpus text and no external gloss text may be consulted or copied.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Resolver: (surface, key, available evidence) -> resolved state/gloss or pending with a typed reason.",
+      "path": "tools/fusha_key_resolver.py"
+    },
+    {
+      "description": "Red-first suite with adversarial homograph cases and a mutation gate proving a wrong resolver fails.",
+      "path": "tools/test_fusha_key_resolver.py"
+    },
+    {
+      "description": "Both bank rows re-dispositioned once the resolver decides them, with measured pins.",
+      "path": "sarf/eval-runner-contract.json",
+      "schema": "qamus.sarf_eval_runner_contract.v1"
+    }
+  ],
+  "guards": [
+    "Only the METHOD transfers: this packet fixes procedure, guards and acceptance tests and never pre-writes a linguistic conclusion for the executor to copy.",
+    "Pending is a PASS state; emitting the commoner reading instead is the failure the banks exist to catch.",
+    "norm() never certifies: every key the resolver consumes is norm_strict-derived.",
+    "The resolver emits candidate decisions only; certification stays with the canonical certifier.",
+    "The four sarf@2.1-@2.4 increments stay CANDIDATE and may not be cited as released authority.",
+    "This packet authorizes NO certification, NO rule promotion and NO public output: it may extend the runner, its tests, the shared harness wiring and the golden-command documentation, while the eval banks, the rule store, the skill registries, the projector ledger and the certification store stay immutable.",
+    "Re-run the candidate/projector/public boundary check with the full run (a targeted --bank run renders it not_checked and never claims it verified)."
+  ],
+  "inputs": {
+    "input_files": [
+      "sarf/evals/sarf-state-machine-eval.json",
+      "sarf/evals/qamus-regression-eval.json",
+      "tools/normalize_ar.py",
+      "tools/validate_linguistic_decisions.py",
+      "sarf/eval-runner-contract.json",
+      "docs/subsystems/sarf-executable-map.md"
+    ],
+    "permitted_write_files": [
+      "docs/golden-commands.md",
+      "docs/subsystems/sarf-executable-map.md",
+      "qamus/schemas/sarf-eval-runner-contract.schema.json",
+      "sarf/eval-runner-contract.json",
+      "tools/check_regressions.py",
+      "tools/fusha_key_resolver.py",
+      "tools/run_sarf_evals.py",
+      "tools/test_fusha_key_resolver.py",
+      "tools/test_run_sarf_evals.py"
+    ],
+    "prohibited_files": [
+      "nahw/",
+      "qamus/certification/",
+      "qamus/data/",
+      "qamus/lattice/",
+      "qamus/skills/",
+      "sarf/evals/",
+      "sarf/rules/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "Nothing in this packet mutates a live surface, an entry store or a whitelist. All outputs are candidate-mode repository artifacts; certification stays with the canonical certifier.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-SARF-A1-KEY-RESOLVER-CONSUMER",
+  "provenance": {
+    "authored_by": "Burst A1 sarf eval/consumer lane",
+    "cites": [
+      "docs/subsystems/sarf-executable-map.md",
+      "sarf/eval-runner-contract.json"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "key_resolution",
+    "out_of_scope": [
+      "Do not author or alter any English gloss text; the resolver emits a decision, not new learner copy.",
+      "Do not certify anything: the resolver is candidate-mode and pending is a PASS state.",
+      "Do not touch nahw files, entry data, the certification store or projectors."
+    ],
+    "summary": "sarf/evals/sarf-state-machine-eval.json (26 cases) and sarf/evals/qamus-regression-eval.json (11 assertions) both encode the same missing consumer: something that takes an over-collapsed analysis key plus an observed surface and emits either the resolved state/gloss or an explicit pending with a typed reason. tools/run_sarf_evals.py proves the banks are internally coherent and that the repository key ladder really drops the deciding signal, but decides no row, so both are candidate_no_consumer with 37 uncovered rows. Build the resolver and make the rows decidable.",
+    "tranche": "sarf-a1-followon"
+  },
+  "title": "Build the norm-key resolver consumer for the two hidden-state / key-collapse banks",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/run_sarf_evals.py",
+    "tools/normalize_ar.py",
+    "tools/validate_linguistic_decisions.py"
+  ]
+}

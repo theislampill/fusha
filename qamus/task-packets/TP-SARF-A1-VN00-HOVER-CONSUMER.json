@@ -1,0 +1,174 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "projection consumer suite",
+      "pass_condition": "unittest OK including the mutation gate",
+      "run": "python -m unittest tools.test_validate_vn00_hover_projection"
+    },
+    {
+      "name": "sarf eval runner all-bank mode",
+      "pass_condition": "exit 0 with the terminal line SARF EVAL RUNNER PASS",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    },
+    {
+      "name": "sarf eval runner unit suite",
+      "pass_condition": "unittest OK (all mutation/negative gates still catch a broken consumer)",
+      "run": "python -m unittest tools.test_run_sarf_evals"
+    },
+    {
+      "name": "full regression harness",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "candidate/public boundary",
+      "pass_condition": "the report line reads 'candidate/projector/public boundary: verified'",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "a flat or draft public payload must FAIL this row, not pass it",
+        "id": "aggr_sarf_n0001_taksibuna_flat_finite",
+        "source": "sarf/evals/vn00-aggressive-false-closure.jsonl"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "the subject-pronoun suffix segment is decided from the projection, not assumed",
+        "id": "vn00_n0029_aqsamtum_suffix",
+        "source": "sarf/evals/vn00-public-visual-andon.jsonl"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "sarf/evals/vn00-public-visual-andon.jsonl",
+    "selection_rule": "both banks in full, in file order; andon bank first, aggressive bank second",
+    "this_packet_size": 84,
+    "universe_size": 84
+  },
+  "commands": [
+    {
+      "expect": "exit 0; disposition candidate_no_consumer",
+      "purpose": "measure the current structural-only coverage",
+      "run": "python tools/run_sarf_evals.py --bank sarf/evals/vn00-public-visual-andon.jsonl"
+    },
+    {
+      "expect": "exit 0",
+      "purpose": "validate the committed projection fixture once it exists",
+      "run": "python tools/validate_vn00_hover_projection.py --self-test"
+    },
+    {
+      "expect": "SARF EVAL RUNNER PASS",
+      "purpose": "re-run both banks",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    }
+  ],
+  "defeaters": [
+    "A generic colour class or a present hover is not a satisfied segment requirement.",
+    "A root that appears in the hover text is not an asserted root fact.",
+    "A single final consonant may be a radical, so a suffix segment must be evidenced, not assumed.",
+    "Two appearances of one canonical occurrence must consume one projection; a second fork is a defect."
+  ],
+  "definition_of_done": [
+    "every one of the 84 rows is decided or carries an exact blocker",
+    "both bank rows in the contract are updated with measured pins",
+    "no private, staging or live path entered the repository"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "a row expected segmentation cannot be produced from committed repository data",
+      "a projection would require a private or staging path",
+      "two appearances of one occurrence disagree"
+    ],
+    "route": "stop and write the unresolved rows with exact blockers to the packet report; hand back to the sarf lane owner"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If a row projection is not derivable from committed repository data, mark it unresolved with an exact blocker; never invent a segmentation to make the row pass.",
+    "statement": "Qurʾanic surfaces are reproduced byte-exactly and never altered; no external gloss, commentary or translation text may enter the fixture.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Committed, source-clean projection sample the consumer reads instead of a staging artifact.",
+      "path": "qamus/examples/vn00-hover-projection.sample.jsonl"
+    },
+    {
+      "description": "Consumer that decides expected_segments and reject_if against the projection sample.",
+      "path": "tools/validate_vn00_hover_projection.py"
+    },
+    {
+      "description": "Red-first suite with a mutation gate proving a wrong projection fails.",
+      "path": "tools/test_validate_vn00_hover_projection.py"
+    }
+  ],
+  "guards": [
+    "Only the METHOD transfers: this packet fixes procedure, guards and acceptance tests and never pre-writes a linguistic conclusion for the executor to copy.",
+    "A reject_if entry must actually be rejected: a row that only checks presence is not a behavioural gate.",
+    "Segment surfaces must concatenate byte-exactly to the display surface.",
+    "The four sarf@2.1-@2.4 increments stay CANDIDATE and may not be cited as released authority.",
+    "This packet authorizes NO certification, NO rule promotion and NO public output: it may extend the runner, its tests, the shared harness wiring and the golden-command documentation, while the eval banks, the rule store, the skill registries, the projector ledger and the certification store stay immutable.",
+    "Re-run the candidate/projector/public boundary check with the full run (a targeted --bank run renders it not_checked and never claims it verified)."
+  ],
+  "inputs": {
+    "input_files": [
+      "sarf/evals/vn00-public-visual-andon.jsonl",
+      "sarf/evals/vn00-aggressive-false-closure.jsonl",
+      "sarf/eval-runner-contract.json",
+      "docs/subsystems/sarf-executable-map.md"
+    ],
+    "permitted_write_files": [
+      "docs/golden-commands.md",
+      "docs/subsystems/sarf-executable-map.md",
+      "qamus/examples/vn00-hover-projection.sample.jsonl",
+      "qamus/schemas/sarf-eval-runner-contract.schema.json",
+      "sarf/eval-runner-contract.json",
+      "tools/check_regressions.py",
+      "tools/run_sarf_evals.py",
+      "tools/test_run_sarf_evals.py",
+      "tools/test_validate_vn00_hover_projection.py",
+      "tools/validate_vn00_hover_projection.py"
+    ],
+    "prohibited_files": [
+      "nahw/",
+      "qamus/certification/",
+      "qamus/data/",
+      "qamus/lattice/",
+      "qamus/skills/",
+      "sarf/evals/",
+      "sarf/rules/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "Nothing in this packet mutates a live surface, an entry store or a whitelist. All outputs are candidate-mode repository artifacts; certification stays with the canonical certifier.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-SARF-A1-VN00-HOVER-CONSUMER",
+  "provenance": {
+    "authored_by": "Burst A1 sarf eval/consumer lane",
+    "cites": [
+      "docs/subsystems/sarf-executable-map.md",
+      "sarf/eval-runner-contract.json"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "vn00_rich_hover",
+    "out_of_scope": [
+      "Do not add a live path, a staging path or any private artifact to the repository.",
+      "Do not author learner-facing gloss text.",
+      "Do not modify the renderer or any website artifact."
+    ],
+    "summary": "vn00-public-visual-andon.jsonl (64 rows) and vn00-aggressive-false-closure.jsonl (20 rows) declare the segments a rich hover must surface for a real Qurʾanic address. Their intended consumer is the rich-hover projection plane, which needs a staging artifact that is not in this repository, so both banks are candidate_no_consumer and only structurally gated. Define a committed, source-clean projection fixture and a consumer that decides these rows from it.",
+    "tranche": "sarf-a1-followon"
+  },
+  "title": "Give the 84 VN-00 hover rows a runnable in-repo consumer",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/run_sarf_evals.py"
+  ]
+}

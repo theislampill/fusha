@@ -34,6 +34,9 @@ exit 0 with the stated terminal line.
 | 23 | Public-boundary scan | `python tools/scan_public_boundary.py` |
 | 24 | Deploy-packet prep | **GAP / LOCKED — owner-gated.** No command exists in this repo by design; a deploy packet is proposed only in an owner window after strata-complete evidence + website-agent contract confirmation (see `docs/decision-ledger.md`) |
 | 25 | Task-packet validation | `python tools/validate_task_packets.py` |
+| 26 | Ṣarf eval banks (all-bank run) | `python tools/run_sarf_evals.py --all --strict` (one bank: `--bank <path>`; machine-readable: `--json`) |
+| 27 | Ṣarf eval runner gates | `python tools/run_sarf_evals.py --self-test` then `python -m unittest tools.test_run_sarf_evals` |
+| 28 | Eval-bank coverage report | `python tools/fusha_eval_coverage.py` (Ṣarf gate: `--strict-sarf`; all banks incl. Naḥw: `--strict`) |
 
 ## Details per operation
 
@@ -103,6 +106,30 @@ exit 0 with the stated terminal line.
     server-path leak (RM-09), canary classes, method-not-conclusion,
     non-deployment, self-containment. Mutation: none. Exit:
     `TASK PACKET VALIDATION PASS`; wired into `tools/check_regressions.py`.
+26. **Ṣarf eval banks** — runs every artifact under `sarf/evals/` through the
+    contract `sarf/eval-runner-contract.json`. Four banks (142 of 392 rows) are
+    decided by a production consumer named per bank in the contract and
+    call-counted by proxies the runner installs; the other 250 rows are
+    read, labelled `documentary` / `candidate_no_consumer` and packetized, and
+    are reported as uncovered. Object-form `cases[]` / `assertions[]` count as
+    rows. `--strict` is a **disposition-completeness** gate, not a coverage
+    claim. An unknown `--bank` fails closed. Mutation: none (read-only unless
+    `--report PATH`). Coverage is reported per property (24 covered, 4 uncovered) and the
+    candidate/projector/public boundary line reads `verified` only on a full
+    run — a targeted `--bank` run renders it `not_checked`. Exit:
+    `SARF EVAL RUNNER PASS`. Wired into `tools/check_regressions.py`.
+27. **Ṣarf eval runner gates** — `--self-test` runs the synthetic red/green plus
+    the consumer-mutation proofs; the unittest module adds the positive,
+    negative, adversarial and mutation gates that make
+    `implemented_and_consumed` a claim a broken consumer cannot survive. It also
+    asserts that `sarf@2.1`–`@2.4` remain CANDIDATE.
+28. **Eval-bank coverage** — read-only census of `nahw/evals/` + `sarf/evals/`
+    in both forms, taking execution only from an invoked registered entrypoint
+    and separating `declared_disposition` (what the contract says) from
+    `has_behavioral_runner` (what the invoked run proved). `--strict-sarf` is a
+    disposition-completeness gate and is green; plain `--strict` still exits 1
+    because the Naḥw banks remain runnerless — that gap belongs to the Naḥw
+    lane, not here. Neither flag asserts behavioural coverage.
 
 ## Rules
 

@@ -1,0 +1,183 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "rule consumer suite",
+      "pass_condition": "unittest OK including the decision-change proof",
+      "run": "python -m unittest tools.test_sarf_rule_consumers"
+    },
+    {
+      "name": "sarf eval runner all-bank mode",
+      "pass_condition": "exit 0 with the terminal line SARF EVAL RUNNER PASS",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    },
+    {
+      "name": "sarf eval runner unit suite",
+      "pass_condition": "unittest OK (all mutation/negative gates still catch a broken consumer)",
+      "run": "python -m unittest tools.test_run_sarf_evals"
+    },
+    {
+      "name": "full regression harness",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "candidate/public boundary",
+      "pass_condition": "the report line reads 'candidate/projector/public boundary: verified'",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "must NOT be silently re-labelled consumed while the checker still uses its own hard-coded enclitic list",
+        "id": "sarf/rules/suffix-pronoun-rules.json",
+        "source": "sarf/eval-runner-contract.json"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "a quarantined surface is routed to pending by the new consumer",
+        "id": "sarf/rules/homograph-quarantines.json",
+        "source": "sarf/rules/homograph-quarantines.json"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "sarf/eval-runner-contract.json",
+    "selection_rule": "every Store A row whose disposition is not implemented_and_consumed, in contract order: the 5 id_citation files, the 2 existence_gate files and the 5 files with no reader — exactly the set tools/run_sarf_evals.py reports as non-consumed",
+    "this_packet_size": 12,
+    "universe_size": 13
+  },
+  "commands": [
+    {
+      "expect": "exit 0; store_a.by_disposition shows implemented_and_consumed=1, fixture_only=7, candidate_no_consumer=5",
+      "purpose": "print the proven Store A dispositions and the non-consumed set",
+      "run": "python tools/run_sarf_evals.py --all --json"
+    },
+    {
+      "expect": "failure before implementation",
+      "purpose": "red-first: the consumer suite must fail before the consumers exist",
+      "run": "python -m unittest tools.test_sarf_rule_consumers"
+    },
+    {
+      "expect": "exit 0 with SARF EVAL RUNNER PASS and a bounded mutation prover bound to each newly declared consumer",
+      "purpose": "re-prove every disposition after wiring",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    }
+  ],
+  "defeaters": [
+    "Reading a file at import time is not consumption; the disposition proof greps for a real reference AND the suite must prove a decision changes.",
+    "A quarantine list that is loaded but never consulted still lets the wrong reading ship.",
+    "Duplicating the enclitic list in code rather than reading it from the rule file leaves the file dark."
+  ],
+  "definition_of_done": [
+    "each of the 12 non-consumed files is either consumed by a real decision, proven by a bounded mutation prover bound to its own declared consumer module, or re-labelled documentary with a reason",
+    "the Store A disposition proof in tools/run_sarf_evals.py still passes and its counts match this packet",
+    "the full harness is green"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "wiring a rule would require editing sarf/rules/ which is prohibited here",
+      "a rule cannot be applied without a grammatical decision",
+      "a rule file lacks the ids needed to cite it per rule"
+    ],
+    "route": "stop and raise an owner packet for the rule-file change; leave the disposition truthful in the meantime"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "Never invent a rule id or a field to make a file loadable. A file that cannot be wired without editing it is escalated, since sarf/rules/ is prohibited for writes here.",
+    "statement": "The rule files are the evidence; no external source is consulted and no rule text is rewritten.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Loaders and appliers that read the rule files and decide something real.",
+      "path": "tools/sarf_rule_consumers.py"
+    },
+    {
+      "description": "Red-first suite proving a broken rule file changes a decision.",
+      "path": "tools/test_sarf_rule_consumers.py"
+    },
+    {
+      "description": "Store A rows re-dispositioned against the new consumers.",
+      "path": "sarf/eval-runner-contract.json",
+      "schema": "qamus.sarf_eval_runner_contract.v1"
+    }
+  ],
+  "guards": [
+    "Only the METHOD transfers: this packet fixes procedure, guards and acceptance tests and never pre-writes a linguistic conclusion for the executor to copy.",
+    "A rule file that is merely loaded is still fixture_only; it is consumed only when it changes a decision.",
+    "suffix-pronoun-rules.json currently has no rule ids, so per-rule citation needs an owner decision first.",
+    "The four sarf@2.1-@2.4 increments stay CANDIDATE and may not be cited as released authority.",
+    "This packet authorizes NO certification, NO rule promotion and NO public output: it may extend the runner, its tests, the shared harness wiring and the golden-command documentation, while the eval banks, the rule store, the skill registries, the projector ledger and the certification store stay immutable.",
+    "Re-run the candidate/projector/public boundary check with the full run (a targeted --bank run renders it not_checked and never claims it verified)."
+  ],
+  "inputs": {
+    "input_files": [
+      "docs/subsystems/sarf-executable-map.md",
+      "sarf/eval-runner-contract.json",
+      "sarf/rules/hamza-gates.json",
+      "sarf/rules/homograph-quarantines.json",
+      "sarf/rules/masdar-participle-gates.json",
+      "sarf/rules/morphology-risk-rules.json",
+      "sarf/rules/plural-gender-rules.json",
+      "sarf/rules/pos-mismatch-rules.json",
+      "sarf/rules/root-decision-rules.json",
+      "sarf/rules/root-pattern-risk-rules.json",
+      "sarf/rules/suffix-pronoun-rules.json",
+      "sarf/rules/surface-state-transition-rules.json",
+      "sarf/rules/verb-measure-gates.json",
+      "sarf/rules/weak-root-gates.json"
+    ],
+    "permitted_write_files": [
+      "docs/golden-commands.md",
+      "docs/subsystems/sarf-executable-map.md",
+      "qamus/schemas/sarf-eval-runner-contract.schema.json",
+      "sarf/eval-runner-contract.json",
+      "tools/check_regressions.py",
+      "tools/run_sarf_evals.py",
+      "tools/sarf_rule_consumers.py",
+      "tools/test_run_sarf_evals.py",
+      "tools/test_sarf_rule_consumers.py"
+    ],
+    "prohibited_files": [
+      "nahw/",
+      "qamus/certification/",
+      "qamus/data/",
+      "qamus/lattice/",
+      "qamus/skills/",
+      "sarf/evals/",
+      "sarf/rules/"
+    ]
+  },
+  "model_class": "deterministic",
+  "non_deployment": {
+    "statement": "Nothing in this packet mutates a live surface, an entry store or a whitelist. All outputs are candidate-mode repository artifacts; certification stays with the canonical certifier.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-SARF-A1-STORE-A-WIRING",
+  "provenance": {
+    "authored_by": "Burst A1 sarf eval/consumer lane",
+    "cites": [
+      "docs/subsystems/sarf-executable-map.md",
+      "sarf/eval-runner-contract.json"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "store_a_rule_wiring",
+    "out_of_scope": [
+      "This is deterministic wiring: it must not change any Arabic meaning or make a grammatical decision.",
+      "sarf/rules/, sarf/evals/, the skill registries, the projector ledger and the certification store stay immutable; a rule file that cannot be wired without editing it is escalated, not edited.",
+      "Do not promote any candidate increment while wiring a rule."
+    ],
+    "summary": "tools/run_sarf_evals.py proves each sarf/rules/*.json disposition against the repository and binds every data_driven claim to a bounded mutation prover keyed by (rule file, declared consumer module). Machine-verified counts: 1 implemented_and_consumed (verb-measures.json, bound to tools/fusha_paradigm_generate.py) and 12 non-consumed rows — 5 id_citation (only stable ids are read while the operative condition is hard-coded in the module), 2 existence_gate (the harness only asserts the file exists and parses) and 5 with no Python reader at all. Give each of those 12 files a real consumer whose content mutation changes a production decision, or record it as deliberately documentary with a reason.",
+    "tranche": "sarf-a1-followon"
+  },
+  "title": "Wire or retire the twelve non-consumed Store A rule files",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/run_sarf_evals.py"
+  ]
+}

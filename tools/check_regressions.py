@@ -3424,6 +3424,60 @@ try:
     check("P1-5 eval-bank coverage reporter self-test (per-bank counts; runner-gap; report-only)", _q3.returncode == 0)
     _q3b = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_eval_coverage.py")])
     check("P1-5 eval-bank coverage real report (report-only, exit 0)", _q3b.returncode == 0)
+
+    # --- Burst A1: the sarf eval banks are no longer dark. Every sarf/evals artifact carries exactly one
+    #     disposition in sarf/eval-runner-contract.json, the behavioural ones run through their REAL consumers,
+    #     and object-form cases[]/assertions[] are row-counted like jsonl rows. ---
+    for _art in ("tools/run_sarf_evals.py", "tools/test_run_sarf_evals.py", "sarf/eval-runner-contract.json",
+                 "qamus/schemas/sarf-eval-runner-contract.schema.json"):
+        check("A1 artifact exists: %s" % _art, os.path.exists(os.path.join(ROOT, _art)))
+    _a1a = run_text([sys.executable, os.path.join(ROOT, "tools", "run_sarf_evals.py"), "--self-test"])
+    check("A1 sarf eval runner self-test (contract valid; mutation/negative gates catch a broken consumer; "
+          "@2.1-@2.4 not promoted)",
+          _a1a.returncode == 0 and "SARF EVAL RUNNER SELF-TEST PASS" in (_a1a.stdout or ""))
+    _a1b = run_text([sys.executable, os.path.join(ROOT, "tools", "run_sarf_evals.py"), "--all", "--strict"])
+    check("A1 sarf eval runner all-bank mode (every bank dispositioned; pinned consumer metrics hold; "
+          "every uncovered bank names an existing follow-on packet)",
+          _a1b.returncode == 0 and "SARF EVAL RUNNER PASS" in (_a1b.stdout or ""))
+    _a1c = run_text([sys.executable, "-m", "unittest", "tools.test_run_sarf_evals"], cwd=ROOT)
+    check("A1 sarf eval runner unit suite (positive + negative + adversarial + consumer-mutation gates)",
+          _a1c.returncode == 0)
+    _a1d = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_eval_coverage.py"), "--strict-sarf"])
+    check("A1 eval coverage strict for sarf (no dark sarf bank; every sarf bank dispositioned)",
+          _a1d.returncode == 0)
+
+    # Packet totals are DERIVED from the committed inventory, never from a prose count: every packet file on disk
+    # must parse, be self-named, and validate, and the A1 follow-on set must be exactly the set the sarf contract
+    # points at. A packet added or deleted without updating the contract fails here.
+    _tp_dir = os.path.join(ROOT, "qamus", "task-packets")
+    _tp_files = sorted(f for f in os.listdir(_tp_dir) if f.endswith(".json"))
+    _tp_ids, _tp_shape_ok, _tp_packets, _tp_other = set(), True, [], []
+    for _fn in _tp_files:
+        try:
+            with io.open(os.path.join(_tp_dir, _fn), encoding="utf-8") as _fh:
+                _pkt = json.load(_fh)
+        except Exception:
+            _tp_shape_ok = False
+            continue
+        # a *.json in this directory is a PACKET only if it declares the packet schema; anything else (a covered
+        # -locs data file, for example) is inventory, not a packet, and is counted separately rather than assumed.
+        if _pkt.get("schema") != "qamus.task_packet.v1":
+            _tp_other.append(_fn)
+            continue
+        _tp_packets.append(_fn)
+        if _pkt.get("packet_id") != _fn[:-len(".json")]:
+            _tp_shape_ok = False
+        _tp_ids.add(_pkt.get("packet_id"))
+    check("TASKPACKET inventory derived from disk (%d packet file(s) + %d non-packet artifact(s), each packet "
+          "self-named and parseable)" % (len(_tp_packets), len(_tp_other)),
+          _tp_shape_ok and len(_tp_ids) == len(_tp_packets) and len(_tp_packets) >= 5)
+    with io.open(os.path.join(ROOT, "sarf", "eval-runner-contract.json"), encoding="utf-8") as _fh:
+        _a1_contract = json.load(_fh)
+    _a1_referenced = {b.get("followup_packet") for b in _a1_contract["banks"] if b.get("followup_packet")}
+    _a1_referenced |= {r.get("followup_packet") for r in _a1_contract["store_a_rules"] if r.get("followup_packet")}
+    _a1_on_disk = {i for i in _tp_ids if str(i).startswith("TP-SARF-A1-")}
+    check("A1 follow-on packet inventory equals the set the sarf contract points at (%d packets)"
+          % len(_a1_on_disk), _a1_on_disk == _a1_referenced)
     _q4 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_tutor_event_replay.py"), "--self-test"])
     check("P1-6 tutor event-log replay validator self-test (event-sourced replay reconstructs state; tamper caught)", _q4.returncode == 0)
     _q5 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_index_integrity.py"), "--self-test"])

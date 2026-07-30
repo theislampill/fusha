@@ -1,0 +1,895 @@
+{
+  "banks": [
+    {
+      "adapter": "byte_exact_marks",
+      "behavioral_consumer": "tools/fusha_text_check.py:check_text",
+      "consumers": [
+        "tools/normalize_ar.py",
+        "tools/fusha_text_check.py"
+      ],
+      "disposition": "implemented_and_consumed",
+      "enforced_properties": [
+        "Qur'anic annotation marks (U+06D6..06ED) are stripped by bare() and norm_strict() so they are transparent to matching",
+        "no match key retains a harakah",
+        "every segmentation concatenates byte-exactly to the display surface (public bytes are never normalized)",
+        "cluster count equals the bare base-letter count, so a peel can never cut a combining mark off its base letter",
+        "check_text preserves raw_input byte-for-byte",
+        "every procedure_link resolves to a repo file"
+      ],
+      "followup_packet": null,
+      "form": "jsonl",
+      "id_field": "id",
+      "loc_fields": [],
+      "metric_floors": {},
+      "nonempty_list_fields": [],
+      "not_enforced_properties": [
+        "the deploy-side resplit/assemble pipeline named in the rows is out of this repo's runnable scope",
+        "mark transparency and cluster arithmetic are asserted structurally over the normalizer, not decided by the declared consumer, so they are reported as UNCOVERED properties rather than as coverage"
+      ],
+      "note": "Behavioural through tools/fusha_text_check.check_text, which is invoked for every row and must return byte-exact analysis tokens for the input surface. The normalizer properties (mark transparency, cluster arithmetic) are declared structural and stay uncovered.",
+      "path": "sarf/evals/combining-mark-byte-exact-eval.jsonl",
+      "pinned_metrics": {
+        "decided_rows": 2,
+        "rows": 2
+      },
+      "property_coverage": [
+        {
+          "applicable_rows": 2,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:check_text",
+          "property": "raw_input_preserved"
+        },
+        {
+          "applicable_rows": 2,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:check_text",
+          "note": "the checker's own analysis tokens must carry byte-exact segmentations of the input surface",
+          "property": "checker_segments_byte_exact"
+        },
+        {
+          "applicable_rows": 2,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:check_text",
+          "property": "live_writes_zero"
+        },
+        {
+          "applicable_rows": 2,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:segment_candidates",
+          "property": "segments_concat_byte_exact"
+        },
+        {
+          "applicable_rows": 2,
+          "covered": false,
+          "decided_by": "structural:tools/normalize_ar.py",
+          "note": "UNCOVERED: a normalizer property, asserted structurally; check_text does not decide it",
+          "property": "marks_transparent_to_matching"
+        },
+        {
+          "applicable_rows": 2,
+          "covered": false,
+          "decided_by": "structural:tools/normalize_ar.py",
+          "note": "UNCOVERED: a cluster-arithmetic assertion over the normalizer, not a consumer decision",
+          "property": "cluster_alignment"
+        }
+      ],
+      "required_fields": [
+        "id",
+        "surface",
+        "situation",
+        "wrong_action",
+        "correct",
+        "decision",
+        "reason"
+      ],
+      "row_key": null,
+      "secondary_consumers": [
+        {
+          "applies_to": "every row (byte-exactness of the kept segmentations)",
+          "callable": "tools/fusha_text_check.py:segment_candidates",
+          "expected_calls": 2
+        }
+      ]
+    },
+    {
+      "adapter": "corpus_classifier",
+      "behavioral_consumer": null,
+      "consumers": [
+        "tools/corpus_to_qamus_candidates.py",
+        "tools/normalize_ar.py"
+      ],
+      "disposition": "candidate_no_consumer",
+      "enforced_properties": [
+        "the REAL authoring differ classify() is invoked on every case and returns exactly one class from its closed vocabulary",
+        "classification is deterministic for a given token",
+        "a closed-set particle is never routed to a new content root (particle spine preserved)",
+        "a no-mint class never carries a minted content root for a particle case",
+        "the declared norm_key is reachable from the surface through the repository key ladder",
+        "expected_gate is inside the decision-gate ladder",
+        "measured agreement with the declared 6-class contract may not REGRESS below its floor",
+        "a new_surface verdict is morphologically licensed by a peeled proclitic, an enclitic or an inflectional ending; anything else is surface laundering and fails"
+      ],
+      "followup_packet": "TP-SARF-A1-CORPUS-DIFFER-CONTRACT",
+      "form": "object",
+      "id_field": "id",
+      "loc_fields": [],
+      "metric_floors": {
+        "contract_agreement": 4
+      },
+      "nonempty_list_fields": [],
+      "not_enforced_properties": [
+        "the bank's 6-class authoring contract itself: the live differ does not implement it, so no case is decided here and a green gate means the gap is truthfully packetized, never that the contract is implemented",
+        "expected_candidate shape (headword/root/senses) has no emitter to compare against"
+      ],
+      "note": "The intended consumer exists and is INVOKED on every case, but it implements a coarser 7-class heuristic and agrees with the declared 6-class contract on a minority of cases. decided_rows is 0: probing is not deciding. The measured agreement is a floored diagnostic, so a later repair that improves it passes; the disagreement histogram is reported, never pinned. Promotion to implemented_and_consumed requires semantic agreement first.",
+      "path": "sarf/evals/corpus-authoring-eval.json",
+      "pinned_metrics": {
+        "decided_rows": 0,
+        "probed_rows": 14,
+        "rows": 14
+      },
+      "property_coverage": [],
+      "required_fields": [
+        "id",
+        "token",
+        "norm_key",
+        "expected_class",
+        "expected_candidate",
+        "evidence_required",
+        "expected_gate"
+      ],
+      "row_key": "cases",
+      "secondary_consumers": []
+    },
+    {
+      "adapter": "clitic_split_guard",
+      "behavioral_consumer": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
+      "consumers": [
+        "tools/fusha_morphology_lattice.py",
+        "tools/fusha_text_check.py",
+        "tools/normalize_ar.py"
+      ],
+      "disposition": "implemented_and_consumed",
+      "enforced_properties": [
+        "the un-peeled whole-token reading survives for every surface (a look-alike clitic is never asserted)",
+        "every kept segmentation is byte-exact against the surface",
+        "no arbitrary-text morphology candidate is auto_safe and none carries a fabricated root",
+        "a tanwin-alif ending is never peeled as the pronoun na",
+        "a row whose decision rejects the split never produces an editable split suggestion",
+        "no arbitrary-text diagnostic gate is auto_safe"
+      ],
+      "followup_packet": null,
+      "form": "jsonl",
+      "id_field": "id",
+      "loc_fields": [],
+      "metric_floors": {},
+      "nonempty_list_fields": [],
+      "not_enforced_properties": [
+        "the per-row expected_visible_gloss wording (a certification-plane obligation, not a segmenter obligation)",
+        "the required host POS and relation labels, which need the source-addressed hover pipeline"
+      ],
+      "note": "Behavioural per row through the morphology lattice (130/130). The suggestion-quarantine property is CONDITIONAL: tools/fusha_text_check.check_text is invoked only for the 29 rows whose decision rejects a split, and that applicability is declared and count-checked separately rather than folded into the per-row claim.",
+      "path": "sarf/evals/false-clitic-split-eval.jsonl",
+      "pinned_metrics": {
+        "decided_rows": 130,
+        "reject_rows": 29,
+        "rejected_splits_quarantined": 29,
+        "rows": 130,
+        "tanwin_alef_rows": 5
+      },
+      "property_coverage": [
+        {
+          "applicable_rows": 130,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:segment_candidates",
+          "property": "whole_token_reading_preserved"
+        },
+        {
+          "applicable_rows": 130,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:segment_candidates",
+          "property": "segments_concat_byte_exact"
+        },
+        {
+          "applicable_rows": 130,
+          "covered": true,
+          "decided_by": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
+          "property": "never_auto_safe"
+        },
+        {
+          "applicable_rows": 130,
+          "covered": true,
+          "decided_by": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
+          "property": "no_fabricated_root"
+        },
+        {
+          "applicable_rows": 5,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:segment_candidates",
+          "note": "applies to the 5 tanwin-alif surfaces only",
+          "property": "tanwin_alef_not_pronoun"
+        },
+        {
+          "applicable_rows": 130,
+          "covered": false,
+          "decided_by": "structural:tools/normalize_ar.py",
+          "note": "a cross-check of the normalizer's detector against a structural twin, not a decision",
+          "property": "tanwin_alef_guard"
+        },
+        {
+          "applicable_rows": 29,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:check_text",
+          "note": "the 29 reject_ rows only",
+          "property": "rejected_split_quarantined"
+        }
+      ],
+      "required_fields": [
+        "id",
+        "surface",
+        "wrong_split",
+        "correct",
+        "decision",
+        "reason"
+      ],
+      "row_key": null,
+      "secondary_consumers": [
+        {
+          "applies_to": "the 29 rows whose decision starts with reject_ (the suggestion-quarantine property)",
+          "callable": "tools/fusha_text_check.py:check_text",
+          "expected_calls": 29
+        }
+      ]
+    },
+    {
+      "adapter": "collision_quarantine",
+      "behavioral_consumer": "tools/fusha_text_check.py:check_text",
+      "consumers": [
+        "tools/fusha_text_check.py",
+        "tools/fusha_suggest.py"
+      ],
+      "disposition": "implemented_and_consumed",
+      "enforced_properties": [
+        "no split suggestion escapes for a lexicon-collision surface",
+        "no gate is auto_safe",
+        "the competing reading is preserved (more than one segmentation is kept), so the forbidden reading is never forced and never the sole reading",
+        "the input surface is returned unaltered and live_writes is zero"
+      ],
+      "followup_packet": null,
+      "form": "jsonl",
+      "id_field": "id",
+      "loc_fields": [],
+      "metric_floors": {},
+      "nonempty_list_fields": [],
+      "not_enforced_properties": [
+        "ranking the whole-name candidate above the splitter artifact: ranking belongs to the LargeLexicon bridge lane, not to this runner"
+      ],
+      "note": "Behavioural: the checker's collision quarantine is exercised directly.",
+      "path": "sarf/evals/largelexicon-collision-safety.jsonl",
+      "pinned_metrics": {
+        "decided_rows": 3,
+        "rows": 3
+      },
+      "property_coverage": [
+        {
+          "applicable_rows": 3,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:check_text",
+          "property": "no_split_suggestion"
+        },
+        {
+          "applicable_rows": 3,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:check_text",
+          "property": "never_auto_safe"
+        },
+        {
+          "applicable_rows": 3,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:check_text",
+          "property": "raw_input_preserved"
+        },
+        {
+          "applicable_rows": 3,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:check_text",
+          "property": "live_writes_zero"
+        },
+        {
+          "applicable_rows": 3,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:check_text",
+          "property": "ambiguity_preserved"
+        }
+      ],
+      "required_fields": [
+        "id",
+        "surface",
+        "expected",
+        "forbidden"
+      ],
+      "row_key": null,
+      "secondary_consumers": []
+    },
+    {
+      "adapter": "lattice_ambiguity",
+      "behavioral_consumer": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
+      "consumers": [
+        "tools/fusha_morphology_lattice.py",
+        "tools/fusha_text_check.py"
+      ],
+      "disposition": "implemented_and_consumed",
+      "enforced_properties": [
+        "the lattice consumes the real segmentation and never rebuilds it",
+        "the candidate count meets the row's expected_min_candidates",
+        "keep_ambiguity rows retain at least two competing readings and all_unvoweled_kept stays true",
+        "root/lemma/pattern stay null when the row forbids fabrication",
+        "score and rank are both present, ranks are 1..n, and no boolean correct flag exists",
+        "a pending row produces no auto_safe candidate",
+        "every candidate evidence_class is inside the closed set"
+      ],
+      "followup_packet": "TP-SARF-A1-LATTICE-EVIDENCE-CLASS",
+      "form": "jsonl",
+      "id_field": "id",
+      "loc_fields": [],
+      "metric_floors": {
+        "evidence_class_agreement": 5
+      },
+      "nonempty_list_fields": [],
+      "not_enforced_properties": [
+        "evidence_class agreement between the row and the engine: NOT a claimed property of this bank. The engine classes most competing readings homograph_split where the bank declares voweled_confirmable or unvoweled_competing. The agreement is reported as a floored diagnostic (improvement allowed, regression not) and routed to TP-SARF-A1-LATTICE-EVIDENCE-CLASS; it is never counted as coverage."
+      ],
+      "note": "Behavioural: the skill's candidate-lattice procedure is executed against the engine that implements it.",
+      "path": "sarf/evals/morphology-candidate-lattice.jsonl",
+      "pinned_metrics": {
+        "decided_rows": 7,
+        "min_lattice_candidates": 2,
+        "rows": 7
+      },
+      "property_coverage": [
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
+          "property": "all_unvoweled_kept"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": false,
+          "decided_by": "structural:diagnostic",
+          "note": "UNCOVERED: the engine and the bank disagree on 2 of 7 rows. The per-row agreement is reported as a diagnostic and packetized to TP-SARF-A1-LATTICE-EVIDENCE-CLASS; its floor is a regression guard, never a released linguistic rule, and it is never counted as coverage.",
+          "property": "evidence_class_agreement"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
+          "property": "evidence_class_closed_set"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
+          "property": "expected_min_candidates"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
+          "property": "forbid_fabricated_root"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
+          "property": "keep_ambiguity"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
+          "property": "never_auto_safe"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
+          "property": "no_boolean_correct"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
+          "property": "ranks_1_to_n"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
+          "property": "score_present"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:segment_candidates",
+          "property": "segments_concat_byte_exact"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/fusha_text_check.py:segment_candidates",
+          "property": "whole_token_reading_preserved"
+        }
+      ],
+      "required_fields": [
+        "id",
+        "surface",
+        "expected_min_candidates",
+        "decision",
+        "evidence_class",
+        "reason"
+      ],
+      "row_key": null,
+      "secondary_consumers": [
+        {
+          "applies_to": "every row (the segmentation the lattice consumes)",
+          "callable": "tools/fusha_text_check.py:segment_candidates",
+          "expected_calls": 7
+        }
+      ]
+    },
+    {
+      "adapter": "structural",
+      "behavioral_consumer": null,
+      "consumers": [
+        "tools/fusha_text_check.py"
+      ],
+      "disposition": "candidate_no_consumer",
+      "enforced_properties": [
+        "every row carries the full required field set and a unique id",
+        "every qac_loc is a surah:ayah:word address",
+        "every surface survives the engine's byte-exactness contract"
+      ],
+      "followup_packet": "TP-SARF-A1-DERIVATIVE-CONSUMER",
+      "form": "jsonl",
+      "id_field": "id",
+      "loc_fields": [
+        "qac_loc"
+      ],
+      "metric_floors": {},
+      "nonempty_list_fields": [],
+      "not_enforced_properties": [
+        "the derivative_type and wazn assignments: no wazn/derivative classifier exists in this repo, so nothing decides these rows",
+        "the expected_decision routing (resolved_nominal / two_vote_required / token_only_review ...)"
+      ],
+      "note": "113 rows encoding an intended nominal-derivative classifier contract with no implementing consumer.",
+      "path": "sarf/evals/nominal-derivative-error-eval.jsonl",
+      "pinned_metrics": {
+        "decided_rows": 0,
+        "distinct_ids": 113,
+        "rows": 113,
+        "surfaces_byte_exact": 113
+      },
+      "property_coverage": [],
+      "required_fields": [
+        "id",
+        "surface",
+        "derivative_type",
+        "pattern",
+        "confusable_with",
+        "gloss_shape",
+        "expected_decision",
+        "why",
+        "madina_error_class"
+      ],
+      "row_key": null,
+      "secondary_consumers": []
+    },
+    {
+      "adapter": "key_collapse_pending",
+      "behavioral_consumer": null,
+      "consumers": [
+        "tools/normalize_ar.py"
+      ],
+      "disposition": "candidate_no_consumer",
+      "enforced_properties": [
+        "every analysis key is built from norm_strict and carries no harakah (norm() never certifies)",
+        "a key-only assertion genuinely collides: at least two of its surfaces land on one analysis key",
+        "a colliding key is never auto_safe, and a pending verdict is never below never_auto_resolve",
+        "a cited @vowelled / @form-aware assertion pins exactly one surface, is never pending, and never sits at auto_safe or never_auto_resolve",
+        "the diacritic a citation rests on is actually readable on the surface (shadda_on / haraka_on) and is dropped by the key",
+        "a cited surface collides with a key-only assertion, so the citation is what buys the gloss"
+      ],
+      "followup_packet": "TP-SARF-A1-KEY-RESOLVER-CONSUMER",
+      "form": "object",
+      "id_field": "id",
+      "loc_fields": [],
+      "metric_floors": {},
+      "nonempty_list_fields": [
+        "surfaces"
+      ],
+      "not_enforced_properties": [
+        "the row's actual verdict: no production consumer takes the key and emits correct_gloss_or_pending, so all 11 assertions are uncovered rows",
+        "the English gloss wording itself, which is an authored-content obligation certified elsewhere",
+        "the expected_gate is checked for vocabulary and ordering only; no decision record is produced and tools/validate_linguistic_decisions.py is not invoked on these rows"
+      ],
+      "note": "Downgraded after review: the adapter proves the key collision is real and that a citation rests on a readable diacritic, but no production consumer emits the correct gloss or the pending state for a key. The bank is a resolver contract with no resolver.",
+      "path": "sarf/evals/qamus-regression-eval.json",
+      "pinned_metrics": {
+        "cited_assertions": 5,
+        "colliding_key_assertions": 6,
+        "decided_rows": 0,
+        "key_relations": {
+          "exact": 13,
+          "ta_marbuta_suffix_illusion": 1,
+          "tanwin_case_fold": 1
+        },
+        "rows": 11
+      },
+      "property_coverage": [],
+      "required_fields": [
+        "id",
+        "key",
+        "surfaces",
+        "wrong_gloss",
+        "correct_gloss_or_pending",
+        "rule",
+        "expected_gate"
+      ],
+      "row_key": "assertions",
+      "secondary_consumers": []
+    },
+    {
+      "adapter": "hidden_state_evidence",
+      "behavioral_consumer": null,
+      "consumers": [
+        "tools/normalize_ar.py",
+        "tools/validate_linguistic_decisions.py"
+      ],
+      "disposition": "candidate_no_consumer",
+      "enforced_properties": [
+        "the declared over-collapsed key is reachable from the observed surface through a named relation in the repository key ladder",
+        "the declared key carries no harakah/shadda while the observed surface does, so the key really drops the deciding signal",
+        "expected_gate is inside the decision-gate ladder and auto_safe is never declared without an external corpus certifier",
+        "every evidence signal is inside the closed set, and a case citing a hamza seat really carries one",
+        "the correct hidden state POS is inside the closed set",
+        "no distractor state is identical to the correct hidden state and every distractor states why it loses"
+      ],
+      "followup_packet": "TP-SARF-A1-KEY-RESOLVER-CONSUMER",
+      "form": "object",
+      "id_field": "id",
+      "loc_fields": [],
+      "metric_floors": {},
+      "nonempty_list_fields": [
+        "evidence_required",
+        "distractor_states"
+      ],
+      "not_enforced_properties": [
+        "the hidden state itself: no production consumer resolves an observation to root/lemma/pos/form, so every one of the 26 cases is an uncovered row",
+        "the expected_gate routing is checked for vocabulary only; tools/validate_linguistic_decisions.py is not invoked on these rows and no decision record is produced from them",
+        "certifying a hidden state needs an external corpus certifier or a source, which this read-only runner never consults"
+      ],
+      "note": "Downgraded after review: the adapter proves the bank is internally coherent and that the repository key ladder really drops the deciding signal, but NOTHING decides a hidden state. No resolver exists that takes the observation and emits the root/lemma/pos/form or abstains, so no row is behaviourally covered.",
+      "path": "sarf/evals/sarf-state-machine-eval.json",
+      "pinned_metrics": {
+        "decided_rows": 0,
+        "key_relations": {
+          "exact": 26
+        },
+        "rows": 26
+      },
+      "property_coverage": [],
+      "required_fields": [
+        "id",
+        "observation",
+        "correct_hidden_state",
+        "distractor_states",
+        "evidence_required",
+        "expected_gate"
+      ],
+      "row_key": "cases",
+      "secondary_consumers": []
+    },
+    {
+      "adapter": "structural",
+      "behavioral_consumer": null,
+      "consumers": [
+        "tools/fusha_text_check.py"
+      ],
+      "disposition": "documentary",
+      "enforced_properties": [
+        "every row carries the full required field set and a unique id",
+        "every loc is a surah:ayah:word address",
+        "every procedure_link resolves to a repo file",
+        "every surface survives the engine's byte-exactness contract"
+      ],
+      "followup_packet": null,
+      "form": "jsonl",
+      "id_field": "id",
+      "loc_fields": [
+        "loc"
+      ],
+      "metric_floors": {},
+      "nonempty_list_fields": [
+        "procedure_links"
+      ],
+      "not_enforced_properties": [
+        "the surfacemap deploy mechanics themselves, which live outside this repo by design (this repo never touches a live surface)"
+      ],
+      "note": "Deploy-mechanics decision records: they fix what an operator must do when a display loc is absent from the canonical word-by-word map. There is no in-repo behaviour to consume, so only their shape and their procedure links are executable.",
+      "path": "sarf/evals/surfacemap-wbw-absent-eval.jsonl",
+      "pinned_metrics": {
+        "decided_rows": 0,
+        "distinct_ids": 2,
+        "rows": 2,
+        "surfaces_byte_exact": 2
+      },
+      "property_coverage": [],
+      "required_fields": [
+        "id",
+        "surface",
+        "loc",
+        "situation",
+        "wrong_action",
+        "correct",
+        "decision",
+        "reason"
+      ],
+      "row_key": null,
+      "secondary_consumers": []
+    },
+    {
+      "adapter": "structural",
+      "behavioral_consumer": null,
+      "consumers": [
+        "tools/fusha_text_check.py"
+      ],
+      "disposition": "candidate_no_consumer",
+      "enforced_properties": [
+        "every row carries the full required field set and a unique case_id",
+        "every loc is a surah:ayah:word address",
+        "expected_segments, reject_if and flywheel_targets are non-empty",
+        "every surface survives the engine's byte-exactness contract"
+      ],
+      "followup_packet": "TP-SARF-A1-VN00-HOVER-CONSUMER",
+      "form": "jsonl",
+      "id_field": "case_id",
+      "loc_fields": [
+        "loc"
+      ],
+      "metric_floors": {},
+      "nonempty_list_fields": [
+        "expected_segments",
+        "reject_if",
+        "flywheel_targets"
+      ],
+      "not_enforced_properties": [
+        "the expected_segments themselves: deciding them needs the rich-hover projection over staged tokens, which is not runnable from this repo"
+      ],
+      "note": "Intended consumer is the rich-hover projection plane; it needs a staging artifact that is not in the repo.",
+      "path": "sarf/evals/vn00-aggressive-false-closure.jsonl",
+      "pinned_metrics": {
+        "decided_rows": 0,
+        "distinct_ids": 20,
+        "rows": 20,
+        "surfaces_byte_exact": 20
+      },
+      "property_coverage": [],
+      "required_fields": [
+        "case_id",
+        "source_scope",
+        "loc",
+        "surface",
+        "aggressive_class",
+        "expected_segments",
+        "reject_if",
+        "flywheel_targets"
+      ],
+      "row_key": null,
+      "secondary_consumers": []
+    },
+    {
+      "adapter": "structural",
+      "behavioral_consumer": null,
+      "consumers": [
+        "tools/fusha_text_check.py"
+      ],
+      "disposition": "candidate_no_consumer",
+      "enforced_properties": [
+        "every row carries the full required field set and a unique case_id",
+        "every loc is a surah:ayah:word address",
+        "expected_segments is non-empty",
+        "every surface survives the engine's byte-exactness contract"
+      ],
+      "followup_packet": "TP-SARF-A1-VN00-HOVER-CONSUMER",
+      "form": "jsonl",
+      "id_field": "case_id",
+      "loc_fields": [
+        "loc"
+      ],
+      "metric_floors": {},
+      "nonempty_list_fields": [
+        "expected_segments"
+      ],
+      "not_enforced_properties": [
+        "the expected_segments and failure_family routing: deciding them needs the rich-hover projection over staged tokens, which is not runnable from this repo"
+      ],
+      "note": "Intended consumer is the rich-hover projection plane; it needs a staging artifact that is not in the repo.",
+      "path": "sarf/evals/vn00-public-visual-andon.jsonl",
+      "pinned_metrics": {
+        "decided_rows": 0,
+        "distinct_ids": 64,
+        "rows": 64,
+        "surfaces_byte_exact": 64
+      },
+      "property_coverage": [],
+      "required_fields": [
+        "case_id",
+        "expected_segments",
+        "failure_family",
+        "loc",
+        "surface"
+      ],
+      "row_key": null,
+      "secondary_consumers": []
+    }
+  ],
+  "candidate_boundary_surfaces": {
+    "expected_records_scanned_min": 1000,
+    "projector_registry": "qamus/lattice/registered-projectors.json",
+    "record_roots": [
+      "qamus/certification",
+      "qamus/lattice/registered-projectors.json",
+      "qamus/skills"
+    ]
+  },
+  "candidate_increments_not_promoted": {
+    "expected_projector_registrations_citing_candidates": 2,
+    "increments": [
+      "sarf@2.1",
+      "sarf@2.2",
+      "sarf@2.3",
+      "sarf@2.4"
+    ],
+    "projector_registry": "qamus/lattice/registered-projectors.json",
+    "registry_files": {
+      "sarf@2.1": "qamus/skills/rule-registry-increment-21.jsonl",
+      "sarf@2.2": "qamus/skills/rule-registry-increment-22.jsonl",
+      "sarf@2.3": "qamus/skills/rule-registry-increment-23.jsonl",
+      "sarf@2.4": "qamus/skills/rule-registry-increment-24.jsonl"
+    },
+    "statement": "The four increment blocks in sarf/SKILL.md stay CANDIDATE. The gate is not a prose check: tools/run_sarf_evals.py joins every increment's registry rows (status + candidate gate tier) to every projector registration citing those rule ids, and fails if a row leaves candidate status, if a projector describes a candidate rule as certified/released authority, if a citing registration is not a candidate projection, or if the projector registry stops declaring candidate-only projection. This runner reads and asserts; it never alters status. Round 3 adds the cross-join: candidate rule ids are matched against the projector registry, the certification stores and every record file under the declared roots, and any record citing a candidate rule while claiming a certified state, a public materialization allowance or a public target is a failure. The check is read-only: it never promotes, certifies or edits a registry or projector.",
+    "status": "candidate_not_released"
+  },
+  "disposition_definitions": {
+    "candidate_no_consumer": "The artifact encodes an intended executable contract that no consumer implements, or that the existing consumer only probes without deciding. The gap is measured (floored diagnostics, never frozen pins) and followup_packet names the exact consumer to build. These rows stay counted as uncovered.",
+    "documentary": "A decision record. Only its shape and its procedure links are executable; there is no in-repo behaviour to consume.",
+    "fixture_only": "Structure and vocabulary are gated, but no consumer decides any row.",
+    "implemented_and_consumed": "A production DECISION consumer (segmentation, lattice, checker or differ) is invoked for every row and its output decides the row. Normalization helpers and row-internal consistency do not qualify. Wrong consumer behaviour turns the bank red, proven by mutating the consumer in tools/test_run_sarf_evals.py."
+  },
+  "generated_by": "hand-authored contract; executed by tools/run_sarf_evals.py, gated by tools/test_run_sarf_evals.py and tools/check_regressions.py",
+  "purpose": "One truthful disposition for every Sarf eval artifact and every Store A rule file, plus the adapter, the real consumers invoked, exactly what is and is not enforced, the pinned measurements, and the follow-on packet for every remaining gap. Nothing here certifies anything and nothing here promotes a candidate rule.",
+  "schema": "qamus.sarf_eval_runner_contract.v1",
+  "store_a_rules": [
+    {
+      "consumers": [
+        "tools/rm40_gate_stack.py"
+      ],
+      "consumption_kind": "id_citation",
+      "disposition": "fixture_only",
+      "followup_packet": "TP-SARF-A1-STORE-A-WIRING",
+      "note": "rm40_gate_stack reads only the stable rule ids to build a citation string; the operative condition (hamza-carrier radicals) is hard-coded in the module. Citation, not consumption.",
+      "path": "sarf/rules/hamza-gates.json"
+    },
+    {
+      "consumers": [],
+      "consumption_kind": "none",
+      "disposition": "candidate_no_consumer",
+      "followup_packet": "TP-SARF-A1-STORE-A-WIRING",
+      "note": "30 quarantines with no Python consumer; the quarantine routing is enforced by hand elsewhere.",
+      "path": "sarf/rules/homograph-quarantines.json"
+    },
+    {
+      "consumers": [
+        "tools/rm40_gate_stack.py"
+      ],
+      "consumption_kind": "id_citation",
+      "disposition": "fixture_only",
+      "followup_packet": "TP-SARF-A1-STORE-A-WIRING",
+      "note": "Only the rule id masdar_nominal is cited; the operative condition (Form-I masdar is samai) is hard-coded.",
+      "path": "sarf/rules/masdar-participle-gates.json"
+    },
+    {
+      "consumers": [],
+      "consumption_kind": "none",
+      "disposition": "candidate_no_consumer",
+      "followup_packet": "TP-SARF-A1-STORE-A-WIRING",
+      "note": "7 risk flags plus a standing order; no executable consumer reads them.",
+      "path": "sarf/rules/morphology-risk-rules.json"
+    },
+    {
+      "consumers": [
+        "tools/rm40_gate_stack.py"
+      ],
+      "consumption_kind": "id_citation",
+      "disposition": "fixture_only",
+      "followup_packet": "TP-SARF-A1-STORE-A-WIRING",
+      "note": "The broken-plural templates are hard-coded in fusha_paradigm_generate; rm40_gate_stack reads only the template id used in the citation chain. Citation, not consumption.",
+      "path": "sarf/rules/plural-gender-rules.json"
+    },
+    {
+      "consumers": [],
+      "consumption_kind": "none",
+      "disposition": "candidate_no_consumer",
+      "followup_packet": "TP-SARF-A1-STORE-A-WIRING",
+      "note": "The POS-mismatch ladder is a controlling invariant with no executable consumer.",
+      "path": "sarf/rules/pos-mismatch-rules.json"
+    },
+    {
+      "consumers": [],
+      "consumption_kind": "none",
+      "disposition": "candidate_no_consumer",
+      "followup_packet": "TP-SARF-A1-STORE-A-WIRING",
+      "note": "The 5-rung root evidence ladder has no executable consumer.",
+      "path": "sarf/rules/root-decision-rules.json"
+    },
+    {
+      "consumers": [],
+      "consumption_kind": "none",
+      "disposition": "candidate_no_consumer",
+      "followup_packet": "TP-SARF-A1-STORE-A-WIRING",
+      "note": "Root/pattern risk rules have no executable consumer.",
+      "path": "sarf/rules/root-pattern-risk-rules.json"
+    },
+    {
+      "consumers": [
+        "tools/check_regressions.py"
+      ],
+      "consumption_kind": "existence_gate",
+      "disposition": "fixture_only",
+      "followup_packet": "TP-SARF-A1-STORE-A-WIRING",
+      "note": "Existence/parse-gated by the harness only; the enclitic list the checker uses is a separate hard-coded set.",
+      "path": "sarf/rules/suffix-pronoun-rules.json"
+    },
+    {
+      "consumers": [
+        "tools/check_regressions.py"
+      ],
+      "consumption_kind": "existence_gate",
+      "disposition": "fixture_only",
+      "followup_packet": "TP-SARF-A1-STORE-A-WIRING",
+      "note": "Existence/parse-gated by the harness only; no consumer walks the transitions.",
+      "path": "sarf/rules/surface-state-transition-rules.json"
+    },
+    {
+      "consumers": [
+        "tools/rm40_gate_stack.py"
+      ],
+      "consumption_kind": "id_citation",
+      "disposition": "fixture_only",
+      "followup_packet": "TP-SARF-A1-STORE-A-WIRING",
+      "note": "Only the rule id form_dominant_sense_keyclean is cited. tools/investigate_gap_residue.py merely emits the pathname as report metadata and is NOT a consumer.",
+      "path": "sarf/rules/verb-measure-gates.json"
+    },
+    {
+      "consumers": [
+        "tools/fusha_paradigm_generate.py"
+      ],
+      "consumption_kind": "data_driven",
+      "disposition": "implemented_and_consumed",
+      "followup_packet": null,
+      "note": "Genuinely data-driven, bound to ONE consumer: tools/fusha_paradigm_generate loads forms[] through its own _measures() and substitutes the slot template into the radicals, so mutating a wazn template changes that module's generated surface (prover keyed by rule file AND consumer module). tools/rm40_gate_stack.py is NOT listed: its only mention of this file is an unused filename constant.",
+      "path": "sarf/rules/verb-measures.json"
+    },
+    {
+      "consumers": [
+        "tools/rm40_gate_stack.py"
+      ],
+      "consumption_kind": "id_citation",
+      "disposition": "fixture_only",
+      "followup_packet": "TP-SARF-A1-STORE-A-WIRING",
+      "note": "Only stable ids are read for the citation chain; the weak-letter set is hard-coded in the module.",
+      "path": "sarf/rules/weak-root-gates.json"
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "differ suite",
+      "pass_condition": "unittest OK",
+      "run": "python -m unittest tools.test_corpus_to_qamus_candidates"
+    },
+    {
+      "name": "sarf eval runner all-bank mode",
+      "pass_condition": "exit 0 with the terminal line SARF EVAL RUNNER PASS",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    },
+    {
+      "name": "sarf eval runner unit suite",
+      "pass_condition": "unittest OK (all mutation/negative gates still catch a broken consumer)",
+      "run": "python -m unittest tools.test_run_sarf_evals"
+    },
+    {
+      "name": "full regression harness",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "candidate/public boundary",
+      "pass_condition": "the report line reads 'candidate/projector/public boundary: verified'",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "must not be given a content root; it belongs to the particle spine",
+        "id": "quran-iyyaka-particle-construction",
+        "source": "sarf/evals/corpus-authoring-eval.json"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "stays already_in_qamus and mints nothing",
+        "id": "nawawi-al-islam-already",
+        "source": "sarf/evals/corpus-authoring-eval.json"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "sarf/evals/corpus-authoring-eval.json",
+    "selection_rule": "the cases whose measured class differs from expected_class, in bank file order",
+    "this_packet_size": 10,
+    "universe_size": 14
+  },
+  "commands": [
+    {
+      "expect": "exit 0; contract_agreement plus the disagreements histogram, reported not pinned",
+      "purpose": "print the current measured disagreement histogram",
+      "run": "python tools/run_sarf_evals.py --bank sarf/evals/corpus-authoring-eval.json --json"
+    },
+    {
+      "expect": "failure before the fix",
+      "purpose": "red-first differ suite",
+      "run": "python -m unittest tools.test_corpus_to_qamus_candidates"
+    },
+    {
+      "expect": "SARF EVAL RUNNER PASS with a raised agreement floor",
+      "purpose": "re-measure after the fix",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    }
+  ],
+  "defeaters": [
+    "A proclitic or an enclitic left on the key produces a false new_root.",
+    "A broken plural does not resemble its singular, so a surface miss is not evidence of a new lemma.",
+    "A pronoun-support construction can hit an existing entry and look already_in_qamus while belonging to the particle spine.",
+    "Two distinct lemmas can share one key once the match-key folds are applied."
+  ],
+  "definition_of_done": [
+    "every disagreement is either closed by a behaviour change or escalated with an exact reason",
+    "the agreement floor is raised to the new measured value; it is never pinned against further improvement",
+    "no abstention became weaker and the full harness is green"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "a case correct class is a linguistic judgement rather than a mechanical one",
+      "closing a disagreement would require weakening an abstention",
+      "the index itself is wrong for a case"
+    ],
+    "route": "stop and route the case to the sarf lane owner with the measured evidence; do not decide the Arabic"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "Never adjust a pin to make a run green. If the differ cannot reach the declared class without a linguistic judgement, escalate the case and leave the pin honest.",
+    "statement": "Evidence is the repository index and the declared contract in the bank. Where the two disagree about Arabic, the row is escalated, not decided by the executor.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Differ updated so its class vocabulary and routing match the declared authoring contract.",
+      "path": "tools/corpus_to_qamus_candidates.py"
+    },
+    {
+      "description": "Red-first suite pinning each reconciled case and its abstention behaviour.",
+      "path": "tools/test_corpus_to_qamus_candidates.py"
+    },
+    {
+      "description": "Bank row re-dispositioned with the new measured pins.",
+      "path": "sarf/eval-runner-contract.json",
+      "schema": "qamus.sarf_eval_runner_contract.v1"
+    }
+  ],
+  "guards": [
+    "Only the METHOD transfers: this packet fixes procedure, guards and acceptance tests and never pre-writes a linguistic conclusion for the executor to copy.",
+    "A lookup hit is not a disambiguation; matching an index row never certifies an entry edge.",
+    "A closed-set particle never receives a content root.",
+    "occurrence_augment and new_surface must mint nothing new.",
+    "This packet authorizes NO certification, NO rule promotion and NO public output: it may extend the runner, its tests, the shared harness wiring and the golden-command documentation, while the eval banks, the rule store, the skill registries, the projector ledger and the certification store stay immutable.",
+    "Re-run the candidate/projector/public boundary check with the full run (a targeted --bank run renders it not_checked and never claims it verified)."
+  ],
+  "inputs": {
+    "input_files": [
+      "sarf/evals/corpus-authoring-eval.json",
+      "tools/corpus_to_qamus_candidates.py",
+      "qamus/reports/corpus-to-qamus-pipeline.md",
+      "sarf/eval-runner-contract.json"
+    ],
+    "permitted_write_files": [
+      "docs/golden-commands.md",
+      "docs/subsystems/sarf-executable-map.md",
+      "qamus/schemas/sarf-eval-runner-contract.schema.json",
+      "sarf/eval-runner-contract.json",
+      "tools/check_regressions.py",
+      "tools/corpus_to_qamus_candidates.py",
+      "tools/run_sarf_evals.py",
+      "tools/test_corpus_to_qamus_candidates.py",
+      "tools/test_run_sarf_evals.py"
+    ],
+    "prohibited_files": [
+      "nahw/",
+      "qamus/certification/",
+      "qamus/data/",
+      "qamus/lattice/",
+      "qamus/skills/",
+      "sarf/evals/",
+      "sarf/rules/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "Nothing in this packet mutates a live surface, an entry store or a whitelist. All outputs are candidate-mode repository artifacts; certification stays with the canonical certifier.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-SARF-A1-CORPUS-DIFFER-CONTRACT",
+  "provenance": {
+    "authored_by": "Burst A1 sarf eval/consumer lane",
+    "cites": [
+      "sarf/eval-runner-contract.json",
+      "qamus/reports/corpus-to-qamus-pipeline.md"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "corpus_authoring_differ",
+    "out_of_scope": [
+      "Do not change the pinned agreement without changing the behaviour that produced it.",
+      "Do not author entries, glosses or senses.",
+      "Do not touch the certification store or entry data."
+    ],
+    "summary": "tools/run_sarf_evals.py invokes the real differ on all 14 cases of sarf/evals/corpus-authoring-eval.json and reports agreement with the declared 6-class contract as a FLOORED diagnostic (currently 4/14; only regression below the floor is red, so an improvement passes). decided_rows stays 0: probing is not deciding. Decide, per disagreement, whether the differ or the bank is right, and close the gap without weakening any abstention.",
+    "tranche": "sarf-a1-followon"
+  },
+  "title": "Reconcile the authoring differ with the 6-class corpus-authoring contract",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/run_sarf_evals.py"
+  ]
+}
