@@ -1,0 +1,169 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "lattice engine self-test",
+      "pass_condition": "exit 0",
+      "run": "python tools/fusha_morphology_lattice.py --self-test"
+    },
+    {
+      "name": "sarf eval runner all-bank mode",
+      "pass_condition": "exit 0 with the terminal line SARF EVAL RUNNER PASS",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    },
+    {
+      "name": "sarf eval runner unit suite",
+      "pass_condition": "unittest OK (all mutation/negative gates still catch a broken consumer)",
+      "run": "python -m unittest tools.test_run_sarf_evals"
+    },
+    {
+      "name": "full regression harness",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "candidate/public boundary",
+      "pass_condition": "the report line reads 'candidate/projector/public boundary: verified'",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "a voweled surface must not be collapsed to a single certain reading in order to match a class",
+        "id": "MCL-002",
+        "source": "sarf/evals/morphology-candidate-lattice.jsonl"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "keeps both competing readings and stays homograph_split",
+        "id": "MCL-001",
+        "source": "sarf/evals/morphology-candidate-lattice.jsonl"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "sarf/evals/morphology-candidate-lattice.jsonl",
+    "selection_rule": "exactly the rows listed in the runner's evidence_class_mismatch_rows metric (MCL-002, MCL-005), in file order",
+    "this_packet_size": 2,
+    "universe_size": 7
+  },
+  "commands": [
+    {
+      "expect": "exit 0; evidence_class_agreement reported with evidence_class_mismatch_rows [MCL-002, MCL-005] and the property listed as uncovered",
+      "purpose": "print the measured evidence_class agreement",
+      "run": "python tools/run_sarf_evals.py --bank sarf/evals/morphology-candidate-lattice.jsonl --json"
+    },
+    {
+      "expect": "exit 0",
+      "purpose": "engine self-test after any change",
+      "run": "python tools/fusha_morphology_lattice.py --self-test"
+    },
+    {
+      "expect": "SARF EVAL RUNNER PASS with the property moved to covered, or an updated floor plus a recorded reason",
+      "purpose": "re-measure",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    }
+  ],
+  "defeaters": [
+    "Voweling narrows a reading, it does not certify one; a voweled surface may still be a homograph.",
+    "A lone single-letter peel is almost always a radical and must stay low-confidence.",
+    "A class that is right for the top-ranked candidate may be wrong for the rest of the lattice."
+  ],
+  "definition_of_done": [
+    "each of the two divergent rows is closed or explicitly recorded as a procedure-level open question",
+    "evidence_class_agreement is either promoted to a covered property with per-row agreement, or stays uncovered with its floor documented as a regression guard only",
+    "the ambiguity guarantee and the never-auto_safe guarantee are unchanged",
+    "the full harness is green"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "the procedure does not settle the class for a row",
+      "closing the gap would require dropping a competing candidate"
+    ],
+    "route": "stop and record the divergence in the contract not_enforced_properties list; hand back to the sarf lane owner"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If the procedure does not settle a class, leave the engine as it is and record the divergence; never widen the closed vocabulary to make a row agree.",
+    "statement": "Evidence is the procedure document and the closed evidence-class vocabulary in the schema only.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Evidence-class assignment reconciled with the procedure, with the ambiguity guarantee intact.",
+      "path": "tools/fusha_morphology_lattice.py"
+    },
+    {
+      "description": "Updated measured pin and unenforced list for the bank.",
+      "path": "sarf/eval-runner-contract.json",
+      "schema": "qamus.sarf_eval_runner_contract.v1"
+    }
+  ],
+  "guards": [
+    "Only the METHOD transfers: this packet fixes procedure, guards and acceptance tests and never pre-writes a linguistic conclusion for the executor to copy.",
+    "Every candidate keeps score AND rank and no boolean correct flag is ever introduced.",
+    "Arbitrary and corpus-backed tokens are never auto_safe.",
+    "The four sarf@2.1-@2.4 increments stay CANDIDATE and may not be cited as released authority.",
+    "This packet authorizes NO certification, NO rule promotion and NO public output: it may extend the runner, its tests, the shared harness wiring and the golden-command documentation, while the eval banks, the rule store, the skill registries, the projector ledger and the certification store stay immutable.",
+    "Re-run the candidate/projector/public boundary check with the full run (a targeted --bank run renders it not_checked and never claims it verified)."
+  ],
+  "inputs": {
+    "input_files": [
+      "sarf/evals/morphology-candidate-lattice.jsonl",
+      "tools/fusha_morphology_lattice.py",
+      "sarf/procedures/morphology-candidate-lattice.md",
+      "qamus/schemas/morphology-candidate-lattice.schema.json",
+      "sarf/eval-runner-contract.json"
+    ],
+    "permitted_write_files": [
+      "docs/golden-commands.md",
+      "docs/subsystems/sarf-executable-map.md",
+      "qamus/schemas/sarf-eval-runner-contract.schema.json",
+      "sarf/eval-runner-contract.json",
+      "tools/check_regressions.py",
+      "tools/fusha_morphology_lattice.py",
+      "tools/run_sarf_evals.py",
+      "tools/test_run_sarf_evals.py"
+    ],
+    "prohibited_files": [
+      "nahw/",
+      "qamus/certification/",
+      "qamus/data/",
+      "qamus/lattice/",
+      "qamus/skills/",
+      "sarf/evals/",
+      "sarf/rules/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "Nothing in this packet mutates a live surface, an entry store or a whitelist. All outputs are candidate-mode repository artifacts; certification stays with the canonical certifier.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-SARF-A1-LATTICE-EVIDENCE-CLASS",
+  "provenance": {
+    "authored_by": "Burst A1 sarf eval/consumer lane",
+    "cites": [
+      "sarf/procedures/morphology-candidate-lattice.md",
+      "sarf/eval-runner-contract.json"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "morphology_candidate_lattice",
+    "out_of_scope": [
+      "Ambiguity preservation outranks class agreement: never drop a candidate to make a class match.",
+      "root, lemma and pattern stay null unless a real certifier supplies them.",
+      "Do not touch the certification store, entry data or projectors."
+    ],
+    "summary": "tools/run_sarf_evals.py runs the real lattice over sarf/evals/morphology-candidate-lattice.jsonl and reports evidence_class agreement per row: MCL-002 and MCL-005 disagree with the engine. The property `evidence_class_agreement` is declared UNCOVERED in property_coverage and its floor is a regression guard, never a released linguistic rule. Decide which side is right and close the gap without collapsing any ambiguity.",
+    "tranche": "sarf-a1-followon"
+  },
+  "title": "Reconcile the morphology lattice evidence_class with the skill bank",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/run_sarf_evals.py"
+  ]
+}

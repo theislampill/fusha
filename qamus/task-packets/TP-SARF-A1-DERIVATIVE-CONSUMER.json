@@ -1,0 +1,177 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "wazn matcher unit suite",
+      "pass_condition": "unittest OK, including the adversarial near-pattern cases",
+      "run": "python -m unittest tools.test_fusha_wazn_match"
+    },
+    {
+      "name": "sarf eval runner all-bank mode",
+      "pass_condition": "exit 0 with the terminal line SARF EVAL RUNNER PASS",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    },
+    {
+      "name": "sarf eval runner unit suite",
+      "pass_condition": "unittest OK (all mutation/negative gates still catch a broken consumer)",
+      "run": "python -m unittest tools.test_run_sarf_evals"
+    },
+    {
+      "name": "full regression harness",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "candidate/public boundary",
+      "pass_condition": "the report line reads 'candidate/projector/public boundary: verified'",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "the homograph/POS trap must NOT resolve to the verb reading; it routes to the declared review class",
+        "id": "ND-002",
+        "source": "sarf/evals/nominal-derivative-error-eval.jsonl"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "the declared active-participle pattern matches the surface and the row resolves nominal",
+        "id": "ND-001",
+        "source": "sarf/evals/nominal-derivative-error-eval.jsonl"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "sarf/evals/nominal-derivative-error-eval.jsonl",
+    "selection_rule": "every row of the bank in file order; no sampling, no reordering",
+    "this_packet_size": 113,
+    "universe_size": 113
+  },
+  "commands": [
+    {
+      "expect": "exit 0; disposition candidate_no_consumer",
+      "purpose": "measure the current structural-only coverage of the bank",
+      "run": "python tools/run_sarf_evals.py --bank sarf/evals/nominal-derivative-error-eval.jsonl"
+    },
+    {
+      "expect": "failure before implementation",
+      "purpose": "red-first: the new matcher unit suite must fail before the matcher exists",
+      "run": "python -m unittest tools.test_fusha_wazn_match"
+    },
+    {
+      "expect": "SARF EVAL RUNNER PASS",
+      "purpose": "re-run the bank after wiring the adapter to the new consumer",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    }
+  ],
+  "defeaters": [
+    "A shared consonant skeleton is not a wazn match: two patterns can differ by a long-vowel position, not by root.",
+    "A definite article or a proclitic on the surface is not part of the pattern and must be peeled first.",
+    "A feminine marker may be part of the lemma rather than a suffix; treating it as a suffix mints a wrong lemma.",
+    "A broken plural has no surface affinity to its singular, so surface similarity never establishes the pair."
+  ],
+  "definition_of_done": [
+    "every one of the 113 rows is matched, refuted or explicitly abstained with a typed reason",
+    "the bank disposition is updated with measured pins and the unenforced list shrinks accordingly",
+    "the full harness is green and no path outside permitted_write_files changed"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "a row declared pattern cannot be matched or refuted without a linguistic judgement",
+      "more than one derivative_type is defensible for a surface",
+      "the change would require editing a file outside permitted_write_files"
+    ],
+    "route": "stop, write the exact blocked rows into the packet report and hand back to the sarf lane owner; do not decide the row"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "When a surface does not determine its wazn, emit abstain with a typed reason. Never guess a pattern to make a row green; an abstaining row keeps the bank honest.",
+    "statement": "Evidence is the repository own rule stores and normalizers. No external corpus text and no external gloss text may be consulted, copied or paraphrased.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Deterministic wazn/derivative matcher: surface + declared pattern -> match | mismatch | abstain.",
+      "path": "tools/fusha_wazn_match.py"
+    },
+    {
+      "description": "Red-first unit suite including adversarial near-patterns and a mutation gate.",
+      "path": "tools/test_fusha_wazn_match.py"
+    },
+    {
+      "description": "Bank row updated to implemented_and_consumed with the new enforced properties and pins.",
+      "path": "sarf/eval-runner-contract.json",
+      "schema": "qamus.sarf_eval_runner_contract.v1"
+    }
+  ],
+  "guards": [
+    "Only the METHOD transfers: this packet fixes procedure, guards and acceptance tests and never pre-writes a linguistic conclusion for the executor to copy.",
+    "Abstention is a PASS state; a forced match is a defect.",
+    "A pattern match never certifies a root, a lemma or a sense.",
+    "The four sarf@2.1-@2.4 increments stay CANDIDATE and may not be cited as released authority.",
+    "This packet authorizes NO certification, NO rule promotion and NO public output: it may extend the runner, its tests, the shared harness wiring and the golden-command documentation, while the eval banks, the rule store, the skill registries, the projector ledger and the certification store stay immutable.",
+    "Re-run the candidate/projector/public boundary check with the full run (a targeted --bank run renders it not_checked and never claims it verified)."
+  ],
+  "inputs": {
+    "input_files": [
+      "sarf/evals/nominal-derivative-error-eval.jsonl",
+      "sarf/rules/masdar-participle-gates.json",
+      "sarf/rules/verb-measures.json",
+      "sarf/SKILL.md",
+      "sarf/procedures/morphology-candidate-lattice.md",
+      "sarf/eval-runner-contract.json"
+    ],
+    "permitted_write_files": [
+      "docs/golden-commands.md",
+      "docs/subsystems/sarf-executable-map.md",
+      "qamus/schemas/sarf-eval-runner-contract.schema.json",
+      "sarf/eval-runner-contract.json",
+      "tools/check_regressions.py",
+      "tools/fusha_wazn_match.py",
+      "tools/run_sarf_evals.py",
+      "tools/test_fusha_wazn_match.py",
+      "tools/test_run_sarf_evals.py"
+    ],
+    "prohibited_files": [
+      "nahw/",
+      "qamus/certification/",
+      "qamus/data/",
+      "qamus/lattice/",
+      "qamus/skills/",
+      "sarf/evals/",
+      "sarf/rules/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "Nothing in this packet mutates a live surface, an entry store or a whitelist. All outputs are candidate-mode repository artifacts; certification stays with the canonical certifier.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-SARF-A1-DERIVATIVE-CONSUMER",
+  "provenance": {
+    "authored_by": "Burst A1 sarf eval/consumer lane",
+    "cites": [
+      "docs/subsystems/sarf-executable-map.md",
+      "sarf/eval-runner-contract.json"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "nominal_derivatives",
+    "out_of_scope": [
+      "Do not author or change any gloss text.",
+      "Do not decide a row the evidence does not settle: abstain and route instead.",
+      "Do not touch nahw files, LargeLexicon builders, projectors, certification stores or entry data."
+    ],
+    "summary": "The 113-row nominal-derivative bank declares a derivative_type and a wazn per surface and a routing decision per row, but no module in this repo classifies a derivative type or matches a wazn, so tools/run_sarf_evals.py can only gate the bank structurally (disposition candidate_no_consumer). Build the smallest consumer that decides derivative_type + pattern from the surface, and promote the bank to implemented_and_consumed.",
+    "tranche": "sarf-a1-followon"
+  },
+  "title": "Build the nominal-derivative / wazn consumer for sarf/evals/nominal-derivative-error-eval.jsonl",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/run_sarf_evals.py",
+    "tools/normalize_ar.py"
+  ]
+}

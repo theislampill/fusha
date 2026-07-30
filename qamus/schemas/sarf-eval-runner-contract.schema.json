@@ -1,0 +1,391 @@
+{
+  "$defs": {
+    "disposition": {
+      "description": "Exactly one truthful state per artifact. 'implemented_and_consumed' is the only state that claims a real consumer decides the rows; tools/test_run_sarf_evals.py proves that claim by mutating the consumer and requiring the bank to go red.",
+      "enum": [
+        "candidate_no_consumer",
+        "documentary",
+        "fixture_only",
+        "implemented_and_consumed"
+      ],
+      "type": "string"
+    },
+    "repo_path": {
+      "description": "Repo-relative path with forward slashes. Absolute and server paths are forbidden.",
+      "pattern": "^[^\\\\]*$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/sarf-eval-runner-contract.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "The contract tools/run_sarf_evals.py executes. It fixes, for every Sarf eval artifact and every Store A rule file (sarf/rules/*.json), exactly one disposition, the adapter that runs it, the real consumer modules invoked, what is and is NOT enforced, the pinned measurements of live consumer behaviour, and the follow-on packet for every remaining gap. This file certifies nothing and promotes nothing: the sarf@2.1-@2.4 increments stay CANDIDATE and the runner asserts sarf/SKILL.md still says so. Executable twin: run_sarf_evals.validate_contract().",
+  "properties": {
+    "banks": {
+      "description": "One row per artifact under sarf/evals/. Every artifact must appear exactly once.",
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "adapter": {
+            "description": "The run_sarf_evals adapter that executes this bank. Adapters invoke production consumers; an adapter that only restates the bank's own fields is not permitted to carry the implemented_and_consumed disposition.",
+            "type": "string"
+          },
+          "behavioral_consumer": {
+            "description": "The production DECISION function this bank's adapter invokes per row (module:function), or null. Required, and restricted to the decision consumers, when the disposition is implemented_and_consumed. Normalization helpers never qualify.",
+            "oneOf": [
+              {
+                "minLength": 8,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "consumers": {
+            "description": "The production modules this bank's adapter actually invokes. Required to be non-empty when the disposition is implemented_and_consumed.",
+            "items": {
+              "$ref": "#/$defs/repo_path"
+            },
+            "type": "array"
+          },
+          "disposition": {
+            "$ref": "#/$defs/disposition"
+          },
+          "enforced_properties": {
+            "description": "The exact behavioural properties this bank's adapter proves. Plain statements, one per property.",
+            "items": {
+              "minLength": 10,
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "followup_packet": {
+            "description": "Packet id under qamus/task-packets/ that specifies the missing consumer, or null when nothing is outstanding. Required for candidate_no_consumer and fixture_only.",
+            "oneOf": [
+              {
+                "minLength": 4,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "form": {
+            "description": "jsonl = one row per line; object = a JSON object whose row_key names the cases[]/assertions[] array. Both forms are row-counted.",
+            "enum": [
+              "jsonl",
+              "object"
+            ],
+            "type": "string"
+          },
+          "id_field": {
+            "type": "string"
+          },
+          "loc_fields": {
+            "description": "Fields that must hold a surah:ayah:word address when present.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "metric_floors": {
+            "description": "Diagnostics that record a KNOWN-WRONG state and must be allowed to improve. Compared with >=, never with equality, so a later repair cannot fail the gate. A metric may be pinned or floored, never both.",
+            "type": "object"
+          },
+          "nonempty_list_fields": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "not_enforced_properties": {
+            "description": "What this runner deliberately does NOT decide. Keeping the unsupported categories visible is a requirement, not an omission.",
+            "items": {
+              "minLength": 10,
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "note": {
+            "minLength": 10,
+            "type": "string"
+          },
+          "path": {
+            "$ref": "#/$defs/repo_path"
+          },
+          "pinned_metrics": {
+            "description": "Measured behaviour of the LIVE consumer, pinned so drift in either direction is a red gate. A pin is a measurement, never a copy of the bank's own expectations.",
+            "type": "object"
+          },
+          "property_coverage": {
+            "description": "Coverage at PROPERTY granularity. A row may be decided for one property and uncovered for another, so a successful assertion may never hide an unproven one. `decided_by` is either a production decision callable or `structural:<module>` (a normalizer/shape assertion, which is never behavioural coverage); `applicable_rows` is verified against the adapter's observed per-property evaluation count; `covered` may be true only for a decision callable.",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "applicable_rows": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "covered": {
+                  "type": "boolean"
+                },
+                "decided_by": {
+                  "minLength": 8,
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "property": {
+                  "minLength": 3,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "applicable_rows",
+                "covered",
+                "decided_by",
+                "property"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "required_fields": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "row_key": {
+            "description": "For object-form artifacts, the array key that holds the rows (cases / assertions). Null for jsonl.",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "secondary_consumers": {
+            "description": "Consumers a bank invokes only for a SUBSET of its rows. Each row declares the callable, the applicability in plain words and the exact expected call count, which the runner verifies against proxies it installs. A conditional consumer may never be sold as the per-row one.",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "applies_to": {
+                  "minLength": 10,
+                  "type": "string"
+                },
+                "callable": {
+                  "minLength": 8,
+                  "type": "string"
+                },
+                "expected_calls": {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "applies_to",
+                "callable",
+                "expected_calls"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "adapter",
+          "behavioral_consumer",
+          "consumers",
+          "disposition",
+          "enforced_properties",
+          "followup_packet",
+          "form",
+          "id_field",
+          "loc_fields",
+          "metric_floors",
+          "nonempty_list_fields",
+          "not_enforced_properties",
+          "note",
+          "path",
+          "pinned_metrics",
+          "property_coverage",
+          "required_fields",
+          "row_key",
+          "secondary_consumers"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "candidate_boundary_surfaces": {
+      "additionalProperties": false,
+      "description": "The repository surfaces the candidate-boundary check cross-joins candidate rule ids against: the projector registry, the certification stores and any record file that could carry a public-materialization flag or target. Declaring them explicitly means a new surface must be reviewed rather than silently unscanned.",
+      "properties": {
+        "expected_records_scanned_min": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "projector_registry": {
+          "$ref": "#/$defs/repo_path"
+        },
+        "record_roots": {
+          "items": {
+            "$ref": "#/$defs/repo_path"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "projector_registry",
+        "record_roots",
+        "expected_records_scanned_min"
+      ],
+      "type": "object"
+    },
+    "candidate_increments_not_promoted": {
+      "additionalProperties": false,
+      "description": "The standing non-promotion record for the four CANDIDATE increments in sarf/SKILL.md.",
+      "properties": {
+        "expected_projector_registrations_citing_candidates": {
+          "description": "How many registrations cite a candidate rule id. An unexpected registration must be reviewed, not silently absorbed.",
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "increments": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "projector_registry": {
+          "description": "The registered-projector file joined to the candidate rule ids.",
+          "type": "string"
+        },
+        "registry_files": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "increment id -> the rule-registry JSONL whose rows must all stay status=candidate.",
+          "type": "object"
+        },
+        "statement": {
+          "minLength": 40,
+          "type": "string"
+        },
+        "status": {
+          "const": "candidate_not_released"
+        }
+      },
+      "required": [
+        "expected_projector_registrations_citing_candidates",
+        "increments",
+        "projector_registry",
+        "registry_files",
+        "statement",
+        "status"
+      ],
+      "type": "object"
+    },
+    "disposition_definitions": {
+      "additionalProperties": {
+        "minLength": 20,
+        "type": "string"
+      },
+      "description": "The four dispositions defined in this repository's own words. All four must be defined even when a state is unused by the current banks.",
+      "type": "object"
+    },
+    "generated_by": {
+      "minLength": 10,
+      "type": "string"
+    },
+    "purpose": {
+      "minLength": 40,
+      "type": "string"
+    },
+    "schema": {
+      "const": "qamus.sarf_eval_runner_contract.v1"
+    },
+    "store_a_rules": {
+      "description": "One row per sarf/rules/*.json file. A row may only claim implemented_and_consumed if a named module actually reads the file; the runner proves this against the repository, not against prose.",
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "consumers": {
+            "items": {
+              "$ref": "#/$defs/repo_path"
+            },
+            "type": "array"
+          },
+          "consumption_kind": {
+            "description": "How production code uses the file. data_driven = rule CONTENT changes or is rejected by a production decision, proven by a bounded mutation prover; id_citation = only stable ids are read to build a citation while the operative condition is hard-coded; existence_gate = the harness only asserts the file exists/parses; none = nothing executable reads it. Only data_driven may carry implemented_and_consumed.",
+            "enum": [
+              "data_driven",
+              "existence_gate",
+              "id_citation",
+              "none"
+            ],
+            "type": "string"
+          },
+          "disposition": {
+            "$ref": "#/$defs/disposition"
+          },
+          "followup_packet": {
+            "oneOf": [
+              {
+                "minLength": 4,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "note": {
+            "minLength": 10,
+            "type": "string"
+          },
+          "path": {
+            "$ref": "#/$defs/repo_path"
+          }
+        },
+        "required": [
+          "consumers",
+          "consumption_kind",
+          "disposition",
+          "note",
+          "path"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "banks",
+    "candidate_boundary_surfaces",
+    "candidate_increments_not_promoted",
+    "disposition_definitions",
+    "generated_by",
+    "schema",
+    "store_a_rules"
+  ],
+  "title": "Sarf eval runner contract v1",
+  "type": "object"
+}
