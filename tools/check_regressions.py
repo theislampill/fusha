@@ -5578,6 +5578,18 @@ except Exception as _fd_compiler_e:
 # fixture gate over committed deploy-shaped artifacts; it never reads or
 # mutates the external corpus, whitelist, renderer, or a live surface.
 try:
+    _proofn_unit = run_text([
+        sys.executable,
+        "-m",
+        "unittest",
+        "tools.test_proofn_noun_sufaha",
+        "-q",
+    ], timeout=120)
+    check(
+        "PROOF-N producer/validator focused tests pass",
+        _proofn_unit.returncode == 0
+        and "OK" in ((_proofn_unit.stdout or "") + (_proofn_unit.stderr or "")),
+    )
     _proofn_noun = run_text([
         sys.executable,
         os.path.join(ROOT, "tools", "validate_proofn_noun_sufaha.py"),
