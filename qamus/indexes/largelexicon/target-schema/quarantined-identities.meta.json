@@ -1,0 +1,17 @@
+{
+  "disposition": "quarantined",
+  "family_counts": {
+    "form-source": 4394,
+    "lemma-source": 1279,
+    "stem-source": 4394
+  },
+  "generator": "tools/promote_largelexicon_target_schema.py",
+  "reason_counts": {
+    "semantic review required: risk_flags": 9502,
+    "semantic review required: root_shape_or_reason": 611
+  },
+  "row_count": 10067,
+  "row_schema": "qamus/largelexicon-target-disposition-row@1",
+  "schema": "qamus/largelexicon-target-disposition-meta@1",
+  "sha256": "ccea51541d252b73c23280fc36189bbcd5ff7eb33c843690a1fe7a80706980e2"
+}

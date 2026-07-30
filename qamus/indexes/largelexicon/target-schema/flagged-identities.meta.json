@@ -1,0 +1,14 @@
+{
+  "disposition": "flagged",
+  "family_counts": {
+    "qword-crosswalk": 1479
+  },
+  "generator": "tools/promote_largelexicon_target_schema.py",
+  "reason_counts": {
+    "structural migration blocker: additional_property": 1479
+  },
+  "row_count": 1479,
+  "row_schema": "qamus/largelexicon-target-disposition-row@1",
+  "schema": "qamus/largelexicon-target-disposition-meta@1",
+  "sha256": "faca6c9e517314e69966fd980d901d26be6d82080948ca1fd487a2b9bc7cf54f"
+}

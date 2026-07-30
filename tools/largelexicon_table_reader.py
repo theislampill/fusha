@@ -1,4 +1,11 @@
-"""Manifest-backed readers for largelexicon source-clean fact tables."""
+"""Manifest-backed readers for largelexicon source-clean fact tables.
+
+``LargelexiconQwordTable`` reads the committed @1 sharded storage. Consumers that
+need TARGET-SCHEMA rows must go through :class:`LargelexiconTargetTables`, which
+regenerates the carried rows behind the release freshness gate: a stale,
+validation-red, mixed-version, or schema-drifted release raises instead of
+handing back rows.
+"""
 
 from __future__ import annotations
 
@@ -10,6 +17,7 @@ from typing import Any, Iterator
 
 
 ROW_ID_RE = re.compile(r"^llx-qword-([0-9a-f]{12})-\d{2}-\d{2}-\d{3}$")
+TARGET_FAMILIES = ("lemma-source", "form-source", "stem-source", "qword-denominator", "qword-crosswalk")
 
 
 def _read_json(path: Path) -> dict[str, Any]:
@@ -128,3 +136,53 @@ class LargelexiconQwordTable:
             if row.get("qword_row_id") == qword_row_id:
                 return row
         return None
+
+
+@dataclass(frozen=True)
+class LargelexiconTargetTables:
+    """Fail-closed reader for the derived carried target-schema tables.
+
+    Carried rows are regenerated from the immutable @1 tables rather than stored a
+    second time; the released digest is re-checked on every read so a drifted
+    regeneration is an error, never silently-different data.
+    """
+
+    release: dict[str, Any]
+
+    @classmethod
+    def open(cls, *, target_dir: Path | None = None) -> "LargelexiconTargetTables":
+        from promote_largelexicon_target_schema import assert_release_usable, read_release
+
+        release = read_release(target_dir)
+        assert_release_usable(release)
+        return cls(release=release)
+
+    def summary(self) -> dict[str, Any]:
+        return {
+            "schema": "qamus/largelexicon-target-table-reader-summary@1",
+            "families": {
+                name: {
+                    "carried_row_count": table["carried_row_count"],
+                    "carried_sha256": table["carried_sha256"],
+                    "disposition_counts": table["disposition_counts"],
+                    "target_row_schema": table["target_row_schema"],
+                }
+                for name, table in sorted(self.release["tables"].items())
+            },
+            "losslessness": self.release["losslessness"],
+            "release_path": "qamus/indexes/largelexicon/target-schema/TARGET-RELEASE.json",
+        }
+
+    def carried(self, family_name: str) -> list[dict[str, Any]]:
+        from promote_largelexicon_target_schema import carried_table
+
+        if family_name not in TARGET_FAMILIES:
+            raise KeyError("unknown target family: " + family_name)
+        return carried_table(family_name)
+
+    def dependency_hashes(self) -> dict[str, str]:
+        """Exact digests a downstream typed claim must record as dependencies."""
+
+        return {
+            name: table["carried_sha256"] for name, table in sorted(self.release["tables"].items())
+        }

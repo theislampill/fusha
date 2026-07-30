@@ -1,15 +1,34 @@
 #!/usr/bin/env python3
-"""Validate largelexicon sharded table manifests and bidirectional indexes."""
+"""Validate largelexicon sharded table manifests, indexes, and the target release.
+
+Two independent gates live here:
+
+* ``validate`` — the sharded @1 qword denominator manifest and its indexes;
+* ``validate_target_release`` — the derived target-schema release. It re-validates
+  every carried row against the UNCHANGED committed target schema rather than
+  trusting the promoter's own accounting, and fails closed on mixed schema
+  versions, stale release metadata, validation-red releases, surviving
+  row-forbidden constants, and lossless-accounting breaks.
+"""
 
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import re
+from collections import Counter
 from pathlib import Path
 
-from largelexicon_common import PUBLIC_BOUNDARY, public_boundary_errors
+import promote_largelexicon_target_schema as promoter
+import validate_largelexicon_rows as rows_validator
+from largelexicon_common import (
+    FORBIDDEN_PUBLIC_SUBSTRINGS,
+    PUBLIC_BOUNDARY,
+    match_forbidden_labels,
+    public_boundary_errors,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -176,12 +195,213 @@ def validate(manifest_path: Path = MANIFEST) -> list[str]:
     return errors
 
 
+def _ledger_rows(path: Path, disposition: str) -> tuple[list[dict], list[str]]:
+    errors: list[str] = []
+    if not path.exists():
+        return [], [f"missing {disposition} ledger: {path.relative_to(ROOT).as_posix()}"]
+    rows = []
+    for line_no, row in _iter_jsonl(path):
+        label = f"{path.relative_to(ROOT).as_posix()}:{line_no}"
+        if row.get("disposition") != disposition:
+            errors.append(f"{label}: ledger row is not {disposition}")
+        for field in ("family", "identity", "source_locator", "source_row_sha256", "reasons"):
+            if not row.get(field):
+                errors.append(f"{label}: {disposition} row lacks {field}")
+        if not re.fullmatch(r"[0-9a-f]{64}", str(row.get("source_row_sha256", ""))):
+            errors.append(f"{label}: source_row_sha256 is not a sha256 digest")
+        rows.append(row)
+    return rows, errors
+
+
+def validate_target_release(target_dir: Path | None = None) -> list[str]:
+    """Independently re-validate the derived target-schema release. Fails closed."""
+
+    target_dir = target_dir or promoter.TARGET_DIR
+    errors: list[str] = []
+    try:
+        release = promoter.read_release(target_dir)
+    except promoter.PromotionError as error:
+        return [str(error)]
+
+    errors.extend(promoter.release_blockers(release))
+
+    flagged, flagged_errors = _ledger_rows(target_dir / "flagged-identities.jsonl", "flagged")
+    quarantined, quarantined_errors = _ledger_rows(target_dir / "quarantined-identities.jsonl", "quarantined")
+    errors.extend(flagged_errors)
+    errors.extend(quarantined_errors)
+    ledger_identities = Counter((row.get("family"), row.get("identity")) for row in flagged + quarantined)
+    for key, count in sorted(ledger_identities.items()):
+        if count != 1:
+            errors.append(f"{key[0]}/{key[1]}: identity appears {count} times across the disposition ledgers")
+
+    ledger_counts: Counter[tuple[str, str]] = Counter()
+    for row in flagged + quarantined:
+        ledger_counts[(str(row.get("family")), str(row.get("disposition")))] += 1
+
+    for family in rows_validator.FAMILIES:
+        item = (release.get("tables") or {}).get(family.name)
+        if item is None:
+            continue
+        schema = rows_validator.read_json(ROOT / family.schema_path)
+        target = schema["properties"]["schema"]["const"]
+        digest = hashlib.sha256()
+        carried_count = 0
+        versions: Counter[str] = Counter()
+        carried_identities: set[str] = set()
+        identity_field = promoter.IDENTITY_FIELDS[family.name]
+        source_count = 0
+        for _source, carried, accounting in promoter.iter_family_dispositions(family):
+            source_count += 1
+            if carried is None:
+                continue
+            carried_count += 1
+            carried_identities.add(str(accounting[identity_field]))
+            versions[str(carried.get("schema"))] += 1
+            digest.update(promoter.canonical_line(carried))
+            row_errors = rows_validator.schema_errors(carried, schema)
+            if row_errors:
+                errors.append(
+                    "%s/%s: carried row fails the unchanged target schema (%s)"
+                    % (family.name, accounting[identity_field], row_errors[0]["defect_family"])
+                )
+            surviving = sorted(promoter.HOISTED_FIELDS.intersection(carried))
+            if surviving:
+                errors.append(
+                    "%s/%s: row-forbidden constant survived migration: %s"
+                    % (family.name, accounting[identity_field], ",".join(surviving))
+                )
+            leaks = match_forbidden_labels(
+                promoter.canonical_text(carried).lower(), FORBIDDEN_PUBLIC_SUBSTRINGS
+            )
+            if leaks:
+                errors.append(
+                    "%s/%s: carried row leaks forbidden public labels: %s"
+                    % (family.name, accounting[identity_field], ",".join(sorted(leaks)))
+                )
+        if len(versions) > 1:
+            errors.append(f"{family.name}: carried rows mix schema versions {sorted(versions)}")
+        if versions and next(iter(versions)) != target:
+            errors.append(f"{family.name}: carried rows do not declare {target}")
+        if carried_count != item.get("carried_row_count"):
+            errors.append(
+                "%s: released carried_row_count %s != recomputed %s"
+                % (family.name, item.get("carried_row_count"), carried_count)
+            )
+        if digest.hexdigest() != item.get("carried_sha256"):
+            errors.append(f"{family.name}: carried_sha256 drifted from the regenerated table")
+        counts = item.get("disposition_counts") or {}
+        if counts.get("carried") != carried_count:
+            errors.append(f"{family.name}: disposition_counts carried disagrees with the regenerated table")
+        for disposition in ("flagged", "quarantined"):
+            if counts.get(disposition) != ledger_counts.get((family.name, disposition), 0):
+                errors.append(
+                    "%s: released %s count %s != ledger rows %s"
+                    % (family.name, disposition, counts.get(disposition), ledger_counts.get((family.name, disposition), 0))
+                )
+        accounted = sum(counts.get(name, 0) for name in promoter.DISPOSITIONS)
+        if accounted != source_count or item.get("source", {}).get("row_count") != source_count:
+            errors.append(
+                "%s: dispositions account for %s of %s source rows (silent drop)"
+                % (family.name, accounted, source_count)
+            )
+        ledger_family_identities = {
+            str(row.get("identity")) for row in flagged + quarantined if row.get("family") == family.name
+        }
+        overlap = sorted(carried_identities & ledger_family_identities)[:3]
+        if overlap:
+            errors.append(f"{family.name}: identities carried AND dispositioned elsewhere: {overlap}")
+
+    losslessness = release.get("losslessness") or {}
+    if losslessness.get("silent_drop_count") != 0:
+        errors.append("release declares a non-zero silent drop count")
+    if losslessness.get("accounted_row_count") != losslessness.get("source_row_count"):
+        errors.append("release accounted_row_count does not equal source_row_count")
+    return errors
+
+
+def run_self_test() -> int:
+    """Red-first fixtures: every fail-closed path must reject its bad release."""
+
+    assertions = 0
+    families = [family.name for family in rows_validator.FAMILIES]
+    snapshot = {family.schema_path: "sha-" + family.name for family in rows_validator.FAMILIES}
+    healthy = {
+        "schema": promoter.RELEASE_SCHEMA,
+        "baseline": {"source_sha256": dict(snapshot)},
+        "losslessness": {"accounted_row_count": 5, "silent_drop_count": 0, "source_row_count": 5},
+        "tables": {
+            name: {
+                "carried_row_count": 5,
+                "provenance": {"boundary_constants": dict(promoter.CANONICAL_BOUNDARY)},
+                "target_row_schema": promoter.target_row_schema(
+                    next(item for item in rows_validator.FAMILIES if item.name == name)
+                ),
+                "target_schema_sha256": "sha-" + name,
+                "validation": {"pass_rows": 5, "violation_rows": 0},
+            }
+            for name in families
+        },
+    }
+    assert promoter.release_blockers(healthy, snapshot=snapshot) == []
+    assertions += 1
+
+    for mutate, expected in (
+        (lambda r: r["tables"][families[0]]["validation"].update({"violation_rows": 1}), "validation-red"),
+        (lambda r: r["tables"][families[0]].update({"target_schema_sha256": "other"}), "target schema changed"),
+        (lambda r: r["tables"][families[0]].update({"target_row_schema": "fusha/bogus@9"}), "released target row schema is stale"),
+        (lambda r: r["tables"][families[0]]["provenance"].update({"boundary_constants": {}}), "boundary provenance is missing"),
+        (
+            lambda r: r["tables"][families[0]]["provenance"]["boundary_constants"].update(
+                {"public_boundary": {"kind": "imported", "lang": "en", "src": "external"}}
+            ),
+            "is not canonical",
+        ),
+        (lambda r: r["baseline"]["source_sha256"].update({families[0]: "drift"}), "changed since the release was built"),
+        (lambda r: r.update({"schema": "qamus/other@1"}), "release schema is not"),
+    ):
+        broken = copy.deepcopy(healthy)
+        mutate(broken)
+        blockers = promoter.release_blockers(broken, snapshot=snapshot)
+        assert any(expected in blocker for blocker in blockers), (expected, blockers)
+        assertions += 1
+
+    # a carried row that kept a row-forbidden safety constant must be caught
+    carried = rows_validator.good_rows()["lemma-source"]
+    assert not promoter.HOISTED_FIELDS.intersection(carried)
+    laundered = dict(carried, public_boundary=dict(PUBLIC_BOUNDARY))
+    assert sorted(promoter.HOISTED_FIELDS.intersection(laundered)) == ["public_boundary"]
+    assertions += 1
+
+    # a carried row leaking a forbidden public label must be caught
+    leaked = dict(carried, gloss_hint="checked against qac")
+    assert match_forbidden_labels(promoter.canonical_text(leaked).lower(), FORBIDDEN_PUBLIC_SUBSTRINGS) == ["qac"]
+    assert match_forbidden_labels(promoter.canonical_text(carried).lower(), FORBIDDEN_PUBLIC_SUBSTRINGS) == []
+    assertions += 1
+
+    print(
+        json.dumps(
+            {"assertions": assertions, "ok": True, "schema": "qamus/largelexicon-table-manifest-self-test@1"},
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate sharded largelexicon qword denominator storage.")
     parser.add_argument("--manifest", default=str(MANIFEST))
     parser.add_argument("--self-test", action="store_true")
+    parser.add_argument(
+        "--target-release",
+        action="store_true",
+        help="re-validate the derived target-schema release against the unchanged schemas",
+    )
     args = parser.parse_args()
-    errors = validate(Path(args.manifest))
+    if args.self_test:
+        return run_self_test()
+    errors = validate_target_release() if args.target_release else validate(Path(args.manifest))
     print(json.dumps({"ok": not errors, "errors": errors}, ensure_ascii=False, indent=2, sort_keys=True))
     return 1 if errors else 0
 

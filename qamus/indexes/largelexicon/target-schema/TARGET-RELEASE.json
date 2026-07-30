@@ -1,0 +1,578 @@
+{
+  "baseline": {
+    "git_head": "6536c319ebf8b9185388c3db88ecd05ecfd230ac",
+    "source_sha256": {
+      "fusha/lexicon/largelexicon/form-source.full.jsonl": "ca388f752b816c9d38c51c65fcf4b4f8abc0523625ab5b3aaa6afa7f2a720c13",
+      "fusha/lexicon/largelexicon/lemma-source.full.jsonl": "e75c23ae50f64425fb7ae6f12f7596093012be173a4a5e8a405d3eaeb587646e",
+      "fusha/morphology/data/largelexicon-stems.full.jsonl": "a6706fa1de9b44f39169a55a70ed9b4a228e3c7f0be41905eb3d138702768f24",
+      "qamus/indexes/largelexicon/RELEASE.json": "b86840993b4669283509b39d2a9c6baea874b195a36ce516cf03fa859bc77a1a",
+      "qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json": "9efe385fb3f8c3b6c0c8be9407a81322261bfc07996a55a83d8a8d4b2b84bc43",
+      "qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json": "8527f021c2366b5453def9aed483ad724455d0d492ede2be7ff1ba5e74811eda",
+      "qamus/indexes/largelexicon/qword-crosswalk/n001-n010.jsonl": "3026c657f91d3e58b46097ae0fde1f443c9c1ae8d69ff02260f304f85048eaa3",
+      "qamus/indexes/largelexicon/qword-crosswalk/n011-n020.jsonl": "8c55a1a1c5e11b44e91c77f205b30f0f4a7b39a8ac60ebb082eca0c12ca036ea",
+      "qamus/indexes/largelexicon/qword-crosswalk/n021-n030.jsonl": "d28531303da1dd595827edd6a1e1d1c91f22757f87f2fe944cb11b7e36a23bd7",
+      "qamus/indexes/largelexicon/qword-crosswalk/n031-n040.jsonl": "415066dbee3613847a2f84350ece6272694bbdca6d199a107d1302a4a56ca681",
+      "qamus/indexes/largelexicon/qword-crosswalk/n041-n050.jsonl": "ba2c888e2f499e09ae7ce8399bb10b57713c1ef7fa7d7484ddec28c57f3c03ae",
+      "qamus/indexes/largelexicon/qword-crosswalk/n051-n060.jsonl": "e51a5c1b8f0a4d444b5407218579b1416736c9597498004a024a145b6e7b0c69",
+      "qamus/indexes/largelexicon/qword-crosswalk/n061-n070.jsonl": "f239ccd11925e2848b9710de4cedc527bea1cb26dec5c6d7315067bbe15e83dc",
+      "qamus/indexes/largelexicon/qword-crosswalk/n071-n080.jsonl": "a12355764c27a59b26a227f9c9e086fe4228146114367a1b968d7cc7a5ef57ef",
+      "qamus/indexes/largelexicon/qword-crosswalk/n081-n090.jsonl": "6ac8f5e8333d8f307b3dc7d1632e898b6aa91a78c865ce6562f1d496b0cbccdc",
+      "qamus/indexes/largelexicon/qword-crosswalk/n091-n100.jsonl": "0f5e7fff49f60186f73d0a36118ff83c65203e691607e3112bb2fbfb435d7473",
+      "qamus/indexes/largelexicon/qword-crosswalk/n1001-n1010.jsonl": "371d349e348f5e720e654246eb507fb8ef72ff787ab615e4cccbd5f41b3cc977",
+      "qamus/indexes/largelexicon/qword-crosswalk/n101-n110.jsonl": "a46b1cd107abef0604cfc60e1d5e7713200b846ce7cc0e1335100e07a7ccea54",
+      "qamus/indexes/largelexicon/qword-crosswalk/n1011-n1020.jsonl": "3a973033d370045c28fd3f3e5a9b3ddf9286b3aacfddd09f8cb90cc4016b62f5",
+      "qamus/indexes/largelexicon/qword-crosswalk/n1021-n1030.jsonl": "5894fe139ac8dfa0588ba35a644da526a19dea9fd8be873d46b5fe2da121b2e8",
+      "qamus/indexes/largelexicon/qword-crosswalk/n1031-n1040.jsonl": "e029ea9e70ee0a1e31d1ec24a2751e98690164d6fdb037df1288f3cde6ebd35f",
+      "qamus/indexes/largelexicon/qword-crosswalk/n1041-n1045.jsonl": "6946118d4292b6d6c920a32d41e307b53eae9ed861123e3487b9c3e848bf354d",
+      "qamus/indexes/largelexicon/qword-crosswalk/n111-n120.jsonl": "a17297529a06f8a7b330ed2c2708c7ed03115fd4c4463785ddd65d559cf16b71",
+      "qamus/indexes/largelexicon/qword-crosswalk/n121-n130.jsonl": "aca62cbd9e160775c908be5d604a34cd770c6581eb5b3765f32eeae9e0ef8604",
+      "qamus/indexes/largelexicon/qword-crosswalk/n131-n140.jsonl": "15569df7ba32977c1dfafc80d94cf85dd319b0e55ca921c1e56ca2daac4a50ca",
+      "qamus/indexes/largelexicon/qword-crosswalk/n141-n150.jsonl": "ac65c5e3dfa9c62893a89122a8d20bdde9043bd3f65b883613f0ec5d08210ed1",
+      "qamus/indexes/largelexicon/qword-crosswalk/n151-n160.jsonl": "cfa7fad1ea828e7873c154c2eae83a2528eecaf555ef0f303b6d430960000d28",
+      "qamus/indexes/largelexicon/qword-crosswalk/n161-n170.jsonl": "5f435b396deeeaef3d8103b9f8c15c52b8c41a889766c7271a5de0c2b619498a",
+      "qamus/indexes/largelexicon/qword-crosswalk/n171-n180.jsonl": "ef4e84e9ccde4453c59286970b7e77281351d30bb653afa311c8020cbf7920b1",
+      "qamus/indexes/largelexicon/qword-crosswalk/n181-n190.jsonl": "50a99ecb42c0a0d93edca37278a390f4c2d8cc9afa7585a454cbb351d5894445",
+      "qamus/indexes/largelexicon/qword-crosswalk/n191-n200.jsonl": "2ac1e5c6a0bcfec42bb592b4b6b36a8a914e0ca6bbdcce7d92dfa4207d461868",
+      "qamus/indexes/largelexicon/qword-crosswalk/n201-n210.jsonl": "eed5d93438df45a9f59f24ab7bb50b20b253633bce8a391e9c21841efab1d5af",
+      "qamus/indexes/largelexicon/qword-crosswalk/n211-n220.jsonl": "d913e8dc7e97d1c2a8faf02c6420d057e40ee605fc5bc0552df021f4e2584cfb",
+      "qamus/indexes/largelexicon/qword-crosswalk/n221-n230.jsonl": "d02f86db1d64dafbcf3d1d8f7dfcb67c3c0ccd5e67311506291ee3a8062ed1fa",
+      "qamus/indexes/largelexicon/qword-crosswalk/n231-n240.jsonl": "29a2f36f6a9c5a6b1edbfb6ce6af1b57c0287aafd44271d2307cbb9fd925130c",
+      "qamus/indexes/largelexicon/qword-crosswalk/n241-n250.jsonl": "36fc36321a3dc82da70b9319d61de2683d901f5613e3a55f53e4435ab8f74967",
+      "qamus/indexes/largelexicon/qword-crosswalk/n251-n260.jsonl": "ff264350284a13052d557e22953ecfcce90566795f76b15c0444fa3da12d1106",
+      "qamus/indexes/largelexicon/qword-crosswalk/n261-n270.jsonl": "f9477bf7454fed1dacb825b4437d70f31626f773657039d2ca8f79171b935fce",
+      "qamus/indexes/largelexicon/qword-crosswalk/n271-n280.jsonl": "5c0427d618099e2da9d01ce9c5ba56e6dc923e517db2b0239bd00672510be608",
+      "qamus/indexes/largelexicon/qword-crosswalk/n281-n290.jsonl": "493ecdb241cef9b969e6fdbee6962a0004c3c291271c3264356eebce4244cca8",
+      "qamus/indexes/largelexicon/qword-crosswalk/n291-n300.jsonl": "143623ab7808f4d3bbb8d5b4a9b463b4aab646b951003bccef5703cfb76bdff6",
+      "qamus/indexes/largelexicon/qword-crosswalk/n301-n310.jsonl": "4c695646d6efe3c1ef1b9ad6785af24a102d4757b218bf61ef9bf80fe3bde404",
+      "qamus/indexes/largelexicon/qword-crosswalk/n311-n320.jsonl": "20b8de6bb91e0068f96925fde4c77399259eaeb59d4da562c16294768f7ded82",
+      "qamus/indexes/largelexicon/qword-crosswalk/n321-n330.jsonl": "7b962de6196a1790158787012a4a8eeb1fc70e01b8023d5a068b3e06e7e89902",
+      "qamus/indexes/largelexicon/qword-crosswalk/n331-n340.jsonl": "db5f70cd626ecbab94d2ea7e582153d62f26d5633544591181232861bd22d9cc",
+      "qamus/indexes/largelexicon/qword-crosswalk/n341-n350.jsonl": "c13e61087a72bad6b3f3a0315ca2f6e99d0125e58396d3cbfc972695e43c81bb",
+      "qamus/indexes/largelexicon/qword-crosswalk/n351-n360.jsonl": "5de8921d99ede0de0d6a12659fba9d18ceb1d62be704a273582ee5fc98db803b",
+      "qamus/indexes/largelexicon/qword-crosswalk/n361-n370.jsonl": "7371c70fc2c871b08a983de477dd23d4f9af4018e712400c446a0900f76456b5",
+      "qamus/indexes/largelexicon/qword-crosswalk/n371-n380.jsonl": "8262baea12cb63eb69646c5b95a1ae75c4b2f15c5843f7c096a81ae1ccbdd161",
+      "qamus/indexes/largelexicon/qword-crosswalk/n381-n390.jsonl": "0748ace4df23edacae06f8e43b164bf9e45c8ce458f7c441f3a11ed7d6220e22",
+      "qamus/indexes/largelexicon/qword-crosswalk/n391-n400.jsonl": "f514d3551d29b8717f0d4b04e3f4a3baa23f9bcea6b309d697fd46f23b53d3f9",
+      "qamus/indexes/largelexicon/qword-crosswalk/n401-n410.jsonl": "bf18f5cc829bfd156a553a64971e7d17eb941be84ea1a6c20d9cbe27b2ed8c48",
+      "qamus/indexes/largelexicon/qword-crosswalk/n411-n420.jsonl": "dd1f94bb7e81de8894ab8d5ea894ccec2158d0691ddbd9320e1ac737131c191b",
+      "qamus/indexes/largelexicon/qword-crosswalk/n421-n430.jsonl": "89d5a844d750829ce035634f19986d14989dbce168240f57002b347a64a27c78",
+      "qamus/indexes/largelexicon/qword-crosswalk/n431-n440.jsonl": "19f37c3fe2948652291114aeabe1da08e9d4ac6c8b43313f6034e35d9aabc2f0",
+      "qamus/indexes/largelexicon/qword-crosswalk/n441-n450.jsonl": "b755a82969785acf8a232a37ce1dc398b6fef7b7b4c9bce280bdaec1d1befe2a",
+      "qamus/indexes/largelexicon/qword-crosswalk/n451-n460.jsonl": "ab3c7efe863eec56c3b03878138ce7707b441505131b02dfe142221df3f4392c",
+      "qamus/indexes/largelexicon/qword-crosswalk/n461-n470.jsonl": "510b412e7c2ed9fc100c3b462b414466372fd6acc1194f011670f5d8e7df3087",
+      "qamus/indexes/largelexicon/qword-crosswalk/n471-n480.jsonl": "297f6c057cdd842a8cd025508230e030f3fe82547e774c8d1336e53e1311e4a8",
+      "qamus/indexes/largelexicon/qword-crosswalk/n481-n490.jsonl": "77e1f85e488564c60118c843f47c48a2a9cc2cd40a9025cc17317f344cffc0e6",
+      "qamus/indexes/largelexicon/qword-crosswalk/n491-n500.jsonl": "fc40277c13d22e07785fee131a575de7c1e781e4935d6b3b6ce69348daec02b7",
+      "qamus/indexes/largelexicon/qword-crosswalk/n501-n510.jsonl": "dfa278dcf24f56ac88dddce1487ce7a998da5feedc60a6eab91f2cce32bc49ed",
+      "qamus/indexes/largelexicon/qword-crosswalk/n511-n520.jsonl": "fece59457169f3316de53dd21845413435f359f58060f249965a26f4cd071369",
+      "qamus/indexes/largelexicon/qword-crosswalk/n521-n530.jsonl": "d7170f86d710ddd2a49db6256d5abde6afbd44a62c1ba62d86c4da9ff4b3cc8f",
+      "qamus/indexes/largelexicon/qword-crosswalk/n531-n540.jsonl": "a6f65895900e1ecfb26c7095bad30cbddaf98df9e777e2fb0f87b3ab3be8952b",
+      "qamus/indexes/largelexicon/qword-crosswalk/n541-n550.jsonl": "b3abaf82fd72b58ee0dfbed96ce82ab1ae50a310f47fc7bdc08b1f2b53934000",
+      "qamus/indexes/largelexicon/qword-crosswalk/n551-n560.jsonl": "144af42651960fe2f37c726de5f81ac725de97a70482185650c1dc674e115fbb",
+      "qamus/indexes/largelexicon/qword-crosswalk/n561-n570.jsonl": "07e0a0a83beb084c682bbe0088ef9f00320332ddadea0978ecdbd59288f6d920",
+      "qamus/indexes/largelexicon/qword-crosswalk/n571-n580.jsonl": "eb639cef2b56a5f0e37449591c4873d4ac2ee14b94f3780da7645f16b3b0da3a",
+      "qamus/indexes/largelexicon/qword-crosswalk/n581-n590.jsonl": "53127391bdec8f084bb4d6e336f55dd03afccfad5ed3e5669d183440e5a4b806",
+      "qamus/indexes/largelexicon/qword-crosswalk/n591-n600.jsonl": "3db11bf3635adf92200a482f12f884cb6e4b84611883a9988d9c297f1f4137ee",
+      "qamus/indexes/largelexicon/qword-crosswalk/n601-n610.jsonl": "487ee3bae1d2c0eaea25e3c5568a1c6da268f529b81e1e30ad099675ae8afba9",
+      "qamus/indexes/largelexicon/qword-crosswalk/n611-n620.jsonl": "cda2050d665e15e44a0380599dcca528163f76b3eb174b3c4c5e7e4bc37fea01",
+      "qamus/indexes/largelexicon/qword-crosswalk/n621-n630.jsonl": "bdb66d6f7c4de67f91ea05a0cb16931784cbd2da44703ba7093dd8900b95864d",
+      "qamus/indexes/largelexicon/qword-crosswalk/n631-n640.jsonl": "7a2b48253deb6261d1c7a9690b1778238d63e9a386f7da90554387919b0afb0b",
+      "qamus/indexes/largelexicon/qword-crosswalk/n641-n650.jsonl": "17e96560794f31be79ccdbf92048006404c5664cb49259398ed8d2e095035915",
+      "qamus/indexes/largelexicon/qword-crosswalk/n651-n660.jsonl": "6226a45b81408adb4e933d663425ab3174890f13a59e8cd0c35142fc5320d9cc",
+      "qamus/indexes/largelexicon/qword-crosswalk/n661-n670.jsonl": "210d1c9958f9775f359ab82cab2b09ef9b03c7058ae50442b51bac32c5de1a8d",
+      "qamus/indexes/largelexicon/qword-crosswalk/n671-n680.jsonl": "4cbc2bcff0fea6d9331069e21ce4c183bf525c89ce340a15f2e1ce26f7968e5b",
+      "qamus/indexes/largelexicon/qword-crosswalk/n681-n690.jsonl": "7e3e349136a431d88c35818a12b767a126bb13a8c73cffc870f18f8ffd94895d",
+      "qamus/indexes/largelexicon/qword-crosswalk/n691-n700.jsonl": "a144d9d7137d8c08035d5d2f1cde2d0cadde95cb4ede78d0439d37ae7c413b27",
+      "qamus/indexes/largelexicon/qword-crosswalk/n701-n710.jsonl": "64f129b8065a48ca00f687c4d803c1e409d2a9d838bc3fddcad6f74d1fe425dc",
+      "qamus/indexes/largelexicon/qword-crosswalk/n711-n720.jsonl": "e982374cb3df189e06a87c9ac956f91fea6855fdd6b51f1db3356ff12bc57b7b",
+      "qamus/indexes/largelexicon/qword-crosswalk/n721-n730.jsonl": "7941c85a73544cb97ff8c74ec8deef2112fe0a72763ceec73f73dba39bf12fb5",
+      "qamus/indexes/largelexicon/qword-crosswalk/n731-n740.jsonl": "4a5686763c177190d15827f4bfbca40e6a56b6cf135c549bba797e1cd61dfe8b",
+      "qamus/indexes/largelexicon/qword-crosswalk/n741-n750.jsonl": "09685ace18917cbe370de985d959a0989713145ecf0caf2da454037451d74f93",
+      "qamus/indexes/largelexicon/qword-crosswalk/n751-n760.jsonl": "43da35ca1f5574b1cc4699ec6bdf67a800cee492319adc7450f25f305ea55bf2",
+      "qamus/indexes/largelexicon/qword-crosswalk/n761-n770.jsonl": "8ee1b4a58ea8a5995383bf7b13d06ec58ab7217ff4260f5e9a665a01521718fd",
+      "qamus/indexes/largelexicon/qword-crosswalk/n771-n780.jsonl": "b2cfea5d9afb31980a4d340aac7ec1c223117ad2091746b6b449d2d5ccb4b87b",
+      "qamus/indexes/largelexicon/qword-crosswalk/n781-n790.jsonl": "959b3bc9b4b491bb1823fc729c5101690002b4f5c28bdf658af2c66006234860",
+      "qamus/indexes/largelexicon/qword-crosswalk/n791-n800.jsonl": "df10deeac360cc0e009c6ca9f28e0a1a9e73f3854b6bdf9ec5c2a0c2ccb63b58",
+      "qamus/indexes/largelexicon/qword-crosswalk/n801-n810.jsonl": "38a721d69f981d4801ed158afebe2139acfe87af5682cfa03242c169315bfef8",
+      "qamus/indexes/largelexicon/qword-crosswalk/n811-n820.jsonl": "81d7b0b1b9c427d665be871da78a3898cc9ead846d5f1da839c44a89a080d0e9",
+      "qamus/indexes/largelexicon/qword-crosswalk/n821-n830.jsonl": "b65baaa08a39664caa16664e95edd13f9b55e1ea5b0a0c338fdf278c41cacc9d",
+      "qamus/indexes/largelexicon/qword-crosswalk/n831-n840.jsonl": "b6069b2d099fea852566fa6e5bf9ec9f6be80de2c22d00e5b1c98770f5915fcb",
+      "qamus/indexes/largelexicon/qword-crosswalk/n841-n850.jsonl": "ede1b7d08efd5d1f72e08183b4a1de97e38e528b8ca33cbcce514cdc84d00ecf",
+      "qamus/indexes/largelexicon/qword-crosswalk/n851-n860.jsonl": "d44d7b3eb0f323ebcb3ef9ffd8af177ae51add0aa564d5c3b082f22483fd9772",
+      "qamus/indexes/largelexicon/qword-crosswalk/n861-n870.jsonl": "2b9ee28f36e78031b452e67a870702b958f11ea1446854a2c5ca316b90f04222",
+      "qamus/indexes/largelexicon/qword-crosswalk/n871-n880.jsonl": "d74c5e4db571d9b1f471de236ac23c6627f9e144f1da0f43eb5f85ff9048595f",
+      "qamus/indexes/largelexicon/qword-crosswalk/n881-n890.jsonl": "7aa13adc9d317cbf0e0087c0235a68bd58be5b0d2ac52487b5beff7d6b022657",
+      "qamus/indexes/largelexicon/qword-crosswalk/n891-n900.jsonl": "461aa045b361b03565f193a06b5b67697f49c999b75281b34843a3cff98e5f83",
+      "qamus/indexes/largelexicon/qword-crosswalk/n901-n910.jsonl": "141ef18d24e97e989c7ac5a9da0719dd19020c33059293c39b605ee64bb52b52",
+      "qamus/indexes/largelexicon/qword-crosswalk/n911-n920.jsonl": "d58564d27c94ca127c5d625999a1ade6e05f61bca90c3fc4116140e31448baab",
+      "qamus/indexes/largelexicon/qword-crosswalk/n921-n930.jsonl": "1374f6ea30d8da3cbced0ff8243d6e62eb6da08d75ed849e18be1970edfc0c5b",
+      "qamus/indexes/largelexicon/qword-crosswalk/n931-n940.jsonl": "cefee44bcbda21f6b34e9704dcc2d82de0470580f1df764ba8b4f438c48cbbb6",
+      "qamus/indexes/largelexicon/qword-crosswalk/n941-n950.jsonl": "142faff6d82a1bf401c7243deba2d3b35116d07c11ddd93fadc5f751f43bf6a3",
+      "qamus/indexes/largelexicon/qword-crosswalk/n951-n960.jsonl": "7e27b1bf84ae907f28fb3ff9e64e047493814ce95c7cdd29316e50a3f8036292",
+      "qamus/indexes/largelexicon/qword-crosswalk/n961-n970.jsonl": "f258d49b68eea134a3438a387394c191bd5c87e1ac8a34bcc89980aed2b0c6e5",
+      "qamus/indexes/largelexicon/qword-crosswalk/n971-n980.jsonl": "8c9bc3cc4f131dbac0aae89449f100a577c6aff3e452e1179ba3ea99904df6e2",
+      "qamus/indexes/largelexicon/qword-crosswalk/n981-n990.jsonl": "1d4347859cda6c2b6c97dfb1c5253fbeee038f5d3a0431f5372c91e1a4b98e3d",
+      "qamus/indexes/largelexicon/qword-crosswalk/n991-n1000.jsonl": "f74d965091b6062474d865b1bf5b3fe9b0f41f49ca8a1bac086a1c6b25642b2f",
+      "qamus/indexes/largelexicon/qword-crosswalk/p001-p010.jsonl": "f52c403f295aba1fd61fe89216c88b212b16fd6f468a0f70b58ffc2cb7896d1f",
+      "qamus/indexes/largelexicon/qword-crosswalk/p011-p020.jsonl": "f858f9bee3cd0de5c370e50a3ce87de52144eaefbf737a66fabe225a7e129f07",
+      "qamus/indexes/largelexicon/qword-crosswalk/p021-p030.jsonl": "4e8d3fd772dabe1dd57813bc9121aceb6d0ed1893ca0c7fe1e9987dcf1edfa01",
+      "qamus/indexes/largelexicon/qword-crosswalk/p031-p040.jsonl": "f65eddac670502f3e14054598fa8611ccdf355834ba3fd674b48cced5b2ffb4c",
+      "qamus/indexes/largelexicon/qword-crosswalk/p041-p050.jsonl": "cb91caaea6196f4e4b97391af2dbabf030fc37e13f6f25adb93025d201c05d05",
+      "qamus/indexes/largelexicon/qword-crosswalk/p051-p060.jsonl": "a6bda8eea4f120ea34ab3e58f5643d92387a09eef9bc3db3190b994cf27d5439",
+      "qamus/indexes/largelexicon/qword-crosswalk/p061-p070.jsonl": "2bac173c5da451ee35a6132d665e96fa5838978697e8d224f072d367bee026c9",
+      "qamus/indexes/largelexicon/qword-crosswalk/p071-p080.jsonl": "4224140e7be3567c0a689431df9643cd2de1a26b6d6d7d5baa2b47b8bbb8984f",
+      "qamus/indexes/largelexicon/qword-crosswalk/p081-p090.jsonl": "ebbda53da062a948948bed56837fea1349796a78759cc15b624fb5acc90980c6",
+      "qamus/indexes/largelexicon/qword-crosswalk/p091-p100.jsonl": "87edbdb11e511ec7f82b1bbbc8175921ea7f9fbc63f543d24cfaa0f951fe685a",
+      "qamus/indexes/largelexicon/qword-crosswalk/v001-v010.jsonl": "c25640d0cf3ad5b55d030482b024a4fcf3d2b1c38aca81274199236677a2d498",
+      "qamus/indexes/largelexicon/qword-crosswalk/v011-v020.jsonl": "c01df58953f7d2baa884d801c780a3545d94de0b86b396ee13db6025c00f3c79",
+      "qamus/indexes/largelexicon/qword-crosswalk/v021-v030.jsonl": "cde788a3f0c30141244a9584baebdc73ff1369d1ae17cba79866ae602b8d6499",
+      "qamus/indexes/largelexicon/qword-crosswalk/v031-v040.jsonl": "8568b004b20292f392c0844861e9332960ca3dd8dc33cdac9bf3276c09ee91fd",
+      "qamus/indexes/largelexicon/qword-crosswalk/v041-v050.jsonl": "a6dfd8cb6cf6acc927472234ec90c1e29094684c16481db4307f1aef80aba252",
+      "qamus/indexes/largelexicon/qword-crosswalk/v051-v060.jsonl": "3c9d7b4c88dd0b03ad8128e9b906fc671175b9e1450a0b3b2105799d7f8de349",
+      "qamus/indexes/largelexicon/qword-crosswalk/v061-v070.jsonl": "be7b5ccbfaf8178068aab55eede7ff5ef7b9af11df3b660da8133efea0777d52",
+      "qamus/indexes/largelexicon/qword-crosswalk/v071-v080.jsonl": "5534e411ba31f194ce06e9fc3b6e82a845d53680c998d5fac5f455e8b87ade72",
+      "qamus/indexes/largelexicon/qword-crosswalk/v081-v090.jsonl": "91f500d0df7fa0b88351a8f9932bbeede93769f4b1773c4666f2b8519056c72a",
+      "qamus/indexes/largelexicon/qword-crosswalk/v091-v100.jsonl": "16a9f0165cee842681d0d6b69195ed9104ae6dae7eb13bd21788e62d1ec0058d",
+      "qamus/indexes/largelexicon/qword-crosswalk/v101-v110.jsonl": "bd450fa8a41c7b6417e08f14531822444d215ba6f3a009cecc4560300e3183e1",
+      "qamus/indexes/largelexicon/qword-crosswalk/v111-v120.jsonl": "d8cecdf5f3dbdf76dfa9959288ce9bd6789116fefb3cd4c9294cc24b69a08cf2",
+      "qamus/indexes/largelexicon/qword-crosswalk/v121-v130.jsonl": "0c70659eac2501b9edd07468943e8416b591f9c0b5587ceae1243fa279e4d85c",
+      "qamus/indexes/largelexicon/qword-crosswalk/v131-v140.jsonl": "9ffc559898f2ba9efbcd6a89304a11b418ba6141da5fffbdc05e49ea7675de95",
+      "qamus/indexes/largelexicon/qword-crosswalk/v141-v150.jsonl": "1dca2191490ca801d9227c284d8c2054dd69c904ccfbfb591b0f89eaef1ebb53",
+      "qamus/indexes/largelexicon/qword-crosswalk/v151-v160.jsonl": "3e850d1ef54b24b01b6d607d3a10ac5d8213ad6fb81604034b5afb6228a84833",
+      "qamus/indexes/largelexicon/qword-crosswalk/v161-v170.jsonl": "4279a779a1d302a2f1c0ad9a6d8f0b86ebb7fa671978c7b2e20ba2cc517c0052",
+      "qamus/indexes/largelexicon/qword-crosswalk/v171-v180.jsonl": "86a3b69eaab05cbb5aa9fc99d8a10f20738e3a39e5c253455e674d03226c23d9",
+      "qamus/indexes/largelexicon/qword-crosswalk/v181-v190.jsonl": "38bc72deb7a67543e387d9ccf51b2ab5856a24eb0fbf40579c474850cb93ca66",
+      "qamus/indexes/largelexicon/qword-crosswalk/v191-v200.jsonl": "6b0cef3a1a6ebbcd98d81b6fd05a6eef5c7fb4e3c5ea2df093f9266929891725",
+      "qamus/indexes/largelexicon/qword-crosswalk/v201-v210.jsonl": "4cbfe2b2b4b279e0fa23c1ad79a25207de87087234b454c517210926d0557643",
+      "qamus/indexes/largelexicon/qword-crosswalk/v211-v220.jsonl": "f715d65c3fe565455b6cf1087f1052574ea3b2137d052710b69e44cb4c4e6a73",
+      "qamus/indexes/largelexicon/qword-crosswalk/v221-v230.jsonl": "6e6c45529164934e22b29feed091d517b6479af9037a1b6189b96210f3be9a9b",
+      "qamus/indexes/largelexicon/qword-crosswalk/v231-v240.jsonl": "58c1f76d599f7ff396a5d75b52799b68b00ee7bbceeed14a6b53861be82d96e4",
+      "qamus/indexes/largelexicon/qword-crosswalk/v241-v250.jsonl": "a43270e1d5dc660195e2cb8bb2392af8220705506ddecf0bfbf38a1dea9ebf29",
+      "qamus/indexes/largelexicon/qword-crosswalk/v251-v260.jsonl": "5ccbf53322fee0f670f9aaeca37f2b855ca3c87a8e9d2c578a3a9388e9bdbb47",
+      "qamus/indexes/largelexicon/qword-crosswalk/v261-v270.jsonl": "72f259faf0a7af45143f1d650339db60cc1429af28125e5f9f24b11c8474a959",
+      "qamus/indexes/largelexicon/qword-crosswalk/v271-v280.jsonl": "ca6d95255977bcb0b51d9c16f08e8c294aa442131f75a4fc546812223be9b98f",
+      "qamus/indexes/largelexicon/qword-crosswalk/v281-v290.jsonl": "2e4e43d055e07d4ba042d60fd878e9b07d153026ba49b5175636311d687aba5b",
+      "qamus/indexes/largelexicon/qword-crosswalk/v291-v300.jsonl": "f5c2a83a94dd993d5cedb64ec2e51790164ec98fd5a3ddb5ffc4e39251c75ddf",
+      "qamus/indexes/largelexicon/qword-crosswalk/v301-v310.jsonl": "fd01747712772af6b2354491ed9f69dce5e7ef47f4efa4d2b1df400f0cbc933c",
+      "qamus/indexes/largelexicon/qword-crosswalk/v311-v320.jsonl": "36eb1d7af74a2feb06d623094aae8aba2c13e9a189ff0bb165a03ba86add2d34",
+      "qamus/indexes/largelexicon/qword-crosswalk/v321-v330.jsonl": "979d2b04415c0fa321f98f1f226d4f3dd3ffb2ab1a8e7478c085bb085252a152",
+      "qamus/indexes/largelexicon/qword-crosswalk/v331-v340.jsonl": "bef8bbb386ec0f18b6713b69acbb28059f8c44547ba85e5016876da86bb7df59",
+      "qamus/indexes/largelexicon/qword-crosswalk/v341-v350.jsonl": "59e99b0ce28315466f90463a0e654472163c1306c0e91ced07f7c7b0aa56dac5",
+      "qamus/indexes/largelexicon/qword-crosswalk/v351-v360.jsonl": "2a7973deb60e9408e018e3e843121729c9946c01032942844840549da14f2948",
+      "qamus/indexes/largelexicon/qword-crosswalk/v361-v370.jsonl": "0018c87dd356c72627fb6d5bac3e83c430806e64ea8aeeae3d5f90b272cc3c57",
+      "qamus/indexes/largelexicon/qword-crosswalk/v371-v380.jsonl": "139cd0b934eae174ea7b4fae4d3c12564115ab9f21ee5f23d889ae60c097eb84",
+      "qamus/indexes/largelexicon/qword-crosswalk/v381-v390.jsonl": "2b8eb2455c146833c8c1e506429fa341ff09781ef596184b0db65a139ea95d9b",
+      "qamus/indexes/largelexicon/qword-crosswalk/v391-v400.jsonl": "344b378519d6de2a8aa5affa58e9e82f98135e427e3e9faaeaa4072f9a222c4d",
+      "qamus/indexes/largelexicon/qword-crosswalk/v401-v410.jsonl": "907c0dfe6615950ae9cb1a92eb516071ec4cfa8ae119304bebb87a5de4fdd446",
+      "qamus/indexes/largelexicon/qword-crosswalk/v411-v420.jsonl": "c367e710e1219b3cad831999f0971b14febe9b580e4fe65d44433173c57862e8",
+      "qamus/indexes/largelexicon/qword-crosswalk/v421-v430.jsonl": "3323db1057d1d507c219cb25765e51586fb3a7d0906af6d162821909733bef63",
+      "qamus/indexes/largelexicon/qword-crosswalk/v431-v440.jsonl": "c892a552878339ac6b2001fd1cd55072415828fbc492eb33cc37601cd2eecf11",
+      "qamus/indexes/largelexicon/qword-crosswalk/v441-v450.jsonl": "3feef25c803aa0e20ab23bd379d170d0ea9e8394e80b1390a400ee0897af55a8",
+      "qamus/indexes/largelexicon/qword-crosswalk/v451-v460.jsonl": "c4d1601da4e205ee0be36fd79a507aeb274e1755b3757e80f78ac9147045ff66",
+      "qamus/indexes/largelexicon/qword-crosswalk/v461-v470.jsonl": "f1b0efdb2dd5b41dd8abc7bd4067473b9e34be1bec257132a8612eb8ae064e88",
+      "qamus/indexes/largelexicon/qword-crosswalk/v471-v480.jsonl": "cc577d1e38fcaa8b26edf5f1cdaad1ec6ae2f64fa14bb4b4a65c322cb0998225",
+      "qamus/indexes/largelexicon/qword-crosswalk/v481-v490.jsonl": "e38196526209303f3fde89fbb075baab435d83e58b6e373395d2ec73ce088d78",
+      "qamus/indexes/largelexicon/qword-crosswalk/v491-v500.jsonl": "edc49e28dd714439eeaed352ea43fea918d6aaf1edd17002c39df8dc35f82c25",
+      "qamus/indexes/largelexicon/qword-crosswalk/v501-v510.jsonl": "d466ed5199c877893db759d17153c1863d656cf081fbb96f4291d6003d9c55a2",
+      "qamus/indexes/largelexicon/qword-crosswalk/v511-v520.jsonl": "4d53c2b5bd1751ae4333e4f0d188fc79e22e4ca492efc0bc7089cb68a88877e8",
+      "qamus/indexes/largelexicon/qword-crosswalk/v521-v530.jsonl": "df3ef2de97f96b82c23523550dfd8e3ffc05f977a37815ee7f14901c2d2feeb7",
+      "qamus/indexes/largelexicon/qword-crosswalk/v531-v540.jsonl": "23217d5b5ddd01a19faa8ef757392b1c8f7c14f54027e409509b6c7a16a12324",
+      "qamus/indexes/largelexicon/qword-crosswalk/v541-v550.jsonl": "6c907b5caae703cc605a505a9e04400b74f98ad9eda6ba952d893c6b296963fa",
+      "qamus/indexes/largelexicon/qword-crosswalk/v551-v560.jsonl": "3018da650fae546ec236a4547b854baa4f1a371ed4b0433863cd2084d8a086c2",
+      "qamus/indexes/largelexicon/qword-crosswalk/v561-v570.jsonl": "5c9fad64478a0e613cd1a0c8c4c1e41c4acb35647688ef535b225e60736305dd",
+      "qamus/indexes/largelexicon/qword-crosswalk/v571-v580.jsonl": "bb3ec4bf76216049812c96f137274834297e047dcea3223053d8d47450731485",
+      "qamus/indexes/largelexicon/qword-crosswalk/v581-v590.jsonl": "28119b8bc1979517e099e77e19a0eb9c13777e2a3839fa2b62c00078243d7e2f",
+      "qamus/indexes/largelexicon/qword-crosswalk/v591-v600.jsonl": "9d51c6a68772174854307c9d1517b03b70dd438a1d550d4e9f1f4b3720c765fe",
+      "qamus/indexes/largelexicon/qword-crosswalk/v601-v610.jsonl": "2ea57b466d87928f5fd8a315cae82221f04a49db526e767ca625ef61ddaf3dd1",
+      "qamus/indexes/largelexicon/qword-crosswalk/v611-v620.jsonl": "8791193eda4c6e6f5e0b88b3c5f64580b856000b41a51b13ffd118c00b83963f",
+      "qamus/indexes/largelexicon/qword-crosswalk/v621-v630.jsonl": "7e06dfe894344d7558c1218197021ea0022f7f5ecdb373f463e0aed107ee153c",
+      "qamus/indexes/largelexicon/qword-crosswalk/v631-v640.jsonl": "e59ae6a55c35d081a35438e0f7ea2604b1c2b42bd7762508a68f7158b04b2c8d",
+      "qamus/indexes/largelexicon/qword-crosswalk/v641-v650.jsonl": "f93ad1523b36e4f564a1ece1ea95ceec3ae0970fef17bac4fd9033813931c680",
+      "qamus/indexes/largelexicon/qword-crosswalk/v651-v660.jsonl": "1f0c5631b3e06c522ed65d65d5e0aaac82ccb56241ad427af2ca7c888782c8e3",
+      "qamus/indexes/largelexicon/qword-crosswalk/v661-v670.jsonl": "79e1b2ec813db9328d910a23c9b73ac007a798b4dd4b6fe288a74448b31d6246",
+      "qamus/indexes/largelexicon/qword-crosswalk/v671-v680.jsonl": "c05bcdb5d69a26095b0b289abebc71a2fb0603b0c00d2f2def3ada731a1987c4",
+      "qamus/indexes/largelexicon/qword-crosswalk/v681-v690.jsonl": "4ac47054c769069304ee1300696a6782e3857e501d26005de1dbeaeea43b213c",
+      "qamus/indexes/largelexicon/qword-crosswalk/v691-v700.jsonl": "ea4af087e8a4e68dee64713df07ab6c160d290d292b8ba9647f2dd5e3613faff",
+      "qamus/indexes/largelexicon/qword-crosswalk/v701-v710.jsonl": "60f74e98e7f6783e963f0b3914bfd236847b646c16d53ae7761f836e31237eb7",
+      "qamus/indexes/largelexicon/qword-crosswalk/v711-v720.jsonl": "c02d6abf85981748b3f41cca69a4a3da678c4b3f5dab807c2d90300c53ac7ee3",
+      "qamus/indexes/largelexicon/qword-crosswalk/v721-v730.jsonl": "c24b536ee602bc00164dbc0abd61574f17335a57e64f2988325992de94be2237",
+      "qamus/indexes/largelexicon/qword-crosswalk/v731-v740.jsonl": "8aac6a89d7642fe96d4b7de02e4021ddd168693ac88490680e726e90cd1a04e1",
+      "qamus/indexes/largelexicon/qword-crosswalk/v741-v750.jsonl": "2b36c0e6c7e0d5c21a622ee086fb593db1fb23c316816e74c902cd0830d9879d",
+      "qamus/indexes/largelexicon/qword-crosswalk/v751-v760.jsonl": "f13401d9b6e54d634cf19afa97f462277da8e0443b61553f4f46c02476cd85c3",
+      "qamus/indexes/largelexicon/qword-crosswalk/v761-v770.jsonl": "8ef6b06afb4355f5ed4112dc605b1b00de90da0e695fa69ce6b31adcbaae33f9",
+      "qamus/indexes/largelexicon/qword-crosswalk/v771-v780.jsonl": "949a64dee02558a7bdb0a4b7ab6da1d175a20a17e00ee74920a294a5a95ea3fe",
+      "qamus/indexes/largelexicon/qword-crosswalk/v781-v790.jsonl": "9141438451de03200c5db018ab4c94b40d339a29b9c9cf2b94eaf3170b8e135a",
+      "qamus/indexes/largelexicon/qword-crosswalk/v791-v800.jsonl": "9359a462b2c5d7bae623e9c36d3f9464e95ef067ce5d61b4c990dee1cf0759b3",
+      "qamus/indexes/largelexicon/qword-crosswalk/v801-v810.jsonl": "8722fd5c97f559c18a6ba4a235cbe3a5e849afe1bc55d509cd88c25e1db405b3",
+      "qamus/indexes/largelexicon/qword-crosswalk/v811-v820.jsonl": "0de1bacdcae8da58b0ebddc4648d904ecfa576b5c46e342cb71b9a424ef318f8",
+      "qamus/indexes/largelexicon/qword-crosswalk/v821-v830.jsonl": "eab949185f6c672c943c1fb89cccf667ca3c7d209039f6e72405069806e20e19",
+      "qamus/indexes/largelexicon/qword-crosswalk/v831-v840.jsonl": "c2f1234bbc3db800c6a8be304ac09815756b38653e98106cd0d64905eb20fcf0",
+      "qamus/indexes/largelexicon/qword-crosswalk/v841-v850.jsonl": "7637c8f3d270e20d80c5ae3336ccf9ab2a06cf365d9eb1114aed5a7576490a2b",
+      "qamus/indexes/largelexicon/qword-crosswalk/v851-v860.jsonl": "32b3490f17dfbfc86f985ff5046bcbab324a4b048f7078641b8bec85e51cfced",
+      "qamus/indexes/largelexicon/qword-crosswalk/v861-v870.jsonl": "2197230526413a4d230aaac672918f8865ec2a112f37f6c72799aae9471fbff1",
+      "qamus/indexes/largelexicon/qword-crosswalk/v871-v880.jsonl": "7f86e6180b13120075dd4f79b31dd7f2cb18bda8a6048d2b47e971b3926984ec",
+      "qamus/indexes/largelexicon/qword-crosswalk/v881-v890.jsonl": "61075fe22a272b69012cd4105b947e39b531d7944a5b64d5017354853b5676c1",
+      "qamus/indexes/largelexicon/qword-crosswalk/v891-v900.jsonl": "0d63ebde2a9beea755a4e377b923ecd9214608919b7c1a08554ba688319272c9",
+      "qamus/indexes/largelexicon/qword-crosswalk/v901-v910.jsonl": "e8e3705e357d8fa1a1e96899150196be82c998cd55c713bce54d90a3015b660b",
+      "qamus/indexes/largelexicon/qword-crosswalk/v911-v920.jsonl": "c035a3944287287b007b328a92de388f2c3ee216f4c517343741c4a4dc106584",
+      "qamus/indexes/largelexicon/qword-crosswalk/v921-v930.jsonl": "52d4f8c7e086e3911e0e5b75ce03cb290b5fe5b358595020c38026708ad6fde0",
+      "qamus/indexes/largelexicon/qword-crosswalk/v931-v940.jsonl": "075f1c5655efff603fd8784f4d765eaf003c29f2a175dfb0f2e986ad811de0a6",
+      "qamus/indexes/largelexicon/qword-crosswalk/v941-v947.jsonl": "8e6737c5568b91ec04873e063f60cb15a81e6ebd6a137fb99855f5f17642a784",
+      "qamus/indexes/largelexicon/qword-denominator/n001-n040.jsonl": "a058b7f4a6f18aa730f89387c84d910383c3289e94726c177cdbfa5a16c8c14d",
+      "qamus/indexes/largelexicon/qword-denominator/n041-n080.jsonl": "c6a8ace80a3f80cc2cd2578325e6d3bc71c167140f2cb6b36ab6a17eb2ab1f36",
+      "qamus/indexes/largelexicon/qword-denominator/n081-n120.jsonl": "64b8878875cbd638a0c86808464bb17fe648fd5797e969458899ba3c76ea1699",
+      "qamus/indexes/largelexicon/qword-denominator/n1001-n1040.jsonl": "9371296dc9e2dc3bc4127ad1346b83d99adc20a82e40f75168bd67af24fb6d05",
+      "qamus/indexes/largelexicon/qword-denominator/n1041-n1045.jsonl": "2c65f46205ab9c5680697e80d691f0cab65f27de2c6084894056ce0c0c4e4e12",
+      "qamus/indexes/largelexicon/qword-denominator/n121-n160.jsonl": "b7160477d04397b0d045459460ed224c050e053316f9ad480c322ff23951c719",
+      "qamus/indexes/largelexicon/qword-denominator/n161-n200.jsonl": "20d11078d186b3e27bba46fc68a5a4547e727bc6e9bf77b77f3a0e2e7302aa8f",
+      "qamus/indexes/largelexicon/qword-denominator/n201-n240.jsonl": "4364da19fdb111e19c6820471980ac4cad2c488a05481c5f8cf65ec7994f2bc1",
+      "qamus/indexes/largelexicon/qword-denominator/n241-n280.jsonl": "e6f39f54b260d2ee67c1a08503f84543b2a5968dffbfae7d1352c06336886397",
+      "qamus/indexes/largelexicon/qword-denominator/n281-n320.jsonl": "865a1e718b8d268d6268488466eddbe41abf0600a9795de474ac93a6e63643d2",
+      "qamus/indexes/largelexicon/qword-denominator/n321-n360.jsonl": "d50ab3d97fec5e7c6c9fa6ee53a38db45f2b2b49bed60eb20ca2a8f0081d1cfb",
+      "qamus/indexes/largelexicon/qword-denominator/n361-n400.jsonl": "e5d63c2e6c292633edf3346cbda59f9832d88b8d01371a903c830f2e8d89aaf2",
+      "qamus/indexes/largelexicon/qword-denominator/n401-n440.jsonl": "118be36e52a3e042b150ab53ceb097554d03688770dfc031f6e1a3f89ec1922b",
+      "qamus/indexes/largelexicon/qword-denominator/n441-n480.jsonl": "ee03e810e320c9a5f4ad320941b40f8a6c10e99182595a4d35b8b2fc09cec196",
+      "qamus/indexes/largelexicon/qword-denominator/n481-n520.jsonl": "64f41cd8aaf1ce256d83ac22bdfc93f6fde188428ffbab4c62d688dd2f10e160",
+      "qamus/indexes/largelexicon/qword-denominator/n521-n560.jsonl": "98513ab322fccdcab6289936539ad43677047d7fb788e6d65089edcf06f13d42",
+      "qamus/indexes/largelexicon/qword-denominator/n561-n600.jsonl": "4b91c41117573f160b7ee7f4cf8cee48605a2d958053a0b2709a46c8e55dd060",
+      "qamus/indexes/largelexicon/qword-denominator/n601-n640.jsonl": "c012ad6cc944074dc1d8d522acb07d6fe4b9d39eabf8c31439b97f4934e4ceb1",
+      "qamus/indexes/largelexicon/qword-denominator/n641-n680.jsonl": "b9896412fdb2b7bb704b8cddf522d9260b39919017102bde9feb335b7fe73b43",
+      "qamus/indexes/largelexicon/qword-denominator/n681-n720.jsonl": "8e75fba4a4e405e89f9f5d2cbf626202535e4d9f508cdc21ff790e25bd08bfc7",
+      "qamus/indexes/largelexicon/qword-denominator/n721-n760.jsonl": "a24df44b4cef4f1babd87b621fb3a42413652a6d9004324fca97eaa30428c232",
+      "qamus/indexes/largelexicon/qword-denominator/n761-n800.jsonl": "0859a3e45934c7fdb05bce8e6e965411f18ccc94a8253a1d97869d50b72f34c8",
+      "qamus/indexes/largelexicon/qword-denominator/n801-n840.jsonl": "0f4dce4dc6a17086eeb4db4e90786441b0fddf54e1a6cf41912a78480776ed75",
+      "qamus/indexes/largelexicon/qword-denominator/n841-n880.jsonl": "69147099f375e3598dc2db4cd8f94733c09a5776ef7a1de9ab17cdd02fa5c349",
+      "qamus/indexes/largelexicon/qword-denominator/n881-n920.jsonl": "8cc99b70f3f218d9e06c3f96cfe36e973a504ae61e7f96175c6bd2f437c43b4a",
+      "qamus/indexes/largelexicon/qword-denominator/n921-n960.jsonl": "3a2772609e0a94faf703c90b815afb276dfaa446f0e6fd177f06d383bcc9e791",
+      "qamus/indexes/largelexicon/qword-denominator/n961-n1000.jsonl": "4d73a76f1ae2ff60963d7612f3e550b83bf4a2d8431aa0b848f6905008e31e6a",
+      "qamus/indexes/largelexicon/qword-denominator/p001-p040.jsonl": "cc36031bf0ccfd4539c8a23dd98fb67253bce43f6acc8fc20f607017bdcc8e7d",
+      "qamus/indexes/largelexicon/qword-denominator/p041-p080.jsonl": "3ae60e93209bfd36eaf4aa3b175e3bc3d95d95fee5bae259a6be880f58ad31da",
+      "qamus/indexes/largelexicon/qword-denominator/p081-p100.jsonl": "b1eaeeb78f9a1ef7f86d49496f2488163977e3104e68de7c8f7587ea40129c16",
+      "qamus/indexes/largelexicon/qword-denominator/v001-v040.jsonl": "cd675850de25510d36ab5447dbb625496984bd52cc53fa300f56a52373a0d000",
+      "qamus/indexes/largelexicon/qword-denominator/v041-v080.jsonl": "952a526b963a3d1aa10365c54730a3b162508aeb16ab137d8dbdcb6e1f1f2650",
+      "qamus/indexes/largelexicon/qword-denominator/v081-v120.jsonl": "35a8548a8cc12381a533ff4c9718359273f05e071ca8ed768d90e7ca34804895",
+      "qamus/indexes/largelexicon/qword-denominator/v121-v160.jsonl": "ce251df2281b658a47fe81c3f5a33340694028d1467579a1365201a350a57422",
+      "qamus/indexes/largelexicon/qword-denominator/v161-v200.jsonl": "122ab15af94999ccaa87df73d8dbc1b190a52672b288324309ad762a7a0a5e7c",
+      "qamus/indexes/largelexicon/qword-denominator/v201-v240.jsonl": "828ae40be67d69c777aed3ceda2a0cd40341d097e9a149f18b1ba276896a159d",
+      "qamus/indexes/largelexicon/qword-denominator/v241-v280.jsonl": "225249d3b5a3464f4d6bc46ec45e826d74d7ca804f2bb03e6f44c76236dc0021",
+      "qamus/indexes/largelexicon/qword-denominator/v281-v320.jsonl": "a0c309e52cef7bb257985553c4d3fc785efd933ed33a61d14479a7decf67db34",
+      "qamus/indexes/largelexicon/qword-denominator/v321-v360.jsonl": "65780c961c9ce38b1972fd44bb0aa1e193e681109297294cb2d9b756c90f7adc",
+      "qamus/indexes/largelexicon/qword-denominator/v361-v400.jsonl": "e649c9ddb16a1531ab7754dc2518f768a3ac46756b424f6fd21ab27f887eb06e",
+      "qamus/indexes/largelexicon/qword-denominator/v401-v440.jsonl": "1828ac1cefd0a2b4d2395290ea4d2d0be316e5eba6be2ff32274830c29d59435",
+      "qamus/indexes/largelexicon/qword-denominator/v441-v480.jsonl": "6b4c9d84f283e6733da49d3e6832bd63fefb253c84b9bb9a1e5e4aa61e900fd7",
+      "qamus/indexes/largelexicon/qword-denominator/v481-v520.jsonl": "8c96633b5d856e51cc149af76ecdf574bb0501092e7aa555e7506b7e1e058bad",
+      "qamus/indexes/largelexicon/qword-denominator/v521-v560.jsonl": "2ebe98917c9630747b9899c47fe68850d2daa6961ca5775c4efe534ec68b47b0",
+      "qamus/indexes/largelexicon/qword-denominator/v561-v600.jsonl": "544a6edb53cc10b771368783859e764253ffac3aca638bcdade7ea8febf9412b",
+      "qamus/indexes/largelexicon/qword-denominator/v601-v640.jsonl": "a35036198b9eb5d3aa3ba5dd6f8537078e88b69c7f3d41e2f5c2ee82fec0f7be",
+      "qamus/indexes/largelexicon/qword-denominator/v641-v680.jsonl": "d2cb42ad1d763070e82e832b301cc87cae0841ee52902b1796f59e4e09730e3d",
+      "qamus/indexes/largelexicon/qword-denominator/v681-v720.jsonl": "b8380f4583166682fdeb59c0dbc6d2a509f10b116e6d564dc330071eb63a37ac",
+      "qamus/indexes/largelexicon/qword-denominator/v721-v760.jsonl": "6281716065821e5b1da0aa7983ecf03e43bb8f1b7921b5874d70eecd11078fd2",
+      "qamus/indexes/largelexicon/qword-denominator/v761-v800.jsonl": "d8ba23af3ba4e6b16152a8aef4f85305f4326c228a13c1c2fa6a9eaa84c0933e",
+      "qamus/indexes/largelexicon/qword-denominator/v801-v840.jsonl": "c17cb107b3273c88d0ce151646dc5c280b7d1522a62a3fb6a5a49ce087e2fb19",
+      "qamus/indexes/largelexicon/qword-denominator/v841-v880.jsonl": "70a01d23dd00b18fdad4bf0ffb39e237acdee2be44661f39ee665f23f445ff34",
+      "qamus/indexes/largelexicon/qword-denominator/v881-v920.jsonl": "2f00dad41d619857f59a21caec3d77d2313a74c9525b2c6424d96b9abb453db3",
+      "qamus/indexes/largelexicon/qword-denominator/v921-v947.jsonl": "0c71f359034464a06f3c6289a6cb9743b0ce79b47a54ed398f0447ef949c09ba",
+      "qamus/schemas/largelexicon-form-source.schema.json": "8200906d81ba77a4997c0fbde3bcaeaa18fad5c9821bdbabdd16ac37296840f5",
+      "qamus/schemas/largelexicon-lemma-source.schema.json": "6a5f30a87fc434a6c9a52e1f4ff0c618219b589aebf55d590243973b28ccbe00",
+      "qamus/schemas/largelexicon-qword-crosswalk.schema.json": "0bb7a010ce118b2d3a827ec09ae4d6b7e0636d1fd3199967d01eb5f70461305d",
+      "qamus/schemas/largelexicon-qword-denominator.schema.json": "5661bff5373c1968bb90e72c2749d39a6d94f9c79593c993927ff7e9483ee700",
+      "qamus/schemas/largelexicon-stem-source.schema.json": "87736254855b7451b9782dc63980bb47320021368525021aa1f77c8516fbf153"
+    }
+  },
+  "carried_output": {
+    "committed_sample": "qamus/indexes/largelexicon/target-schema/carried-rows.sample.jsonl",
+    "full_output_policy": "regenerable; write with --emit-carried into gitignored out/ (sample + generator rule)",
+    "generator": "tools/promote_largelexicon_target_schema.py"
+  },
+  "determinism": {
+    "stable_input_order": true,
+    "stable_json_keys": true,
+    "timestamps_omitted": true
+  },
+  "immutability": {
+    "committed_sources_byte_untouched": true,
+    "live_mutation_allowed": false,
+    "target_schemas_modified": false
+  },
+  "losslessness": {
+    "accounted_row_count": 253292,
+    "disposition_counts": {
+      "carried": 241746,
+      "flagged": 1479,
+      "quarantined": 10067
+    },
+    "silent_drop_count": 0,
+    "source_row_count": 253292
+  },
+  "schema": "qamus/largelexicon-target-release@1",
+  "supersedes_posture": {
+    "note": "qamus/indexes/largelexicon/RELEASE.json continues to describe the immutable @1 tables and honestly reports their target-schema violations; this release describes the derived carried target-schema tables only",
+    "v1_release_path": "qamus/indexes/largelexicon/RELEASE.json"
+  },
+  "tables": {
+    "form-source": {
+      "carried_row_count": 4089,
+      "carried_sha256": "82944f9950d318d1f1beccaf366d0cf19b9548f97c07263beb29681118064d45",
+      "carried_sha256_scope": "canonical compact target-schema JSONL bytes for carried rows in manifest order",
+      "disposition_counts": {
+        "carried": 4089,
+        "flagged": 0,
+        "quarantined": 4394
+      },
+      "identity_field": "form_id",
+      "provenance": {
+        "boundary_constants": {
+          "public_boundary": {
+            "kind": "authored",
+            "lang": "en",
+            "src": "qamus"
+          },
+          "source_status": "qamus_current_authored"
+        },
+        "derivation_variants": [
+          {
+            "provenance_variant_id": "pv-none",
+            "row_count": 8483,
+            "values": {}
+          }
+        ]
+      },
+      "reason_counts": {
+        "candidate satisfies the unchanged target schema": 4089,
+        "semantic review required: risk_flags": 4175,
+        "semantic review required: root_shape_or_reason": 239
+      },
+      "source": {
+        "path": "fusha/lexicon/largelexicon/form-source.full.jsonl",
+        "row_count": 8483,
+        "row_schema": "fusha/largelexicon/form-source@1",
+        "sha256": "ca388f752b816c9d38c51c65fcf4b4f8abc0523625ab5b3aaa6afa7f2a720c13",
+        "storage": "jsonl"
+      },
+      "target_row_schema": "fusha/largelexicon/form-source@2",
+      "target_schema_path": "qamus/schemas/largelexicon-form-source.schema.json",
+      "target_schema_sha256": "8200906d81ba77a4997c0fbde3bcaeaa18fad5c9821bdbabdd16ac37296840f5",
+      "validation": {
+        "pass_rows": 4089,
+        "validated_against": "unchanged committed target schema",
+        "violation_rows": 0
+      }
+    },
+    "lemma-source": {
+      "carried_row_count": 813,
+      "carried_sha256": "3fd9b85c2cab9ed033b3b0715304fe090c94c3622aba4da66f268177f0fac3ec",
+      "carried_sha256_scope": "canonical compact target-schema JSONL bytes for carried rows in manifest order",
+      "disposition_counts": {
+        "carried": 813,
+        "flagged": 0,
+        "quarantined": 1279
+      },
+      "identity_field": "entry_id",
+      "provenance": {
+        "boundary_constants": {
+          "public_boundary": {
+            "kind": "authored",
+            "lang": "en",
+            "src": "qamus"
+          },
+          "source_status": "qamus_current_authored"
+        },
+        "derivation_variants": [
+          {
+            "provenance_variant_id": "pv-none",
+            "row_count": 2092,
+            "values": {}
+          }
+        ]
+      },
+      "reason_counts": {
+        "candidate satisfies the unchanged target schema": 813,
+        "semantic review required: risk_flags": 1152,
+        "semantic review required: root_shape_or_reason": 133
+      },
+      "source": {
+        "path": "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
+        "row_count": 2092,
+        "row_schema": "fusha/largelexicon/lemma-source@1",
+        "sha256": "e75c23ae50f64425fb7ae6f12f7596093012be173a4a5e8a405d3eaeb587646e",
+        "storage": "jsonl"
+      },
+      "target_row_schema": "fusha/largelexicon/lemma-source@2",
+      "target_schema_path": "qamus/schemas/largelexicon-lemma-source.schema.json",
+      "target_schema_sha256": "6a5f30a87fc434a6c9a52e1f4ff0c618219b589aebf55d590243973b28ccbe00",
+      "validation": {
+        "pass_rows": 813,
+        "validated_against": "unchanged committed target schema",
+        "violation_rows": 0
+      }
+    },
+    "qword-crosswalk": {
+      "carried_row_count": 115638,
+      "carried_sha256": "85c0415d74efd24d741a5ebcc9c1714150d7c4941ea367591944cfe4b1fb66f0",
+      "carried_sha256_scope": "canonical compact target-schema JSONL bytes for carried rows in manifest order",
+      "disposition_counts": {
+        "carried": 115638,
+        "flagged": 1479,
+        "quarantined": 0
+      },
+      "identity_field": "row_id",
+      "provenance": {
+        "boundary_constants": {
+          "live_mutation_allowed": false,
+          "public_boundary": {
+            "kind": "authored",
+            "lang": "en",
+            "src": "qamus"
+          }
+        },
+        "derivation_variants": [
+          {
+            "provenance_variant_id": "pv-1ff51d33bfdabba1",
+            "row_count": 1140,
+            "values": {
+              "resolution_normalizer": "arabic_surface_norm_v2_dagger_alif_to_alif",
+              "resolution_source": "local_wbw_lookup_surface_alignment",
+              "resolution_wbw_lookup_built_at": "2026-07-01T18:40:03Z",
+              "resolution_wbw_lookup_sha256": "f2e079dcdce01148074a238e3937314cf02222298f91f83ed66dcbb599697ca7"
+            }
+          },
+          {
+            "provenance_variant_id": "pv-50bff647ecfde261",
+            "row_count": 114535,
+            "values": {
+              "resolution_normalizer": "arabic_surface_norm_v2_dagger_alif_to_alif",
+              "resolution_source": "local_wbw_lookup_surface_alignment",
+              "resolution_wbw_lookup_built_at": "2026-07-01T18:40:03Z",
+              "resolution_wbw_lookup_sha256": "88de377b02e2864c496a6aa959b44932fb024fd2fe84fcce9cdbd7a166fc373b"
+            }
+          },
+          {
+            "provenance_variant_id": "pv-5c638e52397f1d67",
+            "row_count": 1442,
+            "values": {
+              "resolution_normalizer": "arabic_surface_norm_v2_dagger_alif_to_alif",
+              "resolution_source": "two_vote_review_adjudication",
+              "resolution_wbw_lookup_built_at": "2026-07-01T18:40:03Z",
+              "resolution_wbw_lookup_sha256": "f2e079dcdce01148074a238e3937314cf02222298f91f83ed66dcbb599697ca7"
+            }
+          }
+        ]
+      },
+      "reason_counts": {
+        "candidate satisfies the unchanged target schema": 115638,
+        "structural migration blocker: additional_property": 1479
+      },
+      "source": {
+        "path": "qamus/indexes/largelexicon/qamus-qword-crosswalk.manifest.json",
+        "row_count": 117117,
+        "row_schema": "qamus/largelexicon-qword-crosswalk@1",
+        "sha256": "d5ef8d6f76c53edad0a21d9f4b30af06984581a43095884175c81321970f366a",
+        "storage": "sharded_jsonl_manifest"
+      },
+      "target_row_schema": "qamus/largelexicon-qword-crosswalk@2",
+      "target_schema_path": "qamus/schemas/largelexicon-qword-crosswalk.schema.json",
+      "target_schema_sha256": "0bb7a010ce118b2d3a827ec09ae4d6b7e0636d1fd3199967d01eb5f70461305d",
+      "validation": {
+        "pass_rows": 115638,
+        "validated_against": "unchanged committed target schema",
+        "violation_rows": 0
+      }
+    },
+    "qword-denominator": {
+      "carried_row_count": 117117,
+      "carried_sha256": "9d8f109d66f5317400d2437e8e5d1ab7d6f8150b85e47917c6b6de7f2deeadc5",
+      "carried_sha256_scope": "canonical compact target-schema JSONL bytes for carried rows in manifest order",
+      "disposition_counts": {
+        "carried": 117117,
+        "flagged": 0,
+        "quarantined": 0
+      },
+      "identity_field": "row_id",
+      "provenance": {
+        "boundary_constants": {
+          "live_mutation_allowed": false,
+          "public_boundary": {
+            "kind": "authored",
+            "lang": "en",
+            "src": "qamus"
+          },
+          "source_status": "qamus_current_authored"
+        },
+        "derivation_variants": [
+          {
+            "provenance_variant_id": "pv-none",
+            "row_count": 117117,
+            "values": {}
+          }
+        ]
+      },
+      "reason_counts": {
+        "candidate satisfies the unchanged target schema": 117117
+      },
+      "source": {
+        "path": "qamus/indexes/largelexicon/qamus-qword-denominator.manifest.json",
+        "row_count": 117117,
+        "row_schema": "qamus/largelexicon-qword-denominator@1",
+        "sha256": "fca9d8c1057920cfff778362cbb311d0d4ad020c4529e85e86434cda24fd75ba",
+        "storage": "sharded_jsonl_manifest"
+      },
+      "target_row_schema": "qamus/largelexicon-qword-denominator@2",
+      "target_schema_path": "qamus/schemas/largelexicon-qword-denominator.schema.json",
+      "target_schema_sha256": "5661bff5373c1968bb90e72c2749d39a6d94f9c79593c993927ff7e9483ee700",
+      "validation": {
+        "pass_rows": 117117,
+        "validated_against": "unchanged committed target schema",
+        "violation_rows": 0
+      }
+    },
+    "stem-source": {
+      "carried_row_count": 4089,
+      "carried_sha256": "fae45d7a4e83ee988605cc1d83d2fcee4ae86447003087e1680fb6bc671eed8b",
+      "carried_sha256_scope": "canonical compact target-schema JSONL bytes for carried rows in manifest order",
+      "disposition_counts": {
+        "carried": 4089,
+        "flagged": 0,
+        "quarantined": 4394
+      },
+      "identity_field": "stem_id",
+      "provenance": {
+        "boundary_constants": {
+          "public_boundary": {
+            "kind": "authored",
+            "lang": "en",
+            "src": "qamus"
+          },
+          "source": "qamus_current_authored",
+          "source_status": "qamus_current_authored"
+        },
+        "derivation_variants": [
+          {
+            "provenance_variant_id": "pv-none",
+            "row_count": 8483,
+            "values": {}
+          }
+        ]
+      },
+      "reason_counts": {
+        "candidate satisfies the unchanged target schema": 4089,
+        "semantic review required: risk_flags": 4175,
+        "semantic review required: root_shape_or_reason": 239
+      },
+      "source": {
+        "path": "fusha/morphology/data/largelexicon-stems.full.jsonl",
+        "row_count": 8483,
+        "row_schema": "fusha/largelexicon/stem-source@1",
+        "sha256": "a6706fa1de9b44f39169a55a70ed9b4a228e3c7f0be41905eb3d138702768f24",
+        "storage": "jsonl"
+      },
+      "target_row_schema": "fusha/largelexicon/stem-source@2",
+      "target_schema_path": "qamus/schemas/largelexicon-stem-source.schema.json",
+      "target_schema_sha256": "87736254855b7451b9782dc63980bb47320021368525021aa1f77c8516fbf153",
+      "validation": {
+        "pass_rows": 4089,
+        "validated_against": "unchanged committed target schema",
+        "violation_rows": 0
+      }
+    }
+  }
+}

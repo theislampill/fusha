@@ -24,6 +24,7 @@ from largelexicon_common import (
     public_boundary_errors,
     read_jsonl,
 )
+import promote_largelexicon_target_schema as promoter
 from validate_largelexicon_qword_crosswalk import validate as validate_qword_crosswalk
 from validate_largelexicon_table_manifest import validate as validate_qword_manifest
 
@@ -144,6 +145,55 @@ def validate() -> list[str]:
     crosswalk_meta = meta.get("qword_crosswalk_manifest") or {}
     if crosswalk_meta.get("row_count") != counts.get("qword_denominator_rows"):
         errors.append("full table meta qword_crosswalk_manifest row count must match qword denominator count")
+    errors.extend(validate_target_release_boundary(allowed))
+    return errors
+
+
+def validate_target_release_boundary(allowed: dict[str, dict]) -> list[str]:
+    """Ledger view of the derived target-schema release.
+
+    The ledger owns the public/source/live boundary, so hoisting a row constant to
+    manifest level must be visible here: the release's manifest-level provenance is
+    checked against the canonical boundary, and no derived carried table may appear
+    as a committed full table without passing through the allowlist.
+    """
+
+    errors: list[str] = []
+    release_path = promoter.release_path()
+    if not release_path.exists():
+        return [f"missing target-schema release: {release_path.relative_to(ROOT).as_posix()}"]
+    release = json.loads(release_path.read_text(encoding="utf-8"))
+    if release.get("schema") != promoter.RELEASE_SCHEMA:
+        errors.append("target-schema release schema mismatch")
+        return errors
+    if (release.get("immutability") or {}).get("live_mutation_allowed") is not False:
+        errors.append("target-schema release must declare live_mutation_allowed=false")
+    if (release.get("immutability") or {}).get("committed_sources_byte_untouched") is not True:
+        errors.append("target-schema release must declare the @1 sources byte-untouched")
+    for family_name, table in sorted((release.get("tables") or {}).items()):
+        boundary = ((table.get("provenance") or {}).get("boundary_constants")) or {}
+        if not boundary:
+            errors.append(f"{family_name}: target release carries no manifest-level boundary provenance")
+        for field, value in sorted(boundary.items()):
+            if field not in promoter.CANONICAL_BOUNDARY:
+                errors.append(f"{family_name}: unknown hoisted boundary constant {field}")
+            elif value != promoter.CANONICAL_BOUNDARY[field]:
+                errors.append(f"{family_name}: hoisted boundary constant {field} weakens the source boundary")
+        variants = ((table.get("provenance") or {}).get("derivation_variants")) or []
+        if not variants:
+            errors.append(f"{family_name}: hoisted derivation provenance is missing")
+        for variant in variants:
+            if not variant.get("provenance_variant_id") or variant.get("row_count") is None:
+                errors.append(f"{family_name}: derivation variant lacks an id or row count")
+    committed_full = sorted(
+        path.relative_to(ROOT).as_posix()
+        for path in promoter.TARGET_DIR.glob("*.target.jsonl")
+        if path.relative_to(ROOT).as_posix() not in allowed
+    )
+    if committed_full:
+        errors.append(
+            "derived carried tables committed without an allowlist entry: " + ", ".join(committed_full)
+        )
     return errors
 
 
