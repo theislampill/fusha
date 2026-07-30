@@ -40,6 +40,10 @@ FAM3_NUMBER_PROJECTOR_ID = "sarf.fam3.number_formation.v1"
 FAM4_FINITE_VERB_PROJECTOR_ID = "sarf.fam4.finite_verb.v1"
 FAM5_DERIVED_VERB_PROJECTOR_ID = "sarf.fam5.derived_verb.v1"
 PROOFV_VERB_PROJECTOR_ID = "sarf.proofv.verb.v1"
+# A3 largelexicon bridge. Its gate_tier is never_auto_resolve: a carried-table
+# lookup is candidate evidence about a written surface, never a certification of
+# lexical identity, so this projector has NO path to certified or materialized.
+LARGELEXICON_BRIDGE_PROJECTOR_ID = "largelexicon.carried_lexeme_candidate.v1"
 
 
 class ProjectorValidationError(ValueError):
@@ -205,6 +209,56 @@ def proofv_verb_evidence_guard(*_args: Any, **_kwargs: Any) -> None:
     """Named registry guard; PROOF-V keeps source gaps explicit."""
 
     return None
+
+
+def largelexicon_bridge_abstention_guard(*_args: Any, **_kwargs: Any) -> None:
+    """Named registry guard; the bridge performs loc-first and collision checks itself."""
+
+    return None
+
+
+def project_largelexicon_carried_lexeme(
+    *,
+    contract: Dict[str, Any],
+    crosswalk_row: Dict[str, Any],
+    inputs: Any,
+    carried: bool = True,
+) -> Dict[str, Any]:
+    """Run the A3 bridge as a registry call: candidate or abstention, never more."""
+
+    from tools import largelexicon_fact_bridge as bridge
+
+    record = bridge.bridge_row(crosswalk_row, inputs, carried=carried)
+    errors = bridge.validate_records([record])
+    if errors:
+        raise ProjectorValidationError("bridge record is not a valid typed claim: " + "; ".join(errors[:3]))
+    projection = record["projection"]
+    candidates = [fact for fact in record["facts"] if fact["fact_type"] == "largelexicon_lexeme_candidate"]
+    resolved = projection["status"] == "candidate"
+    return {
+        "projector_id": contract["projector_id"],
+        "status": "candidate" if resolved else "abstained",
+        "route": projection["status"],
+        "candidate": {
+            "fact_type": contract["output_fact_type"],
+            "fact_ids": [fact["fact_id"] for fact in candidates],
+            "candidates_preserved": len(candidates),
+            "evidence_mode": "normalized_lexical_body",
+        }
+        if resolved
+        else None,
+        "preserved_candidate_fact_ids": [fact["fact_id"] for fact in candidates],
+        "blockers": sorted(
+            {
+                blocker["blocker_id"]
+                for fact in record["facts"]
+                for blocker in fact.get("unresolved_blockers") or []
+            }
+        ),
+        "typed_claim_record": record,
+        "certification_allowed": False,
+        "materialization_allowed": False,
+    }
 
 
 def project_proofv_verb(
@@ -762,6 +816,12 @@ def review_and_materialize(
     contract = contracts.get(row["fact_type"])
     if contract is None:
         raise ProjectorValidationError("candidate has no registered projector contract")
+    if contract["gate_tier"] == "never_auto_resolve":
+        # Gate SSOT: never_auto_resolve means "reject — never ship; quarantine or
+        # pending with the precise blocker". There is no vote count that opens it.
+        raise ProjectorValidationError(
+            "never_auto_resolve projectors may never certify or materialize: " + contract["projector_id"]
+        )
     if contract["gate_tier"] == "two_vote_required":
         approvals = {
             vote["voter_id"]
@@ -1032,6 +1092,26 @@ PROOFV_VERB_CONTRACT = {
     "resolution_method": "bounded_same_lexeme_crosswalk_candidate",
 }
 
+LARGELEXICON_BRIDGE_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "producer": "tools.largelexicon_fact_bridge",
+    "projector_id": LARGELEXICON_BRIDGE_PROJECTOR_ID,
+    "fact_family": "sarf",
+    "input_fact_types": ["largelexicon_carried_crosswalk_row", "largelexicon_carried_form_row"],
+    "output_fact_type": "largelexicon_lexeme_candidate",
+    "compatibility_class": (
+        "canonical occurrences addressed loc-first by an ACCEPTED carried target-schema crosswalk row, "
+        "whose written surface is documented byte-exactly by carried lemma/form/stem rows; "
+        "the crosswalk entry_id is page context and never a lexical edge, normalized-only matches, "
+        "root-family relations, candidate graph edges, quarantined rows and multi-entry collisions all abstain"
+    ),
+    "defeater_checks": ["largelexicon_bridge_abstention_guard"],
+    "gate_tier": "never_auto_resolve",
+    "version": "1.0.0",
+    "resolution_method": "carried_target_schema_loc_first_exact_surface_candidate",
+}
+
 REGISTRY = ProjectorRegistry()
 REGISTRY.register(SARF_CONTRACT, project_sarf_documented_forms)
 REGISTRY.register(NAHW_CONTRACT, project_nahw_particle_functions)
@@ -1043,6 +1123,7 @@ REGISTRY.register(FAM3_NUMBER_CONTRACT, project_fam3_number_pattern)
 REGISTRY.register(FAM4_FINITE_VERB_CONTRACT, project_fam4_finite_verb_pattern)
 REGISTRY.register(FAM5_DERIVED_VERB_CONTRACT, project_fam5_derived_verb_pattern)
 REGISTRY.register(PROOFV_VERB_CONTRACT, project_proofv_verb)
+REGISTRY.register(LARGELEXICON_BRIDGE_CONTRACT, project_largelexicon_carried_lexeme)
 
 
 def main(argv: Optional[List[str]] = None) -> int:

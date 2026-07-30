@@ -38,11 +38,17 @@ import copy
 import hashlib
 import json
 import subprocess
+import sys
 from collections import Counter
 from pathlib import Path
 from typing import Any, Iterable, Iterator
 
-import validate_largelexicon_rows as validator
+# The largelexicon tool family imports flat sibling modules; keep that working
+# whether this module is loaded as ``promote_...`` or as ``tools.promote_...``.
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+import validate_largelexicon_rows as validator  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -315,6 +321,10 @@ def source_snapshot() -> dict[str, str]:
 
 
 def git_head() -> str:
+    """Reported for humans only. It is deliberately NOT part of the release payload:
+    binding a commit sha would make the release stale after every unrelated commit,
+    while the per-path source_sha256 map already binds the exact inputs."""
+
     return subprocess.run(
         ["git", "rev-parse", "HEAD"], cwd=ROOT, check=True, capture_output=True, text=True
     ).stdout.strip()
@@ -437,7 +447,7 @@ def promote(*, carried_sink: dict[str, Any] | None = None) -> dict[str, Any]:
         raise PromotionError("immutability invariant failed: a committed source byte changed during promotion")
 
     release = {
-        "baseline": {"git_head": git_head(), "source_sha256": baseline},
+        "baseline": {"source_sha256": baseline},
         "carried_output": {
             "committed_sample": "qamus/indexes/largelexicon/target-schema/carried-rows.sample.jsonl",
             "full_output_policy": "regenerable; write with --emit-carried into gitignored out/ (sample + generator rule)",

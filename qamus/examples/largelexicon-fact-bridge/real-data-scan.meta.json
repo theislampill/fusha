@@ -1,0 +1,33 @@
+{
+  "generator": "tools/largelexicon_fact_bridge.py --write-scan",
+  "note": "bounded run over the first 2000 carried crosswalk rows in manifest order; no row content is reproduced, only counts",
+  "projector_id": "largelexicon.carried_lexeme_candidate.v1",
+  "scan_limit": 2000,
+  "schema": "qamus/largelexicon-fact-bridge-scan@1",
+  "summary": {
+    "blocker_counts": {
+      "crosswalk_packet_not_accepted": 420,
+      "lexical_collision_requires_context": 10,
+      "no_carried_lexical_support": 444,
+      "non_certified_graph_edge_only": 642,
+      "norm_only_surface_match": 181,
+      "root_family_relation_not_lexeme_identity": 218,
+      "unresolved_canonical_loc": 420
+    },
+    "certified_records": 0,
+    "learner_visible_records": 0,
+    "preserved_candidate_histogram": {
+      "0": 1905,
+      "1": 90,
+      "2": 5
+    },
+    "projection_status_counts": {
+      "blocked": 181,
+      "candidate": 90,
+      "producer_pending": 444,
+      "source_gap": 420,
+      "unresolved": 865
+    },
+    "record_count": 2000
+  }
+}

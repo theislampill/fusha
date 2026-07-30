@@ -1,0 +1,110 @@
+{
+  "blocker_vocabulary": [
+    "crosswalk_packet_not_accepted",
+    "lexical_collision_requires_context",
+    "missing_dependency_release",
+    "no_carried_lexical_support",
+    "non_certified_graph_edge_only",
+    "norm_only_surface_match",
+    "page_context_only_no_lexical_edge",
+    "quarantined_or_flagged_source_row",
+    "root_family_relation_not_lexeme_identity",
+    "unresolved_canonical_loc"
+  ],
+  "certified_records": 0,
+  "generator": "tools/largelexicon_fact_bridge.py --write-fixtures",
+  "learner_visible_records": 0,
+  "note": "in-memory behavioural fixtures; no committed table row is reproduced here",
+  "projector_id": "largelexicon.carried_lexeme_candidate.v1",
+  "row_count": 11,
+  "scenarios": [
+    {
+      "blockers": [],
+      "preserved_candidates": 1,
+      "projection_status": "candidate",
+      "scenario": "accepted_single_candidate"
+    },
+    {
+      "blockers": [
+        "lexical_collision_requires_context"
+      ],
+      "preserved_candidates": 2,
+      "projection_status": "unresolved",
+      "scenario": "lexical_collision_requires_context"
+    },
+    {
+      "blockers": [
+        "page_context_only_no_lexical_edge"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "unresolved",
+      "scenario": "page_context_only_no_lexical_edge"
+    },
+    {
+      "blockers": [
+        "root_family_relation_not_lexeme_identity"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "unresolved",
+      "scenario": "root_family_relation_not_lexeme_identity"
+    },
+    {
+      "blockers": [
+        "non_certified_graph_edge_only"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "unresolved",
+      "scenario": "non_certified_graph_edge_only"
+    },
+    {
+      "blockers": [
+        "unresolved_canonical_loc"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "source_gap",
+      "scenario": "unresolved_canonical_loc"
+    },
+    {
+      "blockers": [
+        "crosswalk_packet_not_accepted"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "source_gap",
+      "scenario": "crosswalk_packet_not_accepted"
+    },
+    {
+      "blockers": [
+        "quarantined_or_flagged_source_row"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "quarantined_or_flagged_source_row"
+    },
+    {
+      "blockers": [
+        "missing_dependency_release"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "missing_dependency_release"
+    },
+    {
+      "blockers": [
+        "norm_only_surface_match"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "norm_only_surface_match"
+    },
+    {
+      "blockers": [
+        "no_carried_lexical_support"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "producer_pending",
+      "scenario": "no_carried_lexical_support"
+    }
+  ],
+  "schema": "qamus/largelexicon-fact-bridge-fixtures-meta@1",
+  "sha256": "661c7d1f10b2c453b4e69bc7d1aafc6a559f74745b65ea32efe8b1e5b9d4108c"
+}

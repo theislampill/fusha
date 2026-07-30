@@ -1,6 +1,5 @@
 {
   "baseline": {
-    "git_head": "6536c319ebf8b9185388c3db88ecd05ecfd230ac",
     "source_sha256": {
       "fusha/lexicon/largelexicon/form-source.full.jsonl": "ca388f752b816c9d38c51c65fcf4b4f8abc0523625ab5b3aaa6afa7f2a720c13",
       "fusha/lexicon/largelexicon/lemma-source.full.jsonl": "e75c23ae50f64425fb7ae6f12f7596093012be173a4a5e8a405d3eaeb587646e",

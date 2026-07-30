@@ -2,6 +2,8 @@
 
 Verified against: commit `637d7da` (origin/main), audited 2026-07-29 by direct file reads, line counts, live manifest reads, and validator smoke-runs in this worktree (all five largelexicon validators pass: claim-boundary, source-ledger, parser, transclusion, denominator-join). Claims cited `file:line`. GAPs in §8.
 
+**Update 2026-07-30 (Burst A3):** GAP-L1 and GAP-L3 are now executed, not planned — see §9 (target-schema promotion) and §10 (typed fact bridge). §7's schema-migration paragraph and §8's GAP-L1/GAP-L3 stubs are superseded by those sections; the remaining GAPs are unchanged.
+
 ## 1. What largelexicon actually is
 
 A **source-clean, dependency-free candidate/lookup substrate** generated from the 2,092 authored Qamus entries (`qamus/data/current/entries.jsonl`), projected into lemma/form/stem fact tables plus a 117,117-row all-visible-qword denominator and crosswalk graph. It is a worklist accelerator and an abstention-gated parser candidate source — explicitly NOT a disambiguator, not live Qamus progress, not certified NLP (`docs/parser/largelexicon-claim-boundary.md:3-5,29-35`; `docs/parser/largelexicon-implementation.md:124-126`).
@@ -73,3 +75,41 @@ Two layers (`docs/parser/TRANSCLUSION.md:16-25`; `docs/parser/meta-transclusive-
 - **GAP-L6 — page-context/occurrence-syntax exclusion is structural, not linted**: packet routing enforces it in practice, but no validator scans public tables for occurrence-syntax leakage the way `FORBIDDEN_PUBLIC_SUBSTRINGS` scans for source labels. WP-LLX-OCCURRENCE-LEAK-LINT.
 - **GAP-L7 — flywheel artifacts are a 160-row sample**, not a full 117,117-row projection. WP-LLX-FLYWHEEL-FULL-PROJECTION.
 - **GAP-L8 — n993/مَلْجَأ source-card repair outstanding** (blocks the 2,092-complete claim). WP-LLX-N993-REPAIR.
+
+## 9. Target-schema promotion (closes GAP-L1)
+
+`tools/promote_largelexicon_target_schema.py` executes the v1→target migration the RM-22 rehearsal only modelled. Committed @1 tables are **immutable migration inputs**: the tool re-hashes every source path before and after a run and raises if a byte moved, and no `qamus/schemas/largelexicon-*` file was touched.
+
+**Disposition accounting** (`qamus/indexes/largelexicon/target-schema/TARGET-RELEASE.json`): 253,292 source rows in, 253,292 accounted, **0 silent drops** — 241,746 `carried`, 1,479 `flagged`, 10,067 `quarantined`. Every source identity has exactly one disposition; flagged and quarantined identities are emitted to separate ledgers with `source_locator`, `reasons`, `defect_families` and `source_row_sha256`.
+
+| Family | Source | Carried | Flagged | Quarantined |
+|---|---|---|---|---|
+| lemma-source | 2,092 | 813 | 0 | 1,279 |
+| form-source | 8,483 | 4,089 | 0 | 4,394 |
+| stem-source | 8,483 | 4,089 | 0 | 4,394 |
+| qword-denominator | 117,117 | 117,117 | 0 | 0 |
+| qword-crosswalk | 117,117 | 115,638 | 1,479 | 0 |
+
+Quarantine is semantic (`risk_flags`, `root_shape_or_reason`); the 1,479 flagged crosswalk rows are structural — they carry `review_fact_id` / `rebind_provenance` / `demotion` payloads the target row schema forbids, and placing that payload is an owner schema decision (`qamus/task-packets/TP-LARGELEXICON-A3-QUARANTINE-TRIAGE.json`).
+
+**Row-forbidden constants are hoisted, never dropped.** The four safety constants (`live_mutation_allowed`, `public_boundary`, `source`, `source_status`) become validated manifest-level `provenance.boundary_constants`; a row whose value diverges from the canonical boundary is **quarantined**, so hoisting cannot weaken the public/source/live boundary. The genuinely varying `resolution_*` derivation provenance becomes a manifest `derivation_variants` table with a stable `provenance_variant_id` recorded per accounted row — the 1,442 `two_vote_review_adjudication` and 2,582 second-lookup crosswalk rows keep their provenance instead of losing it to the migration. (The rehearsal previously discarded all eight fields uniformly.)
+
+**Carried rows are regenerated, not duplicated.** The 241,746 carried rows are a deterministic function of the immutable @1 tables; the release records their canonical digest, `carried-rows.sample.jsonl` holds a bounded reviewer sample, and `--emit-carried` writes the full tables under gitignored `out/` (sample-plus-generator rule). No new full table is committed, so the source-clean table allowlist needs no new entry.
+
+**Fail-closed gates.** `release_blockers()` refuses a release with mixed schema versions (source or carried), a drifted target schema, stale release metadata, an unbound source, a non-canonical hoisted boundary constant, or any validation-red table; `LargelexiconTargetTables` (in `tools/largelexicon_table_reader.py`) is the only sanctioned carried-row access and re-checks the released digest on every read. `tools/validate_largelexicon_table_manifest.py --target-release` independently re-validates all 241,746 carried rows against the **unchanged** committed schemas, re-checks the ledgers, and proves carried and dispositioned identity sets are disjoint and complete.
+
+**Honest posture note.** `qamus/indexes/largelexicon/RELEASE.json` still reports `pass_rows: 0` — correctly, because it describes the immutable @1 tables, which really do violate the target schemas. `TARGET-RELEASE.json` describes the derived carried tables and reports `pass_rows == carried_row_count`, `violation_rows == 0`. Two releases, two populations, no merged number.
+
+## 10. Typed fact bridge (closes GAP-L3)
+
+`tools/largelexicon_fact_bridge.py` is the smallest correct bridge from carried largelexicon rows to the typed-claim plane. It consumes **only** carried target-schema lemma/form/stem/crosswalk rows behind the freshness gate, and emits `qamus.typed_claim_contract.v1` records that are candidate-or-unresolved, never certification.
+
+**Identity discipline.** Lexeme, form, stem, occurrence, entry, page-context and root-family identities occupy separate fields of `fact_value` and are never merged. In particular the crosswalk `entry_id` is recorded as `page_context.crosswalk_entry_id` with `never_lexeme_edge: true`: it is the entry page that *displays* the word, never a claim that the word instantiates that entry's lexeme. A regression test moves the crosswalk row to a different page and asserts the lexeme candidate and its `fact_id` are unchanged.
+
+**Abstention vocabulary** (closed, ten blockers, each with a projection status): `lexical_collision_requires_context`, `page_context_only_no_lexical_edge`, `root_family_relation_not_lexeme_identity`, `non_certified_graph_edge_only`, `norm_only_surface_match`, `unresolved_canonical_loc`, `crosswalk_packet_not_accepted`, `quarantined_or_flagged_source_row`, `missing_dependency_release`, `no_carried_lexical_support`. Support requires an **exact written-surface** match; a normalized-only match is a `never_auto_resolve` trigger in the gate SSOT and stays blocked. Reuse is loc-first: `missing-loc|…` and `sarf:surface:…` are diagnostic labels and are rejected as binding keys. Zero, one and many candidates are all preserved as-is; a multi-entry collision keeps every candidate, records an unresolved `tension_record`, and never selects a winner.
+
+**Registration.** `largelexicon.carried_lexeme_candidate.v1` is registered in `tools/fact_projectors.py` with `gate_tier: never_auto_resolve`. `fact_projectors.review_and_materialize` now refuses that tier outright — two approving independent votes do not open it — so the bridge has no certification or materialization path at all. It is deliberately **not** added to `qamus/lattice/registered-projectors.json`: that registry keys @2.1 skill-rule projectors to released `sarf@2`/`nahw@2` rule ids through declarative predicates in `tools/lattice_projectors.py`, and the bridge has neither skill rule ids nor a declarative class predicate — registering it there would need a placeholder predicate that misrepresents its real class. A regression test asserts the deliberate absence so it cannot be added silently.
+
+**Measured behaviour** (`qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json`, first 2,000 carried crosswalk rows): 90 candidate records, 1,910 abstentions (865 unresolved, 444 producer_pending, 420 source_gap, 181 blocked), 5 collision records preserving 2 candidates each, **0 certified records and 0 learner-visible records**. Behavioural fixtures covering the accepted case and all ten blockers live in `qamus/examples/largelexicon-fact-bridge/bridge-fixtures.jsonl`; `tools/test_largelexicon_fact_bridge.py` holds 20 mutation tests, gated from `tools/test_fact_projectors.py`.
+
+The bridge does not adopt a live compiler, does not mutate entry data, and never materializes publicly: every record carries `learner_visible: false` and a materialization target with `public_materialization_allowed: false` and `live_mutation_allowed: false`.

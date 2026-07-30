@@ -15,7 +15,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import subprocess
 from collections import Counter
 from pathlib import Path
 from typing import Any, Iterable
@@ -71,12 +70,6 @@ def source_snapshot() -> dict[str, str]:
         if family.manifest_path:
             paths.add(ROOT / family.manifest_path)
     return {path.relative_to(ROOT).as_posix(): validator.sha256_file(path) for path in sorted(paths)}
-
-
-def git_head() -> str:
-    return subprocess.run(
-        ["git", "rev-parse", "HEAD"], cwd=ROOT, check=True, capture_output=True, text=True
-    ).stdout.strip()
 
 
 def rehearse() -> tuple[dict[str, Any], list[dict[str, Any]]]:
@@ -154,7 +147,10 @@ def rehearse() -> tuple[dict[str, Any], list[dict[str, Any]]]:
         raise RuntimeError("dry-run invariant failed: committed table or manifest bytes changed during rehearsal")
     totals = Counter(row["disposition"] for row in all_accounting)
     summary = {
-        "baseline": {"git_head": git_head(), "source_sha256": baseline},
+        # No commit sha in the payload: binding one made --check go red after every
+        # unrelated commit, which is how the committed report silently went stale.
+        # The per-path source_sha256 map already binds the exact rehearsed inputs.
+        "baseline": {"source_sha256": baseline},
         "determinism": {"timestamps_omitted": True, "stable_input_order": True, "stable_json_keys": True},
         "dry_run": {"committed_sources_byte_untouched": True, "live_mutation_allowed": False},
         "families": family_reports,

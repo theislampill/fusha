@@ -1,0 +1,156 @@
+{
+  "schema": "qamus.task_packet.v1",
+  "packet_id": "TP-LARGELEXICON-A3-BRIDGE-WAVE1",
+  "title": "First bounded consumption wave for the largelexicon typed bridge candidates",
+  "model_class": "standard",
+  "scope": {
+    "summary": "The A3 bridge emits candidate-or-unresolved typed-claim records from carried target-schema rows, loc-first, abstaining on collisions, page-context-only rows, root-only relations, normalized-only matches and unaccepted crosswalk addresses. This packet consumes one bounded wave of its CANDIDATE records: it checks each candidate against the sarf evidence ladder and routes it to two-vote, source-gap or rejected. It never certifies from the bridge output itself.",
+    "entry_id": "not-entry-scoped",
+    "family": "LARGELEXICON_BRIDGE_CANDIDATE_CONSUMPTION",
+    "tranche": "a3-bridge-wave-1",
+    "out_of_scope": [
+      "certifying a lexeme, form, sense or root edge from a bridge candidate: the bridge projector is registered never_auto_resolve and has no certification path",
+      "resolving a lexical_collision_requires_context record by picking a candidate",
+      "consuming any abstained record as if it were a candidate",
+      "any live-surface mutation, entry-store write, or public materialization"
+    ]
+  },
+  "inputs": {
+    "input_files": [
+      "tools/largelexicon_fact_bridge.py",
+      "tools/fact_projectors.py",
+      "qamus/lattice/registered-projectors.json",
+      "qamus/examples/largelexicon-fact-bridge/bridge-fixtures.jsonl",
+      "qamus/examples/largelexicon-fact-bridge/bridge-fixtures.meta.json",
+      "qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json",
+      "qamus/indexes/largelexicon/target-schema/TARGET-RELEASE.json",
+      "qamus/schemas/typed-claim-contract.schema.json",
+      "sarf/SKILL.md",
+      "sarf/procedures/largelexicon-morphology-expansion.md",
+      "sarf/procedures/qword-crosswalk-before-morphology.md",
+      "nahw/procedures/largelexicon-function-token-routing.md"
+    ],
+    "permitted_write_files": [
+      "qamus/reports/largelexicon-bridge-wave1/"
+    ],
+    "prohibited_files": [
+      "qamus/data/current/entries.jsonl",
+      "qamus/schemas/",
+      "qamus/indexes/largelexicon/target-schema/",
+      "qamus/certification/",
+      "fusha/lexicon/largelexicon/",
+      "fusha/morphology/data/"
+    ]
+  },
+  "tools_required": [
+    "python3",
+    "tools/largelexicon_fact_bridge.py",
+    "tools/test_largelexicon_fact_bridge.py"
+  ],
+  "commands": [
+    {
+      "purpose": "produce the bounded wave of typed-claim records for review",
+      "run": "python tools/largelexicon_fact_bridge.py --limit 2000 --out out/largelexicon-bridge-wave1/typed-claims.jsonl"
+    },
+    {
+      "purpose": "re-prove the bridge behaviour before consuming anything it emitted",
+      "run": "python tools/test_largelexicon_fact_bridge.py"
+    },
+    {
+      "purpose": "re-prove the committed fixtures and the real-data scan are fresh",
+      "run": "python tools/largelexicon_fact_bridge.py --check-fixtures"
+    }
+  ],
+  "candidate_population": {
+    "universe_size": 115638,
+    "this_packet_size": 90,
+    "selection_rule": "the CANDIDATE-status records of the first 2,000 carried crosswalk rows in manifest order, as counted in qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json; abstained records are input context only",
+    "population_source": "tools/largelexicon_fact_bridge.py --limit 2000"
+  },
+  "expected_outputs": [
+    {
+      "path": "qamus/reports/largelexicon-bridge-wave1/dispositions.jsonl",
+      "description": "one row per consumed candidate with its ladder rung, route and exact reason"
+    },
+    {
+      "path": "qamus/reports/largelexicon-bridge-wave1/dispositions.meta.json",
+      "description": "generator, counts per route, and the carried-table dependency hashes the wave was computed against"
+    }
+  ],
+  "evidence_policy": {
+    "statement": "Every disposition cites the bridge record's contract_id, its canonical quran loc, and the carried form row address it depends on. A carried-table lookup is source-addressed candidate evidence about a written surface; it is never, by itself, evidence of lexeme identity, sense, or function.",
+    "verbatim_required": false,
+    "fabrication_rule": "If the evidence ladder does not reach the rung a route needs, record source_gap with the precise missing evidence. Prefer pending over wrong."
+  },
+  "guards": [
+    "the METHOD of this consumption wave transfers to later waves; the linguistic conclusion about any single occurrence never transfers to another occurrence or surface",
+    "the crosswalk entry_id is the page that displays the word: it is page context and may never become a lexeme, form or sense edge",
+    "a root-family relation is never a lexeme identity, and a candidate graph edge is never a certified edge",
+    "a normalized-only surface match is a never_auto_resolve trigger and must stay blocked",
+    "collision records keep every preserved candidate: no route may select one and drop the others",
+    "the bridge projector is registered never_auto_resolve; certification remains solely with tools/certify_typed_fact.py on its own evidence bundle"
+  ],
+  "defeaters": [
+    "a disposition that treats a bridge candidate as certified evidence",
+    "a disposition that resolves a collision without new context evidence",
+    "a disposition derived from an abstained record",
+    "any output row whose canonical loc does not match the bridge record it cites"
+  ],
+  "canaries": {
+    "positive": [
+      {
+        "id": "canary-single-candidate-routes-to-ladder",
+        "expectation": "a single-candidate record routes to a named sarf ladder rung with its form-source address cited"
+      },
+      {
+        "id": "canary-abstention-context-only",
+        "expectation": "an abstained record appears only as context and produces no disposition row"
+      }
+    ],
+    "adversarial": [
+      {
+        "id": "canary-collision-not-resolved",
+        "expectation": "a lexical_collision_requires_context record must not produce a single-winner disposition; it routes to context review with all candidates intact"
+      },
+      {
+        "id": "canary-page-context-not-lexical",
+        "expectation": "a page_context_only_no_lexical_edge record must never produce a lexeme edge for the displaying entry"
+      }
+    ]
+  },
+  "acceptance_tests": [
+    {
+      "name": "bridge behaviour holds",
+      "run": "python tools/test_largelexicon_fact_bridge.py",
+      "pass_condition": "ok is true and every mutation test passes"
+    },
+    {
+      "name": "bridge output is candidate-only",
+      "run": "python tools/largelexicon_fact_bridge.py --check-scan",
+      "pass_condition": "summary.certified_records is 0 and summary.learner_visible_records is 0"
+    },
+    {
+      "name": "harness stays green",
+      "run": "python tools/check_regressions.py",
+      "pass_condition": "ALL REGRESSION CHECKS PASS"
+    }
+  ],
+  "non_deployment": {
+    "status": "NOT_DEPLOYED",
+    "statement": "This packet produces candidate dispositions and review routes only. No bridge record may be materialized publicly, shown to a learner, or written to the live site; certification stays with the owner-gated certifier on its own evidence bundle."
+  },
+  "escalation_trigger": {
+    "conditions": [
+      "a collision needs occurrence context that no committed artifact supplies",
+      "a candidate would require an iʿrāb-bearing judgement to route",
+      "the carried-table dependency hashes changed mid-wave"
+    ],
+    "route": "two-vote queue for iʿrāb-bearing routes; source-gap packet for missing context; rerun the wave from a fresh release if the dependency hashes moved"
+  },
+  "definition_of_done": [
+    "every candidate record in the bounded wave has exactly one disposition with an exact reason",
+    "no collision record was resolved by selection",
+    "no bridge record was certified, materialized publicly, or made learner-visible",
+    "the carried-table dependency hashes are recorded so the wave can be invalidated mechanically"
+  ]
+}
