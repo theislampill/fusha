@@ -192,14 +192,40 @@ A2_OWNERSHIP = {
         ("tools/fusha_nahw_particle_rules.py:resolve_particle_homograph", "fixture_only"),
     "nahw/evals/irab-polysemy-eval.jsonl": (None, "fixture_only"),
 }
-# consumer id -> (module file that must exist under the reviewed root, import name, attribute that must exist)
+# consumer id -> (module file that must exist under the reviewed root, attribute that must exist)
+#
+# ROUND-9 defect: the import name used to be written out by hand, and for the leak consumer it was the
+# top-level key `leak_sot` — but tools/run_nahw_evals.py binds that consumer with
+#     from tools.leak_sot import LEAK_RE
+# so the key actually backing the INVOKED consumer is `tools.leak_sot`. Preloading sys.modules with a
+# foreign `tools.leak_sot` therefore ran the real scan from another checkout while this check, looking at a
+# key nobody had bound, still reported the consumer repository-local and raised no rejection.
+#
+# The import name is no longer written by hand at all. consumer_module_keys() DERIVES every key the file
+# could be bound under from the file path itself, so this check can never again drift from the key the
+# runner really imports.
 A2_CONSUMER_MODULES = {
-    "tools/leak_sot.py:LEAK_RE.search": ("tools/leak_sot.py", "leak_sot", "LEAK_RE"),
+    "tools/leak_sot.py:LEAK_RE.search": ("tools/leak_sot.py", "LEAK_RE"),
     "tools/fusha_context_parser.py:collision_status":
-        ("tools/fusha_context_parser.py", "tools.fusha_context_parser", "collision_status"),
+        ("tools/fusha_context_parser.py", "collision_status"),
     "tools/fusha_nahw_particle_rules.py:resolve_particle_homograph":
-        ("tools/fusha_nahw_particle_rules.py", "tools.fusha_nahw_particle_rules", "resolve_particle_homograph"),
+        ("tools/fusha_nahw_particle_rules.py", "resolve_particle_homograph"),
 }
+
+
+def consumer_module_keys(rel):
+    """Every sys.modules key `rel` could be bound under, derived from the path — never hand-written.
+
+    `tools/leak_sot.py` -> ("tools.leak_sot", "leak_sot"): the dotted package path the runner imports, and
+    the bare name a `tools/`-on-sys.path import produces. BOTH are checked, because either one can be the
+    object the invoked consumer actually came from.
+    """
+    stem = rel[:-len(".py")] if rel.endswith(".py") else rel
+    parts = [p for p in stem.split("/") if p]
+    keys = [".".join(parts)]
+    if len(parts) > 1:
+        keys.append(parts[-1])
+    return tuple(keys)
 # Exact per-item field types. A string where an int belongs, or a metrics block that is not a mapping, is a
 # malformed item and disqualifies the WHOLE result — not just that row.
 A2_ITEM_TYPES = (("bank", str), ("rows", int), ("checked", int), ("failures", list),
@@ -212,18 +238,21 @@ def _int_field(value):
 
 
 def consumer_module_resolves(consumer, repo_root):
-    """The credited consumer must exist as a file under THIS root, and any already-imported module of the same
-    name must be the one from this root — a preloaded same-named module from another checkout is not evidence."""
+    """The credited consumer must exist as a file under THIS root, and EVERY already-imported module it
+    could be bound under must be the one from this root — a preloaded same-named module from another
+    checkout is not evidence, whichever key it was installed at."""
     slot = A2_CONSUMER_MODULES.get(consumer)
     if slot is None:
         return False
-    rel, import_name, attr = slot
+    rel, attr = slot
     if not os.path.exists(os.path.join(repo_root, rel.replace("/", os.sep))):
         return False
-    mod = sys.modules.get(import_name)
-    if mod is not None:
+    for key in consumer_module_keys(rel):
+        mod = sys.modules.get(key)
+        if mod is None:
+            continue                     # not imported under this key: nothing to verify
         if not module_in_root(mod, repo_root):
-            return False
+            return False                 # the invoked consumer came from another checkout
         if not hasattr(mod, attr):
             return False
     return True
@@ -832,20 +861,49 @@ def _self_test():
         if not any(v.get("entrypoint") == "tools/run_sarf_evals.py" for v in _res.values()):
             failures.append("A2 PROBE %r collaterally destroyed the sarf runner's own results" % _label)
 
-    # a foreign / preloaded module of the same name is not this repository's consumer
-    class _ForeignConsumer(object):
-        __file__ = os.path.join(os.sep, "elsewhere", "checkout", "tools", "leak_sot.py")
+    # A foreign / preloaded module of the same name is not this repository's consumer — under ANY key it
+    # could be bound at.
+    #
+    # ROUND-9 regression. tools/run_nahw_evals.py binds the leak consumer with
+    # `from tools.leak_sot import LEAK_RE`, so the key backing the invoked consumer is `tools.leak_sot`.
+    # This check previously validated only the separate top-level key `leak_sot`, so preloading
+    # `tools.leak_sot` with a foreign module ran the real scan from another checkout while coverage still
+    # reported the consumer repository-local, credited its 10 rows and raised no rejection. Every derived
+    # key is now probed, and the exact key the runner imports is asserted to be among them.
+    _leak_consumer = "tools/leak_sot.py:LEAK_RE.search"
+    _leak_keys = consumer_module_keys(A2_CONSUMER_MODULES[_leak_consumer][0])
+    if "tools.leak_sot" not in _leak_keys:
+        failures.append("the key tools/run_nahw_evals.py actually imports (tools.leak_sot) is not probed; "
+                        "derived keys were %s" % (_leak_keys,))
+    for _key in _leak_keys:
 
-    _saved = sys.modules.get("leak_sot")
-    try:
-        sys.modules["leak_sot"] = _ForeignConsumer()
-        if consumer_module_resolves("tools/leak_sot.py:LEAK_RE.search", _REPO):
-            failures.append("a preloaded same-named consumer module from another checkout was accepted")
-    finally:
-        if _saved is None:
-            sys.modules.pop("leak_sot", None)
-        else:
-            sys.modules["leak_sot"] = _saved
+        class _ForeignConsumer(object):
+            """Same-named module from another checkout, carrying the attribute the reporter looks for."""
+            __file__ = os.path.join(os.sep, "elsewhere", "checkout", "tools", "leak_sot.py")
+            LEAK_RE = re.compile(r"unused")
+
+        _saved, _had = sys.modules.get(_key), _key in sys.modules
+        try:
+            sys.modules[_key] = _ForeignConsumer()
+            if consumer_module_resolves(_leak_consumer, _REPO):
+                failures.append("a preloaded same-named consumer module from another checkout was accepted "
+                                "at sys.modules[%r]" % _key)
+            # and it must cost the artifact its behavioural credit, not merely fail a helper
+            _foreign_result = {
+                "entrypoint": A2_ENTRYPOINT, "invoked": True, "runner_ok": True, "rows": 10,
+                "decided_rows": 10, "failures": 0, "declared_disposition": "implemented_and_consumed",
+                "declared_consumer": _leak_consumer, "observed_consumer_calls": 10,
+                "quarantined_rows": 0, "unowned_axes": {}, "discovered_rows": 10,
+            }
+            if behavioral_coverage(_foreign_result, bank="nahw/evals/public-boundary-scanner-eval.jsonl",
+                                   repo_root=_REPO):
+                failures.append("an otherwise-perfect result was credited while its consumer was preloaded "
+                                "from another checkout at sys.modules[%r]" % _key)
+        finally:
+            if _had:
+                sys.modules[_key] = _saved
+            else:
+                sys.modules.pop(_key, None)
     if not consumer_module_resolves("tools/leak_sot.py:LEAK_RE.search", _REPO):
         failures.append("the real consumer module failed to resolve beneath the repository root")
     if consumer_module_resolves("tools/leak_sot.py:LEAK_RE.search", os.path.join(_REPO, "tools")):
@@ -883,7 +941,11 @@ def _self_test():
               "unowned-axis artifact relabelled implemented, wrong schema, wrong field type, a non-mapping "
               "item and a result that does not declare ok are all rejected from the reporter's OWN allowlist "
               "and OWN row counts, fail closed rather than raising, leave the sarf runner intact, and a "
-              "preloaded same-named consumer module from another checkout is refused")
+              "preloaded same-named consumer module from another checkout is refused; ROUND-9 — the "
+              "import-root integrity check probes EVERY sys.modules key a consumer file could be bound "
+              "under, derived from its path rather than hand-written, including the exact `tools.leak_sot` "
+              "key tools/run_nahw_evals.py imports, and a foreign module at any of those keys costs the "
+              "artifact both resolution and behavioural credit")
     return 0 if not failures else 1
 
 
