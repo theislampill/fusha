@@ -103,6 +103,23 @@ class ProjectorRegistry:
         projector_id = contract.get("projector_id")
         if projector_id in self._entries:
             errors.append("projector_id is already registered")
+        # An output fact type may have sibling producers (FAM2/FAM3 both emit
+        # formation_evidence), but they must agree on the gate. A second
+        # projector claiming the same output at a DIFFERENT tier would make the
+        # gate ambiguous and let a caller pick the lenient contract, so a
+        # conflicting re-registration is refused.
+        output_fact_type = contract.get("output_fact_type")
+        for existing, _projector in self._entries.values():
+            if existing.get("output_fact_type") != output_fact_type:
+                continue
+            if existing.get("gate_tier") != contract.get("gate_tier"):
+                errors.append(
+                    "output_fact_type %s is already produced by %s at gate %s; registering it at %s "
+                    "would make the gate ambiguous"
+                    % (output_fact_type, existing.get("projector_id"), existing.get("gate_tier"),
+                       contract.get("gate_tier"))
+                )
+                break
         if errors:
             raise ProjectorValidationError("invalid projector contract: " + "; ".join(errors))
         self._entries[projector_id] = (copy.deepcopy(contract), projector)
@@ -114,6 +131,24 @@ class ProjectorRegistry:
         if projector_id not in self._entries:
             raise ProjectorValidationError("unregistered projector: " + projector_id)
         return copy.deepcopy(self._entries[projector_id][0])
+
+    def gate_tier_for_output_fact_type(self, output_fact_type: str) -> Optional[str]:
+        """The STRICTEST registered gate that produces this output fact type.
+
+        Sibling producers must already agree on the tier (see ``register``); the
+        strictest-wins reduction is belt-and-braces so a future divergence can
+        only ever tighten a gate, never loosen one.
+        """
+
+        ranks = {name: item.get("rank", 0) for name, item in load_gate_tiers().items()}
+        tiers = [
+            contract.get("gate_tier")
+            for contract, _projector in self._entries.values()
+            if contract.get("output_fact_type") == output_fact_type
+        ]
+        if not tiers:
+            return None
+        return max(tiers, key=lambda tier: ranks.get(tier, 0))
 
     def run(self, projector_id: str, **kwargs: Any) -> Dict[str, Any]:
         if projector_id not in self._entries:
@@ -222,7 +257,6 @@ def project_largelexicon_carried_lexeme(
     contract: Dict[str, Any],
     crosswalk_row: Dict[str, Any],
     inputs: Any,
-    carried: bool = True,
 ) -> Dict[str, Any]:
     """Run the A3 bridge as a registry call: candidate or abstention, never more."""
 
@@ -232,7 +266,7 @@ def project_largelexicon_carried_lexeme(
     # inputs. Diagnostic inputs abstain by construction and can never reach here
     # with a candidate attached.
     candidate_capable = bool(getattr(inputs, "candidate_capable", False))
-    record = bridge.bridge_row(crosswalk_row, inputs, carried=carried)
+    record = bridge.bridge_row(crosswalk_row, inputs)
     errors = bridge.validate_records([record])
     if errors:
         raise ProjectorValidationError("bridge record is not a valid typed claim: " + "; ".join(errors[:3]))

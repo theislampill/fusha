@@ -93,6 +93,9 @@ SUFAHA_CONTRACT = ROOT / "qamus" / "examples" / "proof-noun-sufaha" / "sufaha-co
 TWO_VOTE_SAMPLE = ROOT / "qamus" / "examples" / "two_vote_artifact.sample.jsonl"
 
 
+NEVER_AUTO_RESOLVE = "never_auto_resolve"
+
+
 class CertificationError(ValueError):
     """Raised when a transition, bundle, or event trail fails closed validation."""
 
@@ -103,6 +106,53 @@ def _canonical(value: Any) -> str:
 
 def _sha256(text: str) -> str:
     return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def producing_projector_gate(fact: Dict[str, Any]) -> Tuple[Optional[str], Optional[str], str]:
+    """Resolve the PRODUCING projector's gate tier from repository authority.
+
+    The fact's own claimed tier is never trusted. Resolution order:
+
+    1. ``rule_projector.projector_id`` against the registered projector registry;
+    2. failing that, the strictest registered gate for the fact's ``fact_type``
+       (so deleting or renaming the projector_id cannot shed the gate).
+
+    Returns ``(gate_tier, projector_id, basis)``; ``gate_tier`` is None only when
+    the repository registers no producer for this fact at all.
+    """
+
+    try:
+        from tools import fact_projectors
+    except Exception as error:  # pragma: no cover - registry must be importable
+        raise CertificationError("cannot resolve the producing projector registry: %s" % error)
+
+    projector_id = ((fact.get("rule_projector") or {}).get("projector_id"))
+    if projector_id:
+        try:
+            contract = fact_projectors.REGISTRY.contract(str(projector_id))
+        except fact_projectors.ProjectorValidationError:
+            contract = None
+        if contract is not None:
+            return contract.get("gate_tier"), str(projector_id), "registered projector_id"
+    fact_type = fact.get("fact_type")
+    if fact_type:
+        tier = fact_projectors.REGISTRY.gate_tier_for_output_fact_type(str(fact_type))
+        if tier is not None:
+            return tier, (str(projector_id) if projector_id else None), "registered output_fact_type"
+    return None, (str(projector_id) if projector_id else None), "no registered producer"
+
+
+def gate_refusal(fact: Dict[str, Any]) -> Optional[str]:
+    """Refusal reason when the producing projector may never reach certified."""
+
+    tier, projector_id, basis = producing_projector_gate(fact)
+    if tier == NEVER_AUTO_RESOLVE:
+        return (
+            "the producing projector is gated %s (%s: %s); the gate SSOT rejects this class outright, "
+            "so no evidence bundle, dependency or vote can certify it"
+            % (NEVER_AUTO_RESOLVE, basis, projector_id or fact.get("fact_type"))
+        )
+    return None
 
 
 def _addresses(fact: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -395,6 +445,11 @@ class TypedFactCertificationStore:
             )
         evidence_bundle_ref: Optional[Dict[str, Any]] = None
         if to_status == "certified":
+            # Producer gate first: a never_auto_resolve producer can never reach
+            # certified, however complete its evidence, dependencies or votes.
+            refusal = gate_refusal(entry["fact"])
+            if refusal is not None:
+                raise CertificationError("certification refused for %s: %s" % (fact_id, refusal))
             two_vote_row = None
             errors: List[str] = []
             if two_vote_bundle is not None:

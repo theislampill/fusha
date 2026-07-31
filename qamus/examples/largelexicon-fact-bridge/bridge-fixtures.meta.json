@@ -1,6 +1,7 @@
 {
   "blocker_vocabulary": [
     "crosswalk_packet_not_accepted",
+    "dependency_id_not_in_authority",
     "lexical_collision_requires_context",
     "loc_not_in_canonical_index",
     "loc_surface_disagreement",
@@ -12,6 +13,8 @@
     "page_context_only_no_lexical_edge",
     "quarantined_or_flagged_source_row",
     "root_family_relation_not_lexeme_identity",
+    "row_not_in_validated_carried_authority",
+    "source_card_authority_unavailable",
     "typed_edge_identity_disagreement",
     "unresolved_canonical_loc",
     "unverified_diagnostic_inputs",
@@ -23,7 +26,7 @@
   "note": "in-memory behavioural fixtures; no committed table row is reproduced here",
   "projector_id": "largelexicon.carried_lexeme_candidate.v1",
   "public_boundary_clean": true,
-  "row_count": 17,
+  "row_count": 20,
   "scenarios": [
     {
       "blockers": [],
@@ -153,6 +156,30 @@
     },
     {
       "blockers": [
+        "row_not_in_validated_carried_authority"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "row_not_in_validated_carried_authority"
+    },
+    {
+      "blockers": [
+        "dependency_id_not_in_authority"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "dependency_id_not_in_authority"
+    },
+    {
+      "blockers": [
+        "source_card_authority_unavailable"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "source_gap",
+      "scenario": "source_card_authority_unavailable"
+    },
+    {
+      "blockers": [
         "unverified_diagnostic_inputs"
       ],
       "preserved_candidates": 0,
@@ -161,5 +188,5 @@
     }
   ],
   "schema": "qamus/largelexicon-fact-bridge-fixtures-meta@1",
-  "sha256": "ab902f6e6ea17c1fe73310776908607ca68b06096793cfed3a2a7b9e09620bb2"
+  "sha256": "1c200837e40b7dab13105e4a5e93ddf79757a32bcc0455c08180f7b40fa8c29e"
 }

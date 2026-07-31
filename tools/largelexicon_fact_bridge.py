@@ -104,6 +104,9 @@ MATERIALIZATION_TARGET = {
 # projection status it maps to. Nothing here is ever "resolved by picking one".
 BLOCKER_STATUS = {
     "quarantined_or_flagged_source_row": "blocked",
+    "row_not_in_validated_carried_authority": "blocked",
+    "dependency_id_not_in_authority": "blocked",
+    "source_card_authority_unavailable": "source_gap",
     "unverified_diagnostic_inputs": "blocked",
     "missing_dependency_release": "blocked",
     "norm_only_surface_match": "blocked",
@@ -123,6 +126,17 @@ BLOCKER_STATUS = {
 
 BLOCKER_REASONS = {
     "quarantined_or_flagged_source_row": "the crosswalk row did not carry onto the target schema",
+    "row_not_in_validated_carried_authority": (
+        "this exact row body is not a member of the validated carried crosswalk authority; a detached, "
+        "altered, schema-downgraded or invented row can never be bridged"
+    ),
+    "dependency_id_not_in_authority": (
+        "a declared source dependency id does not resolve in the validated denominator authority; "
+        "a correct kind label is not a membership proof"
+    ),
+    "source_card_authority_unavailable": (
+        "the target release supplies no authority able to prove this row's source-card membership"
+    ),
     "unverified_diagnostic_inputs": (
         "these inputs were built for diagnostics and were never verified, so they are "
         "structurally unable to support a candidate"
@@ -165,6 +179,12 @@ def _canonical(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
+def row_body_digest(row: dict[str, Any]) -> str:
+    """Deterministic digest of an exact canonical row body."""
+
+    return hashlib.sha256(_canonical(row).encode("utf-8")).hexdigest()
+
+
 def canonical_line_bytes(value: Any) -> bytes:
     return _canonical(value).encode("utf-8") + b"\n"
 
@@ -181,7 +201,9 @@ def is_canonical_loc(value: Any) -> bool:
     if not isinstance(value, str) or any(value.startswith(prefix) for prefix in FORBIDDEN_BINDING_PREFIXES):
         return False
     parts = value.split(":")
-    return len(parts) == 3 and all(part.isdigit() and 1 <= len(part) <= 3 and int(part) >= 0 for part in parts)
+    # Coordinates are 1-based everywhere in the corpus: surah, ayah and word all
+    # start at 1, so 0:0:0 is structurally impossible, never merely absent.
+    return len(parts) == 3 and all(part.isdigit() and 1 <= len(part) <= 3 and int(part) >= 1 for part in parts)
 
 
 GUARD_REASONS.update(
@@ -200,10 +222,30 @@ def occurrence_loc_of(node_id: str) -> str | None:
     return ":".join(match.groups()) if match else None
 
 
+EDGE_ID_RE = re.compile(r"^edge:[0-9a-f]{16,}$")
+
+
+def edge_content_digest(edge: dict[str, Any]) -> str:
+    """Deterministic digest of an edge's content, excluding its own identifier."""
+
+    body = {key: value for key, value in edge.items() if key != "edge_id"}
+    return hashlib.sha256(_canonical(body).encode("utf-8")).hexdigest()
+
+
 def typed_edge_errors(edge: dict[str, Any]) -> list[str]:
-    """Closed structural contract for an eligible canonical typed lexeme/form edge."""
+    """Closed content contract for an eligible canonical typed lexeme/form edge.
+
+    An edge only establishes lexeme/entry identity when it is RECONSTRUCTIBLE:
+    a content-shaped identifier, a named producer, an accepted non-candidate
+    status on a lexeme/form relation, an exact occurrence node, an exact written
+    surface, at least one evidence address, and at least one guard. Page context,
+    surface resemblance, root family and lookup labels are excluded by
+    ``LEXICAL_EDGE_TYPES`` and can never satisfy this contract.
+    """
 
     problems: list[str] = []
+    if not isinstance(edge, dict):
+        return ["edge is not a record"]
     if edge.get("schema") != TYPED_GRAPH_SCHEMA:
         problems.append("schema is not " + TYPED_GRAPH_SCHEMA)
     if edge.get("edge_type") not in LEXICAL_EDGE_TYPES:
@@ -216,6 +258,24 @@ def typed_edge_errors(edge: dict[str, Any]) -> list[str]:
         problems.append("edge carries no written surface")
     if not edge.get("from_node_id"):
         problems.append("edge carries no source node")
+    if occurrence_loc_of(edge.get("from_node_id")) is None:
+        problems.append("edge carries no unambiguous occurrence loc")
+    if not EDGE_ID_RE.fullmatch(str(edge.get("edge_id") or "")):
+        problems.append("edge_id is absent or is not a content-shaped identifier")
+    producer = edge.get("producer")
+    if not isinstance(producer, dict) or not producer.get("id") or not producer.get("version"):
+        problems.append("edge carries no identified producer")
+    evidence = edge.get("evidence")
+    if not isinstance(evidence, list) or not evidence:
+        problems.append("edge carries no evidence")
+    else:
+        for index, item in enumerate(evidence):
+            if not isinstance(item, dict) or not str(item.get("address") or ""):
+                problems.append(f"evidence[{index}] carries no source address")
+                break
+    guards = edge.get("guards")
+    if not isinstance(guards, list) or not guards or not all(str(item) for item in guards):
+        problems.append("edge carries no guards")
     return problems
 
 
@@ -371,26 +431,50 @@ def verify_authority(
     derived_edges = sum(len(edges) for edges in (typed_edges or {}).values())
     derived_locs = len(typed_edges or {})
 
-    def _meta(name: str, meta: dict[str, Any], derived_rows: int) -> dict[str, Any]:
+    def _meta(name: str, meta: dict[str, Any], derived_rows: int, content: Any) -> dict[str, Any]:
+        content_digest = hashlib.sha256(_canonical(content).encode("utf-8")).hexdigest()
         if not isinstance(meta, dict) or not meta.get("present"):
             problems.append(f"{name}: authority binding is missing")
-            return {"path": None, "present": False, "row_count": derived_rows, "sha256": None}
-        if not re.fullmatch(r"[0-9a-f]{64}", str(meta.get("sha256"))):
+            return {"content_sha256": content_digest, "path": None, "present": False,
+                    "row_count": derived_rows, "sha256": None}
+        declared = str(meta.get("sha256"))
+        if not re.fullmatch(r"[0-9a-f]{64}", declared):
             problems.append(f"{name}: authority digest is missing or malformed")
         if "row_count" in meta and meta.get("row_count") != derived_rows:
             problems.append(
                 "%s: declared row_count %r disagrees with the %d supplied rows"
                 % (name, meta.get("row_count"), derived_rows)
             )
+        # A digest is only authority when it is RECOMPUTED. A declared repository
+        # path must exist and hash to the declared digest; anything else must
+        # match the deterministic digest of the content actually supplied, so a
+        # well-shaped invented digest, a nonexistent path, and same-count content
+        # drift are all refused.
+        declared_path = str(meta.get("path") or "")
+        if declared_path and "://" not in declared_path:
+            candidate_path = ROOT / declared_path
+            if not candidate_path.exists():
+                problems.append(f"{name}: declared authority path does not exist: {declared_path}")
+            else:
+                actual = hashlib.sha256(candidate_path.read_bytes()).hexdigest()
+                if actual != declared:
+                    problems.append(f"{name}: declared digest does not match the file at {declared_path}")
+        elif declared != content_digest:
+            problems.append(
+                f"{name}: declared digest does not match the deterministic digest of the supplied content"
+            )
         return {
+            "content_sha256": content_digest,
             "path": meta.get("path"),
             "present": True,
             "row_count": derived_rows,
             "sha256": meta.get("sha256"),
         }
 
-    index_binding = _meta("canonical_loc_index", loc_surface_meta, derived_index_rows)
-    lattice_binding = _meta("lexeme_join_lattice", lexeme_join_meta, derived_lattice_rows)
+    index_binding = _meta("canonical_loc_index", loc_surface_meta, derived_index_rows,
+                          dict(sorted((loc_surface or {}).items())))
+    lattice_binding = _meta("lexeme_join_lattice", lexeme_join_meta, derived_lattice_rows,
+                            {key: (lexeme_join or {})[key] for key in sorted(lexeme_join or {})})
 
     bundles: list[dict[str, Any]] = []
     if not isinstance(typed_graph_meta, dict):
@@ -430,6 +514,27 @@ def verify_authority(
         actual = derived_edges if key == "eligible_edge_count" else derived_locs
         if declared is not None and declared != actual:
             problems.append(f"typed_graph: declared {key} {declared!r} disagrees with the supplied edges ({actual})")
+    # Recompute every bundle digest: a declared repository path must exist and hash
+    # to its declared digest; a synthetic bundle must match the deterministic
+    # content digest of the edges actually supplied at those locs.
+    edge_content = {
+        loc: [edge_content_digest(edge) for edge in (typed_edges or {}).get(loc, [])]
+        for loc in sorted(typed_edges or {})
+    }
+    supplied_content_digest = hashlib.sha256(_canonical(edge_content).encode("utf-8")).hexdigest()
+    for index, bundle in enumerate(bundles):
+        declared_path = str(bundle.get("path") or "")
+        declared_digest = str(bundle.get("sha256") or "")
+        if declared_path and "://" not in declared_path:
+            candidate_path = ROOT / declared_path
+            if not candidate_path.exists():
+                problems.append(f"typed_graph: bundle[{index}] path does not exist: {declared_path}")
+            elif hashlib.sha256(candidate_path.read_bytes()).hexdigest() != declared_digest:
+                problems.append(f"typed_graph: bundle[{index}] digest does not match {declared_path}")
+        elif bundle.get("present") and declared_digest != supplied_content_digest:
+            problems.append(
+                f"typed_graph: bundle[{index}] digest does not match the deterministic digest of the supplied edges"
+            )
 
     authority = {
         "canonical_loc_index": index_binding,
@@ -437,6 +542,7 @@ def verify_authority(
         "lexeme_join_lattice": lattice_binding,
         "typed_graph": {
             "bundles": bundles,
+            "edge_content_sha256": supplied_content_digest,
             "eligible_edge_count": derived_edges,
             "eligible_loc_count": derived_locs,
             "typed_graph_sha256": typed_graph_meta.get("typed_graph_sha256"),
@@ -532,6 +638,8 @@ class BridgeInputs:
         forms: Iterable[dict[str, Any]],
         stems: Iterable[dict[str, Any]],
         dependency_hashes: dict[str, str],
+        denominator: Iterable[dict[str, Any]] | None = None,
+        non_carried_crosswalk: Iterable[dict[str, Any]] | None = None,
         graph_edges: dict[str, list[dict[str, Any]]] | None = None,
         typed_edges: dict[str, list[dict[str, Any]]] | None = None,
         typed_graph_meta: dict[str, Any] | None = None,
@@ -582,6 +690,21 @@ class BridgeInputs:
         self._stems_by_key: dict[tuple[str, str], dict[str, Any]] = {
             (str(row.get("entry_id")), str(row.get("surface"))): row for row in self.stems
         }
+        # Content-addressed membership: the digest of the EXACT canonical row body,
+        # so a detached, altered, schema-downgraded or invented row cannot pass as
+        # a member even when its row_id is right.
+        self._carried_bodies: set[str] = {row_body_digest(row) for row in self.crosswalk}
+        self._carried_row_ids: set[str] = {str(row.get("row_id")) for row in self.crosswalk}
+        self._non_carried_bodies: set[str] = {
+            row_body_digest(row) for row in (non_carried_crosswalk or [])
+        }
+        self._non_carried_row_ids: set[str] = {
+            str(row.get("row_id")) for row in (non_carried_crosswalk or [])
+        }
+        self.denominator = list(denominator or [])
+        self._denominator_by_id: dict[str, dict[str, Any]] = {
+            str(row.get("row_id")): row for row in self.denominator
+        }
 
     @classmethod
     def from_release(cls, *, locs: set[str] | None = None) -> "BridgeInputs":
@@ -598,6 +721,7 @@ class BridgeInputs:
             forms=tables.carried("form-source"),
             stems=tables.carried("stem-source"),
             dependency_hashes=tables.dependency_hashes(),
+            denominator=tables.carried("qword-denominator"),
             graph_edges=graph_edges,
             typed_edges=typed_edges,
             typed_graph_meta=typed_graph_meta,
@@ -613,6 +737,48 @@ class BridgeInputs:
 
     def authority_digest(self) -> str:
         return hashlib.sha256(_canonical(self.authority_binding()).encode("utf-8")).hexdigest()
+
+    def carried_membership(self, row: dict[str, Any]) -> str:
+        """``"carried"`` only for an exact member of the validated carried authority."""
+
+        digest = row_body_digest(row)
+        if digest in self._carried_bodies:
+            return "carried"
+        if digest in self._non_carried_bodies or str(row.get("row_id")) in self._non_carried_row_ids:
+            return "quarantined_or_flagged_source_row"
+        if str(row.get("row_id")) in self._carried_row_ids:
+            # Right identity, wrong body: the row drifted after validation.
+            return "row_not_in_validated_carried_authority"
+        return "row_not_in_validated_carried_authority"
+
+    def dependency_authority_blockers(self, row: dict[str, Any]) -> list[str]:
+        """Bind the row's declared dependency IDs to the validated denominator authority.
+
+        A correct ``kind`` label proves nothing. The declared
+        ``qword_denominator_row`` id must resolve in the carried denominator, and
+        the declared ``source_card`` id must equal that denominator row's own
+        ``card_id`` — which is the only source-card membership the target release
+        can actually prove.
+        """
+
+        if not self.denominator:
+            return ["source_card_authority_unavailable"]
+        declared = {}
+        for item in row.get("source_dependencies") or []:
+            declared.setdefault(str(item.get("kind")), []).append(str(item.get("id")))
+        denominator_ids = declared.get("qword_denominator_row") or []
+        card_ids = declared.get("source_card") or []
+        rows = [self._denominator_by_id.get(item) for item in denominator_ids]
+        if not denominator_ids or any(item is None for item in rows):
+            return ["dependency_id_not_in_authority"]
+        authoritative_cards = {str(item.get("card_id")) for item in rows if item}
+        if not card_ids or any(item not in authoritative_cards for item in card_ids):
+            return ["dependency_id_not_in_authority"]
+        if str(row.get("card_id")) not in authoritative_cards:
+            return ["dependency_id_not_in_authority"]
+        if str(row.get("qword_row_id")) not in set(denominator_ids):
+            return ["dependency_id_not_in_authority"]
+        return []
 
     def accepted_typed_edges(self, loc: str, surface: str) -> list[dict[str, Any]]:
         """Accepted typed edges at this loc whose written surface agrees exactly.
@@ -957,8 +1123,14 @@ def _worst_status(blockers: list[str]) -> str:
     return "unresolved"
 
 
-def bridge_row(row: dict[str, Any], inputs: BridgeInputs, *, carried: bool = True) -> dict[str, Any]:
-    """Bridge one crosswalk row into exactly one typed-claim contract record."""
+def bridge_row(row: dict[str, Any], inputs: BridgeInputs) -> dict[str, Any]:
+    """Bridge one crosswalk row into exactly one typed-claim contract record.
+
+    Carried-ness is NOT a caller assertion. The row's canonical body digest must
+    be an exact member of the validated carried crosswalk authority held by
+    ``inputs``; a row that is detached, altered, schema-downgraded, invented or
+    dispositioned elsewhere abstains and can never emit a candidate.
+    """
 
     hashes = inputs.dependency_hashes
     if not getattr(inputs, "candidate_capable", False):
@@ -986,11 +1158,14 @@ def bridge_row(row: dict[str, Any], inputs: BridgeInputs, *, carried: bool = Tru
     graph_edges = inputs.graph_edges.get(loc or "", [])
     blockers: list[str] = []
 
-    if not carried:
-        blockers.append("quarantined_or_flagged_source_row")
+    membership = inputs.carried_membership(row)
+    if membership != "carried":
+        blockers.append(membership)
     dependency_kinds = {str(item.get("kind")) for item in row.get("source_dependencies") or []}
     if not REQUIRED_DEPENDENCY_KINDS.issubset(dependency_kinds):
         blockers.append("missing_dependency_release")
+    else:
+        blockers.extend(inputs.dependency_authority_blockers(row))
     if loc is None:
         blockers.append("unresolved_canonical_loc")
     if row.get("status") != ACCEPTED_CROSSWALK_STATUS or row.get("transclusion_route") != ACCEPTED_TRANSCLUSION_ROUTE:
@@ -1296,6 +1471,31 @@ def fixture_crosswalk_row(**overrides: Any) -> dict[str, Any]:
     return row
 
 
+def fixture_denominator_row(**overrides: Any) -> dict[str, Any]:
+    """The carried denominator row the fixture crosswalk row declares as its dependency."""
+
+    row = {
+        "schema": "qamus/largelexicon-qword-denominator@2",
+        "row_id": "llx-qword-0aae00000000-01-01-001",
+        "entry_id": "0aae00000000",
+        "source_keys": ["n001"],
+        "card_id": "0aae00000000:u1:e1",
+        "usage_index": 1,
+        "example_index": 1,
+        "qword_index": 1,
+        "visible_surface": FIXTURE_SURFACE,
+        "visible_surface_norm_strict": FIXTURE_NORM,
+        "card_text_sha256": "0" * 64,
+        "quran_ref": "2:255",
+        "canonical_quran_loc": FIXTURE_LOC,
+        "canonical_wbw_loc": FIXTURE_LOC,
+        "route": "accepted",
+        "status": "accepted",
+    }
+    row.update(overrides)
+    return row
+
+
 def fixture_form_row(entry_id: str, surface: str, form_index: str = "000") -> dict[str, Any]:
     return {
         "schema": "fusha/largelexicon/form-source@2",
@@ -1362,9 +1562,8 @@ def fixture_typed_edge(
 ) -> dict[str, Any]:
     """A schema-shaped canonical typed lexeme/form edge carrying an occurrence loc."""
 
-    return {
+    body = {
         "schema": TYPED_GRAPH_SCHEMA,
-        "edge_id": f"edge:fixture:{entry_id}:{loc}",
         "edge_type": edge_type,
         "from_node_id": f"selected-word:{entry_id}:s1:u1:f1:o{loc}",
         "from_node_type": "selected-word",
@@ -1372,28 +1571,55 @@ def fixture_typed_edge(
         "to_node_type": "entry",
         "status": status,
         "details": {"surface": surface},
-        "producer": {"id": "fixture", "version": "1.0.0"},
+        "producer": {"id": "tools.fixture_typed_edge", "version": "1.0.0"},
+        "evidence": [{"address": f"entry:{entry_id}:headword", "method": "entry_headword"}],
+        "guards": ["orthography_guard_v1", "page_context_origin_false"],
+    }
+    # The identifier is derived from the content, so any content mutation either
+    # breaks the id binding or changes the recomputed authority digest.
+    return dict(body, edge_id="edge:" + edge_content_digest(body)[:24])
+
+
+def _content_sha256(value: Any) -> str:
+    return hashlib.sha256(_canonical(value).encode("utf-8")).hexdigest()
+
+
+def fixture_loc_index_meta(loc_surface: dict[str, str]) -> dict[str, Any]:
+    """Synthetic canonical-index binding, digest-bound to the supplied index."""
+
+    return {
+        "path": "fixture://quran-loc-surface",
+        "present": True,
+        "sha256": _content_sha256(dict(sorted(loc_surface.items()))),
     }
 
 
-FIXTURE_LOC_INDEX_META = {
-    "path": "fixture://quran-loc-surface",
-    "present": True,
-    "sha256": "a" * 64,
-}
-FIXTURE_LEXEME_JOIN_META = {
-    "path": "fixture://lexeme-join-edges",
-    "present": True,
-    "sha256": "b" * 64,
-}
+def fixture_lexeme_join_meta(lexeme_join: dict[str, list[dict[str, Any]]] | None) -> dict[str, Any]:
+    """Synthetic lattice binding, digest-bound to the supplied lattice."""
+
+    lattice = lexeme_join or {}
+    return {
+        "path": "fixture://lexeme-join-edges",
+        "present": True,
+        "sha256": _content_sha256({key: lattice[key] for key in sorted(lattice)}),
+    }
 
 
 def fixture_graph_meta(
-    typed_edges: dict[str, list[dict[str, Any]]] | None, *, sha256: str = "f" * 64
+    typed_edges: dict[str, list[dict[str, Any]]] | None, *, sha256: str | None = None
 ) -> dict[str, Any]:
-    """Bundle metadata that honestly accounts for the edges actually supplied."""
+    """Bundle metadata that honestly accounts for the edges actually supplied.
 
-    supplied = sum(len(edges) for edges in (typed_edges or {}).values())
+    The bundle digest is the deterministic content digest of those edges, so
+    same-count content drift under unchanged metadata is refused.
+    """
+
+    edges = typed_edges or {}
+    supplied = sum(len(items) for items in edges.values())
+    content = {
+        loc: [edge_content_digest(edge) for edge in edges[loc]] for loc in sorted(edges)
+    }
+    digest = sha256 or _content_sha256(content)
     return {
         "bundles": [
             {
@@ -1402,13 +1628,17 @@ def fixture_graph_meta(
                 "present": True,
                 "row_count": supplied,
                 "schema": TYPED_GRAPH_SCHEMA,
-                "sha256": sha256,
+                "sha256": digest,
             }
         ],
         "eligible_edge_count": supplied,
-        "eligible_loc_count": len(typed_edges or {}),
-        "typed_graph_sha256": sha256,
+        "eligible_loc_count": len(edges),
+        "typed_graph_sha256": digest,
     }
+
+
+FIXTURE_LOC_INDEX_META = fixture_loc_index_meta({FIXTURE_LOC: FIXTURE_SURFACE})
+FIXTURE_LEXEME_JOIN_META = fixture_lexeme_join_meta({})
 
 
 def fixture_inputs(
@@ -1423,6 +1653,9 @@ def fixture_inputs(
     loc_surface_meta=None,
     lexeme_join_meta=None,
     dependency_hashes=None,
+    crosswalk=None,
+    denominator=None,
+    non_carried_crosswalk=None,
 ) -> BridgeInputs:
     entry = "1ec0de000001"
     form_rows = [fixture_form_row(entry, FIXTURE_SURFACE)] if forms is None else forms
@@ -1437,27 +1670,37 @@ def fixture_inputs(
         }
         if not typed_edges[FIXTURE_LOC]:
             typed_edges = {}
+    carried_rows = [fixture_crosswalk_row()] if crosswalk is None else list(crosswalk)
+    index = {FIXTURE_LOC: FIXTURE_SURFACE} if loc_surface is None else loc_surface
+    lattice = graph_edges or {}
     return BridgeInputs(
-        crosswalk=[],
+        crosswalk=carried_rows,
         lemmas=[fixture_lemma_row(entry, FIXTURE_SURFACE)] if lemmas is None else lemmas,
         forms=form_rows,
         stems=[fixture_stem_row(entry, FIXTURE_SURFACE)] if stems is None else stems,
         dependency_hashes=dict(FIXTURE_DEPENDENCY_HASHES) if dependency_hashes is None else dependency_hashes,
-        graph_edges=graph_edges or {},
+        denominator=[fixture_denominator_row()] if denominator is None else denominator,
+        non_carried_crosswalk=non_carried_crosswalk or [],
+        graph_edges=lattice,
         typed_edges=typed_edges,
         typed_graph_meta=fixture_graph_meta(typed_edges) if typed_graph_meta is None else typed_graph_meta,
-        loc_surface={FIXTURE_LOC: FIXTURE_SURFACE} if loc_surface is None else loc_surface,
-        loc_surface_meta=dict(FIXTURE_LOC_INDEX_META) if loc_surface_meta is None else loc_surface_meta,
-        lexeme_join_meta=dict(FIXTURE_LEXEME_JOIN_META) if lexeme_join_meta is None else lexeme_join_meta,
+        loc_surface=index,
+        loc_surface_meta=fixture_loc_index_meta(index) if loc_surface_meta is None else loc_surface_meta,
+        lexeme_join_meta=fixture_lexeme_join_meta(lattice) if lexeme_join_meta is None else lexeme_join_meta,
     )
 
 
 def fixture_scenarios() -> list[tuple[str, dict[str, Any], BridgeInputs, bool]]:
-    """``(scenario, crosswalk_row, inputs, carried)`` covering every closed blocker."""
+    """``(scenario, crosswalk_row, inputs)`` covering every closed blocker.
+
+    Carried-ness is expressed by AUTHORITY, not by a flag: a dispositioned row is
+    supplied through ``non_carried_crosswalk`` and is simply absent from the
+    validated carried set.
+    """
 
     twin = [fixture_form_row("1ec0de000001", FIXTURE_SURFACE), fixture_form_row("1ec0de000002", FIXTURE_SURFACE, "001")]
     return [
-        ("accepted_single_candidate", fixture_crosswalk_row(), fixture_inputs(), True),
+        ("accepted_single_candidate", fixture_crosswalk_row(), fixture_inputs()),
         (
             "lexical_collision_requires_context",
             fixture_crosswalk_row(),
@@ -1466,13 +1709,11 @@ def fixture_scenarios() -> list[tuple[str, dict[str, Any], BridgeInputs, bool]]:
                 lemmas=[fixture_lemma_row("1ec0de000001", FIXTURE_SURFACE), fixture_lemma_row("1ec0de000002", FIXTURE_SURFACE)],
                 stems=[fixture_stem_row("1ec0de000001", FIXTURE_SURFACE)],
             ),
-            True,
         ),
         (
             "page_context_only_no_lexical_edge",
             fixture_crosswalk_row(),
             fixture_inputs(forms=[], lemmas=[fixture_lemma_row("0aae00000000", "شَيْء")], stems=[]),
-            True,
         ),
         (
             "root_family_relation_not_lexeme_identity",
@@ -1487,7 +1728,6 @@ def fixture_scenarios() -> list[tuple[str, dict[str, Any], BridgeInputs, bool]]:
                     ]
                 },
             ),
-            True,
         ),
         (
             "non_certified_graph_edge_only",
@@ -1500,47 +1740,75 @@ def fixture_scenarios() -> list[tuple[str, dict[str, Any], BridgeInputs, bool]]:
                     FIXTURE_LOC: [{"loc": FIXTURE_LOC, "entry_id": "1ec0de000009", "edge_type": "form", "relation": "linkage_only"}]
                 },
             ),
-            True,
         ),
-        ("unresolved_canonical_loc", fixture_crosswalk_row(canonical_quran_loc="missing-loc|2:255"), fixture_inputs(), True),
+        (
+            "unresolved_canonical_loc",
+            fixture_crosswalk_row(canonical_quran_loc="missing-loc|2:255"),
+            fixture_inputs(crosswalk=[fixture_crosswalk_row(canonical_quran_loc="missing-loc|2:255")]),
+        ),
         (
             "crosswalk_packet_not_accepted",
             fixture_crosswalk_row(
                 status="source_crosswalk_packet_ready",
                 transclusion_route="entry_card_qword_to_canonical_crosswalk_packet",
             ),
-            fixture_inputs(),
-            True,
+            fixture_inputs(crosswalk=[fixture_crosswalk_row(
+                status="source_crosswalk_packet_ready",
+                transclusion_route="entry_card_qword_to_canonical_crosswalk_packet",
+            )]),
         ),
-        ("quarantined_or_flagged_source_row", fixture_crosswalk_row(), fixture_inputs(), False),
-        ("missing_dependency_release", fixture_crosswalk_row(source_dependencies=[]), fixture_inputs(), True),
+        (
+            "quarantined_or_flagged_source_row",
+            fixture_crosswalk_row(),
+            fixture_inputs(crosswalk=[], non_carried_crosswalk=[fixture_crosswalk_row()]),
+        ),
+        (
+            "missing_dependency_release",
+            fixture_crosswalk_row(source_dependencies=[{"id": "0aae00000000", "kind": "entry"}]),
+            fixture_inputs(crosswalk=[
+                fixture_crosswalk_row(source_dependencies=[{"id": "0aae00000000", "kind": "entry"}])
+            ]),
+        ),
         (
             "norm_only_surface_match",
             fixture_crosswalk_row(),
             fixture_inputs(forms=[fixture_form_row("1ec0de000001", FIXTURE_NORM_TWIN)], lemmas=[], stems=[]),
-            True,
         ),
-        ("no_carried_lexical_support", fixture_crosswalk_row(), fixture_inputs(forms=[], lemmas=[], stems=[]), True),
-        ("missing_typed_graph_evidence", fixture_crosswalk_row(), fixture_inputs(typed_edges={}), True),
+        ("no_carried_lexical_support", fixture_crosswalk_row(), fixture_inputs(forms=[], lemmas=[], stems=[])),
+        ("missing_typed_graph_evidence", fixture_crosswalk_row(), fixture_inputs(typed_edges={})),
         (
             "typed_edge_identity_disagreement",
             fixture_crosswalk_row(),
             fixture_inputs(typed_edges={FIXTURE_LOC: [fixture_typed_edge("1ec0de000009")]}),
-            True,
         ),
         (
             "loc_not_in_canonical_index",
             fixture_crosswalk_row(),
             fixture_inputs(loc_surface={"1:1:1": "بِسْمِ"}),
-            True,
         ),
         (
             "loc_surface_disagreement",
             fixture_crosswalk_row(),
             fixture_inputs(loc_surface={FIXTURE_LOC: FIXTURE_NORM_TWIN}),
-            True,
         ),
-        ("wbw_loc_disagreement", fixture_crosswalk_row(canonical_wbw_loc="9:9:9"), fixture_inputs(), True),
+        (
+            "wbw_loc_disagreement",
+            fixture_crosswalk_row(canonical_wbw_loc="9:9:9"),
+            fixture_inputs(crosswalk=[fixture_crosswalk_row(canonical_wbw_loc="9:9:9")]),
+        ),
+        ("row_not_in_validated_carried_authority", fixture_crosswalk_row(), fixture_inputs(crosswalk=[])),
+        (
+            "dependency_id_not_in_authority",
+            fixture_crosswalk_row(source_dependencies=[
+                {"id": "llx-qword-ffffffffffff-99-99-999", "kind": "qword_denominator_row"},
+                {"id": "ffffffffffff:u9:e9", "kind": "source_card"},
+            ]),
+            fixture_inputs(crosswalk=[fixture_crosswalk_row(source_dependencies=[
+                {"id": "llx-qword-ffffffffffff-99-99-999", "kind": "qword_denominator_row"},
+                {"id": "ffffffffffff:u9:e9", "kind": "source_card"},
+            ])]),
+        ),
+        ("source_card_authority_unavailable", fixture_crosswalk_row(), fixture_inputs(denominator=[])),
         (
             "unverified_diagnostic_inputs",
             fixture_crosswalk_row(),
@@ -1554,7 +1822,6 @@ def fixture_scenarios() -> list[tuple[str, dict[str, Any], BridgeInputs, bool]]:
                 typed_graph_meta={},
                 loc_surface={},
             ),
-            True,
         ),
     ]
 
@@ -1562,8 +1829,8 @@ def fixture_scenarios() -> list[tuple[str, dict[str, Any], BridgeInputs, bool]]:
 def build_fixtures() -> tuple[list[dict[str, Any]], dict[str, Any]]:
     records = []
     scenarios = []
-    for scenario, row, inputs, carried in fixture_scenarios():
-        record = bridge_row(row, inputs, carried=carried)
+    for scenario, row, inputs in fixture_scenarios():
+        record = bridge_row(row, inputs)
         record["contract_id"] = f"{CONTRACT_PREFIX}:fixture:{scenario}"
         record["projection"]["projection_id"] = f"{CONTRACT_PREFIX}:fixture:{scenario}:projection"
         records.append(record)

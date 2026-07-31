@@ -34,6 +34,30 @@ stem_row = bridge.fixture_stem_row
 make_inputs = bridge.fixture_inputs
 
 
+def inputs_for(row: dict, **kwargs):
+    """Inputs whose validated carried authority contains EXACTLY this row.
+
+    Carried-ness is authority membership, not a flag, so a test that bridges a
+    mutated row must supply that row (and its matching denominator row) as the
+    authority it belongs to; otherwise it is measuring the membership guard
+    instead of the guard under test.
+    """
+
+    kwargs.setdefault("crosswalk", [row])
+    kwargs.setdefault("denominator", [bridge.fixture_denominator_row(
+        row_id=str(row.get("qword_row_id")),
+        entry_id=str(row.get("entry_id")),
+        card_id=str(row.get("card_id")),
+    )])
+    try:
+        return make_inputs(**kwargs)
+    except bridge.BridgeError:
+        # A row that cannot pass the target schema can never be a member of any
+        # carried authority; the membership guard is then the honest blocker.
+        return make_inputs(**{key: value for key, value in kwargs.items()
+                              if key not in ("crosswalk", "denominator")})
+
+
 def blockers_of(record: dict) -> set[str]:
     return {
         blocker["blocker_id"]
@@ -86,13 +110,25 @@ def test_lexeme_identity_is_not_the_crosswalk_entry() -> None:
     base = candidates_of(bridge.bridge_row(crosswalk_row(), inputs))[0]
     moved = crosswalk_row(
         entry_id="0aae00000002",
+        row_id="llx-crosswalk-llx-qword-0aae00000002-01-01-001",
+        qword_row_id="llx-qword-0aae00000002-01-01-001",
         card_id="0aae00000002:u1:e1",
         source_dependencies=[
             {"id": "llx-qword-0aae00000002-01-01-001", "kind": "qword_denominator_row"},
             {"id": "0aae00000002:u1:e1", "kind": "source_card"},
         ],
     )
-    other = candidates_of(bridge.bridge_row(moved, inputs))[0]
+    # The moved row is a member of ITS OWN carried authority, with the matching
+    # denominator row; only the displaying page differs.
+    moved_inputs = make_inputs(
+        crosswalk=[moved],
+        denominator=[bridge.fixture_denominator_row(
+            row_id="llx-qword-0aae00000002-01-01-001",
+            entry_id="0aae00000002",
+            card_id="0aae00000002:u1:e1",
+        )],
+    )
+    other = candidates_of(bridge.bridge_row(moved, moved_inputs))[0]
     check("lexeme candidate entry is the documenting entry, not the displaying page",
           base["fact_value"]["lexeme_candidate"]["entry_id"] == "1ec0de000001")
     check("page context follows the crosswalk entry, not the lexeme",
@@ -184,7 +220,8 @@ def test_graph_edge_never_upgrades_a_candidate() -> None:
 def test_unresolved_loc_abstains() -> None:
     inputs = make_inputs()
     for bad in (None, "missing-loc|2:255", "sarf:surface:الله", "2:255", ""):
-        record = bridge.bridge_row(crosswalk_row(canonical_quran_loc=bad), inputs)
+        bad_row = crosswalk_row(canonical_quran_loc=bad)
+        record = bridge.bridge_row(bad_row, inputs_for(bad_row))
         assert_valid(record, f"unresolved loc {bad!r}")
         check(f"loc {bad!r} abstains", record["projection"]["status"] != "candidate")
         check(f"loc {bad!r} names its blocker", "unresolved_canonical_loc" in blockers_of(record))
@@ -193,11 +230,9 @@ def test_unresolved_loc_abstains() -> None:
 
 def test_packet_ready_crosswalk_abstains() -> None:
     inputs = make_inputs()
-    record = bridge.bridge_row(
-        crosswalk_row(status="source_crosswalk_packet_ready",
-                      transclusion_route="entry_card_qword_to_canonical_crosswalk_packet"),
-        inputs,
-    )
+    packet_ready = crosswalk_row(status="source_crosswalk_packet_ready",
+                                 transclusion_route="entry_card_qword_to_canonical_crosswalk_packet")
+    record = bridge.bridge_row(packet_ready, inputs_for(packet_ready))
     assert_valid(record, "packet ready")
     check("packet-ready abstains", record["projection"]["status"] == "source_gap")
     check("packet-ready names its blocker", "crosswalk_packet_not_accepted" in blockers_of(record))
@@ -205,14 +240,15 @@ def test_packet_ready_crosswalk_abstains() -> None:
 
 def test_demoted_crosswalk_abstains() -> None:
     inputs = make_inputs()
-    record = bridge.bridge_row(crosswalk_row(status="canonical_crosswalk_demoted"), inputs)
+    demoted = crosswalk_row(status="canonical_crosswalk_demoted")
+    record = bridge.bridge_row(demoted, inputs_for(demoted))
     check("demoted abstains", record["projection"]["status"] != "candidate")
     check("demoted names its blocker", "crosswalk_packet_not_accepted" in blockers_of(record))
 
 
 def test_quarantined_row_abstains() -> None:
     inputs = make_inputs()
-    record = bridge.bridge_row(crosswalk_row(), inputs, carried=False)
+    record = bridge.bridge_row(crosswalk_row(), make_inputs(crosswalk=[], non_carried_crosswalk=[crosswalk_row()]))
     assert_valid(record, "quarantined row")
     check("quarantined row abstains", record["projection"]["status"] == "blocked")
     check("quarantined row names its blocker", "quarantined_or_flagged_source_row" in blockers_of(record))
@@ -220,12 +256,19 @@ def test_quarantined_row_abstains() -> None:
 
 
 def test_missing_dependency_abstains() -> None:
-    inputs = make_inputs()
-    for dependencies in ([], [{"id": "x", "kind": "entry"}], [{"id": "x", "kind": "source_card"}]):
-        record = bridge.bridge_row(crosswalk_row(source_dependencies=dependencies), inputs)
+    for dependencies in ([{"id": "x", "kind": "entry"}], [{"id": "x", "kind": "source_card"}]):
+        thin = crosswalk_row(source_dependencies=dependencies)
+        record = bridge.bridge_row(thin, inputs_for(thin))
         assert_valid(record, "missing dependency")
         check("missing dependency abstains", record["projection"]["status"] == "blocked")
         check("missing dependency names its blocker", "missing_dependency_release" in blockers_of(record))
+    # An empty dependency list cannot even pass the target schema, so such a row
+    # is not a member of any carried authority and is blocked one gate earlier.
+    empty = crosswalk_row(source_dependencies=[])
+    record = bridge.bridge_row(empty, inputs_for(empty))
+    check("dependency-less row is refused by the membership gate",
+          "row_not_in_validated_carried_authority" in blockers_of(record))
+    check("dependency-less row emits no candidate", candidates_of(record) == [])
 
 
 def test_norm_only_match_abstains() -> None:
@@ -355,7 +398,23 @@ def all_tests():
     return [value for name, value in sorted(globals().items()) if name.startswith("test_")]
 
 
+# The frozen snapshot below is retained only for direct callers; the harness
+# collects dynamically via all_tests(). EXPECTED_MINIMUM_TESTS and CRITICAL_PROBES
+# are the contract the harness asserts.
 TESTS = all_tests()
+EXPECTED_MINIMUM_TESTS = 45
+CRITICAL_PROBES = (
+    "test_candidate_admission_requires_complete_authority",
+    "test_carried_membership_binds_the_exact_row_body",
+    "test_dependency_ids_bind_to_the_denominator_authority",
+    "test_typed_edge_requires_reconstructible_content",
+    "test_authority_digests_are_recomputed_not_trusted",
+    "test_canonical_loc_requires_positive_coordinates",
+    "test_certifier_refuses_never_auto_resolve_producer",
+    "test_no_validation_bypass_can_return_a_candidate",
+    "test_typed_graph_evidence_is_mandatory",
+    "test_no_first_row_winner",
+)
 
 
 def main() -> int:
@@ -423,7 +482,8 @@ def test_loc_must_agree_with_the_canonical_index() -> None:
     mismatch = bridge.bridge_row(crosswalk_row(), make_inputs(loc_surface={LOC: OTHER_SURFACE}))
     check("loc/surface disagreement is blocked", blockers_of(mismatch) == {"loc_surface_disagreement"})
     for bad in ("0:0:0", "9:9:9", ""):
-        record = bridge.bridge_row(crosswalk_row(canonical_wbw_loc=bad), make_inputs())
+        drifted = crosswalk_row(canonical_wbw_loc=bad)
+        record = bridge.bridge_row(drifted, inputs_for(drifted))
         check("wbw disagreement is caught", "wbw_loc_disagreement" in blockers_of(record))
     for bad in ("0:0:0", "1000:1:1", "2:255", "-1:2:3"):
         check("invalid loc coordinates are refused", not bridge.is_canonical_loc(bad) or bad == "0:0:0")
@@ -478,13 +538,14 @@ def test_fact_id_is_content_addressed_over_the_claim() -> None:
     stale = dict(bridge.FIXTURE_DEPENDENCY_HASHES)
     stale["form-source"] = "9" * 64
     check("stale carried-table digest moves the fact id", one(dependency_hashes=stale) != base)
-    check("typed-graph digest change moves the fact id",
-          one(typed_graph_meta=bridge.fixture_graph_meta(
-              {LOC: [bridge.fixture_typed_edge("1ec0de000001")]}, sha256="e" * 64)) != base)
-    check("canonical-index digest change moves the fact id",
-          one(loc_surface_meta=dict(bridge.FIXTURE_LOC_INDEX_META, sha256="c" * 64)) != base)
-    check("lexeme-lattice digest change moves the fact id",
-          one(lexeme_join_meta=dict(bridge.FIXTURE_LEXEME_JOIN_META, sha256="d" * 64)) != base)
+    # Digests are recomputed from content, so identity moves when CONTENT moves.
+    wider_index = {LOC: SURFACE, "2:255:2": OTHER_SURFACE}
+    check("canonical-index content change moves the fact id", one(loc_surface=wider_index) != base)
+    lattice = {LOC: [{"loc": LOC, "entry_id": "1ec0de000009", "edge_type": "form", "relation": "linkage_only"}]}
+    check("lexeme-lattice content change moves the fact id", one(graph_edges=lattice) != base)
+    both_edges = {LOC: [bridge.fixture_typed_edge("1ec0de000001"),
+                        bridge.fixture_typed_edge("1ec0de000001", edge_type="form_entry_edge")]}
+    check("typed-graph content change moves the fact id", one(typed_edges=both_edges) != base)
     root_edge = {LOC: [{"loc": LOC, "entry_id": "1ec0de000001", "edge_type": "headword",
                         "relation": "root_confirms", "row_root": "ا ل ه"}]}
     check("root-family relation change moves the fact id", one(graph_edges=root_edge) != base)
@@ -644,12 +705,11 @@ def test_abstention_ids_bind_semantics_and_provenance() -> None:
     base = abstention()
     check("carried-table digest moves the abstention id",
           abstention(dependency_hashes=dict(bridge.FIXTURE_DEPENDENCY_HASHES, **{"form-source": "9" * 64})) != base)
-    check("typed-graph digest moves the abstention id",
-          abstention(typed_graph_meta=bridge.fixture_graph_meta({}, sha256="e" * 64)) != base)
-    check("canonical-index digest moves the abstention id",
-          abstention(loc_surface_meta=dict(bridge.FIXTURE_LOC_INDEX_META, sha256="c" * 64)) != base)
-    check("lexeme-lattice digest moves the abstention id",
-          abstention(lexeme_join_meta=dict(bridge.FIXTURE_LEXEME_JOIN_META, sha256="d" * 64)) != base)
+    check("canonical-index content moves the abstention id",
+          abstention(loc_surface={LOC: SURFACE, "2:255:2": OTHER_SURFACE}) != base)
+    check("lexeme-lattice content moves the abstention id",
+          abstention(graph_edges={LOC: [{"loc": LOC, "entry_id": "1ec0de000009", "edge_type": "form",
+                                         "relation": "linkage_only"}]}) != base)
     graph = {LOC: [{"loc": LOC, "entry_id": "1ec0de000009", "edge_type": "form", "relation": "linkage_only"}]}
     check("blocker graph evidence moves the abstention id",
           abstention(forms=[], lemmas=[], stems=[], graph_edges=graph) != base)
@@ -694,8 +754,8 @@ def test_projector_reports_the_enclosed_evidence_mode() -> None:
 
     original = bridge.bridge_row
 
-    def relabelled(row, inputs, *, carried=True):
-        record = original(row, inputs, carried=carried)
+    def relabelled(row, inputs):
+        record = original(row, inputs)
         for item in record["facts"]:
             if item["fact_type"] == "largelexicon_lexeme_candidate":
                 item["evidence_mode"] = "normalized_lexical_body"
@@ -869,6 +929,260 @@ def test_verified_authority_is_bound_into_ids_and_scan() -> None:
         check("the scan binds a verified authority", authorities["verified"] is True)
         check("the scan binds the complete dependency family",
               set(authorities["carried_tables"]) == set(bridge.REQUIRED_DEPENDENCY_FAMILIES))
+
+
+# --------------------------------------------------------------------------- #
+# defect-round-5 repairs: admission, authority, locs, certifier, reader
+# --------------------------------------------------------------------------- #
+def test_carried_membership_binds_the_exact_row_body() -> None:
+    """A detached or drifted row can never be bridged, whatever its row_id says."""
+
+    detached = crosswalk_row()
+    record = bridge.bridge_row(detached, make_inputs(crosswalk=[]))
+    check("a detached row emits no candidate", candidates_of(record) == [])
+    check("a detached row names the membership blocker",
+          "row_not_in_validated_carried_authority" in blockers_of(record))
+
+    authority = make_inputs()
+    for label, mutate in (
+        ("schema downgrade", lambda r: r.update({"schema": "qamus/largelexicon-qword-crosswalk@1"})),
+        ("invented field", lambda r: r.update({"invented_field": "x"})),
+        ("surface drift", lambda r: r.update({"visible_surface": OTHER_SURFACE})),
+        ("match_status forgery", lambda r: r.update({"match_status": "forged"})),
+        ("dependency swap", lambda r: r.update({"source_dependencies": [
+            {"id": "llx-qword-0aae00000000-01-01-001", "kind": "qword_denominator_row"}]})),
+    ):
+        drifted = copy.deepcopy(crosswalk_row())
+        mutate(drifted)
+        record = bridge.bridge_row(drifted, authority)
+        check("post-validation %s emits no candidate" % label, candidates_of(record) == [])
+        check("post-validation %s is blocked" % label,
+              record["projection"]["status"] in {"blocked", "source_gap", "unresolved", "producer_pending"})
+
+    check("membership is body-addressed, not id-addressed",
+          authority.carried_membership(crosswalk_row()) == "carried")
+    check("an altered body loses membership",
+          authority.carried_membership(crosswalk_row(usage_index=9))
+          == "row_not_in_validated_carried_authority")
+    check("a dispositioned row is named as such",
+          make_inputs(crosswalk=[], non_carried_crosswalk=[crosswalk_row()])
+          .carried_membership(crosswalk_row()) == "quarantined_or_flagged_source_row")
+
+    import inspect
+    check("bridge_row exposes no caller-defaulted carried trust path",
+          "carried" not in inspect.signature(bridge.bridge_row).parameters)
+
+
+def test_dependency_ids_bind_to_the_denominator_authority() -> None:
+    """Correct kind labels with bogus ids must not admit a candidate."""
+
+    bogus = crosswalk_row(source_dependencies=[
+        {"id": "llx-qword-ffffffffffff-99-99-999", "kind": "qword_denominator_row"},
+        {"id": "ffffffffffff:u9:e9", "kind": "source_card"},
+    ])
+    record = bridge.bridge_row(bogus, inputs_for(bogus))
+    check("bogus dependency ids emit no candidate", candidates_of(record) == [])
+    check("bogus dependency ids name the authority blocker",
+          "dependency_id_not_in_authority" in blockers_of(record))
+
+    wrong_card = crosswalk_row(source_dependencies=[
+        {"id": "llx-qword-0aae00000000-01-01-001", "kind": "qword_denominator_row"},
+        {"id": "0aae00000000:u9:e9", "kind": "source_card"},
+    ])
+    record = bridge.bridge_row(wrong_card, inputs_for(wrong_card))
+    check("a source-card id that is not the denominator row's card is refused",
+          "dependency_id_not_in_authority" in blockers_of(record))
+
+    record = bridge.bridge_row(crosswalk_row(), make_inputs(denominator=[]))
+    check("an absent denominator authority is an honest source gap",
+          "source_card_authority_unavailable" in blockers_of(record))
+    check("an absent denominator authority emits no candidate", candidates_of(record) == [])
+
+
+def test_typed_edge_requires_reconstructible_content() -> None:
+    """An accepted-looking edge without reconstructible content is not authority."""
+
+    for label, mutate in (
+        ("empty evidence", lambda e: e.update({"evidence": []})),
+        ("missing evidence", lambda e: e.pop("evidence", None)),
+        ("empty guards", lambda e: e.update({"guards": []})),
+        ("missing guards", lambda e: e.pop("guards", None)),
+        ("no producer", lambda e: e.pop("producer", None)),
+        ("producer without version", lambda e: e.update({"producer": {"id": "x"}})),
+        ("no edge id", lambda e: e.pop("edge_id", None)),
+        ("edge id is not content-shaped", lambda e: e.update({"edge_id": "edge:not-the-content-hash"})),
+        ("page context relation", lambda e: e.update({"edge_type": "page_context_entry_edge"})),
+        ("root family relation", lambda e: e.update({"edge_type": "root_family_edge"})),
+        ("candidate status", lambda e: e.update({"status": "candidate"})),
+        ("no occurrence loc", lambda e: e.update({"from_node_id": "selected-word:x:s1:u1:f1:c2:255"})),
+    ):
+        edge = bridge.fixture_typed_edge("1ec0de000001")
+        mutate(edge)
+        check("hollow typed edge (%s) is structurally rejected" % label,
+              bridge.typed_edge_errors(edge) != [])
+        try:
+            record = bridge.bridge_row(crosswalk_row(), make_inputs(typed_edges={LOC: [edge]}))
+        except bridge.BridgeError:
+            continue
+        check("hollow typed edge (%s) emits no candidate" % label, candidates_of(record) == [])
+
+    check("the content-bound fixture edge is accepted",
+          bridge.typed_edge_errors(bridge.fixture_typed_edge("1ec0de000001")) == [])
+
+
+def test_authority_digests_are_recomputed_not_trusted() -> None:
+    """A well-shaped caller digest is not authority; content is."""
+
+    def closed(build) -> bool:
+        try:
+            record = build()
+        except bridge.BridgeError:
+            return True
+        return candidates_of(record) == []
+
+    check("a nonexistent canonical-index path is refused",
+          closed(lambda: bridge.bridge_row(crosswalk_row(), make_inputs(
+              loc_surface_meta={"path": "qamus/indexes/does-not-exist.jsonl",
+                                "present": True, "sha256": "a" * 64}))))
+    check("a nonexistent lattice path is refused",
+          closed(lambda: bridge.bridge_row(crosswalk_row(), make_inputs(
+              lexeme_join_meta={"path": "qamus/lattice/does-not-exist.jsonl",
+                                "present": True, "sha256": "b" * 64}))))
+    check("an arbitrary well-shaped index digest is refused",
+          closed(lambda: bridge.bridge_row(crosswalk_row(), make_inputs(
+              loc_surface_meta={"path": "fixture://quran-loc-surface",
+                                "present": True, "sha256": "c" * 64}))))
+    check("an arbitrary well-shaped typed-graph digest is refused",
+          closed(lambda: bridge.bridge_row(crosswalk_row(), make_inputs(
+              typed_graph_meta=bridge.fixture_graph_meta(
+                  {LOC: [bridge.fixture_typed_edge("1ec0de000001")]}, sha256="e" * 64)))))
+
+    # Same-count content drift under unchanged metadata.
+    drifted_index = {LOC: OTHER_SURFACE}
+    stale_meta = bridge.fixture_loc_index_meta({LOC: SURFACE})
+    check("same-count loc-surface drift under unchanged metadata is refused",
+          closed(lambda: bridge.bridge_row(crosswalk_row(), make_inputs(
+              loc_surface=drifted_index, loc_surface_meta=stale_meta))))
+
+    base_edge = bridge.fixture_typed_edge("1ec0de000001")
+    drifted_edge = copy.deepcopy(base_edge)
+    drifted_edge["details"] = dict(base_edge["details"], drifted=True)
+    check("same-count typed-edge content drift under unchanged metadata is refused",
+          closed(lambda: bridge.bridge_row(crosswalk_row(), make_inputs(
+              typed_edges={LOC: [drifted_edge]},
+              typed_graph_meta=bridge.fixture_graph_meta({LOC: [base_edge]})))))
+
+    binding = make_inputs().authority_binding()
+    check("the verified binding records recomputed content digests",
+          len(binding["canonical_loc_index"]["content_sha256"]) == 64
+          and len(binding["typed_graph"]["edge_content_sha256"]) == 64)
+
+
+def test_canonical_loc_requires_positive_coordinates() -> None:
+    check("0:0:0 is structurally impossible", not bridge.is_canonical_loc("0:0:0"))
+    check("0:1:1 is structurally impossible", not bridge.is_canonical_loc("0:1:1"))
+    check("2:255:0 is structurally impossible", not bridge.is_canonical_loc("2:255:0"))
+    check("a real loc is structural", bridge.is_canonical_loc("2:255:1"))
+    for bad in ("0:0:0", "999:999:999", "114:7:99"):
+        row = crosswalk_row(canonical_quran_loc=bad, canonical_wbw_loc=bad)
+        record = bridge.bridge_row(row, inputs_for(row))
+        check("loc %s emits no candidate" % bad, candidates_of(record) == [])
+        check("loc %s abstains precisely" % bad,
+              blockers_of(record) & {"unresolved_canonical_loc", "loc_not_in_canonical_index"})
+
+
+def test_certifier_refuses_never_auto_resolve_producer() -> None:
+    """The authoritative store must refuse a real emitted bridge fact."""
+
+    import tempfile
+    from tools import certify_typed_fact as certifier
+
+    fact = copy.deepcopy(candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0])
+    tier, projector_id, basis = certifier.producing_projector_gate(fact)
+    check("the producing projector resolves to never_auto_resolve", tier == "never_auto_resolve")
+    check("resolution comes from repository authority, not the fact",
+          basis in {"registered projector_id", "registered output_fact_type"})
+
+    # Even with the projector_id stripped, the output fact type still resolves.
+    stripped = copy.deepcopy(fact)
+    stripped["rule_projector"] = dict(stripped["rule_projector"], projector_id="not.registered.v9")
+    check("a renamed projector_id cannot shed the gate",
+          certifier.producing_projector_gate(stripped)[0] == "never_auto_resolve")
+    check("a claimed weaker tier on the fact is ignored", certifier.gate_refusal(fact) is not None)
+
+    fact["dependent_projection_ids"] = ["llxbridge:probe:projection"]
+    with tempfile.TemporaryDirectory() as tmp:
+        store = certifier.TypedFactCertificationStore(Path(tmp))
+        store.register(fact, contract_id="llxbridge-probe", actor="probe",
+                       timestamp="2026-07-30T00:00:00Z")
+        store.transition(fact["fact_id"], "review_required", actor="probe",
+                         timestamp="2026-07-30T00:00:01Z", reason="probe")
+        try:
+            store.transition(fact["fact_id"], "certified", actor="probe",
+                             timestamp="2026-07-30T00:00:02Z", reason="probe")
+        except certifier.CertificationError as error:
+            check("the authoritative store refuses certification",
+                  "never_auto_resolve" in str(error))
+        else:
+            raise AssertionError("FAILED: a never_auto_resolve fact reached certified")
+
+
+def test_duplicate_registration_cannot_weaken_a_gate() -> None:
+    shadow = copy.deepcopy(fact_projectors.LARGELEXICON_BRIDGE_CONTRACT)
+    shadow["projector_id"] = "largelexicon.duplicate_shadow.v1"
+    shadow["gate_tier"] = "auto_safe"
+    registry = fact_projectors.ProjectorRegistry()
+    registry.register(copy.deepcopy(fact_projectors.LARGELEXICON_BRIDGE_CONTRACT),
+                      fact_projectors.project_largelexicon_carried_lexeme)
+    try:
+        registry.register(shadow, fact_projectors.project_largelexicon_carried_lexeme)
+    except fact_projectors.ProjectorValidationError as error:
+        check("a conflicting gate re-registration is refused", "ambiguous" in str(error))
+    else:
+        raise AssertionError("FAILED: a duplicate projector claimed the output at a weaker gate")
+    check("the strictest registered gate is reported",
+          fact_projectors.REGISTRY.gate_tier_for_output_fact_type("largelexicon_lexeme_candidate")
+          == "never_auto_resolve")
+    check("sibling producers at the same tier remain legal",
+          fact_projectors.REGISTRY.gate_tier_for_output_fact_type("formation_evidence")
+          == "two_vote_required")
+
+
+def test_target_reader_import_and_custom_target_isolation() -> None:
+    import subprocess
+    import tempfile
+    from tools.largelexicon_table_reader import LargelexiconTargetTables
+
+    repo_root = Path(__file__).resolve().parents[1]
+    code = ("import sys; sys.path.insert(0, r'%s');\n"
+            "from tools.largelexicon_table_reader import LargelexiconTargetTables;\n"
+            "print('IMPORT_OK')\n" % str(repo_root))
+    proc = subprocess.run([sys.executable, "-B", "-c", code], cwd=str(repo_root.parent),
+                          capture_output=True, text=True)
+    check("the package imports from the repository parent (%s)" % proc.stderr.strip()[-90:],
+          "IMPORT_OK" in proc.stdout)
+
+    with tempfile.TemporaryDirectory() as tmp:
+        target = Path(tmp) / "target-schema"
+        target.mkdir(parents=True)
+        real = repo_root / "qamus" / "indexes" / "largelexicon" / "target-schema" / "TARGET-RELEASE.json"
+        release = json.loads(real.read_text(encoding="utf-8"))
+        release["tables"]["lemma-source"]["carried_sha256"] = "0" * 64
+        (target / "TARGET-RELEASE.json").write_text(
+            json.dumps(release, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        tables = LargelexiconTargetTables.open(target_dir=target)
+        check("the reader retains the exact validated target dir",
+              tables.target_dir is not None and Path(tables.target_dir).resolve() == target.resolve())
+        try:
+            tables.carried("lemma-source")
+        except Exception as error:  # noqa: BLE001
+            check("carried() reads the retained release, not the default one",
+                  "lemma-source" in str(error) or "carried" in str(error))
+        else:
+            raise AssertionError("FAILED: carried() silently read the default release")
+
+    default_tables = LargelexiconTargetTables.open()
+    check("the default reader keeps target_dir unset", default_tables.target_dir is None)
 
 
 if __name__ == "__main__":

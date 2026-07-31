@@ -31,6 +31,7 @@
   "upstream_binding": {
     "authorities": {
       "canonical_loc_index": {
+        "content_sha256": "1e516a7b9517cd34ea6a0c11909dea9d9fda0b6c17a624dc718f810857d09865",
         "path": "qamus/indexes/quran-loc-surface/index.jsonl",
         "present": true,
         "row_count": 77881,
@@ -44,6 +45,7 @@
         "stem-source": "fae45d7a4e83ee988605cc1d83d2fcee4ae86447003087e1680fb6bc671eed8b"
       },
       "lexeme_join_lattice": {
+        "content_sha256": "e5f5588c37c64adf70c014b008b770ecbdb455a9562cc9bd4d8fd7ce19db0dca",
         "path": "qamus/lattice/lexeme-join-edges.jsonl",
         "present": true,
         "row_count": 24391,
@@ -84,13 +86,14 @@
             "sha256": "0163917ba9b0b0fb75bb5e1538d88b19e248613870ae21e394f9727837eca81b"
           }
         ],
+        "edge_content_sha256": "bd006c9925454769e7b9eee3ba95b1831994aa8bce5e17e8aa044833c2f5040a",
         "eligible_edge_count": 2,
         "eligible_loc_count": 1,
         "typed_graph_sha256": "e2fa82f586bb52a4c7abec7db8aea249a3330c922700df0261a16b15d7362133"
       },
       "verified": true
     },
-    "authority_digest": "c374b92b9fde904abf1b66a21486906e786db51a74605dfc822f9be5cdc04c09",
+    "authority_digest": "a4d49eebab51a507e56c9361385e6b7983df49714ac8e4ecda339d70cbd58fbe",
     "carried_table_sha256": {
       "form-source": "82944f9950d318d1f1beccaf366d0cf19b9548f97c07263beb29681118064d45",
       "lemma-source": "3fd9b85c2cab9ed033b3b0715304fe090c94c3622aba4da66f268177f0fac3ec",
@@ -134,6 +137,7 @@
           "sha256": "0163917ba9b0b0fb75bb5e1538d88b19e248613870ae21e394f9727837eca81b"
         }
       ],
+      "edge_content_sha256": "bd006c9925454769e7b9eee3ba95b1831994aa8bce5e17e8aa044833c2f5040a",
       "eligible_edge_count": 2,
       "eligible_loc_count": 1,
       "typed_graph_sha256": "e2fa82f586bb52a4c7abec7db8aea249a3330c922700df0261a16b15d7362133"

@@ -11,9 +11,16 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterator
+
+# The largelexicon tool family imports flat sibling modules. Keep that working
+# whether this module is loaded as ``largelexicon_table_reader`` or, from the
+# repository boundary, as ``tools.largelexicon_table_reader``.
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 
 ROW_ID_RE = re.compile(r"^llx-qword-([0-9a-f]{12})-\d{2}-\d{2}-\d{3}$")
@@ -148,6 +155,7 @@ class LargelexiconTargetTables:
     """
 
     release: dict[str, Any]
+    target_dir: Path | None = None
 
     @classmethod
     def open(cls, *, target_dir: Path | None = None) -> "LargelexiconTargetTables":
@@ -155,7 +163,10 @@ class LargelexiconTargetTables:
 
         release = read_release(target_dir)
         assert_release_usable(release)
-        return cls(release=release)
+        # The exact directory that was validated is retained and used by every
+        # later read: validating one release and then reading another is a
+        # silent authority swap, so the target dir travels with the reader.
+        return cls(release=release, target_dir=Path(target_dir) if target_dir is not None else None)
 
     def summary(self) -> dict[str, Any]:
         return {
@@ -178,7 +189,7 @@ class LargelexiconTargetTables:
 
         if family_name not in TARGET_FAMILIES:
             raise KeyError("unknown target family: " + family_name)
-        return carried_table(family_name)
+        return carried_table(family_name, target_dir=self.target_dir)
 
     def dependency_hashes(self) -> dict[str, str]:
         """Exact digests a downstream typed claim must record as dependencies."""

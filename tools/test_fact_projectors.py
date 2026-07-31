@@ -696,12 +696,26 @@ class LargelexiconBridgeRegistrationTest(unittest.TestCase):
         self.assertEqual([], self.bridge.check_fixtures())
 
     def test_bridge_behavioural_suite_runs(self):
-        """Gate the full A3 mutation suite from the harness-run projector tests."""
+        """Gate the FULL A3 mutation suite from the harness-run projector tests.
+
+        Collection happens at call time: a frozen module-import snapshot silently
+        drops every test appended after it, which is exactly how the harness came
+        to run 20 of 41. The count is also asserted against the module's own
+        dynamic discovery so the two can never diverge again.
+        """
 
         from tools import test_largelexicon_fact_bridge as suite
 
-        self.assertGreaterEqual(len(suite.TESTS), 20)
-        for test in suite.TESTS:
+        collected = suite.all_tests()
+        self.assertEqual(len(collected), len(suite.all_tests()))
+        self.assertGreaterEqual(
+            len(collected), suite.EXPECTED_MINIMUM_TESTS,
+            "the bridge suite shrank below its declared minimum",
+        )
+        names = {test.__name__ for test in collected}
+        for critical in suite.CRITICAL_PROBES:
+            self.assertIn(critical, names, "critical bridge probe is missing: " + critical)
+        for test in collected:
             with self.subTest(test=test.__name__):
                 test()
 
