@@ -15,9 +15,11 @@ grade() is deterministic over supplied judgments (the model/verifier supplies fi
 module enforces the AND-gate). The CLI runs a self-test proving the load-bearing case — right answer + wrong
 reasoning => FAIL — and exits non-zero if that property ever breaks.
 """
+import json
 import os
 import re
 import sys
+import unicodedata
 
 _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, _REPO)
@@ -126,6 +128,56 @@ def _registry_row(reason_key):
     return _REGISTRY_ROWS.get(reason_key)
 
 
+# ---------------------------------------------------------------------------
+# ROUND-10: an OCCURRENCE is one written word at one exact coordinate
+# ---------------------------------------------------------------------------
+# tools/fusha_check.resolve_address answers `in_scope_source_addressed` for an AYAH (`quran:2:284`) and for
+# word index 0, because it resolves the ayah and treats the word part as optional. Evidence about "somewhere
+# in this ayah" is not evidence about the word under decision, and word 0 does not exist: the canonical word
+# index is 1-based. A2 therefore requires a positive word-level coordinate and then defers to the repository
+# resolver for the upper bound (it rejects `word W > n_tokens`).
+WORD_OCCURRENCE_RE = re.compile(r"\Aquran:([1-9][0-9]{0,2}):([1-9][0-9]{0,2}):([1-9][0-9]{0,2})\Z")
+
+
+def occurrence_defect(address):
+    """None only for `quran:S:A:W` with 1 <= W <= the canonical token count of that ayah.
+
+    Closed vocabulary: occurrence_absent | occurrence_not_word_level | occurrence_not_in_spine.
+    """
+    if not isinstance(address, str) or not address.strip():
+        return "occurrence_absent"
+    if not WORD_OCCURRENCE_RE.match(address.strip()):
+        # covers an ayah-only address, word index 0, a leading-zero coordinate, a wbw: or qamus: address,
+        # and anything that is not a Qur'anic word coordinate at all
+        return "occurrence_not_word_level"
+    from tools.fusha_check import resolve_address     # lazy: the repository's own address authority
+    if resolve_address(address.strip()).get("scope") != "in_scope_source_addressed":
+        return "occurrence_not_in_spine"
+    return None
+
+
+def exact_surface_equal(left, right):
+    """NFC-preserving equality of two WRITTEN surfaces. Nothing is folded away.
+
+    Evidence binding compares what is written. norm_strict/bare/surface families erase exactly the marks
+    that carry the decision — harakāt, shadda, hamza seat, Qur'anic signs, tatweel — so مَن and مِنَ,
+    مَا and مَّا, حَلِيمٌ and حَلِيمٍ must all compare UNEQUAL here even though they share a normal form.
+    NFC is applied only to make two encodings of the SAME characters comparable; it removes nothing.
+    """
+    if not isinstance(left, str) or not isinstance(right, str):
+        return False
+    return unicodedata.normalize("NFC", left) == unicodedata.normalize("NFC", right)
+
+
+def surface_binding_defect(claimed, evidence_surface):
+    """None only when the evidence is about the exact written surface under decision."""
+    if not isinstance(claimed, str) or not claimed.strip():
+        return "surface_absent"
+    if not isinstance(evidence_surface, str) or not evidence_surface.strip():
+        return "evidence_surface_absent"
+    return None if exact_surface_equal(claimed, evidence_surface) else "surface_not_bound"
+
+
 def source_address_defect(claim):
     """The source address must be RESOLVABLE by the repository's own address authority.
 
@@ -136,9 +188,15 @@ def source_address_defect(claim):
     raw = claim.get("source_address")
     if not compact(raw):
         return "source_address_absent"
+    # ROUND-10: an ayah-only address and word 0 both resolved in-scope, so "evidence" could be bound to a
+    # whole verse rather than to the word under decision. Order matters: an address the repository cannot
+    # resolve at all is `not_repository_authorised`; `not_word_level` is reserved for an address the
+    # repository DOES resolve but which names a verse rather than one word.
     from tools.fusha_check import resolve_address     # lazy: the repository's own address authority
     if resolve_address(raw).get("scope") != "in_scope_source_addressed":
         return "source_address_not_repository_authorised"
+    if occurrence_defect(raw if isinstance(raw, str) else "") is not None:
+        return "source_address_not_word_level"
     return None
 
 
@@ -169,11 +227,233 @@ def agreement_tuple(vote):
         "governor_relation": compact(governor.get("relation")),
         "governor_loc": compact(governor.get("loc")),
         "governor_type": JUSTIFICATION_RULE_GOVERNOR_TYPE.get(governor.get("relation")),
-        "fact_type": compact(vote.get("fact_type")),
+        "fact_type": compact((_EXTERNAL_WORKER_RECORD.get(vote.get("vote_id")) or {}).get("fact_type")),
         "reason_key": compact(vote.get("reason_key")),
         "rival_disposition": tuple(sorted(compact(r) for r in rivals)) if isinstance(rivals, list) else None,
         "source_address": compact(occurrence.get("quran_loc")),
     }
+
+
+# ---------------------------------------------------------------------------
+# ROUND-10: the CANONICAL two-vote artifact is the contract; A2 has no vote schema of its own
+# ---------------------------------------------------------------------------
+# The A2 fixture path used to write `worklist_id` and `fact_type` straight into the vote record. The canonical
+# schema is `additionalProperties: false` at every level and permits NEITHER field there, so every A2 "valid"
+# pair was in fact schema-INVALID and A2 had no canonical positive path at all. Those two fields are external
+# worker-record properties; they are kept beside the artifact, never inside it, and the artifact is validated
+# by the repository's own validator plus the repository's own schema.
+TWO_VOTE_SCHEMA_PATH = os.path.join(_REPO, "qamus", "schemas", "two-vote-artifact.schema.json")
+_TWO_VOTE_SCHEMA = None
+
+# vote_id -> the fields the CANONICAL ARTIFACT DELIBERATELY DOES NOT CARRY. This is a worker record, not
+# evidence: see the truthful-limits note on vote_independence_errors().
+_EXTERNAL_WORKER_RECORD = {}
+
+
+def _two_vote_schema():
+    global _TWO_VOTE_SCHEMA
+    if _TWO_VOTE_SCHEMA is None:
+        with open(TWO_VOTE_SCHEMA_PATH, encoding="utf-8") as fh:
+            _TWO_VOTE_SCHEMA = json.load(fh)
+    return _TWO_VOTE_SCHEMA
+
+
+LOCALLY_HANDLED_KEYWORDS = frozenset({"allOf", "if", "then", "else", "maxItems"})
+_UNIMPLEMENTED_RE = re.compile(r"does not implement: \[(?P<kw>[^\]]*)\]")
+
+
+def _locally_handled_notice(message):
+    """True for an unimplemented-keyword notice listing ONLY keywords this module applies itself."""
+    match = _UNIMPLEMENTED_RE.search(message or "")
+    if not match:
+        return False
+    listed = [k.strip().strip("'\"") for k in match.group("kw").split(",") if k.strip()]
+    return bool(listed) and all(k in LOCALLY_HANDLED_KEYWORDS for k in listed)
+
+
+def _apply_local_keywords(value, schema, root, path, errors):
+    """allOf / if-then-else / maxItems, applied here because the shared subset validator reports them."""
+    from tools.validate_task_packets import _schema_validate  # noqa: PLC0415
+    if not isinstance(schema, dict):
+        return
+    for index, sub in enumerate(schema.get("allOf") or ()):
+        sub_errors = []
+        _schema_validate(value, sub, root, path, sub_errors)
+        errors.extend(e for e in sub_errors if not _locally_handled_notice(e))
+        _apply_local_keywords(value, sub, root, path, errors)
+    if "if" in schema:
+        probe = []
+        _schema_validate(value, schema["if"], root, path, probe)
+        probe = [e for e in probe if not _locally_handled_notice(e)]
+        _apply_local_keywords(value, schema["if"], root, path, probe)
+        branch = schema.get("then") if not probe else schema.get("else")
+        if isinstance(branch, dict):
+            branch_errors = []
+            _schema_validate(value, branch, root, path, branch_errors)
+            errors.extend(e for e in branch_errors if not _locally_handled_notice(e))
+            _apply_local_keywords(value, branch, root, path, errors)
+    limit = schema.get("maxItems")
+    if isinstance(limit, int) and isinstance(value, list) and len(value) > limit:
+        errors.append("%s: %d items exceeds maxItems %d" % (path, len(value), limit))
+
+
+def canonical_schema_errors(row):
+    """Draft 2020-12 errors for a two-vote artifact, reusing the repository's own subset validator.
+
+    tools/validate_task_packets._schema_validate is REUSED rather than reimplemented (a second checker would
+    diverge). It REPORTS, rather than silently skips, keywords it does not implement. This schema uses
+    allOf, if/then/else and maxItems; those are applied here, and only notices listing exclusively those
+    keywords are filtered — any other unimplemented-keyword notice is still surfaced as an error.
+    """
+    from tools.validate_task_packets import _schema_validate  # noqa: PLC0415 (lazy: stdlib-only, no cycle)
+    schema = _two_vote_schema()
+    raw = []
+    _schema_validate(row, schema, schema, "$", raw)
+    errors = [e for e in raw if not _locally_handled_notice(e)]
+    _apply_local_keywords(row, schema, schema, "$", errors)
+    votes = (row or {}).get("votes") if isinstance(row, dict) else None
+    limit = ((schema.get("properties") or {}).get("votes") or {}).get("maxItems")
+    if isinstance(votes, list) and isinstance(limit, int) and len(votes) > limit:
+        errors.append("$.votes: %d items exceeds maxItems %d" % (len(votes), limit))
+    return errors
+
+
+def two_vote_artifact_defect(row):
+    """None only when `row` is a canonical two-vote ARTIFACT that this repository's own tools accept.
+
+    Both authorities must agree: the JSON Schema (shape, enums, additionalProperties) and
+    tools/validate_two_vote_artifacts.validate_row (the contract's own semantic rules).
+    """
+    if not isinstance(row, dict):
+        return "artifact_not_an_object"
+    if row.get("schema") not in VTV.SCHEMA_VERSIONS:
+        return "artifact_schema_unknown"
+    schema_errs = canonical_schema_errors(row)
+    if schema_errs:
+        return "artifact_schema_invalid:%s" % schema_errs[0]
+    contract_errs = []
+    VTV.validate_row(row, 1, contract_errs)
+    if contract_errs:
+        return "artifact_contract_invalid:%s" % contract_errs[0]
+    return None
+
+
+# The complete claim/artifact binding. Two agreeing votes prove ONE claim: the one they are about. Comparing
+# only the address let a valid pair clear a different claim at the same coordinate.
+CLAIM_BINDING_FIELDS = (
+    ("source_address", "source_address"), ("surface", "surface"), ("subject", "subject"),
+    ("fact_type", "fact_type"), ("conclusion", "conclusion"), ("function", "function"),
+    ("governor_relation", "governor_relation"), ("governed_expression", "governed_expression"),
+    ("attachment", "attachment"), ("case_mood", "case_mood"), ("sign", "sign"),
+    ("sign_visibility", "sign_visibility"), ("mood_basis", "mood_basis"),
+    ("reason_key", "reason_key"), ("referent", "referent"),
+    ("rival_disposition", "rival_disposition"),
+)
+
+
+def claim_projection(vote):
+    """Everything a claim can be bound to, projected from the canonical artifact alone."""
+    conclusion = (vote or {}).get("conclusion") or {}
+    case_or_mood = conclusion.get("case_or_mood") or {}
+    governor = conclusion.get("governor") or {}
+    occurrence = (vote or {}).get("occurrence") or {}
+    rivals = (vote or {}).get("unresolved_points") or []
+    return {
+        "source_address": compact(occurrence.get("quran_loc")),
+        "surface": occurrence.get("surface"),
+        "subject": occurrence.get("surface"),
+        "fact_type": compact(_EXTERNAL_WORKER_RECORD.get(vote.get("vote_id"), {}).get("fact_type")
+                             if isinstance(vote, dict) else None) or None,
+        "conclusion": compact(conclusion.get("contextual_function")),
+        "function": compact(conclusion.get("function")),
+        "governor_relation": compact(governor.get("relation")),
+        "governed_expression": conclusion.get("governed_expression"),
+        "attachment": compact(conclusion.get("attachment")),
+        "case_mood": normalize_case_mood(case_or_mood.get("value")),
+        "sign": compact(case_or_mood.get("sign")),
+        "sign_visibility": compact(case_or_mood.get("sign_visibility")),
+        "mood_basis": compact(case_or_mood.get("mood_basis")),
+        "reason_key": compact(vote.get("reason_key")) if isinstance(vote, dict) else None,
+        "referent": compact(conclusion.get("referent")),
+        "rival_disposition": tuple(sorted(compact(r) for r in rivals)) if isinstance(rivals, list) else None,
+    }
+
+
+def claim_binding_defect(claim, vote):
+    """None only when the artifact is about THIS claim — same occurrence, same written surface, same tuple.
+
+    Only fields the claim actually declares are compared (a claim that says nothing about `referent` is not
+    contradicted by one), EXCEPT the occurrence and the written surface, which must always be bound.
+    """
+    projected = claim_projection(vote)
+    if occurrence_defect(projected.get("source_address") or "") is not None:
+        return "artifact_occurrence_not_word_level"
+    if compact(claim.get("source_address")) != projected["source_address"]:
+        return "claim_address_not_bound"
+    claimed_surface = claim.get("surface") if claim.get("surface") is not None else claim.get("subject")
+    if claimed_surface is not None:
+        defect = surface_binding_defect(claimed_surface, projected["surface"])
+        if defect is not None:
+            return "claim_surface_not_bound"
+    for claim_field, projected_field in CLAIM_BINDING_FIELDS:
+        if claim_field in ("source_address", "surface"):
+            continue
+        if claim_field not in claim or claim.get(claim_field) is None:
+            continue
+        left = claim.get(claim_field)
+        right = projected.get(projected_field)
+        if claim_field == "case_mood":
+            left = normalize_case_mood(left)
+        elif claim_field == "rival_disposition" and isinstance(left, (list, tuple)):
+            left = tuple(sorted(compact(x) for x in left))
+        elif isinstance(left, str):
+            left = compact(left)
+        if left != right:
+            return "claim_%s_not_bound" % claim_field
+    return None
+
+
+def canonical_two_vote_envelope(vote_a, vote_b, *, claim_state="two_vote_verified"):
+    """Wrap two votes in a CANONICAL two-vote artifact envelope (fixtures/tests; never a production source).
+
+    The envelope is the contract's own shape — occurrence, agreement block, claim state, reclassification,
+    votes_fabricated — so an A2 pair can be validated by the repository's validator and schema rather than by
+    an A2-only invention.
+    """
+    occurrence = dict((vote_a or {}).get("occurrence") or {})
+    conclusion_agrees, reason_agrees = recompute_agreement([vote_a, vote_b])
+    loc = compact(occurrence.get("quran_loc")) or "unknown"
+    return {
+        "schema": VTV.SCHEMA_V1,
+        "artifact_id": "two-vote-artifact:%s" % loc.replace(":", "_"),
+        "claimed_decision_state": "two_vote",
+        "claim_state": claim_state,
+        "occurrence": occurrence,
+        "votes": [vote_a, vote_b],
+        "agreement": {
+            "conclusion_agrees": bool(conclusion_agrees),
+            "reason_agrees": bool(reason_agrees),
+            "agreement_key": compact((vote_a or {}).get("reason_key")),
+            "compared_fields": ["conclusion", "reason_key"],
+            "gloss_text_used_for_agreement": False,
+        },
+        "reclassification": None,
+        "votes_fabricated": False,
+    }
+
+
+def prose_reason_defect(claim):
+    """A2 never validates free `grammatical_reason` prose. Asking it to is an error, not a pass.
+
+    The canonical v1.1 contract treats `grammatical_reason` as UNCOMPARED elaboration: agreement is computed
+    over the registered reason key and the structured conclusion tuple. Presenting the prose as validated
+    proof would claim a check nobody performs, so a caller that asks for it is routed to human/scholar review.
+    """
+    if not isinstance(claim, dict):
+        return "claim_not_a_record"
+    if claim.get("validate_reason_prose"):
+        return "reason_prose_not_machine_validated:route=scholar_irab_review"
+    return None
 
 
 def two_vote_evidence_defect(claim):
@@ -212,8 +492,25 @@ def two_vote_evidence_defect(claim):
         return "two_vote_claimant_identity_absent"
     if claimant not in {compact((v.get("reviewer") or {}).get("reviewer_id")) for v in votes}:
         return "two_vote_claimant_not_a_reviewer"
-    if compact(claim.get("source_address")) != left["source_address"]:
-        return "two_vote_address_not_bound"
+    # ROUND-10: the pair must be a CANONICAL artifact, not merely two records A2 happens to like.
+    envelope = claim.get("two_vote_artifact")
+    if envelope is None:
+        envelope = canonical_two_vote_envelope(votes[0], votes[1])
+    artifact_defect = two_vote_artifact_defect(envelope)
+    if artifact_defect is not None:
+        return "two_vote_%s" % artifact_defect
+    if [v.get("vote_id") for v in (envelope.get("votes") or [])] != [v.get("vote_id") for v in votes]:
+        return "two_vote_artifact_votes_not_the_submitted_pair"
+    # ROUND-10: two agreeing votes prove ONE claim — the one they are about. Address equality alone let a
+    # valid pair clear a different claim at the same coordinate.
+    for vote in votes:
+        binding = claim_binding_defect(claim, vote)
+        if binding is not None:
+            return "two_vote_%s" % binding
+    # ROUND-10: free reason prose is never machine-validated proof.
+    prose = prose_reason_defect(claim)
+    if prose is not None:
+        return "two_vote_%s" % prose
     return None
 
 
@@ -382,12 +679,17 @@ def grade_structured(case, claim):
         hr_defect = human_review_defect(claim)
     # ROUND-8: the structured path ALWAYS grades in evidence mode. `two_vote_done` is deliberately not
     # forwarded — a boolean can no longer reach the gate at all.
-    result = grade(case, {"final_ok": conclusion_ok, "reasoning_ok": reasoning_ok,
-                          "evidence_cited": claim.get("evidence_cited"),
-                          "source_address": claim.get("source_address"),
-                          "reviewer_id": claim.get("reviewer_id"),
-                          "two_vote_evidence": claim.get("two_vote_evidence")},
-                   require_evidence=True)
+    # ROUND-10: forward the WHOLE claim (minus the declared boolean, which must never reach the gate) so the
+    # evidence gate can bind the artifact to every field the claim actually asserts — conclusion, surface,
+    # subject, sign, referent and the rest. Forwarding only a hand-picked subset meant a valid vote pair
+    # could clear a claim whose conclusion or written surface it never mentioned.
+    judgment = {k: v for k, v in claim.items() if k != "two_vote_done"}
+    judgment.update({"final_ok": conclusion_ok, "reasoning_ok": reasoning_ok,
+                     "evidence_cited": claim.get("evidence_cited"),
+                     "source_address": claim.get("source_address"),
+                     "reviewer_id": claim.get("reviewer_id"),
+                     "two_vote_evidence": claim.get("two_vote_evidence")})
+    result = grade(case, judgment, require_evidence=True)
     result["conclusion_defect"] = concl_defect
     result["human_review_defect"] = hr_defect
     if hr_defect:
@@ -427,7 +729,8 @@ def grade_structured(case, claim):
 # reason key — and only then projects the two votes for agreement. Independence adds engine / reviewer_id /
 # lane / vote_id / worklist_id distinctness. TRUTHFUL NOTE: the shared contract does not model a worklist, so
 # `worklist_id` is an A2-level requirement layered on top, not a delegated one.
-TWO_VOTE_INDEPENDENCE_FIELDS = ("vote_id", "reviewer", "worklist_id")
+# canonical fields only — `worklist_id` is not one of them (the schema does not carry it)
+TWO_VOTE_INDEPENDENCE_FIELDS = ("vote_id", "reviewer")
 WORKLIST_ID_RE = re.compile(r"\A[A-Za-z0-9][A-Za-z0-9._:-]*\Z")
 
 
@@ -441,7 +744,21 @@ def vote_artifact_errors(vote_a, vote_b):
 
 
 def vote_independence_errors(vote_a, vote_b):
-    """Reviewer / engine / lane / vote-id / worklist independence over two fully-validated artifacts."""
+    """Independence provable from the CANONICAL artifact alone.
+
+    Requires distinct `vote_id`, distinct `reviewer.reviewer_id` and distinct `reviewer.lane`, and refuses two
+    byte-identical submissions.
+
+    ROUND-10: `engine` is NO LONGER required to differ. Two genuinely independent reviewers can both work
+    through the same CLI surface, so a shared engine string is not evidence of dependence and demanding a
+    different one only pushes workers to falsify it. `worklist_id` is likewise gone: the canonical schema does
+    not carry it, so A2 cannot prove it from the artifact.
+
+    TRUTHFUL LIMIT — what this function does NOT prove, because the canonical artifact does not carry it:
+    CLI version, proof of which model actually produced each vote, a frozen artifact hash, separate worklist
+    provenance, and reviewer-isolation (that neither reviewer saw the other's answer). Those remain EXTERNAL
+    worker-record requirements for the later owner two-vote lane. A2 must not be read as establishing them.
+    """
     errs = []
     for i, vote in enumerate((vote_a, vote_b)):
         if not isinstance(vote, dict):
@@ -455,19 +772,11 @@ def vote_independence_errors(vote_a, vote_b):
     if errs:
         return errs
     ra, rb = vote_a["reviewer"], vote_b["reviewer"]
-    for field in ("engine", "reviewer_id", "lane"):
+    for field in ("reviewer_id", "lane"):
         if compact(ra.get(field)) == compact(rb.get(field)):
             errs.append("votes are not independent: both votes share %s %r" % (field, compact(ra.get(field))))
-    # A worklist id must be a valid, non-empty canonical identifier BEFORE the two are compared: None,
-    # "", whitespace and malformed ids are not "different worklists", they are missing provenance.
-    for i, vote in enumerate((vote_a, vote_b)):
-        raw = vote.get("worklist_id")
-        if not isinstance(raw, str) or not WORKLIST_ID_RE.match(raw):
-            errs.append("votes[%d].worklist_id %r is not a valid canonical worklist identifier" % (i, raw))
     if errs:
         return errs
-    if vote_a["worklist_id"] == vote_b["worklist_id"]:
-        errs.append("votes are not independent: both votes come from worklist %r" % vote_a["worklist_id"])
     if compact(vote_a.get("vote_id")) == compact(vote_b.get("vote_id")):
         errs.append("votes must have distinct vote_ids")
     if vote_a == vote_b:
@@ -488,7 +797,8 @@ def project_vote(vote):
         "case_mood": None if value in (None, "none") else value,
         "mood_basis": case_or_mood.get("mood_basis"),
         "reason_key": vote.get("reason_key"),
-        "fact_type": vote.get("fact_type"),
+        # not an artifact field: the canonical schema does not carry a fact type (see _EXTERNAL_WORKER_RECORD)
+        "fact_type": (_EXTERNAL_WORKER_RECORD.get(vote.get("vote_id")) or {}).get("fact_type"),
         "governor": {"governor_type": gov_type} if gov_type else None,
         "evidence_cited": True,
         "source_address": occurrence.get("quran_loc"),
@@ -550,9 +860,11 @@ def mint_fixture_vote(index, *, reason_key, conclusion, case_mood, relation, wor
     """A complete, contract-valid vote artifact for fixtures/tests (never a production vote source)."""
     vote = VTV.sample_vote(index)
     vote["vote_id"] = vote_id or ("vote:fixture:%d" % index)
-    vote["worklist_id"] = worklist_id
     vote["reason_key"] = reason_key
-    vote["fact_type"] = fact_type
+    # ROUND-10: `worklist_id` and `fact_type` are NOT vote_record properties — the canonical schema is
+    # additionalProperties:false and writing them into the record made every A2 pair schema-invalid. They are
+    # external worker-record fields and are kept beside the artifact, keyed by vote id.
+    _EXTERNAL_WORKER_RECORD[vote["vote_id"]] = {"worklist_id": worklist_id, "fact_type": fact_type}
     case_block = ({"value": case_mood, "sign": "kasra", "sign_visibility": "visible"} if case_mood
                   else {"value": "none", "sign": None, "sign_visibility": "not_visible"})
     vote["conclusion"] = dict(vote["conclusion"], contextual_function=conclusion,
@@ -561,7 +873,7 @@ def mint_fixture_vote(index, *, reason_key, conclusion, case_mood, relation, wor
     return vote
 
 
-def grade(case, judgment, *, require_evidence=False):
+def grade(case, judgment, *, require_evidence=True):
     """case: an eval case dict (has required_gate). judgment: {final_ok, reasoning_ok, evidence_cited,
     source_address, two_vote_evidence}. Returns {..., 'pass': bool, 'block_reason': str|None}.
 
@@ -569,12 +881,13 @@ def grade(case, judgment, *, require_evidence=False):
     gate is satisfied only by two validated, independent, fully agreeing vote records, and `two_vote_done` is
     ignored entirely.
 
-    TRUTHFUL SCOPE NOTE: with `require_evidence=False` this function is a pure boolean AND-gate over booleans
-    the CALLER has already computed elsewhere (tools/run_grammar_evals.py's wrong-reasoning-trap probe and
-    tools/fusha_tutor_runtime.py's optional bridge both use it that way, over runtime checkpoints that carry
-    no vote artifacts at all). In that mode `two_vote_done` is a DECLARATION, and the result says so in
-    `gate_evidence`; it is never evidence. No structured A2 decision can reach this mode: grade_structured()
-    always calls with require_evidence=True.
+    ROUND-10: `require_evidence` now DEFAULTS to True, and the false pass it used to allow is removed. A
+    caller that passes `two_vote_done=True` and no artifacts gets `gate_ok=False` with
+    `gate_evidence="declared_only_rejected"` in either mode. `require_evidence=False` now means only "do not
+    run the artifact validation"; it never means "believe the boolean". The two non-A2 callers of this
+    function (tools/run_grammar_evals.py's wrong-reasoning-trap probe and tools/fusha_tutor_runtime.py's
+    default-off bridge) grade runtime checkpoints that carry no vote artifacts at all, so under this contract
+    a two-vote-gated row of theirs is correctly reported as unproven rather than passed.
     """
     final_ok = bool(judgment.get("final_ok"))
     reasoning_ok = bool(judgment.get("reasoning_ok"))
@@ -589,8 +902,13 @@ def grade(case, judgment, *, require_evidence=False):
         gate_ok = two_vote_defect is None
         gate_evidence = "validated_artifacts" if gate_ok else "rejected"
     else:
-        gate_ok = bool(judgment.get("two_vote_done"))
-        gate_evidence = "declared_only"     # a declaration, never proof; see the scope note above
+        # ROUND-10: the legacy public false pass is GONE. `require_evidence=False` no longer lets a declared
+        # boolean satisfy a two-vote gate; it only suppresses the artifact validation, and the gate still
+        # fails closed. A declared Boolean is never evidence, from any entry point.
+        two_vote_defect = ("two_vote_declared_without_artifacts" if judgment.get("two_vote_done")
+                           else "two_vote_evidence_absent")
+        gate_ok = False
+        gate_evidence = "declared_only_rejected"
     never_auto = required_gate == "never_auto_resolve"
     ok = final_ok and reasoning_ok and evidence_ok and gate_ok and not never_auto
     reason = None
@@ -624,8 +942,10 @@ def _selftest():
         # two-vote required but not done -> FAIL even if everything else right
         (case_tv, {"final_ok": True, "reasoning_ok": True, "evidence_cited": True, "source_address": "x",
                    "two_vote_done": False}, False),
+        # ROUND-10: a DECLARED boolean is never evidence. This case used to pass on `two_vote_done=True`
+        # alone; a two-vote gate now needs the canonical artifact, so the declaration fails closed.
         (case_tv, {"final_ok": True, "reasoning_ok": True, "evidence_cited": True, "source_address": "x",
-                   "two_vote_done": True}, True),
+                   "two_vote_done": True}, False),
         # missing source-address -> FAIL
         (case_auto, {"final_ok": True, "reasoning_ok": True, "evidence_cited": True, "source_address": ""}, False),
     ]
@@ -637,7 +957,8 @@ def _selftest():
             print("  self-test %d FAIL: expected pass=%s got %s (%s)" % (i, exp, r["pass"], r["block_reason"]))
     if bad:
         print("FAIL: %d self-test case(s) broke the AND-gate" % bad); sys.exit(1)
-    print("PASS — grade() AND-gate holds (right answer + wrong reasoning correctly FAILS; %d cases)" % len(cases))
+    print("PASS — grade() AND-gate holds (right answer + wrong reasoning correctly FAILS; a DECLARED "
+          "two_vote_done never satisfies a two-vote gate; %d cases)" % len(cases))
     _selftest_structured()
 
 
@@ -709,7 +1030,13 @@ def _selftest_structured():
         # ROUND-8: a source address must resolve through the repository's authority, not merely be non-empty
         (case, dict(good, source_address="quran:demo"), False,
          "source_address_not_repository_authorised"),
-        (case, dict(good, source_address="quran:2:13:9999"), False,
+        # ROUND-10: an AYAH-only address and word 0 are not occurrences
+        (case, dict(good, source_address="quran:2:13"), False, "source_address_not_word_level"),
+        (case, dict(good, source_address="quran:2:13:0"), False, "source_address_not_word_level"),
+        (case, dict(good, source_address="qamus:entry:1234"), False,
+         "source_address_not_repository_authorised"),
+        # a well-formed word coordinate BEYOND the ayah's token count is refused by the repository resolver
+        (case, dict(good, source_address="quran:2:13:99"), False,
          "source_address_not_repository_authorised"),
     ]
     bad = 0
@@ -738,9 +1065,11 @@ def _selftest_structured():
              "expected_reason_keys": [KEY_JARR], "expected_conclusion": "genitive"}
     # ROUND-4: the review must be BOUND to the exact claim (address, subject, conclusion, reason key),
     # carry a valid identifier and a machine-valid timestamp, and come from someone other than the claimant.
-    bound = dict(good, subject="li-llahi")
+    # ROUND-10: the subject IS the exact written surface under decision, bound to the artifact's occurrence.
+    SURFACE = VA["occurrence"]["surface"]
+    bound = dict(good, subject=SURFACE)
     good_review = {"review_id": "hr:1", "reviewer_id": "human-1", "source_address": ADDR,
-                   "subject": "li-llahi", "decision": "approved", "timestamp": "2026-07-30T00:00:00Z",
+                   "subject": SURFACE, "decision": "approved", "timestamp": "2026-07-30T00:00:00Z",
                    "reviewed_conclusion": "genitive", "reviewed_reason_key": KEY_JARR}
     human = [
         ("validated two votes cannot substitute for a human/source review", dict(bound),
@@ -764,6 +1093,10 @@ def _selftest_structured():
          dict(bound, human_review=dict(good_review, source_address="quran:2:26:20")),
          "human_review_address_not_bound"),
         ("another subject", dict(bound, human_review=dict(good_review, subject="OTHER")),
+         "human_review_subject_not_bound"),
+        # ROUND-10: a same-family but differently-WRITTEN subject is a different occurrence subject
+        ("a differently-written subject",
+         dict(bound, human_review=dict(good_review, subject=SURFACE + "ً")),
          "human_review_subject_not_bound"),
         ("another conclusion",
          dict(bound, human_review=dict(good_review, reviewed_conclusion="accusative")),
@@ -830,13 +1163,11 @@ def _selftest_structured():
         print("  two-vote FAIL: cloned votes were accepted")
     for label, mutated in (
             ("cloned provenance", dict(vote_b, reviewer=dict(vote_a["reviewer"]))),
-            ("same engine", dict(vote_b, reviewer=dict(vote_b["reviewer"],
-                                                       engine=vote_a["reviewer"]["engine"]))),
+
             ("same reviewer_id", dict(vote_b, reviewer=dict(vote_b["reviewer"],
                                                             reviewer_id=vote_a["reviewer"]["reviewer_id"]))),
             ("same lane", dict(vote_b, reviewer=dict(vote_b["reviewer"],
                                                      lane=vote_a["reviewer"]["lane"]))),
-            ("same worklist", dict(vote_b, worklist_id=vote_a["worklist_id"])),
             ("same vote_id", dict(vote_b, vote_id=vote_a["vote_id"]))):
         r = grade_two_vote(tv, vote_a, mutated)
         if r["pass"] or r["disagreement"] != "not_independent":
@@ -900,9 +1231,11 @@ def _selftest_structured():
              fact_type="case_assignment", vote_id="vote:selftest:d")]),
          "two_vote_reason_disagreement"),
         # agreement on conclusion AND reason key, but NOT on the complete tuple
-        ("votes disagreeing on the fact type",
+        # ROUND-10: `fact_type` is not a vote_record property at all — writing one in makes the artifact
+        # schema-invalid, which is caught before any tuple comparison.
+        ("a fact type written into the vote record",
          dict(good, two_vote_evidence=[VA, _tuple_break(VB, fact_type="particle_function")]),
-         "two_vote_tuple_disagreement:fact_type"),
+         "two_vote_artifact_schema_invalid:$.votes[1]: additional property 'fact_type' is not allowed"),
         ("votes disagreeing on the rival-analysis disposition",
          dict(good, two_vote_evidence=[VA, _tuple_break(VB, unresolved_points=["rival idafa reading"])]),
          "two_vote_tuple_disagreement:rival_disposition"),
@@ -924,7 +1257,15 @@ def _selftest_structured():
         ("the claimant is neither of the two reviewers",
          dict(good, reviewer_id="someone-else"), "two_vote_claimant_not_a_reviewer"),
         ("the votes are about another address than the claim",
-         dict(good, source_address="quran:2:26:20"), "two_vote_address_not_bound"),
+         dict(good, source_address="quran:2:26:20"), "two_vote_claim_address_not_bound"),
+        # ROUND-10: two agreeing votes must not clear a DIFFERENT claim at the SAME address
+        ("a different claim at the same address",
+         dict(good, conclusion="accusative"), "two_vote_claim_conclusion_not_bound"),
+        ("a different written surface at the same address",
+         dict(good, surface="حَلِيمٍ"), "two_vote_claim_surface_not_bound"),
+        ("a caller asking A2 to validate free reason prose",
+         dict(good, validate_reason_prose=True),
+         "two_vote_reason_prose_not_machine_validated:route=scholar_irab_review"),
     ]
     # the declaration itself, inspected directly: a boolean is named as such and never becomes evidence
     if two_vote_evidence_defect({"two_vote_done": True}) != "two_vote_declared_without_artifacts":

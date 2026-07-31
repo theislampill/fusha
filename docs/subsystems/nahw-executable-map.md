@@ -125,6 +125,57 @@ Inventory: 28 procedures, 9 references, 8 drills (1,381 lines), 5 curriculum fil
 - **GAP-N4 — PARTIAL (A2).** All 6 execution groups run, over 7 physical artifacts, but **5 of the 7 artifacts are `fixture_only`**: `grammar-wrong-reasoning-cases.jsonl` is prose-only (→ `TP-NAHW-A2-TYPED-WR-BANK`); `nahw-state-machine-eval.json` compares particle IDENTITY plus evidence ablation, not the typed state (→ `TP-NAHW-A2-TYPED-STATE-CONSUMER`); `hover-context-eval.json` decides only 8 of its 20 rows; and `particle-function-eval.jsonl` + `irab-polysemy-eval.jsonl` are cross-checked structurally. Only `public-boundary-scanner-eval.jsonl` (10 rows) and `largelexicon-function-collision-safety.jsonl` (3 rows) are `implemented_and_consumed` — **13 behaviourally credited rows of 314**. Structural row checks and the **21** quarantined rows are excluded from any closure claim. Round 2 additionally quarantined five semantically malformed state rows (`lamma_not_yet`, `la_nafiya_lil_jins`, `ma_relative_vs_negation`, `anna_how_adverbial`, `nima_praise_verb`) and ten hover rows that no consumer decides, and every non-quarantined row now carries an EXACT committed binding — a missing binding is a failure, never skipped coverage. All five runnerless banks — plus a sixth, `function-polysemy`, which upgrades the previously existence-only `particle-function-eval.jsonl` (119) and `irab-polysemy-eval.jsonl` (130) — run under `tools/run_nahw_evals.py` (**6 banks, 314 cases**, behavioural not existence): state-machine with evidence-ablation mutation, hover-context with key recomputation + harakāt stripping, wrong-reasoning through the structured grader, llx-collision through the parser routing table, public-boundary through the leak SoT, and function-polysemy cross-checking the particle consumer against the bank's homograph rows plus the no-bare-slot composition property. Two contract assumptions were tested and **rejected** rather than encoded: `context_function` is not a member of the `functions` inventory (they are separate vocabularies, 84 rows), and a host-only gloss is not detectable by word count (a vocative's whole contribution is one word). Six rows are **quarantined with explicit contract defects and packets** — 4 → `TP-NAHW-A2-STATE-VOCAB` (correct_state == wrong_state), 2 → `TP-NAHW-A2-HOVER-KEY-SEAT` (declared sibling surfaces collide under no repository key function). Runner integration into `tools/check_regressions.py` is **done** (serialized integration round): the consumer self-tests, the behavioural/mutation suite and the eval runner all execute there, the `--json` result must be exactly one parseable document from a genuinely successful run (`ok is True`, return code 0, `errors == []`), and the artifact set, row denominators, dispositions, consumer ownership, observed call counts, the 13 credited rows and the 21 quarantines are asserted exactly.
 - **GAP-N5 — PARTIAL (A2).** `validate_nahw_skill.py` keeps its structural checks and adds a behavioural block: truthful status for every rules file and every rule id, live positive/negative exercise of the particle discriminators, enforcement of the forbidden-collision table, rival preservation, no `auto_safe` iʿrāb tier, and the structured right-answer/wrong-reason property. `tools/test_nahw_behavioural_gates.py` adds five mutation classes (wrong conclusion, wrong/absent reason, absent governor, lost rival, unsafe auto-resolution) including in-memory rule mutations that prove the consumers are data-driven rather than hard-coded.
 
+**Round-10 semantic hardening (occurrence, canonical two-vote, homograph).** An OCCURRENCE is now one
+written word at one exact coordinate: `quran:S:A:W` with `1 <= W <= the ayah's canonical token count`. An
+ayah-only address and word index 0 both used to resolve `in_scope_source_addressed`, so evidence about a
+whole verse could be bound to the word under decision. Written-surface binding is NFC-preserving exact
+equality on every structured-grading, human-review, two-vote and typed-observation path — `norm_strict` had
+been used, which folds the harakāt, so `حَلِيمٌ` and `حَلِيمٍ` compared equal. Homograph selection fails
+closed unless EVERY discriminating mark the rule file itself names agrees, so `مُن`, `لَمَ`, `لِمْ`,
+unvowelled `أن`, `إِنِّي`, `أَنِّى`, `أَنَّي`, `كَل`, `كُلَا` and `نَعِم` are all pending rather than
+resolved; a public surface gloss is refused unless the written surface determines one member, so bare
+`من → whoever`, `إِنِّى → that I`, `إِنَّ → if` and `إِنْ → indeed` cannot pass as occurrence truth. Rivals
+are a transition's own local collision set with registered gate values, unresolved until evidence defeats
+them, and a transition with no authorized lattice preserves an exact blocker. The two-vote path consumes the
+CANONICAL artifact envelope (`qamus/schemas/two-vote-artifact.schema.json` plus
+`tools/validate_two_vote_artifacts.validate_row`); `worklist_id` and `fact_type` are external worker-record
+fields and are no longer written into vote records, which the schema forbids. A declared `two_vote_done`
+boolean no longer satisfies a two-vote gate from ANY entry point.
+
+**Round-10 residual gaps (open, and NOT closed by this lane):**
+
+- **GAP-N12 — the certifier binds a two-vote artifact by Qur'anic location only.** `tools/certify_typed_fact.py:268-272`
+  checks that the artifact's `occurrence.quran_loc` is among the fact's locations; it does not bind the fact
+  VALUE to the votes' conclusion, so an unrelated fact at the same address can be certified. The certifier is
+  outside this lane's permitted files and was NOT edited. A2 remains candidate-only and never calls it.
+  WP-NAHW-CERTIFIER-CLAIM-BINDING (bounded certifier packet).
+- **GAP-N13 — the canonical contract still requires different `engine` values for independence.** Two
+  genuinely independent reviewers can share a CLI surface, so A2's own independence rule no longer treats a
+  shared engine as dependence; `tools/validate_two_vote_artifacts.py` still does, and it is not editable
+  here, so such a pair is refused by the canonical contract rather than by A2.
+- **GAP-N14 — what two-vote independence does NOT prove.** The canonical artifact carries no CLI version, no
+  proof of which model actually produced a vote, no frozen artifact hash, no worklist provenance and no
+  reviewer-isolation attestation. Those remain EXTERNAL worker-record requirements for the owner two-vote
+  lane; A2 must not be read as establishing them.
+- **GAP-N15 — one state-machine row has an undeterminable written identity.** `anni_vs_anna_how` asserts
+  "final yāʾ ـِي, not alif-maqṣūra ـَى" while its own surface `أَنِّى` ends in alif-maqṣūra, and
+  `irab-polysemy-eval.jsonl#IP-015` reads the SAME string as the interrogative "how". Eval fixtures are not
+  editable in this lane, so the runner records the row as `orthography_undetermined`, asserts the consumer
+  fails closed, and claims no identity for it.
+- **A declared Boolean clears no mandatory two-vote gate anywhere (rounds 11-12).**
+  `tools/fusha_tutor_runtime.py` holds every `two_vote_required` checkpoint as pending — a learner
+  `second_check` is recorded as `second_check_declared` and never believed, and the grammar bridge sends no
+  `two_vote_done` — and `tools/fusha_placement_test.py` places a learner AT the rung carrying a two-vote
+  item rather than past it. A held two-vote rung is a SAFE boundary, not a learner failure: the runner
+  under-places rather than clear a grammar-fact gate on a self-report. **Learner placement is not
+  certification**: a placement result certifies nothing and promotes no Qurʾānic fact. `ready` is reachable
+  only for a bank with no `two_vote_required` item; clearing such an item needs a separately governed
+  contract supplying canonical, occurrence-bound external vote artifacts, which does not exist yet.
+- **`grammatical_reason` prose is never machine-validated.** The canonical v1.1 contract treats it as
+  uncompared elaboration; the authoritative reason gate is the registered reason key plus the complete
+  structured conclusion tuple including sign and sign visibility. A caller asking A2 to validate the prose is
+  routed to scholar review.
+
 **A2 residual findings (open, packetized):**
 
 - Three `nahw-state-machine-eval.json` rows declared `gate: two_vote_required` while carrying the `ambiguous_grammar` trigger, which the gates SSOT maps to `human_source_review_required`; A2 raised those three gates (a unique, strengthening correction determined by the SSOT). `man_interrogative_fronted`, `anna_how_adverbial`, `ma_relative_vs_negation`.

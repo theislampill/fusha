@@ -150,11 +150,97 @@ def effective_gate(topic=None, triggers=(), declared=None, rules=None, irab_gate
 
 
 # ---------------------------------------------------------------------------
+# ROUND-10: reconcile the required gate UPWARD from the SSOT, fail closed on bad triggers
+# ---------------------------------------------------------------------------
+# effective_gate() takes the strongest of what it is given, but required_gate() answers "auto_safe" for a
+# trigger list it does not recognise, so a caller could declare auto_safe and pass a misspelled, duplicated
+# or non-list trigger set and have the whole ladder collapse to auto_safe. A trigger set that cannot be
+# validated is not an absence of risk; it is an unreadable risk statement.
+#
+# GRAMMAR-AFFECTING axes may never end up at auto_safe: the SSOT tiers already put irab, case_or_mood,
+# reasoning_path_wrong, referent_sensitive_gloss, jar_majrur_ambiguous, idafa_ambiguous, nafy_lil_jins and
+# istithna above it, and this function refuses to return a gate below the SSOT answer for them.
+GRAMMAR_AFFECTING_TRIGGERS = frozenset({
+    "irab", "case_or_mood", "advanced_nahw", "istithna", "nafy_lil_jins", "idafa_ambiguous",
+    "jar_majrur_ambiguous", "referent_sensitive_gloss", "multi_sense_root", "reasoning_path_wrong",
+    "ambiguous_grammar", "proper_vs_common_noun", "qac_pos_conflict",
+})
+
+
+def trigger_set_defect(triggers):
+    """None when `triggers` is a well-formed, non-duplicated, fully recognised SSOT trigger list."""
+    if triggers is None:
+        return "trigger_list_absent"
+    if isinstance(triggers, (str, bytes)) or not isinstance(triggers, (list, tuple)):
+        return "trigger_list_not_a_list"
+    items = list(triggers)
+    if any(not isinstance(t, str) or not t.strip() for t in items):
+        return "trigger_not_a_string"
+    if len(set(items)) != len(items):
+        return "trigger_list_has_duplicates"
+    unknown = sorted(t for t in items if t not in SSOT_TRIGGERS)
+    if unknown:
+        return "trigger_not_in_ssot:%s" % ",".join(unknown)
+    return None
+
+
+def reconcile_required_gate(declared, triggers, topic=None, rules=None):
+    """The gate that must actually be carried — never weaker than the SSOT answer, fail-closed on bad input.
+
+    A malformed, non-list, duplicated or unknown trigger set yields `never_auto_resolve`: the risk statement
+    could not be read, so nothing may be auto-resolved on it. A caller-declared tier can only STRENGTHEN.
+    """
+    defect = trigger_set_defect(triggers)
+    if defect is not None:
+        return "never_auto_resolve"
+    ssot = required_gate(triggers)
+    declared_gate = resolve_gate(declared) if declared is not None else "auto_safe"
+    gates = [ssot, declared_gate]
+    if topic is not None:
+        gates.append(topic_gate(topic, rules=rules))
+        gates.append(required_gate(TOPIC_TRIGGERS.get(topic, ())))
+    strongest = _strongest(*gates)
+    if set(triggers) & GRAMMAR_AFFECTING_TRIGGERS and gate_rank(strongest) < gate_rank("two_vote_required"):
+        # defence in depth: a grammar-affecting axis is never an auto_safe decision, whatever the tables say
+        return "two_vote_required"
+    return strongest
+
+
+# ---------------------------------------------------------------------------
 # fail-closed contract check over both files
 # ---------------------------------------------------------------------------
+# The exact committed rule-id set of nahw/rules/irab-safety-gates.json, read from the file at authoring time
+# and pinned here so a dropped or duplicated row is a failure rather than a silently missing gate.
+EXPECTED_IRAB_RULE_IDS = frozenset({
+    "irab_assignment", "idafa_jar_majrur_ambiguous", "istithna", "mood_tense_flip",
+    "nafy_lil_jins", "referent_sensitive",
+})
+
+
+def irab_rule_id_defects(rules=None):
+    """The irab-safety table must carry EXACTLY its committed unique rule-id set — no missing, no duplicate.
+
+    ROUND-10: callers read the table by id, so a dropped row silently removes a gate and a duplicated row
+    makes which gate applies depend on iteration order. Both are failures, not omissions.
+    """
+    rows = (rules or load_irab_safety_gates()).get("rules") or []
+    ids = [r.get("id") for r in rows]
+    errs = []
+    dupes = sorted({i for i in ids if ids.count(i) > 1})
+    if dupes:
+        errs.append("irab-safety-gates: duplicate rule ids %s" % dupes)
+    missing = sorted(EXPECTED_IRAB_RULE_IDS - set(ids))
+    extra = sorted(set(i for i in ids if i) - EXPECTED_IRAB_RULE_IDS)
+    if missing:
+        errs.append("irab-safety-gates: missing committed rule ids %s" % missing)
+    if extra:
+        errs.append("irab-safety-gates: uncommitted rule ids %s" % extra)
+    return errs
+
+
 def validate_rule_files(irab_gates=None, topic_gates=None):
     """Report every way the two gate tables can be untrustworthy. Empty list == clean."""
-    errs = []
+    errs = list(irab_rule_id_defects(irab_gates))
     ig = irab_gates or load_irab_safety_gates()
     for row in ig.get("rules", []):
         rid = row.get("id", "?")

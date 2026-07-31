@@ -23,6 +23,7 @@ CLI:  python tools/fusha_nahw_particle_rules.py --status | --self-test
 import argparse
 import json
 import os
+import unicodedata
 import sys
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -124,8 +125,12 @@ def typed_observation(evidence, vocabulary=None, bind=None, surface=None, at=Non
               surface_mismatch, target_invalid, target_binding_mismatch, integrity_mismatch,
               observation_absent, observation_off_vocabulary}
     """
-    if at is not None and not (isinstance(at, str) and SOURCE_ADDRESS_RE.match(at)):
-        return None, "caller_occurrence_invalid", None
+    # ROUND-10: the caller's CURRENT address must be an exact word-level Qur'anic coordinate. SOURCE_ADDRESS_RE
+    # also admits an ayah-only address and word 0, neither of which names the word under decision.
+    if at is not None:
+        from tools.grade_grammar_reasoning import occurrence_defect  # noqa: PLC0415 (lazy: no import cycle)
+        if not isinstance(at, str) or occurrence_defect(at) is not None:
+            return None, "caller_occurrence_invalid", None
     if evidence is None:
         return None, "absent", None
     if isinstance(evidence, bool):
@@ -153,8 +158,12 @@ def typed_observation(evidence, vocabulary=None, bind=None, surface=None, at=Non
         return None, "occurrence_invalid", None
     if address != "quran:%s:%s" % (occ["quran_loc"], occ["word"]):
         return None, "occurrence_address_mismatch", None
-    if surface is not None and N.norm_strict(occ["surface"]) != N.norm_strict(surface):
-        return None, "surface_mismatch", None
+    # ROUND-10: norm_strict erases the harakāt, so حَلِيمٌ and حَلِيمٍ compared EQUAL and an artifact about
+    # one written form was accepted as evidence about another. Evidence binds the exact written surface.
+    if surface is not None:
+        from tools.grade_grammar_reasoning import exact_surface_equal  # noqa: PLC0415 (lazy)
+        if not exact_surface_equal(occ["surface"], surface):
+            return None, "surface_mismatch", None
     target = evidence.get("target")
     if not (isinstance(target, dict) and target.get("kind") in TARGET_KINDS
             and isinstance(target.get("value"), str) and target["value"].strip()):
@@ -224,46 +233,97 @@ def _seat(surface):
     return ""
 
 
+# ---------------------------------------------------------------------------
+# ROUND-10: a homograph branch requires EVERY written mark its member needs
+# ---------------------------------------------------------------------------
+# Each discriminator used to read ONE signal and ignore the rest, so a token that carried the signal but
+# CONTRADICTED the member's other required marks still resolved: مُن -> مَن, لَمَ -> لَمْ, لِمْ -> لِمَ,
+# unvowelled أن -> أَنْ, إِنِّي -> "that I", أَنِّى/أَنَّي -> whichever branch the nūn's vowel suggested,
+# كَل/كُلَا -> كَلَّا/كُلّ, نَعِم -> نَعَمْ. A missing mark is UNCERTAINTY, never positive evidence.
+#
+# The requirements below are the rule files' own `distinguish_by.also` lines made executable — the seat, the
+# shadda, the sukūn, the content-letter haraka and the final yāʾ-vs-alif-maqṣūra shape — so this is
+# enforcement of the committed rule data, not a new linguistic claim.
+SUKUN = "\u0652"
+
+
+def _mark_cluster(tok, target):
+    """The harakāt cluster attached to the FIRST `target` base letter, or None when the letter is absent."""
+    s = unicodedata.normalize("NFC", tok or "")
+    for i, ch in enumerate(s):
+        if ch == target:
+            j, marks = i + 1, []
+            while j < len(s) and 0x064B <= ord(s[j]) <= 0x0652:
+                marks.append(s[j])
+                j += 1
+            return marks
+    return None
+
+
+def _has_mark(tok, target, mark):
+    cluster = _mark_cluster(tok, target)
+    return bool(cluster) and mark in cluster
+
+
+def _final_base_letter(tok):
+    """The last BASE letter, marks stripped. ى and ي are DIFFERENT letters and are never folded."""
+    s = unicodedata.normalize("NFC", tok or "")
+    for ch in reversed(s):
+        if 0x064B <= ord(ch) <= 0x0655 or ch == "\u0670":
+            continue
+        return ch
+    return ""
+
+
 def _d_man_vs_min(surface):
     hm = N.haraka_on(surface, "م")
     obs = ["haraka(م)=%s" % (hm or "absent"), "shadda(ن)=%s" % N.shadda_on(surface, "ن")]
     if N.shadda_on(surface, "ن"):
         return None, obs + ["excluded: مَنَّ (verb 'to bestow') is outside this rule"]
+    if "ن" not in N.bare(surface):
+        return None, obs + ["nun_absent"]
     if hm == N.KASRA:
         return "B", obs
-    if hm in (N.FATHA, N.DAMMA):
+    if hm == N.FATHA:
         return "A", obs
-    return None, obs
+    # ROUND-10: ḍamma is NOT fatḥa. مُن carries a mark that belongs to neither member, so it is a
+    # contradiction, not a bare token, and it can never be positive evidence for مَن.
+    return None, obs + ["haraka on mīm is neither fatḥa (مَن) nor kasra (مِن)"]
 
 
 def _d_lam_vs_lima(surface):
+    """لَمْ needs fatḥa on lām AND sukūn on mīm; لِمَ needs kasra on lām AND fatḥa on mīm."""
     hl = N.haraka_on(surface, "ل")
-    obs = ["haraka(ل)=%s" % (hl or "absent"), "haraka(م)=%s" % (N.haraka_on(surface, "م") or "absent")]
-    if hl == N.FATHA:
+    hm = N.haraka_on(surface, "م")
+    sukun_m = _has_mark(surface, "م", SUKUN)
+    obs = ["haraka(ل)=%s" % (hl or "absent"), "haraka(م)=%s" % (hm or "absent"),
+           "sukun(م)=%s" % sukun_m]
+    if hl == N.FATHA and sukun_m:
         return "A", obs
-    if hl == N.KASRA:
+    if hl == N.KASRA and hm == N.FATHA:
         return "B", obs
-    return None, obs
+    return None, obs + ["the mīm mark does not confirm the member the lām mark suggests"]
 
 
 def _d_an_vs_inna(surface):
     """Seat separates أ from إ; the SHADDA on the nūn separates light أَنْ/إِنْ from heavy أَنَّ/إِنَّ.
 
-    The rule file itself says so (`distinguish_by.also`: "shadda_on(tok,'ن') separates the emphatic أَنَّ/إِنَّ
-    from light أَنْ/إِنْ"), so the discriminator reports BOTH observations. Round-7 defect: only the seat was
-    read, so أَنْ and أَنَّ were indistinguishable. The seat still selects the rule branch (that is what the
-    file's decision_if_A/B cover); the shadda is reported as an explicit sub-branch and a token with no
-    readable weight stays pending rather than defaulting to either reading.
+    ROUND-10: the seat GLYPH alone is not evidence — an unvowelled أن carries no haraka on the hamza at
+    all, so it cannot testify to أَنْ/أَنَّ rather than إِنْ/إِنَّ written defectively. The seat letter must
+    itself carry the vowel its member requires: fatḥa on أ, kasra on إ.
     """
     seat = _seat(surface)
     heavy = N.shadda_on(surface, "ن")
-    bare = N.norm(surface)
     obs = ["hamza_seat=%s" % (seat or "absent"), "shadda(ن)=%s" % heavy]
     if seat not in ("أ", "إ"):
         return None, obs
-    # a nūn must actually be present for its weight to be readable
     if "ن" not in N.bare(surface):
         return None, obs + ["nun_absent"]
+    seat_haraka = N.haraka_on(surface, seat)
+    obs.append("haraka(%s)=%s" % (seat, seat_haraka or "absent"))
+    required = N.FATHA if seat == "أ" else N.KASRA
+    if seat_haraka != required:
+        return None, obs + ["the hamza carries no confirming vowel; an unvowelled seat is uncertainty"]
     obs.append("weight=%s" % ("heavy" if heavy else "light"))
     return ("A" if seat == "أ" else "B"), obs
 
@@ -276,30 +336,47 @@ def an_family_weight(surface):
 
 
 def _d_anni_vs_anna(surface):
+    """أَنِّي = أ seat + shadda + kasra on nūn + final yāʾ; أَنَّى = أ seat + shadda + fatḥa + final alif-maqṣūra.
+
+    ROUND-10: the nūn's vowel alone decided the branch, so إِنِّي (an إ seat — inna + ī) was read as
+    أَنَّ + ـِي, and أَنِّى / أَنَّي (right vowel, WRONG final letter) both resolved. Every mark the rule
+    file names must agree, and ى is never folded to ي.
+    """
+    seat = _seat(surface)
     hn = N.haraka_on(surface, "ن")
-    tail = N.norm_strict(surface)[-1:] if N.norm_strict(surface) else ""
-    obs = ["haraka(ن)=%s" % (hn or "absent"), "final=%s" % (tail or "absent")]
-    if hn == N.KASRA:
+    shadda = N.shadda_on(surface, "ن")
+    final = _final_base_letter(surface)
+    obs = ["hamza_seat=%s" % (seat or "absent"), "shadda(ن)=%s" % shadda,
+           "haraka(ن)=%s" % (hn or "absent"), "final=%s" % (final or "absent")]
+    if seat != "أ":
+        return None, obs + ["this rule covers the أ seat only; an إ seat is the إِنَّ family"]
+    if not shadda:
+        return None, obs + ["both members carry a shadda on the nūn"]
+    if hn == N.KASRA and final == "ي":
         return "A", obs
-    if hn == N.FATHA:
+    if hn == N.FATHA and final == "ى":
         return "B", obs
-    return None, obs
+    return None, obs + ["the final letter does not confirm the member the nūn vowel suggests"]
 
 
 def _d_lima_vs_lamma(surface):
     sh = N.shadda_on(surface, "م")
     hl = N.haraka_on(surface, "ل")
     obs = ["shadda(م)=%s" % sh, "haraka(ل)=%s" % (hl or "absent")]
-    if sh:
+    if sh and hl == N.FATHA:
         return "A", obs
-    if hl == N.KASRA:
+    if not sh and hl == N.KASRA:
         return "B", obs
-    return None, obs
+    return None, obs + ["the lām vowel and the mīm shadda do not agree on one member"]
 
 
 def _d_kull_vs_kalla(surface):
+    """Both members carry a shadda on the lām; the kāf vowel then separates كُلّ from كَلَّا."""
     hk = N.haraka_on(surface, "ك")
-    obs = ["haraka(ك)=%s" % (hk or "absent")]
+    shadda_l = N.shadda_on(surface, "ل")
+    obs = ["haraka(ك)=%s" % (hk or "absent"), "shadda(ل)=%s" % shadda_l]
+    if not shadda_l:
+        return None, obs + ["no shadda on the lām: neither كُلّ nor كَلَّا is written here"]
     if hk == N.DAMMA:
         return "A", obs
     if hk == N.FATHA:
@@ -308,13 +385,17 @@ def _d_kull_vs_kalla(surface):
 
 
 def _d_nima_vs_naam(surface):
+    """نِعْمَ = kasra on nūn + sukūn on ʿayn; نَعَمْ = fatḥa on nūn + fatḥa on ʿayn."""
     hn = N.haraka_on(surface, "ن")
-    obs = ["haraka(ن)=%s" % (hn or "absent")]
-    if hn == N.KASRA:
+    ha = N.haraka_on(surface, "ع")
+    sukun_ayn = _has_mark(surface, "ع", SUKUN)
+    obs = ["haraka(ن)=%s" % (hn or "absent"), "haraka(ع)=%s" % (ha or "absent"),
+           "sukun(ع)=%s" % sukun_ayn]
+    if hn == N.KASRA and sukun_ayn:
         return "A", obs
-    if hn == N.FATHA:
+    if hn == N.FATHA and ha == N.FATHA:
         return "B", obs
-    return None, obs
+    return None, obs + ["the ʿayn mark does not confirm the member the nūn vowel suggests"]
 
 
 DISCRIMINATORS = {
@@ -546,27 +627,78 @@ def rival_analyses(vocabulary, *, selected, gate, evidence_id, axis):
     return out
 
 
+# Each forbidden transition states the COLLISION it guards. Bind it to the homograph family that collision
+# belongs to, so a transition's rivals are the siblings of ITS OWN collision — not every forbidden role in
+# the file. Round-10 defect: the rival set was the global list, so a مِن/مَن transition carried أَنَّ/إِنَّ
+# and لَمَّا/لِمَا roles as "rivals" it had no evidential relation to.
+FORBIDDEN_COLLISION_FAMILY = {
+    "min_not_man": "man_vs_min",
+    "lam_not_lima": "lam_vs_lima",
+    "lamma_not_lima": "lima_vs_lamma",
+    "anna_not_inna": "an_vs_inna",
+    "inna_not_an": "an_vs_inna",
+}
+
+
+def transition_rival_family(transition_id):
+    """The homograph family whose forbidden siblings are THIS transition's authorized local rivals."""
+    bound = TRANSITION_FROM_STATE.get(transition_id) or {}
+    particle = bound.get("particle")
+    return particle[0] if particle else None
+
+
 def transition_rivals(row, rules, *, selected, evidence_id):
-    """Rivals for a state transition: the target role plus every forbidden sibling role for its collision."""
-    gate = "two_vote_required" if row.get("requires_two_vote") else "candidate"
+    """The transition's OWN local rival set.
+
+    * gate values come from the registered ladder only (`candidate` was never a gate);
+    * rivals are the target role, the file's own hold state, and the forbidden siblings of THIS
+      transition's collision family — never the global forbidden list;
+    * a rival is `rejected_rival` only when evidence actually defeats it. With no source-addressed
+      observation nothing is defeated, so every unselected rival stays `unresolved`;
+    * a transition with no authorized local rival lattice returns an exact unresolved BLOCKER rather than
+      an invented rival set.
+    """
+    from tools import fusha_nahw_gate_rules as GATE      # noqa: PLC0415 (lazy: avoid an import cycle)
+    trigger = row.get("two_vote_trigger")
+    triggers = [trigger] if isinstance(trigger, str) and trigger else []
+    gate = GATE.reconcile_required_gate("two_vote_required" if row.get("requires_two_vote") else None,
+                                        triggers)
+    family = transition_rival_family(row.get("id"))
     roles = [row.get("to_nahw_role")]
     els = (row.get("else") or {})
     if els.get("pending_reason"):
         roles.append("hold:%s" % els["pending_reason"])
+    if family is None:
+        # No particle family binds this transition, so the repository authorizes no rival lattice for it.
+        # Preserve the blocker exactly instead of borrowing another collision's roles.
+        return [{
+            "axis": "nahw_role", "role": row.get("to_nahw_role"),
+            "decision_status": "unresolved", "selected": False, "reason_key": None, "gate": gate,
+            "evidence_id": evidence_id, "defeater": None,
+            "rival_lattice": "absent",
+            "blocker": ("no authorized local rival lattice: transition %r is bound by a from-state token, "
+                        "not by a homograph collision, so this repository names no sibling roles for it"
+                        % row.get("id")),
+        }]
     for forb in (rules or load_state_rules()).get("forbidden_transitions", []):
+        if FORBIDDEN_COLLISION_FAMILY.get(forb.get("id")) != family:
+            continue
         if forb.get("forbidden_to") and forb.get("forbidden_to") not in roles:
             roles.append(forb["forbidden_to"])
     out = []
     for role in roles:
         if not role:
             continue
+        is_selected = role == selected
+        # An unselected rival is only REJECTED once evidence defeats it. Selection without a defeater
+        # leaves the others standing, which is what keeps a lost rival visible.
+        status = "candidate_selected" if is_selected else "unresolved"
         out.append({
             "axis": "nahw_role", "role": role,
-            "decision_status": "unresolved" if selected is None else (
-                "candidate_selected" if role == selected else "rejected_rival"),
-            "selected": role == selected, "reason_key": None, "gate": gate,
+            "decision_status": status, "selected": is_selected, "reason_key": None, "gate": gate,
             "evidence_id": evidence_id,
-            "defeater": None if role == selected else "no source-addressed observation selects this role",
+            "rival_lattice": "local:%s" % family,
+            "defeater": None,
         })
     return out
 
@@ -656,6 +788,71 @@ def transition(transition_id, *, evidence=None, at=None, surface=None, from_stat
                  "reason": row.get("reason"), "confidence": row.get("confidence"),
                  "route": "nahw/procedures/irab-case-mood.md"})
     return base
+
+
+# ---------------------------------------------------------------------------
+# ROUND-10: a PUBLIC surface gloss must be occurrence truth, or it stays unresolved
+# ---------------------------------------------------------------------------
+# Two rule branches are deliberately DISJUNCTIVE: an_vs_inna A glosses "to / that" for both أَنْ and أَنَّ,
+# and B glosses "indeed / verily (إِنَّ) — or — if (إِنْ)". A branch gloss is therefore not, by itself, a
+# statement about one occurrence — publishing it would assert a reading the marks may not support. Where the
+# shadda-borne weight separates the members, the member's OWN gloss is required; where it does not, the
+# gloss stays unresolved.
+#
+# The member glosses below are the parenthesised attributions in the rule file's own branch-B gloss string,
+# made machine-readable rather than re-derived.
+AN_FAMILY_MEMBER_GLOSS = {
+    ("A", "light"): ("to", "in order to", "that"),          # أَنْ maṣdariyyah / subjunctive
+    ("A", "heavy"): ("that",),                              # أَنَّ emphatic complementiser
+    ("B", "heavy"): ("indeed", "verily", "truly"),          # إِنَّ
+    ("B", "light"): ("if",),                                # إِنْ conditional
+}
+DISJUNCTIVE_BRANCHES = {("an_vs_inna", "A"), ("an_vs_inna", "B")}
+
+
+def _gloss_alternatives(text):
+    """The rule file writes a branch gloss as slash-separated alternatives; split without inventing any."""
+    out = []
+    for part in re.split(r"[/|]| — or — ", text or ""):
+        part = part.strip().strip(".")
+        part = re.sub(r"\s*\([^)]*\)\s*", " ", part).strip()
+        if part:
+            out.append(part.lower())
+    return out
+
+
+def public_gloss_defect(surface, gloss, rules=None):
+    """None only when the WRITTEN surface determines one member and `gloss` is that member's own gloss.
+
+    Returns a closed defect string otherwise: surface_absent | gloss_absent | no_final_consumer |
+    unresolved_homograph:<reason> | forbidden_reading | branch_gloss_is_disjunctive |
+    gloss_not_the_resolved_member. Every one of them means "do not publish this as occurrence truth".
+    """
+    if not isinstance(surface, str) or not surface.strip():
+        return "surface_absent"
+    if not isinstance(gloss, str) or not gloss.strip():
+        return "gloss_absent"
+    res = resolve_particle_homograph(surface, rules=rules)
+    if res.get("status") == "out_of_domain":
+        return "no_final_consumer"
+    if res.get("decision") != "resolved" or res.get("branch") is None:
+        return "unresolved_homograph:%s" % (res.get("pending_reason") or "pending")
+    if forbidden_gloss_violations(surface, gloss, particle_rules=rules):
+        return "forbidden_reading"
+    key = (res.get("rule_id"), res.get("branch"))
+    if key in DISJUNCTIVE_BRANCHES:
+        weight = an_family_weight(surface)
+        if weight is None:
+            return "branch_gloss_is_disjunctive"
+        allowed = AN_FAMILY_MEMBER_GLOSS.get((res["branch"], weight))
+        if not allowed:
+            return "branch_gloss_is_disjunctive"
+    else:
+        allowed = _gloss_alternatives(res.get("gloss"))
+    offered = gloss.strip().lower().strip(".")
+    if offered not in [a.lower() for a in allowed]:
+        return "gloss_not_the_resolved_member"
+    return None
 
 
 def forbidden_gloss_violations(surface, gloss, rules=None, particle_rules=None):

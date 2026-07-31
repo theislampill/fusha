@@ -399,6 +399,28 @@ QUARANTINED_STATE_GATES = {
     "anna_how_adverbial": "human_source_review_required",
     "nima_praise_verb": "two_vote_required",
 }
+# ---------------------------------------------------------------------------
+# ROUND-10: rows whose WRITTEN SURFACE cannot determine the identity the bank claims
+# ---------------------------------------------------------------------------
+# Homograph selection now requires every discriminating mark the rule file names, so a surface whose marks
+# contradict each other fails closed. One committed bank row is in exactly that position, and the bank
+# itself is internally inconsistent about it — this lane may not edit eval fixtures, so the contradiction is
+# recorded here as an EXPLICIT BLOCKER rather than papered over with a resolved identity the orthography
+# does not support.
+#
+# The row still has every other axis compared (state, rival, expected_decision, gate) and still runs the
+# evidence-ablation mutation. What it no longer does is claim the consumer picked a branch: the consumer
+# must fail closed, and that is asserted.
+ORTHOGRAPHY_UNDETERMINED = {
+    "anni_vs_anna_how": {
+        "rule_id": "anni_vs_anna",
+        "blocker": ("the bank row asserts 'final yāʾ ـِي, not alif-maqṣūra ـَى' but its own surface أَنِّى "
+                    "ends in alif-maqṣūra, and nahw/evals/irab-polysemy-eval.jsonl#IP-015 reads the SAME "
+                    "written string as the interrogative 'how'. The two banks disagree, so the written "
+                    "surface determines no member: the consumer fails closed and no identity is claimed."),
+        "owner": "TP-NAHW-A2-TYPED-STATE-CONSUMER",
+    },
+}
 # Diacritics whose removal must destroy the discriminating evidence (the ablation mutation).
 _MARKS = "ًٌٍَُِّْ"
 
@@ -419,7 +441,7 @@ def run_state_machine(errors, stats):
     # `state_comparison` stays fixture_only: no typed state/function consumer computes correct_state, so the
     # axes are compared against a committed expectation, not against an engine.
     stats[bank] = {"cases": len(cases), "identity_compared": 0, "axes_compared": 0, "ablated": 0,
-                   "quarantined": 0, "state_comparison": "fixture_only",
+                   "quarantined": 0, "orthography_undetermined": 0, "state_comparison": "fixture_only",
                    "packet": "TP-NAHW-A2-TYPED-STATE-CONSUMER"}
     seen = set()
     for c in cases:
@@ -480,6 +502,24 @@ def run_state_machine(errors, stats):
         res = PR.resolve_particle_homograph(c["surface"])
         if res.get("rule_id") != rule_id:
             errors.append("%s:%s engine selected rule %r, expected %r" % (bank, cid, res.get("rule_id"), rule_id))
+            continue
+        undetermined = ORTHOGRAPHY_UNDETERMINED.get(cid)
+        if undetermined is not None:
+            # The written surface determines no member. Assert the consumer FAILS CLOSED, keep the
+            # ablation mutation, and count the row as an explicit blocker — never as a resolved identity.
+            if res.get("rule_id") != undetermined["rule_id"]:
+                errors.append("%s:%s undetermined row changed rule family to %r"
+                              % (bank, cid, res.get("rule_id")))
+            if res.get("branch") is not None or res.get("decision") != "pending":
+                errors.append("%s:%s the written surface determines no member, but the consumer resolved "
+                              "to branch %r/%s — a contradicted mark is not evidence"
+                              % (bank, cid, res.get("branch"), res.get("decision")))
+            stats[bank]["orthography_undetermined"] += 1
+            abl = PR.resolve_particle_homograph(_ablate(c["surface"]))
+            stats[bank]["ablated"] += 1
+            if abl.get("decision") != "pending" or abl.get("branch") is not None:
+                errors.append("%s:%s ablated surface still resolved (%s/%s)"
+                              % (bank, cid, abl.get("decision"), abl.get("branch")))
             continue
         if res.get("branch") != branch:
             errors.append("%s:%s engine landed on branch %r, expected %r (correct_state=%s)"

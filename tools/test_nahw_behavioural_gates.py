@@ -33,6 +33,7 @@ sys.path.insert(0, _REPO)
 from tools import fusha_nahw_context_rules as CTX  # noqa: E402
 from tools import fusha_nahw_gate_rules as GATE  # noqa: E402
 from tools import fusha_nahw_particle_rules as PR  # noqa: E402
+from tools import validate_two_vote_artifacts as VTV  # noqa: E402
 from tools.fusha_nahw_particle_rules import mint_fixture_observation  # noqa: E402
 from tools.grade_grammar_reasoning import (  # noqa: E402
     grade, grade_structured, grade_two_vote, mint_fixture_vote, project_vote,
@@ -425,7 +426,7 @@ def test_two_vote_agreement():
     def v(index, **kw):
         base = dict(reason_key=KJ, conclusion="genitive", case_mood="genitive",
                     relation="preposition_governs_genitive", fact_type="case_assignment",
-                    worklist_id="worklist-%s" % ("a" if index == 0 else "b"))
+                    worklist_id="worklist-%s" % ("a" if index == 0 else "b"))   # external worker record
         base.update(kw)
         return mint_fixture_vote(index, **base)
 
@@ -451,15 +452,29 @@ def test_two_vote_agreement():
     check("TV cloned votes are rejected", not grade_two_vote(case, a, dict(a))["pass"])
     for label, mutated in (
             ("cloned provenance", dict(b, reviewer=dict(a["reviewer"]))),
-            ("engine", dict(b, reviewer=dict(b["reviewer"], engine=a["reviewer"]["engine"]))),
             ("reviewer_id", dict(b, reviewer=dict(b["reviewer"],
                                                   reviewer_id=a["reviewer"]["reviewer_id"]))),
             ("lane", dict(b, reviewer=dict(b["reviewer"], lane=a["reviewer"]["lane"]))),
-            ("worklist", dict(b, worklist_id=a["worklist_id"])),
             ("vote_id", dict(b, vote_id=a["vote_id"]))):
         r = grade_two_vote(case, a, mutated)
         check("TV shared %s breaks independence" % label,
               not r["pass"] and r.get("disagreement") == "not_independent")
+    # ROUND-10: A2's OWN independence check no longer treats a shared ENGINE as dependence. Two genuinely
+    # independent reviewers can both work through the same CLI surface; demanding different engine strings
+    # proves nothing and only rewards falsifying the field. Reviewer identity, lane and vote id still differ.
+    from tools.grade_grammar_reasoning import vote_independence_errors  # noqa: PLC0415
+    _same_engine = dict(b, reviewer=dict(b["reviewer"], engine=a["reviewer"]["engine"]))
+    check("TV A2's own independence check does NOT flag a shared CLI engine",
+          vote_independence_errors(a, _same_engine) == [],
+          repr(vote_independence_errors(a, _same_engine)[:1]))
+    # TRUTHFUL RESIDUAL: the CANONICAL contract (tools/validate_two_vote_artifacts.py, not editable in this
+    # lane) still rejects a shared engine at the artifact level, so the pair is refused there rather than by
+    # A2. The refusal is attributed to the canonical contract, and relaxing it belongs to the owner lane.
+    _r = grade_two_vote(case, a, _same_engine)
+    check("TV a shared engine is refused by the CANONICAL contract, not by A2's own independence rule",
+          not _r["pass"] and "artifact_contract_invalid" in (_r.get("block_reason") or "")
+          and "engine" in (_r.get("block_reason") or ""),
+          json.dumps(_r.get("block_reason"), ensure_ascii=False)[:160])
 
     check("TV an unregistered reason key cannot reach agreement",
           not grade_two_vote(case, v(0, reason_key="tv-expected"),
@@ -473,16 +488,27 @@ def test_two_vote_agreement():
           not r["pass"] and r.get("route") == "arbitration")
     check("TV a single vote never satisfies the gate", not grade_two_vote(case, a, None)["pass"])
 
-    # ROUND-4: a worklist id must be a VALID canonical identifier before the two are compared. None, "",
-    # whitespace and malformed ids are missing provenance, not "different worklists".
-    for label, bad_id in (("null", None), ("empty", ""), ("whitespace", "   "),
-                          ("malformed", "-not/a/worklist")):
-        r = grade_two_vote(case, v(0, worklist_id=bad_id), b)
-        check("TV a %s worklist id is rejected" % label,
-              not r["pass"] and r.get("disagreement") == "not_independent",
-              json.dumps(r, ensure_ascii=False)[:200])
-    check("TV equal worklist ids are rejected",
-          not grade_two_vote(case, a, v(1, worklist_id=a["worklist_id"]))["pass"])
+    # ROUND-10: `worklist_id` is NOT a canonical vote_record property — qamus/schemas/two-vote-artifact
+    # .schema.json is additionalProperties:false and does not carry it, so writing one into a vote makes the
+    # artifact schema-INVALID and A2 cannot prove worklist separation from the artifact at all. Separate
+    # worklist provenance, CLI version, actual-model proof, a frozen artifact hash and reviewer isolation
+    # remain EXTERNAL worker-record requirements for the later owner two-vote lane.
+    check("TV a worklist_id written into a vote record makes the artifact schema-invalid",
+          not grade_two_vote(case, dict(a, worklist_id="wl-a"), b)["pass"])
+    from tools.grade_grammar_reasoning import (  # noqa: PLC0415
+        canonical_two_vote_envelope, two_vote_artifact_defect,
+    )
+    check("TV the A2 pair forms a CANONICAL, schema-valid two-vote artifact",
+          two_vote_artifact_defect(canonical_two_vote_envelope(a, b)) is None,
+          repr(two_vote_artifact_defect(canonical_two_vote_envelope(a, b))))
+    check("TV an extra field in a vote record is refused by the canonical schema",
+          two_vote_artifact_defect(canonical_two_vote_envelope(a, dict(b, fact_type="x"))) is not None)
+    check("TV a third vote exceeds the canonical maxItems",
+          two_vote_artifact_defect(dict(canonical_two_vote_envelope(a, b), votes=[a, b, a])) is not None)
+    for label, row in (("genuine v1 fixture", VTV.sample_verified_row()),
+                       ("genuine v1.1 fixture", VTV.sample_verified_row_v11())):
+        check("TV the canonical %s validates" % label, two_vote_artifact_defect(row) is None,
+              repr(two_vote_artifact_defect(row)))
 
     # human/source review remains a DISTINCT gate
     hcase = {"id": "TV-HR", "required_gate": "human_source_review_required",
@@ -496,9 +522,11 @@ def test_two_vote_agreement():
           not r["pass"] and r.get("human_review_defect") == "human_review_not_a_record")
 
     # ROUND-4: a human review must be BOUND to the exact claim it is offered for
-    bound_claim = dict(claim, subject="لِّلَّهِ")
+    # ROUND-10: the subject is the exact WRITTEN surface under decision, bound to the artifact occurrence
+    SURFACE = GATE_VOTE_A["occurrence"]["surface"]
+    bound_claim = dict(claim, subject=SURFACE)
     good_review = {"review_id": "hr:round4:1", "reviewer_id": "human-1",
-                   "source_address": GATE_ADDR, "subject": "لِّلَّهِ", "decision": "approved",
+                   "source_address": GATE_ADDR, "subject": SURFACE, "decision": "approved",
                    "timestamp": "2026-07-30T00:00:00Z", "reviewed_conclusion": "genitive",
                    "reviewed_reason_key": KJ}
     r = grade_structured(hcase, dict(bound_claim, human_review=good_review))
@@ -827,10 +855,154 @@ def test_quarantine_authority_is_exact():
           not os.path.exists(os.path.join(RUN.PACKET_DIR, "TP-NAHW-A2-PROBE-MINIMAL.json")))
 
 
+def test_r10_exact_occurrence_and_surface():
+    """ROUND-10 A: an occurrence is ONE written word at ONE exact coordinate, bound by its exact surface."""
+    from tools.grade_grammar_reasoning import (  # noqa: PLC0415
+        exact_surface_equal, occurrence_defect, source_address_defect, surface_binding_defect,
+    )
+    for label, address in (("an ayah-only address", "quran:2:284"),
+                           ("word index 0", "quran:2:284:0"),
+                           ("a qamus: address", "qamus:entry:1234"),
+                           ("a wbw: address", "wbw:2:284:1"),
+                           ("a leading-zero coordinate", "quran:002:284:1"),
+                           ("an empty address", ""),
+                           ("a word beyond the token count", "quran:2:284:99")):
+        check("R10 %s is not an occurrence" % label, occurrence_defect(address) is not None,
+              repr(occurrence_defect(address)))
+    check("R10 a genuine word occurrence is accepted", occurrence_defect("quran:2:284:1") is None)
+    check("R10 the claim source address inherits the word-level rule",
+          source_address_defect({"source_address": "quran:2:284"}) == "source_address_not_word_level"
+          and source_address_defect({"source_address": "quran:2:284:1"}) is None)
+
+    # exact written surface — nothing folded away
+    for left, right, why in ((u"\u0645\u064e\u0646", u"\u0645\u0650\u0646\u064e", "man vs mina"),
+                             (u"\u0645\u064e\u0627", u"\u0645\u064e\u0651\u0627", "ma vs mma"),
+                             (u"\u062d\u064e\u0644\u0650\u064a\u0645\u064c",
+                              u"\u062d\u064e\u0644\u0650\u064a\u0645\u064d", "halimun vs halimin"),
+                             (u"\u0645\u064e\u0646", u"\u0648\u064e\u0627\u0644\u0644\u064e\u0651"
+                              u"\u0647\u064f", "an unrelated token")):
+        check("R10 exact surface: %s must differ" % why, not exact_surface_equal(left, right))
+        check("R10 exact surface: %s is not bound" % why,
+              surface_binding_defect(left, right) == "surface_not_bound")
+    import unicodedata as _ud
+    _s = u"\u062d\u064e\u0644\u0650\u064a\u0645\u064c"
+    check("R10 NFC-equal encodings of the SAME characters compare equal",
+          exact_surface_equal(_ud.normalize("NFD", _s), _ud.normalize("NFC", _s)))
+    check("R10 tatweel is not erased for evidence binding",
+          not exact_surface_equal(u"\u0645\u064e\u0646", u"\u0645\u064e\u0640\u0646"))
+
+    # typed observation: cross-occurrence replay and surface mismatch
+    ev = PR.mint_fixture_observation("human", source_address="quran:2:26:20", quran_loc="2:26", word=20,
+                                     surface=u"\u062d\u064e\u0644\u0650\u064a\u0645\u064c",
+                                     target_kind="referent", target_value="halim")
+    for label, kw, want in (
+            ("cross-occurrence replay",
+             {"surface": u"\u062d\u064e\u0644\u0650\u064a\u0645\u064c", "at": "quran:2:284:1"},
+             "occurrence_not_current"),
+            ("a surface differing only in the final tanwin",
+             {"surface": u"\u062d\u064e\u0644\u0650\u064a\u0645\u064d", "at": "quran:2:26:20"},
+             "surface_mismatch"),
+            ("an ayah-only caller address",
+             {"surface": u"\u062d\u064e\u0644\u0650\u064a\u0645\u064c", "at": "quran:2:26"},
+             "caller_occurrence_invalid"),
+            ("caller word index 0",
+             {"surface": u"\u062d\u064e\u0644\u0650\u064a\u0645\u064c", "at": "quran:2:26:0"},
+             "caller_occurrence_invalid")):
+        value, defect, _art = PR.typed_observation(ev, **kw)
+        check("R10 typed observation refuses %s" % label, value is None and defect == want,
+              "defect=%s" % defect)
+    value, defect, _art = PR.typed_observation(
+        ev, surface=u"\u062d\u064e\u0644\u0650\u064a\u0645\u064c", at="quran:2:26:20")
+    check("R10 the genuine occurrence still validates", value is not None, "defect=%s" % defect)
+
+    # transition() validates the caller surface and the caller address
+    t = PR.transition("noun_noun_to_idafa", at="quran:2:284:1",
+                      surface=u"\u0630\u064e\u0670\u0644\u0650\u0643\u064e",
+                      from_state="noun_followed_by_noun")
+    check("R10 transition() refuses a surface unrelated to its from-state", t.get("decision") == "pending")
+    t = PR.transition("noun_noun_to_idafa", at="quran:2:284", surface=None,
+                      from_state="noun_followed_by_noun")
+    check("R10 transition() refuses an ayah-only caller address", t.get("decision") == "pending")
+
+
+def test_r10_homograph_fails_closed():
+    """ROUND-10 C: a contradicted or missing mark is uncertainty, never positive evidence."""
+    for surface in (u"\u0625\u0650\u0646\u0651\u0650\u064a",        # إِنِّي
+                    u"\u0645\u064f\u0646",                             # مُن
+                    u"\u0644\u064e\u0645\u064e",                      # لَمَ
+                    u"\u0644\u0650\u0645\u0652",                      # لِمْ
+                    u"\u0623\u0646",                                    # أن (unvowelled)
+                    u"\u0623\u064e\u0646\u0651\u0650\u0649",        # أَنِّى
+                    u"\u0623\u064e\u0646\u0651\u064e\u064a",        # أَنَّي
+                    u"\u0643\u064e\u0644",                             # كَل
+                    u"\u0643\u064f\u0644\u064e\u0627",               # كُلَا
+                    u"\u0646\u064e\u0639\u0650\u0645"):              # نَعِم
+        res = PR.resolve_particle_homograph(surface)
+        check("R10 homograph %s fails closed" % surface,
+              res.get("decision") == "pending" and res.get("branch") is None,
+              "decision=%s branch=%s" % (res.get("decision"), res.get("branch")))
+    for surface in (u"\u0645\u064e\u0646\u0652", u"\u0645\u0650\u0646\u0652",
+                    u"\u0644\u064e\u0645\u0652", u"\u0644\u0650\u0645\u064e",
+                    u"\u0623\u064e\u0646\u0651\u064e", u"\u0625\u0650\u0646\u0651\u064e"):
+        check("R10 the fully marked %s still resolves" % surface,
+              PR.resolve_particle_homograph(surface).get("decision") == "resolved")
+
+    # public gloss safety
+    for surface, gloss in ((u"\u0645\u0646", "whoever"),
+                           (u"\u0625\u0650\u0646\u0651\u0650\u0649", "that I"),
+                           (u"\u0625\u0650\u0646\u0651\u064e", "if"),
+                           (u"\u0625\u0650\u0646\u0652", "indeed")):
+        check("R10 public gloss %s -> %r is refused" % (surface, gloss),
+              PR.public_gloss_defect(surface, gloss) is not None,
+              repr(PR.public_gloss_defect(surface, gloss)))
+    for surface, gloss in ((u"\u0645\u0650\u0646\u0652", "from"),
+                           (u"\u0625\u0650\u0646\u0651\u064e", "indeed"),
+                           (u"\u0625\u0650\u0646\u0652", "if")):
+        check("R10 public gloss %s -> %r is allowed" % (surface, gloss),
+              PR.public_gloss_defect(surface, gloss) is None,
+              repr(PR.public_gloss_defect(surface, gloss)))
+
+    # local rival lattice
+    rules = PR.load_state_rules()
+    row = next(r for r in rules["transitions"] if r["id"] == "min_preposition_to_jar_majrur")
+    rivals = PR.transition_rivals(row, rules, selected=None, evidence_id="e")
+    check("R10 rivals are the transition's LOCAL collision set",
+          all(r.get("rival_lattice") == "local:man_vs_min" for r in rivals) and len(rivals) <= 4,
+          "n=%d" % len(rivals))
+    check("R10 no rival is pre-marked rejected before evidence defeats it",
+          all(r["decision_status"] != "rejected_rival" for r in rivals))
+    check("R10 rival gates use registered ladder values only",
+          all(r["gate"] in ("auto_safe", "two_vote_required", "human_source_review_required",
+                            "never_auto_resolve") for r in rivals))
+    unbound = next(r for r in rules["transitions"] if r["id"] == "noun_noun_to_idafa")
+    blocked = PR.transition_rivals(unbound, rules, selected=None, evidence_id="e")
+    check("R10 a transition with no authorized rival lattice preserves an exact blocker",
+          len(blocked) == 1 and blocked[0].get("rival_lattice") == "absent" and blocked[0].get("blocker"))
+
+
+def test_r10_gate_reconciliation():
+    """ROUND-10 B4/B5: the required gate reconciles upward and bad trigger sets fail closed."""
+    for triggers in (["irab"], ["case_or_mood"], ["referent_sensitive_gloss"], ["reasoning_path_wrong"]):
+        got = GATE.reconcile_required_gate("auto_safe", triggers)
+        check("R10 caller-declared auto_safe cannot weaken %s" % triggers[0],
+              GATE.gate_rank(got) >= GATE.gate_rank("two_vote_required"), got)
+    for label, triggers in (("a non-list", "irab"), ("None", None), ("a duplicate", ["irab", "irab"]),
+                            ("an unknown trigger", ["not_a_trigger"]), ("a non-string", [1])):
+        check("R10 %s trigger set fails closed" % label,
+              GATE.reconcile_required_gate("auto_safe", triggers) == "never_auto_resolve")
+    check("R10 the committed irab rule-id set is exact", GATE.irab_rule_id_defects() == [])
+    _rows = GATE.load_irab_safety_gates()["rules"]
+    check("R10 a duplicated irab row is a failure",
+          GATE.irab_rule_id_defects({"rules": _rows + [dict(_rows[0])]}) != [])
+    check("R10 a dropped irab row is a failure", GATE.irab_rule_id_defects({"rules": _rows[1:]}) != [])
+
+
 def main():
     for fn in (test_m1_wrong_conclusion, test_m2_wrong_reason, test_m3_absent_governor,
                test_m4_lost_rival, test_m5_unsafe_auto_resolution, test_two_vote_agreement,
-               test_runner_contract, test_domain_consumers, test_quarantine_authority_is_exact):
+               test_runner_contract, test_domain_consumers, test_quarantine_authority_is_exact,
+               test_r10_exact_occurrence_and_surface, test_r10_homograph_fails_closed,
+               test_r10_gate_reconciliation):
         fn()
     if FAILS:
         print("FAIL — %d behavioural gate(s) broke:" % len(FAILS))
@@ -840,7 +1012,8 @@ def main():
     print("PASS — naḥw behavioural gates hold "
           "(M1 wrong conclusion, M2 wrong/absent reason, M3 absent governor, M4 lost rival, "
           "M5 unsafe auto-resolution, two-vote conclusion+reason, domain consumers, "
-          "exact two-way quarantine authority)")
+          "exact two-way quarantine authority, exact occurrence + written-surface binding, "
+          "fail-closed homograph selection, upward gate reconciliation)")
 
 
 if __name__ == "__main__":

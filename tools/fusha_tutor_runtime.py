@@ -7,7 +7,8 @@ judgement on open prose; it makes the OBJECTIVE checkpoint loop runnable and hon
 
     load checkpoint bank (JSONL) + optional progress state
       -> select the next item (a due REVIEW, else a new item)        [deterministic]
-      -> accept an ANSWER PAYLOAD (the learner's answer + reasoning + optional second check)
+      -> accept an ANSWER PAYLOAD (the learner's answer + reasoning + an optional DECLARED second check,
+         which is recorded but never treated as an independent review)
       -> GRADE against the answer key/rubric  (NOT a model self-report)
       -> route a miss to its remediation procedure
       -> update the Leitner schedule (tools/fusha_review_scheduler.py)
@@ -23,7 +24,11 @@ HARD CONTRACTS (enforced by --self-test + tools/validate_tutor_runtime.py):
   * Grading is computed from the answer payload's CONTENT — expected/variant match, forbidden-answer detection,
     required-reasoning presence, and (for hard grammar) a second independent check. It NEVER reads a self-reported
     `correct`/`passed`/`cleared` flag from the payload. "It sounds right" cannot clear an item.
-  * Two-vote gate: a `two_vote_required` row with no agreeing second check is `pending` — HELD, never cleared.
+  * Two-vote gate: a `two_vote_required` row is ALWAYS `pending` — HELD, never cleared from inside the runtime.
+    The runtime grades answer and reasoning content; it cannot independently clear a mandatory two-vote FACT
+    gate, because a learner-supplied `second_check` Boolean is a declaration, not an occurrence-bound
+    canonical vote artifact. Clearing such a row needs a separately governed runtime contract that consumes
+    external, occurrence-bound vote artifacts; until then the checkpoint stays held.
   * No persistent write without `--write`. A dry run mutates no file.
   * Deterministic: "now" is an explicit integer `--now` day index; no wall clock, no RNG.
   * Source-clean: every emitted text field passes tools/leak_sot.
@@ -149,14 +154,28 @@ def grade(row, payload):
     reasoning_passed = not missing
 
     if row.get("two_vote_required"):
-        ok2 = bool(second) and bool(second.get("conclusion_agrees")) and bool(second.get("reason_agrees"))
-        two_vote_status = "cleared" if ok2 else "pending"
+        # ROUND-11: a mandatory two-vote FACT gate is never cleared from inside the tutoring runtime.
+        # `second_check` is a learner-supplied declaration: {"conclusion_agrees": true, "reason_agrees": true}
+        # carries no exact Qurʾānic occurrence, no canonical vote envelope, no reviewer or session identity,
+        # no frozen worklist hash, no model proof and no evidence that the two checks were isolated from each
+        # other. Reading it as an independent review promoted a hard-grammar checkpoint on a self-report.
+        #
+        # The runtime can grade answer and reasoning CONTENT. It cannot independently clear a two-vote fact
+        # gate, so such a row is HELD as pending until a separately governed runtime contract can consume
+        # canonical, occurrence-bound external vote artifacts. That contract is not invented here.
+        declared = (bool(second) and bool(second.get("conclusion_agrees"))
+                    and bool(second.get("reason_agrees")))
+        two_vote_status = "pending"
+        second_check_declared = declared
     else:
         two_vote_status = "n/a"
+        second_check_declared = None
 
     cleared = bool(passed and reasoning_passed and not forbidden_hit and two_vote_status != "pending")
     return {"passed": bool(passed), "reasoning_passed": bool(reasoning_passed),
             "two_vote_status": two_vote_status, "forbidden_hit": bool(forbidden_hit),
+            # reported for transparency ONLY: what the learner declared, never what was proven
+            "second_check_declared": second_check_declared,
             "cleared": cleared, "missing_reasoning": missing}
 
 
@@ -165,15 +184,21 @@ def grade(row, payload):
 # grading path above (grade/step) is the runtime's SOURCE OF TRUTH and is never altered by this bridge. When the
 # caller opts in (bridge_grade=True / --grammar-bridge), the runtime additionally translates its OWN computed grade
 # into the eval grader's `judgment` shape and asserts the two graders AGREE on the shared reasoning gate. They are
-# two views of the same invariant: a grammar decision clears only when the final answer AND the reasoning hold and
-# any required two-vote is done. The bridge is an agreement CHECK, not a second opinion that can override the runtime
+# two views of the same invariant: a grammar decision clears only when the final answer AND the reasoning hold,
+# and a decision that needs two independent occurrence-bound reviews clears in NEITHER grader without them —
+# so on a two_vote_required row both refuse, which is what makes them agree. The bridge is an agreement
+# CHECK, not a second opinion that can override the runtime
 # — a disagreement is surfaced (and, in --self-test, fails) rather than silently re-grading.
 #
 # Shared-gate mapping (runtime grade `g` for `row` -> grade_grammar_reasoning judgment):
 #   final_ok       <- g["passed"]                         (final answer matches the authored key)
 #   reasoning_ok   <- g["reasoning_passed"] and not g["forbidden_hit"]
 #                                                          (required reasoning present AND no forbidden path taken)
-#   two_vote_done  <- g["two_vote_status"] == "cleared"   (an agreeing second check, when the row requires one)
+#   two-vote gate  -> NOT translated. ROUND-11: the runtime holds every two_vote_required row as pending, and
+#       the eval grader requires canonical, occurrence-bound vote artifacts that a tutoring checkpoint does
+#       not have. The bridge therefore sends NO two-vote assertion at all. Both graders refuse the row for
+#       the same reason, so they agree; the gate is still REQUIRED (the case keeps required_gate=
+#       two_vote_required — it is never relabelled auto_safe).
 #   evidence_cited / source_address  -> the runtime checkpoint schema carries NO evidence-rung/source-address field,
 #       so the bridge runs the eval grader with its EVIDENCE gate neutralized (case-driven, satisfied) and compares
 #       ONLY on the gates both graders actually compute. This keeps the comparison honest: we never claim the runtime
@@ -189,10 +214,11 @@ def _grammar_bridge_judgment(g):
     """Translate a runtime grade dict `g` (from grade()) into a grade_grammar_reasoning `judgment`. Evidence is
     neutralized (the runtime checkpoint schema has no evidence rung/source-address) so the shared comparison is only
     over the answer + reasoning + two-vote gates both graders compute."""
+    # ROUND-11: no `two_vote_done` is sent. A declared Boolean is not evidence, and the runtime has no
+    # canonical vote artifact to offer, so the two-vote gate is left unproven on purpose.
     return {"final_ok": bool(g["passed"]),
             "reasoning_ok": bool(g["reasoning_passed"]) and not bool(g["forbidden_hit"]),
-            "evidence_cited": True, "source_address": "n/a-runtime-checkpoint",
-            "two_vote_done": g["two_vote_status"] == "cleared"}
+            "evidence_cited": True, "source_address": "n/a-runtime-checkpoint"}
 
 
 def grammar_bridge_check(row, g):
@@ -463,11 +489,15 @@ def _self_test():
     if r4["grade"]["two_vote_status"] != "pending" or r4["grade"]["cleared"] or r4["outcome"] != "hold":
         failures.append("two-vote with one check must be pending+held, got %s / %s" % (r4["grade"], r4["outcome"]))
 
-    # 5. hard-grammar with an AGREEING second check -> cleared + promote
+    # 5. ROUND-11: hard-grammar with a DECLARED agreeing second check -> still pending + HELD.
+    # The Boolean is a learner declaration, not an independent occurrence-bound review, so it may not clear
+    # or promote a two_vote_required row. It is reported as `second_check_declared` and nothing more.
     p_two = dict(p_one); p_two["second_check"] = {"conclusion_agrees": True, "reason_agrees": True}
     r5 = step(idx["T2-hardgrammar"], None, p_two, now_day=0)
-    if r5["grade"]["two_vote_status"] != "cleared" or not r5["grade"]["cleared"] or r5["outcome"] != "promote":
-        failures.append("two-vote with agreeing second check must clear+promote, got %s" % r5["grade"])
+    if (r5["grade"]["two_vote_status"] != "pending" or r5["grade"]["cleared"]
+            or r5["outcome"] != "hold" or r5["grade"].get("second_check_declared") is not True):
+        failures.append("a DECLARED second check must not clear or promote a two-vote row, got %s / %s"
+                        % (r5["grade"], r5["outcome"]))
 
     # 6. a SELF-REPORTED correctness flag must be IGNORED (no self-report grading)
     p_selfreport = {"answer": "totally wrong text", "reasoning": [], "passed": True, "correct": True, "cleared": True}
@@ -545,7 +575,7 @@ def _self_test():
                           ("no-reasoning", idx["T1-objective"], r2["grade"]),
                           ("forbidden", idx["T1-objective"], r3["grade"]),
                           ("two-vote-pending", idx["T2-hardgrammar"], r4["grade"]),
-                          ("two-vote-cleared", idx["T2-hardgrammar"], r5["grade"]),
+                          ("two-vote-declared-only", idx["T2-hardgrammar"], r5["grade"]),
                           ("self-report-ignored", idx["T1-objective"], r6["grade"])):
         b = grammar_bridge_check(row_, g_)
         if not b["agree"]:
@@ -585,7 +615,10 @@ def _self_test():
     for f in failures:
         print("FAIL " + f)
     if not failures:
-        print("ok   fusha_tutor_runtime self-test: schema-graded (no self-report); two-vote gating; "
+        print("ok   fusha_tutor_runtime self-test: schema-graded (no self-report); a two_vote_required row "
+              "is always HELD pending — the runtime grades answer/reasoning CONTENT but cannot "
+              "independently clear a mandatory two-vote FACT gate, and a declared second_check Boolean is "
+              "recorded, never believed; "
               "wrong-reason holds; --write-gated persistence; deterministic; source-clean; "
               "grammar-bridge default-off (grade byte-identical) + agrees with built-in grader")
     return 0 if not failures else 1
