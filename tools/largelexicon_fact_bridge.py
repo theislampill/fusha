@@ -223,6 +223,14 @@ def occurrence_loc_of(node_id: str) -> str | None:
 
 
 EDGE_ID_RE = re.compile(r"^edge:[0-9a-f]{16,}$")
+EDGE_ID_DIGEST_LENGTH = 24
+# Only these source-node kinds carry an occurrence; a card is an ayah reference.
+OCCURRENCE_BEARING_NODE_TYPES = frozenset({"selected-word", "occurrence", "morpheme-occurrence"})
+NODE_TYPE_PREFIX = {
+    "selected-word": "selected-word:",
+    "occurrence": "occurrence:",
+    "morpheme-occurrence": "mocc:",
+}
 
 
 def edge_content_digest(edge: dict[str, Any]) -> str:
@@ -230,6 +238,12 @@ def edge_content_digest(edge: dict[str, Any]) -> str:
 
     body = {key: value for key, value in edge.items() if key != "edge_id"}
     return hashlib.sha256(_canonical(body).encode("utf-8")).hexdigest()
+
+
+def canonical_edge_id(edge: dict[str, Any]) -> str:
+    """The one edge id derivable from this exact governed edge content."""
+
+    return "edge:" + edge_content_digest(edge)[:EDGE_ID_DIGEST_LENGTH]
 
 
 def typed_edge_errors(edge: dict[str, Any]) -> list[str]:
@@ -260,8 +274,17 @@ def typed_edge_errors(edge: dict[str, Any]) -> list[str]:
         problems.append("edge carries no source node")
     if occurrence_loc_of(edge.get("from_node_id")) is None:
         problems.append("edge carries no unambiguous occurrence loc")
-    if not EDGE_ID_RE.fullmatch(str(edge.get("edge_id") or "")):
+    edge_id = str(edge.get("edge_id") or "")
+    if not EDGE_ID_RE.fullmatch(edge_id):
         problems.append("edge_id is absent or is not a content-shaped identifier")
+    elif edge_id != canonical_edge_id(edge):
+        # A well-shaped but stale or all-zero id is not derived from this content.
+        problems.append("edge_id is not the canonical derivation of this edge content")
+    from_node_type = str(edge.get("from_node_type") or "")
+    if from_node_type not in OCCURRENCE_BEARING_NODE_TYPES:
+        problems.append("from_node_type %r does not carry an occurrence" % from_node_type)
+    elif not str(edge.get("from_node_id") or "").startswith(NODE_TYPE_PREFIX[from_node_type]):
+        problems.append("from_node_id does not agree with the declared from_node_type")
     producer = edge.get("producer")
     if not isinstance(producer, dict) or not producer.get("id") or not producer.get("version"):
         problems.append("edge carries no identified producer")
@@ -619,6 +642,286 @@ def _input_errors(
     return errors
 
 
+_SEAL_TOKEN = object()
+
+CARRIED_FAMILY_IDENTITY = {
+    "qword-crosswalk": "row_id",
+    "qword-denominator": "row_id",
+    "form-source": "form_id",
+    "lemma-source": "entry_id",
+    "stem-source": "stem_id",
+}
+
+
+def _validate_family(family_name: str, rows: list[dict[str, Any]]) -> list[str]:
+    """Schema-validate one carried family and reject ambiguous identities.
+
+    This is the ONE production validation path. A fixture seal runs it over its
+    exact bytes too, so a fixture cannot reach a candidate through a weaker gate.
+    """
+
+    import validate_largelexicon_rows as rows_validator
+
+    problems: list[str] = []
+    family = next((item for item in rows_validator.FAMILIES if item.name == family_name), None)
+    if family is None:
+        return ["unknown carried family: " + family_name]
+    schema = rows_validator.read_json(ROOT / family.schema_path)
+    expected = schema["properties"]["schema"]["const"]
+    identity_field = CARRIED_FAMILY_IDENTITY[family_name]
+    bodies: dict[str, str] = {}
+    for index, row in enumerate(rows):
+        if not isinstance(row, dict):
+            problems.append(f"{family_name}[{index}]: row is not a record")
+            continue
+        if row.get("schema") != expected:
+            problems.append(f"{family_name}[{index}]: row is not {expected}")
+            continue
+        row_errors = rows_validator.schema_errors(row, schema)
+        if row_errors:
+            problems.append(
+                f"{family_name}[{index}]: row fails the target schema ({row_errors[0]['defect_family']})"
+            )
+            continue
+        identity = str(row.get(identity_field))
+        digest = row_body_digest(row)
+        seen = bodies.get(identity)
+        if seen is None:
+            bodies[identity] = digest
+        elif seen != digest:
+            problems.append(
+                f"{family_name}: {identity_field} {identity} carries two conflicting bodies"
+            )
+        else:
+            problems.append(f"{family_name}: {identity_field} {identity} is duplicated")
+    return problems
+
+
+class SealedAuthority:
+    """A self-verified, content-bound authority snapshot.
+
+    Nothing a caller *asserts* has authority: there is no accepted ``verified``
+    Boolean, digest string, row count, path label or membership set. Every digest
+    in a seal is recomputed here from the exact content the seal itself holds,
+    and the only two ways to obtain one are:
+
+    * :meth:`from_release` — production. It loads the carried families, the
+      canonical loc-surface index, the typed-graph bundles and the candidate
+      lattice ITSELF, from the release and the repository, and hashes the exact
+      bytes it read. No content or metadata crosses the boundary from a caller.
+    * :meth:`seal_fixture` — tests. It takes exact in-memory content, runs the
+      SAME validation path, and hashes exactly those bytes. It refuses to accept
+      any repository path claim or caller digest, so a fixture can never borrow
+      genuine repository metadata for unrelated content.
+    """
+
+    def __init__(self, token: Any, *, origin: str, families: dict[str, list[dict[str, Any]]],
+                 loc_surface: dict[str, str], typed_edges: dict[str, list[dict[str, Any]]],
+                 lexeme_join: dict[str, list[dict[str, Any]]], bundles: list[dict[str, Any]],
+                 non_carried_crosswalk: list[dict[str, Any]]) -> None:
+        if token is not _SEAL_TOKEN:
+            raise BridgeError(
+                "a SealedAuthority may only be produced by from_release() or seal_fixture()"
+            )
+        self.origin = origin
+        self.families = families
+        self.loc_surface = loc_surface
+        self.typed_edges = typed_edges
+        self.lexeme_join = lexeme_join
+        self.non_carried_crosswalk = non_carried_crosswalk
+        edge_content = {
+            loc: sorted(edge_content_digest(edge) for edge in typed_edges[loc])
+            for loc in sorted(typed_edges)
+        }
+        self.binding = {
+            "canonical_loc_index": {
+                "content_sha256": _content_sha256(dict(sorted(loc_surface.items()))),
+                "row_count": len(loc_surface),
+            },
+            # Order-independent: the authority is the SET of carried rows, so the
+            # digest is taken over a canonical ordering. Iteration order (which the
+            # scan window depends on) is preserved separately.
+            "carried_tables": {
+                name: _content_sha256(sorted(
+                    families[name],
+                    key=lambda row: (str(row.get(CARRIED_FAMILY_IDENTITY[name])), row_body_digest(row)),
+                )) for name in sorted(families)
+            },
+            "carried_row_counts": {name: len(families[name]) for name in sorted(families)},
+            "lexeme_join_lattice": {
+                "content_sha256": _content_sha256(
+                    {key: lexeme_join[key] for key in sorted(lexeme_join)}
+                ),
+                "row_count": sum(len(rows) for rows in lexeme_join.values()),
+            },
+            "origin": origin,
+            "typed_graph": {
+                "bundles": bundles,
+                "edge_content_sha256": _content_sha256(edge_content),
+                "eligible_edge_count": sum(len(edges) for edges in typed_edges.values()),
+                "eligible_loc_count": len(typed_edges),
+            },
+        }
+        # The aggregate digest is derived from the recomputed parts, never supplied.
+        self.binding["typed_graph"]["typed_graph_sha256"] = _content_sha256(
+            self.binding["typed_graph"]
+        )
+        self.binding["verified"] = True
+        self.binding["authority_sha256"] = _content_sha256(self.binding)
+
+    @staticmethod
+    def _seal(origin: str, *, families: dict[str, list[dict[str, Any]]], loc_surface: dict[str, str],
+              typed_edges: dict[str, list[dict[str, Any]]], lexeme_join: dict[str, list[dict[str, Any]]],
+              bundles: list[dict[str, Any]], non_carried_crosswalk: list[dict[str, Any]]) -> "SealedAuthority":
+        problems: list[str] = []
+        for name in sorted(CARRIED_FAMILY_IDENTITY):
+            problems.extend(_validate_family(name, families.get(name, [])))
+        problems.extend(_validate_family("qword-crosswalk", non_carried_crosswalk))
+        problems.extend(_edge_key_errors(typed_edges))
+        for loc, edges in sorted(typed_edges.items()):
+            for index, edge in enumerate(edges):
+                edge_problems = typed_edge_errors(edge)
+                if edge_problems:
+                    problems.append(f"typed edge {loc}[{index}]: {edge_problems[0]}")
+        seen_edge_ids: dict[str, str] = {}
+        for loc in sorted(typed_edges):
+            for edge in typed_edges[loc]:
+                edge_id = str(edge.get("edge_id"))
+                digest = edge_content_digest(edge)
+                if edge_id in seen_edge_ids and seen_edge_ids[edge_id] != digest:
+                    problems.append(f"typed edge {edge_id} is reused for two different bodies")
+                elif edge_id in seen_edge_ids:
+                    problems.append(f"typed edge {edge_id} is duplicated")
+                seen_edge_ids[edge_id] = digest
+        if not loc_surface:
+            problems.append("the canonical loc-surface index is empty; admission has no loc authority")
+        if problems:
+            raise BridgeError("authority seal failed closed: " + "; ".join(problems[:5]))
+        return SealedAuthority(
+            _SEAL_TOKEN, origin=origin, families=families, loc_surface=loc_surface,
+            typed_edges=typed_edges, lexeme_join=lexeme_join, bundles=bundles,
+            non_carried_crosswalk=non_carried_crosswalk,
+        )
+
+    @classmethod
+    def from_release(cls, *, locs: set[str] | None = None) -> "SealedAuthority":
+        """Production seal. Everything is loaded and hashed here, by this method."""
+
+        tables = LargelexiconTargetTables.open()
+        crosswalk = tables.carried("qword-crosswalk")
+        if locs is not None:
+            crosswalk = [row for row in crosswalk if str(row.get("canonical_quran_loc")) in locs]
+        families = {
+            "qword-crosswalk": crosswalk,
+            "qword-denominator": tables.carried("qword-denominator"),
+            "form-source": tables.carried("form-source"),
+            "lemma-source": tables.carried("lemma-source"),
+            "stem-source": tables.carried("stem-source"),
+        }
+        typed_edges, bundles = _load_typed_graph_sealed()
+        return cls._seal(
+            "release",
+            families=families,
+            loc_surface=_load_loc_surface_sealed(),
+            typed_edges=typed_edges,
+            lexeme_join=_load_lexeme_join_sealed(),
+            bundles=bundles,
+            non_carried_crosswalk=[],
+        )
+
+    @classmethod
+    def seal_fixture(cls, *, crosswalk: Iterable[dict[str, Any]], denominator: Iterable[dict[str, Any]],
+                     forms: Iterable[dict[str, Any]], lemmas: Iterable[dict[str, Any]],
+                     stems: Iterable[dict[str, Any]], loc_surface: dict[str, str],
+                     typed_edges: dict[str, list[dict[str, Any]]] | None = None,
+                     lexeme_join: dict[str, list[dict[str, Any]]] | None = None,
+                     non_carried_crosswalk: Iterable[dict[str, Any]] | None = None) -> "SealedAuthority":
+        """Explicit fixture seal over exact in-memory bytes. No path or digest claims."""
+
+        edges = {loc: list(items) for loc, items in (typed_edges or {}).items() if items}
+        bundles = [{
+            "eligible_edge_count": sum(len(items) for items in edges.values()),
+            "origin": "fixture",
+            "path": None,
+            "present": True,
+            "schema": TYPED_GRAPH_SCHEMA,
+        }]
+        return cls._seal(
+            "fixture",
+            families={
+                "qword-crosswalk": list(crosswalk),
+                "qword-denominator": list(denominator),
+                "form-source": list(forms),
+                "lemma-source": list(lemmas),
+                "stem-source": list(stems),
+            },
+            loc_surface=dict(loc_surface),
+            typed_edges=edges,
+            lexeme_join={key: list(value) for key, value in (lexeme_join or {}).items()},
+            bundles=bundles,
+            non_carried_crosswalk=list(non_carried_crosswalk or []),
+        )
+
+
+def _load_loc_surface_sealed() -> dict[str, str]:
+    """Parse the canonical loc-surface index from the repository, atomically."""
+
+    index: dict[str, str] = {}
+    if LOC_SURFACE_INDEX.exists():
+        with LOC_SURFACE_INDEX.open("r", encoding="utf-8") as handle:
+            for line in handle:
+                if line.strip():
+                    row = json.loads(line)
+                    index[str(row["loc"])] = str(row["surface"])
+    return index
+
+
+def _load_lexeme_join_sealed() -> dict[str, list[dict[str, Any]]]:
+    edges: dict[str, list[dict[str, Any]]] = {}
+    if LEXEME_JOIN_EDGES.exists():
+        with LEXEME_JOIN_EDGES.open("r", encoding="utf-8") as handle:
+            for line in handle:
+                if line.strip():
+                    row = json.loads(line)
+                    edges.setdefault(str(row.get("loc")), []).append(row)
+    return edges
+
+
+def _load_typed_graph_sealed() -> tuple[dict[str, list[dict[str, Any]]], list[dict[str, Any]]]:
+    """Parse the named bundles and return the exact eligible edge multiset + bindings."""
+
+    index: dict[str, list[dict[str, Any]]] = {}
+    bundles: list[dict[str, Any]] = []
+    for relative in sorted(TYPED_GRAPH_BUNDLES):
+        path = ROOT / relative
+        entry = {
+            "eligible_edge_count": 0,
+            "origin": "repository",
+            "path": relative,
+            "present": path.exists(),
+            "row_count": 0,
+            "schema": TYPED_GRAPH_SCHEMA,
+            "sha256": None,
+        }
+        if path.exists():
+            payload = path.read_bytes()
+            entry["sha256"] = hashlib.sha256(payload).hexdigest()
+            for line in payload.decode("utf-8").splitlines():
+                if not line.strip():
+                    continue
+                edge = json.loads(line)
+                entry["row_count"] += 1
+                if typed_edge_errors(edge):
+                    continue
+                loc = occurrence_loc_of(edge.get("from_node_id"))
+                if loc is None:
+                    continue
+                index.setdefault(loc, []).append(edge)
+                entry["eligible_edge_count"] += 1
+        bundles.append(entry)
+    return index, bundles
+
+
 class BridgeInputs:
     """Carried target-schema rows plus canonical typed graph evidence, gate-checked.
 
@@ -630,105 +933,47 @@ class BridgeInputs:
 
     candidate_capable = True
 
-    def __init__(
-        self,
-        *,
-        crosswalk: Iterable[dict[str, Any]],
-        lemmas: Iterable[dict[str, Any]],
-        forms: Iterable[dict[str, Any]],
-        stems: Iterable[dict[str, Any]],
-        dependency_hashes: dict[str, str],
-        denominator: Iterable[dict[str, Any]] | None = None,
-        non_carried_crosswalk: Iterable[dict[str, Any]] | None = None,
-        graph_edges: dict[str, list[dict[str, Any]]] | None = None,
-        typed_edges: dict[str, list[dict[str, Any]]] | None = None,
-        typed_graph_meta: dict[str, Any] | None = None,
-        loc_surface: dict[str, str] | None = None,
-        loc_surface_meta: dict[str, Any] | None = None,
-        lexeme_join_meta: dict[str, Any] | None = None,
-    ) -> None:
-        crosswalk, lemmas, forms, stems = list(crosswalk), list(lemmas), list(forms), list(stems)
-        loc_surface = dict(loc_surface or {})
-        typed_graph_meta = dict(typed_graph_meta or {})
-        loc_surface_meta = dict(loc_surface_meta or {})
-        lexeme_join_meta = dict(lexeme_join_meta or {})
-        # There is NO validation bypass on a candidate-capable path. Every input set
-        # that can return a candidate is row-validated, edge-key checked, and reduced
-        # to a VERIFIED authority object derived from the supplied data.
-        errors = _input_errors(crosswalk, lemmas, forms, stems, dependency_hashes, typed_edges or {})
-        errors.extend(_edge_key_errors(typed_edges or {}))
-        authority, authority_problems = verify_authority(
-            dependency_hashes=dependency_hashes,
-            typed_edges=typed_edges or {},
-            typed_graph_meta=typed_graph_meta,
-            loc_surface=loc_surface,
-            loc_surface_meta=loc_surface_meta,
-            lexeme_join=graph_edges or {},
-            lexeme_join_meta=lexeme_join_meta,
-        )
-        errors.extend(authority_problems)
-        if errors and self.candidate_capable:
-            raise BridgeError("bridge inputs failed closed: " + "; ".join(errors[:5]))
-        self.input_errors = errors
-        self.authority = authority
-        self.typed_edges = dict(typed_edges or {})
-        self.typed_graph_meta = authority["typed_graph"]
-        self.loc_surface = loc_surface
-        self.loc_surface_meta = authority["canonical_loc_index"]
-        self.lexeme_join_meta = authority["lexeme_join_lattice"]
-        self.crosswalk = list(crosswalk)
-        self.lemmas = {str(row["entry_id"]): row for row in lemmas}
-        self.forms = list(forms)
-        self.stems = list(stems)
-        self.dependency_hashes = dict(dependency_hashes)
-        self.graph_edges = dict(graph_edges or {})
+    def __init__(self, authority: "SealedAuthority") -> None:
+        if not isinstance(authority, SealedAuthority):
+            raise BridgeError(
+                "candidate-capable inputs require a SealedAuthority; loose caller rows, digests, "
+                "row counts, path labels and verified flags carry no authority"
+            )
+        self.authority_seal = authority
+        self.authority = copy.deepcopy(authority.binding)
+        self.input_errors: list[str] = []
+        self.typed_edges = authority.typed_edges
+        self.typed_graph_meta = self.authority["typed_graph"]
+        self.loc_surface = authority.loc_surface
+        self.loc_surface_meta = self.authority["canonical_loc_index"]
+        self.lexeme_join_meta = self.authority["lexeme_join_lattice"]
+        self.crosswalk = authority.families["qword-crosswalk"]
+        self.forms = authority.families["form-source"]
+        self.stems = authority.families["stem-source"]
+        self.lemmas = {str(row["entry_id"]): row for row in authority.families["lemma-source"]}
+        self.dependency_hashes = dict(self.authority["carried_tables"])
+        self.graph_edges = authority.lexeme_join
         self._forms_by_surface: dict[str, list[dict[str, Any]]] = {}
         self._forms_by_norm: dict[str, list[dict[str, Any]]] = {}
         for row in self.forms:
             self._forms_by_surface.setdefault(str(row.get("surface")), []).append(row)
             self._forms_by_norm.setdefault(str(row.get("surface_norm_strict")), []).append(row)
-        self._stems_by_key: dict[tuple[str, str], dict[str, Any]] = {
-            (str(row.get("entry_id")), str(row.get("surface"))): row for row in self.stems
-        }
-        # Content-addressed membership: the digest of the EXACT canonical row body,
-        # so a detached, altered, schema-downgraded or invented row cannot pass as
-        # a member even when its row_id is right.
-        self._carried_bodies: set[str] = {row_body_digest(row) for row in self.crosswalk}
-        self._carried_row_ids: set[str] = {str(row.get("row_id")) for row in self.crosswalk}
-        self._non_carried_bodies: set[str] = {
-            row_body_digest(row) for row in (non_carried_crosswalk or [])
-        }
-        self._non_carried_row_ids: set[str] = {
-            str(row.get("row_id")) for row in (non_carried_crosswalk or [])
-        }
-        self.denominator = list(denominator or [])
-        self._denominator_by_id: dict[str, dict[str, Any]] = {
-            str(row.get("row_id")): row for row in self.denominator
-        }
+        self._stems_by_key: dict[tuple[str, str], dict[str, Any]] = {}
+        for row in self.stems:
+            self._stems_by_key[(str(row.get("entry_id")), str(row.get("surface")))] = row
+        # Content-addressed membership over the EXACT sealed row bodies.
+        self._carried_bodies = {row_body_digest(row) for row in self.crosswalk}
+        self._carried_row_ids = {str(row.get("row_id")) for row in self.crosswalk}
+        self._non_carried_bodies = {row_body_digest(row) for row in authority.non_carried_crosswalk}
+        self._non_carried_row_ids = {str(row.get("row_id")) for row in authority.non_carried_crosswalk}
+        self.denominator = authority.families["qword-denominator"]
+        self._denominator_by_id = {str(row.get("row_id")): row for row in self.denominator}
 
     @classmethod
     def from_release(cls, *, locs: set[str] | None = None) -> "BridgeInputs":
-        tables = LargelexiconTargetTables.open()
-        crosswalk = tables.carried("qword-crosswalk")
-        if locs is not None:
-            crosswalk = [row for row in crosswalk if str(row.get("canonical_quran_loc")) in locs]
-        typed_edges, typed_graph_meta = load_typed_graph()
-        graph_edges, lexeme_join_meta = load_lexeme_join_edges()
-        loc_surface, loc_surface_meta = load_loc_surface_index()
-        return cls(
-            crosswalk=crosswalk,
-            lemmas=tables.carried("lemma-source"),
-            forms=tables.carried("form-source"),
-            stems=tables.carried("stem-source"),
-            dependency_hashes=tables.dependency_hashes(),
-            denominator=tables.carried("qword-denominator"),
-            graph_edges=graph_edges,
-            typed_edges=typed_edges,
-            typed_graph_meta=typed_graph_meta,
-            loc_surface=loc_surface,
-            loc_surface_meta=loc_surface_meta,
-            lexeme_join_meta=lexeme_join_meta,
-        )
+        """Production entry point: the seal loads and hashes everything itself."""
+
+        return cls(SealedAuthority.from_release(locs=locs))
 
     def authority_binding(self) -> dict[str, Any]:
         """The VERIFIED authority object: every consumed index, lattice, bundle and table."""
@@ -811,15 +1056,40 @@ class BridgeInputs:
 
 
 class DiagnosticInputs(BridgeInputs):
-    """Non-validating inputs for diagnostics ONLY.
+    """Unsealed inputs for diagnostics ONLY.
 
-    ``candidate_capable`` is False, so construction never raises on bad inputs and
-    :func:`bridge_row` short-circuits to an abstention carrying
-    ``unverified_diagnostic_inputs``. There is no code path from this class to a
-    candidate fact or a candidate projector wrapper.
+    ``candidate_capable`` is False, so :func:`bridge_row` short-circuits to an
+    abstention carrying ``unverified_diagnostic_inputs``. There is no code path
+    from this class to a candidate fact or a candidate projector wrapper.
     """
 
     candidate_capable = False
+
+    def __init__(self, **unsealed: Any) -> None:  # noqa: D401 - deliberately permissive
+        self.authority_seal = None
+        self.unsealed = unsealed
+        self.input_errors = ["inputs were never sealed; diagnostics only"]
+        self.authority = {"origin": "unsealed", "verified": False}
+        self.typed_edges = dict(unsealed.get("typed_edges") or {})
+        self.typed_graph_meta = {"origin": "unsealed", "verified": False}
+        self.loc_surface = dict(unsealed.get("loc_surface") or {})
+        self.loc_surface_meta = {"origin": "unsealed", "verified": False}
+        self.lexeme_join_meta = {"origin": "unsealed", "verified": False}
+        self.crosswalk = list(unsealed.get("crosswalk") or [])
+        self.forms = list(unsealed.get("forms") or [])
+        self.stems = list(unsealed.get("stems") or [])
+        self.lemmas = {}
+        self.dependency_hashes = dict(unsealed.get("dependency_hashes") or {})
+        self.graph_edges = dict(unsealed.get("graph_edges") or {})
+        self._forms_by_surface = {}
+        self._forms_by_norm = {}
+        self._stems_by_key = {}
+        self._carried_bodies = set()
+        self._carried_row_ids = set()
+        self._non_carried_bodies = set()
+        self._non_carried_row_ids = set()
+        self.denominator = []
+        self._denominator_by_id = {}
 
 
 def _source_evidence(structured: dict[str, Any], addresses: list[dict[str, str]]) -> dict[str, Any]:
@@ -839,6 +1109,58 @@ def _dependencies(hashes: dict[str, str], extra: list[dict[str, str]]) -> dict[s
 
 def _guards(names: Iterable[str]) -> list[dict[str, str]]:
     return [{"guard_id": name, "reason": GUARD_REASONS[name]} for name in names]
+
+
+IDENTITY_CORE_FIELDS = (
+    "dependencies",
+    "evidence_mode",
+    "fact_type",
+    "fact_value",
+    "producer",
+    "rule_projector",
+    "source_address",
+    "surface_spans",
+)
+
+
+def identity_core(fact: dict[str, Any]) -> dict[str, Any]:
+    """The exact semantic + provenance payload a bridge fact id is derived from."""
+
+    return {"plane": "typed_claim", **{name: fact.get(name) for name in IDENTITY_CORE_FIELDS}}
+
+
+def lexeme_identity_digest(fact: dict[str, Any]) -> str:
+    """Digest of the LEXICAL claim alone: lexeme, form, stem and occurrence.
+
+    Page context is deliberately excluded, so this value proves that moving the
+    displaying page changes nothing about what the fact claims lexically, even
+    though the whole-fact id legitimately moves with its page context and
+    authority binding.
+    """
+
+    value = fact.get("fact_value") or {}
+    return _content_sha256({
+        "form_realization": value.get("form_realization"),
+        "lexeme_candidate": value.get("lexeme_candidate"),
+        "occurrence": value.get("occurrence"),
+        "stem_segmentation": value.get("stem_segmentation"),
+    })
+
+
+def recompute_fact_id(fact: dict[str, Any]) -> str:
+    """Recompute a bridge fact's content-addressed id from the fact itself.
+
+    Changing the projector, the fact type or any semantic claim moves this value,
+    so a relabelled fact that kept its original ``fact_id`` is detectable by any
+    consumer, including the certifier.
+    """
+
+    return _fact_id(identity_core(fact))
+
+
+def _stamp_identity(fact: dict[str, Any]) -> dict[str, Any]:
+    fact["fact_id"] = recompute_fact_id(fact)
+    return fact
 
 
 def _candidate_fact(
@@ -898,6 +1220,7 @@ def _candidate_fact(
             "visible_segment_count": len(stem.get("visible_segments") or []),
         },
     }
+    fact_value["authority_binding"] = authority_binding
     fact_value["typed_graph_evidence"] = [
         {
             "edge_id": edge.get("edge_id"),
@@ -912,24 +1235,7 @@ def _candidate_fact(
     # Content-addressed over the whole semantic claim: mutating POS, root, lemma,
     # form, stem, a typed edge, a dependency digest, or the projector identity all
     # change the fact id.
-    core = {
-        "authority_binding": authority_binding,
-        "canonical_loc": loc,
-        "dependency_digests": dict(sorted(hashes.items())),
-        "fact_type": "largelexicon_lexeme_candidate",
-        "form_realization": fact_value["form_realization"],
-        "lexeme_candidate": fact_value["lexeme_candidate"],
-        "occurrence": fact_value["occurrence"],
-        "plane": "typed_claim",
-        "producer": {"id": PRODUCER_ID, "version": PRODUCER_VERSION},
-        "root_family_relations": fact_value["root_family_relations"],
-        "rule_projector": {"projector_id": PROJECTOR_ID, "rule_id": RULE_ID, "version": PRODUCER_VERSION},
-        "stem_segmentation": fact_value["stem_segmentation"],
-        "surface": surface,
-        "typed_graph_evidence": fact_value["typed_graph_evidence"],
-        "typed_graph_sha256": typed_graph_meta.get("typed_graph_sha256"),
-    }
-    return {
+    return _stamp_identity({
         "certification": {
             "reason": "carried-table lookup is candidate evidence; only the certifier may certify",
             "status": "candidate",
@@ -966,7 +1272,7 @@ def _candidate_fact(
         # Honest mode: there is no certified lexical input and no derivation chain
         # here, so this is a source-addressed candidate, not a normalized lexical body.
         "evidence_mode": "direct_source_attestation",
-        "fact_id": _fact_id(core),
+        "fact_id": "",
         "fact_type": "largelexicon_lexeme_candidate",
         "fact_value": fact_value,
         "guards": _guards(
@@ -1016,7 +1322,7 @@ def _candidate_fact(
             {"end": len(surface), "role": "written_token", "span_id": f"{loc}:token", "start": 0, "surface": surface}
         ],
         "unresolved_blockers": [],
-    }
+    })
 
 
 def _abstention_fact(
@@ -1031,26 +1337,10 @@ def _abstention_fact(
 ) -> dict[str, Any]:
     surface = str(row.get("visible_surface") or "")
     address = f"largelexicon:qword-crosswalk@2:{row.get('row_id')}"
-    core = {
-        "authority_binding": authority_binding,
-        "blockers": sorted(blockers),
-        "canonical_loc": loc,
-        "dependency_digests": dict(sorted(hashes.items())),
-        "fact_type": "largelexicon_bridge_abstention",
-        "graph_evidence": [
-            {"entry_id": str(edge.get("entry_id")), "relation": str(edge.get("relation"))}
-            for edge in graph_edges
-        ],
-        "observed": observed,
-        "plane": "typed_claim",
-        "producer": {"id": PRODUCER_ID, "version": PRODUCER_VERSION},
-        "row_id": str(row.get("row_id")),
-        "rule_projector": {"projector_id": PROJECTOR_ID, "rule_id": RULE_ID, "version": PRODUCER_VERSION},
-        "source_address": address,
-        "surface": surface,
-    }
     fact_value = {
         "abstained": True,
+        "authority_binding": authority_binding,
+        "blockers": sorted(blockers),
         "candidate_graph_edges": [
             {
                 "edge_relation": str(edge.get("relation")),
@@ -1068,7 +1358,7 @@ def _abstention_fact(
         },
     }
     span_surface = surface if surface and not surface.isspace() else "؟"
-    return {
+    return _stamp_identity({
         "certification": {"reason": "; ".join(BLOCKER_REASONS[name] for name in blockers), "status": "blocked"},
         "contradiction_records": [],
         "defeaters": [
@@ -1085,7 +1375,7 @@ def _abstention_fact(
             "summary": "the bridge abstained; the precise blockers are recorded rather than guessed away",
         },
         "evidence_mode": "unresolved",
-        "fact_id": _fact_id(core),
+        "fact_id": "",
         "fact_type": "largelexicon_bridge_abstention",
         "fact_value": fact_value,
         "guards": _guards(["loc_first_canonical_address", "carried_target_schema_rows_only", "release_dependency_bound"]),
@@ -1111,7 +1401,7 @@ def _abstention_fact(
             }
         ],
         "unresolved_blockers": [{"blocker_id": name, "reason": BLOCKER_REASONS[name]} for name in blockers],
-    }
+    })
 
 
 def _worst_status(blockers: list[str]) -> str:
@@ -1257,7 +1547,10 @@ def bridge_row(row: dict[str, Any], inputs: BridgeInputs) -> dict[str, Any]:
         )
         for form in exact
     ]
-    if len(entry_ids) > 1:
+    # More than one surviving ANALYSIS is unresolved, even when the rivals share an
+    # entry id: two documented forms of one entry are still two distinct claims and
+    # neither may be selected.
+    if len(facts) > 1:
         collision = ["lexical_collision_requires_context"]
         for fact in facts:
             fact["unresolved_blockers"] = [
@@ -1577,7 +1870,7 @@ def fixture_typed_edge(
     }
     # The identifier is derived from the content, so any content mutation either
     # breaks the id binding or changes the recomputed authority digest.
-    return dict(body, edge_id="edge:" + edge_content_digest(body)[:24])
+    return dict(body, edge_id=canonical_edge_id(body))
 
 
 def _content_sha256(value: Any) -> str:
@@ -1649,19 +1942,20 @@ def fixture_inputs(
     graph_edges=None,
     typed_edges=None,
     loc_surface=None,
-    typed_graph_meta=None,
-    loc_surface_meta=None,
-    lexeme_join_meta=None,
-    dependency_hashes=None,
     crosswalk=None,
     denominator=None,
     non_carried_crosswalk=None,
 ) -> BridgeInputs:
+    """Inputs over an EXPLICITLY sealed fixture authority built from exact bytes.
+
+    There is deliberately no digest, path-label, row-count or verified-flag
+    parameter: a fixture supplies content only, and the seal recomputes every
+    binding through the same validation path production uses.
+    """
+
     entry = "1ec0de000001"
-    form_rows = [fixture_form_row(entry, FIXTURE_SURFACE)] if forms is None else forms
+    form_rows = [fixture_form_row(entry, FIXTURE_SURFACE)] if forms is None else list(forms)
     if typed_edges is None:
-        # Default: one accepted typed edge per documenting entry, so the accepted
-        # and collision fixtures exercise the typed-graph join rather than skip it.
         typed_edges = {
             FIXTURE_LOC: [
                 fixture_typed_edge(entry_id)
@@ -1670,24 +1964,17 @@ def fixture_inputs(
         }
         if not typed_edges[FIXTURE_LOC]:
             typed_edges = {}
-    carried_rows = [fixture_crosswalk_row()] if crosswalk is None else list(crosswalk)
-    index = {FIXTURE_LOC: FIXTURE_SURFACE} if loc_surface is None else loc_surface
-    lattice = graph_edges or {}
-    return BridgeInputs(
-        crosswalk=carried_rows,
-        lemmas=[fixture_lemma_row(entry, FIXTURE_SURFACE)] if lemmas is None else lemmas,
+    return BridgeInputs(SealedAuthority.seal_fixture(
+        crosswalk=[fixture_crosswalk_row()] if crosswalk is None else list(crosswalk),
+        denominator=[fixture_denominator_row()] if denominator is None else list(denominator),
         forms=form_rows,
-        stems=[fixture_stem_row(entry, FIXTURE_SURFACE)] if stems is None else stems,
-        dependency_hashes=dict(FIXTURE_DEPENDENCY_HASHES) if dependency_hashes is None else dependency_hashes,
-        denominator=[fixture_denominator_row()] if denominator is None else denominator,
-        non_carried_crosswalk=non_carried_crosswalk or [],
-        graph_edges=lattice,
+        lemmas=[fixture_lemma_row(entry, FIXTURE_SURFACE)] if lemmas is None else list(lemmas),
+        stems=[fixture_stem_row(entry, FIXTURE_SURFACE)] if stems is None else list(stems),
+        loc_surface={FIXTURE_LOC: FIXTURE_SURFACE} if loc_surface is None else dict(loc_surface),
         typed_edges=typed_edges,
-        typed_graph_meta=fixture_graph_meta(typed_edges) if typed_graph_meta is None else typed_graph_meta,
-        loc_surface=index,
-        loc_surface_meta=fixture_loc_index_meta(index) if loc_surface_meta is None else loc_surface_meta,
-        lexeme_join_meta=fixture_lexeme_join_meta(lattice) if lexeme_join_meta is None else lexeme_join_meta,
-    )
+        lexeme_join=graph_edges or {},
+        non_carried_crosswalk=non_carried_crosswalk or [],
+    ))
 
 
 def fixture_scenarios() -> list[tuple[str, dict[str, Any], BridgeInputs, bool]]:

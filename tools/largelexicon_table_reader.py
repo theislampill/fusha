@@ -21,6 +21,18 @@ from typing import Any, Iterator
 # repository boundary, as ``tools.largelexicon_table_reader``.
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
+if str(Path(__file__).resolve().parents[1]) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+# ONE canonical module identity. Importing this module flat and as
+# ``tools.largelexicon_table_reader`` must not produce two classes, or an
+# isinstance/identity check on the reader silently depends on import style.
+_CANONICAL_MODULE = "tools.largelexicon_table_reader"
+if __name__ != _CANONICAL_MODULE:
+    import importlib
+
+    _canonical = sys.modules.get(_CANONICAL_MODULE) or importlib.import_module(_CANONICAL_MODULE)
+    sys.modules[__name__] = _canonical
 
 
 ROW_ID_RE = re.compile(r"^llx-qword-([0-9a-f]{12})-\d{2}-\d{2}-\d{3}$")
@@ -166,7 +178,10 @@ class LargelexiconTargetTables:
         # The exact directory that was validated is retained and used by every
         # later read: validating one release and then reading another is a
         # silent authority swap, so the target dir travels with the reader.
-        return cls(release=release, target_dir=Path(target_dir) if target_dir is not None else None)
+        # Resolve ONCE, at open time: a later chdir must not be able to redirect
+        # reads to a different release.
+        return cls(release=release,
+                   target_dir=Path(target_dir).resolve() if target_dir is not None else None)
 
     def summary(self) -> dict[str, Any]:
         return {

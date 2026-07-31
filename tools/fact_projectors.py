@@ -44,6 +44,12 @@ PROOFV_VERB_PROJECTOR_ID = "sarf.proofv.verb.v1"
 # lookup is candidate evidence about a written surface, never a certification of
 # lexical identity, so this projector has NO path to certified or materialized.
 LARGELEXICON_BRIDGE_PROJECTOR_ID = "largelexicon.carried_lexeme_candidate.v1"
+# Fact types the A3 bridge content-addresses; their ids are recomputable from
+# the emitted fact, so a relabelled fact cannot keep a stale identity.
+LARGELEXICON_CONTENT_ADDRESSED_FACT_TYPES = frozenset(
+    {"largelexicon_lexeme_candidate", "largelexicon_bridge_abstention"}
+)
+LARGELEXICON_PRODUCER_ID = "tools/largelexicon_fact_bridge.py"
 
 
 class ProjectorValidationError(ValueError):
@@ -1160,6 +1166,27 @@ LARGELEXICON_BRIDGE_CONTRACT = {
     "version": "1.0.0",
     "resolution_method": "carried_target_schema_loc_first_exact_surface_candidate",
 }
+
+def identity_recomputer_for(fact: Dict[str, Any]):
+    """The registered content-addressed id recomputer for a fact's producer, if any.
+
+    A producer that content-addresses its facts registers its recomputation here so
+    the certifier can detect a relabelled fact that retained a stale ``fact_id``.
+    """
+
+    fact_type = str(fact.get("fact_type") or "")
+    projector_id = str(((fact.get("rule_projector") or {}).get("projector_id")) or "")
+    producer_id = str(((fact.get("producer") or {}).get("id")) or "")
+    # Dispatch on the PRODUCER too: relabelling only the fact type and projector
+    # must not shed the recomputation that would expose the stale identity.
+    if (fact_type in LARGELEXICON_CONTENT_ADDRESSED_FACT_TYPES
+            or projector_id == LARGELEXICON_BRIDGE_PROJECTOR_ID
+            or producer_id == LARGELEXICON_PRODUCER_ID):
+        from tools import largelexicon_fact_bridge
+
+        return largelexicon_fact_bridge.recompute_fact_id
+    return None
+
 
 REGISTRY = ProjectorRegistry()
 REGISTRY.register(SARF_CONTRACT, project_sarf_documented_forms)

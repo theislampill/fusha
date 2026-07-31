@@ -108,17 +108,28 @@ def _sha256(text: str) -> str:
     return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def _gate_rank(tier):
+    if tier is None:
+        return -1
+    try:
+        from tools import fact_projectors
+    except Exception:  # pragma: no cover
+        return -1
+    return fact_projectors.load_gate_tiers().get(tier, {}).get("rank", 0)
+
+
 def producing_projector_gate(fact: Dict[str, Any]) -> Tuple[Optional[str], Optional[str], str]:
-    """Resolve the PRODUCING projector's gate tier from repository authority.
+    """Resolve the PRODUCING projector gate tier from repository authority.
 
-    The fact's own claimed tier is never trusted. Resolution order:
+    The fact's own claimed tier is never trusted, and a projector id can never
+    shed the gate its fact TYPE carries. Both bindings are resolved:
 
-    1. ``rule_projector.projector_id`` against the registered projector registry;
-    2. failing that, the strictest registered gate for the fact's ``fact_type``
-       (so deleting or renaming the projector_id cannot shed the gate).
+    * projector-bound: ``rule_projector.projector_id`` must be registered AND its
+      contract must actually produce ``fact.fact_type``; a registered projector
+      that produces something else is an incoherent claim, not a weaker gate;
+    * type-bound: the strictest registered gate for ``fact.fact_type``.
 
-    Returns ``(gate_tier, projector_id, basis)``; ``gate_tier`` is None only when
-    the repository registers no producer for this fact at all.
+    The two must agree on producer identity, and the STRICTEST valid gate wins.
     """
 
     try:
@@ -126,31 +137,74 @@ def producing_projector_gate(fact: Dict[str, Any]) -> Tuple[Optional[str], Optio
     except Exception as error:  # pragma: no cover - registry must be importable
         raise CertificationError("cannot resolve the producing projector registry: %s" % error)
 
+    fact_type = str(fact.get("fact_type") or "")
     projector_id = ((fact.get("rule_projector") or {}).get("projector_id"))
+    type_tier = fact_projectors.REGISTRY.gate_tier_for_output_fact_type(fact_type) if fact_type else None
+
+    projector_tier = None
     if projector_id:
         try:
             contract = fact_projectors.REGISTRY.contract(str(projector_id))
         except fact_projectors.ProjectorValidationError:
             contract = None
         if contract is not None:
-            return contract.get("gate_tier"), str(projector_id), "registered projector_id"
-    fact_type = fact.get("fact_type")
-    if fact_type:
-        tier = fact_projectors.REGISTRY.gate_tier_for_output_fact_type(str(fact_type))
-        if tier is not None:
-            return tier, (str(projector_id) if projector_id else None), "registered output_fact_type"
-    return None, (str(projector_id) if projector_id else None), "no registered producer"
+            if contract.get("output_fact_type") != fact_type:
+                return (
+                    type_tier,
+                    str(projector_id),
+                    "projector/fact_type mismatch: %s produces %s, not %s"
+                    % (projector_id, contract.get("output_fact_type"), fact_type),
+                )
+            projector_tier = contract.get("gate_tier")
+
+    if projector_tier is None and type_tier is None:
+        return None, (str(projector_id) if projector_id else None), "no registered producer"
+    strictest = max(
+        [tier for tier in (projector_tier, type_tier) if tier is not None],
+        key=_gate_rank,
+    )
+    basis = "registered projector_id" if projector_tier is not None else "registered output_fact_type"
+    if projector_tier is not None and type_tier is not None and projector_tier != type_tier:
+        basis = "strictest of projector and fact-type gates"
+    return strictest, (str(projector_id) if projector_id else None), basis
 
 
 def gate_refusal(fact: Dict[str, Any]) -> Optional[str]:
     """Refusal reason when the producing projector may never reach certified."""
 
     tier, projector_id, basis = producing_projector_gate(fact)
+    if basis.startswith("projector/fact_type mismatch"):
+        return (
+            "the fact names a registered projector that does not produce its fact type (%s); "
+            "a projector identity may never shed a fact-type gate" % basis
+        )
     if tier == NEVER_AUTO_RESOLVE:
         return (
             "the producing projector is gated %s (%s: %s); the gate SSOT rejects this class outright, "
             "so no evidence bundle, dependency or vote can certify it"
             % (NEVER_AUTO_RESOLVE, basis, projector_id or fact.get("fact_type"))
+        )
+    return None
+
+
+def identity_refusal(fact: Dict[str, Any]) -> Optional[str]:
+    """Refusal when a content-addressed fact id no longer matches its content."""
+
+    try:
+        from tools import fact_projectors
+    except Exception:  # pragma: no cover
+        return None
+    recomputer = fact_projectors.identity_recomputer_for(fact)
+    if recomputer is None:
+        return None
+    try:
+        expected = recomputer(fact)
+    except Exception as error:  # noqa: BLE001
+        return "the producing projector could not recompute this fact id: %s" % error
+    if expected != fact.get("fact_id"):
+        return (
+            "content-addressed fact id does not match its content: a changed projector, fact type "
+            "or semantic claim may not retain the original fact_id"
         )
     return None
 
@@ -409,6 +463,9 @@ class TypedFactCertificationStore:
         fact_id = fact.get("fact_id")
         if not fact_id:
             raise CertificationError("a registered fact requires a fact_id")
+        stale = identity_refusal(fact)
+        if stale is not None:
+            raise CertificationError("registration refused: %s" % stale)
         if fact_id in self.state():
             raise CertificationError("fact %s is already registered" % fact_id)
         # A fact enters the trail as candidate regardless of any status a
@@ -448,8 +505,11 @@ class TypedFactCertificationStore:
             # Producer gate first: a never_auto_resolve producer can never reach
             # certified, however complete its evidence, dependencies or votes.
             refusal = gate_refusal(entry["fact"])
+            if refusal is None:
+                refusal = identity_refusal(entry["fact"])
             if refusal is not None:
                 raise CertificationError("certification refused for %s: %s" % (fact_id, refusal))
+            resolved_tier, _projector_id, _basis = producing_projector_gate(entry["fact"])
             two_vote_row = None
             errors: List[str] = []
             if two_vote_bundle is not None:
@@ -472,6 +532,13 @@ class TypedFactCertificationStore:
                     two_vote_row=two_vote_row, packet_dir=packet_dir,
                 )
             )
+            if resolved_tier == "two_vote_required" and two_vote_row is None:
+                # The registry gate is authoritative even when the fact type is
+                # outside the legacy hard-coded two-vote set.
+                errors.append(
+                    "the producing projector is gated two_vote_required; a canonical "
+                    "two-vote bundle is required"
+                )
             if errors:
                 raise CertificationError(
                     "certification refused for %s: %s" % (fact_id, "; ".join(errors))

@@ -30,31 +30,35 @@
   },
   "upstream_binding": {
     "authorities": {
+      "authority_sha256": "749f3220210f5c5968d4646bf4e2c6198e144c45887620e28440099dee3975b2",
       "canonical_loc_index": {
         "content_sha256": "1e516a7b9517cd34ea6a0c11909dea9d9fda0b6c17a624dc718f810857d09865",
-        "path": "qamus/indexes/quran-loc-surface/index.jsonl",
-        "present": true,
-        "row_count": 77881,
-        "sha256": "97efbaca345d5f23d9e9c699eef155f5bf4e06bb725e430729a8962b1573d227"
+        "row_count": 77881
+      },
+      "carried_row_counts": {
+        "form-source": 4089,
+        "lemma-source": 813,
+        "qword-crosswalk": 115638,
+        "qword-denominator": 117117,
+        "stem-source": 4089
       },
       "carried_tables": {
-        "form-source": "82944f9950d318d1f1beccaf366d0cf19b9548f97c07263beb29681118064d45",
-        "lemma-source": "3fd9b85c2cab9ed033b3b0715304fe090c94c3622aba4da66f268177f0fac3ec",
-        "qword-crosswalk": "85c0415d74efd24d741a5ebcc9c1714150d7c4941ea367591944cfe4b1fb66f0",
-        "qword-denominator": "9d8f109d66f5317400d2437e8e5d1ab7d6f8150b85e47917c6b6de7f2deeadc5",
-        "stem-source": "fae45d7a4e83ee988605cc1d83d2fcee4ae86447003087e1680fb6bc671eed8b"
+        "form-source": "f023500eac4fa676c98071d651969e861c81751a43ffe3cd3c87dc6bb311f61f",
+        "lemma-source": "3b0b87f0fb1f49744e25a602c826f8611ad08a05c5f50d8648aa750db8d5c6c7",
+        "qword-crosswalk": "b2826eb5cb4d4877b4fd8ad584814b64fa4fdb1bbbbf7832e315426f299d98e0",
+        "qword-denominator": "d557186092c09766fbe8eaf1e9c015d6e30f09d160f5c98c49fc004b175c27e0",
+        "stem-source": "6240d7c1d7d56d2da847363b47598f1e33c3f1916cb14b164687d8b1ae86961b"
       },
       "lexeme_join_lattice": {
         "content_sha256": "e5f5588c37c64adf70c014b008b770ecbdb455a9562cc9bd4d8fd7ce19db0dca",
-        "path": "qamus/lattice/lexeme-join-edges.jsonl",
-        "present": true,
-        "row_count": 24391,
-        "sha256": "d41a81248445d531348f40600279118b22aa62024534ccc4635609c487bb4eef"
+        "row_count": 24391
       },
+      "origin": "release",
       "typed_graph": {
         "bundles": [
           {
             "eligible_edge_count": 0,
+            "origin": "repository",
             "path": "qamus/examples/p007-li-pilot/transclusion-edges.jsonl",
             "present": true,
             "row_count": 72,
@@ -63,6 +67,7 @@
           },
           {
             "eligible_edge_count": 0,
+            "origin": "repository",
             "path": "qamus/examples/proof-noun-sufaha/typed-edge-graph.jsonl",
             "present": true,
             "row_count": 35,
@@ -71,6 +76,7 @@
           },
           {
             "eligible_edge_count": 0,
+            "origin": "repository",
             "path": "qamus/examples/proof-particle/particle-graph-edges.jsonl",
             "present": true,
             "row_count": 9,
@@ -78,7 +84,8 @@
             "sha256": "73725ecf6ab33fe2513095b1c4376d150218ed701f6ca23c6fe977cde5591cb6"
           },
           {
-            "eligible_edge_count": 2,
+            "eligible_edge_count": 0,
+            "origin": "repository",
             "path": "qamus/examples/proof-verb/typed-edge-graph.jsonl",
             "present": true,
             "row_count": 10,
@@ -86,26 +93,27 @@
             "sha256": "0163917ba9b0b0fb75bb5e1538d88b19e248613870ae21e394f9727837eca81b"
           }
         ],
-        "edge_content_sha256": "bd006c9925454769e7b9eee3ba95b1831994aa8bce5e17e8aa044833c2f5040a",
-        "eligible_edge_count": 2,
-        "eligible_loc_count": 1,
-        "typed_graph_sha256": "e2fa82f586bb52a4c7abec7db8aea249a3330c922700df0261a16b15d7362133"
+        "edge_content_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "eligible_edge_count": 0,
+        "eligible_loc_count": 0,
+        "typed_graph_sha256": "6e8fa7a1eec0210dbd5cfe7b5242022212070380e4360dbe41c7e98885c5a6ba"
       },
       "verified": true
     },
-    "authority_digest": "a4d49eebab51a507e56c9361385e6b7983df49714ac8e4ecda339d70cbd58fbe",
+    "authority_digest": "e0d785326d74917c21a49ec49ccb6791a44f0c1a170e4f463c387fdbcdd618bd",
     "carried_table_sha256": {
-      "form-source": "82944f9950d318d1f1beccaf366d0cf19b9548f97c07263beb29681118064d45",
-      "lemma-source": "3fd9b85c2cab9ed033b3b0715304fe090c94c3622aba4da66f268177f0fac3ec",
-      "qword-crosswalk": "85c0415d74efd24d741a5ebcc9c1714150d7c4941ea367591944cfe4b1fb66f0",
-      "qword-denominator": "9d8f109d66f5317400d2437e8e5d1ab7d6f8150b85e47917c6b6de7f2deeadc5",
-      "stem-source": "fae45d7a4e83ee988605cc1d83d2fcee4ae86447003087e1680fb6bc671eed8b"
+      "form-source": "f023500eac4fa676c98071d651969e861c81751a43ffe3cd3c87dc6bb311f61f",
+      "lemma-source": "3b0b87f0fb1f49744e25a602c826f8611ad08a05c5f50d8648aa750db8d5c6c7",
+      "qword-crosswalk": "b2826eb5cb4d4877b4fd8ad584814b64fa4fdb1bbbbf7832e315426f299d98e0",
+      "qword-denominator": "d557186092c09766fbe8eaf1e9c015d6e30f09d160f5c98c49fc004b175c27e0",
+      "stem-source": "6240d7c1d7d56d2da847363b47598f1e33c3f1916cb14b164687d8b1ae86961b"
     },
     "target_release_sha256": "576a1361b45b0c7fb301b6db7832e1f229ad7cee17bf4d5d173303ae97764f79",
     "typed_graph": {
       "bundles": [
         {
           "eligible_edge_count": 0,
+          "origin": "repository",
           "path": "qamus/examples/p007-li-pilot/transclusion-edges.jsonl",
           "present": true,
           "row_count": 72,
@@ -114,6 +122,7 @@
         },
         {
           "eligible_edge_count": 0,
+          "origin": "repository",
           "path": "qamus/examples/proof-noun-sufaha/typed-edge-graph.jsonl",
           "present": true,
           "row_count": 35,
@@ -122,6 +131,7 @@
         },
         {
           "eligible_edge_count": 0,
+          "origin": "repository",
           "path": "qamus/examples/proof-particle/particle-graph-edges.jsonl",
           "present": true,
           "row_count": 9,
@@ -129,7 +139,8 @@
           "sha256": "73725ecf6ab33fe2513095b1c4376d150218ed701f6ca23c6fe977cde5591cb6"
         },
         {
-          "eligible_edge_count": 2,
+          "eligible_edge_count": 0,
+          "origin": "repository",
           "path": "qamus/examples/proof-verb/typed-edge-graph.jsonl",
           "present": true,
           "row_count": 10,
@@ -137,10 +148,10 @@
           "sha256": "0163917ba9b0b0fb75bb5e1538d88b19e248613870ae21e394f9727837eca81b"
         }
       ],
-      "edge_content_sha256": "bd006c9925454769e7b9eee3ba95b1831994aa8bce5e17e8aa044833c2f5040a",
-      "eligible_edge_count": 2,
-      "eligible_loc_count": 1,
-      "typed_graph_sha256": "e2fa82f586bb52a4c7abec7db8aea249a3330c922700df0261a16b15d7362133"
+      "edge_content_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "eligible_edge_count": 0,
+      "eligible_loc_count": 0,
+      "typed_graph_sha256": "6e8fa7a1eec0210dbd5cfe7b5242022212070380e4360dbe41c7e98885c5a6ba"
     },
     "typed_release_losslessness": {
       "accounted_row_count": 253292,
