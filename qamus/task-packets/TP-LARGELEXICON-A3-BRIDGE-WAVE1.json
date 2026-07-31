@@ -1,14 +1,19 @@
 {
   "acceptance_tests": [
     {
-      "name": "bridge behaviour holds",
-      "pass_condition": "ok is true and all adversarial mutation tests pass",
+      "name": "bridge guards are intact",
+      "pass_condition": "ok is true and every adversarial mutation test passes; no bridge guard was edited",
       "run": "python tools/test_largelexicon_fact_bridge.py"
     },
     {
-      "name": "scan is fresh and candidate-free",
-      "pass_condition": "exit 0; summary.certified_records is 0, summary.learner_visible_records is 0, and the reported candidate count matches the committed scan",
+      "name": "scan is fresh, candidate-free and matches the inventory population",
+      "pass_condition": "exit 0; summary.certified_records is 0, summary.learner_visible_records is 0, the preserved-candidate histogram is 2000 rows at zero candidates, and blocker_counts.missing_typed_graph_evidence is 95",
       "run": "python tools/largelexicon_fact_bridge.py --check-scan"
+    },
+    {
+      "name": "the run ended report-only in the evidence-inventory state",
+      "pass_condition": "TASK PACKET VALIDATION PASS, the only written paths are under qamus/reports/largelexicon-bridge-wave1/, and the metadata terminal_state is EVIDENCE_READY_FOR_OWNER_CERTIFICATION with GAP-L3 recorded as open",
+      "run": "python tools/validate_task_packets.py"
     },
     {
       "name": "harness stays green",
@@ -19,22 +24,38 @@
   "canaries": {
     "adversarial": [
       {
-        "expectation": "any diff that loosens typed-graph, loc-surface or authority checks fails the packet",
+        "expectation": "a run whose output contains an accepted or candidate typed lexeme/form edge, rather than a description of the edge that is missing, FAILS the packet",
+        "id": "canary-no-accepted-typed-edge"
+      },
+      {
+        "expectation": "a run whose output contains any bridge candidate record, or reports a nonzero candidate count, FAILS the packet",
+        "id": "canary-no-bridge-candidate"
+      },
+      {
+        "expectation": "a run whose output or report claims the typed-graph evidence gap is closed, that GAP-L3 is closed, or that accepted typed edges were produced, FAILS the packet",
+        "id": "canary-no-closure-claim"
+      },
+      {
+        "expectation": "any diff that loosens typed-graph, loc-surface, authority or dependency-family checks FAILS the packet",
         "id": "canary-no-guard-relaxation"
       },
       {
-        "expectation": "a report claiming any nonzero candidate count without new typed-graph evidence fails the acceptance test",
-        "id": "canary-no-candidate-inflation"
+        "expectation": "any write outside qamus/reports/largelexicon-bridge-wave1/ FAILS the packet",
+        "id": "canary-no-write-outside-reports"
       }
     ],
     "positive": [
       {
-        "expectation": "a missing_typed_graph_evidence row is reported with its canonical loc, written surface and the four authority digests",
-        "id": "canary-gap-row-cites-loc-and-authorities"
+        "expectation": "a missing_typed_graph_evidence row is frozen with its canonical loc, exact written surface, required-edge description, bridge contract id and the four authority digests",
+        "id": "canary-inventory-row-is-complete"
       },
       {
-        "expectation": "the report states 0 candidate records among 2,000, matching real-data-scan.meta.json exactly",
+        "expectation": "the inventory metadata states 0 candidate records among 2,000, matching real-data-scan.meta.json exactly",
         "id": "canary-zero-candidates-reported-honestly"
+      },
+      {
+        "expectation": "the metadata terminal_state is EVIDENCE_READY_FOR_OWNER_CERTIFICATION and its gap_status records that GAP-L3 remains open",
+        "id": "canary-terminal-state-is-evidence-inventory"
       }
     ]
   },
@@ -46,60 +67,66 @@
   },
   "commands": [
     {
-      "purpose": "read the current machine truth: 0 candidates, 2,000 abstentions, and the authority bindings",
+      "purpose": "read the machine truth this inventory must match: 0 candidates among 2,000, 95 missing_typed_graph_evidence rows, and the verified authority binding",
       "run": "python tools/largelexicon_fact_bridge.py --check-scan"
     },
     {
-      "purpose": "re-prove the bridge behaviour before changing any input",
+      "purpose": "re-prove the bridge guards are intact before reading a single row; no guard may be edited here",
       "run": "python tools/test_largelexicon_fact_bridge.py"
     },
     {
-      "purpose": "regenerate the full typed-claim output into the gitignored out/ tree for inspection",
+      "purpose": "read-only regeneration of the typed-claim records into the gitignored out/ tree, so each inventory row can cite its bridge contract id",
       "run": "python tools/largelexicon_fact_bridge.py --limit 2000"
     }
   ],
   "defeaters": [
-    "a proposed change that weakens the typed-graph, loc-surface or authority-binding requirement",
-    "a gap row that treats a bridge abstention as certified or candidate evidence",
-    "a gap row whose canonical loc does not match the bridge record it cites",
-    "any claim that GAP-L3 is closed while the typed-graph evidence is still missing"
+    "any edit that weakens the typed-graph, loc-surface, authority-binding or dependency-family requirement",
+    "an output row that asserts an accepted or candidate typed edge rather than describing a missing one",
+    "an output row that treats a bridge abstention as certified or candidate evidence",
+    "an output row whose canonical loc or written surface does not match the bridge record it cites",
+    "any claim that the evidence gap was closed, that GAP-L3 was closed, or that the bridge candidate count rose",
+    "any write outside qamus/reports/largelexicon-bridge-wave1/"
   ],
   "definition_of_done": [
-    "every missing_typed_graph_evidence occurrence in the bounded window has an exact required-edge description",
+    "every one of the 95 missing_typed_graph_evidence occurrences in the bounded window is frozen in the inventory exactly once, with canonical loc, exact written surface, required-edge description, bridge contract id and authority digests",
+    "nothing was written outside qamus/reports/largelexicon-bridge-wave1/, no accepted or candidate typed edge was produced, and nothing was certified",
     "no bridge guard was weakened and no abstention was reported as a candidate",
-    "the authority digests the gap was computed against are recorded so the wave can be invalidated mechanically",
-    "GAP-L3 is only declared closed when the bridge yields candidates from real accepted typed edges"
+    "the terminal state is EVIDENCE_READY_FOR_OWNER_CERTIFICATION: GAP-L3 remains open and the bridge candidate count remains zero",
+    "a separate owner-authorized evidence packet, exact evidence review, and owner-gated application of accepted typed edges are recorded as the required next steps before any later bridge rerun could emit a real candidate"
   ],
   "escalation_trigger": {
     "conditions": [
-      "a collision needs occurrence context that no committed artifact supplies",
-      "a candidate would require an iʿrāb-bearing judgement to route",
-      "the carried-table dependency hashes changed mid-wave"
+      "an occurrence's required-edge description cannot be derived from committed artifacts",
+      "a reviewer asks for the accepted typed edges themselves rather than the inventory of what is missing",
+      "the carried-table, typed-graph, canonical-index or lexeme-lattice authority digests changed mid-run"
     ],
-    "route": "two-vote queue for iʿrāb-bearing routes; source-gap packet for missing context; rerun the wave from a fresh release if the dependency hashes moved"
+    "route": "source-gap row for underivable descriptions; a separate owner-authorized evidence packet for producing and applying accepted typed edges, never here; rerun the inventory from a fresh scan if any authority digest moved"
   },
   "evidence_policy": {
-    "fabrication_rule": "If the evidence ladder does not reach the rung a route needs, record source_gap with the precise missing evidence. Prefer pending over wrong.",
-    "statement": "Every gap row cites the bridge record's contract_id, its canonical quran loc and written surface, and the authority digests it was computed against. A carried-table lookup is source-addressed candidate evidence about a written surface; it is never, by itself, evidence of lexeme identity, sense, or function.",
+    "fabrication_rule": "If a required-edge description is not fully derivable from committed artifacts and the bridge's own abstention record, emit source_gap with the precise missing evidence. Never invent an edge, a root, a lexeme or a sense, and never upgrade a description into an accepted edge. Prefer pending over wrong.",
+    "statement": "Every inventory row cites the bridge record's contract_id, its canonical quran loc, its exact written surface, and the authority digests it was computed against. A carried-table lookup is source-addressed candidate evidence about a written surface; it is never, by itself, evidence of lexeme identity, sense or function. Describing the typed edge an occurrence would require is a statement of what is MISSING, never an assertion that the edge exists or is accepted.",
     "verbatim_required": false
   },
   "expected_outputs": [
     {
-      "description": "one row per missing_typed_graph_evidence occurrence with the exact typed edge that would be required",
+      "description": "the frozen inventory: one row per missing_typed_graph_evidence occurrence carrying canonical loc, exact written surface, required-edge description, bridge contract id, and the authority digests it was computed against. A description of a required edge is NOT an edge.",
       "path": "qamus/reports/largelexicon-bridge-wave1/typed-graph-gap.jsonl"
     },
     {
-      "description": "generator, counts, and the authority digests (carried tables, typed graph, canonical index, lexeme lattice) the gap was computed against",
+      "description": "generator, row count, the four authority digests (carried tables, typed graph, canonical index, lexeme lattice) the inventory was computed against, the observed bridge candidate count (0), and the truthful terminal state: terminal_state EVIDENCE_READY_FOR_OWNER_CERTIFICATION with gap_status recording that GAP-L3 remains open.",
       "path": "qamus/reports/largelexicon-bridge-wave1/typed-graph-gap.meta.json"
     }
   ],
   "guards": [
-    "the METHOD of this gap analysis transfers to later waves; the linguistic conclusion about any single occurrence never transfers to another occurrence or surface",
-    "the bridge currently yields ZERO candidates: no report may present an abstention as a candidate",
+    "REPORT-ONLY: the only tracked product is an inventory under qamus/reports/largelexicon-bridge-wave1/; no typed edge is written and nothing is certified",
+    "the METHOD of this inventory transfers to later waves; the linguistic conclusion about any single occurrence never transfers to another occurrence or surface",
+    "the bridge currently yields ZERO candidates: no inventory row may present an abstention as a candidate",
+    "a required-edge description is a description of missing evidence, never an accepted or candidate typed edge",
     "the crosswalk entry_id is the page that displays the word: it is page context and may never become a lexeme, form or sense edge",
-    "a root-family relation is never a lexeme identity, and a candidate-status graph edge is never accepted support",
+    "a shared written surface is never lexeme identity, a root-family relation is never a lexeme identity, and a candidate-status graph edge is never accepted support",
     "a normalized-only surface match is a never_auto_resolve trigger and must stay blocked",
-    "the bridge projector is registered never_auto_resolve; certification remains solely with tools/certify_typed_fact.py on its own evidence bundle"
+    "the bridge projector is registered never_auto_resolve; certification remains solely with tools/certify_typed_fact.py on its own evidence bundle, under owner gating",
+    "GAP-L3 remains open and the bridge candidate count remains zero at the end of a successful run; only a separate owner-authorized evidence packet can change that"
   ],
   "inputs": {
     "input_files": [
@@ -130,24 +157,27 @@
   },
   "model_class": "standard",
   "non_deployment": {
-    "statement": "This packet produces candidate dispositions and review routes only. No bridge record may be materialized publicly, shown to a learner, or written to the live site; certification stays with the owner-gated certifier on its own evidence bundle.",
+    "statement": "This packet is report-only: it freezes an inventory of missing typed-graph evidence and nothing else. It mutates no live surface, writes no entry, certification or typed-edge store, and materializes nothing publicly or to a learner. Certification and accepted-edge application stay with the owner-gated certifier on its own evidence bundle.",
     "status": "NOT_DEPLOYED"
   },
   "packet_id": "TP-LARGELEXICON-A3-BRIDGE-WAVE1",
   "schema": "qamus.task_packet.v1",
   "scope": {
     "entry_id": "not-entry-scoped",
-    "family": "LARGELEXICON_BRIDGE_CANDIDATE_CONSUMPTION",
+    "family": "LARGELEXICON_BRIDGE_EVIDENCE_INVENTORY",
     "out_of_scope": [
-      "relaxing the typed-graph requirement, the loc-surface agreement check or any bridge guard so that more rows pass",
-      "certifying a lexeme, form, sense or root edge from a bridge candidate: the projector is registered never_auto_resolve and has no certification path",
+      "producing, applying, writing or certifying any accepted canonical typed lexeme/form edge: that is owner-gated and belongs to a separate evidence packet",
+      "declaring GAP-L3 closed, or reporting any nonzero bridge candidate count",
+      "re-running the bridge in order to obtain candidates; a rerun here is read-only inspection of unchanged inputs",
+      "relaxing the typed-graph requirement, the loc-surface agreement check, the authority binding or any other bridge guard so that more rows pass",
+      "inferring lexical identity from written surface, root, root-family relation, page context or a candidate-status graph edge",
       "resolving a lexical_collision_requires_context record by picking a candidate",
-      "any live-surface mutation, entry-store write, or public materialization"
+      "any live-surface mutation, entry-store write, certification-store write, or public materialization"
     ],
-    "summary": "The A3 bridge is executable and abstention-first, but identity requires an accepted canonical typed lexeme/form edge agreeing on occurrence loc, written surface and entry, and the public repository supplies only 2 eligible edges at 1 occurrence loc. The repaired real-data scan therefore records 0 candidate records among 2,000 carried crosswalk rows, with 95 rows reaching the typed-graph gate and abstaining as missing_typed_graph_evidence. This packet closes that evidence gap: it produces the missing canonical typed lexeme/form edges for a bounded occurrence set through the existing typed-edge builder, then re-runs the bridge. It does not relax the bridge's evidence requirement.",
-    "tranche": "a3-bridge-wave-1"
+    "summary": "REPORT-ONLY. The A3 bridge is executable and abstention-first: lexical identity requires an accepted canonical typed lexeme/form edge agreeing on occurrence loc, exact written surface and entry, and the public repository supplies only 2 eligible edges at 1 occurrence loc. The real-data scan therefore records 0 candidate records among 2,000 carried crosswalk rows, of which 95 reached the typed-graph gate and abstained as missing_typed_graph_evidence. The only product here is a frozen inventory of those exact 95 rows - canonical loc, exact written surface, required-edge description, bridge contract id, and the authority digests each row was computed against - written to a single reports directory. No typed edge is written, nothing is certified, no bridge guard changes, and no public or live output is produced. On success the terminal state is the bounded evidence-inventory state EVIDENCE_READY_FOR_OWNER_CERTIFICATION; GAP-L3 remains open and the bridge candidate count remains zero. A separate owner-authorized evidence packet, exact evidence review, and owner-gated application of accepted typed edges are all required before any later bridge rerun could emit a real candidate.",
+    "tranche": "a3-bridge-evidence-inventory-1"
   },
-  "title": "Close the A3 typed-graph evidence gap that leaves the bridge at zero candidates",
+  "title": "Freeze the A3 missing-typed-graph-evidence inventory (report-only; GAP-L3 remains open)",
   "tools_required": [
     "python3",
     "tools/largelexicon_fact_bridge.py",
