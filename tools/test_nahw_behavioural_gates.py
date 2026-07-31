@@ -997,12 +997,196 @@ def test_r10_gate_reconciliation():
     check("R10 a dropped irab row is a failure", GATE.irab_rule_id_defects({"rules": _rows[1:]}) != [])
 
 
+def _r13_pair(vid_a="vote:r13:a", vid_b="vote:r13:b", **kw):
+    base = dict(reason_key="lam-jarr-fused-majrur-kasra", conclusion="genitive", case_mood="genitive",
+                relation="preposition_governs_genitive", fact_type="case_assignment")
+    base.update(kw)
+    return (mint_fixture_vote(0, worklist_id="wl-a", vote_id=vid_a, **base),
+            mint_fixture_vote(1, worklist_id="wl-b", vote_id=vid_b, **base))
+
+
+def test_r13_envelope_and_claim_binding():
+    """ROUND-13 (1,2,3): envelope equivalence, mandatory surface, nested governor relation."""
+    from tools.grade_grammar_reasoning import (  # noqa: PLC0415
+        canonical_two_vote_envelope, canonical_vote_difference, two_vote_evidence_defect,
+    )
+    va, vb = _r13_pair()
+    case = {"id": "r13", "required_gate": "two_vote_required", "expected_conclusion": "genitive",
+            "expected_reason_keys": ["lam-jarr-fused-majrur-kasra"]}
+    good = dict(project_vote(va), two_vote_evidence=[va, vb])
+    check("R13 a genuine occurrence-bound claim still passes", grade_structured(case, good)["pass"],
+          repr(grade_structured(case, good).get("block_reason")))
+
+    # 1. same vote IDs, a DIFFERENT canonical occurrence
+    fa, fb = _r13_pair()
+    for v in (fa, fb):
+        v["occurrence"] = dict(v["occurrence"], quran_loc="quran:2:26:20", wbw_loc="wbw:2:26:20",
+                               surface="حَلِيمٌ")
+    check("R13 an envelope for another occurrence with the SAME vote ids is refused",
+          two_vote_evidence_defect(dict(good, two_vote_artifact=canonical_two_vote_envelope(fa, fb)))
+          is not None)
+    check("R13 canonical_vote_difference names the differing governed field",
+          canonical_vote_difference(va, fa) == "occurrence",
+          repr(canonical_vote_difference(va, fa)))
+    check("R13 two copies of the same record are the same evidence",
+          canonical_vote_difference(va, dict(va)) is None)
+
+    # 2. the exact written surface is mandatory
+    stripped = {k: v for k, v in good.items() if k not in ("surface", "subject")}
+    check("R13 a claim naming neither surface nor subject fails closed",
+          two_vote_evidence_defect(stripped) == "two_vote_claim_surface_absent",
+          repr(two_vote_evidence_defect(stripped)))
+    check("R13 a mismatched exact surface is refused",
+          two_vote_evidence_defect(dict(good, surface="حَلِيمٍ")) == "two_vote_claim_surface_not_bound")
+
+    # 3. the nested governor relation is part of the reason tuple
+    check("R13 a REVERSED governor relation is refused (a right label with the wrong reason)",
+          two_vote_evidence_defect(dict(good, governor={"governor_type": "idafa"}))
+          == "two_vote_claim_governor_relation_not_bound")
+    check("R13 a fabricated governor_type is refused",
+          two_vote_evidence_defect(dict(good, governor={"governor_type": "not_a_governor"}))
+          == "two_vote_claim_governor_relation_not_bound")
+    check("R13 an absent governor_type is refused",
+          two_vote_evidence_defect(dict(good, governor={})) == "two_vote_claim_governor_type_absent")
+
+
+def test_r13_transition_surface_and_gates():
+    """ROUND-13 (4,5): transition evidence is surface-bound; every public gate API fails closed."""
+    def _obs(surface):
+        return PR.mint_fixture_observation("second_noun_majrur_first_stripped",
+                                           source_address="quran:2:2:1", quran_loc="2:2", word=1,
+                                           surface=surface, target_kind="transition",
+                                           target_value="min_preposition_to_jar_majrur")
+
+    mismatched = PR.transition("min_preposition_to_jar_majrur", evidence=_obs("مَنْ"),
+                               at="quran:2:2:1", surface="مِنَ")
+    check("R13 a مَنْ observation cannot fire a مِنَ transition at the same address",
+          mismatched.get("decision") == "pending"
+          and mismatched.get("evidence_defect") == "surface_mismatch",
+          "decision=%s defect=%s" % (mismatched.get("decision"), mismatched.get("evidence_defect")))
+    matched = PR.transition("min_preposition_to_jar_majrur", evidence=_obs("مِنَ"),
+                            at="quran:2:2:1", surface="مِنَ")
+    check("R13 the surface check is the discriminator, not a blanket refusal",
+          matched.get("evidence_defect") != "surface_mismatch",
+          repr(matched.get("evidence_defect")))
+
+    for label, kw in (("a malformed trigger", {"triggers": ["not_a_trigger"], "declared": "auto_safe"}),
+                      ("a duplicate trigger", {"triggers": ["irab", "irab"], "declared": "auto_safe"}),
+                      ("a non-string trigger", {"triggers": [1], "declared": "auto_safe"})):
+        check("R13 effective_gate(): %s never reduces to auto_safe" % label,
+              GATE.effective_gate(**kw) != "auto_safe", GATE.effective_gate(**kw))
+    check("R13 effective_gate(): a clean trigger still reconciles upward",
+          GATE.gate_rank(GATE.effective_gate(triggers=["irab"], declared="auto_safe"))
+          >= GATE.gate_rank("two_vote_required"))
+    check("R13 irab_rule_gate(): an unknown rule id holds",
+          GATE.gate_rank(GATE.irab_rule_gate("no_such_rule")) >= GATE.gate_rank("two_vote_required"))
+    _bad = {"rules": [{"id": "irab_assignment", "gate": "auto_safe", "triggers": ["not_a_trigger"]}]}
+    check("R13 irab_rule_gate(): a malformed trigger in the table holds",
+          GATE.irab_rule_gate("irab_assignment", _bad) != "auto_safe",
+          GATE.irab_rule_gate("irab_assignment", _bad))
+    check("R13 irab_rule_gate(): the committed table still resolves every rule",
+          all(GATE.irab_rule_gate(r) in ("auto_safe", "two_vote_required",
+                                         "human_source_review_required", "never_auto_resolve")
+              for r in GATE.irab_rule_ids()))
+
+
+def test_r13_homographs_rivals_gloss():
+    """ROUND-13 (6,7,8): fail-closed homographs, symmetric rivals, context-free gloss refusal."""
+    for surface in ("أَنِ", "أَنَ", "إِنِ", "إِنَ", "كَلّ", "نَعَمَ", "نِعْمْ"):
+        res = PR.resolve_particle_homograph(surface)
+        check("R13 homograph %s fails closed" % surface,
+              res.get("decision") == "pending" and res.get("branch") is None,
+              "decision=%s branch=%s" % (res.get("decision"), res.get("branch")))
+    for surface in ("أَنْ", "أَنَّ", "إِنْ", "إِنَّ", "كَلَّا", "نَعَمْ", "نِعْمَ", "مَنْ", "مِنْ"):
+        check("R13 the fully marked %s still resolves" % surface,
+              PR.resolve_particle_homograph(surface).get("decision") == "resolved")
+    check("R13 light/heavy weight needs an EXPLICIT mark",
+          PR.an_family_weight("أَنْ") == "light" and PR.an_family_weight("أَنَّ") == "heavy"
+          and PR.an_family_weight("أَن") is None and PR.an_family_weight("أَنِ") is None,
+          repr([PR.an_family_weight(x) for x in ("أَنْ", "أَنَّ", "أَن", "أَنِ")]))
+
+    rules = PR.load_state_rules()
+    rows = {r["id"]: r for r in rules["transitions"]}
+    man = PR.transition_rivals(rows["man_relative_to_mubtada_or_object"], rules, selected=None,
+                               evidence_id="e")
+    mn = PR.transition_rivals(rows["min_preposition_to_jar_majrur"], rules, selected=None, evidence_id="e")
+    man_roles = {r["role"] for r in man}
+    min_roles = {r["role"] for r in mn}
+    check("R13 a مَن candidate preserves the مِن preposition sibling rival",
+          any("مِنْ" in r for r in man_roles), repr(sorted(man_roles))[:90])
+    check("R13 sibling rivalry is symmetric across the governed family",
+          (man_roles - {rows["man_relative_to_mubtada_or_object"]["to_nahw_role"], "hold:homograph_haraka"})
+          == (min_roles - {rows["min_preposition_to_jar_majrur"]["to_nahw_role"],
+                           "hold:jar_majrur_ambiguous"}),
+          "man=%s min=%s" % (len(man_roles), len(min_roles)))
+    check("R13 no rival is pre-marked rejected before evidence defeats it",
+          all(r["decision_status"] != "rejected_rival" for r in man + mn))
+
+    for gloss in ("whoever", "who", "he who"):
+        check("R13 a context-free gloss مَنْ -> %r is refused" % gloss,
+              PR.public_gloss_defect("مَنْ", gloss) == "branch_gloss_is_disjunctive",
+              repr(PR.public_gloss_defect("مَنْ", gloss)))
+    check("R13 the مِنْ preposition gloss is still allowed (vocalization DOES separate مَن from مِن)",
+          PR.public_gloss_defect("مِنْ", "from") is None,
+          repr(PR.public_gloss_defect("مِنْ", "from")))
+
+
+def test_r13_tutor_content_vs_fact():
+    """ROUND-13 (9,10): malformed second_check fails closed; a held row is not a learner miss."""
+    import tools.fusha_tutor_runtime as TUT  # noqa: PLC0415
+    bank = TUT._authored_bank()
+    idx = TUT._bank_index(bank)
+    row = idx["T2-hardgrammar"]
+    payload = {"answer": row["expected_answer"], "reasoning": list(row.get("required_reasoning") or [])}
+
+    for label, bad in (("true", True), ("1", 1), ('"yes"', "yes"), ("[1]", [1]), ("{}", {}),
+                       ("0", 0), ("null", None)):
+        try:
+            g = TUT.grade(row, dict(payload, second_check=bad))
+        except Exception as exc:  # noqa: BLE001
+            check("R13 malformed second_check %s fails closed without a crash" % label, False,
+                  "%s: %s" % (type(exc).__name__, exc))
+            continue
+        check("R13 malformed second_check %s fails closed without a crash" % label,
+              g["two_vote_status"] == "pending" and not g["cleared"], "status=%s" % g["two_vote_status"])
+
+    result = TUT.step(row, None, payload, now_day=0)
+    g = result["grade"]
+    check("R13 a content-correct held answer is reported as content-mastered",
+          g["content_mastered"] is True and g["held_for_fact_gate"] is True and g["cleared"] is False)
+    check("R13 the scheduler label is 'held', never 'miss'",
+          result["outcome"] == "hold" and not result["event"]["note"].startswith("miss"),
+          "%s / %s" % (result["outcome"], result["event"]["note"]))
+    check("R13 the held row is not counted as a lapse",
+          int(result["state"].get("lapses", 0)) == 0, repr(result["state"].get("lapses")))
+    check("R13 a fact hold is not routed to remediation",
+          result["event"]["remediation_route"] is None, repr(result["event"]["remediation_route"]))
+    progress = TUT.new_progress()
+    TUT.apply_event_to_progress(progress, row, result, 1)
+    check("R13 a fact hold does not enter progress.missed",
+          not any(m["item_id"] == row["id"] for m in progress["missed"]), repr(progress["missed"]))
+    # a REAL content miss still lands in missed and still gets remediation
+    wrong = TUT.step(row, None, {"answer": "totally wrong", "reasoning": []}, now_day=0)
+    TUT.apply_event_to_progress(progress, row, wrong, 2)
+    check("R13 a real content miss still lands in missed with a remediation route",
+          any(m["item_id"] == row["id"] for m in progress["missed"])
+          and wrong["event"]["remediation_route"], repr(wrong["event"]["remediation_route"]))
+    # an unclearable fact-held row must not starve unseen content
+    prog2 = TUT.new_progress()
+    TUT.apply_event_to_progress(prog2, row, TUT.step(row, None, payload, now_day=0), 1)
+    nxt, why = TUT.select_next(bank, prog2, now_day=30)
+    check("R13 an unclearable fact-held row does not starve unseen content",
+          nxt != row["id"] and why == "new_item", "%s / %s" % (nxt, why))
+
+
 def main():
     for fn in (test_m1_wrong_conclusion, test_m2_wrong_reason, test_m3_absent_governor,
                test_m4_lost_rival, test_m5_unsafe_auto_resolution, test_two_vote_agreement,
                test_runner_contract, test_domain_consumers, test_quarantine_authority_is_exact,
                test_r10_exact_occurrence_and_surface, test_r10_homograph_fails_closed,
-               test_r10_gate_reconciliation):
+               test_r10_gate_reconciliation, test_r13_envelope_and_claim_binding,
+               test_r13_transition_surface_and_gates, test_r13_homographs_rivals_gloss,
+               test_r13_tutor_content_vs_fact):
         fn()
     if FAILS:
         print("FAIL — %d behavioural gate(s) broke:" % len(FAILS))
@@ -1013,7 +1197,9 @@ def main():
           "(M1 wrong conclusion, M2 wrong/absent reason, M3 absent governor, M4 lost rival, "
           "M5 unsafe auto-resolution, two-vote conclusion+reason, domain consumers, "
           "exact two-way quarantine authority, exact occurrence + written-surface binding, "
-          "fail-closed homograph selection, upward gate reconciliation)")
+          "fail-closed homograph selection, upward gate reconciliation, canonical envelope equivalence, "
+          "mandatory surface + governor-relation binding, surface-bound transitions, symmetric rivals, "
+          "context-free gloss refusal, learner mastery separated from fact readiness)")
 
 
 if __name__ == "__main__":

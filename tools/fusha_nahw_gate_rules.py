@@ -110,7 +110,10 @@ def irab_rule_gate(rule_id, rules=None):
     row = _irab_row(rule_id, rules)
     if row is None:
         return "two_vote_required"          # unknown rule fails closed
-    return _strongest(resolve_gate(row.get("gate")), required_gate(row.get("triggers") or []))
+    # ROUND-13: required_gate() answers auto_safe for a trigger list it cannot read, so a malformed trigger
+    # in the table collapsed the whole ladder. Reconcile through the checked path instead.
+    return _strongest(resolve_gate(row.get("gate")),
+                      reconcile_required_gate(row.get("gate"), list(row.get("triggers") or [])))
 
 
 def irab_rule_hover(rule_id, rules=None):
@@ -137,14 +140,20 @@ def topic_hover(topic, rules=None):
 
 
 def effective_gate(topic=None, triggers=(), declared=None, rules=None, irab_gates=None):
-    """The gate a decision must actually carry: the strongest of topic map, SSOT triggers, and any declared tier."""
+    """The gate a decision must actually carry: the strongest of topic map, SSOT triggers and declared tier.
+
+    ROUND-13: this public entry point used the fail-OPEN path, so `triggers=["not_a_trigger"]` with a
+    declared `auto_safe` answered auto_safe — an unreadable risk statement was treated as an absence of
+    risk. It now delegates to reconcile_required_gate(), which holds on a malformed, non-list, duplicated
+    or unknown trigger set. A caller-declared tier can still only STRENGTHEN.
+    """
     gates = []
     if topic is not None:
         gates.append(topic_gate(topic, rules=rules))
         gates.append(required_gate(TOPIC_TRIGGERS.get(topic, ())))
     if triggers:
-        gates.append(required_gate(triggers))
-    if declared is not None:
+        gates.append(reconcile_required_gate(declared, list(triggers)))
+    elif declared is not None:
         gates.append(resolve_gate(declared))
     return _strongest(*gates) if gates else "auto_safe"
 

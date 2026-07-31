@@ -1170,11 +1170,58 @@ def run_all(root=_REPO):
     return result
 
 
+def _self_test():
+    """Run every bank and assert the contract-shaped result is internally consistent. Exit 1 on violation."""
+    errors, stats = [], {}
+    for name in sorted(BANKS):
+        BANKS[name](errors, stats)
+    result = run_all(_REPO)
+    if not result.get("ok"):
+        errors.extend("run_all: %s" % f for f in (result.get("failures") or ["result not ok"]))
+    banks = [b["bank"] for b in result.get("banks") or []]
+    if sorted(banks) != sorted(A2_ARTIFACT_OWNERSHIP):
+        errors.append("run_all covered %s, expected the %d committed artifacts"
+                      % (sorted(banks), len(A2_ARTIFACT_OWNERSHIP)))
+    if len(set(banks)) != len(banks):
+        errors.append("run_all returned duplicate artifact items")
+    for item in result.get("banks") or []:
+        own = A2_ARTIFACT_OWNERSHIP[item["bank"]]
+        if item["disposition"] != own["disposition"]:
+            errors.append("%s disposition %r != committed %r"
+                          % (item["bank"], item["disposition"], own["disposition"]))
+        if item["behavioral_consumer"] != own["consumer"]:
+            errors.append("%s consumer %r != committed %r"
+                          % (item["bank"], item["behavioral_consumer"], own["consumer"]))
+        if item["rows"] != _bank_rows(_REPO, item["bank"]):
+            errors.append("%s row denominator %r is not the independently counted row count"
+                          % (item["bank"], item["rows"]))
+    if result.get("total_rows") != sum(b["rows"] for b in result.get("banks") or []):
+        errors.append("run_all total_rows is not the sum of its item rows")
+    if errors:
+        print("FAIL — %d naḥw eval self-test violation(s):" % len(errors))
+        for e in errors[:20]:
+            print("  -", e)
+        return 1
+    print("PASS — naḥw eval self-test: %d rows across %d execution groups over %d artifacts; "
+          "dispositions, consumer ownership and row denominators all match the committed map; "
+          "behavioural credit %d rows, quarantined %d rows"
+          % (result["total_rows"], len(BANKS), len(A2_ARTIFACT_OWNERSHIP),
+             result["behavioral_rows"], result["quarantined_rows"]))
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--bank", default="all", choices=["all"] + sorted(BANKS))
     ap.add_argument("--json", action="store_true", help="emit the stats object instead of prose")
+    # ROUND-13: `--self-test` is the repository-wide convention for "run your own gates and exit non-zero on
+    # any violation". This runner already does exactly that over every bank, so the flag runs the full set
+    # (never a subset) and additionally asserts the contract-shaped run_all() result is internally sound.
+    ap.add_argument("--self-test", action="store_true", dest="self_test",
+                    help="run every bank plus the contract-result invariants; exit 1 on any violation")
     a = ap.parse_args()
+    if a.self_test:
+        return _self_test()
     names = sorted(BANKS) if a.bank == "all" else [a.bank]
     errors, stats = [], {}
     for name in names:

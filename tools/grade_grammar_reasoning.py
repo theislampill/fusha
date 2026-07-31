@@ -379,6 +379,29 @@ def claim_projection(vote):
     }
 
 
+# Every governed field of a canonical vote record. Two records are the SAME evidence only when all of them
+# match; a shared `vote_id` is a label, not an identity.
+CANONICAL_VOTE_FIELDS = (
+    "vote_id", "timestamp", "occurrence", "segmentation", "lexical_identity", "lexical_target", "root",
+    "form", "conclusion", "reason_key", "unresolved_points", "reviewer", "root_label_suppressed",
+)
+
+
+def canonical_vote_difference(left, right):
+    """None when two canonical vote records are the same evidence; otherwise the first differing field.
+
+    `grammatical_reason` and `gloss` are deliberately EXCLUDED: the v1.1 contract treats that prose as
+    uncompared elaboration, so differing wording is not differing evidence. Everything the contract does
+    govern must match exactly.
+    """
+    if not isinstance(left, dict) or not isinstance(right, dict):
+        return "not_a_vote_record"
+    for field in CANONICAL_VOTE_FIELDS:
+        if left.get(field) != right.get(field):
+            return field
+    return None
+
+
 def claim_binding_defect(claim, vote):
     """None only when the artifact is about THIS claim — same occurrence, same written surface, same tuple.
 
@@ -390,11 +413,31 @@ def claim_binding_defect(claim, vote):
         return "artifact_occurrence_not_word_level"
     if compact(claim.get("source_address")) != projected["source_address"]:
         return "claim_address_not_bound"
+    # ROUND-13: the exact written surface is MANDATORY, not "compared when supplied". A claim that names
+    # neither `surface` nor `subject` asserts a decision about a word it never identifies, and the previous
+    # code let it through — the opposite of the mandatory-surface contract this module documents.
     claimed_surface = claim.get("surface") if claim.get("surface") is not None else claim.get("subject")
-    if claimed_surface is not None:
-        defect = surface_binding_defect(claimed_surface, projected["surface"])
-        if defect is not None:
-            return "claim_surface_not_bound"
+    if claimed_surface is None:
+        return "claim_surface_absent"
+    defect = surface_binding_defect(claimed_surface, projected["surface"])
+    if defect is not None:
+        return "claim_surface_not_bound"
+    # ROUND-13: the claim carries its governor as a NESTED object ({"governor_type": ...}), which the flat
+    # field loop below never reached, so a vote whose reason is reversed — "the noun governs the
+    # preposition" instead of "the preposition governs the noun" — cleared a claim whose relation is the
+    # other way round. A correct label with the wrong reason must fail.
+    claimed_governor = claim.get("governor")
+    if claimed_governor is not None:
+        if not isinstance(claimed_governor, dict):
+            return "claim_governor_not_a_record"
+        claimed_type = compact(claimed_governor.get("governor_type"))
+        projected_type = JUSTIFICATION_RULE_GOVERNOR_TYPE.get(
+            (((vote or {}).get("conclusion") or {}).get("governor") or {}).get("relation"))
+        if not claimed_type:
+            return "claim_governor_type_absent"
+        if claimed_type != projected_type:
+            return "claim_governor_relation_not_bound"
+
     for claim_field, projected_field in CLAIM_BINDING_FIELDS:
         if claim_field in ("source_address", "surface"):
             continue
@@ -499,8 +542,18 @@ def two_vote_evidence_defect(claim):
     artifact_defect = two_vote_artifact_defect(envelope)
     if artifact_defect is not None:
         return "two_vote_%s" % artifact_defect
-    if [v.get("vote_id") for v in (envelope.get("votes") or [])] != [v.get("vote_id") for v in votes]:
+    # ROUND-13: comparing ordered vote_id values only let a VALID envelope for one occurrence authorise a
+    # separately valid submitted pair for ANOTHER occurrence that happened to reuse the same vote ids.
+    # The envelope must carry the same canonical records — every governed evidence field, not the label.
+    enveloped = envelope.get("votes") or []
+    if len(enveloped) != len(votes):
         return "two_vote_artifact_votes_not_the_submitted_pair"
+    for supplied, carried in zip(votes, enveloped):
+        if canonical_vote_difference(supplied, carried) is not None:
+            return ("two_vote_artifact_votes_not_the_submitted_pair:%s"
+                    % canonical_vote_difference(supplied, carried))
+    if compact((envelope.get("occurrence") or {}).get("quran_loc")) != left["source_address"]:
+        return "two_vote_artifact_occurrence_not_the_submitted_occurrence"
     # ROUND-10: two agreeing votes prove ONE claim — the one they are about. Address equality alone let a
     # valid pair clear a different claim at the same coordinate.
     for vote in votes:
@@ -802,6 +855,10 @@ def project_vote(vote):
         "governor": {"governor_type": gov_type} if gov_type else None,
         "evidence_cited": True,
         "source_address": occurrence.get("quran_loc"),
+        # ROUND-13: the projection carries the vote's OWN exact written surface, so an occurrence-bound
+        # claim always names the word it is about. The surface is mandatory in claim_binding_defect().
+        "surface": occurrence.get("surface"),
+        "subject": occurrence.get("surface"),
         "human_review": vote.get("human_review"),
         "reviewer_id": (vote.get("reviewer") or {}).get("reviewer_id"),
         # ROUND-8: a vote does NOT declare its own gate cleared. grade_two_vote() supplies the validated pair

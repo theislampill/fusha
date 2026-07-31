@@ -117,7 +117,16 @@ def grade_bank(bank, answers):
             reasons.append("held: this item asserts a grammar fact that needs two independent, "
                            "occurrence-bound reviews; a declared second check is not one, so the runner "
                            "cannot clear it")
+        # ROUND-13: report LEARNER/CONTENT mastery separately from linguistic-fact certification
+        # readiness. `cleared` still drives placement (it must, or a held fact gate would be bypassed), but
+        # a reader can now see that a held item was answered correctly and is waiting on certification —
+        # not that the learner got it wrong.
+        bucket.setdefault("content_mastered", 0)
+        if g["content_mastered"]:
+            bucket["content_mastered"] += 1
         bucket["items"].append({"id": row["id"], "cleared": bool(g["cleared"]),
+                                "content_mastered": bool(g["content_mastered"]),
+                                "awaiting_fact_certification": bool(g["held_for_fact_gate"]),
                                 "reasons": [] if g["cleared"] else reasons})
     return {"by_rung": by_rung, "rungs": sorted(by_rung)}
 
@@ -153,7 +162,10 @@ def run_placement(bank, answers):
     for r in graded["rungs"]:
         b = graded["by_rung"][r]
         rung_summary.append({"rung": r, "total": b["total"], "cleared": b["cleared"],
+                             "content_mastered": b.get("content_mastered", 0),
                              "passed": b["total"] > 0 and b["cleared"] == b["total"],
+                             # a rung every item was ANSWERED correctly on, even if a fact gate holds it
+                             "content_passed": b["total"] > 0 and b.get("content_mastered", 0) == b["total"],
                              "items": b["items"]})
     if label == READY_LABEL:
         note = "cleared every rung in the bank; ready for the rung above the top"
@@ -252,6 +264,12 @@ def _self_test():
         failures.append("QB2 must be reported as HELD with a stated reason, got %s" % _qb2)
     if not any(r.get("two_vote_required") for r in bank if r["id"] == "QB2"):
         failures.append("QB2 must keep its two_vote_required gate (it was not downgraded to clear the test)")
+    # ROUND-13: the held rung must report CONTENT mastery separately from fact-certification readiness.
+    _r2 = [r for r in res["rung_summary"] if r["rung"] == 2][0]
+    if not _r2["content_passed"] or _r2["passed"]:
+        failures.append("rung 2 must be content-passed but NOT cleared (held on the fact gate), got %s" % _r2)
+    if not _qb2[0].get("content_mastered") or not _qb2[0].get("awaiting_fact_certification"):
+        failures.append("QB2 must report content mastery + awaiting certification, got %s" % _qb2[0])
 
     # ROUND-12: NO self-reported field may lift the two-vote item above rung 2. The runner grades content;
     # a declaration of any shape is ignored.

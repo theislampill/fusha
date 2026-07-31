@@ -163,7 +163,9 @@ def grade(row, payload):
         # The runtime can grade answer and reasoning CONTENT. It cannot independently clear a two-vote fact
         # gate, so such a row is HELD as pending until a separately governed runtime contract can consume
         # canonical, occurrence-bound external vote artifacts. That contract is not invented here.
-        declared = (bool(second) and bool(second.get("conclusion_agrees"))
+        # ROUND-13: a truthy NON-mapping second_check (JSON true, 1, "yes", [1]) raised AttributeError on
+        # .get(). Malformed evidence fails closed; it never crashes and never counts as a declaration.
+        declared = (isinstance(second, dict) and bool(second.get("conclusion_agrees"))
                     and bool(second.get("reason_agrees")))
         two_vote_status = "pending"
         second_check_declared = declared
@@ -171,11 +173,18 @@ def grade(row, payload):
         two_vote_status = "n/a"
         second_check_declared = None
 
-    cleared = bool(passed and reasoning_passed and not forbidden_hit and two_vote_status != "pending")
+    # ROUND-13: LEARNER MASTERY and FACT READINESS are different questions and are reported separately.
+    # `content_mastered` is what the learner demonstrated: right answer, required reasoning, no forbidden
+    # path. `cleared` additionally needs the fact gate, which this runtime can never satisfy. A held row is
+    # therefore NOT content ignorance, and nothing downstream may treat it as a miss.
+    content_mastered = bool(passed and reasoning_passed and not forbidden_hit)
+    held_for_fact_gate = bool(content_mastered and two_vote_status == "pending")
+    cleared = bool(content_mastered and two_vote_status != "pending")
     return {"passed": bool(passed), "reasoning_passed": bool(reasoning_passed),
             "two_vote_status": two_vote_status, "forbidden_hit": bool(forbidden_hit),
             # reported for transparency ONLY: what the learner declared, never what was proven
             "second_check_declared": second_check_declared,
+            "content_mastered": content_mastered, "held_for_fact_gate": held_for_fact_gate,
             "cleared": cleared, "missing_reasoning": missing}
 
 
@@ -259,11 +268,22 @@ def select_next(bank, progress, now_day, interleave=False):
     due_reviews = [i for i in SCHED.select_due(states, now_day, interleave=interleave,
                                                group_key=(lambda i: level_of.get(i, "")) if interleave else None)
                    if int(states.get(i, {}).get("reps", 0)) > 0]
-    if due_reviews:
-        return due_reviews[0], "due_review"
+    # ROUND-13: a row awaiting external certification can NEVER clear, so it stays in box 0, is always the
+    # most overdue, and used to be served ahead of every unseen item forever. Genuine reviews still come
+    # first; unclearable fact-held rows yield to new content and are only offered when nothing else is.
+    # An item whose BANK ROW carries a two-vote fact gate can never be cleared here, so it is permanently
+    # due. Derive that from the bank rather than from a new state key (the progress schema is canonical).
+    _fact_gated = {r["id"] for r in bank if r.get("two_vote_required")}
+    _cleared = set(progress.get("cleared_item_ids") or [])
+    blocked = [i for i in due_reviews if i in _fact_gated and i not in _cleared]
+    live_reviews = [i for i in due_reviews if i not in blocked]
+    if live_reviews:
+        return live_reviews[0], "due_review"
     for r in bank:                                   # first unseen item, in bank order
         if r["id"] not in seen:
             return r["id"], "new_item"
+    if blocked:
+        return blocked[0], "due_review_awaiting_fact_certification"
     if states:                                        # all seen, none due -> soonest due
         nxt = min(states, key=lambda k: (int(states[k].get("due_day", 0)), k))
         return nxt, "soonest_due"
@@ -274,19 +294,29 @@ def step(row, state, payload, now_day):
     """Grade + schedule + build a (source-clean) event for one attempt. Pure (no I/O). Returns dict."""
     g = grade(row, payload)
     box_before = int((state or {}).get("box", 0))
+    # ROUND-13: the label said "miss" for a content-correct row held only by the fact gate. The scheduler
+    # reads the typed fields (and correctly answers `hold`), but the label itself was untrue and is what a
+    # reader sees. A fact hold is now labelled `held`, never `miss`.
     gr_for_sched = {"passed": g["passed"], "reasoning_passed": g["reasoning_passed"],
                     "two_vote_status": g["two_vote_status"], "forbidden_hit": g["forbidden_hit"],
-                    "grade": "cleared" if g["cleared"] else "miss"}
+                    "grade": ("cleared" if g["cleared"]
+                              else ("held" if g["held_for_fact_gate"] else "miss"))}
     new_state = SCHED.schedule(state or SCHED.new_state(), gr_for_sched, now_day)
     outcome = new_state["last_outcome"]
-    route = None if g["cleared"] else row.get("remediation_route")
+    # ROUND-13: remediation teaches a learner something they got wrong. A fact hold is not that.
+    route = None if (g["cleared"] or g["held_for_fact_gate"]) else row.get("remediation_route")
     note = ("cleared" if g["cleared"]
-            else ("held: " + ("pending two-vote" if g["two_vote_status"] == "pending"
+            else ("held: " + ("content mastered; awaiting external two-vote certification of the fact "
+                              "(not a learner miss)" if g["held_for_fact_gate"]
+                              else "pending two-vote" if g["two_vote_status"] == "pending"
                               else ("forbidden answer" if g["forbidden_hit"]
                                     else "reasoning incomplete" if not g["reasoning_passed"] else "review"))
                   if outcome == "hold" else "miss -> remediation"))
     event = {"schema": EVENT_SCHEMA, "seq": 0, "now_day": now_day, "item_id": row["id"],
              "level": str(row.get("level", "")), "outcome": outcome,
+             # NOTE: the event `grade` block is fixed by qamus/schemas/tutor-event.schema.json, which this
+             # lane may not edit, so the round-13 content_mastered / held_for_fact_gate axes are reported on
+             # the returned grade dict, in `note`, and on progress.awaiting_fact_certification instead.
              "grade": {k: g[k] for k in ("passed", "reasoning_passed", "two_vote_status", "forbidden_hit",
                                           "cleared", "missing_reasoning")},
              "box_before": box_before, "box_after": int(new_state["box"]),
@@ -308,7 +338,13 @@ def apply_event_to_progress(progress, row, result, seq):
         progress["cleared_item_ids"].append(item_id)
     # maintain the open-miss list
     progress["missed"] = [m for m in progress.get("missed", []) if m["item_id"] != item_id]
-    if not g["cleared"]:
+    # ROUND-13: `missed` is the open-MISS list — it drives remediation and reads as learner ignorance. A
+    # content-correct row held only by the external fact gate belongs on its own list instead.
+    # The progress object is fixed by its canonical schema (not editable in this lane), so the hold is
+    # recorded by ABSENCE from `missed` plus the event note, never by a new progress key.
+    if g["held_for_fact_gate"]:
+        pass
+    elif not g["cleared"]:
         status = "pending_two_vote" if g["two_vote_status"] == "pending" else "open"
         progress["missed"].append({"item_id": item_id, "error_reason": None,
                                    "remediation_route": row.get("remediation_route"), "status": status})

@@ -324,15 +324,31 @@ def _d_an_vs_inna(surface):
     required = N.FATHA if seat == "أ" else N.KASRA
     if seat_haraka != required:
         return None, obs + ["the hamza carries no confirming vowel; an unvowelled seat is uncertainty"]
-    obs.append("weight=%s" % ("heavy" if heavy else "light"))
+    # ROUND-13: a nūn carrying a SHORT VOWEL is neither أَنْ/إِنْ (sukūn) nor أَنَّ/إِنَّ (shadda) — أَنِ,
+    # أَنَ, إِنِ and إِنَ are contradicted, not merely unmarked, and must not resolve.
+    nun_haraka = N.haraka_on(surface, "ن")
+    obs.append("haraka(ن)=%s" % (nun_haraka or "absent"))
+    if nun_haraka and not heavy:
+        return None, obs + ["the nūn carries a short vowel: neither the sukūn of the light member nor the "
+                            "shadda of the heavy one"]
+    obs.append("weight=%s" % (an_family_weight(surface) or "unwritten"))
     return ("A" if seat == "أ" else "B"), obs
 
 
 def an_family_weight(surface):
-    """light | heavy | None — the shadda-borne weight of an ان-family token, from the rule file's own guard."""
+    """light | heavy | None — the weight of an ان-family token, and None whenever it is not WRITTEN.
+
+    ROUND-13: "no shadda" was read as "light", so any unmarked nūn silently classified as أَنْ/إِنْ. Light
+    is written with a sukūn and heavy with a shadda; a nūn carrying neither is unmarked, and a nūn carrying
+    a short vowel instead (أَنِ, أَنَ, إِنِ, إِنَ) is neither member. Both answer None.
+    """
     if "ن" not in N.bare(surface):
         return None
-    return "heavy" if N.shadda_on(surface, "ن") else "light"
+    if N.shadda_on(surface, "ن"):
+        return "heavy"
+    if _has_mark(surface, "ن", SUKUN):
+        return "light"
+    return None
 
 
 def _d_anni_vs_anna(surface):
@@ -379,7 +395,11 @@ def _d_kull_vs_kalla(surface):
         return None, obs + ["no shadda on the lām: neither كُلّ nor كَلَّا is written here"]
     if hk == N.DAMMA:
         return "A", obs
-    if hk == N.FATHA:
+    # ROUND-13: كَلَّا is written with a final alif. كَلّ carries the kāf fatḥa and the lām shadda but not
+    # the alif, so it is not that member.
+    final = _final_base_letter(surface)
+    obs.append("final=%s" % (final or "absent"))
+    if hk == N.FATHA and final == "ا":
         return "B", obs
     return None, obs
 
@@ -391,11 +411,17 @@ def _d_nima_vs_naam(surface):
     sukun_ayn = _has_mark(surface, "ع", SUKUN)
     obs = ["haraka(ن)=%s" % (hn or "absent"), "haraka(ع)=%s" % (ha or "absent"),
            "sukun(ع)=%s" % sukun_ayn]
-    if hn == N.KASRA and sukun_ayn:
+    # ROUND-13: the MĪM decides the ending too — نِعْمَ ends in fatḥa, نَعَمْ in sukūn. نِعْمْ and نَعَمَ
+    # each carry the right nūn/ʿayn marks with the WRONG final mark, and neither is its member.
+    hm = N.haraka_on(surface, "م")
+    sukun_mim = _has_mark(surface, "م", SUKUN)
+    obs.append("haraka(م)=%s" % (hm or "absent"))
+    obs.append("sukun(م)=%s" % sukun_mim)
+    if hn == N.KASRA and sukun_ayn and hm == N.FATHA:
         return "A", obs
-    if hn == N.FATHA and ha == N.FATHA:
+    if hn == N.FATHA and ha == N.FATHA and sukun_mim:
         return "B", obs
-    return None, obs + ["the ʿayn mark does not confirm the member the nūn vowel suggests"]
+    return None, obs + ["the ʿayn and mīm marks do not confirm the member the nūn vowel suggests"]
 
 
 DISCRIMINATORS = {
@@ -680,11 +706,15 @@ def transition_rivals(row, rules, *, selected, evidence_id):
                         "not by a homograph collision, so this repository names no sibling roles for it"
                         % row.get("id")),
         }]
+    # ROUND-13: only `forbidden_to` was carried, so the مَن transition listed the مَن relative role as its
+    # own rival and never carried the مِن preposition sibling at all — rivalry was asymmetric. A forbidden
+    # collision names BOTH ends, and each end is the other's rival.
     for forb in (rules or load_state_rules()).get("forbidden_transitions", []):
         if FORBIDDEN_COLLISION_FAMILY.get(forb.get("id")) != family:
             continue
-        if forb.get("forbidden_to") and forb.get("forbidden_to") not in roles:
-            roles.append(forb["forbidden_to"])
+        for end in ("forbidden_from", "forbidden_to"):
+            if forb.get(end) and forb[end] not in roles:
+                roles.append(forb[end])
     out = []
     for role in roles:
         if not role:
@@ -761,7 +791,11 @@ def transition(transition_id, *, evidence=None, at=None, surface=None, from_stat
     # The observation must be bound to THIS transition's from-state: an observation minted for another
     # transition (or another token) can never fire this one.
     bind = {"kind": "state", "value": transition_id}
-    value, defect, art = typed_observation(evidence, TRANSITION_OBSERVATION_VOCAB, bind=bind, at=at)
+    # ROUND-13: the caller surface was NOT passed, so an observation recorded on مَنْ could fire the مِنَ
+    # preposition transition at the same address. The observation must be about the exact written word the
+    # transition is being applied to.
+    value, defect, art = typed_observation(evidence, TRANSITION_OBSERVATION_VOCAB, bind=bind, at=at,
+                                           surface=surface)
     els = row.get("else", {}) or {}
     role = row.get("to_nahw_role")
     base = {"transition_id": transition_id, "from_observation": row.get("from_observation"),
@@ -807,7 +841,11 @@ AN_FAMILY_MEMBER_GLOSS = {
     ("B", "heavy"): ("indeed", "verily", "truly"),          # إِنَّ
     ("B", "light"): ("if",),                                # إِنْ conditional
 }
-DISJUNCTIVE_BRANCHES = {("an_vs_inna", "A"), ("an_vs_inna", "B")}
+# ROUND-13: مَن is one written word with three CONTEXTUAL functions — interrogative, relative and
+# conditional. Vocalization separates مَن from مِن, but it does not choose among those three, and the rule
+# file's own branch gloss ("who / whoever / he who") is a disjunction over them. A context-free public gloss
+# must therefore abstain and keep the alternatives, exactly as the ان family does.
+DISJUNCTIVE_BRANCHES = {("an_vs_inna", "A"), ("an_vs_inna", "B"), ("man_vs_min", "A")}
 
 
 def _gloss_alternatives(text):
@@ -841,6 +879,11 @@ def public_gloss_defect(surface, gloss, rules=None):
         return "forbidden_reading"
     key = (res.get("rule_id"), res.get("branch"))
     if key in DISJUNCTIVE_BRANCHES:
+        # Only the ان family has a WRITTEN disambiguator (the shadda-borne weight). For any other
+        # disjunctive branch — مَن, whose three senses are interrogative, relative and conditional — the
+        # written form does not choose, so a context-free gloss abstains and the alternatives are preserved.
+        if res.get("rule_id") != "an_vs_inna":
+            return "branch_gloss_is_disjunctive"
         weight = an_family_weight(surface)
         if weight is None:
             return "branch_gloss_is_disjunctive"
