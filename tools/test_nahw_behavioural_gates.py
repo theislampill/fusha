@@ -35,8 +35,23 @@ from tools import fusha_nahw_gate_rules as GATE  # noqa: E402
 from tools import fusha_nahw_particle_rules as PR  # noqa: E402
 from tools.fusha_nahw_particle_rules import mint_fixture_observation  # noqa: E402
 from tools.grade_grammar_reasoning import (  # noqa: E402
-    grade, grade_structured, grade_two_vote, mint_fixture_vote,
+    grade, grade_structured, grade_two_vote, mint_fixture_vote, project_vote,
 )
+
+# ROUND-8: a two-vote gate is satisfied only by two REAL contract-valid, independent, fully agreeing vote
+# artifacts. Every fixture below that grades under such a gate carries this pair, and its claim is PROJECTED
+# from vote A, so the conclusion, case, governor, fact type, reason key and source address all come from the
+# evidence rather than from a hand-written literal. `two_vote_done` no longer appears anywhere.
+GATE_VOTE_A = mint_fixture_vote(0, reason_key="lam-jarr-fused-majrur-kasra", conclusion="genitive",
+                                case_mood="genitive", relation="preposition_governs_genitive",
+                                worklist_id="wl-gates-a", fact_type="case_assignment",
+                                vote_id="vote:gates:a")
+GATE_VOTE_B = mint_fixture_vote(1, reason_key="lam-jarr-fused-majrur-kasra", conclusion="genitive",
+                                case_mood="genitive", relation="preposition_governs_genitive",
+                                worklist_id="wl-gates-b", fact_type="case_assignment",
+                                vote_id="vote:gates:b")
+GATE_ADDR = GATE_VOTE_A["occurrence"]["quran_loc"]
+GATE_CLAIM = dict(project_vote(GATE_VOTE_A), two_vote_evidence=[GATE_VOTE_A, GATE_VOTE_B])
 
 FAILS = []
 
@@ -126,10 +141,7 @@ def test_m1_wrong_conclusion():
 def test_m2_wrong_reason():
     case = {"id": "T-M2", "required_gate": "two_vote_required", "expected_conclusion": "genitive",
             "expected_reason_keys": ["lam-jarr-fused-majrur-kasra"]}
-    base = {"conclusion": "genitive", "case_mood": "genitive", "reason_key": "lam-jarr-fused-majrur-kasra",
-            "fact_type": "case_assignment",
-            "governor": {"surface": "بِ", "governor_type": "preposition"},
-            "evidence_cited": True, "source_address": "quran:2:284:1", "two_vote_done": True}
+    base = dict(GATE_CLAIM, governor={"surface": "بِ", "governor_type": "preposition"})
 
     ok = grade_structured(case, base)
     check("M2 honest claim passes", ok["pass"], json.dumps(ok, ensure_ascii=False))
@@ -211,8 +223,7 @@ def test_m2_wrong_reason():
 def test_m3_absent_governor():
     case = {"id": "T-M3", "required_gate": "two_vote_required", "expected_conclusion": "genitive",
             "expected_reason_keys": ["lam-jarr-fused-majrur-kasra"]}
-    claim = {"conclusion": "genitive", "case_mood": "genitive", "reason_key": "lam-jarr-fused-majrur-kasra",
-             "governor": None, "evidence_cited": True, "source_address": "quran:2:284:1", "two_vote_done": True}
+    claim = dict(GATE_CLAIM, governor=None)
     r = grade_structured(case, claim)
     check("M3 case asserted with no governor -> governor_not_justified",
           not r["pass"] and r.get("reason_defect") == "governor_not_justified",
@@ -222,9 +233,8 @@ def test_m3_absent_governor():
     # governor, so the candidate exemption may never authorize a pass here.
     tj = {"id": "T-TJ", "required_gate": "two_vote_required", "expected_conclusion": "accusative",
           "expected_reason_keys": ["inna-ism-nasb-fatha"]}
-    tajarrud = {"conclusion": "accusative", "case_mood": "accusative", "mood_basis": "tajarrud",
-                "reason_key": "inna-ism-nasb-fatha", "fact_type": "case_assignment", "governor": None,
-                "evidence_cited": True, "source_address": "quran:2:91:23", "two_vote_done": True}
+    tajarrud = dict(GATE_CLAIM, conclusion="accusative", case_mood="accusative", mood_basis="tajarrud",
+                    reason_key="inna-ism-nasb-fatha", governor=None)
     r = grade_structured(tj, tajarrud)
     check("M3 the released path does NOT implement the @2.4 tajarrud exemption",
           not r["pass"] and r.get("reason_defect") == "governor_not_justified",
@@ -235,10 +245,9 @@ def test_m3_absent_governor():
           not r["pass"] and r.get("candidate_measurement") is True, json.dumps(r, ensure_ascii=False))
 
     # a governed mood_basis without a governor is a contract error
-    bad = grade_structured(tj, {"conclusion": "accusative", "case_mood": "accusative",
-                                "mood_basis": "governed", "reason_key": "inna-ism-nasb-fatha",
-                                "fact_type": "case_assignment", "governor": None, "evidence_cited": True,
-                                "source_address": "quran:2:284:1", "two_vote_done": True})
+    bad = grade_structured(tj, dict(GATE_CLAIM, conclusion="accusative", case_mood="accusative",
+                                    mood_basis="governed", reason_key="inna-ism-nasb-fatha",
+                                    governor=None))
     check("M3 mood_basis=governed without a governor FAILS", not bad["pass"])
 
 
@@ -388,10 +397,7 @@ def test_m5_unsafe_auto_resolution():
     r = grade_structured({"id": "NA", "required_gate": "never_auto_resolve",
                           "expected_conclusion": "genitive",
                           "expected_reason_keys": ["lam-jarr-fused-majrur-kasra"]},
-                         {"conclusion": "genitive", "case_mood": "genitive",
-                          "reason_key": "lam-jarr-fused-majrur-kasra", "fact_type": "case_assignment",
-                          "governor": {"governor_type": "preposition"}, "evidence_cited": True,
-                          "source_address": "quran:2:284:1", "two_vote_done": True})
+                         dict(GATE_CLAIM))
     check("M5 never_auto_resolve blocks even a perfect claim", not r["pass"], json.dumps(r, ensure_ascii=False))
 
     # the rule files themselves must be trigger-vocabulary clean against the SSOT
@@ -481,25 +487,29 @@ def test_two_vote_agreement():
     # human/source review remains a DISTINCT gate
     hcase = {"id": "TV-HR", "required_gate": "human_source_review_required",
              "expected_conclusion": "genitive", "expected_reason_keys": [KJ]}
-    claim = {"conclusion": "genitive", "case_mood": "genitive", "reason_key": KJ,
-             "fact_type": "case_assignment", "governor": {"governor_type": "preposition"},
-             "evidence_cited": True, "source_address": "quran:2:284:1", "two_vote_done": True}
+    claim = dict(GATE_CLAIM)
     r = grade_structured(hcase, claim)
-    check("human review is not satisfied by two_vote_done",
+    check("human review is not satisfied by a validated two-vote pair",
           not r["pass"] and r.get("human_review_defect") == "human_review_absent")
     r = grade_structured(hcase, dict(claim, human_review=True))
     check("a boolean is not a human review",
           not r["pass"] and r.get("human_review_defect") == "human_review_not_a_record")
 
     # ROUND-4: a human review must be BOUND to the exact claim it is offered for
-    bound_claim = dict(claim, subject="لِّلَّهِ", reviewer_id="claimant-1")
+    bound_claim = dict(claim, subject="لِّلَّهِ")
     good_review = {"review_id": "hr:round4:1", "reviewer_id": "human-1",
-                   "source_address": "quran:2:284:1", "subject": "لِّلَّهِ", "decision": "approved",
+                   "source_address": GATE_ADDR, "subject": "لِّلَّهِ", "decision": "approved",
                    "timestamp": "2026-07-30T00:00:00Z", "reviewed_conclusion": "genitive",
                    "reviewed_reason_key": KJ}
     r = grade_structured(hcase, dict(bound_claim, human_review=good_review))
     check("a complete review bound to the claim is accepted", r["pass"],
           json.dumps(r, ensure_ascii=False)[:250])
+    # ROUND-8: independence against an UNKNOWN claimant is not independence — the comparison would be
+    # between a named reviewer and nobody, which always differs and therefore always passed.
+    r = grade_structured(hcase, dict(bound_claim, reviewer_id=None, human_review=good_review))
+    check("a review whose claimant identity is absent is rejected",
+          not r["pass"] and r.get("human_review_defect") == "human_review_claimant_identity_absent",
+          json.dumps({"got": r.get("human_review_defect")}))
     for label, mutated, want in (
             ("another valid address", dict(good_review, source_address="quran:2:26:20"),
              "human_review_address_not_bound"),
@@ -511,7 +521,8 @@ def test_two_vote_agreement():
             ("a malformed timestamp", dict(good_review, timestamp="yesterday"),
              "human_review_timestamp_invalid"),
             ("a malformed review id", dict(good_review, review_id="1"), "human_review_id_invalid"),
-            ("the claimant reviewing themselves", dict(good_review, reviewer_id="claimant-1"),
+            ("the claimant reviewing themselves",
+             dict(good_review, reviewer_id=bound_claim["reviewer_id"]),
              "human_review_not_independent")):
         r = grade_structured(hcase, dict(bound_claim, human_review=mutated))
         check("a review with %s is rejected" % label,
@@ -717,10 +728,109 @@ def test_domain_consumers():
           not CTX.proper_noun_verb_violations("مُحَمَّد", "Muḥammad"))
 
 
+def test_quarantine_authority_is_exact():
+    """ROUND-8: the quarantined row sets and their packets' typed bindings must be EXACTLY equal both ways.
+
+    Cardinality is not authority. Every mutation below preserves a plausible-looking quarantine (several
+    preserve the exact count) and must still be rejected. The committed table is never mutated on disk: each
+    probe passes its own table into quarantine_authority_errors(), and the packet-schema probe runs against a
+    unique temporary packet root with the genuine packets copied in.
+    """
+    import io
+    import shutil
+    import tempfile
+
+    import tools.run_nahw_evals as RUN
+
+    cases = RUN._json(os.path.join(RUN.EVAL_DIR, "nahw-state-machine-eval.json"))["cases"]
+    hover = RUN._json(os.path.join(RUN.EVAL_DIR, "hover-context-eval.json"))["cases"]
+    base = RUN.QUARANTINE_AUTHORITY
+
+    check("committed quarantine authority is exactly equal for state-machine",
+          RUN.quarantine_authority_errors("state-machine", cases) == [],
+          repr(RUN.quarantine_authority_errors("state-machine", cases)[:2]))
+    check("committed quarantine authority is exactly equal for hover-context",
+          RUN.quarantine_authority_errors("hover-context", hover) == [],
+          repr(RUN.quarantine_authority_errors("hover-context", hover)[:2]))
+    check("the committed quarantine sets are exactly 9 state rows + 12 hover rows",
+          len([r for r in cases if r.get("contract_status")]) == 9
+          and len([r for r in hover if r.get("contract_status")]) == 12)
+
+    def mutate(**kw):
+        table = [dict(b) for b in base]
+        table[0] = dict(table[0], **kw)
+        return tuple(table)
+
+    rows0 = tuple(base[0]["rows"])
+    swapped = ("man_relative_in_sila",) + rows0[1:]          # same cardinality, different membership
+    for label, table in (
+            ("a duplicate binding", tuple([dict(b) for b in base] + [dict(base[0], rows=("kulla_vs_kalla",))])),
+            ("a stale extra binding", mutate(rows=rows0 + ("man_relative_in_sila",))),
+            ("a wrong uncovered property", mutate(property="consumer_branch")),
+            ("a wrong permitted disposition", mutate(disposition="excuse_gate")),
+            ("a wrong authorizing packet id", mutate(packet="TP-NAHW-A2-TYPED-WR-BANK")),
+            ("a row-set swap that preserves the total", mutate(rows=swapped)),
+    ):
+        check("%s is rejected" % label,
+              RUN.quarantine_authority_errors("state-machine", cases, table) != [])
+    check("a row-set swap really preserves the cardinality", len(swapped) == len(rows0))
+
+    # a packet reaching into a bank it does not own is not authority, however well-formed the binding reads
+    cross = [b for b in base if b["bank"] != "state-machine"]
+    cross.append({"bank": "state-machine", "packet": "TP-NAHW-A2-HOVER-KEY-SEAT",
+                  "status": "state_vocab_pending", "property": "state_axis_pair",
+                  "disposition": "excuse_semantic_consumer", "rows": rows0})
+    check("a cross-bank binding is rejected",
+          RUN.quarantine_authority_errors("state-machine", cases, tuple(cross)) != [])
+
+    # a duplicate row id in the bank must be caught BEFORE any set comparison can be satisfied
+    check("a duplicate row id in the bank is rejected",
+          RUN.quarantine_authority_errors("state-machine", list(cases) + [dict(cases[0])]) != [])
+
+    # SCHEMA authority: a packet that is not a valid task packet authorises nothing, even when its
+    # QUARANTINE-BINDING sentence is syntactically perfect.
+    with tempfile.TemporaryDirectory(prefix="a2-authority-probe-") as tmp:
+        for name in os.listdir(RUN.PACKET_DIR):
+            if name.endswith(".json"):
+                shutil.copyfile(os.path.join(RUN.PACKET_DIR, name), os.path.join(tmp, name))
+        plausible = {
+            "packet_id": "TP-NAHW-A2-PROBE-MINIMAL",
+            "candidate_population": {"selection_rule":
+                                     "QUARANTINE-BINDING bank=state-machine; status=state_vocab_pending; "
+                                     "rows=kulla_vs_kalla; property=state_axis_pair; "
+                                     "disposition=excuse_semantic_consumer"},
+            "non_deployment": {"status": "NOT_DEPLOYED"},
+        }
+        genuine = json.load(io.open(os.path.join(tmp, "TP-NAHW-A2-STATE-VOCAB.json"), encoding="utf-8"))
+        near_miss = dict(genuine, packet_id="TP-NAHW-A2-PROBE-NEARMISS")
+        near_miss["acceptance_tests"] = [dict(near_miss["acceptance_tests"][0], pass_condition="exit 0")]
+        for pid, body in (("TP-NAHW-A2-PROBE-MINIMAL", plausible), ("TP-NAHW-A2-PROBE-NEARMISS", near_miss)):
+            io.open(os.path.join(tmp, pid + ".json"), "w", encoding="utf-8").write(
+                json.dumps(body, ensure_ascii=False, indent=2))
+        saved_dir, saved_cache = RUN.PACKET_DIR, dict(RUN._PACKET_BINDINGS)
+        try:
+            RUN.PACKET_DIR = tmp
+            RUN._PACKET_BINDINGS.clear()
+            for pid in ("TP-NAHW-A2-PROBE-MINIMAL", "TP-NAHW-A2-PROBE-NEARMISS"):
+                bindings, errs = RUN.packet_quarantine_bindings(pid)
+                check("%s: a schema-invalid packet authorises nothing" % pid,
+                      bindings == {} and any("schema-valid" in e for e in errs), repr(errs[:1]))
+            RUN._PACKET_BINDINGS.clear()
+            bindings, errs = RUN.packet_quarantine_bindings("TP-NAHW-A2-STATE-VOCAB")
+            check("a genuine schema-valid packet still authorises its 9 rows",
+                  len(bindings) == 9 and errs == [], repr(errs[:1]))
+        finally:
+            RUN.PACKET_DIR = saved_dir
+            RUN._PACKET_BINDINGS.clear()
+            RUN._PACKET_BINDINGS.update(saved_cache)
+    check("the authority probe never created a fixed repository packet path",
+          not os.path.exists(os.path.join(RUN.PACKET_DIR, "TP-NAHW-A2-PROBE-MINIMAL.json")))
+
+
 def main():
     for fn in (test_m1_wrong_conclusion, test_m2_wrong_reason, test_m3_absent_governor,
                test_m4_lost_rival, test_m5_unsafe_auto_resolution, test_two_vote_agreement,
-               test_runner_contract, test_domain_consumers):
+               test_runner_contract, test_domain_consumers, test_quarantine_authority_is_exact):
         fn()
     if FAILS:
         print("FAIL — %d behavioural gate(s) broke:" % len(FAILS))
@@ -729,7 +839,8 @@ def main():
         sys.exit(1)
     print("PASS — naḥw behavioural gates hold "
           "(M1 wrong conclusion, M2 wrong/absent reason, M3 absent governor, M4 lost rival, "
-          "M5 unsafe auto-resolution, two-vote conclusion+reason, domain consumers)")
+          "M5 unsafe auto-resolution, two-vote conclusion+reason, domain consumers, "
+          "exact two-way quarantine authority)")
 
 
 if __name__ == "__main__":

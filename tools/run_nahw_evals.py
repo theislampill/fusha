@@ -108,6 +108,19 @@ QUARANTINE_BINDING_RE = re.compile(
 _PACKET_BINDINGS = {}
 
 
+def _canonical_schema_errors(packet):
+    """Canonical task-packet schema errors, delegated to the repository's single validator.
+
+    ROUND-8: a quarantine SUPPRESSES a semantic comparison, so its authorizing artifact must be a valid task
+    packet, not merely a JSON file carrying a plausible QUARANTINE-BINDING sentence. The Draft 2020-12 subset
+    validator lives in tools/validate_task_packets.py and is REUSED here rather than re-implemented — a second
+    schema checker would inevitably diverge from the first. The import is lazy so the two modules never form
+    an import cycle (validate_task_packets is stdlib-only and does not import this runner).
+    """
+    from tools.validate_task_packets import canonical_schema_errors  # noqa: PLC0415 (lazy: no import cycle)
+    return canonical_schema_errors(packet)
+
+
 def packet_quarantine_bindings(packet_id):
     """Parse a packet as a structured artifact and return its typed quarantine bindings.
 
@@ -128,6 +141,14 @@ def packet_quarantine_bindings(packet_id):
         errors.append("packet %s does not declare a matching packet_id" % packet_id)
     if (packet.get("non_deployment") or {}).get("status") != "NOT_DEPLOYED":
         errors.append("packet %s is not a NOT_DEPLOYED task packet" % packet_id)
+    schema_errors = _canonical_schema_errors(packet) if isinstance(packet, dict) else ["packet is not an object"]
+    if schema_errors:
+        # Fail closed on the WHOLE packet: an artifact that is not a valid task packet has no authority at
+        # all, however plausible its binding sentence reads.
+        _PACKET_BINDINGS[packet_id] = ({}, ["packet %s is not schema-valid against %s (%s)"
+                                            % (packet_id, "qamus/schemas/task-packet.schema.json",
+                                               schema_errors[0])])
+        return _PACKET_BINDINGS[packet_id]
     rule = ((packet.get("candidate_population") or {}).get("selection_rule") or "")
     found = list(QUARANTINE_BINDING_RE.finditer(rule))
     if not found:
@@ -187,6 +208,126 @@ def _pending_row(row, errors, bank):
     if not row.get("quarantine_reason"):
         errors.append("%s:%s quarantined without a stated reason" % (bank, rid))
     return True
+
+
+# ---------------------------------------------------------------------------
+# EXACT quarantine authority (round 8)
+# ---------------------------------------------------------------------------
+# Cardinality is not authority. "9 state rows + 12 hover rows" stays true if a row is swapped for another, if a
+# packet binds a row twice, if a stale binding survives its row's release, or if a packet reaches across into a
+# bank it does not own. The committed authority is therefore pinned EXACTLY here — bank, packet, status,
+# uncovered property, permitted disposition and the precise row set — and compared in BOTH directions:
+#   bank -> authority : every quarantined row in the bank file is authorised by exactly this table;
+#   authority -> bank : every row this table names is really quarantined, under the named packet and status;
+#   packet -> authority: every QUARANTINE-BINDING a packet declares is in this table, for a bank that packet owns.
+# A missing, duplicate, stale, extra or cross-bank binding is a hard failure, never skipped coverage.
+QUARANTINE_AUTHORITY = (
+    {"bank": "state-machine", "packet": "TP-NAHW-A2-STATE-VOCAB", "status": "state_vocab_pending",
+     "property": "state_axis_pair", "disposition": "excuse_semantic_consumer",
+     "rows": ("anna_how_adverbial", "halim_referent_human", "in_nafiya_negating", "kulla_vs_kalla",
+              "la_nafiya_lil_jins", "lamma_not_yet", "ma_relative_vs_negation", "nima_praise_verb",
+              "salihan_proper_vs_deed")},
+    {"bank": "hover-context", "packet": "TP-NAHW-A2-HOVER-KEY-SEAT", "status": "pending_norm_seat_semantics",
+     "property": "key_collision_family", "disposition": "excuse_semantic_consumer",
+     "rows": ("an_vs_inna_norm_collapses_seat_unsafe", "umm_vs_am_unsafe")},
+    {"bank": "hover-context", "packet": "TP-NAHW-A2-TYPED-STATE-CONSUMER", "status": "no_consumer",
+     "property": "typed_state_and_gloss", "disposition": "excuse_semantic_consumer",
+     "rows": ("almulk_vowel_only_unsafe", "bihi_pronoun_referent_unsafe", "fihi_pronoun_safe_neutral",
+              "halim_attribute_referent_unsafe", "ilayna_not_root_layn_safe", "muhammad_proper_no_verb_safe",
+              "qul_imperative_safe", "salihan_proper_vs_common_unsafe", "yaqdiru_contronym_unsafe")},
+    {"bank": "hover-context", "packet": "TP-NAHW-A2-TYPED-STATE-CONSUMER", "status": "consumer_branch_ambiguous",
+     "property": "consumer_branch", "disposition": "excuse_semantic_consumer",
+     "rows": ("in_conditional_referent_free_safe",)},
+)
+
+
+def authority_index(table=QUARANTINE_AUTHORITY):
+    """(bank, row_id) -> the single committed authority block field set. Duplicate coverage is itself an error."""
+    index, duplicates = {}, []
+    for block in table:
+        for row_id in block["rows"]:
+            key = (block["bank"], row_id)
+            if key in index:
+                duplicates.append(key)
+                continue
+            index[key] = {"packet": block["packet"], "status": block["status"],
+                          "property": block["property"], "disposition": block["disposition"]}
+    return index, duplicates
+
+
+def quarantine_authority_errors(bank, rows, table=QUARANTINE_AUTHORITY):
+    """Exact two-way equality between a bank's quarantined rows and its packets' typed bindings.
+
+    `rows` is the bank's row list. Returns a list of error strings (empty when the sets are exactly equal).
+    """
+    errs = []
+    index, duplicates = authority_index(table)
+    for dup_bank, dup_row in duplicates:
+        errs.append("%s:%s is covered by more than one committed authority block" % (dup_bank, dup_row))
+    expected = {rid: meta for (bnk, rid), meta in index.items() if bnk == bank}
+
+    seen_ids = {}
+    for row in rows:
+        rid = row.get("id")
+        seen_ids[rid] = seen_ids.get(rid, 0) + 1
+    for rid, count in sorted(seen_ids.items()):
+        if count > 1:
+            errs.append("%s:%s appears %d times — row ids must be unique before any set comparison"
+                        % (bank, rid, count))
+
+    actual = {row.get("id"): row for row in rows if row.get("contract_status")}
+    for rid in sorted(set(actual) - set(expected)):
+        errs.append("%s:%s is quarantined but no committed authority block covers it — an unauthorised "
+                    "quarantine is an extra binding, not coverage" % (bank, rid))
+    for rid in sorted(set(expected) - set(actual)):
+        errs.append("%s:%s is named by committed quarantine authority but the bank row is not quarantined — "
+                    "a stale binding must be removed when its row is released" % (bank, rid))
+    for rid in sorted(set(actual) & set(expected)):
+        meta, row = expected[rid], actual[rid]
+        if row.get("contract_status") != meta["status"]:
+            errs.append("%s:%s declares contract_status %r; committed authority binds %r"
+                        % (bank, rid, row.get("contract_status"), meta["status"]))
+        if row.get("packet") != meta["packet"]:
+            errs.append("%s:%s names authorizing packet %r; committed authority binds %r"
+                        % (bank, rid, row.get("packet"), meta["packet"]))
+
+    # packet -> authority: every binding a referenced packet declares must be in the table, for a bank that
+    # packet owns. This is what catches a stale binding left behind in the packet and a cross-bank reach.
+    owned = {}
+    for block in table:
+        owned.setdefault(block["packet"], set()).add(block["bank"])
+    for packet_id in sorted({meta["packet"] for meta in expected.values()}):
+        bindings, packet_errors = packet_quarantine_bindings(packet_id)
+        for message in packet_errors:
+            errs.append("%s: %s" % (bank, message))
+        declared = {rid for (bnk, rid) in bindings if bnk == bank}
+        authorised = {rid for rid, meta in expected.items() if meta["packet"] == packet_id}
+        for rid in sorted(declared - authorised):
+            errs.append("%s: packet %s declares a binding for row %s that no committed authority block "
+                        "covers" % (bank, packet_id, rid))
+        for rid in sorted(authorised - declared):
+            errs.append("%s: packet %s is the committed authority for row %s but declares no typed binding "
+                        "for it" % (bank, packet_id, rid))
+        for (bnk, rid) in sorted(bindings):
+            if bnk not in owned.get(packet_id, set()):
+                errs.append("%s: packet %s binds rows in bank %s, which it does not own — a cross-bank "
+                            "binding is not authority" % (bank, packet_id, bnk))
+                continue
+            if bnk != bank:
+                continue
+            meta = expected.get(rid)
+            if meta is None:
+                continue
+            if bindings[(bnk, rid)]["property"] != meta["property"]:
+                errs.append("%s:%s packet %s binds uncovered property %r; committed authority binds %r"
+                            % (bank, rid, packet_id, bindings[(bnk, rid)]["property"], meta["property"]))
+            if bindings[(bnk, rid)]["disposition"] != meta["disposition"]:
+                errs.append("%s:%s packet %s binds disposition %r; committed authority binds %r"
+                            % (bank, rid, packet_id, bindings[(bnk, rid)]["disposition"], meta["disposition"]))
+            if bindings[(bnk, rid)]["status"] != meta["status"]:
+                errs.append("%s:%s packet %s binds status %r; committed authority binds %r"
+                            % (bank, rid, packet_id, bindings[(bnk, rid)]["status"], meta["status"]))
+    return errs
 
 
 # ---------------------------------------------------------------------------
@@ -365,6 +506,8 @@ def run_state_machine(errors, stats):
     stale = sorted(set(STATE_CASE_BINDINGS) - seen)
     if stale:
         errors.append("%s: committed bindings with no matching non-quarantined row: %s" % (bank, stale))
+    # ROUND-8: exact two-way equality between the quarantined row set and its packets' typed bindings.
+    errors.extend(quarantine_authority_errors(bank, cases))
     return bank
 
 
@@ -551,6 +694,8 @@ def run_hover_context(errors, stats):
     stale = sorted(set(HOVER_CASE_BINDINGS) - seen)
     if stale:
         errors.append("%s: committed bindings with no matching non-quarantined row: %s" % (bank, stale))
+    # ROUND-8: exact two-way equality between the quarantined row set and its packets' typed bindings.
+    errors.extend(quarantine_authority_errors(bank, cases))
     # a neutered consumer must not silently collapse the bound or mutation counts to zero
     expected_mutations = sum(1 for b in HOVER_CASE_BINDINGS.values() if b["decision"] == "resolved")
     if stats[bank]["bound"] != len(HOVER_CASE_BINDINGS):
@@ -980,6 +1125,8 @@ def run_all(root=_REPO):
     result["failures"].extend(errors)
     if errors:
         result["exit_code"] = 1
+    # An explicit success flag the reporter can require, derived here rather than inferred there.
+    result["ok"] = (result["exit_code"] == 0 and not result["failures"])
     return result
 
 

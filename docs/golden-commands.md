@@ -46,13 +46,33 @@ exit 0 with the stated terminal line.
 
 ### 29–32 · Naḥw consumers and eval banks (Burst A2)
 
-`python tools/run_nahw_evals.py` replays 6 banks / 314 rows. It reports what a REAL consumer decided
-separately from what is only structurally checked: 52 consumer decisions, 21 rows quarantined
-(9 state-machine + 12 hover-context) under typed `QUARANTINE-BINDING` packet authority, and 2 banks whose
-semantic comparison is honestly fixture-only. `--json` emits exactly one JSON document and a matching exit
-code — a trailing prose line is a defect. Coverage is registered in `tools/fusha_eval_coverage.py` only from
-the INVOKED runner result, so the fixture-only banks and every quarantined row stay visibly uncovered, and
-the unowned axes (`gloss_if_safe`, production key selection) are reported, never counted.
+`python tools/run_nahw_evals.py` runs **6 execution groups over 7 physical eval artifacts / 314 rows**
+(the `function-polysemy` group decides two artifacts: `particle-function-eval.jsonl` and
+`irab-polysemy-eval.jsonl`). Group count and artifact count are different numbers and are never added
+together.
+
+What it reports, kept apart on purpose:
+
+- **13 rows** earn behavioural credit — the whole of
+  `public-boundary-scanner-eval.jsonl` (10 rows, consumer `tools/leak_sot.py:LEAK_RE.search`) and
+  `largelexicon-function-collision-safety.jsonl` (3 rows, consumer
+  `tools/fusha_context_parser.py:collision_status`). Those are the only two artifacts declared
+  `implemented_and_consumed`.
+- **21 rows** are quarantined (9 `state-machine` + 12 `hover-context`) under typed `QUARANTINE-BINDING`
+  packet authority, whose row sets, properties, dispositions and packet ids are compared for exact equality
+  in both directions and whose authorizing packets are validated against the canonical task-packet schema.
+- the remaining rows are structurally checked only: 5 artifacts are declared `fixture_only`, and the
+  unowned axes (`gloss_if_safe`, production key selection, the typed grammatical state, structured
+  wrong-reason keys) are reported, never counted.
+- `consumer-invocation events: 52` is a **mixed-denominator** count (identity + ablation + mutation +
+  routing + scanner + homograph checks, omitting the hover base comparisons). It is not a row coverage
+  figure and must not be compared with 314 or with 13.
+
+`--json` emits exactly one JSON document and a matching exit code — a trailing prose line is a defect.
+Coverage is registered in `tools/fusha_eval_coverage.py` only from the INVOKED runner result, and the
+reporter validates that result against its OWN ownership allowlist and its OWN row counts, so a runner
+that misreported a path, a denominator, a consumer or a disposition would be rejected outright rather
+than believed.
 
 
 1. **Environment / repo verify** — inputs: checkout. Outputs: HEAD sha +
@@ -141,10 +161,18 @@ the unowned axes (`gloss_if_safe`, production key selection) are reported, never
 28. **Eval-bank coverage** — read-only census of `nahw/evals/` + `sarf/evals/`
     in both forms, taking execution only from an invoked registered entrypoint
     and separating `declared_disposition` (what the contract says) from
-    `has_behavioral_runner` (what the invoked run proved). `--strict-sarf` is a
-    disposition-completeness gate and is green; plain `--strict` still exits 1
-    because the Naḥw banks remain runnerless — that gap belongs to the Naḥw
-    lane, not here. Neither flag asserts behavioural coverage.
+    `has_behavioral_runner` (what the invoked run proved). Exit behaviour, as it
+    stands today: **default** exits 0 (it fails only on a bank that is
+    unreadable, empty or malformed); **`--strict-sarf`** is a
+    disposition-completeness gate over `sarf/evals/` and is green;
+    **`--strict`** exits 1 because 6 of the 25 discovered banks still have no
+    registered runner at all — `governor-dependency-lattice`,
+    `grammar-problems-phase3p25-mining`, `irab-right-answer-wrong-reason`,
+    `suffix-pronoun-eval`, `vn00-aggressive-false-closure` and
+    `vn00-public-visual-andon`. The seven Naḥw artifacts listed under 29–32 are
+    **no longer runnerless**: `tools/run_nahw_evals.py` is registered as an
+    invoked contract runner under its own result schema. Neither flag asserts
+    behavioural coverage; of those seven artifacts only 2 (13 rows) earn it.
 
 ## Rules
 

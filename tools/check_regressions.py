@@ -3590,8 +3590,129 @@ try:
                        if f.startswith("TP-NAHW-A2-") and f.endswith(".json")}
         check("A2 packet set is EXACTLY the five named packets (no extra, no missing)",
               _a2_on_disk == _a2_expected_packets)
+        # ROUND-8: cardinality is not authority. The quarantined row sets and the typed bindings declared by
+        # their packets must be EXACTLY equal in both directions, and every authorizing packet must itself be
+        # canonically schema-valid.
+        _a2_auth_err = []
+        for _bank, _rel in (("state-machine", "nahw/evals/nahw-state-machine-eval.json"),
+                            ("hover-context", "nahw/evals/hover-context-eval.json")):
+            with io.open(os.path.join(ROOT, _rel), encoding="utf-8") as _fh:
+                _a2_auth_err.extend(_A2RUN.quarantine_authority_errors(
+                    _bank, json.load(_fh).get("cases") or []))
+        check("A2 quarantine bindings are EXACTLY equal both ways (bank, row id, uncovered property, status, "
+              "disposition, authorizing packet id; no missing, duplicate, stale, extra or cross-bank binding)",
+              _a2_auth_err == [])
+        _a2_swap = [dict(_b) for _b in _A2RUN.QUARANTINE_AUTHORITY]
+        _a2_swap[0] = dict(_a2_swap[0],
+                           rows=("man_relative_in_sila",) + tuple(_a2_swap[0]["rows"])[1:])
+        with io.open(os.path.join(ROOT, "nahw/evals/nahw-state-machine-eval.json"), encoding="utf-8") as _fh:
+            _a2_state_cases = json.load(_fh).get("cases") or []
+        check("A2 a quarantine row-set swap that PRESERVES the count is still rejected",
+              _A2RUN.quarantine_authority_errors("state-machine", _a2_state_cases, tuple(_a2_swap)) != [])
+        check("A2 quarantine authority requires a canonically schema-valid task packet",
+              _A2RUN._canonical_schema_errors({"packet_id": "TP-NAHW-A2-NOT-A-PACKET"}) != [])
     except Exception:
         check("A2 quarantine authority check (error)", False)
+
+    # ROUND-8: the coverage REPORTER must reject a dishonest runner result rather than reproduce it. The
+    # exact defect reproduced here: relabelling the QUARANTINED, fixture-only hover artifact as
+    # implemented_and_consumed used to buy 20 rows of behavioural coverage.
+    try:
+        from tools import fusha_eval_coverage as _A2C8
+
+        def _a2_mutating(fn):
+            def _invoke(mod, ep, root):
+                _rep = getattr(mod, ep["callable"])(root)
+                if ep["module"] != _A2C8.A2_ENTRYPOINT:
+                    return _rep
+                _rep = dict(_rep)
+                _rep["banks"] = [dict(_i, metrics=dict(_i.get("metrics") or {})) for _i in _rep["banks"]]
+                fn(_rep)
+                return _rep
+            return _invoke
+
+        def _a2_relabel(rep):
+            for _i in rep["banks"]:
+                if _i["bank"] == "nahw/evals/hover-context-eval.json":
+                    _i["disposition"] = "implemented_and_consumed"
+                    _i["checked"] = _i["rows"]
+                    _i["metrics"] = dict(_i["metrics"], quarantined=0, unowned_axes={},
+                                         consumer_calls={_i["behavioral_consumer"]: _i["rows"]})
+
+        def _a2_counter_only(rep):
+            for _i in rep["banks"]:
+                _i["metrics"]["consumer_calls"] = {_i["behavioral_consumer"]: 0}
+
+        _a2c8_disc = {_i["bank"]: _i["rows"] for _i in _A2C8.report(ROOT)["items"]}
+        _a2c8_rej = []
+        _a2c8_res = _A2C8.runner_results(ROOT, invoke=_a2_mutating(_a2_relabel), discovered=_a2c8_disc,
+                                         rejected=_a2c8_rej)
+        check("A2 relabelling the quarantined hover artifact implemented_and_consumed is REJECTED by the "
+              "coverage reporter (no has_runner claim, no behavioural credit)",
+              not any(_v.get("entrypoint") == _A2C8.A2_ENTRYPOINT for _v in _a2c8_res.values())
+              and any(_r["entrypoint"] == _A2C8.A2_ENTRYPOINT for _r in _a2c8_rej)
+              and not any(_A2C8.behavioral_coverage(_v, bank=_b, repo_root=ROOT)
+                          for _b, _v in _a2c8_res.items() if _b in _A2C8.A2_OWNERSHIP))
+        _a2c8_res2 = _A2C8.runner_results(ROOT, invoke=_a2_mutating(_a2_counter_only),
+                                          discovered=_a2c8_disc)
+        check("A2 a counter-only runner (rows decided, consumer never invoked) receives NO coverage",
+              not any(_A2C8.behavioral_coverage(_v, bank=_b, repo_root=ROOT)
+                      for _b, _v in _a2c8_res2.items() if _b in _A2C8.A2_OWNERSHIP))
+        check("A2 the coverage reporter carries its OWN ownership allowlist of exactly the 7 A2 artifacts",
+              set(_A2C8.A2_OWNERSHIP) == set(_A2R.A2_ARTIFACT_OWNERSHIP)
+              and all(_A2C8.A2_OWNERSHIP[_k] == (_v["consumer"], _v["disposition"])
+                      for _k, _v in _A2R.A2_ARTIFACT_OWNERSHIP.items()))
+    except Exception:
+        check("A2 coverage-reporter hardening check (error)", False)
+
+    # ROUND-8: the grammar grader evidence gates. A boolean is not a vote, a non-empty string is not a
+    # source address, and a missing fact type is not the expected one.
+    try:
+        from tools import grade_grammar_reasoning as _A2G
+        _g_key = "lam-jarr-fused-majrur-kasra"
+        _g_case = {"id": "rg8", "required_gate": "two_vote_required", "expected_conclusion": "genitive",
+                   "expected_reason_keys": [_g_key]}
+        _g_a = _A2G.mint_fixture_vote(0, reason_key=_g_key, conclusion="genitive", case_mood="genitive",
+                                      relation="preposition_governs_genitive", worklist_id="wl-rg8-a",
+                                      fact_type="case_assignment", vote_id="vote:rg8:a")
+        _g_b = _A2G.mint_fixture_vote(1, reason_key=_g_key, conclusion="genitive", case_mood="genitive",
+                                      relation="preposition_governs_genitive", worklist_id="wl-rg8-b",
+                                      fact_type="case_assignment", vote_id="vote:rg8:b")
+        _g_good = dict(_A2G.project_vote(_g_a), two_vote_evidence=[_g_a, _g_b])
+        _g_pass = _A2G.grade_structured(_g_case, _g_good)
+        check("A2 grader: two validated independent agreeing votes route ONLY to "
+              "candidate_agreed_pending_certification (never certified)",
+              _g_pass["pass"] and _g_pass["route"] == "candidate_agreed_pending_certification"
+              and _g_pass["gate_evidence"] == "validated_artifacts" and not _g_pass.get("certified"))
+        check("A2 grader: two_vote_done=True with no vote artifacts can no longer satisfy a two-vote gate",
+              not _A2G.grade_structured(_g_case, dict(_g_good, two_vote_evidence=None,
+                                                      two_vote_done=True))["pass"]
+              and _A2G.two_vote_evidence_defect({"two_vote_done": True})
+              == "two_vote_declared_without_artifacts")
+        check("A2 grader: one vote, dependent votes and tuple-disagreeing votes are all refused",
+              all(not _A2G.grade_structured(_g_case, dict(_g_good, two_vote_evidence=_ev))["pass"]
+                  for _ev in ([_g_a], [_g_a, dict(_g_b, reviewer=dict(_g_a["reviewer"]))],
+                              [_g_a, dict(_g_b, fact_type="particle_function")])))
+        check("A2 grader: a source address must resolve through the repository authority, not be non-empty",
+              _A2G.source_address_defect({"source_address": "quran:demo"})
+              == "source_address_not_repository_authorised"
+              and _A2G.source_address_defect({"source_address": ""}) == "source_address_absent"
+              and _A2G.source_address_defect({"source_address": "quran:2:284:1"}) is None)
+        check("A2 grader: a missing fact_type is an error, never defaulted to the expected value",
+              _A2G.grade_structured(_g_case, dict(_g_good, fact_type=None))["reason_defect"]
+              == "fact_type_absent")
+        check("A2 grader: human/source-review independence requires the claimant identity",
+              _A2G.human_review_defect({"human_review": {"review_id": "hr:x", "reviewer_id": "human-1",
+                                                         "source_address": "quran:2:284:1",
+                                                         "subject": "s", "decision": "approved",
+                                                         "timestamp": "2026-07-30T00:00:00Z",
+                                                         "reviewed_conclusion": "genitive",
+                                                         "reviewed_reason_key": _g_key},
+                                        "source_address": "quran:2:284:1", "subject": "s",
+                                        "conclusion": "genitive", "reason_key": _g_key})
+              == "human_review_claimant_identity_absent")
+    except Exception:
+        check("A2 grammar-grader evidence-gate check (error)", False)
 
     # The coverage reporter must take A2 execution from the INVOKED runner result, and must keep the
     # fixture-only banks and the quarantined rows visibly uncovered.

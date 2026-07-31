@@ -126,7 +126,8 @@
     "The METHOD (name the missing authority, fail closed to candidate, and packetize it) transfers; the specific occurrences used as fixtures are never occurrence claims and never transfer.",
     "A producer may not be granted may_resolve=True without a repository-resident, reproducible producer; raising trust by fiat is exactly the caller-forgeable evidence this packet exists to remove.",
     "Observations remain candidate-only until BOTH authorities exist; agreement is never certification.",
-    "No local coordinate authority may be invented inside a naḥw helper; tools/fusha_check.resolve_address over the committed spine stays the only coordinate oracle."
+    "No local coordinate authority may be invented inside a naḥw helper; tools/fusha_check.resolve_address over the committed spine stays the only coordinate oracle.",
+    "SERIALIZED WRITE SCOPE (dispatch order 1 of 5): this packet shares write paths tools/fusha_nahw_particle_rules.py, docs/subsystems/nahw-executable-map.md with the other TP-NAHW-A2-* packets and MUST NOT be dispatched concurrently with them. Run only after no predecessor (this is the first packet) have landed, and before TP-NAHW-A2-HOVER-KEY-SEAT, TP-NAHW-A2-STATE-VOCAB, TP-NAHW-A2-TYPED-STATE-CONSUMER, TP-NAHW-A2-TYPED-WR-BANK. Re-measure the runner and the harness after each predecessor: a concurrent run would interleave edits to the same eval bank and the same runner file."
   ],
   "inputs": {
     "input_files": [

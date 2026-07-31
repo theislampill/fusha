@@ -126,6 +126,97 @@ def _registry_row(reason_key):
     return _REGISTRY_ROWS.get(reason_key)
 
 
+def source_address_defect(claim):
+    """The source address must be RESOLVABLE by the repository's own address authority.
+
+    ROUND-8: a non-empty string used to satisfy the evidence rung, so "x", "quran:demo" and a real-looking but
+    out-of-range address all graded as evidence. Authority is tools/fusha_check.resolve_address — the same
+    resolver the human/source-review record is already validated against — not truthiness.
+    """
+    raw = claim.get("source_address")
+    if not compact(raw):
+        return "source_address_absent"
+    from tools.fusha_check import resolve_address     # lazy: the repository's own address authority
+    if resolve_address(raw).get("scope") != "in_scope_source_addressed":
+        return "source_address_not_repository_authorised"
+    return None
+
+
+# ---------------------------------------------------------------------------
+# ROUND-8: two-vote EVIDENCE (a boolean is not a vote)
+# ---------------------------------------------------------------------------
+# `two_vote_done=True` was accepted as proof that a two-vote gate had been cleared. A caller could therefore
+# clear the highest routine gate in this lane by setting one boolean. The gate now requires two explicit,
+# frozen, contract-valid, independent vote records that agree on the COMPLETE conclusion and reason tuple —
+# conclusion, case/mood and its basis, governor/dependency relation and location, fact type, reason key,
+# rival-analysis disposition (the contract's `unresolved_points`) and source-address binding. Agreement on the
+# conclusion alone is not agreement; neither is agreement on the reason key alone.
+TWO_VOTE_TUPLE_FIELDS = ("conclusion", "case_mood", "mood_basis", "governor_relation", "governor_loc",
+                         "governor_type", "fact_type", "reason_key", "rival_disposition", "source_address")
+
+
+def agreement_tuple(vote):
+    """The complete tuple two votes must agree on. Projected from the artifact, never from English wording."""
+    conclusion = vote.get("conclusion") or {}
+    case_or_mood = conclusion.get("case_or_mood") or {}
+    governor = conclusion.get("governor") or {}
+    occurrence = vote.get("occurrence") or {}
+    rivals = vote.get("unresolved_points") or []
+    return {
+        "conclusion": compact(conclusion.get("contextual_function")),
+        "case_mood": normalize_case_mood(case_or_mood.get("value")),
+        "mood_basis": compact(case_or_mood.get("mood_basis")),
+        "governor_relation": compact(governor.get("relation")),
+        "governor_loc": compact(governor.get("loc")),
+        "governor_type": JUSTIFICATION_RULE_GOVERNOR_TYPE.get(governor.get("relation")),
+        "fact_type": compact(vote.get("fact_type")),
+        "reason_key": compact(vote.get("reason_key")),
+        "rival_disposition": tuple(sorted(compact(r) for r in rivals)) if isinstance(rivals, list) else None,
+        "source_address": compact(occurrence.get("quran_loc")),
+    }
+
+
+def two_vote_evidence_defect(claim):
+    """Return None only when the claim carries two validated, independent, fully agreeing vote records.
+
+    Closed defect vocabulary: two_vote_declared_without_artifacts | two_vote_evidence_absent |
+    two_vote_evidence_not_two_records | two_vote_evidence_not_frozen_records | two_vote_artifact_invalid |
+    two_vote_not_independent | two_vote_conclusion_disagreement | two_vote_reason_disagreement |
+    two_vote_tuple_disagreement:<fields> | two_vote_claimant_identity_absent |
+    two_vote_claimant_not_a_reviewer | two_vote_address_not_bound.
+    """
+    votes = claim.get("two_vote_evidence")
+    if votes is None:
+        # A declaration with no artifacts is the exact false pass this gate exists to stop.
+        return ("two_vote_declared_without_artifacts" if claim.get("two_vote_done")
+                else "two_vote_evidence_absent")
+    if not isinstance(votes, (list, tuple)) or len(votes) != 2:
+        return "two_vote_evidence_not_two_records"
+    if not all(isinstance(v, dict) and v for v in votes):
+        return "two_vote_evidence_not_frozen_records"
+    if vote_artifact_errors(votes[0], votes[1]):
+        return "two_vote_artifact_invalid"
+    if vote_independence_errors(votes[0], votes[1]):
+        return "two_vote_not_independent"
+    conclusion_agrees, reason_agrees = recompute_agreement(list(votes))
+    if not conclusion_agrees:
+        return "two_vote_conclusion_disagreement"
+    if not reason_agrees:
+        return "two_vote_reason_disagreement"
+    left, right = agreement_tuple(votes[0]), agreement_tuple(votes[1])
+    differing = [f for f in TWO_VOTE_TUPLE_FIELDS if left.get(f) != right.get(f)]
+    if differing:
+        return "two_vote_tuple_disagreement:%s" % ",".join(differing)
+    claimant = compact(claim.get("reviewer_id"))
+    if not claimant:
+        return "two_vote_claimant_identity_absent"
+    if claimant not in {compact((v.get("reviewer") or {}).get("reviewer_id")) for v in votes}:
+        return "two_vote_claimant_not_a_reviewer"
+    if compact(claim.get("source_address")) != left["source_address"]:
+        return "two_vote_address_not_bound"
+    return None
+
+
 def derive_reasoning(case, claim):
     """Derive the reasoning verdict from structured evidence alone.
 
@@ -148,8 +239,9 @@ def derive_reasoning(case, claim):
         return False, "reason_key_unregistered"
     if reason_key not in set(expected):
         return False, "reason_key_mismatch"
-    if not compact(claim.get("source_address")):
-        return False, "source_address_absent"
+    address_defect = source_address_defect(claim)
+    if address_defect:
+        return False, address_defect
 
     # ---- the reason key must license this exact tuple, not merely exist ----
     tuple_ = REASON_TUPLES.get(reason_key)
@@ -158,7 +250,11 @@ def derive_reasoning(case, claim):
         # tuple. Route pending rather than inventing one.
         return False, "reason_tuple_unavailable"
     kinds, _errs = load_registry()
-    fact_type = claim.get("fact_type") or tuple_["fact_type"]
+    # ROUND-8: a MISSING fact type is an absent fact, not a satisfied one. Silently substituting the tuple's
+    # own expected value made the check compare a value with itself and always agree.
+    fact_type = claim.get("fact_type")
+    if not compact(fact_type):
+        return False, "fact_type_absent"
     registry_row = _registry_row(reason_key)
     if registry_row is not None and fact_type not in (registry_row.get("applicable_fact_types") or ()):
         return False, "fact_type_not_applicable"
@@ -245,6 +341,11 @@ def human_review_defect(claim):
         return "human_review_conclusion_not_bound"
     if compact(record.get("reviewed_reason_key")) != compact(claim.get("reason_key")):
         return "human_review_reason_not_bound"
+    # ROUND-8: independence cannot be established against an UNKNOWN claimant. With no claimant identity the
+    # comparison below is between a reviewer and nobody, which always "differs" — an absent claimant used to
+    # pass the independence test outright. Require the identity first.
+    if not compact(claim.get("reviewer_id")):
+        return "human_review_claimant_identity_absent"
     if compact(record.get("reviewer_id")) == compact(claim.get("reviewer_id")):
         return "human_review_not_independent"        # the claimant may not be their own reviewer
     return None
@@ -279,16 +380,28 @@ def grade_structured(case, claim):
     hr_defect = None
     if resolve_gate(case.get("required_gate")) == "human_source_review_required":
         hr_defect = human_review_defect(claim)
+    # ROUND-8: the structured path ALWAYS grades in evidence mode. `two_vote_done` is deliberately not
+    # forwarded — a boolean can no longer reach the gate at all.
     result = grade(case, {"final_ok": conclusion_ok, "reasoning_ok": reasoning_ok,
                           "evidence_cited": claim.get("evidence_cited"),
                           "source_address": claim.get("source_address"),
-                          "two_vote_done": claim.get("two_vote_done")})
+                          "reviewer_id": claim.get("reviewer_id"),
+                          "two_vote_evidence": claim.get("two_vote_evidence")},
+                   require_evidence=True)
     result["conclusion_defect"] = concl_defect
     result["human_review_defect"] = hr_defect
     if hr_defect:
         result["pass"] = False
         result["block_reason"] = "human/source review required: %s" % hr_defect
     result["reason_defect"] = defect
+    # A structured decision routes to at most a CANDIDATE state. Nothing here certifies.
+    if result["pass"]:
+        result["route"] = ("candidate_agreed_pending_certification"
+                           if result.get("gate_evidence") == "validated_artifacts" else "candidate")
+    elif hr_defect or resolve_gate(case.get("required_gate")) == "human_source_review_required":
+        result["route"] = "human_source_review"
+    else:
+        result["route"] = "pending"
     result["reason_key"] = claim.get("reason_key")
     result["derived_reasoning_ok"] = reasoning_ok
     result["caller_boolean_ignored"] = caller_boolean_ignored
@@ -381,7 +494,8 @@ def project_vote(vote):
         "source_address": occurrence.get("quran_loc"),
         "human_review": vote.get("human_review"),
         "reviewer_id": (vote.get("reviewer") or {}).get("reviewer_id"),
-        "two_vote_done": True,
+        # ROUND-8: a vote does NOT declare its own gate cleared. grade_two_vote() supplies the validated pair
+        # as `two_vote_evidence`; a single projected vote carries no gate authority of its own.
     }
 
 
@@ -406,8 +520,9 @@ def grade_two_vote(case, vote_a, vote_b):
         return {"pass": False, "disagreement": "not_independent", "route": "arbitration",
                 "certified": False, "independence_errors": indep,
                 "block_reason": "votes are not independent: %s" % indep[0]}
-    ga = grade_structured(case, project_vote(vote_a))
-    gb = grade_structured(case, project_vote(vote_b))
+    pair = [vote_a, vote_b]
+    ga = grade_structured(case, dict(project_vote(vote_a), two_vote_evidence=pair))
+    gb = grade_structured(case, dict(project_vote(vote_b), two_vote_evidence=pair))
     if not (ga["pass"] and gb["pass"]):
         bad = ga if not ga["pass"] else gb
         return {"pass": False, "disagreement": "invalid_vote", "route": "arbitration",
@@ -446,15 +561,36 @@ def mint_fixture_vote(index, *, reason_key, conclusion, case_mood, relation, wor
     return vote
 
 
-def grade(case, judgment):
+def grade(case, judgment, *, require_evidence=False):
     """case: an eval case dict (has required_gate). judgment: {final_ok, reasoning_ok, evidence_cited,
-    source_address, two_vote_done}. Returns {..., 'pass': bool, 'block_reason': str|None}."""
+    source_address, two_vote_evidence}. Returns {..., 'pass': bool, 'block_reason': str|None}.
+
+    `require_evidence=True` is the EVIDENCE mode used by every structured decision in this lane: a two-vote
+    gate is satisfied only by two validated, independent, fully agreeing vote records, and `two_vote_done` is
+    ignored entirely.
+
+    TRUTHFUL SCOPE NOTE: with `require_evidence=False` this function is a pure boolean AND-gate over booleans
+    the CALLER has already computed elsewhere (tools/run_grammar_evals.py's wrong-reasoning-trap probe and
+    tools/fusha_tutor_runtime.py's optional bridge both use it that way, over runtime checkpoints that carry
+    no vote artifacts at all). In that mode `two_vote_done` is a DECLARATION, and the result says so in
+    `gate_evidence`; it is never evidence. No structured A2 decision can reach this mode: grade_structured()
+    always calls with require_evidence=True.
+    """
     final_ok = bool(judgment.get("final_ok"))
     reasoning_ok = bool(judgment.get("reasoning_ok"))
     evidence_ok = bool(judgment.get("evidence_cited")) and bool(judgment.get("source_address"))
     required_gate = resolve_gate(case.get("required_gate"))
     needs_two_vote = required_gate in ("two_vote_required", "human_source_review_required")
-    gate_ok = (not needs_two_vote) or bool(judgment.get("two_vote_done"))
+    two_vote_defect = None
+    if not needs_two_vote:
+        gate_ok, gate_evidence = True, "not_required"
+    elif require_evidence:
+        two_vote_defect = two_vote_evidence_defect(judgment)
+        gate_ok = two_vote_defect is None
+        gate_evidence = "validated_artifacts" if gate_ok else "rejected"
+    else:
+        gate_ok = bool(judgment.get("two_vote_done"))
+        gate_evidence = "declared_only"     # a declaration, never proof; see the scope note above
     never_auto = required_gate == "never_auto_resolve"
     ok = final_ok and reasoning_ok and evidence_ok and gate_ok and not never_auto
     reason = None
@@ -468,9 +604,11 @@ def grade(case, judgment):
         elif not evidence_ok:
             reason = "missing evidence rung or source-address"
         elif not gate_ok:
-            reason = "two-vote gate required but not done"
+            reason = ("two-vote gate required but not proven: %s" % two_vote_defect if two_vote_defect
+                      else "two-vote gate required but not done")
     return {"final_ok": final_ok, "reasoning_ok": reasoning_ok, "evidence_ok": evidence_ok,
-            "gate_ok": gate_ok, "pass": ok, "block_reason": reason}
+            "gate_ok": gate_ok, "gate_evidence": gate_evidence, "two_vote_defect": two_vote_defect,
+            "pass": ok, "block_reason": reason}
 
 
 def _selftest():
@@ -511,10 +649,17 @@ def _selftest_structured():
     KEY_ATTACH = "khabar-muqaddam-shibh-jumla"      # kind=ATTACHMENT, deliberately NOT a reason_key
     case = {"id": "s1", "required_gate": "two_vote_required", "expected_reason_keys": [KEY_JARR],
             "expected_conclusion": "genitive"}
-    good = {"conclusion": "genitive", "case_mood": "genitive", "reason_key": KEY_JARR,
-            "fact_type": "case_assignment",
-            "governor": {"surface": "li", "governor_type": "preposition"},
-            "evidence_cited": True, "source_address": "quran:2:284:1", "two_vote_done": True}
+    # ROUND-8: the two-vote gate is satisfied by two REAL contract-valid, independent, fully agreeing vote
+    # artifacts — never by `two_vote_done`. The claim is PROJECTED from one of them, so its conclusion,
+    # case, governor, fact type, reason key and source address all come from the evidence itself.
+    VA = mint_fixture_vote(0, reason_key=KEY_JARR, conclusion="genitive", case_mood="genitive",
+                           relation="preposition_governs_genitive", worklist_id="wl-a",
+                           fact_type="case_assignment", vote_id="vote:selftest:a")
+    VB = mint_fixture_vote(1, reason_key=KEY_JARR, conclusion="genitive", case_mood="genitive",
+                           relation="preposition_governs_genitive", worklist_id="wl-b",
+                           fact_type="case_assignment", vote_id="vote:selftest:b")
+    ADDR = VA["occurrence"]["quran_loc"]
+    good = dict(project_vote(VA), two_vote_evidence=[VA, VB])
     structured = [
         (case, good, True, None),
         # right ending, governor that cannot assign it (a preposition never assigns nasb - GP-WR-005)
@@ -556,10 +701,16 @@ def _selftest_structured():
         # nahw@2.4 tajarrud is CANDIDATE, not released: it may not license a governor-free raf'
         ({"id": "s3", "required_gate": "two_vote_required", "expected_reason_keys": [KEY_INNA],
           "expected_conclusion": "accusative"},
-         {"conclusion": "accusative", "case_mood": "raf3", "mood_basis": "tajarrud",
-          "reason_key": KEY_INNA, "fact_type": "case_assignment", "governor": None,
-          "evidence_cited": True, "source_address": "quran:2:91:23", "two_vote_done": True},
+         dict(good, conclusion="accusative", case_mood="raf3", mood_basis="tajarrud",
+              reason_key=KEY_INNA, fact_type="case_assignment", governor=None),
          False, "reason_tuple_case_mismatch"),
+        # ROUND-8: a MISSING fact type is an absent fact, never the expected one
+        (case, dict(good, fact_type=None), False, "fact_type_absent"),
+        # ROUND-8: a source address must resolve through the repository's authority, not merely be non-empty
+        (case, dict(good, source_address="quran:demo"), False,
+         "source_address_not_repository_authorised"),
+        (case, dict(good, source_address="quran:2:13:9999"), False,
+         "source_address_not_repository_authorised"),
     ]
     bad = 0
     for i, (c, claim, exp_pass, exp_defect) in enumerate(structured, 1):
@@ -587,12 +738,17 @@ def _selftest_structured():
              "expected_reason_keys": [KEY_JARR], "expected_conclusion": "genitive"}
     # ROUND-4: the review must be BOUND to the exact claim (address, subject, conclusion, reason key),
     # carry a valid identifier and a machine-valid timestamp, and come from someone other than the claimant.
-    bound = dict(good, subject="li-llahi", reviewer_id="claimant-1")
-    good_review = {"review_id": "hr:1", "reviewer_id": "human-1", "source_address": "quran:2:284:1",
+    bound = dict(good, subject="li-llahi")
+    good_review = {"review_id": "hr:1", "reviewer_id": "human-1", "source_address": ADDR,
                    "subject": "li-llahi", "decision": "approved", "timestamp": "2026-07-30T00:00:00Z",
                    "reviewed_conclusion": "genitive", "reviewed_reason_key": KEY_JARR}
     human = [
-        ("two_vote_done cannot substitute", dict(bound), "human_review_absent"),
+        ("validated two votes cannot substitute for a human/source review", dict(bound),
+         "human_review_absent"),
+        # ROUND-8: independence cannot be judged against an unknown claimant
+        ("claimant identity absent",
+         dict(bound, reviewer_id=None, human_review=dict(good_review)),
+         "human_review_claimant_identity_absent"),
         ("boolean is not a review", dict(bound, human_review=True), "human_review_not_a_record"),
         ("incomplete review", dict(bound, human_review={"review_id": "hr:1"}), "human_review_incomplete"),
         ("malformed review id", dict(bound, human_review=dict(good_review, review_id="1")),
@@ -615,7 +771,7 @@ def _selftest_structured():
         ("another reason key",
          dict(bound, human_review=dict(good_review, reviewed_reason_key=KEY_INNA)),
          "human_review_reason_not_bound"),
-        ("self-review", dict(bound, human_review=dict(good_review, reviewer_id="claimant-1")),
+        ("self-review", dict(bound, human_review=dict(good_review, reviewer_id=bound["reviewer_id"])),
          "human_review_not_independent"),
     ]
     for label, claim, want in human:
@@ -705,13 +861,121 @@ def _selftest_structured():
         bad += 1
         print("  two-vote FAIL: a single vote satisfied the gate")
 
+    # -----------------------------------------------------------------------
+    # ROUND-8: the two-vote EVIDENCE gate (a boolean is not a vote)
+    # -----------------------------------------------------------------------
+    def _tuple_break(vote, **kw):
+        """A vote that still agrees on conclusion AND reason key, but not on the complete tuple."""
+        return dict(vote, **kw)
+
+    evidence_cases = [
+        # THE round-8 false pass: `two_vote_done=True` used to clear this gate outright. grade_structured()
+        # no longer forwards the boolean at all, so it cannot even be seen — the gate reports an absence.
+        ("two_vote_done=True with no artifacts",
+         dict(good, two_vote_evidence=None, two_vote_done=True), "two_vote_evidence_absent"),
+        ("no gate evidence of any kind",
+         dict(good, two_vote_evidence=None), "two_vote_evidence_absent"),
+        ("one vote is not two", dict(good, two_vote_evidence=[VA]), "two_vote_evidence_not_two_records"),
+        ("three votes are not two",
+         dict(good, two_vote_evidence=[VA, VB, VA]), "two_vote_evidence_not_two_records"),
+        ("booleans in place of vote records",
+         dict(good, two_vote_evidence=[True, True]), "two_vote_evidence_not_frozen_records"),
+        ("an empty record is not a vote",
+         dict(good, two_vote_evidence=[VA, {}]), "two_vote_evidence_not_frozen_records"),
+        ("a malformed artifact is rejected by the established validator",
+         dict(good, two_vote_evidence=[VA, dict(VB, reason_key=None)]), "two_vote_artifact_invalid"),
+        ("two dependent votes",
+         dict(good, two_vote_evidence=[VA, dict(VB, reviewer=dict(VA["reviewer"]))]),
+         "two_vote_not_independent"),
+        ("votes disagreeing on the conclusion",
+         dict(good, two_vote_evidence=[VA, mint_fixture_vote(
+             1, reason_key=KEY_JARR, conclusion="accusative", case_mood="genitive",
+             relation="preposition_governs_genitive", worklist_id="wl-b",
+             fact_type="case_assignment", vote_id="vote:selftest:c")]),
+         "two_vote_conclusion_disagreement"),
+        ("votes disagreeing on the reason key",
+         dict(good, two_vote_evidence=[VA, mint_fixture_vote(
+             1, reason_key=KEY_INNA, conclusion="genitive", case_mood="genitive",
+             relation="preposition_governs_genitive", worklist_id="wl-b",
+             fact_type="case_assignment", vote_id="vote:selftest:d")]),
+         "two_vote_reason_disagreement"),
+        # agreement on conclusion AND reason key, but NOT on the complete tuple
+        ("votes disagreeing on the fact type",
+         dict(good, two_vote_evidence=[VA, _tuple_break(VB, fact_type="particle_function")]),
+         "two_vote_tuple_disagreement:fact_type"),
+        ("votes disagreeing on the rival-analysis disposition",
+         dict(good, two_vote_evidence=[VA, _tuple_break(VB, unresolved_points=["rival idafa reading"])]),
+         "two_vote_tuple_disagreement:rival_disposition"),
+        # the governor location is part of the canonical conclusion projection, so a moved ʿāmil is caught
+        # as a conclusion disagreement rather than reaching the tuple comparison
+        ("votes disagreeing on the governor location",
+         dict(good, two_vote_evidence=[VA, _tuple_break(
+             VB, conclusion=dict(VB["conclusion"],
+                                 governor=dict(VB["conclusion"]["governor"], loc="quran:2:13:1")))]),
+         "two_vote_conclusion_disagreement"),
+        # two votes about different occurrences are not a pair at all: the established artifact validator
+        # rejects the bundle before agreement is ever computed
+        ("votes disagreeing on the source address",
+         dict(good, two_vote_evidence=[VA, _tuple_break(
+             VB, occurrence=dict(VB["occurrence"], quran_loc="quran:2:26:20"))]),
+         "two_vote_artifact_invalid"),
+        ("the claimant identity is absent",
+         dict(good, reviewer_id=None), "two_vote_claimant_identity_absent"),
+        ("the claimant is neither of the two reviewers",
+         dict(good, reviewer_id="someone-else"), "two_vote_claimant_not_a_reviewer"),
+        ("the votes are about another address than the claim",
+         dict(good, source_address="quran:2:26:20"), "two_vote_address_not_bound"),
+    ]
+    # the declaration itself, inspected directly: a boolean is named as such and never becomes evidence
+    if two_vote_evidence_defect({"two_vote_done": True}) != "two_vote_declared_without_artifacts":
+        bad += 1
+        print("  two-vote evidence FAIL: a bare two_vote_done declaration was not named as such")
+    for label, claim, want in evidence_cases:
+        r = grade_structured(case, claim)
+        if r["pass"] or r.get("two_vote_defect") != want:
+            bad += 1
+            print("  two-vote evidence FAIL (%s): pass=%s defect=%s (want %s)"
+                  % (label, r["pass"], r.get("two_vote_defect"), want))
+        if r.get("route") not in ("pending", "human_source_review"):
+            bad += 1
+            print("  two-vote evidence FAIL (%s): routed %r instead of pending/review"
+                  % (label, r.get("route")))
+
+    # the POSITIVE case: two validated agreeing votes route to a CANDIDATE state, never to certification
+    r = grade_structured(case, good)
+    if not (r["pass"] and r.get("two_vote_defect") is None
+            and r.get("gate_evidence") == "validated_artifacts"
+            and r.get("route") == "candidate_agreed_pending_certification"):
+        bad += 1
+        print("  two-vote evidence FAIL: a valid explicit two-vote pair was not accepted (%s / %s / %s)"
+              % (r.get("block_reason"), r.get("gate_evidence"), r.get("route")))
+    if r.get("certified"):
+        bad += 1
+        print("  two-vote evidence FAIL: a graded claim reported certification")
+    # and grade_two_vote agrees, over the same artifacts, with the same route
+    rtv = grade_two_vote(case, VA, VB)
+    if not (rtv["pass"] and rtv["route"] == "candidate_agreed_pending_certification"
+            and rtv["certified"] is False):
+        bad += 1
+        print("  two-vote evidence FAIL: grade_two_vote disagreed with grade_structured (%s)" % rtv)
+    # a declaration cannot rescue an auto_safe case into a two-vote conclusion either
+    if grade({"id": "ev", "required_gate": "two_vote_required"},
+             {"final_ok": True, "reasoning_ok": True, "evidence_cited": True,
+              "source_address": ADDR, "two_vote_done": True}, require_evidence=True)["pass"]:
+        bad += 1
+        print("  two-vote evidence FAIL: grade(require_evidence=True) accepted a bare declaration")
+
     if bad:
         print("FAIL: %d structured-grading case(s) broke" % bad)
         sys.exit(1)
     print("PASS - grade_structured() derives the reason verdict from REGISTERED reason keys + governor "
           "evidence (caller booleans ignored, candidate increments measurement-only); grade_two_vote() "
           "delegates independence to the two-vote artifact contract and never certifies "
-          "(%d structured cases + 17 adversarial two-vote cases)" % len(structured))
+          "(%d structured cases + 17 adversarial two-vote cases + %d round-8 two-vote EVIDENCE cases: "
+          "a boolean, one vote, three votes, non-records, a malformed artifact, dependent votes, "
+          "conclusion/reason/fact-type/rival/governor/address disagreement, an absent or foreign claimant "
+          "and an unbound address are all refused; a valid pair routes only to "
+          "candidate_agreed_pending_certification)" % (len(structured), len(evidence_cases)))
 
 
 if __name__ == "__main__":

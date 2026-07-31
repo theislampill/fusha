@@ -235,8 +235,16 @@ else:
     # conclusion-only reasoning must be rejected from STRUCTURED evidence, not a caller boolean
     _case = {"id": "vns", "required_gate": "two_vote_required", "expected_conclusion": "genitive",
              "expected_reason_keys": ["lam-jarr-fused-majrur-kasra"]}
-    _claim = {"conclusion": "genitive", "case_mood": "genitive", "evidence_cited": True,
-              "source_address": "quran:demo", "two_vote_done": True}
+    # ROUND-8: the two-vote gate needs real vote artifacts and a repository-resolvable address; a boolean and
+    # a made-up "quran:demo" address are no longer evidence.
+    from tools.grade_grammar_reasoning import mint_fixture_vote as _mv, project_vote as _pv
+    _va = _mv(0, reason_key="lam-jarr-fused-majrur-kasra", conclusion="genitive", case_mood="genitive",
+              relation="preposition_governs_genitive", worklist_id="wl-vns-a",
+              fact_type="case_assignment", vote_id="vote:vns:a")
+    _vb = _mv(1, reason_key="lam-jarr-fused-majrur-kasra", conclusion="genitive", case_mood="genitive",
+              relation="preposition_governs_genitive", worklist_id="wl-vns-b",
+              fact_type="case_assignment", vote_id="vote:vns:b")
+    _claim = dict(_pv(_va), two_vote_evidence=[_va, _vb])
     if _gs(_case, dict(_claim, reason_key="lam-jarr-fused-majrur-kasra",
                        governor={"governor_type": "preposition"}))["pass"] is not True:
         errs.append("grade_structured blocked an honest, fully-justified iʿrāb claim")

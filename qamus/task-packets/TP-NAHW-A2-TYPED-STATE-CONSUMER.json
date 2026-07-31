@@ -139,7 +139,8 @@
     "A reason key must be registered in qamus/skills/reason-key-registry.jsonl; a key derived from a fixture id is a fabrication and must fail.",
     "No caller label, boolean or prose condition may resolve a grammatical state; without typed source-addressed evidence the row stays pending/candidate with its rivals preserved.",
     "Agreement is never certification: only tools/certify_typed_fact.py certifies, and only from a validated two-vote artifact.",
-    "Candidate nahw@2.1-@2.4 behaviour may be measured but never released or used to authorize a pass."
+    "Candidate nahw@2.1-@2.4 behaviour may be measured but never released or used to authorize a pass.",
+    "SERIALIZED WRITE SCOPE (dispatch order 5 of 5): this packet shares write paths tools/run_nahw_evals.py, tools/fusha_nahw_particle_rules.py, tools/fusha_nahw_context_rules.py, nahw/evals/nahw-state-machine-eval.json, nahw/evals/hover-context-eval.json, docs/subsystems/nahw-executable-map.md with the other TP-NAHW-A2-* packets and MUST NOT be dispatched concurrently with them. Run only after TP-NAHW-A2-HOVER-KEY-SEAT, TP-NAHW-A2-OBSERVATION-PRODUCER, TP-NAHW-A2-STATE-VOCAB, TP-NAHW-A2-TYPED-WR-BANK have landed, and before no successor (this is the last packet). Re-measure the runner and the harness after each predecessor: a concurrent run would interleave edits to the same eval bank and the same runner file."
   ],
   "inputs": {
     "input_files": [

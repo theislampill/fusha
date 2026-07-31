@@ -112,7 +112,8 @@
     "The METHOD (recompute the key, require a real collision, quarantine rather than guess) transfers to any surface-keyed bank; the specific readings of أَنْ/أَنَّ/إِنَّ/إِنْ and أُمّ/أَمْ/إِمَّا are linguistic conclusions that never transfer to another occurrence.",
     "norm() is recall-only and may never certify a reading (provenance/source-boundaries.md §5); a repair that makes a hover SAFER is acceptable, one that makes it safe is not.",
     "Both rows must remain safe=false at never_auto_resolve regardless of the option chosen — the fail-closed verdict is already correct and is not what this packet is fixing.",
-    "Any proposed change to tools/normalize_ar.py leaves this packet as a written change request; it is never applied here."
+    "Any proposed change to tools/normalize_ar.py leaves this packet as a written change request; it is never applied here.",
+    "SERIALIZED WRITE SCOPE (dispatch order 2 of 5): this packet shares write paths nahw/evals/hover-context-eval.json, docs/subsystems/nahw-executable-map.md with the other TP-NAHW-A2-* packets and MUST NOT be dispatched concurrently with them. Run only after TP-NAHW-A2-OBSERVATION-PRODUCER have landed, and before TP-NAHW-A2-STATE-VOCAB, TP-NAHW-A2-TYPED-STATE-CONSUMER, TP-NAHW-A2-TYPED-WR-BANK. Re-measure the runner and the harness after each predecessor: a concurrent run would interleave edits to the same eval bank and the same runner file."
   ],
   "inputs": {
     "input_files": [
