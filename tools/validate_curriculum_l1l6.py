@@ -102,6 +102,7 @@ def load_context():
     ctx["xwalk"] = (_jsonl(BASE / "crosswalk" / "sarf-crosswalk.jsonl")
                     + _jsonl(BASE / "crosswalk" / "nahw-crosswalk.jsonl"))
     ctx["ledger"] = _jsonl(BASE / "ledger" / "claim-ledger.jsonl")
+    ctx["families"] = _jsonl(BASE / "ledger" / "claim-families.jsonl")
     ctx["guards"] = _jsonl(BASE / "ledger" / "overgeneralization-guards.jsonl")
     ctx["links"] = _jsonl(BASE / "links" / "pvn-candidate-links.jsonl")
     ctx["units"] = _jsonl(BASE / "units" / "instructional-units.jsonl")
@@ -311,6 +312,31 @@ def check_ledger_qualification(ctx, errors):
         if fid is not None and fid not in manifest_ids:
             errors.append("ledger_qualification: %s manifest_file_id %r "
                           "unresolved" % (c.get("claim_id"), fid))
+    # claim families: same closed vocabulary, unit-resolvable family field,
+    # resolvable lesson_refs, zero certification
+    unit_ids = {u["unit_id"] for u in ctx["units"]}
+    seen_cf = set()
+    for c in ctx["families"]:
+        cid = c.get("claim_id")
+        if cid in seen_cf:
+            errors.append("ledger_qualification: duplicate family claim_id %r" % cid)
+        seen_cf.add(cid)
+        if c.get("status") not in LEDGER_STATUSES:
+            errors.append("ledger_qualification: %s status %r not in closed vocab"
+                          % (cid, c.get("status")))
+        if c.get("status") == "repository-certified":
+            errors.append("ledger_qualification: %s claims repository-certified" % cid)
+        if c.get("family") not in unit_ids:
+            errors.append("ledger_qualification: %s family %r is not an "
+                          "instructional unit" % (cid, c.get("family")))
+        for lid in (c.get("source_scope") or {}).get("lesson_refs") or []:
+            if lid not in lesson_ids:
+                errors.append("ledger_qualification: %s lesson_ref %r unresolved"
+                              % (cid, lid))
+    # every unit must have a claim family (the substantive-extraction floor)
+    covered = {c.get("family") for c in ctx["families"]}
+    for uid in sorted(unit_ids - covered):
+        errors.append("ledger_qualification: unit %s has no claim family" % uid)
 
 
 def check_links_candidacy(ctx, errors):
@@ -651,6 +677,11 @@ def self_test():
         lambda c: c["units"][0].update(recognition_criteria=[]))
     mut("unit_overclaimed_population", "units_semantic",
         lambda c: c["units"][0]["concept_node_query"].update(min_nodes=99999))
+    mut("family_certified_claim", "ledger_qualification",
+        lambda c: c["families"][0].update(status="repository-certified"))
+    mut("family_unit_uncovered", "ledger_qualification",
+        lambda c: [c["families"].__setitem__(i, dict(r, family="u-s01"))
+                   for i, r in enumerate(c["families"]) if r["family"] == "u-n12"])
 
     failed = [n for n, ok in mutations if not ok]
     print("self-test: %d/%d mutations tripped their checks"

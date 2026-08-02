@@ -1,0 +1,14 @@
+{
+  "families": 21,
+  "note": "clean-room claim families per instructional unit; original wording; statuses honest; nothing certified. Extends (does not replace) claim-ledger.jsonl.",
+  "rows": 105,
+  "schema": "curriculum.l1l6_claim_family_row.v1.meta",
+  "status_histogram": {
+    "analysis-dependent": 2,
+    "contradicted-by-repository-authority": 12,
+    "pedagogical-simplification": 8,
+    "school-dependent": 2,
+    "source-supported-not-executable": 70,
+    "unsafe-for-automatic-projection": 11
+  }
+}
