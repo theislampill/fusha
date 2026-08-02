@@ -1,0 +1,299 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "occurrence fact producer unit suite",
+      "pass_condition": "unittest exits 0 and includes wrong-reason, missing-vote, forged-reason-key, surface-wide-gloss, and rival-loss mutations",
+      "run": "python -m unittest tools.test_build_nahw_occurrence_facts"
+    },
+    {
+      "name": "deterministic sample check",
+      "pass_condition": "exit 0 with NAHW OCCURRENCE FACTS PASS after recomputing the canonical surface index and manifest, all evidence and fixture input hashes, output schema hash, metadata hash and byte-identical sample",
+      "run": "python tools/build_nahw_occurrence_facts.py --check-sample qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --meta qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json --schema qamus/schemas/nahw-occurrence-fact-bundle.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json"
+    },
+    {
+      "name": "two-vote carrier axes remain schema-valid",
+      "pass_condition": "exit 0 with zero artifact errors and no input mutation; this proves the carrier's schema and recorded agreement axes, not reviewer session, worklist, hash, or no-cross-access independence",
+      "run": "python tools/validate_two_vote_artifacts.py qamus/examples/p007-li-pilot/two-vote-artifacts.v1_1.jsonl"
+    },
+    {
+      "name": "actual ma same-surface divergence",
+      "pass_condition": "exit 0 only when quran:2:284:10 and quran:93:3:1 are both executed as distinct exact occurrences with the exact surface مَا, their occurrence-bound functions and reason tuples differ, neither analysis is fetched by a surface key, and their rivals, scope, referent and unresolved fields remain independent",
+      "run": "python tools/build_nahw_occurrence_facts.py --check-ma-divergence qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --relative-fixture qamus/examples/website-payloads/ma_relative_2_284_10.payload.json --nafiya-fixture qamus/examples/website-payloads/ma_nafiya_93_3_1.payload.json"
+    },
+    {
+      "name": "complete repository harness remains green",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS without changing the shared harness; focused-suite registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "frozen start SHA changed paths",
+      "pass_condition": "prints NAHW OCCURRENCE FACTS CHANGED PATHS PASS after comparing tracked and non-ignored untracked paths with the exact packet allowlist from the SHA frozen before edits",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/nahw-occurrence-facts-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"qamus/schemas/nahw-occurrence-fact-bundle.schema.json\",\"tools/build_nahw_occurrence_facts.py\",\"tools/test_build_nahw_occurrence_facts.py\",\"qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl\",\"qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json\",\"qamus/reports/nahw-occurrence-facts-w1.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"NAHW OCCURRENCE FACTS CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\"+repr(unexpected)+\" missing=\"+repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "name": "whitespace diff check",
+      "pass_condition": "git diff --check exits 0 independently of generated-artifact, drift and changed-path checks",
+      "run": "git diff --check"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "the correct marfu label with the badaliyyah reason must fail because the occurrence is istithna mufarragh and the reason is wrong",
+        "id": "GP-WR-003",
+        "source": "nahw/evals/grammar-wrong-reasoning-cases.jsonl"
+      },
+      {
+        "expectation": "a global ma equals what or ma equals not mapping must fail; the actual quran:2:284:10 relative and quran:93:3:1 negative fixtures must execute as distinct occurrence analyses with different function and reason tuples",
+        "id": "quran:2:284:10+quran:93:3:1",
+        "source": "qamus/examples/website-payloads/ma_relative_2_284_10.payload.json",
+        "surface": "مَا"
+      },
+      {
+        "expectation": "a correct jarr label with the reason layers swapped must fail: the fused lām governs the noun host قَوْمِ into jarr, while قَالَ is the attachment head of the complete prepositional phrase لِقَوْمِهِۦ; if either relation lacks exact evidence or externally proven reviewer independence, preserve both fields as candidate or unresolved and abstain",
+        "id": "quran:61:5:4:wrong-reason-layer-swap",
+        "source": "qamus/examples/p007-li-pilot/two-vote-artifacts.v1_1.jsonl",
+        "surface": "لِقَوْمِهِۦ"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "the actual negative-ma fixture executes at quran:93:3:1 with exact surface مَا and remains independent of the relative analysis at quran:2:284:10; the public fixture is a regression oracle only and never supplies canonical truth or evidence",
+        "id": "quran:93:3:1",
+        "source": "qamus/examples/website-payloads/ma_nafiya_93_3_1.payload.json",
+        "surface": "مَا"
+      },
+      {
+        "expectation": "the schema-valid carrier preserves separate occurrence-bound fields for lām as the jarr governor of قَوْمِ and قَالَ as the prepositional-phrase attachment head, plus function, governed expression, case, reason, rivals, and unresolved state; without external invocation provenance proving session, worklist, hash, and no-cross-access independence, emitted fields remain candidate or unresolved",
+        "id": "quran:61:5:4",
+        "source": "qamus/examples/p007-li-pilot/two-vote-artifacts.v1_1.jsonl",
+        "surface": "لِقَوْمِهِۦ"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "qamus/examples/p007-li-pilot/two-vote-artifacts.v1_1.jsonl",
+    "selection_rule": "all 12 schema-valid p007 v1.1 carriers in committed order plus the exact quran:2:284:10 relative-ma evidence row and quran:93:3:1 negative-ma v1.1 canary; all 14 locs are acquired from the canonical loc-surface index, each occurrence executes separately, no surface grouping is allowed, and public payload fixtures are regression oracles only",
+    "this_packet_size": 14,
+    "universe_size": 14
+  },
+  "commands": [
+    {
+      "expect": "prints one immutable 40-character start SHA and writes the same ASCII SHA plus LF under the gitignored packet out directory; any pre-existing tracked or non-ignored untracked change aborts",
+      "purpose": "freeze the clean packet start SHA",
+      "run": "python -c 'from pathlib import Path; import subprocess; dirty=subprocess.check_output([\"git\",\"status\",\"--porcelain\",\"--untracked-files=all\"],text=True).splitlines(); assert not dirty, \"packet requires a clean isolated worktree: \"+repr(dirty); sha=subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(); p=Path(\"out/nahw-occurrence-facts-w1/start-sha.txt\"); p.parent.mkdir(parents=True,exist_ok=True); p.write_bytes((sha+\"\\n\").encode(\"ascii\")); print(sha)'"
+    },
+    {
+      "expect": "red before implementation, then unittest OK with all behavioural and evidence mutations active",
+      "purpose": "run the occurrence fact producer tests",
+      "run": "python -m unittest tools.test_build_nahw_occurrence_facts"
+    },
+    {
+      "expect": "exit 0; candidate fact bundles for the 12 p007 carriers and both actual same-surface ma occurrences are built only after exact loc-surface and manifest verification; public payloads act only as divergence regression oracles; the sample and pretty metadata bind all inputs, schema and output hashes",
+      "purpose": "build occurrence-bound Nahw facts",
+      "run": "python tools/build_nahw_occurrence_facts.py --artifacts qamus/examples/p007-li-pilot/two-vote-artifacts.v1_1.jsonl --ma-relative-evidence qamus/examples/proof-particle/particle-contract.json --ma-nafiya-evidence qamus/examples/two_vote_artifact_v11_canaries.jsonl --relative-regression-fixture qamus/examples/website-payloads/ma_relative_2_284_10.payload.json --nafiya-regression-fixture qamus/examples/website-payloads/ma_nafiya_93_3_1.payload.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --out out/nahw-occurrence-facts-w1 --sample-out qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --meta-out qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json"
+    },
+    {
+      "expect": "NAHW OCCURRENCE FACTS PASS with byte-identical regeneration and current authority, evidence, fixture, schema and output hashes",
+      "purpose": "verify deterministic regeneration",
+      "run": "python tools/build_nahw_occurrence_facts.py --check-sample qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --meta qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json --schema qamus/schemas/nahw-occurrence-fact-bundle.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json"
+    },
+    {
+      "expect": "exit 0 and zero artifact errors for schema and recorded agreement axes only; no claim of externally proven reviewer independence",
+      "purpose": "revalidate the two-vote carrier contract",
+      "run": "python tools/validate_two_vote_artifacts.py qamus/examples/p007-li-pilot/two-vote-artifacts.v1_1.jsonl"
+    },
+    {
+      "expect": "NAHW MA DIVERGENCE PASS for two exact מَا occurrences with different occurrence ids, functions and reason tuples and no surface-key lookup",
+      "purpose": "execute the actual same-surface divergence fixtures",
+      "run": "python tools/build_nahw_occurrence_facts.py --check-ma-divergence qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --relative-fixture qamus/examples/website-payloads/ma_relative_2_284_10.payload.json --nafiya-fixture qamus/examples/website-payloads/ma_nafiya_93_3_1.payload.json"
+    },
+    {
+      "expect": "ALL REGRESSION CHECKS PASS without editing tools/check_regressions.py; TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 owns the later one-time registration",
+      "purpose": "run the current complete repository harness read-only",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "expect": "NAHW OCCURRENCE FACTS CHANGED PATHS PASS with exactly the schema, builder, focused test, sample, metadata and report paths changed from the frozen start SHA",
+      "purpose": "enforce tracked and untracked path custody",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/nahw-occurrence-facts-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"qamus/schemas/nahw-occurrence-fact-bundle.schema.json\",\"tools/build_nahw_occurrence_facts.py\",\"tools/test_build_nahw_occurrence_facts.py\",\"qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl\",\"qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json\",\"qamus/reports/nahw-occurrence-facts-w1.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"NAHW OCCURRENCE FACTS CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\"+repr(unexpected)+\" missing=\"+repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "expect": "exit 0 with no whitespace errors",
+      "purpose": "verify diff hygiene separately",
+      "run": "git diff --check"
+    }
+  ],
+  "defeaters": [
+    "agreement on a label without agreement on the registered reason key and the evidence that licenses it",
+    "a missing, invalid, identity-mismatched, or externally unproven independent two-vote carrier for an i'rab-bearing conclusion",
+    "the jarr governor relation and the prepositional-phrase attachment relation collapsed or swapped, including treating قَالَ as the case governor of قَوْمِ or treating the fused lām as the attachment head of the whole phrase",
+    "a caller-provided label, prose phrase, fixture id, or boolean substituted for typed source-addressed evidence",
+    "a surface-wide particle gloss or normalized key used as an occurrence function, meaning, scope, referent, or translation",
+    "a rival analysis, unresolved point, abstention, or escalation route dropped during fact production"
+  ],
+  "definition_of_done": [
+    "all 12 p007 exact occurrences plus quran:2:284:10 and quran:93:3:1 emit a schema-valid bundle or exact abstention without surface-wide grouping",
+    "every occurrence loc and exact written surface comes from the unique qamus/indexes/quran-loc-surface/index.jsonl row after recomputing the index.manifest.json artifact hash; page-local and public-fixture surfaces are comparison-only and any missing, duplicate or mismatched authority row fails closed",
+    "function, governor, governed expression, attachment, case or mood, syntactic position, scope, referent, reason key, rivals, and escalation are represented as separate typed fields or explicit unresolved fields",
+    "every i'rab-bearing fact is bound to a schema-valid two-vote carrier whose conclusion and registered reason agree, while session, worklist, hash, and no-cross-access independence require separate external invocation evidence",
+    "quran:61:5:4 keeps the fused lām to noun-host jarr-governance relation separate from the full prepositional phrase to قَالَ attachment relation, and a layer swap fails as wrong-reason rather than passing on the jarr label",
+    "a correct answer with the wrong reason fails and no missing field is filled by a default",
+    "the actual relative and negative מَا fixtures execute as two different occurrence artifacts with different function and reason tuples, independent rivals, scopes, referents and unresolved states; neither output is selected or cached by surface",
+    "no candidate fact is certified or converted into public wording",
+    "the pretty metadata sidecar recomputes and binds the canonical index and manifest, p007 carrier bank, relative-ma evidence, negative-ma evidence, both regression fixtures, reason registry, output schema and sample by SHA-256",
+    "TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 is the sole future writer that may register this focused suite in tools/check_regressions.py or update docs/golden-commands.md; this packet changes neither shared file",
+    "all acceptance tests pass, the frozen-start-SHA tracked-plus-untracked allowlist passes, git diff --check passes separately, and no file outside the permitted write set changed"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "the required reason key is absent from the governed registry",
+      "the two reviewers disagree on conclusion, reason, governor, attachment, scope, referent, case, or mood",
+      "an occurrence needs a scholar-level i'rab decision or source evidence not present in the committed bundle",
+      "any predecessor A2 packet, bank contract, or two-vote input changes during the run"
+    ],
+    "route": "stop the affected occurrence, preserve every rival and exact question in qamus/reports/nahw-occurrence-facts-w1.md, and route it to the two-vote, scholar, or source-gap lane named by the blocker"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If the exact occurrence lacks a registered reason key, complete schema-valid two-vote carrier, externally proven session, worklist, hash, and no-cross-access independence, or source-addressed dependency, emit candidate or unresolved with the precise missing evidence. Never manufacture independence, a reason key, or a contextual fact from the surface.",
+    "statement": "Each fact is bound to one canonical occurrence whose loc and exact written surface come from the hash-verified loc-surface index and manifest, plus a schema-valid two-vote carrier where required, registered reason key, evidence address, dependency set, guards, defeaters, rivals, and candidate or unresolved state. Page-local surfaces and public payload fixtures are comparison-only. The committed carrier proves only its schema and recorded agreement axes; reviewer independence requires separate external invocation evidence.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Closed schema for occurrence-bound function, dependency, i'rab, scope, referent, reason, rival, abstention, and escalation facts",
+      "path": "qamus/schemas/nahw-occurrence-fact-bundle.schema.json"
+    },
+    {
+      "description": "Deterministic producer that converts schema-valid carrier records into candidate or unresolved occurrence facts without inferring reviewer independence",
+      "path": "tools/build_nahw_occurrence_facts.py"
+    },
+    {
+      "description": "Red-first wrong-reason, two-vote, surface-safety, rival-preservation, and abstention suite",
+      "path": "tools/test_build_nahw_occurrence_facts.py"
+    },
+    {
+      "description": "Bounded one-object-per-line JSONL fact sample containing the 12 p007 rows and the two independently executed same-surface ma rows",
+      "path": "qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl"
+    },
+    {
+      "description": "Pretty sorted metadata binding canonical surface authority, all evidence and regression fixtures, reason registry, schema, sample, generator id and exact command by SHA-256",
+      "path": "qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json"
+    },
+    {
+      "description": "Measured typed, unresolved, abstained, and escalated fields without corpus-coverage claims",
+      "path": "qamus/reports/nahw-occurrence-facts-w1.md"
+    },
+    {
+      "description": "Full regenerable candidate fact output kept outside tracked artifacts",
+      "path": "out/nahw-occurrence-facts-w1/"
+    }
+  ],
+  "guards": [
+    "The METHOD transfers: exact occurrence binding, registered reason evidence, two-vote validation, rival preservation, and abstention may be reused; no function, governor, scope, referent, meaning, or translation transfers to another occurrence.",
+    "SERIALIZATION 6 OF 7: run only after TP-NAHW-A2-OBSERVATION-PRODUCER, TP-NAHW-A2-HOVER-KEY-SEAT, TP-NAHW-A2-STATE-VOCAB, TP-NAHW-A2-TYPED-WR-BANK, and TP-NAHW-A2-TYPED-STATE-CONSUMER have landed in that exact order and their acceptance tests are green.",
+    "TP-NAHW-A2-PUBLIC-PROJECTION-BRIDGE-W1 must wait until this packet's schema, sample, tests, and report are frozen.",
+    "For every selected occurrence, qamus/indexes/quran-loc-surface/index.jsonl is the exact loc and surface authority and index.manifest.json is the digest and edition contract. Recompute the digest, require one row per loc and exact NFC equality, and fail closed on missing, duplicate, mismatched or stale rows. Page-local or public-payload surface cannot become canonical truth.",
+    "The actual divergence pair is quran:2:284:10 relative מَا from the committed proof-particle contract and quran:93:3:1 negative מَا from the committed v1.1 two-vote canary. Both must execute. The two website payload files are regression oracles only and supply no evidence, reason, identity or canonical surface.",
+    "A correct label with the wrong grammatical reason fails.",
+    "For quran:61:5:4, the fused lām governs the noun host قَوْمِ into jarr and قَالَ is the attachment head for the complete prepositional phrase; those are different relations, and missing evidence for either requires abstention rather than a default.",
+    "tools/validate_two_vote_artifacts.py validates carrier shape and recorded agreement axes only. Session identity, model identity, separate worklists, frozen hashes, and no-cross-access reviewer independence must be proven by external invocation records before any output can move beyond candidate or unresolved.",
+    "No surface-wide gloss, normalized key, or global particle family may substitute for occurrence analysis.",
+    "Agreement is not certification; only tools/certify_typed_fact.py may certify from its own complete evidence bundle, and this packet never calls it.",
+    "Start only from a clean isolated worktree. Freeze HEAD before edits under out/nahw-occurrence-facts-w1/start-sha.txt, retain that immutable start SHA, and compare both tracked and non-ignored untracked paths against the exact six-file repository allowlist. Git diff --check is a separate gate.",
+    "No predecessor A2 file, A3 file, eval bank, reason-key registry, two-vote artifact, certification store, canonical graph, website payload, tools/check_regressions.py, docs/golden-commands.md, or live surface is writable. Shared harness and golden-command registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1."
+  ],
+  "inputs": {
+    "input_files": [
+      "qamus/task-packets/TP-NAHW-A2-OBSERVATION-PRODUCER.json",
+      "qamus/task-packets/TP-NAHW-A2-HOVER-KEY-SEAT.json",
+      "qamus/task-packets/TP-NAHW-A2-STATE-VOCAB.json",
+      "qamus/task-packets/TP-NAHW-A2-TYPED-WR-BANK.json",
+      "qamus/task-packets/TP-NAHW-A2-TYPED-STATE-CONSUMER.json",
+      "qamus/examples/p007-li-pilot/two-vote-artifacts.v1_1.jsonl",
+      "qamus/examples/p007-li-pilot/typed-facts.jsonl",
+      "qamus/examples/proof-particle/particle-contract.json",
+      "qamus/examples/two_vote_artifact_v11_canaries.jsonl",
+      "qamus/examples/website-payloads/ma_relative_2_284_10.payload.json",
+      "qamus/examples/website-payloads/ma_nafiya_93_3_1.payload.json",
+      "qamus/indexes/quran-loc-surface/index.jsonl",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "qamus/schemas/two-vote-artifact.schema.json",
+      "qamus/schemas/typed-claim-contract.schema.json",
+      "qamus/skills/reason-key-registry.jsonl",
+      "nahw/evals/grammar-wrong-reasoning-cases.jsonl",
+      "nahw/evals/governor-dependency-lattice.jsonl",
+      "tools/validate_two_vote_artifacts.py",
+      "tools/run_nahw_evals.py",
+      "tools/fusha_nahw_particle_rules.py",
+      "tools/fusha_nahw_context_rules.py",
+      "nahw/SKILL.md"
+    ],
+    "permitted_write_files": [
+      "qamus/schemas/nahw-occurrence-fact-bundle.schema.json",
+      "tools/build_nahw_occurrence_facts.py",
+      "tools/test_build_nahw_occurrence_facts.py",
+      "qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl",
+      "qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json",
+      "qamus/reports/nahw-occurrence-facts-w1.md",
+      "out/nahw-occurrence-facts-w1/"
+    ],
+    "prohibited_files": [
+      "qamus/data/",
+      "qamus/certification/",
+      "qamus/lattice/",
+      "qamus/skills/reason-key-registry.jsonl",
+      "qamus/examples/p007-li-pilot/",
+      "qamus/examples/website-payloads/",
+      "nahw/evals/",
+      "sarf/",
+      "docs/current-state.yaml",
+      "docs/golden-commands.md",
+      "docs/subsystems/nahw-executable-map.md",
+      "docs/subsystems/largelexicon-as-built.md",
+      "tools/check_regressions.py",
+      "tools/run_nahw_evals.py",
+      "tools/fusha_nahw_particle_rules.py",
+      "tools/fusha_nahw_context_rules.py",
+      "tools/grade_grammar_reasoning.py",
+      "tools/largelexicon_fact_bridge.py",
+      "tools/fact_projectors.py"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "All outputs are candidate or unresolved repository facts. This packet does not certify facts, author public hover or translation text, edit website code, deploy payloads, or contact or mutate any live surface.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-NAHW-A2-OCCURRENCE-FACT-PRODUCER-W1",
+  "provenance": {
+    "authored_by": "PVN owner re-anchor follow-on lane",
+    "cites": [
+      "nahw/SKILL.md",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "qamus/examples/p007-li-pilot/two-vote-artifacts.v1_1.jsonl",
+      "qamus/examples/proof-particle/particle-contract.json",
+      "qamus/schemas/typed-claim-contract.schema.json"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "NAHW_OCCURRENCE_FACT_PRODUCTION",
+    "out_of_scope": [
+      "Do not decide new grammar, create reviewer votes, register a reason key, or certify a fact.",
+      "Do not collapse distinct occurrences of the same surface into one function or gloss.",
+      "Do not edit predecessor A2 files, A3 files, eval banks, registries, canonical graphs, website payloads, renderer code, or live surfaces."
+    ],
+    "summary": "Produce one evidence-bound Naḥw fact bundle per exact occurrence with typed function, dependency, i'rab, scope, referent, reason, rivals, abstention, and escalation fields, while making a correct label with the wrong reason fail.",
+    "tranche": "pvn-reanchor-nahw-wave-1"
+  },
+  "title": "Produce unified occurrence-bound Nahw facts with wrong-reason and abstention gates",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/validate_two_vote_artifacts.py",
+    "tools/validate_task_packets.py",
+    "tools/check_regressions.py"
+  ]
+}

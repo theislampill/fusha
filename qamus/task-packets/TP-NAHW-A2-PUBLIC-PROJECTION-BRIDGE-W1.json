@@ -1,0 +1,274 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "Nahw projection bridge unit suite",
+      "pass_condition": "unittest exits 0 and includes fact-binding, translation-safety, same-surface divergence, public-cleanliness, and dependency-invalidation mutations",
+      "run": "python -m unittest tools.test_project_nahw_occurrence_facts"
+    },
+    {
+      "name": "deterministic sample check",
+      "pass_condition": "exit 0 with NAHW PUBLIC PROJECTION BRIDGE PASS after recomputing the exact Naḥw schema, sample and metadata hashes, Sarf schema, sample and metadata hashes, canonical index and manifest hashes, output schema hash and byte-identical sample",
+      "run": "python tools/project_nahw_occurrence_facts.py --check-sample qamus/examples/nahw-public-projection-w1/projections.sample.jsonl --meta qamus/examples/nahw-public-projection-w1/projections.sample.meta.json --facts qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --facts-meta qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json --facts-schema qamus/schemas/nahw-occurrence-fact-bundle.schema.json --sarf qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json --sarf-meta qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json --sarf-schema qamus/schemas/sarf-two-surface-projection.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json"
+    },
+    {
+      "name": "public boundary scan",
+      "pass_condition": "exit 0 with no source prose, external source label, reviewer-private artifact, private path, credential marker, or machine topology in a learner-facing field; the unit suite must prove each inserted mutation fails closed",
+      "run": "python tools/project_nahw_occurrence_facts.py --check-public-boundary qamus/examples/nahw-public-projection-w1/projections.sample.jsonl"
+    },
+    {
+      "name": "complete repository harness remains green",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS without changing the shared harness; focused-suite registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "frozen start SHA changed paths",
+      "pass_condition": "prints NAHW PUBLIC PROJECTION CHANGED PATHS PASS after comparing tracked and non-ignored untracked paths with the exact packet allowlist from the SHA frozen before edits",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/nahw-public-projection-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"qamus/schemas/nahw-public-projection.schema.json\",\"tools/project_nahw_occurrence_facts.py\",\"tools/test_project_nahw_occurrence_facts.py\",\"qamus/examples/nahw-public-projection-w1/projections.sample.jsonl\",\"qamus/examples/nahw-public-projection-w1/projections.sample.meta.json\",\"qamus/reports/nahw-public-projection-w1.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"NAHW PUBLIC PROJECTION CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\"+repr(unexpected)+\" missing=\"+repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "name": "whitespace diff check",
+      "pass_condition": "git diff --check exits 0 independently of public-cleanliness, generated-artifact, drift and changed-path checks",
+      "run": "git diff --check"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "the same written surface must retain the different relative and negative functions, reason tuples, scopes, referents, meanings, unresolved states and learner projections already emitted for the two exact occurrences",
+        "id": "quran:2:284:10+quran:93:3:1",
+        "source": "qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl",
+        "surface": "مَا"
+      },
+      {
+        "expectation": "removing or invalidating a reason, governor, or occurrence dependency must invalidate the dependent candidate projection rather than falling back to a dictionary gloss",
+        "id": "mutation:nahw-dependency-revoked",
+        "source": "qamus/schemas/typed-claim-contract.schema.json"
+      },
+      {
+        "expectation": "the existing p007 contextual_gloss is not bound to an authorized meaning fact and must remain unresolved rather than becoming contextual meaning or translation",
+        "id": "baseline:p007-unbound-contextual-gloss",
+        "source": "qamus/examples/p007-li-pilot/projections.jsonl"
+      },
+      {
+        "expectation": "mutating either the Sarf or Naḥw upstream metadata hash, or inserting source prose, an external source label, reviewer-private material, a private path, credential marker, or machine topology into any public field must fail closed",
+        "id": "mutation:upstream-hash-or-public-leak",
+        "source": "qamus/examples/nahw-public-projection-w1/projections.sample.meta.json"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "learner-facing function, governor, governed expression, attachment, and case bind to exact fact ids; contextual meaning remains explicitly unresolved unless a separately authorized meaning fact is present",
+        "id": "quran:61:5:4",
+        "source": "qamus/examples/nahw-public-projection-w1/projections.sample.jsonl",
+        "surface": "لِقَوْمِهِۦ"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl",
+    "selection_rule": "all 14 hash-verified occurrence bundles emitted by TP-NAHW-A2-OCCURRENCE-FACT-PRODUCER-W1 in stable occurrence order, including both exact ma divergence rows, joined only to the same occurrence's hash-verified Sarf projection; an absent Sarf row yields an explicit unresolved projection",
+    "this_packet_size": 14,
+    "universe_size": 14
+  },
+  "commands": [
+    {
+      "expect": "prints one immutable 40-character start SHA and writes the same ASCII SHA plus LF under the gitignored packet out directory; any pre-existing tracked or non-ignored untracked change aborts",
+      "purpose": "freeze the clean packet start SHA",
+      "run": "python -c 'from pathlib import Path; import subprocess; dirty=subprocess.check_output([\"git\",\"status\",\"--porcelain\",\"--untracked-files=all\"],text=True).splitlines(); assert not dirty, \"packet requires a clean isolated worktree: \"+repr(dirty); sha=subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(); p=Path(\"out/nahw-public-projection-w1/start-sha.txt\"); p.parent.mkdir(parents=True,exist_ok=True); p.write_bytes((sha+\"\\n\").encode(\"ascii\")); print(sha)'"
+    },
+    {
+      "expect": "red before implementation, then unittest OK with all projection and public-boundary mutations active",
+      "purpose": "run the fact-to-projection bridge tests",
+      "run": "python -m unittest tools.test_project_nahw_occurrence_facts"
+    },
+    {
+      "expect": "exit 0 only after exact Naḥw and Sarf schemas, samples and metadata plus canonical index and manifest hashes verify; candidate public-projection rows and pretty metadata bind every exact upstream and output hash",
+      "purpose": "project occurrence facts into learner-safe candidate fields",
+      "run": "python tools/project_nahw_occurrence_facts.py --facts qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --facts-meta qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json --facts-schema qamus/schemas/nahw-occurrence-fact-bundle.schema.json --sarf qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json --sarf-meta qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json --sarf-schema qamus/schemas/sarf-two-surface-projection.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --out out/nahw-public-projection-w1 --sample-out qamus/examples/nahw-public-projection-w1/projections.sample.jsonl --meta-out qamus/examples/nahw-public-projection-w1/projections.sample.meta.json"
+    },
+    {
+      "expect": "NAHW PUBLIC PROJECTION BRIDGE PASS, every record schema-valid, every upstream and authority hash current, and regeneration byte-identical",
+      "purpose": "validate the closed output schema and verify deterministic regeneration",
+      "run": "python tools/project_nahw_occurrence_facts.py --check-sample qamus/examples/nahw-public-projection-w1/projections.sample.jsonl --meta qamus/examples/nahw-public-projection-w1/projections.sample.meta.json --facts qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --facts-meta qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json --facts-schema qamus/schemas/nahw-occurrence-fact-bundle.schema.json --sarf qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json --sarf-meta qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json --sarf-schema qamus/schemas/sarf-two-surface-projection.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json"
+    },
+    {
+      "expect": "exit 0 and zero public-boundary findings",
+      "purpose": "scan learner-facing fields",
+      "run": "python tools/project_nahw_occurrence_facts.py --check-public-boundary qamus/examples/nahw-public-projection-w1/projections.sample.jsonl"
+    },
+    {
+      "expect": "ALL REGRESSION CHECKS PASS without editing tools/check_regressions.py; TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 owns the later one-time registration",
+      "purpose": "run the current complete repository harness read-only",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "expect": "NAHW PUBLIC PROJECTION CHANGED PATHS PASS with exactly the schema, bridge, focused test, sample, metadata and report paths changed from the frozen start SHA",
+      "purpose": "enforce tracked and untracked path custody",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/nahw-public-projection-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"qamus/schemas/nahw-public-projection.schema.json\",\"tools/project_nahw_occurrence_facts.py\",\"tools/test_project_nahw_occurrence_facts.py\",\"qamus/examples/nahw-public-projection-w1/projections.sample.jsonl\",\"qamus/examples/nahw-public-projection-w1/projections.sample.meta.json\",\"qamus/reports/nahw-public-projection-w1.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"NAHW PUBLIC PROJECTION CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\"+repr(unexpected)+\" missing=\"+repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "expect": "exit 0 with no whitespace errors",
+      "purpose": "verify diff hygiene separately",
+      "run": "git diff --check"
+    }
+  ],
+  "defeaters": [
+    "a learner statement with no exact fact id, fact field, occurrence id, and surface-span binding",
+    "a contextual translation sourced only from a dictionary gloss, surface gloss, root family, or page context",
+    "a projection that hides an unresolved rival, reason disagreement, scope question, referent question, or dependency failure",
+    "an invalidated input fact that leaves a dependent projection active",
+    "source prose, an external source label, a private reviewer artifact, a private path, or machine topology in any public field"
+  ],
+  "definition_of_done": [
+    "every learner-facing statement binds to the exact occurrence fact ids, fact fields, and surface spans that authorize it",
+    "contextual translation is emitted only when authorized contextual facts are present; otherwise it is explicitly unresolved",
+    "same-surface distinct occurrences remain independent and no surface-wide gloss is introduced",
+    "dependency removal or invalidation deterministically invalidates the dependent candidate projection",
+    "all public fields are source-clean and red-first mutations inserting source prose, external labels, reviewer-private material, private paths, credentials or topology fail; all outputs remain candidate or unresolved",
+    "the bridge refuses to run unless the exact Naḥw schema, sample and metadata, Sarf schema, sample and metadata, and canonical index and manifest hashes match; its pretty metadata binds those artifacts, the output schema and sample by SHA-256",
+    "TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 is the sole future writer that may register this focused suite in tools/check_regressions.py or update docs/golden-commands.md; this packet changes neither shared file",
+    "all acceptance tests pass, the frozen-start-SHA tracked-plus-untracked allowlist passes, git diff --check passes separately, and no file outside the permitted write set changed"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "a learner statement cannot be bound to exact occurrence facts and spans",
+      "a contextual translation needs a fact that is candidate, disputed, revoked, or absent",
+      "Sarf and Naḥw inputs disagree on occurrence identity, surface, segment identity, or projection hash",
+      "a public-boundary scan finds source prose, an external source name, a private artifact, path, or topology"
+    ],
+    "route": "stop the affected projection, preserve an unresolved candidate with the exact blocker in qamus/reports/nahw-public-projection-w1.md, and route the missing fact to the A1, A2, source-review, or scholar lane that owns it"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If a learner-facing field lacks an exact authorized fact binding, leave it unresolved. Never convert a surface gloss, dictionary gloss, root relation, page context, or candidate fact into contextual meaning or translation.",
+    "statement": "The bridge consumes and hash-verifies the exact occurrence-bound Naḥw schema, sample and metadata, Sarf schema, sample and metadata, and canonical surface authority. It preserves their states and dependencies and emits source-clean candidate projection inputs whose learner statements are mechanically traceable to fact ids and spans.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Closed schema for occurrence-bound learner statements, exact fact and span bindings, unresolved translation state, rivals, dependencies, and invalidation state",
+      "path": "qamus/schemas/nahw-public-projection.schema.json"
+    },
+    {
+      "description": "Deterministic adapter from exact occurrence facts to source-clean learner projection inputs",
+      "path": "tools/project_nahw_occurrence_facts.py"
+    },
+    {
+      "description": "Red-first fact-binding, translation, same-surface, invalidation, and public-cleanliness suite",
+      "path": "tools/test_project_nahw_occurrence_facts.py"
+    },
+    {
+      "description": "Bounded one-object-per-line candidate projection sample with independently preserved same-surface occurrences and unresolved examples",
+      "path": "qamus/examples/nahw-public-projection-w1/projections.sample.jsonl"
+    },
+    {
+      "description": "Pretty sorted metadata binding exact Naḥw and Sarf upstream schemas, samples and metadata, canonical index and manifest, output schema, sample, generator id and command by SHA-256",
+      "path": "qamus/examples/nahw-public-projection-w1/projections.sample.meta.json"
+    },
+    {
+      "description": "Measured projection eligibility, unresolved reasons, translation safety, and public-boundary report",
+      "path": "qamus/reports/nahw-public-projection-w1.md"
+    },
+    {
+      "description": "Full regenerable candidate projection output kept outside tracked artifacts",
+      "path": "out/nahw-public-projection-w1/"
+    }
+  ],
+  "guards": [
+    "The METHOD transfers: exact fact-to-claim binding, contextual translation safety, public cleanliness, and dependency invalidation may be reused; no occurrence conclusion transfers by surface, root, lexeme, or page resemblance.",
+    "SERIALIZATION 7 OF 7: run only after TP-NAHW-A2-OCCURRENCE-FACT-PRODUCER-W1 and TP-SARF-PROJECTION-ELIGIBILITY-PARITY-W1 pass all acceptance tests and their samples are hash-frozen.",
+    "Before projection, recompute and match the exact SHA-256 values for the Naḥw schema, facts.sample.jsonl and facts.sample.meta.json and the Sarf schema, projection-parity.sample.json and projection-parity.sample.meta.json. Then verify both upstream metadata contracts bind the current canonical index and manifest. Packet ordering alone is insufficient.",
+    "This packet builds candidate projection inputs only; TP-PVN-A4-CANONICAL-REGEN-W1 owns website-compatible payload generation.",
+    "A dictionary or surface gloss never becomes an occurrence translation without authorized contextual facts.",
+    "Every learner statement carries exact fact, field, occurrence, and span bindings; unresolved rivals remain visible.",
+    "Candidate and unresolved states never become certified or learner-deployed states.",
+    "Public cleanliness is a mutation-tested gate in both the Sarf hover compiler and this bridge. Source prose, external source labels, reviewer-private artifacts, private paths, credential markers and machine topology fail closed.",
+    "Start only from a clean isolated worktree. Freeze HEAD before edits under out/nahw-public-projection-w1/start-sha.txt, retain that immutable start SHA, and compare both tracked and non-ignored untracked paths against the exact six-file repository allowlist. Git diff --check is a separate gate.",
+    "No predecessor A1 or A2 file, A3 file, fact ledger implementation, projector implementation, canonical graph, existing website payload, renderer, tools/check_regressions.py, docs/golden-commands.md, or live surface is writable. Shared harness and golden-command registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1."
+  ],
+  "inputs": {
+    "input_files": [
+      "qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl",
+      "qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json",
+      "qamus/schemas/nahw-occurrence-fact-bundle.schema.json",
+      "qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json",
+      "qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json",
+      "qamus/schemas/sarf-two-surface-projection.schema.json",
+      "qamus/indexes/quran-loc-surface/index.jsonl",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "qamus/schemas/typed-claim-contract.schema.json",
+      "qamus/schemas/public-hover-projection.schema.json",
+      "qamus/examples/p007-li-pilot/projections.jsonl",
+      "qamus/examples/particle_projection_parity.sample.json",
+      "tools/fact_ledger.py",
+      "tools/fact_projectors.py",
+      "docs/architecture/two-surface-contract.md",
+      "docs/architecture/translation-projection.md",
+      "docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md"
+    ],
+    "permitted_write_files": [
+      "qamus/schemas/nahw-public-projection.schema.json",
+      "tools/project_nahw_occurrence_facts.py",
+      "tools/test_project_nahw_occurrence_facts.py",
+      "qamus/examples/nahw-public-projection-w1/projections.sample.jsonl",
+      "qamus/examples/nahw-public-projection-w1/projections.sample.meta.json",
+      "qamus/reports/nahw-public-projection-w1.md",
+      "out/nahw-public-projection-w1/"
+    ],
+    "prohibited_files": [
+      "qamus/data/",
+      "qamus/certification/",
+      "qamus/lattice/",
+      "qamus/skills/",
+      "qamus/examples/p007-li-pilot/",
+      "qamus/examples/website-payloads/",
+      "nahw/evals/",
+      "sarf/evals/",
+      "docs/current-state.yaml",
+      "docs/golden-commands.md",
+      "docs/subsystems/nahw-executable-map.md",
+      "docs/subsystems/largelexicon-as-built.md",
+      "tools/check_regressions.py",
+      "tools/run_nahw_evals.py",
+      "tools/fusha_nahw_particle_rules.py",
+      "tools/fusha_nahw_context_rules.py",
+      "tools/fact_ledger.py",
+      "tools/fact_projectors.py",
+      "tools/largelexicon_fact_bridge.py"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "All outputs are candidate or unresolved repository projection inputs. This packet does not certify facts, write website payloads, edit renderer code, deploy content, or contact or mutate any live surface.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-NAHW-A2-PUBLIC-PROJECTION-BRIDGE-W1",
+  "provenance": {
+    "authored_by": "PVN owner re-anchor follow-on lane",
+    "cites": [
+      "docs/architecture/two-surface-contract.md",
+      "docs/architecture/translation-projection.md",
+      "qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json",
+      "qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json",
+      "qamus/schemas/typed-claim-contract.schema.json"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "NAHW_FACT_TO_PUBLIC_PROJECTION",
+    "out_of_scope": [
+      "Do not create or deploy website payloads; A4 owns candidate payload generation and the website agent owns rendering.",
+      "Do not author new grammar, translation, entry identity, sense identity, or page-local analysis.",
+      "Do not edit predecessor artifacts, A2 or A3 files, fact ledgers, projector registries, canonical graphs, existing website samples, renderer code, or live surfaces."
+    ],
+    "summary": "Bridge exact occurrence-bound Naḥw facts into source-clean rich-hover and contextual-translation candidate fields with complete fact bindings, preserved uncertainty, dependency invalidation, and no surface-wide gloss fallback.",
+    "tranche": "pvn-reanchor-nahw-wave-1"
+  },
+  "title": "Bridge occurrence-bound Nahw facts to source-clean candidate pedagogy and translation fields",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/validate_task_packets.py",
+    "tools/check_regressions.py"
+  ]
+}

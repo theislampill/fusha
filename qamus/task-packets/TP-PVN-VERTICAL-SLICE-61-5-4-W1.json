@@ -1,0 +1,374 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "vertical and owner-binding unit suites",
+      "pass_condition": "unittest exits 0 and exercises owner-event binding, missing and empty stores, hash-chain drift, stale or conflicting terminal records, transclusion, exact A4 inputs, evidence hashes, parity, reverse trace, dogfood, public cleanliness, and revocation",
+      "run": "python -B -m unittest tools.test_validate_pvn_61_5_4_owner_certification_binding tools.test_build_pvn_vertical_slice_61_5_4"
+    },
+    {
+      "name": "read-only owner certification binding",
+      "pass_condition": "exit 0 without creating or changing any file and only when exactly the two owner-metadata-targeted quran:61:5:4 facts are current, certified, non-revoked, and completely hash-bound",
+      "run": "python -B tools/validate_pvn_61_5_4_owner_certification_binding.py --occurrence-id quran:61:5:4 --owner-packet qamus/task-packets/TP-PVN-61-5-4-OWNER-CERTIFICATION-W1.json --events qamus/certification/typed-fact-store/events.jsonl --event-schema qamus/schemas/certification-event.schema.json --binding-meta qamus/certification/typed-fact-store/pvn-61-5-4-owner-certifications.meta.json --binding-meta-schema qamus/schemas/pvn-61-5-4-owner-certifications-meta.schema.json --radical-evidence qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl --radical-evidence-meta qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json --context-evidence qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl --context-evidence-meta qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json"
+    },
+    {
+      "name": "P007 frozen-tree byte identity",
+      "pass_condition": "exit 0 only when the start-SHA tree entry set and every tracked blob byte match the working tree, no non-ignored untracked addition exists, and the deterministic tree digest is recorded in the vertical manifest",
+      "run": "python -B tools/build_pvn_vertical_slice_61_5_4.py --verify-readonly-tree --start-sha-file out/pvn-vertical-slice-61-5-4/start-sha.txt --path qamus/examples/p007-li-pilot"
+    },
+    {
+      "name": "deterministic vertical sample",
+      "pass_condition": "exit 0 with PVN 61 5 4 PASS, exact A4 and evidence dependencies, byte-identical tracked outputs, one canonical product artifact, four appearance envelopes, colour-hover parity, reverse trace, dogfood uptake, and no stale hash",
+      "run": "python -B tools/build_pvn_vertical_slice_61_5_4.py --check-sample qamus/examples/pvn-vertical-slice-61-5-4/manifest.json"
+    },
+    {
+      "name": "appearance payload set",
+      "pass_condition": "exit 0 only for the exact four appearance ids, one canonical projection hash per compiled state, four distinct appearance-binding hashes, exact displayed surfaces and maps, candidate renderer-acceptance state, and public_projection_eligible false",
+      "run": "python -B tools/build_pvn_vertical_slice_61_5_4.py --validate-appearance-payload-set --occurrence-id quran:61:5:4 --appearances qamus/lattice/example-ayah-universe.jsonl --payloads qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/01133eb5431b_u0_x1_w3.payload.json qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/3041d6f44a27_u11_x1_w3.payload.json qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/65d3d5c51f24_u0_x2_w3.payload.json qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json"
+    },
+    {
+      "name": "preinstalled conditional harness",
+      "pass_condition": "the complete harness detects materialization, requires all vertical implementation artifacts, runs both exact vertical test modules and the sample drift check, and ends ALL REGRESSION CHECKS PASS",
+      "run": "python -B tools/check_regressions.py"
+    },
+    {
+      "name": "exact vertical changed paths",
+      "pass_condition": "exit 0 only when every tracked or non-ignored untracked change from the frozen clean start is inside the exact vertical permitted set and all required tracked outputs materialized",
+      "run": "python -B -c \"from pathlib import Path; import subprocess,sys; start=Path('out/pvn-vertical-slice-61-5-4/start-sha.txt').read_text(encoding='ascii').strip(); exact={'tools/validate_pvn_61_5_4_owner_certification_binding.py','tools/test_validate_pvn_61_5_4_owner_certification_binding.py','tools/build_pvn_vertical_slice_61_5_4.py','tools/test_build_pvn_vertical_slice_61_5_4.py','qamus/reports/pvn-vertical-slice-61-5-4.md'}; prefix='qamus/examples/pvn-vertical-slice-61-5-4/'; outputs={prefix+'manifest.json',prefix+'website-payloads/01133eb5431b_u0_x1_w3.payload.json',prefix+'website-payloads/3041d6f44a27_u11_x1_w3.payload.json',prefix+'website-payloads/65d3d5c51f24_u0_x2_w3.payload.json',prefix+'website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json'}; required=exact|outputs; changed=set(subprocess.check_output(['git','diff','--name-only',start,'--'],text=True).splitlines())|set(subprocess.check_output(['git','ls-files','--others','--exclude-standard'],text=True).splitlines()); bad=sorted(x for x in changed if x not in exact and not x.startswith(prefix)); missing=sorted(required-changed); missing_files=sorted(p for p in required if not Path(p).is_file()); ok=not bad and not missing and not missing_files; print('PVN VERTICAL PATH SCOPE '+('PASS' if ok else 'FAIL bad='+repr(bad)+' missing='+repr(missing)+' missing_files='+repr(missing_files))); sys.exit(0 if ok else 1)\""
+    },
+    {
+      "name": "vertical whitespace integrity",
+      "pass_condition": "git diff --check exits 0",
+      "run": "git diff --check"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "any missing appearance, duplicate appearance id, projection mismatch, displayed-surface mismatch, incomplete map, or appearance-binding collision fails",
+        "id": "quran:61:5:4:appearance-set",
+        "source": "qamus/lattice/example-ayah-universe.jsonl"
+      },
+      {
+        "expectation": "a root-family edge, candidate stem or pronoun alternative, or page context never becomes entry identity, certified ownership, contextual meaning, or translation",
+        "id": "quran:61:5:4:identity-boundary",
+        "source": "qamus/examples/pvn-canonical-regeneration-w1/canonical-occurrence-quran-61-5-4.json"
+      },
+      {
+        "expectation": "candidate, review_required, evidence-ready-only, revoked, stale, duplicate, or conflicting owner records fail before product compilation",
+        "id": "mutation:owner-binding-state",
+        "source": "qamus/certification/typed-fact-store/pvn-61-5-4-owner-certifications.meta.json"
+      },
+      {
+        "expectation": "a semantically valid but byte-modified P007 fixture, changed tree entry set, or untracked addition fails the frozen-tree gate",
+        "id": "mutation:p007-readonly-tree",
+        "source": "qamus/examples/p007-li-pilot/"
+      },
+      {
+        "expectation": "revoking either source fact invalidates the compiled projection, all four appearances, reverse trace, dogfood eligibility, contextual output, and website payload eligibility",
+        "id": "mutation:source-revoked",
+        "source": "qamus/schemas/certification-event.schema.json"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "after every named missing input is integrated and exact owner binding validates, one occurrence-bound artifact compiles colour and hover together, preserves root-versus-affix and contextual facts only to their certified evidence strength, transcludes to four appearances, closes reverse trace and dogfood, and emits source-clean candidate payloads",
+        "id": "quran:61:5:4",
+        "source": "qamus/examples/pvn-canonical-regeneration-w1/canonical-occurrence-quran-61-5-4.json",
+        "surface": "لِقَوْمِهِۦ"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "qamus/lattice/example-ayah-universe.occurrences.jsonl",
+    "selection_rule": "select the single exact occurrence_id quran:61:5:4 from the 50041-occurrence source universe, then join only its four exact appearance ids, canonical loc-surface authority, A4 artifacts, hash-bound evidence, and owner-certified fact bindings; never select by surface alone",
+    "this_packet_size": 1,
+    "universe_size": 50041
+  },
+  "commands": [
+    {
+      "expect": "exit 0 from a clean worktree; the dispatch HEAD is written before any permitted source output is changed",
+      "purpose": "freeze the start SHA",
+      "run": "python -B -c \"from pathlib import Path; import subprocess,sys; dirty=subprocess.check_output(['git','status','--porcelain'],text=True); dirty and sys.exit('dirty dispatch tree: '+dirty); p=Path('out/pvn-vertical-slice-61-5-4/start-sha.txt'); p.parent.mkdir(parents=True,exist_ok=True); p.write_bytes((subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()+'\\n').encode('ascii'))\""
+    },
+    {
+      "expect": "red before implementation, then unittest OK",
+      "purpose": "run the exact vertical test modules",
+      "run": "python -B -m unittest tools.test_validate_pvn_61_5_4_owner_certification_binding tools.test_build_pvn_vertical_slice_61_5_4"
+    },
+    {
+      "expect": "exit 0 without writing; exactly two current owner-targeted facts are certified, non-revoked, and fully bound",
+      "purpose": "validate owner certification binding",
+      "run": "python -B tools/validate_pvn_61_5_4_owner_certification_binding.py --occurrence-id quran:61:5:4 --owner-packet qamus/task-packets/TP-PVN-61-5-4-OWNER-CERTIFICATION-W1.json --events qamus/certification/typed-fact-store/events.jsonl --event-schema qamus/schemas/certification-event.schema.json --binding-meta qamus/certification/typed-fact-store/pvn-61-5-4-owner-certifications.meta.json --binding-meta-schema qamus/schemas/pvn-61-5-4-owner-certifications-meta.schema.json --radical-evidence qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl --radical-evidence-meta qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json --context-evidence qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl --context-evidence-meta qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json"
+    },
+    {
+      "expect": "exit 0 with exact start-SHA P007 tree and blob identity",
+      "purpose": "prove P007 remained byte-identical",
+      "run": "python -B tools/build_pvn_vertical_slice_61_5_4.py --verify-readonly-tree --start-sha-file out/pvn-vertical-slice-61-5-4/start-sha.txt --path qamus/examples/p007-li-pilot"
+    },
+    {
+      "expect": "exit 0 with a bounded owner-gated candidate product chain and four exact appearance payloads",
+      "purpose": "build the vertical slice from exact inputs",
+      "run": "python -B tools/build_pvn_vertical_slice_61_5_4.py --occurrence-id quran:61:5:4 --a4-run-manifest qamus/examples/pvn-canonical-regeneration-w1/run-manifest.json --a4-canonical-occurrence qamus/examples/pvn-canonical-regeneration-w1/canonical-occurrence-quran-61-5-4.json --a4-appearance-dispositions qamus/examples/pvn-canonical-regeneration-w1/appearance-dispositions.sample.jsonl --a4-appearance-dispositions-meta qamus/examples/pvn-canonical-regeneration-w1/appearance-dispositions.sample.meta.json --a4-appearance-disposition-schema qamus/schemas/pvn-appearance-disposition.schema.json --a4-payload qamus/examples/pvn-canonical-regeneration-w1/website-payloads/01133eb5431b_u0_x1_w3.payload.json --a4-payload qamus/examples/pvn-canonical-regeneration-w1/website-payloads/3041d6f44a27_u11_x1_w3.payload.json --a4-payload qamus/examples/pvn-canonical-regeneration-w1/website-payloads/65d3d5c51f24_u0_x2_w3.payload.json --a4-payload qamus/examples/pvn-canonical-regeneration-w1/website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json --appearances qamus/lattice/example-ayah-universe.jsonl --loc-surface-index qamus/indexes/quran-loc-surface/index.jsonl --loc-surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --website-contract docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md --website-validator tools/validate_website_payload.py --radical-evidence qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl --radical-evidence-meta qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json --radical-evidence-schema qamus/schemas/sarf-61-5-4-radical-ownership-evidence.schema.json --radical-evidence-meta-schema qamus/schemas/sarf-61-5-4-radical-ownership-evidence-meta.schema.json --context-evidence qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl --context-evidence-meta qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json --context-evidence-schema qamus/schemas/nahw-61-5-4-contextual-meaning-evidence.schema.json --context-evidence-meta-schema qamus/schemas/nahw-61-5-4-contextual-meaning-evidence-meta.schema.json --owner-cert-packet qamus/task-packets/TP-PVN-61-5-4-OWNER-CERTIFICATION-W1.json --owner-cert-events qamus/certification/typed-fact-store/events.jsonl --owner-cert-event-schema qamus/schemas/certification-event.schema.json --owner-cert-meta qamus/certification/typed-fact-store/pvn-61-5-4-owner-certifications.meta.json --owner-cert-meta-schema qamus/schemas/pvn-61-5-4-owner-certifications-meta.schema.json --two-vote-worker-schema qamus/schemas/two-vote-worker-record.schema.json --two-vote-worker-validator tools/validate_two_vote_worker_records.py --start-sha-file out/pvn-vertical-slice-61-5-4/start-sha.txt --p007-readonly-tree qamus/examples/p007-li-pilot --out out/pvn-vertical-slice-61-5-4 --sample-out qamus/examples/pvn-vertical-slice-61-5-4"
+    },
+    {
+      "expect": "PVN 61 5 4 PASS with byte-identical tracked output and current dependency hashes",
+      "purpose": "check deterministic slice regeneration",
+      "run": "python -B tools/build_pvn_vertical_slice_61_5_4.py --check-sample qamus/examples/pvn-vertical-slice-61-5-4/manifest.json"
+    },
+    {
+      "expect": "exit 0 with all four appearance payloads independently source-clean and contract-valid",
+      "purpose": "validate website candidate payloads",
+      "run": "python -B tools/validate_website_payload.py qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/01133eb5431b_u0_x1_w3.payload.json qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/3041d6f44a27_u11_x1_w3.payload.json qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/65d3d5c51f24_u0_x2_w3.payload.json qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json"
+    },
+    {
+      "expect": "exit 0 with exact ids, local surfaces and maps, one canonical projection hash, and four distinct binding hashes",
+      "purpose": "validate the payload set",
+      "run": "python -B tools/build_pvn_vertical_slice_61_5_4.py --validate-appearance-payload-set --occurrence-id quran:61:5:4 --appearances qamus/lattice/example-ayah-universe.jsonl --payloads qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/01133eb5431b_u0_x1_w3.payload.json qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/3041d6f44a27_u11_x1_w3.payload.json qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/65d3d5c51f24_u0_x2_w3.payload.json qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json"
+    },
+    {
+      "expect": "ALL REGRESSION CHECKS PASS and the preinstalled all-or-nothing vertical gate executes",
+      "purpose": "run the complete repository harness",
+      "run": "python -B tools/check_regressions.py"
+    },
+    {
+      "expect": "exit 0 only when all changes are inside the exact vertical allowlist and every required tracked output exists in the changed set",
+      "purpose": "verify the frozen-start vertical path scope",
+      "run": "python -B -c \"from pathlib import Path; import subprocess,sys; start=Path('out/pvn-vertical-slice-61-5-4/start-sha.txt').read_text(encoding='ascii').strip(); exact={'tools/validate_pvn_61_5_4_owner_certification_binding.py','tools/test_validate_pvn_61_5_4_owner_certification_binding.py','tools/build_pvn_vertical_slice_61_5_4.py','tools/test_build_pvn_vertical_slice_61_5_4.py','qamus/reports/pvn-vertical-slice-61-5-4.md'}; prefix='qamus/examples/pvn-vertical-slice-61-5-4/'; outputs={prefix+'manifest.json',prefix+'website-payloads/01133eb5431b_u0_x1_w3.payload.json',prefix+'website-payloads/3041d6f44a27_u11_x1_w3.payload.json',prefix+'website-payloads/65d3d5c51f24_u0_x2_w3.payload.json',prefix+'website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json'}; required=exact|outputs; changed=set(subprocess.check_output(['git','diff','--name-only',start,'--'],text=True).splitlines())|set(subprocess.check_output(['git','ls-files','--others','--exclude-standard'],text=True).splitlines()); bad=sorted(x for x in changed if x not in exact and not x.startswith(prefix)); missing=sorted(required-changed); missing_files=sorted(p for p in required if not Path(p).is_file()); ok=not bad and not missing and not missing_files; print('PVN VERTICAL PATH SCOPE '+('PASS' if ok else 'FAIL bad='+repr(bad)+' missing='+repr(missing)+' missing_files='+repr(missing_files))); sys.exit(0 if ok else 1)\""
+    },
+    {
+      "expect": "no whitespace errors",
+      "purpose": "check the bounded vertical diff",
+      "run": "git diff --check"
+    }
+  ],
+  "defeaters": [
+    "a page-local analysis or payload replacing the canonical occurrence artifact",
+    "an A4 directory accepted without exact manifest, artifact, disposition, payload, contract, and validator hashes",
+    "surface, root family, form, page context, colour, candidate alternative, or evidence-ready state promoted to certified identity, function, meaning, or translation",
+    "a correct fact value with a mismatched evidence row, reason tuple, producer packet, owner authorization, event hash, or trail head",
+    "three resolved morphemes or the boundary at offset 8 asserted merely because current P007 alternatives mention them",
+    "semantic-only P007 validation without frozen tree-entry and byte identity",
+    "four individually valid payloads that duplicate an appearance id, disagree on projection identity, or use incompatible local maps",
+    "rich-at-rest and hover generated from different product artifacts or identities",
+    "source prose, reviewer-private material, private paths, machine topology, credentials, or model-private output in public candidate fields"
+  ],
+  "definition_of_done": [
+    "the packet remains non-dispatchable until the harness packet, integrated A4 exact outputs, evidence producers, exact two-vote proof, and separately owner-authorized certification packet and artifacts all exist and validate",
+    "the read-only owner validator never creates files, rejects missing or empty stores, validates the complete existing hash chain, and binds exactly the two owner-metadata-targeted quran:61:5:4 facts to current certified non-revoked terminal state",
+    "the radical evidence metadata binds its exact upstream ownership row, schema, artifact, packet, loc-surface index, and manifest hashes",
+    "the contextual evidence metadata binds the ordered unique 61:5:1 through 61:5:23 loc-surface rows, index and manifest hashes, exact integrated A2 fact and projection artifact hashes, and independent raw Opus and Sonnet proof",
+    "the builder recomputes every input hash and verifies the A4 manifest's website contract and validator hashes before reuse",
+    "the A4 input carries one canonical projection identity and four distinct appearance-binding hashes with exact local surfaces and closed span maps; the vertical output preserves one shared compiled projection identity and four distinct binding hashes",
+    "the vertical product claims root-versus-affix ownership, Naḥw, contextual meaning, translation, and pedagogy only where exact integrated evidence and owner certification support them; unsupported boundary, stem, and pronoun alternatives remain unresolved",
+    "colour and hover compile from the same product artifact, all four P V N appearances transclude it without page-local forks, and reverse trace, dogfood, public-source cleanliness, and revocation are executable",
+    "P007 semantic validation and frozen start-SHA tree-entry and blob-byte identity both pass, with the deterministic tree digest recorded in the manifest",
+    "the preinstalled harness conditional sees vertical materialization, requires every implementation artifact, runs both named test modules and the sample check, and passes without this packet editing shared files",
+    "all outputs remain candidate-only, no existing certification or P007 artifact changes, and no website code, deployment, live site, or live data is touched",
+    "the clean dispatch SHA is frozen before implementation and the tracked-plus-non-ignored-untracked changed set is confined to the exact vertical permitted files and sample prefix"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "TP-PVN-61-5-4-OWNER-CERTIFICATION-W1 or any named event, metadata, schema, evidence, A4, context, two-vote, or harness input is absent",
+      "the ordered 61:5 context rows are missing, duplicated, surface-mismatched, or hash-drifted",
+      "independent raw Opus and Sonnet proof is absent, model-substituted, mutually visible, or stale",
+      "the owner-binding validator sees missing, empty, candidate, review_required, evidence-ready-only, revoked, stale, duplicate, or conflicting terminal state",
+      "the exact A4 artifact cannot support a claimed public projection without inventing an inner morpheme boundary or other linguistic conclusion",
+      "P007 differs by tree entry, tracked blob byte, or non-ignored untracked addition",
+      "the slice needs a new linguistic conclusion, certification decision, reviewer vote, reason key, or scholar adjudication",
+      "the conditional harness is absent, partial, glob-based, or silently skips a materialized vertical artifact"
+    ],
+    "route": "stop with SOURCE_GAP, preserve the last complete candidate run under out/pvn-vertical-slice-61-5-4, record the exact missing or conflicting dependency in qamus/reports/pvn-vertical-slice-61-5-4.md, and route it to the owning A2, A3, A4, two-vote, owner-certification, scholar, source-boundary, or harness lane"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "Use only the exact integrated A4 files, hash-bound radical and contextual evidence, validated independent worker proof, and separately owner-authorized certification events. If any dependency or exact linguistic binding is absent or disputed, end SOURCE_GAP; never author a replacement conclusion or treat evidence-ready state as certification.",
+    "statement": "This slice is a deterministic product-chain proof over one canonical occurrence. Every public segment, fact, explanation, entry relation, appearance binding, contextual output, reverse edge, dogfood event, and payload field traces to the same product artifact and exact current dependency hashes.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Read-only exact owner-certification binding validator",
+      "path": "tools/validate_pvn_61_5_4_owner_certification_binding.py"
+    },
+    {
+      "description": "Red-first owner-binding validator tests",
+      "path": "tools/test_validate_pvn_61_5_4_owner_certification_binding.py"
+    },
+    {
+      "description": "Deterministic complete product-chain builder",
+      "path": "tools/build_pvn_vertical_slice_61_5_4.py"
+    },
+    {
+      "description": "Red-first product-chain, parity, trace, dogfood, payload, and revocation tests",
+      "path": "tools/test_build_pvn_vertical_slice_61_5_4.py"
+    },
+    {
+      "description": "Hash-bound vertical slice manifest including P007 frozen-tree digest",
+      "path": "qamus/examples/pvn-vertical-slice-61-5-4/manifest.json"
+    },
+    {
+      "description": "Candidate payload for appearance 01133eb5431b:u0:x1:w3",
+      "path": "qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/01133eb5431b_u0_x1_w3.payload.json"
+    },
+    {
+      "description": "Candidate payload for appearance 3041d6f44a27:u11:x1:w3",
+      "path": "qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/3041d6f44a27_u11_x1_w3.payload.json"
+    },
+    {
+      "description": "Candidate payload for appearance 65d3d5c51f24:u0:x2:w3",
+      "path": "qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/65d3d5c51f24_u0_x2_w3.payload.json"
+    },
+    {
+      "description": "Candidate payload for appearance 7f1f8b8e29e6:u0:x0:w3",
+      "path": "qamus/examples/pvn-vertical-slice-61-5-4/website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json"
+    },
+    {
+      "description": "Product-chain report with separate denominators and exact unresolved blockers",
+      "path": "qamus/reports/pvn-vertical-slice-61-5-4.md"
+    },
+    {
+      "description": "Dispatch HEAD, full candidate run, validation evidence, and private non-secret execution records",
+      "path": "out/pvn-vertical-slice-61-5-4/"
+    }
+  ],
+  "guards": [
+    "The METHOD transfers: exact canonical binding, transclusion, evidence checks, two-surface parity, reverse tracing, dogfood linkage, and revocation may be reused; linguistic conclusions never transfer.",
+    "This packet runs only after integrated A4 and TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1. It never edits tools/check_regressions.py or docs/golden-commands.md.",
+    "CURRENT SOURCE_GAP: qamus/task-packets/TP-PVN-61-5-4-OWNER-CERTIFICATION-W1.json and its event, metadata, and metadata-schema outputs are absent. This packet is non-dispatchable until the owner explicitly authors, authorizes, integrates, and validates them.",
+    "Owner validation is read-only: it never creates a directory or file, rejects a missing or empty event store, validates the complete existing hash chain, and permits unrelated facts elsewhere while requiring exactly the two facts named in owner metadata for this occurrence.",
+    "Each targeted fact binds the certification event, evidence row, evidence metadata, all governing schemas, producer packet hash, owner authorization actor and record, exact fact value, structured reason tuple, store trail head, and current non-revoked state.",
+    "Candidate, review_required, evidence-ready-only, stale, duplicate, extra conflicting terminal, or revoked target records fail SOURCE_GAP.",
+    "Context metadata binds ordered unique canonical rows 61:5:1 through 61:5:23 from qamus/indexes/quran-loc-surface/index.jsonl, the raw-byte hashes of that index and its manifest, and exact integrated A2 fact and public-projection artifacts. Missing or duplicate rows, digest drift, or wrong target surface blocks dispatch.",
+    "Contextual review also binds raw independent Opus 5 and Sonnet 5 worker records through qamus/schemas/two-vote-worker-record.schema.json and tools/validate_two_vote_worker_records.py. Sessions are distinct, neither worker sees the other's submission, and raw metadata proves the actual selected model.",
+    "Radical evidence metadata binds the exact upstream ownership producer row, schema, artifact, metadata, packet, loc-surface index, and manifest hashes.",
+    "The builder consumes exact A4 manifest, canonical occurrence, disposition rows and metadata, disposition schema, and four payload envelopes. Directory-only acceptance is forbidden.",
+    "The builder recomputes every raw-byte hash and confirms the website contract and validator hashes recorded in the A4 manifest.",
+    "A4 currently supports only neutral primary canonical spans 0:2 with mocc:p007:61:5:4 and 2:11 with null morpheme identity. The shorter appearances map these to 0:2 and 2:10. Offset 8, stem identity, and possessive-pronoun identity remain candidate alternatives unless exact integrated evidence and owner certification support a richer compiled state.",
+    "The four authoritative appearances are exactly 01133eb5431b:u0:x1:w3, 3041d6f44a27:u11:x1:w3, 65d3d5c51f24:u0:x2:w3, and 7f1f8b8e29e6:u0:x0:w3.",
+    "Every payload carries appearance.binding_state candidate_requires_renderer_capability_acceptance, projection.public_projection_eligible false, a closed six-field canonical_to_appearance_span_map, and a distinct top-level appearance_binding_hash. appearance.page_local is excluded from the hash.",
+    "P007 protection requires semantic validation plus frozen dispatch-SHA tree-entry equality, every tracked blob byte, and absence of non-ignored untracked additions. The deterministic tree digest is recorded in the vertical manifest.",
+    "Rich-at-rest and rich-hover compile from the same vertical artifact and preserve identical segment, ownership, fact, and projection identities. Translation requires exact certified contextual facts; unresolved context remains explicit.",
+    "The preinstalled harness trigger set is any existence of the builder, builder test, owner-binding validator, owner-binding test, vertical manifest, or vertical report. If none exists it reports not materialized without PASS; if any exists it requires all implementation artifacts, runs both test modules, and runs --check-sample. No glob or partial skip is allowed.",
+    "This packet does not create owner authority, certify a fact, modify existing P007 or certification artifacts, edit website code, deploy, contact the live site, or consume page context as linguistic truth."
+  ],
+  "inputs": {
+    "input_files": [
+      "qamus/task-packets/TP-PVN-A4-CANONICAL-REGEN-W1.json",
+      "qamus/task-packets/TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1.json",
+      "qamus/task-packets/TP-SARF-61-5-4-RADICAL-OWNERSHIP-EVIDENCE-W1.json",
+      "qamus/task-packets/TP-NAHW-61-5-4-CONTEXTUAL-MEANING-EVIDENCE-W1.json",
+      "qamus/task-packets/TP-CERTIFIER-TWO-VOTE-EXACT-BINDING-W1.json",
+      "qamus/task-packets/TP-PVN-61-5-4-OWNER-CERTIFICATION-W1.json",
+      "qamus/schemas/pvn-canonical-occurrence-artifact.schema.json",
+      "qamus/schemas/pvn-canonical-regeneration-manifest.schema.json",
+      "qamus/schemas/pvn-appearance-disposition.schema.json",
+      "qamus/examples/pvn-canonical-regeneration-w1/run-manifest.json",
+      "qamus/examples/pvn-canonical-regeneration-w1/canonical-occurrence-quran-61-5-4.json",
+      "qamus/examples/pvn-canonical-regeneration-w1/appearance-dispositions.sample.jsonl",
+      "qamus/examples/pvn-canonical-regeneration-w1/appearance-dispositions.sample.meta.json",
+      "qamus/examples/pvn-canonical-regeneration-w1/website-payloads/01133eb5431b_u0_x1_w3.payload.json",
+      "qamus/examples/pvn-canonical-regeneration-w1/website-payloads/3041d6f44a27_u11_x1_w3.payload.json",
+      "qamus/examples/pvn-canonical-regeneration-w1/website-payloads/65d3d5c51f24_u0_x2_w3.payload.json",
+      "qamus/examples/pvn-canonical-regeneration-w1/website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json",
+      "qamus/indexes/quran-loc-surface/index.jsonl",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "qamus/lattice/example-ayah-universe.jsonl",
+      "qamus/lattice/example-ayah-universe.occurrences.jsonl",
+      "qamus/schemas/sarf-61-5-4-radical-ownership-evidence.schema.json",
+      "qamus/schemas/sarf-61-5-4-radical-ownership-evidence-meta.schema.json",
+      "qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl",
+      "qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json",
+      "qamus/schemas/nahw-61-5-4-contextual-meaning-evidence.schema.json",
+      "qamus/schemas/nahw-61-5-4-contextual-meaning-evidence-meta.schema.json",
+      "qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl",
+      "qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json",
+      "qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl",
+      "qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json",
+      "qamus/examples/nahw-public-projection-w1/projections.sample.jsonl",
+      "qamus/examples/nahw-public-projection-w1/projections.sample.meta.json",
+      "qamus/schemas/two-vote-worker-record.schema.json",
+      "tools/validate_two_vote_worker_records.py",
+      "qamus/certification/typed-fact-store/events.jsonl",
+      "qamus/schemas/certification-event.schema.json",
+      "qamus/certification/typed-fact-store/pvn-61-5-4-owner-certifications.meta.json",
+      "qamus/schemas/pvn-61-5-4-owner-certifications-meta.schema.json",
+      "qamus/examples/p007-li-pilot/",
+      "tools/validate_p007_pilot.py",
+      "tools/validate_website_payload.py",
+      "tools/check_regressions.py",
+      "docs/architecture/two-surface-contract.md",
+      "docs/architecture/translation-projection.md",
+      "docs/architecture/dogfood-flywheel.md",
+      "docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md"
+    ],
+    "permitted_write_files": [
+      "tools/validate_pvn_61_5_4_owner_certification_binding.py",
+      "tools/test_validate_pvn_61_5_4_owner_certification_binding.py",
+      "tools/build_pvn_vertical_slice_61_5_4.py",
+      "tools/test_build_pvn_vertical_slice_61_5_4.py",
+      "qamus/examples/pvn-vertical-slice-61-5-4/",
+      "qamus/reports/pvn-vertical-slice-61-5-4.md",
+      "out/pvn-vertical-slice-61-5-4/"
+    ],
+    "prohibited_files": [
+      "qamus/data/",
+      "qamus/certification/",
+      "qamus/lattice/",
+      "qamus/indexes/",
+      "qamus/examples/p007-li-pilot/",
+      "qamus/examples/website-payloads/",
+      "qamus/examples/pvn-canonical-regeneration-w1/",
+      "qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/",
+      "qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/",
+      "qamus/examples/nahw-occurrence-facts-w1/",
+      "qamus/examples/nahw-public-projection-w1/",
+      "qamus/skills/",
+      "sarf/",
+      "nahw/",
+      "docs/current-state.yaml",
+      "docs/golden-commands.md",
+      "tools/check_regressions.py",
+      "tools/regenerate_pvn_canonical_graph.py",
+      "tools/validate_p007_pilot.py",
+      "tools/validate_website_payload.py",
+      "tools/validate_two_vote_worker_records.py",
+      "tools/skill_fixtures/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "The slice produces candidate repository and website-handoff artifacts only. It does not certify facts, edit website code, deploy payloads, contact the live site, or mutate any live surface.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-PVN-VERTICAL-SLICE-61-5-4-W1",
+  "provenance": {
+    "authored_by": "PVN owner re-anchor follow-on lane",
+    "cites": [
+      "qamus/task-packets/TP-PVN-A4-CANONICAL-REGEN-W1.json",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "docs/architecture/two-surface-contract.md",
+      "docs/architecture/translation-projection.md",
+      "docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "PVN_END_TO_END_PEDAGOGICAL_VERTICAL_SLICE",
+    "out_of_scope": [
+      "Do not introduce or certify a new linguistic conclusion.",
+      "Do not broaden beyond quran:61:5:4.",
+      "Do not edit shared harness files, existing P007 or certification artifacts, website code, or live systems."
+    ],
+    "summary": "Build one owner-gated end-to-end product slice for quran:61:5:4 from exact integrated A4, evidence, certification, and appearance inputs, proving canonical transclusion, guarded morphology and Naḥw, contextual safety, colour-hover parity, reverse trace, dogfood, and candidate payload generation.",
+    "tranche": "pvn-reanchor-vertical-slice-61-5-4"
+  },
+  "title": "Prove the owner-gated canonical-to-pedagogy chain for quran 61 5 4",
+  "tools_required": [
+    "python 3",
+    "tools/validate_two_vote_worker_records.py",
+    "tools/validate_website_payload.py",
+    "tools/check_regressions.py",
+    "git"
+  ]
+}

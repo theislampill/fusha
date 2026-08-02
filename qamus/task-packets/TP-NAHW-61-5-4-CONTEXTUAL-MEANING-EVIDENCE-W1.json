@@ -1,0 +1,384 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "contextual meaning evidence unit suite",
+      "pass_condition": "unittest exits 0 and covers exact Quran-context acquisition and digest mismatch, exact A2 upstream hash binding, distinct-lane envelope hashes, every required closed invocation field, exact requested and actual model proof, independent-session proof, wrong-reason rejection, gloss-text exclusion, disagreement, SOURCE_GAP, owner gate, and public-cleanliness mutations",
+      "run": "python -m unittest tools.test_build_nahw_61_5_4_contextual_meaning_evidence"
+    },
+    {
+      "name": "committed artifact integrity",
+      "pass_condition": "exit 0 with NAHW 61 5 4 CONTEXTUAL MEANING EVIDENCE PASS after validating committed schemas, self-hashes, frozen reviewer and invocation hashes, exact A2 occurrence and public-projection schema/sample/metadata hashes, and canonical Quran index and manifest hashes; this check does not claim raw-custody regeneration",
+      "run": "python tools/build_nahw_61_5_4_contextual_meaning_evidence.py --check-sample qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl --meta qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json --facts qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --facts-meta qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json --facts-schema qamus/schemas/nahw-occurrence-fact-bundle.schema.json --public-projections qamus/examples/nahw-public-projection-w1/projections.sample.jsonl --public-projections-meta qamus/examples/nahw-public-projection-w1/projections.sample.meta.json --public-projections-schema qamus/schemas/nahw-public-projection.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json"
+    },
+    {
+      "name": "external reviewer custody verification",
+      "pass_condition": "exit 0 only when both distinct lane envelopes bind the same review_payload_sha256, each private review and invocation record validates against its closed schema, requested and actual model identity matches the lane, session ids and output hashes differ, and access_to_other_reviewer_work is false",
+      "run": "python tools/build_nahw_61_5_4_contextual_meaning_evidence.py --verify-custody --worklist-envelope-a out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-a.worklist-envelope.json --worklist-envelope-b out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-b.worklist-envelope.json --review-a out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-a.review.jsonl --review-b out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-b.review.jsonl --invocation-a out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-a.invocation.json --invocation-b out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-b.invocation.json"
+    },
+    {
+      "name": "closed schema independence and terminal state",
+      "pass_condition": "exactly one source-clean evidence row and one pretty metadata object validate; reviewer sessions and frozen hashes are distinct; agreement excludes gloss text; terminal state is exactly SOURCE_GAP or EVIDENCE_READY_FOR_OWNER_CERTIFICATION",
+      "run": "python tools/build_nahw_61_5_4_contextual_meaning_evidence.py --validate qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl --meta qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json"
+    },
+    {
+      "name": "artifact ergonomics and public cleanliness",
+      "pass_condition": "exit 0 with JSONL plus pretty sorted metadata, no source prose, no raw reviewer artifact, no private path, no machine topology, and trailing newlines",
+      "run": "python tools/check_artifact_ergonomics.py"
+    },
+    {
+      "name": "source-bound Quran context acquisition",
+      "pass_condition": "exit 0 only when the recomputed index digest equals index.manifest.json artifact_sha256, 61:5 has one contiguous ordered row for each word 1 through 23, quran:61:5:4 is exactly لِقَوْمِهِۦ, and the sanitized context artifact and hash are written under out; otherwise SOURCE_GAP:QURAN_CONTEXT_61_5_AUTHORITY is non-dispatchable",
+      "run": "python tools/build_nahw_61_5_4_contextual_meaning_evidence.py --validate-context --occurrence-id quran:61:5:4 --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --context-out out/nahw-61-5-4-contextual-meaning-evidence-w1/quran-61-5.context.json"
+    },
+    {
+      "name": "complete repository harness remains green",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS without changing the shared harness; focused-suite registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "frozen start SHA changed paths",
+      "pass_condition": "prints NAHW 61 5 4 CONTEXT CHANGED PATHS PASS after comparing tracked and non-ignored untracked paths with the exact packet allowlist from the SHA frozen before edits",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/nahw-61-5-4-contextual-meaning-evidence-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"qamus/schemas/nahw-61-5-4-contextual-meaning-review.schema.json\",\"qamus/schemas/nahw-61-5-4-contextual-meaning-invocation.schema.json\",\"qamus/schemas/nahw-61-5-4-contextual-meaning-evidence.schema.json\",\"qamus/schemas/nahw-61-5-4-contextual-meaning-evidence-meta.schema.json\",\"tools/build_nahw_61_5_4_contextual_meaning_evidence.py\",\"tools/run_nahw_61_5_4_contextual_meaning_reviewer.py\",\"tools/test_build_nahw_61_5_4_contextual_meaning_evidence.py\",\"qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl\",\"qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json\",\"qamus/reports/nahw-61-5-4-contextual-meaning-evidence-w1.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"NAHW 61 5 4 CONTEXT CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\"+repr(unexpected)+\" missing=\"+repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "name": "whitespace diff check",
+      "pass_condition": "git diff --check exits 0 independently of source-context, artifact, drift and changed-path checks",
+      "run": "git diff --check"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "any candidate contextual wording in the A2 public projection remains excluded as evidence and cannot count as either independent review or agreement",
+        "id": "quran:61:5:4:public-projection-is-not-evidence",
+        "source": "qamus/examples/nahw-public-projection-w1/projections.sample.jsonl",
+        "surface": "لِقَوْمِهِۦ"
+      },
+      {
+        "expectation": "the A2 occurrence bundle's function, governor and reason facts are exact dependencies, not a contextual-meaning vote; any gloss-like field remains excluded from agreement",
+        "id": "quran:61:5:4:a2-fact-is-not-contextual-vote",
+        "source": "qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl",
+        "surface": "لِقَوْمِهِۦ"
+      },
+      {
+        "expectation": "two reviews with the same session, reviewer identity, copied submission hash, shared prior submission access, or a matching conclusion with different reason keys fail independence or wrong-reason gates and end SOURCE_GAP",
+        "id": "mutation:61:5:4:false-two-vote",
+        "source": "nahw/evals/grammar-decision-gates.json"
+      },
+      {
+        "expectation": "a missing TP-TWO-VOTE-ENGINE-INDEPENDENCE-W1 dependency blocks reviewer dispatch; a missing closed invocation field, substituted actual model, lane-envelope mismatch, or access_to_other_reviewer_work other than false fails before comparison and cannot produce evidence-ready output",
+        "id": "mutation:61:5:4:unproven-model-or-independence",
+        "source": "qamus/task-packets/TP-TWO-VOTE-ENGINE-INDEPENDENCE-W1.json"
+      },
+      {
+        "expectation": "source prose, raw reviewer transcripts, private paths, machine topology, or credentials in the committed evidence or metadata fail public cleanliness",
+        "id": "mutation:61:5:4:public-evidence-leak",
+        "source": "provenance/source-boundaries.md"
+      },
+      {
+        "expectation": "a missing, duplicate, non-contiguous or surface-mismatched 61:5 index row, an index digest that differs from the manifest, or a page-local context offered as Quran context prevents both reviewer dispatches and records SOURCE_GAP:QURAN_CONTEXT_61_5_AUTHORITY",
+        "id": "mutation:61:5:4:context-authority-gap",
+        "source": "qamus/indexes/quran-loc-surface/index.manifest.json"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "one fresh Claude CLI Opus 5 session pinned and proven as claude-opus-5 and one fresh Claude CLI Sonnet 5 session pinned and proven as claude-sonnet-5, each consuming a distinct lane envelope with the same review_payload_sha256 and no mutual access, may produce EVIDENCE_READY_FOR_OWNER_CERTIFICATION only when the closed contextual conclusion and reason tuple agrees and every dependency, rival, scope, referent, and unresolved field is accounted for",
+        "id": "quran:61:5:4",
+        "source": "qamus/indexes/quran-loc-surface/index.jsonl",
+        "surface": "لِقَوْمِهِۦ"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl",
+    "selection_rule": "select the single hash-verified A2 fact row whose occurrence_id is exactly quran:61:5:4; join its exact hash-verified A2 public projection; acquire the complete ordered 61:5 Quran context only from the hash-verified loc-surface index and manifest; place one identical sanitized payload hash inside two distinct lane envelopes; compare only two newly frozen independent submissions",
+    "this_packet_size": 1,
+    "universe_size": 1
+  },
+  "commands": [
+    {
+      "expect": "prints one immutable 40-character start SHA and writes the same ASCII SHA plus LF under the gitignored packet out directory; any pre-existing tracked or non-ignored untracked change aborts",
+      "purpose": "freeze the clean packet start SHA",
+      "run": "python -c 'from pathlib import Path; import subprocess; dirty=subprocess.check_output([\"git\",\"status\",\"--porcelain\",\"--untracked-files=all\"],text=True).splitlines(); assert not dirty, \"packet requires a clean isolated worktree: \"+repr(dirty); sha=subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(); p=Path(\"out/nahw-61-5-4-contextual-meaning-evidence-w1/start-sha.txt\"); p.parent.mkdir(parents=True,exist_ok=True); p.write_bytes((sha+\"\\n\").encode(\"ascii\")); print(sha)'"
+    },
+    {
+      "expect": "TASK PACKET VALIDATION PASS for this exact file",
+      "purpose": "validate the bounded work order",
+      "run": "python tools/validate_task_packets.py qamus/task-packets/TP-NAHW-61-5-4-CONTEXTUAL-MEANING-EVIDENCE-W1.json"
+    },
+    {
+      "expect": "unittest OK and generic validation remains limited to carrier-level proof; the orchestrator separately preserves the exact external invocation records required for owner two-vote work",
+      "purpose": "execute the integrated engine-independence output",
+      "run": "python -m unittest tools.test_validate_two_vote_engine_independence"
+    },
+    {
+      "expect": "red before implementation, then unittest OK with source-context, upstream-hash, lane-envelope, invocation-schema, exact-model, independence, wrong-reason, gloss-exclusion, source-gap, owner-gate, and public-cleanliness mutations active",
+      "purpose": "run the evidence tests",
+      "run": "python -m unittest tools.test_build_nahw_61_5_4_contextual_meaning_evidence"
+    },
+    {
+      "expect": "QURAN CONTEXT 61 5 AUTHORITY PASS; recomputed index SHA-256 equals the manifest, ordered unique word rows 1 through 23 are extracted, quran:61:5:4 is exactly لِقَوْمِهِۦ, and one source-addressed context artifact is frozen under out; failure yields non-dispatchable SOURCE_GAP:QURAN_CONTEXT_61_5_AUTHORITY",
+      "purpose": "acquire and validate exact Quran context",
+      "run": "python tools/build_nahw_61_5_4_contextual_meaning_evidence.py --validate-context --occurrence-id quran:61:5:4 --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --context-out out/nahw-61-5-4-contextual-meaning-evidence-w1/quran-61-5.context.json"
+    },
+    {
+      "expect": "exit 0 with two distinct sanitized lane envelopes carrying different lane ids and session bindings but the same review_payload_sha256 over the exact occurrence, 23-token Quran context, A2 occurrence facts, A2 public projection, dependency, schema and source-address hashes; any upstream or context mismatch prevents reviewer dispatch",
+      "purpose": "prepare isolated reviewer worklists",
+      "run": "python tools/build_nahw_61_5_4_contextual_meaning_evidence.py --prepare --occurrence-id quran:61:5:4 --context out/nahw-61-5-4-contextual-meaning-evidence-w1/quran-61-5.context.json --facts qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --facts-meta qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json --facts-schema qamus/schemas/nahw-occurrence-fact-bundle.schema.json --public-projections qamus/examples/nahw-public-projection-w1/projections.sample.jsonl --public-projections-meta qamus/examples/nahw-public-projection-w1/projections.sample.meta.json --public-projections-schema qamus/schemas/nahw-public-projection.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --out out/nahw-61-5-4-contextual-meaning-evidence-w1"
+    },
+    {
+      "expect": "exit 0 only after a new reviewer-a session pinned to requested model claude-opus-5 returns actual model and model id claude-opus-5; writes one closed structured review, raw stream, and closed invocation record under out without access to reviewer B files",
+      "purpose": "run the blinded Opus 5 lane through the non-interactive Claude CLI wrapper",
+      "run": "python tools/run_nahw_61_5_4_contextual_meaning_reviewer.py --claude-cli-path-env FUSHA_CLAUDE_CLI_PATH --lane reviewer-a --model claude-opus-5 --fresh-session --worklist-envelope out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-a.worklist-envelope.json --review-out out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-a.review.jsonl --stream-out out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-a.stream.jsonl --invocation-out out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-a.invocation.json --access-to-other-reviewer-work no"
+    },
+    {
+      "expect": "exit 0 only after a new reviewer-b session pinned to requested model claude-sonnet-5 returns actual model and model id claude-sonnet-5; writes one closed structured review, raw stream, and closed invocation record under out without access to reviewer A files",
+      "purpose": "run the blinded Sonnet 5 lane through the non-interactive Claude CLI wrapper",
+      "run": "python tools/run_nahw_61_5_4_contextual_meaning_reviewer.py --claude-cli-path-env FUSHA_CLAUDE_CLI_PATH --lane reviewer-b --model claude-sonnet-5 --fresh-session --worklist-envelope out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-b.worklist-envelope.json --review-out out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-b.review.jsonl --stream-out out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-b.stream.jsonl --invocation-out out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-b.invocation.json --access-to-other-reviewer-work no"
+    },
+    {
+      "expect": "exit 0 only when both lane envelopes bind the same review_payload_sha256, both reviews and invocation records validate, requested and actual model identities match the exact lane, sessions and output hashes differ, and neither lane had access to the other review",
+      "purpose": "verify private reviewer and invocation custody before comparison",
+      "run": "python tools/build_nahw_61_5_4_contextual_meaning_evidence.py --verify-custody --worklist-envelope-a out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-a.worklist-envelope.json --worklist-envelope-b out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-b.worklist-envelope.json --review-a out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-a.review.jsonl --review-b out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-b.review.jsonl --invocation-a out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-a.invocation.json --invocation-b out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-b.invocation.json"
+    },
+    {
+      "expect": "exit 0 only after two frozen independent review and invocation records exist; emits exactly one sanitized evidence or SOURCE_GAP row and a pretty hash-bound metadata sidecar",
+      "purpose": "assemble and compare frozen reviews",
+      "run": "python tools/build_nahw_61_5_4_contextual_meaning_evidence.py --assemble --context out/nahw-61-5-4-contextual-meaning-evidence-w1/quran-61-5.context.json --facts qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --facts-meta qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json --facts-schema qamus/schemas/nahw-occurrence-fact-bundle.schema.json --public-projections qamus/examples/nahw-public-projection-w1/projections.sample.jsonl --public-projections-meta qamus/examples/nahw-public-projection-w1/projections.sample.meta.json --public-projections-schema qamus/schemas/nahw-public-projection.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --worklist-envelope-a out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-a.worklist-envelope.json --worklist-envelope-b out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-b.worklist-envelope.json --review-a out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-a.review.jsonl --review-b out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-b.review.jsonl --invocation-a out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-a.invocation.json --invocation-b out/nahw-61-5-4-contextual-meaning-evidence-w1/reviewer-b.invocation.json --sample-out qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl --meta-out qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json"
+    },
+    {
+      "expect": "NAHW 61 5 4 CONTEXTUAL MEANING EVIDENCE PASS after validating committed schemas, self-hashes, frozen reviewer and invocation hashes, exact A2 upstream hashes, and canonical context authority hashes without claiming raw-custody regeneration",
+      "purpose": "verify committed artifact integrity",
+      "run": "python tools/build_nahw_61_5_4_contextual_meaning_evidence.py --check-sample qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl --meta qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json --facts qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --facts-meta qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json --facts-schema qamus/schemas/nahw-occurrence-fact-bundle.schema.json --public-projections qamus/examples/nahw-public-projection-w1/projections.sample.jsonl --public-projections-meta qamus/examples/nahw-public-projection-w1/projections.sample.meta.json --public-projections-schema qamus/schemas/nahw-public-projection.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json"
+    },
+    {
+      "expect": "exit 0 with one schema-valid evidence row and one schema-valid metadata object; gloss text is absent from compared_fields",
+      "purpose": "validate closed evidence schemas",
+      "run": "python tools/build_nahw_61_5_4_contextual_meaning_evidence.py --validate qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl --meta qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json"
+    },
+    {
+      "expect": "ALL REGRESSION CHECKS PASS without editing tools/check_regressions.py; TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 owns the later one-time registration",
+      "purpose": "run the current complete repository harness read-only",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "expect": "NAHW 61 5 4 CONTEXT CHANGED PATHS PASS with exactly the four schemas, builder, reviewer wrapper, focused test, evidence sample, metadata and report paths changed from the frozen start SHA",
+      "purpose": "enforce tracked and untracked path custody",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/nahw-61-5-4-contextual-meaning-evidence-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"qamus/schemas/nahw-61-5-4-contextual-meaning-review.schema.json\",\"qamus/schemas/nahw-61-5-4-contextual-meaning-invocation.schema.json\",\"qamus/schemas/nahw-61-5-4-contextual-meaning-evidence.schema.json\",\"qamus/schemas/nahw-61-5-4-contextual-meaning-evidence-meta.schema.json\",\"tools/build_nahw_61_5_4_contextual_meaning_evidence.py\",\"tools/run_nahw_61_5_4_contextual_meaning_reviewer.py\",\"tools/test_build_nahw_61_5_4_contextual_meaning_evidence.py\",\"qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl\",\"qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json\",\"qamus/reports/nahw-61-5-4-contextual-meaning-evidence-w1.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"NAHW 61 5 4 CONTEXT CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\"+repr(unexpected)+\" missing=\"+repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "expect": "exit 0 with no whitespace errors",
+      "purpose": "verify diff hygiene separately",
+      "run": "git diff --check"
+    }
+  ],
+  "defeaters": [
+    "the existing contextual_gloss, token_contribution_gloss, learner explanation, dictionary gloss, surface gloss, or either historical vote gloss offered as a reviewer conclusion or agreement field",
+    "two submissions that share a session, reviewer identity, model invocation, work product, prior-submission access, source-note copy, or frozen output hash",
+    "agreement on a contextual label or English wording with disagreement or absence in reason_key, dependency facts, governor, governed expression, attachment, scope, referent, rivals, or unresolved state",
+    "a correct-looking conclusion supported by the wrong grammatical reason, an unbound occurrence, a stale source hash, or a page-local analysis",
+    "Quran context obtained from model memory, page prose, an external prose source, reviewer-private material, or any artifact other than the hash-verified quran-loc-surface index and manifest",
+    "a candidate or evidence-ready result promoted to certification, resolved translation, public eligibility, or vertical-slice closure",
+    "source prose, raw reviewer-private material, credentials, private paths, machine topology, or external-source names entering the committed evidence or metadata"
+  ],
+  "definition_of_done": [
+    "TP-TWO-VOTE-ENGINE-INDEPENDENCE-W1 is integrated and green before reviewer dispatch; its engine-level independence contract is consumed without weakening this packet's occurrence, reason, evidence, candidate, or owner gates",
+    "tools/test_validate_two_vote_engine_independence.py executes green before dispatch, so the dependency is an exact integrated output rather than packet-only sequencing",
+    "qamus/indexes/quran-loc-surface/index.jsonl and index.manifest.json are the exact Quran context authority: the builder recomputes the index digest, requires the manifest artifact_sha256 match, extracts one contiguous ordered 61:5 row for each word 1 through 23, verifies quran:61:5:4 equals لِقَوْمِهِۦ, and freezes the sanitized context plus SHA-256 under out before dispatch",
+    "facts.sample.jsonl, facts.sample.meta.json and nahw-occurrence-fact-bundle.schema.json plus projections.sample.jsonl, projections.sample.meta.json and nahw-public-projection.schema.json are exact upstream dependencies; every hash is recomputed and matched before either reviewer worklist is emitted",
+    "reviewer A is a fresh Claude CLI Opus 5 session pinned and proven as actual model id claude-opus-5, reviewer B is a fresh Claude CLI Sonnet 5 session pinned and proven as actual model id claude-sonnet-5, both receive distinct lane envelopes carrying the same exact review_payload_sha256 for quran:61:5:4, cannot see each other's submissions, and freeze distinct review and invocation records under out",
+    "the reviewer wrapper resolves the owner-authorized executable through FUSHA_CLAUDE_CLI_PATH, records its exact path and --version output only in the private invocation record, and invokes it non-interactively with -p, the exact --model id, a fresh --session-id, --output-format stream-json, --verbose, the closed --json-schema, disabled reviewer filesystem tools, and --no-session-persistence; no fallback model is configured",
+    "each invocation record validates against a closed additionalProperties false schema and records cli_executable_path, requested_model, actual_model, model_id, cli_version, session_id, start_sha, branch, worktree, permitted_files, worklist_envelope_sha256, review_payload_sha256, output artifact path and frozen_submission_sha256 or commit, and access_to_other_reviewer_work; missing, substituted, inconsistent, or secret-bearing metadata fails closed, and the machine-specific executable path remains untracked",
+    "each review is occurrence-bound and source-addressed and records a closed contextual conclusion and reason tuple covering function, governor, governed expression, attachment, case or mood, syntactic position, scope, referent, contextual meaning, rivals, abstention, escalation, and dependency fact ids",
+    "the deterministic comparison uses the closed structured tuple and reason key only; contextual_gloss, token_contribution_gloss, learner prose, dictionary gloss, surface gloss, and reviewer gloss text are absent from compared_fields",
+    "exactly one source-clean JSONL evidence row and one pretty metadata sidecar validate against closed schemas with additionalProperties false and contain only sanitized structured conclusions, source-address and artifact hashes, non-secret reviewer provenance, independence proof, blockers, and terminal state",
+    "EVIDENCE_READY_FOR_OWNER_CERTIFICATION is emitted only when both independent reviews agree on conclusion and reason, all dependency and independence gates pass, and no unresolved rival changes the meaning; every other result ends SOURCE_GAP",
+    "the record remains candidate evidence with certification_state candidate, public_eligible false, owner_gate_required true, and certifier_called false; raw reviews and invocation records remain untracked under out",
+    "TP-PVN-VERTICAL-SLICE-61-5-4-W1 is named as the dependent packet and may consume the resulting contextual-meaning fact only after a separate owner-authorized certification artifact hash-binds this evidence row and metadata; evidence readiness alone does not authorize translation or slice closure",
+    "the committed metadata hash-binds the exact Quran context authority, extracted context, A2 occurrence schema/sample/metadata, A2 public-projection schema/sample/metadata, all four output schemas, frozen worklists, reviews, invocation records and evidence sample; raw custody remains untracked",
+    "TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 is the sole future writer that may register this focused suite in tools/check_regressions.py or update docs/golden-commands.md; this packet changes neither shared file",
+    "all acceptance tests pass, the frozen-start-SHA tracked-plus-untracked allowlist passes, git diff --check passes separately, and no file outside the permitted write set changes"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "TP-TWO-VOTE-ENGINE-INDEPENDENCE-W1 is missing or not green, reviewer A is not a fresh Claude CLI Opus 5 session proven as actual model id claude-opus-5, reviewer B is not a fresh Claude CLI Sonnet 5 session proven as actual model id claude-sonnet-5, or either closed invocation record lacks exact model, CLI, session, start-state, file-boundary, output-hash, or no-other-review-access metadata",
+      "the quran-loc-surface index or manifest is missing, their SHA-256 contract fails, the ordered 61:5 word rows are missing, duplicated or non-contiguous, or quran:61:5:4 is not exactly لِقَوْمِهِۦ",
+      "an exact A2 occurrence-fact or public-projection schema, sample or metadata file is missing, stale, hash-mismatched, occurrence-mismatched, or surface-mismatched",
+      "either review lacks exact occurrence binding, source-address hashes, the full contextual conclusion and reason tuple, rivals, abstention, or unresolved-state accounting",
+      "the reviews disagree on the conclusion, reason key, dependency facts, governor, governed expression, attachment, scope, referent, or contextual meaning",
+      "the only apparent agreement comes from the existing contextual_gloss, vote gloss strings, dictionary or surface text, or copied reviewer prose",
+      "a source or dependency conflict remains, a contextual rival remains material, or the correct answer has the wrong or unsupported reason",
+      "producing the output would require certification, source prose in a committed artifact, a reviewer-private publication, a public payload, website edit, or live mutation"
+    ],
+    "route": "if the Quran authority is absent or invalid, dispatch no reviewer, mark the packet non-dispatchable with SOURCE_GAP:QURAN_CONTEXT_61_5_AUTHORITY and the exact non-secret missing or mismatched path in qamus/reports/nahw-61-5-4-contextual-meaning-evidence-w1.md, and do not substitute model memory, page prose, external prose, or reviewer-private material. If engine independence, A2 upstream hashes, or required model provenance fails before two valid reviews exist, likewise dispatch no reviewer and write BLOCKED_DEPENDENCY. Otherwise write one source-clean SOURCE_GAP row for an evidence, reason, dependency, or rivalry failure, keep raw custody only under out, and hand the question to the Nahw scholar and owner gate without calling tools/certify_typed_fact.py."
+  },
+  "evidence_policy": {
+    "fabrication_rule": "Never acquire Quran context from model memory, page prose, an external prose source, or reviewer-private material, and never treat contextual_gloss, token_contribution_gloss, dictionary or surface gloss, learner prose, or matching historical vote glosses as contextual-meaning agreement. A failed context or upstream hash blocks dispatch; failed independent agreement emits SOURCE_GAP.",
+    "statement": "This packet prepares two-review contextual-meaning evidence for one exact Qurʾānic occurrence. Its Quran context is acquired only from the hash-verified repository loc-surface index and manifest, and its linguistic dependencies are the exact hash-verified A2 occurrence and public-projection outputs. Raw reviews remain untracked; committed artifacts contain source-clean structured fields and hashes only. The output is candidate evidence for a separate owner-authorized certification decision.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Closed schema for each private structured review submission, including occurrence, source hashes, conclusion and reason tuple, rivals, abstention, session provenance, and no-other-review-access declaration",
+      "path": "qamus/schemas/nahw-61-5-4-contextual-meaning-review.schema.json",
+      "schema": "qamus.nahw_61_5_4_contextual_meaning_review.v1"
+    },
+    {
+      "description": "Closed additionalProperties false invocation-record schema requiring CLI executable path, requested and actual model, model id, CLI version, session id, start SHA, branch, worktree, permitted files, worklist-envelope hash, shared review-payload hash, output artifact path and frozen-submission hash or commit, and access to other reviewer work",
+      "path": "qamus/schemas/nahw-61-5-4-contextual-meaning-invocation.schema.json",
+      "schema": "qamus.nahw_61_5_4_contextual_meaning_invocation.v1"
+    },
+    {
+      "description": "Closed schema for the sanitized one-row comparison bundle, independence proof, excluded gloss fields, evidence state, owner gate, and dependency hash",
+      "path": "qamus/schemas/nahw-61-5-4-contextual-meaning-evidence.schema.json",
+      "schema": "qamus.nahw_61_5_4_contextual_meaning_evidence.v1"
+    },
+    {
+      "description": "Closed pretty-metadata schema for counts, state counts, input and frozen-review hashes, generator command, public-cleanliness result, and vertical-slice dependency identity",
+      "path": "qamus/schemas/nahw-61-5-4-contextual-meaning-evidence-meta.schema.json",
+      "schema": "qamus.nahw_61_5_4_contextual_meaning_evidence_meta.v1"
+    },
+    {
+      "description": "Deterministic worklist, independence, comparison, sanitation, evidence-state, and metadata builder and validator",
+      "path": "tools/build_nahw_61_5_4_contextual_meaning_evidence.py"
+    },
+    {
+      "description": "Non-interactive Claude CLI lane wrapper that resolves the authorized executable from FUSHA_CLAUDE_CLI_PATH, records exact path and version privately, pins the exact requested model, creates a fresh session id, disables reviewer filesystem tools, captures raw stream metadata, validates the actual model, and writes the private closed invocation record under out",
+      "path": "tools/run_nahw_61_5_4_contextual_meaning_reviewer.py"
+    },
+    {
+      "description": "Red-first independent-review, wrong-reason, gloss-exclusion, rivalry, source-gap, owner-gate, and public-cleanliness test suite",
+      "path": "tools/test_build_nahw_61_5_4_contextual_meaning_evidence.py"
+    },
+    {
+      "description": "One-object-per-line sanitized evidence sample with no raw reviewer material",
+      "path": "qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl"
+    },
+    {
+      "description": "Pretty sorted metadata binding Quran context authority, extracted context, exact A2 upstream artifacts, output schemas, frozen reviewer custody and evidence sample by SHA-256",
+      "path": "qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json"
+    },
+    {
+      "description": "Source-clean review outcome, independence, evidence state, excluded-input, missing-dependency, and owner-gate report",
+      "path": "qamus/reports/nahw-61-5-4-contextual-meaning-evidence-w1.md"
+    },
+    {
+      "description": "Hash-verified 61:5 Quran context extraction, distinct sanitized lane envelopes, frozen private review submissions, raw streams, closed invocation records, and full comparison custody kept outside tracked artifacts",
+      "path": "out/nahw-61-5-4-contextual-meaning-evidence-w1/"
+    }
+  ],
+  "guards": [
+    "The METHOD transfers: exact occurrence binding, independent review, conclusion-and-reason comparison, rival preservation, abstention, source hashing, and owner gating may be reused; no contextual meaning conclusion transfers to another occurrence.",
+    "EXECUTION DEPENDENCY: TP-TWO-VOTE-ENGINE-INDEPENDENCE-W1 must be integrated and tools/test_validate_two_vote_engine_independence.py must execute green before either reviewer is dispatched. Packet presence alone is insufficient; a missing or failed exact output blocks dispatch and produces no evidence row.",
+    "SOURCE DEPENDENCY QURAN_CONTEXT_61_5_AUTHORITY: qamus/indexes/quran-loc-surface/index.jsonl plus index.manifest.json are an existing repository-authorized exact Quran context surface. Recompute and match manifest artifact_sha256, extract only contiguous ordered 61:5 words 1 through 23, verify the target exact surface, and hash-bind the sanitized context to both worklists. Any failure is dangling SOURCE_GAP:QURAN_CONTEXT_61_5_AUTHORITY and makes the packet non-dispatchable; no model memory, page prose, external prose, or reviewer-private substitute is allowed.",
+    "UPSTREAM DEPENDENCY A2_OCCURRENCE_FACTS_W1: hash-verify qamus/schemas/nahw-occurrence-fact-bundle.schema.json, facts.sample.jsonl and facts.sample.meta.json. UPSTREAM DEPENDENCY A2_PUBLIC_PROJECTION_W1: hash-verify qamus/schemas/nahw-public-projection.schema.json, projections.sample.jsonl and projections.sample.meta.json. Both exact quran:61:5:4 rows and their recorded canonical authority hashes must agree before dispatch.",
+    "DEPENDENCY FOR TP-PVN-VERTICAL-SLICE-61-5-4-W1: this packet prepares the missing contextual-meaning evidence only; the vertical slice remains blocked until a separate owner-authorized certification artifact hash-binds the schema, sanitized evidence JSONL and metadata.",
+    "Reviewer A uses a fresh Claude CLI Opus 5 session pinned and proven as actual model id claude-opus-5; reviewer B uses a fresh Claude CLI Sonnet 5 session pinned and proven as actual model id claude-sonnet-5. They use distinct lane envelopes and work products, distinct session and reviewer identities, and no access to the other review before both hashes are frozen.",
+    "Each distinct lane envelope binds the same review_payload_sha256 over the exact occurrence, context, dependency facts, source-address hashes, closed response schema, and method, but carries its own lane and session bindings and contains no expected conclusion, historical reviewer prose, contextual_gloss, vote gloss, or other review submission.",
+    "The lane wrapper resolves the exact owner-authorized Claude CLI executable from FUSHA_CLAUDE_CLI_PATH, records its path and --version output only in the untracked invocation record, and invokes it with -p, exact --model claude-opus-5 or --model claude-sonnet-5, a newly generated --session-id, --output-format stream-json, --verbose, the closed --json-schema, no reviewer filesystem tools, and --no-session-persistence. It does not configure --fallback-model and fails unless returned metadata proves the requested exact model.",
+    "Each raw invocation record remains under out and validates against a closed schema requiring cli_executable_path, requested_model, actual_model, model_id, cli_version, session_id, start_sha, branch, worktree, permitted_files, worklist_envelope_sha256, review_payload_sha256, output artifact path and frozen_submission_sha256 or commit, and access_to_other_reviewer_work false. Secrets, private configuration, and machine-specific executable paths are not committed.",
+    "Agreement is computed on the structured contextual conclusion and reason tuple, including dependencies, scope, referent, rivals and unresolved state. English gloss text is never an agreement field.",
+    "The A2 occurrence facts authorize only their stated typed fields and reasons, and the A2 public projection remains candidate or unresolved. Neither artifact's gloss-like wording provides a contextual-meaning vote or certification.",
+    "A correct-looking conclusion with a different, absent, or unsupported reason fails. Material rivals, disagreement, missing dependencies, or failed independence end SOURCE_GAP.",
+    "The only evidence-row states are SOURCE_GAP and EVIDENCE_READY_FOR_OWNER_CERTIFICATION. Neither state is certified, translation-authoritative, public-eligible, or deployable.",
+    "Raw review submissions, streams, invocation records and any source inspection material remain under out; committed artifacts contain no source prose, private reviewer artifact, credential, private path, or machine topology. The clean-checkout --check-sample command validates committed schema and hash integrity only; the separate --verify-custody command verifies the untracked raw records before assembly.",
+    "Start only from a clean isolated worktree. Freeze HEAD before edits under out/nahw-61-5-4-contextual-meaning-evidence-w1/start-sha.txt, retain that immutable start SHA, and compare both tracked and non-ignored untracked paths against the exact ten-file repository allowlist. Git diff --check is a separate gate.",
+    "Shared harness and golden-command registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1; tools/check_regressions.py and docs/golden-commands.md are read-only. Direct focused tests and the committed-artifact integrity check remain mandatory.",
+    "Do not call tools/certify_typed_fact.py, modify a certification store, author a public payload, edit website code, or contact or mutate a live surface."
+  ],
+  "inputs": {
+    "input_files": [
+      "qamus/task-packets/TP-TWO-VOTE-ENGINE-INDEPENDENCE-W1.json",
+      "qamus/schemas/nahw-occurrence-fact-bundle.schema.json",
+      "qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl",
+      "qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json",
+      "qamus/schemas/nahw-public-projection.schema.json",
+      "qamus/examples/nahw-public-projection-w1/projections.sample.jsonl",
+      "qamus/examples/nahw-public-projection-w1/projections.sample.meta.json",
+      "qamus/indexes/quran-loc-surface/index.jsonl",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "qamus/skills/reason-key-registry.jsonl",
+      "qamus/schemas/two-vote-artifact.schema.json",
+      "tools/validate_two_vote_artifacts.py",
+      "tools/test_validate_two_vote_engine_independence.py",
+      "nahw/evals/grammar-decision-gates.json",
+      "nahw/SKILL.md",
+      "provenance/source-boundaries.md",
+      "docs/certification-authority.md",
+      "docs/architecture/translation-projection.md"
+    ],
+    "permitted_write_files": [
+      "qamus/schemas/nahw-61-5-4-contextual-meaning-review.schema.json",
+      "qamus/schemas/nahw-61-5-4-contextual-meaning-invocation.schema.json",
+      "qamus/schemas/nahw-61-5-4-contextual-meaning-evidence.schema.json",
+      "qamus/schemas/nahw-61-5-4-contextual-meaning-evidence-meta.schema.json",
+      "tools/build_nahw_61_5_4_contextual_meaning_evidence.py",
+      "tools/run_nahw_61_5_4_contextual_meaning_reviewer.py",
+      "tools/test_build_nahw_61_5_4_contextual_meaning_evidence.py",
+      "qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl",
+      "qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json",
+      "qamus/reports/nahw-61-5-4-contextual-meaning-evidence-w1.md",
+      "out/nahw-61-5-4-contextual-meaning-evidence-w1/"
+    ],
+    "prohibited_files": [
+      "qamus/data/",
+      "qamus/certification/",
+      "qamus/lattice/",
+      "qamus/indexes/",
+      "qamus/examples/p007-li-pilot/",
+      "qamus/examples/website-payloads/",
+      "qamus/examples/pvn-vertical-slice-61-5-4/",
+      "qamus/task-packets/TP-PVN-VERTICAL-SLICE-61-5-4-W1.json",
+      "qamus/skills/",
+      "sarf/",
+      "nahw/",
+      "docs/current-state.yaml",
+      "docs/golden-commands.md",
+      "tools/check_regressions.py",
+      "tools/certify_typed_fact.py"
+    ]
+  },
+  "model_class": "certifier",
+  "non_deployment": {
+    "statement": "All outputs are candidate or source-gap evidence artifacts. This packet does not certify a contextual fact, authorize translation or public projection, generate a public payload, edit website code, deploy anything, contact the live site, or mutate any live surface.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-NAHW-61-5-4-CONTEXTUAL-MEANING-EVIDENCE-W1",
+  "provenance": {
+    "authored_by": "PVN owner re-anchor evidence-gate lane",
+    "cites": [
+      "qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json",
+      "qamus/examples/nahw-public-projection-w1/projections.sample.meta.json",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "nahw/evals/grammar-decision-gates.json",
+      "nahw/SKILL.md",
+      "docs/certification-authority.md",
+      "docs/architecture/translation-projection.md"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "NAHW_61_5_4_CONTEXTUAL_MEANING_EVIDENCE",
+    "out_of_scope": [
+      "Do not reuse the existing contextual_gloss, token contribution, learner explanation, dictionary gloss, surface gloss, or historical vote glosses as agreement.",
+      "Do not certify the prepared evidence or call the certification transition engine.",
+      "Do not decide or alter radical ownership, entry identity, public translation, public projection, or deployment.",
+      "Do not broaden beyond the single exact occurrence quran:61:5:4."
+    ],
+    "summary": "Prepare one occurrence-bound contextual-meaning evidence bundle for quran:61:5:4 from two fresh independent reviews that agree on conclusion and reason, explicitly excluding existing contextual and vote gloss text, and stop at the owner certification gate.",
+    "tranche": "pvn-vertical-slice-evidence-gate-nahw"
+  },
+  "title": "Prepare independent contextual meaning evidence for quran 61 5 4",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "one fresh non-interactive Claude CLI Opus 5 session pinned and proven as actual model id claude-opus-5 with no fallback model",
+    "one fresh non-interactive Claude CLI Sonnet 5 session pinned and proven as actual model id claude-sonnet-5 with no fallback model",
+    "FUSHA_CLAUDE_CLI_PATH set out of band to the already-discovered owner-authorized executable; its machine-specific value is recorded only under out",
+    "tools/validate_task_packets.py",
+    "tools/check_artifact_ergonomics.py",
+    "tools/check_regressions.py"
+  ]
+}

@@ -1,10 +1,14 @@
 # Website-agent handoff contract — `qamus.website_projection_payload.v1`
 
-**Status:** proposed 2026-07-29 (owner steer §11, WEBSITE-BOUNDARY lane).
+**Status:** proposed 2026-07-29; additive `1.2.0` pilot-safety extension
+specified 2026-07-30. This is a Fusha-side candidate contract, not evidence
+that any website renderer accepts the extension.
 **Parties:** the Fusha/Qamus agent ("Fable") and the separate website agent.
-**Executable twin:** `tools/validate_website_payload.py` (red-first self-test,
-gated in `tools/check_regressions.py`). Where this prose and the validator
-disagree, the validator is the bug and this doc is the spec.
+**Executable twin:** `tools/validate_website_payload.py` (red-first self-test).
+Repository-harness registration of the 2026-07-30 re-anchor suite is owned by
+`TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1`; this pilot contract is not
+merge-ready until that serialized packet runs. Where this prose and the
+validator disagree, the validator is the bug and this doc is the spec.
 **Extends, never forks:**
 
 - `docs/qamus/particle-projection-contract.md` — the two-surface projection
@@ -18,8 +22,8 @@ disagree, the validator is the bug and this doc is the spec.
   ladder. Nothing in a website payload can create, upgrade, or imply
   certification.
 
-Sample payloads: `qamus/examples/website-payloads/*.payload.json` (nine
-committed samples, all validated green by the executable twin).
+Sample payloads: `qamus/examples/website-payloads/*.payload.json`, all
+validated by the executable twin.
 
 ---
 
@@ -50,8 +54,9 @@ Hard rules, both directions:
 4. **All refs are internal ids.** Payloads carry evidence and provenance as
    opaque internal identifiers only (fact ids, two-vote artifact ids,
    occurrence addresses). No source prose, no private corpus names
-   (FORBIDDEN_LABELS discipline), and no server filesystem paths ever cross
-   the boundary in either direction.
+   (FORBIDDEN_LABELS discipline), private review material, home or server
+   filesystem paths, UNC paths, private network addresses, build-host keys,
+   or machine topology ever cross the boundary in either direction.
 
 ## 2. Canonical payload envelope
 
@@ -65,14 +70,17 @@ object (`schema`: `qamus.website_projection_payload.v1`):
 | `payload_kind` | yes | `occurrence_projection` |
 | `occurrence_id` | yes | canonical occurrence address, e.g. `quran:2:34:5` |
 | `artifact_id` | yes | internal typed-fact artifact id owning this occurrence |
-| `appearance` | yes | where this payload renders: `appearance_id`, `page_id`, `page_kind` (`reader` \| `entry` \| `example_card` \| `wbw_hover` \| `dogfood_review`), `page_local` (§6) |
-| `projection` | yes | the fact plane (§3) — the ONLY hashed region |
+| `appearance` | yes | where this payload renders: `appearance_id`, `page_id`, `page_kind` (`reader` \| `entry` \| `example_card` \| `wbw_hover` \| `dogfood_review`), `page_local` (§6), and the conditional `1.2.0` binding fields (§6.1) |
+| `projection` | yes | the canonical fact plane (§3), hashed by `projection_hash` |
 | `projection_hash` | yes | sha256 hex over the canonical serialization of `projection` (§5) |
+| `appearance_binding_hash` | `1.2.0` | separate sha256 over stable appearance identity, local geometry, binding state, and the shared `projection_hash` (§6.1) |
 | `reverse_links` | yes | §7 |
 | `provenance` | yes | §8 |
 
-Appearance identity (`appearance_id`, `page_id`, `page_kind`) and
-`page_local` metadata live OUTSIDE `projection` and are never hashed.
+Appearance identity and appearance-local geometry live OUTSIDE `projection`.
+`page_local` is never hashed. In `1.2.0`, the closed appearance-binding basis
+has its own hash so local orthographic geometry cannot mutate silently or
+fork canonical occurrence truth.
 
 ## 3. The projection object (fact plane)
 
@@ -81,7 +89,7 @@ Everything inside `projection` is a linguistic fact owned by Fable. Keys:
 | key | req | meaning |
 |---|---|---|
 | `occurrence_id` | yes | repeats the envelope address (self-containment) |
-| `surface` | yes | the exact rendered surface, diacritics intact, **NFC-normalized** |
+| `surface` | yes | canonical occurrence surface, diacritics intact and **NFC-normalized**; for `1.0.x` and `1.1.x` this is also the rendered surface, while `1.2.0` binds the exact local rendering separately (§6.1) |
 | `normalization` | yes | literally `"NFC"` — the renderer must not re-normalize |
 | `kind` | yes | `particle_clitic_word` \| `noun_word` \| `verb_word` |
 | `segments` | yes | ordered array, §3.1 |
@@ -95,6 +103,7 @@ Everything inside `projection` is a linguistic fact owned by Fable. Keys:
 | `hover_cards` | yes | ordered array, §3.2 — the hover-only teaching plane |
 | `unresolved` | yes | `null` or the honest unresolved object (§10) |
 | `certification` | yes | `{status, plane}` — `status`: `certified` \| `candidate` \| `unresolved`; `plane`: per-fact map (e.g. `segmentation`, `function`, `governor`, `case`) |
+| `public_projection_eligible` | `1.2.0` candidate handoff | boolean; MUST be `false` until the required facts and website renderer capability are separately accepted |
 | `evidence_refs` | yes | array of opaque internal ids (fact ids, two-vote artifact ids, bundle refs) |
 
 ### 3.1 Segments
@@ -114,6 +123,20 @@ MUST tile `[0, len(surface))` contiguously in order. A renderer may therefore
 slice the surface by spans OR join the segment surfaces — both must give the
 same string. Failure is a validator FAIL, never a renderer workaround.
 
+Every morpheme ownership row has a unique, non-empty
+`morpheme_occurrence_id`, a valid `segment_index`, and a non-empty half-open
+span equal to that segment's canonical span. A primary span boundary may not
+split a combining-mark sequence. `1.2.0` permits a segment to have no backed
+primary morpheme identity; that absence is expressed as `null` in the
+appearance map and hover identity. It never permits an invented identity.
+
+The committed `quran:61:5:4` safety pilot deliberately exposes only the
+evidence-backed opening span `[0,2)` and host remainder `[2,11)` in the
+neutral primary plane. The available geometry facts do not support the
+candidate inner boundary at 8, so the possible stem and attached-pronoun
+analysis remains in `alternatives` and `public_projection_eligible` remains
+`false`.
+
 ### 3.2 Hover cards, compact vs expanded
 
 Hover facts are **hover-only**: they never render at rest. At rest the
@@ -126,6 +149,11 @@ Each hover card: `component_surface`, `contextual_gloss`,
 (`{loc, surface, relation}` or `null`), `governed_expression`, `scope`,
 `attachment` (`{host, boundary}` or `null`), `alternatives` (array),
 `reason`, `unresolved` (`null` or message), `entry_link` (path or `null`).
+For `1.2.0`, each card also carries `segment_index` and
+`morpheme_occurrence_id` (string or `null`). The ordered card, visible
+segment, morpheme ownership row, and appearance span-map row MUST agree on
+segment identity, morpheme identity, surface, and canonical span. A
+position-only match is insufficient.
 
 Two renderer field sets over ONE card object (the renderer selects fields; it
 never receives two divergent fact sets):
@@ -160,13 +188,31 @@ honesty is not an expanded-only luxury.
   word belongs to this entry").
 
 One occurrence may carry SEVERAL entry-link rows with distinct
-`relation_kind`s — e.g. لِقَوْمِهِ (quran:61:5:4) links its clitic to the
-particle entry, its written form to the noun entry, and its stem (by shared
-root only) to the verb entry. Multi-entry membership is a fact-plane state,
-not a renderer conflict; the renderer shows each relation in its own
-register.
+`relation_kind`s when each edge has its own evidence and state. Page context,
+surface resemblance, and root family never create entry membership. The
+`quran:61:5:4` safety sample therefore keeps both retained links explicitly
+`candidate_entry`, omits its former root-family claim, and does not convert
+the bound v489 appearance page into occurrence entry identity.
 - `segment_index` — which segment carries the link, or `null` for the whole
   word.
+
+For a `1.2.0` appearance-bound payload, every link additionally carries:
+
+- `link_state` — `candidate` or `certified`. It must agree with
+  `relation_kind`; in particular, `candidate_entry` can never carry a
+  certified-looking state.
+- `sense_state` — `candidate`, `certified`, `unresolved`, or
+  `not_applicable`. A null `sense_id` on `candidate_entry` is
+  `unresolved`, not an implicit whole-entry sense.
+- `evidence_refs` — a non-empty, unique array of opaque repository evidence
+  ids for this edge. A global projection evidence list does not replace
+  edge-local evidence.
+
+The `1.2.0` row is closed over
+`{entry_id, sense_id, relation_kind, segment_index, link_state, sense_state,
+evidence_refs}`. The same typed fields are copied into the corresponding
+reverse row and validated byte-semantically through canonical JSON. Thus a
+candidate edge cannot become settled-looking reverse membership.
 
 `entry_link_state`:
 
@@ -192,7 +238,8 @@ agree whenever the same fact plane is expressed in both shapes.
 **Appearance-parity invariant (renderer obligation).** Every appearance of
 one canonical `occurrence_id` — reader page, entry card, example card, WBW
 hover, dogfood review — carries the SAME `projection_hash`. Same occurrence =
-same projection everywhere; ONLY `appearance.page_local` (§6) may differ
+same canonical projection everywhere. `appearance.page_local` (§6) and, in
+`1.2.0`, the separately hashed local surface and span map (§6.1) may differ
 between appearances. The renderer:
 
 1. MUST treat `projection_hash` as the cache/dedupe key for the fact plane;
@@ -221,19 +268,86 @@ Any other key under `page_local` — and any page-presentation key smuggled
 into `projection` — is a validator FAIL. Extending the whitelist is an owner
 decision recorded in the particle contract, never a renderer convenience.
 
+### 6.1 Appearance-local orthography binding (`1.2.0`)
+
+`1.2.0` adds an appearance-local geometry binding without changing
+`projection_hash` semantics:
+
+- `appearance.displayed_surface`: exact NFC string from the authoritative
+  row selected by `appearance.appearance_id` in
+  `qamus/lattice/example-ayah-universe.jsonl`.
+- `appearance.canonical_to_appearance_span_map`: one ordered row for every
+  canonical segment. Each closed row contains `segment_index`,
+  `morpheme_occurrence_id` (string or `null`),
+  `canonical_char_start`, `canonical_char_end`,
+  `appearance_char_start`, and `appearance_char_end`.
+- `appearance.binding_state`: exactly
+  `candidate_requires_renderer_capability_acceptance`.
+- top-level `appearance_binding_hash`: the separate binding digest below.
+
+Canonical spans equal the referenced `projection.segments` spans. Local spans
+are integer, non-empty, ordered, gap-free, combining-mark safe, and tile
+`[0, len(appearance.displayed_surface))`. If canonical and displayed surfaces
+are equal, the map is an identity map. If they differ, the map preserves
+canonical segment and morpheme identity while reconstructing the local
+surface. It never copies canonical offsets blindly onto a shorter local
+spelling.
+
+The validator joins the envelope `appearance_id` to exactly one authoritative
+appearance row and requires exact `canonical_loc`, `page_id`, `page_kind`,
+and `displayed_surface` agreement. For an occurrence with a committed
+appearance universe, reverse entry-appearance ids must equal that exact set.
+A context row with `appearance_index_entry_linked: false` cannot become an
+entry-identity edge.
+
+The binding hash basis is this closed object:
+
+```json
+{
+  "appearance_id": "...",
+  "artifact_id": "...",
+  "binding_state": "candidate_requires_renderer_capability_acceptance",
+  "canonical_to_appearance_span_map": [],
+  "displayed_surface": "...",
+  "normalization": "NFC",
+  "occurrence_id": "quran:S:A:W",
+  "page_id": "...",
+  "page_kind": "entry",
+  "projection_hash": "..."
+}
+```
+
+`appearance_binding_hash = sha256(utf8(json.dumps(binding_basis,
+ensure_ascii=False, sort_keys=True, separators=(",", ":"))))`.
+
+The binding and hash are Fusha-side candidate artifacts. They do not prove
+that the website renderer supports orthographic variants, neutral unresolved
+classes, or this envelope version. Until the website agent records capability
+acceptance under its separate owner boundary, the envelope remains a
+non-deployed candidate and `projection.public_projection_eligible` stays
+`false`.
+
 ## 7. Reverse-link targets (§10 reverse knowledge views)
 
 `reverse_links` gives the renderer both directions without a graph query:
 
 - `occurrence_to_appearances` — every page appearance of THIS occurrence:
-  array of `{appearance_id, page_id, page_kind}`. The renderer uses it for
+  array of `{appearance_id, page_id, page_kind, projection_hash}`. The
+  shared hash is required on every row. The renderer uses it for
   "this word also appears on…" affordances and for parity auditing (§5).
 - `entry_to_occurrences` — for each linked entry, the occurrence-list shape
   the entry page's reverse knowledge view consumes: array of
-  `{entry_id, occurrences: [{occurrence_id, surface, loc, page_refs}]}`.
-  `page_refs` is an array of `page_id`s. This is the §10 reverse view: an
-  entry knows every occurrence that cites it, and each occurrence row is
-  enough to render a linked example line without fetching the full payload.
+  `{entry_id, sense_id, relation_kind, segment_index, link_state,
+  sense_state, evidence_refs, occurrences: [{occurrence_id, surface, loc,
+  page_refs, projection_hash}]}` in `1.2.0`. `page_refs` is the exact unique
+  set of `page_id`s declared in `occurrence_to_appearances`. Each reverse
+  typed edge must match exactly one forward `entry_links` edge, and each
+  reverse occurrence must bind this payload's occurrence id, canonical
+  surface, location, projection hash, and appearance pages. Extra, duplicate,
+  phantom, or state-losing rows are validator failures. This is the §10
+  reverse view: an entry knows every occurrence that cites it, and each
+  occurrence row is enough to render a linked example line without fetching
+  the full payload while preserving candidate state.
 
 Reverse links are derived data (Fable-computed from the graph); they are NOT
 part of the hashed fact plane, because appearance inventories legitimately
@@ -258,6 +372,12 @@ grow as pages are added while the analysis stays fixed.
 ## 9. Versioning & compatibility
 
 - `schema_version` is semver `MAJOR.MINOR.PATCH`, starting `1.0.0`.
+- `1.1.0` adds `root_family_of_entry` without changing the envelope.
+- `1.2.0` adds the conditional appearance-local binding and separate binding
+  hash in §6.1, plus explicit colour-hover identity and
+  `public_projection_eligible`. Legacy `1.0.x` and `1.1.x` payloads remain
+  valid without those fields. If any `1.2.0` binding field is emitted, the
+  complete shape and all `1.2.0` safety checks apply.
 - **Additive-only within a major:** within major 1, Fable may ADD keys and
   ADD closed-vocabulary values; it may never remove keys, rename keys, change
   a key's type, or change hash semantics. The renderer MUST ignore unknown
@@ -270,8 +390,9 @@ grow as pages are added while the analysis stays fixed.
   version before the next major removes it. The validator warns on
   deprecated-key use by producers; the renderer never depends on a key this
   doc marks deprecated.
-- The validator pins the accepted major; `check_regressions` fails on drift
-  between this doc's version rules and the validator.
+- The validator pins the accepted major. The focused self-test is executable
+  now; repository-harness registration is an explicit dependency of
+  `TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1`.
 
 ## 10. Unresolved & rootless rendering rules
 
@@ -301,11 +422,38 @@ When an occurrence's function is not yet adjudicated:
 - `certification.status` MUST be `unresolved`; an unresolved evidence state
   can never certify.
 
+For a `1.2.0` capability-gated candidate, `certification.plane` is a closed
+map with exactly `attachment_head`, `contextual_meaning`, `entry_links`,
+`function`, `governor`, `referent`, `root`, `segmentation`, and
+`translation`. Every value is exactly `candidate` or `unresolved`; a missing,
+extra, misspelled, or differently valued state is a validator failure. The
+primary public plane is strictly neutral regardless of which of those two
+open states each fact carries:
+
+- every segment uses `semantic_class: "unresolved"` and
+  `renderer_class: "qg-unresolved"`;
+- `whole_word_gloss`, segment glosses, and hover contextual glosses are
+  `"unresolved"`;
+- primary `particle_identity`, `contextual_function`, `governor`,
+  `governed_expression`, `scope`, `attachment`, and `entry_link` fields are
+  `null`;
+- candidate statements occur only in non-empty alternatives whose text begins
+  `Candidate only:`;
+- `root` remains `null`, `public_projection_eligible` remains `false`, and no
+  unresolved dictionary or surface gloss becomes a contextual translation.
+
+This neutral plane is not a universal rendering policy for already-certified
+legacy payloads. It is the fail-closed `1.2.0` contract for an appearance
+binding that has not passed both linguistic eligibility and renderer
+capability acceptance.
+
 ## 11. Teaching-plane language discipline
 
 All learner fields — `whole_word_gloss`, `learner_explanation`, segment
-`gloss`/`sarf_note`/`nahw_note`, hover `contextual_gloss`/`sarf_note`/
-`nahw_note`/`reason`, `rootless_pedagogy`, `unresolved.message` — are
+`gloss`/`sarf_note`/`nahw_note`, every hover learner value including
+`contextual_gloss`, `contextual_function`, identity labels, governor and
+attachment labels, alternatives, `sarf_note`, `nahw_note`, `reason`, and
+`unresolved`, plus `rootless_pedagogy` and the complete unresolved object — are
 learner-register English. Arabic technical iʿrāb formulas (e.g.
 "مبتدأ مرفوع وعلامة رفعه", "في محل جر", "مفعول به منصوب") are private-side
 analysis prose and may not appear (particle contract §1.4, `norm@1`
@@ -313,6 +461,12 @@ N-LANG-01/02). Arabic in these fields is limited to short quoted
 object-language forms (surfaces, hosts, governed expressions). The validator
 carries the forbidden-formula scan; a leak is a payload defect, and the
 website agent must not "translate around" one.
+
+The validator scans both keys and values. External source names,
+`informed_by`, private reviewer or workflow prose, build-host metadata,
+Windows paths using either slash direction, UNC paths, home paths, private
+network addresses, and machine topology are all validator failures. Opaque
+internal fact ids remain legal, but source prose does not.
 
 ## 12. Committed samples
 
@@ -326,8 +480,10 @@ All in `qamus/examples/website-payloads/`, all green under
 | `verb_ituni_12_59_5.payload.json` | verb word ٱئْتُونِى: stem + protective nūn + object pronoun | illustrative-from-live |
 | `noun_libuulatihinna_24_31_23.payload.json` | noun word لِبُعُولَتِهِنَّ: clitic + rooted stem + possessive pronoun | illustrative-from-live |
 | `unresolved_ma_2_284_2.payload.json` | honest unresolved state, neutral colour, live alternatives | illustrative-constructed |
+| `ma_nafiya_93_3_1.payload.json` | occurrence-specific negative `مَا` canary | certified |
+| `ma_relative_2_284_10.payload.json` | distinct occurrence-specific relative `مَا` canary | certified |
 | `no_entry_link_17_78_3.payload.json` | `entry_link_state: none_yet` (§7 W5 board requirement 6) | illustrative-from-live |
-| `multi_entry_liqawmihi_61_5_4.payload.json` | multi-entry token لِقَوْمِهِ (quran:61:5:4): three entry-link rows with distinct relation kinds (clitic → p007, form → n912 candidate, shared root → v005 `root_family_of_entry`); `schema_version` 1.1.0 | illustrative-from-live |
+| `multi_entry_liqawmihi_61_5_4.payload.json` | `1.2.0` candidate safety canary: exact `01133eb5431b:u0:x1:w3` appearance join, separate binding hash, geometry-supported neutral opening/host boundary, candidate links and alternatives, no root/governor/meaning/translation promotion, and explicit renderer-capability ineligibility | illustrative-from-live |
 | `verb_qamu_2_20_13.payload.json` | verb word قَامُوا (quran:2:20:13): hollow-root stem + built-in subject suffix; root + lexeme attachment certified in the vn-entry-canaries lane store | certified |
 | `noun_rajulayni_2_282_59.payload.json` | noun word رَجُلَيْنِ (quran:2:282:59): stem + dual ending; form attestation + lexeme attachment certified in the vn-entry-canaries lane store, root honestly candidate | certified |
 
@@ -336,10 +492,16 @@ projection artifacts in this contract's shape; their fact content is
 unchanged (segment spans corrected to the §3.1 tiling rule, which the pilot
 shape predates).
 
-The canary-derived samples (`multi_entry_*`, `verb_qamu_*`,
-`noun_rajulayni_*`) re-express `packets/vn-entry-canaries/` two-surface
-projections and lane typed-fact-store certification events in this
-contract's shape. Certified provenance there cites lane-store fact ids;
-it never claims committed-repo entry-state promotion (the canary
-completion-state report keeps that boundary explicit), and refused/two-vote
-facts (jarr governor, case) stay candidate in the per-fact plane map.
+The canary-derived verb and noun samples re-express lane two-surface
+projections and typed-fact-store certification events in this contract's
+shape. Certified provenance there cites lane-store fact ids and never claims
+committed-repo entry-state promotion.
+
+The `quran:61:5:4` sample is intentionally narrower than the former canary
+projection. It binds only the exact `01133eb5431b:u0:x1:w3` appearance
+envelope and keeps
+the authoritative four-appearance set in reverse declarations. It does not
+prove that four concrete envelopes consume the projection, that the website
+renderer accepts `1.2.0`, that revocation propagates across those envelopes,
+or that the unsupported inner host boundary has acquired a producer. Those
+remain A4 and website-capability acceptance gaps.

@@ -1,0 +1,284 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "twelve materialized suites",
+      "pass_condition": "unittest exits 0 and every one of the twelve exact modules executes once",
+      "run": "python -B -m unittest tools.test_pvn_reanchor_invariants tools.test_sarf_occurrence_ownership tools.test_compile_sarf_two_surface_projection tools.test_build_nahw_occurrence_facts tools.test_project_nahw_occurrence_facts tools.test_build_largelexicon_typed_edge_evidence_wave tools.test_bridge_largelexicon_occurrence_meta tools.test_validate_two_vote_engine_independence tools.test_certify_typed_fact_two_vote_binding tools.test_build_sarf_61_5_4_radical_ownership_evidence tools.test_build_nahw_61_5_4_contextual_meaning_evidence tools.test_regenerate_pvn_canonical_graph"
+    },
+    {
+      "name": "A4 deterministic sample",
+      "pass_condition": "exit 0 with PVN CANONICAL REGEN PASS and no generated sample drift",
+      "run": "python -B tools/regenerate_pvn_canonical_graph.py --check-sample qamus/examples/pvn-canonical-regeneration-w1/run-manifest.json"
+    },
+    {
+      "name": "A4 raw model proof",
+      "pass_condition": "exit 0 only when the reviewed implementation reconciles to distinct raw system/init events proving claude-sonnet-5 and claude-opus-5 without substitution",
+      "run": "python -B tools/regenerate_pvn_canonical_graph.py --validate-worker-records --worker-schema qamus/schemas/claude-cli-worker-invocation.schema.json --implementation-record out/pvn-canonical-regeneration-w1/worker-provenance/sonnet-5-implementation.invocation.json --implementation-stream out/pvn-canonical-regeneration-w1/worker-provenance/sonnet-5-implementation.stream.jsonl --review-record out/pvn-canonical-regeneration-w1/worker-provenance/opus-5-review.invocation.json --review-stream out/pvn-canonical-regeneration-w1/worker-provenance/opus-5-review.stream.jsonl"
+    },
+    {
+      "name": "complete repository harness",
+      "pass_condition": "all twelve exact modules are registered once, the conditional vertical gate is installed fail-closed, no previously registered block is lost, and the run ends ALL REGRESSION CHECKS PASS",
+      "run": "python -B tools/check_regressions.py"
+    },
+    {
+      "name": "exact changed paths",
+      "pass_condition": "exit 0 only when tracked and non-ignored untracked paths since the frozen clean start are exactly tools/check_regressions.py, docs/golden-commands.md, and qamus/reports/pvn-reanchor-harness-integration-w1.md",
+      "run": "python -B -c \"from pathlib import Path; import subprocess,sys; start=Path('out/pvn-reanchor-harness-integration-w1/start-sha.txt').read_text(encoding='ascii').strip(); required={'tools/check_regressions.py','docs/golden-commands.md','qamus/reports/pvn-reanchor-harness-integration-w1.md'}; changed=set(subprocess.check_output(['git','diff','--name-only',start,'--'],text=True).splitlines()) | set(subprocess.check_output(['git','ls-files','--others','--exclude-standard'],text=True).splitlines()); bad=sorted(changed^required); print('PVN REANCHOR HARNESS CHANGED PATHS '+('PASS' if not bad else 'FAIL delta='+repr(bad))); sys.exit(1 if bad else 0)\""
+    },
+    {
+      "name": "whitespace integrity",
+      "pass_condition": "git diff --check exits 0",
+      "run": "git diff --check"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "registering any named module zero times or more than once fails the integration tests",
+        "id": "mutation:duplicate-or-missing-module",
+        "source": "tools/check_regressions.py"
+      },
+      {
+        "expectation": "when any one vertical trigger exists, missing any required tool, manifest, report, payload, test execution, or sample check fails; partial materialization is never skipped",
+        "id": "mutation:partial-vertical-materialization",
+        "source": "qamus/task-packets/TP-PVN-VERTICAL-SLICE-61-5-4-W1.json"
+      },
+      {
+        "expectation": "when no vertical trigger exists, the vertical block reports owner-gated not materialized without printing a vertical PASS marker",
+        "id": "state:vertical-not-materialized",
+        "source": "qamus/task-packets/TP-PVN-VERTICAL-SLICE-61-5-4-W1.json"
+      },
+      {
+        "expectation": "glob discovery, silent ImportError handling, or a second writer for either shared file fails review",
+        "id": "mutation:unsafe-discovery-or-writer",
+        "source": "qamus/task-packets/TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1.json"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "after final A4 Sonnet implementation and independent Opus review, the twelve exact suites and A4 sample check are installed once, golden commands are copied exactly from their packet authorities, and the complete harness passes before A4 integration",
+        "id": "pvn-reanchor:harness-integration",
+        "source": "qamus/task-packets/TP-PVN-A4-CANONICAL-REGEN-W1.json"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "qamus/task-packets/TP-PVN-A4-CANONICAL-REGEN-W1.json",
+    "selection_rule": "this is a non-population integration packet: edit exactly two shared files once after final A4 implementation and Opus review, retain one packet-local report, and install a fixed conditional gate without requiring vertical outputs",
+    "this_packet_size": null,
+    "universe_size": null
+  },
+  "commands": [
+    {
+      "expect": "exit 0 from a clean worktree; the final reviewed A4 HEAD is written before either shared file changes",
+      "purpose": "freeze the integration start SHA",
+      "run": "python -B -c \"from pathlib import Path; import subprocess,sys; dirty=subprocess.check_output(['git','status','--porcelain'],text=True); dirty and sys.exit('dirty dispatch tree: '+dirty); p=Path('out/pvn-reanchor-harness-integration-w1/start-sha.txt'); p.parent.mkdir(parents=True,exist_ok=True); p.write_bytes((subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()+'\\n').encode('ascii'))\""
+    },
+    {
+      "expect": "TASK PACKET VALIDATION PASS",
+      "purpose": "validate this integration packet",
+      "run": "python -B tools/validate_task_packets.py qamus/task-packets/TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1.json"
+    },
+    {
+      "expect": "all twelve exact materialized modules execute once and pass",
+      "purpose": "run the exact re-anchor suites",
+      "run": "python -B -m unittest tools.test_pvn_reanchor_invariants tools.test_sarf_occurrence_ownership tools.test_compile_sarf_two_surface_projection tools.test_build_nahw_occurrence_facts tools.test_project_nahw_occurrence_facts tools.test_build_largelexicon_typed_edge_evidence_wave tools.test_bridge_largelexicon_occurrence_meta tools.test_validate_two_vote_engine_independence tools.test_certify_typed_fact_two_vote_binding tools.test_build_sarf_61_5_4_radical_ownership_evidence tools.test_build_nahw_61_5_4_contextual_meaning_evidence tools.test_regenerate_pvn_canonical_graph"
+    },
+    {
+      "expect": "PVN CANONICAL REGEN PASS with no tracked sample drift",
+      "purpose": "check A4 sample regeneration",
+      "run": "python -B tools/regenerate_pvn_canonical_graph.py --check-sample qamus/examples/pvn-canonical-regeneration-w1/run-manifest.json"
+    },
+    {
+      "expect": "exit 0 with raw init records proving distinct claude-sonnet-5 implementation and claude-opus-5 review sessions",
+      "purpose": "reconcile A4 Claude worker proof",
+      "run": "python -B tools/regenerate_pvn_canonical_graph.py --validate-worker-records --worker-schema qamus/schemas/claude-cli-worker-invocation.schema.json --implementation-record out/pvn-canonical-regeneration-w1/worker-provenance/sonnet-5-implementation.invocation.json --implementation-stream out/pvn-canonical-regeneration-w1/worker-provenance/sonnet-5-implementation.stream.jsonl --review-record out/pvn-canonical-regeneration-w1/worker-provenance/opus-5-review.invocation.json --review-stream out/pvn-canonical-regeneration-w1/worker-provenance/opus-5-review.stream.jsonl"
+    },
+    {
+      "expect": "ALL REGRESSION CHECKS PASS with the fixed vertical conditional block present",
+      "purpose": "run the complete repository harness",
+      "run": "python -B tools/check_regressions.py"
+    },
+    {
+      "expect": "exit 0 only for exactly the two shared files and retained report, including non-ignored untracked paths",
+      "purpose": "inspect the frozen-start changed set",
+      "run": "python -B -c \"from pathlib import Path; import subprocess,sys; start=Path('out/pvn-reanchor-harness-integration-w1/start-sha.txt').read_text(encoding='ascii').strip(); required={'tools/check_regressions.py','docs/golden-commands.md','qamus/reports/pvn-reanchor-harness-integration-w1.md'}; changed=set(subprocess.check_output(['git','diff','--name-only',start,'--'],text=True).splitlines()) | set(subprocess.check_output(['git','ls-files','--others','--exclude-standard'],text=True).splitlines()); bad=sorted(changed^required); print('PVN REANCHOR HARNESS CHANGED PATHS '+('PASS' if not bad else 'FAIL delta='+repr(bad))); sys.exit(1 if bad else 0)\""
+    },
+    {
+      "expect": "no whitespace errors",
+      "purpose": "check shared-file formatting",
+      "run": "git diff --check"
+    }
+  ],
+  "defeaters": [
+    "a broad test glob or dynamic discovery replacing the twelve exact module names",
+    "a missing module, duplicate registration, swallowed import failure, or directly runnable test not registered in the complete harness",
+    "a vertical gate that claims PASS while no vertical artifact exists",
+    "a vertical gate that skips after only some trigger artifacts materialize",
+    "the harness packet requiring vertical outputs and thereby creating a cycle",
+    "A4 depending upstream on this harness packet instead of feeding its implementation outputs into it",
+    "another packet writing tools/check_regressions.py or docs/golden-commands.md",
+    "a golden command altered, shortened, made deployable, or stripped of owner-gated and candidate-only boundaries",
+    "an unrelated source, schema, evidence, sample, website, certification, or live-system change"
+  ],
+  "definition_of_done": [
+    "the packet runs only after final A4 implementation and its independent Opus review have reconciled to raw Claude CLI model evidence, but before A4 is integrated",
+    "tools/check_regressions.py registers the twelve exact materialized modules once each and propagates any failure",
+    "the harness executes the committed A4 --check-sample command and the full repository run ends ALL REGRESSION CHECKS PASS",
+    "one fixed conditional vertical block uses only the six exact trigger paths; when none exists it reports PVN VERTICAL SLICE NOT MATERIALIZED (OWNER-GATED) without a vertical PASS, and when any exists it requires complete materialization",
+    "complete vertical materialization requires the owner-binding validator and test, vertical builder and test, manifest, report, four exact payload envelopes, both exact test modules, and a successful --check-sample; no glob or partial skip exists",
+    "docs/golden-commands.md records the exact A4 and owner-gated vertical command literals fixed in this packet, preserving every flag and no-live boundary; documenting the vertical command grants no dispatch or certification authority",
+    "the frozen-start tracked changed set is exactly tools/check_regressions.py, docs/golden-commands.md, and qamus/reports/pvn-reanchor-harness-integration-w1.md",
+    "no producer, A4 implementation, vertical implementation, evidence, certification, P007, website, or live artifact changes"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "final A4 implementation, raw Sonnet proof, raw Opus review proof, or deterministic A4 sample is absent or stale",
+      "any of the twelve named test modules is missing or failing",
+      "a named module already has conflicting or duplicate harness registration",
+      "the fixed conditional vertical gate cannot be installed without glob discovery or silent partial skip",
+      "the exact A4 or vertical golden command differs from its packet authority",
+      "any tracked path outside the two shared files and retained report changes from the frozen start SHA",
+      "the complete repository harness or artifact-drift checks fail"
+    ],
+    "route": "stop without integrating A4, preserve diagnostics under out/pvn-reanchor-harness-integration-w1, record the exact failure in qamus/reports/pvn-reanchor-harness-integration-w1.md, and route it to the owning producer, A4, vertical-contract, or repository-harness lane"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "Never invent a missing test, output, worker proof, or command. If A4 or any named suite is absent or stale, stop. If vertical artifacts are entirely absent, report owner-gated not materialized; if any appears, fail until the complete exact set validates.",
+    "statement": "This packet integrates already materialized and reviewed executable checks. It makes no linguistic conclusion, certification decision, or projection; its evidence is exact file identity, deterministic commands, raw A4 model provenance, and observed test output.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Sole shared harness edit registering twelve suites and the fixed conditional vertical gate",
+      "path": "tools/check_regressions.py"
+    },
+    {
+      "description": "Sole shared command-document edit recording exact A4 and owner-gated vertical invocations",
+      "path": "docs/golden-commands.md"
+    },
+    {
+      "description": "Bounded integration report with start SHA, exact registrations, command hashes, test evidence, and changed-path proof",
+      "path": "qamus/reports/pvn-reanchor-harness-integration-w1.md"
+    },
+    {
+      "description": "Untracked start SHA and transient verification evidence",
+      "path": "out/pvn-reanchor-harness-integration-w1/"
+    }
+  ],
+  "guards": [
+    "The METHOD transfers: exact registration, fail-closed conditional integration, deterministic command copying, and changed-path accounting may be reused; linguistic conclusions never transfer.",
+    "SEQUENCE: A1, A2, and A3 core and bounded producers feed A4 implementation; final Sonnet 5 A4 implementation and fresh Opus 5 review feed this packet; this packet must pass before A4 integration.",
+    "Shared-file ownership is singular. Only this packet writes tools/check_regressions.py and docs/golden-commands.md; all other re-anchor packets keep them read-only.",
+    "Register exactly these twelve modules once: tools.test_pvn_reanchor_invariants, tools.test_sarf_occurrence_ownership, tools.test_compile_sarf_two_surface_projection, tools.test_build_nahw_occurrence_facts, tools.test_project_nahw_occurrence_facts, tools.test_build_largelexicon_typed_edge_evidence_wave, tools.test_bridge_largelexicon_occurrence_meta, tools.test_validate_two_vote_engine_independence, tools.test_certify_typed_fact_two_vote_binding, tools.test_build_sarf_61_5_4_radical_ownership_evidence, tools.test_build_nahw_61_5_4_contextual_meaning_evidence, and tools.test_regenerate_pvn_canonical_graph.",
+    "The conditional vertical trigger set is exactly tools/build_pvn_vertical_slice_61_5_4.py, tools/test_build_pvn_vertical_slice_61_5_4.py, tools/validate_pvn_61_5_4_owner_certification_binding.py, tools/test_validate_pvn_61_5_4_owner_certification_binding.py, qamus/examples/pvn-vertical-slice-61-5-4/manifest.json, and qamus/reports/pvn-vertical-slice-61-5-4.md.",
+    "If no trigger exists, print PVN VERTICAL SLICE NOT MATERIALIZED (OWNER-GATED) and no vertical PASS marker. If any trigger exists, require all six triggers plus the four exact payload envelopes, execute tools.test_validate_pvn_61_5_4_owner_certification_binding and tools.test_build_pvn_vertical_slice_61_5_4, and run python -B tools/build_pvn_vertical_slice_61_5_4.py --check-sample qamus/examples/pvn-vertical-slice-61-5-4/manifest.json.",
+    "The conditional vertical block uses fixed paths and exact modules. No glob discovery, silent missing-file skip, swallowed ImportError, or optional test execution is allowed.",
+    "This packet consumes A4 implementation outputs but never requires vertical outputs. The conditional gate is installed before owner-gated vertical materialization, preserving an acyclic graph.",
+    "A4 never consumes this harness packet, owner-certification output, or vertical output. The owner-certification packet never consumes vertical output.",
+    "GOLDEN A4 COMMAND: python -B tools/regenerate_pvn_canonical_graph.py --occurrences qamus/lattice/example-ayah-universe.occurrences.jsonl --appearances qamus/lattice/example-ayah-universe.jsonl --universe-meta qamus/lattice/example-ayah-universe.meta.json --loc-surface-index qamus/indexes/quran-loc-surface/index.jsonl --loc-surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --appearance-disposition-schema qamus/schemas/pvn-appearance-disposition.schema.json --website-contract docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md --sarf-ownership-schema qamus/schemas/sarf-occurrence-ownership.schema.json --sarf-ownership-artifact qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl --sarf-ownership-meta qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json --sarf-parity-schema qamus/schemas/sarf-two-surface-projection.schema.json --sarf-parity-artifact qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json --sarf-parity-meta qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json --nahw-facts-schema qamus/schemas/nahw-occurrence-fact-bundle.schema.json --nahw-facts-artifact qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --nahw-facts-meta qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json --nahw-projection-schema qamus/schemas/nahw-public-projection.schema.json --nahw-projection-artifact qamus/examples/nahw-public-projection-w1/projections.sample.jsonl --nahw-projection-meta qamus/examples/nahw-public-projection-w1/projections.sample.meta.json --largelexicon-bridge-schema qamus/schemas/largelexicon-occurrence-meta-bridge.schema.json --largelexicon-bridge-artifact qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.jsonl --largelexicon-bridge-meta qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.meta.json --largelexicon-accepted-edge-packet qamus/task-packets/TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json --largelexicon-accepted-edge-rows qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.jsonl --largelexicon-accepted-edge-meta qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.meta.json --largelexicon-edge-vocabulary tools/build_typed_edge_crosswalk.py --largelexicon-row-schema qamus.graph_edge.v1 --out out/pvn-canonical-regeneration-w1 --sample-out qamus/examples/pvn-canonical-regeneration-w1",
+    "GOLDEN OWNER-GATED VERTICAL COMMAND: python -B tools/build_pvn_vertical_slice_61_5_4.py --occurrence-id quran:61:5:4 --a4-run-manifest qamus/examples/pvn-canonical-regeneration-w1/run-manifest.json --a4-canonical-occurrence qamus/examples/pvn-canonical-regeneration-w1/canonical-occurrence-quran-61-5-4.json --a4-appearance-dispositions qamus/examples/pvn-canonical-regeneration-w1/appearance-dispositions.sample.jsonl --a4-appearance-dispositions-meta qamus/examples/pvn-canonical-regeneration-w1/appearance-dispositions.sample.meta.json --a4-appearance-disposition-schema qamus/schemas/pvn-appearance-disposition.schema.json --a4-payload qamus/examples/pvn-canonical-regeneration-w1/website-payloads/01133eb5431b_u0_x1_w3.payload.json --a4-payload qamus/examples/pvn-canonical-regeneration-w1/website-payloads/3041d6f44a27_u11_x1_w3.payload.json --a4-payload qamus/examples/pvn-canonical-regeneration-w1/website-payloads/65d3d5c51f24_u0_x2_w3.payload.json --a4-payload qamus/examples/pvn-canonical-regeneration-w1/website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json --appearances qamus/lattice/example-ayah-universe.jsonl --loc-surface-index qamus/indexes/quran-loc-surface/index.jsonl --loc-surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --website-contract docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md --website-validator tools/validate_website_payload.py --radical-evidence qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl --radical-evidence-meta qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json --radical-evidence-schema qamus/schemas/sarf-61-5-4-radical-ownership-evidence.schema.json --radical-evidence-meta-schema qamus/schemas/sarf-61-5-4-radical-ownership-evidence-meta.schema.json --context-evidence qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.jsonl --context-evidence-meta qamus/examples/nahw-61-5-4-contextual-meaning-evidence-w1/evidence.meta.json --context-evidence-schema qamus/schemas/nahw-61-5-4-contextual-meaning-evidence.schema.json --context-evidence-meta-schema qamus/schemas/nahw-61-5-4-contextual-meaning-evidence-meta.schema.json --owner-cert-packet qamus/task-packets/TP-PVN-61-5-4-OWNER-CERTIFICATION-W1.json --owner-cert-events qamus/certification/typed-fact-store/events.jsonl --owner-cert-event-schema qamus/schemas/certification-event.schema.json --owner-cert-meta qamus/certification/typed-fact-store/pvn-61-5-4-owner-certifications.meta.json --owner-cert-meta-schema qamus/schemas/pvn-61-5-4-owner-certifications-meta.schema.json --two-vote-worker-schema qamus/schemas/two-vote-worker-record.schema.json --two-vote-worker-validator tools/validate_two_vote_worker_records.py --start-sha-file out/pvn-vertical-slice-61-5-4/start-sha.txt --p007-readonly-tree qamus/examples/p007-li-pilot --out out/pvn-vertical-slice-61-5-4 --sample-out qamus/examples/pvn-vertical-slice-61-5-4",
+    "The vertical command is documented as owner-gated and non-dispatchable until every named source gap closes. Documentation does not grant certification or execution authority.",
+    "No live-site mutation, website implementation, fact certification, linguistic authoring, dependency promotion, or candidate-to-certified transition occurs in this packet."
+  ],
+  "inputs": {
+    "input_files": [
+      "qamus/task-packets/TP-PVN-A4-CANONICAL-REGEN-W1.json",
+      "qamus/task-packets/TP-PVN-PILOT-SAFETY-61-5-4-W1.json",
+      "qamus/schemas/claude-cli-worker-invocation.schema.json",
+      "out/pvn-canonical-regeneration-w1/worker-provenance/sonnet-5-implementation.invocation.json",
+      "out/pvn-canonical-regeneration-w1/worker-provenance/sonnet-5-implementation.stream.jsonl",
+      "out/pvn-canonical-regeneration-w1/worker-provenance/opus-5-review.invocation.json",
+      "out/pvn-canonical-regeneration-w1/worker-provenance/opus-5-review.stream.jsonl",
+      "tools/regenerate_pvn_canonical_graph.py",
+      "qamus/examples/pvn-canonical-regeneration-w1/run-manifest.json",
+      "tools/test_pvn_reanchor_invariants.py",
+      "tools/test_sarf_occurrence_ownership.py",
+      "tools/test_compile_sarf_two_surface_projection.py",
+      "tools/test_build_nahw_occurrence_facts.py",
+      "tools/test_project_nahw_occurrence_facts.py",
+      "tools/test_build_largelexicon_typed_edge_evidence_wave.py",
+      "tools/test_bridge_largelexicon_occurrence_meta.py",
+      "tools/test_validate_two_vote_engine_independence.py",
+      "tools/test_certify_typed_fact_two_vote_binding.py",
+      "tools/test_build_sarf_61_5_4_radical_ownership_evidence.py",
+      "tools/test_build_nahw_61_5_4_contextual_meaning_evidence.py",
+      "tools/test_regenerate_pvn_canonical_graph.py",
+      "tools/check_regressions.py",
+      "docs/golden-commands.md",
+      "tools/validate_task_packets.py"
+    ],
+    "permitted_write_files": [
+      "tools/check_regressions.py",
+      "docs/golden-commands.md",
+      "qamus/reports/pvn-reanchor-harness-integration-w1.md",
+      "out/pvn-reanchor-harness-integration-w1/"
+    ],
+    "prohibited_files": [
+      "qamus/data/",
+      "qamus/certification/",
+      "qamus/lattice/",
+      "qamus/indexes/",
+      "qamus/schemas/",
+      "qamus/task-packets/",
+      "qamus/examples/",
+      "qamus/skills/",
+      "sarf/",
+      "nahw/",
+      "docs/current-state.yaml",
+      "docs/qamus/",
+      "tools/regenerate_pvn_canonical_graph.py",
+      "tools/test_pvn_reanchor_invariants.py",
+      "tools/test_sarf_occurrence_ownership.py",
+      "tools/test_compile_sarf_two_surface_projection.py",
+      "tools/test_build_nahw_occurrence_facts.py",
+      "tools/test_project_nahw_occurrence_facts.py",
+      "tools/test_build_largelexicon_typed_edge_evidence_wave.py",
+      "tools/test_bridge_largelexicon_occurrence_meta.py",
+      "tools/test_validate_two_vote_engine_independence.py",
+      "tools/test_certify_typed_fact_two_vote_binding.py",
+      "tools/test_build_sarf_61_5_4_radical_ownership_evidence.py",
+      "tools/test_build_nahw_61_5_4_contextual_meaning_evidence.py",
+      "tools/test_regenerate_pvn_canonical_graph.py",
+      "tools/build_pvn_vertical_slice_61_5_4.py",
+      "tools/test_build_pvn_vertical_slice_61_5_4.py",
+      "tools/validate_pvn_61_5_4_owner_certification_binding.py",
+      "tools/test_validate_pvn_61_5_4_owner_certification_binding.py",
+      "tools/validate_website_payload.py"
+    ]
+  },
+  "model_class": "deterministic",
+  "non_deployment": {
+    "statement": "This packet changes only repository harness and command documentation. It does not certify facts, build public payloads, edit website code, deploy, contact the live site, or mutate any live surface.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1",
+  "provenance": {
+    "authored_by": "PVN owner re-anchor integration lane",
+    "cites": [
+      "qamus/task-packets/TP-PVN-A4-CANONICAL-REGEN-W1.json",
+      "qamus/task-packets/TP-PVN-VERTICAL-SLICE-61-5-4-W1.json",
+      "docs/golden-commands.md"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "PVN_REANCHOR_HARNESS_INTEGRATION",
+    "out_of_scope": [
+      "Do not implement or alter producer, A4, vertical, evidence, certification, P007, or website artifacts.",
+      "Do not dispatch the owner-gated vertical command.",
+      "Do not edit any file beyond the two shared files, retained report, and untracked evidence directory."
+    ],
+    "summary": "Serialize the sole shared-file edit after final A4 implementation and review by registering twelve exact re-anchor suites, installing a fail-closed owner-gated vertical conditional, and recording exact candidate-only golden commands.",
+    "tranche": "pvn-reanchor-harness-integration-w1"
+  },
+  "title": "Integrate the P V N re-anchor checks into the canonical harness",
+  "tools_required": [
+    "python 3",
+    "tools/check_regressions.py",
+    "tools/validate_task_packets.py",
+    "git"
+  ]
+}

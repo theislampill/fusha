@@ -1,0 +1,263 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "website payload validator self-test",
+      "pass_condition": "exits 0 with WEBSITE PAYLOAD SELF-TEST PASS and exercises the 1.2 binding, closed candidate-plane states, typed forward/reverse entry parity, identity, geometry, private-source and topology red cases plus the legal-URI control",
+      "run": "python -B tools/validate_website_payload.py --self-test"
+    },
+    {
+      "name": "all committed website payloads",
+      "pass_condition": "exits 0 with WEBSITE PAYLOAD VALIDATION PASS and the 1.2 pilot plus every backward-compatible 1.0 and 1.1 sample accepted",
+      "run": "python -B tools/validate_website_payload.py"
+    },
+    {
+      "name": "P V N pilot re-anchor invariants",
+      "pass_condition": "unittest exits 0 with exact authoritative appearance binding, neutral candidate plane, evidence-bounded geometry, identity parity and public-boundary mutations covered",
+      "run": "python -B tools/test_pvn_reanchor_invariants.py"
+    },
+    {
+      "name": "task packet validation",
+      "pass_condition": "exits 0 with TASK PACKET VALIDATION PASS",
+      "run": "python -B tools/validate_task_packets.py"
+    },
+    {
+      "name": "artifact ergonomics",
+      "pass_condition": "exits 0 with ARTIFACT ERGONOMICS OK",
+      "run": "python -B tools/check_artifact_ergonomics.py"
+    },
+    {
+      "name": "bounded tracked and untracked path scope",
+      "pass_condition": "prints PVN PILOT SAFETY PATH SCOPE PASS after proving no path outside the four implementation files was introduced, every pre-existing dirty path outside the allowlist remains byte-and-type identical, every allowed file changed, and HEAD remains at the frozen start SHA",
+      "run": "python -c 'from pathlib import Path; import hashlib,json,subprocess,sys; state=json.loads(Path(\"out/pvn-pilot-safety-61-5-4-w1/start-state.json\").read_text(encoding=\"utf-8\")); snap=lambda p:{\"exists\":Path(p).exists(),\"is_file\":Path(p).is_file(),\"is_symlink\":Path(p).is_symlink(),\"sha256\":hashlib.sha256(Path(p).read_bytes()).hexdigest() if Path(p).is_file() else None}; sha=subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(); current=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",state[\"start_sha\"],\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); baseline=set(state[\"preexisting_changed_paths\"]); allowed=set(state[\"allowed_paths\"]); unexpected=sorted((current-baseline)-allowed); protected_drift=sorted(p for p,before in state[\"preexisting_protected_state\"].items() if snap(p)!=before); changed=sorted(p for p in allowed if snap(p)!=state[\"allowed_state\"][p]); missing=sorted(allowed-set(changed)); ok=sha==state[\"start_sha\"] and not unexpected and not protected_drift and not missing; print(\"PVN PILOT SAFETY PATH SCOPE \" + (\"PASS\" if ok else \"FAIL\") + (\"\" if ok else \" unexpected=\"+repr(unexpected)+\" protected_drift=\"+repr(protected_drift)+\" missing=\"+repr(missing)+\" head=\"+sha)); sys.exit(0 if ok else 1)'"
+    },
+    {
+      "name": "authoritative input drift",
+      "pass_condition": "git diff exits 0 and reports no change since the frozen start SHA in the occurrence universes, p007 geometry facts, or repository-backed morpheme occurrence source",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; sha=Path(\"out/pvn-pilot-safety-61-5-4-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); sys.exit(subprocess.call([\"git\",\"diff\",\"--exit-code\",sha,\"--\",\"qamus/lattice/example-ayah-universe.jsonl\",\"qamus/lattice/example-ayah-universe.occurrences.jsonl\",\"qamus/certification/p007-geometry-wave/typed-facts.jsonl\",\"qamus/examples/p007-li-pilot/morpheme-occurrences.jsonl\"]))'"
+    },
+    {
+      "name": "whitespace diff check",
+      "pass_condition": "git diff --check exits 0",
+      "run": "git diff --check"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "must fail because this appearance displays the shorter local surface even though the canonical occurrence surface retains the final orthographic mark",
+        "id": "3041d6f44a27:u11:x1:w3",
+        "source": "qamus/lattice/example-ayah-universe.jsonl",
+        "surface": "لِقَوْمِهِ"
+      },
+      {
+        "expectation": "must remain candidate-only because the committed geometry facts support the opening boundary at 2 but not the host-internal boundary at 8 or invented stem and pronoun morpheme identities",
+        "id": "quran:61:5:4:unsupported-inner-boundary",
+        "source": "qamus/certification/p007-geometry-wave/typed-facts.jsonl",
+        "surface": "قَوْمِهِۦ"
+      },
+      {
+        "expectation": "must fail when a learner field, key or provenance value carries an external source label, private workflow prose, home path, UNC path, forward-slash Windows path, private address or machine topology",
+        "id": "mutation:public-boundary-leak",
+        "source": "tools/validate_website_payload.py"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "the envelope binds exactly to the authoritative 11-codepoint appearance, retains one canonical projection hash, carries a separately hashed identity span map, exposes only the evidence-backed neutral opening and host-remainder spans, and remains non-renderable candidate state",
+        "id": "01133eb5431b:u0:x1:w3",
+        "source": "qamus/lattice/example-ayah-universe.jsonl",
+        "surface": "لِقَوْمِهِۦ"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "qamus/lattice/example-ayah-universe.occurrences.jsonl",
+    "selection_rule": "the single already-supported quran:61:5:4 occurrence and its exact 01133eb5431b:u0:x1:w3 appearance are selected as the bounded contract-safety pilot; no new linguistic population is classified",
+    "this_packet_size": 1,
+    "universe_size": 50041
+  },
+  "commands": [
+    {
+      "expect": "writes the immutable HEAD, the complete preexisting tracked-plus-untracked changed-path set, byte-and-type snapshots for every protected dirty path, and the exact four-path pre-edit states under the ignored run directory",
+      "purpose": "freeze start SHA and path baseline before edits",
+      "run": "python -c 'from pathlib import Path; import hashlib,json,subprocess; run=Path(\"out/pvn-pilot-safety-61-5-4-w1\"); run.mkdir(parents=True,exist_ok=True); sha=subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(); changed=sorted(set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",sha,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines())); allowed=[\"docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md\",\"qamus/examples/website-payloads/multi_entry_liqawmihi_61_5_4.payload.json\",\"tools/test_pvn_reanchor_invariants.py\",\"tools/validate_website_payload.py\"]; allowed_set=set(allowed); snap=lambda p:{\"exists\":Path(p).exists(),\"is_file\":Path(p).is_file(),\"is_symlink\":Path(p).is_symlink(),\"sha256\":hashlib.sha256(Path(p).read_bytes()).hexdigest() if Path(p).is_file() else None}; state={\"allowed_paths\":allowed,\"allowed_state\":{p:snap(p) for p in allowed},\"preexisting_changed_paths\":changed,\"preexisting_protected_state\":{p:snap(p) for p in changed if p not in allowed_set},\"start_sha\":sha}; (run/\"start-sha.txt\").write_text(sha+\"\\n\",encoding=\"ascii\",newline=\"\\n\"); (run/\"start-state.json\").write_text(json.dumps(state,ensure_ascii=False,indent=2,sort_keys=True)+\"\\n\",encoding=\"utf-8\",newline=\"\\n\"); print(sha)'"
+    },
+    {
+      "expect": "RED on the pre-repair sample for cross-source appearance mismatch, settled candidate claims, unsupported geometry, malformed spans, identity forks and private topology",
+      "purpose": "run focused tests before implementation",
+      "run": "python -B tools/test_pvn_reanchor_invariants.py"
+    },
+    {
+      "expect": "WEBSITE PAYLOAD SELF-TEST PASS",
+      "purpose": "run validator red mutation matrix after implementation",
+      "run": "python -B tools/validate_website_payload.py --self-test"
+    },
+    {
+      "expect": "unittest OK with the exact authoritative pilot row and every adversarial mutation active",
+      "purpose": "run focused integration tests after implementation",
+      "run": "python -B tools/test_pvn_reanchor_invariants.py"
+    },
+    {
+      "expect": "WEBSITE PAYLOAD VALIDATION PASS for all committed samples",
+      "purpose": "prove backward-compatible payload validation",
+      "run": "python -B tools/validate_website_payload.py"
+    },
+    {
+      "expect": "TASK PACKET VALIDATION PASS",
+      "purpose": "validate all task packet schemas",
+      "run": "python -B tools/validate_task_packets.py"
+    },
+    {
+      "expect": "ARTIFACT ERGONOMICS OK",
+      "purpose": "validate reviewer-facing JSON format",
+      "run": "python -B tools/check_artifact_ergonomics.py"
+    },
+    {
+      "expect": "PVN PILOT SAFETY PATH SCOPE PASS",
+      "purpose": "verify frozen-start tracked and untracked path scope",
+      "run": "python -c 'from pathlib import Path; import hashlib,json,subprocess,sys; state=json.loads(Path(\"out/pvn-pilot-safety-61-5-4-w1/start-state.json\").read_text(encoding=\"utf-8\")); snap=lambda p:{\"exists\":Path(p).exists(),\"is_file\":Path(p).is_file(),\"is_symlink\":Path(p).is_symlink(),\"sha256\":hashlib.sha256(Path(p).read_bytes()).hexdigest() if Path(p).is_file() else None}; sha=subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(); current=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",state[\"start_sha\"],\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); baseline=set(state[\"preexisting_changed_paths\"]); allowed=set(state[\"allowed_paths\"]); unexpected=sorted((current-baseline)-allowed); protected_drift=sorted(p for p,before in state[\"preexisting_protected_state\"].items() if snap(p)!=before); changed=sorted(p for p in allowed if snap(p)!=state[\"allowed_state\"][p]); missing=sorted(allowed-set(changed)); ok=sha==state[\"start_sha\"] and not unexpected and not protected_drift and not missing; print(\"PVN PILOT SAFETY PATH SCOPE \" + (\"PASS\" if ok else \"FAIL\") + (\"\" if ok else \" unexpected=\"+repr(unexpected)+\" protected_drift=\"+repr(protected_drift)+\" missing=\"+repr(missing)+\" head=\"+sha)); sys.exit(0 if ok else 1)'"
+    },
+    {
+      "expect": "exit 0 with no authoritative input drift",
+      "purpose": "verify read-only input drift separately",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; sha=Path(\"out/pvn-pilot-safety-61-5-4-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); sys.exit(subprocess.call([\"git\",\"diff\",\"--exit-code\",sha,\"--\",\"qamus/lattice/example-ayah-universe.jsonl\",\"qamus/lattice/example-ayah-universe.occurrences.jsonl\",\"qamus/certification/p007-geometry-wave/typed-facts.jsonl\",\"qamus/examples/p007-li-pilot/morpheme-occurrences.jsonl\"]))'"
+    },
+    {
+      "expect": "exit 0 with no whitespace errors",
+      "purpose": "verify diff whitespace separately",
+      "run": "git diff --check"
+    }
+  ],
+  "defeaters": [
+    "The canonical 11-codepoint surface cannot be emitted as the exact rendering for a 10-codepoint appearance without an explicit appearance-local span map.",
+    "A page containing the occurrence is not evidence that the occurrence instantiates that page's entry.",
+    "The opening-span geometry and boundary at 2 do not prove the host-internal boundary at 8, stem identity, pronoun identity, root, function, governor, referent, meaning or translation.",
+    "A candidate or unresolved analysis cannot render through settled semantic colour or the primary contextual-function plane.",
+    "Projection-hash parity does not prove appearance-local geometry, renderer capability acceptance, four concrete envelopes, revocation propagation or deployment."
+  ],
+  "definition_of_done": [
+    "The sample envelope is rebound to 01133eb5431b:u0:x1:w3 and its displayed surface joins exactly to the authoritative appearance universe.",
+    "The additive 1.2.0 contract keeps canonical projection surface and hash separate from exact local display geometry and the appearance binding hash.",
+    "The primary public plane contains only neutral evidence-backed opening and host-remainder spans; the unsupported host-internal carve remains explicit candidate-only alternatives.",
+    "The 1.2.0 certification plane has an exact closed key set and only candidate or unresolved values, so malformed states cannot bypass neutral rendering.",
+    "Every forward candidate entry edge and reverse entry row preserves the same relation kind, link state, sense state, edge evidence and exact occurrence binding; phantom or settled-looking reverse membership fails.",
+    "Morpheme, segment, hover and appearance-map identities and spans fail closed on mismatch, malformed offsets or combining-mark splits.",
+    "Every learner-facing value and all payload keys fail on external-source, private-review, path or machine-topology leakage.",
+    "All focused validators, packet checks, artifact ergonomics, path-scope, input-drift and diff checks pass.",
+    "No website file, certification store, source universe, generated state, live surface or deployment is changed.",
+    "Merge readiness remains false until TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 registers tools/test_pvn_reanchor_invariants.py exactly once in tools/check_regressions.py and the complete repository harness passes."
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "the authoritative appearance row or canonical occurrence surface changes",
+      "a primary boundary or morpheme identity cannot resolve to an explicit repository fact",
+      "the website renderer has not accepted the 1.2.0 capability",
+      "the repair would require website code, certification mutation, a new linguistic conclusion or a write outside the exact four implementation files",
+      "the frozen-start path scope, authoritative input drift, focused tests, artifact ergonomics or later harness integration fails"
+    ],
+    "route": "stop without rendering, certification or deployment; preserve the neutral candidate payload and route the exact geometry, linguistic, website-capability or harness blocker to its owning packet"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If exact occurrence identity, local surface, span geometry, morpheme identity, contextual fact or renderer capability is absent, retain null or unresolved state, set public projection eligibility false and route the missing producer; never infer from page context, surface, root, colour or legacy prose.",
+    "statement": "The pilot may expose only identities, surfaces and boundaries that join deterministically to the committed occurrence universe and exact repository facts. Candidate linguistic analyses remain alternatives and cannot become primary public claims.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Backward-compatible 1.2.0 appearance-local binding and candidate safety contract",
+      "path": "docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md"
+    },
+    {
+      "description": "Fail-closed payload validator for local geometry, public candidate safety, identity parity and source cleanliness",
+      "path": "tools/validate_website_payload.py"
+    },
+    {
+      "description": "Focused red-first P V N pilot regression suite",
+      "path": "tools/test_pvn_reanchor_invariants.py"
+    },
+    {
+      "description": "Exact 01133eb5431b appearance-bound neutral candidate sample",
+      "path": "qamus/examples/website-payloads/multi_entry_liqawmihi_61_5_4.payload.json",
+      "schema": "qamus.website_projection_payload.v1"
+    }
+  ],
+  "guards": [
+    "The METHOD transfers; linguistic conclusions never do. Executors may enforce only the explicit identity, geometry, state and boundary checks in this packet.",
+    "Start from a frozen HEAD and capture the complete preexisting tracked-plus-untracked changed-path set, byte-and-type state for every protected dirty path, and pre-edit state for each allowed path before any packet edit.",
+    "Only the exact four implementation files are writable; tools/check_regressions.py and docs/golden-commands.md are serialized to TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1.",
+    "Projection.surface remains the canonical NFC occurrence surface; appearance.displayed_surface remains the exact authoritative local surface.",
+    "Projection_hash covers the complete canonical projection only. Appearance_binding_hash separately covers occurrence and artifact identity, projection hash, appearance and page identity, binding state, NFC declaration, displayed surface and complete local map.",
+    "A context appearance with appearance_index_entry_linked false never licenses entry identity.",
+    "Every 1.2.0 entry link carries explicit link_state, sense_state and non-empty edge-local evidence_refs; the reverse view must preserve that exact typed edge without additions.",
+    "Candidate and unresolved segmentation or function stays neutral in the primary plane; all candidate statements are explicitly marked alternatives.",
+    "Only mocc:p007:61:5:4 and the opening-to-host boundary resolve for current primary ownership; the possible host-internal carve is not projection-eligible.",
+    "No source prose, external source name, private reviewer material, path, credentials, machine topology, website code or live mutation is permitted."
+  ],
+  "inputs": {
+    "input_files": [
+      "AGENTS.md",
+      "docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md",
+      "qamus/examples/website-payloads/multi_entry_liqawmihi_61_5_4.payload.json",
+      "qamus/lattice/example-ayah-universe.jsonl",
+      "qamus/lattice/example-ayah-universe.occurrences.jsonl",
+      "qamus/certification/p007-geometry-wave/typed-facts.jsonl",
+      "qamus/examples/p007-li-pilot/morpheme-occurrences.jsonl",
+      "tools/validate_website_payload.py",
+      "tools/test_pvn_reanchor_invariants.py"
+    ],
+    "permitted_write_files": [
+      "docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md",
+      "qamus/examples/website-payloads/multi_entry_liqawmihi_61_5_4.payload.json",
+      "tools/test_pvn_reanchor_invariants.py",
+      "tools/validate_website_payload.py",
+      "out/pvn-pilot-safety-61-5-4-w1/"
+    ],
+    "prohibited_files": [
+      "docs/golden-commands.md",
+      "qamus/certification/",
+      "qamus/data/",
+      "qamus/lattice/",
+      "qamus/task-packets/",
+      "tools/check_regressions.py",
+      "website/",
+      "nahw/",
+      "sarf/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "This packet changes only repository-local contract, validator, focused test and candidate sample artifacts. It does not edit website code, claim renderer compatibility, certify facts, mutate the live site or authorize deployment.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-PVN-PILOT-SAFETY-61-5-4-W1",
+  "provenance": {
+    "authored_by": "P V N owner re-anchor pilot safety lane",
+    "cites": [
+      "docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md",
+      "qamus/lattice/example-ayah-universe.jsonl#01133eb5431b:u0:x1:w3",
+      "qamus/certification/p007-geometry-wave/typed-facts.jsonl#fact:p007geo:61_5_4:geom",
+      "qamus/examples/p007-li-pilot/morpheme-occurrences.jsonl#mocc:p007:61:5:4"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "PVN_PILOT_APPEARANCE_SAFETY",
+    "out_of_scope": [
+      "Do not produce the four A4 appearance envelopes, regenerate corpus state or claim revocation propagation.",
+      "Do not author new linguistic conclusions, roots, functions, governors, referents, meanings, translations or certifications.",
+      "Do not edit website templates, CSS, JavaScript, runtime code, live data, deployment state or renderer capability records.",
+      "Do not write tools/check_regressions.py or docs/golden-commands.md; the serialized harness packet owns them."
+    ],
+    "summary": "Repair the quran:61:5:4 pilot so one exact authoritative appearance binds safely to a shared canonical projection without promoting unsupported segmentation, context, source prose or renderer compatibility.",
+    "tranche": "pvn-reanchor-pilot-safety-wave-1"
+  },
+  "title": "Bind the 61:5:4 candidate pilot to exact appearance geometry and neutral public safety",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/validate_website_payload.py",
+    "tools/validate_task_packets.py",
+    "tools/check_artifact_ergonomics.py"
+  ]
+}

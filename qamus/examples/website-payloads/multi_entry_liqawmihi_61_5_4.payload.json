@@ -1,266 +1,276 @@
 {
- "schema": "qamus.website_projection_payload.v1",
- "schema_version": "1.1.0",
- "payload_kind": "occurrence_projection",
- "occurrence_id": "quran:61:5:4",
- "artifact_id": "artifact:vncanary:61:5:4",
- "appearance": {
-  "appearance_id": "3041d6f44a27:u11:x1:w3",
-  "page_id": "entry:3041d6f44a27",
-  "page_kind": "entry",
-  "page_local": {
-   "selected_highlight": false,
-   "entry_relationship": "cross-reference",
-   "focus": "context-word",
-   "navigation": []
-  }
- },
- "projection": {
-  "occurrence_id": "quran:61:5:4",
-  "surface": "لِقَوْمِهِ",
-  "normalization": "NFC",
-  "kind": "noun_word",
-  "segments": [
-   {
-    "segment_index": 0,
-    "surface": "لِ",
-    "char_start": 0,
-    "char_end": 2,
-    "semantic_class": "jarr_clitic_lam",
-    "renderer_class": "qg-particle-jarr-clitic",
-    "gloss": "to / for",
-    "sarf_note": "Sarf - a function proclitic with no lexical root, written joined to its host noun.",
-    "nahw_note": "Nahw - it pulls the following noun into the jarr (genitive) state; the kasra on the noun is its visible sign."
-   },
-   {
-    "segment_index": 1,
-    "surface": "قَوْمِ",
-    "char_start": 2,
-    "char_end": 8,
-    "semantic_class": "noun_stem",
-    "renderer_class": "qg-noun-stem",
-    "gloss": "people",
-    "sarf_note": "Sarf - the lexical host: a collective noun from the root ق و م. The same root also builds the verb qama - a root-family relation, not a shared dictionary entry.",
-    "nahw_note": "Nahw - the content word of this token, governed by the clitic lam; the pronoun after it says whose."
-   },
-   {
-    "segment_index": 2,
-    "surface": "هِ",
-    "char_start": 8,
-    "char_end": 10,
-    "semantic_class": "possessive_pronoun_3ms",
-    "renderer_class": "qg-possessive-pronoun",
-    "gloss": "his",
-    "sarf_note": "Sarf - the attached 'his', written onto the noun.",
-    "nahw_note": "Nahw - the possessor suffix: it tells whose people - Musa's."
-   }
-  ],
-  "whole_word_gloss": "to his people",
-  "learner_explanation": "One written word carrying 'to' + 'people' + 'his': Musa spoke to his own people. This single token is known to three different dictionary entries at once - the little lam, the noun qawm, and (by shared root only) the verb family of ق و م.",
-  "entry_links": [
-   {
-    "entry_id": "b10a1ee04666",
-    "sense_id": null,
-    "relation_kind": "clitic_component_of_entry",
-    "segment_index": 0
-   },
-   {
-    "entry_id": "65d3d5c51f24",
-    "sense_id": null,
-    "relation_kind": "candidate_entry",
-    "segment_index": null
-   },
-   {
-    "entry_id": "3041d6f44a27",
-    "sense_id": null,
-    "relation_kind": "root_family_of_entry",
-    "segment_index": 1
-   }
-  ],
-  "entry_link_state": "linked",
-  "morpheme_spans": [
-   {
-    "morpheme_occurrence_id": "m:61:5:4:li",
-    "segment_index": 0,
-    "char_start": 0,
-    "char_end": 2
-   },
-   {
-    "morpheme_occurrence_id": "morph:vncanary:61:5:4:stem",
-    "segment_index": 1,
-    "char_start": 2,
-    "char_end": 8
-   },
-   {
-    "morpheme_occurrence_id": "morph:vncanary:61:5:4:poss3ms",
-    "segment_index": 2,
-    "char_start": 8,
-    "char_end": 10
-   }
-  ],
-  "root": "ق و م",
-  "rootless_pedagogy": null,
-  "hover_cards": [
-   {
-    "component_surface": "لِ",
-    "contextual_gloss": "to / for",
-    "particle_identity": {
-     "headword": "لَـ / لِـ",
-     "entry_id": "b10a1ee04666",
-     "sense": null
-    },
-    "contextual_function": "preposition (jarr) - marks 'to / for' on the following noun",
-    "sarf_note": "Sarf - an indeclinable tool word written joined to its host; the host keeps its own letters.",
-    "nahw_note": "Nahw - it governs the next word, pulling it into the jarr (genitive) state; the kasra on the noun is the visible sign.",
-    "governor": {
-     "loc": "quran:61:5:2",
-     "surface": "قال",
-     "relation": "muta-alliq"
-    },
-    "governed_expression": "قومه",
-    "scope": null,
-    "attachment": {
-     "host": "قومه",
-     "boundary": "clitic letter لِ | host"
-    },
-    "alternatives": [],
-    "reason": "rung-1 deterministic attachment geometry (p007 classification row, candidate mode); the jarr governor fact was routed to the two-vote gate and is not yet certified",
-    "unresolved": null,
-    "entry_link": "/qamus/entry/b10a1ee04666"
-   },
-   {
-    "component_surface": "قَوْمِ",
-    "contextual_gloss": "people",
-    "particle_identity": null,
-    "contextual_function": "the lexical host noun; the clitic lam holds it in the jarr state with a visible kasra",
-    "sarf_note": "Sarf - a collective noun from the root ق و م; the written form qawmihi is documented on the noun entry qawm.",
-    "nahw_note": "Nahw - the noun the lam governs; the pronoun after it completes 'his people'.",
-    "governor": {
-     "loc": "quran:61:5:4",
-     "surface": "لِ",
-     "relation": "jarr by the clitic lam (candidate, two-vote gated)"
-    },
-    "governed_expression": null,
-    "scope": null,
-    "attachment": null,
-    "alternatives": [],
-    "reason": "the written form qawmihi is documented in the noun entry's form list (form-entry link, candidate at repo level); the shared-root relation to the verb entry is root agreement only and never a lexeme claim",
-    "unresolved": null,
-    "entry_link": "/qamus/entry/65d3d5c51f24"
-   },
-   {
-    "component_surface": "هِ",
-    "contextual_gloss": "his",
-    "particle_identity": null,
-    "contextual_function": "possessor suffix: whose people - his (Musa's)",
-    "sarf_note": "Sarf - the attached 'his', written onto the noun.",
-    "nahw_note": "Nahw - it completes the possession phrase: the people belong to him.",
-    "governor": null,
-    "governed_expression": null,
-    "scope": null,
-    "attachment": {
-     "host": "قَوْمِ",
-     "boundary": "noun stem | possessive pronoun"
-    },
-    "alternatives": [],
-    "reason": "referent recorded in the canary projection (Musa's people)",
-    "unresolved": null,
-    "entry_link": null
-   }
-  ],
-  "unresolved": null,
-  "certification": {
-   "status": "candidate",
-   "plane": {
-    "segmentation": "candidate",
-    "function": "candidate",
-    "governor": "candidate",
-    "root": "certified-lane-local",
-    "entry_links": "candidate"
-   }
+  "appearance": {
+    "appearance_id": "01133eb5431b:u0:x1:w3",
+    "binding_state": "candidate_requires_renderer_capability_acceptance",
+    "canonical_to_appearance_span_map": [
+      {
+        "appearance_char_end": 2,
+        "appearance_char_start": 0,
+        "canonical_char_end": 2,
+        "canonical_char_start": 0,
+        "morpheme_occurrence_id": "mocc:p007:61:5:4",
+        "segment_index": 0
+      },
+      {
+        "appearance_char_end": 11,
+        "appearance_char_start": 2,
+        "canonical_char_end": 11,
+        "canonical_char_start": 2,
+        "morpheme_occurrence_id": null,
+        "segment_index": 1
+      }
+    ],
+    "displayed_surface": "لِقَوْمِهِۦ",
+    "page_id": "entry:01133eb5431b",
+    "page_kind": "entry",
+    "page_local": {
+      "entry_relationship": "cross-reference",
+      "focus": "context-word",
+      "navigation": [],
+      "selected_highlight": false
+    }
   },
-  "evidence_refs": [
-   "fact:vncanary:sha256:5037a108ec0b5c5288c8d4ee44105c21178dc62e078fd9bd2d125751ebba5f9d",
-   "fact:vncanary:sha256:9ae0ca048ac0affaed0b4dac7a5ad2cccf2707db7cd11dbb46d6b5d4e8a89777",
-   "packet:vn-entry-canaries:cross-axis-proof#quran:61:5:4",
-   "packet:vn-entry-canaries:morpheme-occurrences#m:61:5:4:li"
-  ]
- },
- "projection_hash": "12d227eb2429f14e1a6d7173bb8372e954189f101016c9041249779b2eca112e",
- "reverse_links": {
-  "occurrence_to_appearances": [
-   {
-    "appearance_id": "app:reader:61:5:4",
-    "page_id": "reader:61:5",
-    "page_kind": "reader",
-    "projection_hash": "12d227eb2429f14e1a6d7173bb8372e954189f101016c9041249779b2eca112e"
-   },
-   {
-    "appearance_id": "3041d6f44a27:u11:x1:w3",
-    "page_id": "entry:3041d6f44a27",
-    "page_kind": "entry",
-    "projection_hash": "12d227eb2429f14e1a6d7173bb8372e954189f101016c9041249779b2eca112e"
-   },
-   {
-    "appearance_id": "65d3d5c51f24:u0:x2:w3",
-    "page_id": "entry:65d3d5c51f24",
-    "page_kind": "entry",
-    "projection_hash": "12d227eb2429f14e1a6d7173bb8372e954189f101016c9041249779b2eca112e"
-   }
-  ],
-  "entry_to_occurrences": [
-   {
-    "entry_id": "b10a1ee04666",
-    "occurrences": [
-     {
-      "occurrence_id": "quran:61:5:4",
-      "surface": "لِقَوْمِهِ",
-      "loc": "61:5:4",
-      "page_refs": [
-       "reader:61:5",
-       "entry:3041d6f44a27",
-       "entry:65d3d5c51f24"
-      ]
-     }
+  "appearance_binding_hash": "2a9c4c4016c461b339498927766d24d8cda6df8768b16303e3a34c162a719c7f",
+  "artifact_id": "artifact:vncanary:61:5:4",
+  "occurrence_id": "quran:61:5:4",
+  "payload_kind": "occurrence_projection",
+  "projection": {
+    "certification": {
+      "plane": {
+        "attachment_head": "unresolved",
+        "contextual_meaning": "unresolved",
+        "entry_links": "candidate",
+        "function": "candidate",
+        "governor": "unresolved",
+        "referent": "unresolved",
+        "root": "unresolved",
+        "segmentation": "candidate",
+        "translation": "unresolved"
+      },
+      "status": "unresolved"
+    },
+    "entry_link_state": "linked",
+    "entry_links": [
+      {
+        "entry_id": "b10a1ee04666",
+        "evidence_refs": [
+          "qamus/examples/p007-li-pilot/candidate-lattice.jsonl#quran:61:5:4"
+        ],
+        "link_state": "candidate",
+        "relation_kind": "candidate_entry",
+        "segment_index": 0,
+        "sense_id": null,
+        "sense_state": "unresolved"
+      },
+      {
+        "entry_id": "65d3d5c51f24",
+        "evidence_refs": [
+          "qamus/lattice/lexeme-join-edges.jsonl#loc=61:5:4;entry=65d3d5c51f24"
+        ],
+        "link_state": "candidate",
+        "relation_kind": "candidate_entry",
+        "segment_index": null,
+        "sense_id": null,
+        "sense_state": "unresolved"
+      }
+    ],
+    "evidence_refs": [
+      "fact:p007geo:61_5_4:geom",
+      "fact:p007geo:61_5_4:recon",
+      "fact:p007geo:61_5_4:bound",
+      "fact:p00slice:61_5_4:seg"
+    ],
+    "hover_cards": [
+      {
+        "alternatives": [
+          "Candidate only: the opening span may be a joined lam clitic."
+        ],
+        "attachment": null,
+        "component_surface": "لِ",
+        "contextual_function": null,
+        "contextual_gloss": "unresolved",
+        "entry_link": null,
+        "governed_expression": null,
+        "governor": null,
+        "morpheme_occurrence_id": "mocc:p007:61:5:4",
+        "nahw_note": "Analysis unresolved; candidate analyses are listed only as alternatives.",
+        "particle_identity": null,
+        "reason": "Analysis unresolved; candidate analyses are listed only as alternatives.",
+        "sarf_note": "Analysis unresolved; candidate analyses are listed only as alternatives.",
+        "scope": null,
+        "segment_index": 0,
+        "unresolved": "No candidate analysis is presented as settled."
+      },
+      {
+        "alternatives": [
+          "Candidate only: the host remainder may contain a noun stem and an attached pronoun; its internal boundary is not projection-eligible."
+        ],
+        "attachment": null,
+        "component_surface": "قَوْمِهِۦ",
+        "contextual_function": null,
+        "contextual_gloss": "unresolved",
+        "entry_link": null,
+        "governed_expression": null,
+        "governor": null,
+        "morpheme_occurrence_id": null,
+        "nahw_note": "Analysis unresolved; candidate analyses are listed only as alternatives.",
+        "particle_identity": null,
+        "reason": "Analysis unresolved; candidate analyses are listed only as alternatives.",
+        "sarf_note": "Analysis unresolved; candidate analyses are listed only as alternatives.",
+        "scope": null,
+        "segment_index": 1,
+        "unresolved": "No candidate analysis is presented as settled."
+      }
+    ],
+    "kind": "noun_word",
+    "learner_explanation": "Analysis unresolved; candidate analyses are listed only as alternatives.",
+    "morpheme_spans": [
+      {
+        "char_end": 2,
+        "char_start": 0,
+        "morpheme_occurrence_id": "mocc:p007:61:5:4",
+        "segment_index": 0
+      }
+    ],
+    "normalization": "NFC",
+    "occurrence_id": "quran:61:5:4",
+    "public_projection_eligible": false,
+    "root": null,
+    "rootless_pedagogy": null,
+    "segments": [
+      {
+        "char_end": 2,
+        "char_start": 0,
+        "gloss": "unresolved",
+        "nahw_note": "Analysis unresolved; candidate analyses are listed only as alternatives.",
+        "renderer_class": "qg-unresolved",
+        "sarf_note": "Analysis unresolved; candidate analyses are listed only as alternatives.",
+        "segment_index": 0,
+        "semantic_class": "unresolved",
+        "surface": "لِ"
+      },
+      {
+        "char_end": 11,
+        "char_start": 2,
+        "gloss": "unresolved",
+        "nahw_note": "Analysis unresolved; candidate analyses are listed only as alternatives.",
+        "renderer_class": "qg-unresolved",
+        "sarf_note": "Analysis unresolved; candidate analyses are listed only as alternatives.",
+        "segment_index": 1,
+        "semantic_class": "unresolved",
+        "surface": "قَوْمِهِۦ"
+      }
+    ],
+    "surface": "لِقَوْمِهِۦ",
+    "unresolved": {
+      "candidate_count": 2,
+      "candidates": [
+        "opening-span clitic analysis",
+        "host-internal stem and attached-pronoun analysis"
+      ],
+      "message": "Segmentation beyond the opening boundary, function, root, governor, attachment, referent, contextual meaning, and translation are unresolved.",
+      "state": "public_analysis_unresolved"
+    },
+    "whole_word_gloss": "unresolved"
+  },
+  "projection_hash": "a199076ceafbb17f41bc4568f9ebfff4e1bee6944957d578a6a0a83ef824a9f7",
+  "provenance": {
+    "built_by": "fusha.pvn-pilot-safety v1.2",
+    "provenance_class": "illustrative-from-live",
+    "source_refs": [
+      "qamus/certification/p007-geometry-wave/events.jsonl#fact:p007geo:61_5_4:geom",
+      "qamus/examples/p007-li-pilot/projections.jsonl#quran:61:5:4",
+      "qamus/lattice/p007-reverse-universe.jsonl#quran:61:5:4"
     ]
-   },
-   {
-    "entry_id": "65d3d5c51f24",
-    "occurrences": [
-     {
-      "occurrence_id": "quran:61:5:4",
-      "surface": "لِقَوْمِهِ",
-      "loc": "61:5:4",
-      "page_refs": [
-       "reader:61:5",
-       "entry:65d3d5c51f24"
-      ]
-     }
+  },
+  "reverse_links": {
+    "entry_to_occurrences": [
+      {
+        "entry_id": "b10a1ee04666",
+        "evidence_refs": [
+          "qamus/examples/p007-li-pilot/candidate-lattice.jsonl#quran:61:5:4"
+        ],
+        "link_state": "candidate",
+        "occurrences": [
+          {
+            "loc": "61:5:4",
+            "occurrence_id": "quran:61:5:4",
+            "page_refs": [
+              "reader:61:5",
+              "entry:01133eb5431b",
+              "entry:3041d6f44a27",
+              "entry:65d3d5c51f24",
+              "entry:7f1f8b8e29e6"
+            ],
+            "projection_hash": "a199076ceafbb17f41bc4568f9ebfff4e1bee6944957d578a6a0a83ef824a9f7",
+            "surface": "لِقَوْمِهِۦ"
+          }
+        ],
+        "relation_kind": "candidate_entry",
+        "segment_index": 0,
+        "sense_id": null,
+        "sense_state": "unresolved"
+      },
+      {
+        "entry_id": "65d3d5c51f24",
+        "evidence_refs": [
+          "qamus/lattice/lexeme-join-edges.jsonl#loc=61:5:4;entry=65d3d5c51f24"
+        ],
+        "link_state": "candidate",
+        "occurrences": [
+          {
+            "loc": "61:5:4",
+            "occurrence_id": "quran:61:5:4",
+            "page_refs": [
+              "reader:61:5",
+              "entry:01133eb5431b",
+              "entry:3041d6f44a27",
+              "entry:65d3d5c51f24",
+              "entry:7f1f8b8e29e6"
+            ],
+            "projection_hash": "a199076ceafbb17f41bc4568f9ebfff4e1bee6944957d578a6a0a83ef824a9f7",
+            "surface": "لِقَوْمِهِۦ"
+          }
+        ],
+        "relation_kind": "candidate_entry",
+        "segment_index": null,
+        "sense_id": null,
+        "sense_state": "unresolved"
+      }
+    ],
+    "occurrence_to_appearances": [
+      {
+        "appearance_id": "app:reader:61:5:4",
+        "page_id": "reader:61:5",
+        "page_kind": "reader",
+        "projection_hash": "a199076ceafbb17f41bc4568f9ebfff4e1bee6944957d578a6a0a83ef824a9f7"
+      },
+      {
+        "appearance_id": "01133eb5431b:u0:x1:w3",
+        "page_id": "entry:01133eb5431b",
+        "page_kind": "entry",
+        "projection_hash": "a199076ceafbb17f41bc4568f9ebfff4e1bee6944957d578a6a0a83ef824a9f7"
+      },
+      {
+        "appearance_id": "3041d6f44a27:u11:x1:w3",
+        "page_id": "entry:3041d6f44a27",
+        "page_kind": "entry",
+        "projection_hash": "a199076ceafbb17f41bc4568f9ebfff4e1bee6944957d578a6a0a83ef824a9f7"
+      },
+      {
+        "appearance_id": "65d3d5c51f24:u0:x2:w3",
+        "page_id": "entry:65d3d5c51f24",
+        "page_kind": "entry",
+        "projection_hash": "a199076ceafbb17f41bc4568f9ebfff4e1bee6944957d578a6a0a83ef824a9f7"
+      },
+      {
+        "appearance_id": "7f1f8b8e29e6:u0:x0:w3",
+        "page_id": "entry:7f1f8b8e29e6",
+        "page_kind": "entry",
+        "projection_hash": "a199076ceafbb17f41bc4568f9ebfff4e1bee6944957d578a6a0a83ef824a9f7"
+      }
     ]
-   },
-   {
-    "entry_id": "3041d6f44a27",
-    "occurrences": [
-     {
-      "occurrence_id": "quran:61:5:4",
-      "surface": "لِقَوْمِهِ",
-      "loc": "61:5:4",
-      "page_refs": [
-       "reader:61:5",
-       "entry:3041d6f44a27"
-      ]
-     }
-    ]
-   }
-  ]
- },
- "provenance": {
-  "provenance_class": "illustrative-from-live",
-  "built_by": "packets.website-handoff.delivery-builder v1 (2026-07-29)",
-  "source_refs": [
-   "packet:vn-entry-canaries:two-surface-projections#canary:61:5:4",
-   "packet:vn-entry-canaries:cross-axis-proof#quran:61:5:4",
-   "typed-fact-store:vn-entry-canaries:events#root:61:5:4"
-  ]
- }
+  },
+  "schema": "qamus.website_projection_payload.v1",
+  "schema_version": "1.2.0"
 }

@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+from functools import lru_cache
 import glob
 import hashlib
 import json
@@ -42,9 +43,33 @@ if hasattr(sys.stdout, "reconfigure"):
 ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_DIR = ROOT / "qamus" / "examples" / "website-payloads"
 P007_DIR = ROOT / "qamus" / "examples" / "p007-li-pilot"
+APPEARANCE_UNIVERSE_PATH = (
+    ROOT / "qamus" / "lattice" / "example-ayah-universe.jsonl"
+)
+OCCURRENCE_UNIVERSE_PATH = (
+    ROOT / "qamus" / "lattice" / "example-ayah-universe.occurrences.jsonl"
+)
+P007_GEOMETRY_FACTS_PATH = (
+    ROOT
+    / "qamus"
+    / "certification"
+    / "p007-geometry-wave"
+    / "typed-facts.jsonl"
+)
 
 PAYLOAD_SCHEMA = "qamus.website_projection_payload.v1"
 ACCEPTED_MAJOR = 1
+APPEARANCE_BINDING_VERSION = (1, 2, 0)
+APPEARANCE_BINDING_STATE = (
+    "candidate_requires_renderer_capability_acceptance"
+)
+UNRESOLVED_PRIMARY_TEXT = (
+    "Analysis unresolved; candidate analyses are listed only as alternatives."
+)
+IGNORABLE_APPEARANCE_ANNOTATION_LETTERS = frozenset({
+    "\u06e5",  # ARABIC SMALL WAW
+    "\u06e6",  # ARABIC SMALL YEH
+})
 
 PAGE_KINDS = frozenset({
     "reader", "entry", "example_card", "wbw_hover", "dogfood_review",
@@ -65,6 +90,26 @@ PROVENANCE_CLASSES = frozenset({
     "certified", "illustrative-from-live", "illustrative-constructed",
 })
 CERT_STATUSES = frozenset({"certified", "candidate", "unresolved"})
+V12_LINK_STATES = frozenset({"candidate", "certified"})
+V12_SENSE_STATES = frozenset({
+    "candidate", "certified", "not_applicable", "unresolved",
+})
+V12_CERTIFICATION_PLANE_STATES = frozenset({"candidate", "unresolved"})
+V12_CERTIFICATION_PLANE_KEYS = frozenset({
+    "attachment_head", "contextual_meaning", "entry_links", "function",
+    "governor", "referent", "root", "segmentation", "translation",
+})
+V12_ENTRY_LINK_KEYS = frozenset({
+    "entry_id", "evidence_refs", "link_state", "relation_kind",
+    "segment_index", "sense_id", "sense_state",
+})
+V12_REVERSE_ENTRY_KEYS = frozenset({
+    "entry_id", "evidence_refs", "link_state", "occurrences",
+    "relation_kind", "segment_index", "sense_id", "sense_state",
+})
+V12_REVERSE_OCCURRENCE_KEYS = frozenset({
+    "loc", "occurrence_id", "page_refs", "projection_hash", "surface",
+})
 
 # Closed page-local whitelist — extending it is an owner decision recorded in
 # the particle projection contract (§2.2, flag A), never a validator edit.
@@ -89,7 +134,49 @@ FORBIDDEN_IRAB_PROSE = (
     "مجرور وعلامة",
 )
 
-# RM-09: no server filesystem paths cross the boundary, anywhere in a payload.
+# Public payloads carry no external-source labels or private review prose.
+EXTERNAL_OR_PRIVATE_SOURCE_RE = re.compile(
+    r"(?i)(?:"
+    r"corpus[._ -]?quran[._ -]?com|quran[._ -]?com|\bqac\b|"
+    r"quranic arabic corpus|tanzil|sunnah\.com|"
+    r"\breviewer-private\b|\bprivate reviewer\b|"
+    r"\bsource prose\b|\bprivate source\b"
+    r")"
+)
+V12_PRIVATE_WORKFLOW_RE = re.compile(
+    r"(?i)(?:"
+    r"\breviewer(?:s)?\b|\btwo[- ]vote\b|\bcandidate mode\b|"
+    r"\bpacket\b|\bsource row\b|\bclassification row\b|"
+    r"\brung[- ]?\d+\b|\bworkflow\b|\bprivate path\b|\bmcp\b|"
+    r"\binformed_by\b"
+    r")"
+)
+FORBIDDEN_PUBLIC_KEYS = frozenset({
+    "build_host", "hostname", "informed_by", "machine_topology",
+    "private_path", "reviewer_private", "worktree",
+})
+
+# RM-09: no private filesystem path or machine topology crosses the boundary.
+MACHINE_TOPOLOGY_PATTERNS = (
+    # The negative lookbehind prevents URI schemes such as https:// from
+    # being mistaken for a Windows drive path while still catching a drive
+    # path embedded in prose.
+    re.compile(r"(?i)(?<![a-z0-9+.-])[a-z]:[\\/]"),
+    re.compile(
+        r"(?i)(?<![a-z0-9:/\\])(?:\\\\|//)[^\\/\s]+[\\/][^\\/\s]+"
+    ),
+    re.compile(r"(?i)(?<![a-z0-9_])~[\\/]"),
+    re.compile(
+        r"(?i)(?<![a-z0-9:/._-])"
+        r"/(?:home|users|root|srv|etc|var/www|volumes)(?:/|\b)"
+    ),
+    re.compile(r"(?i)(?<![a-z0-9:/._-])/mnt/[a-z](?:/|\b)"),
+    re.compile(
+        r"(?<![\d.])(?:10(?:\.\d{1,3}){3}|"
+        r"192\.168(?:\.\d{1,3}){2}|"
+        r"172\.(?:1[6-9]|2\d|3[01])(?:\.\d{1,3}){2})(?![\d.])"
+    ),
+)
 SERVER_PATH_RE = re.compile(
     r"(?:/var/www|/srv/|/home/[a-z]|/etc/|[A-Za-z]:\\\\|[A-Za-z]:\\)"
 )
@@ -109,6 +196,14 @@ REQUIRED_SEGMENT_KEYS = (
     "segment_index", "surface", "char_start", "char_end",
     "semantic_class", "renderer_class",
 )
+REQUIRED_MORPHEME_SPAN_KEYS = (
+    "morpheme_occurrence_id", "segment_index", "char_start", "char_end",
+)
+REQUIRED_APPEARANCE_MAP_KEYS = frozenset({
+    "appearance_char_end", "appearance_char_start",
+    "canonical_char_end", "canonical_char_start",
+    "morpheme_occurrence_id", "segment_index",
+})
 
 
 def projection_hash(projection: dict) -> str:
@@ -118,6 +213,162 @@ def projection_hash(projection: dict) -> str:
     return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
 
+def _version_tuple(payload: dict) -> tuple[int, int, int] | None:
+    match = re.fullmatch(
+        r"(\d+)\.(\d+)\.(\d+)",
+        str(payload.get("schema_version") or ""),
+    )
+    if not match:
+        return None
+    return tuple(int(part) for part in match.groups())
+
+
+def appearance_binding_basis(payload: dict) -> dict:
+    """Stable appearance identity, local geometry, and shared projection."""
+    appearance = payload.get("appearance") or {}
+    projection = payload.get("projection")
+    normalization = (
+        projection.get("normalization")
+        if isinstance(projection, dict)
+        else None
+    )
+    return {
+        "appearance_id": appearance.get("appearance_id"),
+        "artifact_id": payload.get("artifact_id"),
+        "binding_state": appearance.get("binding_state"),
+        "canonical_to_appearance_span_map": appearance.get(
+            "canonical_to_appearance_span_map"
+        ),
+        "displayed_surface": appearance.get("displayed_surface"),
+        "normalization": normalization,
+        "occurrence_id": payload.get("occurrence_id"),
+        "page_id": appearance.get("page_id"),
+        "page_kind": appearance.get("page_kind"),
+        "projection_hash": payload.get("projection_hash"),
+    }
+
+
+def appearance_binding_hash(payload: dict) -> str:
+    """sha256 over the stable appearance binding, outside projection."""
+    blob = json.dumps(
+        appearance_binding_basis(payload),
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def _letter_ownership_signature(text: str) -> str:
+    """Preserve written base letters while ignoring attached mark variation."""
+    if not isinstance(text, str):
+        return ""
+    return "".join(
+        char
+        for char in unicodedata.normalize("NFC", text)
+        if not unicodedata.category(char).startswith("M")
+        and char not in IGNORABLE_APPEARANCE_ANNOTATION_LETTERS
+    )
+
+
+@lru_cache(maxsize=1)
+def _appearance_universe() -> dict[str, dict]:
+    rows: dict[str, dict] = {}
+    with APPEARANCE_UNIVERSE_PATH.open(encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, start=1):
+            row = json.loads(line)
+            appearance_id = row.get("appearance_id")
+            if not isinstance(appearance_id, str) or not appearance_id:
+                raise ValueError(
+                    "appearance universe line %d lacks appearance_id"
+                    % line_number
+                )
+            if appearance_id in rows:
+                raise ValueError(
+                    "appearance universe duplicates %s" % appearance_id
+                )
+            rows[appearance_id] = row
+    return rows
+
+
+@lru_cache(maxsize=1)
+def _occurrence_universe() -> dict[str, dict]:
+    rows: dict[str, dict] = {}
+    with OCCURRENCE_UNIVERSE_PATH.open(encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, start=1):
+            row = json.loads(line)
+            occurrence_id = row.get("occurrence_id")
+            if not isinstance(occurrence_id, str) or not occurrence_id:
+                raise ValueError(
+                    "occurrence universe line %d lacks occurrence_id"
+                    % line_number
+                )
+            if occurrence_id in rows:
+                raise ValueError(
+                    "occurrence universe duplicates %s" % occurrence_id
+                )
+            rows[occurrence_id] = row
+    return rows
+
+
+@lru_cache(maxsize=1)
+def _p007_geometry_facts() -> dict[str, dict]:
+    rows: dict[str, dict] = {}
+    with P007_GEOMETRY_FACTS_PATH.open(encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, start=1):
+            row = json.loads(line)
+            fact_id = row.get("fact_id")
+            if not isinstance(fact_id, str) or not fact_id:
+                raise ValueError(
+                    "p007 geometry fact line %d lacks fact_id" % line_number
+                )
+            if fact_id in rows:
+                raise ValueError(
+                    "p007 geometry facts duplicate %s" % fact_id
+                )
+            rows[fact_id] = row
+    return rows
+
+
+def _all_strings(value):
+    if isinstance(value, str):
+        yield value
+    elif isinstance(value, dict):
+        for child in value.values():
+            yield from _all_strings(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from _all_strings(child)
+
+
+def _all_key_paths(value, prefix=""):
+    if isinstance(value, dict):
+        for key, child in value.items():
+            path = "%s.%s" % (prefix, key) if prefix else key
+            yield path, key
+            yield from _all_key_paths(child, path)
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from _all_key_paths(child, "%s[%d]" % (prefix, index))
+
+
+def _nested_learner_strings(value, prefix):
+    if isinstance(value, str):
+        yield prefix, value
+    elif isinstance(value, dict):
+        for key, child in value.items():
+            yield from _nested_learner_strings(
+                child,
+                "%s.%s" % (prefix, key),
+            )
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from _nested_learner_strings(
+                child,
+                "%s[%d]" % (prefix, index),
+            )
+
+
 def _learner_fields(projection: dict):
     """Yield (field_name, text) for every learner-facing field (§11)."""
     for key in ("whole_word_gloss", "learner_explanation",
@@ -125,7 +376,7 @@ def _learner_fields(projection: dict):
         yield key, projection.get(key)
     unresolved = projection.get("unresolved")
     if isinstance(unresolved, dict):
-        yield "unresolved.message", unresolved.get("message")
+        yield from _nested_learner_strings(unresolved, "unresolved")
     for i, seg in enumerate(projection.get("segments") or []):
         if not isinstance(seg, dict):
             continue
@@ -134,8 +385,108 @@ def _learner_fields(projection: dict):
     for i, card in enumerate(projection.get("hover_cards") or []):
         if not isinstance(card, dict):
             continue
-        for key in ("contextual_gloss", "sarf_note", "nahw_note", "reason"):
-            yield "hover_cards[%d].%s" % (i, key), card.get(key)
+        learner_card = {
+            key: value
+            for key, value in card.items()
+            if key not in {
+                "entry_link", "morpheme_occurrence_id", "segment_index",
+            }
+        }
+        yield from _nested_learner_strings(
+            learner_card,
+            "hover_cards[%d]" % i,
+        )
+
+
+def _entry_link_signature(row: dict) -> str:
+    """Canonical v1.2 forward/reverse entry-edge identity."""
+    basis = {
+        key: row.get(key)
+        for key in V12_ENTRY_LINK_KEYS
+    }
+    return json.dumps(
+        basis,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+
+
+def _entry_link_state_errors(row: dict, label: str, errors) -> None:
+    relation = row.get("relation_kind")
+    link_state = row.get("link_state")
+    sense_id = row.get("sense_id")
+    sense_state = row.get("sense_state")
+    evidence_refs = row.get("evidence_refs")
+    if link_state not in V12_LINK_STATES:
+        errors.append(
+            "reverse_entry_parity: %s link_state %r not in %s"
+            % (label, link_state, sorted(V12_LINK_STATES))
+        )
+    if sense_state not in V12_SENSE_STATES:
+        errors.append(
+            "reverse_entry_parity: %s sense_state %r not in %s"
+            % (label, sense_state, sorted(V12_SENSE_STATES))
+        )
+    if not isinstance(evidence_refs, list) or not evidence_refs \
+            or not all(
+                isinstance(ref, str) and ref.strip()
+                for ref in evidence_refs
+            ) or len(set(evidence_refs)) != len(evidence_refs):
+        errors.append(
+            "reverse_entry_parity: %s evidence_refs must be a non-empty "
+            "unique string array" % label
+        )
+    if relation == "candidate_entry" and link_state != "candidate":
+        errors.append(
+            "reverse_entry_parity: %s candidate_entry must retain "
+            "link_state candidate" % label
+        )
+    if relation in {"certified_entry", "certified_sense"} \
+            and link_state != "certified":
+        errors.append(
+            "reverse_entry_parity: %s %s must retain link_state certified"
+            % (label, relation)
+        )
+    if relation == "certified_sense":
+        if not isinstance(sense_id, str) or not sense_id \
+                or sense_state != "certified":
+            errors.append(
+                "reverse_entry_parity: %s certified_sense requires a "
+                "non-empty sense_id and sense_state certified" % label
+            )
+    elif relation == "certified_entry":
+        if sense_id is not None or sense_state != "unresolved":
+            errors.append(
+                "reverse_entry_parity: %s certified_entry requires null "
+                "sense_id and sense_state unresolved" % label
+            )
+    elif relation == "candidate_entry":
+        expected_sense_state = (
+            "candidate"
+            if isinstance(sense_id, str) and sense_id
+            else "unresolved"
+        )
+        if sense_state != expected_sense_state:
+            errors.append(
+                "reverse_entry_parity: %s candidate_entry sense_state %r "
+                "must be %r for sense_id %r"
+                % (label, sense_state, expected_sense_state, sense_id)
+            )
+    elif relation == "root_family_of_entry":
+        if sense_id is not None or sense_state != "not_applicable":
+            errors.append(
+                "reverse_entry_parity: %s root-family relation requires "
+                "null sense_id and sense_state not_applicable" % label
+            )
+
+
+def _key_scan_views(path: str, key: str):
+    """Views that expose separator-hidden private/source labels in keys."""
+    yield key
+    yield re.sub(r"[_-]+", " ", key)
+    yield path
+    yield re.sub(r"[_-]+", " ", path)
 
 
 # --------------------------------------------------------------------------- #
@@ -153,15 +504,15 @@ def check_envelope(payload, errors):
         errors.append("envelope_shape: payload_kind is %r, expected "
                       "'occurrence_projection'" % payload.get("payload_kind"))
     version = payload.get("schema_version")
-    match = re.fullmatch(r"(\d+)\.(\d+)\.(\d+)", str(version or ""))
-    if not match:
+    version_parts = _version_tuple(payload)
+    if version_parts is None:
         errors.append("envelope_version: schema_version %r is not semver"
                       % version)
-    elif int(match.group(1)) != ACCEPTED_MAJOR:
+    elif version_parts[0] != ACCEPTED_MAJOR:
         errors.append(
             "envelope_version: schema_version %r has major %s, validator "
             "accepts major %d only (breaking changes are an owner decision, "
-            "contract §9)" % (version, match.group(1), ACCEPTED_MAJOR))
+            "contract §9)" % (version, version_parts[0], ACCEPTED_MAJOR))
     appearance = payload.get("appearance")
     if not isinstance(appearance, dict):
         errors.append("envelope_shape: appearance must be an object")
@@ -173,24 +524,26 @@ def check_envelope(payload, errors):
         errors.append("envelope_shape: appearance.page_kind %r not in %s"
                       % (appearance.get("page_kind"), sorted(PAGE_KINDS)))
     projection = payload.get("projection")
-    if isinstance(projection, dict):
-        if projection.get("occurrence_id") != payload.get("occurrence_id"):
-            errors.append(
-                "envelope_shape: projection.occurrence_id %r != envelope "
-                "occurrence_id %r"
-                % (projection.get("occurrence_id"),
-                   payload.get("occurrence_id")))
-        for key in REQUIRED_PROJECTION_KEYS:
-            if key not in projection:
-                errors.append("projection_shape: missing projection key %r"
-                              % key)
-        if projection.get("normalization") != "NFC":
-            errors.append("projection_shape: normalization is %r, expected "
-                          "'NFC'" % projection.get("normalization"))
-        if projection.get("kind") not in PROJECTION_KINDS:
-            errors.append("projection_shape: kind %r not in %s"
-                          % (projection.get("kind"),
-                             sorted(PROJECTION_KINDS)))
+    if not isinstance(projection, dict):
+        errors.append("projection_shape: projection must be an object")
+        return
+    if projection.get("occurrence_id") != payload.get("occurrence_id"):
+        errors.append(
+            "envelope_shape: projection.occurrence_id %r != envelope "
+            "occurrence_id %r"
+            % (projection.get("occurrence_id"),
+               payload.get("occurrence_id")))
+    for key in REQUIRED_PROJECTION_KEYS:
+        if key not in projection:
+            errors.append("projection_shape: missing projection key %r"
+                          % key)
+    if projection.get("normalization") != "NFC":
+        errors.append("projection_shape: normalization is %r, expected "
+                      "'NFC'" % projection.get("normalization"))
+    if projection.get("kind") not in PROJECTION_KINDS:
+        errors.append("projection_shape: kind %r not in %s"
+                      % (projection.get("kind"),
+                         sorted(PROJECTION_KINDS)))
 
 
 def check_hash_fork(payload, errors):
@@ -206,17 +559,71 @@ def check_hash_fork(payload, errors):
             "(contract §5)" % (got, want))
     # appearance-parity: every listed appearance of this occurrence must
     # carry the same hash as the canonical projection.
-    reverse = payload.get("reverse_links") or {}
-    for app in reverse.get("occurrence_to_appearances") or []:
+    reverse = payload.get("reverse_links")
+    if not isinstance(reverse, dict):
+        errors.append("reverse_links: reverse_links must be an object")
+        return
+    appearances = reverse.get("occurrence_to_appearances")
+    if not isinstance(appearances, list):
+        errors.append(
+            "reverse_links: occurrence_to_appearances must be an array"
+        )
+        return
+    top_appearance = payload.get("appearance") or {}
+    top_matches = 0
+    seen_ids = set()
+    for index, app in enumerate(appearances):
         if not isinstance(app, dict):
+            errors.append(
+                "reverse_links: occurrence_to_appearances[%d] must be an "
+                "object" % index
+            )
             continue
+        appearance_id = app.get("appearance_id")
+        if not isinstance(appearance_id, str) or not appearance_id:
+            errors.append(
+                "reverse_links: occurrence_to_appearances[%d] lacks "
+                "appearance_id" % index
+            )
+        elif appearance_id in seen_ids:
+            errors.append(
+                "reverse_links: duplicate appearance_id %s"
+                % appearance_id
+            )
+        else:
+            seen_ids.add(appearance_id)
         listed = app.get("projection_hash")
-        if listed is not None and listed != want:
+        if listed != want:
             errors.append(
                 "hash_fork: appearance %s lists projection_hash %s but the "
                 "canonical occurrence hash is %s — same occurrence must "
                 "carry the same projection everywhere (contract §5)"
                 % (app.get("appearance_id"), listed, want))
+        if appearance_id == top_appearance.get("appearance_id"):
+            top_matches += 1
+            for key in ("page_id", "page_kind"):
+                if app.get(key) != top_appearance.get(key):
+                    errors.append(
+                        "reverse_links: envelope appearance %s has %s=%r "
+                        "but its reverse declaration has %r"
+                        % (
+                            appearance_id,
+                            key,
+                            top_appearance.get(key),
+                            app.get(key),
+                        )
+                    )
+    if top_matches != 1:
+        errors.append(
+            "reverse_links: envelope appearance_id %r must occur exactly "
+            "once in occurrence_to_appearances; found %d"
+            % (top_appearance.get("appearance_id"), top_matches)
+        )
+    entry_reverse = reverse.get("entry_to_occurrences")
+    if not isinstance(entry_reverse, list):
+        errors.append(
+            "reverse_links: entry_to_occurrences must be an array"
+        )
 
 
 def check_page_local_whitelist(payload, errors):
@@ -283,6 +690,160 @@ def check_entry_links(payload, errors):
             errors.append(
                 "entry_links: entry_links[%d] relation_kind %r not in %s"
                 % (i, link.get("relation_kind"), sorted(RELATION_KINDS)))
+
+
+def check_reverse_entry_parity(payload, errors):
+    """Require lossless v1.2 forward/reverse candidate-edge identity."""
+    version = _version_tuple(payload)
+    if version is None or version < APPEARANCE_BINDING_VERSION:
+        return
+    projection = payload.get("projection")
+    reverse = payload.get("reverse_links")
+    if not isinstance(projection, dict) or not isinstance(reverse, dict):
+        return
+    forward = projection.get("entry_links")
+    reverse_rows = reverse.get("entry_to_occurrences")
+    appearances = reverse.get("occurrence_to_appearances")
+    if not isinstance(forward, list) \
+            or not isinstance(reverse_rows, list) \
+            or not isinstance(appearances, list):
+        return
+
+    expected_page_refs = [
+        row.get("page_id")
+        for row in appearances
+        if isinstance(row, dict)
+    ]
+    if any(
+        not isinstance(page_id, str) or not page_id
+        for page_id in expected_page_refs
+    ) or len(set(expected_page_refs)) != len(expected_page_refs):
+        errors.append(
+            "reverse_entry_parity: reverse appearance page_ids must be "
+            "non-empty and unique"
+        )
+
+    forward_signatures = []
+    for index, row in enumerate(forward):
+        if not isinstance(row, dict):
+            continue
+        if set(row) != V12_ENTRY_LINK_KEYS:
+            errors.append(
+                "reverse_entry_parity: entry_links[%d] keys %s do not "
+                "equal the closed 1.2.0 edge shape %s"
+                % (
+                    index,
+                    sorted(row),
+                    sorted(V12_ENTRY_LINK_KEYS),
+                )
+            )
+        _entry_link_state_errors(
+            row,
+            "entry_links[%d]" % index,
+            errors,
+        )
+        forward_signatures.append(_entry_link_signature(row))
+    if len(set(forward_signatures)) != len(forward_signatures):
+        errors.append(
+            "reverse_entry_parity: projection.entry_links contains a "
+            "duplicate typed edge"
+        )
+
+    occurrence_id = payload.get("occurrence_id")
+    projection_surface = projection.get("surface")
+    occurrence_parts = str(occurrence_id or "").split(":")
+    canonical_loc = (
+        ":".join(occurrence_parts[1:])
+        if len(occurrence_parts) == 4
+        else None
+    )
+    projection_digest = payload.get("projection_hash")
+    reverse_signatures = []
+    for index, row in enumerate(reverse_rows):
+        if not isinstance(row, dict):
+            errors.append(
+                "reverse_entry_parity: entry_to_occurrences[%d] must be "
+                "an object" % index
+            )
+            continue
+        if set(row) != V12_REVERSE_ENTRY_KEYS:
+            errors.append(
+                "reverse_entry_parity: entry_to_occurrences[%d] keys %s "
+                "do not equal the closed 1.2.0 reverse edge shape %s"
+                % (
+                    index,
+                    sorted(row),
+                    sorted(V12_REVERSE_ENTRY_KEYS),
+                )
+            )
+        _entry_link_state_errors(
+            row,
+            "entry_to_occurrences[%d]" % index,
+            errors,
+        )
+        reverse_signatures.append(_entry_link_signature(row))
+        occurrences = row.get("occurrences")
+        if not isinstance(occurrences, list) or len(occurrences) != 1:
+            errors.append(
+                "reverse_entry_parity: entry_to_occurrences[%d] must "
+                "contain exactly this payload's one occurrence" % index
+            )
+            continue
+        occurrence = occurrences[0]
+        if not isinstance(occurrence, dict):
+            errors.append(
+                "reverse_entry_parity: entry_to_occurrences[%d]."
+                "occurrences[0] must be an object" % index
+            )
+            continue
+        if set(occurrence) != V12_REVERSE_OCCURRENCE_KEYS:
+            errors.append(
+                "reverse_entry_parity: reverse occurrence %d keys %s do "
+                "not equal the closed 1.2.0 shape %s"
+                % (
+                    index,
+                    sorted(occurrence),
+                    sorted(V12_REVERSE_OCCURRENCE_KEYS),
+                )
+            )
+        expected_values = {
+            "loc": canonical_loc,
+            "occurrence_id": occurrence_id,
+            "projection_hash": projection_digest,
+            "surface": projection_surface,
+        }
+        for key, expected in expected_values.items():
+            if occurrence.get(key) != expected:
+                errors.append(
+                    "reverse_entry_parity: reverse occurrence %d %s=%r "
+                    "does not equal %r"
+                    % (index, key, occurrence.get(key), expected)
+                )
+        page_refs = occurrence.get("page_refs")
+        if not isinstance(page_refs, list) \
+                or any(
+                    not isinstance(page_id, str) or not page_id
+                    for page_id in page_refs
+                ) \
+                or len(page_refs) != len(set(page_refs)) \
+                or set(page_refs) != set(expected_page_refs):
+            errors.append(
+                "reverse_entry_parity: reverse occurrence %d page_refs "
+                "must equal the unique occurrence appearance page set"
+                % index
+            )
+
+    if sorted(reverse_signatures) != sorted(forward_signatures):
+        errors.append(
+            "reverse_entry_parity: reverse typed entry-edge set does not "
+            "equal projection.entry_links; candidate state or identity "
+            "would be lost"
+        )
+    if len(set(reverse_signatures)) != len(reverse_signatures):
+        errors.append(
+            "reverse_entry_parity: entry_to_occurrences contains a "
+            "duplicate typed edge"
+        )
 
 
 def check_prose_leak(payload, errors):
@@ -361,6 +922,508 @@ def check_segment_reconstruction(payload, errors):
             "(contract §3.1)" % (joined, surface))
 
 
+def _valid_offset(value) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
+
+
+def _splits_combining_sequence(surface: str, offset: int) -> bool:
+    if offset <= 0 or offset >= len(surface):
+        return False
+    return bool(
+        unicodedata.combining(surface[offset])
+        or unicodedata.category(surface[offset]).startswith("M")
+    )
+
+
+def check_morpheme_spans(payload, errors):
+    projection = payload.get("projection")
+    if not isinstance(projection, dict):
+        return
+    surface = projection.get("surface")
+    segments = projection.get("segments")
+    spans = projection.get("morpheme_spans")
+    if not isinstance(spans, list):
+        errors.append("morpheme_spans: morpheme_spans must be an array")
+        return
+    if not isinstance(surface, str) or not isinstance(segments, list):
+        return
+    seen_ids = set()
+    seen_segments = set()
+    for index, row in enumerate(spans):
+        if not isinstance(row, dict):
+            errors.append(
+                "morpheme_spans: morpheme_spans[%d] must be an object"
+                % index
+            )
+            continue
+        for key in REQUIRED_MORPHEME_SPAN_KEYS:
+            if key not in row:
+                errors.append(
+                    "morpheme_spans: morpheme_spans[%d] missing %r"
+                    % (index, key)
+                )
+        morpheme_id = row.get("morpheme_occurrence_id")
+        if not isinstance(morpheme_id, str) or not morpheme_id:
+            errors.append(
+                "morpheme_spans: morpheme_spans[%d] has no non-empty "
+                "morpheme_occurrence_id" % index
+            )
+        elif morpheme_id in seen_ids:
+            errors.append(
+                "morpheme_spans: duplicate morpheme_occurrence_id %s"
+                % morpheme_id
+            )
+        else:
+            seen_ids.add(morpheme_id)
+        segment_index = row.get("segment_index")
+        if not _valid_offset(segment_index) \
+                or not 0 <= segment_index < len(segments):
+            errors.append(
+                "morpheme_spans: morpheme_spans[%d] segment_index %r is "
+                "outside the segment array" % (index, segment_index)
+            )
+            continue
+        if segment_index in seen_segments:
+            errors.append(
+                "morpheme_spans: segment %d has more than one primary "
+                "morpheme ownership row" % segment_index
+            )
+        else:
+            seen_segments.add(segment_index)
+        start = row.get("char_start")
+        end = row.get("char_end")
+        if not _valid_offset(start) or not _valid_offset(end) \
+                or not 0 <= start < end <= len(surface):
+            errors.append(
+                "morpheme_spans: morpheme_spans[%d] has invalid half-open "
+                "span [%r,%r) for surface length %d"
+                % (index, start, end, len(surface))
+            )
+            continue
+        if _splits_combining_sequence(surface, start) \
+                or _splits_combining_sequence(surface, end):
+            errors.append(
+                "morpheme_spans: morpheme_spans[%d] boundary splits a "
+                "combining-mark sequence" % index
+            )
+        segment = segments[segment_index]
+        if not isinstance(segment, dict):
+            continue
+        if (
+            start != segment.get("char_start")
+            or end != segment.get("char_end")
+        ):
+            errors.append(
+                "morpheme_spans: morpheme_spans[%d] span [%d,%d) does not "
+                "equal referenced segment %d span [%r,%r)"
+                % (
+                    index,
+                    start,
+                    end,
+                    segment_index,
+                    segment.get("char_start"),
+                    segment.get("char_end"),
+                )
+            )
+
+
+def check_appearance_binding(payload, errors):
+    version = _version_tuple(payload)
+    appearance = payload.get("appearance")
+    if not isinstance(appearance, dict):
+        return
+    extension_keys = {
+        "binding_state",
+        "canonical_to_appearance_span_map",
+        "displayed_surface",
+    }
+    active = (
+        version is not None and version >= APPEARANCE_BINDING_VERSION
+    ) or bool(extension_keys & set(appearance)) \
+        or "appearance_binding_hash" in payload
+    if not active:
+        return
+    if version is None or version < APPEARANCE_BINDING_VERSION:
+        errors.append(
+            "appearance_binding: appearance binding fields require "
+            "schema_version 1.2.0 or later"
+        )
+    for key in extension_keys:
+        if key not in appearance:
+            errors.append(
+                "appearance_binding: appearance missing %r" % key
+            )
+    if "appearance_binding_hash" not in payload:
+        errors.append(
+            "appearance_binding: missing top-level appearance_binding_hash"
+        )
+    if appearance.get("binding_state") != APPEARANCE_BINDING_STATE:
+        errors.append(
+            "appearance_binding: binding_state %r is not %r"
+            % (
+                appearance.get("binding_state"),
+                APPEARANCE_BINDING_STATE,
+            )
+        )
+    displayed = appearance.get("displayed_surface")
+    if not isinstance(displayed, str) or not displayed:
+        errors.append(
+            "appearance_binding: displayed_surface must be a non-empty string"
+        )
+        return
+    if unicodedata.normalize("NFC", displayed) != displayed:
+        errors.append(
+            "appearance_binding: displayed_surface must be NFC-normalized"
+        )
+    want_hash = appearance_binding_hash(payload)
+    if payload.get("appearance_binding_hash") != want_hash:
+        errors.append(
+            "appearance_binding: appearance_binding_hash %r does not match "
+            "the canonical binding hash %s"
+            % (payload.get("appearance_binding_hash"), want_hash)
+        )
+
+    appearance_id = appearance.get("appearance_id")
+    universe_row = _appearance_universe().get(appearance_id)
+    if universe_row is None:
+        errors.append(
+            "appearance_binding: appearance_id %r is absent from "
+            "qamus/lattice/example-ayah-universe.jsonl" % appearance_id
+        )
+    else:
+        if universe_row.get("displayed_surface") != displayed:
+            errors.append(
+                "appearance_binding: displayed_surface %r does not equal "
+                "authoritative appearance %s surface %r"
+                % (
+                    displayed,
+                    appearance_id,
+                    universe_row.get("displayed_surface"),
+                )
+            )
+        if universe_row.get("crosswalk") != "resolved":
+            errors.append(
+                "appearance_binding: appearance %s crosswalk is %r, not "
+                "resolved"
+                % (appearance_id, universe_row.get("crosswalk"))
+            )
+        occurrence_id = payload.get("occurrence_id")
+        parts = str(occurrence_id or "").split(":")
+        canonical_loc = ":".join(parts[1:]) if len(parts) == 4 else None
+        if universe_row.get("canonical_loc") != canonical_loc:
+            errors.append(
+                "appearance_binding: appearance %s canonical_loc %r does "
+                "not bind occurrence_id %r"
+                % (
+                    appearance_id,
+                    universe_row.get("canonical_loc"),
+                    occurrence_id,
+                )
+            )
+        expected_page_id = "entry:%s" % universe_row.get("entry_id")
+        if appearance.get("page_kind") != "entry" \
+                or appearance.get("page_id") != expected_page_id:
+            errors.append(
+                "appearance_binding: appearance %s must bind page_kind "
+                "'entry' and page_id %r"
+                % (appearance_id, expected_page_id)
+            )
+        if universe_row.get("appearance_index_entry_linked") is False:
+            projection_for_links = payload.get("projection")
+            links = (
+                projection_for_links.get("entry_links", [])
+                if isinstance(projection_for_links, dict)
+                else []
+            )
+            entry_ids = {
+                row.get("entry_id")
+                for row in links
+                if isinstance(row, dict)
+            }
+            if universe_row.get("entry_id") in entry_ids:
+                errors.append(
+                    "appearance_binding: context-page entry %s cannot become "
+                    "occurrence entry identity"
+                    % universe_row.get("entry_id")
+                )
+
+    projection = payload.get("projection")
+    if not isinstance(projection, dict):
+        return
+    segments = projection.get("segments")
+    span_map = appearance.get("canonical_to_appearance_span_map")
+    if not isinstance(segments, list) or not isinstance(span_map, list):
+        errors.append(
+            "appearance_binding: canonical_to_appearance_span_map must be "
+            "an array paired with projection.segments"
+        )
+        return
+    if len(span_map) != len(segments):
+        errors.append(
+            "appearance_binding: span map has %d rows for %d canonical "
+            "segments" % (len(span_map), len(segments))
+        )
+    morphemes_by_segment = {
+        row.get("segment_index"): row
+        for row in projection.get("morpheme_spans") or []
+        if isinstance(row, dict)
+    }
+    appearance_cursor = 0
+    for index, row in enumerate(span_map):
+        if not isinstance(row, dict):
+            errors.append(
+                "appearance_binding: span map row %d must be an object"
+                % index
+            )
+            continue
+        if set(row) != REQUIRED_APPEARANCE_MAP_KEYS:
+            errors.append(
+                "appearance_binding: span map row %d keys %s do not equal "
+                "the closed 1.2.0 shape %s"
+                % (
+                    index,
+                    sorted(row),
+                    sorted(REQUIRED_APPEARANCE_MAP_KEYS),
+                )
+            )
+        if row.get("segment_index") != index:
+            errors.append(
+                "appearance_binding: span map row %d carries "
+                "segment_index %r" % (index, row.get("segment_index"))
+            )
+        if index >= len(segments) or not isinstance(segments[index], dict):
+            continue
+        segment = segments[index]
+        canonical_start = row.get("canonical_char_start")
+        canonical_end = row.get("canonical_char_end")
+        if (
+            canonical_start != segment.get("char_start")
+            or canonical_end != segment.get("char_end")
+        ):
+            errors.append(
+                "appearance_binding: span map row %d canonical span "
+                "[%r,%r) does not equal segment span [%r,%r)"
+                % (
+                    index,
+                    canonical_start,
+                    canonical_end,
+                    segment.get("char_start"),
+                    segment.get("char_end"),
+                )
+            )
+        local_start = row.get("appearance_char_start")
+        local_end = row.get("appearance_char_end")
+        if not _valid_offset(local_start) or not _valid_offset(local_end) \
+                or not 0 <= local_start < local_end <= len(displayed):
+            errors.append(
+                "appearance_binding: span map row %d has invalid local span "
+                "[%r,%r)" % (index, local_start, local_end)
+            )
+            continue
+        if local_start != appearance_cursor:
+            errors.append(
+                "appearance_binding: span map row %d starts at %d, expected "
+                "%d for gap-free local tiling"
+                % (index, local_start, appearance_cursor)
+            )
+        if _splits_combining_sequence(displayed, local_start) \
+                or _splits_combining_sequence(displayed, local_end):
+            errors.append(
+                "appearance_binding: span map row %d splits a combining-mark "
+                "sequence" % index
+            )
+        appearance_cursor = local_end
+        morpheme = morphemes_by_segment.get(index)
+        expected_morpheme_id = (
+            morpheme.get("morpheme_occurrence_id")
+            if isinstance(morpheme, dict)
+            else None
+        )
+        if row.get("morpheme_occurrence_id") != expected_morpheme_id:
+            errors.append(
+                "identity_parity: span map row %d morpheme identity %r does "
+                "not equal the canonical segment ownership %r"
+                % (
+                    index,
+                    row.get("morpheme_occurrence_id"),
+                    expected_morpheme_id,
+                )
+            )
+        if displayed == projection.get("surface"):
+            if (
+                local_start != canonical_start
+                or local_end != canonical_end
+                or displayed[local_start:local_end]
+                != segment.get("surface")
+            ):
+                errors.append(
+                    "appearance_binding: identical canonical and displayed "
+                    "surfaces require an identity span map at row %d" % index
+                )
+        else:
+            canonical_letters = _letter_ownership_signature(
+                segment.get("surface")
+            )
+            appearance_letters = _letter_ownership_signature(
+                displayed[local_start:local_end]
+            )
+            if canonical_letters != appearance_letters:
+                errors.append(
+                    "appearance_binding: span map row %d changes letter "
+                    "ownership from canonical %r to appearance %r"
+                    % (index, canonical_letters, appearance_letters)
+                )
+    if appearance_cursor != len(displayed):
+        errors.append(
+            "appearance_binding: local span map ends at %d, displayed "
+            "surface length is %d" % (appearance_cursor, len(displayed))
+        )
+
+    occurrence_row = _occurrence_universe().get(payload.get("occurrence_id"))
+    if occurrence_row is None:
+        errors.append(
+            "appearance_binding: occurrence_id %r is absent from the "
+            "occurrence universe" % payload.get("occurrence_id")
+        )
+    else:
+        expected_ids = set(occurrence_row.get("appearance_ids") or [])
+        reverse_rows = (
+            (payload.get("reverse_links") or {})
+            .get("occurrence_to_appearances") or []
+        )
+        for index, row in enumerate(reverse_rows):
+            if not isinstance(row, dict) or row.get("page_kind") != "entry":
+                continue
+            authoritative = _appearance_universe().get(
+                row.get("appearance_id")
+            )
+            expected_page = (
+                "entry:%s" % authoritative.get("entry_id")
+                if isinstance(authoritative, dict)
+                else None
+            )
+            if authoritative is None or row.get("page_id") != expected_page:
+                errors.append(
+                    "appearance_binding: reverse entry appearance %d does "
+                    "not bind its authoritative page_id"
+                    % index
+                )
+        actual_entry_ids = {
+            row.get("appearance_id")
+            for row in reverse_rows
+            if isinstance(row, dict) and row.get("page_kind") == "entry"
+        }
+        if actual_entry_ids != expected_ids:
+            errors.append(
+                "appearance_binding: reverse entry appearance set %s does "
+                "not equal authoritative set %s"
+                % (sorted(actual_entry_ids), sorted(expected_ids))
+            )
+        occurrence_parts = str(payload.get("occurrence_id") or "").split(":")
+        canonical_loc = (
+            ":".join(occurrence_parts[1:])
+            if len(occurrence_parts) == 4
+            else ""
+        )
+        reader_id = "app:reader:%s" % canonical_loc
+        allowed_ids = expected_ids | {reader_id}
+        actual_ids = {
+            row.get("appearance_id")
+            for row in reverse_rows
+            if isinstance(row, dict)
+        }
+        if actual_ids != allowed_ids:
+            errors.append(
+                "appearance_binding: reverse appearance set %s does not "
+                "equal authoritative entry set plus reader %s"
+                % (sorted(actual_ids), sorted(allowed_ids))
+            )
+        reader_rows = [
+            row
+            for row in reverse_rows
+            if isinstance(row, dict)
+            and row.get("appearance_id") == reader_id
+        ]
+        expected_reader_page = "reader:%s" % ":".join(
+            occurrence_parts[1:3]
+        )
+        if len(reader_rows) != 1 or (
+            reader_rows[0].get("page_kind") != "reader"
+            or reader_rows[0].get("page_id") != expected_reader_page
+        ):
+            errors.append(
+                "appearance_binding: reader reverse declaration must be "
+                "exactly %s on %s" % (reader_id, expected_reader_page)
+            )
+
+
+def check_identity_parity(payload, errors):
+    version = _version_tuple(payload)
+    if version is None or version < APPEARANCE_BINDING_VERSION:
+        return
+    projection = payload.get("projection")
+    if not isinstance(projection, dict):
+        return
+    segments = projection.get("segments")
+    cards = projection.get("hover_cards")
+    if not isinstance(segments, list) or not isinstance(cards, list):
+        errors.append(
+            "identity_parity: segments and hover_cards must be arrays"
+        )
+        return
+    if len(cards) != len(segments):
+        errors.append(
+            "identity_parity: %d hover cards do not cover %d segments"
+            % (len(cards), len(segments))
+        )
+    morphemes_by_segment = {
+        row.get("segment_index"): row
+        for row in projection.get("morpheme_spans") or []
+        if isinstance(row, dict)
+    }
+    for index, segment in enumerate(segments):
+        if index >= len(cards):
+            break
+        card = cards[index]
+        if not isinstance(segment, dict) or not isinstance(card, dict):
+            errors.append(
+                "identity_parity: segment and hover card %d must be objects"
+                % index
+            )
+            continue
+        if card.get("segment_index") != index:
+            errors.append(
+                "identity_parity: hover card %d carries segment_index %r"
+                % (index, card.get("segment_index"))
+            )
+        morpheme = morphemes_by_segment.get(index)
+        expected_morpheme_id = (
+            morpheme.get("morpheme_occurrence_id")
+            if isinstance(morpheme, dict)
+            else None
+        )
+        if card.get("morpheme_occurrence_id") != expected_morpheme_id:
+            errors.append(
+                "identity_parity: hover card %d morpheme identity %r does "
+                "not equal segment ownership %r"
+                % (
+                    index,
+                    card.get("morpheme_occurrence_id"),
+                    expected_morpheme_id,
+                )
+            )
+        if card.get("component_surface") != segment.get("surface"):
+            errors.append(
+                "identity_parity: hover card %d component_surface %r does "
+                "not equal segment surface %r"
+                % (
+                    index,
+                    card.get("component_surface"),
+                    segment.get("surface"),
+                )
+            )
+
+
 def check_unresolved_and_rootless(payload, errors):
     projection = payload.get("projection")
     if not isinstance(projection, dict):
@@ -402,6 +1465,246 @@ def check_unresolved_and_rootless(payload, errors):
                 "(contract §10.1)")
 
 
+def check_candidate_public_plane(payload, errors):
+    version = _version_tuple(payload)
+    if version is None or version < APPEARANCE_BINDING_VERSION:
+        return
+    appearance = payload.get("appearance")
+    projection = payload.get("projection")
+    if not isinstance(appearance, dict) or not isinstance(projection, dict):
+        return
+    if appearance.get("binding_state") != APPEARANCE_BINDING_STATE:
+        return
+    certification = projection.get("certification")
+    if not isinstance(certification, dict):
+        errors.append(
+            "candidate_public_plane: certification must be an object"
+        )
+        return
+    plane = certification.get("plane")
+    if not isinstance(plane, dict):
+        errors.append(
+            "candidate_public_plane: certification.plane must be an object"
+        )
+        return
+    if set(plane) != V12_CERTIFICATION_PLANE_KEYS:
+        errors.append(
+            "candidate_public_plane: certification.plane keys %s do not "
+            "equal the closed 1.2.0 shape %s"
+            % (
+                sorted(plane),
+                sorted(V12_CERTIFICATION_PLANE_KEYS),
+            )
+        )
+    for key, state in plane.items():
+        if state not in V12_CERTIFICATION_PLANE_STATES:
+            errors.append(
+                "candidate_public_plane: certification.plane[%r]=%r is "
+                "not one of %s"
+                % (
+                    key,
+                    state,
+                    sorted(V12_CERTIFICATION_PLANE_STATES),
+                )
+            )
+    for index, row in enumerate(projection.get("entry_links") or []):
+        if not isinstance(row, dict):
+            continue
+        if row.get("relation_kind") in {"certified_entry", "certified_sense"} \
+                or row.get("link_state") == "certified" \
+                or row.get("sense_state") == "certified":
+            errors.append(
+                "candidate_public_plane: entry_links[%d] carries a certified "
+                "edge or sense while certification.plane.entry_links is %r"
+                % (index, plane.get("entry_links"))
+            )
+    if projection.get("public_projection_eligible") is not False:
+        errors.append(
+            "candidate_public_plane: candidate capability handoff must set "
+            "public_projection_eligible to false"
+        )
+    if certification.get("status") != "unresolved":
+        errors.append(
+            "candidate_public_plane: candidate capability handoff with "
+            "unresolved facts must retain certification.status unresolved"
+        )
+    unresolved = projection.get("unresolved")
+    if not isinstance(unresolved, dict):
+        errors.append(
+            "candidate_public_plane: candidate handoff requires an explicit "
+            "unresolved object"
+        )
+    if projection.get("whole_word_gloss") != "unresolved":
+        errors.append(
+            "candidate_public_plane: unresolved contextual meaning or "
+            "translation requires whole_word_gloss 'unresolved'"
+        )
+    if projection.get("learner_explanation") != UNRESOLVED_PRIMARY_TEXT:
+        errors.append(
+            "candidate_public_plane: learner_explanation must remain neutral"
+        )
+    if projection.get("root") is not None:
+        errors.append(
+            "candidate_public_plane: unresolved root must remain null"
+        )
+    for index, segment in enumerate(projection.get("segments") or []):
+        if not isinstance(segment, dict):
+            continue
+        expected = {
+            "semantic_class": "unresolved",
+            "renderer_class": "qg-unresolved",
+            "gloss": "unresolved",
+            "sarf_note": UNRESOLVED_PRIMARY_TEXT,
+            "nahw_note": UNRESOLVED_PRIMARY_TEXT,
+        }
+        for key, value in expected.items():
+            if segment.get(key) != value:
+                errors.append(
+                    "candidate_public_plane: segment %d %s=%r must be %r"
+                    % (index, key, segment.get(key), value)
+                )
+    for index, card in enumerate(projection.get("hover_cards") or []):
+        if not isinstance(card, dict):
+            continue
+        for key in (
+            "particle_identity", "contextual_function", "governor",
+            "governed_expression", "scope", "attachment", "entry_link",
+        ):
+            if card.get(key) is not None:
+                errors.append(
+                    "candidate_public_plane: hover card %d primary field %s "
+                    "must be null while analysis is unresolved"
+                    % (index, key)
+                )
+        expected = {
+            "contextual_gloss": "unresolved",
+            "sarf_note": UNRESOLVED_PRIMARY_TEXT,
+            "nahw_note": UNRESOLVED_PRIMARY_TEXT,
+            "reason": UNRESOLVED_PRIMARY_TEXT,
+        }
+        for key, value in expected.items():
+            if card.get(key) != value:
+                errors.append(
+                    "candidate_public_plane: hover card %d %s=%r must be %r"
+                    % (index, key, card.get(key), value)
+                )
+        alternatives = card.get("alternatives")
+        if not isinstance(alternatives, list) or not alternatives:
+            errors.append(
+                "candidate_public_plane: hover card %d must preserve "
+                "candidate analyses only under non-empty alternatives"
+                % index
+            )
+        else:
+            for alternative in alternatives:
+                if not isinstance(alternative, str) \
+                        or not alternative.startswith("Candidate only:"):
+                    errors.append(
+                        "candidate_public_plane: hover card %d alternative "
+                        "%r lacks the explicit 'Candidate only:' marker"
+                        % (index, alternative)
+                    )
+
+
+def check_geometry_evidence(payload, errors):
+    version = _version_tuple(payload)
+    if version is None or version < APPEARANCE_BINDING_VERSION:
+        return
+    projection = payload.get("projection")
+    if not isinstance(projection, dict):
+        return
+    refs = projection.get("evidence_refs")
+    if not isinstance(refs, list):
+        errors.append(
+            "geometry_evidence: evidence_refs must be an array"
+        )
+        return
+    occurrence_id = payload.get("occurrence_id")
+    if occurrence_id != "quran:61:5:4":
+        errors.append(
+            "geometry_evidence: schema 1.2.0 pilot validator has no "
+            "registered geometry resolver for occurrence %r; preserve "
+            "candidate ineligibility and extend the validator with its "
+            "producer before handoff" % occurrence_id
+        )
+        return
+    required = {
+        "fact:p007geo:61_5_4:geom": "attachment_geometry",
+        "fact:p007geo:61_5_4:recon": "surface_reconstruction_nfc",
+        "fact:p007geo:61_5_4:bound": "token_host_boundary",
+    }
+    missing = sorted(set(required) - set(refs))
+    if missing:
+        errors.append(
+            "geometry_evidence: missing authoritative geometry fact ids %s"
+            % missing
+        )
+        return
+    facts = _p007_geometry_facts()
+    resolved = {}
+    for fact_id, fact_type in required.items():
+        fact = facts.get(fact_id)
+        if not isinstance(fact, dict) or fact.get("fact_type") != fact_type:
+            errors.append(
+                "geometry_evidence: %s does not resolve to fact_type %s"
+                % (fact_id, fact_type)
+            )
+            continue
+        if (fact.get("source_address") or {}).get("address") != occurrence_id:
+            errors.append(
+                "geometry_evidence: %s source address does not bind %s"
+                % (fact_id, occurrence_id)
+            )
+        resolved[fact_type] = fact.get("fact_value") or {}
+    if set(resolved) != set(required.values()):
+        return
+    surface = projection.get("surface")
+    geometry = resolved["attachment_geometry"]
+    reconstruction = resolved["surface_reconstruction_nfc"]
+    boundary = resolved["token_host_boundary"]
+    if (
+        geometry.get("surface_nfc") != surface
+        or reconstruction.get("surface_nfc") != surface
+        or boundary.get("surface_nfc") != surface
+    ):
+        errors.append(
+            "geometry_evidence: resolved fact surfaces do not equal "
+            "projection.surface"
+        )
+    segments = projection.get("segments")
+    if not isinstance(segments, list) or len(segments) != 2:
+        errors.append(
+            "geometry_evidence: current 61:5:4 facts support exactly the "
+            "opening component and host-remainder boundary, not an inner "
+            "three-segment carve"
+        )
+        return
+    char_span = geometry.get("char_span") or {}
+    boundary_index = boundary.get("boundary_char_index")
+    if (
+        segments[0].get("char_start") != char_span.get("start")
+        or segments[0].get("char_end") != char_span.get("end")
+        or segments[0].get("surface") != geometry.get("component_surface")
+        or boundary_index != segments[0].get("char_end")
+        or segments[1].get("char_start") != boundary_index
+        or segments[1].get("char_end") != len(surface)
+        or segments[1].get("surface")
+        != boundary.get("host_remainder_surface")
+    ):
+        errors.append(
+            "geometry_evidence: primary segments exceed or disagree with "
+            "the resolved lam and host-remainder geometry"
+        )
+    morphemes = projection.get("morpheme_spans") or []
+    if len(morphemes) != 1 \
+            or morphemes[0].get("morpheme_occurrence_id") \
+            != "mocc:p007:61:5:4":
+        errors.append(
+            "geometry_evidence: only the repository-backed "
+            "mocc:p007:61:5:4 ownership may bind the opening span"
+        )
+
+
 def check_provenance(payload, errors):
     provenance = payload.get("provenance")
     projection = payload.get("projection")
@@ -437,6 +1740,77 @@ def check_no_server_paths(payload, errors):
             "server_paths: payload carries a server filesystem path %r — "
             "internal ids only ever cross the boundary (RM-09, contract §8)"
             % hit.group(0))
+
+
+def check_public_boundary(payload, errors):
+    version = _version_tuple(payload)
+    for path, key in _all_key_paths(payload):
+        if key.casefold() in FORBIDDEN_PUBLIC_KEYS:
+            errors.append(
+                "public_boundary: forbidden public key %r at %s"
+                % (key, path)
+            )
+            continue
+        for view in _key_scan_views(path, key):
+            source_hit = EXTERNAL_OR_PRIVATE_SOURCE_RE.search(view)
+            workflow_hit = (
+                V12_PRIVATE_WORKFLOW_RE.search(view)
+                if version is not None
+                and version >= APPEARANCE_BINDING_VERSION
+                else None
+            )
+            if source_hit or workflow_hit:
+                hit = source_hit or workflow_hit
+                errors.append(
+                    "public_boundary: forbidden source/private key %r at "
+                    "%s (matched %r)"
+                    % (key, path, hit.group(0))
+                )
+                break
+    for value in _all_strings(payload):
+        source_hit = EXTERNAL_OR_PRIVATE_SOURCE_RE.search(value)
+        workflow_hit = (
+            V12_PRIVATE_WORKFLOW_RE.search(value)
+            if version is not None
+            and version >= APPEARANCE_BINDING_VERSION
+            else None
+        )
+        if source_hit or workflow_hit:
+            hit = source_hit or workflow_hit
+            errors.append(
+                "public_boundary: payload carries external/private-source or "
+                "private-workflow "
+                "label %r" % hit.group(0)
+            )
+    for field, text in _learner_fields(
+        payload.get("projection")
+        if isinstance(payload.get("projection"), dict)
+        else {}
+    ):
+        if not isinstance(text, str):
+            continue
+        if version is not None and version >= APPEARANCE_BINDING_VERSION:
+            hit = V12_PRIVATE_WORKFLOW_RE.search(text)
+            if hit:
+                errors.append(
+                    "public_boundary: learner field %r carries private "
+                    "workflow prose %r" % (field, hit.group(0))
+                )
+
+
+def check_machine_topology(payload, errors):
+    candidates = list(_all_strings(payload))
+    for path, key in _all_key_paths(payload):
+        candidates.extend((path, key))
+    for value in candidates:
+        for pattern in MACHINE_TOPOLOGY_PATTERNS:
+            hit = pattern.search(value)
+            if hit:
+                errors.append(
+                    "machine_topology: payload carries private path or "
+                    "machine topology %r" % hit.group(0)
+                )
+                break
 
 
 def check_p007_authority(payload, errors):
@@ -636,12 +2010,20 @@ def validate_payload(payload: dict) -> list[str]:
     check_hash_fork(payload, errors)
     check_page_local_whitelist(payload, errors)
     check_entry_links(payload, errors)
+    check_reverse_entry_parity(payload, errors)
     check_prose_leak(payload, errors)
     check_segment_reconstruction(payload, errors)
+    check_morpheme_spans(payload, errors)
+    check_appearance_binding(payload, errors)
+    check_identity_parity(payload, errors)
     check_unresolved_and_rootless(payload, errors)
+    check_candidate_public_plane(payload, errors)
+    check_geometry_evidence(payload, errors)
     check_provenance(payload, errors)
     check_no_server_paths(payload, errors)
     check_p007_authority(payload, errors)
+    check_public_boundary(payload, errors)
+    check_machine_topology(payload, errors)
     return errors
 
 
@@ -746,6 +2128,27 @@ def _green_payload() -> dict:
     }
 
 
+def _green_v12_payload() -> dict:
+    path = (
+        SAMPLES_DIR
+        / "multi_entry_liqawmihi_61_5_4.payload.json"
+    )
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _rehash_payload(payload: dict) -> None:
+    projection = payload.get("projection")
+    if isinstance(projection, dict):
+        payload["projection_hash"] = projection_hash(projection)
+        reverse = payload.get("reverse_links")
+        if isinstance(reverse, dict):
+            for row in reverse.get("occurrence_to_appearances") or []:
+                if isinstance(row, dict):
+                    row["projection_hash"] = payload["projection_hash"]
+    if "appearance_binding_hash" in payload:
+        payload["appearance_binding_hash"] = appearance_binding_hash(payload)
+
+
 def _self_test() -> int:
     failures = []
 
@@ -768,6 +2171,10 @@ def _self_test() -> int:
             failures.append(name)
 
     expect_green("green: full contract-shaped payload passes", _green_payload())
+    expect_green(
+        "green: 1.2 appearance-bound candidate pilot passes",
+        _green_v12_payload(),
+    )
 
     # red 1 — missing entry links while claiming linked
     bad = _green_payload()
@@ -889,7 +2296,7 @@ def _self_test() -> int:
     bad = _green_payload()
     bad["provenance"]["source_refs"].append("/var/www/qamus/live/rows.jsonl")
     expect_red("red: server filesystem path crossing the boundary",
-               bad, "server_paths")
+               bad, "machine_topology")
 
     # red 15 — wrong schema major
     bad = _green_payload()
@@ -985,6 +2392,168 @@ def _self_test() -> int:
     bad["reverse_links"]["occurrence_to_appearances"].insert(0, duplicate)
     expect_red("red: duplicate p007 appearance shadows page binding", bad,
                "p007_authority")
+
+    # red 16 — projection scalar must fail closed
+    bad = _green_payload()
+    bad["projection"] = "not-an-object"
+    bad["projection_hash"] = "0" * 64
+    expect_red(
+        "red: projection scalar fails closed",
+        bad,
+        "projection_shape",
+    )
+
+    # red 17 — authoritative local appearance surface mismatch
+    bad = _green_v12_payload()
+    bad["appearance"]["appearance_id"] = "3041d6f44a27:u11:x1:w3"
+    bad["appearance"]["page_id"] = "entry:3041d6f44a27"
+    bad["appearance_binding_hash"] = appearance_binding_hash(bad)
+    expect_red(
+        "red: appearance id and displayed surface must join exactly",
+        bad,
+        "appearance_binding",
+    )
+
+    # red 18 — local span map missing
+    bad = _green_v12_payload()
+    del bad["appearance"]["canonical_to_appearance_span_map"]
+    bad["appearance_binding_hash"] = appearance_binding_hash(bad)
+    expect_red(
+        "red: 1.2 appearance binding requires a local span map",
+        bad,
+        "appearance_binding",
+    )
+
+    # red 19 — malformed morpheme ownership span
+    bad = _green_v12_payload()
+    bad["projection"]["morpheme_spans"][0]["char_end"] = 1
+    _rehash_payload(bad)
+    expect_red(
+        "red: morpheme ownership cannot split its segment",
+        bad,
+        "morpheme_spans",
+    )
+
+    # red 20 — colour and hover identities fork
+    bad = _green_v12_payload()
+    bad["projection"]["hover_cards"][0]["morpheme_occurrence_id"] = "wrong"
+    _rehash_payload(bad)
+    expect_red(
+        "red: hover morpheme identity must equal visible ownership",
+        bad,
+        "identity_parity",
+    )
+
+    # red 21 — arbitrary geometry labels are not evidence
+    bad = _green_v12_payload()
+    bad["projection"]["evidence_refs"] = ["fact:fake:geom"]
+    _rehash_payload(bad)
+    expect_red(
+        "red: primary geometry requires resolvable fact ids",
+        bad,
+        "geometry_evidence",
+    )
+
+    # red 22 — private external source label in a learner field
+    bad = _green_v12_payload()
+    bad["projection"]["hover_cards"][0][
+        "unresolved"
+    ] = "Quranic Arabic Corpus says this"
+    _rehash_payload(bad)
+    expect_red(
+        "red: every learner field rejects source-private prose",
+        bad,
+        "public_boundary",
+    )
+
+    # red 23 — forward-slash Windows path
+    bad = _green_v12_payload()
+    bad["provenance"]["source_refs"].append(
+        "C:" + "/Users/alice/private.json"
+    )
+    expect_red(
+        "red: forward-slash Windows path is private topology",
+        bad,
+        "machine_topology",
+    )
+
+    # red 24 — missing reverse projection hash
+    bad = _green_v12_payload()
+    del bad["reverse_links"]["occurrence_to_appearances"][0][
+        "projection_hash"
+    ]
+    expect_red(
+        "red: every reverse appearance requires the shared hash",
+        bad,
+        "hash_fork",
+    )
+
+    # red 25 — forbidden topology key
+    bad = _green_v12_payload()
+    bad["appearance"]["build_host"] = "builder-17"
+    expect_red(
+        "red: machine topology keys never cross the boundary",
+        bad,
+        "public_boundary",
+    )
+
+    # red 26 — reverse entry relation invented without a forward typed edge
+    bad = _green_v12_payload()
+    phantom = json.loads(json.dumps(
+        bad["reverse_links"]["entry_to_occurrences"][0],
+        ensure_ascii=False,
+    ))
+    phantom["entry_id"] = "phantom-entry"
+    bad["reverse_links"]["entry_to_occurrences"].append(phantom)
+    expect_red(
+        "red: reverse entry edge cannot invent settled-looking membership",
+        bad,
+        "reverse_entry_parity",
+    )
+
+    # red 27 — typoed plane states cannot bypass neutral candidate checks
+    bad = _green_v12_payload()
+    for key in list(bad["projection"]["certification"]["plane"]):
+        bad["projection"]["certification"]["plane"][key] = "certifed"
+    bad["projection"]["whole_word_gloss"] = "settled-looking gloss"
+    bad["projection"]["segments"][0]["semantic_class"] = "particle"
+    bad["projection"]["segments"][0]["renderer_class"] = "qg-particle"
+    _rehash_payload(bad)
+    expect_red(
+        "red: invalid certification plane state fails closed",
+        bad,
+        "candidate_public_plane",
+    )
+
+    # red 28 — separator-hidden external-source labels in keys
+    bad = _green_v12_payload()
+    bad["appearance"]["qac_source"] = None
+    expect_red(
+        "red: external-source key labels never cross the boundary",
+        bad,
+        "public_boundary",
+    )
+
+    # red 29 — private topology embedded in a longer prose value
+    bad = _green_v12_payload()
+    bad["provenance"]["source_refs"].append(
+        "copied from " + "C:" + "/Users/alice/private.json"
+    )
+    expect_red(
+        "red: embedded private path fails topology scan",
+        bad,
+        "machine_topology",
+    )
+
+    # green control — a legal URI scheme is not a Windows drive path
+    good = _green_v12_payload()
+    good["provenance"]["source_refs"].append(
+        "https://example.org/qamus/ref"
+    )
+    expect_green(
+        "green: legal URI is not private machine topology",
+        good,
+    )
 
     if failures:
         print("\n%d SELF-TEST CASE(S) FAILED" % len(failures))

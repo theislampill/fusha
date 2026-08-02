@@ -1,0 +1,404 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "canonical regeneration unit suite",
+      "pass_condition": "unittest exits 0 and covers all twelve stages, exact canonical-surface joins, producer hash drift, rival preservation, invalidation, two-surface parity, appearance dispositions, and public cleanliness",
+      "run": "python -B -m unittest tools.test_regenerate_pvn_canonical_graph"
+    },
+    {
+      "name": "deterministic sample check",
+      "pass_condition": "exit 0 with PVN CANONICAL REGEN PASS, all four denominators recomputed, every displayed appearance disposed exactly once, and no sample drift",
+      "run": "python -B tools/regenerate_pvn_canonical_graph.py --check-sample qamus/examples/pvn-canonical-regeneration-w1/run-manifest.json"
+    },
+    {
+      "name": "appearance payload set",
+      "pass_condition": "exit 0 only for the exact four quran:61:5:4 appearances, one shared canonical projection hash, four distinct appearance-binding hashes, exact displayed surfaces and maps, binding_state candidate_requires_renderer_capability_acceptance, and public_projection_eligible false",
+      "run": "python -B tools/regenerate_pvn_canonical_graph.py --validate-appearance-payload-set --occurrence-id quran:61:5:4 --appearances qamus/lattice/example-ayah-universe.jsonl --payloads qamus/examples/pvn-canonical-regeneration-w1/website-payloads/01133eb5431b_u0_x1_w3.payload.json qamus/examples/pvn-canonical-regeneration-w1/website-payloads/3041d6f44a27_u11_x1_w3.payload.json qamus/examples/pvn-canonical-regeneration-w1/website-payloads/65d3d5c51f24_u0_x2_w3.payload.json qamus/examples/pvn-canonical-regeneration-w1/website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json"
+    },
+    {
+      "name": "independent website payload contract",
+      "pass_condition": "all four generated envelopes independently pass the repository website handoff validator, including candidate certification, letter ownership, colour-hover parity, reverse identity and public-source cleanliness",
+      "run": "python -B tools/validate_website_payload.py qamus/examples/pvn-canonical-regeneration-w1/website-payloads/01133eb5431b_u0_x1_w3.payload.json qamus/examples/pvn-canonical-regeneration-w1/website-payloads/3041d6f44a27_u11_x1_w3.payload.json qamus/examples/pvn-canonical-regeneration-w1/website-payloads/65d3d5c51f24_u0_x2_w3.payload.json qamus/examples/pvn-canonical-regeneration-w1/website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json"
+    },
+    {
+      "name": "Claude raw-stream provenance",
+      "pass_condition": "exit 0 only when each invocation record reconciles to the first system/init event in its raw stream, the sessions differ, and the implementation and review prove claude-sonnet-5 and claude-opus-5 respectively without substitution",
+      "run": "python -B tools/regenerate_pvn_canonical_graph.py --validate-worker-records --worker-schema qamus/schemas/claude-cli-worker-invocation.schema.json --implementation-record out/pvn-canonical-regeneration-w1/worker-provenance/sonnet-5-implementation.invocation.json --implementation-stream out/pvn-canonical-regeneration-w1/worker-provenance/sonnet-5-implementation.stream.jsonl --review-record out/pvn-canonical-regeneration-w1/worker-provenance/opus-5-review.invocation.json --review-stream out/pvn-canonical-regeneration-w1/worker-provenance/opus-5-review.stream.jsonl"
+    },
+    {
+      "name": "artifact ergonomics",
+      "pass_condition": "exit 0 with JSONL one object per line, pretty metadata JSON, LF endings, and no tracked full-corpus output",
+      "run": "python -B tools/check_artifact_ergonomics.py"
+    },
+    {
+      "name": "exact A4 changed paths",
+      "pass_condition": "exit 0 only when every tracked or non-ignored untracked change from the frozen clean start is inside the exact A4 permitted set and all required tracked outputs materialized",
+      "run": "python -B -c \"from pathlib import Path; import subprocess,sys; start=Path('out/pvn-canonical-regeneration-w1/start-sha.txt').read_text(encoding='ascii').strip(); exact={'qamus/schemas/pvn-canonical-occurrence-artifact.schema.json','qamus/schemas/pvn-canonical-regeneration-manifest.schema.json','qamus/schemas/pvn-appearance-disposition.schema.json','qamus/schemas/claude-cli-worker-invocation.schema.json','tools/regenerate_pvn_canonical_graph.py','tools/test_regenerate_pvn_canonical_graph.py','qamus/reports/pvn-canonical-regeneration-w1.md'}; prefix='qamus/examples/pvn-canonical-regeneration-w1/'; outputs={prefix+'run-manifest.json',prefix+'canonical-occurrences.sample.jsonl',prefix+'canonical-occurrences.sample.meta.json',prefix+'appearance-dispositions.sample.jsonl',prefix+'appearance-dispositions.sample.meta.json',prefix+'canonical-occurrence-quran-61-5-4.json',prefix+'website-payloads/01133eb5431b_u0_x1_w3.payload.json',prefix+'website-payloads/3041d6f44a27_u11_x1_w3.payload.json',prefix+'website-payloads/65d3d5c51f24_u0_x2_w3.payload.json',prefix+'website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json'}; required=exact|outputs; changed=set(subprocess.check_output(['git','diff','--name-only',start,'--'],text=True).splitlines())|set(subprocess.check_output(['git','ls-files','--others','--exclude-standard'],text=True).splitlines()); bad=sorted(x for x in changed if x not in exact and not x.startswith(prefix)); missing=sorted(required-changed); missing_files=sorted(p for p in required if not Path(p).is_file()); ok=not bad and not missing and not missing_files; print('PVN A4 PATH SCOPE '+('PASS' if ok else 'FAIL bad='+repr(bad)+' missing='+repr(missing)+' missing_files='+repr(missing_files))); sys.exit(0 if ok else 1)\""
+    },
+    {
+      "name": "A4 whitespace integrity",
+      "pass_condition": "git diff --check exits 0",
+      "run": "git diff --check"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "the two exact occurrences may retain different segmentations, senses, functions, scopes, referents, meanings, translations, and unresolved rivals; no surface-wide truth is emitted",
+        "id": "quran:2:284:2+10",
+        "source": "qamus/examples/particle_projection_parity.sample.json",
+        "surface": "مَا"
+      },
+      {
+        "expectation": "a root-family edge to v005 never becomes the n912 lexeme, entry, sense, meaning, translation, or public certification",
+        "id": "quran:61:5:4:root-family",
+        "source": "qamus/examples/website-payloads/multi_entry_liqawmihi_61_5_4.payload.json",
+        "surface": "لِقَوْمِهِۦ"
+      },
+      {
+        "expectation": "a missing or stale producer schema, artifact, metadata sidecar, loc-surface index, or manifest invalidates the dependent stage and every affected disposition",
+        "id": "mutation:producer-hash-drift",
+        "source": "qamus/indexes/quran-loc-surface/index.manifest.json"
+      },
+      {
+        "expectation": "a self-declared model record without a matching raw system/init event fails worker provenance",
+        "id": "mutation:self-declared-model",
+        "source": "qamus/schemas/claude-cli-worker-invocation.schema.json"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "one canonical artifact supplies one shared projection hash to four distinct appearance envelopes; the supported primary projection has neutral canonical spans 0:2 bound to mocc:p007:61:5:4 and 2:11 with null morpheme identity, while unsupported inner boundaries remain candidate alternatives",
+        "id": "quran:61:5:4",
+        "source": "qamus/task-packets/TP-PVN-PILOT-SAFETY-61-5-4-W1.json",
+        "surface": "لِقَوْمِهِۦ"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "qamus/lattice/example-ayah-universe.meta.json",
+    "selection_rule": "process all 109471 displayed-word appearance rows in committed order; join only the 109018 aligned rows through exact occurrence and canonical loc-surface authority, retain the 453 unaligned rows as ineligible dispositions, and keep the 50041 canonical occurrence denominator separate",
+    "this_packet_size": 109471,
+    "universe_size": 109471
+  },
+  "commands": [
+    {
+      "expect": "exit 0 from a clean worktree and one ASCII start SHA written under the ignored A4 run directory",
+      "purpose": "freeze the clean A4 dispatch SHA",
+      "run": "python -B -c \"from pathlib import Path; import subprocess,sys; dirty=subprocess.check_output(['git','status','--porcelain'],text=True); dirty and sys.exit('dirty dispatch tree: '+dirty); p=Path('out/pvn-canonical-regeneration-w1/start-sha.txt'); p.parent.mkdir(parents=True,exist_ok=True); p.write_bytes((subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()+'\\n').encode('ascii'))\""
+    },
+    {
+      "expect": "red before implementation, then unittest OK",
+      "purpose": "run the canonical regeneration tests",
+      "run": "python -B -m unittest tools.test_regenerate_pvn_canonical_graph"
+    },
+    {
+      "expect": "exit 0; full candidate state remains under out and bounded tracked samples are regenerated",
+      "purpose": "regenerate canonical candidate state",
+      "run": "python -B tools/regenerate_pvn_canonical_graph.py --occurrences qamus/lattice/example-ayah-universe.occurrences.jsonl --appearances qamus/lattice/example-ayah-universe.jsonl --universe-meta qamus/lattice/example-ayah-universe.meta.json --loc-surface-index qamus/indexes/quran-loc-surface/index.jsonl --loc-surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --appearance-disposition-schema qamus/schemas/pvn-appearance-disposition.schema.json --website-contract docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md --sarf-ownership-schema qamus/schemas/sarf-occurrence-ownership.schema.json --sarf-ownership-artifact qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl --sarf-ownership-meta qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json --sarf-parity-schema qamus/schemas/sarf-two-surface-projection.schema.json --sarf-parity-artifact qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json --sarf-parity-meta qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json --nahw-facts-schema qamus/schemas/nahw-occurrence-fact-bundle.schema.json --nahw-facts-artifact qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --nahw-facts-meta qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json --nahw-projection-schema qamus/schemas/nahw-public-projection.schema.json --nahw-projection-artifact qamus/examples/nahw-public-projection-w1/projections.sample.jsonl --nahw-projection-meta qamus/examples/nahw-public-projection-w1/projections.sample.meta.json --largelexicon-bridge-schema qamus/schemas/largelexicon-occurrence-meta-bridge.schema.json --largelexicon-bridge-artifact qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.jsonl --largelexicon-bridge-meta qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.meta.json --largelexicon-accepted-edge-packet qamus/task-packets/TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json --largelexicon-accepted-edge-rows qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.jsonl --largelexicon-accepted-edge-meta qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.meta.json --largelexicon-edge-vocabulary tools/build_typed_edge_crosswalk.py --largelexicon-row-schema qamus.graph_edge.v1 --out out/pvn-canonical-regeneration-w1 --sample-out qamus/examples/pvn-canonical-regeneration-w1"
+    },
+    {
+      "expect": "PVN CANONICAL REGEN PASS with byte-identical sample outputs and current dependency hashes",
+      "purpose": "check the deterministic tracked sample",
+      "run": "python -B tools/regenerate_pvn_canonical_graph.py --check-sample qamus/examples/pvn-canonical-regeneration-w1/run-manifest.json"
+    },
+    {
+      "expect": "exit 0 with the exact four appearance identities and safe additive binding contract",
+      "purpose": "check the four appearance envelopes",
+      "run": "python -B tools/regenerate_pvn_canonical_graph.py --validate-appearance-payload-set --occurrence-id quran:61:5:4 --appearances qamus/lattice/example-ayah-universe.jsonl --payloads qamus/examples/pvn-canonical-regeneration-w1/website-payloads/01133eb5431b_u0_x1_w3.payload.json qamus/examples/pvn-canonical-regeneration-w1/website-payloads/3041d6f44a27_u11_x1_w3.payload.json qamus/examples/pvn-canonical-regeneration-w1/website-payloads/65d3d5c51f24_u0_x2_w3.payload.json qamus/examples/pvn-canonical-regeneration-w1/website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json"
+    },
+    {
+      "expect": "WEBSITE PAYLOAD VALIDATION PASS for all four generated envelopes",
+      "purpose": "independently enforce the website handoff contract over A4 outputs",
+      "run": "python -B tools/validate_website_payload.py qamus/examples/pvn-canonical-regeneration-w1/website-payloads/01133eb5431b_u0_x1_w3.payload.json qamus/examples/pvn-canonical-regeneration-w1/website-payloads/3041d6f44a27_u11_x1_w3.payload.json qamus/examples/pvn-canonical-regeneration-w1/website-payloads/65d3d5c51f24_u0_x2_w3.payload.json qamus/examples/pvn-canonical-regeneration-w1/website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json"
+    },
+    {
+      "expect": "exit 0 only when raw CLI init metadata proves both selected models and independent sessions",
+      "purpose": "validate implementation and review provenance",
+      "run": "python -B tools/regenerate_pvn_canonical_graph.py --validate-worker-records --worker-schema qamus/schemas/claude-cli-worker-invocation.schema.json --implementation-record out/pvn-canonical-regeneration-w1/worker-provenance/sonnet-5-implementation.invocation.json --implementation-stream out/pvn-canonical-regeneration-w1/worker-provenance/sonnet-5-implementation.stream.jsonl --review-record out/pvn-canonical-regeneration-w1/worker-provenance/opus-5-review.invocation.json --review-stream out/pvn-canonical-regeneration-w1/worker-provenance/opus-5-review.stream.jsonl"
+    },
+    {
+      "expect": "exit 0 with canonical reviewer-facing formatting",
+      "purpose": "check artifact ergonomics",
+      "run": "python -B tools/check_artifact_ergonomics.py"
+    },
+    {
+      "expect": "exit 0 only when all changes are inside the exact A4 allowlist and every required tracked output exists in the changed set",
+      "purpose": "verify the frozen-start A4 path scope",
+      "run": "python -B -c \"from pathlib import Path; import subprocess,sys; start=Path('out/pvn-canonical-regeneration-w1/start-sha.txt').read_text(encoding='ascii').strip(); exact={'qamus/schemas/pvn-canonical-occurrence-artifact.schema.json','qamus/schemas/pvn-canonical-regeneration-manifest.schema.json','qamus/schemas/pvn-appearance-disposition.schema.json','qamus/schemas/claude-cli-worker-invocation.schema.json','tools/regenerate_pvn_canonical_graph.py','tools/test_regenerate_pvn_canonical_graph.py','qamus/reports/pvn-canonical-regeneration-w1.md'}; prefix='qamus/examples/pvn-canonical-regeneration-w1/'; outputs={prefix+'run-manifest.json',prefix+'canonical-occurrences.sample.jsonl',prefix+'canonical-occurrences.sample.meta.json',prefix+'appearance-dispositions.sample.jsonl',prefix+'appearance-dispositions.sample.meta.json',prefix+'canonical-occurrence-quran-61-5-4.json',prefix+'website-payloads/01133eb5431b_u0_x1_w3.payload.json',prefix+'website-payloads/3041d6f44a27_u11_x1_w3.payload.json',prefix+'website-payloads/65d3d5c51f24_u0_x2_w3.payload.json',prefix+'website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json'}; required=exact|outputs; changed=set(subprocess.check_output(['git','diff','--name-only',start,'--'],text=True).splitlines())|set(subprocess.check_output(['git','ls-files','--others','--exclude-standard'],text=True).splitlines()); bad=sorted(x for x in changed if x not in exact and not x.startswith(prefix)); missing=sorted(required-changed); missing_files=sorted(p for p in required if not Path(p).is_file()); ok=not bad and not missing and not missing_files; print('PVN A4 PATH SCOPE '+('PASS' if ok else 'FAIL bad='+repr(bad)+' missing='+repr(missing)+' missing_files='+repr(missing_files))); sys.exit(0 if ok else 1)\""
+    },
+    {
+      "expect": "no whitespace errors",
+      "purpose": "check the bounded implementation diff",
+      "run": "git diff --check"
+    }
+  ],
+  "defeaters": [
+    "one occurrence analyzed separately for different P, V, or N pages",
+    "surface, root, form, stem, pattern, colour, lookup coverage, or page context promoted to entry, sense, function, meaning, translation, or certification",
+    "canonical spans copied onto a different displayed surface without a closed canonical-to-appearance map",
+    "the unsupported quran:61:5:4 boundary at canonical offset 8 promoted into primary letter ownership",
+    "rich-at-rest and rich-hover compiled from different canonical artifacts or projection hashes",
+    "candidate or unresolved contextual facts emitted as resolved public translation",
+    "revoked or stale dependencies that leave candidate projections, traces, or appearance payloads active",
+    "a LargeLexicon bridge row counted as runtime uptake without exact accepted-edge owner application",
+    "source prose, reviewer-private material, private paths, machine topology, credentials, tokens, or private configuration in tracked or public artifacts"
+  ],
+  "definition_of_done": [
+    "the workflow deterministically rebuilds 50041 canonical occurrences and separately accounts for 109471 displayed appearances, including 109018 aligned and 453 unaligned",
+    "every displayed appearance has exactly one closed-schema payload_envelope or ineligible disposition, and all denominator equations in metadata hold",
+    "the loc-surface index raw-byte SHA-256 is recomputed and equals index.manifest.json artifact_sha256; the currently recorded digest is 97efbaca345d5f23d9e9c699eef155f5bf4e06bb725e430729a8962b1573d227 but is never trusted without recomputation",
+    "every producer metadata sidecar recomputes and binds raw-byte hashes for its packet, schema, artifact, upstream artifacts, loc-surface index, and loc-surface manifest",
+    "the LargeLexicon accepted-edge owner-application packet, rows, and metadata remain an explicit dangling dependency; until they exist, that runtime stage is BLOCKED_DEPENDENCY with zero uptake while other A4 implementation stages continue",
+    "quran:61:5:4 emits one canonical projection with two supported neutral primary spans and four appearance envelopes with exact displayed surfaces, maps, binding state, and distinct appearance-binding hashes",
+    "appearance.binding_state is candidate_requires_renderer_capability_acceptance and projection.public_projection_eligible is false until the separate website renderer accepts the additive capability",
+    "rich-at-rest and rich-hover derive from the same canonical occurrence artifact; rivals, abstentions, revocation, reverse traces, and public-source cleanliness are executable gates",
+    "the fresh Sonnet 5 implementation and fresh Opus 5 review records reconcile to distinct raw CLI system/init events and bind exact prompts, streams, outputs, commits, scope, and model identities",
+    "full corpus output remains under out, tracked outputs are bounded samples with pretty metadata, and no live or website code is changed",
+    "A4 implementation does not edit shared harness files and is not integration-ready until TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 registers it and completes the repository harness",
+    "the clean dispatch SHA is frozen before implementation and the tracked-plus-non-ignored-untracked changed set is confined to the exact A4 permitted files and sample prefix"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "any exact producer packet, schema, artifact, metadata, or dependency digest changes during execution",
+      "the canonical index hash does not match its manifest or an occurrence cannot join to exact loc-surface authority",
+      "any denominator or disposition equation fails",
+      "an appearance cannot reconstruct its displayed surface from a complete closed map without changing canonical projection identity",
+      "a projector requires a new linguistic conclusion, certification decision, reviewer vote, or scholar adjudication",
+      "either Claude invocation lacks matching raw init proof or shows model substitution",
+      "a public candidate cannot remain source-clean and unresolved-safe"
+    ],
+    "route": "stop the affected stage, retain the last complete candidate run under out/pvn-canonical-regeneration-w1, record the exact blocker in qamus/reports/pvn-canonical-regeneration-w1.md, and route it to the owning producer, two-vote, scholar, source-boundary, or website-handoff lane"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If exact identity, canonical surface authority, producer dependency, certified contextual fact, or projection binding is absent, preserve rivals and emit unresolved, ineligible, abstention, or BLOCKED_DEPENDENCY. Never infer occurrence truth from surface, root, page context, lookup coverage, colour, or candidate state.",
+    "statement": "Every state is a deterministic candidate projection of canonical occurrences, exact surfaces, hash-bound producer artifacts, guarded projector records, dependency state, and authoritative appearance rows. Facts, occurrences, entries, and appearances remain separate denominators.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Closed canonical occurrence artifact schema shared by colour and hover",
+      "path": "qamus/schemas/pvn-canonical-occurrence-artifact.schema.json"
+    },
+    {
+      "description": "Closed regeneration manifest schema for stages, dependencies, denominators, traces, invalidations, uptake, and payload compatibility",
+      "path": "qamus/schemas/pvn-canonical-regeneration-manifest.schema.json"
+    },
+    {
+      "description": "Closed oneOf schema for exact payload-envelope or ineligible appearance dispositions",
+      "path": "qamus/schemas/pvn-appearance-disposition.schema.json",
+      "schema": "qamus.pvn_appearance_disposition.v1"
+    },
+    {
+      "description": "Closed non-secret Claude CLI invocation and raw-init reconciliation schema",
+      "path": "qamus/schemas/claude-cli-worker-invocation.schema.json",
+      "schema": "qamus.claude_cli_worker_invocation.v1"
+    },
+    {
+      "description": "Candidate-only corpus regeneration and provenance validator",
+      "path": "tools/regenerate_pvn_canonical_graph.py"
+    },
+    {
+      "description": "Red-first canonical regeneration test suite",
+      "path": "tools/test_regenerate_pvn_canonical_graph.py"
+    },
+    {
+      "description": "Tracked deterministic sample run manifest",
+      "path": "qamus/examples/pvn-canonical-regeneration-w1/run-manifest.json"
+    },
+    {
+      "description": "Bounded canonical occurrence sample rows",
+      "path": "qamus/examples/pvn-canonical-regeneration-w1/canonical-occurrences.sample.jsonl"
+    },
+    {
+      "description": "Hash-bound canonical occurrence sample metadata",
+      "path": "qamus/examples/pvn-canonical-regeneration-w1/canonical-occurrences.sample.meta.json"
+    },
+    {
+      "description": "Bounded appearance disposition sample rows",
+      "path": "qamus/examples/pvn-canonical-regeneration-w1/appearance-dispositions.sample.jsonl"
+    },
+    {
+      "description": "Hash-bound appearance disposition sample metadata and denominator proofs",
+      "path": "qamus/examples/pvn-canonical-regeneration-w1/appearance-dispositions.sample.meta.json"
+    },
+    {
+      "description": "Canonical quran:61:5:4 occurrence artifact with neutral supported primary spans",
+      "path": "qamus/examples/pvn-canonical-regeneration-w1/canonical-occurrence-quran-61-5-4.json"
+    },
+    {
+      "description": "Candidate payload for appearance 01133eb5431b:u0:x1:w3",
+      "path": "qamus/examples/pvn-canonical-regeneration-w1/website-payloads/01133eb5431b_u0_x1_w3.payload.json"
+    },
+    {
+      "description": "Candidate payload for appearance 3041d6f44a27:u11:x1:w3",
+      "path": "qamus/examples/pvn-canonical-regeneration-w1/website-payloads/3041d6f44a27_u11_x1_w3.payload.json"
+    },
+    {
+      "description": "Candidate payload for appearance 65d3d5c51f24:u0:x2:w3",
+      "path": "qamus/examples/pvn-canonical-regeneration-w1/website-payloads/65d3d5c51f24_u0_x2_w3.payload.json"
+    },
+    {
+      "description": "Candidate payload for appearance 7f1f8b8e29e6:u0:x0:w3",
+      "path": "qamus/examples/pvn-canonical-regeneration-w1/website-payloads/7f1f8b8e29e6_u0_x0_w3.payload.json"
+    },
+    {
+      "description": "Separate fact, occurrence, entry, appearance, projection, trace, invalidation, uptake, and compatibility report",
+      "path": "qamus/reports/pvn-canonical-regeneration-w1.md"
+    },
+    {
+      "description": "Full regenerable candidate state and private non-secret worker proof",
+      "path": "out/pvn-canonical-regeneration-w1/"
+    }
+  ],
+  "guards": [
+    "The METHOD transfers: canonical binding, guarded projection, invalidation, two-surface parity, reverse trace, and dogfood accounting may be reused; linguistic conclusions never transfer.",
+    "The twelve stages are canonical graph, P V N appearances, morpheme registration, guarded Ṣarf and Naḥw projectors, rival preservation, revocation propagation, rich-at-rest compilation, rich-hover compilation, appearance parity, reverse traces, flywheel uptake, and candidate payload generation.",
+    "The loc-surface index and manifest are canonical written-surface authority for this packet; recompute their raw-byte digest and reject mismatch.",
+    "Each producer is consumed as an exact packet-schema-artifact-metadata dependency. Every metadata sidecar must bind its own artifact and schema plus upstream artifacts and the loc-surface index and manifest.",
+    "The accepted-edge dependency is qamus/task-packets/TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json with accepted-edges.jsonl and accepted-edges.meta.json under qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/. tools/build_typed_edge_crosswalk.py and literal qamus.graph_edge.v1 govern row vocabulary; no invented typed-edge schema is named.",
+    "Missing accepted-edge owner application does not block A4 workflow implementation, but it forces LargeLexicon runtime uptake to BLOCKED_DEPENDENCY and zero.",
+    "The finalized website fields are appearance.displayed_surface, appearance.canonical_to_appearance_span_map, appearance.binding_state, top-level appearance_binding_hash, and projection.public_projection_eligible.",
+    "Every span-map row is closed over segment_index, morpheme_occurrence_id, canonical_char_start, canonical_char_end, appearance_char_start, and appearance_char_end.",
+    "appearance_binding_hash is SHA-256 of compact sorted UTF-8 JSON over occurrence_id, artifact_id, projection_hash, appearance_id, page_id, page_kind, binding_state, normalization fixed to NFC, displayed_surface, and canonical_to_appearance_span_map; appearance.page_local is excluded.",
+    "The supported quran:61:5:4 primary geometry is canonical 0:2 with mocc:p007:61:5:4 and canonical 2:11 with null morpheme identity. Three shorter appearances map these spans to 0:2 and 2:10. The boundary at 8 and stem or pronoun identities remain candidate alternatives until exact producer evidence supports them.",
+    "qamus.pvn_appearance_disposition.v1 is closed and oneOf payload_envelope or ineligible. The payload branch binds exact payload path and hash, projection hash, appearance-binding hash, binding state, displayed surface, span map, and source-row hash. The ineligible branch has nonempty blockers, no payload path or hash, and retains exact appearance identity and displayed surface.",
+    "Metadata proves canonical_occurrences 50041, displayed_word_appearances 109471, aligned_appearances 109018, unaligned_appearances 453, payload plus ineligible equals 109471, aligned payload plus aligned ineligible equals 109018, unaligned payload zero, unaligned ineligible 453, and summed occurrence appearance counts 109018.",
+    "Each private Claude record binds argv, requested model, actual model, model ID, CLI version, session ID, start SHA, branch, worktree, permitted files, other-reviewer access, raw-stream path and hash, init-record hash, prompt path and hash, output hash, and final commit. Validation parses and reconciles the first raw system/init event.",
+    "No page-local analysis, global surface gloss, root-to-entry inference, candidate-to-certified promotion, source prose, website implementation, or live mutation is permitted.",
+    "tools/check_regressions.py and docs/golden-commands.md are read-only in this packet. Only TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 may edit them after final A4 implementation and review.",
+    "A4 does not depend on TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 or any vertical-slice or owner-certification output, preserving the acyclic execution graph."
+  ],
+  "inputs": {
+    "input_files": [
+      "qamus/task-packets/TP-SARF-OCCURRENCE-OWNERSHIP-PRODUCER-W1.json",
+      "qamus/task-packets/TP-SARF-PROJECTION-ELIGIBILITY-PARITY-W1.json",
+      "qamus/task-packets/TP-NAHW-A2-OCCURRENCE-FACT-PRODUCER-W1.json",
+      "qamus/task-packets/TP-NAHW-A2-PUBLIC-PROJECTION-BRIDGE-W1.json",
+      "qamus/task-packets/TP-LARGELEXICON-A3-OCCURRENCE-META-BRIDGE-W1.json",
+      "qamus/task-packets/TP-PVN-PILOT-SAFETY-61-5-4-W1.json",
+      "qamus/task-packets/TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json",
+      "qamus/schemas/sarf-occurrence-ownership.schema.json",
+      "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl",
+      "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json",
+      "qamus/schemas/sarf-two-surface-projection.schema.json",
+      "qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json",
+      "qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json",
+      "qamus/schemas/nahw-occurrence-fact-bundle.schema.json",
+      "qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl",
+      "qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json",
+      "qamus/schemas/nahw-public-projection.schema.json",
+      "qamus/examples/nahw-public-projection-w1/projections.sample.jsonl",
+      "qamus/examples/nahw-public-projection-w1/projections.sample.meta.json",
+      "qamus/schemas/largelexicon-occurrence-meta-bridge.schema.json",
+      "qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.jsonl",
+      "qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.meta.json",
+      "qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.jsonl",
+      "qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.meta.json",
+      "tools/build_typed_edge_crosswalk.py",
+      "qamus/lattice/example-ayah-universe.jsonl",
+      "qamus/lattice/example-ayah-universe.occurrences.jsonl",
+      "qamus/lattice/example-ayah-universe.meta.json",
+      "qamus/indexes/quran-loc-surface/index.jsonl",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "qamus/indexes/occurrence-appearances.jsonl",
+      "qamus/lattice/projection-ledger.jsonl",
+      "qamus/lattice/registered-projectors.json",
+      "qamus/schemas/typed-claim-contract.schema.json",
+      "qamus/schemas/projector-record.schema.json",
+      "qamus/schemas/public-hover-projection.schema.json",
+      "qamus/examples/p007-li-pilot/",
+      "qamus/examples/particle_projection_parity.sample.json",
+      "qamus/examples/website-payloads/multi_entry_liqawmihi_61_5_4.payload.json",
+      "tools/fact_ledger.py",
+      "tools/fact_projectors.py",
+      "tools/lattice_projectors.py",
+      "tools/fd_compiler.py",
+      "tools/validate_appearance_parity.py",
+      "tools/validate_website_payload.py",
+      "tools/validate_acceleration_ledgers.py",
+      "tools/check_regressions.py",
+      "docs/golden-commands.md",
+      "docs/architecture/meta-transclusive-projection.md",
+      "docs/architecture/two-surface-contract.md",
+      "docs/architecture/translation-projection.md",
+      "docs/architecture/dogfood-flywheel.md",
+      "docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md"
+    ],
+    "permitted_write_files": [
+      "qamus/schemas/pvn-canonical-occurrence-artifact.schema.json",
+      "qamus/schemas/pvn-canonical-regeneration-manifest.schema.json",
+      "qamus/schemas/pvn-appearance-disposition.schema.json",
+      "qamus/schemas/claude-cli-worker-invocation.schema.json",
+      "tools/regenerate_pvn_canonical_graph.py",
+      "tools/test_regenerate_pvn_canonical_graph.py",
+      "qamus/examples/pvn-canonical-regeneration-w1/",
+      "qamus/reports/pvn-canonical-regeneration-w1.md",
+      "out/pvn-canonical-regeneration-w1/"
+    ],
+    "prohibited_files": [
+      "qamus/data/",
+      "qamus/certification/",
+      "qamus/lattice/",
+      "qamus/indexes/",
+      "qamus/examples/p007-li-pilot/",
+      "qamus/examples/website-payloads/",
+      "qamus/examples/sarf-occurrence-ownership-w1/",
+      "qamus/examples/sarf-two-surface-projection-w1/",
+      "qamus/examples/nahw-occurrence-facts-w1/",
+      "qamus/examples/nahw-public-projection-w1/",
+      "qamus/examples/largelexicon-occurrence-meta-bridge-w1/",
+      "qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/",
+      "sarf/",
+      "nahw/",
+      "docs/current-state.yaml",
+      "docs/golden-commands.md",
+      "tools/check_regressions.py",
+      "tools/fact_ledger.py",
+      "tools/fact_projectors.py",
+      "tools/lattice_projectors.py",
+      "tools/fd_compiler.py",
+      "tools/validate_appearance_parity.py",
+      "tools/validate_website_payload.py",
+      "tools/build_typed_edge_crosswalk.py"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "This packet produces candidate repository and website-handoff artifacts only. It does not certify facts, edit website code, deploy payloads, contact the live site, or mutate any live surface.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-PVN-A4-CANONICAL-REGEN-W1",
+  "provenance": {
+    "authored_by": "PVN owner re-anchor follow-on lane",
+    "cites": [
+      "qamus/task-packets/TP-PVN-PILOT-SAFETY-61-5-4-W1.json",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "docs/architecture/meta-transclusive-projection.md",
+      "docs/architecture/two-surface-contract.md",
+      "docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "PVN_CANONICAL_OCCURRENCE_GRAPH",
+    "out_of_scope": [
+      "Do not certify candidate facts or promote candidate rules.",
+      "Do not author new occurrence-level linguistic conclusions.",
+      "Do not edit shared harness files, website code, frontend behavior, or live systems.",
+      "Do not consume owner-certification or vertical-slice outputs."
+    ],
+    "summary": "Implement the canonical candidate-only P V N occurrence graph regeneration workflow, binding exact Qurʾānic surfaces and producer artifacts to guarded Ṣarf, Naḥw, LargeLexicon, two-surface pedagogy, invalidation, reverse traces, and appearance payload dispositions.",
+    "tranche": "pvn-reanchor-a4-canonical-regeneration"
+  },
+  "title": "Regenerate the canonical P V N graph and pedagogical candidate projections",
+  "tools_required": [
+    "python 3",
+    "tools/validate_website_payload.py",
+    "tools/check_artifact_ergonomics.py",
+    "tools/validate_task_packets.py",
+    "git"
+  ]
+}

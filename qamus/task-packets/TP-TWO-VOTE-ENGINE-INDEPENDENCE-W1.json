@@ -1,0 +1,322 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "same engine is not dependence",
+      "pass_condition": "unittest exits 0 and a canonical schema-valid, semantically valid vote pair using one engine passes when vote_id, reviewer_id, and lane are pairwise distinct",
+      "run": "python -m unittest tools.test_validate_two_vote_engine_independence.TwoVoteEngineIndependenceTests.test_same_engine_with_distinct_carrier_axes_passes"
+    },
+    {
+      "name": "carrier collisions fail closed",
+      "pass_condition": "unittest exits 0 and equal vote_id, reviewer_id, or lane is rejected independently while a different engine alone cannot rescue a collision",
+      "run": "python -m unittest tools.test_validate_two_vote_engine_independence.TwoVoteEngineIndependenceTests.test_same_vote_id_fails tools.test_validate_two_vote_engine_independence.TwoVoteEngineIndependenceTests.test_same_reviewer_id_fails tools.test_validate_two_vote_engine_independence.TwoVoteEngineIndependenceTests.test_same_lane_fails"
+    },
+    {
+      "name": "semantic gates remain authoritative",
+      "pass_condition": "unittest exits 0 and malformed occurrence, schema-invalid vote, conclusion disagreement, wrong reason key, and gloss-only agreement fixtures still fail",
+      "run": "python -m unittest tools.test_validate_two_vote_engine_independence.TwoVoteEngineIndependenceTests.test_schema_and_semantic_gates_remain_closed"
+    },
+    {
+      "name": "carrier boundary is explicit",
+      "pass_condition": "unittest exits 0 and the generic validator never claims that carrier validation proves CLI version, requested or actual model, model ID, session identity, start SHA, branch, worktree, file scope, output hash, worklist hash, frozen submission hash, or no-cross-access",
+      "run": "python -m unittest tools.test_validate_two_vote_engine_independence.TwoVoteEngineIndependenceTests.test_success_claim_is_carrier_level_only"
+    },
+    {
+      "name": "closed external worker-record contract",
+      "pass_condition": "exit 0 with TWO VOTE WORKER RECORD SELF TEST PASS after rejecting every omitted or substituted CLI-path, redacted-argv, fallback-policy, requested-model, actual-model, model-id, CLI-version, session, start-SHA, branch, worktree, permitted-files, output-ref/hash, worklist-hash, frozen-submission-hash, model-proof, access, and no-cross-access field",
+      "run": "python tools/validate_two_vote_worker_records.py --self-test"
+    },
+    {
+      "name": "validator self test",
+      "pass_condition": "exit 0 with the same-engine positive canary and distinct-axis adversarial canaries active",
+      "run": "python tools/validate_two_vote_artifacts.py --self-test"
+    },
+    {
+      "name": "complete regression harness",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS without requiring this packet to edit the shared harness; one-time registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "exact changed path allowlist",
+      "pass_condition": "prints TWO VOTE ENGINE INDEPENDENCE CHANGED PATHS PASS after comparing tracked and untracked changed paths with the exact seven-path implementation, schema, test, and authority-document allowlist from the SHA frozen before edits",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/two-vote-engine-independence-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); expected={\"tools/validate_two_vote_artifacts.py\",\"tools/validate_two_vote_worker_records.py\",\"tools/test_validate_two_vote_engine_independence.py\",\"qamus/schemas/two-vote-worker-record.schema.json\",\"docs/certification-authority.md\",\"docs/architecture/evidence-and-certification.md\",\"docs/certification-store-reconciliation.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-expected); missing=sorted(expected-changed); print(\"TWO VOTE ENGINE INDEPENDENCE CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\" + repr(unexpected) + \" missing=\" + repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "name": "canonical artifact drift",
+      "pass_condition": "prints TWO VOTE ENGINE INDEPENDENCE ARTIFACT DRIFT PASS and proves that both canonical schemas and committed two-vote artifacts are byte-unchanged from the frozen start SHA",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/two-vote-engine-independence-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); protected=[\"qamus/schemas/two-vote-artifact.schema.json\",\"qamus/examples/two_vote_artifact.sample.jsonl\",\"qamus/examples/two_vote_artifact_v11_canaries.jsonl\"]; rc=subprocess.run([\"git\",\"diff\",\"--exit-code\",start,\"--\",*protected]).returncode; print(\"TWO VOTE ENGINE INDEPENDENCE ARTIFACT DRIFT \" + (\"PASS\" if rc == 0 else \"FAIL\")); sys.exit(rc)'"
+    },
+    {
+      "name": "bounded diff hygiene",
+      "pass_condition": "git diff --check exits 0 with no whitespace errors",
+      "run": "git diff --check"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "two votes sharing a vote_id fail even when reviewer, lane, engine, model, conclusion, and reason metadata otherwise look valid",
+        "id": "same-vote-id",
+        "source": "tools/validate_two_vote_artifacts.py sample_verified_row"
+      },
+      {
+        "expectation": "two votes sharing a reviewer_id fail even when their engine strings differ",
+        "id": "same-reviewer-id",
+        "source": "tools/validate_two_vote_artifacts.py sample_verified_row"
+      },
+      {
+        "expectation": "two votes sharing a lane fail because the canonical carrier requires two separately identified lanes",
+        "id": "same-lane",
+        "source": "qamus/schemas/two-vote-artifact.schema.json"
+      },
+      {
+        "expectation": "a carrier with distinct vote, reviewer, and lane values may pass generic validation, but missing canonical external worker records or any required field, hash, actual-model proof, or no-cross-access proof must never be reported as independent owner two-vote work",
+        "id": "carrier-without-external-proof",
+        "source": "docs/certification-authority.md"
+      },
+      {
+        "expectation": "distinct engines do not rescue malformed, semantically divergent, wrong-reason, or gloss-only votes",
+        "id": "engine-diversity-laundering",
+        "source": "tools/validate_two_vote_artifacts.py self_test"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "the canonical carrier validates when two separately identified reviewers and lanes use the same Claude CLI engine string but retain distinct vote ids and agree on the governed conclusion and reason key",
+        "id": "same-engine-distinct-carrier-axes",
+        "source": "tools/validate_two_vote_artifacts.py sample_verified_row"
+      },
+      {
+        "expectation": "the committed v1.1 canaries continue to validate under their canonical schemas and semantic comparison rules",
+        "id": "v1.1-existing-canaries",
+        "source": "qamus/examples/two_vote_artifact_v11_canaries.jsonl"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "tools/validate_two_vote_artifacts.py",
+    "selection_rule": "non-population validator-boundary repair applied to every canonical v1 and v1.1 two-vote artifact validation without changing linguistic conclusions or certification state",
+    "this_packet_size": null,
+    "universe_size": null
+  },
+  "commands": [
+    {
+      "expect": "prints the immutable 40-character start SHA and writes the same ASCII SHA plus LF under the packet-local gitignored out root before any repository file is edited",
+      "purpose": "freeze the packet start SHA",
+      "run": "python -c 'from pathlib import Path; import subprocess; p=Path(\"out/two-vote-engine-independence-w1/start-sha.txt\"); p.parent.mkdir(parents=True,exist_ok=True); sha=subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(); p.write_bytes((sha+\"\\n\").encode(\"ascii\")); print(sha)'"
+    },
+    {
+      "expect": "RED before implementation because the otherwise valid same-engine pair is rejected solely for matching reviewer.engine",
+      "purpose": "reproduce the false dependence gate",
+      "run": "python -m unittest tools.test_validate_two_vote_engine_independence.TwoVoteEngineIndependenceTests.test_same_engine_with_distinct_carrier_axes_passes"
+    },
+    {
+      "expect": "unittest OK after the repair; same-engine passes, all three carrier-axis collisions fail, and canonical schema and semantic gates stay closed",
+      "purpose": "run the focused validator suite",
+      "run": "python -m unittest tools.test_validate_two_vote_engine_independence"
+    },
+    {
+      "expect": "exit 0 with a carrier-level success statement that does not claim external session or model-identity proof",
+      "purpose": "run the canonical validator self test",
+      "run": "python tools/validate_two_vote_artifacts.py --self-test"
+    },
+    {
+      "expect": "TWO VOTE WORKER RECORD SELF TEST PASS after the closed schema and validator reject every missing proof field, same-session pair, shared submission, cross-access declaration, hash mismatch, and model substitution; synthetic self-test fixtures establish validator behaviour only and never count as real Opus or Sonnet proof",
+      "purpose": "run the external worker-record contract self test",
+      "run": "python tools/validate_two_vote_worker_records.py --self-test"
+    },
+    {
+      "expect": "exit 0 and the committed sample remains schema-valid and semantically valid",
+      "purpose": "validate the canonical sample",
+      "run": "python tools/validate_two_vote_artifacts.py qamus/examples/two_vote_artifact.sample.jsonl"
+    },
+    {
+      "expect": "ALL REGRESSION CHECKS PASS without editing tools/check_regressions.py; TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 owns later one-time registration",
+      "purpose": "run the complete repository harness",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "expect": "TWO VOTE ENGINE INDEPENDENCE CHANGED PATHS PASS and the changed set contains only the exact seven implementation, schema, test, and authority-document paths",
+      "purpose": "enforce the exact changed path allowlist",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/two-vote-engine-independence-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); expected={\"tools/validate_two_vote_artifacts.py\",\"tools/validate_two_vote_worker_records.py\",\"tools/test_validate_two_vote_engine_independence.py\",\"qamus/schemas/two-vote-worker-record.schema.json\",\"docs/certification-authority.md\",\"docs/architecture/evidence-and-certification.md\",\"docs/certification-store-reconciliation.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-expected); missing=sorted(expected-changed); print(\"TWO VOTE ENGINE INDEPENDENCE CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\" + repr(unexpected) + \" missing=\" + repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "expect": "TWO VOTE ENGINE INDEPENDENCE ARTIFACT DRIFT PASS",
+      "purpose": "prove canonical two-vote schemas and artifacts did not drift",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/two-vote-engine-independence-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); protected=[\"qamus/schemas/two-vote-artifact.schema.json\",\"qamus/examples/two_vote_artifact.sample.jsonl\",\"qamus/examples/two_vote_artifact_v11_canaries.jsonl\"]; rc=subprocess.run([\"git\",\"diff\",\"--exit-code\",start,\"--\",*protected]).returncode; print(\"TWO VOTE ENGINE INDEPENDENCE ARTIFACT DRIFT \" + (\"PASS\" if rc == 0 else \"FAIL\")); sys.exit(rc)'"
+    },
+    {
+      "expect": "exit 0 with no whitespace errors",
+      "purpose": "check final diff hygiene",
+      "run": "git diff --check"
+    }
+  ],
+  "defeaters": [
+    "Engine-name identity is not session dependence: two fresh isolated sessions may intentionally use the same authorized CLI surface and exact model.",
+    "Engine-name diversity is not independence proof: different engine strings cannot prove separate sessions, frozen worklists, frozen submissions, or no cross-access.",
+    "Declared reviewer.model is carrier metadata, not proof of requested model, actual model, model ID, CLI version, or returned model metadata. Only the real CLI stream plus its hash-bound canonical external worker record may supply that authority.",
+    "Carrier-axis distinction is necessary but incomplete: distinct vote_id, reviewer_id, and lane cannot substitute for the external invocation-record gates required by owner two-vote work.",
+    "Semantic laundering remains forbidden: matching gloss text, prose, surface, or engine metadata cannot substitute for canonical schema validity and agreement on the governed conclusion plus reason key.",
+    "Schema stuffing is forbidden: fields absent from the canonical artifact must not be invented, copied into ungoverned extension keys, or falsely described as validator-verified.",
+    "One session reused for both submissions, a submission exposed across lanes, or a worklist modified after hashing fails the external owner gate even if the generic carrier validates.",
+    "A documentation-only claim of independence does not repair the validator, add the focused red-first test, or register it in the complete harness."
+  ],
+  "definition_of_done": [
+    "A red-first pure test reproduces the current false rejection of a same-engine pair whose vote_id, reviewer_id, and lane are pairwise distinct.",
+    "The generic validator no longer treats equal reviewer.engine values as evidence of dependence.",
+    "The validator requires distinct vote_id, reviewer_id, and lane values and retains every canonical schema, occurrence, conclusion, reason-key, agreement, and no-gloss semantic gate.",
+    "The validator's CLI and self-test success wording truthfully describes carrier-level validation only and does not claim external session or model-identity proof.",
+    "The three narrowly scoped authority documents consistently distinguish canonical carrier validation from the mandatory external worker-record gate for owner two-vote work.",
+    "A closed qamus.two_vote_worker_record.v1 schema and validator require reviewer_id and lane, private cli_executable_path, redacted_argv, fallback_model_configured false, requested_model, actual_model, model_id, cli_version, session_id, start_sha, branch, worktree, permitted_files, frozen worklist-envelope and submission hashes, real CLI model-proof artifact plus hash, explicit access_to_other_reviewers_work false, and no_cross_access true. A closed oneOf requires either output_artifact_path plus output_artifact_sha256 or commit_sha plus commit_tree_sha256.",
+    "Pair validation requires distinct reviewer, lane, session, output, and frozen-submission identities; each reviewer remains unable to read the other submission until both are frozen and hashed. A real Opus 5 or Sonnet 5 identity is established only by the external CLI invocation and returned metadata named by the worker record, never by schema validity or a synthetic self-test fixture.",
+    "When a consuming owner packet requires Opus 5 or Sonnet 5, its lane policy must require requested_model, actual_model, and model_id to equal claude-opus-5 or claude-sonnet-5 exactly, forbid fallback, and reject silent substitution. This generic packet defines the proof carrier but does not choose reviewers or models.",
+    "No existing canonical carrier schema or artifact is changed. The additive qamus.two_vote_worker_record.v1 schema governs private external proof separately; no external-proof field is inserted into either two-vote carrier schema.",
+    "No fact is certified, reclassified, promoted, revoked, or written, and no owner, scholar, certifier, public, website, or deployment authority is created.",
+    "TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 exclusively owns later shared harness and golden-command updates; this packet's focused suites, validator self-tests, canonical sample validation, complete unchanged harness, exact frozen-start changed-path allowlist, protected-artifact drift check, and git diff --check all pass."
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "removing the same-engine rejection would require weakening any canonical schema, occurrence, conclusion, reason-key, agreement, or gloss-exclusion gate",
+      "the implementation cannot enforce distinct lane without changing a canonical schema or rewriting committed artifacts",
+      "the owner two-vote workflow lacks any mandatory canonical worker-record field, model-proof artifact, hash, or no-cross-access proof, or cannot prove frozen independent sessions without inspecting secrets",
+      "a requested or actual model identity cannot be proved from non-secret CLI output and invocation metadata",
+      "the authority documents conflict on a policy question beyond the carrier-versus-external-proof boundary",
+      "the complete harness fails outside the exact permitted path set or generated artifacts drift"
+    ],
+    "route": "STOP without changing schemas, artifacts, facts, or certification state; preserve the non-secret red output and exact missing external proof in the implementation handoff, then route the policy or schema question to the owner-gated certifier lane."
+  },
+  "evidence_policy": {
+    "fabrication_rule": "Never infer session independence from engine sameness or difference, and never synthesize CLI, model, session, repository, file-scope, output, worklist, submission, access, or hash fields. When either real CLI stream or canonical worker record is missing, generic carrier validation may report only its bounded result and the owner two-vote gate remains unsatisfied.",
+    "statement": "Generic artifact validation proves only canonical carrier-level axes and semantics: two distinct vote ids, reviewer ids, and lanes; schema-valid votes; and recomputed agreement on the governed conclusion and reason key. Owner two-vote work additionally requires two hash-bound canonical external worker records and the real CLI metadata they name, proving the private exact executable path, requested and actual model, model ID, CLI version, distinct sessions, start SHA, branch, worktree, permitted files, frozen worklists, frozen submissions, output references and hashes, explicit no access to the other review, and no cross-access.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Generic validator repair that removes engine equality as a dependence test, adds distinct-lane enforcement, retains canonical schema and semantic gates, and narrows success claims to carrier-level validity",
+      "path": "tools/validate_two_vote_artifacts.py"
+    },
+    {
+      "description": "Pure red-first unit suite for same-engine acceptance, distinct carrier axes, retained semantic gates, and bounded success wording",
+      "path": "tools/test_validate_two_vote_engine_independence.py"
+    },
+    {
+      "description": "Closed schema for each private external worker record, with exact CLI executable path, redacted argv, no-fallback declaration, model, CLI version, session, repository, file-scope, output, frozen-hash, model-proof, and no-cross-access fields",
+      "path": "qamus/schemas/two-vote-worker-record.schema.json",
+      "schema": "qamus.two_vote_worker_record.v1"
+    },
+    {
+      "description": "Deterministic validator for one worker record and a blinded pair; it verifies shape, referenced hashes, model-proof binding, distinct sessions and submissions, and no-cross-access without treating the generic carrier as independence proof",
+      "path": "tools/validate_two_vote_worker_records.py"
+    },
+    {
+      "description": "Canonical authority wording separating carrier validation from mandatory external invocation-record proof",
+      "path": "docs/certification-authority.md"
+    },
+    {
+      "description": "Architecture wording that permits same-engine independent sessions while preserving the full external owner gate",
+      "path": "docs/architecture/evidence-and-certification.md"
+    },
+    {
+      "description": "Certification-store wording corrected so engine diversity is neither necessary nor sufficient for reviewer independence",
+      "path": "docs/certification-store-reconciliation.md"
+    },
+    {
+      "description": "Private frozen start-SHA record and any real external Opus or Sonnet worker records retained outside tracked artifacts; synthetic self-test records never count as model proof",
+      "path": "out/two-vote-engine-independence-w1/"
+    }
+  ],
+  "guards": [
+    "The method transfers and linguistic conclusions never do: this deterministic packet changes only carrier-validator independence accounting, the separate external worker-record schema and validator, focused tests, and directly contradictory authority wording.",
+    "Equal reviewer.engine values are allowed when vote_id, reviewer_id, and lane are distinct and all canonical schema and semantic checks pass.",
+    "Distinct vote_id, reviewer_id, and lane are mandatory carrier-level axes. Empty, malformed, duplicated, or schema-invalid values fail closed.",
+    "Canonical conclusion and reason agreement remains recomputed from both complete votes. Gloss text, free prose, declared flags, engine, model, and lane never establish semantic agreement.",
+    "Generic tools/validate_two_vote_artifacts.py validation proves only the artifact fields and semantics it can inspect. Its output must not claim independent CLI sessions, verified actual model identity, frozen inputs, or no cross-access.",
+    "For owner two-vote work, external worker records are a separate mandatory gate. Each closed record requires reviewer_id, lane, cli_executable_path, redacted_argv, fallback_model_configured false, requested_model, actual_model, model_id, cli_version, session_id, start_sha, branch, worktree, permitted_files, worklist_envelope_sha256, frozen_submission_sha256, model_proof_artifact_path, model_proof_sha256, access_to_other_reviewers_work false, and no_cross_access true. Its closed output oneOf requires either output_artifact_path plus output_artifact_sha256 or commit_sha plus commit_tree_sha256.",
+    "The pair validator recomputes every referenced hash, requires distinct reviewer, lane, session, output, and frozen-submission identities, and refuses comparison until both worklists and submissions are frozen. It does not inspect credentials and it does not let either reviewer access the other's work.",
+    "The real non-interactive Claude CLI invocation and returned metadata are the only model-identity authority. cli_executable_path and machine topology remain private under out. A qamus.two_vote_worker_record.v1 row binds that external proof but cannot create it, and a schema-valid or synthetic record never proves Opus 5 or Sonnet 5.",
+    "A consuming packet that requests claude-opus-5 or claude-sonnet-5 must match that exact string in requested_model, actual_model, and model_id, must record a no-fallback invocation, and must reject any substituted or unproven model.",
+    "The existing reviewer.model field remains governed carrier metadata but is not silently reinterpreted as returned actual-model proof.",
+    "No field absent from qamus/schemas/two-vote-artifact.schema.json is added to an artifact. A proposed schema change is outside this packet and routes to owner review.",
+    "No artifact, fact, certification event, reason registry, public payload, website file, or live surface is writable.",
+    "Start only from a clean isolated worktree. Freeze HEAD before edits under out/two-vote-engine-independence-w1/start-sha.txt, enforce the exact tracked plus untracked seven-path changed set from that SHA, run protected canonical-artifact drift separately, and run git diff --check separately.",
+    "tools/check_regressions.py and docs/golden-commands.md are read-only in this packet. Their shared updates are reserved for the future single integration packet TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1."
+  ],
+  "inputs": {
+    "input_files": [
+      "tools/validate_two_vote_artifacts.py",
+      "tools/check_regressions.py",
+      "qamus/schemas/two-vote-artifact.schema.json",
+      "qamus/examples/two_vote_artifact.sample.jsonl",
+      "qamus/examples/two_vote_artifact_v11_canaries.jsonl",
+      "docs/certification-authority.md",
+      "docs/architecture/evidence-and-certification.md",
+      "docs/certification-store-reconciliation.md",
+      "docs/golden-commands.md"
+    ],
+    "permitted_write_files": [
+      "tools/validate_two_vote_artifacts.py",
+      "tools/validate_two_vote_worker_records.py",
+      "tools/test_validate_two_vote_engine_independence.py",
+      "qamus/schemas/two-vote-worker-record.schema.json",
+      "docs/certification-authority.md",
+      "docs/architecture/evidence-and-certification.md",
+      "docs/certification-store-reconciliation.md",
+      "out/two-vote-engine-independence-w1/"
+    ],
+    "prohibited_files": [
+      "tools/certify_typed_fact.py",
+      "qamus/certification/",
+      "qamus/data/",
+      "qamus/examples/",
+      "qamus/lattice/",
+      "qamus/schemas/two-vote-artifact.schema.json",
+      "qamus/schemas/typed-claim-contract.schema.json",
+      "qamus/skills/",
+      "qamus/task-packets/",
+      "qamus/work-queues/",
+      "tools/check_regressions.py",
+      "docs/blockers.yaml",
+      "docs/current-state.yaml",
+      "docs/decision-ledger.md",
+      "docs/golden-commands.md",
+      "nahw/",
+      "sarf/"
+    ]
+  },
+  "model_class": "deterministic",
+  "non_deployment": {
+    "statement": "This candidate packet repairs only a repository-local carrier-validator boundary, adds a separate private external worker-record contract and validator, adds pure tests, and corrects directly related authority wording. It certifies no fact, changes no existing carrier artifact or schema, emits no public payload, touches no website code, and performs no live mutation or deployment.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-TWO-VOTE-ENGINE-INDEPENDENCE-W1",
+  "provenance": {
+    "authored_by": "PVN owner re-anchor two-vote validator hardening lane",
+    "cites": [
+      "tools/validate_two_vote_artifacts.py validate_row and self_test",
+      "qamus/schemas/two-vote-artifact.schema.json reviewer carrier",
+      "docs/certification-authority.md reviewer artifact boundary",
+      "owner correction requiring fresh Opus 5 and Sonnet 5 CLI sessions with frozen external invocation proof"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "TWO_VOTE_ENGINE_INDEPENDENCE",
+    "out_of_scope": [
+      "Do not change either canonical two-vote artifact schema, add ungoverned extension fields, or rewrite committed artifacts.",
+      "Do not implement owner two-vote voting, choose reviewers or models, generate votes, inspect credentials, or reconstruct missing external invocation records.",
+      "Do not alter linguistic conclusions, reason keys, agreement semantics, certification authority, owner or scholar gates, public payloads, website code, or live surfaces."
+    ],
+    "summary": "Repair the generic two-vote artifact validator so shared engine identity is not misclassified as reviewer dependence, while retaining distinct carrier axes and making the stronger external invocation-record gate explicit for owner two-vote work.",
+    "tranche": "pvn-reanchor-two-vote-validator-wave-1"
+  },
+  "title": "Separate two-vote carrier validity from external session independence proof",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "unittest",
+    "tools/validate_two_vote_artifacts.py",
+    "tools/validate_task_packets.py",
+    "tools/check_regressions.py",
+    "jsonschema Draft202012Validator"
+  ]
+}

@@ -1,0 +1,275 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "pure exact-binding unit suite",
+      "pass_condition": "unittest exits 0; the positive pure tuple comparisons pass, every single-field identity, subject, fact-type, conclusion, reason, governor, and case or mood mutation fails closed, and certification eligibility remains false without two valid external worker records",
+      "run": "python -m unittest tools.test_certify_typed_fact_two_vote_binding"
+    },
+    {
+      "name": "engine independence prerequisite",
+      "pass_condition": "the packet validator, focused engine-independence suite, and closed worker-record validator self-test all exit 0; this establishes integrated contract behaviour only and never substitutes for real per-vote CLI proof",
+      "run": "python -m unittest tools.test_validate_two_vote_engine_independence && python tools/validate_two_vote_worker_records.py --self-test && python tools/validate_task_packets.py qamus/task-packets/TP-TWO-VOTE-ENGINE-INDEPENDENCE-W1.json"
+    },
+    {
+      "name": "word-zero and ayah-only rejection",
+      "pass_condition": "both invalid occurrence shapes are rejected by the certifier binding check even if the underlying artifact shape otherwise passes its existing schema",
+      "run": "python -m unittest tools.test_certify_typed_fact_two_vote_binding.TwoVoteExactBindingTests.test_rejects_word_zero tools.test_certify_typed_fact_two_vote_binding.TwoVoteExactBindingTests.test_rejects_ayah_only_fact_address"
+    },
+    {
+      "name": "canonical artifact validation remains authoritative",
+      "pass_condition": "exit 0 with every committed sample carrier either semantically verified or honestly reclassified; this generic validation proves carrier validity only and does not prove independent votes, sessions, or models",
+      "run": "python tools/validate_two_vote_artifacts.py qamus/examples/two_vote_artifact.sample.jsonl"
+    },
+    {
+      "name": "complete regression harness",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS without requiring this packet to edit the shared harness and does not create or modify a certification store; one-time registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "bounded changed-path allowlist",
+      "pass_condition": "prints CERTIFIER TWO VOTE CHANGED PATHS PASS after comparing tracked and untracked changed paths against the exact two-path allowlist from the SHA frozen before edits",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/certifier-two-vote-exact-binding-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"tools/certify_typed_fact.py\",\"tools/test_certify_typed_fact_two_vote_binding.py\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"CERTIFIER TWO VOTE CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\" + repr(unexpected) + \" missing=\" + repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "name": "protected evidence drift",
+      "pass_condition": "prints CERTIFIER TWO VOTE EVIDENCE DRIFT PASS and proves that the carrier schemas, committed sample, reason-key registry, engine packet, and worker-record schema did not change from the frozen start SHA",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/certifier-two-vote-exact-binding-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); protected=[\"qamus/schemas/two-vote-artifact.schema.json\",\"qamus/schemas/typed-claim-contract.schema.json\",\"qamus/schemas/two-vote-worker-record.schema.json\",\"qamus/skills/reason-key-registry.jsonl\",\"qamus/examples/two_vote_artifact.sample.jsonl\",\"qamus/task-packets/TP-TWO-VOTE-ENGINE-INDEPENDENCE-W1.json\",\"tools/validate_two_vote_artifacts.py\",\"tools/validate_two_vote_worker_records.py\"]; missing=[p for p in protected if not Path(p).is_file()]; rc=1 if missing else subprocess.run([\"git\",\"diff\",\"--exit-code\",start,\"--\",*protected]).returncode; print(\"CERTIFIER TWO VOTE EVIDENCE DRIFT \" + (\"PASS\" if rc == 0 else \"FAIL missing=\" + repr(missing))); sys.exit(rc)'"
+    },
+    {
+      "name": "whitespace diff check",
+      "pass_condition": "git diff --check exits 0 with no whitespace errors",
+      "run": "git diff --check"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "a schema-valid two-vote carrier at the same quran location must fail when the candidate fact names a different subject, fact type, value, conclusion, or registered reason key; it also remains ineligible when real external worker-record proof is absent",
+        "id": "same-loc-unrelated-fact-replay",
+        "source": "tools/certify_typed_fact.py evidence_bundle_errors"
+      },
+      {
+        "expectation": "word position zero must fail closed before eligibility, even if the existing artifact schema accepts the numeric shape",
+        "id": "quran:2:13:0",
+        "source": "qamus/schemas/two-vote-artifact.schema.json"
+      },
+      {
+        "expectation": "an ayah-only source address must not bind a word-level fact and must never be widened to every word in the ayah",
+        "id": "quran:2:13",
+        "source": "qamus/schemas/typed-claim-contract.schema.json"
+      },
+      {
+        "expectation": "changing only the governor, case or mood value, sign, sign visibility, mood basis, or structured reason tuple must reject cross-fact replay",
+        "id": "two-vote-field-mutation-matrix",
+        "source": "qamus/examples/two_vote_artifact.sample.jsonl"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "the pure binding checker accepts an in-memory candidate whose exact occurrence, surface, subject, fact type, conclusion fields, governed reason key, governor, and nasb fatha tuple equal the carrier; this proves tuple equality only, no eligibility or certification transition is invoked, and real external worker records remain mandatory",
+        "id": "quran:2:173:23",
+        "source": "qamus/examples/two_vote_artifact.sample.jsonl",
+        "surface": "ٱللَّهَ"
+      },
+      {
+        "expectation": "the pure binding checker accepts the carrier-valid tajarrud analysis with a null governor only when the candidate carries the same raf3, thubut-nun, visibility, mood-basis, subject, function, and governed reason tuple; this still grants no eligibility without real external worker-record proof",
+        "id": "quran:2:91:23",
+        "source": "qamus/examples/two_vote_artifact.sample.jsonl",
+        "surface": "تَقْتُلُونَ"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "tools/certify_typed_fact.py",
+    "selection_rule": "non-population security repair: every fact type in TWO_VOTE_FACT_TYPES uses one closed type-specific exact-binding dispatch before certification eligibility is returned",
+    "this_packet_size": null,
+    "universe_size": null
+  },
+  "commands": [
+    {
+      "expect": "prints the 40-character immutable packet start SHA and writes the same ASCII SHA plus LF under the gitignored out directory before any repository file is edited",
+      "purpose": "freeze the packet start SHA",
+      "run": "python -c 'from pathlib import Path; import subprocess; p=Path(\"out/certifier-two-vote-exact-binding-w1/start-sha.txt\"); p.parent.mkdir(parents=True,exist_ok=True); sha=subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(); p.write_bytes((sha+\"\\n\").encode(\"ascii\")); print(sha)'"
+    },
+    {
+      "expect": "the engine packet validates, its focused tests pass, and TWO VOTE WORKER RECORD SELF TEST PASS; no result is described as real Opus or Sonnet proof",
+      "purpose": "verify the integrated engine-independence dependency",
+      "run": "python tools/validate_task_packets.py qamus/task-packets/TP-TWO-VOTE-ENGINE-INDEPENDENCE-W1.json && python -m unittest tools.test_validate_two_vote_engine_independence && python tools/validate_two_vote_worker_records.py --self-test"
+    },
+    {
+      "expect": "RED before the certifier change: at least the same-location unrelated-fact replay is accepted or lacks a rejection; preserve this failing output as the regression evidence",
+      "purpose": "author and run the pure red-first binding tests",
+      "run": "python -m unittest tools.test_certify_typed_fact_two_vote_binding"
+    },
+    {
+      "expect": "exit 0; the validator accepts semantically valid carriers and honest reclassifications before exact fact binding, while making no claim of independent reviewers, sessions, or models",
+      "purpose": "prove the canonical two-vote validator remains the carrier gate",
+      "run": "python tools/validate_two_vote_artifacts.py qamus/examples/two_vote_artifact.sample.jsonl"
+    },
+    {
+      "expect": "unittest OK; packet-specific tests call the pure binding surface and the eligibility guard, prove carrier-only evidence cannot clear eligibility, require two exact hash-bound external worker records, and never register or transition a fact",
+      "purpose": "rerun the exact-binding mutation matrix after implementation",
+      "run": "python -m unittest tools.test_certify_typed_fact_two_vote_binding"
+    },
+    {
+      "expect": "ALL REGRESSION CHECKS PASS without editing tools/check_regressions.py; TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 owns later one-time registration",
+      "purpose": "run the complete repository harness",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "expect": "CERTIFIER TWO VOTE CHANGED PATHS PASS with the changed-path set exactly equal to tools/certify_typed_fact.py and tools/test_certify_typed_fact_two_vote_binding.py",
+      "purpose": "verify the start-SHA changed-path allowlist",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/certifier-two-vote-exact-binding-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"tools/certify_typed_fact.py\",\"tools/test_certify_typed_fact_two_vote_binding.py\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"CERTIFIER TWO VOTE CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\" + repr(unexpected) + \" missing=\" + repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "expect": "CERTIFIER TWO VOTE EVIDENCE DRIFT PASS",
+      "purpose": "prove protected carrier, worker-record, and reason-key authorities did not drift",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/certifier-two-vote-exact-binding-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); protected=[\"qamus/schemas/two-vote-artifact.schema.json\",\"qamus/schemas/typed-claim-contract.schema.json\",\"qamus/schemas/two-vote-worker-record.schema.json\",\"qamus/skills/reason-key-registry.jsonl\",\"qamus/examples/two_vote_artifact.sample.jsonl\",\"qamus/task-packets/TP-TWO-VOTE-ENGINE-INDEPENDENCE-W1.json\",\"tools/validate_two_vote_artifacts.py\",\"tools/validate_two_vote_worker_records.py\"]; missing=[p for p in protected if not Path(p).is_file()]; rc=1 if missing else subprocess.run([\"git\",\"diff\",\"--exit-code\",start,\"--\",*protected]).returncode; print(\"CERTIFIER TWO VOTE EVIDENCE DRIFT \" + (\"PASS\" if rc == 0 else \"FAIL missing=\" + repr(missing))); sys.exit(rc)'"
+    },
+    {
+      "expect": "exit 0 with no whitespace errors",
+      "purpose": "verify whitespace integrity separately",
+      "run": "git diff --check"
+    }
+  ],
+  "defeaters": [
+    "Location-only binding: matching quran_loc without exact wbw location, written surface, subject, fact type, value, and reason tuple is insufficient.",
+    "Cross-fact replay: an artifact that proves a governor relation cannot certify a contextual-function, case, mood, or rendering fact unless the closed type-specific extraction equals that fact's complete binding tuple.",
+    "Shape laundering: quran:S:A:0, quran:S:A, a missing word index, a normalized surface, or an ayah-wide address cannot stand in for an exact canonical word occurrence.",
+    "Carrier laundering: a tools/validate_two_vote_artifacts.py-valid carrier, declared reviewer metadata, or matching engine strings cannot substitute for two real hash-bound qamus.two_vote_worker_record.v1 records and the external CLI model proof they name.",
+    "Partial grammatical match: matching function while governor, governed subject, attachment, case or mood value, sign, sign visibility, mood basis, or reason key differs defeats eligibility.",
+    "Free-prose substitution: matching gloss text, grammatical prose, evidence summary, or actor-supplied description cannot replace the governed conclusion and reason tuple.",
+    "Unknown mapping: a TWO_VOTE_FACT_TYPES member without a complete closed fact-type binding extractor fails closed and routes to escalation."
+  ],
+  "definition_of_done": [
+    "The pre-fix same-location unrelated-fact false green is reproduced by a red-first pure unit test before implementation.",
+    "Every two-vote eligibility decision first consumes a tools/validate_two_vote_artifacts.py-valid two_vote_verified carrier, then compares a deterministic exact binding tuple, then requires a tools/validate_two_vote_worker_records.py-valid blinded pair backed by real external CLI invocation metadata. Carrier validity alone never proves independent votes.",
+    "The binding tuple covers quran and wbw word identity, exact written surface, explicit fact subject, fact type, type-specific fact value or conclusion, structured reason key, governor tuple, and case or mood tuple when applicable.",
+    "Word zero, ayah-only addresses, normalized-surface substitution, missing binding fields, and every cross-fact replay mutation fail closed with precise non-secret errors.",
+    "The governed reason key is read only from qamus/skills/reason-key-registry.jsonl, must be a current kind reason_key id, and must equal the carrier agreement key, both vote reason keys, and the candidate fact reason key; the eligibility evidence records the registry SHA-256 and fails closed on drift.",
+    "The external pair records carry private CLI path, redacted argv, fallback_model_configured false, requested and actual model, model ID, CLI version, distinct session ids, start SHAs, branches, worktrees, permitted files, the closed output-artifact-or-commit oneOf and hashes, frozen worklist and submission hashes, model-proof artifacts and hashes, access_to_other_reviewers_work false, and no_cross_access true. Missing, substituted, fallback-enabled, same-session, copied-submission, cross-access, or hash-drifted proof defeats eligibility.",
+    "The packet-specific tests are pure: they do not call register, transition a fact to certified, append an event, or write any certification store. Synthetic worker records may test rejection logic but never count as real Opus 5 or Sonnet 5 proof.",
+    "The existing candidate to review_required to certified transition and owner authorization boundary remain intact; this packet grants no certification or deployment authority.",
+    "TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 exclusively owns later tools/check_regressions.py and docs/golden-commands.md updates.",
+    "The start SHA is frozen before edits; the deterministic tracked-plus-untracked changed-path check matches exactly the two permitted repository paths, protected authority drift and git diff --check run separately, and no generated artifact drifts.",
+    "The engine dependency, focused suite, carrier validator, worker-record validator, complete unchanged regression harness, changed-path allowlist, protected-evidence drift check, and whitespace check all pass."
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "exact subject or occurrence surface cannot be obtained from an explicit typed fact or caller-supplied canonical occurrence record without inference",
+      "a TWO_VOTE_FACT_TYPES member has no unambiguous mapping to the canonical artifact conclusion fields",
+      "supporting exact binding would require weakening the two-vote schema, accepting prose equivalence, or changing existing certification data",
+      "either external worker record, real CLI model-proof artifact, frozen worklist or submission hash, no-cross-access proof, or current governed reason-key registry binding is absent or cannot be recomputed",
+      "the repair would require a write outside the permitted certifier and test files",
+      "the complete harness exposes a pre-existing certified record that relied on location-only replay and cannot be safely reclassified in this packet"
+    ],
+    "route": "stop without certifying or rewriting any fact; record the exact missing binding field or incompatible fact type in the implementation handoff and route schema or historical-data decisions to the owner-gated certifier lane"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If the fact lacks an explicit exact occurrence, surface, subject, value, governed reason key, governor, or case or mood field, or if either real external worker record and its CLI proof cannot be hash-verified, return a binding or independence error and preserve candidate or review-required state. Never infer equality or independence from location, gloss, normalized surface, related fact, prose summary, carrier metadata, engine name, or synthetic record.",
+    "statement": "Two-vote evidence licenses only the exact typed fact it reconstructibly proves. Generic artifact validation proves carrier validity only. Eligibility additionally requires exact candidate-to-carrier tuple equality, current governed reason-key registry binding, and two real independent external worker records whose CLI model proof, frozen inputs, outputs, hashes, and no-cross-access state validate.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Fail-closed two-vote eligibility logic with a closed exact-fact extractor, current governed reason-key binding, mandatory external worker-record verification, and no carrier-only or location-only fallback",
+      "path": "tools/certify_typed_fact.py"
+    },
+    {
+      "description": "Pure red-first unit suite covering exact positive tuples and all replay, word-zero, ayah-only, surface, subject, fact-type, value, reason, governor, and case or mood mutations",
+      "path": "tools/test_certify_typed_fact_two_vote_binding.py"
+    },
+    {
+      "description": "Private frozen start-SHA record retained under the packet-local ignored output root",
+      "path": "out/certifier-two-vote-exact-binding-w1/start-sha.txt"
+    }
+  ],
+  "guards": [
+    "TP-TWO-VOTE-ENGINE-INDEPENDENCE-W1, qamus/schemas/two-vote-worker-record.schema.json, tools/validate_two_vote_worker_records.py, and their focused tests must be integrated and green before this packet starts.",
+    "Carrier validation, exact fact binding, external worker-record validation, and certification authorization are four separate mandatory gates. tools/validate_two_vote_artifacts.py proves carrier validity only; it never proves independent reviewers, sessions, models, frozen inputs, or no-cross-access.",
+    "The exact occurrence is a word occurrence with positive surah, ayah, and word positions plus matching quran_loc, wbw_loc, and written surface; no ayah-only or word-zero widening is allowed.",
+    "The fact subject is explicit and type-specific. It must not be guessed from location, entry family, lexical root, surface resemblance, gloss, or another fact in the same occurrence.",
+    "Use a closed dispatch for every fact type in TWO_VOTE_FACT_TYPES. Missing fields, unsupported versions, unknown fact types, and ambiguous mappings fail closed.",
+    "The structured comparison includes the carrier agreement key and both votes' matching reason key, plus the canonical conclusion subset for the fact type. The same reason key must be a current kind reason_key id at qamus/skills/reason-key-registry.jsonl, and its registry SHA-256 is bound into eligibility evidence. Prose and gloss text never establish equality.",
+    "Certification eligibility requires two qamus.two_vote_worker_record.v1 rows validated with tools/validate_two_vote_worker_records.py and the real external CLI proof they hash-bind. The pair must have distinct reviewer, lane, session, output, and frozen-submission identities; exact requested and actual model proof; explicit access_to_other_reviewers_work false; and no_cross_access true.",
+    "The external worker records must satisfy the exact model IDs and no-fallback policy declared by their governing owner packet. For an Opus 5 or Sonnet 5 lane, requested_model, actual_model, and model_id must equal claude-opus-5 or claude-sonnet-5 exactly; no certifier fallback or substitution is allowed.",
+    "Governor and case or mood components are compared exactly when applicable, including locations, normalized surface only where the canonical v1.1 comparator already authorizes it, relation key or tuple, value, sign, sign visibility, and mood basis.",
+    "Packet-specific tests exercise only a pure binding predicate over in-memory or temporary candidate data. They never call register, never transition to certified, never append an event, and never write a certification store.",
+    "Start only from a clean isolated worktree. Before the first repository edit, run the packet command that freezes HEAD under out/certifier-two-vote-exact-binding-w1/start-sha.txt; never recalculate it from a later HEAD, main, merge-base, or reflog.",
+    "The start-SHA file is a gitignored local run record only. Do not commit it, and do not widen the exact two-path repository allowlist.",
+    "tools/check_regressions.py and docs/golden-commands.md are read-only in this packet. Their shared updates are reserved for the future single integration packet TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1.",
+    "Only tools/certify_typed_fact.py retains certification authority. Successful binding establishes eligibility only; the existing review transition, complete evidence bundle, actor record, and explicit owner-gated apply or deploy boundary still govern certification.",
+    "No existing certification row, two-vote artifact, typed fact, schema, reason-key registry, public payload, website code, or live surface is writable."
+  ],
+  "inputs": {
+    "input_files": [
+      "tools/certify_typed_fact.py",
+      "tools/validate_two_vote_artifacts.py",
+      "tools/validate_two_vote_worker_records.py",
+      "tools/check_regressions.py",
+      "qamus/task-packets/TP-TWO-VOTE-ENGINE-INDEPENDENCE-W1.json",
+      "qamus/schemas/two-vote-artifact.schema.json",
+      "qamus/schemas/two-vote-worker-record.schema.json",
+      "qamus/schemas/typed-claim-contract.schema.json",
+      "qamus/skills/reason-key-registry.jsonl",
+      "qamus/examples/two_vote_artifact.sample.jsonl",
+      "qamus/examples/proof-noun-sufaha/sufaha-contract.json",
+      "docs/certification-authority.md"
+    ],
+    "permitted_write_files": [
+      "tools/certify_typed_fact.py",
+      "tools/test_certify_typed_fact_two_vote_binding.py",
+      "out/certifier-two-vote-exact-binding-w1/start-sha.txt"
+    ],
+    "prohibited_files": [
+      "qamus/certification/",
+      "qamus/data/",
+      "qamus/examples/",
+      "qamus/lattice/",
+      "qamus/schemas/",
+      "qamus/skills/",
+      "qamus/task-packets/",
+      "tools/check_regressions.py",
+      "docs/",
+      "nahw/",
+      "sarf/"
+    ]
+  },
+  "model_class": "certifier",
+  "non_deployment": {
+    "statement": "This packet repairs a repository-local eligibility guard in candidate and evidence-preparation mode only. It certifies no fact, edits no certification data, emits no public payload, changes no website code, and performs no live mutation. Certification and every apply or deploy action remain separately owner-gated.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-CERTIFIER-TWO-VOTE-EXACT-BINDING-W1",
+  "provenance": {
+    "authored_by": "PVN owner re-anchor certifier hardening lane",
+    "cites": [
+      "tools/certify_typed_fact.py evidence_bundle_errors",
+      "tools/validate_two_vote_artifacts.py",
+      "qamus/schemas/two-vote-artifact.schema.json",
+      "qamus/schemas/typed-claim-contract.schema.json",
+      "docs/certification-authority.md sections 2 through 4"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "CERTIFIER_TWO_VOTE_EXACT_BINDING",
+    "out_of_scope": [
+      "Do not certify, reclassify, revoke, migrate, or rewrite any existing fact or certification event.",
+      "Do not change the two-vote schema, typed-claim schema, reason-key registry, two-vote artifacts, candidate facts, or public payloads.",
+      "Do not broaden the certifier beyond exact two-vote-to-fact binding or alter owner, scholar, apply, deploy, website, or live-surface authority."
+    ],
+    "summary": "Repair the typed-fact certifier so a carrier-valid two-vote artifact can make only the exact occurrence-bound fact, conclusion, and governed grammatical reason eligible, and only when two real hash-bound external worker records prove independent frozen review. Neither a same-location carrier nor generic validation alone can authorize eligibility.",
+    "tranche": "pvn-reanchor-certifier-hardening-wave-1"
+  },
+  "title": "Bind two-vote evidence to the exact typed fact before certification eligibility",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/validate_two_vote_artifacts.py",
+    "tools/validate_two_vote_worker_records.py",
+    "tools/validate_task_packets.py",
+    "tools/check_regressions.py"
+  ]
+}

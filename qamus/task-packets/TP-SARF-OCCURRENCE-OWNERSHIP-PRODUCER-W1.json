@@ -1,0 +1,248 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "ownership producer unit suite",
+      "pass_condition": "unittest exits 0 and includes red-first overlap, gap, reconstruction, and affix-swallowing mutations",
+      "run": "python -m unittest tools.test_sarf_occurrence_ownership"
+    },
+    {
+      "name": "deterministic sample check",
+      "pass_condition": "exit 0 with SARF OCCURRENCE OWNERSHIP PASS after recomputing the sample, metadata, schema and every recorded input hash, including the canonical surface index and manifest",
+      "run": "python tools/build_sarf_occurrence_ownership.py --check-sample qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl --meta qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json --schema qamus/schemas/sarf-occurrence-ownership.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json"
+    },
+    {
+      "name": "canonical loc and surface authority",
+      "pass_condition": "exit 0 only when every selected loc has exactly one index row, its surface equals the producer record byte-for-byte after NFC verification, and the recomputed index SHA-256 equals index.manifest.json artifact_sha256",
+      "run": "python tools/build_sarf_occurrence_ownership.py --verify-surface-authority qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --population qamus/examples/p007-li-pilot/locations.json"
+    },
+    {
+      "name": "complete repository harness remains green",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS without changing the shared harness; focused-suite registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "frozen start SHA changed paths",
+      "pass_condition": "prints SARF OCCURRENCE OWNERSHIP CHANGED PATHS PASS after comparing tracked and non-ignored untracked paths with the exact packet allowlist from the SHA frozen before edits",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/sarf-occurrence-ownership-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"qamus/schemas/sarf-occurrence-ownership.schema.json\",\"tools/build_sarf_occurrence_ownership.py\",\"tools/test_sarf_occurrence_ownership.py\",\"qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl\",\"qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json\",\"qamus/reports/sarf-occurrence-ownership-w1.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"SARF OCCURRENCE OWNERSHIP CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\"+repr(unexpected)+\" missing=\"+repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "name": "whitespace diff check",
+      "pass_condition": "git diff --check exits 0 independently of the generated-artifact and changed-path checks",
+      "run": "git diff --check"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "a mutation merging the initial lam or final pronoun letters into the noun-host owner must fail; no qaf-waw-mim radical ownership is asserted because the permitted p007 inputs carry root null",
+        "id": "mutation:noun-host-swallows-affix",
+        "source": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
+      },
+      {
+        "expectation": "the lexical-initial lam rival must remain a rejected or unresolved rival and must not be silently deleted from the occurrence lattice",
+        "id": "quran:48:29:42",
+        "source": "qamus/examples/p007-li-pilot/candidate-lattice.jsonl",
+        "surface": "لِيَغِيظَ"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "the exact written surface reconstructs as three non-overlapping morphemes with distinct primary ownership for lam, noun host, and attached pronoun",
+        "id": "quran:61:5:4",
+        "source": "qamus/examples/p007-li-pilot/typed-facts.jsonl",
+        "surface": "لِقَوْمِهِۦ"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "qamus/examples/p007-li-pilot/locations.json",
+    "selection_rule": "all 12 in-family p007 pilot occurrence rows in their committed file order; rejected false candidates remain canaries and are not silently added",
+    "this_packet_size": 12,
+    "universe_size": 12
+  },
+  "commands": [
+    {
+      "expect": "prints one immutable 40-character start SHA and writes the same ASCII SHA plus LF under the gitignored packet out directory; any pre-existing tracked or non-ignored untracked change aborts",
+      "purpose": "freeze the clean packet start SHA",
+      "run": "python -c 'from pathlib import Path; import subprocess; dirty=subprocess.check_output([\"git\",\"status\",\"--porcelain\",\"--untracked-files=all\"],text=True).splitlines(); assert not dirty, \"packet requires a clean isolated worktree: \"+repr(dirty); sha=subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(); p=Path(\"out/sarf-occurrence-ownership-w1/start-sha.txt\"); p.parent.mkdir(parents=True,exist_ok=True); p.write_bytes((sha+\"\\n\").encode(\"ascii\")); print(sha)'"
+    },
+    {
+      "expect": "red before implementation, then unittest OK with all mutation gates active",
+      "purpose": "run the ownership producer tests",
+      "run": "python -m unittest tools.test_sarf_occurrence_ownership"
+    },
+    {
+      "expect": "exit 0; every loc and exact NFC surface is acquired from the hash-verified canonical index, page-local fields are comparison-only, and the JSONL sample plus pretty metadata bind all input, schema and output hashes",
+      "purpose": "build candidate ownership records",
+      "run": "python tools/build_sarf_occurrence_ownership.py --population qamus/examples/p007-li-pilot/locations.json --typed-facts qamus/examples/p007-li-pilot/typed-facts.jsonl --candidate-lattice qamus/examples/p007-li-pilot/candidate-lattice.jsonl --morphemes qamus/examples/p007-li-pilot/morpheme-occurrences.jsonl --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --out out/sarf-occurrence-ownership-w1 --sample-out qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl --meta-out qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json"
+    },
+    {
+      "expect": "SARF OCCURRENCE OWNERSHIP PASS with byte-identical regeneration and current input, schema and artifact hashes",
+      "purpose": "verify deterministic regeneration",
+      "run": "python tools/build_sarf_occurrence_ownership.py --check-sample qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl --meta qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json --schema qamus/schemas/sarf-occurrence-ownership.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json"
+    },
+    {
+      "expect": "ALL REGRESSION CHECKS PASS without editing tools/check_regressions.py; TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 owns the later one-time registration",
+      "purpose": "run the current complete repository harness read-only",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "expect": "SARF OCCURRENCE OWNERSHIP CHANGED PATHS PASS with exactly the schema, builder, focused test, sample, metadata and report paths changed from the frozen start SHA",
+      "purpose": "enforce tracked and untracked path custody",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/sarf-occurrence-ownership-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"qamus/schemas/sarf-occurrence-ownership.schema.json\",\"tools/build_sarf_occurrence_ownership.py\",\"tools/test_sarf_occurrence_ownership.py\",\"qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl\",\"qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json\",\"qamus/reports/sarf-occurrence-ownership-w1.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"SARF OCCURRENCE OWNERSHIP CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\"+repr(unexpected)+\" missing=\"+repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "expect": "exit 0 with no whitespace errors",
+      "purpose": "verify diff hygiene separately",
+      "run": "git diff --check"
+    }
+  ],
+  "defeaters": [
+    "a span gap, overlap, out-of-range index, or segment sequence that does not reconstruct the NFC surface exactly",
+    "a root-radical owner that absorbs derivational, inflectional, article, particle, clitic, or pronoun material",
+    "a surface-only or normalized-only match offered as morpheme identity",
+    "a segmentation with no source-addressed occurrence evidence or with unresolved rivals hidden from the output",
+    "a combining mark detached from the base letter whose visible realization it modifies"
+  ],
+  "definition_of_done": [
+    "all 12 supported pilot occurrences have candidate ownership records or an exact abstention record, with no corpus-coverage claim",
+    "every visible base letter has exactly one primary owner and any additional facts are secondary ownership only",
+    "all segment surfaces concatenate to the exact NFC written surface and every morpheme occurrence has a stable identifier",
+    "every emitted occurrence binds the unique loc and exact surface from qamus/indexes/quran-loc-surface/index.jsonl; the metadata recomputes and records the index, index manifest, producer inputs, schema and sample SHA-256 values, and any loc, surface or manifest-hash mismatch fails closed",
+    "root-radical, derivational, inflectional, stem, article, particle, clitic, and pronoun roles remain mechanically distinct when source-addressed evidence supports them; unsupported root ownership remains explicitly unresolved",
+    "rival segmentations, blockers, guards, and defeaters remain attached to the exact occurrence",
+    "TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 is the sole future writer that may register this focused suite in tools/check_regressions.py or update docs/golden-commands.md; this packet changes neither shared file",
+    "all acceptance tests pass, the frozen-start-SHA tracked-plus-untracked allowlist passes, git diff --check passes separately, and no file outside the permitted write set changed"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "the exact written surface cannot be reconstructed from committed occurrence evidence",
+      "a base letter could belong to more than one primary morpheme owner",
+      "the correct ownership requires a new linguistic judgement rather than a mechanical projection of existing evidence",
+      "an input hash or A1 evaluation contract changes during the run"
+    ],
+    "route": "stop the affected occurrence, emit an exact blocker in qamus/reports/sarf-occurrence-ownership-w1.md, and route the linguistic question to the sarf certifier lane"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If a letter owner, morpheme boundary, or role is not derivable from committed source-addressed evidence, emit an abstention with the exact missing dependency. Never infer identity from colour, surface resemblance, normalization, or shared root.",
+    "statement": "Ownership records are occurrence-bound mechanical projections of committed p007 pilot facts whose loc and exact NFC surface are independently acquired from the hash-verified canonical loc-surface index and manifest. Page-local surface is comparison-only and can never become canonical truth. The records preserve evidence addresses, rivals, guards, and candidate state without creating a new linguistic conclusion.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Closed schema for exact written-surface spans, primary and secondary ownership, morpheme identities, rivals, and abstention",
+      "path": "qamus/schemas/sarf-occurrence-ownership.schema.json"
+    },
+    {
+      "description": "Deterministic candidate ownership producer",
+      "path": "tools/build_sarf_occurrence_ownership.py"
+    },
+    {
+      "description": "Red-first ownership, reconstruction, rivalry, and affix-boundary test suite",
+      "path": "tools/test_sarf_occurrence_ownership.py"
+    },
+    {
+      "description": "Bounded one-object-per-line JSONL sample for the 12 supported pilot occurrences, each bound to the canonical loc-surface authority",
+      "path": "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl"
+    },
+    {
+      "description": "Pretty sorted metadata binding the canonical index and manifest, all producer inputs, schema, sample, counts, generator id and exact command by SHA-256",
+      "path": "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json"
+    },
+    {
+      "description": "Measured scope, abstentions, and non-coverage report",
+      "path": "qamus/reports/sarf-occurrence-ownership-w1.md"
+    },
+    {
+      "description": "Full regenerable candidate output kept outside tracked artifacts",
+      "path": "out/sarf-occurrence-ownership-w1/"
+    }
+  ],
+  "guards": [
+    "The METHOD transfers: exact occurrence binding, exact reconstruction, one primary letter owner, rival preservation, and abstention may be reused; no linguistic conclusion transfers to another occurrence.",
+    "SERIALIZATION 1 OF 2: run only after the integrated Burst A1 evaluation and consumer machinery is green; TP-SARF-PROJECTION-ELIGIBILITY-PARITY-W1 must wait for this packet's sample, schema, tests, and report.",
+    "The packet covers only the 12 committed pilot occurrences and must not be reported as corpus coverage.",
+    "For every selected occurrence, qamus/indexes/quran-loc-surface/index.jsonl is the exact loc and surface authority and index.manifest.json is the digest and edition contract. Recompute the index digest, require one row per loc, require exact NFC equality, and fail closed on missing, duplicate, mismatched or stale rows. A page-local surface is never canonical input.",
+    "One written base letter receives one primary visible owner; additional compatible facts remain secondary and never change the primary colour identity.",
+    "Combining marks travel with their owning base letter, and all indices are checked against the exact NFC surface.",
+    "Candidate and unresolved records stay candidate or unresolved; this packet never calls tools/certify_typed_fact.py and never changes a certification store.",
+    "Start only from a clean isolated worktree. Freeze HEAD before edits under out/sarf-occurrence-ownership-w1/start-sha.txt, retain that immutable start SHA, and compare both tracked and non-ignored untracked paths against the exact six-file repository allowlist. Git diff --check is a separate gate.",
+    "No existing A2 or A3 implementation file, canonical graph, eval bank, rule registry, entry data, website payload, tools/check_regressions.py, or docs/golden-commands.md is writable. Shared harness and golden-command registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1."
+  ],
+  "inputs": {
+    "input_files": [
+      "qamus/examples/p007-li-pilot/locations.json",
+      "qamus/examples/p007-li-pilot/typed-facts.jsonl",
+      "qamus/examples/p007-li-pilot/candidate-lattice.jsonl",
+      "qamus/examples/p007-li-pilot/morpheme-occurrences.jsonl",
+      "qamus/indexes/quran-loc-surface/index.jsonl",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "qamus/lattice/example-ayah-universe.occurrences.jsonl",
+      "qamus/schemas/typed-claim-contract.schema.json",
+      "sarf/SKILL.md",
+      "docs/architecture/meta-transclusive-projection.md",
+      "docs/architecture/two-surface-contract.md"
+    ],
+    "permitted_write_files": [
+      "qamus/schemas/sarf-occurrence-ownership.schema.json",
+      "tools/build_sarf_occurrence_ownership.py",
+      "tools/test_sarf_occurrence_ownership.py",
+      "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl",
+      "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json",
+      "qamus/reports/sarf-occurrence-ownership-w1.md",
+      "out/sarf-occurrence-ownership-w1/"
+    ],
+    "prohibited_files": [
+      "qamus/data/",
+      "qamus/certification/",
+      "qamus/lattice/example-ayah-universe.occurrences.jsonl",
+      "qamus/indexes/occurrence-appearances.jsonl",
+      "qamus/examples/website-payloads/",
+      "tools/check_regressions.py",
+      "sarf/evals/",
+      "sarf/rules/",
+      "nahw/",
+      "docs/current-state.yaml",
+      "docs/golden-commands.md",
+      "docs/subsystems/nahw-executable-map.md",
+      "docs/subsystems/largelexicon-as-built.md",
+      "tools/run_nahw_evals.py",
+      "tools/largelexicon_fact_bridge.py",
+      "tools/fact_projectors.py"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "All outputs are candidate-only repository artifacts. This packet does not certify a fact, author a public hover, mutate entry data, edit website code, or contact or mutate any live surface.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-SARF-OCCURRENCE-OWNERSHIP-PRODUCER-W1",
+  "provenance": {
+    "authored_by": "PVN owner re-anchor follow-on lane",
+    "cites": [
+      "docs/architecture/meta-transclusive-projection.md",
+      "docs/architecture/two-surface-contract.md",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "qamus/examples/p007-li-pilot/typed-facts.jsonl"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "SARF_OCCURRENCE_LETTER_OWNERSHIP",
+    "out_of_scope": [
+      "Do not claim coverage beyond the 12 supported p007 pilot occurrences.",
+      "Do not decide a new root, morpheme boundary, lexeme, entry, sense, function, case, mood, referent, gloss, or translation.",
+      "Do not edit eval banks, rules, certification stores, canonical graph inputs, A2 or A3 lane files, website payloads, or live surfaces."
+    ],
+    "summary": "Produce the smallest candidate-only occurrence artifact that assigns every supported written letter to one primary morpheme owner while preserving exact surface reconstruction, distinct root and affix roles, rivals, evidence, blockers, and abstention.",
+    "tranche": "pvn-reanchor-sarf-wave-1"
+  },
+  "title": "Produce exact occurrence-bound letter and morpheme ownership for the supported Sarf pilot",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/validate_task_packets.py",
+    "tools/check_regressions.py"
+  ]
+}

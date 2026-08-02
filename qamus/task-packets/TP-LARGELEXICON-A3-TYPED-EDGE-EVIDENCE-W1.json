@@ -1,0 +1,361 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "A3 source scan remains fresh",
+      "pass_condition": "exit 0 and the committed scan still reports exactly 2,000 records, 95 missing_typed_graph_evidence rows, 0 certified records, and 0 learner-visible records against the same authority binding",
+      "run": "python tools/largelexicon_fact_bridge.py --check-scan"
+    },
+    {
+      "name": "evidence wave behavioural suite",
+      "pass_condition": "unittest exits 0 after proving exact selection, closed routing, collision preservation, abstention, authority invalidation, public cleanliness, and candidate-to-accepted promotion mutations",
+      "run": "python -m unittest tools.test_build_largelexicon_typed_edge_evidence_wave"
+    },
+    {
+      "name": "deterministic sample and metadata",
+      "pass_condition": "exit 0 with LARGELEXICON TYPED EDGE EVIDENCE SAMPLE PASS; the JSONL and pretty metadata regenerate byte-identically with sorted keys and trailing newlines",
+      "run": "python tools/build_largelexicon_typed_edge_evidence_wave.py --check-sample qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.jsonl"
+    },
+    {
+      "name": "bounded evidence run accounts for all rows",
+      "pass_condition": "exit 0 with LARGELEXICON TYPED EDGE EVIDENCE RUN PASS; route counts sum to 95, every input contract id occurs once, accepted and certified edge counts remain 0, and the terminal state is EVIDENCE_READY_FOR_OWNER_CERTIFICATION only when at least one complete candidate bundle exists",
+      "run": "python tools/build_largelexicon_typed_edge_evidence_wave.py --check-run out/largelexicon-typed-edge-evidence-wave1/run.meta.json"
+    },
+    {
+      "name": "A3 bridge safety remains green",
+      "pass_condition": "exit 0 with every existing exact-loc, exact-surface, authority, collision, abstention, and no-promotion mutation still caught",
+      "run": "python tools/test_largelexicon_fact_bridge.py"
+    },
+    {
+      "name": "packet contract remains valid",
+      "pass_condition": "ends TASK PACKET VALIDATION PASS",
+      "run": "python tools/validate_task_packets.py qamus/task-packets/TP-LARGELEXICON-A3-TYPED-EDGE-EVIDENCE-W1.json"
+    },
+    {
+      "name": "full regression harness",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS without requiring this packet to edit the shared harness; one-time registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "frozen-start changed-path boundary",
+      "pass_condition": "prints LARGELEXICON TYPED EDGE EVIDENCE CHANGED PATHS PASS after checking tracked and untracked paths from the SHA frozen before edits",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/largelexicon-typed-edge-evidence-wave1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); exact={\"qamus/schemas/largelexicon-typed-edge-evidence.schema.json\",\"tools/build_largelexicon_typed_edge_evidence_wave.py\",\"tools/test_build_largelexicon_typed_edge_evidence_wave.py\",\"qamus/reports/largelexicon-typed-edge-evidence-wave1.md\"}; prefixes=(\"qamus/examples/largelexicon-typed-edge-evidence-wave1/\",\"out/largelexicon-typed-edge-evidence-wave1/\"); changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(p for p in changed if p not in exact and not any(p.startswith(prefix) for prefix in prefixes)); missing=sorted(exact-changed); print(\"LARGELEXICON TYPED EDGE EVIDENCE CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\" + repr(unexpected) + \" missing=\" + repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "name": "protected upstream drift",
+      "pass_condition": "prints LARGELEXICON TYPED EDGE EVIDENCE UPSTREAM DRIFT PASS and proves that the accepted A3 release, committed scan metadata, canonical index, lexeme lattice, and bridge sources did not change from the frozen start SHA",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/largelexicon-typed-edge-evidence-wave1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); protected=[\"qamus/indexes/largelexicon/target-schema/TARGET-RELEASE.json\",\"qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json\",\"qamus/indexes/quran-loc-surface/index.jsonl\",\"qamus/lattice/lexeme-join-edges.jsonl\",\"tools/largelexicon_fact_bridge.py\",\"tools/test_largelexicon_fact_bridge.py\"]; rc=subprocess.run([\"git\",\"diff\",\"--exit-code\",start,\"--\",*protected]).returncode; print(\"LARGELEXICON TYPED EDGE EVIDENCE UPSTREAM DRIFT \" + (\"PASS\" if rc == 0 else \"FAIL\")); sys.exit(rc)'"
+    },
+    {
+      "name": "whitespace diff check",
+      "pass_condition": "git diff --check exits 0 with no whitespace errors",
+      "run": "git diff --check"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "the page entry remains display context only; the row abstains unless independent occurrence-to-entry evidence exists",
+        "id": "scenario:page_context_only_no_lexical_edge",
+        "source": "qamus/examples/largelexicon-fact-bridge/bridge-fixtures.meta.json"
+      },
+      {
+        "expectation": "the root-family relation is preserved as a distinct candidate relation and cannot supply a lexeme_entry_edge or form_entry_edge",
+        "id": "scenario:root_family_relation_not_lexeme_identity",
+        "source": "qamus/examples/largelexicon-fact-bridge/bridge-fixtures.meta.json"
+      },
+      {
+        "expectation": "all rival entries and proposed edges remain represented, no winner is selected, and the route remains review or source gap",
+        "id": "scenario:lexical_collision_requires_context",
+        "source": "qamus/examples/largelexicon-fact-bridge/bridge-fixtures.meta.json"
+      },
+      {
+        "expectation": "a normalized-only surface match produces no evidence-ready bundle and remains a never-auto-resolve blocker",
+        "id": "scenario:norm_only_surface_match",
+        "source": "qamus/examples/largelexicon-fact-bridge/bridge-fixtures.meta.json"
+      },
+      {
+        "expectation": "changing any bound target-release, carried-table, canonical-index, lexeme-lattice, typed-graph, or scan digest invalidates every dependent candidate bundle",
+        "id": "mutation:authority-digest-drift",
+        "source": "qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json"
+      },
+      {
+        "expectation": "changing a proposed edge or evidence bundle to certified or deterministic_exact fails; this packet may emit only candidate, ambiguous, review, source-gap, or rejected states",
+        "id": "mutation:candidate-to-accepted-promotion",
+        "source": "docs/certification-authority.md"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "the executor selects exactly the 95 first-window records whose sole bridge blocker is missing_typed_graph_evidence and binds their exact contract ids, canonical locs, written surfaces, and authority digest",
+        "id": "population:first-2000:missing-typed-graph-evidence:95",
+        "source": "qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json"
+      },
+      {
+        "expectation": "a structurally complete candidate bundle retains the exact occurrence, exact surface, all source addresses, candidate edge type, target entry candidate, conflicts, dependencies, defeaters, and owner/certifier route without becoming accepted",
+        "id": "scenario:accepted_single_candidate",
+        "source": "qamus/examples/largelexicon-fact-bridge/bridge-fixtures.meta.json"
+      },
+      {
+        "expectation": "the run metadata reports EVIDENCE_READY_FOR_OWNER_CERTIFICATION only when at least one candidate bundle satisfies every structural and evidence-ladder gate; otherwise it reports SOURCE_GAP and keeps the downstream packet blocked",
+        "id": "route:owner-certifier-terminal-state",
+        "source": "docs/certification-authority.md"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json",
+    "selection_rule": "Regenerate the first 2,000 carried crosswalk rows in manifest order with tools/largelexicon_fact_bridge.py and select, in original scan order, every record whose complete blocker set is exactly missing_typed_graph_evidence. Refuse the run unless there are exactly 95 unique contract ids and the regenerated summary and authority binding match the committed scan metadata.",
+    "this_packet_size": 95,
+    "universe_size": 95
+  },
+  "commands": [
+    {
+      "expect": "prints the immutable 40-character start SHA and writes the same ASCII SHA plus LF under the packet-local gitignored out root before any repository file is edited",
+      "purpose": "freeze the packet start SHA",
+      "run": "python -c 'from pathlib import Path; import subprocess; p=Path(\"out/largelexicon-typed-edge-evidence-wave1/start-sha.txt\"); p.parent.mkdir(parents=True,exist_ok=True); sha=subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(); p.write_bytes((sha+\"\\n\").encode(\"ascii\")); print(sha)'"
+    },
+    {
+      "expect": "exit 0; exact committed counts and authority bindings are current",
+      "purpose": "verify the frozen A3 scan before selecting rows",
+      "run": "python tools/largelexicon_fact_bridge.py --check-scan"
+    },
+    {
+      "expect": "red before implementation, then unittest OK with every authority, ambiguity, abstention, routing, cleanliness, and promotion mutation active",
+      "purpose": "run the evidence-wave tests",
+      "run": "python -m unittest tools.test_build_largelexicon_typed_edge_evidence_wave"
+    },
+    {
+      "expect": "exit 0 and exactly 2,000 one-object-per-line typed claims are written only under out/",
+      "purpose": "regenerate the bounded real bridge rows",
+      "run": "python tools/largelexicon_fact_bridge.py --limit 2000 --out out/largelexicon-typed-edge-evidence-wave1/upstream-typed-claims.jsonl"
+    },
+    {
+      "expect": "exit 0; exactly 95 evidence-review rows, a pretty hash-bound run.meta.json, a closed owner/certifier routing state, a deterministic public-clean sample plus sidecar, and a measured report are written",
+      "purpose": "build the candidate evidence bundles and routing manifest",
+      "run": "python tools/build_largelexicon_typed_edge_evidence_wave.py --claims out/largelexicon-typed-edge-evidence-wave1/upstream-typed-claims.jsonl --out out/largelexicon-typed-edge-evidence-wave1 --sample-out qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.jsonl --report qamus/reports/largelexicon-typed-edge-evidence-wave1.md"
+    },
+    {
+      "expect": "LARGELEXICON TYPED EDGE EVIDENCE SAMPLE PASS with byte-identical JSONL and pretty metadata",
+      "purpose": "verify deterministic sample regeneration",
+      "run": "python tools/build_largelexicon_typed_edge_evidence_wave.py --check-sample qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.jsonl"
+    },
+    {
+      "expect": "LARGELEXICON TYPED EDGE EVIDENCE RUN PASS; route counts sum to 95 and no edge or fact is accepted, certified, learner-visible, or public",
+      "purpose": "verify complete bounded population accounting",
+      "run": "python tools/build_largelexicon_typed_edge_evidence_wave.py --check-run out/largelexicon-typed-edge-evidence-wave1/run.meta.json"
+    },
+    {
+      "expect": "unittest OK with the integrated A3 bridge boundary unchanged",
+      "purpose": "re-prove exact A3 authority and abstention gates",
+      "run": "python tools/test_largelexicon_fact_bridge.py"
+    },
+    {
+      "expect": "TASK PACKET VALIDATION PASS",
+      "purpose": "validate this packet contract",
+      "run": "python tools/validate_task_packets.py qamus/task-packets/TP-LARGELEXICON-A3-TYPED-EDGE-EVIDENCE-W1.json"
+    },
+    {
+      "expect": "ALL REGRESSION CHECKS PASS without editing tools/check_regressions.py; TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 owns later one-time registration",
+      "purpose": "run the complete repository harness",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "expect": "LARGELEXICON TYPED EDGE EVIDENCE CHANGED PATHS PASS with no tracked or untracked path outside the packet-local allowlist",
+      "purpose": "enforce the frozen-start changed-path boundary",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/largelexicon-typed-edge-evidence-wave1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); exact={\"qamus/schemas/largelexicon-typed-edge-evidence.schema.json\",\"tools/build_largelexicon_typed_edge_evidence_wave.py\",\"tools/test_build_largelexicon_typed_edge_evidence_wave.py\",\"qamus/reports/largelexicon-typed-edge-evidence-wave1.md\"}; prefixes=(\"qamus/examples/largelexicon-typed-edge-evidence-wave1/\",\"out/largelexicon-typed-edge-evidence-wave1/\"); changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(p for p in changed if p not in exact and not any(p.startswith(prefix) for prefix in prefixes)); missing=sorted(exact-changed); print(\"LARGELEXICON TYPED EDGE EVIDENCE CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\" + repr(unexpected) + \" missing=\" + repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "expect": "LARGELEXICON TYPED EDGE EVIDENCE UPSTREAM DRIFT PASS",
+      "purpose": "prove protected upstream artifacts did not drift",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/largelexicon-typed-edge-evidence-wave1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); protected=[\"qamus/indexes/largelexicon/target-schema/TARGET-RELEASE.json\",\"qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json\",\"qamus/indexes/quran-loc-surface/index.jsonl\",\"qamus/lattice/lexeme-join-edges.jsonl\",\"tools/largelexicon_fact_bridge.py\",\"tools/test_largelexicon_fact_bridge.py\"]; rc=subprocess.run([\"git\",\"diff\",\"--exit-code\",start,\"--\",*protected]).returncode; print(\"LARGELEXICON TYPED EDGE EVIDENCE UPSTREAM DRIFT \" + (\"PASS\" if rc == 0 else \"FAIL\")); sys.exit(rc)'"
+    },
+    {
+      "expect": "exit 0 with no whitespace errors",
+      "purpose": "verify whitespace integrity separately",
+      "run": "git diff --check"
+    }
+  ],
+  "defeaters": [
+    "the canonical loc, wbw loc, or byte-exact written surface differs across the bridge record, canonical index, proposed edge, or evidence bundle",
+    "the proposed lexical target comes only from the crosswalk page entry, page context, normalized surface lookup, shared root, stem resemblance, pattern resemblance, or a candidate graph edge",
+    "fewer than two genuinely independent structured sources support a lexical identity claim that requires cross-source corroboration",
+    "two or more entry or form candidates survive and the row selects one without occurrence-specific contextual evidence",
+    "a source, target release, carried table, canonical index, lexeme lattice, typed graph, or scan digest is missing or has drifted",
+    "a proposed edge or governed fact is labelled certified, deterministic_exact, learner-visible, public, or deployable",
+    "source prose, an external source label, a private reviewer artifact, a private path, machine topology, or a credential-bearing value appears in a committed sample or report",
+    "one or more of the 95 input contract ids is missing, duplicated, silently dropped, or replaced by a row outside the selected population"
+  ],
+  "definition_of_done": [
+    "the first-2,000 scan is regenerated from the accepted A3 target release and exactly 95 unique missing_typed_graph_evidence records are selected without changing the bridge",
+    "every selected row has one closed evidence-review record carrying exact occurrence and surface identity, all candidate lexical edges, all rival candidates, source addresses, evidence mode, dependencies, contradiction or tension records, guards, defeaters, authority digests, and an explicit route",
+    "the closed routing vocabulary distinguishes EVIDENCE_READY_FOR_OWNER_CERTIFICATION, OWNER_ADJUDICATION_REQUIRED, SCHOLAR_ADJUDICATION_REQUIRED, SARF_REVIEW_REQUIRED, NAHW_REVIEW_REQUIRED, SOURCE_GAP, and REJECTED without selecting unresolved rivals",
+    "every proposed qamus.graph_edge.v1 lexical edge remains candidate or ambiguous; accepted statuses, certification, public materialization, learner visibility, and certifier invocation are all structurally forbidden",
+    "route counts sum to 95, certified and accepted edge counts are 0, all ambiguity and abstention are preserved, and authority drift invalidates every dependent row",
+    "the run may end EVIDENCE_READY_FOR_OWNER_CERTIFICATION only when at least one structurally complete evidence bundle is ready for an external owner/certifier lane; if none is ready it ends SOURCE_GAP and TP-LARGELEXICON-A3-OCCURRENCE-META-BRIDGE-W1 remains blocked",
+    "the full 95-row output remains gitignored under out/; only the deterministic public-clean sample, pretty hash-bound metadata, schema, tools, tests, and measured report are committed",
+    "the packet-local sample check proves deterministic generated-artifact stability; TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 alone may later register the focused suite in tools/check_regressions.py or update docs/golden-commands.md",
+    "the start SHA is frozen before edits; tracked and untracked changed paths remain inside the packet-local allowlist, protected upstream artifacts do not drift, git diff --check passes separately, and all acceptance tests pass"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "the regenerated first-2,000 population does not contain exactly 95 unique missing_typed_graph_evidence rows",
+      "an exact loc, surface, authority digest, source address, or dependency cannot be reconstructed",
+      "a row has a surviving lexical collision or requires occurrence-specific Ṣarf or Naḥw context",
+      "the evidence ladder requires private source material, owner adjudication, scholar adjudication, or two independent review artifacts",
+      "the wave would need to invoke a certifier, emit an accepted edge, alter a source authority, create public wording, or unblock the downstream packet without accepted evidence"
+    ],
+    "route": "Stop the affected row, preserve all candidates and blockers in out/largelexicon-typed-edge-evidence-wave1/evidence-candidates.jsonl, record its closed route in run.meta.json and qamus/reports/largelexicon-typed-edge-evidence-wave1.md, and hand it to the named source, Ṣarf, Naḥw, owner, scholar, or certifier lane. The packet itself may stop at EVIDENCE_READY_FOR_OWNER_CERTIFICATION but may not invoke tools/certify_typed_fact.py or produce an accepted graph edge."
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If exact occurrence identity, exact written surface, two independent source addresses for lexical identity, or any authority binding is absent, keep every rival, emit SOURCE_GAP or the precise review route, and abstain. Never infer lexeme, form, entry, sense, meaning, function, or translation from page context, root family, surface resemblance, or lookup coverage.",
+    "statement": "Each candidate bundle is occurrence-bound and authority-bound. It may propose only a qamus.graph_edge.v1 lexeme_entry_edge or form_entry_edge with candidate or ambiguous status, supported by structured source facts at exact addresses and the existing evidence-mode ladder. The bundle is preparation for a separate owner/certifier decision, not accepted typed-graph evidence by itself.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Closed additive schema for occurrence-bound candidate typed-edge evidence bundles and the exact owner/certifier routing vocabulary",
+      "path": "qamus/schemas/largelexicon-typed-edge-evidence.schema.json",
+      "schema": "qamus.largelexicon_typed_edge_evidence.v1"
+    },
+    {
+      "description": "Deterministic selector, evidence-bundle builder, validator, sample generator, and routing-metadata producer for the exact 95-row population",
+      "path": "tools/build_largelexicon_typed_edge_evidence_wave.py"
+    },
+    {
+      "description": "Red-first tests for population completeness, exact identity, evidence sufficiency, ambiguity, abstention, authority drift, public cleanliness, and no promotion",
+      "path": "tools/test_build_largelexicon_typed_edge_evidence_wave.py"
+    },
+    {
+      "description": "Deterministic public-clean JSONL sample with one candidate evidence object per line",
+      "path": "qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.jsonl"
+    },
+    {
+      "description": "Pretty sorted metadata binding the sample, schema, generator, exact upstream authorities, and their SHA-256 values",
+      "path": "qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.meta.json"
+    },
+    {
+      "description": "Measured report with separate row, candidate bundle, ambiguity, abstention, route, and readiness counts plus the exact downstream dependency state",
+      "path": "qamus/reports/largelexicon-typed-edge-evidence-wave1.md"
+    },
+    {
+      "description": "Packet-local regenerated first-2,000 typed-claim input retained only in the gitignored output tree",
+      "path": "out/largelexicon-typed-edge-evidence-wave1/upstream-typed-claims.jsonl"
+    },
+    {
+      "description": "Full 95-row candidate evidence output retained only in the gitignored output tree",
+      "path": "out/largelexicon-typed-edge-evidence-wave1/evidence-candidates.jsonl"
+    },
+    {
+      "description": "Pretty run metadata and exact routing manifest with zero accepted and certified edge counts plus all upstream and output SHA-256 values",
+      "path": "out/largelexicon-typed-edge-evidence-wave1/run.meta.json"
+    }
+  ],
+  "guards": [
+    "The METHOD transfers: exact occurrence binding, byte-exact surface verification, evidence-ladder review, ambiguity preservation, authority binding, and explicit routing may be reused; no linguistic conclusion transfers to another occurrence.",
+    "TP-LARGELEXICON-A3-OCCURRENCE-META-BRIDGE-W1 is downstream and remains blocked until this packet has produced at least one EVIDENCE_READY_FOR_OWNER_CERTIFICATION bundle and the separately owner-authorized TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1 has emitted, hash-bound, and registered an accepted typed edge. This packet produces exactly zero accepted or certified edges and cannot unblock that bridge.",
+    "Select only the 95 records whose complete blocker set is missing_typed_graph_evidence in the regenerated first-2,000 A3 scan; fixtures and other blocker classes do not count.",
+    "Do not edit or relax tools/largelexicon_fact_bridge.py, its exact loc and surface checks, the accepted edge-status gate, its four authority families, or any source authority.",
+    "The crosswalk entry id is the page that displays the occurrence and is never lexical evidence; page context, root family, surface resemblance, normalization, lookup coverage, and candidate graph edges never establish lexeme, form, entry, or sense identity.",
+    "Use the existing qamus.graph_edge.v1 vocabulary and qamus.typed_claim_contract.v1 evidence modes; do not create a parallel edge, fact, certification, or evidence vocabulary.",
+    "Lexical identity requires cross-source corroboration from genuinely independent structured source facts at exact addresses. Repeated output from one engine or two views of one source is one source, not two.",
+    "Every candidate bundle preserves all rival entry and form candidates, contradiction and tension records, unresolved blockers, dependencies, guards, defeaters, and invalidation conditions. No first-row, highest-score, or page-local winner selection is allowed.",
+    "Every proposed lexeme_entry_edge or form_entry_edge remains candidate or ambiguous. This packet cannot emit certified or deterministic_exact status, call a certifier, write an accepted typed-graph bundle, or change certification state.",
+    "EVIDENCE_READY_FOR_OWNER_CERTIFICATION means only that a reconstructible candidate evidence bundle is ready for an independent owner/certifier lane. It is not an accepted edge and does not unblock the downstream meta bridge.",
+    "The run metadata must record SHA-256 values for qamus/indexes/largelexicon/target-schema/TARGET-RELEASE.json, qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json, qamus/indexes/quran-loc-surface/index.jsonl, qamus/lattice/lexeme-join-edges.jsonl, the packet-local out/largelexicon-typed-edge-evidence-wave1/upstream-typed-claims.jsonl, the evidence schema, the full evidence JSONL, and the committed sample plus metadata. A missing or stale hash ends SOURCE_GAP.",
+    "Start only from a clean isolated worktree. Freeze HEAD before edits under out/largelexicon-typed-edge-evidence-wave1/start-sha.txt, enforce tracked plus untracked changed paths from that SHA, run protected-input drift separately, and run git diff --check separately.",
+    "tools/check_regressions.py and docs/golden-commands.md are read-only in this packet. Their shared updates are reserved for the future single integration packet TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1.",
+    "The full 95-row output is never committed. Committed samples and reports contain no source prose, external source labels, private reviewer artifacts, private paths, machine topology, credentials, public hover text, meaning, translation, or learner-visible material.",
+    "No existing A3 input, target-schema table, canonical graph, typed-graph bundle, fact ledger, projector registry, certification store, website payload, renderer, or live surface is writable."
+  ],
+  "inputs": {
+    "input_files": [
+      "qamus/task-packets/TP-LARGELEXICON-A3-BRIDGE-WAVE1.json",
+      "qamus/examples/largelexicon-fact-bridge/bridge-fixtures.jsonl",
+      "qamus/examples/largelexicon-fact-bridge/bridge-fixtures.meta.json",
+      "qamus/examples/largelexicon-fact-bridge/real-data-scan.meta.json",
+      "qamus/indexes/largelexicon/target-schema/TARGET-RELEASE.json",
+      "qamus/indexes/quran-loc-surface/index.jsonl",
+      "qamus/lattice/lexeme-join-edges.jsonl",
+      "qamus/data/current/entries.jsonl",
+      "qamus/schemas/typed-claim-contract.schema.json",
+      "docs/certification-authority.md",
+      "docs/model-routing-guide.md",
+      "docs/architecture/meta-transclusive-projection.md",
+      "docs/subsystems/largelexicon-as-built.md",
+      "sarf/SKILL.md",
+      "sarf/procedures/largelexicon-morphology-expansion.md",
+      "sarf/procedures/qword-crosswalk-before-morphology.md",
+      "nahw/SKILL.md",
+      "nahw/procedures/largelexicon-function-token-routing.md",
+      "tools/largelexicon_fact_bridge.py",
+      "tools/test_largelexicon_fact_bridge.py"
+    ],
+    "permitted_write_files": [
+      "qamus/schemas/largelexicon-typed-edge-evidence.schema.json",
+      "tools/build_largelexicon_typed_edge_evidence_wave.py",
+      "tools/test_build_largelexicon_typed_edge_evidence_wave.py",
+      "qamus/examples/largelexicon-typed-edge-evidence-wave1/",
+      "qamus/reports/largelexicon-typed-edge-evidence-wave1.md",
+      "out/largelexicon-typed-edge-evidence-wave1/"
+    ],
+    "prohibited_files": [
+      "qamus/data/current/",
+      "qamus/indexes/largelexicon/target-schema/",
+      "qamus/indexes/quran-loc-surface/",
+      "qamus/lattice/",
+      "qamus/certification/",
+      "qamus/examples/largelexicon-fact-bridge/",
+      "qamus/examples/proof-verb/",
+      "qamus/examples/proof-noun-sufaha/",
+      "qamus/examples/proof-particle/",
+      "qamus/examples/p007-li-pilot/",
+      "qamus/examples/website-payloads/",
+      "tools/largelexicon_fact_bridge.py",
+      "tools/test_largelexicon_fact_bridge.py",
+      "tools/fact_projectors.py",
+      "tools/fact_ledger.py",
+      "tools/certify_typed_fact.py",
+      "tools/check_regressions.py",
+      "docs/current-state.yaml",
+      "docs/golden-commands.md",
+      "sarf/",
+      "nahw/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "All outputs remain candidate evidence, abstentions, and review routes. This packet does not certify facts or edges, create learner-visible or public payloads, edit website code, deploy, or contact or mutate any live surface.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-LARGELEXICON-A3-TYPED-EDGE-EVIDENCE-W1",
+  "provenance": {
+    "authored_by": "PVN owner re-anchor follow-on lane",
+    "cites": [
+      "docs/certification-authority.md",
+      "docs/model-routing-guide.md",
+      "docs/architecture/meta-transclusive-projection.md",
+      "docs/subsystems/largelexicon-as-built.md"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "LARGELEXICON_TYPED_EDGE_EVIDENCE",
+    "out_of_scope": [
+      "Do not modify the integrated A3 bridge, target-schema migration, carried tables, canonical loc-surface index, lexeme lattice, existing typed-graph bundles, or authority digests.",
+      "Do not turn page context, root family, surface lookup, normalization, lemma recall, form recall, stem recall, or pattern recall into lexical identity.",
+      "Do not select among unresolved rivals or author a new entry, sense, meaning, contextual function, translation, public hover, or public colour claim.",
+      "Do not certify or emit accepted typed edges, invoke tools/certify_typed_fact.py, alter a fact ledger or certification store, unblock the downstream meta bridge, edit website payloads, or touch a live surface."
+    ],
+    "summary": "Prepare all 95 first-window missing_typed_graph_evidence rows as candidate-only, occurrence-bound evidence bundles with exact authority bindings and explicit owner/certifier routing. This evidence/report-only packet preserves ambiguity and abstention, emits zero accepted edges, and cannot discharge or unblock the downstream occurrence-meta bridge.",
+    "tranche": "a3-first-2000-typed-edge-evidence-wave-1"
+  },
+  "title": "Prepare the first A3 candidate typed-edge evidence wave for independent owner and certifier review",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/largelexicon_fact_bridge.py",
+    "tools/validate_task_packets.py",
+    "tools/check_regressions.py"
+  ]
+}

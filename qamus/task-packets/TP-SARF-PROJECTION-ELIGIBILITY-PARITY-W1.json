@@ -1,0 +1,288 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "two-surface compiler unit suite",
+      "pass_condition": "unittest exits 0 and all red-first fact-binding, hash-fork, unresolved-eligibility, and colour-hover mismatch mutations fail",
+      "run": "python -m unittest tools.test_compile_sarf_two_surface_projection"
+    },
+    {
+      "name": "closed two-surface schema validation",
+      "pass_condition": "exit 0 with SARF TWO SURFACE PROJECTION SCHEMA PASS; missing fields, extra fields, mismatched segment or fact identities, and invalid eligibility states fail closed",
+      "run": "python tools/compile_sarf_two_surface_projection.py --validate qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json --schema qamus/schemas/sarf-two-surface-projection.schema.json"
+    },
+    {
+      "name": "existing particle parity executable contract",
+      "pass_condition": "exit 0 with PARTICLE PROJECTION PARITY VALIDATION PASS for the existing particle parity contract; this validator does not validate qamus.sarf_two_surface_projection.v1",
+      "run": "python tools/validate_particle_projection_parity.py qamus/examples/particle_projection_parity.sample.json"
+    },
+    {
+      "name": "deterministic sample check",
+      "pass_condition": "exit 0 with byte-identical regeneration after recomputing the ownership sample, ownership metadata, ownership schema, canonical surface authority, output schema and projection sample hashes",
+      "run": "python tools/compile_sarf_two_surface_projection.py --check-sample qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json --meta qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json --ownership qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl --ownership-meta qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json --ownership-schema qamus/schemas/sarf-occurrence-ownership.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json"
+    },
+    {
+      "name": "public cleanliness mutation gate",
+      "pass_condition": "exit 0 only when all learner-visible hover fields are source-clean and mutations inserting source prose, an external source name, a private reviewer artifact, a private path, a credential marker, or machine topology fail closed",
+      "run": "python tools/compile_sarf_two_surface_projection.py --check-public-boundary qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json"
+    },
+    {
+      "name": "complete repository harness remains green",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS without changing the shared harness; focused-suite registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "frozen start SHA changed paths",
+      "pass_condition": "prints SARF TWO SURFACE CHANGED PATHS PASS after comparing tracked and non-ignored untracked paths with the exact packet allowlist from the SHA frozen before edits",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/sarf-two-surface-projection-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"qamus/schemas/sarf-two-surface-projection.schema.json\",\"tools/compile_sarf_two_surface_projection.py\",\"tools/test_compile_sarf_two_surface_projection.py\",\"qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json\",\"qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json\",\"qamus/reports/sarf-two-surface-projection-w1.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"SARF TWO SURFACE CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\"+repr(unexpected)+\" missing=\"+repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "name": "whitespace diff check",
+      "pass_condition": "git diff --check exits 0 independently of public-cleanliness, generated-artifact and changed-path checks",
+      "run": "git diff --check"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "the two exact occurrences keep distinct canonical artifacts and may retain different analysis and projection hashes despite sharing the surface ma",
+        "id": "quran:2:284:2+10",
+        "source": "qamus/examples/particle_projection_parity.sample.json",
+        "surface": "مَا"
+      },
+      {
+        "expectation": "the current p007 baseline has three at-rest segments but only one hover card without closed segment, owner, and fact ids, so it must not be accepted as colour-hover parity proof",
+        "id": "baseline:p007-not-yet-closed-parity",
+        "source": "qamus/examples/p007-li-pilot/projections.jsonl"
+      },
+      {
+        "expectation": "changing a hover component identity while leaving its at-rest segment unchanged must fail colour-hover fact parity",
+        "id": "mutation:hover-segment-fork",
+        "source": "docs/architecture/two-surface-contract.md"
+      },
+      {
+        "expectation": "inserting source prose, an external source label, private reviewer material, a private path, a credential marker, or machine topology into any learner-visible hover field must fail the public-cleanliness gate",
+        "id": "mutation:hover-public-source-leak",
+        "source": "qamus/schemas/public-hover-projection.schema.json"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "all appearances consume one occurrence artifact and one projection hash while the three owned segments remain identical on the at-rest and hover surfaces",
+        "id": "quran:61:5:4",
+        "source": "qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json",
+        "surface": "لِقَوْمِهِۦ"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl",
+    "selection_rule": "all 12 ownership records emitted by TP-SARF-OCCURRENCE-OWNERSHIP-PRODUCER-W1 in stable occurrence order",
+    "this_packet_size": 12,
+    "universe_size": 12
+  },
+  "commands": [
+    {
+      "expect": "prints one immutable 40-character start SHA and writes the same ASCII SHA plus LF under the gitignored packet out directory; any pre-existing tracked or non-ignored untracked change aborts",
+      "purpose": "freeze the clean packet start SHA",
+      "run": "python -c 'from pathlib import Path; import subprocess; dirty=subprocess.check_output([\"git\",\"status\",\"--porcelain\",\"--untracked-files=all\"],text=True).splitlines(); assert not dirty, \"packet requires a clean isolated worktree: \"+repr(dirty); sha=subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(); p=Path(\"out/sarf-two-surface-projection-w1/start-sha.txt\"); p.parent.mkdir(parents=True,exist_ok=True); p.write_bytes((sha+\"\\n\").encode(\"ascii\")); print(sha)'"
+    },
+    {
+      "expect": "red before implementation, then unittest OK with all parity and eligibility mutations active",
+      "purpose": "run the projection compiler tests",
+      "run": "python -m unittest tools.test_compile_sarf_two_surface_projection"
+    },
+    {
+      "expect": "exit 0; the compiler first verifies the ownership schema, sample and metadata hashes plus the canonical index and manifest hashes, then writes one bounded parity bundle and pretty hash metadata",
+      "purpose": "compile both pedagogical surfaces",
+      "run": "python tools/compile_sarf_two_surface_projection.py --ownership qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl --ownership-meta qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json --ownership-schema qamus/schemas/sarf-occurrence-ownership.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --out out/sarf-two-surface-projection-w1 --sample-out qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json --meta-out qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json"
+    },
+    {
+      "expect": "SARF TWO SURFACE PROJECTION SCHEMA PASS with every record valid against the closed qamus.sarf_two_surface_projection.v1 schema",
+      "purpose": "validate the new closed projection schema and compiler invariants",
+      "run": "python tools/compile_sarf_two_surface_projection.py --validate qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json --schema qamus/schemas/sarf-two-surface-projection.schema.json"
+    },
+    {
+      "expect": "PARTICLE PROJECTION PARITY VALIDATION PASS for the existing particle parity contract only",
+      "purpose": "re-run the existing particle parity validator without claiming it validates the new schema",
+      "run": "python tools/validate_particle_projection_parity.py qamus/examples/particle_projection_parity.sample.json"
+    },
+    {
+      "expect": "exit 0 with byte-identical regeneration and current upstream, authority, schema and output hashes",
+      "purpose": "verify deterministic regeneration",
+      "run": "python tools/compile_sarf_two_surface_projection.py --check-sample qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json --meta qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json --ownership qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl --ownership-meta qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json --ownership-schema qamus/schemas/sarf-occurrence-ownership.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json"
+    },
+    {
+      "expect": "SARF TWO SURFACE PUBLIC BOUNDARY PASS and every red-first public-leak mutation is rejected",
+      "purpose": "enforce public cleanliness on hover fields",
+      "run": "python tools/compile_sarf_two_surface_projection.py --check-public-boundary qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json"
+    },
+    {
+      "expect": "ALL REGRESSION CHECKS PASS without editing tools/check_regressions.py; TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 owns the later one-time registration",
+      "purpose": "run the current complete repository harness read-only",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "expect": "SARF TWO SURFACE CHANGED PATHS PASS with exactly the schema, compiler, focused test, sample, metadata and report paths changed from the frozen start SHA",
+      "purpose": "enforce tracked and untracked path custody",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/sarf-two-surface-projection-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"qamus/schemas/sarf-two-surface-projection.schema.json\",\"tools/compile_sarf_two_surface_projection.py\",\"tools/test_compile_sarf_two_surface_projection.py\",\"qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json\",\"qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json\",\"qamus/reports/sarf-two-surface-projection-w1.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"SARF TWO SURFACE CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\"+repr(unexpected)+\" missing=\"+repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "expect": "exit 0 with no whitespace errors",
+      "purpose": "verify diff hygiene separately",
+      "run": "git diff --check"
+    }
+  ],
+  "defeaters": [
+    "an active rival, missing dependency, unresolved blocker, failed guard, or source fact below the required evidence state",
+    "a hover component whose segment id, owner id, span, surface, fact binding, or projection hash differs from its at-rest segment",
+    "a second projection artifact for another appearance of the same canonical occurrence",
+    "a global surface key used to share an occurrence analysis across distinct locations",
+    "a contextual gloss or translation inferred from morphology alone"
+  ],
+  "definition_of_done": [
+    "the 12 ownership records compile to candidate two-surface records or exact ineligibility records without adding linguistic conclusions",
+    "at-rest and hover views share one occurrence artifact, projection id, projection hash, segment identities, ownership identities, and fact bindings",
+    "every active rival, failed dependency, guard, or defeater makes public projection eligibility false",
+    "same-occurrence appearances have one hash while same-surface distinct occurrences remain independently analyzable",
+    "no contextual translation is generated by the Sarf-only compiler",
+    "the compiler refuses to run unless the ownership sample, ownership metadata, ownership schema, canonical surface index and manifest hashes all match; its own pretty metadata binds those exact upstream artifacts, the output schema and projection sample by SHA-256",
+    "the public-cleanliness mutation suite proves that source prose, external source labels, reviewer-private material, private paths, credentials and machine topology cannot enter hover fields",
+    "the compiler's closed-schema validator mode validates qamus.sarf_two_surface_projection.v1, while tools/validate_particle_projection_parity.py independently remains green only for its existing particle parity contract",
+    "TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 is the sole future writer that may register this focused suite in tools/check_regressions.py or update docs/golden-commands.md; this packet changes neither shared file",
+    "all acceptance tests pass, the frozen-start-SHA tracked-plus-untracked allowlist passes, git diff --check passes separately, and no file outside the permitted write set changed"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "the ownership sample is missing, schema-invalid, or hash-stale",
+      "a requested hover statement needs a Naḥw or contextual-translation fact",
+      "an appearance would need a page-local linguistic override",
+      "a source dependency changes during compilation"
+    ],
+    "route": "stop the affected projection, record public_projection_eligible=false with its exact blocker in qamus/reports/sarf-two-surface-projection-w1.md, and route contextual facts to the A2 occurrence-fact lane"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If the ownership record or its dependencies do not authorize a segment statement, omit the statement and preserve an unresolved blocker. Never create contextual meaning, translation, or entry identity from morphology, colour, surface, or root resemblance.",
+    "statement": "The compiler consumes and hash-verifies the exact candidate ownership sample, its schema and metadata, plus the canonical loc-surface index and manifest. It preserves every source fact, guard, defeater, rival, state, and dependency in both pedagogical views and emits only source-clean hover fields.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Closed schema for one-artifact at-rest and hover records, exact segment and fact bindings, eligibility, rivals, dependencies, and invalidation state",
+      "path": "qamus/schemas/sarf-two-surface-projection.schema.json"
+    },
+    {
+      "description": "Deterministic compiler that emits at-rest and hover morphology from one occurrence artifact and provides a closed-schema validation mode",
+      "path": "tools/compile_sarf_two_surface_projection.py"
+    },
+    {
+      "description": "Red-first eligibility, same-surface divergence, same-occurrence fanout, and colour-hover parity suite",
+      "path": "tools/test_compile_sarf_two_surface_projection.py"
+    },
+    {
+      "description": "Bounded one-artifact parity bundle whose at-rest and hover surfaces share exact segment, owner, fact and projection identities",
+      "path": "qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json"
+    },
+    {
+      "description": "Pretty sorted metadata binding the ownership schema, sample and metadata, canonical surface index and manifest, output schema, sample, generator id and exact command by SHA-256",
+      "path": "qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json"
+    },
+    {
+      "description": "Measured eligibility and unresolved-blocker report without corpus-coverage claims",
+      "path": "qamus/reports/sarf-two-surface-projection-w1.md"
+    },
+    {
+      "description": "Full regenerable candidate projections kept outside tracked artifacts",
+      "path": "out/sarf-two-surface-projection-w1/"
+    }
+  ],
+  "guards": [
+    "The METHOD transfers: one canonical occurrence artifact compiles both pedagogical surfaces, and exact fact bindings, eligibility checks, and parity may be reused; no occurrence conclusion transfers by surface resemblance.",
+    "SERIALIZATION 2 OF 2: run only after TP-SARF-OCCURRENCE-OWNERSHIP-PRODUCER-W1 passes all acceptance tests and its sample hash is frozen.",
+    "Before compilation, recompute and match the exact SHA-256 values for qamus/schemas/sarf-occurrence-ownership.schema.json, ownership.sample.jsonl and ownership.sample.meta.json, then verify that the ownership metadata's canonical index and manifest hashes match the current files. Packet sequencing alone is not an input contract.",
+    "Rich-at-rest contains ownership, colour, boundaries, and segmentation only; it never carries independent analysis prose.",
+    "Rich-hover may explain only facts carried by the same canonical artifact and must bind each statement to exact fact and segment identifiers.",
+    "A failed dependency, active rival, unresolved blocker, guard failure, or defeater makes public_projection_eligible false.",
+    "Candidate rules, facts, and projections remain candidate; the compiler never calls the certifier and never promotes a state.",
+    "The current p007 projection is source evidence, not closed colour-hover parity proof; the compiler must generate both surfaces from the new ownership artifact and schema.",
+    "Every learner-visible hover field passes a fail-closed public-cleanliness scan. The red-first mutation suite inserts source prose, external source labels, private reviewer artifacts, private paths, credential markers and machine topology and requires rejection.",
+    "Start only from a clean isolated worktree. Freeze HEAD before edits under out/sarf-two-surface-projection-w1/start-sha.txt, retain that immutable start SHA, and compare both tracked and non-ignored untracked paths against the exact six-file repository allowlist. Git diff --check is a separate gate.",
+    "No existing A2 or A3 implementation file, canonical graph, certification store, entry data, website payload, renderer, tools/check_regressions.py, docs/golden-commands.md, or live surface is writable. Shared harness and golden-command registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1."
+  ],
+  "inputs": {
+    "input_files": [
+      "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl",
+      "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json",
+      "qamus/schemas/sarf-occurrence-ownership.schema.json",
+      "qamus/indexes/quran-loc-surface/index.jsonl",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "qamus/schemas/typed-claim-contract.schema.json",
+      "qamus/schemas/public-hover-projection.schema.json",
+      "qamus/examples/p007-li-pilot/projections.jsonl",
+      "qamus/examples/particle_projection_parity.sample.json",
+      "tools/validate_particle_projection_parity.py",
+      "docs/architecture/two-surface-contract.md",
+      "docs/qamus/particle-projection-contract.md"
+    ],
+    "permitted_write_files": [
+      "qamus/schemas/sarf-two-surface-projection.schema.json",
+      "tools/compile_sarf_two_surface_projection.py",
+      "tools/test_compile_sarf_two_surface_projection.py",
+      "qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json",
+      "qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json",
+      "qamus/reports/sarf-two-surface-projection-w1.md",
+      "out/sarf-two-surface-projection-w1/"
+    ],
+    "prohibited_files": [
+      "qamus/data/",
+      "qamus/certification/",
+      "qamus/lattice/example-ayah-universe.occurrences.jsonl",
+      "qamus/indexes/occurrence-appearances.jsonl",
+      "qamus/examples/website-payloads/",
+      "tools/check_regressions.py",
+      "sarf/evals/",
+      "sarf/rules/",
+      "nahw/",
+      "docs/current-state.yaml",
+      "docs/golden-commands.md",
+      "docs/subsystems/nahw-executable-map.md",
+      "docs/subsystems/largelexicon-as-built.md",
+      "tools/run_nahw_evals.py",
+      "tools/largelexicon_fact_bridge.py",
+      "tools/fact_projectors.py"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "All outputs are candidate-only repository artifacts. This packet does not certify facts, create live entry state, edit website code, render pages, deploy payloads, or contact or mutate any live surface.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-SARF-PROJECTION-ELIGIBILITY-PARITY-W1",
+  "provenance": {
+    "authored_by": "PVN owner re-anchor follow-on lane",
+    "cites": [
+      "docs/architecture/two-surface-contract.md",
+      "docs/qamus/particle-projection-contract.md",
+      "qamus/examples/p007-li-pilot/projections.jsonl"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "SARF_TWO_SURFACE_PROJECTION_ELIGIBILITY",
+    "out_of_scope": [
+      "Do not author contextual Naḥw, learner translation, entry identity, sense identity, or page-local analysis.",
+      "Do not generalize an occurrence conclusion by surface or root similarity.",
+      "Do not edit ownership inputs, canonical indexes, A2 or A3 lane files, certification stores, website payloads, renderer code, or live surfaces."
+    ],
+    "summary": "Compile rich-at-rest segmentation and rich-hover morphology from the same candidate occurrence ownership artifact, with exact fact bindings, fail-closed public eligibility, same-occurrence appearance parity, and same-surface occurrence independence.",
+    "tranche": "pvn-reanchor-sarf-wave-1"
+  },
+  "title": "Compile candidate Sarf colour and hover projections from one occurrence artifact with fail-closed parity",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/validate_particle_projection_parity.py",
+    "tools/validate_task_packets.py",
+    "tools/check_regressions.py"
+  ]
+}

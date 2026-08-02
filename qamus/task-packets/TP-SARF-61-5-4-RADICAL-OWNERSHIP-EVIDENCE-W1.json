@@ -1,0 +1,284 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "radical ownership evidence unit suite",
+      "pass_condition": "unittest exits 0 and covers exact occurrence binding, root-family rejection, affix-swallowing rejection, reconstruction, SOURCE_GAP, and owner-gate mutations",
+      "run": "python -m unittest tools.test_build_sarf_61_5_4_radical_ownership_evidence"
+    },
+    {
+      "name": "deterministic evidence sample",
+      "pass_condition": "exit 0 with SARF 61 5 4 RADICAL OWNERSHIP EVIDENCE PASS after recomputing the exact upstream ownership schema, sample and metadata hashes, canonical index and manifest hashes, and byte-identical evidence artifacts",
+      "run": "python tools/build_sarf_61_5_4_radical_ownership_evidence.py --check-sample qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl --meta qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json --ownership qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl --ownership-meta qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json --ownership-schema qamus/schemas/sarf-occurrence-ownership.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json"
+    },
+    {
+      "name": "closed schema and terminal state",
+      "pass_condition": "exactly one source-clean row validates against the closed row schema, the pretty metadata validates against its closed schema, and the terminal state is exactly SOURCE_GAP or EVIDENCE_READY_FOR_OWNER_CERTIFICATION",
+      "run": "python tools/build_sarf_61_5_4_radical_ownership_evidence.py --validate qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl --meta qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json"
+    },
+    {
+      "name": "artifact ergonomics",
+      "pass_condition": "exit 0 with one-object-per-line JSONL, pretty sorted metadata and schemas, UTF-8, and trailing newlines",
+      "run": "python tools/check_artifact_ergonomics.py"
+    },
+    {
+      "name": "complete repository harness remains green",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS without changing the shared harness; focused-suite registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "name": "frozen start SHA changed paths",
+      "pass_condition": "prints SARF 61 5 4 EVIDENCE CHANGED PATHS PASS after comparing tracked and non-ignored untracked paths with the exact packet allowlist from the SHA frozen before edits",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/sarf-61-5-4-radical-ownership-evidence-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"qamus/schemas/sarf-61-5-4-radical-ownership-evidence.schema.json\",\"qamus/schemas/sarf-61-5-4-radical-ownership-evidence-meta.schema.json\",\"tools/build_sarf_61_5_4_radical_ownership_evidence.py\",\"tools/test_build_sarf_61_5_4_radical_ownership_evidence.py\",\"qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl\",\"qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json\",\"qamus/reports/sarf-61-5-4-radical-ownership-evidence-w1.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"SARF 61 5 4 EVIDENCE CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\"+repr(unexpected)+\" missing=\"+repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "name": "whitespace diff check",
+      "pass_condition": "git diff --check exits 0 independently of artifact, drift and changed-path checks",
+      "run": "git diff --check"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "the root_family_of_entry or root_confirms edge is never accepted as occurrence-level radical ownership evidence and cannot produce EVIDENCE_READY_FOR_OWNER_CERTIFICATION",
+        "id": "quran:61:5:4:root-family-is-not-radical-ownership",
+        "source": "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl",
+        "surface": "لِقَوْمِهِۦ"
+      },
+      {
+        "expectation": "the existing projection root null remains an explicit evidence gap and is never rewritten from surface resemblance, entry context, or a page-local colour",
+        "id": "quran:61:5:4:projection-root-null",
+        "source": "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl",
+        "surface": "لِقَوْمِهِۦ"
+      },
+      {
+        "expectation": "a mutation assigning the initial lām or final attached pronoun to the noun root fails exact primary ownership and ends SOURCE_GAP",
+        "id": "mutation:61:5:4:root-swallows-affix",
+        "source": "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl",
+        "surface": "لِقَوْمِهِۦ"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "only an exact-occurrence, source-addressed morphology record that independently supports the token root and exact radical positions, combined with the exact hash-verified upstream ownership row and its letter geometry, may produce one candidate ownership-evidence row ready for the separate owner certification gate",
+        "id": "quran:61:5:4",
+        "source": "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl",
+        "surface": "لِقَوْمِهِۦ"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl",
+    "selection_rule": "select the single hash-verified upstream ownership row whose occurrence_id is exactly quran:61:5:4; require its loc and surface to match the hash-verified canonical index; never reconstruct a second segmentation or enrich it from legacy P007, shared-root, entry, page or colour artifacts",
+    "this_packet_size": 1,
+    "universe_size": 1
+  },
+  "commands": [
+    {
+      "expect": "prints one immutable 40-character start SHA and writes the same ASCII SHA plus LF under the gitignored packet out directory; any pre-existing tracked or non-ignored untracked change aborts",
+      "purpose": "freeze the clean packet start SHA",
+      "run": "python -c 'from pathlib import Path; import subprocess; dirty=subprocess.check_output([\"git\",\"status\",\"--porcelain\",\"--untracked-files=all\"],text=True).splitlines(); assert not dirty, \"packet requires a clean isolated worktree: \"+repr(dirty); sha=subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(); p=Path(\"out/sarf-61-5-4-radical-ownership-evidence-w1/start-sha.txt\"); p.parent.mkdir(parents=True,exist_ok=True); p.write_bytes((sha+\"\\n\").encode(\"ascii\")); print(sha)'"
+    },
+    {
+      "expect": "TASK PACKET VALIDATION PASS for this exact file",
+      "purpose": "validate the bounded work order",
+      "run": "python tools/validate_task_packets.py qamus/task-packets/TP-SARF-61-5-4-RADICAL-OWNERSHIP-EVIDENCE-W1.json"
+    },
+    {
+      "expect": "red before implementation, then unittest OK with every evidence and owner-gate mutation active",
+      "purpose": "run the evidence tests",
+      "run": "python -m unittest tools.test_build_sarf_61_5_4_radical_ownership_evidence"
+    },
+    {
+      "expect": "exit 0 with exactly one candidate evidence or SOURCE_GAP row; the row reuses the exact upstream ownership artifact and never reconstructs an independent legacy-P007 analysis; metadata hash-binds upstream ownership schema, sample and metadata plus the canonical index and manifest",
+      "purpose": "build evidence from the upstream ownership contract",
+      "run": "python tools/build_sarf_61_5_4_radical_ownership_evidence.py --occurrence-id quran:61:5:4 --ownership qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl --ownership-meta qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json --ownership-schema qamus/schemas/sarf-occurrence-ownership.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --sample-out qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl --meta-out qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json --out out/sarf-61-5-4-radical-ownership-evidence-w1"
+    },
+    {
+      "expect": "SARF 61 5 4 RADICAL OWNERSHIP EVIDENCE PASS with byte-identical output and current ownership, authority, schema and output hashes",
+      "purpose": "verify deterministic evidence regeneration",
+      "run": "python tools/build_sarf_61_5_4_radical_ownership_evidence.py --check-sample qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl --meta qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json --ownership qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl --ownership-meta qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json --ownership-schema qamus/schemas/sarf-occurrence-ownership.schema.json --surface-index qamus/indexes/quran-loc-surface/index.jsonl --surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json"
+    },
+    {
+      "expect": "exit 0 with one schema-valid row and one schema-valid metadata object",
+      "purpose": "validate closed evidence schemas",
+      "run": "python tools/build_sarf_61_5_4_radical_ownership_evidence.py --validate qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl --meta qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json"
+    },
+    {
+      "expect": "ALL REGRESSION CHECKS PASS without editing tools/check_regressions.py; TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 owns the later one-time registration",
+      "purpose": "run the current complete repository harness read-only",
+      "run": "python tools/check_regressions.py"
+    },
+    {
+      "expect": "SARF 61 5 4 EVIDENCE CHANGED PATHS PASS with exactly the two schemas, builder, focused test, evidence sample, metadata and report paths changed from the frozen start SHA",
+      "purpose": "enforce tracked and untracked path custody",
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/sarf-61-5-4-radical-ownership-evidence-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); allowed={\"qamus/schemas/sarf-61-5-4-radical-ownership-evidence.schema.json\",\"qamus/schemas/sarf-61-5-4-radical-ownership-evidence-meta.schema.json\",\"tools/build_sarf_61_5_4_radical_ownership_evidence.py\",\"tools/test_build_sarf_61_5_4_radical_ownership_evidence.py\",\"qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl\",\"qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json\",\"qamus/reports/sarf-61-5-4-radical-ownership-evidence-w1.md\"}; changed=set(subprocess.check_output([\"git\",\"diff\",\"--name-only\",start,\"--\"],text=True).splitlines()) | set(subprocess.check_output([\"git\",\"ls-files\",\"--others\",\"--exclude-standard\"],text=True).splitlines()); unexpected=sorted(changed-allowed); missing=sorted(allowed-changed); print(\"SARF 61 5 4 EVIDENCE CHANGED PATHS \" + (\"PASS\" if not unexpected and not missing else \"FAIL unexpected=\"+repr(unexpected)+\" missing=\"+repr(missing))); sys.exit(1 if unexpected or missing else 0)'"
+    },
+    {
+      "expect": "exit 0 with no whitespace errors",
+      "purpose": "verify diff hygiene separately",
+      "run": "git diff --check"
+    }
+  ],
+  "defeaters": [
+    "a root-family, shared-root, entry-root, lexeme-join, or page-context edge offered as proof of radical ownership at this occurrence",
+    "a root inferred from surface resemblance, norm, norm_strict, colour, the current contextual gloss, or the first lexicon candidate",
+    "a base letter with zero or more than one primary owner, an affix letter owned by the root, or a combining mark detached from its base letter",
+    "a span gap, overlap, out-of-range index, non-NFC reconstruction, or mismatch against the exact quran:61:5:4 surface authority",
+    "an evidence record without exact source addresses and input hashes, or a source conflict hidden by choosing one record",
+    "an evidence-ready marker treated as certification, public eligibility, translation authority, or permission to update the vertical slice"
+  ],
+  "definition_of_done": [
+    "exactly one source-clean JSONL row and one pretty metadata sidecar are generated for quran:61:5:4 and validate against closed schemas with additionalProperties false",
+    "the row records exact written-surface reconstruction, base-letter and combining-mark accounting, one primary owner per base letter, distinct clitic, radical, stem, inflectional and attached-pronoun roles where directly supported, source addresses, input hashes, rivals, blockers, and abstention",
+    "the builder consumes the exact quran:61:5:4 row from ownership.sample.jsonl and verifies ownership.sample.meta.json, sarf-occurrence-ownership.schema.json, index.jsonl and index.manifest.json by SHA-256; the evidence metadata records those exact hashes and fails closed on any mismatch",
+    "no segmentation, span, primary owner or radical position is reconstructed independently from legacy P007 lattice, projection, matrix, geometry, entry or page artifacts",
+    "EVIDENCE_READY_FOR_OWNER_CERTIFICATION is emitted only when exact-occurrence source evidence independently supports the token root and radical positions and all geometry and reconstruction gates pass; otherwise the only terminal state is SOURCE_GAP",
+    "no root-family, entry-root, page-appearance, normalization, surface-gloss, or colour inference supplies the occurrence-level radical conclusion",
+    "the record remains candidate evidence with certification_state candidate, public_eligible false, owner_gate_required true, and certifier_called false",
+    "TP-PVN-VERTICAL-SLICE-61-5-4-W1 is named as the dependent packet and may consume the resulting fact only after a separate owner-authorized certification artifact hash-binds this row and metadata; this packet's evidence-ready marker alone does not satisfy the vertical-slice dependency",
+    "TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 is the sole future writer that may register this focused suite in tools/check_regressions.py or update docs/golden-commands.md; this packet changes neither shared file",
+    "all acceptance tests pass, the frozen-start-SHA tracked-plus-untracked allowlist passes, git diff --check passes separately, and no file outside the permitted write set changes"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "no exact-occurrence source record independently supports both the token root and the radical-to-letter mapping",
+      "the repository root or POS evidence conflicts with the exact surface, segmentation, geometry, or another source-addressed record",
+      "any base letter has ambiguous primary ownership or the exact NFC surface cannot be reconstructed",
+      "the only support is a root-family, entry-root, page-context, normalization, surface, colour, or lexicon-lookup inference",
+      "producing the requested output would require a new certification, public payload, source prose, private reviewer artifact, or live mutation"
+    ],
+    "route": "write one source-clean SOURCE_GAP row and the exact missing dependency or conflict to qamus/reports/sarf-61-5-4-radical-ownership-evidence-w1.md, preserve non-public source material only under out/sarf-61-5-4-radical-ownership-evidence-w1, emit SOURCE_GAP, and hand the evidence question to the Sarf certifier and owner gate without calling tools/certify_typed_fact.py"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If the hash-verified upstream ownership artifact does not carry source-addressed exact occurrence-level radical positions, emit SOURCE_GAP. Never reconstruct them from legacy P007 artifacts, the v005 root-family edge, the n912 form candidate, entry roots, normalization, surface resemblance, existing colour, or a root-null projection.",
+    "statement": "This packet prepares a source-addressed, occurrence-bound evidence bundle by consuming the upstream ownership producer's exact schema, sample and metadata contract. Committed rows contain structured facts, source addresses and hashes only, with no source prose. They remain evidence-ready candidates pending a separate owner-authorized certification transition.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "Closed row schema with exact occurrence, surface, source hashes, primary ownership, rivals, blockers, candidate state, owner gate, and the two terminal evidence states",
+      "path": "qamus/schemas/sarf-61-5-4-radical-ownership-evidence.schema.json",
+      "schema": "qamus.sarf_61_5_4_radical_ownership_evidence.v1"
+    },
+    {
+      "description": "Closed pretty-metadata schema for row counts, state counts, input and output hashes, generator command, and vertical-slice dependency identity",
+      "path": "qamus/schemas/sarf-61-5-4-radical-ownership-evidence-meta.schema.json",
+      "schema": "qamus.sarf_61_5_4_radical_ownership_evidence_meta.v1"
+    },
+    {
+      "description": "Deterministic source-addressed radical and affix ownership evidence builder and validator",
+      "path": "tools/build_sarf_61_5_4_radical_ownership_evidence.py"
+    },
+    {
+      "description": "Red-first exact-address, source-gap, reconstruction, ownership, root-family rejection, and owner-gate test suite",
+      "path": "tools/test_build_sarf_61_5_4_radical_ownership_evidence.py"
+    },
+    {
+      "description": "One-object-per-line structured evidence sample plus a pretty sorted hash-bound metadata sidecar",
+      "path": "qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl"
+    },
+    {
+      "description": "Pretty sorted metadata binding the upstream ownership schema, sample and metadata, canonical surface index and manifest, evidence schema and evidence sample by SHA-256",
+      "path": "qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json"
+    },
+    {
+      "description": "Source-clean evidence state, missing-dependency, and owner-gate report",
+      "path": "qamus/reports/sarf-61-5-4-radical-ownership-evidence-w1.md"
+    },
+    {
+      "description": "Full regenerable evidence run and any non-public source inspection artifacts, kept outside tracked outputs",
+      "path": "out/sarf-61-5-4-radical-ownership-evidence-w1/"
+    }
+  ],
+  "guards": [
+    "The METHOD transfers: exact occurrence binding, source-addressed evidence, exact surface reconstruction, one primary owner per base letter, rival preservation, and abstention may be reused; no radical or affix conclusion transfers to another occurrence.",
+    "DEPENDENCY FOR TP-PVN-VERTICAL-SLICE-61-5-4-W1: this packet prepares the missing radical-ownership evidence only; the vertical slice remains blocked until a separate owner-authorized certification artifact hash-binds the schema, evidence JSONL and metadata.",
+    "The current quran:61:5:4 projection has root null; that is an honest gap and never permission to infer a root from the v005 root-family relation or the n912 candidate entry.",
+    "The only linguistic ownership input is the hash-verified quran:61:5:4 row emitted by TP-SARF-OCCURRENCE-OWNERSHIP-PRODUCER-W1. Verify the exact upstream schema, sample and metadata hashes and the metadata's canonical index and manifest hashes before selection; packet ordering alone is insufficient.",
+    "Use the exact quran:61:5:4 source address and surface. Shared surface, root, lexeme, entry, page, or colour identity cannot substitute for occurrence evidence.",
+    "The lām clitic, noun host, radical letters, inflectional marks, and attached pronoun remain distinct ownership classes; one class may not swallow another.",
+    "Every base letter has exactly one primary owner, combining marks remain attached to their base letter, and concatenated spans reconstruct the exact NFC surface.",
+    "The only row states are SOURCE_GAP and EVIDENCE_READY_FOR_OWNER_CERTIFICATION. Neither state is certified, public-eligible, or deployable.",
+    "Start only from a clean isolated worktree. Freeze HEAD before edits under out/sarf-61-5-4-radical-ownership-evidence-w1/start-sha.txt, retain that immutable start SHA, and compare both tracked and non-ignored untracked paths against the exact seven-file repository allowlist. Git diff --check is a separate gate.",
+    "Shared harness and golden-command registration is reserved for TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1; tools/check_regressions.py and docs/golden-commands.md are read-only.",
+    "Do not call tools/certify_typed_fact.py, modify a certification store, author a public payload, expose source prose or private reviewer artifacts, edit website code, or contact a live surface."
+  ],
+  "inputs": {
+    "input_files": [
+      "qamus/schemas/sarf-occurrence-ownership.schema.json",
+      "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl",
+      "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json",
+      "qamus/indexes/quran-loc-surface/index.jsonl",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "qamus/schemas/typed-claim-contract.schema.json",
+      "sarf/SKILL.md",
+      "provenance/source-boundaries.md",
+      "docs/certification-authority.md",
+      "docs/architecture/two-surface-contract.md"
+    ],
+    "permitted_write_files": [
+      "qamus/schemas/sarf-61-5-4-radical-ownership-evidence.schema.json",
+      "qamus/schemas/sarf-61-5-4-radical-ownership-evidence-meta.schema.json",
+      "tools/build_sarf_61_5_4_radical_ownership_evidence.py",
+      "tools/test_build_sarf_61_5_4_radical_ownership_evidence.py",
+      "qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.jsonl",
+      "qamus/examples/sarf-61-5-4-radical-ownership-evidence-w1/evidence.meta.json",
+      "qamus/reports/sarf-61-5-4-radical-ownership-evidence-w1.md",
+      "out/sarf-61-5-4-radical-ownership-evidence-w1/"
+    ],
+    "prohibited_files": [
+      "qamus/data/",
+      "qamus/certification/",
+      "qamus/lattice/",
+      "qamus/indexes/",
+      "qamus/examples/p007-li-pilot/",
+      "qamus/examples/website-payloads/",
+      "qamus/examples/pvn-vertical-slice-61-5-4/",
+      "qamus/task-packets/TP-PVN-VERTICAL-SLICE-61-5-4-W1.json",
+      "sarf/",
+      "nahw/",
+      "docs/current-state.yaml",
+      "docs/golden-commands.md",
+      "tools/check_regressions.py",
+      "tools/certify_typed_fact.py"
+    ]
+  },
+  "model_class": "certifier",
+  "non_deployment": {
+    "statement": "All outputs are candidate or source-gap evidence artifacts. This packet does not certify a fact, authorize public projection, generate a public payload, edit website code, deploy anything, contact the live site, or mutate any live surface.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-SARF-61-5-4-RADICAL-OWNERSHIP-EVIDENCE-W1",
+  "provenance": {
+    "authored_by": "PVN owner re-anchor evidence-gate lane",
+    "cites": [
+      "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl",
+      "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json",
+      "qamus/indexes/quran-loc-surface/index.manifest.json",
+      "sarf/SKILL.md",
+      "docs/certification-authority.md"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "SARF_61_5_4_RADICAL_AFFIX_OWNERSHIP_EVIDENCE",
+    "out_of_scope": [
+      "Do not certify the prepared evidence or call the certification transition engine.",
+      "Do not infer radical ownership from a root-family edge, entry root, surface resemblance, normalization, colour, gloss, or page context.",
+      "Do not decide an entry, sense, Naḥw function, contextual meaning, translation, public projection, or deployment.",
+      "Do not broaden beyond the single exact occurrence quran:61:5:4."
+    ],
+    "summary": "Prepare one source-addressed candidate evidence bundle for exact radical, clitic, inflectional and attached-pronoun ownership at quran:61:5:4, preserving the current root gap unless occurrence-level evidence closes it and stopping at the owner certification gate.",
+    "tranche": "pvn-vertical-slice-evidence-gate-sarf"
+  },
+  "title": "Prepare exact radical and affix ownership evidence for quran 61 5 4",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "an authorized source-addressed morphology evidence surface",
+    "tools/validate_task_packets.py",
+    "tools/check_artifact_ergonomics.py",
+    "tools/check_regressions.py"
+  ]
+}
