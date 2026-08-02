@@ -95,17 +95,25 @@ def main():
     from grade_grammar_reasoning import grade
     wr_cases = [c for c in cases if c.get("wrong_reasoning_trap")]
     for c in wr_cases:
-        # simulate the failure mode: final answer correct, reasoning is the trap (wrong), evidence + 2-vote present
+        # simulate the failure mode: final answer correct, reasoning is the trap (wrong), 2-vote DECLARED
         r = grade(c, {"final_ok": True, "reasoning_ok": False, "evidence_cited": True,
                       "source_address": "quran:demo", "two_vote_done": True})
         if r["pass"]:
             errors.append("%s: wrong_reasoning_trap NOT blocked (right answer + wrong reasoning passed!)" % c["id"])
-        # and the honest version (correct reasoning) must pass the gate
+        # ROUND-13: the honest version used to be asserted to PASS from {"two_vote_done": True}. That is the
+        # Boolean false proof removed in rounds 10-12: a declaration is not two independent occurrence-bound
+        # vote artifacts, and every one of these cases is two_vote_required. The correct expectation is that
+        # the DECLARATION is refused — and refused for the gate, not for the reasoning.
         r2 = grade(c, {"final_ok": True, "reasoning_ok": True, "evidence_cited": True,
                        "source_address": "quran:demo", "two_vote_done": True})
-        if not r2["pass"]:
-            errors.append("%s: correct-reasoning version unexpectedly blocked (%s)" % (c["id"], r2["block_reason"]))
-    print("wrong_reasoning_trap cases exercised: %d (each must FAIL on wrong reasoning, PASS on right)" % len(wr_cases))
+        if r2["pass"]:
+            errors.append("%s: a DECLARED two_vote_done cleared a two-vote gate (a Boolean is not evidence)"
+                          % c["id"])
+        elif "two-vote gate required but not proven" not in (r2["block_reason"] or ""):
+            errors.append("%s: correct-reasoning version blocked for the WRONG reason (%s)"
+                          % (c["id"], r2["block_reason"]))
+    print("wrong_reasoning_trap cases exercised: %d (each must FAIL on wrong reasoning, and a DECLARED "
+          "two_vote_done must never clear the gate)" % len(wr_cases))
 
     # scoreboard
     by_level = collections.Counter(c.get("level") for c in cases)

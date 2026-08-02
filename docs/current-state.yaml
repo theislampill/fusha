@@ -3,7 +3,7 @@
 # Regenerate: python tools/build_current_state.py
 # Staleness gate: python tools/build_current_state.py --check (wired into tools/check_regressions.py)
 schema: qamus.current_state.v1
-generated_from_commit: 637d7dad4af6f185af078f44a8a7eebfd68fd9ba  # excluded from --check comparison
+generated_from_commit: 3bc759707d0b98a0349ca32ef5e4dd91613fcb5e  # excluded from --check comparison
 verify_head: git rev-parse HEAD && python tools/check_regressions.py
 mode: candidate — no live mutation from this repo, ever
 entries:

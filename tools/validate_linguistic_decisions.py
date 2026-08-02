@@ -31,6 +31,8 @@ import re
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+from tools import fusha_nahw_context_rules as CTX  # noqa: E402
+from tools import fusha_nahw_particle_rules as PR  # noqa: E402
 from tools import normalize_ar as N  # noqa: E402
 
 SCHEMA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
@@ -154,6 +156,31 @@ def invariant_violations(record):
             if WHO_GLOSS.search(glow):
                 v.append("مِن 'from' must not be glossed 'who/whoever' (%r) at %s"
                          % (gloss, record.get("source_address")))
+
+    # --- naḥw rule-file guards (A2 wiring) --------------------------------
+    # These used to be hand-copied here for من only. They are now read from the rule files themselves —
+    # nahw/rules/state-transition-rules.json forbidden_transitions, nahw/rules/context-sense-rules.json
+    # polyseme_quarantines, and nahw/rules/referent-guard-rules.json — so editing a rule file changes what this
+    # validator rejects, and the whole forbidden-collision table (مِن/مَن، لَمْ/لِمَ، لَمَّا/لِمَا، أَنَّ/إِنَّ، إِنْ/أَنْ) is
+    # enforced instead of a single hard-coded pair.
+    for row in PR.forbidden_gloss_violations(surface, gloss):
+        v.append("forbidden role collision %s: a resolved %s may not carry the gloss %r "
+                 "(%s) at %s — use instead: %s"
+                 % (row["id"], row.get("collision"), gloss, row.get("reason_code"),
+                    record.get("source_address"), row.get("correct_instead")))
+    for row in CTX.polyseme_quarantine_violations(surface, gloss):
+        v.append("polyseme quarantine: %s may not carry the blocked sibling sense %r (correct: %s) at %s"
+                 % (row["surface"], row.get("blocked_sense"), row.get("correct"),
+                    record.get("source_address")))
+    for row in CTX.proper_noun_verb_violations(surface, gloss):
+        v.append("referent guard %s: the proper noun %s may not be glossed %r (correct: %s) at %s"
+                 % (row["rule_id"], row["surface"], gloss, row.get("correct"),
+                    record.get("source_address")))
+    if record.get("root_ar"):
+        rg = CTX.root_guard_violation(surface, record["root_ar"])
+        if rg:
+            v.append("preposition-pronoun hard guard %s: %s (%s) at %s"
+                     % (rg["rule_id"], rg["do_not"], rg["reason_code"], record.get("source_address")))
 
     # --- no 'to …' verb gloss on a noun / proper-noun --------------------
     noun_like = pos in ("noun", "proper_noun", "adjective", "masdar", "participle")
@@ -311,10 +338,36 @@ def _self_test():
     _, _, ie9 = validate_stream([json.dumps(bad9, ensure_ascii=False)], schema)
     assert any("not exportable" in e for e in ie9), ie9
 
+    # bad 10 (A2): a forbidden role collision BEYOND the hand-coded من pair, read from
+    # nahw/rules/state-transition-rules.json — لَمْ may never carry the interrogative لِمَ gloss
+    bad10 = json.loads(json.dumps(good))
+    bad10.update({"source_address": "quran:112:3:1", "surface_ar": "لَمْ", "lemma_ar": "لَمْ",
+                  "public_export_allowed": False})
+    bad10["decision"]["gloss_en_authored"] = "why"
+    _, _, ie10 = validate_stream([json.dumps(bad10, ensure_ascii=False)], schema)
+    assert any("forbidden role collision lam_not_lima" in e for e in ie10), ie10
+
+    # bad 11 (A2): a polyseme quarantine from nahw/rules/context-sense-rules.json
+    bad11 = json.loads(json.dumps(good))
+    bad11.update({"source_address": "quran:2:247:6", "surface_ar": "ٱلْمُلْك", "pos": "noun",
+                  "lemma_ar": "مُلْك", "public_export_allowed": False})
+    bad11["decision"]["gloss_en_authored"] = "angels"
+    _, _, ie11 = validate_stream([json.dumps(bad11, ensure_ascii=False)], schema)
+    assert any("polyseme quarantine" in e for e in ie11), ie11
+
+    # bad 12 (A2): the referent guard from nahw/rules/referent-guard-rules.json
+    bad12 = json.loads(json.dumps(good))
+    bad12.update({"source_address": "quran:47:2:8", "surface_ar": "مُحَمَّد", "pos": "proper_noun",
+                  "lemma_ar": "مُحَمَّد", "public_export_allowed": False})
+    bad12["decision"]["gloss_en_authored"] = "to praise"
+    _, _, ie12 = validate_stream([json.dumps(bad12, ensure_ascii=False)], schema)
+    assert any("referent guard proper_noun_not_verb" in e for e in ie12), ie12
+
     print("validate_linguistic_decisions self-test OK — good passes; "
-          "9 bad records each caught (مِن≠who, no 'to …' on noun, إِلَيْنَا≠ل ي ن, "
+          "12 bad records each caught (مِن≠who, no 'to …' on noun, إِلَيْنَا≠ل ي ن, "
           "no provenance leak on export, export⇒authored, schema enums/patterns, "
-          "GP0: gate>=triggers, two-vote needs reasoning, never_auto not exportable)")
+          "GP0: gate>=triggers, two-vote needs reasoning, never_auto not exportable; "
+          "A2 rule-file guards: forbidden role collision, polyseme quarantine, referent guard)")
 
 
 def main():

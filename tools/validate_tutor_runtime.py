@@ -5,7 +5,10 @@
 This is the adversarial guard for tools/fusha_tutor_runtime.py + tools/fusha_review_scheduler.py. It FAILS if the
 runtime ever:
   * grades from a self-reported correctness flag (a payload `passed`/`correct`/`cleared`/`score` must be ignored);
-  * clears a `two_vote_required` row without an agreeing second check (pending must HOLD, never clear);
+  * clears a `two_vote_required` row from inside the runtime at all (pending must HOLD, never clear) — a
+    learner-supplied `second_check` Boolean is a declaration, not an occurrence-bound canonical vote
+    artifact, so the runtime can grade answer/reasoning content but cannot independently clear a mandatory
+    two-vote FACT gate;
   * promotes a "right answer for the wrong reason" (passed but reasoning incomplete) up the Leitner ladder;
   * persists progress or an event without the explicit `--write` flag;
   * is non-deterministic (a wall clock / RNG would break replay);
@@ -104,7 +107,8 @@ def validate():
     if g["passed"] or g["cleared"]:
         errs.append("a self-reported correctness flag was honored")
 
-    # 3. two-vote: one check -> pending+not cleared; agreeing second check -> cleared.
+    # 3. two-vote: the runtime NEVER clears a two_vote_required row — one check or a declared agreeing
+    #    second check both stay pending and held.
     one = RT.grade(idx["T2-hardgrammar"], {"answer": "man means who because the content letter carries fatha",
                                            "reasoning": ["content-letter harakah read"]})
     if one["two_vote_status"] != "pending" or one["cleared"]:
@@ -112,8 +116,11 @@ def validate():
     two = RT.grade(idx["T2-hardgrammar"], {"answer": "man means who because the content letter carries fatha",
                                            "reasoning": ["content-letter harakah read"],
                                            "second_check": {"conclusion_agrees": True, "reason_agrees": True}})
-    if two["two_vote_status"] != "cleared" or not two["cleared"]:
-        errs.append("two-vote row did not clear with an agreeing second check")
+    # ROUND-11: a DECLARED agreeing second check must NOT clear the row either. The Boolean carries no
+    # occurrence, no canonical vote envelope and no reviewer identity; it is recorded, never believed.
+    if two["two_vote_status"] != "pending" or two["cleared"] or two.get("second_check_declared") is not True:
+        errs.append("two-vote row cleared on a DECLARED second check (a Boolean is not an independent "
+                    "review artifact)")
 
     # 4. scheduler: only a FULL pass promotes; wrong-reason/pending/forbidden HOLD; miss demotes.
     base = {"box": 2, "due_day": 0, "reps": 3, "lapses": 0}
@@ -180,7 +187,9 @@ def _self_test():
     for e in errs:
         print("FAIL " + e)
     if not errs:
-        print("ok   validate_tutor_runtime self-test: no self-report grading; two-vote gating; full-pass-only "
+        print("ok   validate_tutor_runtime self-test: no self-report grading; the runtime never clears a "
+              "two_vote_required row (a declared second_check Boolean is not an occurrence-bound canonical "
+              "vote artifact); full-pass-only "
               "promotion; --write-gated; deterministic; event/progress schema-conformant; source-clean")
     return 0 if not errs else 1
 

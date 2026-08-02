@@ -53,8 +53,10 @@ from __future__ import annotations
 import copy
 import json
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 import unicodedata
 from pathlib import Path
 
@@ -107,6 +109,10 @@ VOWEL_MARK_NAMES = {"َ": "fatha", "ِ": "kasra", "ُ": "damma"}
 OWNERSHIP_VOCAB = frozenset({
     "fable_branch_repair", "sol_adapter_required", "shared_integration_gate",
     "linguistic_review_blocked", "owner_or_scholar_blocked"})
+NON_CLOSURE_STATUS_VOCAB = frozenset({
+    "repaired_awaiting_sol_reverification",
+    "integrated_awaiting_final_verification",
+})
 # review identity of the Sol fix-request round this branch repairs
 # (github.com/theislampill/fusha/pull/136#issuecomment-5158892104)
 R2_REVIEWED_HEAD = "eb51278c626ebe9b65b5a3e1be3a3895783e1233"
@@ -870,27 +876,41 @@ def check_corpus_pilot(ctx, errors):
         if not cd.get("effective_states") or not cd.get("invalidation_rule"):
             errors.append("corpus_pilot: %s missing effective-certification "
                           "dependency block" % name)
-        if "cascade" in (cd.get("invalidation_rule") or "").lower() \
-                and "not claimed" not in (cd.get("invalidation_rule") or "").lower():
-            errors.append("corpus_pilot: %s invalidation rule claims cascade "
-                          "behavior (forbidden: Sol adapter contract)" % name)
+        if cd.get("trail_valid") is not True or cd.get("trail_errors") != []:
+            errors.append("corpus_pilot: %s did not consume a valid "
+                          "authoritative certification trail" % name)
+        if "TypedFactCertificationStore" not in (cd.get("basis") or ""):
+            errors.append("corpus_pilot: %s uses a private certification "
+                          "fold instead of the authoritative store" % name)
         for f in env.get("repository_authority", {}).get("typed_facts", []):
             if f.get("certification_status_verbatim") not in ("candidate", "certified"):
                 errors.append("corpus_pilot: %s fact %s odd certification %r"
                               % (name, f.get("fact_id"),
                                  f.get("certification_status_verbatim")))
-    # LIVE WITHHOLDING CANARY (Sol fix-request round 2, finding 5): inject a
-    # synthetic revocation of one depended-on fact and require every envelope
-    # to withhold its learner-facing artifact classes — learner projections,
-    # colour/hover bindings, website envelope, appearances, fixture
-    # derivations and metrics must all be absent from the withheld form
+    # LIVE WITHHOLDING CANARY (Sol integration): copy the authoritative store,
+    # call its real revoke() API for one occurrence-specific dependency, and
+    # require only the affected envelope to withhold.  This proves both
+    # invalidation and unrelated-occurrence isolation without synthetic
+    # transition strings or a private state machine.
     if dep_fids:
+        target = "quran:2:34:5"
+        fact_id = "fact:p00slice:2_34_5:seg"
         try:
             sys.path.insert(0, str(ROOT / "tools"))
             import build_curriculum_corpus_pilot as builder
-            revoked = builder.build(
-                extra_events=[{"fact_id": fid, "to_status": "revoked"}
-                              for fid in sorted(dep_fids)])
+            from certify_typed_fact import TypedFactCertificationStore
+            with tempfile.TemporaryDirectory() as td:
+                store_dir = Path(td) / "certification"
+                shutil.copytree(
+                    ROOT / "qamus" / "examples" / "p007-li-pilot" /
+                    "certification", store_dir)
+                TypedFactCertificationStore(store_dir).revoke(
+                    fact_id,
+                    actor="validator:curriculum-l1l6",
+                    timestamp="2026-08-02T00:00:00Z",
+                    reason="targeted downstream invalidation canary",
+                )
+                revoked = builder.build(certification_dir=store_dir)
         except Exception as exc:  # noqa: BLE001
             errors.append("corpus_pilot: withholding canary crashed (%s)" % exc)
             revoked = {}
@@ -898,11 +918,19 @@ def check_corpus_pilot(ctx, errors):
             if str(ROOT / "tools") in sys.path:
                 sys.path.remove(str(ROOT / "tools"))
         for target, env in sorted(revoked.items()):
-            if not env.get("withheld") \
-                    or env.get("status") != "withheld_invalid_dependency":
+            affected = target == "quran:2:34:5"
+            if affected and (not env.get("withheld")
+                             or env.get("status") !=
+                             "withheld_invalid_dependency"):
                 errors.append("corpus_pilot: withholding canary FAILED — %s "
-                              "did not withhold under a revoked dependency"
+                              "did not withhold under authoritative revoke"
                               % target)
+                continue
+            if not affected and env.get("withheld"):
+                errors.append("corpus_pilot: withholding canary FAILED — %s "
+                              "was affected by an unrelated revocation" % target)
+                continue
+            if not affected:
                 continue
             for banned in ("colour_and_hover", "website_envelope",
                            "appearances", "letter_ownership", "sarf_facts",
@@ -1367,6 +1395,8 @@ def check_sol_ledgers(ctx, errors):
                       "request comment")
     if not led.get("rows"):
         errors.append("sol_ledgers: repair ledger has no rows")
+    if set(led.get("status_vocabulary") or []) != NON_CLOSURE_STATUS_VOCAB:
+        errors.append("sol_ledgers: non-closure status vocabulary drifted")
     r3 = led.get("round_3") or {}
     if r3.get("reviewed_head") != R3_REVIEWED_HEAD:
         errors.append("sol_ledgers: round-3 reviewed_head %r is not the head "
@@ -1381,19 +1411,14 @@ def check_sol_ledgers(ctx, errors):
             errors.append("sol_ledgers: ledger row %r ownership %r outside "
                           "the owner's closed vocabulary"
                           % (r.get("finding", "?")[:40], r.get("ownership")))
-        # closed, non-closure status vocabulary: a row either records a repair
-        # awaiting Sol's re-verification, or records an obligation this branch
-        # deliberately did NOT absorb (a shared integration gate). Neither
-        # asserts that the finding is closed — closure is Sol's call.
-        if r.get("status") not in ("repaired_awaiting_sol_reverification",
-                                   "reported_awaiting_merge_sequencing"):
+        # Closed non-closure vocabulary: branch repairs await Sol
+        # re-verification; integration work may be implemented while still
+        # awaiting the final exact-tree review/harness. Neither state claims
+        # merge readiness or linguistic certification.
+        if r.get("status") not in NON_CLOSURE_STATUS_VOCAB:
             errors.append("sol_ledgers: ledger row %r status %r — closure "
                           "is Sol's call, rows may only await re-review"
                           % (r.get("finding", "?")[:40], r.get("status")))
-        if r.get("status") == "reported_awaiting_merge_sequencing" \
-                and r.get("ownership") == "fable_branch_repair":
-            errors.append("sol_ledgers: ledger row %r defers a repair this "
-                          "branch owns" % r.get("finding", "?")[:40])
         for k in ("finding", "repair", "acceptance", "red_canary"):
             if not r.get(k):
                 errors.append("sol_ledgers: ledger row missing %s" % k)
@@ -1420,6 +1445,44 @@ def check_sol_ledgers(ctx, errors):
             if not a.get(k):
                 errors.append("sol_ledgers: adapter %s missing %s"
                               % (a.get("id"), k))
+
+    # Exact combined-tree consistency. Once the canonical certification
+    # adapter is present, the historical R3-3 merge obligation must be
+    # recorded as implemented (but still awaiting final verification), and
+    # the conformance/summary surfaces may not reopen it as future work.
+    by_id = {a.get("id"): a for a in adapters}
+    cert_integrated = (by_id.get("adp-typed-fact-certification") or {}).get(
+        "integration_status") == "implemented_in_sol_integration"
+    if cert_integrated:
+        r3_rows = [r for r in r3.get("rows", [])
+                   if str(r.get("finding", "")).startswith("R3-3.")]
+        if len(r3_rows) != 1 or r3_rows[0].get("status") != \
+                "integrated_awaiting_final_verification":
+            errors.append("sol_ledgers: integration resolution for R3-3 is "
+                          "not recorded on the combined tree")
+        elif any(s in json.dumps(r3_rows[0], ensure_ascii=False)
+                 for s in ("NOT performed", "AT MERGE",
+                           "reported_awaiting_merge_sequencing")):
+            errors.append("sol_ledgers: integration resolution for R3-3 "
+                          "still describes completed work as pending")
+
+        conf_by_name = {r.get("subsystem"): r
+                        for r in conf.get("rows", [])}
+        p007_row = conf_by_name.get(
+            "p007-derived planes (merge sequencing)") or {}
+        if p007_row.get("remaining_dependency") != "none" or any(
+                s in json.dumps(p007_row, ensure_ascii=False)
+                for s in ("AT MERGE", "reported, not silently absorbed")):
+            errors.append("sol_ledgers: integration resolution for p007 "
+                          "derived planes is stale in the conformance matrix")
+        learner_row = conf_by_name.get("Learner projections") or {}
+        if learner_row.get("remaining_dependency") != "none":
+            errors.append("sol_ledgers: integration resolution for the typed-"
+                          "fact learner dependency is stale")
+        if "sol_owned_not_touched" in led or not led.get(
+                "sol_owned_integration_summary"):
+            errors.append("sol_ledgers: integration resolution summary still "
+                          "claims Sol-owned adapters were untouched")
 
 
 ALL_CHECKS = (
@@ -1561,9 +1624,23 @@ def self_test():
         lambda c: c["repair_ledger"]["rows"][0].update(status="complete"))
     mut("adapter_owner_drift", "owner sol",
         lambda c: c["adapters"].update(owner="fable"))
-    mut("branch_repair_deferred_to_merge", "defers a repair this branch owns",
+    mut("obsolete_merge_sequencing_status", "closure is Sol",
         lambda c: c["repair_ledger"]["round_3"]["rows"][0].update(
             status="reported_awaiting_merge_sequencing"))
+    # Exact-tree integration truth: once the Sol adapters are present, the
+    # shared merge-sequencing row and its conformance counterpart may not
+    # continue describing regeneration as future work.
+    mut("integrated_r3_reopened", "integration resolution",
+        lambda c: c["repair_ledger"]["round_3"]["rows"][2].update(
+            status="reported_awaiting_merge_sequencing"))
+    mut("integrated_matrix_reopened", "integration resolution",
+        lambda c: next(
+            r for r in c["conformance"]["rows"]
+            if r["subsystem"] == "p007-derived planes (merge sequencing)"
+        ).update(remaining_dependency="regenerate AT MERGE"))
+    mut("integrated_adapter_summary_reverted", "integration resolution",
+        lambda c: c["repair_ledger"].update(
+            sol_owned_not_touched="all Sol adapters remain untouched"))
     mut("family_unit_uncovered", "ledger_qualification",
         lambda c: [c["families"].__setitem__(i, dict(r, family="u-s01"))
                    for i, r in enumerate(c["families"]) if r["family"] == "u-n12"])

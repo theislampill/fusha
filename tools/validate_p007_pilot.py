@@ -15,13 +15,14 @@ Gates (all mechanical, stdlib only, no network, no live reads):
    evidence policy (evidence_mode + source addresses + exactly one verbatim
    source quotation) — and the hash-chained certification store certifies all
    49 (``tools/certify_typed_fact.py`` trail validation + count).
-3. Entry-transclusion closure — EVERY certified morpheme occurrence carries the
-   explicit entry edge (-> entry:b10a1ee04666) AND sense edge
-   (-> sense:b10a1ee04666:2) AND clitic_host_edge AND governor_edge AND
-   governed_expression_edge; a generic 'preposition' class without the
-   entry/sense edge does NOT satisfy transclusion. Certified edges carry
-   evidence bundle refs; iʿrāb-bearing edges carry two-vote artifact refs;
-   morpheme occurrences carry base-letter spans.
+3. Entry-transclusion honesty — EVERY certified morpheme occurrence carries the
+   explicit entry edge (-> entry:b10a1ee04666), a candidate-only sense edge
+   (-> sense:b10a1ee04666:2), clitic_host_edge, governor_edge and
+   governed_expression_edge.  The contextual-function fact does not itself
+   certify sense identity, so the sense edge must remain candidate until a
+   separate certified entry/sense fact exists. Certified edges carry evidence
+   bundle refs; iʿrāb-bearing edges carry two-vote artifact refs; morpheme
+   occurrences carry base-letter spans.
 4. Parity hash stability — every canonical projection hash recomputes
    byte-identically (sorted-keys canonical JSON sha256); all 78 appearance
    hashes equal their occurrence's canonical hash; NFC-normalized segment
@@ -58,6 +59,10 @@ if hasattr(sys.stdout, "reconfigure"):
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 PILOT_DIR = os.path.join(ROOT, "qamus", "examples", "p007-li-pilot")
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
+
+from tools import certify_typed_fact as certifier  # noqa: E402
 
 SCOPE = "P007_LI_NOUN_HOST_PILOT"
 ENTRY_ID = "b10a1ee04666"
@@ -68,11 +73,11 @@ EXPECTED_APPEARANCES = 78
 EXPECTED_PAGE_CLASSES = {"context_on_n": 22, "context_on_v": 54, "context_on_p": 2}
 EXPECTED_FACTS = 49
 EXPECTED_REJECTED = 3
-FACT_SUFFIXES = ("seg", "func", "gov", "case")
+FACT_SUFFIXES = ("seg", "func:v2", "gov:v2", "case:v2")
 ROOTLESS_FACT = "fact:p00slice:entry_%s:rootless" % ENTRY_ID
 REQUIRED_EDGE_KINDS = (
     "particle_entry_certified_edge",
-    "particle_sense_certified_edge",
+    "particle_sense_candidate_edge",
     "clitic_host_edge",
     "governor_edge",
     "governed_expression_edge",
@@ -125,6 +130,7 @@ def validate(pilot_dir):
         "transclusion-edges.jsonl", "entry-reverse-index.json",
         "production-difference.json", "vn-unlock.json", "live-rows.jsonl",
         os.path.join("certification", "events.jsonl"),
+        os.path.join("certification", "claim-binding-migration.json"),
     ]
     for name in required_files:
         if not os.path.exists(os.path.join(pilot_dir, name)):
@@ -143,6 +149,8 @@ def validate(pilot_dir):
     reverse_index = read_json(os.path.join(pilot_dir, "entry-reverse-index.json"))
     reverse_trace = read_json(os.path.join(pilot_dir, "reverse-trace.json"))
     production = read_json(os.path.join(pilot_dir, "production-difference.json"))
+    parity = read_json(os.path.join(pilot_dir, "parity-report.json"))
+    vn_unlock = read_json(os.path.join(pilot_dir, "vn-unlock.json"))
     mcp_evidence = read_jsonl(os.path.join(pilot_dir, "mcp-evidence.jsonl"))
     live_rows = read_jsonl(os.path.join(pilot_dir, "live-rows.jsonl"))
 
@@ -212,13 +220,13 @@ def validate(pilot_dir):
     certify = os.path.join(ROOT, "tools", "certify_typed_fact.py")
     result = subprocess.run(
         [sys.executable, certify, "--validate", store_dir],
-        capture_output=True, text=True, encoding="utf-8", cwd=ROOT)
+        capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=ROOT)
     if result.returncode != 0 or "certification event trail is valid" not in (result.stdout or ""):
         err("certification store trail validation failed: %s"
             % ((result.stdout or "") + (result.stderr or "")).strip()[:400])
     result = subprocess.run(
         [sys.executable, certify, "--count", store_dir],
-        capture_output=True, text=True, encoding="utf-8", cwd=ROOT)
+        capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=ROOT)
     try:
         certified_count = int((result.stdout or "").strip().splitlines()[-1])
     except (ValueError, IndexError):
@@ -226,6 +234,65 @@ def validate(pilot_dir):
     if certified_count != EXPECTED_FACTS:
         err("certification store must certify exactly %d facts (found %d)"
             % (EXPECTED_FACTS, certified_count))
+    event_rows = read_jsonl(os.path.join(store_dir, "events.jsonl"))
+    effective = {}
+    for event in event_rows:
+        fact_id = event.get("fact_id")
+        effective[fact_id] = event.get("to_status")
+    effective_certified = {
+        fact_id for fact_id, status in effective.items() if status == "certified"
+    }
+    if set(fact_by_id) != effective_certified:
+        err("typed-facts.jsonl must equal the exact effective certified fact-id set")
+    folded_state = certifier.TypedFactCertificationStore(store_dir).state()
+    for fact_id, fact in sorted(fact_by_id.items()):
+        effective_fact = (folded_state.get(fact_id) or {}).get("fact")
+        if effective_fact != fact:
+            err("%s differs from its append-only effective fact payload" % fact_id)
+    migration = read_json(os.path.join(
+        pilot_dir, "certification", "claim-binding-migration.json"))
+    if migration.get("schema") != "qamus.p007_claim_binding_migration.v1":
+        err("claim-binding migration has the wrong schema")
+    if migration.get("legacy_facts_revoked") != 36:
+        err("claim-binding migration must revoke exactly 36 legacy facts")
+    if migration.get("exact_successors_certified") != 36:
+        err("claim-binding migration must certify exactly 36 exact successors")
+    if migration.get("migration_event_count") != 156:
+        err("claim-binding migration must preserve exactly 156 append-only events")
+    if migration.get("dependency_rebind_event_count") != 12:
+        err("claim-binding migration must append exactly 12 dependency rebind events")
+    downstream_posture = migration.get("downstream_projection_posture") or {}
+    if downstream_posture != {
+        "appearance_hashes_regenerated": 78,
+        "governor_identity": "certified_exact_v1_1",
+        "governor_relation": "unresolved_uncompared_prose_withheld",
+        "not_deployed": True,
+        "sense_identity": "candidate_pending_separate_fact_required",
+    }:
+        err("claim-binding migration downstream projection posture is incomplete")
+    mappings = migration.get("mappings") or []
+    if len(mappings) != 36:
+        err("claim-binding migration must carry exactly 36 legacy/successor mappings")
+    for mapping in mappings:
+        if mapping.get("legacy_effective_status") != "review_required":
+            err("legacy fact %r is not effectively revoked"
+                % mapping.get("legacy_fact_id"))
+        if mapping.get("successor_effective_status") != "certified":
+            err("successor fact %r is not effectively certified"
+                % mapping.get("successor_fact_id"))
+        if not mapping.get("legacy_revoke_event_id"):
+            err("legacy fact %r has no append-only revoke event identity"
+                % mapping.get("legacy_fact_id"))
+        if not mapping.get("successor_certification_event_id"):
+            err("successor fact %r has no certification event identity"
+                % mapping.get("successor_fact_id"))
+        if len(mapping.get("affected_projection_ids") or []) != 1:
+            err("successor fact %r must name its one affected p007 projection"
+                % mapping.get("successor_fact_id"))
+    for fact_id, fact in sorted(fact_by_id.items()):
+        for dependent_id in fact.get("dependent_fact_ids") or []:
+            if dependent_id not in fact_by_id:
+                err("%s has dangling dependent_fact_id %s" % (fact_id, dependent_id))
 
     # ---- gate 3: entry-transclusion closure -------------------------------
     morpheme_by_host = {}
@@ -276,14 +343,21 @@ def validate(pilot_dir):
                     "'preposition' class without the entry/sense edge does not satisfy "
                     "entry transclusion" % (mocc_id, kind))
                 continue
-            if any(row.get("status") != "certified" for row in rows):
-                err("%s on %s must be certified" % (kind, mocc_id))
+            expected_status = "candidate" if kind == "particle_sense_candidate_edge" else "certified"
+            if any(row.get("status") != expected_status for row in rows):
+                err("%s on %s must be %s" % (kind, mocc_id, expected_status))
         entry_edges = kinds.get("particle_entry_certified_edge", [])
         if entry_edges and any(row.get("to_node_id") != ENTRY_NODE for row in entry_edges):
             err("%s entry edge must target %s" % (mocc_id, ENTRY_NODE))
-        sense_edges = kinds.get("particle_sense_certified_edge", [])
+        sense_edges = kinds.get("particle_sense_candidate_edge", [])
         if sense_edges and any(row.get("to_node_id") != SENSE_NODE for row in sense_edges):
             err("%s sense edge must target %s (p007 clitic sense لِـ)" % (mocc_id, SENSE_NODE))
+        if sense_edges and any(row.get("status") != "candidate" for row in sense_edges):
+            err("%s sense edge must remain candidate until a separately certified sense fact exists"
+                % mocc_id)
+        if sense_edges and any((row.get("details") or {}).get("evidence_bundle_ref")
+                               for row in sense_edges):
+            err("%s candidate sense edge must not carry a certification bundle" % mocc_id)
     if reverse_edge_targets != set(loc_ids):
         err("entry reverse occurrence edges must cover exactly the 12 certified occurrences")
 
@@ -291,6 +365,17 @@ def validate(pilot_dir):
     for row in projections:
         projection = row["projection"]
         occurrence_id = projection["occurrence_id"]
+        hover = (projection.get("hover_cards") or [{}])[0]
+        governor = hover.get("governor") or {}
+        if "relation" in governor:
+            err("%s projection renders uncompared governor.relation prose" % occurrence_id)
+        identity = hover.get("particle_identity") or {}
+        if identity.get("sense") is not None or identity.get("sense_state") != "candidate_pending":
+            err("%s projection must keep sense identity candidate-only" % occurrence_id)
+        plane = projection.get("certification_plane") or {}
+        if plane.get("sense") != "candidate_pending" \
+                or plane.get("governor_relation") != "unresolved":
+            err("%s projection overstates sense or governor-relation certification" % occurrence_id)
         recomputed = canonical_hash(projection)
         if recomputed != row.get("projection_hash"):
             err("%s canonical projection hash does not recompute (stored %s, got %s)"
@@ -303,6 +388,16 @@ def validate(pilot_dir):
         if joined != nfc(projection["surface"]):
             err("%s NFC-joined segments %r do not rebuild the token surface %r"
                 % (occurrence_id, joined, projection["surface"]))
+    parity_hashes = {
+        "quran:%s" % row.get("loc"): row.get("canonical_hash")
+        for row in parity.get("occurrences") or []
+    }
+    projection_hashes = {
+        row["projection"]["occurrence_id"]: row.get("projection_hash")
+        for row in projections
+    }
+    if parity_hashes != projection_hashes:
+        err("parity-report canonical hashes differ from projections.jsonl")
 
     # ---- gate 5: reverse-trace closure ------------------------------------
     analyze_word_anchors = set()
@@ -350,7 +445,7 @@ def validate(pilot_dir):
     for name in ("two-vote-artifacts.v1.jsonl", "two-vote-artifacts.v1_1.jsonl"):
         result = subprocess.run(
             [sys.executable, validator, os.path.join(pilot_dir, name)],
-            capture_output=True, text=True, encoding="utf-8", cwd=ROOT)
+            capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=ROOT)
         if result.returncode != 0:
             err("%s fails tools/validate_two_vote_artifacts.py:\n%s"
                 % (name, ((result.stdout or "") + (result.stderr or "")).strip()[:600]))
@@ -393,6 +488,10 @@ def validate(pilot_dir):
         err("entry-reverse-index page-class totals must be n:22 / v:54 / p:2 (found %r)" % by_page_class)
     if reverse_index.get("entry_id") != ENTRY_ID:
         err("entry-reverse-index must index entry %s" % ENTRY_ID)
+    if reverse_index.get("sense_n") is not None \
+            or reverse_index.get("sense_n_candidate") != 2 \
+            or reverse_index.get("sense_state") != "candidate_pending":
+        err("entry-reverse-index must preserve sense 2 as candidate-only")
     indexed = {occ["occurrence_id"] for occ in reverse_index.get("occurrences", [])}
     if indexed != set(loc_ids):
         err("entry-reverse-index occurrence set differs from the 12 locations")
@@ -417,6 +516,13 @@ def validate(pilot_dir):
                 err("production-difference row %s is missing %s" % (row.get("occurrence_id"), field))
         if row.get("deployed") is not False:
             err("production-difference row %s must be marked deployed: false" % row.get("occurrence_id"))
+        if row.get("projection_state") != "candidate_pending" \
+                or set(row.get("unresolved_dependencies") or []) != {
+                    "occurrence_to_sense_certification",
+                    "governor_relation_governed_key",
+                }:
+            err("production-difference row %s overstates projection readiness"
+                % row.get("occurrence_id"))
     summary = production.get("summary", {})
     if summary.get("carve_forks") != 2:
         err("production-difference summary must record exactly the 2 live carve forks (found %r)"
@@ -424,6 +530,20 @@ def validate(pilot_dir):
     if summary.get("colour_class_deltas") != 12:
         err("production-difference summary must record the 12 colour-class deltas (found %r)"
             % summary.get("colour_class_deltas"))
+    direct_unlock = vn_unlock.get("family_direct") or {}
+    ceiling_unlock = vn_unlock.get("pattern_ceiling_li_kasra_clitic") or {}
+    expected_unlock_blockers = {
+        "occurrence_to_sense_certification",
+        "governor_relation_governed_key",
+    }
+    if vn_unlock.get("not_deployed") is not True \
+            or direct_unlock.get("projection_state") != "candidate_pending" \
+            or set(direct_unlock.get("unresolved_dependencies") or []) != expected_unlock_blockers:
+        err("vn-unlock must preserve the family-direct projection as candidate-only")
+    if ceiling_unlock.get("projection_state") != "candidate_ceiling_only" \
+            or set(ceiling_unlock.get("unresolved_dependencies") or []) != expected_unlock_blockers \
+            or "certified template" in (ceiling_unlock.get("note") or ""):
+        err("vn-unlock must preserve the 580-row pattern ceiling as candidate-only")
 
     return errors
 
@@ -478,8 +598,29 @@ def self_test():
         _mutate_jsonl(
             os.path.join(target, "transclusion-edges.jsonl"),
             lambda rows: [row for row in rows
-                          if not (row["edge_type"] == "particle_sense_certified_edge"
+                          if not (row["edge_type"] == "particle_sense_candidate_edge"
                                   and row["details"]["occurrence_id"] == "quran:61:5:4")])
+
+    def falsely_certify_sense_edge(target):
+        def mutate(rows):
+            edge = next(row for row in rows
+                        if row["edge_type"] == "particle_sense_candidate_edge")
+            edge["edge_type"] = "particle_sense_certified_edge"
+            edge["status"] = "certified"
+            edge["details"]["evidence_bundle_ref"] = (
+                "certification/events.jsonl#" + edge["details"]["fact_id"]
+            )
+            return rows
+        _mutate_jsonl(os.path.join(target, "transclusion-edges.jsonl"), mutate)
+
+    def restore_uncompared_governor_relation(target):
+        def mutate(rows):
+            rows[0]["projection"]["hover_cards"][0]["governor"]["relation"] = "muta-alliq"
+            rows[0]["projection_hash"] = canonical_hash(rows[0]["projection"])
+            for appearance in rows[0]["appearances"]:
+                appearance["projection_hash"] = rows[0]["projection_hash"]
+            return rows
+        _mutate_jsonl(os.path.join(target, "projections.jsonl"), mutate)
 
     def corrupt_projection_hash(target):
         def mutate(rows):
@@ -519,6 +660,14 @@ def self_test():
         _mutate_json(os.path.join(target, "production-difference.json"),
                      lambda data: data.__setitem__("not_deployed", False))
 
+    def overstate_vn_ceiling(target):
+        def mutate(data):
+            ceiling = data["pattern_ceiling_li_kasra_clitic"]
+            ceiling.pop("projection_state", None)
+            ceiling.pop("unresolved_dependencies", None)
+            ceiling["note"] = "each row needs evidence before the certified template applies"
+        _mutate_json(os.path.join(target, "vn-unlock.json"), mutate)
+
     def strip_defeater(target):
         _mutate_json(os.path.join(target, "locations.json"),
                      lambda data: data["rejected_false_candidates"][0].__setitem__("defeater", ""))
@@ -526,6 +675,9 @@ def self_test():
     expect_red("13th location dropped -> 12-loc integrity fails", drop_thirteenth_location)
     expect_red("typed fact removed -> 49-fact completeness fails", drop_fact)
     expect_red("sense edge removed -> entry-transclusion closure fails", drop_sense_edge)
+    expect_red("sense edge falsely certified -> identity authority fails", falsely_certify_sense_edge)
+    expect_red("uncompared governor relation rendered -> claim binding fails",
+               restore_uncompared_governor_relation)
     expect_red("projection mutated -> parity hash stability fails", corrupt_projection_hash)
     expect_red("appearance hash forked -> parity fails", fork_appearance_hash)
     expect_red("certification event deleted -> hash chain fails", break_store_chain)
@@ -533,6 +685,7 @@ def self_test():
     expect_red("v1.1 substance edited -> migration equality fails", touch_migration_substance)
     expect_red("reverse index totals off-by-one -> closure fails", break_reverse_index)
     expect_red("NOT-DEPLOYED flag flipped -> honesty gate fails", hide_deployment_flag)
+    expect_red("VN pattern ceiling overstated -> candidate-only gate fails", overstate_vn_ceiling)
     expect_red("defeater stripped -> rejected-candidate gate fails", strip_defeater)
 
     green_errors = validate(PILOT_DIR)
@@ -565,7 +718,8 @@ def main(argv=None):
             print("  ", error)
         return 1
     print("P007 PILOT VALIDATION PASS — %s: 12 occurrences / 78 appearances / 49 facts, "
-          "entry+sense transclusion closed, parity stable, reverse trace closed, NOT-DEPLOYED" % SCOPE)
+          "entry transclusion closed, sense candidate preserved, parity stable, "
+          "reverse trace closed, NOT-DEPLOYED" % SCOPE)
     return 0
 
 

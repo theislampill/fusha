@@ -28,19 +28,27 @@ to the typed-claim plane governed by docs/certification-authority.md:
   revoked input are automatically de-certified.
 
 No live surface is read or mutated. The committed sufaha packet demo is
-read-only over the committed contract: it refuses certification for the
-committed packet because the MCP verbatim evidence file the facts address
-(``sufaha-evidence.jsonl``) is not committed in-repo, and demonstrates the full
-transition + revocation cascade only on a fixture copy in a temp directory.
+read-only over the committed contract: it refuses certification for every fact
+of the ten non-two-vote typed-claim families, because the MCP verbatim evidence
+file their family contract declares (``sufaha-evidence.jsonl``) is not committed
+in-repo — and it stays refused even when a temp packet makes that address
+resolvable, since family authority is the committed contract's evidence, not a
+citation string. Its legacy ``governor_relation`` also remains refused: the
+fact value predates the exact conclusion-and-reason projection required here.
+The full transition + revocation cascade is
+exercised by ``--self-test`` over a fact type with a registered producer
+contract, so no family name is ever borrowed to make a fixture green.
 """
 
 from __future__ import annotations
 
 import argparse
 import copy
+import functools
 import hashlib
 import json
 import os
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -88,9 +96,49 @@ TWO_VOTE_FACT_TYPES = {
     "irab_rendering",
 }
 
+# Certification is a POSITIVE act: it requires a contract that says what evidence
+# this class of fact needs. A fact type is certifiable only if it is either
+# produced by a registered projector (whose gate then applies) or listed here as a
+# typed-claim family this plane already knows how to gate. Anything else has no
+# contract at all, so relabelling a gated fact's type/projector/producer sheds the
+# gate INTO refusal, never out of it. Extending this list is a deliberate edit.
+#
+# Membership here is NECESSARY BUT NEVER SUFFICIENT: a fact-type string is not a
+# credential. A recognised family that resolves NO registered projector gate must
+# additionally satisfy the authority its own family actually has --
+#
+#   * two-vote families certify only against a validated two-vote artifact naming
+#     the fact (see ``two_vote_refusal``), which is external evidence, not a name;
+#   * every other recognised family must establish membership against the committed
+#     contract that declares it: the exact declared review-artifact citation, on the
+#     carrier that is actually resolved, plus the declared producer and projector,
+#     plus an evidence file committed in this repository (see
+#     ``family_authority_refusal``). A citation string is not evidence until it
+#     opens onto something.
+#
+# So a foreign payload relabelled into a recognised family cannot borrow that
+# family's authority from the fact_type field, and cannot mint it from an address
+# nothing resolves.
+RECOGNISED_TYPED_CLAIM_FACT_TYPES = frozenset(TWO_VOTE_FACT_TYPES) | frozenset({
+    # proof-noun-sufaha typed-claim families (qamus/examples/proof-noun-sufaha/)
+    "case_ending",
+    "paired_y_removal",
+    "plural_formation",
+    "plural_introduced_letters",
+    "plural_lexical_body",
+    "plural_pattern",
+    "retained_radicals",
+    "root",
+    "singular_pattern",
+    "singular_plural_relation",
+})
+
 ADJUDICATION_EVIDENCE_PREFIX = "adjudication:"
 SUFAHA_CONTRACT = ROOT / "qamus" / "examples" / "proof-noun-sufaha" / "sufaha-contract.json"
 TWO_VOTE_SAMPLE = ROOT / "qamus" / "examples" / "two_vote_artifact.sample.jsonl"
+
+
+NEVER_AUTO_RESOLVE = "never_auto_resolve"
 
 
 class CertificationError(ValueError):
@@ -103,6 +151,521 @@ def _canonical(value: Any) -> str:
 
 def _sha256(text: str) -> str:
     return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+FAMILY_CONTRACT_ARTIFACTS = (
+    ROOT / "qamus" / "examples" / "proof-noun-sufaha" / "sufaha-contract.json",
+)
+
+
+# A family anchor is only ever read from the SAME carrier the review-artifact
+# reconstructibility check reads (``source_evidence.source_addresses`` and
+# ``source_address``) and only with this source kind. An address that appears only
+# under ``dependencies.source_addresses``, or under any other source kind, is never
+# resolved against a packet, so it can claim anything and authorizes nothing.
+FAMILY_ANCHOR_SOURCE_KIND = "review_artifact"
+
+
+# Fields the certification STATE MACHINE owns, and only those. Everything else in
+# a fact is truth-bearing and is bound by ``family_body_digest``: fact_type,
+# fact_value, evidence_mode, source_evidence (addresses, quotation or structured
+# source fact), source_address, dependencies, derivation_chain, evidence identity,
+# contradiction records, defeaters/guards, producer, rule_projector, occurrence and
+# surface spans, and any other key a contract carries.
+#
+#   * ``certification`` — the status/reason the store itself writes;
+#   * ``unresolved_blockers`` — review bookkeeping, cleared as blockers are closed;
+#   * ``dependent_fact_ids`` / ``dependent_projection_ids`` — back-references that
+#     grow as OTHER facts register against this one, so they cannot be fixed at
+#     declaration time.
+#
+# Nothing else may be excluded: an exclusion is a field a forger may rewrite.
+FAMILY_BODY_STATE_FIELDS = frozenset({
+    "certification",
+    "unresolved_blockers",
+    "dependent_fact_ids",
+    "dependent_projection_ids",
+})
+
+
+def family_body_digest(fact: Dict[str, Any]) -> str:
+    """A deterministic digest of everything in a fact except state-machine fields."""
+
+    body = {key: value for key, value in (fact or {}).items()
+            if key not in FAMILY_BODY_STATE_FIELDS}
+    return _sha256(_canonical(body))
+
+
+def family_body_difference(candidate: Dict[str, Any], declared: Dict[str, Any]) -> List[str]:
+    """The truth-bearing keys on which a candidate differs from its declaration."""
+
+    keys = (set(candidate or {}) | set(declared or {})) - FAMILY_BODY_STATE_FIELDS
+    return sorted(
+        key for key in keys
+        if _canonical((candidate or {}).get(key)) != _canonical((declared or {}).get(key))
+    )
+
+
+def _build_family_index(payload: Dict[str, Any], path: Path) -> Dict[str, Dict[str, Any]]:
+    """Index one committed family contract by declared fact type.
+
+    Each citation maps to the ONE declaring fact it addresses — its id, producer,
+    projector, evidence mode, body digest and the declared body itself — so family
+    authority is never a type-wide set a foreign payload can satisfy.
+    """
+
+    index: Dict[str, Dict[str, Any]] = {}
+    contract_id = str(payload.get("contract_id") or "")
+    for fact in payload.get("facts") or []:
+        if not isinstance(fact, dict):
+            continue
+        fact_type = str(fact.get("fact_type") or "")
+        anchor = fact.get("source_address")
+        if not isinstance(anchor, dict):
+            continue
+        address = str(anchor.get("address") or "")
+        if not fact_type or not address:
+            continue
+        if str(anchor.get("source_kind") or "") != FAMILY_ANCHOR_SOURCE_KIND:
+            # Only a reconstructible review artifact can anchor a family.
+            continue
+        declared = index.setdefault(fact_type, {
+            "contract_path": path,
+            "contract_id": contract_id,
+            "citations": {},
+        })
+        declared["citations"][address] = {
+            "fact_id": str(fact.get("fact_id") or ""),
+            "producer": str(((fact.get("producer") or {}).get("id")) or ""),
+            "projector": str(((fact.get("rule_projector") or {}).get("projector_id")) or ""),
+            "evidence_mode": str(fact.get("evidence_mode") or ""),
+            "body_digest": family_body_digest(fact),
+            "body": copy.deepcopy(fact),
+        }
+    return index
+
+
+@functools.lru_cache(maxsize=1)
+def family_contract_index() -> Dict[str, Dict[str, Any]]:
+    """Per declared family, the exact facts its committed family contract declares.
+
+    Read out of the committed contracts rather than hard-coded here, so a family's
+    permitted authority cannot drift away from the artifact that defines it.
+    """
+
+    index: Dict[str, Dict[str, Any]] = {}
+    for path in FAMILY_CONTRACT_ARTIFACTS:
+        if not path.exists():
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):  # a damaged contract declares nothing
+            continue
+        for fact_type, declared in _build_family_index(payload, path).items():
+            index.setdefault(fact_type, declared)["citations"].update(declared["citations"])
+    return index
+
+
+def _family_anchor_candidates(fact: Dict[str, Any]) -> List[str]:
+    """Addresses offered on the reconstructible carrier, with the anchor kind.
+
+    ``dependencies.source_addresses`` is deliberately excluded: the review-artifact
+    reconstructibility check never reads it, so an address living only there is
+    never opened and cannot be evidence of anything.
+    """
+
+    items: List[Any] = list(_addresses(fact))
+    primary = fact.get("source_address")
+    if isinstance(primary, dict):
+        items.append(primary)
+    return [
+        str(item["address"]) for item in items
+        if isinstance(item, dict) and item.get("address")
+        and str(item.get("source_kind") or "") == FAMILY_ANCHOR_SOURCE_KIND
+    ]
+
+
+def family_evidence_path(declared: Dict[str, Any], address: str) -> Optional[Path]:
+    """The in-repository path a declared citation resolves to, or None if unsafe.
+
+    Resolution is relative to the DECLARING contract's own directory and must stay
+    inside the repository: a citation may not escape into the filesystem, and a
+    lookalike path is not the declared artifact.
+    """
+
+    file_part = str(address).split("#", 1)[0]
+    if (not file_part or os.path.isabs(file_part)
+            or file_part.startswith(("/", "\\")) or ".." in file_part):
+        return None
+    candidate = Path(declared["contract_path"]).parent / file_part
+    try:
+        candidate.resolve().relative_to(ROOT.resolve())
+    except (OSError, ValueError):
+        return None
+    return candidate
+
+
+def repository_blob_refusal(path: Path, *, repo_root: Path = ROOT) -> Optional[str]:
+    """Refusal unless repository authority proves this path is committed, unchanged.
+
+    Existence in a worktree proves nothing: anyone can drop a file next to a
+    contract. The path must be tracked at the CURRENT commit and its working-tree
+    content must equal that committed blob. If repository authority cannot be
+    consulted at all, that is a refusal too — never an assumption of good faith.
+    """
+
+    root = Path(repo_root).resolve()
+    try:
+        relative = Path(path).resolve().relative_to(root)
+    except (OSError, ValueError):
+        return "%s is outside the repository, so it can never be committed evidence" % path
+    rel = relative.as_posix()
+
+    def git(*args: str) -> Optional[subprocess.CompletedProcess]:
+        try:
+            return subprocess.run(("git", "-C", str(root)) + args,
+                                  capture_output=True, text=True, timeout=60)
+        except (OSError, subprocess.SubprocessError):
+            return None
+
+    tracked = git("rev-parse", "--verify", "--quiet", "HEAD:%s" % rel)
+    if tracked is None:
+        return ("repository authority is unavailable, so %s cannot be shown to be committed "
+                "evidence; certification fails closed" % rel)
+    if tracked.returncode != 0 or not tracked.stdout.strip():
+        return ("%s exists in the working tree but is not tracked at the current commit; "
+                "an untracked lookalike is not committed evidence" % rel)
+    unchanged = git("diff", "--quiet", "HEAD", "--", rel)
+    if unchanged is None or unchanged.returncode not in (0, 1):
+        return ("repository authority could not compare %s against the commit, so it cannot be "
+                "accepted as committed evidence" % rel)
+    if unchanged.returncode == 1:
+        return ("%s has drifted from the blob committed at %s; the evidence a citation opens "
+                "must be the committed bytes, not the working copy"
+                % (rel, tracked.stdout.strip()[:12]))
+    return None
+
+
+def _record_carries(record: Any, represented: str) -> bool:
+    """Whether an opened evidence record actually carries this verbatim evidence.
+
+    The comparison walks the record's own values rather than its serialisation: a
+    quotation legitimately contains quotes and braces, and an escaped-JSON substring
+    test would reject exactly the verbatim material it is meant to confirm.
+    """
+
+    if isinstance(record, str):
+        return represented == record or represented in record
+    if isinstance(record, dict):
+        return (_canonical(record) == represented
+                or any(_record_carries(value, represented) for value in record.values()))
+    if isinstance(record, list):
+        return (_canonical(record) == represented
+                or any(_record_carries(value, represented) for value in record))
+    return False
+
+
+def evidence_fragment_refusal(evidence_path: Path, address: str,
+                              fact: Dict[str, Any]) -> Optional[str]:
+    """Refusal unless the cited fragment opens and corroborates this exact fact.
+
+    ``#fact=N`` selects the N-th record of the cited artifact (one JSON object per
+    line for ``.jsonl``, or the N-th entry of a ``facts`` array / top-level array
+    for ``.json``). That record must carry this fact's verbatim quotation, and must
+    not name a different fact type. A fragment nothing can open is not evidence.
+    """
+
+    fragment = address.split("#", 1)[1] if "#" in address else ""
+    if not fragment.startswith("fact=") or not fragment[len("fact="):].isdigit():
+        return ("the citation %r carries no resolvable record fragment, so nothing in %s can be "
+                "opened to corroborate this fact" % (address, evidence_path.name))
+    index = int(fragment[len("fact="):])
+    try:
+        text = evidence_path.read_text(encoding="utf-8")
+    except (OSError, ValueError) as error:
+        return "the cited evidence %s could not be opened (%s)" % (evidence_path.name, error)
+    records: List[Any] = []
+    try:
+        if evidence_path.suffix == ".jsonl":
+            records = [json.loads(line) for line in text.splitlines() if line.strip()]
+        else:
+            payload = json.loads(text)
+            if isinstance(payload, dict):
+                records = list(payload.get("facts") or [])
+            elif isinstance(payload, list):
+                records = list(payload)
+    except ValueError as error:
+        return "the cited evidence %s is not a readable record artifact (%s)" % (
+            evidence_path.name, error)
+    if not records or not 1 <= index <= len(records):
+        return ("the citation %r addresses record %d of %s, which holds %d record(s); the cited "
+                "fragment does not exist" % (address, index, evidence_path.name, len(records)))
+    record = records[index - 1]
+    source_evidence = fact.get("source_evidence") or {}
+    quotation = source_evidence.get("source_quotation")
+    represented = quotation if isinstance(quotation, str) and quotation else None
+    if represented is None:
+        structured = source_evidence.get("structured_source_fact")
+        represented = _canonical(structured) if structured is not None else None
+    if represented is None:
+        return ("this fact carries neither a verbatim quotation nor a structured source fact, so "
+                "the cited record %r cannot corroborate it" % address)
+    if not _record_carries(record, represented):
+        return ("the record at %r does not carry this fact's verbatim evidence, so the citation "
+                "does not corroborate the claim being certified" % address)
+    record_type = str(record.get("fact_type") or "") if isinstance(record, dict) else ""
+    if record_type and record_type != str(fact.get("fact_type") or ""):
+        return ("the record at %r is evidence for %r, not for %r"
+                % (address, record_type, fact.get("fact_type")))
+    return None
+
+
+def family_authority_refusal(fact: Dict[str, Any], *,
+                             contract_id: Optional[str] = None) -> Optional[str]:
+    """Refusal when a recognised-but-ungated family's authority is not established.
+
+    A registered projector gate already decides what a fact needs. Where no such
+    gate exists, the family name is only a word; the fact must be tied to the
+    committed contract that declares the family by
+
+    1. citing that contract's own review-artifact address for a fact of THIS type,
+       on the carrier the reconstructibility check actually reads;
+    2. carrying the producer, projector and evidence mode THAT CITATION's declaring
+       fact carries — never a type-wide set, and never an omitted field;
+    3. presenting the declared body itself: every truth-bearing field is digest-
+       compared against the declaration (see ``FAMILY_BODY_STATE_FIELDS`` for the
+       narrow set of state-machine fields excluded), so a declared fact id can never
+       carry a substituted fact_value, quotation, dependency or derivation;
+    4. opening onto evidence that repository authority proves is tracked at the
+       current commit and byte-identical to that commit, whose cited fragment
+       actually corroborates this fact.
+
+    Anything less would let a relabelled payload assert its own family membership.
+    """
+
+    fact_type = str(fact.get("fact_type") or "")
+    declared = family_contract_index().get(fact_type)
+    if not declared:
+        return (
+            "fact_type %r resolves no registered projector gate and no committed family contract "
+            "declares it; a fact-type name can never by itself authorize certification" % fact_type
+        )
+    contract_display = Path(declared["contract_path"]).relative_to(ROOT).as_posix()
+    citations = declared["citations"]
+
+    offered = _family_anchor_candidates(fact)
+    if not offered:
+        return (
+            "fact_type %r resolves no registered projector gate, so its family membership must be "
+            "anchored to %s by a %r source address in source_evidence.source_addresses or "
+            "source_address; this fact offers none (a dependency-only or differently-kinded "
+            "address is never resolved, so it is not evidence)"
+            % (fact_type, contract_display, FAMILY_ANCHOR_SOURCE_KIND)
+        )
+    cited = sorted(address for address in offered if address in citations)
+    if not cited:
+        return (
+            "fact_type %r must cite the exact %s address that contract declares for a %s fact "
+            "(one of: %s); it cites %s, so its family membership is an unverified relabelling"
+            % (fact_type, contract_display, fact_type,
+               ", ".join(sorted(citations)), ", ".join(sorted(offered)))
+        )
+    declaring = {citations[address]["fact_id"] for address in cited}
+    if len(declaring) > 1:
+        return (
+            "the citations %s are declared by different %s facts (%s); one fact may not present "
+            "another's evidence" % (", ".join(cited), contract_display, ", ".join(sorted(declaring)))
+        )
+    declared_fact = citations[cited[0]]
+
+    # The declared fact, not a type-wide set: producer, projector and evidence mode
+    # are the ones THIS citation's declaring fact carries.
+    producer = str(((fact.get("producer") or {}).get("id")) or "")
+    if producer != declared_fact["producer"]:
+        return (
+            "the citation %r is declared by %s with producer %r; this fact declares %s, so it is "
+            "not a fact of that family"
+            % (cited[0], contract_display, declared_fact["producer"],
+               repr(producer) if producer else "no producer")
+        )
+    projector = str(((fact.get("rule_projector") or {}).get("projector_id")) or "")
+    if projector != declared_fact["projector"]:
+        return (
+            "the citation %r is declared by %s with projector %r; this fact declares %s, so it is "
+            "not a fact of that family"
+            % (cited[0], contract_display, declared_fact["projector"],
+               repr(projector) if projector else "no projector")
+        )
+    if (contract_id is not None and declared["contract_id"]
+            and str(contract_id) != declared["contract_id"]):
+        return (
+            "fact_type %r is declared by %s under contract_id %r; this fact is registered under "
+            "%r, so the citation does not belong to it"
+            % (fact_type, contract_display, declared["contract_id"], str(contract_id))
+        )
+    if declared_fact["fact_id"] and str(fact.get("fact_id") or "") != declared_fact["fact_id"]:
+        return (
+            "the citation %r identifies the %s fact %s declared by %s; this payload presents "
+            "fact_id %r, so it is not the fact that citation declares"
+            % (cited[0], fact_type, declared_fact["fact_id"], contract_display,
+               str(fact.get("fact_id") or ""))
+        )
+    if str(fact.get("evidence_mode") or "") != declared_fact["evidence_mode"]:
+        return (
+            "the citation %r is declared at evidence_mode %r; this fact claims %r, and a fact may "
+            "not certify on a rung its declaration never claimed"
+            % (cited[0], declared_fact["evidence_mode"], str(fact.get("evidence_mode") or ""))
+        )
+
+    # A fact_id is a label. What certification asserts is the BODY, so the body must
+    # be the declared one: every truth-bearing field, digest-compared.
+    if family_body_digest(fact) != declared_fact["body_digest"]:
+        differing = family_body_difference(fact, declared_fact["body"])
+        return (
+            "this payload differs from the %s fact %s declared by %s on %s; a declared fact id "
+            "may not carry a substituted body"
+            % (fact_type, declared_fact["fact_id"], contract_display,
+               ", ".join(differing) or "an excluded field")
+        )
+
+    # The citation must open onto committed evidence. While the declared evidence is
+    # absent from the repository, no fact of this family can be certified — that is
+    # the honest state, not a reason to accept the citation as its own proof.
+    evidence_path = family_evidence_path(declared, cited[0])
+    if evidence_path is None:
+        return (
+            "the family citation %r does not resolve to a repository-relative path under %s"
+            % (cited[0], contract_display)
+        )
+    if not evidence_path.exists():
+        return (
+            "%s declares the evidence for %r at %s, which is not committed in-repo; "
+            "no fact of this family can be certified until that evidence is committed"
+            % (contract_display, fact_type, evidence_path.relative_to(ROOT).as_posix())
+        )
+    blob_refusal = repository_blob_refusal(evidence_path)
+    if blob_refusal is not None:
+        return blob_refusal
+    return evidence_fragment_refusal(evidence_path, cited[0], fact)
+
+
+def _gate_rank(tier):
+    if tier is None:
+        return -1
+    try:
+        from tools import fact_projectors
+    except Exception:  # pragma: no cover
+        return -1
+    return fact_projectors.load_gate_tiers().get(tier, {}).get("rank", 0)
+
+
+def producing_projector_gate(fact: Dict[str, Any]) -> Tuple[Optional[str], Optional[str], str]:
+    """Resolve the PRODUCING projector gate tier from repository authority.
+
+    The fact's own claimed tier is never trusted, and a projector id can never
+    shed the gate its fact TYPE carries. Both bindings are resolved:
+
+    * projector-bound: ``rule_projector.projector_id`` must be registered AND its
+      contract must actually produce ``fact.fact_type``; a registered projector
+      that produces something else is an incoherent claim, not a weaker gate;
+    * type-bound: the strictest registered gate for ``fact.fact_type``.
+
+    The two must agree on producer identity, and the STRICTEST valid gate wins.
+    """
+
+    try:
+        from tools import fact_projectors
+    except Exception as error:  # pragma: no cover - registry must be importable
+        raise CertificationError("cannot resolve the producing projector registry: %s" % error)
+
+    fact_type = str(fact.get("fact_type") or "")
+    projector_id = ((fact.get("rule_projector") or {}).get("projector_id"))
+    type_tier = fact_projectors.REGISTRY.gate_tier_for_output_fact_type(fact_type) if fact_type else None
+
+    projector_tier = None
+    if projector_id:
+        try:
+            contract = fact_projectors.REGISTRY.contract(str(projector_id))
+        except fact_projectors.ProjectorValidationError:
+            contract = None
+        if contract is not None:
+            if contract.get("output_fact_type") != fact_type:
+                return (
+                    type_tier,
+                    str(projector_id),
+                    "projector/fact_type mismatch: %s produces %s, not %s"
+                    % (projector_id, contract.get("output_fact_type"), fact_type),
+                )
+            projector_tier = contract.get("gate_tier")
+
+    if projector_tier is None and type_tier is None:
+        return None, (str(projector_id) if projector_id else None), "no registered producer"
+    strictest = max(
+        [tier for tier in (projector_tier, type_tier) if tier is not None],
+        key=_gate_rank,
+    )
+    basis = "registered projector_id" if projector_tier is not None else "registered output_fact_type"
+    if projector_tier is not None and type_tier is not None and projector_tier != type_tier:
+        basis = "strictest of projector and fact-type gates"
+    return strictest, (str(projector_id) if projector_id else None), basis
+
+
+def gate_refusal(fact: Dict[str, Any], *, contract_id: Optional[str] = None) -> Optional[str]:
+    """Refusal reason when the producing projector may never reach certified."""
+
+    tier, projector_id, basis = producing_projector_gate(fact)
+    if basis.startswith("projector/fact_type mismatch"):
+        return (
+            "the fact names a registered projector that does not produce its fact type (%s); "
+            "a projector identity may never shed a fact-type gate" % basis
+        )
+    if tier == NEVER_AUTO_RESOLVE:
+        return (
+            "the producing projector is gated %s (%s: %s); the gate SSOT rejects this class outright, "
+            "so no evidence bundle, dependency or vote can certify it"
+            % (NEVER_AUTO_RESOLVE, basis, projector_id or fact.get("fact_type"))
+        )
+    fact_type = str(fact.get("fact_type") or "")
+    if tier is None:
+        if fact_type not in RECOGNISED_TYPED_CLAIM_FACT_TYPES:
+            # No registered producer AND no recognised typed-claim family: this fact
+            # has no contract deciding what evidence it needs, so it can never be
+            # certified.
+            return (
+                "no registered producer gate and no recognised typed-claim contract for fact_type %r "
+                "/ projector %r; an unrecognised producer can never be certified"
+                % (fact.get("fact_type"), projector_id)
+            )
+        if fact_type not in TWO_VOTE_FACT_TYPES:
+            # Recognised but ungated: the family name proves nothing on its own, so
+            # the fact must establish its membership against the contract that
+            # declares the family — a cited, resolvable, committed artifact plus the
+            # declared producer and projector identity. (Two-vote families are
+            # already bound to a validated vote artifact.)
+            return family_authority_refusal(fact, contract_id=contract_id)
+    return None
+
+
+def identity_refusal(fact: Dict[str, Any]) -> Optional[str]:
+    """Refusal when a content-addressed fact id no longer matches its content."""
+
+    try:
+        from tools import fact_projectors
+    except Exception:  # pragma: no cover
+        return None
+    recomputer = fact_projectors.identity_recomputer_for(fact)
+    if recomputer is None:
+        return None
+    try:
+        expected = recomputer(fact)
+    except Exception as error:  # noqa: BLE001
+        return "the producing projector could not recompute this fact id: %s" % error
+    if expected != fact.get("fact_id"):
+        return (
+            "content-addressed fact id does not match its content: a changed projector, fact type "
+            "or semantic claim may not retain the original fact_id"
+        )
+    return None
 
 
 def _addresses(fact: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -155,6 +718,133 @@ def load_two_vote_row(bundle_path: os.PathLike[str] | str,
         )
         return None, errors
     return row, errors
+
+
+def _two_vote_expected_fact_value(fact_type: str,
+                                  vote: Dict[str, Any],
+                                  schema: str = "qamus.two_vote_artifact.v1") -> Optional[Dict[str, Any]]:
+    """Project one agreed vote into the exact closed value shape for a fact type.
+
+    A shared occurrence is not claim identity.  The certifier therefore accepts
+    only fact values whose complete JSON value is the type-specific projection
+    below, including the agreed reason key.  Producers that need additional
+    lexical or presentation fields must keep those in separate facts rather than
+    smuggling them through a grammar certification.
+    """
+
+    conclusion = vote.get("conclusion") or {}
+    case_or_mood = conclusion.get("case_or_mood") or {}
+    reason_key = vote.get("reason_key")
+    function = conclusion.get("function") or conclusion.get("contextual_function")
+    if schema == "qamus.two_vote_artifact.v1.1":
+        compact = two_vote.compact
+        reason_key = compact(vote.get("reason_key"))
+        governor = conclusion.get("governor")
+        governor_identity = None
+        if isinstance(governor, dict):
+            governor_identity = {
+                "loc": compact(governor.get("loc")),
+                "surface": (
+                    compact(governor.get("normalized_surface"))
+                    or compact(governor.get("surface"))
+                ),
+            }
+        canonical_case_or_mood = {
+            "mood_basis": compact(case_or_mood.get("mood_basis")) or None,
+            "sign": compact(case_or_mood.get("sign")),
+            "sign_visibility": compact(case_or_mood.get("sign_visibility")),
+            "value": compact(case_or_mood.get("value")),
+        }
+        if fact_type == "governor_relation":
+            return {
+                "attachment_key": compact(conclusion.get("attachment_key")) or None,
+                "governed_expression": compact(conclusion.get("governed_expression")) or None,
+                "governor": governor_identity,
+                "reason_key": reason_key,
+            }
+        if fact_type == "case_mood_governor":
+            return {
+                "case_or_mood": canonical_case_or_mood,
+                "governed_expression": compact(conclusion.get("governed_expression")) or None,
+                "governor": governor_identity,
+                "reason_key": reason_key,
+            }
+        if fact_type == "contextual_function":
+            return {"function": compact(conclusion.get("function")), "reason_key": reason_key}
+        if fact_type == "irab_rendering":
+            return {
+                "conclusion": {
+                    "attachment_key": compact(conclusion.get("attachment_key")) or None,
+                    "case_or_mood": canonical_case_or_mood,
+                    "function": compact(conclusion.get("function")),
+                    "governed_expression": compact(conclusion.get("governed_expression")) or None,
+                    "governor": governor_identity,
+                },
+                "reason_key": reason_key,
+            }
+        return None
+    if fact_type == "governor_relation":
+        return {
+            "attachment": conclusion.get("attachment"),
+            "governed_expression": conclusion.get("governed_expression"),
+            "governor": copy.deepcopy(conclusion.get("governor")),
+            "reason_key": reason_key,
+        }
+    if fact_type == "case_mood_governor":
+        return {
+            "case_or_mood": copy.deepcopy(case_or_mood),
+            "governed_expression": conclusion.get("governed_expression"),
+            "governor": copy.deepcopy(conclusion.get("governor")),
+            "reason_key": reason_key,
+        }
+    if fact_type == "contextual_function":
+        return {"function": function, "reason_key": reason_key}
+    if fact_type == "irab_rendering":
+        return {"conclusion": copy.deepcopy(conclusion), "reason_key": reason_key}
+    return None
+
+
+def two_vote_claim_errors(fact: Dict[str, Any],
+                          two_vote_row: Dict[str, Any]) -> List[str]:
+    """Refuse a two-vote artifact unless it proves this exact typed fact claim."""
+
+    errors: List[str] = []
+    votes = two_vote_row.get("votes") or []
+    if len(votes) != 2 or not all(isinstance(vote, dict) for vote in votes):
+        return ["two-vote claim binding requires exactly two vote records"]
+    fact_type = str(fact.get("fact_type") or "")
+    schema = str(two_vote_row.get("schema") or "")
+    expected = _two_vote_expected_fact_value(fact_type, votes[0], schema)
+    second_expected = _two_vote_expected_fact_value(fact_type, votes[1], schema)
+    if expected is None:
+        errors.append("two-vote claim has no closed fact-value projection for %s" % fact_type)
+    elif _canonical(expected) != _canonical(second_expected):
+        errors.append(
+            "two-vote claim projection for %s is not exactly agreed by both votes"
+            % fact_type
+        )
+    elif _canonical(fact.get("fact_value")) != _canonical(expected):
+        errors.append(
+            "two-vote claim does not bind the exact %s fact value and agreed reason key"
+            % fact_type
+        )
+
+    occurrence = two_vote_row.get("occurrence") or {}
+    expected_loc = occurrence.get("quran_loc")
+    expected_surface = occurrence.get("surface")
+    spans = fact.get("surface_spans") or []
+    exact_surface_bound = any(
+        isinstance(span, dict)
+        and span.get("quran_loc") == expected_loc
+        and span.get("surface") == expected_surface
+        for span in spans
+    )
+    if not exact_surface_bound:
+        errors.append(
+            "two-vote claim does not bind the artifact's exact occurrence surface %s"
+            % expected_loc
+        )
+    return errors
 
 
 def evidence_bundle_errors(fact: Dict[str, Any],
@@ -272,6 +962,8 @@ def evidence_bundle_errors(fact: Dict[str, Any],
                     "two-vote artifact occurrence %s is not among the fact's "
                     "source addresses" % bundle_loc
                 )
+            for claim_error in two_vote_claim_errors(fact, two_vote_row):
+                err(claim_error)
 
     # 6. Conflict record must exist (possibly empty) — certifying over an
     # unattached known conflict is a violation; attachment is representable.
@@ -341,12 +1033,27 @@ class TypedFactCertificationStore:
                     "fact": event.get("fact"),
                     "contract_id": event.get("contract_id"),
                 }
+            elif event.get("event_type") == "dependency_rebind" and fact_id in state:
+                fact = copy.deepcopy(state[fact_id].get("fact") or {})
+                fact["dependent_fact_ids"] = copy.deepcopy(
+                    event.get("dependent_fact_ids") or []
+                )
+                state[fact_id]["fact"] = fact
             elif fact_id in state:
                 state[fact_id]["status"] = event.get("to_status")
         return state
 
     def status_by_id(self) -> Dict[str, str]:
         return {fact_id: entry["status"] for fact_id, entry in self.state().items()}
+
+    def event_counts_by_id(self) -> Dict[str, int]:
+        """Return audit-only event counts without reimplementing state fold."""
+        counts: Dict[str, int] = {}
+        for event in self._events():
+            fact_id = event.get("fact_id")
+            if fact_id:
+                counts[fact_id] = counts.get(fact_id, 0) + 1
+        return counts
 
     def certified_fact_ids(self) -> List[str]:
         return sorted(
@@ -359,6 +1066,9 @@ class TypedFactCertificationStore:
         fact_id = fact.get("fact_id")
         if not fact_id:
             raise CertificationError("a registered fact requires a fact_id")
+        stale = identity_refusal(fact)
+        if stale is not None:
+            raise CertificationError("registration refused: %s" % stale)
         if fact_id in self.state():
             raise CertificationError("fact %s is already registered" % fact_id)
         # A fact enters the trail as candidate regardless of any status a
@@ -395,6 +1105,14 @@ class TypedFactCertificationStore:
             )
         evidence_bundle_ref: Optional[Dict[str, Any]] = None
         if to_status == "certified":
+            # Producer gate first: a never_auto_resolve producer can never reach
+            # certified, however complete its evidence, dependencies or votes.
+            refusal = gate_refusal(entry["fact"], contract_id=entry.get("contract_id"))
+            if refusal is None:
+                refusal = identity_refusal(entry["fact"])
+            if refusal is not None:
+                raise CertificationError("certification refused for %s: %s" % (fact_id, refusal))
+            resolved_tier, _projector_id, _basis = producing_projector_gate(entry["fact"])
             two_vote_row = None
             errors: List[str] = []
             if two_vote_bundle is not None:
@@ -417,6 +1135,13 @@ class TypedFactCertificationStore:
                     two_vote_row=two_vote_row, packet_dir=packet_dir,
                 )
             )
+            if resolved_tier == "two_vote_required" and two_vote_row is None:
+                # The registry gate is authoritative even when the fact type is
+                # outside the legacy hard-coded two-vote set.
+                errors.append(
+                    "the producing projector is gated two_vote_required; a canonical "
+                    "two-vote bundle is required"
+                )
             if errors:
                 raise CertificationError(
                     "certification refused for %s: %s" % (fact_id, "; ".join(errors))
@@ -442,6 +1167,49 @@ class TypedFactCertificationStore:
             "reason": reason,
             "evidence_bundle_ref": evidence_bundle_ref,
             "triggered_by": triggered_by,
+        })
+
+    def rebind_dependents(self, fact_id: str, dependent_fact_ids: List[str], *,
+                          actor: str, timestamp: str, reason: str) -> Dict[str, Any]:
+        """Append an effective reverse-dependency update without rewriting a fact.
+
+        ``dependent_fact_ids`` is state-machine metadata (not linguistic claim
+        substance), so a versioned successor may replace a revoked historical
+        target while the original register event remains immutable.
+        """
+
+        state = self.state()
+        entry = state.get(fact_id)
+        if entry is None:
+            raise CertificationError("unknown fact_id: %s" % fact_id)
+        if not isinstance(dependent_fact_ids, list) or any(
+                not isinstance(item, str) or not item for item in dependent_fact_ids):
+            raise CertificationError("dependent_fact_ids must be a list of non-empty ids")
+        if len(dependent_fact_ids) != len(set(dependent_fact_ids)):
+            raise CertificationError("dependent_fact_ids must not contain duplicates")
+        if fact_id in dependent_fact_ids:
+            raise CertificationError("a fact cannot depend on itself")
+        missing = sorted(item for item in dependent_fact_ids if item not in state)
+        if missing:
+            raise CertificationError(
+                "dependency rebind targets unregistered facts: %s" % ", ".join(missing)
+            )
+        old_ids = copy.deepcopy((entry.get("fact") or {}).get("dependent_fact_ids") or [])
+        return self._append_event({
+            "event_type": "dependency_rebind",
+            "fact_id": fact_id,
+            "contract_id": entry.get("contract_id"),
+            "fact_type": (entry.get("fact") or {}).get("fact_type"),
+            "evidence_mode": (entry.get("fact") or {}).get("evidence_mode"),
+            "from_status": entry["status"],
+            "to_status": entry["status"],
+            "actor": actor,
+            "timestamp": timestamp,
+            "reason": reason,
+            "from_dependent_fact_ids": old_ids,
+            "dependent_fact_ids": copy.deepcopy(dependent_fact_ids),
+            "evidence_bundle_ref": None,
+            "triggered_by": None,
         })
 
     # -- revocation cascade (doc section 5) --------------------------------
@@ -518,6 +1286,7 @@ class TypedFactCertificationStore:
     def validate_trail(self) -> List[str]:
         errors: List[str] = []
         state: Dict[str, Dict[str, Any]] = {}
+        last_certification_event: Dict[str, Dict[str, Any]] = {}
         previous_line: Optional[str] = None
         for number, event in enumerate(self._events(), 1):
             prefix = "event %d" % number
@@ -546,6 +1315,43 @@ class TypedFactCertificationStore:
                     "status": "candidate",
                     "fact": event.get("fact") or {},
                 }
+            elif event.get("event_type") == "dependency_rebind":
+                entry = state.get(fact_id)
+                if entry is None:
+                    errors.append(
+                        "%s: dependency rebind for unregistered fact %s" % (prefix, fact_id)
+                    )
+                else:
+                    if event.get("from_status") != entry["status"] \
+                            or event.get("to_status") != entry["status"]:
+                        errors.append(
+                            "%s: dependency rebind must preserve folded status %r"
+                            % (prefix, entry["status"])
+                        )
+                    fact = copy.deepcopy(entry.get("fact") or {})
+                    old_ids = fact.get("dependent_fact_ids") or []
+                    new_ids = event.get("dependent_fact_ids")
+                    if event.get("from_dependent_fact_ids") != old_ids:
+                        errors.append(
+                            "%s: dependency rebind source ids do not match folded payload"
+                            % prefix
+                        )
+                    if not isinstance(new_ids, list) or any(
+                            not isinstance(item, str) or not item for item in (new_ids or [])):
+                        errors.append(
+                            "%s: dependency rebind requires a list of non-empty ids" % prefix
+                        )
+                    elif len(new_ids) != len(set(new_ids)):
+                        errors.append("%s: dependency rebind contains duplicate ids" % prefix)
+                    else:
+                        missing = sorted(item for item in new_ids if item not in state)
+                        if missing:
+                            errors.append(
+                                "%s: dependency rebind targets unregistered facts: %s"
+                                % (prefix, ", ".join(missing))
+                            )
+                        fact["dependent_fact_ids"] = copy.deepcopy(new_ids)
+                        entry["fact"] = fact
             else:
                 entry = state.get(fact_id)
                 if entry is None:
@@ -566,7 +1372,49 @@ class TypedFactCertificationStore:
                     event.get("evidence_bundle_ref"), dict
                 ):
                     errors.append("%s: certification event requires an evidence bundle reference" % prefix)
+                if event.get("to_status") == "certified":
+                    last_certification_event[fact_id] = event
             previous_line = _canonical(event)
+
+        # A hash-valid historical event is not proof that its claim still meets
+        # the current authority contract. Re-open the evidence behind every
+        # *currently* certified two-vote fact and bind it to the registered fact
+        # payload. A later append-only revocation removes the fact from this
+        # effective-state audit without rewriting its historical event.
+        for fact_id, entry in state.items():
+            if entry["status"] != "certified":
+                continue
+            fact = entry.get("fact") or {}
+            resolved_tier, _projector_id, _basis = producing_projector_gate(fact)
+            if fact.get("fact_type") not in TWO_VOTE_FACT_TYPES \
+                    and resolved_tier != "two_vote_required":
+                continue
+            cert_event = last_certification_event.get(fact_id) or {}
+            bundle_ref = cert_event.get("evidence_bundle_ref") or {}
+            bundle_name = bundle_ref.get("two_vote_bundle")
+            artifact_id = bundle_ref.get("two_vote_artifact_id")
+            if not bundle_name or not artifact_id:
+                errors.append(
+                    "current two-vote certification %s has no reopenable bundle and artifact id"
+                    % fact_id
+                )
+                continue
+            bundle_path = Path(str(bundle_name))
+            if not bundle_path.is_absolute():
+                bundle_path = ROOT / bundle_path
+            row, bundle_errors = load_two_vote_row(bundle_path, str(artifact_id))
+            for message in bundle_errors:
+                errors.append("current two-vote certification %s: %s" % (fact_id, message))
+            if row is None:
+                continue
+            loc = (row.get("occurrence") or {}).get("quran_loc")
+            if loc not in {item.get("address") for item in _addresses(fact)}:
+                errors.append(
+                    "current two-vote certification %s: artifact occurrence %s is not "
+                    "among the fact's source addresses" % (fact_id, loc)
+                )
+            for message in two_vote_claim_errors(fact, row):
+                errors.append("current two-vote certification %s: %s" % (fact_id, message))
         # Cascade invariant: a derived fact may not remain certified after any
         # input fact lost certification (a revoke without cascade is invalid).
         for fact_id, entry in state.items():
@@ -611,17 +1459,40 @@ def count_certified(directory: os.PathLike[str] | str | None = None) -> int:
 _TS = "2026-07-29T00:00:00Z"
 _ACTOR = "lane:certify-typed-fact-self-test"
 
+# The fact type these fixtures are stamped with: one whose producer contract is
+# REGISTERED (``sarf.documented_form.v1`` -> ``sarf_form``, gate ``auto_safe``), so
+# the state machine can be exercised without borrowing anyone's authority.
+_FIXTURE_FACT_TYPE = "sarf_form"
+
 
 def _synthetic_fact(suffix: str, fact_type: str, mode: str, *,
                     addresses: Optional[List[Dict[str, str]]] = None,
                     dependency_ids: Optional[List[str]] = None,
                     chain_inputs: Optional[List[str]] = None,
                     quotation: str = "verbatim source statement") -> Dict[str, Any]:
+    """A synthetic fixture for the transition machinery.
+
+    A fixture may never impersonate a recognised typed-claim family: that family's
+    authority is a committed contract, an evidence artifact and a declared identity,
+    none of which a synthetic fact has. A requested family name is therefore
+    recorded as ``fixture_requested_fact_type`` and the fixture is stamped with the
+    registered fixture type instead — callers exercising the state machine keep
+    working, and no fixture is ever certified under a family it does not belong to.
+    Two-vote families are left alone: their authority is a validated vote artifact,
+    which a fixture bundle can legitimately supply.
+    """
+
+    requested = fact_type
+    if fact_type in RECOGNISED_TYPED_CLAIM_FACT_TYPES and fact_type not in TWO_VOTE_FACT_TYPES:
+        fact_type = _FIXTURE_FACT_TYPE
     addresses = addresses or [{"address": "quran:2:13:%s" % suffix, "source_kind": "quran_token"}]
     fact: Dict[str, Any] = {
         "fact_id": "sha256:" + hashlib.sha256(("fixture:" + fact_type + ":" + suffix).encode("utf-8")).hexdigest(),
         "fact_type": fact_type,
-        "fact_value": {"value": "fixture-%s-%s" % (fact_type, suffix)},
+        "fact_value": {
+            "value": "fixture-%s-%s" % (fact_type, suffix),
+            "fixture_requested_fact_type": requested,
+        },
         "evidence_mode": mode,
         "source_evidence": {
             "source_addresses": copy.deepcopy(addresses),
@@ -667,16 +1538,16 @@ def self_test() -> int:
     with tempfile.TemporaryDirectory(prefix="certify-typed-fact-") as td:
         store = TypedFactCertificationStore(os.path.join(td, "store"))
 
-        attested = _synthetic_fact("21", "singular_pattern", "direct_source_attestation")
+        attested = _synthetic_fact("21", _FIXTURE_FACT_TYPE, "direct_source_attestation")
         corroborated = _synthetic_fact(
-            "22", "root", "cross_source_corroboration",
+            "22", _FIXTURE_FACT_TYPE, "cross_source_corroboration",
             addresses=[
                 {"address": "quran:2:13:22", "source_kind": "quran_token"},
                 {"address": "entry:fixture22:root", "source_kind": "qamus_entry_field"},
             ],
         )
         derived = _synthetic_fact(
-            "23", "paired_y_removal", "deterministic_derivation_from_certified_facts",
+            "23", _FIXTURE_FACT_TYPE, "deterministic_derivation_from_certified_facts",
             dependency_ids=[attested["fact_id"], corroborated["fact_id"]],
             chain_inputs=[attested["fact_id"], corroborated["fact_id"]],
         )
@@ -705,7 +1576,7 @@ def self_test() -> int:
             return 1
 
         # Red 3: certification without an evidence bundle.
-        naked = _synthetic_fact("24", "plural_pattern", "direct_source_attestation")
+        naked = _synthetic_fact("24", _FIXTURE_FACT_TYPE, "direct_source_attestation")
         del naked["source_evidence"]
         store.register(naked, contract_id="fixture:contract", actor=_ACTOR, timestamp=_TS)
         store.transition(naked["fact_id"], "review_required", actor=_ACTOR,
@@ -719,7 +1590,7 @@ def self_test() -> int:
 
         # Red 4: same-family repetition is not corroboration.
         repeated = _synthetic_fact(
-            "25", "root", "cross_source_corroboration",
+            "25", _FIXTURE_FACT_TYPE, "cross_source_corroboration",
             addresses=[
                 {"address": "quran:2:13:25", "source_kind": "quran_token"},
                 {"address": "quran:2:282:25", "source_kind": "quran_token"},
@@ -740,6 +1611,14 @@ def self_test() -> int:
             "12", "governor_relation", "direct_source_attestation",
             addresses=[{"address": "quran:2:13:12", "source_kind": "quran_token"}],
         )
+        governed_vote = two_vote.sample_verified_row()["votes"][0]
+        governed["fact_value"] = _two_vote_expected_fact_value(
+            "governor_relation", governed_vote, "qamus.two_vote_artifact.v1"
+        )
+        governed["surface_spans"] = [{
+            "quran_loc": "quran:2:13:12",
+            "surface": "السُّفَهَاءُ",
+        }]
         store.register(governed, contract_id="fixture:contract", actor=_ACTOR, timestamp=_TS)
         store.transition(governed["fact_id"], "review_required", actor=_ACTOR,
                          timestamp=_TS, reason="bundle assembled")
@@ -814,9 +1693,9 @@ def self_test() -> int:
         # the corroborated input under a certified derived fact.
         forged_dir = os.path.join(td, "forged")
         forged = TypedFactCertificationStore(forged_dir)
-        base_input = _synthetic_fact("31", "singular_pattern", "direct_source_attestation")
+        base_input = _synthetic_fact("31", _FIXTURE_FACT_TYPE, "direct_source_attestation")
         base_derived = _synthetic_fact(
-            "32", "paired_y_removal", "paired_form_inference",
+            "32", _FIXTURE_FACT_TYPE, "paired_form_inference",
             dependency_ids=[base_input["fact_id"]],
             chain_inputs=[base_input["fact_id"]],
         )
@@ -947,10 +1826,15 @@ def demo_sufaha() -> int:
               "(sufaha-evidence.jsonl, MCP verbatim capture) is not committed in-repo"
               % len(facts))
 
-        # Leg B — fixture copy: a temp packet dir carries a clearly-marked
-        # stand-in evidence file built ONLY from the quotations already
-        # committed inside sufaha-contract.json, so the transition machinery
-        # can be demonstrated without asserting any new evidence.
+        # Leg B — a resolvable fixture packet does NOT confer family authority.
+        # The temp packet dir carries a clearly-marked stand-in evidence file built
+        # ONLY from quotations already committed inside sufaha-contract.json. It
+        # makes the review-artifact address resolvable, and it still changes
+        # nothing: the ten non-two-vote families draw their authority from the
+        # committed family contract, whose declared evidence file is absent from
+        # this repository, so they stay refused. The legacy governor_relation also
+        # stays refused because its value does not exactly project the votes'
+        # conclusion and reason key. Location equality alone is no longer enough.
         fixture_packet = Path(td) / "fixture-packet"
         fixture_packet.mkdir()
         standin_rows = [
@@ -972,49 +1856,45 @@ def demo_sufaha() -> int:
             store_b.register(fact, contract_id=contract_id, actor=actor, timestamp=_TS)
             store_b.transition(fact["fact_id"], "review_required", actor=actor,
                                timestamp=_TS, reason="fixture bundle under review")
+        certified_types: List[str] = []
+        family_refusals: Dict[str, str] = {}
+        claim_refusals: Dict[str, str] = {}
         for fact in _sufaha_dependency_order(facts):
             kwargs = {"packet_dir": fixture_packet}
             if fact.get("fact_type") in TWO_VOTE_FACT_TYPES:
                 kwargs["two_vote_bundle"] = (TWO_VOTE_SAMPLE, "two-vote-artifact:quran_2_13_12")
-            store_b.transition(fact["fact_id"], "certified", actor=actor, timestamp=_TS,
-                               reason="fixture-copy bundle complete (%s)" % fact.get("evidence_mode"),
-                               **kwargs)
-        if len(store_b.certified_fact_ids()) != len(facts):
-            print("SUFAHA DEMO FAIL: fixture copy certified %d/%d facts"
-                  % (len(store_b.certified_fact_ids()), len(facts)))
+            try:
+                store_b.transition(fact["fact_id"], "certified", actor=actor, timestamp=_TS,
+                                   reason="fixture packet bundle (%s)" % fact.get("evidence_mode"),
+                                   **kwargs)
+                certified_types.append(str(fact.get("fact_type")))
+            except CertificationError as exc:
+                destination = (claim_refusals if "two-vote claim" in str(exc)
+                               else family_refusals)
+                destination[str(fact.get("fact_type"))] = str(exc)
+        if certified_types:
+            print("SUFAHA DEMO FAIL: fixture packet certified claims without exact "
+                  "fact-value binding: %s" % sorted(certified_types))
             return 1
-        modes = sorted({fact.get("evidence_mode") for fact in facts})
-        print("  leg B (fixture copy): %d/%d certified across evidence modes %s; "
-              "governor_relation certified by CONSUMING the committed two-vote "
-              "artifact bundle (%s)"
-              % (len(facts), len(facts), ", ".join(modes),
-                 TWO_VOTE_SAMPLE.relative_to(ROOT)))
-
-        # Leg C — revocation cascade on the fixture copy: revoking the root
-        # singular_pattern fact must drop the paired_y_removal derivation.
-        singular = next(fact for fact in facts if fact["fact_type"] == "singular_pattern")
-        paired = next(fact for fact in facts if fact["fact_type"] == "paired_y_removal")
-        events = store_b.revoke(singular["fact_id"], actor=actor, timestamp=_TS,
-                                reason="demo: source capture withdrawn")
-        statuses = store_b.status_by_id()
-        cascade = [event for event in events if event["event_type"] == "revoke_cascade"]
-        if statuses[singular["fact_id"]] != "review_required":
-            print("SUFAHA DEMO FAIL: revoked root fact did not drop")
+        if not family_refusals or not all(
+                "not committed in-repo" in message for message in family_refusals.values()):
+            print("SUFAHA DEMO FAIL: family refusals must all name the uncommitted evidence:",
+                  sorted(family_refusals)[:3])
             return 1
-        if statuses[paired["fact_id"]] != "review_required":
-            print("SUFAHA DEMO FAIL: dependent paired_form_inference fact did not drop")
-            return 1
-        if not any(event["fact_id"] == paired["fact_id"] and "auto-de-certified" in event["reason"]
-                   for event in cascade):
-            print("SUFAHA DEMO FAIL: paired_y_removal was not auto-de-certified")
+        if set(claim_refusals) != {"governor_relation"}:
+            print("SUFAHA DEMO FAIL: expected the legacy governor_relation to fail exact "
+                  "claim binding, saw %s" % sorted(claim_refusals))
             return 1
         trail_errors = store_b.validate_trail()
         if trail_errors:
             print("SUFAHA DEMO FAIL: fixture trail invalid:", trail_errors[:3])
             return 1
-        print("  leg C (revocation cascade): revoking singular_pattern dropped %d "
-              "dependent fact(s) the same run (paired_y_removal auto-de-certified); "
-              "%d certified remain" % (len(cascade), len(store_b.certified_fact_ids())))
+        print("  leg B (resolvable fixture packet): 0/%d certified — %d family facts remain "
+              "blocked on committed evidence; governor_relation remains blocked because its "
+              "legacy value does not exactly bind the votes' conclusion and reason key"
+              % (len(facts), len(family_refusals)))
+        print("  revocation cascade remains exercised by --self-test over an exactly bound "
+              "two-vote fixture; this legacy packet has no certified fact to revoke")
 
     print("  committed artifacts untouched: certification was demonstrated only in "
           "temp stores; the in-repo blocker (uncommitted MCP verbatim evidence) is "

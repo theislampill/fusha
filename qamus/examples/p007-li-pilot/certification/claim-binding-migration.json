@@ -1,0 +1,494 @@
+{
+  "authority_gap": "GAP-N12",
+  "dependency_rebind_event_count": 12,
+  "downstream_projection_posture": {
+    "appearance_hashes_regenerated": 78,
+    "governor_identity": "certified_exact_v1_1",
+    "governor_relation": "unresolved_uncompared_prose_withheld",
+    "not_deployed": true,
+    "sense_identity": "candidate_pending_separate_fact_required"
+  },
+  "exact_successors_certified": 36,
+  "final_event_sha256": "sha256:36f13d026b9dd0587416bbac969c2b6aa780c1845850583f4255175a0462e9ce",
+  "generator": "tools/migrate_p007_claim_binding.py",
+  "legacy_facts_revoked": 36,
+  "mappings": [
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:12_31_24"
+      ],
+      "artifact_id": "two-vote-artifact:quran_12_31_24:p00slice-li-jarr",
+      "fact_type": "contextual_function",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:12_31_24:func",
+      "legacy_revoke_event_id": "cert-event:148:fact:p00slice:12_31_24:func",
+      "successor_certification_event_id": "cert-event:186:fact:p00slice:12_31_24:func:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:12_31_24:func:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:12_31_24"
+      ],
+      "artifact_id": "two-vote-artifact:quran_12_31_24:p00slice-li-jarr",
+      "fact_type": "governor_relation",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:12_31_24:gov",
+      "legacy_revoke_event_id": "cert-event:149:fact:p00slice:12_31_24:gov",
+      "successor_certification_event_id": "cert-event:189:fact:p00slice:12_31_24:gov:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:12_31_24:gov:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:12_31_24"
+      ],
+      "artifact_id": "two-vote-artifact:quran_12_31_24:p00slice-li-jarr",
+      "fact_type": "case_mood_governor",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:12_31_24:case",
+      "legacy_revoke_event_id": "cert-event:150:fact:p00slice:12_31_24:case",
+      "successor_certification_event_id": "cert-event:192:fact:p00slice:12_31_24:case:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:12_31_24:case:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:17_78_3"
+      ],
+      "artifact_id": "two-vote-artifact:quran_17_78_3:p00slice-li-jarr",
+      "fact_type": "contextual_function",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:17_78_3:func",
+      "legacy_revoke_event_id": "cert-event:151:fact:p00slice:17_78_3:func",
+      "successor_certification_event_id": "cert-event:195:fact:p00slice:17_78_3:func:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:17_78_3:func:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:17_78_3"
+      ],
+      "artifact_id": "two-vote-artifact:quran_17_78_3:p00slice-li-jarr",
+      "fact_type": "governor_relation",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:17_78_3:gov",
+      "legacy_revoke_event_id": "cert-event:152:fact:p00slice:17_78_3:gov",
+      "successor_certification_event_id": "cert-event:198:fact:p00slice:17_78_3:gov:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:17_78_3:gov:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:17_78_3"
+      ],
+      "artifact_id": "two-vote-artifact:quran_17_78_3:p00slice-li-jarr",
+      "fact_type": "case_mood_governor",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:17_78_3:case",
+      "legacy_revoke_event_id": "cert-event:153:fact:p00slice:17_78_3:case",
+      "successor_certification_event_id": "cert-event:201:fact:p00slice:17_78_3:case:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:17_78_3:case:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:24_31_23"
+      ],
+      "artifact_id": "two-vote-artifact:quran_24_31_23:p00slice-li-jarr",
+      "fact_type": "contextual_function",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:24_31_23:func",
+      "legacy_revoke_event_id": "cert-event:154:fact:p00slice:24_31_23:func",
+      "successor_certification_event_id": "cert-event:204:fact:p00slice:24_31_23:func:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:24_31_23:func:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:24_31_23"
+      ],
+      "artifact_id": "two-vote-artifact:quran_24_31_23:p00slice-li-jarr",
+      "fact_type": "governor_relation",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:24_31_23:gov",
+      "legacy_revoke_event_id": "cert-event:155:fact:p00slice:24_31_23:gov",
+      "successor_certification_event_id": "cert-event:207:fact:p00slice:24_31_23:gov:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:24_31_23:gov:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:24_31_23"
+      ],
+      "artifact_id": "two-vote-artifact:quran_24_31_23:p00slice-li-jarr",
+      "fact_type": "case_mood_governor",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:24_31_23:case",
+      "legacy_revoke_event_id": "cert-event:156:fact:p00slice:24_31_23:case",
+      "successor_certification_event_id": "cert-event:210:fact:p00slice:24_31_23:case:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:24_31_23:case:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:24_35_44"
+      ],
+      "artifact_id": "two-vote-artifact:quran_24_35_44:p00slice-li-jarr",
+      "fact_type": "contextual_function",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:24_35_44:func",
+      "legacy_revoke_event_id": "cert-event:157:fact:p00slice:24_35_44:func",
+      "successor_certification_event_id": "cert-event:213:fact:p00slice:24_35_44:func:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:24_35_44:func:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:24_35_44"
+      ],
+      "artifact_id": "two-vote-artifact:quran_24_35_44:p00slice-li-jarr",
+      "fact_type": "governor_relation",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:24_35_44:gov",
+      "legacy_revoke_event_id": "cert-event:158:fact:p00slice:24_35_44:gov",
+      "successor_certification_event_id": "cert-event:216:fact:p00slice:24_35_44:gov:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:24_35_44:gov:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:24_35_44"
+      ],
+      "artifact_id": "two-vote-artifact:quran_24_35_44:p00slice-li-jarr",
+      "fact_type": "case_mood_governor",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:24_35_44:case",
+      "legacy_revoke_event_id": "cert-event:159:fact:p00slice:24_35_44:case",
+      "successor_certification_event_id": "cert-event:219:fact:p00slice:24_35_44:case:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:24_35_44:case:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:2_187_63"
+      ],
+      "artifact_id": "two-vote-artifact:quran_2_187_63:p00slice-li-jarr",
+      "fact_type": "contextual_function",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:2_187_63:func",
+      "legacy_revoke_event_id": "cert-event:160:fact:p00slice:2_187_63:func",
+      "successor_certification_event_id": "cert-event:222:fact:p00slice:2_187_63:func:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:2_187_63:func:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:2_187_63"
+      ],
+      "artifact_id": "two-vote-artifact:quran_2_187_63:p00slice-li-jarr",
+      "fact_type": "governor_relation",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:2_187_63:gov",
+      "legacy_revoke_event_id": "cert-event:161:fact:p00slice:2_187_63:gov",
+      "successor_certification_event_id": "cert-event:225:fact:p00slice:2_187_63:gov:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:2_187_63:gov:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:2_187_63"
+      ],
+      "artifact_id": "two-vote-artifact:quran_2_187_63:p00slice-li-jarr",
+      "fact_type": "case_mood_governor",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:2_187_63:case",
+      "legacy_revoke_event_id": "cert-event:162:fact:p00slice:2_187_63:case",
+      "successor_certification_event_id": "cert-event:228:fact:p00slice:2_187_63:case:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:2_187_63:case:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:2_34_3"
+      ],
+      "artifact_id": "two-vote-artifact:quran_2_34_3:p00slice-li-jarr",
+      "fact_type": "contextual_function",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:2_34_3:func",
+      "legacy_revoke_event_id": "cert-event:163:fact:p00slice:2_34_3:func",
+      "successor_certification_event_id": "cert-event:231:fact:p00slice:2_34_3:func:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:2_34_3:func:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:2_34_3"
+      ],
+      "artifact_id": "two-vote-artifact:quran_2_34_3:p00slice-li-jarr",
+      "fact_type": "governor_relation",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:2_34_3:gov",
+      "legacy_revoke_event_id": "cert-event:164:fact:p00slice:2_34_3:gov",
+      "successor_certification_event_id": "cert-event:234:fact:p00slice:2_34_3:gov:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:2_34_3:gov:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:2_34_3"
+      ],
+      "artifact_id": "two-vote-artifact:quran_2_34_3:p00slice-li-jarr",
+      "fact_type": "case_mood_governor",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:2_34_3:case",
+      "legacy_revoke_event_id": "cert-event:165:fact:p00slice:2_34_3:case",
+      "successor_certification_event_id": "cert-event:237:fact:p00slice:2_34_3:case:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:2_34_3:case:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:2_34_5"
+      ],
+      "artifact_id": "two-vote-artifact:quran_2_34_5:p00slice-li-jarr",
+      "fact_type": "contextual_function",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:2_34_5:func",
+      "legacy_revoke_event_id": "cert-event:166:fact:p00slice:2_34_5:func",
+      "successor_certification_event_id": "cert-event:240:fact:p00slice:2_34_5:func:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:2_34_5:func:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:2_34_5"
+      ],
+      "artifact_id": "two-vote-artifact:quran_2_34_5:p00slice-li-jarr",
+      "fact_type": "governor_relation",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:2_34_5:gov",
+      "legacy_revoke_event_id": "cert-event:167:fact:p00slice:2_34_5:gov",
+      "successor_certification_event_id": "cert-event:243:fact:p00slice:2_34_5:gov:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:2_34_5:gov:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:2_34_5"
+      ],
+      "artifact_id": "two-vote-artifact:quran_2_34_5:p00slice-li-jarr",
+      "fact_type": "case_mood_governor",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:2_34_5:case",
+      "legacy_revoke_event_id": "cert-event:168:fact:p00slice:2_34_5:case",
+      "successor_certification_event_id": "cert-event:246:fact:p00slice:2_34_5:case:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:2_34_5:case:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:33_53_48"
+      ],
+      "artifact_id": "two-vote-artifact:quran_33_53_48:p00slice-li-jarr",
+      "fact_type": "contextual_function",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:33_53_48:func",
+      "legacy_revoke_event_id": "cert-event:169:fact:p00slice:33_53_48:func",
+      "successor_certification_event_id": "cert-event:249:fact:p00slice:33_53_48:func:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:33_53_48:func:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:33_53_48"
+      ],
+      "artifact_id": "two-vote-artifact:quran_33_53_48:p00slice-li-jarr",
+      "fact_type": "governor_relation",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:33_53_48:gov",
+      "legacy_revoke_event_id": "cert-event:170:fact:p00slice:33_53_48:gov",
+      "successor_certification_event_id": "cert-event:252:fact:p00slice:33_53_48:gov:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:33_53_48:gov:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:33_53_48"
+      ],
+      "artifact_id": "two-vote-artifact:quran_33_53_48:p00slice-li-jarr",
+      "fact_type": "case_mood_governor",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:33_53_48:case",
+      "legacy_revoke_event_id": "cert-event:171:fact:p00slice:33_53_48:case",
+      "successor_certification_event_id": "cert-event:255:fact:p00slice:33_53_48:case:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:33_53_48:case:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:4_11_5"
+      ],
+      "artifact_id": "two-vote-artifact:quran_4_11_5:p00slice-li-jarr",
+      "fact_type": "contextual_function",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:4_11_5:func",
+      "legacy_revoke_event_id": "cert-event:172:fact:p00slice:4_11_5:func",
+      "successor_certification_event_id": "cert-event:258:fact:p00slice:4_11_5:func:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:4_11_5:func:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:4_11_5"
+      ],
+      "artifact_id": "two-vote-artifact:quran_4_11_5:p00slice-li-jarr",
+      "fact_type": "governor_relation",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:4_11_5:gov",
+      "legacy_revoke_event_id": "cert-event:173:fact:p00slice:4_11_5:gov",
+      "successor_certification_event_id": "cert-event:261:fact:p00slice:4_11_5:gov:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:4_11_5:gov:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:4_11_5"
+      ],
+      "artifact_id": "two-vote-artifact:quran_4_11_5:p00slice-li-jarr",
+      "fact_type": "case_mood_governor",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:4_11_5:case",
+      "legacy_revoke_event_id": "cert-event:174:fact:p00slice:4_11_5:case",
+      "successor_certification_event_id": "cert-event:264:fact:p00slice:4_11_5:case:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:4_11_5:case:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:5_3_9"
+      ],
+      "artifact_id": "two-vote-artifact:quran_5_3_9:p00slice-li-jarr",
+      "fact_type": "contextual_function",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:5_3_9:func",
+      "legacy_revoke_event_id": "cert-event:175:fact:p00slice:5_3_9:func",
+      "successor_certification_event_id": "cert-event:267:fact:p00slice:5_3_9:func:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:5_3_9:func:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:5_3_9"
+      ],
+      "artifact_id": "two-vote-artifact:quran_5_3_9:p00slice-li-jarr",
+      "fact_type": "governor_relation",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:5_3_9:gov",
+      "legacy_revoke_event_id": "cert-event:176:fact:p00slice:5_3_9:gov",
+      "successor_certification_event_id": "cert-event:270:fact:p00slice:5_3_9:gov:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:5_3_9:gov:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:5_3_9"
+      ],
+      "artifact_id": "two-vote-artifact:quran_5_3_9:p00slice-li-jarr",
+      "fact_type": "case_mood_governor",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:5_3_9:case",
+      "legacy_revoke_event_id": "cert-event:177:fact:p00slice:5_3_9:case",
+      "successor_certification_event_id": "cert-event:273:fact:p00slice:5_3_9:case:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:5_3_9:case:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:61_5_4"
+      ],
+      "artifact_id": "two-vote-artifact:quran_61_5_4:p00slice-li-jarr",
+      "fact_type": "contextual_function",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:61_5_4:func",
+      "legacy_revoke_event_id": "cert-event:178:fact:p00slice:61_5_4:func",
+      "successor_certification_event_id": "cert-event:276:fact:p00slice:61_5_4:func:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:61_5_4:func:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:61_5_4"
+      ],
+      "artifact_id": "two-vote-artifact:quran_61_5_4:p00slice-li-jarr",
+      "fact_type": "governor_relation",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:61_5_4:gov",
+      "legacy_revoke_event_id": "cert-event:179:fact:p00slice:61_5_4:gov",
+      "successor_certification_event_id": "cert-event:279:fact:p00slice:61_5_4:gov:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:61_5_4:gov:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:61_5_4"
+      ],
+      "artifact_id": "two-vote-artifact:quran_61_5_4:p00slice-li-jarr",
+      "fact_type": "case_mood_governor",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:61_5_4:case",
+      "legacy_revoke_event_id": "cert-event:180:fact:p00slice:61_5_4:case",
+      "successor_certification_event_id": "cert-event:282:fact:p00slice:61_5_4:case:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:61_5_4:case:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:9_120_3"
+      ],
+      "artifact_id": "two-vote-artifact:quran_9_120_3:p00slice-li-jarr",
+      "fact_type": "contextual_function",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:9_120_3:func",
+      "legacy_revoke_event_id": "cert-event:181:fact:p00slice:9_120_3:func",
+      "successor_certification_event_id": "cert-event:285:fact:p00slice:9_120_3:func:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:9_120_3:func:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:9_120_3"
+      ],
+      "artifact_id": "two-vote-artifact:quran_9_120_3:p00slice-li-jarr",
+      "fact_type": "governor_relation",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:9_120_3:gov",
+      "legacy_revoke_event_id": "cert-event:182:fact:p00slice:9_120_3:gov",
+      "successor_certification_event_id": "cert-event:288:fact:p00slice:9_120_3:gov:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:9_120_3:gov:v2"
+    },
+    {
+      "affected_projection_ids": [
+        "proj:p00slice:9_120_3"
+      ],
+      "artifact_id": "two-vote-artifact:quran_9_120_3:p00slice-li-jarr",
+      "fact_type": "case_mood_governor",
+      "legacy_effective_status": "review_required",
+      "legacy_fact_id": "fact:p00slice:9_120_3:case",
+      "legacy_revoke_event_id": "cert-event:183:fact:p00slice:9_120_3:case",
+      "successor_certification_event_id": "cert-event:291:fact:p00slice:9_120_3:case:v2",
+      "successor_effective_status": "certified",
+      "successor_fact_id": "fact:p00slice:9_120_3:case:v2"
+    }
+  ],
+  "migration_event_count": 156,
+  "migration_event_sequence": {
+    "first": 148,
+    "last": 303
+  },
+  "not_deployed": true,
+  "posture": "append_only_legacy_revocation_and_exact_successor_certification",
+  "schema": "qamus.p007_claim_binding_migration.v1",
+  "source_vote_bundle": "two-vote-artifacts.v1_1.jsonl"
+}

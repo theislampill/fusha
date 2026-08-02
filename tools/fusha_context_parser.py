@@ -16,6 +16,56 @@ from tools import normalize_ar as N  # noqa: E402
 
 STANDALONE_PREPS = {"من", "إلى", "الى", "على", "في", "عن", "مع", "حتى", "بين"}
 
+# nahw/SKILL.md §9 (largelexicon collision safety): short function-like surfaces and particle clusters must route
+# by function/context, never by the first lexicon row. Each entry names the homograph a bigger Qamus table would
+# otherwise surface, so the block is auditable rather than a bare pending.
+# Gated behaviourally by nahw/evals/largelexicon-function-collision-safety.jsonl via tools/run_nahw_evals.py.
+# Each entry is TYPED: a stable forbidden-reading id plus the human-readable reading it blocks. Consumers
+# compare the id, so an eval bank cannot pass by carrying unrelated non-empty prose.
+FUNCTION_COLLISION_SURFACES = {
+    "من": ("llx-forbidden-man-manna-verb",
+           "the verb مَنَّ ('to bestow') / the preposition مِن / the pronoun مَن"),
+    "لا": ("llx-forbidden-laa-unscoped",
+           "لا النافية vs لا الناهية vs لا النافية للجنس"),
+    "إلا": ("llx-forbidden-illa-illan-noun",
+            "the noun إِلًّا ('kinship/pact') beside the exceptive إِلَّا"),
+    "الا": ("llx-forbidden-illa-illan-noun",
+            "the noun إِلًّا ('kinship/pact') beside the exceptive إِلَّا"),
+    "أم": ("llx-forbidden-am-umm-noun",
+           "the noun أُمّ ('mother') beside the connective/interrogative أَمْ"),
+    "ام": ("llx-forbidden-am-umm-noun",
+           "the noun أُمّ ('mother') beside the connective/interrogative أَمْ"),
+    "لهم": ("llx-forbidden-lahum-single-entry",
+            "the lām + pronoun relation read as a single lexical entry"),
+    "ما": ("llx-forbidden-ma-default-gloss",
+           "a default mā gloss chosen without its function (negative/relative/interrogative/maṣdariyya)"),
+    "وما": ("llx-forbidden-wama-default-ma",
+            "a single default mā gloss without the wāw's own contribution and mā's function"),
+}
+
+
+def collision_status(surface):
+    """Route a short function-like surface to pending_context, naming the lexical row it must NOT surface.
+
+    Returns None when the surface is outside the collision table (the caller then uses ordinary routing).
+    """
+    key = N.bare(surface or "")
+    entry = FUNCTION_COLLISION_SURFACES.get(key)
+    if entry is None:
+        return None
+    forbidden_id, forbidden = entry
+    return {
+        "relation": "lexical_collision_requires_context",
+        "surface": surface,
+        "status": "pending_context",
+        "gate": "two_vote_required",
+        "forbidden_reading_id": forbidden_id,
+        "forbidden_reading": forbidden,
+        "explanation": "short function-like surface: nahw supplies the function, governor and "
+                       "phrase-vs-token contribution before any lexical row may be shown",
+        "route": "nahw/procedures/particle-function-decision.md",
+    }
+
 
 def token_context_candidates(tokens):
     """Annotate each token with conservative context candidates."""
@@ -61,6 +111,9 @@ def token_context_candidates(tokens):
                 "gate": "two_vote_required",
                 "explanation": "lām/mā cluster and mood/time function require context",
             })
+        collision = collision_status(surface)
+        if collision:
+            by_index[tok["index"]].append(collision)
         if any(seg.get("role") == "object_pronoun" for seg in qg):
             by_index[tok["index"]].append({
                 "relation": "attached_object_or_complement",

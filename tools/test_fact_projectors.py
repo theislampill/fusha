@@ -197,6 +197,8 @@ class RegistryTests(unittest.TestCase):
                 fact_projectors.TRANCHE1_NAHW_PROJECTOR_ID,
                 fact_projectors.FAM2_LEXICAL_PROJECTOR_ID,
                 fact_projectors.FAM3_NUMBER_PROJECTOR_ID,
+                fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID,
+                fact_projectors.LARGELEXICON_ABSTENTION_PROJECTOR_ID,
                 fact_projectors.FAM4_FINITE_VERB_PROJECTOR_ID,
                 fact_projectors.FAM5_DERIVED_VERB_PROJECTOR_ID,
                 fact_projectors.PROOFV_VERB_PROJECTOR_ID,
@@ -620,6 +622,103 @@ class FlywheelTests(unittest.TestCase):
             metrics = fact_projectors.aggregate_projection_runs([run])
             self.assertEqual(2.0, metrics["facts_per_hour"])
             self.assertEqual(1, metrics["candidate_count"])
+
+
+class LargelexiconBridgeRegistrationTest(unittest.TestCase):
+    """The A3 bridge must be registered fail-closed and have no certification path."""
+
+    def setUp(self) -> None:
+        from tools import largelexicon_fact_bridge
+
+        self.bridge = largelexicon_fact_bridge
+        self.contract = fact_projectors.REGISTRY.contract(
+            fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID
+        )
+
+    def test_registered_with_never_auto_resolve(self):
+        self.assertEqual("never_auto_resolve", self.contract["gate_tier"])
+        self.assertEqual([], fact_projectors.validate_projector_record(self.contract))
+        self.assertIn("never_auto_resolve", fact_projectors.load_gate_tiers())
+        self.assertEqual(
+            "largelexicon_lexeme_candidate", self.contract["output_fact_type"]
+        )
+
+    def test_not_registered_behind_a_placeholder_lattice_predicate(self):
+        """The lattice registry keys @2.1 skill-rule projectors; the bridge is not one.
+
+        Registering it there would require a placeholder class_predicate, which
+        would misrepresent the bridge's real class. The enforcing registration is
+        this module's REGISTRY, where never_auto_resolve blocks certification.
+        """
+
+        registry = json.loads(
+            (ROOT / "qamus" / "lattice" / "registered-projectors.json").read_text(encoding="utf-8")
+        )
+        entries = {item["projector_id"] for item in registry["registered"]}
+        self.assertNotIn(fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID, entries)
+        self.assertIn(
+            fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID,
+            {item["projector_id"] for item in fact_projectors.REGISTRY.list_contracts()},
+        )
+
+    def test_never_auto_resolve_blocks_certification(self):
+        class _Store:
+            def __init__(self, row):
+                self.row = row
+
+            def query(self, fact_id=None):
+                return [self.row] if fact_id == self.row["fact_id"] else []
+
+        row = {"fact_id": "sha256:" + "0" * 64, "fact_type": self.contract["output_fact_type"]}
+        votes = [
+            {"voter_id": "a", "independent": True, "vote": "approve"},
+            {"voter_id": "b", "independent": True, "vote": "approve"},
+        ]
+        with self.assertRaises(fact_projectors.ProjectorValidationError) as caught:
+            fact_projectors.review_and_materialize(_Store(row), row["fact_id"], votes, "target", {})
+        self.assertIn("never_auto_resolve", str(caught.exception))
+
+    def test_registry_run_is_candidate_or_abstention_only(self):
+        result = fact_projectors.REGISTRY.run(
+            fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID,
+            crosswalk_row=self.bridge.fixture_crosswalk_row(),
+            inputs=self.bridge.fixture_inputs(),
+        )
+        self.assertEqual("candidate", result["status"])
+        self.assertFalse(result["materialization_allowed"])
+        self.assertFalse(result["certification_allowed"])
+        record = result["typed_claim_record"]
+        self.assertFalse(record["projection"]["learner_visible"])
+        self.assertTrue(
+            all(fact["certification"]["status"] != "certified" for fact in record["facts"])
+        )
+
+    def test_committed_fixtures_are_fresh(self):
+        self.assertEqual([], self.bridge.check_fixtures())
+
+    def test_bridge_behavioural_suite_runs(self):
+        """Gate the FULL A3 mutation suite from the harness-run projector tests.
+
+        Collection happens at call time: a frozen module-import snapshot silently
+        drops every test appended after it, which is exactly how the harness came
+        to run 20 of 41. The count is also asserted against the module's own
+        dynamic discovery so the two can never diverge again.
+        """
+
+        from tools import test_largelexicon_fact_bridge as suite
+
+        collected = suite.all_tests()
+        self.assertEqual(len(collected), len(suite.all_tests()))
+        self.assertGreaterEqual(
+            len(collected), suite.EXPECTED_MINIMUM_TESTS,
+            "the bridge suite shrank below its declared minimum",
+        )
+        names = {test.__name__ for test in collected}
+        for critical in suite.CRITICAL_PROBES:
+            self.assertIn(critical, names, "critical bridge probe is missing: " + critical)
+        for test in collected:
+            with self.subTest(test=test.__name__):
+                test()
 
 
 if __name__ == "__main__":

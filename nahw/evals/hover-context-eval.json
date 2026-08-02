@@ -95,18 +95,22 @@
     },
     {
       "id": "an_vs_inna_norm_collapses_seat_unsafe",
+      "quarantine_reason": "no repository key function collides the declared family: norm() deletes the hamza seat (norm('أَنْ')='ن') while norm('ان')='ان'",
       "surface": "ان",
       "norm_key": "ان",
       "same_key_surfaces": ["أَنْ", "أَنَّ", "إِنَّ", "إِنْ"],
       "safe": false,
       "pending_reason": "seat_collapsed",
       "reason": "plain norm() drops the hamza seat, so أَنْ (subjunctive), أَنَّ ('that'+noun), إِنَّ ('indeed'), and إِنْ ('if'/'not') all collide; re-key with norm_strict before any hover renders",
-      "gate": "never_auto_resolve"
+      "gate": "never_auto_resolve",
+      "contract_status": "pending_norm_seat_semantics",
+      "packet": "TP-NAHW-A2-HOVER-KEY-SEAT"
     },
     {
       "id": "inna_strict_seat_safe",
       "surface": "إِنَّ",
       "norm_key": "إن",
+      "key_fn": "norm_strict",
       "same_key_surfaces": ["إِنْ"],
       "safe": true,
       "gloss_if_safe": "indeed / verily",
@@ -115,8 +119,12 @@
     },
     {
       "id": "in_conditional_referent_free_safe",
+      "contract_status": "consumer_branch_ambiguous",
+      "packet": "TP-NAHW-A2-TYPED-STATE-CONSUMER",
+      "quarantine_reason": "particle-context-rules an_vs_inna branch B covers BOTH light conditional إِنْ and heavy emphatic إِنَّ, so the consumer cannot decide this row's gloss; the shadda axis needs the typed consumer",
       "surface": "إِنْ",
       "norm_key": "إن",
+      "key_fn": "norm_strict",
       "same_key_surfaces": ["إِنَّ"],
       "safe": true,
       "gloss_if_safe": "if",
@@ -125,6 +133,9 @@
     },
     {
       "id": "bihi_pronoun_referent_unsafe",
+      "contract_status": "no_consumer",
+      "packet": "TP-NAHW-A2-TYPED-STATE-CONSUMER",
+      "quarantine_reason": "no naḥw consumer decides this row; referent, polysemy and proper-noun rows need the typed state/function consumer before any behavioural comparison can be claimed",
       "surface": "بِهِ",
       "norm_key": "به",
       "same_key_surfaces": ["بِهَا"],
@@ -135,6 +146,9 @@
     },
     {
       "id": "fihi_pronoun_safe_neutral",
+      "contract_status": "no_consumer",
+      "packet": "TP-NAHW-A2-TYPED-STATE-CONSUMER",
+      "quarantine_reason": "no naḥw consumer decides this row; referent, polysemy and proper-noun rows need the typed state/function consumer before any behavioural comparison can be claimed",
       "surface": "فِيهِ",
       "norm_key": "فيه",
       "same_key_surfaces": [],
@@ -145,6 +159,9 @@
     },
     {
       "id": "halim_attribute_referent_unsafe",
+      "contract_status": "no_consumer",
+      "packet": "TP-NAHW-A2-TYPED-STATE-CONSUMER",
+      "quarantine_reason": "no naḥw consumer decides this row; referent, polysemy and proper-noun rows need the typed state/function consumer before any behavioural comparison can be claimed",
       "surface": "حَلِيمٌ",
       "norm_key": "حليم",
       "same_key_surfaces": [],
@@ -155,6 +172,9 @@
     },
     {
       "id": "salihan_proper_vs_common_unsafe",
+      "contract_status": "no_consumer",
+      "packet": "TP-NAHW-A2-TYPED-STATE-CONSUMER",
+      "quarantine_reason": "no naḥw consumer decides this row; referent, polysemy and proper-noun rows need the typed state/function consumer before any behavioural comparison can be claimed",
       "surface": "صَٰلِحًا",
       "norm_key": "صالحا",
       "same_key_surfaces": ["صَالِح"],
@@ -165,6 +185,9 @@
     },
     {
       "id": "muhammad_proper_no_verb_safe",
+      "contract_status": "no_consumer",
+      "packet": "TP-NAHW-A2-TYPED-STATE-CONSUMER",
+      "quarantine_reason": "no naḥw consumer decides this row; referent, polysemy and proper-noun rows need the typed state/function consumer before any behavioural comparison can be claimed",
       "surface": "مُحَمَّد",
       "norm_key": "محمد",
       "same_key_surfaces": ["مُحَمِّد"],
@@ -175,6 +198,9 @@
     },
     {
       "id": "almulk_vowel_only_unsafe",
+      "contract_status": "no_consumer",
+      "packet": "TP-NAHW-A2-TYPED-STATE-CONSUMER",
+      "quarantine_reason": "no naḥw consumer decides this row; referent, polysemy and proper-noun rows need the typed state/function consumer before any behavioural comparison can be claimed",
       "surface": "الملك",
       "norm_key": "الملك",
       "same_key_surfaces": ["ٱلْمُلْكُ", "ٱلْمَلِكُ", "ٱلْمَلَكُ"],
@@ -185,6 +211,9 @@
     },
     {
       "id": "yaqdiru_contronym_unsafe",
+      "contract_status": "no_consumer",
+      "packet": "TP-NAHW-A2-TYPED-STATE-CONSUMER",
+      "quarantine_reason": "no naḥw consumer decides this row; referent, polysemy and proper-noun rows need the typed state/function consumer before any behavioural comparison can be claimed",
       "surface": "يَقْدِرُ",
       "norm_key": "يقدر",
       "same_key_surfaces": [],
@@ -195,6 +224,9 @@
     },
     {
       "id": "qul_imperative_safe",
+      "contract_status": "no_consumer",
+      "packet": "TP-NAHW-A2-TYPED-STATE-CONSUMER",
+      "quarantine_reason": "no naḥw consumer decides this row; referent, polysemy and proper-noun rows need the typed state/function consumer before any behavioural comparison can be claimed",
       "surface": "قُلْ",
       "norm_key": "قل",
       "same_key_surfaces": ["قَالَ"],
@@ -205,18 +237,25 @@
     },
     {
       "id": "umm_vs_am_unsafe",
+      "quarantine_reason": "no repository key function collides the declared family: norm_strict keeps the seat so 'أم' != 'ام', and norm() deletes it",
       "surface": "ام",
       "norm_key": "ام",
       "same_key_surfaces": ["أُمّ", "أَمْ", "إِمَّا"],
       "safe": false,
       "pending_reason": "seat_collapsed",
       "reason": "norm_strict(أُمّ)=norm_strict(أَمْ)='أم'; the very frequent interrogative أَمْ 'or' collides with أُمّ 'mother' — a surface key is unsafe, render pending (function-word-decisions line 23)",
-      "gate": "never_auto_resolve"
+      "gate": "never_auto_resolve",
+      "contract_status": "pending_norm_seat_semantics",
+      "packet": "TP-NAHW-A2-HOVER-KEY-SEAT"
     },
     {
       "id": "ilayna_not_root_layn_safe",
+      "contract_status": "no_consumer",
+      "packet": "TP-NAHW-A2-TYPED-STATE-CONSUMER",
+      "quarantine_reason": "no naḥw consumer decides this row; referent, polysemy and proper-noun rows need the typed state/function consumer before any behavioural comparison can be claimed",
       "surface": "إِلَيْنَا",
       "norm_key": "إلينا",
+      "key_fn": "norm_strict",
       "same_key_surfaces": [],
       "safe": true,
       "gloss_if_safe": "to us",

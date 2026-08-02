@@ -240,7 +240,9 @@
  ],
  "schema": "qamus.p007_li_pilot.entry_reverse_index.v1",
  "scope": "P007_LI_NOUN_HOST_PILOT",
- "sense_n": 2,
+ "sense_blocker": "no separately certified occurrence-to-sense fact",
+ "sense_n_candidate": 2,
+ "sense_state": "candidate_pending",
  "source_key": "p007",
  "totals": {
   "appearances": 78,

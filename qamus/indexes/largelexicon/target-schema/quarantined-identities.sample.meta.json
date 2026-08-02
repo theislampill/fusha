@@ -1,0 +1,18 @@
+{
+  "disposition": "quarantined",
+  "full_ledger_row_count": 10067,
+  "full_ledger_sha256": "ccea51541d252b73c23280fc36189bbcd5ff7eb33c843690a1fe7a80706980e2",
+  "full_output_path": "out/largelexicon-target-schema/quarantined-identities.jsonl",
+  "generator": "tools/promote_largelexicon_target_schema.py",
+  "note": "bounded committed sample; the complete ledger is a large regenerable output kept under gitignored out/ and bound by full_ledger_sha256",
+  "row_count": 15,
+  "row_schema": "qamus/largelexicon-target-disposition-row@1",
+  "sample_family_counts": {
+    "form-source": 5,
+    "lemma-source": 5,
+    "stem-source": 5
+  },
+  "sample_rule": "first 5 records of each family in canonical order",
+  "schema": "qamus/largelexicon-target-disposition-meta@1",
+  "sha256": "34c3ce882a632032ee5ee30528cee259c5af6b954472ce90ac49c8769a4bff79"
+}

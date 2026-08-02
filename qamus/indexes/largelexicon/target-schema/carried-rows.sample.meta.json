@@ -1,0 +1,15 @@
+{
+  "family_counts": {
+    "form-source": 4,
+    "lemma-source": 4,
+    "qword-crosswalk": 4,
+    "qword-denominator": 4,
+    "stem-source": 4
+  },
+  "generator": "tools/promote_largelexicon_target_schema.py",
+  "note": "illustrative carried rows only; regenerate the full tables with --emit-carried",
+  "row_count": 20,
+  "row_schema": "qamus/largelexicon-target-carried-sample@1",
+  "schema": "qamus/largelexicon-target-carried-sample-meta@1",
+  "sha256": "525f79c6399230cccf2717b6dff46dfc84f61f4997c19825184fc9c487486cdc"
+}

@@ -1,0 +1,191 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "artifact contract holds",
+      "pass_condition": "exits 0 with no failure lines",
+      "run": "python tools/fusha_nahw_particle_rules.py --self-test"
+    },
+    {
+      "name": "behavioural gates hold",
+      "pass_condition": "exits 0 with no failure lines",
+      "run": "python tools/test_nahw_behavioural_gates.py"
+    },
+    {
+      "name": "eval runner green",
+      "pass_condition": "exits 0 with no failure lines",
+      "run": "python tools/run_nahw_evals.py"
+    },
+    {
+      "name": "full harness",
+      "pass_condition": "ends with ALL REGRESSION CHECKS PASS and no FAIL line",
+      "run": "python tools/check_regressions.py"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "quran:999:999:999 must remain source_address_not_in_scope",
+        "id": "CAN-ADV-IMPOSSIBLE"
+      },
+      {
+        "expectation": "a newline-suffixed address must remain source_address_invalid",
+        "id": "CAN-ADV-NEWLINE"
+      },
+      {
+        "expectation": "a caller-minted producer id must remain producer_not_authorized",
+        "id": "CAN-ADV-MINTED-PRODUCER"
+      },
+      {
+        "expectation": "mutating any artifact field must remain integrity_mismatch",
+        "id": "CAN-ADV-MUTATED"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "a spine-covered coordinate such as quran:2:26:20 continues to validate, and a well-formed artifact still yields at most `candidate`",
+        "id": "CAN-POS-INSCOPE"
+      },
+      {
+        "expectation": "an artifact minted for one transition still cannot fire another",
+        "id": "CAN-POS-BINDING"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "tools/fusha_nahw_particle_rules.py OBSERVATION_PRODUCERS, printed by the first command above",
+    "selection_rule": "the single OBSERVATION_PRODUCERS registry plus the absent per-word surface authority",
+    "this_packet_size": 1,
+    "universe_size": 1
+  },
+  "commands": [
+    {
+      "expect": "a single fixture producer with may_resolve False",
+      "purpose": "Reproduce the two missing authorities exactly",
+      "run": "python -c \"import sys;sys.path.insert(0,'.');from tools.fusha_nahw_particle_rules import OBSERVATION_PRODUCERS;print(OBSERVATION_PRODUCERS)\""
+    },
+    {
+      "expect": "in_scope for spine-covered ayat, out_of_scope for the rest — no local table is consulted",
+      "purpose": "Show that the coordinate authority is real but partial (corpus-spine coverage only)",
+      "run": "python -c \"import sys;sys.path.insert(0,'.');from tools.fusha_check import resolve_address;[print(a,resolve_address(a)) for a in ['quran:2:26:20','quran:11:75:4','quran:999:999:999']]\""
+    },
+    {
+      "expect": "token records carry w/state/gloss/blocker but no surface field",
+      "purpose": "Confirm no repository index carries a per-word written surface today",
+      "run": "python -c \"import io,json;r=json.loads(io.open('qamus/indexes/current/quran-usage-spine-full.jsonl',encoding='utf-8').readline());print(sorted(r), sorted(r['tokens'][0]))\""
+    },
+    {
+      "expect": "PASS, including producer_not_authorized, source_address_not_in_scope, surface_mismatch, target_binding_mismatch and integrity_mismatch",
+      "purpose": "Verify the artifact contract still fails closed after any producer change",
+      "run": "python tools/fusha_nahw_particle_rules.py --self-test"
+    },
+    {
+      "expect": "exit 0",
+      "purpose": "Confirm the wider lane is still green",
+      "run": "python tools/test_nahw_behavioural_gates.py"
+    }
+  ],
+  "defeaters": [
+    "The only way to verify a surface would be to import external corpus text into the public repo.",
+    "A producer would have to be trusted on the caller's word rather than reproduced from the repository.",
+    "Granting the producer may_resolve would let an observation resolve an iʿrāb-sensitive decision."
+  ],
+  "definition_of_done": [
+    "OBSERVATION_PRODUCERS either gains a repository-resident producer with a stated trust level, or the absence is recorded with its measured reason",
+    "the per-word surface authority is either wired in or explicitly recorded as absent",
+    "every artifact adversarial in tools/fusha_nahw_particle_rules.py --self-test still fails closed",
+    "no observation can promote a decision past candidate while trust remains fixture"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "no repository source can verify a per-word written surface",
+      "a producer would require importing external corpus text",
+      "granting the producer resolve authority would bypass an iʿrāb gate"
+    ],
+    "route": "owner/architecture review for the evidence-authority contract; leave producer trust at fixture and every observation candidate-only"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If no repository source can verify a per-word written surface, do NOT add a local table: leave the surface bound-but-unverified, keep producer trust at fixture, and escalate.",
+    "statement": "Every claim about coordinate or surface coverage must be produced by running the commands above against the committed indexes. No authority may be asserted from documentation prose.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "OBSERVATION_PRODUCERS extended with a repository-resident producer, and the surface check upgraded from bound-and-compared to verified, only if an authority exists",
+      "path": "tools/fusha_nahw_particle_rules.py"
+    },
+    {
+      "description": "the evidence-authority limitation reconciled to the measured result",
+      "path": "docs/subsystems/nahw-executable-map.md"
+    },
+    {
+      "description": "the producer contract, its trust level, and the measured coverage of the coordinate and surface authorities",
+      "path": "qamus/reports/nahw-observation-producer.md"
+    }
+  ],
+  "guards": [
+    "The METHOD (name the missing authority, fail closed to candidate, and packetize it) transfers; the specific occurrences used as fixtures are never occurrence claims and never transfer.",
+    "A producer may not be granted may_resolve=True without a repository-resident, reproducible producer; raising trust by fiat is exactly the caller-forgeable evidence this packet exists to remove.",
+    "Observations remain candidate-only until BOTH authorities exist; agreement is never certification.",
+    "No local coordinate authority may be invented inside a naḥw helper; tools/fusha_check.resolve_address over the committed spine stays the only coordinate oracle.",
+    "SERIALIZED WRITE SCOPE (dispatch order 1 of 5): this packet shares write paths tools/fusha_nahw_particle_rules.py, docs/subsystems/nahw-executable-map.md with the other TP-NAHW-A2-* packets and MUST NOT be dispatched concurrently with them. Run only after no predecessor (this is the first packet) have landed, and before TP-NAHW-A2-HOVER-KEY-SEAT, TP-NAHW-A2-STATE-VOCAB, TP-NAHW-A2-TYPED-STATE-CONSUMER, TP-NAHW-A2-TYPED-WR-BANK. Re-measure the runner and the harness after each predecessor: a concurrent run would interleave edits to the same eval bank and the same runner file."
+  ],
+  "inputs": {
+    "input_files": [
+      "tools/fusha_nahw_particle_rules.py",
+      "tools/fusha_check.py",
+      "qamus/indexes/current/quran-usage-spine-full.jsonl",
+      "qamus/indexes/current/source-address-full.jsonl",
+      "provenance/source-boundaries.md",
+      "qamus/schemas/dependency-candidate-lattice.schema.json"
+    ],
+    "permitted_write_files": [
+      "tools/fusha_nahw_particle_rules.py",
+      "docs/subsystems/nahw-executable-map.md",
+      "qamus/reports/nahw-observation-producer.md"
+    ],
+    "prohibited_files": [
+      "tools/normalize_ar.py",
+      "tools/check_regressions.py",
+      "tools/certify_typed_fact.py",
+      "qamus/indexes/",
+      "qamus/data/",
+      "sarf/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "This packet builds internal evidence machinery only. It certifies nothing, publishes no hover, and never writes to the live site or the entry store; all outcomes stay candidate-mode inside this repository.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-NAHW-A2-OBSERVATION-PRODUCER",
+  "provenance": {
+    "authored_by": "burst-a2-nahw lane (Opus 5 implementation worker)",
+    "cites": [
+      "docs/subsystems/nahw-executable-map.md",
+      "nahw/evals/grammar-decision-gates.json",
+      "qamus/skills/reason-key-registry.jsonl",
+      "qamus/schemas/dependency-candidate-lattice.schema.json",
+      "tools/run_nahw_evals.py",
+      "integrated A2 base commit 4d13fd2731d94f02be2f0e31b679eccf598606bd on branch codex/burst-a2-nahw-wiring"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "NAHW_EVIDENCE_AUTHORITY",
+    "out_of_scope": [
+      "inventing a local coordinate or surface authority inside a naḥw helper",
+      "raising any producer trust above `fixture` without a repository-resident producer",
+      "certifying any Quranic gloss or typed fact",
+      "promoting any candidate nahw@2.1-@2.4 increment"
+    ],
+    "summary": "tools/fusha_nahw_particle_rules.typed_observation validates an observation artifact on five axes: shape, authorized producer, canonical coordinate (against qamus/indexes/current/quran-usage-spine-full.jsonl via tools/fusha_check.resolve_address), binding to the exact token/surface/state/referent, and content integrity. Two authorities are missing. (1) OBSERVATION_PRODUCERS contains only nahw-a2-fixture-observer, whose trust is `fixture` and whose may_resolve is False, so no observation can promote a decision past `candidate`. (2) The spine carries token COUNTS and glosses, not per-word written surfaces, so occurrence.surface is bound and compared but never verified against a repository authority. A2 deliberately did not invent either authority. This packet supplies them.",
+    "tranche": "burst-a2-followon"
+  },
+  "title": "no repository producer signs naḥw observation artifacts and no per-word written-surface authority exists, so every observation stays fixture-trust and candidate-only",
+  "tools_required": [
+    "python3",
+    "python tools/fusha_nahw_particle_rules.py --self-test (the executable oracle)"
+  ]
+}

@@ -23,7 +23,8 @@
     "lam_relative": "لِ + موصول مَا — 'for that which'",
     "nafy_lil_jins": "لا النافية للجنس — negates the genus over an indefinite noun in naṣb",
     "preposition": "حرف جر",
-    "praise_verb": "فعل مدح جامد (نِعْمَ)"
+    "praise_verb": "فعل مدح جامد (نِعْمَ)",
+    "pending": "no state — the discriminating evidence is absent, so the token HOLDS unresolved (PENDING beats a wrong role)"
   },
   "cases": [
     {
@@ -49,9 +50,9 @@
       "wrong_state": "relative_pronoun",
       "gloss": "who (is it that)…?",
       "expected_decision": "two_vote",
-      "gate": "two_vote_required",
+      "gate": "human_source_review_required",
       "trigger": ["referent_sensitive_gloss", "ambiguous_grammar"],
-      "reason": "relative vs interrogative مَن share the same harakah; the clause-frame (question vs ṣilah) is the only discriminator and must be confirmed twice"
+      "reason": "relative vs interrogative مَن share the same harakah; the clause-frame (question vs ṣilah) is the only discriminator and must be confirmed twice. Gate raised from two_vote_required by the declared trigger ambiguous_grammar (grammar-decision-gates.json)"
     },
     {
       "id": "min_preposition_kasra",
@@ -137,6 +138,9 @@
     },
     {
       "id": "lamma_not_yet",
+      "contract_status": "state_vocab_pending",
+      "packet": "TP-NAHW-A2-STATE-VOCAB",
+      "quarantine_reason": "the row's own evidence says the following verb is JUSSIVE and there is no jawab clause (lamma al-jazima, 'not yet'), which the released state_vocab cannot express; correct_state temporal_lamma contradicts the row's own description",
       "surface": "لَمَّا",
       "context": "بَل لَّمَّا يَذُوقُوا عَذَابِ",
       "observation": "لَمَّا before a JUSSIVE muḍāriʿ — looks like 'when' but is not",
@@ -220,6 +224,7 @@
     },
     {
       "id": "in_nafiya_negating",
+      "quarantine_reason": "correct_state equals wrong_state; the row tests a third light-in state (in al-nafiya) that the released state_vocab does not name",
       "surface": "إِنْ",
       "context": "إِنْ هَٰذَا إِلَّا قَوْلُ ٱلْبَشَرِ",
       "observation": "إِنْ NOT before two verbs — looks conditional but negates",
@@ -227,6 +232,8 @@
       "correct_state": "conditional_particle",
       "wrong_state": "conditional_particle",
       "note": "trap: same إِنْ surface; here it is إِنْ النافية, a third state",
+      "contract_status": "state_vocab_pending",
+      "packet": "TP-NAHW-A2-STATE-VOCAB",
       "gloss": "(this is) nothing but / not",
       "expected_decision": "pending",
       "pending_reason": "context_sensitive_needs_nahw",
@@ -265,6 +272,9 @@
     },
     {
       "id": "anna_how_adverbial",
+      "contract_status": "state_vocab_pending",
+      "packet": "TP-NAHW-A2-STATE-VOCAB",
+      "quarantine_reason": "correct_state interrogative_pronoun types the interrogative ADVERB anna as a pronoun; the released state_vocab has no interrogative-adverb state",
       "surface": "أَنَّىٰ",
       "context": "أَنَّىٰ يَكُونُ لَهُ ٱلْمُلْكُ",
       "observation": "same اني skeleton; here an interrogative adverb",
@@ -273,12 +283,15 @@
       "wrong_state": "noun_clause_anna",
       "gloss": "how / whence",
       "expected_decision": "two_vote",
-      "gate": "two_vote_required",
+      "gate": "human_source_review_required",
       "trigger": ["referent_sensitive_gloss", "ambiguous_grammar"],
-      "reason": "fatḥa on nūn + alif-maqṣūra + the question frame fix أَنَّى; mis-reading as أَنِّي would invert the clause role"
+      "reason": "fatḥa on nūn + alif-maqṣūra + the question frame fix أَنَّى; mis-reading as أَنِّي would invert the clause role. Gate raised from two_vote_required by the declared trigger ambiguous_grammar (grammar-decision-gates.json)"
     },
     {
       "id": "la_nafiya_lil_jins",
+      "contract_status": "state_vocab_pending",
+      "packet": "TP-NAHW-A2-STATE-VOCAB",
+      "quarantine_reason": "wrong_state negation_jazm is the LAM-specific 'harf nafy wa-jazm' state; verbal laa is not a jazm negator, so the rival axis is not expressible under released authority",
       "surface": "لَّا",
       "context": "أَن لَّا مَلْجَأَ مِنَ ٱللَّهِ",
       "observation": "لا before مَلْجَأ — verbal negation vs negation of the genus",
@@ -294,6 +307,9 @@
     },
     {
       "id": "ma_relative_vs_negation",
+      "contract_status": "state_vocab_pending",
+      "packet": "TP-NAHW-A2-STATE-VOCAB",
+      "quarantine_reason": "wrong_state negation_jazm is jazm-bearing; the row's own evidence says maa here is non-operative, so the rival axis is not expressible under released authority",
       "surface": "مَا",
       "context": "مَا عِندَكُمْ يَنفَدُ",
       "observation": "مَا — relative 'that which' vs negating مَا 'not'",
@@ -302,12 +318,13 @@
       "wrong_state": "negation_jazm",
       "gloss": "that which / what",
       "expected_decision": "two_vote",
-      "gate": "two_vote_required",
+      "gate": "human_source_review_required",
       "trigger": ["ambiguous_grammar"],
-      "reason": "مَا is a notorious multi-state word (relative / interrogative / negating / maṣdariyyah / temporal); the ṣilah-with-predicate frame picks relative, confirmed twice"
+      "reason": "Gate raised from two_vote_required by the declared trigger ambiguous_grammar (grammar-decision-gates.json). مَا is a notorious multi-state word (relative / interrogative / negating / maṣdariyyah / temporal); the ṣilah-with-predicate frame picks relative, confirmed twice"
     },
     {
       "id": "kulla_vs_kalla",
+      "quarantine_reason": "correct_state equals wrong_state; the row tests quantifier vs deterrent particle, an axis the released state_vocab does not name",
       "surface": "كُلًّا",
       "context": "وَيَعْقُوبَ كُلًّا هَدَيْنَا",
       "observation": "كلا — quantifier كُلّ vs deterrent كَلَّا",
@@ -315,6 +332,8 @@
       "correct_state": "preposition",
       "wrong_state": "preposition",
       "note": "neither is a preposition; the test is quantifier-state vs particle-state",
+      "contract_status": "state_vocab_pending",
+      "packet": "TP-NAHW-A2-STATE-VOCAB",
       "gloss": "all / each",
       "expected_decision": "resolved",
       "gate": "two_vote_required",
@@ -323,6 +342,9 @@
     },
     {
       "id": "nima_praise_verb",
+      "contract_status": "state_vocab_pending",
+      "packet": "TP-NAHW-A2-STATE-VOCAB",
+      "quarantine_reason": "wrong_state interrogative_pronoun contradicts the row's own rival, the affirmation particle naam; the released state_vocab has no affirmation-particle state",
       "surface": "نِعْمَ",
       "context": "نِعْمَ ٱلثَّوَابُ",
       "observation": "نعم — praise verb نِعْمَ vs affirmation نَعَمْ",
@@ -337,6 +359,7 @@
     },
     {
       "id": "salihan_proper_vs_deed",
+      "quarantine_reason": "correct_state equals wrong_state; the row tests common adjective vs proper noun, an axis the released state_vocab does not name",
       "surface": "صَٰلِحًا",
       "context": "وَعَمِلَ صَٰلِحًا",
       "observation": "could be the Prophet's proper name or the common adjective/maṣdar",
@@ -344,6 +367,8 @@
       "correct_state": "relative_pronoun",
       "wrong_state": "relative_pronoun",
       "note": "state test here is common-adjective vs proper-noun, not the pronoun states; left as the non-proper reading",
+      "contract_status": "state_vocab_pending",
+      "packet": "TP-NAHW-A2-STATE-VOCAB",
       "gloss": "righteous (deed) / good",
       "expected_decision": "two_vote",
       "gate": "human_source_review_required",
@@ -352,6 +377,7 @@
     },
     {
       "id": "halim_referent_human",
+      "quarantine_reason": "correct_state equals wrong_state; the row tests human attribute vs divine Name, an axis the released state_vocab does not name",
       "surface": "حَلِيمٌ",
       "context": "إِنَّ إِبْرَٰهِيمَ لَأَوَّٰهٌ حَلِيمٌ",
       "observation": "an attribute that could be read as a divine Name",
@@ -359,6 +385,8 @@
       "correct_state": "relative_pronoun",
       "wrong_state": "relative_pronoun",
       "note": "state test is referent-by-attribute (human vs divine), gloss governed by referent",
+      "contract_status": "state_vocab_pending",
+      "packet": "TP-NAHW-A2-STATE-VOCAB",
       "gloss": "forbearing",
       "expected_decision": "resolved",
       "gate": "two_vote_required",

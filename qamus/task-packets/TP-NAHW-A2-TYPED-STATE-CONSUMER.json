@@ -1,0 +1,205 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "eval runner green",
+      "pass_condition": "exits 0 with no failure lines",
+      "run": "python tools/run_nahw_evals.py"
+    },
+    {
+      "name": "behavioural gates hold",
+      "pass_condition": "exits 0 with no failure lines",
+      "run": "python tools/test_nahw_behavioural_gates.py"
+    },
+    {
+      "name": "two-vote artifact contract holds",
+      "pass_condition": "exits 0 with no failure lines",
+      "run": "python tools/validate_two_vote_artifacts.py --self-test"
+    },
+    {
+      "name": "full harness",
+      "pass_condition": "ends with ALL REGRESSION CHECKS PASS and no FAIL line",
+      "run": "python tools/check_regressions.py"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "two rows with distinct correct_state values must not both satisfy the consumer through one shared branch",
+        "id": "CAN-ADV-BRANCH-COLLAPSE"
+      },
+      {
+        "expectation": "a bare boolean trigger must never move a state",
+        "id": "CAN-ADV-BOOLEAN-TRIGGER"
+      },
+      {
+        "expectation": "editing a row correct_state to match consumer output, with no cited repository evidence, must be rejected in review",
+        "id": "CAN-ADV-EXPECTATION-EDIT"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "min_preposition_kasra lands in state preposition with decision resolved and gate auto_safe from the kasra observation, and REJECTS wrong_state relative_pronoun",
+        "id": "CAN-POS-MIN-KASRA"
+      },
+      {
+        "expectation": "removing the diacritic still forces pending: a state reached without its evidence stays reasoning_path_wrong",
+        "id": "CAN-POS-ABLATION"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "measured by `python tools/run_nahw_evals.py --json` (state-machine.identity_compared vs cases; hover-context.bound vs cases)",
+    "selection_rule": "state-machine rows compared only by identity plus every hover row quarantined as no_consumer or consumer_branch_ambiguous | QUARANTINE-BINDING bank=hover-context; status=no_consumer; rows=bihi_pronoun_referent_unsafe,fihi_pronoun_safe_neutral,halim_attribute_referent_unsafe,salihan_proper_vs_common_unsafe,muhammad_proper_no_verb_safe,almulk_vowel_only_unsafe,yaqdiru_contronym_unsafe,qul_imperative_safe,ilayna_not_root_layn_safe; property=typed_state_and_gloss; disposition=excuse_semantic_consumer | QUARANTINE-BINDING bank=hover-context; status=consumer_branch_ambiguous; rows=in_conditional_referent_free_safe; property=consumer_branch; disposition=excuse_semantic_consumer",
+    "this_packet_size": 25,
+    "universe_size": 44
+  },
+  "commands": [
+    {
+      "expect": "state_comparison=fixture_only, hover gloss_axis=no_consumer, and the quarantine counts",
+      "purpose": "Reproduce the measured coverage split the runner reports",
+      "run": "python tools/run_nahw_evals.py --json"
+    },
+    {
+      "expect": "the discriminator inventory; states sharing one branch are the gap this packet closes",
+      "purpose": "Show the branch-level identity the current consumer actually decides, per surface",
+      "run": "python tools/fusha_nahw_particle_rules.py --status"
+    },
+    {
+      "expect": "PASS, including the artifact producer/coordinate/binding/integrity adversarials",
+      "purpose": "Confirm the typed-evidence contract the new consumer must consume",
+      "run": "python tools/fusha_nahw_particle_rules.py --self-test"
+    },
+    {
+      "expect": "state_comparison is no longer fixture_only and every non-quarantined row is bound",
+      "purpose": "Re-run every bank after the typed consumer lands",
+      "run": "python tools/run_nahw_evals.py"
+    },
+    {
+      "expect": "exit 0",
+      "purpose": "Confirm the wider lane is still green",
+      "run": "python tools/test_nahw_behavioural_gates.py"
+    }
+  ],
+  "defeaters": [
+    "A row cannot be typed without inventing a registry id or a schema enum value.",
+    "The typed contract would require executing a free-text when-clause as code.",
+    "Typing a row would change its linguistic conclusion rather than its structure."
+  ],
+  "definition_of_done": [
+    "the runner compares the typed state and rejects wrong_state for every non-quarantined state-machine row",
+    "every hover row is either decided by the typed consumer or still explicitly quarantined with a reason",
+    "expected_decision, structured rivals, reason key and gate are compared, not merely present",
+    "state_comparison and gloss_axis are no longer reported as unconsumed",
+    "the TP-NAHW-A2-STATE-VOCAB quarantines remain excluded from any closure claim"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "a row state cannot be computed without executing its free-text when-clause",
+      "the typed consumer would have to guess between rival states with no observation to separate them"
+    ],
+    "route": "nahw/procedures/irab-case-mood.md -> scholar_irab_review; open an arbitration packet and leave the bank fixture-only"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If a row needs a reason key or state that no registry or schema provides, do NOT invent one: leave the row fixture-only and escalate for registry adjudication.",
+    "statement": "Every typed field must resolve to an id that already exists in qamus/skills/reason-key-registry.jsonl or to an enum in qamus/schemas/dependency-candidate-lattice.schema.json. No key may be invented, and no key may be derived from a fixture id.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "a typed state/function consumer returning state, decision, structured rivals, reason key and gate from validated observation artifacts",
+      "path": "tools/fusha_nahw_particle_rules.py"
+    },
+    {
+      "description": "the referent/polysemy half of the same consumer, for the hover rows that have none",
+      "path": "tools/fusha_nahw_context_rules.py"
+    },
+    {
+      "description": "state-machine and hover banks upgraded to compare the typed state and reject wrong_state",
+      "path": "tools/run_nahw_evals.py"
+    },
+    {
+      "description": "structural corrections only, each with explicit repository evidence",
+      "path": "nahw/evals/nahw-state-machine-eval.json"
+    },
+    {
+      "description": "no_consumer quarantines lifted only for rows the new consumer genuinely decides",
+      "path": "nahw/evals/hover-context-eval.json"
+    },
+    {
+      "description": "GAP-N4/GAP-N5 reconciled to the measured result",
+      "path": "docs/subsystems/nahw-executable-map.md"
+    },
+    {
+      "description": "the consumer contract and the measured before/after coverage split",
+      "path": "qamus/reports/nahw-typed-state-consumer.md"
+    }
+  ],
+  "guards": [
+    "The METHOD (require typed, registered evidence before claiming a behavioural comparison) transfers; the linguistic conclusions in these rows never transfer to another occurrence and must be re-derived per address.",
+    "A reason key must be registered in qamus/skills/reason-key-registry.jsonl; a key derived from a fixture id is a fabrication and must fail.",
+    "No caller label, boolean or prose condition may resolve a grammatical state; without typed source-addressed evidence the row stays pending/candidate with its rivals preserved.",
+    "Agreement is never certification: only tools/certify_typed_fact.py certifies, and only from a validated two-vote artifact.",
+    "Candidate nahw@2.1-@2.4 behaviour may be measured but never released or used to authorize a pass.",
+    "SERIALIZED WRITE SCOPE (dispatch order 5 of 5): this packet shares write paths tools/run_nahw_evals.py, tools/fusha_nahw_particle_rules.py, tools/fusha_nahw_context_rules.py, nahw/evals/nahw-state-machine-eval.json, nahw/evals/hover-context-eval.json, docs/subsystems/nahw-executable-map.md with the other TP-NAHW-A2-* packets and MUST NOT be dispatched concurrently with them. Run only after TP-NAHW-A2-HOVER-KEY-SEAT, TP-NAHW-A2-OBSERVATION-PRODUCER, TP-NAHW-A2-STATE-VOCAB, TP-NAHW-A2-TYPED-WR-BANK have landed, and before no successor (this is the last packet). Re-measure the runner and the harness after each predecessor: a concurrent run would interleave edits to the same eval bank and the same runner file."
+  ],
+  "inputs": {
+    "input_files": [
+      "nahw/SKILL.md",
+      "qamus/skills/reason-key-registry.jsonl",
+      "qamus/schemas/dependency-candidate-lattice.schema.json",
+      "docs/subsystems/nahw-executable-map.md"
+    ],
+    "permitted_write_files": [
+      "tools/run_nahw_evals.py",
+      "tools/fusha_nahw_particle_rules.py",
+      "tools/fusha_nahw_context_rules.py",
+      "nahw/evals/nahw-state-machine-eval.json",
+      "nahw/evals/hover-context-eval.json",
+      "docs/subsystems/nahw-executable-map.md",
+      "qamus/reports/nahw-typed-state-consumer.md"
+    ],
+    "prohibited_files": [
+      "tools/normalize_ar.py",
+      "tools/check_regressions.py",
+      "tools/certify_typed_fact.py",
+      "qamus/data/",
+      "sarf/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "This packet builds internal evaluation machinery only. It certifies nothing, publishes no hover, and never writes to the live site or the entry store; all outcomes stay candidate-mode inside this repository.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-NAHW-A2-TYPED-STATE-CONSUMER",
+  "provenance": {
+    "authored_by": "burst-a2-nahw lane (Opus 5 implementation worker)",
+    "cites": [
+      "docs/subsystems/nahw-executable-map.md",
+      "nahw/evals/grammar-decision-gates.json",
+      "qamus/skills/reason-key-registry.jsonl",
+      "qamus/schemas/dependency-candidate-lattice.schema.json",
+      "tools/run_nahw_evals.py",
+      "integrated A2 base commit 4d13fd2731d94f02be2f0e31b679eccf598606bd on branch codex/burst-a2-nahw-wiring"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "NAHW_TYPED_CONSUMER",
+    "out_of_scope": [
+      "editing eval expectations to make a consumer pass; every fixture correction needs explicit repository evidence and stays reviewable",
+      "authoring a generic nahw resolver that executes free-text when-clauses as code",
+      "promoting any candidate nahw@2.1-@2.4 increment",
+      "certifying any Quranic gloss or typed fact"
+    ],
+    "summary": "tools/run_nahw_evals.py replays each row through tools/fusha_nahw_particle_rules, which decides PARTICLE IDENTITY from the content-letter diacritic (rule + branch). That comparison is real, and so is the evidence-ablation mutation. It does NOT decide the typed grammatical STATE: several distinct states share one A/B branch, so mapping a branch onto a state would assert a state the consumer never computed. The state axes are therefore compared against a COMMITTED per-case binding (which catches a mutated axis) and reported state_comparison=fixture_only. The same gap quarantines ten hover rows: nine have no consumer at all (referent, polysemy, proper-noun, imperative), and in_conditional_referent_free_safe cannot be decided because an_vs_inna branch B covers both light conditional and heavy emphatic. This packet builds the typed consumer.",
+    "tranche": "burst-a2-defect-round-1"
+  },
+  "title": "no typed state/function consumer exists: state-machine state axes and every hover gloss/referent row are compared against committed expectations, not against an engine",
+  "tools_required": [
+    "python3",
+    "python tools/run_nahw_evals.py (the executable oracle for this packet)"
+  ]
+}

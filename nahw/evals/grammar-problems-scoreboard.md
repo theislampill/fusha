@@ -44,7 +44,7 @@ Original/isomorphic cases (NOT copied). Generator/gate: `tools/run_grammar_evals
 | hal | 5 | yes |
 | idafa | 5 | yes |
 | ikhtisas | 2 | yes |
-| ism_fail_ism_maful_operation | 3 |  |
+| ism_fail_ism_maful_operation | 3 | yes |
 | ism_fail_maful_operation | 1 | yes |
 | istithna | 6 | yes |
 | jar_majrur | 4 | yes |
@@ -54,7 +54,7 @@ Original/isomorphic cases (NOT copied). Generator/gate: `tools/run_grammar_evals
 | maful_mutlaq | 4 | yes |
 | mamnu_min_al_sarf | 5 | yes |
 | mubtada_khabar | 4 | yes |
-| negation_mood | 3 |  |
+| negation_mood | 3 | yes |
 | nima_bisa | 4 | yes |
 | passive_agent_transformation | 3 | yes |
 | signs_of_irab | 7 | yes |
@@ -64,4 +64,4 @@ Original/isomorphic cases (NOT copied). Generator/gate: `tools/run_grammar_evals
 
 ## Uncovered grammar-affecting topics
 
-none — all 20 covered
+none — all 22 covered

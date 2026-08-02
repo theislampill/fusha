@@ -120,8 +120,13 @@ Disagreements become arbitration packets; they are never averaged (see
 
 ### Step 11 — Certify through the engine, and let it refuse
 
-File: `qamus/examples/p007-li-pilot/certification/events.jsonl` (147
-hash-chained events). Command:
+File: `qamus/examples/p007-li-pilot/certification/events.jsonl` (303
+hash-chained events: the original 147 plus 156 append-only GAP-N12 migration
+events). The 36 location-only legacy claims are now `review_required`; 36
+versioned successors bind exact v1.1 fact values and remain the current
+certified facts; 12 dependency-rebind events point the segmentation facts at
+those successors. Mapping and terminal-hash provenance live in
+`certification/claim-binding-migration.json`. Command:
 `python tools/certify_typed_fact.py --validate qamus/examples/p007-li-pilot/certification`.
 Facts certify only when their ladder rung is satisfied
 (`docs/certification-authority.md` §2): direct source attestation for
@@ -129,26 +134,29 @@ read-offs, two-vote bundles for iʿrāb-bearing conclusions. The certifier
 REFUSING a fact until the bundle passed is the system working — refusal is
 recorded, never re-worded around.
 
-### Step 12 — Draw the transclusion edges: entry AND sense, explicitly
+### Step 12 — Draw the transclusion edges without laundering sense identity
 
 File: `qamus/examples/p007-li-pilot/transclusion-edges.jsonl`. Every
-certified morpheme occurrence carries the explicit entry edge
+certified morpheme occurrence carries the explicit certified entry edge
 (`morpheme_occurrence_instantiates_particle_entry` → `entry:b10a1ee04666`)
-AND sense edge (→ `sense:b10a1ee04666:2`), plus clitic-host / governor /
-governed-expression edges. **A generic 'preposition' colour class without the
-entry/sense edge does NOT satisfy transclusion.**
+and a candidate-only sense edge (→ `sense:b10a1ee04666:2`), plus clitic-host /
+governor / governed-expression edges. The contextual-function fact contains no
+entry/sense identity, so it cannot certify that sense edge. A separate
+occurrence-to-sense fact is required before public transclusion.
 
 ### Step 13 — Build the reverse index (entry → occurrences)
 
 File: `qamus/examples/p007-li-pilot/entry-reverse-index.json`. p007 → its 12
-certified occurrences → 78 appearances grouped by page class (n:22 / v:54 /
-p:2). Transclusion is bidirectional or it is not transclusion.
+certified morpheme occurrences → 78 appearances grouped by page class (n:22 /
+v:54 / p:2), while sense 2 remains candidate-pending. Transclusion is
+bidirectional or it is not transclusion.
 
 ### Step 14 — Project two surfaces with exact letter ownership
 
-File: `qamus/examples/p007-li-pilot/projections.jsonl` (12 canonical
-projections + 78 appearance hashes). Regenerate with
-`python tools/build_p007_li_pilot.py`. Projection carries exact spans, `qg-*`
+File: `qamus/examples/p007-li-pilot/projections.jsonl` (12 canonical candidate
+projections + 78 appearance hashes). Regenerate the exact-claim boundary and
+hash consumers with `python tools/migrate_p007_claim_binding.py --apply`.
+Projection carries exact spans, `qg-*`
 renderer classes, and learner-register notes — compiled FROM certified facts,
 never authored ad hoc.
 
@@ -240,8 +248,8 @@ property of the entry.
 ## What a continuation wave copies, and what it must not copy
 
 COPY: the 18-step order; the per-occurrence evidence discipline; the
-rival-symmetric two-vote method; per-fact evidence modes; entry+sense edge
-requirement; parity hashing; read-only live checks; the NOT-DEPLOYED
+rival-symmetric two-vote method; per-fact evidence modes; certified-entry plus
+candidate-sense boundary; parity hashing; read-only live checks; the NOT-DEPLOYED
 honesty table; the CI gate pattern. The wave-shaped instances of this method
 are issued as task packets in `qamus/task-packets/`
 (`qamus/schemas/task-packet.schema.json`,
