@@ -431,7 +431,7 @@ class _FrozenSuiteTrap(list):
 
 
 TESTS = _FrozenSuiteTrap()
-EXPECTED_MINIMUM_TESTS = 68
+EXPECTED_MINIMUM_TESTS = 69
 CRITICAL_PROBES = (
     "test_candidate_admission_requires_complete_authority",
     "test_carried_membership_binds_the_exact_row_body",
@@ -459,6 +459,7 @@ CRITICAL_PROBES = (
     "test_unrecognised_producer_can_never_be_certified",
     "test_no_recognised_family_name_authorizes_certification",
     "test_family_authority_is_resolved_evidence_not_a_citation_string",
+    "test_family_authority_binds_the_declared_body_and_committed_evidence",
     "test_both_bridge_output_fact_types_are_registered",
     "test_no_frozen_partial_suite_can_be_run",
 )
@@ -1684,13 +1685,15 @@ def _family_member(base, fact_type, certifier):
         fact.pop("producer", None)
         return fact
     citation = sorted(declared["citations"])[0]
+    declaring = declared["citations"][citation]
     fact["source_evidence"] = dict(fact.get("source_evidence") or {})
     fact["source_evidence"]["source_addresses"] = list(
         fact["source_evidence"].get("source_addresses") or []
     ) + [{"address": citation, "source_kind": certifier.FAMILY_ANCHOR_SOURCE_KIND}]
-    fact["producer"] = {"id": sorted(declared["producers"])[0], "version": "1.0.0"}
+    fact["producer"] = {"id": declaring["producer"], "version": "1.0.0"}
     fact["rule_projector"] = dict(fact.get("rule_projector") or {},
-                                  projector_id=sorted(declared["projectors"])[0])
+                                  projector_id=declaring["projector"])
+    fact["evidence_mode"] = declaring["evidence_mode"]
     return fact
 
 
@@ -1950,6 +1953,189 @@ def test_family_authority_is_resolved_evidence_not_a_citation_string() -> None:
             certifier, forged(family, address=_declared_citation(certifier, "root")), "round9")
         check("the two-vote family %s stays closed to a relabelled candidate" % family,
               refusal is not None)
+
+
+def _tracked_evidence_declaration(certifier):
+    """The future evidence-present state, modelled with COMMITTED bytes only.
+
+    The declared citations are re-pointed from the (uncommitted) MCP capture at
+    ``sufaha-evidence.jsonl`` onto an artifact that is already tracked, unmodified
+    and record-shaped: the contract itself, whose N-th fact carries the N-th
+    quotation. Nothing is written, no evidence is manufactured, and the real
+    evidence artifact is never created — but the evidence-authority checks pass, so
+    what stays under test is the DECLARED-BODY binding on its own.
+    """
+
+    contract_path = certifier.FAMILY_CONTRACT_ARTIFACTS[0]
+    payload = json.loads(Path(contract_path).read_text(encoding="utf-8"))
+    for fact in payload["facts"]:
+        carriers = [fact.get("source_address")]
+        carriers += list((fact.get("source_evidence") or {}).get("source_addresses") or [])
+        carriers += list((fact.get("dependencies") or {}).get("source_addresses") or [])
+        for item in carriers:
+            if isinstance(item, dict) and isinstance(item.get("address"), str):
+                item["address"] = item["address"].replace("sufaha-evidence.jsonl",
+                                                          Path(contract_path).name)
+    return payload, Path(contract_path)
+
+
+def _certify_family_batch(certifier, payload, packet_dir, mutate=None):
+    """Register every declared fact in one store; return the types that certified."""
+
+    import tempfile
+
+    certified = []
+    with tempfile.TemporaryDirectory() as tmp:
+        store = certifier.TypedFactCertificationStore(Path(tmp))
+        prepared = []
+        for fact in payload["facts"]:
+            candidate = copy.deepcopy(fact)
+            if mutate is not None:
+                mutate(candidate)
+            prepared.append(candidate)
+            store.register(candidate, contract_id=payload["contract_id"], actor="t",
+                           timestamp="2026-08-02T00:00:00Z")
+            store.transition(candidate["fact_id"], "review_required", actor="t",
+                             timestamp="2026-08-02T00:00:01Z", reason="t")
+        for fact in certifier._sufaha_dependency_order(prepared):
+            kwargs = {"packet_dir": packet_dir}
+            if fact["fact_type"] in certifier.TWO_VOTE_FACT_TYPES:
+                kwargs["two_vote_bundle"] = (certifier.TWO_VOTE_SAMPLE,
+                                             "two-vote-artifact:quran_2_13_12")
+            try:
+                store.transition(fact["fact_id"], "certified", actor="t",
+                                 timestamp="2026-08-02T00:00:02Z", reason="t", **kwargs)
+                certified.append(fact["fact_type"])
+            except certifier.CertificationError:
+                pass
+    return certified
+
+
+def test_family_authority_binds_the_declared_body_and_committed_evidence() -> None:
+    """A declared fact id is a label; certification asserts the declared BODY.
+
+    Round 9 resolved a citation to a path and checked that the path existed. Under
+    a resolvable evidence file that let a candidate keep the declared ``fact_id``
+    and citation while substituting ``fact_value``, the quotation or the evidence
+    mode — and certify. Existence was also mistaken for repository authority: any
+    file dropped beside a contract counted as committed evidence.
+    """
+
+    import tempfile
+
+    from tools import certify_typed_fact as certifier
+
+    payload, contract_path = _tracked_evidence_declaration(certifier)
+    families = [fact["fact_type"] for fact in payload["facts"]
+                if fact["fact_type"] not in certifier.TWO_VOTE_FACT_TYPES]
+    check("the committed contract declares ten non-two-vote families", len(families) == 10)
+
+    real_index = certifier.family_contract_index
+    simulated = certifier._build_family_index(payload, contract_path)
+    certifier.family_contract_index = lambda: simulated
+    try:
+        # Positive control: with committed evidence the DECLARED facts certify, so
+        # every refusal below is the body binding, not an inert simulation.
+        clean = [name for name in _certify_family_batch(certifier, payload, contract_path.parent)
+                 if name not in certifier.TWO_VOTE_FACT_TYPES]
+        check("the evidence-present simulation certifies all %d declared facts (%d)"
+              % (len(families), len(clean)), sorted(clean) == sorted(families))
+
+        def substitute_payload(fact):
+            fact["fact_value"] = {"value": "SUBSTITUTED CLAIM", "attacker": True}
+            fact["source_evidence"] = dict(fact.get("source_evidence") or {})
+            fact["source_evidence"]["source_quotation"] = "substituted verbatim quotation"
+
+        forged = [name for name in _certify_family_batch(
+            certifier, payload, contract_path.parent, mutate=substitute_payload)
+            if name not in certifier.TWO_VOTE_FACT_TYPES]
+        check("no substituted payload certifies under a declared fact id (%s)" % forged,
+              not forged)
+
+        # Each truth-bearing field binds on its own, with a refusal that says so.
+        declared = next(fact for fact in payload["facts"]
+                        if fact["fact_type"] == "singular_pattern")
+        for label, mutate in (
+            ("fact_value", lambda f: f.update({"fact_value": {"value": "other"}})),
+            ("source_quotation", lambda f: f["source_evidence"].update(
+                {"source_quotation": "other"})),
+            ("dependencies", lambda f: f.update({"dependencies": {"fact_ids": ["sha256:x"]}})),
+            ("derivation_chain", lambda f: f.update({"derivation_chain": [{"step_id": "x"}]})),
+            ("evidence", lambda f: f.update({"evidence": {"evidence_ids": ["invented"]}})),
+            ("contradiction_records", lambda f: f.update({"contradiction_records": ["x"]})),
+        ):
+            forged_fact = copy.deepcopy(declared)
+            mutate(forged_fact)
+            refusal = certifier.gate_refusal(forged_fact, contract_id=payload["contract_id"])
+            check("a substituted %s is refused as a substituted body" % label,
+                  refusal is not None and "may not carry a substituted body" in refusal)
+
+        # A weaker rung than the declaration claimed.
+        root_fact = copy.deepcopy(next(fact for fact in payload["facts"]
+                                       if fact["fact_type"] == "root"))
+        check("root is declared at cross_source_corroboration",
+              root_fact["evidence_mode"] == "cross_source_corroboration")
+        root_fact["evidence_mode"] = "direct_source_attestation"
+        refusal = certifier.gate_refusal(root_fact, contract_id=payload["contract_id"])
+        check("a substituted evidence mode is refused",
+              refusal is not None and "never claimed" in refusal)
+
+        # The cited fragment must open and corroborate; a filename is not evidence.
+        for label, address_suffix in (("an out-of-range record", "#fact=999"),
+                                      ("no record fragment at all", "")):
+            forged_fact = copy.deepcopy(declared)
+            base_address = forged_fact["source_address"]["address"].split("#", 1)[0]
+            forged_fact["source_address"] = dict(forged_fact["source_address"],
+                                                 address=base_address + address_suffix)
+            refusal = certifier.gate_refusal(forged_fact, contract_id=payload["contract_id"])
+            check("a citation naming %s is refused" % label, refusal is not None)
+    finally:
+        certifier.family_contract_index = real_index
+
+    # Repository authority: tracked and unmodified passes; an untracked lookalike
+    # and a tracked-but-drifted path are refusals, not evidence.
+    check("a tracked, unmodified repository file passes repository authority",
+          certifier.repository_blob_refusal(contract_path) is None)
+    with tempfile.TemporaryDirectory() as tmp:
+        repo = Path(tmp) / "scratch"
+        repo.mkdir()
+        git = ["git", "-C", str(repo)]
+        _run(git + ["init", "-q"])
+        tracked = repo / "evidence.jsonl"
+        tracked.write_text('{"row": 1}\n', encoding="utf-8", newline="\n")
+        lookalike = repo / "sufaha-evidence.jsonl"
+        lookalike.write_text('{"row": 2}\n', encoding="utf-8", newline="\n")
+        _run(git + ["add", "evidence.jsonl"])
+        _run(git + ["-c", "user.email=a@b.c", "-c", "user.name=t", "commit", "-q", "-m", "e"])
+        check("the committed scratch blob is accepted",
+              certifier.repository_blob_refusal(tracked, repo_root=repo) is None)
+        untracked_refusal = certifier.repository_blob_refusal(lookalike, repo_root=repo)
+        check("an untracked lookalike is not committed evidence",
+              untracked_refusal is not None and "not tracked" in untracked_refusal)
+        tracked.write_text('{"row": 1, "drifted": true}\n', encoding="utf-8", newline="\n")
+        drift_refusal = certifier.repository_blob_refusal(tracked, repo_root=repo)
+        check("a tracked but byte-drifted evidence path is not committed evidence",
+              drift_refusal is not None and "drifted" in drift_refusal)
+
+    # Today's honest state is unchanged by any of this.
+    real_evidence = contract_path.parent / "sufaha-evidence.jsonl"
+    check("the real evidence artifact is still absent", not real_evidence.exists())
+    live = json.loads(contract_path.read_text(encoding="utf-8"))
+    certified = _certify_family_batch(certifier, live, contract_path.parent)
+    check("no real family fact certifies today (%s)" % certified, not certified)
+    # The two-vote family is not held by the family gate at all: its authority is
+    # the validated vote artifact, and today it is stopped only by the same missing
+    # review artifact that stops everything else in this packet.
+    governor = next(fact for fact in live["facts"]
+                    if fact["fact_type"] == "governor_relation")
+    check("the two-vote family keeps its validated-bundle authority",
+          certifier.gate_refusal(governor, contract_id=live["contract_id"]) is None)
+
+
+def _run(args):
+    import subprocess
+
+    return subprocess.run(args, capture_output=True, text=True)
 
 
 def test_both_bridge_output_fact_types_are_registered() -> None:

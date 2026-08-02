@@ -47,6 +47,7 @@ import functools
 import hashlib
 import json
 import os
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -164,20 +165,91 @@ FAMILY_CONTRACT_ARTIFACTS = (
 FAMILY_ANCHOR_SOURCE_KIND = "review_artifact"
 
 
+# Fields the certification STATE MACHINE owns, and only those. Everything else in
+# a fact is truth-bearing and is bound by ``family_body_digest``: fact_type,
+# fact_value, evidence_mode, source_evidence (addresses, quotation or structured
+# source fact), source_address, dependencies, derivation_chain, evidence identity,
+# contradiction records, defeaters/guards, producer, rule_projector, occurrence and
+# surface spans, and any other key a contract carries.
+#
+#   * ``certification`` — the status/reason the store itself writes;
+#   * ``unresolved_blockers`` — review bookkeeping, cleared as blockers are closed;
+#   * ``dependent_fact_ids`` / ``dependent_projection_ids`` — back-references that
+#     grow as OTHER facts register against this one, so they cannot be fixed at
+#     declaration time.
+#
+# Nothing else may be excluded: an exclusion is a field a forger may rewrite.
+FAMILY_BODY_STATE_FIELDS = frozenset({
+    "certification",
+    "unresolved_blockers",
+    "dependent_fact_ids",
+    "dependent_projection_ids",
+})
+
+
+def family_body_digest(fact: Dict[str, Any]) -> str:
+    """A deterministic digest of everything in a fact except state-machine fields."""
+
+    body = {key: value for key, value in (fact or {}).items()
+            if key not in FAMILY_BODY_STATE_FIELDS}
+    return _sha256(_canonical(body))
+
+
+def family_body_difference(candidate: Dict[str, Any], declared: Dict[str, Any]) -> List[str]:
+    """The truth-bearing keys on which a candidate differs from its declaration."""
+
+    keys = (set(candidate or {}) | set(declared or {})) - FAMILY_BODY_STATE_FIELDS
+    return sorted(
+        key for key in keys
+        if _canonical((candidate or {}).get(key)) != _canonical((declared or {}).get(key))
+    )
+
+
+def _build_family_index(payload: Dict[str, Any], path: Path) -> Dict[str, Dict[str, Any]]:
+    """Index one committed family contract by declared fact type.
+
+    Each citation maps to the ONE declaring fact it addresses — its id, producer,
+    projector, evidence mode, body digest and the declared body itself — so family
+    authority is never a type-wide set a foreign payload can satisfy.
+    """
+
+    index: Dict[str, Dict[str, Any]] = {}
+    contract_id = str(payload.get("contract_id") or "")
+    for fact in payload.get("facts") or []:
+        if not isinstance(fact, dict):
+            continue
+        fact_type = str(fact.get("fact_type") or "")
+        anchor = fact.get("source_address")
+        if not isinstance(anchor, dict):
+            continue
+        address = str(anchor.get("address") or "")
+        if not fact_type or not address:
+            continue
+        if str(anchor.get("source_kind") or "") != FAMILY_ANCHOR_SOURCE_KIND:
+            # Only a reconstructible review artifact can anchor a family.
+            continue
+        declared = index.setdefault(fact_type, {
+            "contract_path": path,
+            "contract_id": contract_id,
+            "citations": {},
+        })
+        declared["citations"][address] = {
+            "fact_id": str(fact.get("fact_id") or ""),
+            "producer": str(((fact.get("producer") or {}).get("id")) or ""),
+            "projector": str(((fact.get("rule_projector") or {}).get("projector_id")) or ""),
+            "evidence_mode": str(fact.get("evidence_mode") or ""),
+            "body_digest": family_body_digest(fact),
+            "body": copy.deepcopy(fact),
+        }
+    return index
+
+
 @functools.lru_cache(maxsize=1)
 def family_contract_index() -> Dict[str, Dict[str, Any]]:
-    """Per declared family, the exact identity its committed family contract uses.
+    """Per declared family, the exact facts its committed family contract declares.
 
     Read out of the committed contracts rather than hard-coded here, so a family's
-    permitted authority cannot drift away from the artifact that defines it. For
-    each declared fact type we keep
-
-    * ``citations`` — the EXACT review-artifact addresses the contract's own facts
-      of that type are anchored to, mapped to the declaring fact id, so a citation
-      identifies one declared contract fact rather than a basename;
-    * ``producers`` / ``projectors`` — the identities those facts carry;
-    * ``contract_path`` / ``contract_id`` — the declaring artifact itself, which is
-      also the directory the cited evidence must be committed under.
+    permitted authority cannot drift away from the artifact that defines it.
     """
 
     index: Dict[str, Dict[str, Any]] = {}
@@ -188,38 +260,8 @@ def family_contract_index() -> Dict[str, Dict[str, Any]]:
             payload = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):  # a damaged contract declares nothing
             continue
-        contract_id = str(payload.get("contract_id") or "")
-        for fact in payload.get("facts") or []:
-            if not isinstance(fact, dict):
-                continue
-            fact_type = str(fact.get("fact_type") or "")
-            anchor = fact.get("source_address")
-            if not isinstance(anchor, dict):
-                continue
-            address = str(anchor.get("address") or "")
-            if not fact_type or not address:
-                continue
-            if str(anchor.get("source_kind") or "") != FAMILY_ANCHOR_SOURCE_KIND:
-                # Only a reconstructible review artifact can anchor a family.
-                continue
-            declared = index.setdefault(fact_type, {
-                "contract_path": path,
-                "contract_id": contract_id,
-                "citations": {},
-                "producers": set(),
-                "projectors": set(),
-            })
-            declared["citations"][address] = str(fact.get("fact_id") or "")
-            producer = str(((fact.get("producer") or {}).get("id")) or "")
-            if producer:
-                declared["producers"].add(producer)
-            projector = str(((fact.get("rule_projector") or {}).get("projector_id")) or "")
-            if projector:
-                declared["projectors"].add(projector)
-    for declared in index.values():
-        declared["producers"] = frozenset(declared["producers"])
-        declared["projectors"] = frozenset(declared["projectors"])
-        declared["citations"] = dict(declared["citations"])
+        for fact_type, declared in _build_family_index(payload, path).items():
+            index.setdefault(fact_type, declared)["citations"].update(declared["citations"])
     return index
 
 
@@ -262,6 +304,121 @@ def family_evidence_path(declared: Dict[str, Any], address: str) -> Optional[Pat
     return candidate
 
 
+def repository_blob_refusal(path: Path, *, repo_root: Path = ROOT) -> Optional[str]:
+    """Refusal unless repository authority proves this path is committed, unchanged.
+
+    Existence in a worktree proves nothing: anyone can drop a file next to a
+    contract. The path must be tracked at the CURRENT commit and its working-tree
+    content must equal that committed blob. If repository authority cannot be
+    consulted at all, that is a refusal too — never an assumption of good faith.
+    """
+
+    root = Path(repo_root).resolve()
+    try:
+        relative = Path(path).resolve().relative_to(root)
+    except (OSError, ValueError):
+        return "%s is outside the repository, so it can never be committed evidence" % path
+    rel = relative.as_posix()
+
+    def git(*args: str) -> Optional[subprocess.CompletedProcess]:
+        try:
+            return subprocess.run(("git", "-C", str(root)) + args,
+                                  capture_output=True, text=True, timeout=60)
+        except (OSError, subprocess.SubprocessError):
+            return None
+
+    tracked = git("rev-parse", "--verify", "--quiet", "HEAD:%s" % rel)
+    if tracked is None:
+        return ("repository authority is unavailable, so %s cannot be shown to be committed "
+                "evidence; certification fails closed" % rel)
+    if tracked.returncode != 0 or not tracked.stdout.strip():
+        return ("%s exists in the working tree but is not tracked at the current commit; "
+                "an untracked lookalike is not committed evidence" % rel)
+    unchanged = git("diff", "--quiet", "HEAD", "--", rel)
+    if unchanged is None or unchanged.returncode not in (0, 1):
+        return ("repository authority could not compare %s against the commit, so it cannot be "
+                "accepted as committed evidence" % rel)
+    if unchanged.returncode == 1:
+        return ("%s has drifted from the blob committed at %s; the evidence a citation opens "
+                "must be the committed bytes, not the working copy"
+                % (rel, tracked.stdout.strip()[:12]))
+    return None
+
+
+def _record_carries(record: Any, represented: str) -> bool:
+    """Whether an opened evidence record actually carries this verbatim evidence.
+
+    The comparison walks the record's own values rather than its serialisation: a
+    quotation legitimately contains quotes and braces, and an escaped-JSON substring
+    test would reject exactly the verbatim material it is meant to confirm.
+    """
+
+    if isinstance(record, str):
+        return represented == record or represented in record
+    if isinstance(record, dict):
+        return (_canonical(record) == represented
+                or any(_record_carries(value, represented) for value in record.values()))
+    if isinstance(record, list):
+        return (_canonical(record) == represented
+                or any(_record_carries(value, represented) for value in record))
+    return False
+
+
+def evidence_fragment_refusal(evidence_path: Path, address: str,
+                              fact: Dict[str, Any]) -> Optional[str]:
+    """Refusal unless the cited fragment opens and corroborates this exact fact.
+
+    ``#fact=N`` selects the N-th record of the cited artifact (one JSON object per
+    line for ``.jsonl``, or the N-th entry of a ``facts`` array / top-level array
+    for ``.json``). That record must carry this fact's verbatim quotation, and must
+    not name a different fact type. A fragment nothing can open is not evidence.
+    """
+
+    fragment = address.split("#", 1)[1] if "#" in address else ""
+    if not fragment.startswith("fact=") or not fragment[len("fact="):].isdigit():
+        return ("the citation %r carries no resolvable record fragment, so nothing in %s can be "
+                "opened to corroborate this fact" % (address, evidence_path.name))
+    index = int(fragment[len("fact="):])
+    try:
+        text = evidence_path.read_text(encoding="utf-8")
+    except (OSError, ValueError) as error:
+        return "the cited evidence %s could not be opened (%s)" % (evidence_path.name, error)
+    records: List[Any] = []
+    try:
+        if evidence_path.suffix == ".jsonl":
+            records = [json.loads(line) for line in text.splitlines() if line.strip()]
+        else:
+            payload = json.loads(text)
+            if isinstance(payload, dict):
+                records = list(payload.get("facts") or [])
+            elif isinstance(payload, list):
+                records = list(payload)
+    except ValueError as error:
+        return "the cited evidence %s is not a readable record artifact (%s)" % (
+            evidence_path.name, error)
+    if not records or not 1 <= index <= len(records):
+        return ("the citation %r addresses record %d of %s, which holds %d record(s); the cited "
+                "fragment does not exist" % (address, index, evidence_path.name, len(records)))
+    record = records[index - 1]
+    source_evidence = fact.get("source_evidence") or {}
+    quotation = source_evidence.get("source_quotation")
+    represented = quotation if isinstance(quotation, str) and quotation else None
+    if represented is None:
+        structured = source_evidence.get("structured_source_fact")
+        represented = _canonical(structured) if structured is not None else None
+    if represented is None:
+        return ("this fact carries neither a verbatim quotation nor a structured source fact, so "
+                "the cited record %r cannot corroborate it" % address)
+    if not _record_carries(record, represented):
+        return ("the record at %r does not carry this fact's verbatim evidence, so the citation "
+                "does not corroborate the claim being certified" % address)
+    record_type = str(record.get("fact_type") or "") if isinstance(record, dict) else ""
+    if record_type and record_type != str(fact.get("fact_type") or ""):
+        return ("the record at %r is evidence for %r, not for %r"
+                % (address, record_type, fact.get("fact_type")))
+    return None
+
+
 def family_authority_refusal(fact: Dict[str, Any], *,
                              contract_id: Optional[str] = None) -> Optional[str]:
     """Refusal when a recognised-but-ungated family's authority is not established.
@@ -272,11 +429,15 @@ def family_authority_refusal(fact: Dict[str, Any], *,
 
     1. citing that contract's own review-artifact address for a fact of THIS type,
        on the carrier the reconstructibility check actually reads;
-    2. carrying the producer and projector identity that contract declares — both
-       are required, because an omitted field must never skip a check;
-    3. being the fact that citation declares, registered under that contract, so a
-       foreign payload cannot ride a legitimate citation;
-    4. resolving the cited artifact to a file committed in this repository.
+    2. carrying the producer, projector and evidence mode THAT CITATION's declaring
+       fact carries — never a type-wide set, and never an omitted field;
+    3. presenting the declared body itself: every truth-bearing field is digest-
+       compared against the declaration (see ``FAMILY_BODY_STATE_FIELDS`` for the
+       narrow set of state-machine fields excluded), so a declared fact id can never
+       carry a substituted fact_value, quotation, dependency or derivation;
+    4. opening onto evidence that repository authority proves is tracked at the
+       current commit and byte-identical to that commit, whose cited fragment
+       actually corroborates this fact.
 
     Anything less would let a relabelled payload assert its own family membership.
     """
@@ -300,7 +461,7 @@ def family_authority_refusal(fact: Dict[str, Any], *,
             "address is never resolved, so it is not evidence)"
             % (fact_type, contract_display, FAMILY_ANCHOR_SOURCE_KIND)
         )
-    cited = [address for address in offered if address in citations]
+    cited = sorted(address for address in offered if address in citations)
     if not cited:
         return (
             "fact_type %r must cite the exact %s address that contract declares for a %s fact "
@@ -308,21 +469,30 @@ def family_authority_refusal(fact: Dict[str, Any], *,
             % (fact_type, contract_display, fact_type,
                ", ".join(sorted(citations)), ", ".join(sorted(offered)))
         )
-
-    producer = str(((fact.get("producer") or {}).get("id")) or "")
-    if declared["producers"] and producer not in declared["producers"]:
+    declaring = {citations[address]["fact_id"] for address in cited}
+    if len(declaring) > 1:
         return (
-            "fact_type %r is declared by %s with producer %s; this fact declares %s, so it is not "
-            "a fact of that family"
-            % (fact_type, contract_display, ", ".join(sorted(declared["producers"])),
+            "the citations %s are declared by different %s facts (%s); one fact may not present "
+            "another's evidence" % (", ".join(cited), contract_display, ", ".join(sorted(declaring)))
+        )
+    declared_fact = citations[cited[0]]
+
+    # The declared fact, not a type-wide set: producer, projector and evidence mode
+    # are the ones THIS citation's declaring fact carries.
+    producer = str(((fact.get("producer") or {}).get("id")) or "")
+    if producer != declared_fact["producer"]:
+        return (
+            "the citation %r is declared by %s with producer %r; this fact declares %s, so it is "
+            "not a fact of that family"
+            % (cited[0], contract_display, declared_fact["producer"],
                repr(producer) if producer else "no producer")
         )
     projector = str(((fact.get("rule_projector") or {}).get("projector_id")) or "")
-    if declared["projectors"] and projector not in declared["projectors"]:
+    if projector != declared_fact["projector"]:
         return (
-            "fact_type %r is declared by %s with projector %s; this fact declares %s, so it is not "
-            "a fact of that family"
-            % (fact_type, contract_display, ", ".join(sorted(declared["projectors"])),
+            "the citation %r is declared by %s with projector %r; this fact declares %s, so it is "
+            "not a fact of that family"
+            % (cited[0], contract_display, declared_fact["projector"],
                repr(projector) if projector else "no projector")
         )
     if (contract_id is not None and declared["contract_id"]
@@ -332,38 +502,50 @@ def family_authority_refusal(fact: Dict[str, Any], *,
             "%r, so the citation does not belong to it"
             % (fact_type, contract_display, declared["contract_id"], str(contract_id))
         )
+    if declared_fact["fact_id"] and str(fact.get("fact_id") or "") != declared_fact["fact_id"]:
+        return (
+            "the citation %r identifies the %s fact %s declared by %s; this payload presents "
+            "fact_id %r, so it is not the fact that citation declares"
+            % (cited[0], fact_type, declared_fact["fact_id"], contract_display,
+               str(fact.get("fact_id") or ""))
+        )
+    if str(fact.get("evidence_mode") or "") != declared_fact["evidence_mode"]:
+        return (
+            "the citation %r is declared at evidence_mode %r; this fact claims %r, and a fact may "
+            "not certify on a rung its declaration never claimed"
+            % (cited[0], declared_fact["evidence_mode"], str(fact.get("evidence_mode") or ""))
+        )
 
-    # A citation identifies ONE declared contract fact. Presenting it with someone
-    # else's payload attached is the whole forgery: the body would be certified, not
-    # the fact the contract declared.
-    for address in sorted(cited):
-        declared_fact_id = citations.get(address) or ""
-        if declared_fact_id and str(fact.get("fact_id") or "") != declared_fact_id:
-            return (
-                "the citation %r identifies the %s fact %s declared by %s; this payload presents "
-                "fact_id %r, so it is not the fact that citation declares"
-                % (address, fact_type, declared_fact_id, contract_display,
-                   str(fact.get("fact_id") or ""))
-            )
+    # A fact_id is a label. What certification asserts is the BODY, so the body must
+    # be the declared one: every truth-bearing field, digest-compared.
+    if family_body_digest(fact) != declared_fact["body_digest"]:
+        differing = family_body_difference(fact, declared_fact["body"])
+        return (
+            "this payload differs from the %s fact %s declared by %s on %s; a declared fact id "
+            "may not carry a substituted body"
+            % (fact_type, declared_fact["fact_id"], contract_display,
+               ", ".join(differing) or "an excluded field")
+        )
 
-    # The citation must open onto something committed. While the declared evidence
-    # is absent from the repository, no fact of this family can be certified — that
-    # is the honest state, not a reason to accept the citation as its own proof.
-    for address in sorted(cited):
-        evidence_path = family_evidence_path(declared, address)
-        if evidence_path is None:
-            return (
-                "the family citation %r does not resolve to a repository-relative path under %s"
-                % (address, contract_display)
-            )
-        if not evidence_path.exists():
-            return (
-                "%s declares the evidence for %r at %s, which is not committed in-repo; "
-                "no fact of this family can be certified until that evidence is committed"
-                % (contract_display, fact_type,
-                   evidence_path.relative_to(ROOT).as_posix())
-            )
-    return None
+    # The citation must open onto committed evidence. While the declared evidence is
+    # absent from the repository, no fact of this family can be certified — that is
+    # the honest state, not a reason to accept the citation as its own proof.
+    evidence_path = family_evidence_path(declared, cited[0])
+    if evidence_path is None:
+        return (
+            "the family citation %r does not resolve to a repository-relative path under %s"
+            % (cited[0], contract_display)
+        )
+    if not evidence_path.exists():
+        return (
+            "%s declares the evidence for %r at %s, which is not committed in-repo; "
+            "no fact of this family can be certified until that evidence is committed"
+            % (contract_display, fact_type, evidence_path.relative_to(ROOT).as_posix())
+        )
+    blob_refusal = repository_blob_refusal(evidence_path)
+    if blob_refusal is not None:
+        return blob_refusal
+    return evidence_fragment_refusal(evidence_path, cited[0], fact)
 
 
 def _gate_rank(tier):
