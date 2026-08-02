@@ -1493,6 +1493,125 @@ def test_r16_total_hover_and_absent_governor():
           two_vote_evidence_defect(dict(project_vote(fa), two_vote_evidence=[fa, fb])) is None)
 
 
+def test_r17_typed_governor_mirrors_and_total_grading():
+    """ROUND-17: the whole non-string mirror matrix is refused, nothing raises, and the governor-less
+    fixture pair is schema-valid enough to clear the canonical envelope."""
+    import copy  # noqa: PLC0415
+    import unicodedata  # noqa: PLC0415
+    from tools import validate_two_vote_artifacts as VTV17  # noqa: PLC0415
+    from tools.grade_grammar_reasoning import (  # noqa: PLC0415
+        canonical_two_vote_envelope, claim_binding_defect, derive_reasoning, governor_mirror_defect,
+        two_vote_artifact_defect, two_vote_evidence_defect,
+    )
+
+    # 3. the governor-less fixture must be schema-valid, or the governor-less gates are untestable
+    govless_base = dict(reason_key="ma-nafiya-non-operative", conclusion="negation", case_mood=None,
+                        relation="preposition_governs_genitive", fact_type="particle_function")
+    ga = mint_fixture_vote(0, worklist_id="wl-r17-a", vote_id="vote:r17:a", **govless_base)
+    gb = mint_fixture_vote(1, worklist_id="wl-r17-b", vote_id="vote:r17:b", **govless_base)
+    for v in (ga, gb):
+        v["conclusion"] = dict(v["conclusion"])
+        v["conclusion"]["governor"] = None
+    check("R17 a case-mood-less fixture emits the schema-valid not_applicable",
+          ((ga.get("conclusion") or {}).get("case_or_mood") or {}).get("sign_visibility")
+          == "not_applicable",
+          repr(((ga.get("conclusion") or {}).get("case_or_mood") or {}).get("sign_visibility")))
+    _errs = []
+    VTV17.validate_vote(ga, 1, 0, ga.get("occurrence"), _errs)
+    check("R17 the repository vote validator accepts the governor-less vote", _errs == [], repr(_errs[:1]))
+    check("R17 the governor-less pair clears the canonical two-vote envelope",
+          two_vote_artifact_defect(canonical_two_vote_envelope(ga, gb)) is None,
+          repr(two_vote_artifact_defect(canonical_two_vote_envelope(ga, gb))))
+    govless = dict(project_vote(ga), two_vote_evidence=[ga, gb])
+    case = {"id": "r17", "required_gate": "two_vote_required", "expected_conclusion": "negation",
+            "expected_reason_keys": ["ma-nafiya-non-operative"]}
+    check("R17 a fully valid governor-less claim grades cleanly",
+          grade_structured(case, govless)["pass"],
+          repr(grade_structured(case, govless).get("block_reason")))
+
+    # 1. the FULL type matrix — a mirror is a written string or nothing; every other type is malformed
+    matrix = [("list", ["x"]), ("empty list", []), ("dict", {"a": 1}), ("empty dict", {}),
+              ("int", 7), ("zero", 0), ("tuple", ("a",)), ("bool True", True),
+              ("bool False", False), ("float", 1.5)]
+    for field in ("surface", "loc", "relation", "governor_type"):
+        for label, value in matrix:
+            claim = dict(govless, governor={field: value})
+            try:
+                defect = claim_binding_defect(claim, ga)
+            except Exception as exc:  # noqa: BLE001
+                check("R17 nested %s=%s does not raise" % (field, label), False,
+                      "%s: %s" % (type(exc).__name__, exc))
+                continue
+            check("R17 nested %s=%s is refused" % (field, label), defect is not None, repr(defect))
+            try:
+                check("R17 the public gates refuse nested %s=%s" % (field, label),
+                      two_vote_evidence_defect(claim) is not None
+                      and not grade_structured(case, claim)["pass"])
+            except Exception as exc:  # noqa: BLE001
+                check("R17 the public gates refuse nested %s=%s without raising" % (field, label),
+                      False, "%s: %s" % (type(exc).__name__, exc))
+    for label, value in (("string", "preposition"), ("list", ["preposition"]), ("int", 7),
+                         ("tuple", ("a",)), ("bool", True), ("float", 1.5)):
+        claim = dict(govless, governor=value)
+        try:
+            check("R17 a non-record governor (%s) is refused" % label,
+                  claim_binding_defect(claim, ga) is not None,
+                  repr(claim_binding_defect(claim, ga)))
+        except Exception as exc:  # noqa: BLE001
+            check("R17 a non-record governor (%s) does not raise" % label, False,
+                  "%s: %s" % (type(exc).__name__, exc))
+    # honest absence is preserved exactly
+    for label, governor in (("None", None), ("an empty record", {}),
+                            ("an all-empty-string record",
+                             {"surface": "", "loc": "", "relation": "", "governor_type": ""})):
+        check("R17 honest absence (%s) still passes" % label,
+              claim_binding_defect(dict(govless, governor=governor), ga) is None,
+              repr(claim_binding_defect(dict(govless, governor=governor), ga)))
+    check("R17 governor_mirror_defect types values before content",
+          governor_mirror_defect(None) is None and governor_mirror_defect("") is None
+          and governor_mirror_defect("x") == "present" and governor_mirror_defect([]) == "not_a_string"
+          and governor_mirror_defect(0) == "not_a_string"
+          and governor_mirror_defect(False) == "not_a_string")
+
+    # 2. derive_reasoning() is total on every malformed governor value
+    for label, value in (("string", "preposition"), ("list", ["x"]), ("int", 7), ("tuple", ("a",)),
+                         ("bool", True), ("float", 1.5), ("dict-with-list", {"governor_type": ["x"]})):
+        try:
+            ok, defect = derive_reasoning(case, dict(govless, governor=value))
+            check("R17 derive_reasoning with governor=%s is total and typed" % label,
+                  not ok and isinstance(defect, str) and defect, "ok=%s defect=%s" % (ok, defect))
+        except Exception as exc:  # noqa: BLE001
+            check("R17 derive_reasoning with governor=%s is total" % label, False,
+                  "%s: %s" % (type(exc).__name__, exc))
+        try:
+            check("R17 grade_structured with governor=%s is total" % label,
+                  not grade_structured(case, dict(govless, governor=value))["pass"])
+        except Exception as exc:  # noqa: BLE001
+            check("R17 grade_structured with governor=%s is total" % label, False,
+                  "%s: %s" % (type(exc).__name__, exc))
+
+    # regressions: the governed path, NFC equivalence and the recorded external limit
+    va, vb = _r13_pair(vid_a="vote:r17:c", vid_b="vote:r17:d")
+    good = dict(project_vote(va), two_vote_evidence=[va, vb])
+    check("R17 a genuine governed claim still passes",
+          two_vote_evidence_defect(good) is None, repr(two_vote_evidence_defect(good)))
+    check("R17 round-15/16 flat-mirror binding still holds",
+          two_vote_evidence_defect(dict(good, governor_surface="لَيْسَ")) is not None)
+    for field in ("relation", "surface", "loc"):
+        check("R17 a non-string flat governor_%s is refused on a GOVERNED vote" % field,
+              two_vote_evidence_defect(dict(good, **{"governor_%s" % field: ["x"]})) is not None)
+    nfd = dict(good)
+    nfd["governor_surface"] = unicodedata.normalize("NFD", good["governor_surface"] or "")
+    check("R17 NFC equivalence is still legal", two_vote_evidence_defect(nfd) is None,
+          repr(two_vote_evidence_defect(nfd)))
+    fa, fb = copy.deepcopy(va), copy.deepcopy(vb)
+    for v in (fa, fb):
+        v["conclusion"] = dict(v["conclusion"],
+                               governor=dict(v["conclusion"]["governor"], surface="لَيْسَ"))
+    check("R17 a valid self-consistent fabricated tuple is still NOT disproved (recorded limit)",
+          two_vote_evidence_defect(dict(project_vote(fa), two_vote_evidence=[fa, fb])) is None)
+
+
 def main():
     for fn in (test_m1_wrong_conclusion, test_m2_wrong_reason, test_m3_absent_governor,
                test_m4_lost_rival, test_m5_unsafe_auto_resolution, test_two_vote_agreement,
@@ -1502,7 +1621,8 @@ def main():
                test_r13_transition_surface_and_gates, test_r13_homographs_rivals_gloss,
                test_r13_tutor_content_vs_fact, test_r14_identity_governor_and_gates,
                test_r14_marks_and_learner_error, test_r15_case_safe_kull_and_gate_inputs,
-               test_r15_governor_mirrors_are_bound, test_r16_total_hover_and_absent_governor):
+               test_r15_governor_mirrors_are_bound, test_r16_total_hover_and_absent_governor,
+               test_r17_typed_governor_mirrors_and_total_grading):
         fn()
     if FAILS:
         print("FAIL — %d behavioural gate(s) broke:" % len(FAILS))
@@ -1518,7 +1638,8 @@ def main():
           "context-free gloss refusal, learner mastery separated from fact readiness, complete canonical "
           "record identity, complete governor tuple, exact mark profiles, exact sibling roles, learner "
           "error never hidden by the fact gate, case-safe كُلّ, bound governor mirrors, total gate-input "
-          "validation, total topic_hover, governor mirrors bound with no canonical tuple)")
+          "validation, total topic_hover, governor mirrors bound with no canonical tuple, typed governor "
+          "mirrors with a total grading path)")
 
 
 if __name__ == "__main__":

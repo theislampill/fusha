@@ -409,6 +409,21 @@ def canonical_vote_difference(left, right):
     return None
 
 
+# ROUND-17: a governor mirror is a WRITTEN value — a string or nothing. Anything else is neither an
+# assertion this module can bind nor an honest absence, so it is refused on its type before its content is
+# ever inspected. `compact()` stringifies, so without this a list read as "[1]" and a bool/0 read as "".
+GOVERNOR_MIRROR_FIELDS = ("relation", "surface", "loc", "type", "governor_type")
+
+
+def governor_mirror_defect(value):
+    """`None` for honest absence, "present" for a stated string, "not_a_string" for anything else."""
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        return "not_a_string"
+    return "present" if compact(value) else None
+
+
 def claim_binding_defect(claim, vote):
     """None only when the artifact is about THIS claim — same occurrence, same written surface, same tuple.
 
@@ -444,21 +459,40 @@ def claim_binding_defect(claim, vote):
     # or governor_loc and no binding defect was reported. Absence in the vote is itself a binding fact: a
     # mirror that asserts a governor the vote never named is fabricated, whichever form it takes.
     if not vote_governor:
+        # ROUND-17: the round-16 guard only inspected STRING mirror values, so a list, dict, int, tuple,
+        # bool or float in a nested mirror was silently read as "empty" and accepted, and a `governor`
+        # that was not a record at all was discarded outright instead of refused. Both carried governor
+        # content the votes never named. Type is checked before content now, and only the honest-absence
+        # forms survive.
+        if claimed_governor is not None and not isinstance(claimed_governor, dict):
+            return "claim_governor_not_a_record"
         for field in ("relation", "surface", "loc", "type"):
             flat = claim.get("governor_%s" % field)
+            if governor_mirror_defect(flat) == "not_a_string":
+                return "claim_governor_%s_not_a_string" % field
             if flat is not None and compact(flat):
                 return "claim_governor_%s_not_bound" % field
-        if isinstance(claimed_governor, dict) and any(
-                compact(v) for v in claimed_governor.values() if isinstance(v, str)):
-            return "claim_governor_relation_not_bound"
-        # There is no canonical tuple to bind against, and nothing fabricated was asserted, so an empty
-        # nested record is honest absence rather than an incomplete claim.
+        for field, value in sorted((claimed_governor or {}).items()):
+            defect = governor_mirror_defect(value)
+            if defect == "not_a_string":
+                return "claim_governor_%s_not_a_string" % field
+            if defect == "present":
+                return "claim_governor_%s_not_bound" % field
+        # No canonical tuple to bind against and nothing asserted: an absent record, an empty record and a
+        # record whose every value is an empty string are all honest absence.
         claimed_governor = None
     if vote_governor and claimed_governor is None:
         return "claim_governor_absent"
     if claimed_governor is not None:
         if not isinstance(claimed_governor, dict):
             return "claim_governor_not_a_record"
+        # ROUND-17: type before content on the governed path as well.
+        for _field, _value in sorted(claimed_governor.items()):
+            if governor_mirror_defect(_value) == "not_a_string":
+                return "claim_governor_%s_not_a_string" % _field
+        for _field in ("relation", "surface", "loc", "type"):
+            if governor_mirror_defect(claim.get("governor_%s" % _field)) == "not_a_string":
+                return "claim_governor_%s_not_a_string" % _field
         projected_type = JUSTIFICATION_RULE_GOVERNOR_TYPE.get(vote_governor.get("relation"))
         if not compact(claimed_governor.get("governor_type")):
             return "claim_governor_type_absent"
@@ -632,7 +666,8 @@ def derive_reasoning(case, claim):
 
     Returns (reasoning_ok: bool, defect: str|None). `defect` is a closed vocabulary:
     reason_contract_absent | reason_key_absent | reason_key_unregistered | reason_key_mismatch |
-    governor_not_justified | mood_basis_not_licensed | source_address_absent.
+    governor_not_justified | mood_basis_not_licensed | source_address_absent |
+    governor_not_a_record | governor_type_not_a_string.
     """
     expected = case.get("expected_reason_keys")
     if not expected:
@@ -674,7 +709,14 @@ def derive_reasoning(case, claim):
         return False, "reason_tuple_conclusion_mismatch"
     if normalize_case_mood(claim.get("case_mood")) != normalize_case_mood(tuple_["case_mood"]):
         return False, "reason_tuple_case_mismatch"
-    claimed_gov = (claim.get("governor") or {}).get("governor_type")
+    # ROUND-17: this called .get() straight through, so a non-record governor raised AttributeError out of
+    # a public grading path. A malformed claim is a typed reason defect, never a crash.
+    raw_governor = claim.get("governor")
+    if raw_governor is not None and not isinstance(raw_governor, dict):
+        return False, "governor_not_a_record"
+    claimed_gov = (raw_governor or {}).get("governor_type")
+    if governor_mirror_defect(claimed_gov) == "not_a_string":
+        return False, "governor_type_not_a_string"
     if tuple_["governor_type"] and not claimed_gov:
         # the case/mood is asserted with no ʿāmil at all — keep the named defect visible
         return False, "governor_not_justified"
@@ -686,7 +728,7 @@ def derive_reasoning(case, claim):
         return True, None                       # no case/mood asserted => no governor obligation
 
     basis = (claim.get("mood_basis") or "").strip().lower() or None
-    governor = claim.get("governor") or None
+    governor = raw_governor or None
     gov_type = (governor or {}).get("governor_type")
 
     if basis in CANDIDATE_MOOD_BASIS:
@@ -993,7 +1035,10 @@ def mint_fixture_vote(index, *, reason_key, conclusion, case_mood, relation, wor
     # external worker-record fields and are kept beside the artifact, keyed by vote id.
     _EXTERNAL_WORKER_RECORD[vote["vote_id"]] = {"worklist_id": worklist_id, "fact_type": fact_type}
     case_block = ({"value": case_mood, "sign": "kasra", "sign_visibility": "visible"} if case_mood
-                  else {"value": "none", "sign": None, "sign_visibility": "not_visible"})
+                  # ROUND-17: the schema enum is visible|estimated|not_applicable. "not_visible" was
+                  # rejected by the repository's own vote validator, so a governor-less fixture pair could
+                  # never clear the canonical envelope and the governor-less gates were untestable.
+                  else {"value": "none", "sign": None, "sign_visibility": "not_applicable"})
     vote["conclusion"] = dict(vote["conclusion"], contextual_function=conclusion,
                               case_or_mood=case_block,
                               governor=dict(vote["conclusion"]["governor"], relation=relation))
