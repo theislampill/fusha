@@ -5537,8 +5537,8 @@ except Exception as _fa_contract_e:
 # FACTCERT: fact-level certification transition engine (consumption-map hops
 # 1-3). Red-first self-test covers: certify without a bundle, deterministic
 # derivation over candidate inputs, same-family "corroboration", two-vote rung
-# without a validate_two_vote_artifacts-passing bundle, revoke without cascade,
-# and event-trail gaps/tampering. The sufaha demo is read-only over committed
+# without a validate_two_vote_artifacts-passing bundle, exact two-vote claim
+# binding, revoke without cascade, and event-trail gaps/tampering. The sufaha demo is read-only over committed
 # artifacts: the committed packet is honestly refused (its MCP verbatim
 # evidence file is not committed in-repo) and the full transition + revocation
 # cascade runs only on a temp fixture copy.
@@ -5551,10 +5551,17 @@ try:
           "CERTIFY TYPED FACT SELF-TEST PASS" in (_factcert_self.stdout or ""))
     if _factcert_self.returncode != 0:
         print("  ", ((_factcert_self.stdout or "") + (_factcert_self.stderr or "")).strip().splitlines()[-1:])
+    _factcert_claims = run_text([sys.executable,
+                                 os.path.join(ROOT, "tools", "test_certify_typed_fact.py")], timeout=120)
+    check("FACTCERT two-vote exact claim-binding regressions pass",
+          _factcert_claims.returncode == 0 and
+          "CERTIFY TYPED FACT CLAIM-BINDING TESTS PASS" in (_factcert_claims.stdout or ""))
+    if _factcert_claims.returncode != 0:
+        print("  ", ((_factcert_claims.stdout or "") + (_factcert_claims.stderr or "")).strip().splitlines()[-1:])
     _factcert_demo = run_text([sys.executable,
                                os.path.join(ROOT, "tools", "certify_typed_fact.py"),
                                "--demo-sufaha"], timeout=120)
-    check("FACTCERT sufaha canary demo (honest refusal + fixture-copy transitions + cascade) passes",
+    check("FACTCERT sufaha canary demo (honest refusal + exact-claim closure) passes",
           _factcert_demo.returncode == 0 and
           "SUFAHA CERTIFIER DEMO PASS" in (_factcert_demo.stdout or "") and
           "leg A (committed packet): 0/11 certified" in (_factcert_demo.stdout or ""))
@@ -6376,12 +6383,34 @@ except Exception as _tp_e:
 # morpheme occurrences of the jarr clitic li- on noun hosts / 78 appearances /
 # 49 typed facts).  Durable repository machinery for the P00 slice: 12-location
 # integrity, 49-fact completeness against the hash-chained certification store,
-# entry+sense transclusion closure on every certified morpheme occurrence
-# (a generic 'preposition' class without the entry/sense edge does NOT satisfy
-# transclusion), parity hash stability (NFC lesson), reverse-trace closure and
+# certified entry transclusion plus an explicit candidate-only sense edge on
+# every certified morpheme occurrence (a contextual-function fact never
+# certifies sense identity), parity hash stability (NFC lesson), reverse-trace closure and
 # the NOT-DEPLOYED production-difference honesty gate.  Red-first self-test +
 # committed green pilot; fixture-only, no lane-side corpora, no live reads.
 try:
+    _p007_migration_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "migrate_p007_claim_binding.py"),
+        "--self-test",
+    ], timeout=300)
+    check(
+        "P007PILOT GAP-N12 append-only migration self-test passes",
+        _p007_migration_self.returncode == 0
+        and "P007 CLAIM-BINDING MIGRATION SELF-TEST PASS"
+        in (_p007_migration_self.stdout or ""),
+    )
+    _p007_migration_check = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "migrate_p007_claim_binding.py"),
+        "--check",
+    ], timeout=300)
+    check(
+        "P007PILOT GAP-N12 facts and downstream consumers are fresh",
+        _p007_migration_check.returncode == 0
+        and "P007 CLAIM-BINDING MIGRATION FRESH"
+        in (_p007_migration_check.stdout or ""),
+    )
     _p007_self = run_text([
         sys.executable,
         os.path.join(ROOT, "tools", "validate_p007_pilot.py"),
@@ -6405,12 +6434,17 @@ try:
             "qamus/examples/p007-li-pilot/locations.json",
             "qamus/examples/p007-li-pilot/typed-facts.jsonl",
             "qamus/examples/p007-li-pilot/certification/events.jsonl",
+            "qamus/examples/p007-li-pilot/certification/claim-binding-migration.json",
             "qamus/examples/p007-li-pilot/transclusion-edges.jsonl",
             "qamus/examples/p007-li-pilot/entry-reverse-index.json",
+            "qamus/examples/p007-li-pilot/projections.jsonl",
+            "qamus/examples/p007-li-pilot/parity-report.json",
             "qamus/examples/p007-li-pilot/two-vote-artifacts.v1.jsonl",
             "qamus/examples/p007-li-pilot/two-vote-artifacts.v1_1.jsonl",
             "qamus/examples/p007-li-pilot/production-difference.json",
+            "qamus/examples/p007-li-pilot/vn-unlock.json",
             "tools/build_p007_li_pilot.py",
+            "tools/migrate_p007_claim_binding.py",
     ):
         check("P007PILOT artifact committed: " + _p007_art,
               os.path.exists(os.path.join(_R, *_p007_art.split("/"))))

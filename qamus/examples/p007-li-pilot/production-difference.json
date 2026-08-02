@@ -44,9 +44,14 @@
    ],
    "deployed": false,
    "occurrence_id": "quran:12:31:24",
-   "required_change": "replace the live rich-whitelist row for quran:12:31:24 with the certified canonical projection (hash see projections.jsonl…)",
+   "projection_state": "candidate_pending",
+   "required_change": "no live change authorized; resolve the candidate sense identity and governor-relation label before any public application for quran:12:31:24",
    "rollback_unit": "live rich-whitelist row for quran:12:31:24 (single-row revert)",
    "surface": "لِلَّهِ",
+   "unresolved_dependencies": [
+    "occurrence_to_sense_certification",
+    "governor_relation_governed_key"
+   ],
    "verdict": "legacy-coarse",
    "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
   },
@@ -95,9 +100,14 @@
    ],
    "deployed": false,
    "occurrence_id": "quran:2:34:3",
-   "required_change": "replace the live rich-whitelist row for quran:2:34:3 with the certified canonical projection (hash see projections.jsonl…)",
+   "projection_state": "candidate_pending",
+   "required_change": "no live change authorized; resolve the candidate sense identity and governor-relation label before any public application for quran:2:34:3",
    "rollback_unit": "live rich-whitelist row for quran:2:34:3 (single-row revert)",
    "surface": "لِلْمَلَٰٓئِكَةِ",
+   "unresolved_dependencies": [
+    "occurrence_to_sense_certification",
+    "governor_relation_governed_key"
+   ],
    "verdict": "legacy-coarse",
    "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
   },
@@ -140,9 +150,14 @@
    ],
    "deployed": false,
    "occurrence_id": "quran:2:34:5",
-   "required_change": "replace the live rich-whitelist row for quran:2:34:5 with the certified canonical projection (hash see projections.jsonl…)",
+   "projection_state": "candidate_pending",
+   "required_change": "no live change authorized; resolve the candidate sense identity and governor-relation label before any public application for quran:2:34:5",
    "rollback_unit": "live rich-whitelist row for quran:2:34:5 (single-row revert)",
    "surface": "لِءَادَمَ",
+   "unresolved_dependencies": [
+    "occurrence_to_sense_certification",
+    "governor_relation_governed_key"
+   ],
    "verdict": "legacy-coarse",
    "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
   },
@@ -197,9 +212,14 @@
    ],
    "deployed": false,
    "occurrence_id": "quran:24:35:44",
-   "required_change": "replace the live rich-whitelist row for quran:24:35:44 with the certified canonical projection (hash see projections.jsonl…)",
+   "projection_state": "candidate_pending",
+   "required_change": "no live change authorized; resolve the candidate sense identity and governor-relation label before any public application for quran:24:35:44",
    "rollback_unit": "live rich-whitelist row for quran:24:35:44 (single-row revert)",
    "surface": "لِلنَّاسِ",
+   "unresolved_dependencies": [
+    "occurrence_to_sense_certification",
+    "governor_relation_governed_key"
+   ],
    "verdict": "legacy-coarse",
    "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
   },
@@ -250,9 +270,14 @@
    ],
    "deployed": false,
    "occurrence_id": "quran:2:187:63",
-   "required_change": "replace the live rich-whitelist row for quran:2:187:63 with the certified canonical projection (hash see projections.jsonl…)",
+   "projection_state": "candidate_pending",
+   "required_change": "no live change authorized; resolve the candidate sense identity and governor-relation label before any public application for quran:2:187:63",
    "rollback_unit": "live rich-whitelist row for quran:2:187:63 (single-row revert)",
    "surface": "لِلنَّاسِ",
+   "unresolved_dependencies": [
+    "occurrence_to_sense_certification",
+    "governor_relation_governed_key"
+   ],
    "verdict": "wrong",
    "verdict_reason": "live folds the assimilated article into the host (لِ | لنَّاسِ); the candidate carve separates clitic | article | host"
   },
@@ -301,9 +326,14 @@
    ],
    "deployed": false,
    "occurrence_id": "quran:5:3:9",
-   "required_change": "replace the live rich-whitelist row for quran:5:3:9 with the certified canonical projection (hash see projections.jsonl…)",
+   "projection_state": "candidate_pending",
+   "required_change": "no live change authorized; resolve the candidate sense identity and governor-relation label before any public application for quran:5:3:9",
    "rollback_unit": "live rich-whitelist row for quran:5:3:9 (single-row revert)",
    "surface": "لِغَيْرِ",
+   "unresolved_dependencies": [
+    "occurrence_to_sense_certification",
+    "governor_relation_governed_key"
+   ],
    "verdict": "incomplete",
    "verdict_reason": "live clitic and host role labels are EMPTY; colour class qg-preposition is legacy-coarse"
   },
@@ -349,9 +379,14 @@
    ],
    "deployed": false,
    "occurrence_id": "quran:9:120:3",
-   "required_change": "replace the live rich-whitelist row for quran:9:120:3 with the certified canonical projection (hash see projections.jsonl…)",
+   "projection_state": "candidate_pending",
+   "required_change": "no live change authorized; resolve the candidate sense identity and governor-relation label before any public application for quran:9:120:3",
    "rollback_unit": "live rich-whitelist row for quran:9:120:3 (single-row revert)",
    "surface": "لِأَهْلِ",
+   "unresolved_dependencies": [
+    "occurrence_to_sense_certification",
+    "governor_relation_governed_key"
+   ],
    "verdict": "incomplete",
    "verdict_reason": "live clitic and host role labels are EMPTY; colour class qg-preposition is legacy-coarse"
   },
@@ -394,9 +429,14 @@
    ],
    "deployed": false,
    "occurrence_id": "quran:17:78:3",
-   "required_change": "replace the live rich-whitelist row for quran:17:78:3 with the certified canonical projection (hash see projections.jsonl…)",
+   "projection_state": "candidate_pending",
+   "required_change": "no live change authorized; resolve the candidate sense identity and governor-relation label before any public application for quran:17:78:3",
    "rollback_unit": "live rich-whitelist row for quran:17:78:3 (single-row revert)",
    "surface": "لِدُلُوكِ",
+   "unresolved_dependencies": [
+    "occurrence_to_sense_certification",
+    "governor_relation_governed_key"
+   ],
    "verdict": "legacy-coarse",
    "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
   },
@@ -443,9 +483,14 @@
    ],
    "deployed": false,
    "occurrence_id": "quran:4:11:5",
-   "required_change": "replace the live rich-whitelist row for quran:4:11:5 with the certified canonical projection (hash see projections.jsonl…)",
+   "projection_state": "candidate_pending",
+   "required_change": "no live change authorized; resolve the candidate sense identity and governor-relation label before any public application for quran:4:11:5",
    "rollback_unit": "live rich-whitelist row for quran:4:11:5 (single-row revert)",
    "surface": "لِلذَّكَرِ",
+   "unresolved_dependencies": [
+    "occurrence_to_sense_certification",
+    "governor_relation_governed_key"
+   ],
    "verdict": "wrong",
    "verdict_reason": "live folds the assimilated article into the host (لِ | لذَّكَرِ); the candidate carve separates clitic | article | host"
   },
@@ -494,9 +539,14 @@
    ],
    "deployed": false,
    "occurrence_id": "quran:33:53:48",
-   "required_change": "replace the live rich-whitelist row for quran:33:53:48 with the certified canonical projection (hash see projections.jsonl…)",
+   "projection_state": "candidate_pending",
+   "required_change": "no live change authorized; resolve the candidate sense identity and governor-relation label before any public application for quran:33:53:48",
    "rollback_unit": "live rich-whitelist row for quran:33:53:48 (single-row revert)",
    "surface": "لِقُلُوبِكُمْ",
+   "unresolved_dependencies": [
+    "occurrence_to_sense_certification",
+    "governor_relation_governed_key"
+   ],
    "verdict": "legacy-coarse",
    "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
   },
@@ -546,9 +596,14 @@
    ],
    "deployed": false,
    "occurrence_id": "quran:24:31:23",
-   "required_change": "replace the live rich-whitelist row for quran:24:31:23 with the certified canonical projection (hash see projections.jsonl…)",
+   "projection_state": "candidate_pending",
+   "required_change": "no live change authorized; resolve the candidate sense identity and governor-relation label before any public application for quran:24:31:23",
    "rollback_unit": "live rich-whitelist row for quran:24:31:23 (single-row revert)",
    "surface": "لِبُعُولَتِهِنَّ",
+   "unresolved_dependencies": [
+    "occurrence_to_sense_certification",
+    "governor_relation_governed_key"
+   ],
    "verdict": "legacy-coarse",
    "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
   },
@@ -596,9 +651,14 @@
    ],
    "deployed": false,
    "occurrence_id": "quran:61:5:4",
-   "required_change": "replace the live rich-whitelist row for quran:61:5:4 with the certified canonical projection (hash see projections.jsonl…)",
+   "projection_state": "candidate_pending",
+   "required_change": "no live change authorized; resolve the candidate sense identity and governor-relation label before any public application for quran:61:5:4",
    "rollback_unit": "live rich-whitelist row for quran:61:5:4 (single-row revert)",
    "surface": "لِقَوْمِهِۦ",
+   "unresolved_dependencies": [
+    "occurrence_to_sense_certification",
+    "governor_relation_governed_key"
+   ],
    "verdict": "legacy-coarse",
    "verdict_reason": "carve agrees (NFC); live colour classes / role labels predate the particle-projection contract"
   }

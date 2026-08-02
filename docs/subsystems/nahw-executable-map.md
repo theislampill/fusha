@@ -142,13 +142,22 @@ CANONICAL artifact envelope (`qamus/schemas/two-vote-artifact.schema.json` plus
 fields and are no longer written into vote records, which the schema forbids. A declared `two_vote_done`
 boolean no longer satisfies a two-vote gate from ANY entry point.
 
-**Round-10 residual gaps (open, and NOT closed by this lane):**
+**Round-10 gap status:**
 
-- **GAP-N12 — the certifier binds a two-vote artifact by Qur'anic location only.** `tools/certify_typed_fact.py:268-272`
-  checks that the artifact's `occurrence.quran_loc` is among the fact's locations; it does not bind the fact
-  VALUE to the votes' conclusion, so an unrelated fact at the same address can be certified. The certifier is
-  outside this lane's permitted files and was NOT edited. A2 remains candidate-only and never calls it.
-  WP-NAHW-CERTIFIER-CLAIM-BINDING (bounded certifier packet).
+- **GAP-N12 — CLOSED by the bounded certifier and p007 migration repair.** A two-vote certification needs all three:
+  the artifact occurrence among its source addresses, the artifact's exact written surface in its
+  `surface_spans`, and a complete type-specific `fact_value` projection equal to the votes' agreed conclusion
+  **and reason key**. `governor_relation`, `case_mood_governor`, `contextual_function`, and `irab_rendering`
+  have separate closed projections. Same-location value substitution, fact-type relabelling, reason-key drift,
+  and v1/v1.1 surface drift are red-first regressions in `tools/test_certify_typed_fact.py`. `validate_trail()`
+  re-opens the evidence behind every currently certified two-vote fact. The p007 trail preserves its 147
+  historical events, append-only revokes the 36 location-only claims, certifies 36 exact v1.1 successors, and
+  regenerates the current fact table and every downstream claim/hash consumer through
+  `tools/migrate_p007_claim_binding.py`; `certification/claim-binding-migration.json` binds the 156-event
+  migration (including 12 reverse-dependency rebinds) and terminal trail hash. This closes exact
+  two-vote claim binding only: the p007 occurrence-to-sense edge remains candidate because the
+  contextual-function fact does not certify dictionary sense identity, and uncompared
+  `governor.relation` prose is withheld from the candidate projection.
 - **GAP-N13 — the canonical contract still requires different `engine` values for independence.** Two
   genuinely independent reviewers can share a CLI surface, so A2's own independence rule no longer treats a
   shared engine as dependence; `tools/validate_two_vote_artifacts.py` still does, and it is not editable
