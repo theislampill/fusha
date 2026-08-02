@@ -66,7 +66,7 @@
   },
   "candidate_population": {
     "population_source": "qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl",
-    "selection_rule": "all 14 hash-verified occurrence bundles emitted by TP-NAHW-A2-OCCURRENCE-FACT-PRODUCER-W1 in stable occurrence order, including both exact ma divergence rows, joined only to the same occurrence's hash-verified Sarf projection; an absent Sarf row yields an explicit unresolved projection",
+    "selection_rule": "all 14 hash-verified occurrence bundles emitted by TP-NAHW-PVN-OCCURRENCE-FACT-PRODUCER-W1 in stable occurrence order, including both exact ma divergence rows, joined only to the same occurrence's hash-verified Sarf projection; an absent Sarf row yields an explicit unresolved projection",
     "this_packet_size": 14,
     "universe_size": 14
   },
@@ -175,7 +175,7 @@
   ],
   "guards": [
     "The METHOD transfers: exact fact-to-claim binding, contextual translation safety, public cleanliness, and dependency invalidation may be reused; no occurrence conclusion transfers by surface, root, lexeme, or page resemblance.",
-    "SERIALIZATION 7 OF 7: run only after TP-NAHW-A2-OCCURRENCE-FACT-PRODUCER-W1 and TP-SARF-PROJECTION-ELIGIBILITY-PARITY-W1 pass all acceptance tests and their samples are hash-frozen.",
+    "SERIALIZATION 7 OF 7: run only after TP-NAHW-PVN-OCCURRENCE-FACT-PRODUCER-W1 and TP-SARF-PROJECTION-ELIGIBILITY-PARITY-W1 pass all acceptance tests and their samples are hash-frozen.",
     "Before projection, recompute and match the exact SHA-256 values for the Naḥw schema, facts.sample.jsonl and facts.sample.meta.json and the Sarf schema, projection-parity.sample.json and projection-parity.sample.meta.json. Then verify both upstream metadata contracts bind the current canonical index and manifest. Packet ordering alone is insufficient.",
     "This packet builds candidate projection inputs only; TP-PVN-A4-CANONICAL-REGEN-W1 owns website-compatible payload generation.",
     "A dictionary or surface gloss never becomes an occurrence translation without authorized contextual facts.",
@@ -241,7 +241,7 @@
     "statement": "All outputs are candidate or unresolved repository projection inputs. This packet does not certify facts, write website payloads, edit renderer code, deploy content, or contact or mutate any live surface.",
     "status": "NOT_DEPLOYED"
   },
-  "packet_id": "TP-NAHW-A2-PUBLIC-PROJECTION-BRIDGE-W1",
+  "packet_id": "TP-NAHW-PVN-PUBLIC-PROJECTION-BRIDGE-W1",
   "provenance": {
     "authored_by": "PVN owner re-anchor follow-on lane",
     "cites": [

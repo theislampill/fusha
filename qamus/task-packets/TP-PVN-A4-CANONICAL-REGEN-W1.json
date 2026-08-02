@@ -95,7 +95,7 @@
     {
       "expect": "exit 0; full candidate state remains under out and bounded tracked samples are regenerated",
       "purpose": "regenerate canonical candidate state",
-      "run": "python -B tools/regenerate_pvn_canonical_graph.py --occurrences qamus/lattice/example-ayah-universe.occurrences.jsonl --appearances qamus/lattice/example-ayah-universe.jsonl --universe-meta qamus/lattice/example-ayah-universe.meta.json --loc-surface-index qamus/indexes/quran-loc-surface/index.jsonl --loc-surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --appearance-disposition-schema qamus/schemas/pvn-appearance-disposition.schema.json --website-contract docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md --sarf-ownership-schema qamus/schemas/sarf-occurrence-ownership.schema.json --sarf-ownership-artifact qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl --sarf-ownership-meta qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json --sarf-parity-schema qamus/schemas/sarf-two-surface-projection.schema.json --sarf-parity-artifact qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json --sarf-parity-meta qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json --nahw-facts-schema qamus/schemas/nahw-occurrence-fact-bundle.schema.json --nahw-facts-artifact qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --nahw-facts-meta qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json --nahw-projection-schema qamus/schemas/nahw-public-projection.schema.json --nahw-projection-artifact qamus/examples/nahw-public-projection-w1/projections.sample.jsonl --nahw-projection-meta qamus/examples/nahw-public-projection-w1/projections.sample.meta.json --largelexicon-bridge-schema qamus/schemas/largelexicon-occurrence-meta-bridge.schema.json --largelexicon-bridge-artifact qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.jsonl --largelexicon-bridge-meta qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.meta.json --largelexicon-accepted-edge-packet qamus/task-packets/TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json --largelexicon-accepted-edge-rows qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.jsonl --largelexicon-accepted-edge-meta qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.meta.json --largelexicon-edge-vocabulary tools/build_typed_edge_crosswalk.py --largelexicon-row-schema qamus.graph_edge.v1 --out out/pvn-canonical-regeneration-w1 --sample-out qamus/examples/pvn-canonical-regeneration-w1"
+      "run": "python -B tools/regenerate_pvn_canonical_graph.py --occurrences qamus/lattice/example-ayah-universe.occurrences.jsonl --appearances qamus/lattice/example-ayah-universe.jsonl --universe-meta qamus/lattice/example-ayah-universe.meta.json --loc-surface-index qamus/indexes/quran-loc-surface/index.jsonl --loc-surface-manifest qamus/indexes/quran-loc-surface/index.manifest.json --appearance-disposition-schema qamus/schemas/pvn-appearance-disposition.schema.json --website-contract docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md --sarf-ownership-schema qamus/schemas/sarf-occurrence-ownership.schema.json --sarf-ownership-artifact qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl --sarf-ownership-meta qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json --sarf-parity-schema qamus/schemas/sarf-two-surface-projection.schema.json --sarf-parity-artifact qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.json --sarf-parity-meta qamus/examples/sarf-two-surface-projection-w1/projection-parity.sample.meta.json --nahw-facts-schema qamus/schemas/nahw-occurrence-fact-bundle.schema.json --nahw-facts-artifact qamus/examples/nahw-occurrence-facts-w1/facts.sample.jsonl --nahw-facts-meta qamus/examples/nahw-occurrence-facts-w1/facts.sample.meta.json --nahw-projection-schema qamus/schemas/nahw-public-projection.schema.json --nahw-projection-artifact qamus/examples/nahw-public-projection-w1/projections.sample.jsonl --nahw-projection-meta qamus/examples/nahw-public-projection-w1/projections.sample.meta.json --largelexicon-bridge-schema qamus/schemas/largelexicon-occurrence-meta-bridge.schema.json --largelexicon-bridge-artifact qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.jsonl --largelexicon-bridge-meta qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.meta.json --largelexicon-accepted-edge-packet qamus/task-packets/TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json --largelexicon-accepted-edge-rows qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.jsonl --largelexicon-accepted-edge-meta qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.meta.json --largelexicon-edge-vocabulary tools/build_typed_edge_crosswalk.py --largelexicon-row-schema qamus.graph_edge.v1 --out out/pvn-canonical-regeneration-w1 --sample-out qamus/examples/pvn-canonical-regeneration-w1"
     },
     {
       "expect": "PVN CANONICAL REGEN PASS with byte-identical sample outputs and current dependency hashes",
@@ -256,7 +256,7 @@
     "The twelve stages are canonical graph, P V N appearances, morpheme registration, guarded Ṣarf and Naḥw projectors, rival preservation, revocation propagation, rich-at-rest compilation, rich-hover compilation, appearance parity, reverse traces, flywheel uptake, and candidate payload generation.",
     "The loc-surface index and manifest are canonical written-surface authority for this packet; recompute their raw-byte digest and reject mismatch.",
     "Each producer is consumed as an exact packet-schema-artifact-metadata dependency. Every metadata sidecar must bind its own artifact and schema plus upstream artifacts and the loc-surface index and manifest.",
-    "The accepted-edge dependency is qamus/task-packets/TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json with accepted-edges.jsonl and accepted-edges.meta.json under qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/. tools/build_typed_edge_crosswalk.py and literal qamus.graph_edge.v1 govern row vocabulary; no invented typed-edge schema is named.",
+    "The accepted-edge dependency is qamus/task-packets/TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json with accepted-edges.jsonl and accepted-edges.meta.json under qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/. tools/build_typed_edge_crosswalk.py and literal qamus.graph_edge.v1 govern row vocabulary; no invented typed-edge schema is named.",
     "Missing accepted-edge owner application does not block A4 workflow implementation, but it forces LargeLexicon runtime uptake to BLOCKED_DEPENDENCY and zero.",
     "The finalized website fields are appearance.displayed_surface, appearance.canonical_to_appearance_span_map, appearance.binding_state, top-level appearance_binding_hash, and projection.public_projection_eligible.",
     "Every span-map row is closed over segment_index, morpheme_occurrence_id, canonical_char_start, canonical_char_end, appearance_char_start, and appearance_char_end.",
@@ -273,11 +273,11 @@
     "input_files": [
       "qamus/task-packets/TP-SARF-OCCURRENCE-OWNERSHIP-PRODUCER-W1.json",
       "qamus/task-packets/TP-SARF-PROJECTION-ELIGIBILITY-PARITY-W1.json",
-      "qamus/task-packets/TP-NAHW-A2-OCCURRENCE-FACT-PRODUCER-W1.json",
-      "qamus/task-packets/TP-NAHW-A2-PUBLIC-PROJECTION-BRIDGE-W1.json",
-      "qamus/task-packets/TP-LARGELEXICON-A3-OCCURRENCE-META-BRIDGE-W1.json",
+      "qamus/task-packets/TP-NAHW-PVN-OCCURRENCE-FACT-PRODUCER-W1.json",
+      "qamus/task-packets/TP-NAHW-PVN-PUBLIC-PROJECTION-BRIDGE-W1.json",
+      "qamus/task-packets/TP-LARGELEXICON-PVN-OCCURRENCE-META-BRIDGE-W1.json",
       "qamus/task-packets/TP-PVN-PILOT-SAFETY-61-5-4-W1.json",
-      "qamus/task-packets/TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json",
+      "qamus/task-packets/TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json",
       "qamus/schemas/sarf-occurrence-ownership.schema.json",
       "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.jsonl",
       "qamus/examples/sarf-occurrence-ownership-w1/ownership.sample.meta.json",
@@ -293,8 +293,8 @@
       "qamus/schemas/largelexicon-occurrence-meta-bridge.schema.json",
       "qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.jsonl",
       "qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.meta.json",
-      "qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.jsonl",
-      "qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.meta.json",
+      "qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.jsonl",
+      "qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.meta.json",
       "tools/build_typed_edge_crosswalk.py",
       "qamus/lattice/example-ayah-universe.jsonl",
       "qamus/lattice/example-ayah-universe.occurrences.jsonl",
@@ -348,7 +348,7 @@
       "qamus/examples/nahw-occurrence-facts-w1/",
       "qamus/examples/nahw-public-projection-w1/",
       "qamus/examples/largelexicon-occurrence-meta-bridge-w1/",
-      "qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/",
+      "qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/",
       "sarf/",
       "nahw/",
       "docs/current-state.yaml",

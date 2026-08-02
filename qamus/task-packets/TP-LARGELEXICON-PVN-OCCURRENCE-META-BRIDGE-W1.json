@@ -33,7 +33,7 @@
     {
       "name": "protected upstream drift",
       "pass_condition": "prints LARGELEXICON OCCURRENCE META BRIDGE UPSTREAM DRIFT PASS and proves that the exact evidence, accepted-edge, canonical occurrence, and appearance inputs did not change from the frozen start SHA",
-      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/largelexicon-occurrence-meta-bridge-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); protected=[\"qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.jsonl\",\"qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.meta.json\",\"qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.jsonl\",\"qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.meta.json\",\"qamus/lattice/example-ayah-universe.occurrences.jsonl\",\"qamus/indexes/occurrence-appearances.jsonl\",\"tools/largelexicon_fact_bridge.py\"]; missing=[p for p in protected if not Path(p).is_file()]; rc=1 if missing else subprocess.run([\"git\",\"diff\",\"--exit-code\",start,\"--\",*protected]).returncode; print(\"LARGELEXICON OCCURRENCE META BRIDGE UPSTREAM DRIFT \" + (\"PASS\" if rc == 0 else \"FAIL missing=\" + repr(missing))); sys.exit(rc)'"
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/largelexicon-occurrence-meta-bridge-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); protected=[\"qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.jsonl\",\"qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.meta.json\",\"qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.jsonl\",\"qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.meta.json\",\"qamus/lattice/example-ayah-universe.occurrences.jsonl\",\"qamus/indexes/occurrence-appearances.jsonl\",\"tools/largelexicon_fact_bridge.py\"]; missing=[p for p in protected if not Path(p).is_file()]; rc=1 if missing else subprocess.run([\"git\",\"diff\",\"--exit-code\",start,\"--\",*protected]).returncode; print(\"LARGELEXICON OCCURRENCE META BRIDGE UPSTREAM DRIFT \" + (\"PASS\" if rc == 0 else \"FAIL missing=\" + repr(missing))); sys.exit(rc)'"
     },
     {
       "name": "whitespace diff check",
@@ -68,7 +68,7 @@
       {
         "expectation": "the bounded real run emits at least one occurrence-bound candidate backed by an accepted typed edge and records the exact nonzero count and all authority digests",
         "id": "real-data-scan:first-2000:nonzero",
-        "source": "qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.meta.json"
+        "source": "qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.meta.json"
       },
       {
         "expectation": "the accepted candidate is bound to one exact occurrence, written surface, source fact, projector, dependency set, guard set, affected appearance set, and candidate-only state",
@@ -78,8 +78,8 @@
     ]
   },
   "candidate_population": {
-    "population_source": "qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.meta.json",
-    "selection_rule": "the first 2,000 carried crosswalk rows in manifest order only after TP-LARGELEXICON-A3-TYPED-EDGE-EVIDENCE-W1 produces candidate evidence and the missing owner-authorized TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1 integrates at least one exact accepted typed edge plus hash-bound metadata; the 17 committed behavioural scenarios remain test fixtures only and cannot satisfy real occurrence uptake",
+    "population_source": "qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.meta.json",
+    "selection_rule": "the first 2,000 carried crosswalk rows in manifest order only after TP-LARGELEXICON-PVN-TYPED-EDGE-EVIDENCE-W1 produces candidate evidence and the missing owner-authorized TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1 integrates at least one exact accepted typed edge plus hash-bound metadata; the 17 committed behavioural scenarios remain test fixtures only and cannot satisfy real occurrence uptake",
     "this_packet_size": 2000,
     "universe_size": 115638
   },
@@ -92,7 +92,7 @@
     {
       "expect": "TASK PACKET VALIDATION PASS only after the owner has authored and integrated the named packet; if the file is absent, stop with the declared dangling SOURCE_GAP and do not dispatch this packet",
       "purpose": "validate the owner-authorized accepted-edge producer dependency",
-      "run": "python tools/validate_task_packets.py qamus/task-packets/TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json"
+      "run": "python tools/validate_task_packets.py qamus/task-packets/TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json"
     },
     {
       "expect": "red before implementation, then unittest OK with all boundary and invalidation mutations active",
@@ -107,7 +107,7 @@
     {
       "expect": "exit 0; at least one real occurrence-bound candidate, one-object-per-line candidate or unresolved records, a pretty metadata sidecar, and full gitignored output are written",
       "purpose": "build the bounded occurrence meta bridge run and reviewer sample",
-      "run": "python tools/bridge_largelexicon_occurrence_meta.py --claims out/largelexicon-occurrence-meta-bridge-w1/upstream-typed-claims.jsonl --accepted-edges qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.jsonl --accepted-edges-meta qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.meta.json --occurrences qamus/lattice/example-ayah-universe.occurrences.jsonl --appearances qamus/indexes/occurrence-appearances.jsonl --out out/largelexicon-occurrence-meta-bridge-w1 --sample-out qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.jsonl"
+      "run": "python tools/bridge_largelexicon_occurrence_meta.py --claims out/largelexicon-occurrence-meta-bridge-w1/upstream-typed-claims.jsonl --accepted-edges qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.jsonl --accepted-edges-meta qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.meta.json --occurrences qamus/lattice/example-ayah-universe.occurrences.jsonl --appearances qamus/indexes/occurrence-appearances.jsonl --out out/largelexicon-occurrence-meta-bridge-w1 --sample-out qamus/examples/largelexicon-occurrence-meta-bridge-w1/bridge.sample.jsonl"
     },
     {
       "expect": "LARGELEXICON OCCURRENCE META BRIDGE PASS with byte-identical JSONL and metadata",
@@ -137,7 +137,7 @@
     {
       "expect": "LARGELEXICON OCCURRENCE META BRIDGE UPSTREAM DRIFT PASS",
       "purpose": "prove protected upstream artifacts did not drift",
-      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/largelexicon-occurrence-meta-bridge-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); protected=[\"qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.jsonl\",\"qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.meta.json\",\"qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.jsonl\",\"qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.meta.json\",\"qamus/lattice/example-ayah-universe.occurrences.jsonl\",\"qamus/indexes/occurrence-appearances.jsonl\",\"tools/largelexicon_fact_bridge.py\"]; missing=[p for p in protected if not Path(p).is_file()]; rc=1 if missing else subprocess.run([\"git\",\"diff\",\"--exit-code\",start,\"--\",*protected]).returncode; print(\"LARGELEXICON OCCURRENCE META BRIDGE UPSTREAM DRIFT \" + (\"PASS\" if rc == 0 else \"FAIL missing=\" + repr(missing))); sys.exit(rc)'"
+      "run": "python -c 'from pathlib import Path; import subprocess,sys; start=Path(\"out/largelexicon-occurrence-meta-bridge-w1/start-sha.txt\").read_text(encoding=\"ascii\").strip(); protected=[\"qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.jsonl\",\"qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.meta.json\",\"qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.jsonl\",\"qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.meta.json\",\"qamus/lattice/example-ayah-universe.occurrences.jsonl\",\"qamus/indexes/occurrence-appearances.jsonl\",\"tools/largelexicon_fact_bridge.py\"]; missing=[p for p in protected if not Path(p).is_file()]; rc=1 if missing else subprocess.run([\"git\",\"diff\",\"--exit-code\",start,\"--\",*protected]).returncode; print(\"LARGELEXICON OCCURRENCE META BRIDGE UPSTREAM DRIFT \" + (\"PASS\" if rc == 0 else \"FAIL missing=\" + repr(missing))); sys.exit(rc)'"
     },
     {
       "expect": "exit 0 with no whitespace errors",
@@ -155,14 +155,14 @@
   ],
   "definition_of_done": [
     "all 17 A3 fixture scenarios pass as behavioural canaries, but fixture output is not counted as occurrence-graph uptake",
-    "the bounded first-2,000 real run emits at least one occurrence candidate backed by an exact accepted edge from TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1; a missing producer, artifact, metadata hash, or nonzero candidate ends SOURCE_GAP and leaves this packet open",
+    "the bounded first-2,000 real run emits at least one occurrence candidate backed by an exact accepted edge from TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1; a missing producer, artifact, metadata hash, or nonzero candidate ends SOURCE_GAP and leaves this packet open",
     "every output carries source fact identity, projector identity, eligibility predicates, required dependencies, guards, defeaters, rivals, evidence rung, state, invalidation behavior, and affected occurrence and appearance sets",
     "lemma, form, stem, root, pattern, and crosswalk evidence remains candidate-only and never becomes entry identity, sense, occurrence meaning, Naḥw function, translation, or certification",
     "revoking a source fact or authority digest invalidates every dependent candidate and affected appearance reference",
     "the sample is JSONL with one object per line and a pretty hash-bound metadata sidecar",
     "the packet-local sample check proves deterministic generated-artifact stability; TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 alone may later register the focused suite in tools/check_regressions.py or update docs/golden-commands.md",
     "the start SHA is frozen before edits; tracked and untracked changed paths remain inside the packet-local allowlist, protected upstream artifacts do not drift, git diff --check passes separately, and all acceptance tests pass",
-    "CURRENT DANGLING SOURCE_GAP: qamus/task-packets/TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json, qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.jsonl, and qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.meta.json do not exist in the current repository. This packet is non-dispatchable until the owner explicitly authors and authorizes that separate producer packet and integrates its hash-bound outputs."
+    "CURRENT DANGLING SOURCE_GAP: qamus/task-packets/TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json, qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.jsonl, and qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.meta.json do not exist in the current repository. This packet is non-dispatchable until the owner explicitly authors and authorizes that separate producer packet and integrates its hash-bound outputs."
   ],
   "escalation_trigger": {
     "conditions": [
@@ -172,7 +172,7 @@
       "the candidate typed-edge evidence wave has not landed, the owner-authorized accepted-edge application packet or either exact artifact is absent, an upstream hash is stale, or the bounded real rerun still contains zero candidate records",
       "an output would need certification, public materialization, or a learner-facing translation"
     ],
-    "route": "stop before dispatch while TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1 or either named accepted-edge artifact is absent. Otherwise stop the affected record; if real uptake is zero, end SOURCE_GAP and keep the packet open, preserve every candidate and exact blocker in qamus/reports/largelexicon-occurrence-meta-bridge-w1.md, and route it to the owning typed-edge evidence, owner application, source, Ṣarf, Naḥw, two-vote, or certifier lane"
+    "route": "stop before dispatch while TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1 or either named accepted-edge artifact is absent. Otherwise stop the affected record; if real uptake is zero, end SOURCE_GAP and keep the packet open, preserve every candidate and exact blocker in qamus/reports/largelexicon-occurrence-meta-bridge-w1.md, and route it to the owning typed-edge evidence, owner application, source, Ṣarf, Naḥw, two-vote, or certifier lane"
   },
   "evidence_policy": {
     "fabrication_rule": "If exact occurrence identity, written surface, accepted typed-edge support, or authority binding is missing, emit the existing A3 blocker and abstain. Never infer identity, meaning, function, or translation from resemblance, lookup coverage, page context, or root family.",
@@ -219,10 +219,10 @@
   ],
   "guards": [
     "The METHOD transfers: exact occurrence binding, verified authority use, candidate preservation, guarded meta-projection, and invalidation may be reused; no linguistic conclusion transfers to another occurrence.",
-    "Run only after the integrated A3 target-schema migration, TP-LARGELEXICON-A3-TYPED-EDGE-EVIDENCE-W1, the missing TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1, tools/largelexicon_fact_bridge.py, tools/fact_projectors.py, and their complete acceptance tests are green.",
-    "TP-LARGELEXICON-A3-TYPED-EDGE-EVIDENCE-W1 is evidence/report-only, produces zero accepted edges, and cannot unblock this packet. Only the separately owner-authorized TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1 may create the exact accepted-edge artifact this packet consumes; naming that future packet grants no application or certification authority here.",
-    "CURRENT DANGLING SOURCE_GAP: this packet is non-dispatchable while qamus/task-packets/TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json, qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.jsonl, or qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.meta.json is absent. Do not create that owner-only packet or either artifact in this lane.",
-    "The accepted-edges metadata must name producer packet TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1 and its SHA-256, the exact typed-edge evidence JSONL and metadata SHA-256 values, the accepted-edges JSONL SHA-256, tools/build_typed_edge_crosswalk.py SHA-256 as the base qamus.graph_edge.v1 row-shape and vocabulary authority, accepted edge ids, source contract ids, owner authorization record id and hash, and revocation state. Missing, stale, candidate-only, ambiguous, or revoked bindings end SOURCE_GAP.",
+    "Run only after the integrated A3 target-schema migration, TP-LARGELEXICON-PVN-TYPED-EDGE-EVIDENCE-W1, the missing TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1, tools/largelexicon_fact_bridge.py, tools/fact_projectors.py, and their complete acceptance tests are green.",
+    "TP-LARGELEXICON-PVN-TYPED-EDGE-EVIDENCE-W1 is evidence/report-only, produces zero accepted edges, and cannot unblock this packet. Only the separately owner-authorized TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1 may create the exact accepted-edge artifact this packet consumes; naming that future packet grants no application or certification authority here.",
+    "CURRENT DANGLING SOURCE_GAP: this packet is non-dispatchable while qamus/task-packets/TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json, qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.jsonl, or qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.meta.json is absent. Do not create that owner-only packet or either artifact in this lane.",
+    "The accepted-edges metadata must name producer packet TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1 and its SHA-256, the exact typed-edge evidence JSONL and metadata SHA-256 values, the accepted-edges JSONL SHA-256, tools/build_typed_edge_crosswalk.py SHA-256 as the base qamus.graph_edge.v1 row-shape and vocabulary authority, accepted edge ids, source contract ids, owner authorization record id and hash, and revocation state. Missing, stale, candidate-only, ambiguous, or revoked bindings end SOURCE_GAP.",
     "The bridge run metadata must additionally bind SHA-256 values for the packet-local upstream-typed-claims JSONL, canonical occurrence universe, occurrence-appearance index, accepted-edge JSONL and metadata, bridge schema, output JSONL, sample, and sample metadata.",
     "Fixture-only success is not occurrence-graph uptake: completion requires a nonzero real candidate population from the first 2,000 carried rows after the typed-edge evidence wave.",
     "Use the closed qamus.typed_claim_contract.v1 facts and the new closed bridge envelope; do not create a parallel fact or certification vocabulary.",
@@ -238,12 +238,12 @@
   "inputs": {
     "input_files": [
       "qamus/task-packets/TP-LARGELEXICON-A3-BRIDGE-WAVE1.json",
-      "qamus/task-packets/TP-LARGELEXICON-A3-TYPED-EDGE-EVIDENCE-W1.json",
-      "qamus/task-packets/TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json",
+      "qamus/task-packets/TP-LARGELEXICON-PVN-TYPED-EDGE-EVIDENCE-W1.json",
+      "qamus/task-packets/TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1.json",
       "qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.jsonl",
       "qamus/examples/largelexicon-typed-edge-evidence-wave1/evidence-candidates.sample.meta.json",
-      "qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.jsonl",
-      "qamus/examples/largelexicon-a3-accepted-edge-owner-application-w1/accepted-edges.meta.json",
+      "qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.jsonl",
+      "qamus/examples/largelexicon-pvn-accepted-edge-owner-application-w1/accepted-edges.meta.json",
       "tools/build_typed_edge_crosswalk.py",
       "qamus/indexes/largelexicon/target-schema/TARGET-RELEASE.json",
       "qamus/examples/largelexicon-fact-bridge/bridge-fixtures.jsonl",
@@ -292,7 +292,7 @@
     "statement": "All outputs are candidate or unresolved repository records. This packet does not certify facts, create public wording, edit website code, deploy payloads, or contact or mutate any live surface.",
     "status": "NOT_DEPLOYED"
   },
-  "packet_id": "TP-LARGELEXICON-A3-OCCURRENCE-META-BRIDGE-W1",
+  "packet_id": "TP-LARGELEXICON-PVN-OCCURRENCE-META-BRIDGE-W1",
   "provenance": {
     "authored_by": "PVN owner re-anchor follow-on lane",
     "cites": [

@@ -28,7 +28,7 @@
     {
       "name": "packet contract remains valid",
       "pass_condition": "ends TASK PACKET VALIDATION PASS",
-      "run": "python tools/validate_task_packets.py qamus/task-packets/TP-LARGELEXICON-A3-TYPED-EDGE-EVIDENCE-W1.json"
+      "run": "python tools/validate_task_packets.py qamus/task-packets/TP-LARGELEXICON-PVN-TYPED-EDGE-EVIDENCE-W1.json"
     },
     {
       "name": "full regression harness",
@@ -152,7 +152,7 @@
     {
       "expect": "TASK PACKET VALIDATION PASS",
       "purpose": "validate this packet contract",
-      "run": "python tools/validate_task_packets.py qamus/task-packets/TP-LARGELEXICON-A3-TYPED-EDGE-EVIDENCE-W1.json"
+      "run": "python tools/validate_task_packets.py qamus/task-packets/TP-LARGELEXICON-PVN-TYPED-EDGE-EVIDENCE-W1.json"
     },
     {
       "expect": "ALL REGRESSION CHECKS PASS without editing tools/check_regressions.py; TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 owns later one-time registration",
@@ -191,7 +191,7 @@
     "the closed routing vocabulary distinguishes EVIDENCE_READY_FOR_OWNER_CERTIFICATION, OWNER_ADJUDICATION_REQUIRED, SCHOLAR_ADJUDICATION_REQUIRED, SARF_REVIEW_REQUIRED, NAHW_REVIEW_REQUIRED, SOURCE_GAP, and REJECTED without selecting unresolved rivals",
     "every proposed qamus.graph_edge.v1 lexical edge remains candidate or ambiguous; accepted statuses, certification, public materialization, learner visibility, and certifier invocation are all structurally forbidden",
     "route counts sum to 95, certified and accepted edge counts are 0, all ambiguity and abstention are preserved, and authority drift invalidates every dependent row",
-    "the run may end EVIDENCE_READY_FOR_OWNER_CERTIFICATION only when at least one structurally complete evidence bundle is ready for an external owner/certifier lane; if none is ready it ends SOURCE_GAP and TP-LARGELEXICON-A3-OCCURRENCE-META-BRIDGE-W1 remains blocked",
+    "the run may end EVIDENCE_READY_FOR_OWNER_CERTIFICATION only when at least one structurally complete evidence bundle is ready for an external owner/certifier lane; if none is ready it ends SOURCE_GAP and TP-LARGELEXICON-PVN-OCCURRENCE-META-BRIDGE-W1 remains blocked",
     "the full 95-row output remains gitignored under out/; only the deterministic public-clean sample, pretty hash-bound metadata, schema, tools, tests, and measured report are committed",
     "the packet-local sample check proves deterministic generated-artifact stability; TP-PVN-REANCHOR-HARNESS-INTEGRATION-W1 alone may later register the focused suite in tools/check_regressions.py or update docs/golden-commands.md",
     "the start SHA is frozen before edits; tracked and untracked changed paths remain inside the packet-local allowlist, protected upstream artifacts do not drift, git diff --check passes separately, and all acceptance tests pass"
@@ -252,7 +252,7 @@
   ],
   "guards": [
     "The METHOD transfers: exact occurrence binding, byte-exact surface verification, evidence-ladder review, ambiguity preservation, authority binding, and explicit routing may be reused; no linguistic conclusion transfers to another occurrence.",
-    "TP-LARGELEXICON-A3-OCCURRENCE-META-BRIDGE-W1 is downstream and remains blocked until this packet has produced at least one EVIDENCE_READY_FOR_OWNER_CERTIFICATION bundle and the separately owner-authorized TP-LARGELEXICON-A3-ACCEPTED-EDGE-OWNER-APPLICATION-W1 has emitted, hash-bound, and registered an accepted typed edge. This packet produces exactly zero accepted or certified edges and cannot unblock that bridge.",
+    "TP-LARGELEXICON-PVN-OCCURRENCE-META-BRIDGE-W1 is downstream and remains blocked until this packet has produced at least one EVIDENCE_READY_FOR_OWNER_CERTIFICATION bundle and the separately owner-authorized TP-LARGELEXICON-PVN-ACCEPTED-EDGE-OWNER-APPLICATION-W1 has emitted, hash-bound, and registered an accepted typed edge. This packet produces exactly zero accepted or certified edges and cannot unblock that bridge.",
     "Select only the 95 records whose complete blocker set is missing_typed_graph_evidence in the regenerated first-2,000 A3 scan; fixtures and other blocker classes do not count.",
     "Do not edit or relax tools/largelexicon_fact_bridge.py, its exact loc and surface checks, the accepted edge-status gate, its four authority families, or any source authority.",
     "The crosswalk entry id is the page that displays the occurrence and is never lexical evidence; page context, root family, surface resemblance, normalization, lookup coverage, and candidate graph edges never establish lexeme, form, entry, or sense identity.",
@@ -327,7 +327,7 @@
     "statement": "All outputs remain candidate evidence, abstentions, and review routes. This packet does not certify facts or edges, create learner-visible or public payloads, edit website code, deploy, or contact or mutate any live surface.",
     "status": "NOT_DEPLOYED"
   },
-  "packet_id": "TP-LARGELEXICON-A3-TYPED-EDGE-EVIDENCE-W1",
+  "packet_id": "TP-LARGELEXICON-PVN-TYPED-EDGE-EVIDENCE-W1",
   "provenance": {
     "authored_by": "PVN owner re-anchor follow-on lane",
     "cites": [

@@ -192,7 +192,7 @@
   "guards": [
     "The METHOD transfers: exact occurrence binding, registered reason evidence, two-vote validation, rival preservation, and abstention may be reused; no function, governor, scope, referent, meaning, or translation transfers to another occurrence.",
     "SERIALIZATION 6 OF 7: run only after TP-NAHW-A2-OBSERVATION-PRODUCER, TP-NAHW-A2-HOVER-KEY-SEAT, TP-NAHW-A2-STATE-VOCAB, TP-NAHW-A2-TYPED-WR-BANK, and TP-NAHW-A2-TYPED-STATE-CONSUMER have landed in that exact order and their acceptance tests are green.",
-    "TP-NAHW-A2-PUBLIC-PROJECTION-BRIDGE-W1 must wait until this packet's schema, sample, tests, and report are frozen.",
+    "TP-NAHW-PVN-PUBLIC-PROJECTION-BRIDGE-W1 must wait until this packet's schema, sample, tests, and report are frozen.",
     "For every selected occurrence, qamus/indexes/quran-loc-surface/index.jsonl is the exact loc and surface authority and index.manifest.json is the digest and edition contract. Recompute the digest, require one row per loc and exact NFC equality, and fail closed on missing, duplicate, mismatched or stale rows. Page-local or public-payload surface cannot become canonical truth.",
     "The actual divergence pair is quran:2:284:10 relative מَا from the committed proof-particle contract and quran:93:3:1 negative מَا from the committed v1.1 two-vote canary. Both must execute. The two website payload files are regression oracles only and supply no evidence, reason, identity or canonical surface.",
     "A correct label with the wrong grammatical reason fails.",
@@ -265,7 +265,7 @@
     "statement": "All outputs are candidate or unresolved repository facts. This packet does not certify facts, author public hover or translation text, edit website code, deploy payloads, or contact or mutate any live surface.",
     "status": "NOT_DEPLOYED"
   },
-  "packet_id": "TP-NAHW-A2-OCCURRENCE-FACT-PRODUCER-W1",
+  "packet_id": "TP-NAHW-PVN-OCCURRENCE-FACT-PRODUCER-W1",
   "provenance": {
     "authored_by": "PVN owner re-anchor follow-on lane",
     "cites": [
