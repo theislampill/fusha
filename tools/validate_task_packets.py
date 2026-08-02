@@ -358,6 +358,61 @@ def check_non_deployment(packet, errors):
                       "is required")
 
 
+def _powershell_command_segments(run):
+    """Split a packet run string at unquoted PowerShell separators."""
+    segments = []
+    start = 0
+    quote = None
+    escaped = False
+    index = 0
+    while index < len(run):
+        char = run[index]
+        if quote == "'":
+            if char == "'":
+                if index + 1 < len(run) and run[index + 1] == "'":
+                    index += 1
+                else:
+                    quote = None
+        elif escaped:
+            escaped = False
+        elif char == "`":
+            escaped = True
+        elif quote == '"':
+            if char == '"':
+                quote = None
+        elif char in ("'", '"'):
+            quote = char
+        elif char in (";", "|", "&", "\n"):
+            segments.append(run[start:index].strip())
+            if char in ("|", "&") and index + 1 < len(run) \
+                    and run[index + 1] == char:
+                index += 1
+            start = index + 1
+        index += 1
+    segments.append(run[start:].strip())
+    return segments
+
+
+def check_command_contract(packet, errors):
+    """Reject command spellings known to be invalid for repository CLIs."""
+    stale_projector_self_test = re.compile(
+        r"^python(?:3)?\s+tools[/\\]lattice_projectors\.py\s+--self-test\b"
+    )
+    run_lines = [
+        row.get("run", "")
+        for key in ("commands", "acceptance_tests")
+        for row in (packet.get(key) or [])
+        if isinstance(row, dict)
+    ]
+    if any(stale_projector_self_test.search(segment)
+           for run in run_lines
+           for segment in _powershell_command_segments(run)):
+        errors.append(
+            "command_contract: lattice_projectors.py exposes self-test as a "
+            "subcommand; use `python tools/lattice_projectors.py self-test`"
+        )
+
+
 CHECKS = (
     check_canonical_schema,
     check_packet_shape,
@@ -366,6 +421,7 @@ CHECKS = (
     check_canaries,
     check_method_not_conclusion,
     check_non_deployment,
+    check_command_contract,
 )
 
 
@@ -499,6 +555,71 @@ def self_test():
         lambda p: p["escalation_trigger"].pop("route"), "self_containment")
     red("empty commands flagged",
         lambda p: p.update(commands=[]), "self_containment")
+    red("stale lattice projector self-test syntax flagged",
+        lambda p: p["commands"].append({
+            "purpose": "run projector self-test",
+            "run": "python tools/lattice_projectors.py --self-test",
+            "expect": "exit 0",
+        }),
+        "command_contract")
+    red("stale acceptance-test projector syntax flagged",
+        lambda p: p["acceptance_tests"].append({
+            "name": "projector self-test",
+            "run": "python3 tools/lattice_projectors.py --self-test",
+            "pass_condition": "exit code 0",
+        }),
+        "command_contract")
+    quoted = _minimal_green()
+    quoted["commands"].append({
+        "purpose": "document obsolete spelling without executing it",
+        "run": "echo python tools/lattice_projectors.py --self-test",
+        "expect": "exit code 0",
+    })
+    check("green: non-executing stale syntax text is ignored",
+          not any("command_contract" in e for e in validate_packet(quoted)))
+    quoted_separator = _minimal_green()
+    quoted_separator["commands"].extend([
+        {
+            "purpose": "quote historical spelling",
+            "run": "echo \"historical; python tools/lattice_projectors.py --self-test\"",
+            "expect": "exit code 0",
+        },
+        {
+            "purpose": "print historical spelling from Python",
+            "run": "python -c \"print('historical; python tools/lattice_projectors.py --self-test')\"",
+            "expect": "exit code 0",
+        },
+    ])
+    check("green: separators inside quoted text are ignored",
+          not any("command_contract" in e
+                  for e in validate_packet(quoted_separator)))
+    powershell_backslash = _minimal_green()
+    powershell_backslash["commands"].append({
+        "purpose": "run a second PowerShell command after a literal backslash",
+        "run": r"echo ok \; python tools/lattice_projectors.py --self-test",
+        "expect": "validator rejects stale second invocation",
+    })
+    check("red: PowerShell backslash does not escape a separator",
+          any("command_contract" in e
+              for e in validate_packet(powershell_backslash)))
+    powershell_quoted = _minimal_green()
+    powershell_quoted["commands"].append({
+        "purpose": "quote historical spelling after a literal backslash",
+        "run": r'echo \"historical; python tools/lattice_projectors.py --self-test\"',
+        "expect": "exit code 0",
+    })
+    check("green: PowerShell backslash before a quote stays quoted",
+          not any("command_contract" in e
+                  for e in validate_packet(powershell_quoted)))
+    powershell_single_quote = _minimal_green()
+    powershell_single_quote["commands"].append({
+        "purpose": "run after a PowerShell single-quoted backtick",
+        "run": "Write-Output 'x`'; python tools/lattice_projectors.py --self-test",
+        "expect": "validator rejects stale second invocation",
+    })
+    check("red: PowerShell single-quoted backtick is literal",
+          any("command_contract" in e
+              for e in validate_packet(powershell_single_quote)))
 
     # id collision across files (directory-level check)
     import tempfile
