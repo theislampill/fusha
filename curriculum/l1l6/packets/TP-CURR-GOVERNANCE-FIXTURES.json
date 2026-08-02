@@ -1,0 +1,131 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "lattice_validator",
+      "pass_condition": "exit 0, zero auto_safe governor edges",
+      "run": "python tools/validate_dependency_lattice.py curriculum/l1l6/reports/governance-candidate-lattices.jsonl"
+    },
+    {
+      "name": "curriculum_validator",
+      "pass_condition": "exit 0",
+      "run": "python tools/validate_curriculum_l1l6.py"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "a sentence admitting two attachments must carry BOTH analyses in the lattice; a single-analysis output for it is a failure",
+        "id": "adv-bare-labels"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "an inna-family sentence yields ism-accusative/khabar-nominative candidate edges with justification_rule set and gate two_vote_required",
+        "id": "pos-inna"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "curriculum/l1l6/crosswalk/nahw-crosswalk.jsonl rows xn-02 xn-03 xn-04",
+    "selection_rule": "6 governor families x 4 graded sentences (beginner->advanced per curriculum staging)",
+    "this_packet_size": 24,
+    "universe_size": null
+  },
+  "commands": [
+    {
+      "expect": "every emitted edge decision_status pending/candidate; zero auto_safe governor edges",
+      "purpose": "author graded original sentences per governor family and run them through the lattice builder",
+      "run": "python tools/fusha_governor.py --self-test && python - (inline: build_dependency_lattice per sentence; serialize candidate lattices)"
+    },
+    {
+      "expect": "0 violations",
+      "purpose": "validate emitted lattices",
+      "run": "python tools/validate_dependency_lattice.py curriculum/l1l6/reports/governance-candidate-lattices.jsonl"
+    }
+  ],
+  "defeaters": [
+    "a produced row conflicts with a repo-certified fact -> record as contradicted, do not overwrite",
+    "the private corpus is unavailable -> metadata-only steps proceed; body-reading steps abort cleanly"
+  ],
+  "definition_of_done": [
+    "24 candidate lattices emitted",
+    "coverage matrix complete",
+    "all edges pending/two-vote"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "any sentence needs a school-dependent ruling",
+      "builder cannot represent a curriculum construction (record as capability gap)"
+    ],
+    "route": "Sol integration review -> owner adjudication where a rule/status change is implied"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "never invent an example, answer key or analysis the source or an independent authority does not support; abstain and record the gap",
+    "statement": "evidence level: curriculum-source-supported (uncertified); every row cites its claim-ledger claim_id and manifest file_id (source + claim identity); lesson prose is read in private custody and never committed; committed rows are original restatements",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "candidate dependency lattices for original graded sentences",
+      "path": "curriculum/l1l6/reports/governance-candidate-lattices.jsonl"
+    },
+    {
+      "description": "family x grade coverage matrix",
+      "path": "curriculum/l1l6/reports/governance-candidate-lattices.meta.json"
+    }
+  ],
+  "guards": [
+    "the METHOD transfers, linguistic conclusions never do: a lesson-derived pattern licenses a candidate row, never a resolved analysis at any occurrence",
+    "rival-analysis handling: any item admitting more than one admissible analysis is recorded with ALL alternatives (analysis-dependent / school-dependent), never side-picked",
+    "no candidate-to-certified automatic promotion: nothing this packet produces may carry status certified; only tools/certify_typed_fact.py certifies, after review, outside this packet"
+  ],
+  "inputs": {
+    "input_files": [
+      "curriculum/l1l6/registry/lessons.jsonl",
+      "curriculum/l1l6/graph/concepts.jsonl",
+      "curriculum/l1l6/ledger/claim-ledger.jsonl",
+      "curriculum/l1l6/ledger/overgeneralization-guards.jsonl",
+      "curriculum/l1l6/crosswalk/sarf-crosswalk.jsonl",
+      "curriculum/l1l6/crosswalk/nahw-crosswalk.jsonl"
+    ],
+    "permitted_write_files": [
+      "curriculum/l1l6/reports/governance-candidate-lattices.jsonl",
+      "curriculum/l1l6/reports/governance-candidate-lattices.meta.json"
+    ],
+    "prohibited_files": [
+      "sarf/SKILL.md",
+      "nahw/SKILL.md",
+      "sarf/rules/",
+      "nahw/rules/",
+      "qamus/skills/",
+      "qamus/lattice/",
+      "qamus/data/",
+      "qamus/examples/",
+      "tools/check_regressions.py",
+      "fusha/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "All outputs are candidate-plane repo artifacts; no live surface, entry store, or public payload is touched; deployment is owner-gated elsewhere.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-CURR-GOVERNANCE-FIXTURES",
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "CURRICULUM_BACKPROP_NAHW",
+    "out_of_scope": [
+      "adding rows to nahw/evals/ directly",
+      "resolving any governor edge (governor edges are never auto_safe)",
+      "iʿrāb conclusions without the two-vote posture"
+    ],
+    "summary": "The dependency lattice machinery is executable but exercised on only 7 fixture rows, and NO fixture exercises kana/inna-family government (crosswalk xn-02/xn-04). Author ORIGINAL graded sentences (clean-room; never lesson sentences) exercising kana_family, inna_family, jussive and subjunctive governance, emitted as candidate lattice rows via the existing builder.",
+    "tranche": "curriculum-l1l6-w1"
+  },
+  "title": "Widen the governor/dependency fixture bank with curriculum-staged abrogator and mood-governance sentences (candidate rows)",
+  "tools_required": [
+    "python3",
+    "the PRIVATE lesson corpus (owner custody) for any step that reads lesson bodies; metadata-only steps run from committed artifacts"
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "no_text_leakage",
+      "pass_condition": "leakage scan passes (no question/key text committed)",
+      "run": "python tools/validate_curriculum_l1l6.py"
+    },
+    {
+      "name": "abstention_majority_plausible",
+      "pass_condition": "derivable rows all cite an existing repo path",
+      "run": "python tools/validate_curriculum_l1l6.py"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "a vocabulary-meaning question must ABSTAIN (no repo authority determines a lesson-vocabulary gloss; guard og-5)",
+        "id": "adv-vocab-q"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "a pure paradigm question (e.g. form a sound feminine plural) derives its key from sarf/rules with the file cited",
+        "id": "pos-paradigm-q"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "curriculum/l1l6/registry/lessons.jsonl counts.quiz_questions",
+    "selection_rule": "all quiz questions (census); derivation only where authority exists",
+    "this_packet_size": 3096,
+    "universe_size": 3096
+  },
+  "commands": [
+    {
+      "expect": "per-question disposition rows; abstention is the default",
+      "purpose": "for each quiz question (read in PRIVATE custody), attempt an authority-cited derivation; abstain otherwise",
+      "run": "python - (private-corpus step: emit {question_ref(hash), derivable: bool, authority_path, key_class} — never the question text or the key text for underivable rows)"
+    }
+  ],
+  "defeaters": [
+    "a produced row conflicts with a repo-certified fact -> record as contradicted, do not overwrite",
+    "the private corpus is unavailable -> metadata-only steps proceed; body-reading steps abort cleanly"
+  ],
+  "definition_of_done": [
+    "census complete",
+    "every derived key authority-cited",
+    "underivable questions remain honestly keyless"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "any key would require a linguistic ruling not in repo authority",
+      "rights status changes (owner)"
+    ],
+    "route": "Sol integration review -> owner adjudication where a rule/status change is implied"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "never invent an example, answer key or analysis the source or an independent authority does not support; abstain and record the gap",
+    "statement": "evidence level: curriculum-source-supported (uncertified); every row cites its claim-ledger claim_id and manifest file_id (source + claim identity); lesson prose is read in private custody and never committed; committed rows are original restatements",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "disposition per question (hash-referenced; no question text)",
+      "path": "curriculum/l1l6/reports/quiz-key-derivation.jsonl"
+    },
+    {
+      "description": "derivable/abstained census by authority class",
+      "path": "curriculum/l1l6/reports/quiz-key-derivation.meta.json"
+    }
+  ],
+  "guards": [
+    "the METHOD transfers, linguistic conclusions never do: a lesson-derived pattern licenses a candidate row, never a resolved analysis at any occurrence",
+    "rival-analysis handling: any item admitting more than one admissible analysis is recorded with ALL alternatives (analysis-dependent / school-dependent), never side-picked",
+    "no candidate-to-certified automatic promotion: nothing this packet produces may carry status certified; only tools/certify_typed_fact.py certifies, after review, outside this packet"
+  ],
+  "inputs": {
+    "input_files": [
+      "curriculum/l1l6/registry/lessons.jsonl",
+      "curriculum/l1l6/graph/concepts.jsonl",
+      "curriculum/l1l6/ledger/claim-ledger.jsonl",
+      "curriculum/l1l6/ledger/overgeneralization-guards.jsonl",
+      "curriculum/l1l6/crosswalk/sarf-crosswalk.jsonl",
+      "curriculum/l1l6/crosswalk/nahw-crosswalk.jsonl"
+    ],
+    "permitted_write_files": [
+      "curriculum/l1l6/reports/quiz-key-derivation.jsonl",
+      "curriculum/l1l6/reports/quiz-key-derivation.meta.json"
+    ],
+    "prohibited_files": [
+      "sarf/SKILL.md",
+      "nahw/SKILL.md",
+      "sarf/rules/",
+      "nahw/rules/",
+      "qamus/skills/",
+      "qamus/lattice/",
+      "qamus/data/",
+      "qamus/examples/",
+      "tools/check_regressions.py",
+      "fusha/"
+    ]
+  },
+  "model_class": "certifier",
+  "non_deployment": {
+    "statement": "All outputs are candidate-plane repo artifacts; no live surface, entry store, or public payload is touched; deployment is owner-gated elsewhere.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-CURR-QUIZ-KEY-REVIEW",
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "CURRICULUM_EVAL_SEPARATION",
+    "out_of_scope": [
+      "publishing keys",
+      "using keyed questions as independent evaluation",
+      "deriving keys from lesson prose alone (answer-visible leakage + rights boundary)"
+    ],
+    "summary": "The source publishes 3,096 quiz questions with NO answer key. Keys may NOT be manufactured by model confidence. This packet defines the only permitted path: derive candidate keys ONLY where a committed repo authority (rule file, paradigm table, certified fact) independently determines the answer; every derived key cites that authority; everything else stays keyless. Runs under certifier class because key acceptance is an evidence decision.",
+    "tranche": "curriculum-l1l6-w1"
+  },
+  "title": "Review-gated derivation of answer keys for the 3,096 keyless quiz questions",
+  "tools_required": [
+    "python3",
+    "the PRIVATE lesson corpus (owner custody) for any step that reads lesson bodies; metadata-only steps run from committed artifacts"
+  ]
+}

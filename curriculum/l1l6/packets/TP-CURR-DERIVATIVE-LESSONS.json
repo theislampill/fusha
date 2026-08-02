@@ -1,0 +1,136 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "crosswalk_rows_validate",
+      "pass_condition": "schema + path checks pass",
+      "run": "python tools/validate_curriculum_l1l6.py"
+    },
+    {
+      "name": "no_lesson_prose",
+      "pass_condition": "leakage scan passes",
+      "run": "python tools/validate_curriculum_l1l6.py"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "a pattern-lookalike (root letter resembling an augment) fixture is present and marked adversarial; a fixture set without adversarial rows fails",
+        "id": "adv-lookalike"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "place-noun concepts map to the bank's place-noun error class with at least one positive and one adversarial fixture",
+        "id": "pos-ism-makan"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "curriculum/l1l6/graph/concepts.jsonl",
+    "selection_rule": "all derivation-domain concept nodes",
+    "this_packet_size": 144,
+    "universe_size": 144
+  },
+  "commands": [
+    {
+      "expect": "one row per (concept, error_class) pair with coverage flags",
+      "purpose": "map each L3 derivation concept node to the eval-bank error classes",
+      "run": "python - (inline: join graph/concepts.jsonl domain=derivation rows against sarf/evals/nominal-derivative-error-eval.jsonl error classes; emit crosswalk rows)"
+    },
+    {
+      "expect": "fixtures carry source claim ids and status candidate",
+      "purpose": "author clean-room fixture rows for uncovered classes using independently selected standard examples",
+      "run": "python - (inline: for each uncovered class, add a fixture row with an independently chosen word, positive + adversarial variant)"
+    }
+  ],
+  "defeaters": [
+    "a produced row conflicts with a repo-certified fact -> record as contradicted, do not overwrite",
+    "the private corpus is unavailable -> metadata-only steps proceed; body-reading steps abort cleanly"
+  ],
+  "definition_of_done": [
+    "every derivation concept mapped or explicitly unmapped",
+    "uncovered classes enumerated",
+    "fixtures all candidate"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "an error class needs a linguistic ruling (e.g. contested wazn)",
+      "fixture disagreement with an existing eval row"
+    ],
+    "route": "Sol integration review -> owner adjudication where a rule/status change is implied"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "never invent an example, answer key or analysis the source or an independent authority does not support; abstain and record the gap",
+    "statement": "evidence level: curriculum-source-supported (uncertified); every row cites its claim-ledger claim_id and manifest file_id (source + claim identity); lesson prose is read in private custody and never committed; committed rows are original restatements",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "concept -> eval error-class coverage rows",
+      "path": "curriculum/l1l6/reports/derivative-lessons-crosswalk.jsonl"
+    },
+    {
+      "description": "counts + uncovered-class list",
+      "path": "curriculum/l1l6/reports/derivative-lessons-crosswalk.meta.json"
+    },
+    {
+      "description": "original candidate fixtures (positive + adversarial per class)",
+      "path": "curriculum/l1l6/reports/derivative-candidate-fixtures.jsonl"
+    }
+  ],
+  "guards": [
+    "the METHOD transfers, linguistic conclusions never do: a lesson-derived pattern licenses a candidate row, never a resolved analysis at any occurrence",
+    "rival-analysis handling: any item admitting more than one admissible analysis is recorded with ALL alternatives (analysis-dependent / school-dependent), never side-picked",
+    "no candidate-to-certified automatic promotion: nothing this packet produces may carry status certified; only tools/certify_typed_fact.py certifies, after review, outside this packet"
+  ],
+  "inputs": {
+    "input_files": [
+      "curriculum/l1l6/registry/lessons.jsonl",
+      "curriculum/l1l6/graph/concepts.jsonl",
+      "curriculum/l1l6/ledger/claim-ledger.jsonl",
+      "curriculum/l1l6/ledger/overgeneralization-guards.jsonl",
+      "curriculum/l1l6/crosswalk/sarf-crosswalk.jsonl",
+      "curriculum/l1l6/crosswalk/nahw-crosswalk.jsonl"
+    ],
+    "permitted_write_files": [
+      "curriculum/l1l6/reports/derivative-lessons-crosswalk.jsonl",
+      "curriculum/l1l6/reports/derivative-lessons-crosswalk.meta.json",
+      "curriculum/l1l6/reports/derivative-candidate-fixtures.jsonl"
+    ],
+    "prohibited_files": [
+      "sarf/SKILL.md",
+      "nahw/SKILL.md",
+      "sarf/rules/",
+      "nahw/rules/",
+      "qamus/skills/",
+      "qamus/lattice/",
+      "qamus/data/",
+      "qamus/examples/",
+      "tools/check_regressions.py",
+      "fusha/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "All outputs are candidate-plane repo artifacts; no live surface, entry store, or public payload is touched; deployment is owner-gated elsewhere.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-CURR-DERIVATIVE-LESSONS",
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "CURRICULUM_BACKPROP_SARF",
+    "out_of_scope": [
+      "building the classifier itself",
+      "copying lesson example words",
+      "modifying sarf/evals/"
+    ],
+    "summary": "The 113-row nominal-derivative-error eval bank has NO consumer (TP-SARF-A1-DERIVATIVE-CONSUMER). The curriculum's L3 derivation modules are the largest staged instructional treatment of exactly that capability. Produce a graded concept->eval-row crosswalk and ORIGINAL candidate fixture rows (restated, clean-room) so the consumer, when built, trains/validates against curriculum-informed graded difficulty.",
+    "tranche": "curriculum-l1l6-w1"
+  },
+  "title": "Stage the L3 derivation modules as graded evidence for the future wazn/derivative classifier",
+  "tools_required": [
+    "python3",
+    "the PRIVATE lesson corpus (owner custody) for any step that reads lesson bodies; metadata-only steps run from committed artifacts"
+  ]
+}
