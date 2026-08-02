@@ -381,18 +381,25 @@ def claim_projection(vote):
 
 # Every governed field of a canonical vote record. Two records are the SAME evidence only when all of them
 # match; a shared `vote_id` is a label, not an identity.
+# ROUND-14: this is an IDENTITY check — "is the record in the envelope the record that was submitted?" —
+# not the reviewer-agreement comparison. Round 13 excluded `grammatical_reason` and `gloss` because the v1.1
+# contract treats that prose as uncompared *for agreement between two reviewers*; that exclusion does not
+# belong here. Changing only the prose produced canonical_vote_difference=None and a passing grade, so a
+# submitted record could borrow authority from a different canonical record. Every governed property of the
+# record is compared.
 CANONICAL_VOTE_FIELDS = (
     "vote_id", "timestamp", "occurrence", "segmentation", "lexical_identity", "lexical_target", "root",
-    "form", "conclusion", "reason_key", "unresolved_points", "reviewer", "root_label_suppressed",
+    "form", "conclusion", "grammatical_reason", "reason_key", "gloss", "unresolved_points", "reviewer",
+    "root_label_suppressed",
 )
 
 
 def canonical_vote_difference(left, right):
     """None when two canonical vote records are the same evidence; otherwise the first differing field.
 
-    `grammatical_reason` and `gloss` are deliberately EXCLUDED: the v1.1 contract treats that prose as
-    uncompared elaboration, so differing wording is not differing evidence. Everything the contract does
-    govern must match exactly.
+    Every governed property is compared, prose included: this asks whether the two records are the SAME
+    record, not whether two reviewers agree. The agreement policy (which does treat `grammatical_reason` as
+    uncompared elaboration) is unchanged and lives in agreement_tuple()/recompute_agreement().
     """
     if not isinstance(left, dict) or not isinstance(right, dict):
         return "not_a_vote_record"
@@ -426,17 +433,44 @@ def claim_binding_defect(claim, vote):
     # field loop below never reached, so a vote whose reason is reversed — "the noun governs the
     # preposition" instead of "the preposition governs the noun" — cleared a claim whose relation is the
     # other way round. A correct label with the wrong reason must fail.
+    # ROUND-14: the claim used to bind ONLY `governor_type`, so replacing the canonical governor with a
+    # fabricated surface at another location under a reversed relation still passed as long as the type
+    # string was retained. A governor is an identified WORD at an exact place standing in a named relation,
+    # and the whole tuple is bound: type, surface, location, relation and the governed expression.
+    vote_governor = (((vote or {}).get("conclusion") or {}).get("governor") or {})
     claimed_governor = claim.get("governor")
+    if vote_governor and claimed_governor is None:
+        return "claim_governor_absent"
     if claimed_governor is not None:
         if not isinstance(claimed_governor, dict):
             return "claim_governor_not_a_record"
-        claimed_type = compact(claimed_governor.get("governor_type"))
-        projected_type = JUSTIFICATION_RULE_GOVERNOR_TYPE.get(
-            (((vote or {}).get("conclusion") or {}).get("governor") or {}).get("relation"))
-        if not claimed_type:
+        projected_type = JUSTIFICATION_RULE_GOVERNOR_TYPE.get(vote_governor.get("relation"))
+        if not compact(claimed_governor.get("governor_type")):
             return "claim_governor_type_absent"
-        if claimed_type != projected_type:
+        if compact(claimed_governor.get("governor_type")) != projected_type:
             return "claim_governor_relation_not_bound"
+        for field, defect in (("relation", "claim_governor_relation_not_bound"),
+                              ("surface", "claim_governor_surface_not_bound"),
+                              ("loc", "claim_governor_loc_not_bound")):
+            # Each field may be stated on the nested governor record or as a flat `governor_<field>` key
+            # (what project_vote emits); it must be stated somewhere, and it must match the vote.
+            claimed_value = claimed_governor.get(field)
+            if claimed_value is None:
+                claimed_value = claim.get("governor_%s" % field)
+            if claimed_value is None:
+                return "claim_governor_%s_absent" % field
+            if field == "surface":
+                if not exact_surface_equal(claimed_value, vote_governor.get(field) or ""):
+                    return defect
+            elif compact(claimed_value) != compact(vote_governor.get(field)):
+                return defect
+        governed = ((vote or {}).get("conclusion") or {}).get("governed_expression")
+        if governed is not None:
+            claimed_governed = claim.get("governed_expression")
+            if claimed_governed is None:
+                return "claim_governed_expression_absent"
+            if not exact_surface_equal(claimed_governed, governed):
+                return "claim_governed_expression_not_bound"
 
     for claim_field, projected_field in CLAIM_BINDING_FIELDS:
         if claim_field in ("source_address", "surface"):
@@ -852,7 +886,17 @@ def project_vote(vote):
         "reason_key": vote.get("reason_key"),
         # not an artifact field: the canonical schema does not carry a fact type (see _EXTERNAL_WORKER_RECORD)
         "fact_type": (_EXTERNAL_WORKER_RECORD.get(vote.get("vote_id")) or {}).get("fact_type"),
-        "governor": {"governor_type": gov_type} if gov_type else None,
+        # ROUND-14: project the COMPLETE governor tuple — an honest claim names the governing word, where it
+        # stands and how it governs, not merely its type.
+        "governor": ({"governor_type": gov_type, "relation": governor.get("relation"),
+                      "surface": governor.get("surface"), "loc": governor.get("loc")}
+                     if gov_type else None),
+        "governed_expression": conclusion.get("governed_expression"),
+        # ROUND-14: flat mirrors of the governor tuple, so a caller that overrides the nested governor
+        # record with a partial one still STATES the relation, surface and location it is claiming.
+        "governor_relation": governor.get("relation"),
+        "governor_surface": governor.get("surface"),
+        "governor_loc": governor.get("loc"),
         "evidence_cited": True,
         "source_address": occurrence.get("quran_loc"),
         # ROUND-13: the projection carries the vote's OWN exact written surface, so an occurrence-bound

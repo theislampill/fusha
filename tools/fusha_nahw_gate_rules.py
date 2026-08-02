@@ -105,6 +105,9 @@ def irab_rule_triggers(rule_id, rules=None):
     return tuple(row.get("triggers") or ()) if row else ()
 
 
+IRAB_GATE_FLOOR = "two_vote_required"
+
+
 def irab_rule_gate(rule_id, rules=None):
     """The effective gate for an iʿrāb-safety rule: the file's tier, strengthened by its own triggers."""
     row = _irab_row(rule_id, rules)
@@ -112,7 +115,12 @@ def irab_rule_gate(rule_id, rules=None):
         return "two_vote_required"          # unknown rule fails closed
     # ROUND-13: required_gate() answers auto_safe for a trigger list it cannot read, so a malformed trigger
     # in the table collapsed the whole ladder. Reconcile through the checked path instead.
-    return _strongest(resolve_gate(row.get("gate")),
+    # ROUND-14: every iʿrāb decision carries a two_vote_required FLOOR. A row that declares auto_safe and
+    # lists no triggers used to answer auto_safe — an iʿrāb call with no stated risk is not a safe one.
+    # Additional risk may strengthen this; nothing may weaken it.
+    if declared_gate_defect(row.get("gate")) is not None:
+        return "never_auto_resolve"
+    return _strongest(IRAB_GATE_FLOOR, resolve_gate(row.get("gate")),
                       reconcile_required_gate(row.get("gate"), list(row.get("triggers") or [])))
 
 
@@ -147,6 +155,15 @@ def effective_gate(topic=None, triggers=(), declared=None, rules=None, irab_gate
     risk. It now delegates to reconcile_required_gate(), which holds on a malformed, non-list, duplicated
     or unknown trigger set. A caller-declared tier can still only STRENGTHEN.
     """
+    # ROUND-14: validate the RAW inputs before any lookup or coercion. `declared=[]` used to raise
+    # TypeError out of this public API, and a non-list `triggers` fell through to auto_safe.
+    if declared_gate_defect(declared) is not None:
+        return "never_auto_resolve"
+    # an EMPTY non-list (e.g. {}) is falsy, so it must be validated on its type, not on its truthiness
+    if triggers is not None and not isinstance(triggers, (list, tuple)):
+        return "never_auto_resolve"
+    if triggers and trigger_set_defect(list(triggers)) is not None:
+        return "never_auto_resolve"
     gates = []
     if topic is not None:
         gates.append(topic_gate(topic, rules=rules))
@@ -193,12 +210,28 @@ def trigger_set_defect(triggers):
     return None
 
 
+def declared_gate_defect(declared):
+    """None when `declared` is a value the gate ladder can even look up.
+
+    ROUND-14: `resolve_gate()` hashes its argument, so a list or dict raised
+    `TypeError: unhashable type` out of a public API. A gate value that cannot be read is not a weak gate;
+    it is an unreadable one.
+    """
+    if declared is None:
+        return None
+    if not isinstance(declared, str) or not declared.strip():
+        return "declared_gate_not_a_string"
+    return None
+
+
 def reconcile_required_gate(declared, triggers, topic=None, rules=None):
     """The gate that must actually be carried — never weaker than the SSOT answer, fail-closed on bad input.
 
     A malformed, non-list, duplicated or unknown trigger set yields `never_auto_resolve`: the risk statement
     could not be read, so nothing may be auto-resolved on it. A caller-declared tier can only STRENGTHEN.
     """
+    if declared_gate_defect(declared) is not None:
+        return "never_auto_resolve"
     defect = trigger_set_defect(triggers)
     if defect is not None:
         return "never_auto_resolve"

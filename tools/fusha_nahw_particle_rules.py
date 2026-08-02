@@ -245,6 +245,7 @@ def _seat(surface):
 # shadda, the sukūn, the content-letter haraka and the final yāʾ-vs-alif-maqṣūra shape — so this is
 # enforcement of the committed rule data, not a new linguistic claim.
 SUKUN = "\u0652"
+FATHATAN = "ً"   # the tanwin on kulla-tanwin; part of a permitted lam profile
 
 
 def _mark_cluster(tok, target):
@@ -263,6 +264,19 @@ def _mark_cluster(tok, target):
 def _has_mark(tok, target, mark):
     cluster = _mark_cluster(tok, target)
     return bool(cluster) and mark in cluster
+
+
+def _marks_exactly(tok, target, allowed):
+    """True when the letter's harakāt cluster is EXACTLY `allowed` (same multiset, no extras, no repeats).
+
+    ROUND-14: presence checks alone accepted contradictory and extraneous marks — أَنُّ (shadda AND ḍamma on
+    the nūn) read as أَنَّ, كَلُّا as كَلَّا, نَعَّمْ as نَعَمْ. A member is written with a specific mark
+    profile; anything more, less or other is not that member.
+    """
+    cluster = _mark_cluster(tok, target)
+    if cluster is None:
+        return not allowed
+    return sorted(cluster) == sorted(allowed)
 
 
 def _final_base_letter(tok):
@@ -331,6 +345,13 @@ def _d_an_vs_inna(surface):
     if nun_haraka and not heavy:
         return None, obs + ["the nūn carries a short vowel: neither the sukūn of the light member nor the "
                             "shadda of the heavy one"]
+    # ROUND-14: the nūn profile must be EXACT — bare, sukūn alone, or shadda alone (optionally with the
+    # member's own following vowel is NOT modelled here, so أَنُّ/إِنُّ are refused).
+    # the permitted nūn profiles: bare, sukūn alone (light أَنْ/إِنْ), or shadda with at most the member's
+    # own fatḥa (heavy أَنَّ/إِنَّ). A ḍamma or kasra beside the shadda — أَنُّ, إِنُّ — is neither.
+    if not any(_marks_exactly(surface, "ن", allowed)
+               for allowed in ([], [SUKUN], [N.SHADDA], [N.SHADDA, N.FATHA])):
+        return None, obs + ["the nūn carries an extraneous or contradictory mark profile"]
     obs.append("weight=%s" % (an_family_weight(surface) or "unwritten"))
     return ("A" if seat == "أ" else "B"), obs
 
@@ -393,6 +414,12 @@ def _d_kull_vs_kalla(surface):
     obs = ["haraka(ك)=%s" % (hk or "absent"), "shadda(ل)=%s" % shadda_l]
     if not shadda_l:
         return None, obs + ["no shadda on the lām: neither كُلّ nor كَلَّا is written here"]
+    # ROUND-14: both members carry a bare shadda on the lām; كَلُّا adds a ḍamma, so it is neither.
+    # permitted lām profiles: bare shadda, shadda+fatḥa (كَلَّا / كُلَّ) or shadda+fatḥatān (كُلًّا).
+    # كَلُّا adds a ḍamma, which belongs to neither member.
+    if not any(_marks_exactly(surface, "ل", allowed)
+               for allowed in ([N.SHADDA], [N.SHADDA, N.FATHA], [N.SHADDA, FATHATAN])):
+        return None, obs + ["the lām carries an extraneous or contradictory mark profile"]
     if hk == N.DAMMA:
         return "A", obs
     # ROUND-13: كَلَّا is written with a final alif. كَلّ carries the kāf fatḥa and the lām shadda but not
@@ -417,9 +444,10 @@ def _d_nima_vs_naam(surface):
     sukun_mim = _has_mark(surface, "م", SUKUN)
     obs.append("haraka(م)=%s" % (hm or "absent"))
     obs.append("sukun(م)=%s" % sukun_mim)
-    if hn == N.KASRA and sukun_ayn and hm == N.FATHA:
+    # ROUND-14: نَعَّمْ carries a shadda on the ʿayn that نَعَمْ does not have.
+    if hn == N.KASRA and sukun_ayn and hm == N.FATHA and _marks_exactly(surface, "ع", [SUKUN]):
         return "A", obs
-    if hn == N.FATHA and ha == N.FATHA and sukun_mim:
+    if hn == N.FATHA and ha == N.FATHA and sukun_mim and _marks_exactly(surface, "ع", [N.FATHA]):
         return "B", obs
     return None, obs + ["the ʿayn and mīm marks do not confirm the member the nūn vowel suggests"]
 
@@ -709,7 +737,19 @@ def transition_rivals(row, rules, *, selected, evidence_id):
     # ROUND-13: only `forbidden_to` was carried, so the مَن transition listed the مَن relative role as its
     # own rival and never carried the مِن preposition sibling at all — rivalry was asymmetric. A forbidden
     # collision names BOTH ends, and each end is the other's rival.
-    for forb in (rules or load_state_rules()).get("forbidden_transitions", []):
+    loaded = rules or load_state_rules()
+    # ROUND-14: the forbidden table's `forbidden_from`/`forbidden_to` are human-readable PROSE labels. A
+    # rival lattice has to carry the exact machine analysis identity — the sibling transition's own
+    # `to_nahw_role` — or a consumer cannot tell which analysis was preserved. The prose stays as a
+    # secondary explanation; the exact role is added first and can never be substituted by it.
+    for sibling in loaded.get("transitions", []):
+        if sibling.get("id") == row.get("id"):
+            continue
+        if transition_rival_family(sibling.get("id")) != family:
+            continue
+        if sibling.get("to_nahw_role") and sibling["to_nahw_role"] not in roles:
+            roles.append(sibling["to_nahw_role"])
+    for forb in loaded.get("forbidden_transitions", []):
         if FORBIDDEN_COLLISION_FAMILY.get(forb.get("id")) != family:
             continue
         for end in ("forbidden_from", "forbidden_to"):
@@ -790,6 +830,20 @@ def transition(transition_id, *, evidence=None, at=None, surface=None, from_stat
     gate = "two_vote_required" if row.get("requires_two_vote") else "candidate"
     # The observation must be bound to THIS transition's from-state: an observation minted for another
     # transition (or another token) can never fire this one.
+    # ROUND-14: a candidate-capable transition must know WHICH written word it is being applied to. Without
+    # a caller surface the particle-bound families already failed, but a from-state family (e.g.
+    # noun_noun_to_idafa) reached `candidate` on an observation alone.
+    if not (isinstance(surface, str) and unicodedata.normalize("NFC", surface).strip()):
+        base = {"transition_id": transition_id, "from_observation": row.get("from_observation"),
+                "required_observation": required, "to_nahw_role": None,
+                "requires_two_vote": bool(row.get("requires_two_vote")),
+                "two_vote_trigger": row.get("two_vote_trigger"), "gate": gate,
+                "unresolved_alternatives": transition_rivals(row, rules, selected=None, evidence_id=None),
+                "at": at, "status": "consumed", "decision": "pending",
+                "pending_reason": "caller_surface_absent", "evidence_defect": "caller_surface_absent",
+                "from_state_defect": _fs_defect, "surface": surface,
+                "note": "a candidate-capable transition requires the exact written surface it applies to"}
+        return base
     bind = {"kind": "state", "value": transition_id}
     # ROUND-13: the caller surface was NOT passed, so an observation recorded on مَنْ could fire the مِنَ
     # preposition transition at the same address. The observation must be about the exact written word the
@@ -1041,25 +1095,33 @@ def _self_test():
        "observation_off_vocabulary")
     eq("iḍāfa no evidence -> pending", transition("noun_noun_to_idafa")["decision"], "pending")
     eq("iḍāfa bare boolean rejected",
-       transition("noun_noun_to_idafa", evidence=True)["evidence_defect"], "caller_label")
+       transition("noun_noun_to_idafa", evidence=True, surface="ذَٰلِكَ")["evidence_defect"], "caller_label")
     TREV = mint_fixture_observation("second_noun_majrur_first_stripped", source_address="quran:2:2:1",
                                     quran_loc="2:2", word=1, surface="ذَٰلِكَ", target_kind="state",
                                     target_value="noun_noun_to_idafa")
-    t = transition("noun_noun_to_idafa", evidence=TREV, at="quran:2:2:1",
+    t = transition("noun_noun_to_idafa", evidence=TREV, at="quran:2:2:1", surface="ذَٰلِكَ",
                    from_state="noun_followed_by_noun")
     eq("iḍāfa typed evidence -> candidate only", t["decision"], "candidate")
     eq("iḍāfa candidate carries the evidence id", t["evidence_id"], TREV["observation_id"])
+    # ROUND-14: a candidate-capable transition needs the exact written surface it applies to. Without one a
+    # from-state family (noun_noun_to_idafa) previously reached `candidate` on an observation alone.
+    eq("a from-state transition without a caller surface is pending",
+       transition("noun_noun_to_idafa", evidence=TREV, at="quran:2:2:1",
+                  from_state="noun_followed_by_noun")["evidence_defect"], "caller_surface_absent")
+    eq("a blank caller surface is refused",
+       transition("noun_noun_to_idafa", evidence=TREV, at="quran:2:2:1", surface="   ",
+                  from_state="noun_followed_by_noun")["evidence_defect"], "caller_surface_absent")
     eq("iḍāfa rivals are structured objects", all(isinstance(x, dict) and "role" in x
                                                   for x in t["unresolved_alternatives"]), True)
     eq("iḍāfa observation cannot fire another transition",
-       transition("illa_to_istithna", evidence=TREV, at="quran:2:2:1",
+       transition("illa_to_istithna", evidence=TREV, at="quran:2:2:1", surface="ذَٰلِكَ",
                   from_state="illa_exceptive_particle")["evidence_defect"], "target_binding_mismatch")
     # ROUND-7 from-state binding: a transition may not be applied without proving the current from-state
     eq("transition without a from-state is pending",
-       transition("noun_noun_to_idafa", evidence=TREV, at="quran:2:2:1")["from_state_defect"],
-       "from_state_absent")
-    eq("transition with the wrong from-state is pending",
        transition("noun_noun_to_idafa", evidence=TREV, at="quran:2:2:1",
+                  surface="ذَٰلِكَ")["from_state_defect"], "from_state_absent")
+    eq("transition with the wrong from-state is pending",
+       transition("noun_noun_to_idafa", evidence=TREV, at="quran:2:2:1", surface="ذَٰلِكَ",
                   from_state="illa_exceptive_particle")["from_state_defect"], "from_state_mismatch")
     eq("a particle-bound transition needs the written surface",
        transition("min_preposition_to_jar_majrur")["from_state_defect"], "from_state_surface_absent")
@@ -1082,17 +1144,18 @@ def _self_test():
     eq("a forbidden phrase does not match across token boundaries",
        forbidden_gloss_violations("مَن", "from the whole group"), [])
     eq("transition without a caller occurrence never becomes a candidate",
-       transition("noun_noun_to_idafa", evidence=TREV)["evidence_defect"], "caller_occurrence_absent")
+       transition("noun_noun_to_idafa", evidence=TREV, surface="ذَٰلِكَ")["evidence_defect"],
+       "caller_occurrence_absent")
     eq("transition observation replayed at another occurrence is rejected",
-       transition("noun_noun_to_idafa", evidence=TREV, at="quran:2:26:20")["evidence_defect"],
-       "occurrence_not_current")
+       transition("noun_noun_to_idafa", evidence=TREV, at="quran:2:26:20",
+                  surface="ذَٰلِكَ")["evidence_defect"], "occurrence_not_current")
     eq("a malformed caller occurrence is rejected",
-       transition("noun_noun_to_idafa", evidence=TREV, at="2:2:1")["evidence_defect"],
-       "caller_occurrence_invalid")
+       transition("noun_noun_to_idafa", evidence=TREV, at="2:2:1",
+                  surface="ذَٰلِكَ")["evidence_defect"], "caller_occurrence_invalid")
     eq("iḍāfa heuristic evidence rejected",
        transition("noun_noun_to_idafa",
-                  evidence=dict(TREV, evidence_class="heuristic"), at="quran:2:2:1")["evidence_defect"],
-       "evidence_class_not_source_addressed")
+                  evidence=dict(TREV, evidence_class="heuristic"), at="quran:2:2:1",
+                  surface="ذَٰلِكَ")["evidence_defect"], "evidence_class_not_source_addressed")
     eq("forbidden مِن/whoever", bool(forbidden_gloss_violations("مِنَ", "and whoever")), True)
     eq("licit مِن/from", forbidden_gloss_violations("مِنَ", "from / among"), [])
     # every rule in every consumed file must have a truthful status

@@ -273,9 +273,15 @@ def select_next(bank, progress, now_day, interleave=False):
     # first; unclearable fact-held rows yield to new content and are only offered when nothing else is.
     # An item whose BANK ROW carries a two-vote fact gate can never be cleared here, so it is permanently
     # due. Derive that from the bank rather than from a new state key (the progress schema is canonical).
+    # ROUND-14: only a CONTENT-CORRECT fact hold may yield to new material. A wrong answer to a two-vote
+    # row is a genuine learner miss and keeps normal due-review priority — the fact gate must not erase
+    # learner error. An open miss is recorded in `progress.missed` (a fact hold deliberately is not), so
+    # that list distinguishes the two cases without adding a key to the canonical progress schema.
     _fact_gated = {r["id"] for r in bank if r.get("two_vote_required")}
     _cleared = set(progress.get("cleared_item_ids") or [])
-    blocked = [i for i in due_reviews if i in _fact_gated and i not in _cleared]
+    _open_misses = {m.get("item_id") for m in (progress.get("missed") or [])}
+    blocked = [i for i in due_reviews
+               if i in _fact_gated and i not in _cleared and i not in _open_misses]
     live_reviews = [i for i in due_reviews if i not in blocked]
     if live_reviews:
         return live_reviews[0], "due_review"
