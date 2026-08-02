@@ -818,6 +818,53 @@ def check_absorption(ctx, errors):
                               % r.get("row_id"))
 
 
+def check_generated_planes(ctx, errors):
+    """Capability matrix, occurrence bridge, learner projections and
+    promotion bundles: live recompute byte-parity (stale = red), plus the
+    single-source projection invariant and the every-increment-bundled
+    floor."""
+    for mod_name, label in (("build_capability_matrix", "capability matrix"),
+                            ("build_curriculum_occurrence_bridge", "occurrence bridge"),
+                            ("build_learner_projections", "learner projections"),
+                            ("build_promotion_bundles", "promotion bundles")):
+        try:
+            sys.path.insert(0, str(ROOT / "tools"))
+            mod = __import__(mod_name)
+            if mod_name == "build_curriculum_occurrence_bridge":
+                files = mod.serialize(*mod.build())
+            else:
+                files = mod.serialize(mod.build())
+        except Exception as exc:  # noqa: BLE001
+            errors.append("generated_planes: %s recompute failed (%s)" % (label, exc))
+            continue
+        finally:
+            if str(ROOT / "tools") in sys.path:
+                sys.path.remove(str(ROOT / "tools"))
+        for path, data in sorted(files.items()):
+            p = Path(path)
+            if not p.exists() or p.read_bytes() != data:
+                errors.append("generated_planes: %s stale (%s)" % (label, p.name))
+    # every discovered increment must have a bundle
+    for inc in discovered_increments():
+        if not (BASE / "promotion" / ("%s.bundle.json" % inc)).exists():
+            errors.append("generated_planes: increment %s has no promotion bundle" % inc)
+    # projection single-source invariant: every projection carries fact_ref
+    # and a technical view (the verbatim artifact) — no independent authoring
+    pp = BASE / "projections" / "learner-projections.json"
+    if pp.exists():
+        obj = json.loads(pp.read_text(encoding="utf-8"))
+        for pr in obj.get("projections", []):
+            if not pr.get("fact_ref") or "technical" not in pr.get("views", {}):
+                errors.append("generated_planes: projection missing fact_ref/"
+                              "technical view (single-source invariant)")
+                break
+        # occurrence bridge wildcard gate
+    ob = BASE / "reports" / "pvn-readiness.json"
+    if ob.exists():
+        if not json.loads(ob.read_text(encoding="utf-8")).get("wildcard_free"):
+            errors.append("generated_planes: P/V/N links contain wildcards")
+
+
 ALL_CHECKS = (
     check_manifest_shape, check_registry_consistency, check_graph_integrity,
     check_nfc, check_crosswalk_evidence, check_ledger_qualification,
@@ -825,6 +872,7 @@ ALL_CHECKS = (
     check_no_certification, check_pilot_parity, check_packet_presence,
     check_units_semantic, check_increments, check_flywheel_loop,
     check_corpus_pilot, check_precise_links, check_absorption,
+    check_generated_planes,
 )
 PILOT_CHECKS = (check_pilot_parity, check_no_certification)
 

@@ -1,0 +1,248 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-derivatives/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-derivatives/reference.md",
+  "capability": "template_classification",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-derivatives",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "rule_id": "curr-derivatives-der-r1",
+      "statement": "a template matches only with supplied root radicals filling R1..R3 in order (no root derivation in the consumer)",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "rule_id": "curr-derivatives-der-r2",
+      "statement": "mu_participle without a known penult vowel -> abstain penult_vowel_unknown (never default to active)",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "rule_id": "curr-derivatives-der-r3",
+      "statement": "gloss SHAPE is nominal for every class here; the consumer flags (does not author) any verbal-gloss pairing",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "rule_id": "curr-derivatives-der-r4",
+      "statement": "zero or >1 surviving template -> abstain (ambiguous_template or no_template)",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "rule_id": "curr-derivatives-der-r5",
+      "statement": "a weak radical may surface via the declared weak_substitutions table only (data-driven; guard: substitutions never apply to sound radicals)",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "der-abs-01"
+    ],
+    "adversarial": [
+      "der-adv-01",
+      "der-adv-02"
+    ],
+    "positive": [
+      "der-pos-01",
+      "der-pos-02",
+      "der-pos-03"
+    ],
+    "transfer": [
+      "der-trn-01",
+      "der-trn-02"
+    ]
+  },
+  "flywheel_evidence": "curriculum/l1l6/loop/derivation/loop-record.json",
+  "increment": "inc-derivatives",
+  "learner_explanation_ladder": {
+    "u-s03": {
+      "advanced": "curriculum/l1l6/increments/inc-derivatives/reference.md",
+      "beginner": "curriculum/l1l6/increments/inc-derivatives/staged-explanation.md",
+      "intermediate": "curriculum/l1l6/increments/inc-derivatives/reference.md",
+      "model_facing": "curriculum/l1l6/increments/inc-derivatives/procedure.md",
+      "technical": "curriculum/l1l6/increments/inc-derivatives/unit-v1.json"
+    },
+    "u-s04": {
+      "advanced": "curriculum/l1l6/increments/inc-derivatives/reference.md",
+      "beginner": "curriculum/l1l6/increments/inc-derivatives/staged-explanation.md",
+      "intermediate": "curriculum/l1l6/increments/inc-derivatives/reference.md",
+      "model_facing": "curriculum/l1l6/increments/inc-derivatives/procedure.md",
+      "technical": "curriculum/l1l6/increments/inc-derivatives/unit-v1.json"
+    }
+  },
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "penult_vowel_unknown",
+      "ambiguous_template",
+      "no_template",
+      "no_root_evidence"
+    ],
+    "capability": "template_classification",
+    "increment": "inc-derivatives",
+    "repair_of": "unit-v1.json (no weak-root substitution: hollow participles false-negative, loop derivation run-1)",
+    "rules": [
+      {
+        "id": "der-r1",
+        "text": "a template matches only with supplied root radicals filling R1..R3 in order (no root derivation in the consumer)"
+      },
+      {
+        "id": "der-r2",
+        "text": "mu_participle without a known penult vowel -> abstain penult_vowel_unknown (never default to active)"
+      },
+      {
+        "id": "der-r3",
+        "text": "gloss SHAPE is nominal for every class here; the consumer flags (does not author) any verbal-gloss pairing"
+      },
+      {
+        "id": "der-r4",
+        "text": "zero or >1 surviving template -> abstain (ambiguous_template or no_template)"
+      },
+      {
+        "id": "der-r5",
+        "text": "a weak radical may surface via the declared weak_substitutions table only (data-driven; guard: substitutions never apply to sound radicals)"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "templates": [
+      {
+        "class": "active_participle",
+        "id": "faail",
+        "name": "فاعل active participle (form I)",
+        "requires": [],
+        "shape": [
+          "R1",
+          "ا",
+          "R2",
+          "R3"
+        ]
+      },
+      {
+        "class": "passive_participle",
+        "id": "mafuul",
+        "name": "مفعول passive participle (form I)",
+        "requires": [],
+        "shape": [
+          "م",
+          "R1",
+          "R2",
+          "و",
+          "R3"
+        ]
+      },
+      {
+        "class": "mu_participle",
+        "id": "mu_participle",
+        "name": "مُـ participle (derived forms)",
+        "requires": [
+          "penult_vowel"
+        ],
+        "shape": [
+          "م",
+          "..."
+        ],
+        "split": {
+          "fatha": "passive_participle",
+          "kasra": "active_participle"
+        }
+      },
+      {
+        "class": "masdar_II",
+        "id": "tafiil",
+        "name": "تفعيل masdar (form II)",
+        "requires": [],
+        "shape": [
+          "ت",
+          "R1",
+          "R2",
+          "ي",
+          "R3"
+        ]
+      },
+      {
+        "class": "masdar_IV",
+        "id": "ifaal",
+        "name": "إفعال masdar (form IV)",
+        "requires": [],
+        "shape": [
+          "إ",
+          "R1",
+          "R2",
+          "ا",
+          "R3"
+        ]
+      },
+      {
+        "class": "masdar_X",
+        "id": "istifaal",
+        "name": "استفعال masdar (form X)",
+        "requires": [],
+        "shape": [
+          "ا",
+          "س",
+          "ت",
+          "R1",
+          "R2",
+          "ا",
+          "R3"
+        ]
+      },
+      {
+        "class": "place_time_noun",
+        "id": "mafal_place",
+        "name": "مَفْعَل/مَفْعِل place-noun",
+        "requires": [],
+        "shape": [
+          "م",
+          "R1",
+          "R2",
+          "R3"
+        ]
+      }
+    ],
+    "unit_ref": "u-s03",
+    "version": 2,
+    "weak_substitutions": {
+      "R2": {
+        "و": [
+          "ئ",
+          "ا"
+        ],
+        "ي": [
+          "ئ"
+        ]
+      }
+    }
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "rich_hover_fields": [
+    {
+      "key": "derivative_class_chip",
+      "teaching": "names the class (active/passive participle, masdar, place-noun) with its template"
+    },
+    {
+      "key": "penult_vowel_evidence",
+      "teaching": "for مُـ participles, shows the vowel that decided active vs passive — or the honest abstention"
+    },
+    {
+      "key": "nominal_gloss_shape_note",
+      "teaching": "why the gloss is a noun phrase, not a finite verb"
+    }
+  ],
+  "rollback_condition": "revert to unit-v1.json (kept committed; the loops manifest pins both packs), rerun the regression command, expect the recorded pre-repair defect set",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

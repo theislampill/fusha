@@ -1,0 +1,166 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-nawasikh/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-nawasikh/reference.md",
+  "capability": "pattern_consistency",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-nawasikh",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
+      "rule_id": "curr-nawasikh-naw-r1",
+      "statement": "identify the abrogator by membership; a lightened/non-governing use (declared feature) removes the expectation (abstain non_governing_use)",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
+      "rule_id": "curr-nawasikh-naw-r2",
+      "statement": "the consumer CHECKS observed case markings against the family pattern; it never assigns case itself (case facts stay two-vote)",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
+      "rule_id": "curr-nawasikh-naw-r3",
+      "statement": "observed==expected -> consistent; observed!=expected -> violation_candidate routed to review (the text is never 'corrected'); marking unknown -> abstain marking_unknown",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
+      "rule_id": "curr-nawasikh-naw-r4",
+      "statement": "la_jins and hijaziyya-ma regimes are OUT of this unit (different/school-dependent regimes)",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "naw-abs-01",
+      "naw-abs-02"
+    ],
+    "adversarial": [
+      "naw-adv-01",
+      "naw-adv-02"
+    ],
+    "positive": [
+      "naw-pos-01",
+      "naw-pos-02"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-nawasikh",
+  "learner_explanation_ladder": {
+    "u-n02": {
+      "advanced": "curriculum/l1l6/increments/inc-nawasikh/reference.md",
+      "beginner": "curriculum/l1l6/increments/inc-nawasikh/staged-explanation.md",
+      "intermediate": "curriculum/l1l6/increments/inc-nawasikh/reference.md",
+      "model_facing": "curriculum/l1l6/increments/inc-nawasikh/procedure.md",
+      "technical": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json"
+    }
+  },
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "marking_unknown",
+      "non_governing_use",
+      "out_of_regime"
+    ],
+    "capability": "pattern_consistency",
+    "families": {
+      "inna": {
+        "ism": "nasb",
+        "khabar": "raf3",
+        "members": [
+          "إن",
+          "أن",
+          "لكن",
+          "كأن",
+          "ليت",
+          "لعل"
+        ]
+      },
+      "kana": {
+        "ism": "raf3",
+        "khabar": "nasb",
+        "members": [
+          "كان",
+          "أصبح",
+          "صار",
+          "ليس",
+          "ما زال",
+          "ما دام",
+          "بات",
+          "ظل"
+        ]
+      },
+      "zanna": {
+        "ism": "nasb",
+        "khabar": "nasb",
+        "members": [
+          "ظن",
+          "حسب",
+          "جعل",
+          "علم",
+          "وجد"
+        ]
+      }
+    },
+    "increment": "inc-nawasikh",
+    "rules": [
+      {
+        "id": "naw-r1",
+        "text": "identify the abrogator by membership; a lightened/non-governing use (declared feature) removes the expectation (abstain non_governing_use)"
+      },
+      {
+        "id": "naw-r2",
+        "text": "the consumer CHECKS observed case markings against the family pattern; it never assigns case itself (case facts stay two-vote)"
+      },
+      {
+        "id": "naw-r3",
+        "text": "observed==expected -> consistent; observed!=expected -> violation_candidate routed to review (the text is never 'corrected'); marking unknown -> abstain marking_unknown"
+      },
+      {
+        "id": "naw-r4",
+        "text": "la_jins and hijaziyya-ma regimes are OUT of this unit (different/school-dependent regimes)"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "u-n02",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [
+    "br-pl-ent-p011",
+    "br-pl-ent-p012",
+    "br-pl-ent-p013",
+    "br-pl-ent-p024",
+    "br-pl-ent-p029",
+    "br-pl-ent-p057",
+    "br-pl-ent-p058",
+    "br-pl-ent-p061",
+    "br-pl-ent-p063"
+  ],
+  "rich_hover_fields": [
+    {
+      "key": "abrogator_card",
+      "teaching": "family, its two governed elements, and the case each receives — with the reason"
+    },
+    {
+      "key": "swap_warning",
+      "teaching": "the kana/inna pattern swap is THE classic error; the card shows both patterns side by side"
+    },
+    {
+      "key": "review_flag",
+      "teaching": "a marking that contradicts the pattern shows as 'needs review', never as a silent correction"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

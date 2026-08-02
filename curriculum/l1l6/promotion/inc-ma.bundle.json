@@ -1,0 +1,203 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-ma/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-ma/reference.md",
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-ma",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-ma/unit-v1.json",
+      "rule_id": "curr-ma-ma-r1",
+      "statement": "discriminator features are SUPPLIED evidence (from context analysis or source), never guessed by the consumer",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-ma/unit-v1.json",
+      "rule_id": "curr-ma-ma-r2",
+      "statement": "evaluate every function; keep every function whose discriminators are all satisfied",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-ma/unit-v1.json",
+      "rule_id": "curr-ma-ma-r3",
+      "statement": "exactly one survivor -> that function (candidate); >1 -> preserve_alternatives; 0 -> abstain insufficient_features (og-3: no default function exists)",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-ma/unit-v1.json",
+      "rule_id": "curr-ma-ma-r4",
+      "statement": "hijaziyya government is school-dependent: even a resolved nafiya reading never emits a government claim from this unit",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "ma-abs-01"
+    ],
+    "adversarial": [
+      "ma-adv-01",
+      "ma-adv-02"
+    ],
+    "positive": [
+      "ma-pos-01",
+      "ma-pos-02",
+      "ma-pos-03"
+    ]
+  },
+  "flywheel_evidence": "curriculum/l1l6/loop/ma-ambiguity/loop-record.json",
+  "increment": "inc-ma",
+  "learner_explanation_ladder": {
+    "u-n07": {
+      "advanced": "curriculum/l1l6/increments/inc-ma/reference.md",
+      "beginner": "curriculum/l1l6/increments/inc-ma/staged-explanation.md",
+      "intermediate": "curriculum/l1l6/increments/inc-ma/reference.md",
+      "model_facing": "curriculum/l1l6/increments/inc-ma/procedure.md",
+      "technical": "curriculum/l1l6/increments/inc-ma/unit-v1.json"
+    }
+  },
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives"
+    ],
+    "capability": "discriminator_table",
+    "functions": [
+      {
+        "discriminators": {
+          "clause": [
+            "declarative"
+          ],
+          "following": [
+            "perfect_verb"
+          ]
+        },
+        "id": "nafiya",
+        "name": "negation ما"
+      },
+      {
+        "discriminators": {
+          "antecedent_slot": [
+            "open_headless"
+          ],
+          "following_clause": [
+            "complete_with_gap"
+          ]
+        },
+        "id": "mawsula",
+        "name": "relative ما"
+      },
+      {
+        "discriminators": {
+          "clause": [
+            "interrogative"
+          ],
+          "position": [
+            "clause_initial"
+          ]
+        },
+        "id": "istifhamiyya",
+        "name": "interrogative ما"
+      },
+      {
+        "discriminators": {
+          "following": [
+            "verb_clause"
+          ],
+          "substitution": [
+            "masdar_paraphrase_valid"
+          ]
+        },
+        "id": "masdariyya",
+        "name": "masdar ما"
+      },
+      {
+        "discriminators": {
+          "mood_pattern": [
+            "double_jussive"
+          ]
+        },
+        "id": "shartiyya",
+        "name": "conditional ما"
+      },
+      {
+        "discriminators": {
+          "attachment": [
+            "fused_to_inna_family"
+          ]
+        },
+        "id": "kaffa",
+        "name": "restraining ما (إنّما)"
+      },
+      {
+        "discriminators": {
+          "position": [
+            "after_preposition_non_argument"
+          ]
+        },
+        "id": "zaida",
+        "name": "extra ما"
+      }
+    ],
+    "increment": "inc-ma",
+    "rules": [
+      {
+        "id": "ma-r1",
+        "text": "discriminator features are SUPPLIED evidence (from context analysis or source), never guessed by the consumer"
+      },
+      {
+        "id": "ma-r2",
+        "text": "evaluate every function; keep every function whose discriminators are all satisfied"
+      },
+      {
+        "id": "ma-r3",
+        "text": "exactly one survivor -> that function (candidate); >1 -> preserve_alternatives; 0 -> abstain insufficient_features (og-3: no default function exists)"
+      },
+      {
+        "id": "ma-r4",
+        "text": "hijaziyya government is school-dependent: even a resolved nafiya reading never emits a government claim from this unit"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "u-n07",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [
+    "br-pl-ent-p014",
+    "br-pl-ent-p023",
+    "br-pl-ent-p034",
+    "br-pl-ent-p056",
+    "br-pl-ent-p060",
+    "br-pl-ent-p099",
+    "br-pl-ent-p100",
+    "br-pl-ma-2-284-10",
+    "br-pl-ma-93-3-1"
+  ],
+  "rich_hover_fields": [
+    {
+      "key": "function_inventory_panel",
+      "teaching": "lists ma's documented functions with the discriminator that decides each — the learner sees WHY this occurrence reads as it does"
+    },
+    {
+      "key": "alternatives_panel",
+      "teaching": "genuinely unresolved occurrences show every surviving reading, attributed, no winner implied"
+    },
+    {
+      "key": "school_note",
+      "teaching": "hijaziyya government marked school-dependent when relevant"
+    }
+  ],
+  "rollback_condition": "revert to unit-v0.json (kept committed; the loops manifest pins both packs), rerun the regression command, expect the recorded pre-repair defect set",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

@@ -1,0 +1,166 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-hidden/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-hidden/reference.md",
+  "capability": "licensing_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-hidden",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-hidden/unit-v1.json",
+      "rule_id": "curr-hidden-hid-r1",
+      "statement": "a hidden element may be emitted ONLY for a construction in the licensing table; anything else -> reject_reconstruction",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-hidden/unit-v1.json",
+      "rule_id": "curr-hidden-hid-r2",
+      "statement": "hidden elements are TYPED nodes flagged is_reconstruction=true; they are analysis, never text; scripture is never altered",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-hidden/unit-v1.json",
+      "rule_id": "curr-hidden-hid-r3",
+      "statement": "analysis-dependent licences (vocative deleted-verb) carry their attribution and never certify",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-hidden/unit-v1.json",
+      "rule_id": "curr-hidden-hid-r4",
+      "statement": "rival reconstructions are all emitted as alternatives, none preferred",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "adversarial": [
+      "hid-adv-01"
+    ],
+    "positive": [
+      "hid-pos-01",
+      "hid-pos-02",
+      "hid-pos-03"
+    ]
+  },
+  "flywheel_evidence": "curriculum/l1l6/loop/hidden-structure/loop-record.json",
+  "increment": "inc-hidden",
+  "learner_explanation_ladder": {
+    "u-n08": {
+      "advanced": "curriculum/l1l6/increments/inc-hidden/reference.md",
+      "beginner": "curriculum/l1l6/increments/inc-hidden/staged-explanation.md",
+      "intermediate": "curriculum/l1l6/increments/inc-hidden/reference.md",
+      "model_facing": "curriculum/l1l6/increments/inc-hidden/procedure.md",
+      "technical": "curriculum/l1l6/increments/inc-hidden/unit-v1.json"
+    },
+    "u-n09": {
+      "advanced": "curriculum/l1l6/increments/inc-hidden/reference.md",
+      "beginner": "curriculum/l1l6/increments/inc-hidden/staged-explanation.md",
+      "intermediate": "curriculum/l1l6/increments/inc-hidden/reference.md",
+      "model_facing": "curriculum/l1l6/increments/inc-hidden/procedure.md",
+      "technical": "curriculum/l1l6/increments/inc-hidden/unit-v1.json"
+    }
+  },
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "reject_reconstruction",
+      "alternatives_preserved"
+    ],
+    "capability": "licensing_table",
+    "increment": "inc-hidden",
+    "licensing_table": [
+      {
+        "construction": "imperative_verb",
+        "hidden": {
+          "type": "mustatir_pronoun",
+          "value_class": "second_person"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "third_person_verb_no_overt_subject",
+        "hidden": {
+          "type": "mustatir_pronoun",
+          "value_class": "third_person"
+        },
+        "obligatory": false
+      },
+      {
+        "construction": "vocative_ya_noun",
+        "hidden": {
+          "type": "deleted_verb",
+          "value_class": "call_verb"
+        },
+        "note": "analysis-dependent: the deleted-verb account is one school's analysis",
+        "obligatory": true
+      },
+      {
+        "construction": "relative_clause_object_gap",
+        "hidden": {
+          "type": "elided_aid",
+          "value_class": "object_pronoun"
+        },
+        "obligatory": false
+      },
+      {
+        "construction": "answer_fragment",
+        "hidden": {
+          "type": "elided_clause",
+          "value_class": "contextual"
+        },
+        "obligatory": false
+      }
+    ],
+    "rules": [
+      {
+        "id": "hid-r1",
+        "text": "a hidden element may be emitted ONLY for a construction in the licensing table; anything else -> reject_reconstruction"
+      },
+      {
+        "id": "hid-r2",
+        "text": "hidden elements are TYPED nodes flagged is_reconstruction=true; they are analysis, never text; scripture is never altered"
+      },
+      {
+        "id": "hid-r3",
+        "text": "analysis-dependent licences (vocative deleted-verb) carry their attribution and never certify"
+      },
+      {
+        "id": "hid-r4",
+        "text": "rival reconstructions are all emitted as alternatives, none preferred"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "u-n08",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [
+    "br-pl-ent-p094",
+    "br-pl-ent-p095",
+    "br-pl-ent-p097"
+  ],
+  "rich_hover_fields": [
+    {
+      "key": "hidden_element_chip",
+      "teaching": "shows the typed reconstruction (e.g. 'subject: hidden you') clearly flagged as analysis, visually distinct from real text"
+    },
+    {
+      "key": "licence_note",
+      "teaching": "names the construction that licenses the reconstruction"
+    },
+    {
+      "key": "attribution_note",
+      "teaching": "analysis-dependent reconstructions carry whose analysis they are"
+    }
+  ],
+  "rollback_condition": "revert to unit-v0.json (kept committed; the loops manifest pins both packs), rerun the regression command, expect the recorded pre-repair defect set",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}
