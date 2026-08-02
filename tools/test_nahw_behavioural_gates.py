@@ -1401,6 +1401,98 @@ def test_r15_governor_mirrors_are_bound():
           repr(two_vote_evidence_defect(self_consistent)))
 
 
+def test_r16_total_hover_and_absent_governor():
+    """ROUND-16: topic_hover() is total, and a governor mirror is bound even with NO canonical tuple."""
+    import copy  # noqa: PLC0415
+    import unicodedata  # noqa: PLC0415
+    from tools.grade_grammar_reasoning import claim_binding_defect, two_vote_evidence_defect  # noqa: PLC0415
+
+    # 1. topic_hover() is a public topic/gate vocabulary entry point and keyed a dict directly.
+    for value in ([], {}, set(), 7, object(), ("a", "b")):
+        label = type(value).__name__
+        try:
+            got = GATE.topic_hover(value)
+        except Exception as exc:  # noqa: BLE001
+            check("R16 topic_hover(%s) is total" % label, False, "%s: %s" % (type(exc).__name__, exc))
+            continue
+        check("R16 topic_hover(%s) fails closed, never permissive" % label,
+              got == GATE.STRICT_HOVER, repr(got))
+    for value in ([], {}, set()):
+        try:
+            GATE.irab_rule_hover(value)
+            check("R16 irab_rule_hover(%s) is total" % type(value).__name__, True)
+        except Exception as exc:  # noqa: BLE001
+            check("R16 irab_rule_hover(%s) is total" % type(value).__name__, False,
+                  "%s: %s" % (type(exc).__name__, exc))
+    # valid labels, honest unknowns and every existing guard are untouched
+    check("R16 a valid topic keeps its hover", GATE.topic_hover("irab") == "never_auto",
+          repr(GATE.topic_hover("irab")))
+    check("R16 an honest unknown topic still answers None",
+          GATE.topic_hover("no_such_topic") is None and GATE.topic_hover(None) is None)
+    check("R16 every committed topic keeps a hover value from the vocabulary",
+          all(GATE.topic_hover(t) in ("never_auto", "pending_if_reason_uncertain", "safe_if_cited")
+              for t in GATE.topic_ids()))
+    check("R16 the round-15 gate guards still hold",
+          GATE.topic_gate([]) == "never_auto_resolve" and GATE.resolve_gate([]) == "never_auto_resolve"
+          and GATE.effective_gate(topic=[]) == "never_auto_resolve"
+          and GATE.resolve_gate(None) == "two_vote_required")
+    check("R16 the irāb two-vote floor still holds",
+          all(GATE.gate_rank(GATE.irab_rule_gate(r)) >= GATE.gate_rank(GATE.IRAB_GATE_FLOOR)
+              for r in GATE.irab_rule_ids()))
+
+    # 2. a canonical vote with NO governor tuple
+    govless_base = dict(reason_key="ma-nafiya-non-operative", conclusion="negation", case_mood=None,
+                        relation="preposition_governs_genitive", fact_type="particle_function")
+    ga = mint_fixture_vote(0, worklist_id="wl-r16-a", vote_id="vote:r16:a", **govless_base)
+    gb = mint_fixture_vote(1, worklist_id="wl-r16-b", vote_id="vote:r16:b", **govless_base)
+    for v in (ga, gb):
+        v["conclusion"] = dict(v["conclusion"])
+        v["conclusion"]["governor"] = None
+    govless = dict(project_vote(ga), two_vote_evidence=[ga, gb])
+    check("R16 the honest governor-less claim has no BINDING defect",
+          claim_binding_defect(govless, ga) is None, repr(claim_binding_defect(govless, ga)))
+    for label, key, value in (("surface", "governor_surface", "لَيْسَ"),
+                              ("location", "governor_loc", "quran:2:13:1"),
+                              ("relation", "governor_relation", "idafa_governs_genitive")):
+        claim = dict(govless)
+        claim[key] = value
+        check("R16 a fabricated flat governor %s on a governor-less vote is refused" % label,
+              claim_binding_defect(claim, ga) is not None, repr(claim_binding_defect(claim, ga)))
+    check("R16 a fabricated NESTED governor on a governor-less vote is refused",
+          claim_binding_defect(dict(govless, governor={"governor_type": "preposition"}), ga) is not None)
+    check("R16 an empty nested governor record on a governor-less vote is not a fabrication",
+          claim_binding_defect(dict(govless, governor={}), ga) is None,
+          repr(claim_binding_defect(dict(govless, governor={}), ga)))
+
+    # the round-14/15 governed behaviour and the upstream refusal survive
+    va, vb = _r13_pair(vid_a="vote:r16:c", vid_b="vote:r16:d")
+    good = dict(project_vote(va), two_vote_evidence=[va, vb])
+    check("R16 a genuine governed claim still passes",
+          two_vote_evidence_defect(good) is None, repr(two_vote_evidence_defect(good)))
+    check("R16 round-15 flat-mirror binding still holds",
+          two_vote_evidence_defect(dict(good, governor_surface="لَيْسَ")) is not None)
+    nfd = dict(good)
+    nfd["governor_surface"] = unicodedata.normalize("NFD", good["governor_surface"] or "")
+    check("R16 NFC equivalence is still legal", two_vote_evidence_defect(nfd) is None,
+          repr(two_vote_evidence_defect(nfd)))
+    stripped = copy.deepcopy(va)
+    stripped["conclusion"]["governor"] = None
+    case_g = {"id": "r16g", "required_gate": "two_vote_required", "expected_conclusion": "genitive",
+              "expected_reason_keys": ["lam-jarr-fused-majrur-kasra"]}
+    graded = grade_structured(case_g, dict(project_vote(stripped),
+                                           two_vote_evidence=[stripped, vb]))
+    check("R16 the upstream governor_not_justified refusal survives",
+          not graded["pass"] and graded.get("reason_defect") == "governor_not_justified",
+          repr(graded.get("reason_defect")))
+    # EXTERNAL-AUTHORITY LIMIT — still genuinely open, asserted so it cannot close by accident
+    fa, fb = copy.deepcopy(va), copy.deepcopy(vb)
+    for v in (fa, fb):
+        v["conclusion"] = dict(v["conclusion"],
+                               governor=dict(v["conclusion"]["governor"], surface="لَيْسَ"))
+    check("R16 a self-consistent fabricated tuple is still NOT disproved (recorded external limit)",
+          two_vote_evidence_defect(dict(project_vote(fa), two_vote_evidence=[fa, fb])) is None)
+
+
 def main():
     for fn in (test_m1_wrong_conclusion, test_m2_wrong_reason, test_m3_absent_governor,
                test_m4_lost_rival, test_m5_unsafe_auto_resolution, test_two_vote_agreement,
@@ -1410,7 +1502,7 @@ def main():
                test_r13_transition_surface_and_gates, test_r13_homographs_rivals_gloss,
                test_r13_tutor_content_vs_fact, test_r14_identity_governor_and_gates,
                test_r14_marks_and_learner_error, test_r15_case_safe_kull_and_gate_inputs,
-               test_r15_governor_mirrors_are_bound):
+               test_r15_governor_mirrors_are_bound, test_r16_total_hover_and_absent_governor):
         fn()
     if FAILS:
         print("FAIL — %d behavioural gate(s) broke:" % len(FAILS))
@@ -1426,7 +1518,7 @@ def main():
           "context-free gloss refusal, learner mastery separated from fact readiness, complete canonical "
           "record identity, complete governor tuple, exact mark profiles, exact sibling roles, learner "
           "error never hidden by the fact gate, case-safe كُلّ, bound governor mirrors, total gate-input "
-          "validation)")
+          "validation, total topic_hover, governor mirrors bound with no canonical tuple)")
 
 
 if __name__ == "__main__":

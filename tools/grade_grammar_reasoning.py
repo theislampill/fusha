@@ -439,6 +439,21 @@ def claim_binding_defect(claim, vote):
     # and the whole tuple is bound: type, surface, location, relation and the governed expression.
     vote_governor = (((vote or {}).get("conclusion") or {}).get("governor") or {})
     claimed_governor = claim.get("governor")
+    # ROUND-16: when the canonical vote carries NO governor tuple, the block below was skipped entirely
+    # unless the claim supplied a nested record — so a claim could add a fabricated FLAT governor_surface
+    # or governor_loc and no binding defect was reported. Absence in the vote is itself a binding fact: a
+    # mirror that asserts a governor the vote never named is fabricated, whichever form it takes.
+    if not vote_governor:
+        for field in ("relation", "surface", "loc", "type"):
+            flat = claim.get("governor_%s" % field)
+            if flat is not None and compact(flat):
+                return "claim_governor_%s_not_bound" % field
+        if isinstance(claimed_governor, dict) and any(
+                compact(v) for v in claimed_governor.values() if isinstance(v, str)):
+            return "claim_governor_relation_not_bound"
+        # There is no canonical tuple to bind against, and nothing fabricated was asserted, so an empty
+        # nested record is honest absence rather than an incomplete claim.
+        claimed_governor = None
     if vote_governor and claimed_governor is None:
         return "claim_governor_absent"
     if claimed_governor is not None:

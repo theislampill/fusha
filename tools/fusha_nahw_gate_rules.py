@@ -116,6 +116,9 @@ IRAB_GATE_FLOOR = "two_vote_required"
 # re-exports the guarded form under the same name so `GATE.resolve_gate` is safe for callers too.
 _UPSTREAM_RESOLVE_GATE = resolve_gate
 STRICT_GATE = "never_auto_resolve"
+# the strictest hover tier the committed topic/irab tables use; the fail-closed answer for an UNREADABLE
+# topic, as distinct from the honest `None` an unknown-but-readable topic gets.
+STRICT_HOVER = "never_auto"
 
 
 def gate_value_defect(value):
@@ -181,6 +184,16 @@ def _topic_gate_checked(topic, rules=None):
 
 
 def topic_hover(topic, rules=None):
+    """The topic's hover tier, or None when the topic is genuinely unknown.
+
+    ROUND-16: this is a public topic/gate vocabulary entry point, and it keyed a dict directly, so a raw
+    unhashable topic (list/dict/set) raised TypeError. An UNREADABLE topic is not the same as an unknown
+    one: an unknown topic honestly has no hover restriction on record (None, unchanged), whereas a value we
+    cannot even look up must not read as permissive. A malformed topic therefore answers the strictest
+    hover tier in the committed vocabulary.
+    """
+    if gate_value_defect(topic) is not None:
+        return STRICT_HOVER
     row = (rules or load_topic_gates()).get("by_topic", {}).get(topic)
     return (row or {}).get("hover")
 
