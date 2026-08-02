@@ -1,0 +1,9 @@
+{
+  "concepts": 1740,
+  "generator": "tools/build_curriculum_l1l6.py",
+  "lessons": 226,
+  "levels": 6,
+  "modules": 32,
+  "quiz_questions_total": 3096,
+  "schema": "curriculum.l1l6_lesson.v1.meta"
+}
