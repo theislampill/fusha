@@ -486,10 +486,14 @@ def claim_binding_defect(claim, vote):
                 return "claim_governor_%s_not_bound" % field
         for field, value in _mirror_items(claimed_governor):
             defect = governor_mirror_defect(value)
+            # ROUND-19: `"...%s..." % field` treats a TUPLE field as the argument tuple, so a tuple key of
+            # arity 0, 2 or more raised while CONSTRUCTING the typed defect and the exception escaped the
+            # public gates. Arity 1 only worked by accident. A single-element argument tuple renders any
+            # key type, and renders a tuple key as itself.
             if defect == "not_a_string":
-                return "claim_governor_%s_not_a_string" % field
+                return "claim_governor_%s_not_a_string" % (field,)
             if defect == "present":
-                return "claim_governor_%s_not_bound" % field
+                return "claim_governor_%s_not_bound" % (field,)
         # No canonical tuple to bind against and nothing asserted: an absent record, an empty record and a
         # record whose every value is an empty string are all honest absence.
         claimed_governor = None
@@ -501,7 +505,7 @@ def claim_binding_defect(claim, vote):
         # ROUND-17: type before content on the governed path as well.
         for _field, _value in _mirror_items(claimed_governor):
             if governor_mirror_defect(_value) == "not_a_string":
-                return "claim_governor_%s_not_a_string" % _field
+                return "claim_governor_%s_not_a_string" % (_field,)   # ROUND-19: tuple-key safe
         for _field in ("relation", "surface", "loc", "type"):
             if governor_mirror_defect(claim.get("governor_%s" % _field)) == "not_a_string":
                 return "claim_governor_%s_not_a_string" % _field

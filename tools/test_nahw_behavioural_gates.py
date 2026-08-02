@@ -1629,6 +1629,21 @@ R18_UNORDERABLE_KEYS = (
     ("bytes/string", {b"k": "x", "surface": "y"}),
 )
 
+# ROUND-19: round 18 made ITERATION total for any key type, but the typed defect messages were still
+# rendered with `"...%s..." % field`. `%` treats a TUPLE field as the ARGUMENT tuple, so a tuple key of
+# arity 0, 2 or more raised while CONSTRUCTING the defect and the exception escaped claim_binding_defect(),
+# two_vote_evidence_defect() and grade_structured(). Arity 1 only ever worked by accident, and it rendered
+# `a` rather than `('a',)`. These rows pin every arity against both a string and a non-string value.
+R19_TUPLE_KEY_ARITIES = (
+    ("empty tuple", ()),
+    ("1-tuple", ("a",)),
+    ("2-tuple", ("a", "b")),
+    ("3-tuple", ("a", "b", "c")),
+    ("5-tuple", tuple("abcde")),
+    ("nested tuple", (("a", "b"), "c")),
+)
+R19_KEY_VALUES = (("string", "y"), ("list", ["y"]))
+
 
 def test_r18_unorderable_governor_keys_are_total():
     """ROUND-18: arbitrary JSON-like mapping keys never crash the grading path, on either governor path."""
@@ -1724,6 +1739,65 @@ def test_r18_unorderable_governor_keys_are_total():
     check("R18 a non-record governor is still refused",
           claim_binding_defect(dict(govless, governor="preposition"), ga) is not None)
 
+    # --- ROUND-19: tuple keys of EVERY arity must render a typed defect, not raise ----------------------
+    for klabel, key in R19_TUPLE_KEY_ARITIES:
+        for vlabel, value in R19_KEY_VALUES:
+            # governor-LESS: the vote names no governor, so any stated mirror is fabricated and refused
+            claim = dict(govless, governor={key: value})
+            for name, call in (("claim_binding_defect",
+                                lambda c=claim: claim_binding_defect(c, ga)),
+                               ("two_vote_evidence_defect",
+                                lambda c=claim: two_vote_evidence_defect(c))):
+                try:
+                    defect = call()
+                except Exception as exc:  # noqa: BLE001
+                    check("R19 %s (%s key, %s value) is total" % (name, klabel, vlabel), False,
+                          "%s: %s" % (type(exc).__name__, exc))
+                    continue
+                check("R19 %s (%s key, %s value) refuses the fabricated mirror" % (name, klabel, vlabel),
+                      defect is not None, repr(defect))
+            try:
+                check("R19 grade_structured (%s key, %s value) is total and false" % (klabel, vlabel),
+                      not grade_structured(case_n, claim)["pass"])
+            except Exception as exc:  # noqa: BLE001
+                check("R19 grade_structured (%s key, %s value) is total" % (klabel, vlabel), False,
+                      "%s: %s" % (type(exc).__name__, exc))
+
+            # GOVERNED: totality always; a non-string value under any key is still refused
+            governed = {"governor_type": "preposition", "surface": gov["surface"],
+                        "loc": gov.get("loc"), "relation": gov["relation"], key: value}
+            gclaim = dict(good, governor=governed)
+            for name, call in (("claim_binding_defect",
+                                lambda c=gclaim: claim_binding_defect(c, va)),
+                               ("two_vote_evidence_defect",
+                                lambda c=gclaim: two_vote_evidence_defect(c))):
+                try:
+                    defect = call()
+                except Exception as exc:  # noqa: BLE001
+                    check("R19 governed %s (%s key, %s value) is total" % (name, klabel, vlabel), False,
+                          "%s: %s" % (type(exc).__name__, exc))
+                    continue
+                if vlabel == "list":
+                    check("R19 governed %s refuses a list value under a %s key" % (name, klabel),
+                          defect is not None, repr(defect))
+            try:
+                grade_structured(case_g, gclaim)
+                check("R19 governed grade_structured (%s key, %s value) is total" % (klabel, vlabel), True)
+            except Exception as exc:  # noqa: BLE001
+                check("R19 governed grade_structured (%s key, %s value) is total" % (klabel, vlabel),
+                      False, "%s: %s" % (type(exc).__name__, exc))
+
+    # messages stay deterministic and name the offending key exactly (a 1-tuple renders as ('a',), not a)
+    for klabel, key in R19_TUPLE_KEY_ARITIES:
+        try:
+            first = claim_binding_defect(dict(govless, governor={key: ["y"]}), ga)
+            again = claim_binding_defect(dict(govless, governor={key: ["y"]}), ga)
+            check("R19 a %s key yields a stable message naming the key" % klabel,
+                  isinstance(first, str) and first == again and str(key) in first, repr(first))
+        except Exception as exc:  # noqa: BLE001
+            check("R19 a %s key yields a stable message" % klabel, False,
+                  "%s: %s" % (type(exc).__name__, exc))
+
 
 def main():
     for fn in (test_m1_wrong_conclusion, test_m2_wrong_reason, test_m3_absent_governor,
@@ -1753,7 +1827,8 @@ def main():
           "record identity, complete governor tuple, exact mark profiles, exact sibling roles, learner "
           "error never hidden by the fact gate, case-safe كُلّ, bound governor mirrors, total gate-input "
           "validation, total topic_hover, governor mirrors bound with no canonical tuple, typed governor "
-          "mirrors with a total grading path, unorderable governor-record keys)")
+          "mirrors with a total grading path, unorderable governor-record keys, tuple keys of every "
+          "arity)")
 
 
 if __name__ == "__main__":
