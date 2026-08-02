@@ -15,6 +15,10 @@
     {
       "guard": "an unrecorded cell abstains; the matrix is never extended by analogy from a neighbouring class",
       "id": "g-mood-anal"
+    },
+    {
+      "guard": "the alif-final subclass carries an ESTIMATED subjunctive fatha (ta'adhdhur), never an overt one — the row name declares both realizations; a per-subclass split awaits a final_weak_letter discriminator (audit flag)",
+      "id": "g-mood-5"
     }
   ],
   "schema": "curriculum.l1l6_increment_guards.v1",

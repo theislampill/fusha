@@ -1,7 +1,7 @@
 {
   "guards": [
     {
-      "guard": "og-2: identical skeletons split by harakat and by entry; the فعال row collides with a singular template, so that skeleton abstains",
+      "guard": "og-2: identical skeletons split by harakat and by entry; the فعال row collides with a singular template, so that skeleton abstains — colliding skeletons declared: فعال، فعول، فعلاء (all three abstain ambiguous_template)",
       "id": "g-bpl-1"
     },
     {

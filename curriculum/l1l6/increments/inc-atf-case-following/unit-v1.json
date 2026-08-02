@@ -61,6 +61,7 @@
     "consistent": "the conjunct inherited the head's case",
     "ism": "expected case of the joined-to element (head)",
     "khabar": "expected case of the joined element (conjunct)",
+    "lightened_non_governing": "reused slot: THIS occurrence is not a coordination reading (e.g. heavy لكنّ with an attached pronoun, or clause-level coordination with no case to copy). The slot name comes from inc-nawasikh and is NOT a claim about lightening here",
     "violation_candidate": "the conjunct bears a case of its own — routed to review, never corrected"
   },
   "increment": "inc-atf-case-following",

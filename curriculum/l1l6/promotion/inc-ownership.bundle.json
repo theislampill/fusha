@@ -71,13 +71,6 @@
       "model_facing": "curriculum/l1l6/increments/inc-ownership/procedure.md",
       "technical": "curriculum/l1l6/increments/inc-ownership/unit-v2.json"
     },
-    "u-s05": {
-      "advanced": "curriculum/l1l6/increments/inc-ownership/reference.md",
-      "beginner": "curriculum/l1l6/increments/inc-ownership/staged-explanation.md",
-      "intermediate": "curriculum/l1l6/increments/inc-ownership/reference.md",
-      "model_facing": "curriculum/l1l6/increments/inc-ownership/procedure.md",
-      "technical": "curriculum/l1l6/increments/inc-ownership/unit-v2.json"
-    },
     "u-s09": {
       "advanced": "curriculum/l1l6/increments/inc-ownership/reference.md",
       "beginner": "curriculum/l1l6/increments/inc-ownership/staged-explanation.md",

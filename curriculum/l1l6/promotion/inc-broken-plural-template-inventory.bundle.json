@@ -200,6 +200,29 @@
           "ء"
         ],
         "signature": "the three radicals closed by a long low vowel and a hamza"
+      },
+      {
+        "class": "non_plural_homograph",
+        "id": "fuul_singular_homograph",
+        "name": "فُعُول plural skeleton == singular فَعُول (declared collision)",
+        "shape": [
+          "R1",
+          "R2",
+          "و",
+          "R3"
+        ]
+      },
+      {
+        "class": "non_plural_homograph",
+        "id": "fualaa_singular_homograph",
+        "name": "فُعَلاء plural skeleton == singular فَعْلاء (declared collision)",
+        "shape": [
+          "R1",
+          "R2",
+          "R3",
+          "ا",
+          "ء"
+        ]
       }
     ],
     "unit_ref": "cu-broken-plural-template-inventory",

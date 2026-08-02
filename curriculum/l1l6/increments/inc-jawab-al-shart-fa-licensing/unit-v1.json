@@ -5,6 +5,7 @@
     "response_boundary_unknown"
   ],
   "capability": "licensing_table",
+  "encoding_limitation": "the registered licensing_table capability matches ONE compound construction key and can only emit reject_reconstruction for anything unmatched; the evidence-specific abstention reasons declared here are therefore DECLARED-BUT-UNREACHABLE pending a keyed-evidence capability — kept as the unit's honest abstention vocabulary, not as consumer behavior (audit finding, modeled on inc-atf-case-following)",
   "increment": "inc-jawab-al-shart-fa-licensing",
   "licensing_table": [
     {
