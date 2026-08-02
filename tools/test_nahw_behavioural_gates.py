@@ -1612,6 +1612,119 @@ def test_r17_typed_governor_mirrors_and_total_grading():
           two_vote_evidence_defect(dict(project_vote(fa), two_vote_evidence=[fa, fb])) is None)
 
 
+# ROUND-18: governor records whose KEYS are not mutually orderable. Round 17 iterated
+# `sorted(record.items())`, which compares keys against each other, so every one of these raised TypeError
+# out of claim_binding_defect(), two_vote_evidence_defect() and grade_structured() — a totality regression
+# the parent commit did not have. Ordering is only for deterministic defect messages, so it is taken over
+# the string form of the key instead.
+R18_UNORDERABLE_KEYS = (
+    ("string/integer", {"surface": "x", 1: "y"}),
+    ("string/boolean", {"surface": "x", True: "y"}),
+    ("string/None", {"surface": "x", None: "y"}),
+    ("string/float", {"relation": "x", 2.5: "y"}),
+    ("string/tuple", {"loc": "x", ("a",): "y"}),
+    ("integer/None", {1: "x", None: "y"}),
+    ("tuple/integer", {("a",): "x", 3: "y"}),
+    ("float/None", {1.5: "x", None: "y"}),
+    ("bytes/string", {b"k": "x", "surface": "y"}),
+)
+
+
+def test_r18_unorderable_governor_keys_are_total():
+    """ROUND-18: arbitrary JSON-like mapping keys never crash the grading path, on either governor path."""
+    from tools.grade_grammar_reasoning import (  # noqa: PLC0415
+        claim_binding_defect, derive_reasoning, two_vote_evidence_defect,
+    )
+
+    # --- governor-LESS path: the vote names no governor, so any stated mirror is fabricated -------------
+    govless_base = dict(reason_key="ma-nafiya-non-operative", conclusion="negation", case_mood=None,
+                        relation="preposition_governs_genitive", fact_type="particle_function")
+    ga = mint_fixture_vote(0, worklist_id="wl-r18-a", vote_id="vote:r18:a", **govless_base)
+    gb = mint_fixture_vote(1, worklist_id="wl-r18-b", vote_id="vote:r18:b", **govless_base)
+    for v in (ga, gb):
+        v["conclusion"] = dict(v["conclusion"])
+        v["conclusion"]["governor"] = None
+    govless = dict(project_vote(ga), two_vote_evidence=[ga, gb])
+    case_n = {"id": "r18n", "required_gate": "two_vote_required", "expected_conclusion": "negation",
+              "expected_reason_keys": ["ma-nafiya-non-operative"]}
+    for label, governor in R18_UNORDERABLE_KEYS:
+        claim = dict(govless, governor=governor)
+        for name, call in (("claim_binding_defect", lambda c=claim: claim_binding_defect(c, ga)),
+                           ("two_vote_evidence_defect", lambda c=claim: two_vote_evidence_defect(c))):
+            try:
+                defect = call()
+            except Exception as exc:  # noqa: BLE001
+                check("R18 %s (%s keys) is total" % (name, label), False,
+                      "%s: %s" % (type(exc).__name__, exc))
+                continue
+            check("R18 %s (%s keys) refuses a fabricated mirror" % (name, label),
+                  defect is not None, repr(defect))
+        try:
+            check("R18 grade_structured (%s keys) is total and false" % label,
+                  not grade_structured(case_n, claim)["pass"])
+        except Exception as exc:  # noqa: BLE001
+            check("R18 grade_structured (%s keys) is total" % label, False,
+                  "%s: %s" % (type(exc).__name__, exc))
+
+    # --- GOVERNED path: totality always; a defect when a canonical mirror is actually overwritten --------
+    va, vb = _r13_pair(vid_a="vote:r18:c", vid_b="vote:r18:d")
+    good = dict(project_vote(va), two_vote_evidence=[va, vb])
+    gov = va["conclusion"]["governor"]
+    case_g = {"id": "r18g", "required_gate": "two_vote_required", "expected_conclusion": "genitive",
+              "expected_reason_keys": ["lam-jarr-fused-majrur-kasra"]}
+    for label, extra in R18_UNORDERABLE_KEYS:
+        governor = {"governor_type": "preposition", "surface": gov["surface"],
+                    "loc": gov.get("loc"), "relation": gov["relation"]}
+        governor.update(extra)
+        claim = dict(good, governor=governor)
+        overwrites = any(k in ("surface", "loc", "relation", "governor_type") for k in extra)
+        for name, call in (("claim_binding_defect", lambda c=claim: claim_binding_defect(c, va)),
+                           ("two_vote_evidence_defect", lambda c=claim: two_vote_evidence_defect(c))):
+            try:
+                defect = call()
+            except Exception as exc:  # noqa: BLE001
+                check("R18 governed %s (%s keys) is total" % (name, label), False,
+                      "%s: %s" % (type(exc).__name__, exc))
+                continue
+            if overwrites:
+                check("R18 governed %s (%s keys) refuses the overwritten mirror" % (name, label),
+                      defect is not None, repr(defect))
+        try:
+            result = grade_structured(case_g, claim)
+            if overwrites:
+                check("R18 governed grade_structured (%s keys) grades false" % label, not result["pass"])
+        except Exception as exc:  # noqa: BLE001
+            check("R18 governed grade_structured (%s keys) is total" % label, False,
+                  "%s: %s" % (type(exc).__name__, exc))
+        try:
+            ok, defect = derive_reasoning(case_g, claim)
+            check("R18 derive_reasoning (%s keys) is total" % label, isinstance(ok, bool))
+        except Exception as exc:  # noqa: BLE001
+            check("R18 derive_reasoning (%s keys) is total" % label, False,
+                  "%s: %s" % (type(exc).__name__, exc))
+
+    # --- positive controls and round-15/16/17 behaviour are preserved -----------------------------------
+    check("R18 the governor-less claim still grades cleanly", grade_structured(case_n, govless)["pass"],
+          repr(grade_structured(case_n, govless).get("block_reason")))
+    check("R18 the governed claim still grades cleanly", grade_structured(case_g, good)["pass"],
+          repr(grade_structured(case_g, good).get("block_reason")))
+    check("R18 the case_mood=None fixture is still schema-valid",
+          ((ga.get("conclusion") or {}).get("case_or_mood") or {}).get("sign_visibility")
+          == "not_applicable")
+    for label, governor in (("None", None), ("an empty record", {}),
+                            ("an all-empty-string record",
+                             {"surface": "", "loc": "", "relation": "", "governor_type": ""})):
+        check("R18 honest absence (%s) still passes" % label,
+              claim_binding_defect(dict(govless, governor=governor), ga) is None,
+              repr(claim_binding_defect(dict(govless, governor=governor), ga)))
+    check("R18 round-17 typed mirrors still refuse a non-string value",
+          claim_binding_defect(dict(govless, governor={"surface": ["x"]}), ga) is not None)
+    check("R18 round-15/16 flat-mirror binding still holds",
+          two_vote_evidence_defect(dict(good, governor_surface="لَيْسَ")) is not None)
+    check("R18 a non-record governor is still refused",
+          claim_binding_defect(dict(govless, governor="preposition"), ga) is not None)
+
+
 def main():
     for fn in (test_m1_wrong_conclusion, test_m2_wrong_reason, test_m3_absent_governor,
                test_m4_lost_rival, test_m5_unsafe_auto_resolution, test_two_vote_agreement,
@@ -1622,7 +1735,8 @@ def main():
                test_r13_tutor_content_vs_fact, test_r14_identity_governor_and_gates,
                test_r14_marks_and_learner_error, test_r15_case_safe_kull_and_gate_inputs,
                test_r15_governor_mirrors_are_bound, test_r16_total_hover_and_absent_governor,
-               test_r17_typed_governor_mirrors_and_total_grading):
+               test_r17_typed_governor_mirrors_and_total_grading,
+               test_r18_unorderable_governor_keys_are_total):
         fn()
     if FAILS:
         print("FAIL — %d behavioural gate(s) broke:" % len(FAILS))
@@ -1639,7 +1753,7 @@ def main():
           "record identity, complete governor tuple, exact mark profiles, exact sibling roles, learner "
           "error never hidden by the fact gate, case-safe كُلّ, bound governor mirrors, total gate-input "
           "validation, total topic_hover, governor mirrors bound with no canonical tuple, typed governor "
-          "mirrors with a total grading path)")
+          "mirrors with a total grading path, unorderable governor-record keys)")
 
 
 if __name__ == "__main__":

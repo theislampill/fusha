@@ -415,6 +415,18 @@ def canonical_vote_difference(left, right):
 GOVERNOR_MIRROR_FIELDS = ("relation", "surface", "loc", "type", "governor_type")
 
 
+def _mirror_items(record):
+    """Deterministically ordered (key, value) pairs of a governor record, for ANY JSON-like key type.
+
+    ROUND-18: round 17 iterated `sorted(record.items())`, which compares the KEYS against each other, so a
+    record mixing string with int/bool/None/float/tuple/bytes keys raised TypeError out of
+    claim_binding_defect(), two_vote_evidence_defect() and grade_structured() — a totality regression the
+    parent commit did not have. Ordering exists only to make the reported defect deterministic, so it is
+    taken over the string FORM of each key, which every key type has.
+    """
+    return sorted((record or {}).items(), key=lambda kv: (str(type(kv[0])), str(kv[0])))
+
+
 def governor_mirror_defect(value):
     """`None` for honest absence, "present" for a stated string, "not_a_string" for anything else."""
     if value is None:
@@ -472,7 +484,7 @@ def claim_binding_defect(claim, vote):
                 return "claim_governor_%s_not_a_string" % field
             if flat is not None and compact(flat):
                 return "claim_governor_%s_not_bound" % field
-        for field, value in sorted((claimed_governor or {}).items()):
+        for field, value in _mirror_items(claimed_governor):
             defect = governor_mirror_defect(value)
             if defect == "not_a_string":
                 return "claim_governor_%s_not_a_string" % field
@@ -487,7 +499,7 @@ def claim_binding_defect(claim, vote):
         if not isinstance(claimed_governor, dict):
             return "claim_governor_not_a_record"
         # ROUND-17: type before content on the governed path as well.
-        for _field, _value in sorted(claimed_governor.items()):
+        for _field, _value in _mirror_items(claimed_governor):
             if governor_mirror_defect(_value) == "not_a_string":
                 return "claim_governor_%s_not_a_string" % _field
         for _field in ("relation", "surface", "loc", "type"):
