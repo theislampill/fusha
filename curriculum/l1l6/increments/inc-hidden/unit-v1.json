@@ -1,0 +1,72 @@
+{
+  "abstention_reasons": [
+    "reject_reconstruction",
+    "alternatives_preserved"
+  ],
+  "increment": "inc-hidden",
+  "licensing_table": [
+    {
+      "construction": "imperative_verb",
+      "hidden": {
+        "type": "mustatir_pronoun",
+        "value_class": "second_person"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "third_person_verb_no_overt_subject",
+      "hidden": {
+        "type": "mustatir_pronoun",
+        "value_class": "third_person"
+      },
+      "obligatory": false
+    },
+    {
+      "construction": "vocative_ya_noun",
+      "hidden": {
+        "type": "deleted_verb",
+        "value_class": "call_verb"
+      },
+      "note": "analysis-dependent: the deleted-verb account is one school's analysis",
+      "obligatory": true
+    },
+    {
+      "construction": "relative_clause_object_gap",
+      "hidden": {
+        "type": "elided_aid",
+        "value_class": "object_pronoun"
+      },
+      "obligatory": false
+    },
+    {
+      "construction": "answer_fragment",
+      "hidden": {
+        "type": "elided_clause",
+        "value_class": "contextual"
+      },
+      "obligatory": false
+    }
+  ],
+  "rules": [
+    {
+      "id": "hid-r1",
+      "text": "a hidden element may be emitted ONLY for a construction in the licensing table; anything else -> reject_reconstruction"
+    },
+    {
+      "id": "hid-r2",
+      "text": "hidden elements are TYPED nodes flagged is_reconstruction=true; they are analysis, never text; scripture is never altered"
+    },
+    {
+      "id": "hid-r3",
+      "text": "analysis-dependent licences (vocative deleted-verb) carry their attribution and never certify"
+    },
+    {
+      "id": "hid-r4",
+      "text": "rival reconstructions are all emitted as alternatives, none preferred"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "u-n08",
+  "version": 1
+}

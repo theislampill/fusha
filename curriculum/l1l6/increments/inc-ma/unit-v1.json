@@ -1,0 +1,106 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives"
+  ],
+  "functions": [
+    {
+      "discriminators": {
+        "clause": [
+          "declarative"
+        ],
+        "following": [
+          "perfect_verb"
+        ]
+      },
+      "id": "nafiya",
+      "name": "negation ما"
+    },
+    {
+      "discriminators": {
+        "antecedent_slot": [
+          "open_headless"
+        ],
+        "following_clause": [
+          "complete_with_gap"
+        ]
+      },
+      "id": "mawsula",
+      "name": "relative ما"
+    },
+    {
+      "discriminators": {
+        "clause": [
+          "interrogative"
+        ],
+        "position": [
+          "clause_initial"
+        ]
+      },
+      "id": "istifhamiyya",
+      "name": "interrogative ما"
+    },
+    {
+      "discriminators": {
+        "following": [
+          "verb_clause"
+        ],
+        "substitution": [
+          "masdar_paraphrase_valid"
+        ]
+      },
+      "id": "masdariyya",
+      "name": "masdar ما"
+    },
+    {
+      "discriminators": {
+        "mood_pattern": [
+          "double_jussive"
+        ]
+      },
+      "id": "shartiyya",
+      "name": "conditional ما"
+    },
+    {
+      "discriminators": {
+        "attachment": [
+          "fused_to_inna_family"
+        ]
+      },
+      "id": "kaffa",
+      "name": "restraining ما (إنّما)"
+    },
+    {
+      "discriminators": {
+        "position": [
+          "after_preposition_non_argument"
+        ]
+      },
+      "id": "zaida",
+      "name": "extra ما"
+    }
+  ],
+  "increment": "inc-ma",
+  "rules": [
+    {
+      "id": "ma-r1",
+      "text": "discriminator features are SUPPLIED evidence (from context analysis or source), never guessed by the consumer"
+    },
+    {
+      "id": "ma-r2",
+      "text": "evaluate every function; keep every function whose discriminators are all satisfied"
+    },
+    {
+      "id": "ma-r3",
+      "text": "exactly one survivor -> that function (candidate); >1 -> preserve_alternatives; 0 -> abstain insufficient_features (og-3: no default function exists)"
+    },
+    {
+      "id": "ma-r4",
+      "text": "hijaziyya government is school-dependent: even a resolved nafiya reading never emits a government claim from this unit"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "u-n07",
+  "version": 1
+}

@@ -1,0 +1,127 @@
+{
+  "abstention_reasons": [
+    "penult_vowel_unknown",
+    "ambiguous_template",
+    "no_template",
+    "no_root_evidence"
+  ],
+  "increment": "inc-derivatives",
+  "rules": [
+    {
+      "id": "der-r1",
+      "text": "a template matches only with supplied root radicals filling R1..R3 in order (no root derivation in the consumer)"
+    },
+    {
+      "id": "der-r2",
+      "text": "mu_participle without a known penult vowel -> abstain penult_vowel_unknown (never default to active)"
+    },
+    {
+      "id": "der-r3",
+      "text": "gloss SHAPE is nominal for every class here; the consumer flags (does not author) any verbal-gloss pairing"
+    },
+    {
+      "id": "der-r4",
+      "text": "zero or >1 surviving template -> abstain (ambiguous_template or no_template)"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "templates": [
+    {
+      "class": "active_participle",
+      "id": "faail",
+      "name": "فاعل active participle (form I)",
+      "requires": [],
+      "shape": [
+        "R1",
+        "ا",
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "class": "passive_participle",
+      "id": "mafuul",
+      "name": "مفعول passive participle (form I)",
+      "requires": [],
+      "shape": [
+        "م",
+        "R1",
+        "R2",
+        "و",
+        "R3"
+      ]
+    },
+    {
+      "class": "mu_participle",
+      "id": "mu_participle",
+      "name": "مُـ participle (derived forms)",
+      "requires": [
+        "penult_vowel"
+      ],
+      "shape": [
+        "م",
+        "..."
+      ],
+      "split": {
+        "fatha": "passive_participle",
+        "kasra": "active_participle"
+      }
+    },
+    {
+      "class": "masdar_II",
+      "id": "tafiil",
+      "name": "تفعيل masdar (form II)",
+      "requires": [],
+      "shape": [
+        "ت",
+        "R1",
+        "R2",
+        "ي",
+        "R3"
+      ]
+    },
+    {
+      "class": "masdar_IV",
+      "id": "ifaal",
+      "name": "إفعال masdar (form IV)",
+      "requires": [],
+      "shape": [
+        "إ",
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ]
+    },
+    {
+      "class": "masdar_X",
+      "id": "istifaal",
+      "name": "استفعال masdar (form X)",
+      "requires": [],
+      "shape": [
+        "ا",
+        "س",
+        "ت",
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ]
+    },
+    {
+      "class": "place_time_noun",
+      "id": "mafal_place",
+      "name": "مَفْعَل/مَفْعِل place-noun",
+      "requires": [],
+      "shape": [
+        "م",
+        "R1",
+        "R2",
+        "R3"
+      ]
+    }
+  ],
+  "unit_ref": "u-s03",
+  "version": 1
+}

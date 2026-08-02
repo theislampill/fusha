@@ -1,0 +1,18 @@
+{
+  "guards": [
+    {
+      "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+      "id": "g-der-1"
+    },
+    {
+      "guard": "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+      "id": "g-der-2"
+    },
+    {
+      "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
+      "id": "g-der-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

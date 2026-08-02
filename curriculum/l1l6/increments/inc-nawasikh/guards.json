@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "the unit CHECKS consistency; it never assigns case (case facts remain two-vote gated)",
+      "id": "g-naw-1"
+    },
+    {
+      "guard": "og-4: family membership never fixes an occurrence's analysis when a lightened/non-governing use is possible",
+      "id": "g-naw-2"
+    },
+    {
+      "guard": "scripture is never 'corrected': violations become review candidates",
+      "id": "g-naw-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-naw-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

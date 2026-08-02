@@ -1,0 +1,69 @@
+{
+  "abstention_reasons": [
+    "marking_unknown",
+    "non_governing_use",
+    "out_of_regime"
+  ],
+  "families": {
+    "inna": {
+      "ism": "nasb",
+      "khabar": "raf3",
+      "members": [
+        "إن",
+        "أن",
+        "لكن",
+        "كأن",
+        "ليت",
+        "لعل"
+      ]
+    },
+    "kana": {
+      "ism": "raf3",
+      "khabar": "nasb",
+      "members": [
+        "كان",
+        "أصبح",
+        "صار",
+        "ليس",
+        "ما زال",
+        "ما دام",
+        "بات",
+        "ظل"
+      ]
+    },
+    "zanna": {
+      "ism": "nasb",
+      "khabar": "nasb",
+      "members": [
+        "ظن",
+        "حسب",
+        "جعل",
+        "علم",
+        "وجد"
+      ]
+    }
+  },
+  "increment": "inc-nawasikh",
+  "rules": [
+    {
+      "id": "naw-r1",
+      "text": "identify the abrogator by membership; a lightened/non-governing use (declared feature) removes the expectation (abstain non_governing_use)"
+    },
+    {
+      "id": "naw-r2",
+      "text": "the consumer CHECKS observed case markings against the family pattern; it never assigns case itself (case facts stay two-vote)"
+    },
+    {
+      "id": "naw-r3",
+      "text": "observed==expected -> consistent; observed!=expected -> violation_candidate routed to review (the text is never 'corrected'); marking unknown -> abstain marking_unknown"
+    },
+    {
+      "id": "naw-r4",
+      "text": "la_jins and hijaziyya-ma regimes are OUT of this unit (different/school-dependent regimes)"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "u-n02",
+  "version": 1
+}

@@ -104,6 +104,8 @@ def load_context():
     ctx["ledger"] = _jsonl(BASE / "ledger" / "claim-ledger.jsonl")
     ctx["guards"] = _jsonl(BASE / "ledger" / "overgeneralization-guards.jsonl")
     ctx["links"] = _jsonl(BASE / "links" / "pvn-candidate-links.jsonl")
+    ctx["units"] = _jsonl(BASE / "units" / "instructional-units.jsonl")
+    ctx["unit_deps"] = _jsonl(BASE / "units" / "unit-dependencies.jsonl")
     ctx["facts"] = json.loads((BASE / "pilot" / "pilot-facts.json").read_text(encoding="utf-8"))
     ctx["fixtures"] = _jsonl(BASE / "pilot" / "fixtures.jsonl")
     proj = BASE / "pilot" / "projection.json"
@@ -410,6 +412,77 @@ def check_pilot_parity(ctx, errors):
                               % (b.get("record_id"), w.get("surface")))
 
 
+UNIT_REQUIRED_FIELDS = (
+    "concept", "instructional_level", "recognition_criteria",
+    "formation_or_decision_procedure", "positive_conditions",
+    "negative_conditions", "exceptions", "contrasts",
+    "common_learner_errors", "worked_analysis_stages",
+    "required_evidence", "skill_surface", "rich_hover_component",
+    "corpus_pvn_application", "backprop_destination", "concept_node_query",
+)
+
+
+def check_units_semantic(ctx, errors):
+    unit_ids = set()
+    lesson_ids = {l["lesson_id"] for l in ctx["lessons"]}
+    domain_counts = {}
+    for c in ctx["concepts"]:
+        domain_counts[c["domain"]] = domain_counts.get(c["domain"], 0) + 1
+    for u in ctx["units"]:
+        uid = u.get("unit_id")
+        if uid in unit_ids:
+            errors.append("units_semantic: duplicate unit_id %r" % uid)
+        unit_ids.add(uid)
+        if u.get("status") != "candidate":
+            errors.append("units_semantic: %s status must be candidate" % uid)
+        for f in UNIT_REQUIRED_FIELDS:
+            v = u.get(f)
+            if v is None or v == [] or v == "" or v == {}:
+                errors.append("units_semantic: %s missing/empty field %r" % (uid, f))
+        for lid in u.get("lesson_refs") or []:
+            if lid not in lesson_ids:
+                errors.append("units_semantic: %s lesson_ref %r unresolved" % (uid, lid))
+        for path_field in ("skill_surface", "backprop_destination"):
+            p = u.get(path_field)
+            if isinstance(p, str) and p and not (ROOT / p).exists():
+                # increments dirs may be added in the same PR; require existence
+                errors.append("units_semantic: %s %s path %r missing" % (uid, path_field, p))
+        cq = u.get("concept_node_query") or {}
+        have = domain_counts.get(cq.get("domain"), 0)
+        if have < cq.get("min_nodes", 0):
+            errors.append("units_semantic: %s concept query domain %r has %d nodes "
+                          "< declared minimum %d" % (uid, cq.get("domain"), have,
+                                                     cq.get("min_nodes", 0)))
+    # dependency edges resolve + acyclic
+    adj = {}
+    for d in ctx["unit_deps"]:
+        if d["from"] not in unit_ids or d["to"] not in unit_ids:
+            errors.append("units_semantic: dep %s endpoint unresolved" % d.get("edge_id"))
+            continue
+        adj.setdefault(d["from"], []).append(d["to"])
+    state = {}
+
+    def dfs(n):
+        state[n] = 1
+        for m in adj.get(n, ()):
+            if state.get(m) == 1 or (state.get(m) is None and dfs(m)):
+                return True
+        state[n] = 2
+        return False
+
+    for n in list(adj):
+        if state.get(n) is None and dfs(n):
+            errors.append("units_semantic: unit dependency cycle reachable from %s" % n)
+            break
+    # every prerequisite_units entry must have a matching dep edge
+    edge_pairs = {(d["from"], d["to"]) for d in ctx["unit_deps"]}
+    for u in ctx["units"]:
+        for p in u.get("prerequisite_units") or []:
+            if (p, u["unit_id"]) not in edge_pairs:
+                errors.append("units_semantic: %s prerequisite %s lacks a dep edge"
+                              % (u["unit_id"], p))
+
+
 def check_packet_presence(ctx, errors):
     for pid in PACKET_IDS:
         if not (BASE / "packets" / (pid + ".json")).exists():
@@ -421,6 +494,7 @@ ALL_CHECKS = (
     check_nfc, check_crosswalk_evidence, check_ledger_qualification,
     check_links_candidacy, check_material_classes, check_leakage,
     check_no_certification, check_pilot_parity, check_packet_presence,
+    check_units_semantic,
 )
 PILOT_CHECKS = (check_pilot_parity, check_no_certification)
 
@@ -486,6 +560,15 @@ def self_test():
         lambda c: c["classes"]["classes"]["genuinely_held_out_evaluation_material"].update(count=5))
     mut("wildcard_source_ref", "ledger_qualification",
         lambda c: c["ledger"][0]["source_ref"].update(lesson_id="L6.M1.*"))
+    mut("unit_dep_cycle", "units_semantic",
+        lambda c: c["unit_deps"].append({"edge_id": "ud-x", "from": c["units"][-1]["unit_id"],
+                                         "to": c["units"][0]["unit_id"],
+                                         "kind": "capability_prerequisite"}
+                                        ) if c["units"][0]["unit_id"] == "u-s01" else None)
+    mut("unit_empty_field", "units_semantic",
+        lambda c: c["units"][0].update(recognition_criteria=[]))
+    mut("unit_overclaimed_population", "units_semantic",
+        lambda c: c["units"][0]["concept_node_query"].update(min_nodes=99999))
 
     failed = [n for n, ok in mutations if not ok]
     print("self-test: %d/%d mutations tripped their checks"
